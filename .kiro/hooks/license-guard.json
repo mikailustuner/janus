@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "License guard (data/ and pipelines/)",
+      "trigger": "PostFileSave",
+      "description": "Fails if data/ contains a TİTCK list (by name or column headers), a spreadsheet, a file over 10 MB, or a cite-only source.",
+      "matcher": "/(data|pipelines)/",
+      "action": {
+        "type": "command",
+        "command": "python3 .kiro/hooks/scripts/license-guard.py",
+        "timeout": 30
+      }
+    }
+  ]
+}

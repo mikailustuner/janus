@@ -19,6 +19,21 @@ found, what hooks blocked. Three to five lines per day.
 - CI (GitHub Actions) runs lint, type checks and tests, and fails if `.kiro/` is
   gitignored, a TİTCK list file is tracked, or a private planning document is tracked.
 
+### Agent hooks
+
+- Added hooks in `.kiro/hooks/`: `medical-language-guard`, `log-guard`, `license-guard`
+  (+ `-create`) and `translation-completeness` run shell commands (no credits);
+  `kiro-log` (PostTaskExec) and `kiro-log-stop` (Stop) are agent prompts that write this log.
+- Each guard was tested against a planted violation: the medical-language guard flagged
+  `"gereksiz ilaç"` and `"stop taking"` with path:line; log-guard flagged
+  `logger.info(..., ingredients)` and an `atc_code` in `extra`; license-guard flagged a
+  renamed CSV by its TİTCK column headers (BARKOD, ÜRÜN ADI, ETKİN MADDE, ATC KODU).
+- Testing the translation hook showed the key-parity test did not say which key was
+  missing; it now names missing and extra keys (`Home.status` in `de.json`).
+- The phrase scan of `apps/` is a vitest test (`source-scan.test.ts`), so CI enforces it too:
+  Node here is built without TypeScript stripping, so a standalone script couldn't reuse the
+  phrase list.
+
 ### Open items
 
 - **arm64 image build not verified.** Images currently build and run on amd64 only; base
@@ -26,3 +41,6 @@ found, what hooks blocked. Three to five lines per day.
   by decision). The Oracle Cloud shape (Ampere arm64 or x86) is decided at the end of
   Phase 3; if arm64 is chosen, verify with `docker buildx build --platform linux/arm64`
   before Phase 5.
+- **Hooks not yet seen firing in the IDE.** Hook files load at session start; the command
+  hooks were run by hand with a sample event, and the `kiro-log` prompt was followed by hand.
+  Confirm in the next session; watch `kiro-log-stop` for repeated no-op runs (credit cost).

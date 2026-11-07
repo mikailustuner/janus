@@ -32,7 +32,12 @@ describe.each(routing.locales)("messages/%s.json", (locale) => {
   const messages = flatten(load(locale));
 
   it("has exactly the same keys as the default locale", () => {
-    expect([...messages.keys()].sort()).toEqual([...reference.keys()].sort());
+    const missing = [...reference.keys()].filter((k) => !messages.has(k));
+    const extra = [...messages.keys()].filter((k) => !reference.has(k));
+    expect({ missing, extra }, `messages/${locale}.json`).toEqual({
+      missing: [],
+      extra: [],
+    });
   });
 
   it("has no empty strings", () => {

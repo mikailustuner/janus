@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Log guard (no health data in logs)",
+      "trigger": "PostFileSave",
+      "description": "Parses Python files under apps/api and flags logging calls that mention ingredients, product codes, ATC codes, events, dates or medical request bodies (privacy.md).",
+      "matcher": "/apps/api/.*\\.py$",
+      "action": {
+        "type": "command",
+        "command": "python3 .kiro/hooks/scripts/log-guard.py",
+        "timeout": 30
+      }
+    }
+  ]
+}

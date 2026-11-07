@@ -1,0 +1,14 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Kiro usage log (agent run done)",
+      "trigger": "Stop",
+      "description": "At the end of an agent run that changed files, appends 3–5 dated lines to docs/kiro-usage.md; skips no-op runs and its own updates.",
+      "action": {
+        "type": "agent",
+        "prompt": "The agent run just finished. Decide whether docs/kiro-usage.md needs an entry, and stop immediately if not.\nSKIP (reply only \"kiro-log: nothing to add\", make no edits) if ANY of these is true:\n- this run changed no files, or only changed docs/kiro-usage.md;\n- this run was itself a kiro-log update;\n- the work is already described in today's entry.\nOTHERWISE append to docs/kiro-usage.md under \"## YYYY-MM-DD — <short title>\" for today (reuse today's heading; never rewrite earlier entries) 3–5 bullet lines, plain English, past tense: what was built, and anything a spec, property test (counterexample) or hook (what it blocked or flagged) caught. Do not invent findings. Never include health data, secrets, or links to docs/internal/. Edit only docs/kiro-usage.md. Do not commit."
+      }
+    }
+  ]
+}

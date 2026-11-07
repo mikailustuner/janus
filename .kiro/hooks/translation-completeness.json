@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Translation completeness",
+      "trigger": "PostFileSave",
+      "description": "Runs the key-parity and empty-string tests across en/tr/de/fr/es message files; names missing or extra keys.",
+      "matcher": "/apps/web/messages/[^/]+\\.json$",
+      "action": {
+        "type": "command",
+        "command": "sh .kiro/hooks/scripts/vitest-guard.sh translation-completeness src/i18n/messages.test.ts -t \"same keys|no empty strings\"",
+        "timeout": 60
+      }
+    }
+  ]
+}

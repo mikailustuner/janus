@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Medical language guard",
+      "trigger": "PostFileSave",
+      "description": "Scans apps/ and apps/web/messages for the forbidden phrases of medical-safety.md (EN/TR/DE/FR/ES) using the vitest tests; reports path:line of each match.",
+      "matcher": "/apps/(web/(src|messages)|api/janus)/.*\\.(tsx?|jsx?|mjs|py|json|md|html)$",
+      "action": {
+        "type": "command",
+        "command": "sh .kiro/hooks/scripts/vitest-guard.sh medical-language-guard src/i18n/source-scan.test.ts src/i18n/messages.test.ts -t forbidden",
+        "timeout": 60
+      }
+    }
+  ]
+}

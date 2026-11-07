@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "License guard on new files in data/",
+      "trigger": "PostFileCreate",
+      "description": "Same check as license-guard, for files newly created in data/ (e.g. written by a pipeline or the agent).",
+      "matcher": "/data/",
+      "action": {
+        "type": "command",
+        "command": "python3 .kiro/hooks/scripts/license-guard.py",
+        "timeout": 30
+      }
+    }
+  ]
+}

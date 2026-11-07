@@ -1,0 +1,14 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Kiro usage log (spec task done)",
+      "trigger": "PostTaskExec",
+      "description": "After each spec task completes, appends 3–5 dated lines to docs/kiro-usage.md.",
+      "action": {
+        "type": "agent",
+        "prompt": "A spec task just finished. Append a short entry to docs/kiro-usage.md (raw material for the Kiroween write-up):\n- Under a heading \"## YYYY-MM-DD — <short title>\" for today's date (reuse today's heading if it exists; add bullets under it, never rewrite earlier entries).\n- 3–5 bullet lines, plain English, past tense: what was built (spec name + task), and anything a spec, property test (counterexample found), or hook (what it blocked or flagged) caught. Name files and test names; no filler.\n- If nothing was caught, say what was built only. Do not invent findings.\n- Never include health data, secrets, or links to docs/internal/. Follow medical-safety.md wording.\n- Edit only docs/kiro-usage.md. Do not commit."
+      }
+    }
+  ]
+}
