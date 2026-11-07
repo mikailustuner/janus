@@ -18,3 +18,11 @@ found, what hooks blocked. Three to five lines per day.
   moved the web port to 3100 (configurable) instead of stopping that service.
 - CI (GitHub Actions) runs lint, type checks and tests, and fails if `.kiro/` is
   gitignored, a TİTCK list file is tracked, or a private planning document is tracked.
+
+### Open items
+
+- **arm64 image build not verified.** Images currently build and run on amd64 only; base
+  images and lockfiles support arm64, but no arm64 build has run (no QEMU emulation set up,
+  by decision). The Oracle Cloud shape (Ampere arm64 or x86) is decided at the end of
+  Phase 3; if arm64 is chosen, verify with `docker buildx build --platform linux/arm64`
+  before Phase 5.
