@@ -12,6 +12,7 @@ from janus.resolution.load import Artifact, Inputs
 from janus.resolution.prepare import OPENFDA, TITCK, WIKIDATA
 from tests.resolution_strategies import ROUTES, RULES
 
+CADENCES = {TITCK: 7, OPENFDA: 7, WIKIDATA: 30}
 _META = {
     TITCK: ("titck-2", "TR", "2026-11-06", "Redistribution terms unclear"),
     OPENFDA: ("us_ndc-2", "US", "2026-11-06", "CC0 1.0 (public domain)"),
@@ -47,6 +48,7 @@ def inputs(tr: Sequence[Any], us: Sequence[Any], wd: Sequence[Any], run: str = "
         ROUTES,
         (),
         "test-code",
+        CADENCES,
     )
 
 

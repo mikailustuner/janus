@@ -220,3 +220,67 @@ def test_idempotent_with_same_responses() -> None:
     a = RetractionsJob().parse(_raw(resp, (WAKEFIELD,)))
     b = RetractionsJob().parse(_raw(resp, (WAKEFIELD,)))
     assert a.rows == b.rows
+
+
+# --- paper list as a second DOI input (evidence-integrity DP13, Req 1.2) ----------------------
+
+
+def _papers(tmp_path: Path, dois: list[str]) -> Path:
+    (tmp_path / "data").mkdir(exist_ok=True)
+    lines = ["key,doi,source_id,title,verified_on,note"]
+    lines += [f"k{i},{d},bmj_2026,T,2026-11-07," for i, d in enumerate(dois)]
+    (tmp_path / "data" / "evidence_papers.csv").write_text(
+        "\n".join(lines) + "\n", encoding="utf-8"
+    )
+    return tmp_path
+
+
+def _make_doi(n: int, s: str) -> str:
+    return f"10.{n}/{s}"
+
+
+_DOIS = st.builds(
+    _make_doi,
+    st.integers(1000, 99999999),
+    st.text(alphabet="abcdefghij0123456789.-", min_size=1, max_size=8),
+)
+
+
+@given(artifact=st.lists(_DOIS, max_size=6), papers=st.lists(_DOIS, max_size=6), data=st.data())
+def test_collected_dois_are_the_normalised_union(
+    artifact: list[str], papers: list[str], data: st.DataObject, tmp_path_factory: Any
+) -> None:
+    """Feature: evidence-integrity task 7 — Validates: Req 1.2 (data-pipelines 9.1).
+
+    The collected DOIs are the normalised union of artifact DOIs and paper-list DOIs, without
+    repeats, whatever the order and the case or prefix they were written with.
+    """
+    upper = data.draw(st.lists(st.booleans(), min_size=len(papers), max_size=len(papers)))
+    written = [
+        ("https://doi.org/" + p.upper()) if u else p for p, u in zip(papers, upper, strict=True)
+    ]
+    root = _papers(tmp_path_factory.mktemp("repo"), written)
+    read = RetractionsJob.paper_dois(root)
+    assert read == [p.lower() for p in papers]
+    merged = RetractionsJob.merge_dois(artifact, read)
+    keys = [normalise_doi(d) for d in merged]
+    assert len(keys) == len(set(keys))
+    assert set(keys) == {normalise_doi(d) for d in [*artifact, *papers]}
+    shuffled = data.draw(st.permutations(artifact))
+    again = RetractionsJob.merge_dois(shuffled, list(reversed(read)))
+    assert {normalise_doi(d) for d in again} == set(keys)
+
+
+def test_paper_list_edge_cases(tmp_path: Path) -> None:
+    import pytest
+
+    assert RetractionsJob.paper_dois(tmp_path) == []  # no file
+    _papers(tmp_path, [])
+    assert RetractionsJob.paper_dois(tmp_path) == []  # header only
+    _papers(tmp_path, ["10.1000/ok", "not a doi"])
+    with pytest.raises(ValueError, match="line 3: not a DOI") as exc:
+        RetractionsJob.paper_dois(tmp_path)
+    assert "not a doi" not in str(exc.value)
+    (tmp_path / "data" / "evidence_papers.csv").write_text("key,title\nk,t\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="no doi column"):
+        RetractionsJob.paper_dois(tmp_path)

@@ -348,7 +348,9 @@ def test_amlipin_end_to_end_service(database: Database, db_conn: psycopg.Connect
         [],
         WD,
     )
-    real = Inputs(base.artifacts, CombinationRules.load(), RouteMap.load(), (), "test")
+    real = Inputs(
+        base.artifacts, CombinationRules.load(), RouteMap.load(), (), "test", base.cadences
+    )
     load(database, real)
     res = _call(database, service.resolve_scan, "(01)08680199094206(17)280500", None, TODAY)
     (c,) = res.candidates
@@ -362,3 +364,39 @@ def test_amlipin_end_to_end_service(database: Database, db_conn: psycopg.Connect
     ]
     stale = _call(database, service.resolve_scan, "08680199094206", None, dt.date(2026, 12, 1))
     assert any(n.code == "source_may_be_outdated" for n in stale.notices)
+
+
+@pytest.mark.db
+def test_staleness_follows_the_shared_freshness_rule(
+    database: Database, db_conn: psycopg.Connection
+) -> None:
+    """DP17: stale after twice the cadence (14 days for weekly sources), from the stored cadence."""
+    from dataclasses import replace
+
+    reset(db_conn)
+    base = inputs([titck_row("8680199094206", "AMLIPIN", ["amlodipin besilat"], "C08CA01")], [], WD)
+    load(database, base)
+    # Snapshot of the synthetic TİTCK artifact is 2026-11-06; weekly cadence → limit 14 days.
+    fresh = _call(database, service.resolve_scan, "08680199094206", None, dt.date(2026, 11, 20))
+    assert not any(n.code == "source_may_be_outdated" for n in fresh.notices)
+    stale = _call(database, service.resolve_scan, "08680199094206", None, dt.date(2026, 11, 21))
+    assert [n.source_id for n in stale.notices if n.code == "source_may_be_outdated"] == ["titck"]
+    # A longer cadence moves the limit; the cadence is part of the dataset version.
+    slower = replace(base, cadences={**base.cadences, "titck": 30})
+    assert slower.dataset_version() != base.dataset_version()
+    load(database, slower)
+    later = _call(database, service.resolve_scan, "08680199094206", None, dt.date(2026, 11, 21))
+    assert not any(n.code == "source_may_be_outdated" for n in later.notices)
+    # A dataset without a stored cadence cannot be judged: the notice is shown.
+    unknown = replace(base, cadences={"titck": None, "openfda_ndc": 7, "wikidata": 30})
+    load(database, unknown)
+    res = _call(database, service.resolve_scan, "08680199094206", None, dt.date(2026, 11, 7))
+    assert any(n.code == "source_may_be_outdated" for n in res.notices)
+
+
+def test_no_hard_coded_staleness_constant_remains() -> None:
+    from pathlib import Path
+
+    root = Path(service.__file__).parent
+    for path in root.glob("*.py"):
+        assert "STALE_AFTER" not in path.read_text(encoding="utf-8"), path.name

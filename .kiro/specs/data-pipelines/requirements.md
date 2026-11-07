@@ -136,7 +136,7 @@ Every external source enters Janus through a pipeline that records its version, 
 **User story:** As evidence integrity, I need the retraction status of every DOI Janus cites, refreshed weekly.
 
 #### Acceptance criteria
-1. WHEN run THE pipeline SHALL collect every DOI from the evidence records available (in Phase 1: the evidence records emitted by pipelines) and normalise each DOI (lower case, without `https://doi.org/` or `doi:` prefix).
+1. WHEN run THE pipeline SHALL collect every DOI from the evidence records available (in Phase 1: the evidence records emitted by pipelines, and the DOIs of the curated paper list `data/evidence_papers.csv`; *added 2026-11-07, `evidence-integrity` DP13*) and normalise each DOI (lower case, without `https://doi.org/` or `doi:` prefix); a DOI present in both is checked once.
 2. FOR each DOI THE pipeline SHALL query the Crossref REST API and derive a status from the work's update notices (`updated-by`): `retracted`, `expression_of_concern`, `corrected` or `ok`.
 3. WHEN a work has several notices THE pipeline SHALL use the most severe one (retracted > expression_of_concern > corrected), whatever their order.
 4. IF a DOI is not found or the check cannot be completed THEN THE pipeline SHALL record `unknown` for that check; it SHALL NOT record `ok`.

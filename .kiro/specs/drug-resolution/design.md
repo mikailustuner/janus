@@ -260,8 +260,10 @@ of file row order. Nothing is deduplicated: two rows with the same barcode are t
 - No `res_current` row, or a needed source missing from the current dataset → 503
   `{"error": "resolution_unavailable"}`. Only with the sources loaded can the result be an empty
   candidate list (HTTP 200, "not found", with `regions_searched` and `sources`).
-- `source_may_be_outdated` notice when `today − snapshot_date > 14 days` for `titck` or
-  `openfda_ndc` (DP18). The request path makes no external calls (DP6).
+- `source_may_be_outdated` notice for `titck` or `openfda_ndc` when `today − snapshot_date >
+  2 × cadence_days` (the shared freshness rule, `integrity.freshness`; 14 days for the weekly
+  sources). The loader stores the cadence from `pipelines/sources.toml` with each source version
+  (`res_source_version.cadence_days`, migration `0003`); a missing cadence gives the notice (DP18). The request path makes no external calls (DP6).
 
 ### 4.8 Privacy on the request path (Req 8)
 - Routes come from `medical_router()`; the database is used through `read_only_tx()`, extended
@@ -518,7 +520,7 @@ owner's DP20 decision.
 | DP15 | Loader in `apps/api` (`python -m janus.resolution.load`), reading Parquet with DuckDB; canonical hash re-implemented with a shared golden vector. **Confirmed by the owner.** | Loader in `pipelines/` with psycopg; `pyarrow`. | DuckDB is already in the stack (FAERS); the loader needs the API's models and migrations. |
 | DP16 | One write transaction per load plus a `res_current` pointer; previous dataset kept for `--activate`; request reads in `REPEATABLE READ, READ ONLY`; `write_tx` allowed in `resolution/load.py`. | Table swap by rename; materialised views. | PostgreSQL atomicity gives P23 without custom code; ~1 M rows is a small transaction. |
 | DP17 | Dataset version = hash of source content hashes, rule version, curated-file hashes and prepare code version. | Timestamp. | Same inputs → same version (P8); any rule change is visible. |
-| DP18 | Staleness notice when TİTCK or openFDA data is older than 14 days (weekly cadence + one week). **Confirmed by the owner.** | No notice; 7 days. | The weekly schedule only starts in Phase 5; users should see the list date. |
+| DP18 | Staleness notice when TİTCK or openFDA data is older than twice its cadence (14 days for the weekly sources). **Confirmed by the owner.** *(2026-11-07, owner decision `evidence-integrity` DP17: the rule is the shared freshness rule and the cadence comes from `pipelines/sources.toml`; no constant in `resolution/`.)* | No notice; 7 days. | The weekly schedule only starts in Phase 5; users should see the list date. |
 | DP19 | **Owner decision:** the serial identifies a single box and must not leave the device. The client sends only AI (01) and (17) (`experience`); the API parser still drops serial and lot if they arrive (defence in depth) and never logs or returns them. | API-only stripping (proposed). | Data minimisation at the source; the server-side drop keeps old or third-party clients safe. |
 | DP20 | **Owner decision:** add `route` and `dosage_form` to `us_ndc` (`us_ndc-2`) and a small reviewed route → ATC-group map (§5.5); selection `route_group`; no allowed code → `unmapped/no_ingredient_atc_for_route`, never a fallback to another route's codes; route missing or unknown → `all_codes`. | No route context in Phase 1 (proposed default). | A US betamethasone cream must not carry the systemic `H02AB01` into the cascade engine. |
 | DP21 | TİTCK test data is synthetic; small CC0 openFDA/Wikidata fixtures may be committed; real-artifact tests are local only. | Commit a TİTCK sample. | Licence (data-pipelines DP12). |

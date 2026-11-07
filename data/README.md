@@ -22,3 +22,11 @@ fetched at runtime and must not be committed; CI fails if one is tracked.
   with the combination rules.
 - `ingredient_synonyms.csv`: published ingredient name → Wikidata item, for frequent names the
   matching ladder cannot map (`drug-resolution` DP5). Each row names the evidence it rests on.
+
+## Curated evidence files (Janus, Apache-2.0)
+- `evidence_papers.csv`: papers that Janus cites as evidence (`evidence-integrity` design §3.1,
+  DP13). Columns: `key` (id part: the evidence id is `paper:<source_id>:<key>`), `doi`,
+  `source_id` (an id in `pipelines/sources.toml`, which supplies licence and region),
+  `title`, `verified_on` (the day the bibliographic record was checked, `YYYY-MM-DD`), `note`.
+  The `retractions` pipeline checks every DOI listed here, and the integrity loader creates the
+  evidence records. It is empty until `cascade-engine` adds the papers its rules cite.

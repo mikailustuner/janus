@@ -22,6 +22,7 @@ class SourceVersionRow:
     run_id: str
     region: str | None
     snapshot_date: str
+    cadence_days: int | None = None
 
 
 @dataclass(frozen=True)
@@ -36,11 +37,11 @@ def current(conn: psycopg.Connection) -> Current | None:
         return None
     dataset = str(row[0])
     rows = conn.execute(
-        "SELECT source_id, run_id, region, snapshot_date FROM res_source_version "
+        "SELECT source_id, run_id, region, snapshot_date, cadence_days FROM res_source_version "
         "WHERE dataset_id = %s ORDER BY source_id",
         (dataset,),
     ).fetchall()
-    return Current(dataset, {r[0]: SourceVersionRow(r[0], r[1], r[2], r[3]) for r in rows})
+    return Current(dataset, {r[0]: SourceVersionRow(r[0], r[1], r[2], r[3], r[4]) for r in rows})
 
 
 def refs_by_codes(

@@ -14,6 +14,7 @@ from typing import Any, cast
 
 import psycopg
 
+from janus.integrity.freshness import is_stale, parse_snapshot_date
 from janus.regions.base import ProductKey, Region, RegionAdapter, gs1_prefix_region
 from janus.regions.tr.adapter import TitckAdapter
 from janus.regions.us.adapter import OpenFdaNdcAdapter
@@ -36,7 +37,7 @@ from janus.resolution.ndc import parse_ndc_input
 
 ADAPTERS: tuple[RegionAdapter, ...] = (TitckAdapter(), OpenFdaNdcAdapter())
 WIKIDATA = "wikidata"
-STALE_AFTER = dt.timedelta(days=14)  # DP18: weekly cadence + one week
+# Staleness follows the shared freshness rule (twice the cadence, evidence-integrity DP17).
 STALENESS_SOURCES = ("titck", "openfda_ndc")
 REGION_SOURCES: dict[Region, str] = {"TR": "titck", "US": "openfda_ndc"}
 NOT_YET: tuple[str, ...] = ("FR", "ES", "DE")  # Phase 2 adapters (eu_fr, eu_es, eu_name)
@@ -220,8 +221,10 @@ def _notices(
     out: list[Notice] = []
     for s in sources:
         if s in STALENESS_SOURCES:
-            snap = dt.date.fromisoformat(b.cur.sources[s].snapshot_date[:10])
-            if today - snap > STALE_AFTER:
+            row = b.cur.sources[s]
+            snap = parse_snapshot_date(row.snapshot_date)
+            # A missing cadence cannot be judged, so the notice is shown.
+            if row.cadence_days is None or is_stale(snap, today, row.cadence_days):
                 out.append(
                     Notice(code="source_may_be_outdated", source_id=s, date=snap.isoformat())
                 )

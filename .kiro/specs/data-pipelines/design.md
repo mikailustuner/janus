@@ -251,7 +251,9 @@ NOTICE must keep every entry of the current hand-written file.
 
 ### 5.5 `retractions` (Req 9)
 - Input DOIs: the `doi` field of every current `evidence_source.json` (Phase 1: the PIPC
-  paper), normalised by `normalise_doi`: trim, strip `https://doi.org/`, `http://dx.doi.org/`,
+  paper) and the `doi` column of `data/evidence_papers.csv` (curated papers cited by rules;
+  `evidence-integrity` DP13; a missing file is an empty list, a row that is not a DOI fails the
+  run), one entry per normalised DOI, normalised by `normalise_doi`: trim, strip `https://doi.org/`, `http://dx.doi.org/`,
   `doi:` (case-insensitive), lower case.
 - Per DOI: `GET https://api.crossref.org/works/{doi}`. `status_from_notices(updated_by)` maps
   `retraction`/`withdrawal` → `retracted`, `expression_of_concern` → `expression_of_concern`,

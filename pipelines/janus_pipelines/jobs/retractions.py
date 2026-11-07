@@ -3,6 +3,7 @@ Req 9). Includes Retraction Watch data (Crossref `updated-by[].source`)."""
 
 from __future__ import annotations
 
+import csv
 import json
 import re
 from collections.abc import Iterable, Mapping, Sequence
@@ -201,6 +202,43 @@ class RetractionsJob(Job[Payload]):
         return dois
 
     @staticmethod
+    def paper_dois(repo_root: Path) -> list[str]:
+        """DOIs of the curated paper list `data/evidence_papers.csv` (evidence-integrity DP13).
+
+        A missing file is an empty list. A row whose DOI is not a DOI fails the run; the error
+        names the row number, not the value.
+        """
+        path = repo_root / "data" / "evidence_papers.csv"
+        if not path.is_file():
+            return []
+        out: list[str] = []
+        with path.open(encoding="utf-8", newline="") as f:
+            reader = csv.DictReader(f)
+            if reader.fieldnames is None or "doi" not in reader.fieldnames:
+                raise ValueError("evidence_papers.csv: header has no doi column")
+            for n, row in enumerate(reader, start=2):
+                value = (row.get("doi") or "").strip()
+                if not value:
+                    continue
+                doi = normalise_doi(value)
+                if doi is None:
+                    raise ValueError(f"evidence_papers.csv: line {n}: not a DOI")
+                out.append(doi)
+        return out
+
+    @staticmethod
+    def merge_dois(artifact: Sequence[str], papers: Sequence[str]) -> list[str]:
+        """Artifact DOIs then paper-list DOIs, one entry per normalised DOI (first one wins)."""
+        seen: set[str] = set()
+        out: list[str] = []
+        for value in [*artifact, *papers]:
+            key = normalise_doi(value) or value
+            if key not in seen:
+                seen.add(key)
+                out.append(value)
+        return out
+
+    @staticmethod
     def previous_statuses(data_dir: Path) -> dict[str, Previous]:
         store = Store(data_dir, "retractions")
         run_id = store.current_run_id()
@@ -220,7 +258,9 @@ class RetractionsJob(Job[Payload]):
         fetcher = make_fetcher(require_contact=False)
         params = mailto_params(fetcher.contact)
         retrieved = ctx.now()
-        dois = tuple(self.collect_dois(ctx.data_dir))
+        dois = tuple(
+            self.merge_dois(self.collect_dois(ctx.data_dir), self.paper_dois(ctx.repo_root))
+        )
         responses: dict[str, Response] = {}
         for doi in sorted({d for d in (normalise_doi(x) for x in dois) if d}):
             try:

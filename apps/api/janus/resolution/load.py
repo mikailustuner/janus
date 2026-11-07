@@ -17,7 +17,7 @@ import hashlib
 import json
 import sys
 from collections.abc import Callable, Iterable, Mapping, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, cast
 
@@ -25,6 +25,7 @@ import duckdb
 import psycopg
 
 from janus.db.pool import Database
+from janus.integrity.registry import read_sources
 from janus.observability.logging import LogEvent, configure_logging, log_event
 from janus.resolution import atc, canonical, matching, names, ndc, prepare
 from janus.resolution.atc import DATA_DIR, CombinationRules, RouteMap
@@ -38,6 +39,7 @@ SCHEMAS: dict[str, frozenset[str]] = {
     WIKIDATA: frozenset({"wikidata_ingredients-1"}),
 }
 SYNONYMS_FILE = DATA_DIR / "ingredient_synonyms.csv"
+REGISTRY_FILE = DATA_DIR.parent / "pipelines" / "sources.toml"
 _CODE_MODULES = (atc, canonical, matching, names, ndc, prepare)
 
 type Hook = Callable[[str], None]
@@ -111,6 +113,8 @@ class Inputs:
     route_map: RouteMap
     synonyms: tuple[tuple[str, str], ...]
     code: str
+    # source id -> cadence_days from pipelines/sources.toml (freshness rule, DP17)
+    cadences: Mapping[str, int | None] = field(default_factory=dict[str, int | None])
 
     def describe(self) -> dict[str, Any]:
         syn = hashlib.sha256(json.dumps(self.synonyms, ensure_ascii=False).encode()).hexdigest()
@@ -127,6 +131,7 @@ class Inputs:
             "route_map": self.route_map.version,
             "synonyms": syn,
             "name_rules": names.RULES_VERSION,
+            "cadences": dict(sorted(self.cadences.items())),
             "code": self.code,
         }
 
@@ -143,14 +148,21 @@ def gather(
     rules: CombinationRules | None = None,
     route_map: RouteMap | None = None,
     synonyms: tuple[tuple[str, str], ...] | None = None,
+    registry: Path = REGISTRY_FILE,
 ) -> Inputs:
     artifacts = {s: read_artifact(data_dir, s) for s in PIPELINES}
+    try:
+        sources = read_sources(registry)
+    except (OSError, ValueError) as exc:
+        raise LoadError("source registry (pipelines/sources.toml) cannot be read") from exc
+    cadences = {s: sources[s].cadence_days if s in sources else None for s in PIPELINES}
     return Inputs(
         artifacts,
         rules or CombinationRules.load(),
         route_map or RouteMap.load(),
         read_synonyms() if synonyms is None else synonyms,
         code_version(),
+        cadences,
     )
 
 
@@ -209,7 +221,7 @@ def write_dataset(
         (
             "dataset_id", "source_id", "run_id", "region", "snapshot_date",
             "snapshot_is_retrieval_time", "content_sha256", "schema_version", "license",
-            "source_url",
+            "source_url", "cadence_days",
         ),
         (
             (
@@ -219,6 +231,7 @@ def write_dataset(
                 a.manifest["content_sha256"], a.manifest["schema_version"],
                 a.evidence.get("license") or a.manifest.get("license"),
                 a.evidence.get("source_url") or "",
+                inputs.cadences.get(s),
             )
             for s, a in sorted(inputs.artifacts.items())
         ),
