@@ -5,11 +5,14 @@
 from __future__ import annotations
 
 import csv
+import datetime as dt
 import io
 import json
 import os
-from collections.abc import Sequence, Set
+import re
+from collections.abc import Mapping, Sequence, Set
 from dataclasses import dataclass, field, replace
+from pathlib import Path
 from typing import Any
 
 from hypothesis import strategies as st
@@ -19,8 +22,13 @@ from janus.cascades.model import (
     PIPC_SCHEMA_VERSION,
     REQUIRED_ABRUPT_GROUPS,
     AtcClass,
+    EngineIngredient,
+    EngineItem,
     MatchKind,
     Pattern,
+    Priority,
+    Rule,
+    RuleBase,
     Scope,
 )
 from janus.cascades.rulebase import (
@@ -31,6 +39,14 @@ from janus.cascades.rulebase import (
     PRIORITY_HEADER,
     RULES_HEADER,
     RuleBaseInputs,
+)
+from janus.integrity.model import (
+    EvidenceRecord,
+    IntegritySnapshot,
+    IntegrityState,
+    Notice,
+    SourceInfo,
+    Status,
 )
 from janus.resolution.canonical import content_hash
 
@@ -273,3 +289,150 @@ def file_sets(draw: st.DrawFn) -> FileSet:
 
 
 ABRUPT_PATTERNS = ["N01A", "N02A", "N03A", "R01A", "R02A", "R03A"]
+
+
+# --- Engine: synthetic rule bases, items and snapshots ----------------------------------------
+
+QIDS = ["Q101", "Q102", "Q103", "Q104", "Q105", "Q106"]
+MONTH0 = 2020 * 12
+PIPC_DOI = "10.1007/s41999-025-01215-x"
+
+
+@st.composite
+def rule_bases(draw: st.DrawFn, max_rules: int = 6) -> RuleBase:
+    """Small rule bases over the ANR alphabet; only class c0 may carry a form extension."""
+    n = draw(st.integers(2, 4))
+    classes = {f"c{i}": draw(atc_classes(f"c{i}", extensions=(i == 0))) for i in range(n)}
+    marker_ids = [cid for cid, c in classes.items() if not c.extension_ids]
+    rules: list[Rule] = []
+    for pos in range(1, draw(st.integers(1, max_rules)) + 1):
+        unmatch = draw(st.integers(0, 9)) == 0
+        rules.append(
+            Rule(
+                position=pos,
+                system="s",
+                kind="drug_class",
+                drug_a=f"a{pos}",
+                adverse_event=f"e{pos}",
+                drug_b=f"b{pos}",
+                locator=f"Table 1, row {pos}",
+                index_class=draw(st.sampled_from(sorted(classes))),
+                marker_class=None if unmatch else draw(st.sampled_from(marker_ids)),
+                unmatchable=("marker", "no_atc_code") if unmatch else None,
+                supporting=(SUPPORT_ID,) if draw(st.booleans()) else (),
+                priority=Priority(PRIORITY_ID, "incidence", "10.9", "10.7", "11.0", "percent", "x")
+                if draw(st.booleans())
+                else None,
+            )
+        )
+    abrupt = draw(atc_classes("abrupt_stop", extensions=False))
+    return RuleBase(
+        window_months=draw(st.integers(1, 24)),
+        rules=tuple(rules),
+        classes=classes,
+        abrupt_stop=abrupt,
+        abrupt_groups=(),
+        version="test",
+    )
+
+
+def months() -> st.SearchStrategy[int | None]:
+    return st.one_of(st.none(), st.integers(MONTH0, MONTH0 + 40))
+
+
+@st.composite
+def engine_ingredients(draw: st.DrawFn, keys: Sequence[str] = QIDS) -> EngineIngredient:
+    return EngineIngredient(
+        key=draw(st.sampled_from(keys)),
+        codes=frozenset(draw(st.lists(ingredient_codes(), min_size=1, max_size=3))),
+        form_confirmed=draw(st.booleans()),
+        label_en=None,
+    )
+
+
+@st.composite
+def engine_items(draw: st.DrawFn, max_items: int = 6) -> list[EngineItem]:
+    n = draw(st.integers(0, max_items))
+    out: list[EngineItem] = []
+    for i in range(n):
+        ings = draw(st.lists(engine_ingredients(), min_size=1, max_size=2))
+        # one item carries each key at most once (a product lists an ingredient once)
+        seen: dict[str, EngineIngredient] = {}
+        for ing in ings:
+            seen.setdefault(ing.key, ing)
+        out.append(EngineItem(i, draw(months()), tuple(seen.values())))
+    return out
+
+
+def _record(rid: str, kind: str, doi: str | None, basis: tuple[str, ...] = ()) -> EvidenceRecord:
+    return EvidenceRecord(
+        id=rid,
+        kind=kind,
+        source_id="s_cited",
+        source_url="https://doi.org/10.1000/x" if doi is None else f"https://doi.org/{doi}",
+        license="CC BY 4.0",
+        region=None,
+        snapshot_date=dt.date(2025, 7, 31),
+        snapshot_is_retrieval_time=False,
+        doi=doi,
+        locator=None,
+        title=None,
+        basis=basis,
+    )
+
+
+def _state(status: Status) -> IntegrityState:
+    notices: tuple[Notice, ...] = ()
+    if status in (Status.CORRECTED, Status.RETRACTED, Status.EXPRESSION_OF_CONCERN):
+        kind = {
+            Status.CORRECTED: "correction",
+            Status.RETRACTED: "retraction",
+            Status.EXPRESSION_OF_CONCERN: "expression_of_concern",
+        }[status]
+        notices = (Notice(kind, "publisher", "10.1000/notice", dt.date(2025, 12, 18)),)
+    if status == Status.UNKNOWN:
+        return IntegrityState(status, status, "check_failed", dt.date(2026, 11, 7), "r", ())
+    return IntegrityState(status, status, None, dt.date(2026, 11, 7), "r", notices)
+
+
+def doi_ids(rb: RuleBase) -> list[str]:
+    """Every DOI-bearing evidence id a rule base cites (the PIPC paper and the papers)."""
+    ids = {rb.source_paper_id, rb.window_evidence_id, PRIORITY_ID, SUPPORT_ID, *EXTENSION_IDS}
+    for r in rb.rules:
+        ids.update(r.supporting)
+        if r.priority is not None:
+            ids.add(r.priority.evidence_id)
+    for c in rb.classes.values():
+        ids.update(c.extension_ids)
+    return sorted(ids)
+
+
+def cascade_snapshot(
+    rb: RuleBase, statuses: Mapping[str, Status] | None = None
+) -> IntegritySnapshot:
+    """Evidence for a rule base: the PIPC paper, rule records resting on it, and the papers."""
+    statuses = statuses or {}
+    records: dict[str, EvidenceRecord] = {}
+    states: dict[str, IntegrityState] = {}
+    for i, rid in enumerate(doi_ids(rb)):
+        kind = "dataset" if rid == rb.source_paper_id else "paper"
+        records[rid] = _record(rid, kind, f"10.1000/p{i}")
+        states[rid] = _state(statuses.get(rid, Status.OK))
+    for r in rb.rules:
+        records[r.evidence_id] = _record(r.evidence_id, "rule", None, (rb.source_paper_id,))
+    sources = {"s_cited": SourceInfo("s_cited", "Cited", "cited_only", None)}
+    return IntegritySnapshot(records, states, sources)
+
+
+TODAY = dt.date(2026, 11, 7)
+
+
+def forbidden_phrases() -> list[str]:
+    """The phrase list of medical-safety.md rule 2, read from the client's shared list."""
+    path = Path(__file__).resolve().parents[2] / "web" / "src" / "i18n" / "forbidden-phrases.ts"
+    text = path.read_text(encoding="utf-8")
+    body = text[text.index("forbiddenPhrases") : text.index("} as const")]
+    return [p.lower() for p in re.findall(r'"([^"]+)"', body)]
+
+
+REASSURANCE = ["safe", "no problems", "all clear"]

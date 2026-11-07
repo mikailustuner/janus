@@ -129,3 +129,176 @@ class RuleBase:
     source_paper_id: str = SOURCE_PAPER_ID
     window_evidence_id: str = WINDOW_EVIDENCE_ID
     engine_version: str = ENGINE_RULES_VERSION
+
+
+# --- Engine input and result (design §4) ---------------------------------------------------
+
+Month = int  # year * 12 + (month - 1)
+Status = Literal["probable", "possible"]
+Timing = Literal["within_window", "date_unknown", "same_month", "after_window"]
+TIMING_ORDER: tuple[Timing, ...] = ("within_window", "date_unknown", "same_month", "after_window")
+NotCheckedReason = Literal[
+    "ambiguous",
+    "no_ingredient_key",
+    "possible_unsplit_combination",
+    "no_ingredient_atc",
+    "no_ingredient_atc_for_route",
+]
+StatementCode = Literal["no_pattern_found", "rule_base_unavailable"]
+
+NO_PATTERN_TEXT = (
+    "Janus found no pattern from its rule list. "
+    "This does not mean your medicines are free of problems."
+)
+RULE_BASE_UNAVAILABLE_TEXT = "Janus could not check its rule list."
+ABRUPT_STOP_CODE = "do_not_stop_suddenly"
+ABRUPT_STOP_TEXT = "Do not stop this medicine suddenly."
+PATTERN_CODE = "matches_published_pattern"
+CHAINS_TRUNCATED = "chains_truncated"
+
+
+@dataclass(frozen=True)
+class EngineIngredient:
+    key: str  # Wikidata QID
+    codes: frozenset[str]  # ingredient-level ATC codes (rule input)
+    form_confirmed: bool
+    label_en: str | None = None
+
+
+@dataclass(frozen=True)
+class EngineItem:
+    index: int  # position in the request
+    start: Month | None
+    ingredients: tuple[EngineIngredient, ...]
+
+
+@dataclass(frozen=True)
+class NotChecked:
+    item: int
+    position: int
+    reason: NotCheckedReason
+
+
+@dataclass(frozen=True)
+class Exposure:
+    """One ingredient key's copies that match one class (design §4.3)."""
+
+    key: str
+    items: frozenset[int]
+    start: Month | None
+    form_confirmed: bool
+    via_extension: bool
+    matched_codes: tuple[str, ...]
+    label_en: str | None
+
+
+@dataclass(frozen=True)
+class TimingResult:
+    status: Status
+    timing: Timing
+    months_between: int | None
+    low_priority: bool
+
+
+@dataclass(frozen=True)
+class Side:
+    key: str
+    label_en: str | None
+    items: tuple[int, ...]
+    matched_codes: tuple[str, ...]
+    form_confirmed: bool
+    via_form_extension: bool
+    start: Month | None
+
+
+@dataclass(frozen=True)
+class Finding:
+    finding_id: str
+    rule: Rule
+    index: Side
+    marker: Side
+    status: Status
+    timing: Timing
+    months_between: int | None
+    low_priority: bool
+    form_confirmed: bool
+    via_form_extension: bool
+    priority: Priority | None
+    abrupt_stop: tuple[Role, ...]
+    evidence_ids: tuple[str, ...]
+    excluded_evidence: tuple[tuple[str, str], ...]
+    integrity_codes: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class ChainLink:
+    index_key: str
+    marker_key: str
+    finding_ids: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class Chain:
+    chain_id: str
+    ingredient_keys: tuple[str, ...]
+    links: tuple[ChainLink, ...]
+    status: Status
+
+
+@dataclass(frozen=True)
+class SameProduct:
+    rule_id: str
+    index_key: str
+    marker_key: str
+    items: tuple[int, ...]
+
+
+@dataclass(frozen=True)
+class ItemWarning:
+    item: int
+    ingredient_key: str
+    code: str = ABRUPT_STOP_CODE
+    text: str = ABRUPT_STOP_TEXT
+
+
+@dataclass(frozen=True)
+class RemovedSource:
+    id: str
+    reason: str
+    notice_types: tuple[str, ...]
+    notice_dois: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class DisabledRule:
+    rule_id: str
+    reason: str
+    removed: tuple[RemovedSource, ...]
+
+
+@dataclass(frozen=True)
+class NotMatchable:
+    rule_id: str
+    role: str
+    reason: str
+
+
+@dataclass(frozen=True)
+class Statement:
+    code: StatementCode
+    text: str
+
+
+@dataclass(frozen=True)
+class EngineResult:
+    findings: tuple[Finding, ...]
+    chains: tuple[Chain, ...]
+    same_product: tuple[SameProduct, ...]
+    item_warnings: tuple[ItemWarning, ...]
+    not_checked: tuple[NotChecked, ...]
+    rules_total: int
+    rules_checked: int
+    disabled: tuple[DisabledRule, ...]
+    not_matchable: tuple[NotMatchable, ...]
+    statement: Statement | None
+    notices: tuple[str, ...]

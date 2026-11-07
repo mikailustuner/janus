@@ -76,39 +76,39 @@
     `requirements.md`; apply the requested changes to the curated files and re-run the validator.
   - _Requirements: 5.1_
 
-- [ ] 6. Engine core (`timing.py`, `exposure.py`, `chains.py`, `engine.py`, pure)
+- [x] 6. Engine core (`timing.py`, `exposure.py`, `chains.py`, `engine.py`, pure)
   - `parse_month`, `classify` (design §4.2); `exposures` with the merge rule (DP10);
     `evaluate` with the input guard, pair rules, `same_product` (DP11), abrupt-stop flags,
     statements and sorting (§4.4, §4.6); `chains` with the bounds (§4.5). Integrity is passed in
     as a snapshot; task 7 adds its use.
-  - [ ] 6.1 Property test P1: order independence. _Requirements: 2.1, 9.6_
-  - [ ] 6.2 Property test P2: monotonicity (unmatched items change nothing; a new key never changes existing findings). _Requirements: 2.1_
-  - [ ] 6.3 Property test P3: temporal soundness. _Requirements: 2.4_
-  - [ ] 6.4 Property test P4: date refinement. _Requirements: 2.2–2.5_
-  - [ ] 6.5 Property test P5: duplicate invariance. _Requirements: 2.1_
-  - [ ] 6.6 Property test P6 (pure part): region invariance over TR-, US- and EU-shaped inputs. _Requirements: 7.1_
-  - [ ] 6.7 Property test P9: malformed and combination codes are refused. _Requirements: 1.3_
-  - [ ] 6.8 Property test P10: no self-pairs; `same_product` pairs give no finding; matched codes match the classes. _Requirements: 2.1_
-  - [ ] 6.9 Property test P11: timing table and boundaries. _Requirements: 2.2–2.5_
-  - [ ] 6.10 Property test P12: chains equal the reference; weakest-link status; bounds give `chains_truncated`. _Requirements: 2.6_
-  - [ ] 6.11 Property test P14: abrupt-stop flags on findings and on every item. _Requirements: 4.1_
-  - [ ] 6.12 Property test P15: statements; disclaimer; `matches_published_pattern`; no forbidden phrase or reassurance word in any language. _Requirements: 4.2, 4.3_
-  - [ ] 6.13 Property test P16: not-checked ingredients reported and inert; form labels and sort order. _Requirements: 2.10, 7.2, 7.3_
-  - [ ] 6.14 Example tests: amlodipine + hydrochlorothiazide in one product gives `same_product` for row 5; a 15-item list evaluates in under one second. _Requirements: 2.1, 9.7_
+  - [x] 6.1 Property test P1: order independence. _Requirements: 2.1, 9.6_
+  - [x] 6.2 Property test P2: monotonicity (unmatched items change nothing; a new key never changes existing findings). _Requirements: 2.1_
+  - [x] 6.3 Property test P3: temporal soundness. _Requirements: 2.4_
+  - [x] 6.4 Property test P4: date refinement. _Requirements: 2.2–2.5_
+  - [x] 6.5 Property test P5: duplicate invariance. _Requirements: 2.1_
+  - [x] 6.6 Property test P6 (pure part): region invariance over TR-, US- and EU-shaped inputs. _Requirements: 7.1_
+  - [x] 6.7 Property test P9: malformed and combination codes are refused. _Requirements: 1.3_
+  - [x] 6.8 Property test P10: no self-pairs; `same_product` pairs give no finding; matched codes match the classes. _Requirements: 2.1_
+  - [x] 6.9 Property test P11: timing table and boundaries. _Requirements: 2.2–2.5_
+  - [x] 6.10 Property test P12: chains equal the reference; weakest-link status; bounds give `chains_truncated`. _Requirements: 2.6_
+  - [x] 6.11 Property test P14: abrupt-stop flags on findings and on every item. _Requirements: 4.1_
+  - [x] 6.12 Property test P15: statements; disclaimer; `matches_published_pattern`; no forbidden phrase or reassurance word in any language. _Requirements: 4.2, 4.3_
+  - [x] 6.13 Property test P16: not-checked ingredients reported and inert; form labels and sort order. _Requirements: 2.10, 7.2, 7.3_
+  - [x] 6.14 Example tests: amlodipine + hydrochlorothiazide in one product gives `same_product` for row 5; a 15-item list evaluates in under one second. _Requirements: 2.1, 9.7_
 
-- [ ] 7. Evidence in the engine (`engine.py`)
+- [x] 7. Evidence in the engine (`engine.py`)
   - Rule gate per rule, disabled-rule report, `cite` of finding ids, priority gated by the BMJ
     paper, extensions gated by their papers, `probable` gated by the window paper,
     `integrity_codes` from `build_item` (design §4.4, DP5, DP16).
-  - [ ] 7.1 Property test P7: evidence completeness. _Requirements: 1.5, 2.7_
-  - [ ] 7.2 Property test P13: disabled rules yield nothing; retraction only removes findings, priority, extensions and `probable`; restoring restores. _Requirements: 1.5, 2.2, 6.1, 7.4_
-  - [ ] 7.3 Example tests: the PIPC correction gives `corrected_notice` on every finding; BMJ data on rows 9, 25, 26, 47, 60, 65 only; timolol eye drops (`S01ED01`) plus a later antidepressant give row 3 with `via_form_extension` and the Vander Zanden id, and never act as the row 17 marker; prednisolone eye drops (`S01BA04`) never trigger rows 59–61. _Requirements: 1.5, 6.1, 7.4_
+  - [x] 7.1 Property test P7: evidence completeness. _Requirements: 1.5, 2.7_
+  - [x] 7.2 Property test P13: disabled rules yield nothing; retraction only removes findings, priority, extensions and `probable`; restoring restores. _Requirements: 1.5, 2.2, 6.1, 7.4_
+  - [x] 7.3 Example tests: the PIPC correction gives `corrected_notice` on every finding; BMJ data on rows 9, 25, 26, 47, 60, 65 only; timolol eye drops (`S01ED01`) plus a later antidepressant give row 3 with `via_form_extension` and the Vander Zanden id, and never act as the row 17 marker; prednisolone eye drops (`S01BA04`) never trigger rows 59–61. _Requirements: 1.5, 6.1, 7.4_
 
-- [ ] 8. Every rule against the real curated files (`test_cascades_rules_properties.py`)
-  - [ ] 8.1 Property test P18: each matchable rule fires on codes inside its classes within the window and not outside them; not-matchable rules never fire and are listed. _Requirements: 5.2, 10.4_
-  - [ ] 8.2 Example test: a table over all 65 rules with one positive and one negative example each (generated deterministically from the class patterns). _Requirements: 10.4_
+- [x] 8. Every rule against the real curated files (`test_cascades_rules_properties.py`)
+  - [x] 8.1 Property test P18: each matchable rule fires on codes inside its classes within the window and not outside them; not-matchable rules never fire and are listed. _Requirements: 5.2, 10.4_
+  - [x] 8.2 Example test: a table over all 65 rules with one positive and one negative example each (generated deterministically from the class patterns). _Requirements: 10.4_
 
-- [ ] 9. Checkpoint: pure core
+- [x] 9. Checkpoint: pure core
   - All lint, format, type-check and test steps green (`apps/api`: ruff, ruff format, pyright
     strict, pytest with `HYPOTHESIS_PROFILE=ci`); the medical-language and log guards pass on
     the new files. Commit, push, confirm CI passes.
