@@ -4,6 +4,7 @@
     {
       "name": "Kiro usage log (agent run done)",
       "trigger": "Stop",
+      "enabled": false,
       "description": "At the end of an agent run that changed files, appends 3–5 dated lines to docs/kiro-usage.md; skips no-op runs and its own updates.",
       "action": {
         "type": "agent",

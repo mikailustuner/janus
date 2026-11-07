@@ -34,6 +34,17 @@ found, what hooks blocked. Three to five lines per day.
   Node here is built without TypeScript stripping, so a standalone script couldn't reuse the
   phrase list.
 
+- `kiro-log-stop` is disabled (`"enabled": false`): it fires an agent prompt at the end of
+  every run, which costs credits even when it decides there is nothing to log. The
+  `kiro-log` hook on spec-task completion stays on and is now the only automatic log writer.
+
+### Custom agents
+
+- Added five workspace agents in `.kiro/agents/` (Markdown with YAML front matter):
+  `pharmacologist`, `statistician`, `historian` (can write, no web), `safety-auditor` and
+  `localization-reviewer` (read-only: `read` tool only, no write or shell).
+- Each agent loads the steering files for its area through `resources`.
+
 ### Open items
 
 - **arm64 image build not verified.** Images currently build and run on amd64 only; base
