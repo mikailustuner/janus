@@ -5,6 +5,18 @@ name: janus
 services:
   postgres:
     image: postgres:16
+    # No statement text, parameters or failing rows in the server log (privacy.md):
+    # a CHECK violation would otherwise print the whole row in DETAIL.
+    command:
+      - postgres
+      - -c
+      - log_error_verbosity=terse
+      - -c
+      - log_min_error_statement=panic
+      - -c
+      - log_statement=none
+      - -c
+      - log_min_duration_statement=-1
     environment:
       POSTGRES_DB: janus
       POSTGRES_USER: janus

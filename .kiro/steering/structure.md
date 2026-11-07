@@ -21,6 +21,12 @@ apps/api/           FastAPI service
   janus/seance/       three-witness synthesis
   janus/notes/        note content model + signed QR tokens + outcomes
   janus/agents/       narrator, auditor (LLM wrappers)
+  janus/observability/ allowlist log formatter, access-log middleware, error handler
+  janus/http_policy/  route kinds (operational / medical / donation), body policy (JSON only, 64 KiB)
+  janus/db/           PostgreSQL pool; read-only and write transactions
+  janus/contributions/ donations: model, report week, deletion tokens, retention purge, repository, router
+  janus/privacy/      storage-region guard and endpoint
+  migrations/         Alembic migrations (forward-only, each with a downgrade)
   tests/              pytest + Hypothesis (property tests next to the module they test)
 pipelines/          ETL jobs: titck, us_ndc, eu_fr_bdpm, eu_es_cima, wikidata_ingredients, onsides, faers, pipc, retractions, canon (OpenITI)
 data/               small, redistributable files only (e.g. PIPC table, CC BY; curated mappings)

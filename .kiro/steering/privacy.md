@@ -7,7 +7,7 @@ inclusion: always
 - **Images never leave the device.** Barcode decoding and OCR run in the browser.
 - **Medication lists live in the browser by default.** API requests are stateless; the server does not persist a user's list unless the user explicitly donates it. The doctor note PDF is rendered in the browser.
 - **No health data in logs.** Never log ingredients, ATC codes, product codes, events, dates, notes, or request bodies of medical endpoints. Log only request id, route, status, latency.
-- **Donations require explicit, specific consent** and are anonymous: 5-year age band, optional sex, region (TR / EU / US only — no country, city or postcode), ingredients, event, direction (adverse/benefit), week of report. No names, emails, exact dates, locations or device identifiers. The user receives a deletion token; deletion must be complete.
+- **Donations require explicit, specific consent** and are anonymous: 5-year age band, optional sex, region (TR / EU / US only — no country, city or postcode), ingredients, event, direction (adverse/benefit), week of report, and the version of the consent text the user accepted. No names, emails, exact dates, locations or device identifiers. The user receives a deletion token; deletion must be complete.
 - **Aggregates from user data:** never shown for groups smaller than **k = 20**; Laplace noise (differential privacy) is added to counts. FAERS counts are public data and need no noise.
 - **QR tokens contain no personal data:** note id + HMAC signature + expiry only.
 

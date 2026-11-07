@@ -5,8 +5,12 @@ description = "Janus API (research prototype, not a medical device)"
 license = "Apache-2.0"
 requires-python = ">=3.12,<3.13"
 dependencies = [
+    "alembic>=1.20.1",
     "fastapi>=0.162.1",
+    "psycopg-pool>=3.3.3",
+    "psycopg[binary]>=3.3.8",
     "pydantic>=2.14.3",
+    "sqlalchemy>=2.1.8",
     "uvicorn[standard]>=0.54.0",
 ]
 
