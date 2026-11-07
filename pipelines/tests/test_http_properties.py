@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import datetime as dt
+from pathlib import Path
 
 import httpx2
 import pytest
@@ -190,6 +191,10 @@ def _one_doi(_data_dir: object) -> list[str]:
     return ["10.1000/x"]
 
 
+def _no_papers(_repo_root: Path) -> list[str]:
+    return []
+
+
 def test_crossref_request_has_no_mailto_for_url_contact(monkeypatch: pytest.MonkeyPatch) -> None:
     """Validates: Req 4.1, 9.2 — with a URL contact, Crossref gets no mailto (public pool)."""
     from pathlib import Path
@@ -214,6 +219,8 @@ def test_crossref_request_has_no_mailto_for_url_contact(monkeypatch: pytest.Monk
     monkeypatch.setenv("JANUS_CONTACT", GITHUB)
     monkeypatch.setattr(retractions, "make_fetcher", fake_make)
     monkeypatch.setattr(retractions.RetractionsJob, "collect_dois", staticmethod(_one_doi))
+    # The curated paper list is a second DOI input; leave it out so only the stub DOI is fetched.
+    monkeypatch.setattr(retractions.RetractionsJob, "paper_dois", staticmethod(_no_papers))
     repo = Path(__file__).resolve().parents[2]
     ctx = RunContext(
         data_dir=Path("/nonexistent-janus-test"),

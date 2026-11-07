@@ -1,0 +1,7 @@
+position,evidence_id,measure,value,ci_low,ci_high,unit,locator,note
+65,paper:bmj_2026:e100499,incidence,11.9,11.7,12.1,percent,"Abstract, Results",Abstract statement on the highest incidence: iron supplement then laxative.
+9,paper:bmj_2026:e100499,incidence,10.9,10.7,11.0,percent,"Abstract, Results",Abstract statement on the highest incidence: statin then pain reliever.
+25,paper:bmj_2026:e100499,incidence,10.3,9.9,10.7,percent,"Abstract, Results",Abstract statement on the highest incidence: cholinesterase inhibitor then sleep agent.
+60,paper:bmj_2026:e100499,adjusted_sequence_ratio,2.55,2.47,2.64,ratio,"Abstract, Results",Abstract statement on the highest adjusted sequence ratio: corticosteroid then antipsychotic.
+47,paper:bmj_2026:e100499,adjusted_sequence_ratio,2.53,2.43,2.65,ratio,"Abstract, Results",Abstract statement on the highest adjusted sequence ratio: laxative then antidiarrheal.
+26,paper:bmj_2026:e100499,adjusted_sequence_ratio,2.24,1.90,2.65,ratio,"Abstract, Results",Abstract statement on the highest adjusted sequence ratio: cholinesterase inhibitor then antiemetic.

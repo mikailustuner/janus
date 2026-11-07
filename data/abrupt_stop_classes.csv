@@ -1,0 +1,25 @@
+pattern,match,group,note
+C07,include,beta_blocker,"Systemic beta-blockers; stopping suddenly can cause rebound angina, tachycardia or infarction. Eye drops (S01ED) are not on the list."
+N03A,include,antiepileptic,"Antiepileptics; stopping suddenly can trigger seizures or status epilepticus. The old gabapentinoid codes in this group (N03AX12, N03AX16) are listed separately under gabapentinoid."
+H02A,include,corticosteroid,"Systemic corticosteroids (glucocorticoids and fludrocortisone); stopping suddenly after long use can cause adrenal crisis. Skin (D07), inhaled (R03BA), nasal (R01AD), eye (S01BA) and gut-acting (A07EA) forms are not on the list."
+N05BA,include,benzodiazepine,Benzodiazepines (anxiolytic); stopping suddenly can cause withdrawal seizures and delirium.
+N05CD,include,benzodiazepine,Benzodiazepines (hypnotic); same withdrawal risk.
+N03AE01,include,benzodiazepine,Clonazepam; same withdrawal risk (also covered by the antiepileptic group).
+M03BX07,include,benzodiazepine,"Tetrazepam, a benzodiazepine coded as a muscle relaxant (withdrawn in the EU); same withdrawal risk."
+N06A,include,antidepressant,"Antidepressants; stopping suddenly can cause discontinuation syndrome, and with MAO inhibitors and tricyclics severe rebound effects."
+C02AC01,include,clonidine,Clonidine (tablets and patches); stopping suddenly can cause rebound hypertensive crisis.
+N02CX02,include,clonidine,Clonidine coded for migraine prevention; same rebound risk.
+C02AC,include,central_alpha_agonist,"Proposed beyond medical-safety.md rule 4; needs owner confirmation. Other centrally acting alpha-2 agonists (guanfacine, moxonidine, rilmenidine); rebound hypertension after a sudden stop is described, less often than with clonidine."
+N07BC04,include,central_alpha_agonist,Proposed beyond medical-safety.md rule 4; needs owner confirmation. Lofexidine; its label advises gradual reduction because blood pressure rebounds after a sudden stop.
+N02BF,include,gabapentinoid,"Proposed beyond medical-safety.md rule 4; needs owner confirmation. Gabapentin, pregabalin, mirogabalin; sudden withdrawal can cause seizures (in people with epilepsy) and withdrawal symptoms; labels advise tapering over at least a week."
+N03AX12,include,gabapentinoid,Proposed beyond medical-safety.md rule 4; needs owner confirmation. Old gabapentin code still published by TİTCK.
+N03AX16,include,gabapentinoid,Proposed beyond medical-safety.md rule 4; needs owner confirmation. Old pregabalin code still published by TİTCK.
+M03BX01,include,baclofen,"Proposed beyond medical-safety.md rule 4; needs owner confirmation. Baclofen; sudden withdrawal can cause hallucinations, seizures and, after intrathecal use, a life-threatening syndrome."
+M03BX02,include,tizanidine,Proposed beyond medical-safety.md rule 4; needs owner confirmation. Tizanidine; sudden withdrawal can cause rebound hypertension and tachycardia.
+N02A,include,opioid,Proposed beyond medical-safety.md rule 4; needs owner confirmation. Opioid analgesics; sudden stop in a physically dependent person causes withdrawal; the FDA warned in 2019 of serious harm after sudden opioid stops in dependent patients.
+N07BC,include,opioid,"Proposed beyond medical-safety.md rule 4; needs owner confirmation. Opioids for opioid dependence (methadone, buprenorphine); same risk."
+N04B,include,dopaminergic_antiparkinsonian,Proposed beyond medical-safety.md rule 4; needs owner confirmation. Levodopa and other dopaminergic drugs; sudden withdrawal can cause a neuroleptic-malignant-like syndrome and severe worsening of parkinsonism.
+N05A,include,antipsychotic,"Proposed beyond medical-safety.md rule 4; needs owner confirmation. Antipsychotics; sudden withdrawal can cause rebound psychosis, withdrawal dyskinesia and, with clozapine, cholinergic rebound."
+N05AN01,include,lithium,Proposed beyond medical-safety.md rule 4; needs owner confirmation. Lithium; sudden stop raises the risk of early relapse of mania.
+N05CF,include,z_drug,"Proposed beyond medical-safety.md rule 4; needs owner confirmation. Z-drugs (zolpidem, zopiclone); rebound insomnia, and withdrawal seizures after high doses."
+N05CA,include,barbiturate,Proposed beyond medical-safety.md rule 4; needs owner confirmation. Barbiturate hypnotics; sudden withdrawal can cause seizures and delirium.

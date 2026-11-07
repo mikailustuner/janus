@@ -281,6 +281,22 @@ license = "Paywalled"
 storage = "cited_only"
 
 [[sources]]
+id = "hendrix_2024"
+section = "cited"
+name = "Hendrix MRS et al., BMC Med Res Methodol 2024;24:8"
+license = "CC BY 4.0"
+notes = ["Cited for the 12-month exposure window of the cascade engine."]
+storage = "cited_only"
+
+[[sources]]
+id = "vander_zanden_2001"
+section = "cited"
+name = "Vander Zanden JA et al., Ann Pharmacother 2001;35(12):1633-1637"
+license = "Subscription"
+notes = ["Cited only, for systemic effects of ophthalmic beta-blockers."]
+storage = "cited_only"
+
+[[sources]]
 id = "eudravigilance"
 section = "cited"
 name = "EudraVigilance / adrreports.eu — European Medicines Agency"

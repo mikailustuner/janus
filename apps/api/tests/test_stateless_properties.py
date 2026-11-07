@@ -158,8 +158,8 @@ def test_classify_rejects_prefix_and_unlisted_operational() -> None:
 
 def test_write_tx_used_only_by_contributions_repository() -> None:
     """`write_tx` is the only write path; only the donation repository and the resolution
-    loader (reference data, drug-resolution DP16) and the integrity loader (public evidence,
-    evidence-integrity DP20) may use it (DP5)."""
+    loader (reference data, drug-resolution DP16), the integrity loader (public evidence,
+    evidence-integrity DP20) and the rule-base loader (cascade-engine DP19) may use it (DP5)."""
     users: list[str] = []
     for path in JANUS.rglob("*.py"):
         tree = ast.parse(path.read_text(encoding="utf-8"))
@@ -172,4 +172,5 @@ def test_write_tx_used_only_by_contributions_repository() -> None:
         "contributions/repository.py",
         "resolution/load.py",
         "integrity/load.py",
+        "cascades/load.py",
     }
