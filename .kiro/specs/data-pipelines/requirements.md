@@ -106,9 +106,10 @@ Every external source enters Janus through a pipeline that records its version, 
 1. WHEN run THE `titck` pipeline SHALL fetch the newest weekly "Ruhsatlı Beşeri Tıbbi Ürünler Listesi" file at runtime, or read a local file given on the command line, and record its publication date.
 2. THE pipeline SHALL read the sheet "RUHSATLI ÜRÜNLER LİSTESİ", locate the header row by its column names, and require the columns BARKOD, ÜRÜN ADI, ETKİN MADDE and ATC KODU.
 3. THE pipeline SHALL output for each product row: barcode (13 digits), product name, the active-ingredient text as published, the list of individual ingredient names split from it, the ATC code as published, and the suspension status.
-4. WHEN a barcode is not 13 digits or fails the EAN-13 check digit THE pipeline SHALL exclude the row with the reason `invalid_barcode`.
+4. ~~WHEN a barcode is not 13 digits or fails the EAN-13 check digit THE pipeline SHALL exclude the row with the reason `invalid_barcode`.~~ *(Changed 2026-11-07 by owner decision, `drug-resolution` DP9.)* WHEN a barcode is not 13 digits or fails the EAN-13 check digit THE pipeline SHALL output the row as a name-only row (barcode null, `name_only` true), SHALL NOT repair or keep the invalid value, and SHALL report the number of name-only rows. Such rows are reachable by name search only.
 5. WHEN two or more rows share a barcode THE pipeline SHALL keep all of them and report the count; THE pipeline SHALL NOT choose one.
 6. WHEN the active-ingredient text lists several ingredients THE pipeline SHALL split it into individual names and SHALL preserve every non-separator character of the original text.
+   - *(Added 2026-11-07, owner decision `drug-resolution` DP10.)* A separator inside parentheses SHALL NOT split the text (e.g. `inaktif çocuk felci (tip 1, 2, 3)` is one name).
 7. THE pipeline SHALL store its artifacts only in the data directory and SHALL NOT commit any part of the list (Requirement 3.1).
 8. THE pipeline SHALL NOT decide which ATC codes are combination codes; that is done in the `drug-resolution` spec.
 
@@ -128,6 +129,7 @@ Every external source enters Janus through a pipeline that records its version, 
 1. WHEN run THE pipeline SHALL read the openFDA download index, download the NDC directory bulk file it lists, and record the index's export date as the snapshot date.
 2. IF the number of parsed records differs from the record count in the download index THEN THE pipeline SHALL fail the run.
 3. THE pipeline SHALL output for each product: product NDC, package NDCs, product type, brand and generic name, active ingredients with strength, RxCUIs, and marketing end date, as published.
+   - *(Added 2026-11-07, owner decision `drug-resolution` DP20.)* THE pipeline SHALL also output the route(s) of administration and the dosage form, as published.
 4. THE pipeline SHALL NOT normalise NDC formats; normalisation is done in the `drug-resolution` spec.
 
 ### Requirement 9: `retractions` pipeline (Phase 1)

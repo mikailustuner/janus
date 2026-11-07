@@ -1,6 +1,8 @@
 """`us_ndc` pipeline: openFDA NDC directory bulk download (design §5.4, Req 8). Data CC0.
 
 Values are kept as published; NDC normalisation happens in drug-resolution (Req 8.4).
+Schema `us_ndc-2` adds `route` and `dosage_form` as published (drug-resolution DP20); the
+route-to-ATC-group map that uses them lives in drug-resolution.
 """
 
 from __future__ import annotations
@@ -31,7 +33,7 @@ from janus_pipelines.core.validation import (
 INDEX_URL = "https://api.fda.gov/download.json"
 
 NDC_SCHEMA = ExpectedSchema(
-    version="us_ndc-1",
+    version="us_ndc-2",
     fields=(
         Field("product_ndc", frozenset({"str"})),
         Field("product_type", frozenset({"str", KIND_NULL})),
@@ -41,6 +43,8 @@ NDC_SCHEMA = ExpectedSchema(
         Field("packaging", frozenset({"list", KIND_NULL})),
         Field("openfda", frozenset({"object", KIND_NULL})),
         Field("marketing_end_date", frozenset({"str", KIND_NULL})),
+        Field("route", frozenset({"list", KIND_NULL})),
+        Field("dosage_form", frozenset({"str", KIND_NULL})),
     ),
 )
 
@@ -159,6 +163,8 @@ def record_row(rec: Mapping[str, Any]) -> Row:
         "active_ingredients": ingredients,
         "rxcuis": _strs(openfda.get("rxcui")),
         "marketing_end_date": rec.get("marketing_end_date"),
+        "route": _strs(rec.get("route")),
+        "dosage_form": rec.get("dosage_form"),
     }
 
 
@@ -178,6 +184,8 @@ class UsNdcJob(Job[Payload]):
         "active_ingredients": pl.List(pl.Struct({"name": pl.String(), "strength": pl.String()})),
         "rxcuis": pl.List(pl.String()),
         "marketing_end_date": pl.String(),
+        "route": pl.List(pl.String()),
+        "dosage_form": pl.String(),
     }
 
     def fetch(self, ctx: RunContext) -> RawInput[Payload]:

@@ -31,7 +31,7 @@ def ean13(first12: str) -> str:
 class SpecRow:
     """One generated sheet row and what the pipeline should do with it."""
 
-    kind: str  # "product" | "blank" | "invalid_barcode"
+    kind: str  # "product" | "blank" | "name_only" (invalid barcode, kept for name search)
     barcode: int | str | None = None
     name: str | None = None
     ingredients: tuple[str, ...] = ()
@@ -58,19 +58,28 @@ def spec_rows(draw: st.DrawFn, max_rows: int = 40) -> list[SpecRow]:
     pool = draw(st.lists(BARCODE12.map(ean13), min_size=1, max_size=15, unique=True))
     rows: list[SpecRow] = []
     for _ in range(draw(st.integers(1, max_rows))):
-        kind = draw(st.sampled_from(["product"] * 6 + ["blank", "invalid_barcode"]))
+        kind = draw(st.sampled_from(["product"] * 6 + ["blank", "name_only"]))
         if kind == "blank":
             rows.append(SpecRow("blank"))
             continue
-        if kind == "invalid_barcode":
+        if kind == "name_only":
             bad = draw(
                 st.one_of(
                     BARCODE12,  # 12 digits
                     BARCODE12.map(lambda s: s + str((int(ean13(s)[-1]) + 1) % 10)),  # bad check
                     st.just("ABC"),
+                    st.just(None),  # empty cell
                 )
             )
-            rows.append(SpecRow("invalid_barcode", barcode=bad, name="X", ingredients=("y",)))
+            rows.append(
+                SpecRow(
+                    "name_only",
+                    barcode=bad,
+                    name=draw(NAME_PART).upper(),
+                    ingredients=tuple(draw(st.lists(INGREDIENT, min_size=1, max_size=2))),
+                    atc=draw(ATC),
+                )
+            )
             continue
         code = draw(st.sampled_from(pool))
         as_int = draw(st.booleans())

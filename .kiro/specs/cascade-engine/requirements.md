@@ -53,3 +53,16 @@ Detect prescribing cascades in a user's medication list: drug A causes an advers
 - **Duplicate invariance:** listing the same ingredient twice (e.g. two brands, or brands from two regions) does not duplicate findings.
 - **Region invariance:** the same ingredients with the same dates give the same findings whether they were resolved from TR, EU or US products.
 - **Evidence completeness:** every finding has at least one non-retracted evidence id with a source URL.
+
+## Open items from drug-resolution (2026-11-07)
+- **Input contract.** Read ingredient codes only through `janus.resolution.model.rule_input`
+  (ingredient-level ATC codes of `mapped` ingredients). Codes selected as `all_codes` are not
+  confirmed by a product code or a route and are less specific than `single_ingredient_product`,
+  `therapeutic_group`, `anatomical_group` or `route_group`; decide how findings built on them are
+  labelled.
+- **Non-oral forms that act systemically (owner, 2026-11-07).** Some cascades start from
+  products that are not taken by mouth but act systemically, e.g. timolol eye drops (`S01ED…`)
+  causing bronchospasm or bradycardia. Drug resolution gives such products only their route's
+  codes (an ophthalmic timolol carries `S01ED01`, not `C07AA06`). The rule base must decide
+  whether each rule's index-drug classes also include such codes (e.g. `S01ED` alongside `C07`).
+  The route map stays as it is.

@@ -32,9 +32,19 @@ REPO = Path(__file__).resolve().parents[2]
 # --- P12: ingredient split -----------------------------------------------------------
 
 SEPARATORS = st.sampled_from([",", ", ", " ,", ";", "; ", "/", " / ", "+", " + ", " ve ", "  ve\t"])
-NAME_CHARS = st.sampled_from(list("abcçdefgğhıijklmnoöprsştuüvyzİIÇŞĞÜÖ0123456789%-().'"))
+NAME_CHARS = st.sampled_from(list("abcçdefgğhıijklmnoöprsştuüvyzİIÇŞĞÜÖ0123456789%-.'"))
 WORD = st.text(alphabet=NAME_CHARS, min_size=1, max_size=8).filter(lambda w: w != "ve")
-NAME = st.lists(WORD, min_size=1, max_size=3).map(" ".join)
+# A parenthesised part may itself contain separators; they must not split (titck-2, DP10).
+PAREN = st.lists(WORD, min_size=1, max_size=3).flatmap(
+    lambda ws: st.lists(SEPARATORS, min_size=len(ws) - 1, max_size=len(ws) - 1).map(
+        lambda seps: "(" + "".join(w + s for w, s in zip(ws, [*seps, ""], strict=True)) + ")"
+    )
+)
+NAME = (
+    st.lists(st.one_of(WORD, WORD, PAREN), min_size=1, max_size=3)
+    .map(" ".join)
+    .filter(lambda n: n == n.strip())
+)
 _STANDALONE_VE = re.compile(r"(^|\s)ve(\s|$)")
 
 
@@ -52,6 +62,18 @@ def test_split_returns_joined_names(names: list[str], data: st.DataObject) -> No
     assert split_ingredients(lead + text + trail) == names
 
 
+def test_no_split_inside_parentheses() -> None:
+    """titck-2 (drug-resolution DP10): the observed polio-vaccine text stays one name."""
+    text = "difteri toksoidi, inaktif çocuk felci (tip 1, 2, 3), tetanoz"
+    assert split_ingredients(text) == [
+        "difteri toksoidi",
+        "inaktif çocuk felci (tip 1, 2, 3)",
+        "tetanoz",
+    ]
+    assert split_ingredients("a (b, c") == ["a (b, c"]  # unclosed: no split after "("
+    assert split_ingredients("a) , b") == ["a)", "b"]  # stray ")" does not go below zero
+
+
 def test_separator_runs_split_once() -> None:
     """Regression for the P12 counterexample `", ve "`."""
     assert split_ingredients("x, ve y") == ["x", "y"]
@@ -60,19 +82,20 @@ def test_separator_runs_split_once() -> None:
 
 
 FRAGMENT = st.text(
-    alphabet=st.characters(categories=["L", "N", "P", "S", "Zs"], exclude_characters=",;/+"),
+    alphabet=st.characters(categories=["L", "N", "P", "S", "Zs"], exclude_characters=",;/+()"),
     max_size=12,
 ).filter(lambda f: not _STANDALONE_VE.search(f))
 
 
-@given(st.lists(FRAGMENT, min_size=1, max_size=6), st.data())
+@given(st.lists(st.one_of(FRAGMENT, FRAGMENT, PAREN), min_size=1, max_size=6), st.data())
 def test_split_keeps_every_non_separator_character(
     fragments: list[str], data: st.DataObject
 ) -> None:
     """Feature: data-pipelines, Property P12 — Validates: Req 6.6.
 
     For any text made of fragments and separators, the non-whitespace characters of the
-    fragments are exactly the non-whitespace characters of the split names.
+    fragments are exactly the non-whitespace characters of the split names. Fragments may be
+    parenthesised groups that contain separators; those separators are kept (titck-2).
     """
     text = fragments[0]
     for f in fragments[1:]:
@@ -90,15 +113,15 @@ def test_split_keeps_every_non_separator_character(
 
 
 def _expected_metrics(spec: list[SpecRow]) -> dict[str, int]:
-    products = [r for r in spec if r.kind == "product"]
-    barcodes = Counter(str(r.barcode) for r in products)
+    out = [r for r in spec if r.kind in ("product", "name_only")]
+    barcodes = Counter(str(r.barcode) for r in out if r.kind == "product")
     return {
-        "output_rows": len(products),
-        "rows_with_atc": sum(1 for r in products if r.atc),
-        "multi_ingredient_products": sum(1 for r in products if len(r.ingredients) >= 2),
+        "output_rows": len(out),
+        "rows_with_atc": sum(1 for r in out if r.atc),
+        "multi_ingredient_products": sum(1 for r in out if len(r.ingredients) >= 2),
         "duplicate_barcodes": sum(1 for n in barcodes.values() if n > 1),
         "rows_with_duplicate_barcode": sum(n for n in barcodes.values() if n > 1),
-        "invalid_barcode": sum(1 for r in spec if r.kind == "invalid_barcode"),
+        "name_only_rows": sum(1 for r in spec if r.kind == "name_only"),
     }
 
 
@@ -107,7 +130,7 @@ def _expected_metrics(spec: list[SpecRow]) -> dict[str, int]:
 def test_metrics_equal_recount(spec: list[SpecRow]) -> None:
     """Feature: data-pipelines, Property P6 — Validates: Req 2.3, 6.4, 6.5.
 
-    ATC share, multi-ingredient products, duplicate and invalid barcodes equal a direct
+    ATC share, multi-ingredient products, duplicate barcodes and name-only rows equal a direct
     recount of the generated rows; duplicate barcodes are all kept.
     """
     result = parse_workbook(build_workbook(spec))
@@ -125,15 +148,20 @@ def test_row_accounting_titck(spec: list[SpecRow]) -> None:
     """Feature: data-pipelines, Property P4 (titck) — Validates: Req 1.5, 6.4.
 
     input rows == output rows + excluded rows, with the right reason for each exclusion,
-    and the product rows come out in order with their fields.
+    and the product rows come out in order with their fields. Rows with an invalid barcode are
+    output as name-only rows (barcode null), never excluded and never repaired (titck-2).
     """
     result = parse_workbook(build_workbook(spec))
     assert result.input_rows == len(spec)
     assert result.input_rows == len(result.rows) + sum(result.excluded.values())
     assert result.excluded.get("blank_row", 0) == sum(1 for r in spec if r.kind == "blank")
-    products = [r for r in spec if r.kind == "product"]
-    assert [r["barcode"] for r in result.rows] == [str(p.barcode) for p in products]
-    assert [r["ingredients"] for r in result.rows] == [list(p.ingredients) for p in products]
+    assert "invalid_barcode" not in result.excluded
+    out = [r for r in spec if r.kind in ("product", "name_only")]
+    want = [str(p.barcode) if p.kind == "product" else None for p in out]
+    assert [r["barcode"] for r in result.rows] == want
+    assert [r["name_only"] for r in result.rows] == [p.kind == "name_only" for p in out]
+    assert [r["product_name"] for r in result.rows] == [p.name for p in out]
+    assert [r["ingredients"] for r in result.rows] == [list(p.ingredients) for p in out]
 
 
 # --- examples -----------------------------------------------------------------------

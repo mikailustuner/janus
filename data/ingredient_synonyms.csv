@@ -1,0 +1,7 @@
+name,qid,note
+sulpiride,Q422418,"(RS)-sulpiride; the name also hits levosulpiride (N05AL07) through an alias. Evidence: TİTCK single-ingredient products with this name carry N05AL01, the code of Q422418. Added 2026-11-07"
+bosentan monohidrat,Q419769,"Bosentan; Wikidata also has a separate hydrate item with the same code C02KX01. Evidence: TİTCK code C02KX01. Added 2026-11-07"
+metilprednisolon sodyum süksinat,Q417222,"Methylprednisolone (sodium succinate is a salt ester for injection). Evidence: TİTCK code H02AB04, a code of Q417222. Added 2026-11-07"
+metilprednisolon aseponat,Q6824052,"Methylprednisolone aceponate, a topical ester with its own code D07AC14. Evidence: TİTCK code D07AC14. Added 2026-11-07"
+kalsiyum polistiren sülfonat,Q3395465,"Polystyrene sulfonate resin. Evidence: TİTCK code V03AE01, the code of Q3395465. Added 2026-11-07"
+rosuvastatinkalsiyum,Q415159,"Rosuvastatin calcium written without a space. Evidence: name; Q415159 carries C10AA07. Added 2026-11-07"

@@ -49,3 +49,16 @@ def test_nfc_forms_hash_equal(rs: list[dict[str, Json]]) -> None:
 @given(rows(min_size=1))
 def test_schema_version_is_part_of_hash(rs: list[dict[str, Json]]) -> None:
     assert content_hash(rs, "v1") != content_hash(rs, "v2")
+
+
+def test_golden_hash_vector() -> None:
+    """Shared with apps/api (drug-resolution design §6.2): the API's loader re-implements the
+    canonical hash, and both suites assert this value so the two cannot drift."""
+    rows = (
+        {"barcode": "8680199094206", "ingredients": ["b", "a"], "atc_code": "C09BB03", "n": 1},
+        {"barcode": None, "name_only": True, "product_name": "İ\u0307ç", "x": {"k": [1.5, False]}},
+    )
+    assert (
+        content_hash(rows, "golden-1")
+        == "a7b073198be149895d161e694542975078a69999dd7fb1c284f8dcf1b6c5ec8b"
+    )

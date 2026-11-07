@@ -211,16 +211,22 @@ NOTICE must keep every entry of the current hand-written file.
 - Parse with openpyxl (read-only): sheet `RUHSATLI ÜRÜNLER LİSTESİ`; header = first row among
   the first 10 that contains the four required names (matched after trimming whitespace);
   missing sheet or column → schema failure (Req 2.1).
-- Row: `barcode, product_name, ingredient_text, ingredients[], atc_code (null if empty),
+- Row: `barcode (null for name-only rows), name_only, product_name, ingredient_text, ingredients[], atc_code (null if empty),
   suspension_status (int|null)`. Columns used only to locate data (SIRA NO) and those not needed
   (licence holder, licence number, change notes) are not kept.
-- Barcode: integer or text → 13 digits, EAN-13 check digit; else excluded `invalid_barcode`.
+- Barcode: integer or text → 13 digits, EAN-13 check digit; else (schema `titck-2`, owner
+  decision in `drug-resolution` DP9) the row is output as a name-only row: `barcode = null`,
+  `name_only = true`; the invalid value is not kept. Every row has `name_only`.
   Empty rows after the table → excluded `blank_row`.
 - Ingredient split: `split_ingredients(text)` splits on `,`, `;`, `/`, `+` and the word ` ve `
   (surrounded by whitespace), trims, drops empty parts. Whitespace and the separators are the
   only characters removed. Salt normalisation and ATC mapping stay in `drug-resolution`.
 - Metrics: `atc_share` (rows with ATC / output rows), `multi_ingredient_products` (rows with
-  ≥ 2 ingredients), `duplicate_barcodes` (barcodes on > 1 row), `invalid_barcode` count.
+  ≥ 2 ingredients), `duplicate_barcodes` (barcodes on > 1 row, name-only rows not counted),
+  `name_only_rows` (was the `invalid_barcode` exclusion count in `titck-1`).
+- `titck-2` split (DP10 in `drug-resolution`): a separator match starting inside parentheses
+  (depth > 0, depth never below zero) does not split. The list of 2026-11-06 gives 23,137
+  output rows (155 name-only), 4,362 multi-ingredient rows.
 
 ### 5.3 `wikidata_ingredients` (Req 7)
 - Query 1: `?item wdt:P267 ?atc . OPTIONAL { ?item wdt:P3345 ?rxcui }` → codes.
@@ -237,7 +243,9 @@ NOTICE must keep every entry of the current hand-written file.
   partitions (file URL, `records`). Download each zip into `raw/` (storage `cache`), stream
   the JSON `results` array.
 - Row: `product_ndc, package_ndcs[], product_type, brand_name, generic_name,
-  active_ingredients[{name, strength}], rxcuis[], marketing_end_date` — values as published.
+  active_ingredients[{name, strength}], rxcuis[], marketing_end_date, route[], dosage_form` —
+  values as published (`route` and `dosage_form` added in schema `us_ndc-2`, `drug-resolution`
+  DP20; a record without a route gets an empty list).
 - Parsed record count ≠ sum of partition `records` → failed (Req 8.2). Bulk download needs no
   API key.
 
@@ -288,15 +296,15 @@ Each property is one Hypothesis test, tagged in its docstring with
 | P1 | **Determinism.** Running a pipeline twice on the same input gives the same content hash and the same rows. | Req 1.1, 1.3 | Generated rows for a stub job and generated TİTCK/PIPC inputs; run twice into two fresh data dirs; compare hash and rows (run id and timestamps differ). |
 | P2 | **Order independence.** Any permutation of input rows gives the same content hash. | Req 1.3 | `st.permutations` of generated rows → `content_hash`. |
 | P3 | **Schema mismatch is safe.** For any valid current artifact and any input with a required column removed, renamed or retyped, the run fails, names the column, and `current` and its files are byte-identical before and after. | Req 2.1 | Generate a valid artifact, then a mutation (drop / rename / retype one of the required columns); snapshot the files; run; compare. |
-| P4 | **Row accounting.** For any input, `input == output + Σ excluded`, and every excluded row has a reason. | Req 1.5 | TİTCK workbooks with a mix of valid, invalid-barcode and blank rows; check counts and reasons. |
+| P4 | **Row accounting.** For any input, `input == output + Σ excluded`, and every excluded row has a reason; invalid-barcode rows come out as name-only rows (`titck-2`). | Req 1.5, 6.4 | TİTCK workbooks with a mix of valid, invalid-barcode and blank rows; check counts, reasons and name-only rows. |
 | P5 | **Review flag.** For any previous count `p ≥ 1`, current count `c ≥ 0` and threshold `t ∈ (0, 1]`, the run is flagged iff `abs(c − p) > t·p`; with no previous artifact it is never flagged. | Req 2.2 | Integers and fractions; exact rational arithmetic (`fractions.Fraction`) to avoid float edge cases. |
-| P6 | **TİTCK metrics.** For any generated list, `atc_share`, `multi_ingredient_products`, `duplicate_barcodes` and `invalid_barcode` equal a direct recount of the generated data. | Req 2.3, 6.4, 6.5 | Generate rows with controlled duplicates, empty ATC and multi-ingredient text; recount independently. |
+| P6 | **TİTCK metrics.** For any generated list, `atc_share`, `multi_ingredient_products`, `duplicate_barcodes` and `name_only_rows` equal a direct recount of the generated data. | Req 2.3, 6.4, 6.5 | Generate rows with controlled duplicates, empty ATC and multi-ingredient text; recount independently. |
 | P7 | **Runtime-only never lands in `data/`.** For any path string built from segments (`.`, `..`, names, `data`, absolute prefixes, symlinks inside a temp repo), if the resolved path is inside `<repo>/data/` the guard refuses for `runtime_only`, and nothing is written. | Req 3.1 | Build a temp repo with `data/` and symlinks into it; generate relative paths; compare the guard's decision with a reference `resolve()` containment check; assert the directory stays empty. |
 | P8 | **NOTICE completeness.** For any registry and any set of manifests whose sources are in the registry, the generated NOTICE contains an entry (name and licence) for every manifest source; a manifest with an unknown source makes generation fail. | Req 3.2 | Generated registries (unique ids) and manifest subsets; plus one manifest with an id outside the registry. |
 | P9 | **Retry policy.** For any method, outcome (status code or error) and attempt number, a retry is allowed only for GET/HEAD, only for connection error / timeout / 429 / 5xx, never after 3 retries; any delay is ≥ 0 and ≤ the cap. | Req 4.1 | `st.sampled_from` methods, `st.integers(100, 599)` statuses, error kinds, attempts 0–10, optional `Retry-After`. |
 | P10 | **Always a usable artifact.** For any sequence of runs (success, schema failure, crash at staging write, crash before promote, crash during promote, needs_review), after each step `current` is either absent (no success yet) or points to a complete run whose rows hash to its manifest's content hash, and that run is the last promoted one. | Req 4.2 | `RuleBasedStateMachine` with fault injection in `store`; invariant checked after every rule. |
 | P11 | **PIPC parse.** For any generated Table-1-like XML (systems, "Drug Class"/"Individual Drug" rows, N cascades, some split over two `<tr>`), the parser returns exactly the N cascades in order with the right system and kind; the real-count check fails for N ≠ 65. | Req 5.2–5.4 | Strategy builds the cascade list first, then renders XML from it, with random split points. |
-| P12 | **Ingredient split keeps characters.** For any list of 1–5 ingredient names (without separators) joined by any mix of separators and spacing, `split_ingredients` returns that list; and for any text, the multiset of non-separator, non-whitespace characters is the same before and after splitting. | Req 6.6 | Turkish letters (ç ğ ı İ ö ş ü), digits, `%`, `-`, `(`, `)` in names; separators from the five observed. |
+| P12 | **Ingredient split keeps characters.** For any list of 1–5 ingredient names (without top-level separators; parenthesised parts may contain separators) joined by any mix of separators and spacing, `split_ingredients` returns that list; and for any text, the multiset of non-separator, non-whitespace characters is the same before and after splitting, separators inside parentheses included. | Req 6.6 | Turkish letters (ç ğ ı İ ö ş ü), digits, `%`, `-`, `(`, `)` in names; separators from the five observed. |
 | P13 | **Wikidata merge.** For any set of result rows, merging is independent of row order and of how rows are split across queries; each QID appears once with ≥ 1 ATC code. | Req 7.3, 7.4 | Generate (QID, ATC, RxCUI, lang, label) tuples; shuffle and partition; compare merges. |
 | P14 | **Most severe notice wins.** For any list of notices, the status equals the maximum severity of their types, whatever their order; adding a retraction notice always gives `retracted`. | Req 9.2, 9.3 | Lists of notice types incl. unknown types; `st.permutations`. |
 | P15 | **Failed check never un-retracts.** For any history of checks, if the last completed check was `retracted` and the new check is `unknown`, the effective status is `retracted`; `unknown` never becomes `ok`. | Req 9.4, 9.5 | Generated check histories (sequences of statuses and failures). |

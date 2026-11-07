@@ -1,6 +1,9 @@
 """`titck` pipeline: TİTCK licensed products list → barcode, product, ingredients, ATC.
 
-Design §5.2, Req 2.3, 6. Storage rule `runtime_only`: the list is fetched at runtime and its
+Design §5.2, Req 2.3, 6. Schema `titck-2` (drug-resolution DP9, DP10): a row whose barcode is
+invalid is kept as a name-only row (`barcode` null, `name_only` true) so it stays reachable by
+name search; it is never repaired. Separators inside parentheses do not split ingredients.
+Storage rule `runtime_only`: the list is fetched at runtime and its
 rows live only in the data directory; nothing is cached in raw/ or committed.
 """
 
@@ -43,7 +46,7 @@ SUSPENSION_PREFIX = "RUHSATI ASKIDA"
 HEADER_SCAN_ROWS = 10
 
 TITCK_SCHEMA = ExpectedSchema(
-    version="titck-1",
+    version="titck-2",
     fields=(
         Field(COL_BARCODE, frozenset({"int", "str", "null"})),
         Field(COL_NAME, frozenset({"str", "null"})),
@@ -65,12 +68,36 @@ def nfc(text: str) -> str:
     return unicodedata.normalize("NFC", text)
 
 
+def _paren_depths(text: str) -> list[int]:
+    """Parenthesis depth before each character (never below zero)."""
+    depths: list[int] = []
+    depth = 0
+    for ch in text:
+        depths.append(depth)
+        if ch == "(":
+            depth += 1
+        elif ch == ")" and depth > 0:
+            depth -= 1
+    return depths
+
+
 def split_ingredients(text: str | None) -> list[str]:
     """Split the published ingredient text into names. Only separators and whitespace at the
-    ends of each name are removed (Req 6.6). Salt and ATC handling is in drug-resolution."""
+    ends of each name are removed (Req 6.6). A separator inside parentheses does not split
+    (`inaktif çocuk felci (tip 1, 2, 3)` stays one name; drug-resolution DP10). Salt and ATC
+    handling is in drug-resolution."""
     if text is None:
         return []
-    return [part.strip() for part in _SPLIT.split(text) if part.strip()]
+    depths = _paren_depths(text)
+    parts: list[str] = []
+    start = 0
+    for m in _SPLIT.finditer(text):
+        if depths[m.start()] > 0:
+            continue
+        parts.append(text[start : m.start()])
+        start = m.end()
+    parts.append(text[start:])
+    return [part.strip() for part in parts if part.strip()]
 
 
 def ean13_valid(code: str) -> bool:
@@ -216,9 +243,6 @@ def parse_workbook(data: bytes) -> ParseResult:
             acc.exclude("blank_row")
             continue
         barcode = _barcode(cell(col[COL_BARCODE]))
-        if barcode is None:
-            acc.exclude("invalid_barcode")
-            continue
         name = _text(cell(col[COL_NAME]))
         if name is None:
             acc.exclude("missing_product_name")
@@ -227,6 +251,7 @@ def parse_workbook(data: bytes) -> ParseResult:
         rows.append(
             {
                 "barcode": barcode,
+                "name_only": barcode is None,
                 "product_name": name,
                 "ingredient_text": ingredient_text,
                 "ingredients": split_ingredients(ingredient_text),
@@ -239,14 +264,12 @@ def parse_workbook(data: bytes) -> ParseResult:
         input_rows=acc.input_rows,
         excluded=acc.excluded,
         schema=report,
-        metrics=titck_metrics(rows, acc.excluded),
+        metrics=titck_metrics(rows),
     )
 
 
-def titck_metrics(
-    rows: Sequence[Mapping[str, Json]], excluded: Mapping[str, int]
-) -> dict[str, Json]:
-    """Req 2.3: ATC share, multi-ingredient products, duplicate barcodes, invalid barcodes."""
+def titck_metrics(rows: Sequence[Mapping[str, Json]]) -> dict[str, Json]:
+    """Req 2.3: ATC share, multi-ingredient products, duplicate barcodes, name-only rows."""
     output = len(rows)
     with_atc = sum(1 for r in rows if r["atc_code"])
     multi = 0
@@ -254,7 +277,7 @@ def titck_metrics(
         ingredients = r["ingredients"]
         if isinstance(ingredients, list) and len(ingredients) >= 2:
             multi += 1
-    counts = Counter(r["barcode"] for r in rows)
+    counts = Counter(r["barcode"] for r in rows if r["barcode"] is not None)
     return {
         "output_rows": output,
         "rows_with_atc": with_atc,
@@ -262,7 +285,7 @@ def titck_metrics(
         "multi_ingredient_products": multi,
         "duplicate_barcodes": sum(1 for n in counts.values() if n > 1),
         "rows_with_duplicate_barcode": sum(n for n in counts.values() if n > 1),
-        "invalid_barcode": int(excluded.get("invalid_barcode", 0)),
+        "name_only_rows": sum(1 for r in rows if r["name_only"]),
     }
 
 
@@ -272,6 +295,7 @@ class TitckJob(Job[bytes]):
     schema = TITCK_SCHEMA
     polars_schema: ClassVar[Mapping[str, pl.DataType]] = {
         "barcode": pl.String(),
+        "name_only": pl.Boolean(),
         "product_name": pl.String(),
         "ingredient_text": pl.String(),
         "ingredients": pl.List(pl.String()),

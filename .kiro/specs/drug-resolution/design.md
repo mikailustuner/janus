@@ -54,6 +54,7 @@ committed); the loader's coverage report replaces them in task 9.
 | Wikidata run `20261107T163917Z-6bb8fcbc-6855` | 3,766 items; labels en 3,757, tr 1,269, de 2,284, fr 2,813, es 2,284; 2,422 items with RxCUI; 4,374 distinct ATC codes, 8.6 % not at 5th level (class items such as "ATC code V09", "antacid"); 440 items with > 1 code; single-substance items also carry combination codes (iron(II) sulfate: `B03AA07`, `B03AD03`) | Class items are not ingredient keys; combination codes are removed from every item (§5.4) |
 | Turkish name matching (prototype, §5.3) | Of 4,550 distinct TİTCK strings: Turkish label/alias exact 16.0 % (33.1 % of occurrences); any-language exact +13.3 % (+10.0 %); salt-normalised +16.8 % (+19.5 %); spelling key +7.4 % (+5.5 %); spelling key after salts +4.8 % (+4.5 %). Total 58.3 % of strings, **72.6 % of occurrences**; 76.4 % of products (17,553) fully mapped, 50.7 % of multi-ingredient products (2,208); 44 strings ambiguous | Wikidata Turkish labels alone would map a third of occurrences; the ladder of §5.3 is needed. Tuning targets in DP22 |
 | Precision proxy | For 15,117 single-ingredient products with a 7-character code and an unambiguous match, the matched item's codes share the 5-character group with the TİTCK code in 94.3 %. Sampled disagreements are mostly outdated Wikidata codes after WHO changes (axitinib `L01XE17` vs `L01EK01`, pregabalin `N02BF02` vs `N03AX16`, bevacizumab `L01XC07` vs `L01FG01`) | TİTCK's code for a single-ingredient product is preferred over Wikidata's (§5.5) |
+| **Measured coverage, task 9** (`prepare_dataset` on the artifacts of 2026-11-07: titck-2 run `20261107T180936Z-0738c719-f9ff`, us_ndc-2 run `20261107T180945Z-941214ac-7657`, reviewed rule files) | TİTCK: 4,502 distinct names, 72.2 % mapped; **83.9 % of 31,885 ingredient occurrences** (DP22 target 85 %: not met); 87.9 % of 23,093 products and 63.8 % of 4,362 multi-ingredient products fully mapped; steps by occurrences: tr_label 10,523, salt 7,789, any_label 3,169, spelling 1,792, spelling+salt 1,656, bridge 1,752, curated 69; not mapped: 4,960 no key (mostly parenteral-nutrition amino acids and electrolytes, vaccine strain fragments, ATC-text fragments such as "combinations"; none has a single-substance item with a code), 133 ambiguous, 42 unsplit. openFDA Rx: **92.6 % of 55,840 products fully mapped** (target 92 %: met), 91.0 % of occurrences, selection 58,646 route_group / 658 all_codes, 256 no code for the route; Rx+OTC 69.7 % (sunscreens, homeopathics). Agreement of Wikidata codes with TİTCK single-ingredient codes: **93.9 %** of 17,426 at the 5-character group; of the 1,062 disagreements, 739 share the 3-character group (typical WHO re-codings such as `L01XE`→`L01EK`), giving 98.2 % if those are counted as re-codings; they are not individually documented, so the DP22 target (≥ 97 % after documented re-codings) is reported as not verified. 383 codes classified as combination codes | Reported, not blocking (DP22). The single-product code wins over Wikidata (DP2), so the 1,062 disagreements do not reach the cascade engine for single-ingredient TİTCK products |
 | TİTCK ATC bridge (§5.3 step 5) | Single-ingredient product code → exactly one Wikidata item would map 555 more strings (2,709 occurrences); where both methods map a string they agree on 2,004 of 2,042 (98.1 %) | Offered as a labelled last step (DP5) |
 | openFDA run `20261107T162503Z-941214ac-c741` (export 2026-11-06) | 138,262 products; package NDC layouts 5-3-2: 146,115, 5-4-1: 91,786, 4-4-2: 18,355, one malformed (`02` for product `53209-2000`); 256,256 packages → 256,252 distinct 11-digit NDCs (4 collisions); no 10-digit string matches two layouts in this export | 10-digit input still tries all layouts and returns every hit (§4.4) |
 | openFDA product types | Rx 57,102; OTC 56,920; bulk ingredient 15,743; drug for further processing 5,691; others < 2,200 | Name search covers finished products only; NDC lookup returns every type, labelled (DP23) |
@@ -295,21 +296,32 @@ Req 6.4 and 6.6; that spec is updated in the same task):
   drop combining marks (`ç ğ ö ş ü é` → `c g o s u e`); characters other than `[a-z0-9%+]` →
   space; collapse spaces. All four i's fold to `i`, so `İBUPROFEN`, `ibuprofen` and `Ibuprofen`
   give one key.
-- `strip_salts(folded)`: remove whole tokens in `SALT_WORDS` (Turkish and English salt, ester,
-  hydrate and counter-ion words: `hidroklorur, hcl, besilat, besylate, dihidrat, monohydrate,
-  sodyum, sodium, maleat, tartarat, bitartrate, medoxomil, acetonide, …`) and hydrate notation
-  (`.2h2o`); if nothing would remain, return the input unchanged.
-- `spelling_key(folded)`: remove spaces; rewrite `ph→f, th→t, x→ks, qu→kw, c(before e,i,y)→s,
-  c→k, y→i, z→s, w→v, ae→e, oe→e`; collapse repeated letters; drop a final `e`. Example:
-  `siprofloksasin` and `ciprofloxacin` → `siprofloksasin`; `dekzametazon` and `dexamethasone` →
-  `deksametason`.
+- `strip_salts(folded)`: hydrate words and notation (`dihidrat`, `monohydrate`, `.2h2o`) are
+  always removed. Other whole tokens in `SALT_WORDS` (Turkish and English salt, ester and
+  counter-ion words: `hidroklorur, hcl, besilat, besylate, sodyum, sodium, maleat, tartarat,
+  bitartrate, medoxomil, cilexetil, mofetil, …`) are removed unless that would leave nothing or
+  only words in `NOT_ALONE` (inorganic anions such as carbonate, oxide, fluoride, edetate; bare
+  metals such as zinc, iron, silver, lithium; alkyl words); then the hydrate-free name is kept.
+  This keeps sodium vs potassium bicarbonate, zinc acetate vs zinc gluconate and sodium calcium
+  edetate vs edetate disodium apart (pharmacologist review, 2026-11-07). Never salt words:
+  furoate, butylbromide, mono-/di-/trinitrate, disoproxil, alafenamide (they distinguish
+  substances).
+- `spelling_key(folded)`: whole-token rewrites first (`ii→2`, `iii→3`, `iv→4`, `asit→acid`, so
+  iron(II) and iron(III) stay apart and Turkish "asit" meets "acid"); remove spaces; rewrite
+  `ph→f, th→t, ch→k, x→ks, qu→k, c(before e,i,y)→s, c→k, y→i, z→s, w→v, ae→e, oe→e`; collapse
+  repeated letters; drop a final `e`; final `d→t` (Turkish devoicing); repeat until nothing
+  changes. Examples: `siprofloksasin`/`ciprofloxacin`, `dekzametazon`/`dexamethasone`,
+  `klorpromazin`/`chlorpromazine`, `ketiapin`/`quetiapine`,
+  `hidroklorotiyazit`/`hydrochlorothiazide`.
 - All three are idempotent (P6). `RULES_VERSION` = hash of the word lists and rewrite rules; it is
   part of the dataset version (Req 5.7).
 
 ### 5.3 Name → ingredient key ladder (`matching.py`, Req 2.5, 5.3)
 `NameIndex.build(wikidata_rows, synonyms)` keeps only items with at least one ingredient-level,
 non-combination code (class items drop out). Keys per item: folded label and aliases, by language.
-`map_name(published_name, index, titck_bridge)` stops at the **first** step with a hit:
+`map_name(published_name, index, titck_bridge)` stops at the **first** step with a hit. Within a
+step, keys hit through an item's label win over keys hit only through aliases (Wikidata aliases
+are loose: esomeprazole lists "omeprazole", L-thyroxine lists "levothyroxine sodium"):
 
 | Step | Lookup | Label |
 |---|---|---|
@@ -319,11 +331,14 @@ non-combination code (class items drop out). Keys per item: folded label and ali
 | 3 | `strip_salts(name)` = a folded (salt-stripped) label/alias | `salt_normalised` |
 | 4 | `spelling_key(name)` = spelling key of a label/alias | `spelling_key` |
 | 5 | `spelling_key(strip_salts(name))` | `spelling_key_salt` |
-| 6 | TİTCK ATC bridge: the name occurs on single-ingredient rows whose valid, non-combination code belongs to exactly one item (DP5) | `titck_atc_bridge` |
+| 6 | TİTCK ATC bridge: the salt-normalised name occurs on single-ingredient rows whose valid, non-combination code belongs to exactly one item (DP5) | `titck_atc_bridge` |
 
 One key at the first hit → `mapped` (subject to §5.5); several keys → `ambiguous` with all
-`key_candidates`; no hit → `detect_unsplit` (below), else `unmapped/no_ingredient_key`. The
-result depends only on the set of index entries, not their order (P16).
+`key_candidates`. With no hit in steps 0–5, `detect_unsplit` (below) runs **before** step 6, so a
+name naming two substances is never mapped through a product code; else step 6; else
+`unmapped/no_ingredient_key`. The result depends only on the set of index entries, not their
+order (P16). The bridge is keyed by the salt-normalised name, so a salt form on a single product
+and the plain name in a combination meet (P5 counterexample, task 8).
 
 `detect_unsplit(name)`: if the folded tokens can be split into two or more consecutive spans that
 each map (steps 1–3) to different keys, the ingredient is `unmapped/possible_unsplit_combination`
@@ -377,7 +392,7 @@ from the route values in the openFDA export, reviewed by the owner; part of the 
 
 AMLIPIN (`C09BB03`): amlodipine `S = {C08CA01}` → no `C09` code → anatomical `C` → `C08CA01`;
 lisinopril `S = {C09AA03}` → therapeutic `C09` → `C09AA03`. A final guard in `prepare` raises
-`CombinationCodeLeak` if any selected code is a combination code (Req 5.2, fail loudly).
+`CombinationCodeLeakError` if any selected code is a combination code (Req 5.2, fail loudly).
 
 ### 5.6 Coverage report (Req 5.6)
 Per source (`titck`, `openfda_ndc` by product type): distinct names and occurrences mapped (total
@@ -461,7 +476,7 @@ exactly `contributions/repository.py` and `resolution/load.py` (DP16).
 | P13 | **All candidates.** For any source where a product key occurs on n ≥ 1 rows, the lookup returns exactly those n rows, in `product_id` order, for every input form that maps to that key. | Req 2.1, 3.1, 6.2 | DB-backed synthetic loads with duplicate barcodes and colliding NDCs. |
 | P14 | **Name-only rows.** For any source with name-only rows, no scan or barcode lookup returns them, and a search for the exact product name returns them. | Req 2.3 | DB-backed; name-only rows whose names equal, prefix or differ from normal rows. |
 | P15 | **Search invariance.** For any query, case changes, Turkish `İ/I/ı/i`, and diacritic variants give the same result; `rank` is independent of the input order of candidate rows; results never exceed `limit`. | Req 2.4, 3.3 | Pure `rank` with permuted rows; DB-backed search with shuffled insert order. |
-| P16 | **Matching ladder.** For any index and name, `map_name` returns the first step with a hit; several keys at that step → `ambiguous` with exactly those keys; the result is independent of index entry order; a name formed by two known names with no separator is `possible_unsplit_combination`. | Req 5.3 | Generated items and names built to hit a chosen step. |
+| P16 | **Matching ladder.** For any index and name, `map_name` returns the first step with a hit (label hits before alias hits within a step); several keys at that step → `ambiguous` with exactly those keys; the result is independent of index entry order; a name formed by two known names with no separator is `possible_unsplit_combination`. | Req 5.3 | Generated items and names built to hit a chosen step. |
 | P17 | **Ingredient codes are well formed and belong to the ingredient.** For any synthetic source, every emitted code matches the 7-character pattern and is in `ingredient_codes(qid)` of its own ingredient; malformed published codes (`B05D`, `S03CA0l`) never appear in `atc_codes`. | Req 5.1 | Published codes from a strategy mixing valid, short and malformed codes. |
 | P18 | **Unmapped stay visible.** For any product, the ingredient list has one entry per published ingredient, in published order; every non-`mapped` entry has a reason or key candidates and contributes nothing to `rule_input`. | Req 5.4 | Names designed to fail at each stage. |
 | P19 | **Not found only when loaded.** For any input, with no current dataset (or a needed source missing) the route answers 503 `resolution_unavailable`; with sources loaded and no match it answers 200 with no candidates and the searched sources. | Req 6.2, 7.1 | DB-backed; empty, partial and full loads. |

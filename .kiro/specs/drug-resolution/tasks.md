@@ -36,44 +36,44 @@
   - All lint, format, type-check and test steps green (`apps/api`: ruff, ruff format, pyright
     strict, pytest with `HYPOTHESIS_PROFILE=ci`). Commit, push, confirm CI passes.
 
-- [ ] 5. Pipeline changes `titck-2` and `us_ndc-2` (`pipelines/janus_pipelines/jobs/titck.py`, `us_ndc.py`)
+- [x] 5. Pipeline changes `titck-2` and `us_ndc-2` (`pipelines/janus_pipelines/jobs/titck.py`, `us_ndc.py`)
   - Invalid-barcode rows output as name-only rows (`barcode = null`, `name_only = true`), metric
     `name_only_rows`; parenthesis-aware `split_ingredients`; schema version `titck-2`.
   - `us_ndc-2`: add `route` (list, as published) and `dosage_form` (as published) (DP20).
   - Update `data-pipelines` requirements (Req 6.4, 6.6, 8.3), design §5.2/§5.4 and its tests.
   - Re-run `titck` (`--input <local list>`) and `us_ndc` locally; record counts.
-  - [ ] 5.1 Property tests (data-pipelines) P4, P6 and P12 updated and green: row accounting with name-only rows; metrics recount; characters kept, no split inside parentheses. _Requirements: 2.3 (drug-resolution); data-pipelines 6.4, 6.6_
-  - [ ] 5.2 Example test (data-pipelines): `us_ndc` rows carry `route` and `dosage_form` as published; records without them get an empty list / null. _Requirements: data-pipelines 8.3_
+  - [x] 5.1 Property tests (data-pipelines) P4, P6 and P12 updated and green: row accounting with name-only rows; metrics recount; characters kept, no split inside parentheses. _Requirements: 2.3 (drug-resolution); data-pipelines 6.4, 6.6_
+  - [x] 5.2 Example test (data-pipelines): `us_ndc` rows carry `route` and `dosage_form` as published; records without them get an empty list / null. _Requirements: data-pipelines 8.3_
 
-- [ ] 6. Name normalisation (`janus/resolution/names.py`, pure)
+- [x] 6. Name normalisation (`janus/resolution/names.py`, pure)
   - `fold`, `strip_salts` (Turkish and English word lists, extended with the measured gaps:
     medoxomil, acetonide, bitartrate, oxalate, …), `spelling_key`, `RULES_VERSION` (design §5.2).
   - Pharmacologist agent reviews the word lists and rewrite rules.
-  - [ ] 6.1 Property test P6: `fold`, `strip_salts∘fold`, `spelling_key∘fold` are idempotent; never empty. _Requirements: 5.3, 5.7_
+  - [x] 6.1 Property test P6: `fold`, `strip_salts∘fold`, `spelling_key∘fold` are idempotent; never empty. _Requirements: 5.3, 5.7_
 
-- [ ] 7. ATC codes, combination check and route map (`janus/resolution/atc.py`, `data/atc_combination_rules.csv`, `data/route_atc_groups.csv`)
+- [x] 7. ATC codes, combination check and route map (`janus/resolution/atc.py`, `data/atc_combination_rules.csv`, `data/route_atc_groups.csv`)
   - `is_ingredient_level`, `CombinationRules`, `is_combination` (exception → rule file → numbering
     rule → TİTCK observation), `ingredient_codes`, `select_codes` (design §5.4, §5.5).
   - First rule file drafted by the pharmacologist agent from the observed TİTCK multi-ingredient
     codes and the WHO conventions; first route map drafted by the pharmacologist agent from the
     openFDA route values (DP20). **Stop after this task** and show the owner the rule file with
     a short summary of how it was derived; continue only after the review.
-  - [ ] 7.1 Property test P17: every selected code is well formed and in the ingredient's own `ingredient_codes`; malformed published codes never selected. _Requirements: 5.1_
-  - [ ] 7.2 Property test P7 (pure part): no selected code is a combination code; a forced leak raises `CombinationCodeLeak`. _Requirements: 5.2_
-  - [ ] 7.3 Property test P24: route-based selection keeps only allowed codes, never falls back, `all_codes` without a mapped route. _Requirements: 5.1, 5.4_
-  - [ ] 7.4 Example tests: a US topical betamethasone product keeps `D07…` codes and not `H02AB01`; AMLIPIN fields → amlodipine `C08CA01`, lisinopril `C09AA03`; `C09BB03` only as published code. _Requirements: 5.1, 5.2_
+  - [x] 7.1 Property test P17: every selected code is well formed and in the ingredient's own `ingredient_codes`; malformed published codes never selected. _Requirements: 5.1_
+  - [x] 7.2 Property test P7 (pure part): no selected code is a combination code; a forced leak raises `CombinationCodeLeakError`. _Requirements: 5.2_
+  - [x] 7.3 Property test P24: route-based selection keeps only allowed codes, never falls back, `all_codes` without a mapped route. _Requirements: 5.1, 5.4_
+  - [x] 7.4 Example tests: a US topical betamethasone product keeps `D07…` codes and not `H02AB01`; AMLIPIN fields → amlodipine `C08CA01`, lisinopril `C09AA03`; `C09BB03` only as published code. _Requirements: 5.1, 5.2_
 
-- [ ] 8. Matching and dataset preparation (`matching.py`, `prepare.py`, `canonical.py`, `data/ingredient_synonyms.csv`)
+- [x] 8. Matching and dataset preparation (`matching.py`, `prepare.py`, `canonical.py`, `data/ingredient_synonyms.csv`)
   - `NameIndex.build`, ladder steps 0–6, ambiguity, `detect_unsplit`; `prepare_dataset` producing
     products, codes, ingredients, name index, combination audit and coverage report; final
     leak guard; canonical hash with the golden vector shared with `pipelines/`.
-  - [ ] 8.1 Property test P16: first matching step wins; ambiguity keeps all keys; order independent; unsplit names flagged. _Requirements: 5.3_
-  - [ ] 8.2 Property test P5: decomposition invariance for synthetic A + B, A, B. _Requirements: 5.1_
-  - [ ] 8.3 Property test P7 (prepare part): no combination code in any prepared ingredient, incl. unsplit names on single-ingredient rows. _Requirements: 5.2_
-  - [ ] 8.4 Property test P18: one entry per published ingredient, in order; non-mapped entries have a reason and no `rule_input`. _Requirements: 5.4_
-  - [ ] 8.5 Example test: golden canonical-hash vector equals the `pipelines/` value. _Requirements: 9.1_
+  - [x] 8.1 Property test P16: first matching step wins; ambiguity keeps all keys; order independent; unsplit names flagged. _Requirements: 5.3_
+  - [x] 8.2 Property test P5: decomposition invariance for synthetic A + B, A, B. _Requirements: 5.1_
+  - [x] 8.3 Property test P7 (prepare part): no combination code in any prepared ingredient, incl. unsplit names on single-ingredient rows. _Requirements: 5.2_
+  - [x] 8.4 Property test P18: one entry per published ingredient, in order; non-mapped entries have a reason and no `rule_input`. _Requirements: 5.4_
+  - [x] 8.5 Example test: golden canonical-hash vector equals the `pipelines/` value. _Requirements: 9.1_
 
-- [ ] 9. Checkpoint: preparation and measured coverage
+- [x] 9. Checkpoint: preparation and measured coverage
   - All lint, format, type-check and test steps green; commit, push, confirm CI passes.
   - Run `prepare_dataset` on the local artifacts (no database needed); write the coverage report
     to `$JANUS_DATA_DIR/resolution/`; copy the summary numbers (no TİTCK names) into design §1

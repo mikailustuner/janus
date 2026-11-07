@@ -32,6 +32,8 @@ SAMPLE: dict[str, Any] = {
         {"package_ndc": "0071-0155-40", "description": "5000 TABLET in 1 BOTTLE"},
     ],
     "openfda": {"rxcui": ["617310", "617312"], "manufacturer_name": ["Pfizer"]},
+    "route": ["ORAL"],
+    "dosage_form": "TABLET, FILM COATED",
 }
 
 
@@ -103,6 +105,31 @@ def test_sample_record_as_published(tmp_path: Path) -> None:
     assert lipitor["brand_name"] == "Lipitor"
     other = next(r for r in rows if r["product_ndc"] == "12345-678")
     assert other["brand_name"] is None and other["package_ndcs"] == []
+    assert result.manifest.schema_version == "us_ndc-2"
+
+
+def test_route_and_dosage_form_as_published(tmp_path: Path) -> None:
+    """Validates: data-pipelines Req 8.3 (us_ndc-2, drug-resolution DP20).
+
+    Route and dosage form are kept as published; a record without them gets an empty route
+    list and a null dosage form.
+    """
+    cream = {
+        **SAMPLE,
+        "product_ndc": "0168-0041",
+        "route": ["TOPICAL", "CUTANEOUS"],
+        "dosage_form": "CREAM",
+    }
+    bare = {"product_ndc": "12345-678", "product_type": "HUMAN OTC DRUG", "generic_name": "X"}
+    ctx = _ctx(tmp_path)
+    result = run_job(UsNdcJob(), ctx, _raw([SAMPLE, cream, bare]))
+    assert result.outcome is Outcome.SUCCEEDED, result.error
+    rows = {r["product_ndc"]: r for r in Store(ctx.data_dir, "us_ndc").read_rows(result.run_id)}
+    assert rows["0071-0155"]["route"] == ["ORAL"]
+    assert rows["0071-0155"]["dosage_form"] == "TABLET, FILM COATED"
+    assert rows["0168-0041"]["route"] == ["TOPICAL", "CUTANEOUS"]
+    assert rows["0168-0041"]["dosage_form"] == "CREAM"
+    assert rows["12345-678"]["route"] == [] and rows["12345-678"]["dosage_form"] is None
     assert result.manifest.snapshot_date == "2026-11-06"
     assert (ctx.data_dir / "raw" / "us_ndc" / result.run_id / "download.json").exists()
 

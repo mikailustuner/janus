@@ -127,3 +127,62 @@ def ndc10s(draw: st.DrawFn) -> Ndc10:
 
 def label_prefixes() -> st.SearchStrategy[str]:
     return st.sampled_from(["", "NDC", "NDC:", "ndc ", "NDC: ", "N", "n"])
+
+
+# --- synthetic sources (TİTCK-, openFDA- and Wikidata-shaped rows) ---------------------------
+
+# Words that are not salt words and fold to themselves.
+WORDS = ["alfazin", "betorol", "kavidin", "dumapril", "eslotan", "fenaxol", "gorvacin", "hilastin"]
+SALTS = ["hidroklorur", "besilat", "sodyum", "monohidrat", "maleat"]
+SYN_CODES = st.tuples(
+    st.sampled_from("ACJN"),
+    st.sampled_from(["01", "08", "09"]),
+    st.sampled_from(["AA", "BB", "CA"]),
+    st.sampled_from(["01", "02", "03", "51"]),
+).map("".join)
+
+
+def wikidata_row(
+    qid: str, codes: list[str], labels: dict[str, str], aliases: dict[str, list[str]] | None = None
+) -> dict[str, object]:
+    row: dict[str, object] = {"qid": qid, "atc_codes": codes, "rxcuis": []}
+    for lang in ("en", "tr", "de", "fr", "es"):
+        row[f"label_{lang}"] = labels.get(lang)
+        row[f"aliases_{lang}"] = (aliases or {}).get(lang, [])
+    return row
+
+
+def titck_row(
+    barcode: str | None, name: str, ingredients: list[str], atc: str | None
+) -> dict[str, object]:
+    return {
+        "barcode": barcode,
+        "name_only": barcode is None,
+        "product_name": name,
+        "ingredient_text": ", ".join(ingredients) or None,
+        "ingredients": ingredients,
+        "atc_code": atc,
+        "suspension_status": 0,
+    }
+
+
+def us_row(
+    product_ndc: str,
+    packages: list[str],
+    ingredients: list[str],
+    routes: list[str],
+    product_type: str = "HUMAN PRESCRIPTION DRUG",
+    brand: str | None = None,
+) -> dict[str, object]:
+    return {
+        "product_ndc": product_ndc,
+        "package_ndcs": packages,
+        "product_type": product_type,
+        "brand_name": brand,
+        "generic_name": " and ".join(ingredients) or None,
+        "active_ingredients": [{"name": n.upper(), "strength": "1 mg/1"} for n in ingredients],
+        "rxcuis": [],
+        "marketing_end_date": None,
+        "route": routes,
+        "dosage_form": "TABLET",
+    }

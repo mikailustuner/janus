@@ -1,0 +1,109 @@
+pattern,kind,note
+A02AD01,combination_code,Mixtures of aluminium/calcium/magnesium antacid salts; the rest of A02AD are single complexes (magaldrate etc.) so the group is not listed. Knowledge; observed on TİTCK multi-ingredient rows (A02AD 19 rows)
+A02AF,combination_group,Antacids combined with an antiflatulent. Observed on 7 TİTCK multi-ingredient rows
+A02AG,combination_group,Antacids combined with an antispasmodic. Knowledge only
+A02AH,combination_group,Antacids combined with sodium bicarbonate. Knowledge only
+A02AX,combination_group,Antacids in other combinations. Knowledge only
+A02BD,combination_group,Helicobacter pylori eradication packs (acid suppressant plus antibiotics). Observed on 5 TİTCK multi-ingredient rows
+A03C,combination_group,Antispasmodics combined with psycholeptics. Observed on 4 TİTCK multi-ingredient rows
+A03D,combination_group,Antispasmodics combined with analgesics. Observed on 5 TİTCK multi-ingredient rows
+A03E,combination_group,Antispasmodics and anticholinergics combined with other drugs. Knowledge only
+A10BD,combination_group,Fixed-dose combinations of oral glucose-lowering drugs. Observed on 212 TİTCK multi-ingredient rows (and 17 single-ingredient rows whose text names two substances)
+A11A,combination_group,Multivitamins combined with minerals or other substances. Observed on 4 TİTCK multi-ingredient rows
+A11B,combination_group,Multivitamin mixtures without other substances; never one substance. Knowledge only
+A11CB,combination_group,Vitamin A and vitamin D together. Knowledge only
+A11DB,combination_group,Vitamin B1 combined with vitamin B6 and/or B12. Knowledge only
+A11E,combination_group,Vitamin B-complex mixtures (plain or with other substances). Knowledge only
+A11GB,combination_group,Vitamin C combined with other substances. Knowledge only
+A11J,combination_group,Other vitamin mixtures and vitamins with minerals. Knowledge only
+A01AB11,combination_code,Catch-all code for mixed local oral anti-infectives; not one substance. Observed on 2 TİTCK multi-ingredient rows; no Wikidata item carries it
+A01AD11,combination_code,Catch-all code for mixed local oral preparations; not one substance. Observed on 46 TİTCK multi-ingredient rows; no Wikidata item carries it
+A06AD10,combination_code,Mixed mineral-salt osmotic laxatives. Observed on 2 TİTCK multi-ingredient rows; knowledge
+B02BD01,combination_code,Prothrombin complex (several coagulation factors together). Observed on 2 TİTCK multi-ingredient rows; knowledge
+B02BD06,combination_code,Von Willebrand factor together with factor VIII. Observed on 4 TİTCK multi-ingredient rows; knowledge
+B03AD,combination_group,Iron combined with folic acid. Observed on 13 TİTCK multi-ingredient rows; removes B03AD codes that Wikidata attaches to single iron salts
+B03AE,combination_group,Iron combined with vitamin B12 and/or folic acid or other substances. Observed on 9 TİTCK multi-ingredient rows
+B05BA10,combination_code,Parenteral nutrition mixtures (amino acids/lipids/glucose). Observed on 56 TİTCK multi-ingredient rows; no Wikidata item carries it
+B05BB02,combination_code,Infusion solutions of electrolytes with carbohydrates. Observed on 398 TİTCK multi-ingredient rows; no Wikidata item carries it
+B05XA31,combination_code,Electrolyte additives combined with other drugs. Observed on 1 TİTCK multi-ingredient row; knowledge
+C02L,combination_group,Antihypertensives combined with diuretics. Observed on 4 TİTCK multi-ingredient rows
+C03E,combination_group,Potassium-sparing diuretics combined with other diuretics. Observed on 21 TİTCK multi-ingredient rows
+C05AX03,combination_code,Mixed antihaemorrhoidal preparations. Observed on 5 TİTCK multi-ingredient rows; no Wikidata item carries it
+C07B,combination_group,Beta blockers combined with thiazides. Observed on 16 TİTCK multi-ingredient rows
+C07C,combination_group,Beta blockers combined with other diuretics. Knowledge only
+C07D,combination_group,Beta blockers with thiazides and other diuretics. Knowledge only
+C07E,combination_group,Beta blockers combined with vasodilators. Knowledge only
+C07F,combination_group,Beta blockers in other combinations (e.g. with a calcium channel blocker). Observed on 14 TİTCK multi-ingredient rows
+C08G,combination_group,Calcium channel blockers combined with diuretics. Observed on 2 TİTCK multi-ingredient rows
+C09B,combination_group,ACE inhibitors in combination (with diuretics or calcium channel blockers or others); includes C09BB03. Observed on 103 TİTCK multi-ingredient rows
+C09D,combination_group,Angiotensin II receptor blockers in combination. Observed on 443 TİTCK multi-ingredient rows
+C10B,combination_group,Lipid-modifying agents in combination. Observed on 117 TİTCK multi-ingredient rows
+D07B,combination_group,Topical corticosteroids combined with antiseptics. Observed on 16 TİTCK multi-ingredient rows
+D07C,combination_group,Topical corticosteroids combined with antibiotics. Observed on 10 TİTCK multi-ingredient rows
+D07X,combination_group,Topical corticosteroids in other combinations. Observed on 12 TİTCK multi-ingredient rows; removes D07X codes that Wikidata attaches to single corticosteroids (e.g. betamethasone)
+G02BB01,combination_code,Vaginal ring releasing a progestogen and an estrogen. Observed on 1 TİTCK multi-ingredient row; knowledge
+G03AA,combination_group,Fixed progestogen-estrogen contraceptives. Observed on 29 TİTCK multi-ingredient rows
+G03AB,combination_group,Sequential progestogen-estrogen contraceptives. Observed on 1 TİTCK multi-ingredient row
+G03CC,combination_group,Estrogens combined with other drugs. Observed on 2 TİTCK multi-ingredient rows; removes G03CC codes Wikidata attaches to single estrogens
+G03E,combination_group,Androgens combined with female sex hormones. Knowledge only
+G03F,combination_group,Progestogens and estrogens combined for hormone therapy. Observed on 11 TİTCK multi-ingredient rows
+G03HB,combination_group,Antiandrogens combined with estrogens. Observed on 3 TİTCK multi-ingredient rows
+J01CR,combination_group,Penicillins combined with a beta-lactamase inhibitor or another penicillin. Observed on 145 TİTCK multi-ingredient rows
+J01CR04,exception,Sultamicillin is one molecule (mutual prodrug of ampicillin and sulbactam) labelled as one ingredient; keep its code. Observed on 56 TİTCK single-ingredient rows. Verified 2026-11-07: the WHOCC index lists this code as a single substance (https://atcddd.fhi.no/atc_ddd_index/?code=J01CR&showdescription=no; index updated 2026-01-20)
+J01EE,combination_group,Sulfonamides combined with trimethoprim or a related drug. Observed on 18 TİTCK multi-ingredient rows and 19 single-ingredient rows naming two substances
+J01RA,combination_group,Combinations of antibacterials. Observed on 12 TİTCK multi-ingredient rows
+J04AM,combination_group,Fixed combinations of antituberculosis drugs. Knowledge only (5 Wikidata combination items)
+J05AR,combination_group,Fixed combinations of antivirals for HIV. Observed on 29 TİTCK multi-ingredient rows
+J07CA,combination_group,Bacterial and viral vaccines combined in one product. Observed on 10 TİTCK multi-ingredient rows
+L01FY,combination_group,Combinations of monoclonal antibodies (and with other agents) for cancer. Observed on 2 TİTCK multi-ingredient rows
+L01XY,combination_group,Combinations of antineoplastic agents. Knowledge only (1 Wikidata combination item)
+M05BB,combination_group,Bisphosphonates in combination (e.g. with vitamin D or calcium). Observed on 37 TİTCK multi-ingredient rows
+N02AJ,combination_group,Opioids combined with non-opioid analgesics. Observed on 11 TİTCK multi-ingredient rows
+N04BA02,combination_code,Levodopa with a decarboxylase inhibitor. Observed on 13 TİTCK multi-ingredient rows; knowledge
+N04BA03,combination_code,Levodopa with a decarboxylase inhibitor and a COMT inhibitor. Observed on 22 TİTCK multi-ingredient rows; knowledge
+N04BA05,combination_code,Melevodopa with a decarboxylase inhibitor. Verified 2026-11-07: the WHOCC index lists this code as a combination with a decarboxylase inhibitor (https://atcddd.fhi.no/atc_ddd_index/?code=N04BA&showdescription=no; index updated 2026-01-20)
+N04BA06,combination_code,Etilevodopa with a decarboxylase inhibitor. Verified 2026-11-07: the WHOCC index lists this code as a combination with a decarboxylase inhibitor (https://atcddd.fhi.no/atc_ddd_index/?code=N04BA&showdescription=no; index updated 2026-01-20)
+N04BA07,combination_code,Prodrug pair of levodopa and carbidopa for subcutaneous infusion. Observed on 1 TİTCK multi-ingredient row. Verified 2026-11-07: the WHOCC index lists this code as a levodopa prodrug combined with a decarboxylase inhibitor (https://atcddd.fhi.no/atc_ddd_index/?code=N04BA&showdescription=no; index updated 2026-01-20)
+N06C,combination_group,Psycholeptics combined with psychoanaleptics. Observed on 15 TİTCK multi-ingredient rows
+R01AB,combination_group,Nasal sympathomimetics in combination (excluding corticosteroids). Observed on 4 TİTCK multi-ingredient rows; removes R01AB codes Wikidata attaches to single decongestants
+R01AX10,combination_code,Catch-all code for mixed nasal preparations. Observed on 1 TİTCK multi-ingredient row; no Wikidata item carries it
+R03AK,combination_group,Inhaled adrenergics combined with corticosteroids or other drugs (not anticholinergics). Observed on 150 TİTCK multi-ingredient rows
+R03AL,combination_group,Inhaled adrenergics combined with anticholinergics (including triple combinations). Observed on 43 TİTCK multi-ingredient rows
+R05CA10,combination_code,Mixed expectorants. Observed on 6 TİTCK multi-ingredient rows; no Wikidata item carries it
+R05CB10,combination_code,Mixed mucolytics. Observed on 32 TİTCK multi-ingredient rows; no Wikidata item carries it
+R05F,combination_group,Cough suppressants combined with expectorants. Observed on 2 TİTCK multi-ingredient rows
+S01BB,combination_group,Eye corticosteroids combined with mydriatics. Observed on 1 TİTCK multi-ingredient row
+S01C,combination_group,Eye anti-inflammatories combined with anti-infectives. Observed on 13 TİTCK multi-ingredient rows
+S02C,combination_group,Ear corticosteroids combined with anti-infectives. Observed on 1 TİTCK multi-ingredient row
+S03C,combination_group,Eye/ear corticosteroids combined with anti-infectives. Knowledge only
+L01XX,exception,Other antineoplastics: single substances run past number 50 (e.g. L01XX52); combinations are coded in L01XY. Observed on 35 TİTCK single-ingredient rows and 0 multi-ingredient rows; 9 Wikidata items would otherwise lose their only code
+L01FX,exception,Other monoclonal antibodies for cancer: numbered singly (e.g. L01FX20); combinations are coded in L01FY. Observed on 11 TİTCK single-ingredient rows and 0 multi-ingredient rows
+L04AA,exception,Selective immunosuppressants: single substances numbered past 50 (L04AA51 L04AA52). Observed on 149 TİTCK single-ingredient rows and 0 multi-ingredient rows
+A03AA30,exception,Single substance numbered 30 in its group. Wikidata item with this as its only code
+A03AD30,exception,Single substance numbered 30 in its group. Wikidata item with this as its only code
+A03AX30,exception,Single substance numbered 30 in its group. Wikidata item with this as its only code
+A11HA30,exception,Dexpanthenol: single substance numbered 30. Observed on 7 TİTCK single-ingredient rows and 0 multi-ingredient rows
+A12AA30,exception,Single calcium salt numbered 30. Wikidata item with this as its only code
+C04AX20,exception,Single peripheral vasodilator numbered 20. Wikidata item with this as its only code
+C04AX30,exception,Single peripheral vasodilator numbered 30. Wikidata item with this as its only code
+D08AK30,exception,Single mercury antiseptic numbered 30. Wikidata item with this as its only code
+D08AL30,exception,Silver as a single antiseptic numbered 30. Wikidata item with this as its only code
+J04AB30,exception,Capreomycin: single antibiotic numbered 30. Wikidata item with this as its only code
+M03BX30,exception,Fenyramidol: single muscle relaxant numbered 30. Observed on 14 TİTCK single-ingredient rows and 0 multi-ingredient rows
+N03AA30,exception,Single barbiturate antiepileptic numbered 30. Wikidata item with this as its only code
+N03AX30,exception,Single antiepileptic numbered 30. Wikidata item with this as its only code
+N04AC30,exception,Single anticholinergic numbered 30. Wikidata item with this as its only code
+N05CA20,exception,Single barbiturate hypnotic numbered 20. Wikidata item with this as its only code
+N07AA30,exception,Single cholinesterase inhibitor numbered 30. Wikidata item with this as its only code
+R02AB30,exception,Single throat antibiotic numbered 30. Wikidata item with this as its only code
+V03AB20,exception,Single antidote salt numbered 20. Wikidata item with this as its only code
+V04CH30,exception,Single diagnostic agent numbered 30. Wikidata item with this as its only code
+V10XA53,exception,Single radiolabelled antibody numbered 53. Wikidata item with this as its only code
+N03AX16,exception,Pregabalin: single substance. Guard against the observation rule (3 TİTCK multi-ingredient rows; Wikidata still carries the older code N02BF02). Observed on 159 TİTCK single-ingredient rows
+A07FA01,exception,Lactic-acid-producing organisms coded as one agent. Guard against the observation rule (1 multi-ingredient row); observed on 4 TİTCK single-ingredient rows
+G04CX02,exception,Saw palmetto fruit extract coded as one agent. Guard against the observation rule (2 multi-ingredient rows); observed on 2 TİTCK single-ingredient rows
+J06BD08,exception,Single monoclonal antibody. Guard against the observation rule (1 multi-ingredient row); observed on 5 TİTCK single-ingredient rows
+J07AL02,exception,Pneumococcal conjugate vaccine coded as one vaccine although multivalent. Guard against the observation rule (6 multi-ingredient rows); observed on 5 TİTCK single-ingredient rows
+J07BK01,exception,Live varicella vaccine coded as one vaccine. Guard against the observation rule (4 multi-ingredient rows); observed on 1 TİTCK single-ingredient row
+S01XA03,exception,Hypertonic sodium chloride eye product: single substance. Guard against the observation rule (1 multi-ingredient row); observed on 3 TİTCK single-ingredient rows
+G03CA57,exception,Conjugated estrogens: a defined estrogen mixture that labels list as one ingredient and has no other code; numbered 57 but treated as one estrogen. Wikidata item with this as its only code. Verified 2026-11-07: the WHOCC index places this code in the plain-estrogens group (https://atcddd.fhi.no/atc_ddd_index/?code=G03CA&showdescription=no; index updated 2026-01-20)
