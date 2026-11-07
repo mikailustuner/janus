@@ -14,7 +14,9 @@ from __future__ import annotations
 import argparse
 import csv
 import hashlib
+import io
 import json
+import re
 import sys
 from collections.abc import Callable, Iterable, Mapping, Sequence
 from dataclasses import dataclass, field
@@ -29,7 +31,14 @@ from janus.integrity.registry import read_sources
 from janus.observability.logging import LogEvent, configure_logging, log_event
 from janus.resolution import atc, canonical, matching, names, ndc, prepare
 from janus.resolution.atc import DATA_DIR, CombinationRules, RouteMap
-from janus.resolution.prepare import OPENFDA, TITCK, WIKIDATA, PreparedDataset, prepare_dataset
+from janus.resolution.prepare import (
+    JANUS_CURATED,
+    OPENFDA,
+    TITCK,
+    WIKIDATA,
+    PreparedDataset,
+    prepare_dataset,
+)
 from janus.settings import Settings
 
 PIPELINES: dict[str, str] = {TITCK: "titck", OPENFDA: "us_ndc", WIKIDATA: "wikidata_ingredients"}
@@ -39,6 +48,13 @@ SCHEMAS: dict[str, frozenset[str]] = {
     WIKIDATA: frozenset({"wikidata_ingredients-1"}),
 }
 SYNONYMS_FILE = DATA_DIR / "ingredient_synonyms.csv"
+CURATED_FILE = DATA_DIR / "janus_ingredients.csv"
+CURATED_HEADER = [
+    "key", "label_en", "label_tr", "label_de", "label_fr", "label_es", "atc_codes", "added_on",
+    "note",
+]  # fmt: skip
+CURATED_KEY = re.compile(r"^J[1-9][0-9]{0,5}$")
+CURATED_SCHEMA = "janus_ingredients-1"
 REGISTRY_FILE = DATA_DIR.parent / "pipelines" / "sources.toml"
 _CODE_MODULES = (atc, canonical, matching, names, ndc, prepare)
 
@@ -99,6 +115,47 @@ def read_synonyms(path: Path = SYNONYMS_FILE) -> tuple[tuple[str, str], ...]:
         return tuple((r["name"], r["qid"]) for r in reader)
 
 
+@dataclass(frozen=True)
+class Curated:
+    """Janus ingredient keys from `data/janus_ingredients.csv` (owner decision 2026-11-07)."""
+
+    rows: tuple[dict[str, Any], ...] = ()  # Wikidata-shaped rows, qid = the Janus key
+    sha256: str = ""
+    added_on: str = ""
+
+
+def parse_curated(text: str) -> Curated:
+    """Pure. Refuses a bad header, key, code or date; names the row, never the content."""
+    reader = csv.DictReader(io.StringIO(text))
+    if reader.fieldnames != CURATED_HEADER:
+        raise LoadError("janus_ingredients.csv: header is not the expected one")
+    rows: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    dates: list[str] = []
+    for n, r in enumerate(reader, start=2):
+        key = (r["key"] or "").strip()
+        codes = [c.strip() for c in (r["atc_codes"] or "").split(";") if c.strip()]
+        if not CURATED_KEY.fullmatch(key) or key in seen:
+            raise LoadError(f"janus_ingredients.csv row {n}: bad or repeated key")
+        if not codes or not all(atc.is_ingredient_level(c) for c in codes):
+            raise LoadError(f"janus_ingredients.csv row {n}: codes must be ingredient-level")
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", r["added_on"] or "") or not r["label_en"]:
+            raise LoadError(f"janus_ingredients.csv row {n}: missing label or date")
+        seen.add(key)
+        dates.append(r["added_on"])
+        row: dict[str, Any] = {"qid": key, "atc_codes": codes, "rxcuis": []}
+        for lang in prepare.LANGS:
+            row[f"label_{lang}"] = (r[f"label_{lang}"] or "").strip() or None
+            row[f"aliases_{lang}"] = []
+        rows.append(row)
+    digest = hashlib.sha256(text.encode("utf-8")).hexdigest() if rows else ""
+    return Curated(tuple(rows), digest, max(dates) if dates else "")
+
+
+def read_curated(path: Path = CURATED_FILE) -> Curated:
+    return parse_curated(path.read_text(encoding="utf-8")) if path.is_file() else Curated()
+
+
 def code_version() -> str:
     digest = hashlib.sha256()
     for module in _CODE_MODULES:
@@ -115,6 +172,7 @@ class Inputs:
     code: str
     # source id -> cadence_days from pipelines/sources.toml (freshness rule, DP17)
     cadences: Mapping[str, int | None] = field(default_factory=dict[str, int | None])
+    curated: Curated = field(default_factory=Curated)
 
     def describe(self) -> dict[str, Any]:
         syn = hashlib.sha256(json.dumps(self.synonyms, ensure_ascii=False).encode()).hexdigest()
@@ -132,6 +190,7 @@ class Inputs:
             "synonyms": syn,
             "name_rules": names.RULES_VERSION,
             "cadences": dict(sorted(self.cadences.items())),
+            "curated_keys": self.curated.sha256,
             "code": self.code,
         }
 
@@ -163,6 +222,7 @@ def gather(
         read_synonyms() if synonyms is None else synonyms,
         code_version(),
         cadences,
+        read_curated(),
     )
 
 
@@ -174,6 +234,7 @@ def prepare_inputs(inputs: Inputs) -> PreparedDataset:
         inputs.rules,
         inputs.route_map,
         inputs.synonyms,
+        inputs.curated.rows,
     )
 
 
@@ -237,6 +298,17 @@ def write_dataset(
         ),
         hook,
     )  # fmt: skip
+    if inputs.curated.rows:
+        c = inputs.curated
+        conn.execute(
+            "INSERT INTO res_source_version (dataset_id, source_id, run_id, region, snapshot_date, "
+            "snapshot_is_retrieval_time, content_sha256, schema_version, license, source_url, "
+            "cadence_days) VALUES (%s, %s, %s, NULL, %s, false, %s, %s, %s, %s, NULL)",
+            (
+                version, JANUS_CURATED, f"curated-{c.sha256[:8]}", c.added_on, c.sha256,
+                CURATED_SCHEMA, "Apache-2.0 (Janus curated)", "data/janus_ingredients.csv",
+            ),
+        )  # fmt: skip
     _copy(
         conn,
         "res_product",

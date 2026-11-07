@@ -20,8 +20,15 @@ fetched at runtime and must not be committed; CI fails if one is tracked.
 - `route_atc_groups.csv`: openFDA route of administration → ATC groups a product given by that
   route may carry (`drug-resolution` design §5.5, DP20). Same derivation date and review. Re-review
   with the combination rules.
-- `ingredient_synonyms.csv`: published ingredient name → Wikidata item, for frequent names the
+- `ingredient_synonyms.csv`: published ingredient name → ingredient key, for frequent names the
   matching ladder cannot map (`drug-resolution` DP5). Each row names the evidence it rests on.
+  102 rows were added on 2026-11-07 from the PIPC coverage report (cascade-engine task 12),
+  proposed by the pharmacologist agent and approved by the owner.
+- `janus_ingredients.csv`: curated Janus ingredient keys `J<n>` for substances that no
+  Wikidata item in the extract covers with an ATC code (`drug-resolution` Req 11.2, DP25).
+  Columns `key,label_en,label_tr,label_de,label_fr,label_es,atc_codes,added_on,note`. First key:
+  J1 dimenhydrinate, `R06AA11` (owner decision 2026-11-07). Codes only, checked by hand on the
+  WHOCC index (URL and date in the note).
 
 ## Curated evidence files (Janus, Apache-2.0)
 - `evidence_papers.csv`: papers that Janus cites as evidence (`evidence-integrity` design §3.1,

@@ -212,25 +212,29 @@ def resolved(
     )
 
 
-@given(
-    rb=rule_bases(),
-    spec=st.lists(
-        st.tuples(
-            st.lists(
-                st.tuples(
-                    st.sampled_from(QIDS),
-                    st.lists(ingredient_codes(), min_size=1, max_size=2),
-                    st.sampled_from(SELECTIONS),
-                ),
-                min_size=1,
-                max_size=2,
-                unique_by=lambda t: t[0],
+def _qid_of(t: tuple[str, list[str], str]) -> str:
+    return t[0]
+
+
+PRODUCT_SPECS = st.lists(
+    st.tuples(
+        st.lists(
+            st.tuples(
+                st.sampled_from(QIDS),
+                st.lists(ingredient_codes(), min_size=1, max_size=2),
+                st.sampled_from(SELECTIONS),
             ),
-            months(),
+            min_size=1,
+            max_size=2,
+            unique_by=_qid_of,
         ),
-        max_size=5,
+        months(),
     ),
+    max_size=5,
 )
+
+
+@given(rb=rule_bases(), spec=PRODUCT_SPECS)
 def test_p6_region_invariance(rb: RuleBase, spec: list[Any]) -> None:
     """Feature: cascade-engine, Property 6. Validates: Req 7.1.
 
@@ -471,3 +475,42 @@ def test_fifteen_items_under_one_second() -> None:
     res = evaluate(items, rb, snap, dt.date(2026, 11, 7))
     assert time.perf_counter() - t0 < 1.0
     assert res.rules_checked == 63
+
+
+# --- P23: homeopathic products never contribute (owner decision 2026-11-07) ---------------------
+
+
+@given(rb=rule_bases(), spec=PRODUCT_SPECS, flags=st.lists(st.booleans(), min_size=5, max_size=5))
+def test_p23_homeopathic_products_never_contribute(
+    rb: RuleBase, spec: list[Any], flags: list[bool]
+) -> None:
+    """Feature: cascade-engine, Property 23. Validates: owner decision of 2026-11-07.
+
+    A homeopathic product never appears in a finding, a chain or an abrupt-stop warning; every
+    one of its ingredients is listed as `homeopathic_product`; and the result equals the result
+    for the list without those products.
+    """
+    items: list[EngineItem] = []
+    without: list[EngineItem] = []
+    unchecked: list[NotChecked] = []
+    homeo: set[int] = set()
+    for idx, (ings, start) in enumerate(spec):
+        rs = [resolved(p + 1, q, c, sel, "US") for p, (q, c, sel) in enumerate(ings)]
+        flag = flags[idx]
+        item, nc = product_item(idx, start, rs, {}, {}, homeopathic=flag)
+        items.append(item)
+        unchecked += nc
+        if flag:
+            homeo.add(idx)
+            assert item.ingredients == ()
+            assert [(n.position, n.reason) for n in nc] == [
+                (r.position, "homeopathic_product") for r in rs
+            ]
+        else:
+            without.append(item)
+    res = run(items, rb, not_checked=unchecked)
+    for f in res.findings:
+        assert not (set(f.index.items) | set(f.marker.items)) & homeo
+    assert not {w.item for w in res.item_warnings} & homeo
+    assert res.findings == run(without, rb).findings
+    assert {n.item for n in res.not_checked if n.reason == "homeopathic_product"} == homeo

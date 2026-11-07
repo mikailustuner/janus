@@ -168,7 +168,14 @@ Turn what the user scans, photographs or types — in Türkiye, the EU or the US
 1. THE region-specific code (code parsing, product lookup, ingredient names) SHALL live behind the `RegionAdapter` interface; the resolution core, the result model and the cascade-engine input SHALL be the same for every region.
 2. THE result SHALL carry, for every ingredient, its ingredient key, ingredient-level ATC codes, RxCUIs, mapping status and provenance in the same shape for every region.
 
+### Requirement 11: Homeopathic products and curated Janus keys *(Owner decisions, 2026-11-07)*
+#### Acceptance criteria
+1. WHEN any ingredient strength of a product is given in homeopathic units (openFDA `[hp_X]`, `[hp_C]`, `[hp_M]`, `[hp_Q]`, `[kp_C]`) THE API SHALL mark the product as homeopathic (`homeopathic = true`). Such products contain negligible active substance: THE cascade engine SHALL NOT evaluate their ingredients and SHALL list each of them as `homeopathic_product`, not checked; the coverage report SHALL NOT count or hint them. **[Client: experience]** shows "homeopathic product, not checked".
+2. WHERE no Wikidata item in the extract carries an ingredient-level ATC code for a substance that a PIPC class needs, THE system MAY give it a curated Janus ingredient key `J<n>` in `data/janus_ingredients.csv` (labels in the five languages, ingredient-level codes, the date, a note citing the code check). Janus keys SHALL behave like Wikidata keys in matching and code selection; their own codes SHALL cite the source `janus_curated`, recorded as a source version of the dataset; the file's hash SHALL be part of the dataset version. First key: J1 dimenhydrinate, `R06AA11` (not mapped to diphenhydramine, whose code would drop the antiemetic and vestibular classes).
+3. THE loader SHALL refuse a curated row with a malformed or repeated key, a code that is not ingredient-level, a missing English label or a malformed date, naming the row only.
+
 ## Properties to test (PBT candidates)
+- *(Owner decisions 2026-11-07.)* Homeopathic units are detected exactly and a homeopathic product never contributes to a cascade finding; curated Janus keys keep their own codes and cite their source. (Req 11)
 - Parsing is invariant to separator style: FNC1 form and parenthesised form of the same data yield identical results. (Req 1.1)
 - Any GTIN with a corrupted check digit is rejected. (Req 1.2)
 - Round trip: building a GS1 string from (GTIN, expiry, lot, serial) and parsing it returns the same GTIN and expiry. (Req 1.1, 1.3)

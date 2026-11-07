@@ -477,7 +477,7 @@ to a review list; `data/ingredient_synonyms.csv` changes only after owner review
 
 ## 9. Correctness properties
 
-P1–P7 are the seven original properties; P8–P22 were added in the refinement.
+P1–P7 are the seven original properties; P8–P22 were added in the refinement; P23 follows the owner's decision of 2026-11-07.
 
 | # | Property (for all …) | Validates | Hypothesis approach |
 |---|---|---|---|
@@ -503,6 +503,7 @@ P1–P7 are the seven original properties; P8–P22 were added in the refinement
 | P20 | **Stateless, silent route.** For any request (valid, 422, 409, 503), the database snapshot and temp directory are unchanged, the response has `no-store`, no candidate id, QID, start month, code or rule id appears in any log output, and 422 bodies hold field paths only; nothing loaded → 503 and no statement; dataset mismatch → 409. | Req 9.1–9.5 | `assert_stateless()` and sentinel capture; empty, partial and full loads. |
 | P21 | **Deterministic route.** For any loaded state and request, repeated calls give byte-identical responses, and permuting `items` gives the same findings after renumbering. | Req 9.6 | DB-backed; permutations of request items. |
 | P22 | **Honest coverage.** For any synthetic dataset and rule base, member, product and OTC counts equal an independent recount using `class_match`; hints never contain a `mapped` name; hints are ranked by product count; `trigram_similarity` is symmetric, in [0, 1] and 1 for equal non-empty folded names. | Req 8.1–8.4 | Synthetic res rows with mapped, unmapped and ambiguous ingredients. |
+| P23 | **Homeopathic products never contribute (owner decision 2026-11-07).** For any rule base and list, a homeopathic product appears in no finding, chain or abrupt-stop warning, each of its ingredients is `not_checked` with `homeopathic_product`, and the findings equal those of the list without it; the coverage report never counts or hints it (P22). | Req 7.2 | Product specs with random homeopathic flags through `product_item`. |
 
 ## 10. Decisions
 
@@ -624,3 +625,31 @@ P1–P7 are the seven original properties; P8–P22 were added in the refinement
   `data/ingredient_synonyms.csv` is unchanged until the owner reviews them. No cannot-fire rule
   is fixable by a synonym: rows 11 and 14 have no TİTCK product, rows 36 and 44 only bulk
   listings in openFDA (44 none in TİTCK either), rows 27 and 57 are not matchable by decision.
+- **Owner review of the synonym proposals (2026-11-07), applied:** all 102 rows added to
+  `data/ingredient_synonyms.csv` (the four US sodium phosphate dibasic rows only together with
+  the homeopathic exclusion); homeopathic products excluded from matching and coverage
+  (drug-resolution Req 11.1, DP24; P23 here); codeine `R05DA04` added to the opioid abrupt-stop
+  group; dimenhydrinate given the Janus key J1 with `R06AA11` (drug-resolution Req 11.2, DP25);
+  `B03AB02` excluded from `ppi_deficiency_supplement` as in `iron_oral`. Left unmapped and
+  listed: colchiceine (probably a data error), the prodrugs fosaprepitant, gabapentin enacarbil
+  and aripiprazole lauroxil, and the elemental names iron, zinc and selenium.
+- **Follow-up (coverage report):** add a hint kind "a member's name is a whole-word part of the
+  unmapped name"; the trigram rule missed lithium carbonate and the atorvastatin solvate.
+- **Follow-up (privacy spec):** donations accept QIDs only; allow Janus keys `J<n>` there too.
+- **Re-run after the synonym review (2026-11-07):** dataset `0a2da39a…` (108 synonym rows, J1
+  dimenhydrinate, homeopathic products excluded), rule base `472f35a9…` (codeine on the
+  abrupt-stop list, `B03AB02` out of `ppi_deficiency_supplement`). The same rules cannot fire as
+  before (TİTCK: 11, 14, 44, 27, 57; US: 36, 44, 27, 57); hints fell from 493 to 343. Changes in
+  PIPC-relevant classes (products TR / US Rx / US OTC): lithium US Rx 0 → 78 and OTC 14 → 0;
+  statin US Rx 1,190 → 1,257; bisphosphonate US Rx 29 → 73; corticosteroid_systemic TR 85 → 89,
+  US Rx 890 → 982, OTC 71 → 1; laxative TR 120 → 149, US Rx 397 → 412, OTC 1,223 → 1,163;
+  gastroprotective TR 484 → 501, OTC 1,658 → 1,474; ppi_deficiency_supplement TR 207 → 220,
+  OTC 312 → 140; cough_remedy OTC 2,980 → 2,646; mineral_supplement OTC 1,034 → 822;
+  iron_oral OTC 56 → 2; antidepressant OTC 198 → 1; anticonvulsant OTC 28 → 0; quinine OTC
+  49 → 0 (all homeopathic); vestibular_suppressant and anticholinergic_antiemetic US OTC
+  91 → 123 (dimenhydrinate). OTC losses are homeopathic products leaving the counts.
+- **Found in the re-run:** four TİTCK products publish `R06AA11` with an ingredient text that
+  is an ATC-text fragment ("other antiemetics"). The TİTCK bridge now finds two keys for that
+  code (J1 and trimethobenzamide, whose Wikidata item carries no `R06AA11`), so those rows are
+  `ambiguous` instead of being mapped wrongly to trimethobenzamide as before. The three real
+  dimenhydrinate products map to J1. Gate 1 is unchanged: rows 5, 6, 9 and 12.

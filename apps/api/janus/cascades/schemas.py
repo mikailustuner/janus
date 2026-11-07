@@ -15,7 +15,7 @@ DISCLAIMER = (
     "Janus provides information, not medical advice. Research prototype - not a medical device."
 )
 MAX_ITEMS = 50
-QID = r"^Q[1-9][0-9]{0,9}$"
+QID = r"^(Q[1-9][0-9]{0,9}|J[1-9][0-9]{0,5})$"  # Wikidata QID or Janus curated key
 CANDIDATE = r"^(TR|US):[a-z_]+:[0-9]{1,9}$"
 MONTH = r"^\d{4}-(0[1-9]|1[0-2])$"
 
@@ -149,6 +149,7 @@ class NotCheckedOut(_Out):
     item: int
     position: int
     reason: Literal[
+        "homeopathic_product",
         "ambiguous",
         "no_ingredient_key",
         "possible_unsplit_combination",

@@ -7,6 +7,8 @@
 from __future__ import annotations
 
 import datetime as dt
+import re
+from collections.abc import Iterable
 from typing import Annotated, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints
@@ -119,6 +121,7 @@ class ProductCandidate(_Out):
     marketing_end_date: str | None
     suspension_status: int | None
     name_only: bool
+    homeopathic: bool = False  # strengths in homeopathic units: not evaluated as the substance
     product_rxcuis: list[str]
     packages: list[Package]
     ingredients: list[ResolvedIngredient]
@@ -168,6 +171,22 @@ class ResolutionResult(_Out):
     disclaimer: str = (
         "Janus provides information, not medical advice. Research prototype - not a medical device."
     )
+
+
+# Homeopathic strength units of openFDA (UCUM-style annotations: [hp_X], [hp_C], [hp_M],
+# [hp_Q], [kp_C]). Owner decision 2026-11-07: such products contain negligible active substance
+# and are never evaluated as the substance.
+HOMEOPATHIC_UNIT = re.compile(r"\[(hp|kp)_[a-z]+\]", re.IGNORECASE)
+
+
+def is_homeopathic_strength(strength: str | None) -> bool:
+    return bool(strength) and HOMEOPATHIC_UNIT.search(strength or "") is not None
+
+
+def is_homeopathic_product(strengths: Iterable[str | None]) -> bool:
+    """A product is homeopathic when any of its ingredient strengths is in homeopathic units
+    (13,481 of 135,688 openFDA products on 2026-11-06; 44 of them mix units)."""
+    return any(is_homeopathic_strength(s) for s in strengths)
 
 
 def rule_input(ingredient: ResolvedIngredient) -> tuple[str, ...]:

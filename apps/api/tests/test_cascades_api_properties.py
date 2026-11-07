@@ -71,6 +71,12 @@ TR = [
 US = [
     us_row("11111-111", ["11111-111-11"], ["amlodipine besylate"], ["ORAL"], brand="AMLO US"),
     us_row("22222-222", ["22222-222-22"], ["furosemide"], ["ORAL"], brand="FURO US"),
+    {
+        **us_row(
+            "33333-333", ["33333-333-33"], ["furosemide"], ["ORAL"], "HUMAN OTC DRUG", "HOMEO US"
+        ),
+        "active_ingredients": [{"name": "FUROSEMIDE", "strength": "30 [hp_C]/1"}],
+    },
 ]
 
 
@@ -383,3 +389,29 @@ def test_fifteen_items_under_one_second(env: Any) -> None:
     t0 = time.perf_counter()
     r = post(client, {"dataset_version": dataset, "items": items})
     assert r.status_code == 200 and time.perf_counter() - t0 < 1.0
+
+
+def test_homeopathic_product_is_not_checked(env: Any) -> None:
+    """A product with homeopathic strengths is never evaluated as the substance (owner decision
+    2026-11-07): no finding, listed as `homeopathic_product`; the same substance as a real
+    product gives the finding."""
+    client, ids, dataset, _, _ = env
+    homeo = post(
+        client,
+        {
+            "dataset_version": dataset,
+            "items": [item(ids["AMLO"], "2024-01"), item(ids["HOMEO US"], "2024-04")],
+        },
+    ).json()
+    assert homeo["findings"] == []
+    assert homeo["not_checked"] == [{"item": 1, "position": 0, "reason": "homeopathic_product"}]
+    real = post(
+        client,
+        {
+            "dataset_version": dataset,
+            "items": [item(ids["AMLO"], "2024-01"), item(ids["FURO US"], "2024-04")],
+        },
+    ).json()
+    assert "pipc:5" in {f["rule_id"] for f in real["findings"]}
+    flagged = client.post("/resolve/ndc", json={"ndc": "33333-333-33"}).json()
+    assert flagged["candidates"][0]["homeopathic"] is True

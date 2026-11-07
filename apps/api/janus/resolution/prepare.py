@@ -33,6 +33,7 @@ from janus.resolution.ndc import canonical_package, canonical_product
 TITCK = "titck"
 OPENFDA = "openfda_ndc"
 WIKIDATA = "wikidata"
+JANUS_CURATED = "janus_curated"  # curated Janus ingredient keys, data/janus_ingredients.csv
 LANGS = ("en", "tr", "de", "fr", "es")
 SEARCH_LANGS = ("en", "tr")  # de, fr, es join with eu_name in Phase 2
 FINISHED_TYPES = frozenset(
@@ -256,7 +257,13 @@ def prepare_dataset(
     rules: CombinationRules,
     route_map: RouteMap,
     synonyms: Iterable[tuple[str, str]] = (),
+    curated_rows: Sequence[Row] = (),
 ) -> PreparedDataset:
+    """`curated_rows` are Janus ingredient keys (`J<n>`) in the shape of Wikidata rows, for
+    substances that no Wikidata item in the extract covers with a code (owner decision,
+    2026-11-07: dimenhydrinate). They behave like items; their codes cite `janus_curated`."""
+    curated_keys = frozenset(str(r["qid"]) for r in curated_rows)
+    wikidata_rows = [*wikidata_rows, *curated_rows]
     wikidata_codes = frozenset(c for r in wikidata_rows for c in _strs(r.get("atc_codes")))
     base = CombinationCheck(rules, frozenset(), wikidata_codes)
 
@@ -320,7 +327,14 @@ def prepare_dataset(
         records[qid] = IngredientRecord(
             qid,
             {lang: r.get(f"label_{lang}") for lang in LANGS},
-            _one_per_code(ingredient_codes(_strs(r.get("atc_codes")), observed_single, check)),
+            _one_per_code(
+                ingredient_codes(
+                    _strs(r.get("atc_codes")),
+                    observed_single,
+                    check,
+                    JANUS_CURATED if qid in curated_keys else WIKIDATA,
+                )
+            ),
             _strs(r.get("rxcuis")),
         )
 
@@ -347,7 +361,9 @@ def _one_per_code(codes: Iterable[AtcCode]) -> tuple[AtcCode, ...]:
     """One entry per code; a code observed on a TİTCK product (the regulator's list) is cited
     before the same code from Wikidata."""
     best: dict[str, AtcCode] = {}
-    for a in sorted(codes, key=lambda a: (a.code, a.source_id == WIKIDATA, a.sort_key())):
+    for a in sorted(
+        codes, key=lambda a: (a.code, a.source_id in (WIKIDATA, JANUS_CURATED), a.sort_key())
+    ):
         best.setdefault(a.code, a)
     return tuple(best[c] for c in sorted(best))
 

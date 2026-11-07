@@ -66,3 +66,6 @@ The end-to-end product experience across five languages and three regions, inclu
   `do_not_stop_suddenly`, `no_pattern_found`, `rule_base_unavailable`, integrity codes) and the
   English canonical sentences. The five-language wording, and showing not-matchable rules (PIPC
   rows 27 and 57) and not-checked ingredients as "cannot be checked", belong to this spec.
+- **Homeopathic products** (owner decision 2026-11-07): a product with `homeopathic = true`
+  (drug-resolution Req 11.1) is shown as "homeopathic product, not checked"; the evaluation
+  result lists its ingredients as `not_checked` with reason `homeopathic_product`.

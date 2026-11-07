@@ -27,12 +27,20 @@ def product_item(
     ingredients: Sequence[ResolvedIngredient],
     choices: Mapping[int, str],
     key_codes: Mapping[str, tuple[frozenset[str], str | None]],
+    homeopathic: bool = False,
 ) -> tuple[EngineItem, list[NotChecked]]:
     """A product's ingredients; `choices` maps an ambiguous position to the chosen key.
 
     `key_codes` gives, for a chosen key, all its ingredient-level codes and its English label
-    (a chosen key is evaluated with all its codes, as form-unconfirmed: Req 7.2).
+    (a chosen key is evaluated with all its codes, as form-unconfirmed: Req 7.2). A homeopathic
+    product (strengths in homeopathic units) contributes nothing: every ingredient is listed as
+    `homeopathic_product`, not checked (owner decision 2026-11-07).
     """
+    if homeopathic:
+        return EngineItem(index, start, ()), [
+            NotChecked(index, i.position, "homeopathic_product")
+            for i in sorted(ingredients, key=lambda i: i.position)
+        ]
     by_pos = {i.position: i for i in ingredients}
     for pos, qid in choices.items():
         ing = by_pos.get(pos)

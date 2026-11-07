@@ -1007,3 +1007,22 @@ butabarbital → butethal), homeopathic listings (bromides, phosphates, creosote
 combination fragments, or names already keyed whose code the route map excludes (glycerin and
 polyethylene glycol 400 eye drops, mineral oil, ophthalmic zinc sulfate). Counts per class are in the
 data-directory file.
+
+### 7.1 Owner decisions on the proposals (2026-11-07), applied
+
+- **All 102 rows approved** and added to `data/ingredient_synonyms.csv`. The four US sodium
+  phosphate dibasic rows only together with the homeopathic exclusion below.
+- **Homeopathic products** (strengths in homeopathic units) contain negligible active substance:
+  drug-resolution marks them `homeopathic`, the cascade engine lists their ingredients as
+  `homeopathic_product`, not checked, and the coverage report leaves them out (drug-resolution
+  Req 11.1; cascade-engine P23).
+- **Codeine:** `R05DA04` added to the `opioid` group of the abrupt-stop list.
+- **Dimenhydrinate:** its own Janus ingredient key J1 (`data/janus_ingredients.csv`) with
+  `R06AA11`, so it keeps the antiemetic, anticholinergic antiemetic and vestibular suppressant
+  classes; not mapped to diphenhydramine.
+- **`ppi_deficiency_supplement`:** `B03AB02` excluded, as in `iron_oral`.
+- **Left unmapped and listed:** colchiceine (probably a data error), the prodrugs
+  fosaprepitant, gabapentin enacarbil and aripiprazole lauroxil, and the elemental names iron,
+  zinc and selenium.
+- **Follow-up:** a coverage-report hint kind for "a member's name is a whole-word part of the
+  unmapped name" (design §11).

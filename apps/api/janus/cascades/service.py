@@ -106,7 +106,9 @@ def evaluate_request(conn: psycopg.Connection, body: EvaluateIn, today: dt.date)
                 if q in found.ingredients
             }
             try:
-                engine_item, nc = product_item(i, starts[i], cand.ingredients, choices, key_codes)
+                engine_item, nc = product_item(
+                    i, starts[i], cand.ingredients, choices, key_codes, cand.homeopathic
+                )
             except ChoiceError:
                 bad.append(f"items.{i}.choices")
                 continue

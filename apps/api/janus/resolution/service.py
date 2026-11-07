@@ -31,12 +31,14 @@ from janus.resolution.model import (
     ResolvedIngredient,
     ScanInfo,
     SourceRef,
+    is_homeopathic_product,
 )
 from janus.resolution.names import fold
 from janus.resolution.ndc import parse_ndc_input
 
 ADAPTERS: tuple[RegionAdapter, ...] = (TitckAdapter(), OpenFdaNdcAdapter())
 WIKIDATA = "wikidata"
+JANUS_CURATED = "janus_curated"  # curated Janus ingredient keys (J<n>)
 # Staleness follows the shared freshness rule (twice the cadence, evidence-integrity DP17).
 STALENESS_SOURCES = ("titck", "openfda_ndc")
 REGION_SOURCES: dict[Region, str] = {"TR": "titck", "US": "openfda_ndc"}
@@ -154,6 +156,7 @@ class _Builder:
                     marketing_end_date=f["marketing_end_date"],
                     suspension_status=f["suspension_status"],
                     name_only=f["name_only"],
+                    homeopathic=is_homeopathic_product(i["strength"] for i in r.ingredients),
                     product_rxcuis=list(f["product_rxcuis"]),
                     packages=[Package(ndc_published=p, ndc11=c) for p, c in r.packages],
                     ingredients=[
@@ -199,7 +202,7 @@ class _Builder:
                     atc_selection="all_codes" if codes else None,
                     rxcuis=rec["rxcuis"],
                     rxcui_status="from_wikidata" if rec["rxcuis"] else "not_in_wikidata",
-                    source=self.source(WIKIDATA),
+                    source=self.source(JANUS_CURATED if qid.startswith("J") else WIKIDATA),
                 )
             )
         return out

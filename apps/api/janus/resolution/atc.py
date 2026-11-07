@@ -199,13 +199,15 @@ def ingredient_codes(
     wikidata: Iterable[str],
     observed_single: Iterable[tuple[str, str, str]],
     check: CombinationCheck,
+    item_source: str = "wikidata",
 ) -> tuple[AtcCode, ...]:
     """Ingredient-level, non-combination codes of one ingredient key (design §5.4).
 
-    `wikidata`: the item's codes; `observed_single`: (code, source id, product ref) from
+    `wikidata`: the item's codes (from `item_source`: Wikidata, or the curated Janus keys of
+    `data/janus_ingredients.csv`); `observed_single`: (code, source id, product ref) from
     single-ingredient products mapped unambiguously to the item.
     """
-    out = {AtcCode(c, "wikidata") for c in wikidata}
+    out = {AtcCode(c, item_source) for c in wikidata}
     out |= {AtcCode(c, s, ref) for c, s, ref in observed_single}
     return _sorted(
         a for a in out if is_ingredient_level(a.code) and not check.is_combination(a.code)

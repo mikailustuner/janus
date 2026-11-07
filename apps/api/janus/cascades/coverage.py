@@ -30,6 +30,7 @@ class ProductRow:
     region: str
     product_type: str | None
     published_atc: str | None
+    homeopathic: bool = False  # never counted and never hinted (owner decision 2026-11-07)
 
 
 @dataclass(frozen=True)
@@ -162,7 +163,7 @@ def _class_report(
 
     for row in ingredients:
         p = products.get((row.source_id, row.product_id))
-        if p is None:
+        if p is None or p.homeopathic:
             continue
         if row.status == "mapped":
             if row.qid in members and any(

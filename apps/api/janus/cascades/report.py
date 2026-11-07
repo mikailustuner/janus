@@ -23,6 +23,7 @@ from janus.cascades import repository
 from janus.cascades.coverage import IngredientRow, KeyRow, ProductRow, build_coverage
 from janus.db.pool import Database
 from janus.resolution.atc import DATA_DIR, is_ingredient_level
+from janus.resolution.model import is_homeopathic_strength
 from janus.settings import Settings
 
 REPO = DATA_DIR.parent
@@ -54,8 +55,18 @@ def read_rows(
     if row is None:
         raise LookupError("no resolution dataset loaded")
     ds = str(row[0])
+    raw = conn.execute(
+        "SELECT source_id, product_id, published_name, status, qid, key_candidates, atc, strength "
+        "FROM res_product_ingredient WHERE dataset_id = %s",
+        (ds,),
+    ).fetchall()
+    homeopathic = {
+        (str(r[0]), int(r[1])) for r in raw if is_homeopathic_strength(r[7])
+    }  # same rule as ProductCandidate.homeopathic (any ingredient strength)
     products = [
-        ProductRow(str(r[0]), int(r[1]), str(r[2]), r[3], r[4])
+        ProductRow(
+            str(r[0]), int(r[1]), str(r[2]), r[3], r[4], (str(r[0]), int(r[1])) in homeopathic
+        )
         for r in conn.execute(
             "SELECT source_id, product_id, region, product_type, published_atc FROM res_product "
             "WHERE dataset_id = %s",
@@ -74,11 +85,7 @@ def read_rows(
             if r[3] == "mapped"
             else (),
         )
-        for r in conn.execute(
-            "SELECT source_id, product_id, published_name, status, qid, key_candidates, atc "
-            "FROM res_product_ingredient WHERE dataset_id = %s",
-            (ds,),
-        )
+        for r in raw
     ]
     names: dict[str, set[str]] = {}
     for r in conn.execute(

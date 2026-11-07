@@ -137,6 +137,7 @@ Detect prescribing cascades in a user's medication list: drug A causes an advers
 #### Acceptance criteria
 1. THE engine SHALL take, per list item, the ingredient key and the rule-input codes of each `mapped` ingredient, whether those codes are form-confirmed, and the item's start month. It SHALL take nothing region-specific: TR, EU and US products with the same ingredients, codes and start months SHALL give the same result.
 2. WHEN an ingredient is `ambiguous` or `unmapped` THE result SHALL list it as not checked, with its list item, position and reason. IF the user chose one of an ambiguous ingredient's key candidates THEN THE system SHALL evaluate that key with all its ingredient-level codes, as form-unconfirmed.
+   - *(Owner decision, 2026-11-07.)* WHEN a product is homeopathic (drug-resolution Req 11.1) THE engine SHALL NOT evaluate any of its ingredients and SHALL list each as not checked with reason `homeopathic_product`.
 3. WHEN a finding rests on a form-unconfirmed ingredient (`atc_selection = all_codes`, an ingredient found by name, or a user's choice under 7.2) THE finding SHALL be labelled `form_confirmed = false` and SHALL name the matched codes, so the client can ask the user to confirm the product. Such findings SHALL keep their status and SHALL sort after form-confirmed ones.
 4. A non-oral form that acts systemically SHALL belong to an index class only as a form extension: a route-specific ATC group (for example ophthalmic beta-blockers, `S01ED`) whose systemic adverse effect is the rule's adverse event, documented by a registered, citable source. Findings that match only through a form extension SHALL carry `via_form_extension = true` and that source's evidence id; IF that source is not citable THEN the extension SHALL not match. Marker classes SHALL contain the forms used to treat the adverse event (which may be topical, e.g. topical corticosteroids, vaginal antifungals) and SHALL have no form extensions.
 5. THE route map of `drug-resolution` (`data/route_atc_groups.csv`) SHALL stay unchanged; form extensions live in the class mapping only.
@@ -192,6 +193,7 @@ Detect prescribing cascades in a user's medication list: drug A causes an advers
   - Every rule fires on codes inside its classes with dates in the window, and does not fire outside them. (Req 10.4)
   - The coverage report's counts equal an independent recount and its hints never contain mapped names. (Req 8)
   - The evaluation route is stateless, logs nothing of the request, echoes no input, and gives identical bytes for identical requests. (Req 9)
+  - *(Owner decision 2026-11-07.)* A homeopathic product never contributes to a finding, a chain or an abrupt-stop warning. (Req 7.2)
 
 ## Open items from drug-resolution (2026-11-07)
 - **Input contract.** Read ingredient codes only through `janus.resolution.model.rule_input`

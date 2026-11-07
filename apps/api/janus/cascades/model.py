@@ -138,6 +138,7 @@ Status = Literal["probable", "possible"]
 Timing = Literal["within_window", "date_unknown", "same_month", "after_window"]
 TIMING_ORDER: tuple[Timing, ...] = ("within_window", "date_unknown", "same_month", "after_window")
 NotCheckedReason = Literal[
+    "homeopathic_product",
     "ambiguous",
     "no_ingredient_key",
     "possible_unsplit_combination",

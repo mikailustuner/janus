@@ -46,6 +46,7 @@ def datasets(draw: st.DrawFn) -> tuple[list[ProductRow], list[IngredientRow], li
         region = draw(st.sampled_from(["TR", "US"]))
         src = "titck" if region == "TR" else "openfda_ndc"
         published = draw(st.one_of(st.none(), ingredient_codes())) if region == "TR" else None
+        homeo = region == "US" and draw(st.booleans())
         products.append(
             ProductRow(
                 src,
@@ -53,6 +54,7 @@ def datasets(draw: st.DrawFn) -> tuple[list[ProductRow], list[IngredientRow], li
                 region,
                 None if region == "TR" else draw(st.sampled_from(TYPES)),
                 published,
+                homeo,
             )
         )
         for _ in range(draw(st.integers(1, 3))):
@@ -80,7 +82,11 @@ def test_p22_honest_coverage(
     products, rows, keys = ds
     report = build_coverage(rb, products, rows, keys)
     by_id = {(p.source_id, p.product_id): p for p in products}
-    non_mapped = {name_key(r.published_name) for r in rows if r.status != "mapped"}
+    non_mapped_live = {
+        name_key(r.published_name)
+        for r in rows
+        if r.status != "mapped" and not by_id[(r.source_id, r.product_id)].homeopathic
+    }
     for cid, cls in rb.classes.items():
         got = report["classes"][cid]
         ext = cls.extension_ids
@@ -89,7 +95,8 @@ def test_p22_honest_coverage(
         recount: dict[str, set[tuple[str, int]]] = {b: set() for b in BUCKETS}
         for r in rows:
             if (
-                r.status == "mapped"
+                not by_id[(r.source_id, r.product_id)].homeopathic
+                and r.status == "mapped"
                 and r.qid in members
                 and any(class_match(c, cls, ext) for c in r.codes)
             ):
@@ -101,7 +108,7 @@ def test_p22_honest_coverage(
         totals = [h["total"] for h in got["hints"]]
         assert totals == sorted(totals, reverse=True)
         for h in got["hints"]:
-            assert h["name"] in non_mapped
+            assert h["name"] in non_mapped_live
             assert set(h["kinds"]) <= {"titck_product_code", "ambiguous_member", "similar_name"}
     for r in report["rules"]:
         assert r["matchable"] == (r["unmatchable"] is None)

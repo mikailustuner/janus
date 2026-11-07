@@ -161,3 +161,41 @@ def test_prednisolone_eye_drops_never_trigger_corticosteroid_rows() -> None:
     assert not rows & {59, 60, 61}
     oral = [_item(0, MONTH0, "Q1", "H02AB06"), *items[1:]]
     assert {59, 60, 61} <= {f.rule.position for f in evaluate(oral, rb, snap, TODAY).findings}
+
+
+# --- Owner decisions on the synonym review (2026-11-07) -----------------------------------------
+
+
+def test_dimenhydrinate_key_keeps_its_own_classes() -> None:
+    """Dimenhydrinate (Janus key J1, R06AA11) is a vestibular suppressant and an antiemetic,
+    not a sleep agent (rows 56 and 2), because it keeps its own code."""
+    rb = real_rule_base()
+    snap = cascade_snapshot(rb)
+    doxazosin = _item(0, MONTH0, "Q1", "C02CA04")
+    dimen = _item(1, MONTH0 + 2, "J1", "R06AA11")
+    rows = {f.rule.position for f in evaluate([doxazosin, dimen], rb, snap, TODAY).findings}
+    assert {2, 56} <= rows
+    statin = _item(0, MONTH0, "Q2", "C10AA05")
+    assert 12 not in {f.rule.position for f in evaluate([statin, dimen], rb, snap, TODAY).findings}
+
+
+def test_codeine_gets_the_abrupt_stop_warning() -> None:
+    """Codeine carries only R05DA04 in Wikidata; it is on the abrupt-stop list (opioid)."""
+    rb = real_rule_base()
+    res = evaluate([_item(0, MONTH0, "Q174723", "R05DA04")], rb, cascade_snapshot(rb), TODAY)
+    assert [(w.item, w.ingredient_key) for w in res.item_warnings] == [(0, "Q174723")]
+
+
+def test_iron_sucrose_code_is_not_a_ppi_deficiency_supplement() -> None:
+    """B03AB02 (intravenous iron sucrose in Wikidata) is excluded from row 49, as in row 65."""
+    rb = real_rule_base()
+    snap = cascade_snapshot(rb)
+    omeprazole = _item(0, MONTH0, "Q1", "A02BC01")
+    iv_iron = _item(1, MONTH0 + 3, "Q2", "B03AB02")
+    oral_iron = _item(1, MONTH0 + 3, "Q2", "B03AA07")
+    assert 49 not in {
+        f.rule.position for f in evaluate([omeprazole, iv_iron], rb, snap, TODAY).findings
+    }
+    assert 49 in {
+        f.rule.position for f in evaluate([omeprazole, oral_iron], rb, snap, TODAY).findings
+    }
