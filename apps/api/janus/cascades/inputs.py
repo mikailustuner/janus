@@ -69,6 +69,6 @@ def ingredient_item(
     """An ingredient found by name: all its ingredient-level codes, form-unconfirmed."""
     codes = frozenset(a.code for a in cand.atc_codes)
     if not codes:
-        return EngineItem(index, start, ()), [NotChecked(index, 1, "no_ingredient_atc")]
+        return EngineItem(index, start, ()), [NotChecked(index, 0, "no_ingredient_atc")]
     ing = EngineIngredient(cand.ingredient_key.qid, codes, False, cand.ingredient_key.label_en)
     return EngineItem(index, start, (ing,)), []

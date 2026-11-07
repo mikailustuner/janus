@@ -415,7 +415,7 @@ response. Nothing is written on the request path.
 
 ## 7. Coverage report (`coverage.py`, `report.py`, Req 8)
 
-`python -m janus.cascades.report [--data-dir PATH] [--similarity 0.5]` reads, in one read-only
+`python -m janus.cascades.report [--data-dir PATH] [--similarity 0.6]` reads, in one read-only
 transaction, the current rule base and, of the current resolution dataset: products (region,
 product type, published code), product ingredients (status, QID, codes, published name, key
 candidates) and ingredients (QID, codes, labels and aliases from `res_name`). The pure
@@ -432,8 +432,11 @@ candidates) and ingredients (QID, codes, labels and aliases from `res_name`). Th
     they hint at their own group — used for the report only, never for findings);
   - `ambiguous_member`: an `ambiguous` ingredient with a class member among its key candidates;
   - `similar_name`: an `unmapped` name whose `trigram_similarity` with a label or alias of a
-    class member is ≥ the threshold (pg_trgm's algorithm on `fold`ed names: words padded with
-    two spaces in front and one behind, Jaccard of trigram sets).
+    class member is ≥ the threshold (pg_trgm's algorithm on folded, salt-stripped names: words
+    padded with two spaces in front and one behind, Jaccard of trigram sets). Hints are grouped
+    by the folded, salt-stripped name, so the salt forms of one name count together. The default
+    threshold is 0.6: on the real dataset 0.5 gave 1,026 hints led by unrelated salts (potassium
+    vs calcium carbonate), 0.6 gave 493 and 0.7 gave 361 while dropping true variants (task 12).
 - Rules that cannot fire in a region (index or marker with no product there), not-matchable
   rules, and marker classes with `otc_share ≥ 0.5` listed first in the summary (Req 8.4: the OTC
   marking comes from the openFDA product type, not from a curated flag, DP17).

@@ -161,3 +161,11 @@ def search_names(
 
 def _like_prefix(key: str) -> str:
     return key.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_") + "%"
+
+
+def combination_codes(conn: psycopg.Connection, dataset_id: str) -> frozenset[str]:
+    """Codes the loader classified as combination codes in this dataset (design §5.4)."""
+    rows = conn.execute(
+        "SELECT code FROM res_combination_atc WHERE dataset_id = %s", (dataset_id,)
+    ).fetchall()
+    return frozenset(str(r[0]) for r in rows)

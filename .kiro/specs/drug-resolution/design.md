@@ -157,7 +157,11 @@ SourceRef: {source_id, run_id, region | null, snapshot_date}
 ```
 `janus.resolution.model.rule_input(ingredient) -> tuple[str, ...]` returns `atc_codes` codes
 only for `status == mapped`, else `()`. This is the only function the cascade engine uses to read
-codes (Req 5.4, cascade-engine Req 1.3).
+codes (Req 5.4, cascade-engine Req 1.3). Added by `cascade-engine` (2026-11-07), read-only:
+`service.rule_inputs(conn, candidate_ids, qids)` re-resolves list items in the request's
+transaction (products through the same builder as `resolve_products`, ingredients by QID with all
+their codes), `service.current_dataset_id(conn)`, and `repository.combination_codes(conn,
+dataset_id)` (the dataset's `res_combination_atc` codes, for the engine's input guard).
 
 ### 3.3 Database (migration `0002_resolution`, forward-only, with downgrade)
 All tables carry `dataset_id text` and are written only by the loader (Req 9.5).

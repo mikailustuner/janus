@@ -51,3 +51,18 @@ The end-to-end product experience across five languages and three regions, inclu
 - For every supported locale, every user-facing string key has a translation (no fallback keys rendered).
 - For every supported locale, rendered findings contain the mandatory disclaimer and none of the forbidden phrases.
 - Demo-mode items never reach contribution or outcome endpoints.
+
+## Open items from cascade-engine (2026-11-07)
+- **Evaluation call.** `POST /cascades/evaluate` takes the resolution `dataset_version` and 1-50
+  items, each a product `candidate_id` (with `choices` for ambiguous ingredient positions, which
+  start at 0) or an ingredient QID, plus `started` as `YYYY-MM` or null. The client never sends
+  ATC codes.
+- **Re-resolve after 409.** Candidate ids are stable only within one dataset version. The client
+  keeps each item's product code (GTIN or NDC) or name in the browser so it can re-resolve after
+  `409 dataset_version_mismatch`.
+- **Form-unconfirmed findings** (`form_confirmed = false`, e.g. an ingredient typed by name) name
+  the matched codes; the client asks the user to confirm the product.
+- **Wording.** Results carry codes (`status`, `timing`, `matches_published_pattern`,
+  `do_not_stop_suddenly`, `no_pattern_found`, `rule_base_unavailable`, integrity codes) and the
+  English canonical sentences. The five-language wording, and showing not-matchable rules (PIPC
+  rows 27 and 57) and not-checked ingredients as "cannot be checked", belong to this spec.

@@ -36,3 +36,15 @@ Give the doctor a one-page, cited note in the doctor's language, and let the doc
 - The generated note never contains a sentence without a non-retracted evidence id.
 - For every supported language, the note contains the mandatory disclaimer and none of that language's forbidden phrases.
 - Changing the note language never changes the set of findings or evidence ids in the note.
+
+## Open items from cascade-engine (2026-11-07)
+- **Abrupt-stop warnings.** `item_warnings` flags every list item whose ingredient is on the
+  abrupt-stop list (16 groups, confirmed by the owner); the note shows "Do not stop this
+  medicine suddenly." next to that medicine, not only next to findings.
+- **Form-unconfirmed findings.** Decide whether findings with `form_confirmed = false` belong in
+  the note's main section or in a separate part.
+- **Evidence.** Each finding carries `evidence_ids` (rule, PIPC paper, the window paper for
+  `probable`, BMJ 2026 where shown, ThinkCascades where supporting, the form-extension paper),
+  already filtered by the integrity snapshot; resolve them with `POST /evidence/resolve` for the
+  integrity line. `rule_base_version` and `integrity_version` identify what the note was made
+  with.

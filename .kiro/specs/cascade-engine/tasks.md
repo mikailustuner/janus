@@ -113,22 +113,22 @@
     strict, pytest with `HYPOTHESIS_PROFILE=ci`); the medical-language and log guards pass on
     the new files. Commit, push, confirm CI passes.
 
-- [ ] 10. Migration, repository and loader (`0005_cascade_rule_base.py`, `repository.py`, `load.py`)
+- [x] 10. Migration, repository and loader (`0005_cascade_rule_base.py`, `repository.py`, `load.py`)
   - Tables of design §3.7 with downgrade; `current_rule_base_version`, rule-base read; the loader
     of design §5.2 (validate first, one transaction, `register_records` for 65 rule records with
     basis `dataset:pipc`, current pointer, `cascade_load` log line with counts only); CLI.
-  - [ ] 10.1 Property test P19: atomic, idempotent load; 65 rule records with basis `dataset:pipc`; refused inputs change nothing. _Requirements: 1.1, 10.1–10.3_
-  - [ ] 10.2 Example tests: upgrade → downgrade → upgrade gives an identical schema; a changed `pipc.csv` (hash mismatch) is refused; loading before the integrity loader has run is refused with a clear error; `/evidence/resolve` for `rule:pipc:12` returns the PIPC correction notice through its basis. _Requirements: 1.1, 1.4, 1.5, 10.1_
+  - [x] 10.1 Property test P19: atomic, idempotent load; 65 rule records with basis `dataset:pipc`; refused inputs change nothing. _Requirements: 1.1, 10.1–10.3_
+  - [x] 10.2 Example tests: upgrade → downgrade → upgrade gives an identical schema; a changed `pipc.csv` (hash mismatch) is refused; loading before the integrity loader has run is refused with a clear error; `/evidence/resolve` for `rule:pipc:12` returns the PIPC correction notice through its basis. _Requirements: 1.1, 1.4, 1.5, 10.1_
 
-- [ ] 11. Request path (`resolution` helpers, `service.py`, `schemas.py`, `router.py`, wiring in `main.py`)
+- [x] 11. Request path (`resolution` helpers, `service.py`, `schemas.py`, `router.py`, wiring in `main.py`)
   - `engine_items` and `combination_codes` in `janus/resolution/` (read-only, design §6.2);
     `POST /cascades/evaluate` on `medical_router()` with its own body validation (field paths
     only), 409 `dataset_version_mismatch`, 503 `cascades_unavailable`, rule-base cache by
     version, `today()` hook for tests, disclaimer on every response.
-  - [ ] 11.1 Property test P6 (database part): region invariance through `engine_items`. _Requirements: 7.1_
-  - [ ] 11.2 Property test P20: stateless, `no-store`, nothing of the request in logs, 422 field paths only, 409 and 503 cases. _Requirements: 9.1–9.5_
-  - [ ] 11.3 Property test P21: byte-identical repeated responses; permuted items give the same findings. _Requirements: 9.6_
-  - [ ] 11.4 Example tests: `classify(app)` accepts the route; codes and ids are not accepted in a path or query string (404/405); a choice outside `key_candidates` is 422; an ambiguous ingredient without a choice is `not_checked`; synthetic Istanbul patient (TİTCK-shaped AMLIPIN `C09BB03` → amlodipine `C08CA01`, a diuretic started later) gives row 5 `probable`; 15 items in under one second through the API. _Requirements: 7.2, 9.1, 9.7, 9.8_
+  - [x] 11.1 Property test P6 (database part): region invariance through `engine_items`. _Requirements: 7.1_
+  - [x] 11.2 Property test P20: stateless, `no-store`, nothing of the request in logs, 422 field paths only, 409 and 503 cases. _Requirements: 9.1–9.5_
+  - [x] 11.3 Property test P21: byte-identical repeated responses; permuted items give the same findings. _Requirements: 9.6_
+  - [x] 11.4 Example tests: `classify(app)` accepts the route; codes and ids are not accepted in a path or query string (404/405); a choice outside `key_candidates` is 422; an ambiguous ingredient without a choice is `not_checked`; synthetic Istanbul patient (TİTCK-shaped AMLIPIN `C09BB03` → amlodipine `C08CA01`, a diuretic started later) gives row 5 `probable`; 15 items in under one second through the API. _Requirements: 7.2, 9.1, 9.7, 9.8_
 
 - [ ] 12. PIPC coverage report (`coverage.py`, `report.py`)
   - `trigram_similarity`, `build_coverage` (design §7); CLI with the output-path guard,
@@ -142,7 +142,7 @@
     not changed without owner review.
   - _Requirements: 8.1–8.6_
 
-- [ ] 13. Checkpoint: API end to end
+- [x] 13. Checkpoint: API end to end
   - All lint, format, type-check and test steps green, including property tests and database
     tests against PostgreSQL 16; commit, push, confirm CI passes.
   - Locally: rebuild the migrate image before `docker compose up` (new migration), run
@@ -153,7 +153,7 @@
   - `test_cascades_real_artifacts.py` green locally (skipped in CI).
   - _Requirements: 9.5, 9.8_
 
-- [ ] 14. Contracts and documentation
+- [x] 14. Contracts and documentation
   - Record in the open items of `experience`, `doctor-loop` and `collective-memory`
     requirements the contracts of design §11 (re-resolve after 409, form-unconfirmed findings,
     `item_warnings`, codes to wording, `faers_stat:` ids); record the two resolution helpers in

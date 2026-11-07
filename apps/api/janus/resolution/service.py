@@ -353,3 +353,40 @@ def resolve_products(
         else [Notice(code="unknown_candidate_ids")]
     )
     return _result(b, regions, found, today, extra=extra)
+
+
+# --- Read-only helpers for the cascade engine (cascade-engine design §6.2) -----------------------
+
+
+@dataclass(frozen=True)
+class RuleInputs:
+    """Products and ingredients of the current dataset, for `janus.cascades.inputs`."""
+
+    dataset_id: str
+    products: dict[str, ProductCandidate]  # by candidate id; unknown ids are absent
+    ingredients: dict[str, IngredientCandidate]  # by QID; unknown QIDs are absent
+    combination_codes: frozenset[str]
+
+
+def current_dataset_id(conn: psycopg.Connection) -> str | None:
+    cur = repository.current(conn)
+    return None if cur is None else cur.dataset_id
+
+
+def rule_inputs(
+    conn: psycopg.Connection, candidate_ids: Sequence[str], qids: Sequence[str]
+) -> RuleInputs:
+    """Re-resolve list items in the request's read-only transaction (codes via `rule_input`)."""
+    cur = _current(conn, REGION_SOURCES.values())
+    refs: list[repository.ProductRef] = []
+    for cid in dict.fromkeys(candidate_ids):
+        region, source_id, pid = cid.split(":")
+        if REGION_SOURCES.get(cast(Region, region)) == source_id:
+            refs.append((source_id, int(pid)))
+    b = _Builder(conn, cur)
+    products = {p.candidate_id: p for p in b.products(refs, "candidate_id")}
+    wanted = sorted(set(qids))
+    ingredients = {c.ingredient_key.qid: c for c in b.ingredient_candidates(wanted, {})}
+    return RuleInputs(
+        cur.dataset_id, products, ingredients, repository.combination_codes(conn, cur.dataset_id)
+    )

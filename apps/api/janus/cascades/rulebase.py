@@ -525,6 +525,61 @@ def rule_base_content(rb: RuleBase) -> dict[str, Any]:
     }
 
 
+def rule_base_from_content(content: Mapping[str, Any], expected_version: str) -> RuleBase:
+    """Rebuild a stored rule base; its recomputed version must equal the stored one."""
+
+    def pattern(p: Mapping[str, Any]) -> Pattern:
+        return Pattern(
+            prefix=p["prefix"],
+            match=p["match"],
+            scope=p["scope"],
+            evidence_id=p["evidence_id"],
+            basis=p["basis"],
+            note=p["note"],
+        )
+
+    rules: list[Rule] = []
+    for r in content["rules"]:
+        pr = r["priority"]
+        rules.append(
+            Rule(
+                position=r["position"],
+                system=r["system"],
+                kind=r["kind"],
+                drug_a=r["drug_a"],
+                adverse_event=r["adverse_event"],
+                drug_b=r["drug_b"],
+                locator=r["locator"],
+                index_class=r["index_class"],
+                marker_class=r["marker_class"],
+                unmatchable=tuple(r["unmatchable"]) if r["unmatchable"] else None,  # pyright: ignore[reportArgumentType]
+                supporting=tuple(r["supporting"]),
+                priority=None if pr is None else Priority(**pr),
+                note=r["note"],
+            )
+        )
+    abrupt = content["abrupt_stop"]
+    rb = RuleBase(
+        window_months=content["window_months"],
+        rules=tuple(rules),
+        classes={
+            cid: AtcClass(cid, tuple(pattern(p) for p in pats))
+            for cid, pats in content["classes"].items()
+        },
+        abrupt_stop=AtcClass(
+            "abrupt_stop", tuple(Pattern(a["prefix"], a["match"], note=a["note"]) for a in abrupt)
+        ),
+        abrupt_groups=tuple(AbruptGroup(a["prefix"], a["group"]) for a in abrupt),
+        version=expected_version,
+        source_paper_id=content["source_paper_id"],
+        window_evidence_id=content["window_evidence_id"],
+        engine_version=content["engine_version"],
+    )
+    if version(rb) != expected_version:
+        raise RuleBaseError("stored_version_mismatch", "cascade_rule_base")
+    return rb
+
+
 def version(rb: RuleBase) -> str:
     """SHA-256 of the canonical content: same content, same version; any change, a new one."""
     return hashlib.sha256(canonical_line(rule_base_content(rb)).encode("utf-8")).hexdigest()

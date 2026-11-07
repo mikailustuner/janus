@@ -54,3 +54,8 @@ Show how often the same medicines and events appear together in public adverse-e
 - Noised counts are never negative and never non-integer.
 - The result for (D, E) does not depend on the order in which reports were loaded.
 - No rendered sentence uses "people" for a FAERS count.
+
+## Open items from cascade-engine (2026-11-07)
+- **FAERS statistics in findings.** A finding's `evidence_ids` has room for `faers_stat:` ids
+  (cascade-engine Req 2.7, Phase 2). They must be registered as evidence and pass the same `cite`
+  filter. Counts are reports, never people.

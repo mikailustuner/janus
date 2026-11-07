@@ -68,6 +68,7 @@ def create_app(
     app.state.database = database
     app.state.events = load_vocabulary(settings.event_vocabulary_path)
     # Imported here to avoid an import cycle (the routers read settings from app.state).
+    from janus.cascades.router import router as cascades_router
     from janus.contributions.router import router as contributions_router
     from janus.integrity.router import router as integrity_router
     from janus.privacy.router import router as privacy_router
@@ -79,6 +80,7 @@ def create_app(
         contributions_router,
         resolution_router,
         integrity_router,
+        cascades_router,
         *extra_routers,
     ]
     for router in routers:
