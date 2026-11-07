@@ -149,3 +149,23 @@ found, what hooks blocked. Three to five lines per day.
 - Re-review both curated ATC files when WHOCC publishes a new ATC version.
 - 12-digit NDC (FDA rule, effective 2033) not accepted yet.
 - Phase 2: `eu_fr`, `eu_es`, `eu_name` adapters; de/fr/es labels in the name index.
+
+## 2026-11-07 — Phase 1: evidence-integrity spec and build
+- Refined `evidence-integrity` requirements into EARS form (original criteria and the four
+  properties kept, Requirements 4-8 added), wrote design.md with 20 Hypothesis properties and 21
+  decisions, then built it. The owner confirmed that only retracted evidence is excluded
+  (`corrected`, `expression_of_concern`, `unknown` stay citable with their notice or status),
+  that notices are shown as published, and that drug-resolution's hard-coded 14 days is replaced
+  by the shared freshness rule (twice the cadence in `pipelines/sources.toml`).
+- The PIPC paper is `corrected` in Crossref (a publisher correction notice of 2025-12-18). The
+  API returns that notice next to the PIPC evidence and with every rule that rests on it; the
+  record stays citable. Janus does not say what the notice changed, because Crossref does not.
+- Spec check before building found that the `retractions` pipeline only reads DOIs of datasets,
+  so a paper cited by a rule would never be checked; a curated paper list became a second input.
+- The sticky-retraction rule is repeated in the loader against the database: a failed check row
+  carries no notices, so without it a retracted record would lose its notice.
+- Property test P9 disagreed with the code at first. The path-based reference followed the
+  basis of a retracted DOI-bearing record; the requirement judges such a record by its own
+  status, so the reference was wrong and was fixed.
+- The rule gate (`rule_gate`) is a pure function over an immutable snapshot, ready for the
+  cascade engine; its contract is recorded in the cascade-engine requirements.

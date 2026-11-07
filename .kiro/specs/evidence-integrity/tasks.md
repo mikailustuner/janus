@@ -72,7 +72,7 @@
   - [x] 7.1 Property test (pipelines): the collected DOIs are the normalised union of artifact DOIs and paper-list DOIs, without repeats, whatever the order. _Requirements: 1.2 (data-pipelines 9.1)_
   - [x] 7.2 Example tests (pipelines): empty file, missing file, bad DOI fails the run. _Requirements: 1.2_
 
-- [ ] 8. Migration, repository and loader (`migrations/versions/0004_evidence_integrity.py`, `repository.py`, `load.py`)
+- [x] 8. Migration, repository and loader (`migrations/versions/0004_evidence_integrity.py`, `repository.py`, `load.py`)
   - Tables of design §3.2 with CHECK constraints and downgrade; `load_snapshot`; the loader of
     design §5.1 (artifact checks, hash of the `retractions` rows, validation, `merge_status`
     against stored state, change log, one transaction, `LOCK TABLE`); `register_records`;
@@ -80,24 +80,24 @@
     counts only.
   - `tests/integrity_db.py`: synthetic artifact directories (Parquet via DuckDB, manifests with
     correct hashes, `evidence_source.json`).
-  - [ ] 8.1 Property test P4 (database part): loading the same artifacts twice leaves every table and the version identical and adds no change rows. _Requirements: 1.1, 8.2, 8.4_
-  - [ ] 8.2 Property test P13 (database part): a refused record set changes nothing. _Requirements: 4.1_
-  - [ ] 8.3 Property test P14 (database part): a new run of the same source keeps ids and updates the snapshot date; no record is deleted. _Requirements: 4.2_
-  - [ ] 8.4 Property test P15: the status-change log has one row per real change; `changes` ordering, `since` and `limit`. _Requirements: 3.3_
-  - [ ] 8.5 Property test P16: any sequence of good, refused and failing loads leaves the state of the last good load. _Requirements: 8.1_
-  - [ ] 8.6 Example tests: upgrade → downgrade → upgrade gives an identical schema (0003 and 0004); hash mismatch refused; `needs_review` artifact without promotion refused; DOI record not in the artifact is stored `unknown / not_yet_checked` and reported; PIPC load gives status `corrected` with its notice. _Requirements: 1.2, 8.1, 8.3_
+  - [x] 8.1 Property test P4 (database part): loading the same artifacts twice leaves every table and the version identical and adds no change rows. _Requirements: 1.1, 8.2, 8.4_
+  - [x] 8.2 Property test P13 (database part): a refused record set changes nothing. _Requirements: 4.1_
+  - [x] 8.3 Property test P14 (database part): a new run of the same source keeps ids and updates the snapshot date; no record is deleted. _Requirements: 4.2_
+  - [x] 8.4 Property test P15: the status-change log has one row per real change; `changes` ordering, `since` and `limit`. _Requirements: 3.3_
+  - [x] 8.5 Property test P16: any sequence of good, refused and failing loads leaves the state of the last good load. _Requirements: 8.1_
+  - [x] 8.6 Example tests: upgrade → downgrade → upgrade gives an identical schema (0003 and 0004); hash mismatch refused; `needs_review` artifact without promotion refused; DOI record not in the artifact is stored `unknown / not_yet_checked` and reported; PIPC load gives status `corrected` with its notice. _Requirements: 1.2, 8.1, 8.3_
 
-- [ ] 9. Service and routes (`service.py`, `router.py`, wiring in `main.py`)
+- [x] 9. Service and routes (`service.py`, `router.py`, wiring in `main.py`)
   - `POST /evidence/resolve` and `POST /evidence/changes` on `medical_router()` with their own
     body validation (field names only); fixed error codes `invalid_request`,
     `integrity_unavailable`; `today()` hook for tests; disclaimer on every response.
-  - [ ] 9.1 Property test P17: nothing loaded → 503 and nothing citable; loaded → unregistered ids are `not_registered`, 200. _Requirements: 7.4_
-  - [ ] 9.2 Property test P18 (route part): identical bytes for repeated calls and any order or repetition of ids. _Requirements: 7.5_
-  - [ ] 9.3 Property test P19: routes are stateless, send `no-store`, log no id, DOI or notice DOI; 422 bodies echo nothing. _Requirements: 7.6, 8.5_
-  - [ ] 9.4 Property test P20: request validation near misses; closed vocabularies; no forbidden phrase in any response. _Requirements: 7.1–7.3, 7.6_
-  - [ ] 9.5 Example tests: `classify(app)` passes with the new routes; codes are not accepted in a path or query string (404/405); the shared freshness rule gives 14 days for `titck` and `openfda_ndc` (DP17). _Requirements: 2.2, 8.5_
+  - [x] 9.1 Property test P17: nothing loaded → 503 and nothing citable; loaded → unregistered ids are `not_registered`, 200. _Requirements: 7.4_
+  - [x] 9.2 Property test P18 (route part): identical bytes for repeated calls and any order or repetition of ids. _Requirements: 7.5_
+  - [x] 9.3 Property test P19: routes are stateless, send `no-store`, log no id, DOI or notice DOI; 422 bodies echo nothing. _Requirements: 7.6, 8.5_
+  - [x] 9.4 Property test P20: request validation near misses; closed vocabularies; no forbidden phrase in any response. _Requirements: 7.1–7.3, 7.6_
+  - [x] 9.5 Example tests: `classify(app)` passes with the new routes; codes are not accepted in a path or query string (404/405); the shared freshness rule gives 14 days for `titck` and `openfda_ndc` (DP17). _Requirements: 2.2, 8.5_
 
-- [ ] 10. Checkpoint: API end to end
+- [x] 10. Checkpoint: API end to end
   - All lint, format, type-check and test steps green, including property tests and database
     tests against PostgreSQL 16; commit, push, confirm CI passes.
   - Locally: `janus-pipelines run retractions` (reads the PIPC DOI), `python -m
@@ -109,14 +109,14 @@
   - `test_integrity_real_artifacts.py` green locally (skipped in CI).
   - _Requirements: 1.4, 3.1, 3.2, 7.1, 8.5_
 
-- [ ] 11. Contract and documentation
+- [x] 11. Contract and documentation
   - Record the rule-gate contract (design §4.4, §10) in `cascade-engine/requirements.md` open
     items, as drug-resolution did for `rule_input`.
   - Note the new integrity data in `data/README.md`; update `docs/kiro-usage.md` after the final
     checkpoint (task 12).
   - _Requirements: 6.6_
 
-- [ ] 12. Final checkpoint
+- [x] 12. Final checkpoint
   - All steps green locally and in CI; commit, push, confirm CI passes.
   - Record final numbers (records, statuses, tests) and remaining open items in design §10 and
     append a dated entry to `docs/kiro-usage.md` (spec refinement, counterexamples found by the

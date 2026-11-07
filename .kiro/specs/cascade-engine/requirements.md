@@ -66,3 +66,22 @@ Detect prescribing cascades in a user's medication list: drug A causes an advers
   codes (an ophthalmic timolol carries `S01ED01`, not `C07AA06`). The rule base must decide
   whether each rule's index-drug classes also include such codes (e.g. `S01ED` alongside `C07`).
   The route map stays as it is.
+
+## Open items from evidence-integrity (2026-11-07)
+- **Rule gate contract (Req 1.5).** Read the integrity snapshot once per request with
+  `janus.integrity.repository.load_snapshot(conn)` (inside the same read-only transaction) and pass
+  it to the pure functions. For each rule call `janus.integrity.gate.rule_gate(source_ids,
+  snapshot)`: a disabled rule (`gate.enabled` false) produces no finding, and `gate.reason`
+  (`no_source`, `all_sources_retracted`, `no_citable_source`) with `gate.removed` (ids, reasons and
+  the retraction notices) is the "why". Put only `gate.usable` into a finding's evidence ids. The
+  gate keeps nothing between calls, so a rule returns when a source becomes citable again.
+- **Evidence records for rules.** Register one `rule:pipc:<position>` record per PIPC row with
+  `register_records` (`janus.integrity.load`), basis `dataset:pipc` (and the BMJ 2026 paper where
+  a rule takes its priority from it, added to `data/evidence_papers.csv` with its DOI so the
+  `retractions` pipeline checks it). A `rule` record without basis is refused.
+- **Outputs.** Carry `snapshot.version()` (the integrity version) next to the rule-base version in
+  every result. Use `cite(snapshot, ids)` and `keep_output(snapshot, ids)` for any finding,
+  sentence or card; only `retracted` removes a record, `corrected`, `expression_of_concern` and
+  `unknown` stay citable with their notice or status (evidence-integrity DP4).
+- **Status today.** The PIPC list (`dataset:pipc`) is `corrected` (a publisher correction notice
+  of 2025-12-18). It stays citable and its notice is returned with every PIPC rule.

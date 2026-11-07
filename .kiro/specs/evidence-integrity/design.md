@@ -581,3 +581,24 @@ refinement.
   into evidence ids; carry `integrity_version`; use `cite` and `keep_output` for outputs.
 - The crossref snapshot date of a record created from a `retractions` run is its retrieval time;
   the per-record check date (`checked_at`) is what the evidence view shows for a DOI check.
+
+## 11. Result of the build (2026-11-07)
+- Built as designed. Differences: the item view and the line are Pydantic models in `view.py`
+  and `line.py` (pure data); request and response models are in `schemas.py`; `resolve` rejects
+  repeated ids with 422 (P20), so "repetition" in P18 means repeated calls and permutations.
+- Counts: 201 API tests (all properties P1-P20 as Hypothesis tests or, for P8 and P17, a
+  Hypothesis test plus an example on the real file or database), 92 pipelines tests, all green
+  with `HYPOTHESIS_PROFILE=ci` and PostgreSQL 16.
+- Counterexample from the property tests: P9 compared the code with a path-based reference that
+  also followed the basis of a retracted DOI-bearing record. That is the reference being wrong,
+  not the code: Requirement 5.2 judges a DOI-bearing record by its own status only. The
+  reference was fixed; the requirement text was already unambiguous. The other failures during
+  development were generator mistakes in the tests (a "completed" check with status `unknown`;
+  Hypothesis positional strategies filling fixtures), not defects in the code.
+- Real data: `janus-pipelines run retractions` then `python -m janus.integrity.load` gave 5
+  evidence records, one with a DOI: `dataset:pipc`, status `corrected`, notice
+  `10.1007/s41999-025-01378-7` (correction, publisher, 2025-12-18). `POST /evidence/resolve` in
+  the Docker API returns it citable, freshness `current` (464 days of 730), one source in the
+  integrity line, `no_retracted_used` true. API and Postgres logs hold no evidence id or DOI.
+- The resolution dataset of the dev database was reloaded: the cadence is now part of its
+  version, and AMLIPIN still resolves to `C08CA01` and `C09AA03`.
