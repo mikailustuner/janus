@@ -320,7 +320,7 @@ def prepare_dataset(
         records[qid] = IngredientRecord(
             qid,
             {lang: r.get(f"label_{lang}") for lang in LANGS},
-            ingredient_codes(_strs(r.get("atc_codes")), observed_single, check),
+            _one_per_code(ingredient_codes(_strs(r.get("atc_codes")), observed_single, check)),
             _strs(r.get("rxcuis")),
         )
 
@@ -341,6 +341,15 @@ def prepare_dataset(
     audit = _audit(products, wikidata_codes, check)
     coverage = _coverage(products, records, items, stats)
     return PreparedDataset(tuple(products), records, names, audit, coverage)
+
+
+def _one_per_code(codes: Iterable[AtcCode]) -> tuple[AtcCode, ...]:
+    """One entry per code; a code observed on a TİTCK product (the regulator's list) is cited
+    before the same code from Wikidata."""
+    best: dict[str, AtcCode] = {}
+    for a in sorted(codes, key=lambda a: (a.code, a.source_id == WIKIDATA, a.sort_key())):
+        best.setdefault(a.code, a)
+    return tuple(best[c] for c in sorted(best))
 
 
 def _ingredient(
@@ -370,7 +379,7 @@ def _ingredient(
     qid = match.keys[0]
     record = records[qid]
     chosen = select_codes(record.ingredient_atc, ctx, check, route_map)
-    codes = chosen.codes
+    codes = _one_per_code(chosen.codes)
     if chosen.selection == "single_ingredient_product":
         own = f"{raw.product['region']}:{raw.product['source_id']}:{raw.product['product_id']}"
         codes = (AtcCode(codes[0].code, raw.product["source_id"], own),)

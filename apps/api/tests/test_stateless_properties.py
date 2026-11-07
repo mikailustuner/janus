@@ -157,7 +157,8 @@ def test_classify_rejects_prefix_and_unlisted_operational() -> None:
 
 
 def test_write_tx_used_only_by_contributions_repository() -> None:
-    """`write_tx` is the only write path; only the donation repository may use it (DP5)."""
+    """`write_tx` is the only write path; only the donation repository and the resolution
+    loader (reference data, drug-resolution DP16) may use it (DP5)."""
     users: list[str] = []
     for path in JANUS.rglob("*.py"):
         tree = ast.parse(path.read_text(encoding="utf-8"))
@@ -166,4 +167,4 @@ def test_write_tx_used_only_by_contributions_repository() -> None:
                 users.append(str(path.relative_to(JANUS)))
             if isinstance(node, ast.ImportFrom) and any(a.name == "write_tx" for a in node.names):
                 users.append(str(path.relative_to(JANUS)))
-    assert set(users) <= {"contributions/repository.py"}
+    assert set(users) <= {"contributions/repository.py", "resolution/load.py"}

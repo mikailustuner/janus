@@ -16,52 +16,14 @@ from janus.resolution.atc import (
 from janus.resolution.canonical import GOLDEN_ROWS, GOLDEN_SCHEMA, content_hash
 from janus.resolution.prepare import PreparedDataset, prepare_dataset
 from tests.resolution_strategies import (
-    SALTS,
+    ROUTES,
+    RULES,
     SYN_CODES,
-    WORDS,
+    barcode13,
+    sources,
     titck_row,
-    us_row,
     wikidata_row,
-    with_check_digit,
 )
-
-RULES = CombinationRules(frozenset({"C09B", "A10BD"}), frozenset({"J01CA51"}), frozenset(), "t")
-ROUTES = RouteMap({"ORAL": ("A", "C", "J", "N"), "TOPICAL": ("D",)}, "t")
-COMBO_CODES = st.sampled_from(["C09BB03", "A10BD05", "J01CA51", "N01AA20", "C08CA51"])
-
-
-def _barcode(i: int) -> str:
-    return with_check_digit(f"869{i:09d}")
-
-
-@st.composite
-def sources(draw: st.DrawFn) -> tuple[list[Any], list[Any], list[Any]]:
-    """Synthetic Wikidata items and TİTCK/openFDA products built from them."""
-    n = draw(st.integers(2, len(WORDS)))
-    words = WORDS[:n]
-    wd: list[Any] = []
-    for i, w in enumerate(words, start=1):
-        codes = draw(st.lists(st.one_of(SYN_CODES, COMBO_CODES), min_size=1, max_size=3))
-        lang = draw(st.sampled_from(["en", "tr"]))
-        wd.append(wikidata_row(f"Q{i}", codes, {lang: w}))
-    name = st.one_of(
-        st.sampled_from(words),
-        st.tuples(st.sampled_from(words), st.sampled_from(SALTS)).map(" ".join),
-        st.just("bilinmeyen madde"),
-        st.tuples(st.sampled_from(words), st.sampled_from(words)).map(" ".join),  # unsplit
-    )
-    published = st.one_of(st.none(), SYN_CODES, COMBO_CODES, st.sampled_from(["B05D", "S03CA0l"]))
-    tr: list[Any] = []
-    for i in range(draw(st.integers(1, 12))):
-        ings = draw(st.lists(name, min_size=0, max_size=3))
-        barcode = _barcode(draw(st.integers(1, 6))) if draw(st.integers(0, 5)) else None
-        tr.append(titck_row(barcode, f"URUN {i}", ings, draw(published)))
-    us: list[Any] = []
-    for i in range(draw(st.integers(0, 6))):
-        ings = draw(st.lists(st.sampled_from(words), min_size=1, max_size=2))
-        routes = draw(st.lists(st.sampled_from(["ORAL", "TOPICAL", "NASAL"]), max_size=2))
-        us.append(us_row(f"1234{i}-678", [f"1234{i}-678-90"], ings, routes))
-    return tr, us, wd
 
 
 def _full_check(ds: PreparedDataset) -> set[str]:
@@ -169,9 +131,9 @@ def test_decomposition_invariance(
         wikidata_row("Q2", b_codes, {"tr": "betorol"}),
     ]
     tr = [
-        titck_row(_barcode(1), "KOMBI", ["alfazin" + salt, "betorol"], combo),
-        titck_row(_barcode(2), "TEK A", ["alfazin"], a_mono),
-        titck_row(_barcode(3), "TEK B", ["betorol" + salt], b_mono),
+        titck_row(barcode13(1), "KOMBI", ["alfazin" + salt, "betorol"], combo),
+        titck_row(barcode13(2), "TEK A", ["alfazin"], a_mono),
+        titck_row(barcode13(3), "TEK B", ["betorol" + salt], b_mono),
     ]
     ds = prepare_dataset(tr, [], wd, RULES, ROUTES)
     p = {x.product_name: x for x in ds.products}

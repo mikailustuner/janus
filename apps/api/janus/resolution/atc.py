@@ -31,7 +31,14 @@ _ANATOMICAL = re.compile(r"^[A-Z]")
 # outside it use the 50-series (and 70-series in some groups).
 NUMBERING_SERIES: frozenset[int] = frozenset({20, 30, *range(50, 80)})
 
-DATA_DIR = Path(__file__).resolve().parents[4] / "data"
+
+def _repo_data_dir() -> Path:
+    """`<repo>/data` when running from the repository; the loader runs there (design §6)."""
+    parents = Path(__file__).resolve().parents
+    return parents[4] / "data" if len(parents) > 4 else Path("data")
+
+
+DATA_DIR = _repo_data_dir()
 COMBINATION_RULES_FILE = DATA_DIR / "atc_combination_rules.csv"
 ROUTE_MAP_FILE = DATA_DIR / "route_atc_groups.csv"
 

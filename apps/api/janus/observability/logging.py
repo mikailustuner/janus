@@ -73,6 +73,7 @@ class LogEvent(StrEnum):
     migration = "migration"
     donations_disabled = "donations_disabled"
     purge = "purge"
+    resolution_load = "resolution_load"
 
 
 def register_route_templates(templates: Iterable[str]) -> None:

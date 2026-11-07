@@ -70,8 +70,15 @@ def create_app(
     # Imported here to avoid an import cycle (the routers read settings from app.state).
     from janus.contributions.router import router as contributions_router
     from janus.privacy.router import router as privacy_router
+    from janus.resolution.router import router as resolution_router
 
-    routers = [health_router, privacy_router, contributions_router, *extra_routers]
+    routers = [
+        health_router,
+        privacy_router,
+        contributions_router,
+        resolution_router,
+        *extra_routers,
+    ]
     for router in routers:
         app.include_router(router)
     kinds = classify(app, routers)  # fails on an unclassified route (DP2)

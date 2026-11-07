@@ -8,9 +8,11 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import date
+from typing import Any
 
 from hypothesis import strategies as st
 
+from janus.resolution.atc import CombinationRules, RouteMap
 from janus.resolution.gs1 import AI_TABLE, GS, gtin_check_digit
 
 # GS1 character set 82 without "(" and ")", which the parenthesised form cannot carry.
@@ -186,3 +188,42 @@ def us_row(
         "route": routes,
         "dosage_form": "TABLET",
     }
+
+
+RULES = CombinationRules(frozenset({"C09B", "A10BD"}), frozenset({"J01CA51"}), frozenset(), "t")
+ROUTES = RouteMap({"ORAL": ("A", "C", "J", "N"), "TOPICAL": ("D",)}, "t")
+COMBO_CODES = st.sampled_from(["C09BB03", "A10BD05", "J01CA51", "N01AA20", "C08CA51"])
+
+
+def barcode13(i: int) -> str:
+    return with_check_digit(f"869{i:09d}")
+
+
+@st.composite
+def sources(draw: st.DrawFn) -> tuple[list[Any], list[Any], list[Any]]:
+    """Synthetic Wikidata items and TİTCK/openFDA products built from them."""
+    n = draw(st.integers(2, len(WORDS)))
+    words = WORDS[:n]
+    wd: list[Any] = []
+    for i, w in enumerate(words, start=1):
+        codes = draw(st.lists(st.one_of(SYN_CODES, COMBO_CODES), min_size=1, max_size=3))
+        lang = draw(st.sampled_from(["en", "tr"]))
+        wd.append(wikidata_row(f"Q{i}", codes, {lang: w}))
+    name = st.one_of(
+        st.sampled_from(words),
+        st.tuples(st.sampled_from(words), st.sampled_from(SALTS)).map(" ".join),
+        st.just("bilinmeyen madde"),
+        st.tuples(st.sampled_from(words), st.sampled_from(words)).map(" ".join),  # unsplit
+    )
+    published = st.one_of(st.none(), SYN_CODES, COMBO_CODES, st.sampled_from(["B05D", "S03CA0l"]))
+    tr: list[Any] = []
+    for i in range(draw(st.integers(1, 12))):
+        ings = draw(st.lists(name, min_size=0, max_size=3))
+        barcode = barcode13(draw(st.integers(1, 6))) if draw(st.integers(0, 5)) else None
+        tr.append(titck_row(barcode, f"URUN {i}", ings, draw(published)))
+    us: list[Any] = []
+    for i in range(draw(st.integers(0, 6))):
+        ings = draw(st.lists(st.sampled_from(words), min_size=1, max_size=2))
+        routes = draw(st.lists(st.sampled_from(["ORAL", "TOPICAL", "NASAL"]), max_size=2))
+        us.append(us_row(f"1234{i}-678", [f"1234{i}-678-90"], ings, routes))
+    return tr, us, wd

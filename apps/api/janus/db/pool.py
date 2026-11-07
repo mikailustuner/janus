@@ -1,7 +1,8 @@
 """PostgreSQL access (privacy design §4.3, DP5).
 
 Medical routes get the database only through `read_only_tx()`, so PostgreSQL rejects any
-write. `write_tx()` is used only by `janus/contributions/repository.py` (enforced by a test).
+write. `write_tx()` is used only by `janus/contributions/repository.py` and the resolution
+loader `janus/resolution/load.py` (enforced by a test).
 All SQL is parameterised.
 """
 
@@ -34,7 +35,9 @@ class Database:
     @contextmanager
     def read_only_tx(self) -> Generator[psycopg.Connection]:
         with self.pool.connection() as conn, conn.transaction():
-            conn.execute("SET TRANSACTION READ ONLY")
+            # One snapshot per request: a dataset switch by the resolution loader during a
+            # request is not seen half-way (drug-resolution design §4.8).
+            conn.execute("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY")
             yield conn
 
     @contextmanager
