@@ -128,8 +128,11 @@ def test_library_logger_messages_are_suppressed() -> None:
     planted = "HTTP Request: GET https://api.fda.gov/x?search=zzndczz"
     logging.getLogger("httpx2").info(planted)  # log-guard: ignore (planted library leak)
     logging.getLogger("uvicorn.error").exception("boom zzbodyzz")
+    access_record = '127.0.0.1:5555 - "GET /resolve/zzcodezz HTTP/1.1" 404'
+    logging.getLogger("uvicorn.access").info(access_record)  # log-guard: ignore (planted)
     log_event(LogEvent.purge, count=3)
     lines = [json.loads(x) for x in stream.getvalue().splitlines()]
+    assert len(lines) == 3  # the uvicorn.access record is not emitted at all
     assert lines[0] == {**lines[0], "event": "suppressed", "logger": "httpx2"}
     assert lines[1]["event"] == "suppressed"
     assert lines[2]["event"] == "purge" and lines[2]["count"] == 3

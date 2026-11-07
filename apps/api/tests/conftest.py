@@ -2,11 +2,15 @@
 
 from __future__ import annotations
 
+import argparse
 import os
 from collections.abc import Iterator
+from pathlib import Path
 
 import psycopg
 import pytest
+from alembic import command
+from alembic.config import Config
 from hypothesis import HealthCheck, settings
 
 settings.register_profile(
@@ -46,11 +50,21 @@ def pytest_collection_modifyitems(config: pytest.Config, items: list[pytest.Item
             item.add_marker(skip)
 
 
+API_ROOT = Path(__file__).resolve().parents[1]
+
+
+def alembic_config(url: str) -> Config:
+    cfg = Config(str(API_ROOT / "alembic.ini"))
+    cfg.cmd_opts = argparse.Namespace(x=[f"url={url}"])
+    return cfg
+
+
 @pytest.fixture(scope="session")
 def db_url() -> str:
     url = os.environ.get(TEST_DB_ENV)
     if not url:
         pytest.skip(f"{TEST_DB_ENV} not set")
+    command.upgrade(alembic_config(url), "head")
     return url
 
 

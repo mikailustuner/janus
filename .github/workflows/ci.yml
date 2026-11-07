@@ -96,6 +96,15 @@ jobs:
       - run: uv run ruff check .
       - run: uv run ruff format --check .
       - run: uv run pyright
+      - name: Postgres logs no statements or failing rows (same settings as docker-compose.yml)
+        run: |
+          for setting in "log_error_verbosity = 'terse'" "log_min_error_statement = 'panic'" \
+                         "log_statement = 'none'" "log_min_duration_statement = -1"; do
+            psql "$JANUS_TEST_DATABASE_URL" -v ON_ERROR_STOP=1 -c "ALTER SYSTEM SET $setting"
+          done
+          psql "$JANUS_TEST_DATABASE_URL" -v ON_ERROR_STOP=1 -c "SELECT pg_reload_conf()"
+      - name: Apply migrations
+        run: uv run alembic -x url="$JANUS_TEST_DATABASE_URL" upgrade head
       - run: uv run pytest
 
   pipelines:

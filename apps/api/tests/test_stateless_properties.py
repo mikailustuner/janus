@@ -38,13 +38,16 @@ def stub_client(db_url: str) -> Iterator[TestClient]:
         table = sql.Identifier(STUB_TABLE)
         conn.execute(sql.SQL("CREATE TABLE IF NOT EXISTS {} (v text)").format(table))
         conn.execute(sql.SQL("INSERT INTO {} (v) VALUES ('baseline')").format(table))
+    database = Database(db_url)
+    database.open()
     app = create_app(
         Settings.from_env({}),
-        database=Database(db_url),
+        database=database,
         extra_routers=[stub_medical_router(with_db=True)],
     )
     with TestClient(app, raise_server_exceptions=False) as client:
         yield client
+    database.close()
     with psycopg.connect(db_url, autocommit=True) as conn:
         conn.execute(sql.SQL("DROP TABLE IF EXISTS {}").format(sql.Identifier(STUB_TABLE)))
 

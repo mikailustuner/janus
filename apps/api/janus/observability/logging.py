@@ -196,4 +196,9 @@ def configure_logging(stream: Any = None, level: int = logging.INFO) -> logging.
         for old in list(lib.handlers):
             lib.removeHandler(old)
         lib.propagate = True
+    # Uvicorn's access records carry client IP, path and query; Janus writes its own access
+    # line, so they are not emitted at all (the formatter would only reduce them).
+    uvicorn_access = logging.getLogger("uvicorn.access")
+    uvicorn_access.disabled = True
+    uvicorn_access.propagate = False
     return handler

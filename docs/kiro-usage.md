@@ -83,3 +83,32 @@ found, what hooks blocked. Three to five lines per day.
 - **155 TİTCK rows excluded as `invalid_barcode`** (06.11.2026 list): 83 are 13 digits with a
   wrong check digit, the rest are empty, 12, 14 or 16-17 characters (e.g. a leading `:`). They
   are kept out of the lookup, not repaired; whether to recover any is a `drug-resolution` decision.
+
+## 2026-11-07 — Phase 1: privacy spec (server side)
+- Refined `privacy` requirements into EARS form, client-side criteria kept and tagged for the
+  `experience` spec; design.md has 16 Hypothesis properties and 21 decisions. Owner decisions:
+  adults only (age bands from 20), consent version stored, 24-month retention purge,
+  `"demo": true` rejected, placeholder event vocabulary until `collective-memory`.
+- Built in `apps/api`: an allowlist log formatter for every logger, an access-log middleware
+  (request id, route template, status, latency), route kinds with a fail-safe "medical unless
+  allowlisted" rule, JSON-only 64 KiB bodies, read-only transactions for medical routes, the
+  `contributions` migration with CHECK constraints, donation and deletion endpoints, the
+  EU-region guard, the retention purge, and the shared k = 20 / discrete Laplace module.
+- Statistical test S1 (chi-square fit of the noise sampler) found that the discrete Laplace
+  sampler used scale ε instead of 1/ε (the two integers of CKS20 Algorithm 2 were swapped);
+  at ε = 1 both are the same, so only the ε = 0.1 case showed it. Fixed in
+  `janus/memory/noise.py`.
+- Property test P7 found that the donation model accepted `"explicit": 1` and
+  `"age_band": 65.0`: Pydantic's `Literal` compares by equality even in strict mode. Fixed with
+  strict `bool`/`int` fields plus explicit checks.
+- The manual check in docker compose found that uvicorn still emitted an access record per
+  request (reduced to a `suppressed` line by the formatter); the `uvicorn.access` logger is now
+  disabled. The `log-guard` hook flagged `event` in `log_event()`; it is the log-event name,
+  so the call was restructured rather than suppressed.
+### Open items
+- Phase 5: daily purge schedule; rate limiting at Caddy without storing or logging IPs (one
+  source can still submit many donations until then); database roles; production Postgres
+  log settings; Caddy access logs; backups and their retention; production EU region.
+- `collective-memory`: replace the placeholder event vocabulary.
+- `experience`: consent screen, privacy page (region, 24-month retention, what is stored), no
+  donations in demo mode.

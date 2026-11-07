@@ -44,52 +44,52 @@
     tests against PostgreSQL 16); the `log-guard` hook reports no findings under `apps/api`.
     Commit, push, and confirm CI passes.
 
-- [ ] 6. Pure disclosure module (`janus/memory/noise.py`, `janus/memory/disclosure.py`)
+- [x] 6. Pure disclosure module (`janus/memory/noise.py`, `janus/memory/disclosure.py`)
   - Exact discrete Laplace sampler (CKS20, `int` / `Fraction` only), keyed HMAC-SHA256 generator
     with unbiased `randbelow`, `noisy_count`, `release_table` (design §6). No I/O.
-  - [ ] 6.1 Property test P11: released cells all have count ≥ k; output unchanged when suppressed cells change below k. _Requirements: 4.1_
-  - [ ] 6.2 Property test P12: noisy counts are non-negative integers. _Requirements: 4.2_
-  - [ ] 6.3 Property test P13: same key, cell and data version give the same value; cell order does not matter. _Requirements: 4.2_
-  - [ ] 6.4 Statistical test S1: chi-square fit of 200,000 seeded draws per ε against the discrete Laplace pmf; mean near 0. _Requirements: 4.2_
-  - [ ] 6.5 Property test P14 (module part): `release_table` raises for k < 20. _Requirements: 4.1_
+  - [x] 6.1 Property test P11: released cells all have count ≥ k; output unchanged when suppressed cells change below k. _Requirements: 4.1_
+  - [x] 6.2 Property test P12: noisy counts are non-negative integers. _Requirements: 4.2_
+  - [x] 6.3 Property test P13: same key, cell and data version give the same value; cell order does not matter. _Requirements: 4.2_
+  - [x] 6.4 Statistical test S1: chi-square fit of 200,000 seeded draws per ε against the discrete Laplace pmf; mean near 0. _Requirements: 4.2_
+  - [x] 6.5 Property test P14 (module part): `release_table` raises for k < 20. _Requirements: 4.1_
 
-- [ ] 7. Migration and local database settings (`apps/api/migrations/`, `docker-compose.yml`)
+- [x] 7. Migration and local database settings (`apps/api/migrations/`, `docker-compose.yml`)
   - Alembic setup; revision `0001_contributions` with the schema and CHECKs from design §5.2 and
     a downgrade that drops the table.
   - Postgres in compose with `log_error_verbosity=terse`, `log_min_error_statement=panic`,
     `log_statement=none`, `log_min_duration_statement=-1` (design §5.4).
-  - [ ] 7.1 Example test: upgrade → downgrade → upgrade on an empty database gives identical columns and constraints. _Requirements: 3.5_
-  - [ ] 7.2 Example test: the database rejects a row outside each field's domain (CHECKs hold without the API). _Requirements: 3.2_
-  - [ ] 7.3 Example test: `SHOW log_error_verbosity` is `terse` on the compose database. _Requirements: 2.3_
+  - [x] 7.1 Example test: upgrade → downgrade → upgrade on an empty database gives identical columns and constraints. _Requirements: 3.5_
+  - [x] 7.2 Example test: the database rejects a row outside each field's domain (CHECKs hold without the API). _Requirements: 3.2_
+  - [x] 7.3 Example test: `SHOW log_error_verbosity` is `terse` on the compose database. _Requirements: 2.3_
 
-- [ ] 8. Donation model, week, tokens, retention (`janus/contributions/models.py`, `week.py`, `tokens.py`, `vocabulary.py`, `retention.py`)
+- [x] 8. Donation model, week, tokens, retention (`janus/contributions/models.py`, `week.py`, `tokens.py`, `vocabulary.py`, `retention.py`)
   - `ContributionIn` / `ContributionStored` / `DeletionIn` with `extra="forbid"` and the domains of
     design §5.1 (age bands 20–85 and 90; consent version); event vocabulary loader with the
     placeholder file (design §5.8); `report_week`; `new_token`, `token_hash`;
     `retention_cutoff`, `is_expired` (design §5.7).
-  - [ ] 8.1 Property test P8: `report_week` returns the Monday of the UTC ISO week for any aware instant. _Requirements: 3.2_
-  - [ ] 8.2 Property test P7 (model part): extra fields, missing fields, out-of-domain values (incl. age bands under 20), duplicate ingredients and missing or unknown consent fail validation. _Requirements: 3.1, 3.2_
-  - [ ] 8.3 Property test P16 (pure part): `retention_cutoff` is 24 calendar months earlier, clamped, matching an independent reference. _Requirements: 3.6_
+  - [x] 8.1 Property test P8: `report_week` returns the Monday of the UTC ISO week for any aware instant. _Requirements: 3.2_
+  - [x] 8.2 Property test P7 (model part): extra fields, missing fields, out-of-domain values (incl. age bands under 20), duplicate ingredients and missing or unknown consent fail validation. _Requirements: 3.1, 3.2_
+  - [x] 8.3 Property test P16 (pure part): `retention_cutoff` is 24 calendar months earlier, clamped, matching an independent reference. _Requirements: 3.6_
 
-- [ ] 9. Donation storage, deletion and storage region (`contributions/repository.py`, `router.py`, `privacy/`)
+- [x] 9. Donation storage, deletion and storage region (`contributions/repository.py`, `router.py`, `privacy/`)
   - Repository with parameterised SQL; `POST /contributions` (stores the consent version;
     rejects `"demo": true`), `POST /contributions/deletions`, `GET /privacy/storage`; region
     guard with the explicit EU list; 503 when donations are not fully configured (design §5).
   - `purge_expired` and `python -m janus.contributions.purge` (design §5.7).
-  - [ ] 9.1 Property test P6: a stored donation has exactly the allowed columns and the normalised input values. _Requirements: 3.2_
-  - [ ] 9.2 Property test P7 (endpoint part): every invalid payload, incl. `"demo": true`, gets 422 and the table is unchanged; stored week equals `report_week(server clock)` (P8 router part). _Requirements: 3.1, 3.2_
-  - [ ] 9.3 Property test P9: after deletion no query returns the donation, others are unchanged, a recomputed aggregate excludes it. _Requirements: 3.3_
-  - [ ] 9.4 Property test P10: the token is not in the database; other tokens delete nothing; second use returns 404. _Requirements: 3.3_
-  - [ ] 9.5 Property test P16 (database part): the purge deletes exactly the expired donations and a second run deletes nothing. _Requirements: 3.6_
-  - [ ] 9.6 Property test P15: donations enabled iff region is `local` or exactly an EU storage region id. _Requirements: 3.4_
-  - [ ] 9.7 Example tests: `/privacy/storage` in `local` mode reports the region and `in_eu=false` with no compliance wording; donation routes return 503 when not configured; P1 rerun over the donation routes. _Requirements: 3.4, 5.2, 2.2_
+  - [x] 9.1 Property test P6: a stored donation has exactly the allowed columns and the normalised input values. _Requirements: 3.2_
+  - [x] 9.2 Property test P7 (endpoint part): every invalid payload, incl. `"demo": true`, gets 422 and the table is unchanged; stored week equals `report_week(server clock)` (P8 router part). _Requirements: 3.1, 3.2_
+  - [x] 9.3 Property test P9: after deletion no query returns the donation, others are unchanged, a recomputed aggregate excludes it. _Requirements: 3.3_
+  - [x] 9.4 Property test P10: the token is not in the database; other tokens delete nothing; second use returns 404. _Requirements: 3.3_
+  - [x] 9.5 Property test P16 (database part): the purge deletes exactly the expired donations and a second run deletes nothing. _Requirements: 3.6_
+  - [x] 9.6 Property test P15: donations enabled iff region is `local` or exactly an EU storage region id. _Requirements: 3.4_
+  - [x] 9.7 Example tests: `/privacy/storage` in `local` mode reports the region and `in_eu=false` with no compliance wording; donation routes return 503 when not configured; P1 rerun over the donation routes. _Requirements: 3.4, 5.2, 2.2_
 
-- [ ] 10. CI
+- [x] 10. CI
   - `api` job: `postgres:16` service, `JANUS_TEST_DATABASE_URL`, `HYPOTHESIS_PROFILE=ci`,
     `alembic upgrade head` before pytest; the `db` tests must run, not skip.
   - _Requirements: 3.5, 2.1_
 
-- [ ] 11. Final checkpoint
+- [x] 11. Final checkpoint
   - All tests green locally and in CI; `docker compose up` starts the API with donations in
     `local` mode; a manual donation and deletion leave no trace in API or Postgres logs.
   - All lint, format, type-check and test steps green; commit, push, confirm CI passes.

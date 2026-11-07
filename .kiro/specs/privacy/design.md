@@ -134,7 +134,9 @@ finally:
 
 `route` is always `route.path` (the template, e.g. `/resolve/{code}`), never `scope["path"]`
 or `scope["query_string"]`. Mounted sub-apps (docs) log their mount template. Uvicorn's own
-access log stays off (`--no-access-log`, already in the Dockerfile).
+access log stays off (`--no-access-log`, already in the Dockerfile), and `configure_logging()`
+also disables the `uvicorn.access` logger: the manual check in task 11 showed uvicorn still
+emits an access record per request, which the formatter reduced to a `suppressed` line.
 
 ### 4.2 Allowlist formatter (Req 2.2)
 `configure_logging()` replaces all handlers on the root logger and on `uvicorn`,
@@ -421,5 +423,13 @@ added in the refinement; P16 follows the owner's retention decision.
 - `collective-memory`: replace the placeholder event vocabulary (DP6 d).
 - `experience`: consent screen, privacy page (region, 24-month retention, what is stored),
   no donations in demo mode.
-- Confirm in task 1: `scope["route"]` is set for mounted apps and for 404/405 responses in
-  FastAPI 0.162.1; current Alembic, psycopg and psycopg-pool versions.
+- Confirmed during implementation: `scope["route"]` is the matched `APIRoute` (also for 405);
+  FastAPI 0.162.1 includes routers lazily, so `classify` walks the included routers and
+  forbids prefixes. Versions: Alembic 1.20.1, SQLAlchemy 2.1.8, psycopg 3.3.8, psycopg-pool
+  3.3.3.
+- Postgres CHECK violations from direct SQL (not through the API) still reach the server log
+  with the constraint name; with `log_error_verbosity = terse` the row is not logged
+  (verified in task 11). The `DETAIL` row is still sent to the client that issued the SQL.
+- The API's `ContributionIn` uses a strict `bool` for `consent.explicit` and a strict `int`
+  plus membership for `age_band`, not `Literal`: P7 found that `Literal[True]` accepts `1` and
+  `Literal[65]` accepts `65.0` (Pydantic compares literals by equality).

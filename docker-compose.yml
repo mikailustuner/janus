@@ -31,14 +31,31 @@ services:
       timeout: 3s
       retries: 10
 
-  api:
+  migrate:
+    # One-shot: apply Alembic migrations (forward-only; each has a downgrade).
     build:
       context: apps/api
+    command: ["alembic", "upgrade", "head"]
     environment:
       DATABASE_URL: postgresql://janus:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@postgres:5432/janus
     depends_on:
       postgres:
         condition: service_healthy
+  api:
+    build:
+      context: apps/api
+    environment:
+      DATABASE_URL: postgresql://janus:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@postgres:5432/janus
+      # Donations stay disabled unless these are set in .env (`local` for development).
+      JANUS_DONATION_REGION: ${JANUS_DONATION_REGION:-}
+      JANUS_CONSENT_VERSIONS: ${JANUS_CONSENT_VERSIONS:-}
+      JANUS_K: ${JANUS_K:-20}
+      JANUS_DP_EPSILON: ${JANUS_DP_EPSILON:-1}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
     ports:
       - "127.0.0.1:${API_PORT:-8000}:8000"
     healthcheck:
