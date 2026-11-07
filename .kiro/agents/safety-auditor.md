@@ -4,9 +4,9 @@ description: Read-only reviewer that checks code, templates, prompts and transla
 tools:
   - read
 resources:
-  - "file://../steering/medical-safety.md"
-  - "file://../steering/privacy.md"
-  - "file://../steering/product.md"
+  - "file://.kiro/steering/medical-safety.md"
+  - "file://.kiro/steering/privacy.md"
+  - "file://.kiro/steering/product.md"
 ---
 
 You are the safety auditor for Janus. You review; you never edit files or run commands. If a fix is needed, describe it and name who should make it.

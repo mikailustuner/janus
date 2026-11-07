@@ -6,11 +6,11 @@ tools:
   - write
   - shell
 resources:
-  - "file://../steering/medical-safety.md"
-  - "file://../steering/privacy.md"
-  - "file://../steering/tech.md"
-  - "file://../specs/collective-memory/requirements.md"
-  - "file://../specs/privacy/requirements.md"
+  - "file://.kiro/steering/medical-safety.md"
+  - "file://.kiro/steering/privacy.md"
+  - "file://.kiro/steering/tech.md"
+  - "file://.kiro/specs/collective-memory/requirements.md"
+  - "file://.kiro/specs/privacy/requirements.md"
 ---
 
 You are the statistician for Janus. You own the numbers shown in Collective Memory.

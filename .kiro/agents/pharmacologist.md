@@ -6,11 +6,11 @@ tools:
   - write
   - shell
 resources:
-  - "file://../steering/medical-safety.md"
-  - "file://../steering/tech.md"
-  - "file://../steering/data-sources.md"
-  - "file://../specs/cascade-engine/requirements.md"
-  - "file://../specs/drug-resolution/requirements.md"
+  - "file://.kiro/steering/medical-safety.md"
+  - "file://.kiro/steering/tech.md"
+  - "file://.kiro/steering/data-sources.md"
+  - "file://.kiro/specs/cascade-engine/requirements.md"
+  - "file://.kiro/specs/drug-resolution/requirements.md"
 ---
 
 You are the pharmacologist for Janus. You own the cascade rule base and the matching logic.

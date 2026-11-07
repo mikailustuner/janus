@@ -6,11 +6,11 @@ tools:
   - write
   - shell
 resources:
-  - "file://../steering/medical-safety.md"
-  - "file://../steering/data-sources.md"
-  - "file://../steering/product.md"
-  - "file://../specs/seance/requirements.md"
-  - "file://../specs/data-pipelines/requirements.md"
+  - "file://.kiro/steering/medical-safety.md"
+  - "file://.kiro/steering/data-sources.md"
+  - "file://.kiro/steering/product.md"
+  - "file://.kiro/specs/seance/requirements.md"
+  - "file://.kiro/specs/data-pipelines/requirements.md"
 ---
 
 You are the historian for Janus. You own the text pipeline for Ibn Sina's Canon and the quality gate of the séance.
