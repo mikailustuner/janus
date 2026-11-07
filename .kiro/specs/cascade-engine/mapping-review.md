@@ -923,3 +923,87 @@ The questions of the draft and the owner's answers. All are applied to the files
    outside pain relievers (row 9); benzodiazepines outside vestibular suppressants (row 56).
 7. **Wikidata-based codes.** *Decision:* verify each against the public WHOCC index pages like the
    others. Done (section 1).
+
+## 7. Synonym proposals from the coverage report (pending owner review)
+
+Task 12, drafted by the pharmacologist agent on 2026-11-07 from the coverage report for rule base
+`590f454d…` and dataset `e6798def…`. `data/ingredient_synonyms.csv` is **not changed**. The full
+list, with the TİTCK names, evidence per row and draft CSV rows, is in the git-ignored file
+`.data/cascades/synonym-proposals.md`; this section gives counts, QIDs and codes only.
+
+**102 proposed rows: 30 US (20 Wikidata items), 72 TİTCK (41 items).** Each was simulated through
+code selection (drug-resolution §5.5) and the class patterns. A row is proposed only where the
+name is the same active substance as the item: a salt, ester, hydrate, solvate, grade, misspelling
+or glued spelling. Step 0 matches the exact folded name, so each spelling needs its own row.
+"Products" counts listings per name (TR; US Rx / OTC). "Homeopathic" means openFDA strengths in
+homeopathic units.
+
+| # | Name(s) | QID | label_en | Code → class | Products | Confidence |
+|---|---|---|---|---|---|---|
+| 1 | lithium carbonate, lithium citrate (US) | Q152763 | lithium | N05AN01 → `lithium` (row 37; abrupt-stop) | Rx 78 / OTC 71 (70 homeopathic) | high |
+| 2 | methylprednisolone acetate, sodium succinate, hemisuccinate (US; ambiguous today with the aceponate item) | Q417222 | methylprednisolone | H02AB04 → `corticosteroid_systemic` | Rx 91 | high |
+| 3 | atorvastatin calcium propylene glycol solvate (US) | Q668093 | atorvastatin | C10AA05 → `statin` | Rx 67 | high |
+| 4 | sodium phosphate monobasic, 4 spellings (US) | Q3249706 | sodium phosphates | A06AG01 → `laxative`; IV products get B05XA09, no class | Rx 61 / OTC 6 (laxative: Rx 15, OTC 6) | high |
+| 5 | sodium phosphate dibasic, 4 spellings (US) | Q3249706 | sodium phosphates | as row 4 | Rx 30 / OTC 143 (137 homeopathic) | conditional on a homeopathic exclusion |
+| 6 | alendronate sodium (US) | Q420057 | alendronic acid | M05BA04 → `bisphosphonate` | Rx 38 | high |
+| 7 | psyllium husk (US) | Q430675 | Psyllium | A06AC01 → `laxative` | OTC 39 | high |
+| 8 | sennosides a and b (US) | Q502327 | senna glycoside | A06AB06 → `laxative` | OTC 28 | high |
+| 9 | dapagliflozin propanediol (US) | Q409898 | dapagliflozin | A10BK01 → `sglt2_inhibitor`, `antihyperglycemic` | Rx 19 | high |
+| 10 | prochlorperazine edisylate (US) | Q2359690 | prochlorperazine | N05AB04 → `antiemetic`, `antipsychotic`, `antidopaminergic_antiemetic` | Rx 18 | high |
+| 11 | methylcellulose 4000 mpa s (US) | Q416312 | methyl cellulose | A06AC06 → `laxative` | OTC 18 | high |
+| 12 | diclofenac epolamine (US, topical patch) | Q244408 | Diclofenac | M02AA15 → `nsaid_marker`, `pain_reliever` (not the index `nsaid`) | Rx 15 | high |
+| 13 | ertugliflozin pidolate (US; flagged as unsplit today) | Q27077223 | ertugliflozin | A10BK04 → `sglt2_inhibitor` | Rx 8 | high |
+| 14 | risedronate sodium hemi pentahydrate (US) | Q408724 | risedronic acid | M05BA07 → `bisphosphonate` | Rx 6 | high |
+| 15 | aliskiren hemifumarate (US) | Q414904 | aliskiren | C09XA02 → `antihypertensive` | Rx 6 | high |
+| 16 | valproate sodium (US) | Q240642 | valproic acid | N03AG01 → `anticonvulsant` | Rx 5 / OTC 16 (all homeopathic) | medium |
+| 17 | 6 TİTCK names | Q3249706 | sodium phosphates | A06AG01 → `laxative` (34); B05XA09 for electrolyte products | TR 56 | high |
+| 18 | 2 TİTCK names | Q422092 | alginic acid | A02BX13 (the code every product publishes) → `gastroprotective` | TR 43 | high |
+| 19 | 9 TİTCK names | Q3492616 | Insulin Lispro | A10AD04 (published) → `antihyperglycemic` | TR 14 | medium |
+| 20 | 3 TİTCK names | Q502327 | senna glycoside | A06AB06 (published) → `laxative` | TR 13 | high |
+| 21 | 5 TİTCK names | Q252251 | cyanocobalamin | B03BA01 → `ppi_deficiency_supplement` | TR 8 | high |
+| 22 | 2 TİTCK names | Q411347 | amlodipine | C08CA01 → `ccb`, `antihypertensive` | TR 7 | high |
+| 23 | 3 TİTCK names | Q139347 | cholecalciferol | A11CC05 → `vitamin_supplement` | TR 7 | high |
+| 24 | 1 TİTCK name | Q4737384 | Aluminium glycinate | A02AB07 → `gastroprotective` | TR 6 | high |
+| 25 | 1 TİTCK name | Q388801 | furosemide | C03CA01 → `diuretic`, `heart_failure_agent`, `antihypertensive` | TR 6 | high |
+
+The other 39 TİTCK rows (misspellings of ARBs, NSAIDs, antihistamines, paracetamol,
+guaifenesin and others; 1 to 5 products each) and 5 US rows (diazoxide choline, ibuprofen lysine,
+three corticosteroid esters) are in the data-directory file.
+
+**Most important finding.** In the US the `lithium` class has 0 Rx products; its 14 OTC products
+are all homeopathic. Row 37 is therefore not on the cannot-fire list but fires in the US only on
+homeopathic products. Row 1 of the table fixes it. The report's trigram hints missed this name
+and the atorvastatin solvate (follow-up for `coverage.py`: also hint when a member's name is a
+whole word of the unmapped name).
+
+**Rules that cannot fire in a region.** None is fixed by a synonym.
+
+| Rule | Region | Reason |
+|---|---|---|
+| pipc:11 statin → quinine | TR | No quinine product in the TİTCK list (no string, no code P01BC01). In the US, 48 of the 49 OTC quinine products are homeopathic |
+| pipc:14 midodrine → antihypertensive | TR | No midodrine product in the TİTCK list (US: 109 Rx) |
+| pipc:27 cholinesterase inhibitor → bismuth subsalicylate | TR, US | Not matchable by design (no ingredient-level code; decision 5), although products exist (US 247 OTC, TİTCK 5). Only matching by ingredient identity, a design change, would make it checkable |
+| pipc:36 flunarizine → antidepressant | US | Only one bulk-ingredient listing in openFDA; no finished product |
+| pipc:44 rosiglitazone → diuretic | TR, US | No TİTCK product; openFDA has only two bulk-ingredient listings (row 43 still covers pioglitazone) |
+| pipc:57 urinary anticholinergic → saliva substitute | TR, US | Not matchable by design (no ATC code; no proxy, decision 5) |
+
+**Owner decisions needed (not proposed).** Dimenhydrinate (US 40 listings, TİTCK 4) has no
+Wikidata item; mapping it to diphenhydramine (R06AA02) would put it in `sleep_agent` and miss the
+vestibular and antiemetic classes, which list R06AA11, so it needs its own ingredient key. US
+"colchiceine" (Rx 6) sits on products named colchicine, probably a data error. Prodrugs
+(fosaprepitant Rx 27, gabapentin enacarbil, aripiprazole lauroxil) and the elemental names iron,
+zinc and selenium are not mapped. No item exists for vericiguat, finerenone (both already listed in
+`heart_failure_agent`), human insulin, activated charcoal, iron protein succinylate, butalbital or
+oxymorphone. Five TİTCK names on local products (mouth gels, throat sprays, an antiseptic, a cream without a code) are not proposed: their
+group-level product codes would fall back to all of the item's codes and place them in systemic
+classes. Follow-ups: homeopathic strengths are counted as the substance today (2,991 US OTC
+products with a mapped ingredient). `ppi_deficiency_supplement` lacks the B03AB02 exclusion that
+`iron_oral` has. Codeine's item carries only R05DA04, so codeine never gets the opioid
+abrupt-stop warning.
+
+**Rejected as noise.** Of 493 hints, the rest were other substances that share trigrams (methyl,
+trolamine and ethylhexyl salicylate, thymol, aspartame, quinine → quinidine,
+butabarbital → butethal), homeopathic listings (bromides, phosphates, creosote, Polygala), ATC text or
+combination fragments, or names already keyed whose code the route map excludes (glycerin and
+polyethylene glycol 400 eye drops, mineral oil, ophthalmic zinc sulfate). Counts per class are in the
+data-directory file.

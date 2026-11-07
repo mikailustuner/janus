@@ -169,3 +169,28 @@ found, what hooks blocked. Three to five lines per day.
   status, so the reference was wrong and was fixed.
 - The rule gate (`rule_gate`) is a pure function over an immutable snapshot, ready for the
   cascade engine; its contract is recorded in the cascade-engine requirements.
+## 2026-11-07 — Phase 1: cascade-engine spec and build
+- Refined `cascade-engine` requirements into EARS form (all original criteria and the seven
+  properties kept, Requirements 5-10 added), wrote design.md with 22 Hypothesis properties and 21
+  decisions, and generated tasks.md with a stop after the curated mapping was drafted.
+- Before citing the window paper (Hendrix 2024) and the eye-drop paper (Vander Zanden 2001), their
+  DOIs were checked in Crossref. BMJ 2026 data is used only for the six cascades its abstract
+  names with a number, described as "named in the abstract", never as "one of the 24".
+- The pharmacologist agent drafted the PIPC-to-ATC mapping (66 classes, 202 patterns) and a
+  review sheet; the validator was built first, so the draft was checked mechanically. The owner
+  reviewed it with AI assistance: row 49 narrowed to B12, magnesium and oral iron; ten extra
+  abrupt-stop groups confirmed; no eye-drop extension for row 4 (only a letter as source); every
+  code first taken from Wikidata re-checked by hand on the WHOCC index. A pharmacist or physician
+  review is still needed before any public claim.
+- Decision on non-oral forms that act systemically: ophthalmic beta-blockers (`S01ED`) start
+  row 3 only, as a cited form extension; PIPC has no bronchospasm or bradycardia row.
+- Gate 1 passes on real data: AMLIPIN (`C09BB03`) gives the CCB → diuretic cascade from its
+  amlodipine through the API, with the PIPC correction notice; logs hold no request values.
+- The PIPC coverage report showed which rules cannot fire per region (midodrine, quinine and
+  rosiglitazone have no TİTCK product; flunarizine has none in the US) and gave 102 synonym
+  proposals, pending owner review. The first hint threshold (0.5) mostly matched unrelated salts;
+  0.6 on salt-stripped names kept the true variants.
+- Property tests found no engine defect. One generator mistake (P17) was fixed; one P20 failure
+  in development did not reproduce in seven later runs and is recorded as unexplained.
+- Follow-up for drug-resolution: give imipenem an ingredient-level code (today only the
+  combination code `J01DH51`, so row 58 cannot see imipenem).

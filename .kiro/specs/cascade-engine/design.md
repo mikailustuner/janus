@@ -590,3 +590,37 @@ P1–P7 are the seven original properties; P8–P22 were added in the refinement
   each medicine; `collective-memory` adds `faers_stat:` ids.
 - Coverage numbers and synonym proposals are recorded here after task 12.
 - **[Later phase: OnSIDES]** Requirement 3 (exploratory mode).
+
+## 12. Result of the build (2026-11-07)
+- Built as designed, with these differences: 422 bodies name failing fields as dotted paths
+  (`items.3.product`), as the integrity routes do; `choices` positions start at 0 because
+  resolution numbers ingredient positions from 0 (an example test found the mismatch, the schema
+  was fixed); the abrupt-stop list has 16 groups after the owner's review; coverage hints use
+  folded, salt-stripped names and a similarity threshold of 0.6 (§7).
+- Tests: 346 API tests green with `HYPOTHESIS_PROFILE=ci` and PostgreSQL 16 (all 22 properties
+  P1-P22, a 63-rule example table, real-file examples), 92 pipelines tests; the local real-data
+  test (`test_cascades_real_artifacts.py`) passes against the dev database.
+- Property-test findings: no engine defect was found. P17 first failed on a generator mistake
+  (an added class copied an exclude row, so the loader rightly reported `no_include_pattern`
+  instead of `unused_class`); the generator was fixed. P20 failed once with "a medical request
+  changed the database" in a development run; it did not reproduce in seven later runs (dev and
+  ci profiles) and the route uses a read-only transaction, so the cause is outside the request
+  (recorded, not explained).
+- Gate 1 on real data (dev database, TİTCK list of 2026-11-06): AMLIPIN (`C09BB03`) and eight
+  more medicines scanned through `/resolve/scan` and evaluated through the Docker API give
+  rows 5 (CCB → diuretic, from the amlodipine inside AMLIPIN, `probable`, 5 months, with the
+  PIPC `corrected_notice`), 6 (CCB → laxative), 9 (statin → pain reliever, BMJ 2026 data) and
+  12 (statin → sleep agent, `possible`, date unknown), plus 2 abrupt-stop item warnings; API and
+  Postgres logs hold no candidate id, QID, code, rule id or start month.
+- PIPC coverage report (current dataset `e6798def…`, rule base `590f454d…`; counts only, the
+  file with names stays in `$JANUS_DATA_DIR/cascades/`): 63 of 65 rules matchable; rules that
+  cannot fire in TİTCK: 11 (quinine), 14 (midodrine), 44 (rosiglitazone) plus 27 and 57; in the
+  US: 36 (flunarizine), 44 plus 27 and 57. Marker classes with an OTC share ≥ 0.5 (US OTC
+  products): pain_reliever 4,813, antihistamine 3,130, cough_remedy 2,980, nsaid_marker 2,134,
+  gastroprotective 1,658, sleep_agent 1,478, laxative 1,223, mineral_supplement 1,034,
+  antifungal_genital 509, antidiarrheal 262, quinine 49. 493 hints over all classes.
+- Synonym proposals (task 12, pharmacologist agent): 102 rows (30 US for 20 items, 72 TİTCK for
+  41 items), in `mapping-review.md` §7 with counts and QIDs and in the data directory with names;
+  `data/ingredient_synonyms.csv` is unchanged until the owner reviews them. No cannot-fire rule
+  is fixable by a synonym: rows 11 and 14 have no TİTCK product, rows 36 and 44 only bulk
+  listings in openFDA (44 none in TİTCK either), rows 27 and 57 are not matchable by decision.

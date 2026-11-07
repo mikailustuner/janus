@@ -130,11 +130,11 @@
   - [x] 11.3 Property test P21: byte-identical repeated responses; permuted items give the same findings. _Requirements: 9.6_
   - [x] 11.4 Example tests: `classify(app)` accepts the route; codes and ids are not accepted in a path or query string (404/405); a choice outside `key_candidates` is 422; an ambiguous ingredient without a choice is `not_checked`; synthetic Istanbul patient (TİTCK-shaped AMLIPIN `C09BB03` → amlodipine `C08CA01`, a diuretic started later) gives row 5 `probable`; 15 items in under one second through the API. _Requirements: 7.2, 9.1, 9.7, 9.8_
 
-- [ ] 12. PIPC coverage report (`coverage.py`, `report.py`)
+- [x] 12. PIPC coverage report (`coverage.py`, `report.py`)
   - `trigram_similarity`, `build_coverage` (design §7); CLI with the output-path guard,
     counts-only output and log.
-  - [ ] 12.1 Property test P22: counts equal a recount with `class_match`; hints never contain mapped names; ranking; similarity properties. _Requirements: 8.1–8.4_
-  - [ ] 12.2 Example tests: the output path inside the repository is refused; published combination codes give `titck_product_code` hints but never findings. _Requirements: 8.2, 8.3, 8.5_
+  - [x] 12.1 Property test P22: counts equal a recount with `class_match`; hints never contain mapped names; ranking; similarity properties. _Requirements: 8.1–8.4_
+  - [x] 12.2 Example tests: the output path inside the repository is refused; published combination codes give `titck_product_code` hints but never findings. _Requirements: 8.2, 8.3, 8.5_
   - Locally on the real dataset: run the report, record counts (no names) in design §11: rules
     that cannot fire in TR or US, not-matchable rules, marker classes with high OTC share, the
     number of hints per rule. The pharmacologist proposes synonym rows for the hints with the
@@ -161,7 +161,7 @@
   - `data/README.md` up to date for every new file.
   - _Requirements: 2.7, 4.1, 7.3, 9.2_
 
-- [ ] 15. Final checkpoint
+- [x] 15. Final checkpoint
   - All steps green locally and in CI; commit, push, confirm CI passes.
   - Record final numbers (rules matchable, findings for the demo patients, tests, coverage
     summary) and remaining open items in design §11; append a dated entry to
