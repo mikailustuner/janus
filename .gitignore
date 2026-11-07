@@ -5,6 +5,8 @@ docs/internal/
 # Third-party downloads with unclear redistribution terms (also covered by the line above)
 docs/internal/arastirma/titck-indirme/
 
+# Pipeline runtime and cached artifacts (JANUS_DATA_DIR); TİTCK copies live here only
+.data/
 # Secrets
 .env
 .env.*

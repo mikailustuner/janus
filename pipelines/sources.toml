@@ -1,0 +1,306 @@
+# Source registry: every data source Janus uses or cites (design §3.4, Req 3).
+# NOTICE is generated from this file: `uv run janus-pipelines notice`. Edit here, not in NOTICE.
+#
+# storage: runtime_only (fetch at runtime, never commit) | cache (may be stored outside git)
+#          | commit (may be committed under data/) | separate_package (own licence package)
+#          | cited_only (not ingested or redistributed)
+# region: TR | EU | US, or omitted.  cadence_days: expected update interval.
+
+[notice]
+header = """
+Janus
+Copyright 2026 Mikail Üstüner
+
+This product's source code is licensed under the Apache License, Version 2.0
+(see LICENSE).
+
+Janus is a research prototype, not a medical device. It provides information,
+not medical advice.
+
+--------------------------------------------------------------------------------
+THIRD-PARTY DATA SOURCES
+--------------------------------------------------------------------------------
+
+Janus uses the data sources below. Each keeps its own license or terms; the
+Apache-2.0 license of the code does not apply to them. Every record Janus
+stores from these sources keeps its source URL, license, region and snapshot
+date. Use of a source does not imply endorsement by its publisher.
+
+This file is generated from pipelines/sources.toml by `janus-pipelines notice`.
+Do not edit it by hand. Snapshot dates of data fetched at runtime are shown with
+each result in the product, not here.
+"""
+
+[[sections]]
+id = "product"
+title = "Product identification"
+
+[[sections]]
+id = "clinical"
+title = "Clinical knowledge"
+
+[[sections]]
+id = "adverse"
+title = "Adverse events"
+
+[[sections]]
+id = "integrity"
+title = "Evidence integrity"
+
+[[sections]]
+id = "historical"
+title = "Historical texts (Séance)"
+
+[[sections]]
+id = "cited"
+title = "CITED ONLY — NOT INGESTED OR REDISTRIBUTED"
+banner = true
+
+# --- Product identification -------------------------------------------------
+
+[[sources]]
+id = "titck"
+section = "product"
+name = "TİTCK — Ruhsatlı Beşeri Tıbbi Ürünler Listesi (Türkiye)"
+publisher = "Türkiye İlaç ve Tıbbi Cihaz Kurumu"
+license = "Redistribution terms unclear"
+notes = ["Not included in this repository; fetched at runtime."]
+storage = "runtime_only"
+region = "TR"
+cadence_days = 7
+urls = ["https://www.titck.gov.tr/dinamikmodul/85"]
+
+[[sources]]
+id = "titck_skrs"
+section = "product"
+name = "TİTCK — SKRS e-reçete list (Türkiye)"
+publisher = "Türkiye İlaç ve Tıbbi Cihaz Kurumu"
+license = "Redistribution terms unclear"
+notes = ["Not included in this repository; fetched at runtime."]
+storage = "runtime_only"
+region = "TR"
+cadence_days = 7
+urls = ["https://www.titck.gov.tr/dinamikmodul/43"]
+
+[[sources]]
+id = "its_datamatrix"
+section = "product"
+name = "İTS (İlaç Takip Sistemi) DataMatrix format (Türkiye)"
+license = "Format specification only"
+notes = ["No data redistributed."]
+storage = "cited_only"
+region = "TR"
+
+[[sources]]
+id = "openfda_ndc"
+section = "product"
+name = "openFDA NDC Directory (United States)"
+publisher = "U.S. Food and Drug Administration"
+license = "CC0 1.0 (public domain)"
+notes = ["Not an FDA endorsement."]
+storage = "cache"
+region = "US"
+cadence_days = 7
+urls = ["https://open.fda.gov/apis/drug/ndc/"]
+
+[[sources]]
+id = "dscsa_datamatrix"
+section = "product"
+name = "DSCSA product identifier, GS1 DataMatrix (United States)"
+license = "Format specification only"
+notes = ["No data redistributed."]
+storage = "cited_only"
+region = "US"
+
+[[sources]]
+id = "bdpm"
+section = "product"
+name = "BDPM — Base de données publique des médicaments (France)"
+publisher = "base-donnees-publique.medicaments.gouv.fr (French Ministry of Health, ANSM, HAS, Assurance Maladie)"
+license = "Licence Ouverte (Etalab)"
+notes = ["Source and update date are cited with each use; data is not altered; no endorsement implied."]
+storage = "cache"
+region = "EU"
+cadence_days = 30
+
+[[sources]]
+id = "cima"
+section = "product"
+name = "CIMA — Centro de Información online de Medicamentos (Spain)"
+publisher = "Agencia Española de Medicamentos y Productos Sanitarios (AEMPS)"
+license = "Reuse with attribution (Ley 37/2007)"
+storage = "cache"
+region = "EU"
+cadence_days = 7
+
+[[sources]]
+id = "wikidata"
+section = "product"
+name = "Wikidata"
+publisher = "Wikimedia Foundation and Wikidata contributors"
+license = "CC0 1.0"
+storage = "cache"
+cadence_days = 30
+urls = ["https://query.wikidata.org/sparql"]
+
+# --- Clinical knowledge -----------------------------------------------------
+
+[[sources]]
+id = "pipc"
+section = "clinical"
+name = "PIPC list of prescribing cascades"
+license = "CC BY 4.0"
+notes = [
+  "Rochon PA et al., Eur Geriatr Med 2025;16(5):1573–1584. PMC12712104.",
+  "doi:10.1007/s41999-025-01215-x",
+  "Table 1 is redistributed in data/pipc.csv, text unchanged except whitespace.",
+]
+storage = "commit"
+cadence_days = 365
+urls = ["https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12712104/fullTextXML"]
+
+[[sources]]
+id = "onsides"
+section = "clinical"
+name = "OnSIDES v3.1.1"
+publisher = "Tatonetti Lab"
+license = "Data: CC BY 4.0. Code: MIT."
+storage = "cache"
+
+[[sources]]
+id = "openfda_label"
+section = "clinical"
+name = "openFDA Drug Label"
+publisher = "U.S. Food and Drug Administration"
+license = "CC0 1.0"
+notes = ["Not an FDA endorsement."]
+storage = "cache"
+region = "US"
+
+[[sources]]
+id = "rxnav"
+section = "clinical"
+name = "RxNav / RxClass"
+license = "Free to use with the NLM attribution below"
+notes = [
+  "This product uses publicly available data courtesy of the U.S. National",
+  "Library of Medicine (NLM), National Institutes of Health, Department of",
+  "Health and Human Services; NLM is not responsible for the product and does",
+  "not endorse or recommend this or any other product.",
+]
+storage = "cache"
+region = "US"
+
+[[sources]]
+id = "whocc_atc"
+section = "clinical"
+name = "ATC classification"
+publisher = "WHO Collaborating Centre for Drug Statistics Methodology (WHOCC), Oslo"
+license = "Restricted"
+notes = [
+  "Janus does not copy the WHOCC index; ATC codes are taken from TİTCK, CIMA,",
+  "RxClass and Wikidata.",
+]
+storage = "cited_only"
+
+# --- Adverse events ---------------------------------------------------------
+
+[[sources]]
+id = "faers"
+section = "adverse"
+name = "openFDA / FDA Adverse Event Reporting System (FAERS)"
+publisher = "U.S. Food and Drug Administration"
+license = "CC0 1.0"
+notes = [
+  "Spontaneous reports; not deduplicated; counts are reports, not people.",
+  "Not an FDA endorsement.",
+]
+storage = "cache"
+region = "US"
+cadence_days = 91
+
+# --- Evidence integrity -----------------------------------------------------
+
+[[sources]]
+id = "crossref"
+section = "integrity"
+name = "Crossref REST API, including Retraction Watch data"
+publisher = "Crossref"
+license = "Open metadata"
+storage = "cache"
+cadence_days = 7
+urls = ["https://api.crossref.org/works/"]
+
+[[sources]]
+id = "europepmc"
+section = "integrity"
+name = "Europe PMC / PubMed"
+publisher = "EMBL-EBI / U.S. National Library of Medicine"
+license = "Open APIs"
+storage = "cache"
+
+# --- Historical texts -------------------------------------------------------
+
+[[sources]]
+id = "openiti_canon"
+section = "historical"
+name = "OpenITI — 0428IbnSina.QanunFiTibb (Ibn Sina, al-Qanun fi al-Tibb)"
+publisher = "Open Islamicate Texts Initiative"
+license = "CC BY-NC-SA 4.0"
+notes = ["Derived data is released under the same license, separately from the Apache-2.0 code."]
+storage = "separate_package"
+
+[[sources]]
+id = "pmc3941892"
+section = "historical"
+name = "PMC3941892 (tables of Canon remedy identifications)"
+license = "CC BY"
+storage = "cache"
+
+[[sources]]
+id = "ancientbiotics"
+section = "historical"
+name = "AncientBiotics (mBio 2020, Data Set S1)"
+license = "CC BY"
+storage = "cache"
+
+# --- Cited only -------------------------------------------------------------
+
+[[sources]]
+id = "thinkcascades"
+section = "cited"
+name = "ThinkCascades — McCarthy LM et al., Drugs Aging 2022"
+license = "Restricted PMC terms"
+storage = "cited_only"
+
+[[sources]]
+id = "bmj_2026"
+section = "cited"
+name = "Rochon PA et al., BMJ 2026;394:e100499"
+license = "Paywalled"
+storage = "cited_only"
+
+[[sources]]
+id = "eudravigilance"
+section = "cited"
+name = "EudraVigilance / adrreports.eu — European Medicines Agency"
+license = "Public access with reuse limits"
+notes = ["Linked to only."]
+storage = "cited_only"
+region = "EU"
+
+[[sources]]
+id = "hamdard"
+section = "cited"
+name = "Hamdard 1998 translation of the Canon, Book 2"
+license = "© Jamia Hamdard"
+notes = ["Cited only."]
+storage = "cited_only"
+
+[[sources]]
+id = "ottoman_texts"
+section = "cited"
+name = "Ottoman medical texts (theses, TTK editions)"
+license = "Copyright with their authors"
+notes = ["Short cited quotations only."]
+storage = "cited_only"
