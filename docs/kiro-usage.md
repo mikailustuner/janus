@@ -45,6 +45,23 @@ found, what hooks blocked. Three to five lines per day.
   `localization-reviewer` (read-only: `read` tool only, no write or shell).
 - Each agent loads the steering files for its area through `resources`.
 
+## 2026-11-07 — Phase 1: data-pipelines spec and the first pipelines
+
+- Refined `data-pipelines` requirements into EARS form (scope: pipc, titck,
+  wikidata_ingredients, us_ndc, retractions), then wrote design.md with 16 Hypothesis
+  properties traced to requirements, and tasks.md. The owner confirmed that a run flagged for
+  review is not promoted until a maintainer promotes it.
+- Before the design, the live sources were checked: Europe PMC Table 1 has the statin cascade
+  split across two table rows, so a naive parser finds 64 cascades; the design merges split
+  rows and fails unless exactly 65 are found. The real run found 65.
+- Property test P12 found a counterexample in the TİTCK ingredient splitter: for `", ve "` the
+  comma pattern swallowed the space before "ve", so "x, ve y" came out as "ve y". Fixed by
+  treating a run of separators as one split point; a regression test was added.
+- The local run of `titck` (live download, 06.11.2026 list) gave 22,982 products, 99.5% with
+  ATC, 4,355 multi-ingredient products; AMLIPIN (C09BB03) splits into amlodipine and
+  lisinopril. `us_ndc` gave 138,262 records, matching the openFDA index.
+- NOTICE is now generated from `pipelines/sources.toml` and checked in CI.
+
 ### Open items
 
 - **arm64 image build not verified.** Images currently build and run on amd64 only; base
@@ -55,3 +72,10 @@ found, what hooks blocked. Three to five lines per day.
 - **Hooks not yet seen firing in the IDE.** Hook files load at session start; the command
   hooks were run by hand with a sample event, and the `kiro-log` prompt was followed by hand.
   Confirm in the next session; watch `kiro-log-stop` for repeated no-op runs (credit cost).
+- **Pipelines not yet run for real: `wikidata_ingredients` and `retractions`.** Both send a
+  contact address to Wikidata/Crossref (their usage policies ask for one), and the owner has
+  not chosen which address to use. Set `JANUS_CONTACT_EMAIL`, then run them (retractions after
+  pipc).
+- **155 TİTCK rows excluded as `invalid_barcode`** (06.11.2026 list): 83 are 13 digits with a
+  wrong check digit, the rest are empty, 12, 14 or 16-17 characters (e.g. a leading `:`). They
+  are kept out of the lookup, not repaired; whether to recover any is a `drug-resolution` decision.

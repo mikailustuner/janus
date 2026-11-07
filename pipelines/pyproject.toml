@@ -43,7 +43,7 @@ line-length = 100
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "B", "UP", "S", "N", "RUF"]
 # Turkish source text uses dotless i and dotted capital I on purpose.
-allowed-confusables = ["ı", "İ"]
+allowed-confusables = ["ı", "İ", "–"]
 
 [tool.ruff.lint.per-file-ignores]
 "tests/**" = ["S101"]

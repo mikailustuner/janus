@@ -1,0 +1,14 @@
+{
+  "source_id": "pipc",
+  "file": "data/pipc.csv",
+  "source_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12712104/fullTextXML",
+  "doi": "10.1007/s41999-025-01215-x",
+  "pmcid": "PMC12712104",
+  "license": "CC BY 4.0",
+  "attribution": "Rochon PA et al. Potentially inappropriate prescribing cascades (PIPC) list. Eur Geriatr Med 2025;16(5):1573–1584. PMC12712104. doi:10.1007/s41999-025-01215-x. Table 1, CC BY 4.0.",
+  "snapshot_date": "2025-07-31",
+  "retrieved_date": "2026-11-07",
+  "content_sha256": "1e2b78a2ed05669eeae0a6ad3e41b5fbdab1d6787eaee73d84d8f48491577958",
+  "run_id": "20261107T162311Z-a3ac15ad-9532",
+  "note": "Cell text as published in Table 1; only whitespace was changed."
+}

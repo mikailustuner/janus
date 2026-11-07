@@ -55,44 +55,46 @@
   - All tests green (`uv run pytest`, ruff, pyright). Ask the owner to confirm decision DP4
     (needs_review runs are not promoted) before the jobs rely on it.
 
-- [ ] 9. `pipc` job (`jobs/pipc.py`)
+- [x] 9. `pipc` job (`jobs/pipc.py`)
   - Fetch Europe PMC XML; parse Table 1 with the row state machine (design §5.1); exactly 65
     cascades; on promotion write `data/pipc.csv` and `data/pipc.meta.json`; evidence source
     record with the DOI.
-  - [ ] 9.1 Property test P11: generated Table-1-like XML parses to exactly the generated cascades, split rows merged. _Requirements: 5.2, 5.3, 5.4_
-  - [ ] 9.2 Example test: the statin cascade split over two `<tr>` merges into one row; 64 + 1 = 65. _Requirements: 5.4, 5.3_
-  - [ ] 9.3 Run the job once, review `data/pipc.csv` against the paper, commit it with its metadata file. _Requirements: 5.5, 5.6_
+  - [x] 9.1 Property test P11: generated Table-1-like XML parses to exactly the generated cascades, split rows merged. _Requirements: 5.2, 5.3, 5.4_
+  - [x] 9.2 Example test: the statin cascade split over two `<tr>` merges into one row; 64 + 1 = 65. _Requirements: 5.4, 5.3_
+  - [x] 9.3 Run the job once, review `data/pipc.csv` against the paper, commit it with its metadata file. _Requirements: 5.5, 5.6_
 
-- [ ] 10. `titck` job (`jobs/titck.py`)
+- [x] 10. `titck` job (`jobs/titck.py`)
   - Fetch the newest list from the TİTCK page or `--input PATH`; header row by name; barcode
     validation; duplicates kept; `split_ingredients`; metrics; artifacts only in the data dir.
   - Confirm the live page's link and date format.
-  - [ ] 10.1 Property test P12: splitting returns the joined names and keeps every non-separator character. _Requirements: 6.6_
-  - [ ] 10.2 Property test P6: metrics equal a direct recount. _Requirements: 2.3, 6.4, 6.5_
-  - [ ] 10.3 Property test P4 (titck): row accounting on generated workbooks with invalid and blank rows. _Requirements: 1.5, 6.4_
-  - [ ] 10.4 Example test: `amlodipin besilat/lisinopril dihidrat` splits into two names; ATC `C09BB03` kept as published. _Requirements: 6.3, 6.6, 6.8_
-  - [ ] 10.5 Optional integration test against `JANUS_TITCK_LIST` (skipped when unset and in CI). _Requirements: 6.1, 6.2_
+  - [x] 10.1 Property test P12: splitting returns the joined names and keeps every non-separator character. _Requirements: 6.6_
+  - [x] 10.2 Property test P6: metrics equal a direct recount. _Requirements: 2.3, 6.4, 6.5_
+  - [x] 10.3 Property test P4 (titck): row accounting on generated workbooks with invalid and blank rows. _Requirements: 1.5, 6.4_
+  - [x] 10.4 Example test: `amlodipin besilat/lisinopril dihidrat` splits into two names; ATC `C09BB03` kept as published. _Requirements: 6.3, 6.6, 6.8_
+  - [x] 10.5 Optional integration test against `JANUS_TITCK_LIST` (skipped when unset and in CI). _Requirements: 6.1, 6.2_
 
-- [ ] 11. `wikidata_ingredients` job (`jobs/wikidata_ingredients.py`)
+- [x] 11. `wikidata_ingredients` job (`jobs/wikidata_ingredients.py`)
   - Code query + one label query per language; split by ATC first letter on timeout; pure merge;
     record query hashes; snapshot = retrieval time.
-  - [ ] 11.1 Property test P13: merge is independent of order and partitioning; each QID once with ≥ 1 ATC. _Requirements: 7.3, 7.4_
+  - [x] 11.1 Property test P13: merge is independent of order and partitioning; each QID once with ≥ 1 ATC. _Requirements: 7.3, 7.4_
 
-- [ ] 12. `us_ndc` job (`jobs/us_ndc.py`)
+- [x] 12. `us_ndc` job (`jobs/us_ndc.py`)
   - Read `download.json`; download partitions into `raw/`; stream records; fields as published.
-  - [ ] 12.1 Example test: record count different from the index fails the run. _Requirements: 8.2_
-  - [ ] 12.2 Example test: one sample record maps to the output row with all fields as published. _Requirements: 8.3, 8.4_
+  - [x] 12.1 Example test: record count different from the index fails the run. _Requirements: 8.2_
+  - [x] 12.2 Example test: one sample record maps to the output row with all fields as published. _Requirements: 8.3, 8.4_
 
-- [ ] 13. `retractions` job (`jobs/retractions.py`)
+- [x] 13. `retractions` job (`jobs/retractions.py`)
   - Collect DOIs from current evidence source records; `normalise_doi`; Crossref per DOI;
     `status_from_notices`; `effective`; raw responses in `raw/`; `changes[]`; change away from
     `retracted` → `needs_review`. Confirm Crossref rate limits and notice type names.
-  - [ ] 13.1 Property test P14: status is the most severe notice, whatever the order. _Requirements: 9.2, 9.3_
-  - [ ] 13.2 Property test P15: a failed check never turns `retracted` into anything else; `unknown` is never `ok`. _Requirements: 9.4, 9.5_
-  - [ ] 13.3 Property test P16: DOI normalisation is idempotent and ignores case and prefixes. _Requirements: 9.1_
-  - [ ] 13.4 Example test: a recorded Crossref response with a `retraction-watch` retraction notice gives `retracted` with source and notice DOI. _Requirements: 9.2, 9.7_
+  - [x] 13.1 Property test P14: status is the most severe notice, whatever the order. _Requirements: 9.2, 9.3_
+  - [x] 13.2 Property test P15: a failed check never turns `retracted` into anything else; `unknown` is never `ok`. _Requirements: 9.4, 9.5_
+  - [x] 13.3 Property test P16: DOI normalisation is idempotent and ignores case and prefixes. _Requirements: 9.1_
+  - [x] 13.4 Example test: a recorded Crossref response with a `retraction-watch` retraction notice gives `retracted` with source and notice DOI. _Requirements: 9.2, 9.7_
 
 - [ ] 14. Final checkpoint
+  - Status 2026-11-07: pipc, titck (live download) and us_ndc ran and were checked;
+    `wikidata_ingredients` and `retractions` wait for the owner to choose `JANUS_CONTACT_EMAIL`.
   - Run all five pipelines locally (TİTCK with `--input`); check every manifest (counts, hashes,
     snapshot dates, licences) and the TİTCK metrics; all tests and `notice --check` green.
   - Update `pipelines/README.md` (commands, env vars, data dir) and `docs/kiro-usage.md`.
