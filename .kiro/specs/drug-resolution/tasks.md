@@ -81,35 +81,35 @@
     changes; report what changed.
   - _Requirements: 2.5, 5.6_
 
-- [ ] 10. Migration and loader (`migrations/versions/0002_resolution.py`, `janus/resolution/load.py`)
+- [x] 10. Migration and loader (`migrations/versions/0002_resolution.py`, `janus/resolution/load.py`)
   - Tables and indexes of design §3.3 (`pg_trgm`), downgrade drops them; loader steps of design
     §6.1 (DuckDB read, manifest and hash check, dataset version, one transaction, retire old,
     `--activate`); `read_only_tx` with `REPEATABLE READ, READ ONLY`; import-boundary test allows
     `resolution/load.py` (DP16).
-  - [ ] 10.1 Property test P23: any sequence of good, refused and failing loads leaves exactly one complete dataset current. _Requirements: 9.1, 9.2_
-  - [ ] 10.2 Property test P8 (load part): the same artifacts give the same dataset version and product ids. _Requirements: 9.4, 7.3_
-  - [ ] 10.3 Example tests: upgrade → downgrade → upgrade gives identical schema; source versions recorded from `evidence_source.json`; a hash mismatch is refused. _Requirements: 9.1, 9.3_
+  - [x] 10.1 Property test P23: any sequence of good, refused and failing loads leaves exactly one complete dataset current. _Requirements: 9.1, 9.2_
+  - [x] 10.2 Property test P8 (load part): the same artifacts give the same dataset version and product ids. _Requirements: 9.4, 7.3_
+  - [x] 10.3 Example tests: upgrade → downgrade → upgrade gives identical schema; source versions recorded from `evidence_source.json`; a hash mismatch is refused. _Requirements: 9.1, 9.3_
 
-- [ ] 11. Adapters, repository and service (`janus/regions/base.py`, `tr/adapter.py`, `us/adapter.py`, `resolution/repository.py`, `service.py`, `model.py`)
+- [x] 11. Adapters, repository and service (`janus/regions/base.py`, `tr/adapter.py`, `us/adapter.py`, `resolution/repository.py`, `service.py`, `model.py`)
   - `RegionAdapter`, TİTCK and openFDA adapters, dispatch and hints, region-not-available notice,
     candidate order, name search with pure `rank`, not-found vs unavailable, staleness notice,
     provenance, `rule_input` (design §3.2, §4).
-  - [ ] 11.1 Property test P21: adapter dispatch with and without override. _Requirements: 1.5_
-  - [ ] 11.2 Property test P13: all rows for a duplicated key, in stable order, for every input form. _Requirements: 2.1, 3.1, 6.2_
-  - [ ] 11.3 Property test P14: name-only rows never by barcode, always by exact name. _Requirements: 2.3_
-  - [ ] 11.4 Property test P15: search invariant to case, Turkish i's and diacritics; `rank` order independent; at most `limit`. _Requirements: 2.4, 3.3_
-  - [ ] 11.5 Property test P19: 503 when not loaded, empty 200 only when loaded. _Requirements: 6.2, 7.1_
-  - [ ] 11.6 Property test P20: every `SourceRef` belongs to the current dataset. _Requirements: 7.2_
-  - [ ] 11.7 Property test P8 (request part): identical JSON for repeated requests. _Requirements: 7.3_
+  - [x] 11.1 Property test P21: adapter dispatch with and without override. _Requirements: 1.5_
+  - [x] 11.2 Property test P13: all rows for a duplicated key, in stable order, for every input form. _Requirements: 2.1, 3.1, 6.2_
+  - [x] 11.3 Property test P14: name-only rows never by barcode, always by exact name. _Requirements: 2.3_
+  - [x] 11.4 Property test P15: search invariant to case, Turkish i's and diacritics; `rank` order independent; at most `limit`. _Requirements: 2.4, 3.3_
+  - [x] 11.5 Property test P19: 503 when not loaded, empty 200 only when loaded. _Requirements: 6.2, 7.1_
+  - [x] 11.6 Property test P20: every `SourceRef` belongs to the current dataset. _Requirements: 7.2_
+  - [x] 11.7 Property test P8 (request part): identical JSON for repeated requests. _Requirements: 7.3_
 
-- [ ] 12. Routes and error handling (`janus/resolution/router.py`, wiring in `main.py`)
+- [x] 12. Routes and error handling (`janus/resolution/router.py`, wiring in `main.py`)
   - `POST /resolve/scan`, `/resolve/ndc`, `/resolve/search`, `/resolve/products` on
     `medical_router()`; fixed error codes; 422 without `input`/`ctx` on medical routes.
-  - [ ] 12.1 Property test P10: sentinel serial and lot never in response, logs or database, for valid and invalid scans. _Requirements: 1.4, 8.3, 8.4_
-  - [ ] 12.2 Property test P22: the four routes are stateless, send `no-store`, and log no input value (privacy harness). _Requirements: 8.1–8.3_
-  - [ ] 12.3 Example tests: `classify(app)` passes with the new routes; codes in a query string or path are not accepted (405/404, no lookup). _Requirements: 8.2_
+  - [x] 12.1 Property test P10: sentinel serial and lot never in response, logs or database, for valid and invalid scans. _Requirements: 1.4, 8.3, 8.4_
+  - [x] 12.2 Property test P22: the four routes are stateless, send `no-store`, and log no input value (privacy harness). _Requirements: 8.1–8.3_
+  - [x] 12.3 Example tests: `classify(app)` passes with the new routes; codes in a query string or path are not accepted (405/404, no lookup). _Requirements: 8.2_
 
-- [ ] 13. Checkpoint: API end to end
+- [x] 13. Checkpoint: API end to end
   - All lint, format, type-check and test steps green, incl. property tests and database tests
     against PostgreSQL 16; commit, push, confirm CI passes.
   - Locally: `janus-pipelines run` for the three sources, `python -m janus.resolution.load`,
@@ -120,7 +120,7 @@
   - `test_real_artifacts.py` green locally (skipped in CI).
   - _Requirements: 2.1, 2.3, 3.2, 5.2, 8.3_
 
-- [ ] 14. Final checkpoint
+- [x] 14. Final checkpoint
   - All steps green locally and in CI; commit, push, confirm CI passes.
   - Record final coverage numbers and remaining open items in design §1/§10 and append a dated
     entry to `docs/kiro-usage.md` (spec refinement, counterexamples found by property tests and

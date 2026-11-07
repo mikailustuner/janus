@@ -112,3 +112,40 @@ found, what hooks blocked. Three to five lines per day.
 - `collective-memory`: replace the placeholder event vocabulary.
 - `experience`: consent screen, privacy page (region, 24-month retention, what is stored), no
   donations in demo mode.
+## 2026-11-07 — Phase 1: drug-resolution spec (Türkiye and United States)
+- Refined `drug-resolution` requirements into EARS form; EU criteria kept and tagged for Phase 2.
+  design.md has 24 Hypothesis properties and 23 decisions. Owner decisions: invalid-barcode
+  TİTCK rows are not repaired and stay findable by name only; duplicate barcodes return every
+  candidate; the client sends only GS1 AI (01) and (17), and the API still drops serial and lot;
+  US products get route-based ATC selection.
+- Built: GS1 and NDC parsers; `titck-2` (name-only rows, no split inside parentheses) and
+  `us_ndc-2` (route, dosage form); name folding, salt stripping and a TR/INN spelling key; the
+  combination-code classifier with a reviewed rule file and a route → ATC-group map (both drafted
+  by the pharmacologist agent, owner-reviewed, uncertain rows checked against the WHOCC index);
+  load-time preparation; a loader with a content-hash check and one-transaction switch; TR and
+  US adapters; four POST-only medical routes.
+- AMLIPIN (`C09BB03`) resolves to amlodipine `C08CA01` and lisinopril `C09AA03`; a topical US
+  betamethasone keeps `D07AC01` and drops `H02AB01`.
+- Measured coverage (DP22, reported): TİTCK 83.9 % of ingredient occurrences (target 85 %, not
+  met; the gap is mostly parenteral-nutrition amino acids, electrolytes and vaccine strain
+  fragments with no single-substance code); openFDA Rx 92.6 % of products fully mapped (target
+  92 %, met); Wikidata/TİTCK group agreement 93.9 % (98.2 % if same-3-character disagreements
+  are WHO re-codings; not individually documented).
+- Counterexamples found by property tests:
+  - P17: sorting ATC codes failed when one code had no product reference (`None` vs `str` in
+    dataclass ordering); fixed with an explicit sort key.
+  - P5: the TİTCK ATC bridge matched a salt form on a single product ("x hidroklorür") but not
+    the plain name in a combination product; the bridge is now keyed by the salt-normalised name.
+- Real-data checks found Wikidata aliases that made common names ambiguous (esomeprazole lists
+  "omeprazole"); label hits now win over alias hits within a step. The pharmacologist review
+  added a guard so that salt stripping cannot merge substances (sodium vs potassium
+  bicarbonate, zinc acetate vs zinc gluconate, sodium calcium edetate vs edetate disodium).
+### Open items
+- TİTCK coverage below the 85 % target; more curated synonyms (`data/ingredient_synonyms.csv`)
+  or a parenteral-nutrition decision would close part of the gap.
+- `cascade-engine`: read codes only through `rule_input`; decide how `all_codes` findings are
+  labelled; decide whether index-drug classes include systemically acting non-oral codes (e.g.
+  timolol eye drops `S01ED`) — recorded in its requirements.
+- Re-review both curated ATC files when WHOCC publishes a new ATC version.
+- 12-digit NDC (FDA rule, effective 2033) not accepted yet.
+- Phase 2: `eu_fr`, `eu_es`, `eu_name` adapters; de/fr/es labels in the name index.

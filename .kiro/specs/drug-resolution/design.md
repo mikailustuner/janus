@@ -269,9 +269,11 @@ of file row order. Nothing is deduplicated: two rows with the same barcode are t
   dataset version even if the loader switches meanwhile.
 - No logging in `resolution/` or `regions/` except through `log_event` with allowlisted fields
   (the `log-guard` hook checks on save).
-- Validation errors: a `RequestValidationError` on a medical route returns `422 {"error":
-  "invalid_request", "fields": [loc…]}` without FastAPI's `input` and `ctx` (DP14), so a 422 never
-  echoes a serial or lot back. Domain errors use fixed codes and never interpolate input.
+- Validation errors: the resolution routes read the raw JSON body and validate it themselves
+  (as the donation routes do), returning `422 {"error": "invalid_request", "fields": [loc…]}`
+  without FastAPI's `input` and `ctx` (DP14), so a 422 never echoes a serial or lot back.
+  Domain errors use fixed codes (`gtin_check_digit`, `ndc_malformed`, …) and never interpolate
+  input. Every result also carries the research-prototype disclaimer (medical-safety rule 9).
 
 ## 5. Load-time preparation (pure, `prepare.py`)
 
@@ -421,7 +423,12 @@ commit                                                                          
 second transaction: retire and delete datasets older than the previous one
 ```
 A crash or error before commit leaves `res_current` and its rows untouched (PostgreSQL
-atomicity). The previous dataset is kept so a bad load can be undone with
+atomicity). All artifacts are verified before anything else, even when the dataset version is
+already current. Implementation notes (task 10): every `res_*` table cascades from
+`res_dataset`, so retiring a dataset is one DELETE; the real load of 2026-11-07 (161,399
+products, 417,499 codes, 252,123 ingredient rows, 234,383 names) takes about 75 s; an unchanged
+reload only re-verifies hashes. Each ingredient's codes are cited once per code, a code observed
+on a TİTCK product before the same code from Wikidata. The previous dataset is kept so a bad load can be undone with
 `python -m janus.resolution.load --activate <dataset>`. CLI: `python -m janus.resolution.load
 [--data-dir PATH]`; needs `DATABASE_URL`. Logs: `LogEvent.resolution_load` with counts and the
 dataset version only.
