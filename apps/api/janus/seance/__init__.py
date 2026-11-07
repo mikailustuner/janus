@@ -1,0 +1,1 @@
+"""Séance: three-witness synthesis."""

@@ -1,0 +1,53 @@
+# Requirements: Experience (patient, doctor, researcher, judge)
+
+> Draft seed. Functional requirements only. The visual design system is chosen with the `ui-ux-pro-max` skill and recorded in `.kiro/steering/design.md` before this spec's design step. Refine with Kiro, then let Kiro generate `design.md` and `tasks.md`.
+
+## Introduction
+The end-to-end product experience across five languages and three regions, including a judge/demo mode, because hackathon judges will not have Turkish (or most EU) medicine boxes at hand and may judge from the video alone.
+
+## Requirements
+
+### Requirement 1: Patient / caregiver flow
+**User story:** As a caregiver, I want to scan my mother's medicines and understand in a few minutes what to discuss with her doctor.
+
+#### Acceptance criteria
+1. THE flow SHALL be: choose region(s) → scan / photograph / type medicines → confirm each → answer "since when?" (month/year or "don't know") → timeline → findings ("ghosts") → evidence → doctor note.
+2. THE first screen SHALL show the emergency notice (112 / 911) and the "information, not medical advice; research prototype" statement.
+3. WHEN no finding is produced THE screen SHALL show the no-false-reassurance statement.
+4. THE flow SHALL work on a 375 px wide phone screen without horizontal scrolling.
+
+### Requirement 2: Languages and regions
+#### Acceptance criteria
+1. THE interface SHALL be available in English (primary), Turkish, German, French and Spanish.
+2. THE user SHALL be able to switch interface language, doctor-note language and region independently.
+3. Dates, numbers and decimal separators SHALL follow the selected locale.
+
+### Requirement 3: Accessibility
+#### Acceptance criteria
+1. THE interface SHALL meet WCAG 2.2 AA: keyboard navigation, visible focus, alt text, contrast, reduced-motion support for all ghost animations.
+2. A large-text mode and text-to-speech reading of findings SHALL be available for older users.
+3. Every data view SHALL handle loading, empty, error and long-content states.
+
+### Requirement 4: Judge / demo mode
+**User story:** As a hackathon judge without Turkish boxes, I want to try the full flow in two minutes.
+
+#### Acceptance criteria
+1. THE home page SHALL offer "Try the demo" without any sign-up.
+2. Demo mode SHALL include printable/scannable sample codes (TR, US, FR/ES) for synthetic products clearly labelled "demo", and three synthetic patients (Istanbul, Cologne with mixed TR+DE boxes, Ohio with pharmacy vials).
+3. Demo data SHALL be clearly labelled synthetic on every screen and SHALL never be mixed into Collective Memory.
+4. Demo mode SHALL work even if external APIs are unavailable (cached snapshot).
+
+### Requirement 5: Doctor and researcher areas
+#### Acceptance criteria
+1. THE doctor QR page SHALL require no account and SHALL load on a phone in under 3 seconds on a 4G connection.
+2. THE researcher area SHALL contain hypothesis cards, the séance view, the retrospective-validation report and dataset export; it SHALL be reachable from the main navigation but not part of the patient flow.
+
+### Requirement 6: Theme with function
+#### Acceptance criteria
+1. Ghosts SHALL represent cascades, the two-faced mask SHALL switch shadow/light views, the zombie stamp SHALL mark retracted evidence, and the séance table SHALL hold the three witnesses; decorative-only spooky elements SHALL NOT be added.
+2. The patient-facing tone SHALL be mysterious and reassuring, never frightening; red is used only for real risk.
+
+## Properties to test (PBT candidates)
+- For every supported locale, every user-facing string key has a translation (no fallback keys rendered).
+- For every supported locale, rendered findings contain the mandatory disclaimer and none of the forbidden phrases.
+- Demo-mode items never reach contribution or outcome endpoints.

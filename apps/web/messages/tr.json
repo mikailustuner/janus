@@ -1,0 +1,16 @@
+{
+  "Metadata": {
+    "title": "Janus",
+    "description": "Evdeki ilaçları okur ve doktorunuzla konuşmaya değer olabilecek reçete kaskadı örüntülerini gösterir."
+  },
+  "LocaleSwitcher": {
+    "label": "Dil"
+  },
+  "Home": {
+    "title": "Janus",
+    "status": "Yapım aşamasında. Burada henüz hiçbir tıbbi veri işlenmiyor."
+  },
+  "Disclaimer": {
+    "text": "Janus bilgi sağlar, tıbbi tavsiye vermez. Araştırma prototipi — tıbbi cihaz değildir."
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "Metadata": {
+    "title": "Janus",
+    "description": "Lee los medicamentos de casa y señala patrones de cascada de prescripción que puede valer la pena comentar con su médico."
+  },
+  "LocaleSwitcher": {
+    "label": "Idioma"
+  },
+  "Home": {
+    "title": "Janus",
+    "status": "En construcción. Aquí todavía no se procesa ningún dato médico."
+  },
+  "Disclaimer": {
+    "text": "Janus ofrece información, no consejo médico. Prototipo de investigación: no es un producto sanitario."
+  }
+}

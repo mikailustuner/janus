@@ -1,0 +1,16 @@
+{
+  "name": "janus",
+  "private": true,
+  "license": "Apache-2.0",
+  "packageManager": "pnpm@12.11.2",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @janus/web dev",
+    "build": "pnpm --filter @janus/web build",
+    "lint": "pnpm --filter @janus/web lint",
+    "typecheck": "pnpm --filter @janus/web typecheck",
+    "test": "pnpm --filter @janus/web test"
+  }
+}

@@ -1,0 +1,8 @@
+packages:
+  - apps/web
+# Install scripts are denied by default; these packages ship prebuilt binaries.
+allowBuilds:
+  "@parcel/watcher": false
+  "@swc/core": false
+  sharp: false
+  unrs-resolver: false

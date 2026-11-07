@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  repo-policy:
+    name: Repository policy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: .kiro/ must be tracked and not gitignored
+        run: |
+          if git check-ignore -q .kiro || git check-ignore -q .kiro/steering/product.md; then
+            echo "::error::.kiro/ is ignored by git. It must be committed."
+            exit 1
+          fi
+          if [ -z "$(git ls-files .kiro)" ]; then
+            echo "::error::No files under .kiro/ are tracked."
+            exit 1
+          fi
+
+      - name: No TİTCK list files tracked
+        run: |
+          tracked="$(git ls-files -- data docs | grep -iE 'titck|tİtck' || true)"
+          if [ -n "$tracked" ]; then
+            echo "::error::TİTCK list files must not be committed (unclear redistribution terms):"
+            echo "$tracked"
+            exit 1
+          fi
+
+      - name: No private planning documents tracked (docs/internal/)
+        run: |
+          tracked="$(git ls-files -- docs/internal)"
+          if [ -n "$tracked" ]; then
+            echo "::error::Files under docs/internal/ are private and must not be committed:"
+            echo "$tracked"
+            exit 1
+          fi
+
+  web:
+    name: Web (lint, types, tests)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm test
+
+  api:
+    name: API (lint, types, tests)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/api
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.3.3
+        with:
+          working-directory: apps/api
+          enable-cache: true
+      - run: uv sync --frozen
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
+      - run: uv run pyright
+      - run: uv run pytest

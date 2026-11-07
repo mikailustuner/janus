@@ -1,0 +1,119 @@
+Janus
+Copyright 2026 Mikail Üstüner
+
+This product's source code is licensed under the Apache License, Version 2.0
+(see LICENSE).
+
+Janus is a research prototype, not a medical device. It provides information,
+not medical advice.
+
+--------------------------------------------------------------------------------
+THIRD-PARTY DATA SOURCES
+--------------------------------------------------------------------------------
+
+Janus uses the data sources below. Each keeps its own license or terms; the
+Apache-2.0 license of the code does not apply to them. Every record Janus
+stores from these sources keeps its source URL, license, region and snapshot
+date. Use of a source does not imply endorsement by its publisher.
+
+This file is a skeleton. Snapshot dates and versions are filled in by the data
+pipelines (pipelines/) as each source is integrated.
+
+Product identification
+----------------------
+
+TİTCK — Ruhsatlı Beşeri Tıbbi Ürünler Listesi and SKRS e-reçete list (Türkiye)
+  Publisher: Türkiye İlaç ve Tıbbi Cihaz Kurumu
+  Terms: redistribution terms unclear. Not included in this repository;
+  fetched at runtime.
+
+İTS (İlaç Takip Sistemi) DataMatrix format (Türkiye)
+  Format specification only; no data redistributed.
+
+openFDA NDC Directory (United States)
+  Publisher: U.S. Food and Drug Administration
+  License: CC0 1.0 (public domain). Not an FDA endorsement.
+
+DSCSA product identifier, GS1 DataMatrix (United States)
+  Format specification only; no data redistributed.
+
+BDPM — Base de données publique des médicaments (France)
+  Publisher: base-donnees-publique.medicaments.gouv.fr (French Ministry of
+  Health, ANSM, HAS, Assurance Maladie)
+  License: Licence Ouverte (Etalab). Source and update date are cited with
+  each use; data is not altered; no endorsement implied.
+
+CIMA — Centro de Información online de Medicamentos (Spain)
+  Publisher: Agencia Española de Medicamentos y Productos Sanitarios (AEMPS)
+  Terms: reuse with attribution (Ley 37/2007).
+
+Wikidata
+  Publisher: Wikimedia Foundation and Wikidata contributors
+  License: CC0 1.0
+
+Clinical knowledge
+------------------
+
+PIPC list of prescribing cascades
+  Rochon PA et al., Eur Geriatr Med 2025;16(5):1573–1584. PMC12712104.
+  License: CC BY 4.0
+
+OnSIDES v3.1.1
+  Tatonetti Lab. Data: CC BY 4.0. Code: MIT.
+
+openFDA Drug Label
+  Publisher: U.S. Food and Drug Administration
+  License: CC0 1.0. Not an FDA endorsement.
+
+RxNav / RxClass
+  This product uses publicly available data courtesy of the U.S. National
+  Library of Medicine (NLM), National Institutes of Health, Department of
+  Health and Human Services; NLM is not responsible for the product and does
+  not endorse or recommend this or any other product.
+
+ATC classification
+  WHO Collaborating Centre for Drug Statistics Methodology (WHOCC), Oslo.
+  Terms: restricted. Janus does not copy the WHOCC index; ATC codes are taken
+  from TİTCK, CIMA, RxClass and Wikidata.
+
+Adverse events
+--------------
+
+openFDA / FDA Adverse Event Reporting System (FAERS)
+  Publisher: U.S. Food and Drug Administration
+  License: CC0 1.0. Spontaneous reports; not deduplicated; counts are reports,
+  not people. Not an FDA endorsement.
+
+Evidence integrity
+------------------
+
+Crossref REST API, including Retraction Watch data
+  Publisher: Crossref. Open metadata.
+
+Europe PMC / PubMed
+  Publishers: EMBL-EBI / U.S. National Library of Medicine. Open APIs.
+
+Historical texts (Séance)
+-------------------------
+
+OpenITI — 0428IbnSina.QanunFiTibb (Ibn Sina, al-Qanun fi al-Tibb)
+  Open Islamicate Texts Initiative.
+  License: CC BY-NC-SA 4.0. Derived data is released under the same license,
+  separately from the Apache-2.0 code.
+
+PMC3941892 (tables of Canon remedy identifications)
+  License: CC BY
+
+AncientBiotics (mBio 2020, Data Set S1)
+  License: CC BY
+
+--------------------------------------------------------------------------------
+CITED ONLY — NOT INGESTED OR REDISTRIBUTED
+--------------------------------------------------------------------------------
+
+ThinkCascades — McCarthy LM et al., Drugs Aging 2022 (restricted PMC terms).
+Rochon PA et al., BMJ 2026;394:e100499 (paywalled).
+EudraVigilance / adrreports.eu — European Medicines Agency (linked to only).
+Hamdard 1998 translation of the Canon, Book 2 — © Jamia Hamdard (cited only).
+Ottoman medical texts (theses, TTK editions) — copyright with their authors;
+  short cited quotations only.

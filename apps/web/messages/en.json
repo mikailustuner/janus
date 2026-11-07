@@ -1,0 +1,16 @@
+{
+  "Metadata": {
+    "title": "Janus",
+    "description": "Reads the medicines at home and points out prescribing-cascade patterns that may be worth discussing with your doctor."
+  },
+  "LocaleSwitcher": {
+    "label": "Language"
+  },
+  "Home": {
+    "title": "Janus",
+    "status": "Under construction. Nothing here processes medical data yet."
+  },
+  "Disclaimer": {
+    "text": "Janus provides information, not medical advice. Research prototype — not a medical device."
+  }
+}

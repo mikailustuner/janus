@@ -1,0 +1,16 @@
+{
+  "Metadata": {
+    "title": "Janus",
+    "description": "Liest die Medikamente zu Hause und zeigt Muster von Verschreibungskaskaden, über die ein Gespräch mit Ihrer Ärztin oder Ihrem Arzt sinnvoll sein kann."
+  },
+  "LocaleSwitcher": {
+    "label": "Sprache"
+  },
+  "Home": {
+    "title": "Janus",
+    "status": "Im Aufbau. Hier werden noch keine medizinischen Daten verarbeitet."
+  },
+  "Disclaimer": {
+    "text": "Janus bietet Informationen, keine medizinische Beratung. Forschungsprototyp – kein Medizinprodukt."
+  }
+}

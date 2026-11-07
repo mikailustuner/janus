@@ -1,0 +1,16 @@
+{
+  "Metadata": {
+    "title": "Janus",
+    "description": "Lit les médicaments de la maison et signale des schémas de cascade de prescription qu'il peut être utile d'aborder avec votre médecin."
+  },
+  "LocaleSwitcher": {
+    "label": "Langue"
+  },
+  "Home": {
+    "title": "Janus",
+    "status": "En construction. Aucune donnée médicale n'est encore traitée ici."
+  },
+  "Disclaimer": {
+    "text": "Janus fournit des informations, pas des conseils médicaux. Prototype de recherche — pas un dispositif médical."
+  }
+}
