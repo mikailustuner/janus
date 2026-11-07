@@ -35,6 +35,7 @@ class Settings:
     k: int
     epsilon: Fraction
     noise_key: bytes | None
+    data_dir: Path | None = None  # resolution loader only (drug-resolution design §6)
 
     @classmethod
     def from_env(cls, env: Mapping[str, str] | None = None) -> Settings:
@@ -49,7 +50,12 @@ class Settings:
             k=parse_k(e.get("JANUS_K", str(K_MIN))),
             epsilon=parse_epsilon(e.get("JANUS_DP_EPSILON", "1")),
             noise_key=parse_noise_key(e.get("JANUS_NOISE_KEY", "")),
+            data_dir=_path_or_none(_optional(e, "JANUS_DATA_DIR")),
         )
+
+
+def _path_or_none(value: str | None) -> Path | None:
+    return Path(value) if value else None
 
 
 def _optional(env: Mapping[str, str], name: str) -> str | None:
