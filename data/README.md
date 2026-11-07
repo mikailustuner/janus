@@ -39,8 +39,9 @@ fetched at runtime and must not be committed; CI fails if one is tracked.
 
 The PIPC-to-ATC class mapping of the cascade engine (`cascade-engine` design §3.1-3.3, DP2,
 DP8, DP13; `data-pipelines` DP8). Curated by Janus, Apache-2.0. Drafted by the pharmacologist
-agent on 2026-11-07, **pending owner review** (cascade-engine task 5; the review sheet is
-`.kiro/specs/cascade-engine/mapping-review.md`). The files hold ATC codes and Janus's own
+agent on 2026-11-07 and **reviewed on 2026-11-07 by the project owner with AI assistance**
+(review sheet and decisions: `.kiro/specs/cascade-engine/mapping-review.md`). It still needs a
+review by a pharmacist or physician before any public claim. The files hold ATC codes and Janus's own
 notes only; no WHO index text, TİTCK product name or TİTCK ingredient string is copied. Codes
 come from the ATC structure (`basis = pharmacology`), the Wikidata extract (CC0), the TİTCK
 list (codes and row counts only) or a hand check of one WHOCC ATC/DDD Index page per prefix
@@ -61,5 +62,4 @@ them whenever WHOCC publishes a new ATC version**, together with the combination
   "Abstract, Results").
 - `abrupt_stop_classes.csv`: ATC patterns that get the warning "Do not stop this medicine
   suddenly." (`pattern,match,group,note`), systemic forms only. It covers the six groups of
-  `medical-safety.md` rule 4; rows whose note says "proposed beyond medical-safety.md rule 4"
-  await the owner's confirmation.
+  `medical-safety.md` rule 4 and ten more groups confirmed by the owner on 2026-11-07.

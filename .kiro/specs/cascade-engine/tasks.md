@@ -68,7 +68,7 @@
     WHOCC ATC version).
   - _Requirements: 4.1, 5.1–5.6, 6.1, 6.2, 7.4_
 
-- [ ] 5. **STOP — owner review of the curated mapping**
+- [x] 5. **STOP — owner review of the curated mapping**
   - Run ruff, ruff format, pyright strict and pytest (`HYPOTHESIS_PROFILE=ci`) for the tasks
     so far; commit the curated files, `mapping-review.md` and tasks 1–4; push; confirm CI passes.
   - Report to the owner and stop. Do not start task 6 until the owner has answered.

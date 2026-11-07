@@ -1,11 +1,17 @@
 # Mapping review: PIPC rows to ATC classes
 
 > Review sheet for the owner (cascade-engine task 4, review stop in task 5). Drafted by the
-> pharmacologist agent on 2026-11-07. Files under review: `data/cascade_classes.csv`,
-> `data/pipc_rules.csv`, `data/cascade_priority.csv`, `data/abrupt_stop_classes.csv`.
-> Validator (`build_rule_base`) result on the drafted files: rule base version
-> `cd71f267ed2e12bd37ccbc6e3130220944d1e86eb8f97bc26833b374e249ccbd`, 66 classes, 2 rules not
-> matchable (rows 27 and 57, marker role).
+> pharmacologist agent on 2026-11-07. Files: `data/cascade_classes.csv`, `data/pipc_rules.csv`,
+> `data/cascade_priority.csv`, `data/abrupt_stop_classes.csv`.
+>
+> **Review status.** The mapping was reviewed on 2026-11-07 by the project owner with AI
+> assistance; the owner's decisions are in section 6 and have been applied to the files. It
+> **still needs a review by a pharmacist or physician before any public claim** is made about it.
+>
+> Validator (`build_rule_base`) result after the owner's decisions: rule base version
+> `590f454d7ce4dcdd6af28b97b2d767f6d808a8d0209088cca3ee0a640f9cd075`, 66 classes, 202 pattern
+> rows, 2 rules not matchable (rows 27 and 57, marker role). The first draft had version
+> `cd71f267…ccbd`.
 
 ## 1. How the mapping was derived
 
@@ -16,22 +22,24 @@
   benzodiazepine, cholinesterase inhibitor, laxative, alpha-1 blocker) one class serves both roles.
   Classes differ where the role changes what belongs in them: `nsaid` (index, systemic only) and
   `nsaid_marker` (adds topical NSAIDs); `beta_blocker_index_eye` (row 3, with the eye-drop
-  extension), `beta_blocker_index` (row 4) and `beta_blocker_marker` (row 17).
+  extension), `beta_blocker_index` (row 4, no extension: owner decision) and `beta_blocker_marker` (row 17).
 - **Index classes** hold the systemic forms that cause the adverse event. **Marker classes** hold
   the forms used to treat it, including topical, vaginal and over-the-counter products (laxatives,
   analgesics, antihistamines, antidiarrhoeals, antacids, cough remedies, sleep aids).
 - **Codes.** Class-level groups come from pharmacological knowledge of the ATC structure
-  (`basis = pharmacology`). Single codes were taken from the local Wikidata extract
-  (`wikidata`, CC0) or checked by hand on one WHOCC index page per prefix (`whocc_lookup`; 30
-  prefixes, one page each, fetched one at a time on 2026-11-07, three of them twice while I fixed
-  my text extraction; index last updated 2026-01-20; URL and date in each note). Two codes rest on what the TİTCK list publishes (`titck_observed`, counts only). No WHO
+  (`basis = pharmacology`). Every single code was checked by hand on the public WHOCC ATC/DDD
+  index page of its group (`whocc_lookup`; URL and date in each note; index last updated
+  2026-01-20; one page per group, fetched one at a time, nothing copied). In the draft, 39 rows
+  (28 codes) had been taken from the local Wikidata extract (`wikidata`); at the owner's request
+  they were checked on 17 more WHOCC pages on 2026-11-07, all 28 codes were confirmed for the
+  intended substance, and their basis is now `whocc_lookup`. Two codes rest on what the TİTCK list publishes (`titck_observed`, counts only). No WHO
   index text, TİTCK product name or ingredient string is in any file.
 - **Longest-prefix matching** (design DP3) is used to drop sub-groups that do not belong (for
   example M01AX, which mixes NSAIDs with glucosamine and chondroitin) and add back single codes.
 - **Combination codes** never appear as patterns; the loader refuses them. Where a class covers a
   combination group (C09, C07, A10, N04), the engine still only sees the decomposed ingredients.
 - **Form extension** (design DP8): only ophthalmic beta-blockers (`S01ED`) on row 3, cited to
-  Vander Zanden 2001. The row-4 source found is a proposal (section 6).
+  Vander Zanden 2001. Row 4 has none (owner decision, section 6).
 - **ThinkCascades**: the overlap rows (5, 8, 18, 23, 53, 56) were checked against the article's
   table of retained cascades on PMC9477172 (read only, nothing copied). All six describe the same
   cascade as the PIPC row and carry `paper:thinkcascades:drugs_aging_2022`.
@@ -45,7 +53,7 @@
 | 1 | Angiotensin converting enzyme inhibitor | Cough | Cough remedy | `ace_inhibitor` | `cough_remedy` |  |  |  |
 | 2 | Antihypertensive | Orthostatic hypotension/dizziness | Antiemetic | `antihypertensive` | `antiemetic` |  |  |  |
 | 3 | Beta-blocker (particularly lipophilic e.g., propranolol) | Depression | Antidepressant | `beta_blocker_index_eye` | `antidepressant` | S01ED |  |  |
-| 4 | Beta-blocker (particularly lipophilic e.g., propranolol) | Erectile dysfunction | Phosphodiesterase-5 inhibitor, alprostadil | `beta_blocker_index` | `pde5_inhibitor_alprostadil` | pending owner (row 4 source) |  |  |
+| 4 | Beta-blocker (particularly lipophilic e.g., propranolol) | Erectile dysfunction | Phosphodiesterase-5 inhibitor, alprostadil | `beta_blocker_index` | `pde5_inhibitor_alprostadil` | none (owner decision) |  |  |
 | 5 | Calcium channel blocker | Peripheral edema | Diuretic | `ccb` | `diuretic` |  |  | ThinkCascades |
 | 6 | Calcium channel blocker | Constipation | Laxative | `ccb` | `laxative` |  |  |  |
 | 7 | Diuretic | Gout or Hyperuricemia | Anti-gout agent | `diuretic` | `antigout` |  |  |  |
@@ -140,12 +148,12 @@ Used by rows: 45 (marker), 56 (index).
 
 ### `antiarrhythmic`
 
-Used by rows: 21 (marker), 63 (marker).
+Used by rows: 21, 63 (marker).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
 | `C01B` | include | pipc | pharmacology | Rows 21, 63 marker. Class I and III antiarrhythmics (amiodarone, dronedarone, flecainide, propafenone and others). Beta-blockers, verapamil, diltiazem and digoxin are left out: they are mostly started for blood pressure, angina or rate control (judgement call, listed for review). |
-| `C07AA07` | include | pipc | wikidata | Sotalol, a beta-blocker used almost only as a class III antiarrhythmic. |
+| `C07AA07` | include | pipc | whocc_lookup | Sotalol, a beta-blocker used almost only as a class III antiarrhythmic. WHOCC page checked 2026-11-07. |
 
 ### `anticholinergic_antiemetic`
 
@@ -153,15 +161,15 @@ Used by rows: 45 (index).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
-| `A04AD01` | include | pipc | wikidata | Row 45 index (urinary retention). Antiemetics with marked anticholinergic action. Scopolamine (hyoscine), including patches (the route map keeps A04 for transdermal products). Butylscopolamine (A03BB01) is an antispasmodic, not an antiemetic, and is left out. |
+| `A04AD01` | include | pipc | whocc_lookup | Row 45 index (urinary retention). Antiemetics with marked anticholinergic action. Scopolamine (hyoscine), including patches (the route map keeps A04 for transdermal products). Butylscopolamine (A03BB01) is an antispasmodic, not an antiemetic, and is left out. WHOCC page checked 2026-11-07. |
 | `R06AA11` | include | pipc | whocc_lookup | Row 45 index (urinary retention). Antiemetics with marked anticholinergic action. Dimenhydrinate. WHOCC page checked 2026-11-07. |
-| `R06AD02` | include | pipc | wikidata | Row 45 index (urinary retention). Antiemetics with marked anticholinergic action. Promethazine. |
-| `R06AE03` | include | pipc | wikidata | Row 45 index (urinary retention). Antiemetics with marked anticholinergic action. Cyclizine. |
-| `R06AE05` | include | pipc | wikidata | Row 45 index (urinary retention). Antiemetics with marked anticholinergic action. Meclizine (meclozine). |
+| `R06AD02` | include | pipc | whocc_lookup | Row 45 index (urinary retention). Antiemetics with marked anticholinergic action. Promethazine. WHOCC page checked 2026-11-07. |
+| `R06AE03` | include | pipc | whocc_lookup | Row 45 index (urinary retention). Antiemetics with marked anticholinergic action. Cyclizine. WHOCC page checked 2026-11-07. |
+| `R06AE05` | include | pipc | whocc_lookup | Row 45 index (urinary retention). Antiemetics with marked anticholinergic action. Meclizine (meclozine). WHOCC page checked 2026-11-07. |
 
 ### `anticonvulsant`
 
-Used by rows: 15 (index), 16 (index), 58 (marker).
+Used by rows: 15, 16 (index), 58 (marker).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
@@ -171,7 +179,7 @@ Used by rows: 15 (index), 16 (index), 58 (marker).
 
 ### `antidepressant`
 
-Used by rows: 3 (marker), 36 (marker), 55 (marker).
+Used by rows: 3, 36, 55 (marker).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
@@ -179,7 +187,7 @@ Used by rows: 3 (marker), 36 (marker), 55 (marker).
 
 ### `antidiarrheal`
 
-Used by rows: 28 (marker), 42 (marker), 47 (marker).
+Used by rows: 28, 42, 47 (marker).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
@@ -193,32 +201,32 @@ Used by rows: 46 (index).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
-| `A03FA01` | include | pipc | wikidata | Row 46 index (extrapyramidal symptoms). Dopamine-blocking antiemetics. Metoclopramide. Left out: promethazine (weak dopamine block; owner question), droperidol and amisulpride injections (hospital use), itopride and cinitapride (prokinetics for dyspepsia). |
-| `A03FA03` | include | pipc | wikidata | Row 46 index (extrapyramidal symptoms). Dopamine-blocking antiemetics. Domperidone: acts mostly outside the brain, extrapyramidal effects are uncommon but reported; kept (judgement call). |
-| `A03FA04` | include | pipc | wikidata | Row 46 index (extrapyramidal symptoms). Dopamine-blocking antiemetics. Bromopride. |
-| `A03FA05` | include | pipc | wikidata | Row 46 index (extrapyramidal symptoms). Dopamine-blocking antiemetics. Alizapride. |
-| `A03FA06` | include | pipc | wikidata | Row 46 index (extrapyramidal symptoms). Dopamine-blocking antiemetics. Clebopride. |
-| `A04AD05` | include | pipc | wikidata | Row 46 index (extrapyramidal symptoms). Dopamine-blocking antiemetics. Metopimazine. |
-| `N05AB04` | include | pipc | wikidata | Row 46 index (extrapyramidal symptoms). Dopamine-blocking antiemetics. Prochlorperazine, mostly used as an antiemetic in older adults; it is also in the antipsychotic class. |
+| `A03FA01` | include | pipc | whocc_lookup | Row 46 index (extrapyramidal symptoms). Dopamine-blocking antiemetics. Metoclopramide. Left out: promethazine (weak dopamine block; owner question), droperidol and amisulpride injections (hospital use), itopride and cinitapride (prokinetics for dyspepsia). WHOCC page checked 2026-11-07. |
+| `A03FA03` | include | pipc | whocc_lookup | Row 46 index (extrapyramidal symptoms). Dopamine-blocking antiemetics. Domperidone: acts mostly outside the brain, extrapyramidal effects are uncommon but reported; kept (judgement call). WHOCC page checked 2026-11-07. |
+| `A03FA04` | include | pipc | whocc_lookup | Row 46 index (extrapyramidal symptoms). Dopamine-blocking antiemetics. Bromopride. WHOCC page checked 2026-11-07. |
+| `A03FA05` | include | pipc | whocc_lookup | Row 46 index (extrapyramidal symptoms). Dopamine-blocking antiemetics. Alizapride. WHOCC page checked 2026-11-07. |
+| `A03FA06` | include | pipc | whocc_lookup | Row 46 index (extrapyramidal symptoms). Dopamine-blocking antiemetics. Clebopride. WHOCC page checked 2026-11-07. |
+| `A04AD05` | include | pipc | whocc_lookup | Row 46 index (extrapyramidal symptoms). Dopamine-blocking antiemetics. Metopimazine. WHOCC page checked 2026-11-07. |
+| `N05AB04` | include | pipc | whocc_lookup | Row 46 index (extrapyramidal symptoms). Dopamine-blocking antiemetics. Prochlorperazine, mostly used as an antiemetic in older adults; it is also in the antipsychotic class. WHOCC page checked 2026-11-07. |
 
 ### `antiemetic`
 
-Used by rows: 2 (marker), 13 (marker), 16 (marker), 26 (marker), 52 (marker).
+Used by rows: 2, 13, 16, 26, 52 (marker).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
-| `A03FA` | include | pipc | wikidata | Dopamine-blocking prokinetics (metoclopramide, domperidone and others), the most used antiemetics in Türkiye and much of the EU. The few dyspepsia prokinetics in the group (itopride, cinitapride) are kept: rarely prescribed, same group. |
+| `A03FA` | include | pipc | whocc_lookup | Dopamine-blocking prokinetics (metoclopramide, domperidone and others), the most used antiemetics in Türkiye and much of the EU. The few dyspepsia prokinetics in the group (itopride, cinitapride) are kept: rarely prescribed, same group. WHOCC page checked 2026-11-07. |
 | `A04A` | include | pipc | pharmacology | Rows 2, 13, 16, 26, 52 marker; one definition for all five. 5-HT3 and NK1 antagonists, scopolamine patches, cannabinoids and other antiemetics. |
-| `N05AB04` | include | pipc | wikidata | Prochlorperazine, used mainly as an antiemetic in older adults. |
+| `N05AB04` | include | pipc | whocc_lookup | Prochlorperazine, used mainly as an antiemetic in older adults. WHOCC page checked 2026-11-07. |
 | `R06AA10` | include | pipc | whocc_lookup | Trimethobenzamide, an antiemetic coded with the antihistamines (8 TİTCK rows). WHOCC page checked 2026-11-07. |
 | `R06AA11` | include | pipc | whocc_lookup | Dimenhydrinate, over the counter for nausea. WHOCC page checked 2026-11-07. |
-| `R06AD02` | include | pipc | wikidata | Promethazine, commonly prescribed for nausea in the US. |
-| `R06AE03` | include | pipc | wikidata | Cyclizine, used for nausea. |
-| `R06AE05` | include | pipc | wikidata | Meclizine (meclozine), over the counter for nausea and motion sickness. |
+| `R06AD02` | include | pipc | whocc_lookup | Promethazine, commonly prescribed for nausea in the US. WHOCC page checked 2026-11-07. |
+| `R06AE03` | include | pipc | whocc_lookup | Cyclizine, used for nausea. WHOCC page checked 2026-11-07. |
+| `R06AE05` | include | pipc | whocc_lookup | Meclizine (meclozine), over the counter for nausea and motion sickness. WHOCC page checked 2026-11-07. |
 
 ### `antifungal_genital`
 
-Used by rows: 41 (marker), 62 (marker).
+Used by rows: 41, 62 (marker).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
@@ -256,9 +264,9 @@ Used by rows: 29 (marker).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
-| `R01AC` | include | pipc | wikidata | Nasal antihistamine sprays (azelastine, levocabastine, olopatadine). Ipratropium nasal spray (R01AX03), which works best for a cholinergic runny nose, is left out because PIPC names antihistamines (owner question). |
-| `R01AC01` | exclude | pipc | wikidata | Cromoglicate is a mast-cell stabiliser, not an antihistamine; excluded. |
-| `R01AC07` | exclude | pipc | wikidata | Nedocromil is a mast-cell stabiliser, not an antihistamine; excluded. |
+| `R01AC` | include | pipc | whocc_lookup | Nasal antihistamine sprays (azelastine, levocabastine, olopatadine). Ipratropium nasal spray (R01AX03), which works best for a cholinergic runny nose, is left out because PIPC names antihistamines (owner question). WHOCC page checked 2026-11-07. |
+| `R01AC01` | exclude | pipc | whocc_lookup | Cromoglicate is a mast-cell stabiliser, not an antihistamine; excluded. WHOCC page checked 2026-11-07. |
+| `R01AC07` | exclude | pipc | whocc_lookup | Nedocromil is a mast-cell stabiliser, not an antihistamine; excluded. WHOCC page checked 2026-11-07. |
 | `R06A` | include | pipc | pharmacology | Row 29 marker (rhinorrhoea). Systemic antihistamines, many over the counter. |
 | `R06AA10` | exclude | pipc | whocc_lookup | Trimethobenzamide is an antiemetic, not used for a runny nose; excluded. WHOCC page checked 2026-11-07. |
 
@@ -273,7 +281,7 @@ Used by rows: 22 (marker).
 
 ### `antihypertensive`
 
-Used by rows: 2 (index), 14 (marker), 38 (marker), 53 (marker), 61 (marker), 64 (marker).
+Used by rows: 2 (index), 14, 38, 53, 61, 64 (marker).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
@@ -296,7 +304,7 @@ Used by rows: 19 (marker).
 
 ### `antiparkinsonian`
 
-Used by rows: 18 (marker), 37 (marker), 46 (marker).
+Used by rows: 18, 37, 46 (marker).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
@@ -304,7 +312,7 @@ Used by rows: 18 (marker), 37 (marker), 46 (marker).
 
 ### `antipsychotic`
 
-Used by rows: 17 (index), 18 (index), 19 (index), 20 (index), 21 (index), 22 (index), 30 (marker), 60 (marker).
+Used by rows: 17, 18, 19, 20, 21, 22 (index), 30, 60 (marker).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
@@ -317,7 +325,7 @@ Used by rows: 23 (index), 39 (marker).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
-| `N03AE01` | include | pipc | wikidata | Clonazepam, a benzodiazepine coded with the antiepileptics. |
+| `N03AE01` | include | pipc | whocc_lookup | Clonazepam, a benzodiazepine coded with the antiepileptics. WHOCC page checked 2026-11-07. |
 | `N05BA` | include | pipc | pharmacology | Rows 23 (index) and 39 (marker). Benzodiazepines labelled as anxiolytics. One class for both roles. Z-drugs (N05CF) are not benzodiazepines and are left out; tetrazepam (M03BX07, withdrawn in the EU) is left out. |
 | `N05CD` | include | pipc | pharmacology | Benzodiazepines labelled as hypnotics (temazepam, nitrazepam, midazolam and others). |
 
@@ -327,7 +335,7 @@ Used by rows: 4 (index).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
-| `C07` | include | pipc | pharmacology | Row 4 index (erectile dysfunction). All systemic beta-blockers. PIPC says 'particularly lipophilic e.g., propranolol'; the class keeps hydrophilic ones (atenolol, sotalol) too, because PIPC names the whole class and 'particularly' is a weight, not a limit. Fixed combinations (C07B-C07F) never reach the engine. Same content as row 3 without the eye-drop extension: the extension is pending owner approval of source Fraunfelder and Meyer 1985 (JAMA letter, doi:10.1001/jama.1985.03350450064016), so rows 3 and 4 use different classes. |
+| `C07` | include | pipc | pharmacology | Row 4 index (erectile dysfunction). All systemic beta-blockers. PIPC says 'particularly lipophilic e.g., propranolol'; the class keeps hydrophilic ones (atenolol, sotalol) too, because PIPC names the whole class and 'particularly' is a weight, not a limit. Fixed combinations (C07B-C07F) never reach the engine. Same content as row 3 without the eye-drop extension. Owner decision 2026-11-07: no S01ED extension for row 4, because the only source found is a letter (Fraunfelder 1985), not a reviewed article; it is not added to the paper list. |
 
 ### `beta_blocker_index_eye`
 
@@ -353,8 +361,8 @@ Used by rows: 50 (index).
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
 | `M05BA` | include | pipc | pharmacology | Row 50 index (gastritis). Bisphosphonates taken by mouth irritate the oesophagus and stomach. Combinations with calcium or vitamin D (M05BB) never reach the engine. |
-| `M05BA03` | exclude | pipc | wikidata | Pamidronate is given only by infusion and does not cause gastritis; excluded. |
-| `M05BA08` | exclude | pipc | wikidata | Zoledronate is given only by infusion and does not cause gastritis; excluded. Ibandronate and clodronate have oral and injected forms under one code and stay in. |
+| `M05BA03` | exclude | pipc | whocc_lookup | Pamidronate is given only by infusion and does not cause gastritis; excluded. WHOCC page checked 2026-11-07. |
+| `M05BA08` | exclude | pipc | whocc_lookup | Zoledronate is given only by infusion and does not cause gastritis; excluded. Ibandronate and clodronate have oral and injected forms under one code and stay in. WHOCC page checked 2026-11-07. |
 
 ### `carbapenem`
 
@@ -366,7 +374,7 @@ Used by rows: 58 (index).
 
 ### `ccb`
 
-Used by rows: 5 (index), 6 (index).
+Used by rows: 5, 6 (index).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
@@ -374,7 +382,7 @@ Used by rows: 5 (index), 6 (index).
 
 ### `cholinesterase_inhibitor`
 
-Used by rows: 23 (marker), 24 (index), 25 (index), 26 (index), 27 (index), 28 (index), 29 (index), 33 (marker).
+Used by rows: 23, 33 (marker), 24, 25, 26, 27, 28, 29 (index).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
@@ -382,7 +390,7 @@ Used by rows: 23 (marker), 24 (index), 25 (index), 26 (index), 27 (index), 28 (i
 
 ### `corticosteroid_systemic`
 
-Used by rows: 59 (index), 60 (index), 61 (index).
+Used by rows: 59, 60, 61 (index).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
@@ -403,11 +411,11 @@ Used by rows: 13 (index).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
-| `C01AA05` | include | pipc | wikidata | Row 13 index, individual drug: digoxin only. Other cardiac glycosides (digitoxin, metildigoxin) are left out because PIPC names one substance. |
+| `C01AA05` | include | pipc | whocc_lookup | Row 13 index, individual drug: digoxin only. Other cardiac glycosides (digitoxin, metildigoxin) are left out because PIPC names one substance. WHOCC page checked 2026-11-07. |
 
 ### `diuretic`
 
-Used by rows: 5 (marker), 7 (index), 8 (index), 31 (marker), 43 (marker), 44 (marker).
+Used by rows: 5, 31, 43, 44 (marker), 7, 8 (index).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
@@ -436,7 +444,7 @@ Used by rows: 63 (index).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
-| `J01FA01` | include | pipc | wikidata | Row 63 index, individual drug: systemic erythromycin (oral or intravenous; also used as a prokinetic under the same code). Not extended (design DP8): skin erythromycin (D10AF02) and eye ointment (S01AA17) give no meaningful systemic exposure, so they do not prolong the QT interval. |
+| `J01FA01` | include | pipc | whocc_lookup | Row 63 index, individual drug: systemic erythromycin (oral or intravenous; also used as a prokinetic under the same code). Not extended (design DP8): skin erythromycin (D10AF02) and eye ointment (S01AA17) give no meaningful systemic exposure, so they do not prolong the QT interval. WHOCC page checked 2026-11-07. |
 
 ### `fludrocortisone`
 
@@ -444,7 +452,7 @@ Used by rows: 64 (index).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
-| `H02AA02` | include | pipc | wikidata | Row 64 index, individual drug: fludrocortisone (oral). |
+| `H02AA02` | include | pipc | whocc_lookup | Row 64 index, individual drug: fludrocortisone (oral). WHOCC page checked 2026-11-07. |
 
 ### `flunarizine`
 
@@ -466,7 +474,7 @@ Used by rows: 31 (index).
 
 ### `gastroprotective`
 
-Used by rows: 50 (marker), 51 (marker).
+Used by rows: 50, 51 (marker).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
@@ -479,7 +487,7 @@ Used by rows: 54 (marker).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
-| `C01AA05` | include | pipc | wikidata | Row 54 marker (worsening heart failure). Digoxin. |
+| `C01AA05` | include | pipc | whocc_lookup | Row 54 marker (worsening heart failure). Digoxin. WHOCC page checked 2026-11-07. |
 | `C01DX22` | include | pipc | whocc_lookup | Row 54 marker (worsening heart failure). Vericiguat. WHOCC page checked 2026-11-07. |
 | `C01EB17` | include | pipc | whocc_lookup | Row 54 marker (worsening heart failure). Ivabradine. WHOCC page checked 2026-11-07. |
 | `C03C` | include | pipc | pharmacology | Row 54 marker (worsening heart failure). Loop diuretics, the usual response to fluid retention. ACE inhibitors, ARBs, sacubitril-valsartan, beta-blockers and SGLT-2 inhibitors are left out: they are mostly started for blood pressure or diabetes, so a match would say little (judgement call, listed for review). |
@@ -497,7 +505,7 @@ Used by rows: 65 (index).
 
 ### `laxative`
 
-Used by rows: 6 (marker), 34 (marker), 47 (index), 65 (marker).
+Used by rows: 6, 34, 65 (marker), 47 (index).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
@@ -509,7 +517,7 @@ Used by rows: 37 (index).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
-| `N05AN01` | include | pipc | wikidata | Row 37 index, individual drug: lithium salts. |
+| `N05AN01` | include | pipc | whocc_lookup | Row 37 index, individual drug: lithium salts. WHOCC page checked 2026-11-07. |
 
 ### `metformin`
 
@@ -517,7 +525,7 @@ Used by rows: 42 (index).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
-| `A10BA02` | include | pipc | wikidata | Row 42 index, individual drug: metformin. |
+| `A10BA02` | include | pipc | whocc_lookup | Row 42 index, individual drug: metformin. WHOCC page checked 2026-11-07. |
 
 ### `midodrine`
 
@@ -540,7 +548,7 @@ Used by rows: 10 (marker).
 
 ### `nsaid`
 
-Used by rows: 51 (index), 52 (index), 53 (index), 54 (index).
+Used by rows: 51, 52, 53, 54 (index).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
@@ -575,7 +583,7 @@ Used by rows: 40 (marker).
 
 ### `oab_medication`
 
-Used by rows: 8 (marker), 24 (marker), 32 (marker), 35 (marker).
+Used by rows: 8, 24, 32, 35 (marker).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
@@ -630,12 +638,12 @@ Used by rows: 43 (index).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
-| `A10BG02` | include | pipc | wikidata | Row 43 index: rosiglitazone. |
-| `A10BG03` | include | pipc | wikidata | Row 43 index: pioglitazone. Other glitazones (troglitazone, lobeglitazone) are left out because PIPC names two substances. |
+| `A10BG02` | include | pipc | whocc_lookup | Row 43 index: rosiglitazone. WHOCC page checked 2026-11-07. |
+| `A10BG03` | include | pipc | whocc_lookup | Row 43 index: pioglitazone. Other glitazones (troglitazone, lobeglitazone) are left out because PIPC names two substances. WHOCC page checked 2026-11-07. |
 
 ### `ppi`
 
-Used by rows: 48 (index), 49 (index).
+Used by rows: 48, 49 (index).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
@@ -647,12 +655,10 @@ Used by rows: 49 (marker).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
-| `A11CC` | include | pipc | pharmacology | Row 49 marker. PIPC publishes Drug B as 'Vitamin or Mineral Deficiency', the same words as the adverse event; the text is kept as published and read as the vitamin or mineral supplements that treat deficiencies linked to long-term PPI use (owner question). Vitamin D, usually given with calcium. |
-| `A12AA` | include | pipc | pharmacology | Row 49 marker. PIPC publishes Drug B as 'Vitamin or Mineral Deficiency', the same words as the adverse event; the text is kept as published and read as the vitamin or mineral supplements that treat deficiencies linked to long-term PPI use (owner question). Calcium salts. |
-| `A12CC` | include | pipc | pharmacology | Row 49 marker. PIPC publishes Drug B as 'Vitamin or Mineral Deficiency', the same words as the adverse event; the text is kept as published and read as the vitamin or mineral supplements that treat deficiencies linked to long-term PPI use (owner question). Magnesium salts (PPI-related hypomagnesaemia). |
-| `B03AA` | include | pipc | pharmacology | Row 49 marker. PIPC publishes Drug B as 'Vitamin or Mineral Deficiency', the same words as the adverse event; the text is kept as published and read as the vitamin or mineral supplements that treat deficiencies linked to long-term PPI use (owner question). Oral ferrous iron. |
-| `B03AB` | include | pipc | pharmacology | Row 49 marker. PIPC publishes Drug B as 'Vitamin or Mineral Deficiency', the same words as the adverse event; the text is kept as published and read as the vitamin or mineral supplements that treat deficiencies linked to long-term PPI use (owner question). Oral ferric iron. Parenteral iron has no substance-level code (B03AC), so it cannot be matched. |
-| `B03BA` | include | pipc | pharmacology | Row 49 marker. PIPC publishes Drug B as 'Vitamin or Mineral Deficiency', the same words as the adverse event; the text is kept as published and read as the vitamin or mineral supplements that treat deficiencies linked to long-term PPI use (owner question). Vitamin B12 (cyanocobalamin, hydroxocobalamin and others). |
+| `A12CC` | include | pipc | pharmacology | Row 49 marker. PIPC publishes Drug B as 'Vitamin or Mineral Deficiency', the same words as the adverse event; the text is kept as published. Owner decision 2026-11-07: read as supplements for the deficiencies best linked to long-term PPI use, vitamin B12, magnesium and oral iron; calcium and vitamin D belong to the fracture cascade (row 48). This row: magnesium. |
+| `B03AA` | include | pipc | pharmacology | Row 49 marker. PIPC publishes Drug B as 'Vitamin or Mineral Deficiency', the same words as the adverse event; the text is kept as published. Owner decision 2026-11-07: read as supplements for the deficiencies best linked to long-term PPI use, vitamin B12, magnesium and oral iron; calcium and vitamin D belong to the fracture cascade (row 48). This row: oral iron (ferrous). |
+| `B03AB` | include | pipc | pharmacology | Row 49 marker. PIPC publishes Drug B as 'Vitamin or Mineral Deficiency', the same words as the adverse event; the text is kept as published. Owner decision 2026-11-07: read as supplements for the deficiencies best linked to long-term PPI use, vitamin B12, magnesium and oral iron; calcium and vitamin D belong to the fracture cascade (row 48). This row: oral iron (ferric). |
+| `B03BA` | include | pipc | pharmacology | Row 49 marker. PIPC publishes Drug B as 'Vitamin or Mineral Deficiency', the same words as the adverse event; the text is kept as published. Owner decision 2026-11-07: read as supplements for the deficiencies best linked to long-term PPI use, vitamin B12, magnesium and oral iron; calcium and vitamin D belong to the fracture cascade (row 48). This row: vitamin B12. |
 
 ### `quinine`
 
@@ -668,7 +674,7 @@ Used by rows: 44 (index).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
-| `A10BG02` | include | pipc | wikidata | Row 44 index, individual drug: rosiglitazone. |
+| `A10BG02` | include | pipc | whocc_lookup | Row 44 index, individual drug: rosiglitazone. WHOCC page checked 2026-11-07. |
 
 ### `sedative`
 
@@ -676,7 +682,7 @@ Used by rows: 20 (marker).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
-| `N03AE01` | include | pipc | wikidata | Row 20 marker (akathisia or tardive movements). Clonazepam, the benzodiazepine most used for akathisia. Mirtazapine is left out (antidepressant). |
+| `N03AE01` | include | pipc | whocc_lookup | Row 20 marker (akathisia or tardive movements). Clonazepam, the benzodiazepine most used for akathisia. Mirtazapine is left out (antidepressant). WHOCC page checked 2026-11-07. |
 | `N05B` | include | pipc | pharmacology | Row 20 marker (akathisia or tardive movements). Anxiolytics: benzodiazepines, hydroxyzine and others. |
 | `N05BE` | exclude | pipc | pharmacology | Buspirone is not sedating; excluded. |
 | `N05C` | include | pipc | pharmacology | Row 20 marker (akathisia or tardive movements). Hypnotics and sedatives. |
@@ -693,14 +699,14 @@ Used by rows: 41 (index).
 
 ### `sleep_agent`
 
-Used by rows: 12 (marker), 25 (marker), 59 (marker).
+Used by rows: 12, 25, 59 (marker).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
 | `N05BA` | include | pipc | pharmacology | Rows 12, 25, 59 marker; one definition for all three. Benzodiazepines labelled as anxiolytics but often prescribed for sleep (lorazepam, alprazolam, diazepam). |
 | `N05C` | include | pipc | pharmacology | Rows 12, 25, 59 marker; one definition for all three. All hypnotics and sedatives: benzodiazepine hypnotics, Z-drugs, melatonin and its agonists, orexin antagonists, barbiturates and others. Melatonin is often bought without prescription. |
-| `N06AX05` | include | pipc | wikidata | Rows 12, 25, 59 marker; one definition for all three. Trazodone, the antidepressant most prescribed for sleep in older adults. Mirtazapine, low-dose doxepin and quetiapine are left out (judgement call). |
-| `R06AA02` | include | pipc | wikidata | Rows 12, 25, 59 marker; one definition for all three. Diphenhydramine, an over-the-counter sleep aid. |
+| `N06AX05` | include | pipc | whocc_lookup | Rows 12, 25, 59 marker; one definition for all three. Trazodone, the antidepressant most prescribed for sleep in older adults. Mirtazapine, low-dose doxepin and quetiapine are left out (judgement call). WHOCC page checked 2026-11-07. |
+| `R06AA02` | include | pipc | whocc_lookup | Rows 12, 25, 59 marker; one definition for all three. Diphenhydramine, an over-the-counter sleep aid. WHOCC page checked 2026-11-07. |
 | `R06AA09` | include | pipc | whocc_lookup | Rows 12, 25, 59 marker; one definition for all three. Doxylamine, an over-the-counter sleep aid. WHOCC page checked 2026-11-07. |
 
 ### `ssri_snri`
@@ -718,7 +724,7 @@ Used by rows: 32 (index).
 
 ### `statin`
 
-Used by rows: 9 (index), 10 (index), 11 (index), 12 (index).
+Used by rows: 9, 10, 11, 12 (index).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
@@ -734,7 +740,7 @@ Used by rows: 15 (marker).
 
 ### `tricyclic_antidepressant`
 
-Used by rows: 33 (index), 34 (index), 35 (index).
+Used by rows: 33, 34, 35 (index).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
@@ -752,7 +758,7 @@ Used by rows: 57 (index).
 
 ### `venlafaxine`
 
-Used by rows: 38 (index), 39 (index).
+Used by rows: 38, 39 (index).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
@@ -764,12 +770,12 @@ Used by rows: 56 (marker).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
-| `A04AD01` | include | pipc | wikidata | Row 56 marker (orthostatic hypotension, dizziness). Scopolamine. Benzodiazepines, also used as vestibular suppressants, are left out because they are started for many other reasons (owner question). |
+| `A04AD01` | include | pipc | whocc_lookup | Row 56 marker (orthostatic hypotension, dizziness). Scopolamine. Benzodiazepines, also used as vestibular suppressants, are left out because they are started for many other reasons (owner question). WHOCC page checked 2026-11-07. |
 | `N07CA` | include | pipc | whocc_lookup | Row 56 marker (orthostatic hypotension, dizziness). Antivertigo drugs (betahistine, cinnarizine, flunarizine, acetylleucine). Betahistine is not a vestibular suppressant in the strict sense but is the drug most prescribed for dizziness in Türkiye and the EU, and ThinkCascades gives it as an example for this cascade. WHOCC page checked 2026-11-07. |
 | `R06AA11` | include | pipc | whocc_lookup | Row 56 marker (orthostatic hypotension, dizziness). Dimenhydrinate. WHOCC page checked 2026-11-07. |
-| `R06AD02` | include | pipc | wikidata | Row 56 marker (orthostatic hypotension, dizziness). Promethazine. |
-| `R06AE03` | include | pipc | wikidata | Row 56 marker (orthostatic hypotension, dizziness). Cyclizine. |
-| `R06AE05` | include | pipc | wikidata | Row 56 marker (orthostatic hypotension, dizziness). Meclizine (meclozine). |
+| `R06AD02` | include | pipc | whocc_lookup | Row 56 marker (orthostatic hypotension, dizziness). Promethazine. WHOCC page checked 2026-11-07. |
+| `R06AE03` | include | pipc | whocc_lookup | Row 56 marker (orthostatic hypotension, dizziness). Cyclizine. WHOCC page checked 2026-11-07. |
+| `R06AE05` | include | pipc | whocc_lookup | Row 56 marker (orthostatic hypotension, dizziness). Meclizine (meclozine). WHOCC page checked 2026-11-07. |
 
 ### `vitamin_supplement`
 
@@ -779,20 +785,19 @@ Used by rows: 48 (marker).
 |---|---|---|---|---|
 | `A11CC` | include | pipc | pharmacology | Row 48 marker (osteoporosis, fractures). Vitamin D and its analogues (cholecalciferol, calcitriol, alfacalcidol). Calcium is a mineral and is left out because PIPC writes 'Vitamin supplement' (owner question). Vitamin A plus D (A11CB) never reaches the engine. |
 
-
 ## 4. Abrupt-stop list
 
 The six groups of `medical-safety.md` rule 4 are covered on systemic forms only (no eye drops,
-skin, inhaled or nasal forms). Rows marked **proposed** go beyond rule 4 and need the owner's
-confirmation; they are in the file now because design DP13 prefers over-inclusion, and each can
-be removed by deleting its row. Tetrazepam (`M03BX07`) and clonidine for migraine (`N02CX02`) are
-extra codes inside required groups, not new groups.
+skin, inhaled or nasal forms). The groups beyond rule 4 were confirmed by the owner on
+2026-11-07 (a wrong "do not stop suddenly" warning is low-harm, so over-inclusion is the safe
+side). Gut-acting corticosteroids (A07EA) are not on the list (owner decision: low systemic
+exposure).
 
 | Pattern | Group | Status | Note |
 |---|---|---|---|
 | `C07` | beta_blocker | rule 4 | Systemic beta-blockers; stopping suddenly can cause rebound angina, tachycardia or infarction. Eye drops (S01ED) are not on the list. |
 | `N03A` | antiepileptic | rule 4 | Antiepileptics; stopping suddenly can trigger seizures or status epilepticus. The old gabapentinoid codes in this group (N03AX12, N03AX16) are listed separately under gabapentinoid. |
-| `H02A` | corticosteroid | rule 4 | Systemic corticosteroids (glucocorticoids and fludrocortisone); stopping suddenly after long use can cause adrenal crisis. Skin (D07), inhaled (R03BA), nasal (R01AD), eye (S01BA) and gut-acting (A07EA) forms are not on the list. |
+| `H02A` | corticosteroid | rule 4 | Systemic corticosteroids (glucocorticoids and fludrocortisone); stopping suddenly after long use can cause adrenal crisis. Skin (D07), inhaled (R03BA), nasal (R01AD), eye (S01BA) and gut-acting (A07EA) forms are not on the list. Gut-acting corticosteroids (A07EA) are not added (owner decision 2026-11-07: low systemic exposure). |
 | `N05BA` | benzodiazepine | rule 4 | Benzodiazepines (anxiolytic); stopping suddenly can cause withdrawal seizures and delirium. |
 | `N05CD` | benzodiazepine | rule 4 | Benzodiazepines (hypnotic); same withdrawal risk. |
 | `N03AE01` | benzodiazepine | rule 4 | Clonazepam; same withdrawal risk (also covered by the antiepileptic group). |
@@ -800,22 +805,25 @@ extra codes inside required groups, not new groups.
 | `N06A` | antidepressant | rule 4 | Antidepressants; stopping suddenly can cause discontinuation syndrome, and with MAO inhibitors and tricyclics severe rebound effects. |
 | `C02AC01` | clonidine | rule 4 | Clonidine (tablets and patches); stopping suddenly can cause rebound hypertensive crisis. |
 | `N02CX02` | clonidine | rule 4 | Clonidine coded for migraine prevention; same rebound risk. |
-| `C02AC` | central_alpha_agonist | **proposed** | Other centrally acting alpha-2 agonists (guanfacine, moxonidine, rilmenidine); rebound hypertension after a sudden stop is described, less often than with clonidine. |
-| `N07BC04` | central_alpha_agonist | **proposed** | Lofexidine; its label advises gradual reduction because blood pressure rebounds after a sudden stop. |
-| `N02BF` | gabapentinoid | **proposed** | Gabapentin, pregabalin, mirogabalin; sudden withdrawal can cause seizures (in people with epilepsy) and withdrawal symptoms; labels advise tapering over at least a week. |
-| `N03AX12` | gabapentinoid | **proposed** | Old gabapentin code still published by TİTCK. |
-| `N03AX16` | gabapentinoid | **proposed** | Old pregabalin code still published by TİTCK. |
-| `M03BX01` | baclofen | **proposed** | Baclofen; sudden withdrawal can cause hallucinations, seizures and, after intrathecal use, a life-threatening syndrome. |
-| `M03BX02` | tizanidine | **proposed** | Tizanidine; sudden withdrawal can cause rebound hypertension and tachycardia. |
-| `N02A` | opioid | **proposed** | Opioid analgesics; sudden stop in a physically dependent person causes withdrawal; the FDA warned in 2019 of serious harm after sudden opioid stops in dependent patients. |
-| `N07BC` | opioid | **proposed** | Opioids for opioid dependence (methadone, buprenorphine); same risk. |
-| `N04B` | dopaminergic_antiparkinsonian | **proposed** | Levodopa and other dopaminergic drugs; sudden withdrawal can cause a neuroleptic-malignant-like syndrome and severe worsening of parkinsonism. |
-| `N05A` | antipsychotic | **proposed** | Antipsychotics; sudden withdrawal can cause rebound psychosis, withdrawal dyskinesia and, with clozapine, cholinergic rebound. |
-| `N05AN01` | lithium | **proposed** | Lithium; sudden stop raises the risk of early relapse of mania. |
-| `N05CF` | z_drug | **proposed** | Z-drugs (zolpidem, zopiclone); rebound insomnia, and withdrawal seizures after high doses. |
-| `N05CA` | barbiturate | **proposed** | Barbiturate hypnotics; sudden withdrawal can cause seizures and delirium. |
+| `C02AC` | central_alpha_agonist | beyond rule 4, confirmed | Other centrally acting alpha-2 agonists (guanfacine, moxonidine, rilmenidine); rebound hypertension after a sudden stop is described, less often than with clonidine. |
+| `N07BC04` | central_alpha_agonist | beyond rule 4, confirmed | Lofexidine; its label advises gradual reduction because blood pressure rebounds after a sudden stop. |
+| `N02BF` | gabapentinoid | beyond rule 4, confirmed | Gabapentin, pregabalin, mirogabalin; sudden withdrawal can cause seizures (in people with epilepsy) and withdrawal symptoms; labels advise tapering over at least a week. |
+| `N03AX12` | gabapentinoid | beyond rule 4, confirmed | Old gabapentin code still published by TİTCK. |
+| `N03AX16` | gabapentinoid | beyond rule 4, confirmed | Old pregabalin code still published by TİTCK. |
+| `M03BX01` | baclofen | beyond rule 4, confirmed | Baclofen; sudden withdrawal can cause hallucinations, seizures and, after intrathecal use, a life-threatening syndrome. |
+| `M03BX02` | tizanidine | beyond rule 4, confirmed | Tizanidine; sudden withdrawal can cause rebound hypertension and tachycardia. |
+| `N02A` | opioid | beyond rule 4, confirmed | Opioid analgesics; sudden stop in a physically dependent person causes withdrawal; the FDA warned in 2019 of serious harm after sudden opioid stops in dependent patients. |
+| `N07BC` | opioid | beyond rule 4, confirmed | Opioids for opioid dependence (methadone, buprenorphine); same risk. |
+| `N04B` | dopaminergic_antiparkinsonian | beyond rule 4, confirmed | Levodopa and other dopaminergic drugs; sudden withdrawal can cause a neuroleptic-malignant-like syndrome and severe worsening of parkinsonism. |
+| `N05A` | antipsychotic | beyond rule 4, confirmed | Antipsychotics; sudden withdrawal can cause rebound psychosis, withdrawal dyskinesia and, with clozapine, cholinergic rebound. |
+| `N05AN01` | lithium | beyond rule 4, confirmed | Lithium; sudden stop raises the risk of early relapse of mania. |
+| `N05CF` | z_drug | beyond rule 4, confirmed | Z-drugs (zolpidem, zopiclone); rebound insomnia, and withdrawal seizures after high doses. |
+| `N05CA` | barbiturate | beyond rule 4, confirmed | Barbiturate hypnotics; sudden withdrawal can cause seizures and delirium. |
 
 ## 5. Rows where I am uncertain
+
+The judgement calls below were confirmed by the owner on 2026-11-07 (section 6) unless a
+decision there changed them.
 
 - **Rows 2, 14, 38, 53, 61, 64 (`antihypertensive`).** Chapters C02, C03, C07, C08, C09. Left out:
   pulmonary-hypertension drugs (C02KX), vasopressin antagonists (C03X), antianginal non-selective
@@ -823,8 +831,7 @@ extra codes inside required groups, not new groups.
   MRAs used for heart failure stay in. The same class serves as row 2's index.
 - **Rows 3, 4 (beta-blocker index).** PIPC says "particularly lipophilic e.g., propranolol"; I kept
   all systemic beta-blockers rather than only lipophilic ones.
-- **Row 4.** No eye-drop extension yet. The source found is a letter, not a reviewed article
-  (section 6).
+- **Row 4.** No eye-drop extension (owner decision: the only source is a letter).
 - **Row 7 (`diuretic` as index).** Potassium-sparing diuretics are included although gout is mainly
   a thiazide and loop effect.
 - **Row 9 (`pain_reliever`).** Muscle relaxants (thiocolchicoside, cyclobenzaprine), common for
@@ -859,7 +866,7 @@ extra codes inside required groups, not new groups.
 - **Row 46 (`antidopaminergic_antiemetic`).** Domperidone is kept although extrapyramidal effects
   are uncommon; promethazine is left out.
 - **Row 48 (`vitamin_supplement`).** Vitamin D only; calcium left out because PIPC writes "vitamin".
-- **Row 49.** Drug B text reading (section 6).
+- **Row 49.** Drug B text reading: decided by the owner (vitamin B12, magnesium, oral iron).
 - **Row 50 (`bisphosphonate`).** Infusion-only pamidronate and zoledronate excluded. Ibandronate
   and clodronate have oral and injected forms under one code, so an injected product still matches.
 - **Rows 51-54 (`nsaid`).** Analgesic salicylates (N02BA) are included; low-dose aspirin coded as an
@@ -877,53 +884,42 @@ extra codes inside required groups, not new groups.
 - **Codes verified on WHOCC but absent from the local artifacts** (no TİTCK row, no Wikidata item
   in the extract): oteseconazole J02AC06, ibrexafungerp J02AX07, levomilnacipran N06AX28. They are
   correct codes but match nothing today.
-- **Codes taken from Wikidata without a WHOCC page check** (basis `wikidata`), for example
-  meclizine R06AE05, cyclizine R06AE03, promethazine R06AD02, scopolamine A04AD01, the A03FA
-  prokinetics, prochlorperazine N05AB04, digoxin C01AA05, lithium N05AN01, metformin A10BA02,
-  glitazones A10BG02/03, erythromycin J01FA01, fludrocortisone H02AA02, sotalol C07AA07,
-  clonazepam N03AE01, the nasal cromones R01AC01/07 and the bisphosphonate excludes M05BA03/08.
-  They are well-known codes, but I did not open a WHOCC page for each.
+- **Codes first taken from Wikidata** (39 rows, 28 codes) were checked on their WHOCC group pages on
+  2026-11-07 at the owner's request; all match the intended substance and now have basis
+  `whocc_lookup`.
 
-## 6. Questions for the owner
+## 6. Owner decisions (2026-11-07)
 
-1. **Row 49 reading.** PIPC publishes Drug B as "Vitamin or Mineral Deficiency". I read it as
-   vitamin or mineral supplements for deficiencies linked to long-term PPI use: vitamin B12
-   (B03BA), magnesium (A12CC), oral iron (B03AA, B03AB), calcium (A12AA) and vitamin D (A11CC).
-   Keep this reading, narrow it (for example B12 and magnesium only), or mark the marker
-   `ambiguous_text`?
-2. **Abrupt-stop proposals.** Confirm or drop each group beyond rule 4: `central_alpha_agonist`
-   (guanfacine, moxonidine, rilmenidine, lofexidine), `gabapentinoid`, `baclofen`, `tizanidine`,
-   `opioid`, `dopaminergic_antiparkinsonian`, `antipsychotic`, `lithium`, `z_drug`, `barbiturate`.
-   If `gabapentinoid` is dropped, should the old codes N03AX12/N03AX16 stay under `antiepileptic`
-   (they match N03A by prefix)? Gut-acting corticosteroids (A07EA, for example oral budesonide) are
-   not on the list; add them?
-3. **Row 4 extension source.** Candidate found and checked in Crossref
-   (`https://api.crossref.org/works/10.1001/jama.1985.03350450064016`, 2026-11-07):
-   - DOI `10.1001/jama.1985.03350450064016`
-   - Title: "Sexual Dysfunction Secondary to Topical Ophthalmic Timolol"
-   - Authors: Crossref lists one author, F. T. Fraunfelder; Europe PMC (PMID 3999290) lists
-     Fraunfelder FT, Meyer SM
-   - Journal: JAMA: The Journal of the American Medical Association, vol. 253, issue 21,
-     p. 3092 (Europe PMC: 3092-3093)
-   - Year: 1985 (issued 1985-06-07); no update or retraction notice in the Crossref record
-   - Caveat: Europe PMC types it as a **Letter** (case reports from a registry of drug-induced
-     ocular side effects), so it may not meet the "peer-reviewed source" bar.
+The questions of the draft and the owner's answers. All are applied to the files.
 
-   It is not in `data/evidence_papers.csv`. If you approve it, it needs a row there and a
-   `cited_only` entry in `pipelines/sources.toml`, and row 4 then needs its own index class with
-   `S01ED` cited to it. Otherwise row 4 stays without the extension.
-4. **ThinkCascades overlap.** All six expected rows (5, 8, 18, 23, 53, 56) were confirmed against
-   the paper; no row is unconfirmed. For row 23 ThinkCascades also accepts memantine as a marker
-   and for row 56 it names the marker "vestibular sedatives"; I treated both as the same cascade.
-   Agree?
-5. **Not-matchable roles.** Row 27 marker (bismuth subsalicylate, `no_atc_code`) and row 57 marker
-   (saliva substitute, `no_atc_code`). For row 57, should saliva stimulants (pilocarpine N07AX01,
-   cevimeline N07AX03) stand in as a proxy? For row 58, imipenem matches only after resolution
-   gives it an ingredient-level code; should that be a `drug-resolution` follow-up?
-6. **Broad marker choices.** Please confirm the judgement calls with the largest effect on
-   findings: sleep agents including benzodiazepine anxiolytics, trazodone and OTC antihistamines
-   (rows 12, 25, 59); heart-failure agents limited to diuretics and a few others (row 54);
-   antiarrhythmics limited to class I/III plus sotalol (rows 21, 63); skin antifungal creams for
-   rows 41 and 62; vitamin D without calcium (row 48); low-dose aspirin outside the NSAID class
-   (rows 51-54); muscle relaxants outside pain relievers (row 9); benzodiazepines outside vestibular
-   suppressants (row 56).
+1. **Row 49 reading.** Drug B is published as "Vitamin or Mineral Deficiency". *Decision:* narrow
+   it to the deficiencies best linked to long-term PPI use: vitamin B12 (`B03BA`), magnesium
+   (`A12CC`) and oral iron (`B03AA`, `B03AB`). Calcium and vitamin D belong to the fracture
+   cascade (row 48). `A11CC` and `A12AA` were removed from `ppi_deficiency_supplement`.
+2. **Abrupt-stop proposals.** *Decision:* all proposed groups confirmed: `central_alpha_agonist`
+   (incl. lofexidine), `gabapentinoid` (with the old TİTCK codes `N03AX12`/`N03AX16`),
+   `baclofen`, `tizanidine`, `opioid`, `dopaminergic_antiparkinsonian`, `antipsychotic`,
+   `lithium`, `z_drug`, `barbiturate`. A wrong "do not stop suddenly" warning is low-harm, so
+   over-inclusion is the safe side. Gut-acting corticosteroids (`A07EA`) are not added (low
+   systemic exposure).
+3. **Row 4 extension source.** The candidate was Fraunfelder FT (Europe PMC: Fraunfelder FT, Meyer
+   SM), "Sexual Dysfunction Secondary to Topical Ophthalmic Timolol", JAMA 1985;253(21):3092,
+   doi:10.1001/jama.1985.03350450064016 (verified in Crossref; Europe PMC types it as a letter).
+   *Decision:* no eye-drop extension for row 4, because the only source is a letter, not a
+   reviewed article; the letter is not added to the paper list.
+4. **ThinkCascades overlap.** Rows 5, 8, 18, 23, 53, 56 confirmed against the paper; row 23 (where
+   ThinkCascades also accepts memantine) and row 56 ("vestibular sedatives") treated as the same
+   cascade. *Decision:* agreed.
+5. **Not-matchable roles.** *Decision:* row 57 (saliva substitute) gets no proxy (pilocarpine as a
+   stand-in would be a guess); it stays not matchable and is shown as "cannot be checked". Row 27
+   (bismuth subsalicylate) likewise. Imipenem (row 58): a `drug-resolution` follow-up is
+   recorded so the imipenem ingredient gets an ingredient-level carbapenem code.
+6. **Broad marker choices.** *Decision:* all confirmed as drafted: sleep agents including
+   benzodiazepine anxiolytics, trazodone and OTC antihistamines (rows 12, 25, 59); heart-failure
+   agents limited to diuretics and a few others (row 54); antiarrhythmics limited to class I/III
+   plus sotalol (rows 21, 63); skin antifungal creams for rows 41 and 62; vitamin D without
+   calcium (row 48); low-dose aspirin outside the NSAID class (rows 51-54; otherwise every
+   intentional aspirin-plus-PPI prophylaxis would be flagged as a cascade); muscle relaxants
+   outside pain relievers (row 9); benzodiazepines outside vestibular suppressants (row 56).
+7. **Wikidata-based codes.** *Decision:* verify each against the public WHOCC index pages like the
+   others. Done (section 1).

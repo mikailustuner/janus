@@ -545,3 +545,8 @@ owner's DP20 decision.
 - `data-pipelines` Req 6.4, 6.6 and 8.3 change with DP9, DP10 and DP20 (updated in task 5).
 - Phase 2: `eu_fr`, `eu_es`, `eu_name` adapters; de/fr/es labels in the name index; CIMA calls
   under the HTTP policy.
+- **Follow-up from `cascade-engine` (owner decision 2026-11-07):** imipenem is marketed only with
+  cilastatin, and its only code is the combination code `J01DH51`, so the imipenem ingredient has
+  no ingredient-level code and cannot match the carbapenem rule (PIPC row 58). Give the imipenem
+  ingredient an ingredient-level carbapenem code (reviewed, e.g. through the curated files) in a
+  later drug-resolution task.
