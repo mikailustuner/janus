@@ -78,7 +78,10 @@ Every external source enters Janus through a pipeline that records its version, 
    - THE pipeline SHALL set a connect timeout and a read timeout on every external request.
    - WHEN a request fails with a connection error, a timeout, HTTP 429 or HTTP 5xx THE pipeline SHALL retry only idempotent requests (GET, HEAD), at most 3 times, with increasing delay, and SHALL honour a `Retry-After` header.
    - THE pipeline SHALL NOT retry HTTP 4xx responses other than 429.
-   - THE pipeline SHALL keep within each source's published rate limit (openFDA 240 requests/minute; RxNav 20 requests/second) and SHALL identify itself with a User-Agent that includes a contact address from the environment.
+   - THE pipeline SHALL keep within each source's published rate limit (openFDA 240 requests/minute; RxNav 20 requests/second; Crossref public pool 5 single-record requests/second, 1 concurrent request).
+   - THE pipeline SHALL identify itself with a User-Agent that includes the contact from `JANUS_CONTACT`, which is either an http(s) URL or an email address. No contact is assumed or derived when it is unset.
+   - WHEN a source's usage policy requires contact information (Wikidata, Wikimedia User-Agent policy) and `JANUS_CONTACT` is unset THE pipeline SHALL refuse to start the run.
+   - THE pipeline SHALL send Crossref's `mailto` parameter only WHEN `JANUS_CONTACT` is an email address; otherwise it SHALL use Crossref's public pool without `mailto`.
 2. A failed pipeline SHALL never leave the API without a usable artifact.
    - THE pipeline SHALL write a new artifact to a staging location and promote it only after validation passes, by an atomic switch of the current-artifact pointer.
    - IF a run fails or is interrupted at any step THEN the current artifact SHALL be the one that was current before the run.

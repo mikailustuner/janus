@@ -9,7 +9,7 @@
     `apps/api` tool settings; `uv lock`.
   - Package `janus_pipelines/` with `core/`, `jobs/`, `cli.py` (`run`, `promote`, `notice`).
   - Hypothesis profiles `dev` and `ci` in `tests/conftest.py`.
-  - Add `.data/` to `.gitignore`; add `JANUS_DATA_DIR` and `JANUS_CONTACT_EMAIL` to `.env.example`.
+  - Add `.data/` to `.gitignore`; add `JANUS_DATA_DIR` and `JANUS_CONTACT` to `.env.example`.
   - Add a `pipelines` CI job (uv sync, ruff check, ruff format --check, pyright, pytest `ci`).
   - Confirm the `httpx2` client and mock-transport API used in later tasks.
   - _Requirements: 4.1, 3.1_
@@ -42,7 +42,8 @@
 
 - [x] 6. HTTP client and retry policy (`core/http.py`, `core/retry.py`)
   - Timeouts, pure `should_retry`, `Retry-After`, per-host token bucket, User-Agent with
-    `JANUS_CONTACT_EMAIL` (refuse to start without it for Crossref and Wikidata).
+    `JANUS_CONTACT` (URL or email; Wikidata refuses to start without it; Crossref `mailto`
+    only for an email contact, else the public pool).
   - [x] 6.1 Property test P9: retries only GET/HEAD on connection error / timeout / 429 / 5xx, at most 3, bounded delay. _Requirements: 4.1_
   - [x] 6.2 Example test with the mock transport: a 503 then 200 succeeds; a 404 is not retried. _Requirements: 4.1_
 
@@ -92,9 +93,9 @@
   - [x] 13.3 Property test P16: DOI normalisation is idempotent and ignores case and prefixes. _Requirements: 9.1_
   - [x] 13.4 Example test: a recorded Crossref response with a `retraction-watch` retraction notice gives `retracted` with source and notice DOI. _Requirements: 9.2, 9.7_
 
-- [ ] 14. Final checkpoint
-  - Status 2026-11-07: pipc, titck (live download) and us_ndc ran and were checked;
-    `wikidata_ingredients` and `retractions` wait for the owner to choose `JANUS_CONTACT_EMAIL`.
+- [x] 14. Final checkpoint
+  - Done 2026-11-07: all five pipelines ran locally (titck as a live download) and were checked;
+    `wikidata_ingredients` and `retractions` ran with `JANUS_CONTACT` set to a URL (DP13).
   - Run all five pipelines locally (TİTCK with `--input`); check every manifest (counts, hashes,
     snapshot dates, licences) and the TİTCK metrics; all tests and `notice --check` green.
   - Update `pipelines/README.md` (commands, env vars, data dir) and `docs/kiro-usage.md`.

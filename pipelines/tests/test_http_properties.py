@@ -9,7 +9,17 @@ import pytest
 from hypothesis import given
 from hypothesis import strategies as st
 
-from janus_pipelines.core.http import Fetcher, FetchError, RateLimiter, user_agent
+from janus_pipelines.core.http import (
+    ContactInvalidError,
+    ContactMissingError,
+    Fetcher,
+    FetchError,
+    RateLimiter,
+    contact_from_env,
+    mailto_params,
+    parse_contact,
+    user_agent,
+)
 from janus_pipelines.core.retry import (
     DELAY_CAP_SECONDS,
     MAX_RETRIES,
@@ -136,6 +146,83 @@ def test_rate_limiter_spaces_requests() -> None:
     assert slept == [0.25]
 
 
-def test_user_agent_has_contact() -> None:
-    assert "mailto:a@b.org" in user_agent("a@b.org")
-    assert "mailto" not in user_agent(None)
+GITHUB = "https://github.com/mikailustuner"
+
+
+def test_user_agent_with_url_contact() -> None:
+    """Validates: Req 4.1 — Wikimedia format with a URL as contact, no email."""
+    ua = user_agent(parse_contact(GITHUB))
+    assert ua.startswith("janus-pipelines-bot/")
+    assert f"({GITHUB}; research prototype)" in ua
+    assert "@" not in ua and "mailto" not in ua
+    assert "httpx2/" in ua
+
+
+def test_user_agent_without_contact() -> None:
+    ua = user_agent(None)
+    assert "(research prototype)" in ua and "@" not in ua
+
+
+def test_mailto_only_for_email_contact() -> None:
+    """Validates: Req 4.1 — Crossref mailto only when JANUS_CONTACT is an email."""
+    assert mailto_params(parse_contact(GITHUB)) == {}
+    assert mailto_params(None) == {}
+    assert mailto_params(parse_contact("ops@example.org")) == {"mailto": "ops@example.org"}
+
+
+@pytest.mark.parametrize("bad", ["", "github.com/x", "not an address", "ftp://x.org", "a@b"])
+def test_invalid_contact_rejected(bad: str) -> None:
+    with pytest.raises(ContactInvalidError):
+        parse_contact(bad)
+
+
+def test_contact_from_env(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.delenv("JANUS_CONTACT", raising=False)
+    assert contact_from_env(required=False) is None
+    with pytest.raises(ContactMissingError):
+        contact_from_env(required=True)
+    monkeypatch.setenv("JANUS_CONTACT", f"  {GITHUB} ")
+    contact = contact_from_env(required=True)
+    assert contact is not None and contact.value == GITHUB and not contact.is_email
+
+
+def _one_doi(_data_dir: object) -> list[str]:
+    return ["10.1000/x"]
+
+
+def test_crossref_request_has_no_mailto_for_url_contact(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Validates: Req 4.1, 9.2 — with a URL contact, Crossref gets no mailto (public pool)."""
+    from pathlib import Path
+
+    from janus_pipelines.core.registry import load_registry
+    from janus_pipelines.core.runner import RunContext
+    from janus_pipelines.jobs import retractions
+
+    seen: list[httpx2.Request] = []
+
+    def handle(request: httpx2.Request) -> httpx2.Response:
+        seen.append(request)
+        return httpx2.Response(200, json={"status": "ok", "message": {}})
+
+    real_make = retractions.make_fetcher
+
+    def fake_make(*, require_contact: bool) -> Fetcher:
+        f = real_make(require_contact=require_contact, transport=httpx2.MockTransport(handle))
+        f.limiter = _NoWait()
+        return f
+
+    monkeypatch.setenv("JANUS_CONTACT", GITHUB)
+    monkeypatch.setattr(retractions, "make_fetcher", fake_make)
+    monkeypatch.setattr(retractions.RetractionsJob, "collect_dois", staticmethod(_one_doi))
+    repo = Path(__file__).resolve().parents[2]
+    ctx = RunContext(
+        data_dir=Path("/nonexistent-janus-test"),
+        repo_root=repo,
+        registry=load_registry(repo / "pipelines" / "sources.toml"),
+        code_version="test",
+    )
+    retractions.RetractionsJob().fetch(ctx)
+    assert len(seen) == 1
+    assert "mailto" not in str(seen[0].url)
+    assert "@" not in seen[0].headers["User-Agent"]
+    assert GITHUB in seen[0].headers["User-Agent"]

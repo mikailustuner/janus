@@ -15,8 +15,8 @@ uv run janus-pipelines run pipc                 # Europe PMC → data/pipc.csv (
 uv run janus-pipelines run titck                # newest TİTCK list, fetched at runtime
 uv run janus-pipelines run titck --input FILE.xlsx [--snapshot-date YYYY-MM-DD]
 uv run janus-pipelines run us_ndc               # openFDA NDC bulk download
-uv run janus-pipelines run wikidata_ingredients # needs JANUS_CONTACT_EMAIL
-uv run janus-pipelines run retractions          # needs JANUS_CONTACT_EMAIL; run after pipc
+uv run janus-pipelines run wikidata_ingredients # needs JANUS_CONTACT
+uv run janus-pipelines run retractions          # run after pipc
 uv run janus-pipelines status                   # current artifact per pipeline
 uv run janus-pipelines promote NAME RUN_ID --by NAME   # promote a needs_review run
 uv run janus-pipelines notice [--check]         # NOTICE from sources.toml
@@ -30,7 +30,7 @@ unknown source).
 | Variable | Use |
 |---|---|
 | `JANUS_DATA_DIR` | Artifacts directory (default `<repo>/.data`, git-ignored). Relative paths are relative to the repo. |
-| `JANUS_CONTACT_EMAIL` | Contact address in the User-Agent (and Crossref `mailto`). Required by `wikidata_ingredients` and `retractions`; never set from a personal default. |
+| `JANUS_CONTACT` | Operator contact in the User-Agent: an http(s) URL or an email. Required by `wikidata_ingredients`. Crossref gets `mailto` only for an email contact, otherwise the public pool. Never derived from git or the system. |
 | `JANUS_CODE_VERSION` | Overrides the git commit recorded in manifests. |
 | `HYPOTHESIS_PROFILE` | `dev` (default, 100 examples) or `ci` (300, derandomised). |
 | `JANUS_TITCK_LIST` | Optional local TİTCK list for the integration test (skipped when unset). |

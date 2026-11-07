@@ -61,6 +61,14 @@ found, what hooks blocked. Three to five lines per day.
   ATC, 4,355 multi-ingredient products; AMLIPIN (C09BB03) splits into amlodipine and
   lisinopril. `us_ndc` gave 138,262 records, matching the openFDA index.
 - NOTICE is now generated from `pipelines/sources.toml` and checked in CI.
+- Contact for Wikidata/Crossref: the owner chose a public URL and no email anywhere. Checked
+  first: the Wikimedia User-Agent policy accepts a website as contact, and Crossref allows the
+  anonymous public pool (5 single-record requests/s, 1 concurrent). `JANUS_CONTACT` replaced
+  `JANUS_CONTACT_EMAIL`; Crossref gets `mailto` only for an email contact.
+- `wikidata_ingredients` gave 3,766 items with ATC codes (2,422 with RxCUI; labels: en 3,757,
+  fr 2,813, de 2,284, es 2,284, tr 1,269), no query split needed. `retractions` checked the PIPC
+  DOI: status `corrected` (publisher notice 10.1007/s41999-025-01378-7, 2025-12-18). The notice
+  only moves the article to CC BY 4.0 on 30 Sep 2025; Table 1 is unchanged.
 
 ### Open items
 
@@ -72,10 +80,6 @@ found, what hooks blocked. Three to five lines per day.
 - **Hooks not yet seen firing in the IDE.** Hook files load at session start; the command
   hooks were run by hand with a sample event, and the `kiro-log` prompt was followed by hand.
   Confirm in the next session; watch `kiro-log-stop` for repeated no-op runs (credit cost).
-- **Pipelines not yet run for real: `wikidata_ingredients` and `retractions`.** Both send a
-  contact address to Wikidata/Crossref (their usage policies ask for one), and the owner has
-  not chosen which address to use. Set `JANUS_CONTACT_EMAIL`, then run them (retractions after
-  pipc).
 - **155 TİTCK rows excluded as `invalid_barcode`** (06.11.2026 list): 83 are 13 digits with a
   wrong check digit, the rest are empty, 12, 14 or 16-17 characters (e.g. a leading `:`). They
   are kept out of the lookup, not repaired; whether to recover any is a `drug-resolution` decision.

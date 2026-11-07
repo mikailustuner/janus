@@ -156,11 +156,16 @@ records `promoted_by` (from `--by`) and `promoted_at` in `promotion.json`.
 - `should_retry(method, outcome, attempt) -> bool | delay` is pure: retry only for `GET`/`HEAD`;
   only on connection error, timeout, 429 or 5xx; at most 3 retries; delay = `Retry-After` when
   present (capped at 120 s), else exponential backoff with jitter (1, 2, 4 s base).
-- Rate limit: token bucket per host (openFDA 4 req/s ≈ 240/min; Crossref and Wikidata default
-  2 req/s, configurable; Crossref's current polite-pool limits to be checked at task time).
-- User-Agent: `janus-pipelines/<version> (research prototype; mailto:<JANUS_CONTACT_EMAIL>)`.
-  `JANUS_CONTACT_EMAIL` is added to `.env.example`; runs that call Crossref or Wikidata refuse
-  to start without it.
+- Rate limit: minimum interval per host (openFDA 4 req/s ≈ 240/min; Crossref and Wikidata
+  2 req/s, sequential). Crossref's public pool allows 5 single-record requests/s and 1
+  concurrent request; the polite pool 10/s and 3 (Crossref docs, checked 2026-11-07).
+- Contact (DP13): `JANUS_CONTACT` holds an http(s) URL or an email address. User-Agent, in the
+  Wikimedia format: `janus-pipelines-bot/<version> (<JANUS_CONTACT>; research prototype)
+  httpx2/<version>`. The Wikimedia User-Agent policy accepts an email address, a website or a
+  wiki user page as contact information, so a URL is enough for Wikidata, and
+  `wikidata_ingredients` refuses to start without `JANUS_CONTACT`. Crossref needs no
+  identification: `mailto` is added only when `JANUS_CONTACT` is an email; otherwise requests go
+  to the public pool. Nothing is derived from git or the system when the variable is unset.
 
 ### 4.4 Licence guard (Req 3.1)
 `check_output_path(path, storage, repo_root)` resolves the path (`Path.resolve()`, which follows
@@ -252,6 +257,8 @@ NOTICE must keep every entry of the current hand-written file.
 - Row: `doi, check_status, effective_status, notices[{type, source, notice_doi, date}],
   checked_at`. Raw responses stored in `raw/` (storage `cache`). `changes[]` in the manifest;
   a change away from `retracted` sets `needs_review` (Req 9.6).
+- Requests send `mailto` only when `JANUS_CONTACT` is an email (DP13); otherwise the public
+  pool is used, within its 5 requests/s and 1 concurrent request.
 - `status_from_notices`, `effective` and `normalise_doi` are pure. They live here for Phase 1;
   `evidence-integrity` may move them into `apps/api/janus/integrity/` and reuse them.
 
@@ -312,10 +319,11 @@ P1–P3 are the three original properties; P4–P16 were added in the requiremen
 | DP9 | A failed retraction check keeps a `retracted` status; unknown notice types count as `corrected`. | Mark `unknown` in all cases (evidence-integrity 1.5 read literally). | A network error must not re-enable a rule backed by a retracted paper. `unknown` is still recorded as the check status. |
 | DP10 | NOTICE holds licences and terms (plus committed-artifact dates), not runtime snapshot dates. | Write all snapshot dates into NOTICE. | Keeps NOTICE reproducible in CI; runtime dates are shown with the evidence in the product. |
 | DP11 | Phase 1 runs pipelines from the CLI only. Scheduling (GitHub Actions cron or the Night Watch Crew app) comes with deployment in Phase 5. | Cron now. | Nothing is deployed before Phase 5, and a cron in CI could not keep a TİTCK artifact anyway. |
+| DP13 | Contact is `JANUS_CONTACT` (URL or email). Owner's choice: a public URL, no email anywhere; Crossref `mailto` only for an email contact, else the public pool. | Require an email for Crossref and Wikidata. | Wikimedia's policy accepts a website as contact; Crossref allows anonymous public-pool access. Keeps personal addresses out of requests. |
 | DP12 | TİTCK test data is generated in memory; no fixture file. | Small committed sample. | Redistribution terms are unclear; the licence guard and CI policy also forbid it. |
 
 ## 9. Open items
 - DP4 needs the owner's confirmation.
 - TİTCK list page: link format and date parsing to confirm against the live page in task 10; `--input` covers offline work.
-- Crossref polite-pool rate limits and `withdrawal` / `erratum` type names to confirm against current Crossref docs in task 13.
+- Crossref rate limits and update types confirmed 2026-11-07 (public pool 5/s, 1 concurrent; 12 Crossmark update types).
 - `httpx2` mock-transport API to confirm in task 1.

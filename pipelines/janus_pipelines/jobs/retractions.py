@@ -15,7 +15,7 @@ from urllib.parse import quote
 import polars as pl
 
 from janus_pipelines.core.canonical import Json, Row, sha256_bytes
-from janus_pipelines.core.http import FetchError, contact_email, make_fetcher
+from janus_pipelines.core.http import FetchError, mailto_params, make_fetcher
 from janus_pipelines.core.runner import Job, ParseResult, RawInput, RunContext
 from janus_pipelines.core.store import Store
 from janus_pipelines.core.validation import Accounting, ExpectedSchema, Field, SchemaReport
@@ -216,8 +216,9 @@ class RetractionsJob(Job[Payload]):
         return out
 
     def fetch(self, ctx: RunContext) -> RawInput[Payload]:
-        fetcher = make_fetcher(require_contact=True)
-        email = contact_email(required=True) or ""
+        # Crossref does not require identification: without an email the public pool is used.
+        fetcher = make_fetcher(require_contact=False)
+        params = mailto_params(fetcher.contact)
         retrieved = ctx.now()
         dois = tuple(self.collect_dois(ctx.data_dir))
         responses: dict[str, Response] = {}
@@ -225,7 +226,7 @@ class RetractionsJob(Job[Payload]):
             try:
                 r = fetcher.get(
                     WORKS_URL + quote(doi, safe="/"),
-                    params={"mailto": email},
+                    params=params,
                     allow_status=frozenset({404}),
                 )
                 responses[doi] = Response(status=r.status_code, body=r.content)

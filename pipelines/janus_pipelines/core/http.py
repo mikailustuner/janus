@@ -5,6 +5,7 @@ from __future__ import annotations
 import datetime as dt
 import os
 import random
+import re
 import time
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass, field
@@ -19,7 +20,9 @@ CONNECT_TIMEOUT = 10.0
 READ_TIMEOUT = 60.0
 BULK_READ_TIMEOUT = 300.0
 
-# Requests per second per host. openFDA publishes 240/min; others are conservative defaults.
+# Requests per second per host. openFDA publishes 240/min. Crossref's public pool allows
+# 5 single-record requests/s with 1 concurrent request (docs checked 2026-11-07); requests here
+# are sequential at 2/s. Others are conservative defaults.
 DEFAULT_RATES: dict[str, float] = {
     "api.fda.gov": 4.0,
     "download.open.fda.gov": 4.0,
@@ -30,22 +33,57 @@ DEFAULT_RATES: dict[str, float] = {
 }
 
 
-class ContactEmailMissingError(Exception):
-    """JANUS_CONTACT_EMAIL is required by the source's usage policy."""
+_EMAIL = re.compile(r"[^@\s;()]+@[^@\s;()]+\.[^@\s;()]+")
+_URL = re.compile(r"https?://[^\s;()]+")
 
 
-def contact_email(required: bool) -> str | None:
-    value = os.environ.get("JANUS_CONTACT_EMAIL", "").strip() or None
-    if required and value is None:
-        raise ContactEmailMissingError(
-            "set JANUS_CONTACT_EMAIL; Crossref and Wikidata ask clients to identify themselves"
-        )
-    return value
+class ContactMissingError(Exception):
+    """JANUS_CONTACT is required by the source's usage policy (Wikimedia User-Agent policy)."""
 
 
-def user_agent(email: str | None) -> str:
-    contact = f"; mailto:{email}" if email else ""
-    return f"janus-pipelines/{__version__} (research prototype{contact})"
+class ContactInvalidError(ValueError):
+    """JANUS_CONTACT is neither an http(s) URL nor an email address."""
+
+
+@dataclass(frozen=True)
+class Contact:
+    """Operator contact for the User-Agent: a URL or an email address (Req 4.1)."""
+
+    value: str
+    is_email: bool
+
+
+def parse_contact(value: str) -> Contact:
+    text = value.strip()
+    if _URL.fullmatch(text):
+        return Contact(text, is_email=False)
+    if _EMAIL.fullmatch(text):
+        return Contact(text, is_email=True)
+    raise ContactInvalidError("JANUS_CONTACT must be an http(s) URL or an email address")
+
+
+def contact_from_env(required: bool) -> Contact | None:
+    """Read JANUS_CONTACT. Nothing is assumed when it is unset."""
+    value = os.environ.get("JANUS_CONTACT", "").strip()
+    if not value:
+        if required:
+            raise ContactMissingError(
+                "set JANUS_CONTACT (a URL or an email address); Wikidata asks clients to "
+                "include contact information in the User-Agent"
+            )
+        return None
+    return parse_contact(value)
+
+
+def user_agent(contact: Contact | None) -> str:
+    """Wikimedia format: <client>/<version> (<contact>; ...) <library>/<version>."""
+    details = f"{contact.value}; research prototype" if contact else "research prototype"
+    return f"janus-pipelines-bot/{__version__} ({details}) httpx2/{httpx2.__version__}"
+
+
+def mailto_params(contact: Contact | None) -> dict[str, str]:
+    """Crossref `mailto` (polite pool) only when the contact is an email; else public pool."""
+    return {"mailto": contact.value} if contact is not None and contact.is_email else {}
 
 
 @dataclass
@@ -77,6 +115,7 @@ class Fetcher:
     """GET/HEAD only. Every request has timeouts; retries follow retry.retry_delay."""
 
     client: httpx2.Client
+    contact: Contact | None = None
     limiter: RateLimiter = field(default_factory=RateLimiter)
     sleep: Callable[[float], None] = time.sleep
     rng: random.Random = field(default_factory=random.Random)
@@ -128,11 +167,11 @@ class Fetcher:
 def make_fetcher(
     *, require_contact: bool, transport: httpx2.BaseTransport | None = None
 ) -> Fetcher:
-    email = contact_email(required=require_contact)
+    contact = contact_from_env(required=require_contact)
     client = httpx2.Client(
-        headers={"User-Agent": user_agent(email)},
+        headers={"User-Agent": user_agent(contact)},
         timeout=httpx2.Timeout(CONNECT_TIMEOUT, read=READ_TIMEOUT),
         follow_redirects=True,
         transport=transport,
     )
-    return Fetcher(client=client)
+    return Fetcher(client=client, contact=contact)
