@@ -195,44 +195,62 @@
   - [x] 15.2 Property test P5: re-resolution (model-based with fake resolver and engine). _Requirements: 22.3, 14.2_
   - [x] 15.3 Playwright: stubbed live flow (scan TR code → confirm → since when → results) and the 409 path. _Requirements: 1.1, 22.3_
 
-- [ ] 16. Outcome loop: QR opt-in, reminder, withdrawal (`src/note/qr.ts`, `src/app/[locale]/note/` opt-in card,
+- [x] 16. Outcome loop: QR opt-in, reminder, withdrawal (`src/note/qr.ts`, `src/app/[locale]/note/` opt-in card,
   `note/withdraw/`, `src/store/reminders.ts`; design §10.3–§10.4, DP7, DP23)
   - Consent text, `POST /notes/token`, QR at 50 mm in the PDF with the coverage line, `qr_url` or own-origin address,
     `no_findings` and 503 paths, reminder card after 28 days leading to the donation flow, withdrawal screen.
-  - [ ] 16.1 Property test P25: QR version ≤ 25, level M, byte mode, decodes back (zxing-wasm in node). _Requirements: 18.2, 18.3_
-  - [ ] 16.2 Property test P29: reminder due date and token lifecycle. _Requirements: 18.4, 18.5_
+  > Done 2026-11-08 (Claude Code): opt-in card with the versioned consent text, `POST /notes/token` only after acceptance, QR
+  > at 50 mm in the preview and the PDF, token and reminder in the browser only, withdrawal screen. Checked end to end
+  > against the real local API (`e2e/real-api.spec.ts`, local only): QR → doctor page with the issued token → answer stored →
+  > withdrawal; demo uses `/o#demo-<patient>` and makes no request.
+  - [x] 16.1 Property test P25: QR version ≤ 25, level M, byte mode, decodes back (zxing-wasm in node). _Requirements: 18.2, 18.3_
+  - [x] 16.2 Property test P29: reminder due date and token lifecycle. _Requirements: 18.4, 18.5_
 
-- [ ] 17. Doctor page (`src/app/o/layout.tsx`, `page.tsx`, `src/app/[locale]/demo/doctor/`; design §11, DP19)
+- [x] 17. Doctor page (`src/app/o/layout.tsx`, `page.tsx`, `src/app/[locale]/demo/doctor/`; design §11, DP19)
   - Fragment read, pattern check, demo fragment, form with two questions per finding, error texts in the note's
     language, success state, `janus:form-ready` mark.
-  - [ ] 17.1 Property test P26: token transport. _Requirements: 19.1, 19.7_
-  - [ ] 17.2 Property test P27: outcome answers and the Send rule. _Requirements: 19.2, 19.5_
-  - [ ] 17.3 Playwright C5: form ready < 3 s median of 5 cold loads on the 4G profile; JS budget of §16. _Requirements: 5.1, 19.6, 25.1_
+  > Done 2026-11-08 (Claude Code): own root layout, the `Doctor` map generated into `src/doctor/messages.json` (parity by
+  > the vocabulary test). C5: form ready median 2,139 ms (5 cold loads, 4G profile, CPU ×4, 300 ms answer delay); JS
+  > before interaction 183 KB gzip, over the 110 KB ceiling of §16 (DP38).
+  - [x] 17.1 Property test P26: token transport. _Requirements: 19.1, 19.7_
+  - [x] 17.2 Property test P27: outcome answers and the Send rule. _Requirements: 19.2, 19.5_
+  - [x] 17.3 Playwright C5: form ready < 3 s median of 5 cold loads on the 4G profile; JS budget of §16. _Requirements: 5.1, 19.6, 25.1_
 
-- [ ] 18. Donation and deletion (`src/app/[locale]/donate/`, `donate/delete/`; design §12, DP24)
+- [x] 18. Donation and deletion (`src/app/[locale]/donate/`, `donate/delete/`; design §12, DP24)
   - Emergency notice first, event picker with safety lines, fields of Req 20.2, stored summary, consent, deletion token
     screen, delete by token, error texts, demo replacement sentence.
-  - [ ] 18.1 Property test P28: donation request. _Requirements: 20.2, 20.3, 20.8_
-  - [ ] 18.2 Property test P14 (complete): model-based demo session over every screen incl. note, QR, doctor demo,
+  > Done 2026-11-08 (Claude Code): checked against the real local API: donation stored, deletion token shown once, kept,
+  > deleted. Counterexample from that run: the region defaulted from the user region before the settings were read, so
+  > the form was incomplete; the default is now derived at render time.
+  - [x] 18.1 Property test P28: donation request. _Requirements: 20.2, 20.3, 20.8_
+  - [x] 18.2 Property test P14 (complete): model-based demo session over every screen incl. note, QR, doctor demo,
     donate and withdraw; no request, no store write, demo label everywhere. _Requirements: 4.3, 4.4, 4.7, 20.8_
 
-- [ ] 19. Privacy page, researcher shell and error states (`src/app/[locale]/privacy/`, `research/**`; design §12, §14,
+- [x] 19. Privacy page, researcher shell and error states (`src/app/[locale]/privacy/`, `research/**`; design §12, §14,
   Req 21, Req 24)
   - Privacy sections with `GET /privacy/storage`, limits, legal frame, sources; research layout in the light face with
     four Phase 4 empty states; every screen's loading, empty, error and long-content states per design §9 table.
-  - [ ] 19.1 Playwright: each route's four states rendered from stubs (long German content at 375 px included). _Requirements: 3.3, 21, 24_
+  > Done 2026-11-08 (Claude Code): privacy sections with `GET /privacy/storage` (region never guessed); state checks from
+  > stubs in `e2e/states.spec.ts`; research shell from task 6.
+  - [x] 19.1 Playwright: each route's four states rendered from stubs (long German content at 375 px included). _Requirements: 3.3, 21, 24_
 
-- [ ] 20. Offline demo, PWA and accessibility features (`public/sw.js`, `public/manifest.webmanifest`, large text,
+- [x] 20. Offline demo, PWA and accessibility features (`public/sw.js`, `public/manifest.webmanifest`, large text,
   reduce transparency, read aloud; design §7, §13.4, DP22, DP14)
-  - [ ] 20.1 Playwright: after one visit, the Istanbul flow works with the network offline; `/api` responses are never in
+  > Done 2026-11-08 (Claude Code): hand-written `public/sw.js` (never `/api`), manifest and icon; reduce transparency and
+  > large text in Settings.
+  - [x] 20.1 Playwright: after one visit, the Istanbul flow works with the network offline; `/api` responses are never in
     the cache. _Requirements: 4.4, 22.5_
-  - [ ] 20.2 Playwright C4 (all flows) and C7 (reduced motion, reduce transparency); large text at 375 px without
+  - [x] 20.2 Playwright C4 (all flows) and C7 (reduced motion, reduce transparency); large text at 375 px without
     horizontal scroll. _Requirements: 3.1, 3.2, 3.4, 23.4_
 
-- [ ] 21. Checkpoint 2: everything built
+- [x] 21. Checkpoint 2: everything built
   - C1–C7 on every route × 5 locales × 2 themes; `bundle-budget.mjs` values recorded in design §16 with the budget set
     to measured + 10 % (within the ceilings); rendering time of a 15-item result recorded. All checkpoint steps green;
     commit, push, CI passes. _Requirements: 25.2, 25.3_
+  > Done 2026-11-08 (Claude Code): web lint, typecheck, `FC_PROFILE=ci` vitest 309 tests; Playwright 81 local checks
+  > (C1–C3 on 22 routes × 5 locales × 2 themes × 2 viewports, C4, C5 run alone, C6, C7, offline, states, live flow, OCR,
+  > doctor page). Budgets recorded in design §16 at measured + 10 %, above the first ceilings (DP38); 15-item results
+  > render 55–252 ms after the response.
 
 - [ ] 22. Wording review and **review stop (owner)**
   - Localization review of every new namespace in four languages (forbidden and near-forbidden forms, register, meaning

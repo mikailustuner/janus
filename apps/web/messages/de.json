@@ -52,7 +52,9 @@
       }
     },
     "privacy": "Datenschutz",
-    "demoCodes": "Demo-Codes"
+    "demoCodes": "Demo-Codes",
+    "demoDoctor": "Demo-Seite für die Ärztin oder den Arzt öffnen",
+    "donate": "Meldung teilen"
   },
   "Emergency": {
     "title": "Im Notfall",
@@ -456,7 +458,19 @@
     "unavailable": "Die Notiz kann gerade nicht erstellt werden. Die Ergebnisse bleiben verfügbar.",
     "qr_no_findings": "Zu dieser Notiz gibt es für die Ärztin oder den Arzt nichts zu melden.",
     "qr_unavailable": "Der QR-Code ist gerade nicht verfügbar. Die Notiz kann ohne ihn gedruckt werden.",
-    "productNotKnown": "(Name auf der Packung nicht angegeben)"
+    "productNotKnown": "(Name auf der Packung nicht angegeben)",
+    "qrTitle": "Die Ärztin oder den Arzt um Rückmeldung bitten (optional)",
+    "qrIntro": "Mit einem QR-Code auf der Notiz kann die Ärztin oder der Arzt ohne Konto mitteilen, ob ein Muster eine Verschreibungskaskade war und was getan wurde. Lesen Sie zuerst, was das bedeutet.",
+    "qrAccept": "Ich habe dies gelesen und möchte den QR-Code auf der Notiz.",
+    "qrMake": "QR-Code hinzufügen",
+    "qrMaking": "Der QR-Code wird erstellt …",
+    "qrRegion": "In welcher Region ist die Ärztin oder der Arzt tätig?",
+    "qrAlt": "QR-Code für die ärztliche Rückmeldung zu dieser Notiz",
+    "qrTooLong": "Die Adresse dieser Janus-Instanz ist für den QR-Code zu lang; die Notiz kann ohne ihn gedruckt werden.",
+    "qrDemo": "Demo: Der QR-Code öffnet ein Demo-Formular, das nichts sendet.",
+    "qrAdded": "Der QR-Code ist auf der Notiz. Der Link funktioniert bis {date}.",
+    "qrCoverage": "Der QR-Code umfasst die Muster 1 bis {covered} von {total}.",
+    "withdrawLink": "Daten der Ergebnisrückmeldung widerrufen"
   },
   "Research": {
     "title": {
@@ -490,7 +504,8 @@
     "back": {
       "twoFaces": "Zurück zum Schattengesicht",
       "glass": "Zurück zum Patientenbereich"
-    }
+    },
+    "empty": "Noch nichts anzuzeigen."
   },
   "Doctor": {
     "errors": {
@@ -499,13 +514,34 @@
       "token_not_usable": "Dieser Link kann nicht mehr verwendet werden.",
       "token_used": "Zu dieser Notiz wurde bereits eine Antwort gesendet.",
       "unavailable": "Gerade nicht verfügbar. Bitte versuchen Sie es später erneut."
-    }
+    },
+    "title": "Janus · Rückmeldung zu einer Notiz",
+    "loading": "Das Formular wird geladen …",
+    "demo": "Demo · synthetische Patientendaten. Dieses Formular sendet nichts.",
+    "first": "Erstes Medikament",
+    "second": "Zweites Medikament",
+    "send": "Senden",
+    "sending": "Wird gesendet …",
+    "sent": "Vielen Dank. {count, plural, one {# Antwort wurde} other {# Antworten wurden}} gespeichert.",
+    "noAnswer": "Beantworten Sie mindestens eine Frage, um zu senden.",
+    "network": "Janus ist nicht erreichbar. Bitte versuchen Sie es erneut; Ihre Antworten bleiben auf dieser Seite erhalten.",
+    "retry": "Erneut senden",
+    "medicineQuestion": "Welches Medikament?",
+    "notConfirmed": "Darreichungsform nicht bestätigt",
+    "expires": "Dieser Link funktioniert bis {date}."
   },
   "Withdraw": {
     "errors": {
       "invalid_token": "Dieses Token ist nicht gültig.",
       "unavailable": "Der Widerruf ist gerade nicht möglich. Das Token bleibt auf diesem Gerät; bitte versuchen Sie es später erneut."
-    }
+    },
+    "title": "Daten der Ergebnisrückmeldung widerrufen",
+    "intro": "Zu jeder Notiz mit QR-Code ist ein Token auf diesem Gerät gespeichert. Ein Widerruf beendet die Antworten der Ärztin oder des Arztes zu dieser Notiz und löscht bereits gesendete Antworten.",
+    "none": "Auf diesem Gerät ist kein Notiz-Token gespeichert.",
+    "item": "Notiz vom {date}: Der QR-Code umfasst {covered} von {total} Mustern",
+    "button": "Widerrufen",
+    "working": "Wird widerrufen …",
+    "done": "Widerrufen. Die Ärztin oder der Arzt kann mit dieser Notiz nicht mehr antworten, und bereits gesendete Antworten wurden gelöscht."
   },
   "Donate": {
     "errors": {
@@ -514,8 +550,63 @@
     },
     "delete": {
       "not_found": "Zu diesem Token wurde keine Spende gefunden (bereits gelöscht oder nie gespeichert).",
-      "invalid_token": "Dieses Lösch-Token ist nicht gültig."
-    }
+      "invalid_token": "Dieses Lösch-Token ist nicht gültig.",
+      "title": "Eine Spende löschen",
+      "intro": "Fügen Sie das erhaltene Lösch-Token ein oder wählen Sie eines, das auf diesem Gerät gespeichert ist.",
+      "label": "Lösch-Token",
+      "kept": "Auf diesem Gerät gespeicherte Token",
+      "submit": "Spende löschen",
+      "working": "Wird gelöscht …",
+      "done": "Die Spende wurde gelöscht."
+    },
+    "title": "Eine Meldung teilen",
+    "intro": "Sie können eine Erfahrung als anonyme gespendete Meldung teilen: welche Medikamente, welches Ereignis und ob es eine unerwünschte Wirkung oder eine Besserung war. Sie wird im Kollektiven Gedächtnis nur in Gruppen von 20 oder mehr gezählt, mit hinzugefügtem Rauschen.",
+    "noItems": "Fügen Sie zuerst Medikamente hinzu, um auszuwählen, welche die Meldung betrifft.",
+    "event": "Ereignis",
+    "eventSearch": "Ein Ereignis suchen",
+    "direction": "War es …",
+    "adverse": "Eine unerwünschte Wirkung",
+    "benefit": "Eine Besserung",
+    "ingredients": "Medikamente, die die Meldung betrifft (1 bis 20)",
+    "ageBand": "Altersgruppe",
+    "age": "{from} bis {to}",
+    "age90": "90 und älter",
+    "sex": "Geschlecht (optional)",
+    "female": "Weiblich",
+    "male": "Männlich",
+    "notGiven": "Keine Angabe",
+    "region": "Region",
+    "storedTitle": "Was gespeichert wird",
+    "storedEvent": "Ereignis: {event}",
+    "storedDirection": "Art: {direction}",
+    "storedIngredients": "Medikamente: {list}",
+    "storedAge": "Altersgruppe: {band}",
+    "storedSex": "Geschlecht: {sex}",
+    "storedRegion": "Region: {region}",
+    "storedWeek": "Die Woche der Meldung, vom Server festgelegt (nicht der Tag).",
+    "storedConsent": "Die Version des Einwilligungstextes, dem Sie zugestimmt haben.",
+    "storedNothingElse": "Sonst nichts: kein Name, keine E-Mail, kein Datum, kein Ort und keine Gerätekennung.",
+    "consent": {
+      "2026-11-v1": {
+        "heading": "Ihre ausdrückliche Einwilligung",
+        "body": "Diese Angaben sind Gesundheitsdaten. Janus speichert sie nur mit Ihrer ausdrücklichen Einwilligung (in der EU: Art. 9 Abs. 2 lit. a DSGVO; in der Türkei: ausdrückliche Einwilligung nach dem KVKK), um gespendete Meldungen im Kollektiven Gedächtnis zu zählen, und für die Forschung. Sie werden in der Region gespeichert, die auf der Datenschutzseite angegeben ist, und höchstens 24 Monate aufbewahrt.",
+        "delete": "Nach dem Senden erhalten Sie ein Lösch-Token. Damit können Sie die Spende jederzeit löschen. Ohne das Token kann die Spende nicht vor Ablauf der 24 Monate gelöscht werden.",
+        "check": "Ich stimme ausdrücklich zu, die obigen Angaben als anonyme gespendete Meldung zu teilen."
+      }
+    },
+    "submit": "Meldung teilen",
+    "sending": "Wird gesendet …",
+    "needConsent": "Bitte lesen Sie zuerst den Einwilligungstext und setzen Sie das Häkchen.",
+    "needFields": "Bitte wählen Sie ein Ereignis, mindestens ein Medikament, eine Altersgruppe und eine Region.",
+    "doneTitle": "Vielen Dank. Die Meldung wurde gespeichert.",
+    "token": "Ihr Lösch-Token",
+    "tokenOnce": "Dieses Token wird nur einmal angezeigt. Ohne das Token kann die Spende nicht gelöscht werden, bevor sie nach 24 Monaten entfernt wird.",
+    "keep": "Token auf diesem Gerät speichern",
+    "kept": "Auf diesem Gerät gespeichert.",
+    "copy": "Token kopieren",
+    "copied": "Kopiert.",
+    "storedRecord": "Gespeichert: {summary}",
+    "deleteLink": "Eine Spende löschen"
   },
   "Confirm": {
     "title": "Medikament bestätigen",
@@ -560,6 +651,65 @@
     "showMore": "Mehr Ergebnisse anzeigen",
     "demoNoAdd": "Demo-Medikamente werden nicht zu Ihrer eigenen Liste hinzugefügt.",
     "back": "Zurück zum Scannen"
+  },
+  "OutcomeConsent": {
+    "2026-11-v1": {
+      "heading": "Was der QR-Code bewirkt",
+      "asked": "Die Ärztin oder der Arzt wird zu jedem Muster auf der Notiz gefragt, ob es eine Verschreibungskaskade war und was getan wurde (zum Beispiel Dosis geändert oder keine Änderung).",
+      "stored": "Janus speichert nur die Antworten der Ärztin oder des Arztes, die Woche der Antwort, die Region der Notiz und die Codes der Muster. Keine Namen, keine Packungsnamen und keine Datumsangaben genauer als eine Woche. Die Medikamentenliste bleibt auf diesem Gerät.",
+      "howLong": "Der Link funktioniert etwa fünf Wochen. Antworten werden höchstens 24 Monate aufbewahrt und nur als Zahlen für Gruppen von mindestens 20 Antworten gezeigt, mit hinzugefügtem Rauschen.",
+      "withdraw": "Sie können jederzeit mit dem auf diesem Gerät gespeicherten Token widerrufen: Die Ärztin oder der Arzt kann dann nicht mehr antworten, und bereits gesendete Antworten werden gelöscht."
+    }
+  },
+  "Reminder": {
+    "title": "Hat sich das besprochene Symptom gebessert?",
+    "body": "Sie haben am {date} eine Notiz für die Ärztin oder den Arzt erstellt. Wenn Sie möchten, können Sie als anonyme gespendete Meldung teilen, wie es verlaufen ist.",
+    "report": "Teilen, wie es verlaufen ist",
+    "dismiss": "Ausblenden"
+  },
+  "Privacy": {
+    "title": "Datenschutz",
+    "intro": "Janus ist ein Forschungsprototyp, kein Medizinprodukt. Diese Seite erklärt, was auf Ihrem Gerät bleibt, was gesendet wird, was gespeichert wird, wie lange und wie Sie es löschen können.",
+    "device": {
+      "title": "Was auf diesem Gerät bleibt",
+      "body": "Fotos von Packungen und Etiketten, der erkannte Text, Ihre Medikamentenliste mit den Namen auf den Packungen, Ihre Einstellungen, die Token der Ergebnisrückmeldung und der Spenden sowie Erinnerungen. Sie liegen nur in diesem Browser; Janus verwendet keine Konten."
+    },
+    "sent": {
+      "title": "Was an Janus gesendet wird",
+      "body": "Produktcodes (von einem Packungscode nur die GTIN, das Verfalldatum und die nationale Produktnummer; nie die Serien- oder Chargennummer), NDCs, die Wörter, die Sie für eine Suche eingeben oder auswählen, die IDs der von Ihnen bestätigten Medikamente mit ihren Startmonaten und Ihre Auswahl. Nicht die Fotos, nicht der erkannte Text als Ganzes und nicht die Namen auf den Packungen. Anfragen werden nicht gespeichert."
+    },
+    "stored": {
+      "title": "Was gespeichert wird",
+      "body": "Nur wenn Sie es wählen: eine gespendete Meldung (Altersgruppe, optional Geschlecht, Region, Medikamente, Ereignis, Art, Woche, Version der Einwilligung) und die Antworten der Ärztin oder des Arztes auf den QR-Code einer Notiz. Janus speichert außerdem einen Code verwendeter oder widerrufener Notizen bis zu deren Ablauf, damit ein Link nicht zweimal verwendet werden kann."
+    },
+    "where": {
+      "title": "Wo gespendete Daten gespeichert werden",
+      "region": "Gespendete Daten werden gespeichert in: {region}{eu}.",
+      "inEu": " (Europäische Union)",
+      "disabled": "Spenden sind auf diesem Server ausgeschaltet.",
+      "unknown": "Die Speicherregion kann gerade nicht angezeigt werden."
+    },
+    "howLong": {
+      "title": "Wie lange",
+      "body": "Gespendete Meldungen und ärztliche Antworten: höchstens 24 Monate. Links der Ergebnisrückmeldung: etwa fünf Wochen (28 bis 35 Tage)."
+    },
+    "delete": {
+      "title": "Wie Sie löschen",
+      "body": "Eine Spende: mit ihrem Lösch-Token. Daten der Ergebnisrückmeldung: mit dem Token der Notiz widerrufen. Alles auf diesem Gerät: Einstellungen › Alles auf diesem Gerät löschen."
+    },
+    "protection": {
+      "title": "Wie geteilte Zahlen geschützt werden, und die Grenzen",
+      "body": "Zahlen aus Spenden und ärztlichen Antworten werden nur für Gruppen von mindestens 20 gezeigt, mit hinzugefügtem zufälligem Rauschen (Unter 20 ausgeblendet, Rauschen hinzugefügt). Dies ist keine formale Differential Privacy für die Veröffentlichung als Ganzes.",
+      "limits": "Bekannte Grenzen: Der Vergleich einer Reihe von Zahlen in zwei Schritten, (A) − (A,B) − (A,C) + (A,B,C), ist nicht abgedeckt. Solange es keine Ratenbegrenzung gibt (Phase 5), kann jemand, der Spenden hinzufügen kann, eine Gruppe auffüllen und ihr Rauschen neu ziehen lassen; jede Person kann Notiz-Token erstellen und Ergebnisse melden, sodass eine Gruppe ärztlicher Antworten auf dieselbe Weise aufgefüllt werden kann."
+    },
+    "legal": {
+      "title": "Rechtlicher Rahmen",
+      "body": "In der EU beruhen Spenden auf einer ausdrücklichen Einwilligung nach der DSGVO, in der Türkei auf einer ausdrücklichen Einwilligung nach dem KVKK. In den USA ist Janus keine Covered Entity im Sinne von HIPAA und folgt dem strengsten dieser Regelwerke. Keine externe Stelle hat Janus geprüft, und Janus ist kein Medizinprodukt."
+    },
+    "sources": {
+      "title": "Datenquellen",
+      "body": "openFDA (NDC Directory und FAERS / FDA AEMS), TİTCK (Türkei), BDPM (Frankreich), CIMA der AEMPS (Spanien), Wikidata, die PIPC-Liste der Verschreibungskaskaden, Crossref und Retraction Watch für die Prüfung auf Rückzüge sowie MedDRA-Begriffe in der Meldestatistik (die Marke MedDRA® ist von der IFPMA im Namen des ICH eingetragen). Jedes Ergebnis zeigt seine Quelle und sein Datum; keiner dieser Herausgeber unterstützt Janus."
+    }
   },
   "Memory": {
     "screening": "Dies ist eine Screening-Statistik. Viele Kombinationen aus Arzneimittel und Ereignis werden gleichzeitig geprüft und die meisten erfüllen diese Kriterien. Diese Kriterien zu erfüllen ist daher häufig und kein Beleg dafür, dass das Arzneimittel das Ereignis verursacht.",

@@ -9,7 +9,10 @@ import {
   Document,
   Font,
   Page,
+  Path,
   pdf,
+  Rect,
+  Svg,
   StyleSheet,
   Text,
   View,
@@ -27,6 +30,7 @@ const C = {
   warn: "#7A4D00",
 };
 const FALLBACK = ["PlexMono", "NotoFallback"];
+const MM50 = (50 / 25.4) * 72; // 50 mm in PDF points
 
 let registered = false;
 function registerFonts(origin: string) {
@@ -152,6 +156,8 @@ export interface PdfLabels {
   demo: string | null;
   pageOf: (page: number, pages: number) => string;
   versions: string;
+  /** The outcome-loop QR code, drawn at 50 mm and never split (design §10.3). */
+  qr: { path: string; side: number } | null;
 }
 
 function NotePages({
@@ -184,6 +190,24 @@ function NotePages({
           ))}
         </View>
       ))}
+      {labels.qr ? (
+        <View wrap={false} style={{ marginTop: 8 }}>
+          <Svg
+            width={MM50}
+            height={MM50}
+            viewBox={`0 0 ${labels.qr.side} ${labels.qr.side}`}
+          >
+            <Rect
+              x={0}
+              y={0}
+              width={labels.qr.side}
+              height={labels.qr.side}
+              fill="#FFFFFF"
+            />
+            <Path d={labels.qr.path} fill={C.fg} />
+          </Svg>
+        </View>
+      ) : null}
       <View style={s.footer} fixed>
         <Text>{doc.disclaimer}</Text>
         {labels.demo ? <Text style={s.bold}>{labels.demo}</Text> : null}

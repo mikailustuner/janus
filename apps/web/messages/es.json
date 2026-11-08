@@ -52,7 +52,9 @@
       }
     },
     "privacy": "Privacidad",
-    "demoCodes": "Códigos de demo"
+    "demoCodes": "Códigos de demo",
+    "demoDoctor": "Abrir la página de demo del médico",
+    "donate": "Compartir una notificación"
   },
   "Emergency": {
     "title": "En una emergencia",
@@ -456,7 +458,19 @@
     "unavailable": "La nota no se puede preparar ahora. Los resultados siguen disponibles.",
     "qr_no_findings": "En esta nota no hay nada que el médico deba comunicar.",
     "qr_unavailable": "El código QR no está disponible ahora. La nota se puede imprimir sin él.",
-    "productNotKnown": "(nombre de la caja no indicado)"
+    "productNotKnown": "(nombre de la caja no indicado)",
+    "qrTitle": "Pedir al médico que informe del resultado (opcional)",
+    "qrIntro": "Un código QR en la nota permite al médico indicar, sin cuenta, si un patrón era una cascada de prescripción y qué se hizo. Lea primero lo que esto significa.",
+    "qrAccept": "He leído esto y quiero el código QR en la nota.",
+    "qrMake": "Añadir el código QR",
+    "qrMaking": "Preparando el código QR…",
+    "qrRegion": "¿En qué región está el médico?",
+    "qrAlt": "Código QR para la respuesta del médico sobre esta nota",
+    "qrTooLong": "La dirección de este Janus es demasiado larga para el código QR; la nota se puede imprimir sin él.",
+    "qrDemo": "Demo: el código QR abre un formulario de demostración que no envía nada.",
+    "qrAdded": "El código QR está en la nota. El enlace funciona hasta el {date}.",
+    "qrCoverage": "El código QR cubre los patrones 1 a {covered} de {total}.",
+    "withdrawLink": "Retirar los datos del circuito de resultados"
   },
   "Research": {
     "title": {
@@ -490,7 +504,8 @@
     "back": {
       "twoFaces": "Volver a la cara de sombra",
       "glass": "Volver a la sección del paciente"
-    }
+    },
+    "empty": "Todavía no hay nada que mostrar."
   },
   "Doctor": {
     "errors": {
@@ -499,13 +514,34 @@
       "token_not_usable": "Este enlace ya no se puede usar.",
       "token_used": "Ya se envió una respuesta para esta nota.",
       "unavailable": "No está disponible ahora. Inténtelo más tarde."
-    }
+    },
+    "title": "Janus · respuesta sobre una nota",
+    "loading": "Cargando el formulario…",
+    "demo": "Demo · paciente ficticio. Este formulario no envía nada.",
+    "first": "Primer medicamento",
+    "second": "Segundo medicamento",
+    "send": "Enviar",
+    "sending": "Enviando…",
+    "sent": "Gracias. {count, plural, one {Se guardó # respuesta} other {Se guardaron # respuestas}}.",
+    "noAnswer": "Responda al menos una pregunta para enviar.",
+    "network": "No se puede conectar con Janus. Inténtelo de nuevo; sus respuestas se conservan en esta página.",
+    "retry": "Enviar de nuevo",
+    "medicineQuestion": "¿Qué medicamento?",
+    "notConfirmed": "Forma del producto no confirmada",
+    "expires": "Este enlace funciona hasta el {date}."
   },
   "Withdraw": {
     "errors": {
       "invalid_token": "Este token no es válido.",
       "unavailable": "No es posible retirar los datos ahora. El token se guarda en este dispositivo; inténtelo más tarde."
-    }
+    },
+    "title": "Retirar los datos del circuito de resultados",
+    "intro": "Cada nota con código QR tiene un token guardado en este dispositivo. Retirar los datos detiene las respuestas del médico para esa nota y borra las respuestas ya enviadas.",
+    "none": "No hay ningún token de la nota guardado en este dispositivo.",
+    "item": "Nota del {date}: el código QR cubre {covered} de {total} patrones",
+    "button": "Retirar",
+    "working": "Retirando…",
+    "done": "Retirado. El médico ya no puede responder con esta nota y se han borrado las respuestas ya enviadas."
   },
   "Donate": {
     "errors": {
@@ -514,8 +550,63 @@
     },
     "delete": {
       "not_found": "No se encontró ninguna donación para este token (ya borrada o nunca guardada).",
-      "invalid_token": "Este token de borrado no es válido."
-    }
+      "invalid_token": "Este token de borrado no es válido.",
+      "title": "Borrar una donación",
+      "intro": "Pegue el token de borrado que recibió o elija uno guardado en este dispositivo.",
+      "label": "Token de borrado",
+      "kept": "Tokens guardados en este dispositivo",
+      "submit": "Borrar la donación",
+      "working": "Borrando…",
+      "done": "La donación se ha borrado."
+    },
+    "title": "Compartir una notificación",
+    "intro": "Puede compartir una experiencia como notificación donada anónima: qué medicamentos, qué evento y si fue un efecto no deseado o una mejoría. Solo se cuenta en la Memoria colectiva en grupos de 20 o más, con ruido añadido.",
+    "noItems": "Añada primero medicamentos para elegir a cuáles se refiere la notificación.",
+    "event": "Evento",
+    "eventSearch": "Buscar un evento",
+    "direction": "¿Fue…?",
+    "adverse": "Un efecto no deseado",
+    "benefit": "Una mejoría",
+    "ingredients": "Medicamentos a los que se refiere la notificación (de 1 a 20)",
+    "ageBand": "Franja de edad",
+    "age": "De {from} a {to}",
+    "age90": "90 o más",
+    "sex": "Sexo (opcional)",
+    "female": "Mujer",
+    "male": "Hombre",
+    "notGiven": "Prefiero no decirlo",
+    "region": "Región",
+    "storedTitle": "Qué se guardará",
+    "storedEvent": "Evento: {event}",
+    "storedDirection": "Tipo: {direction}",
+    "storedIngredients": "Medicamentos: {list}",
+    "storedAge": "Franja de edad: {band}",
+    "storedSex": "Sexo: {sex}",
+    "storedRegion": "Región: {region}",
+    "storedWeek": "La semana de la notificación, fijada por el servidor (no el día).",
+    "storedConsent": "La versión del texto de consentimiento que aceptó.",
+    "storedNothingElse": "Nada más: ni nombre, ni correo electrónico, ni fecha, ni lugar, ni identificador del dispositivo.",
+    "consent": {
+      "2026-11-v1": {
+        "heading": "Su consentimiento explícito",
+        "body": "Estos campos son datos de salud. Janus solo los guarda con su consentimiento explícito (en la UE: artículo 9.2.a) del RGPD; en Turquía: consentimiento explícito según la KVKK), con el fin de contar las notificaciones donadas en la Memoria colectiva y para la investigación. Se guardan en la región indicada en la página de privacidad y se conservan como máximo 24 meses.",
+        "delete": "Tras el envío recibe un token de borrado. Con él puede borrar la donación en cualquier momento. Sin él, la donación no se puede borrar antes de que terminen los 24 meses.",
+        "check": "Acepto explícitamente compartir los campos anteriores como notificación donada anónima."
+      }
+    },
+    "submit": "Compartir la notificación",
+    "sending": "Enviando…",
+    "needConsent": "Lea primero el texto de consentimiento y marque la casilla.",
+    "needFields": "Elija un evento, al menos un medicamento, una franja de edad y una región.",
+    "doneTitle": "Gracias. La notificación se ha guardado.",
+    "token": "Su token de borrado",
+    "tokenOnce": "Este token solo se muestra una vez. Sin él, la donación no se puede borrar antes de que se elimine a los 24 meses.",
+    "keep": "Guardar el token en este dispositivo",
+    "kept": "Guardado en este dispositivo.",
+    "copy": "Copiar el token",
+    "copied": "Copiado.",
+    "storedRecord": "Guardado: {summary}",
+    "deleteLink": "Borrar una donación"
   },
   "Confirm": {
     "title": "Confirmar el medicamento",
@@ -560,6 +651,65 @@
     "showMore": "Mostrar más resultados",
     "demoNoAdd": "Los medicamentos de la demo no se añaden a su propia lista.",
     "back": "Volver a escanear"
+  },
+  "OutcomeConsent": {
+    "2026-11-v1": {
+      "heading": "Qué hace el código QR",
+      "asked": "Se pregunta al médico, para cada patrón de la nota, si era una cascada de prescripción y qué se hizo (por ejemplo, se cambió la dosis o no hubo cambios).",
+      "stored": "Janus guarda solo las respuestas del médico, la semana de la respuesta, la región de la nota y los códigos de los patrones. Ningún nombre, ningún nombre de caja y ninguna fecha más precisa que la semana. La lista de medicamentos se queda en este dispositivo.",
+      "howLong": "El enlace funciona unas cinco semanas. Las respuestas se conservan como máximo 24 meses y solo se muestran como recuentos de grupos de al menos 20 respuestas, con ruido añadido.",
+      "withdraw": "Puede retirar los datos en cualquier momento con el token guardado en este dispositivo: el médico ya no podrá responder y las respuestas ya enviadas se borran."
+    }
+  },
+  "Reminder": {
+    "title": "¿Mejoró el síntoma que comentó?",
+    "body": "El {date} preparó una nota para el médico. Si lo desea, puede compartir cómo fue como notificación donada anónima.",
+    "report": "Compartir cómo fue",
+    "dismiss": "Ocultar"
+  },
+  "Privacy": {
+    "title": "Privacidad",
+    "intro": "Janus es un prototipo de investigación, no un producto sanitario. Esta página explica qué se queda en su dispositivo, qué se envía, qué se guarda, durante cuánto tiempo y cómo borrarlo.",
+    "device": {
+      "title": "Qué se queda en este dispositivo",
+      "body": "Las fotos de cajas y etiquetas, el texto reconocido, su lista de medicamentos con los nombres de las cajas, sus ajustes, los tokens del circuito de resultados y de las donaciones, y los recordatorios. Solo están en este navegador; Janus no usa cuentas."
+    },
+    "sent": {
+      "title": "Qué se envía a Janus",
+      "body": "Códigos de producto (de un código de envase, solo el GTIN, la caducidad y el número nacional del producto; nunca su número de serie ni de lote), NDC, las palabras que escribe o elige para una búsqueda, los identificadores de los medicamentos que confirmó con sus meses de inicio y las elecciones que hace. No las fotos, ni el texto reconocido completo, ni los nombres de las cajas. Las solicitudes no se guardan."
+    },
+    "stored": {
+      "title": "Qué se guarda",
+      "body": "Solo si usted lo elige: una notificación donada (franja de edad, sexo opcional, región, medicamentos, evento, tipo, semana, versión del consentimiento) y las respuestas del médico al código QR de una nota. Janus también guarda un código de las notas usadas o retiradas hasta que caducan, para que un enlace no pueda usarse dos veces."
+    },
+    "where": {
+      "title": "Dónde se guardan los datos donados",
+      "region": "Los datos donados se guardan en: {region}{eu}.",
+      "inEu": " (Unión Europea)",
+      "disabled": "Las donaciones están desactivadas en este servidor.",
+      "unknown": "La región de almacenamiento no se puede mostrar ahora."
+    },
+    "howLong": {
+      "title": "Durante cuánto tiempo",
+      "body": "Notificaciones donadas y respuestas de los médicos: como máximo 24 meses. Enlaces del circuito de resultados: unas cinco semanas (de 28 a 35 días)."
+    },
+    "delete": {
+      "title": "Cómo borrar",
+      "body": "Una donación: con su token de borrado. Datos del circuito de resultados: retírelos con el token de la nota. Todo lo que hay en este dispositivo: Ajustes › Borrar todo en este dispositivo."
+    },
+    "protection": {
+      "title": "Cómo se protegen las cifras compartidas, y sus límites",
+      "body": "Los recuentos de donaciones y de respuestas de los médicos solo se muestran para grupos de al menos 20, con ruido aleatorio añadido (Oculto por debajo de 20, se añade ruido). Esto no es privacidad diferencial formal para la publicación en su conjunto.",
+      "limits": "Límites conocidos: no está cubierta la comparación de un conjunto de recuentos en dos pasos, (A) − (A,B) − (A,C) + (A,B,C). Hasta que existan límites de frecuencia (fase 5), alguien que pueda añadir donaciones puede inflar un grupo y hacer que su ruido se vuelva a sortear; cualquiera puede crear tokens de nota y notificar resultados, así que un grupo de respuestas de médicos puede inflarse de la misma forma."
+    },
+    "legal": {
+      "title": "Marco jurídico",
+      "body": "En la UE, las donaciones se basan en el consentimiento explícito según el RGPD; en Turquía, en el consentimiento explícito según la KVKK. En EE. UU., Janus no es una entidad cubierta por la HIPAA y sigue el más estricto de estos conjuntos de normas. Ningún organismo externo ha auditado a Janus, y Janus no es un producto sanitario."
+    },
+    "sources": {
+      "title": "Fuentes de datos",
+      "body": "openFDA (NDC Directory y FAERS / FDA AEMS), TİTCK (Turquía), BDPM (Francia), CIMA de la AEMPS (España), Wikidata, la lista PIPC de cascadas de prescripción, Crossref y Retraction Watch para comprobar retractaciones, y términos MedDRA en las estadísticas de notificaciones (la marca MedDRA® está registrada por la IFPMA en nombre del ICH). Cada resultado muestra su fuente y su fecha; ninguno de estos editores respalda a Janus."
+    }
   },
   "Memory": {
     "screening": "Es una estadística de cribado. Se examinan a la vez muchas combinaciones de medicamento y evento y la mayoría cumple estos criterios; cumplirlos es habitual y no es una prueba de que el medicamento cause el evento.",

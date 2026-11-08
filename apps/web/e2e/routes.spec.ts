@@ -13,6 +13,7 @@ import {
 import { themeWords } from "../src/i18n/reassurance";
 
 import {
+  stubApi,
   expectNoAxeViolations,
   expectNoHorizontalScroll,
   expectTouchTargets,
@@ -42,6 +43,11 @@ const PLAIN = [
   "/demo/codes",
   "/research",
   "/scan",
+  "/confirm",
+  "/privacy",
+  "/donate",
+  "/donate/delete",
+  "/note/withdraw",
   "/no-such-page",
 ];
 const DEMO = [
@@ -51,6 +57,8 @@ const DEMO = [
   "/results/finding#1",
   "/memory",
   "/note",
+  "/demo/doctor",
+  "/donate",
 ];
 
 async function demoSession(page: Page) {
@@ -93,6 +101,10 @@ for (const theme of THEMES)
   for (const locale of locales) {
     test(`plain routes, ${locale}, ${theme}`, async ({ page }) => {
       await useTheme(page, theme);
+      // No API in these checks: /privacy shows "the region cannot be shown right now".
+      await stubApi(page, {
+        "/privacy/storage": { status: 503, body: { error: "unavailable" } },
+      });
       for (const route of PLAIN) {
         await page.goto(`/${locale}${route}`);
         await page.waitForLoadState("networkidle");

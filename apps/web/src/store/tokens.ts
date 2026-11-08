@@ -14,6 +14,8 @@ export interface NoteToken {
   language: string;
   reminderDue: string; // issuedOn + 28 days
   reminderDismissed: boolean;
+  /** Janus event keys of the note's findings, to pre-select the event of a donation (Req 18.4). */
+  events?: string[];
 }
 
 export interface DeletionToken {
@@ -52,7 +54,10 @@ export function validateTokens(v: unknown): TokensDoc | null {
       !Number.isInteger(n.findingsCovered) ||
       !Number.isInteger(n.findingsTotal) ||
       typeof n.language !== "string" ||
-      typeof n.reminderDismissed !== "boolean"
+      typeof n.reminderDismissed !== "boolean" ||
+      (n.events !== undefined &&
+        (!Array.isArray(n.events) ||
+          n.events.some((e) => typeof e !== "string")))
     )
       return null;
     notes.push(n as unknown as NoteToken);

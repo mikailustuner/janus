@@ -7,6 +7,11 @@
 import { useLocale } from "next-intl";
 import { useState } from "react";
 
+import { parseLocator } from "@/flow/locator";
+import { QUIET, type Qr } from "@/note/qr";
+
+import { QrOptIn } from "./QrOptIn";
+
 import { noteBody, pinsIn } from "@/api/builders";
 import type { Locale, NoteOut } from "@/api/contracts";
 import type { ApiError } from "@/api/errors";
@@ -86,16 +91,37 @@ function BlockView({ b, t }: { b: LaidBlock; t: ReturnType<typeof useT> }) {
   );
 }
 
+function QrImage({ qr, label }: { qr: Qr; label: string }) {
+  const side = qr.size + 2 * QUIET;
+  // 50 mm at the CSS reference of 96 px per inch (Req 18.2); the PDF draws it at 50 mm too.
+  return (
+    <svg
+      viewBox={`0 0 ${side} ${side}`}
+      width="189"
+      height="189"
+      role="img"
+      aria-label={label}
+      shapeRendering="crispEdges"
+      data-testid="note-qr"
+    >
+      <rect width={side} height={side} fill="var(--on-accent)" />
+      <path d={qr.path} fill="var(--fg)" />
+    </svg>
+  );
+}
+
 function Paper({
   doc,
   demoLabel,
   t,
   uiLang,
+  qr,
 }: {
   doc: LaidDocument;
   demoLabel: string | null;
   t: ReturnType<typeof useT>;
   uiLang: string;
+  qr?: Qr | null;
 }) {
   return (
     <article
@@ -112,7 +138,10 @@ function Paper({
         </p>
       ) : null}
       {doc.sections.map((sec) => (
-        <section key={sec.id} className="flex flex-col gap-2">
+        <section
+          key={sec.id}
+          className="flex flex-col gap-2 break-inside-avoid"
+        >
           {sec.heading ? (
             sec.id === "header" ? (
               <h2 className="text-2xl font-semibold">{sec.heading}</h2>
@@ -125,6 +154,7 @@ function Paper({
           ))}
         </section>
       ))}
+      {qr ? <QrImage qr={qr} label={t("Note.qrAlt")} /> : null}
     </article>
   );
 }
@@ -194,7 +224,7 @@ export function NotePage() {
     | { s: "idle" }
     | { s: "loading" }
     | { s: "error"; error: ApiError }
-    | { s: "ok"; note: NoteOut; layout: NoteLayout }
+    | { s: "ok"; note: NoteOut; layout: NoteLayout; qr: Qr | null }
   >({ s: "idle" });
   const [pdfState, setPdf] = useState<"idle" | "busy" | "failed">("idle");
   const snapshot = useCall(
@@ -265,6 +295,7 @@ export function NotePage() {
         s: "ok",
         note: r.data,
         layout: layoutNote(r.data, boxNames, !!session.demo),
+        qr: null,
       });
     } catch {
       setState({
@@ -289,6 +320,9 @@ export function NotePage() {
         {
           demo: demoLabel,
           pageOf: (page, pages) => t("Note.pageOf", { page, pages }),
+          qr: state.qr
+            ? { path: state.qr.path, side: state.qr.size + 2 * QUIET }
+            : null,
           versions: t("Note.versions", {
             rules: v.rule_base_version.slice(0, 8),
             dataset: v.dataset_version.slice(0, 8),
@@ -394,7 +428,50 @@ export function NotePage() {
             demoLabel={demoLabel}
             t={t}
             uiLang={locale}
+            qr={state.qr}
           />
+          {state.note.documents[0]?.sections.some(
+            (x) => x.id === "findings" || x.id === "findings_form_unconfirmed",
+          ) && evaluation.result.findings.length ? (
+            <QrOptIn
+              session={session}
+              noteIn={() =>
+                noteBody(
+                  evaluation.input,
+                  pinsIn({
+                    rule_base_version: evaluation.result.rule_base_version,
+                    integrity_version: evaluation.result.integrity_version,
+                    counts_build_id:
+                      snapshot.status === "ok" ? snapshot.data.build_id : null,
+                  }),
+                  [lang],
+                  region,
+                  session.demo ? null : settings.statisticsRegion,
+                )
+              }
+              language={lang}
+              events={evaluation.result.findings
+                .map((f) => parseLocator(f.faers_locator)?.event)
+                .filter((e): e is string => !!e)}
+              onIssued={(note, qr) =>
+                setState((st) =>
+                  st.s === "ok"
+                    ? {
+                        s: "ok",
+                        note: note ?? st.note,
+                        layout: note
+                          ? {
+                              ...layoutNote(note, boxNames, !!session.demo),
+                              sideBySide: st.layout.sideBySide,
+                            }
+                          : st.layout,
+                        qr,
+                      }
+                    : st,
+                )
+              }
+            />
+          ) : null}
           {state.layout.sideBySide ? (
             <SideBySide note={state.layout} t={t} />
           ) : null}

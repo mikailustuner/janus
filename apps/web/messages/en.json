@@ -52,7 +52,9 @@
       }
     },
     "privacy": "Privacy",
-    "demoCodes": "Demo codes"
+    "demoCodes": "Demo codes",
+    "demoDoctor": "Open the demo doctor page",
+    "donate": "Share a report"
   },
   "Emergency": {
     "title": "In an emergency",
@@ -456,7 +458,19 @@
     "unavailable": "The note cannot be made right now. The results are still available.",
     "qr_no_findings": "There is nothing for the doctor to report on this note.",
     "qr_unavailable": "The QR code is not available right now. The note can be printed without it.",
-    "productNotKnown": "(name on the box not given)"
+    "productNotKnown": "(name on the box not given)",
+    "qrTitle": "Ask the doctor to report back (optional)",
+    "qrIntro": "A QR code on the note lets the doctor say, without an account, whether a pattern was a prescribing cascade and what was done. Read what this means first.",
+    "qrAccept": "I have read this and want the QR code on the note.",
+    "qrMake": "Add the QR code",
+    "qrMaking": "Preparing the QR code…",
+    "qrRegion": "In which region is the doctor?",
+    "qrAlt": "QR code for the doctor's report on this note",
+    "qrTooLong": "The address of this Janus is too long for the QR code; the note can be printed without it.",
+    "qrDemo": "Demo: the QR code opens a demo form that sends nothing.",
+    "qrAdded": "The QR code is on the note. The link works until {date}.",
+    "qrCoverage": "The QR code covers patterns 1 to {covered} of {total}.",
+    "withdrawLink": "Withdraw outcome-loop data"
   },
   "Research": {
     "title": {
@@ -490,7 +504,8 @@
     "back": {
       "twoFaces": "Back to the shadow face",
       "glass": "Back to the patient section"
-    }
+    },
+    "empty": "Nothing to show yet."
   },
   "Doctor": {
     "errors": {
@@ -499,13 +514,34 @@
       "token_not_usable": "This link can no longer be used.",
       "token_used": "An answer was already sent for this note.",
       "unavailable": "Not available right now. Please try again later."
-    }
+    },
+    "title": "Janus · report on a note",
+    "loading": "Loading the form…",
+    "demo": "Demo · synthetic patient. This form sends nothing.",
+    "first": "First medicine",
+    "second": "Second medicine",
+    "send": "Send",
+    "sending": "Sending…",
+    "sent": "Thank you. {count, plural, one {# answer was} other {# answers were}} stored.",
+    "noAnswer": "Answer at least one question to send.",
+    "network": "Janus cannot be reached. Please try again; your answers are kept on this page.",
+    "retry": "Send again",
+    "medicineQuestion": "Which medicine?",
+    "notConfirmed": "Product form not confirmed",
+    "expires": "This link works until {date}."
   },
   "Withdraw": {
     "errors": {
       "invalid_token": "This token is not valid.",
       "unavailable": "Withdrawal is not possible right now. The token is kept on this device; please try again later."
-    }
+    },
+    "title": "Withdraw outcome-loop data",
+    "intro": "Each note with a QR code has a token kept on this device. Withdrawing stops the doctor's answers for that note and deletes answers already sent.",
+    "none": "No outcome-loop token is kept on this device.",
+    "item": "Note of {date}: the QR code covers {covered} of {total} patterns",
+    "button": "Withdraw",
+    "working": "Withdrawing…",
+    "done": "Withdrawn. The doctor can no longer answer with this note, and any answers already sent are deleted."
   },
   "Donate": {
     "errors": {
@@ -514,8 +550,63 @@
     },
     "delete": {
       "not_found": "No donation was found for this token (already deleted or never stored).",
-      "invalid_token": "This deletion token is not valid."
-    }
+      "invalid_token": "This deletion token is not valid.",
+      "title": "Delete a donation",
+      "intro": "Paste the deletion token you received, or choose one kept on this device.",
+      "label": "Deletion token",
+      "kept": "Tokens kept on this device",
+      "submit": "Delete the donation",
+      "working": "Deleting…",
+      "done": "The donation was deleted."
+    },
+    "title": "Share a report",
+    "intro": "You can share one experience as an anonymous donated report: which medicines, which event, and whether it was unwanted or an improvement. It is counted in Collective Memory only in groups of 20 or more, with noise added.",
+    "noItems": "Add medicines first, to choose which ones the report concerns.",
+    "event": "Event",
+    "eventSearch": "Find an event",
+    "direction": "Was it…",
+    "adverse": "An unwanted effect",
+    "benefit": "An improvement",
+    "ingredients": "Medicines the report concerns (1 to 20)",
+    "ageBand": "Age band",
+    "age": "{from} to {to}",
+    "age90": "90 and over",
+    "sex": "Sex (optional)",
+    "female": "Female",
+    "male": "Male",
+    "notGiven": "Prefer not to say",
+    "region": "Region",
+    "storedTitle": "What will be stored",
+    "storedEvent": "Event: {event}",
+    "storedDirection": "Kind: {direction}",
+    "storedIngredients": "Medicines: {list}",
+    "storedAge": "Age band: {band}",
+    "storedSex": "Sex: {sex}",
+    "storedRegion": "Region: {region}",
+    "storedWeek": "The week of the report, set by the server (not the day).",
+    "storedConsent": "The version of the consent text you accepted.",
+    "storedNothingElse": "Nothing else: no name, email, date, place or device identifier.",
+    "consent": {
+      "2026-11-v1": {
+        "heading": "Your explicit consent",
+        "body": "These fields are health data. Janus stores them only with your explicit consent (in the EU: GDPR Article 9(2)(a); in Türkiye: explicit consent under KVKK), for the purpose of counting donated reports in Collective Memory and for research. They are stored in the region shown on the privacy page and kept for at most 24 months.",
+        "delete": "After sending you receive a deletion token. With it you can delete the donation at any time. Without it the donation cannot be deleted before the 24 months end.",
+        "check": "I explicitly agree to share the fields above as an anonymous donated report."
+      }
+    },
+    "submit": "Share the report",
+    "sending": "Sending…",
+    "needConsent": "Please read the consent text and tick the box first.",
+    "needFields": "Please choose an event, at least one medicine, an age band and a region.",
+    "doneTitle": "Thank you. The report was stored.",
+    "token": "Your deletion token",
+    "tokenOnce": "This token is shown only once. Without it the donation cannot be deleted before it is removed after 24 months.",
+    "keep": "Keep the token on this device",
+    "kept": "Kept on this device.",
+    "copy": "Copy the token",
+    "copied": "Copied.",
+    "storedRecord": "Stored: {summary}",
+    "deleteLink": "Delete a donation"
   },
   "Confirm": {
     "title": "Confirm the medicine",
@@ -560,6 +651,65 @@
     "showMore": "Show more results",
     "demoNoAdd": "Demo medicines are not added to your own list.",
     "back": "Back to scanning"
+  },
+  "OutcomeConsent": {
+    "2026-11-v1": {
+      "heading": "What the QR code does",
+      "asked": "The doctor is asked, for each pattern on the note, whether it was a prescribing cascade and what was done (for example dose changed, or no change).",
+      "stored": "Janus stores only the doctor's answers, the week of the answer, the region of the note and the codes of the patterns. No names, no box names and no dates finer than a week. The medicine list stays on this device.",
+      "howLong": "The link works for about five weeks. Answers are kept for at most 24 months and are shown only as counts for groups of at least 20 answers, with noise added.",
+      "withdraw": "You can withdraw at any time with the token kept on this device: the doctor can then no longer answer, and answers already sent are deleted."
+    }
+  },
+  "Reminder": {
+    "title": "Did the symptom you discussed get better?",
+    "body": "You made a note for the doctor on {date}. If you like, you can share how it went as an anonymous donated report.",
+    "report": "Share how it went",
+    "dismiss": "Hide this"
+  },
+  "Privacy": {
+    "title": "Privacy",
+    "intro": "Janus is a research prototype, not a medical device. This page says what stays on your device, what is sent, what is stored, for how long, and how to delete it.",
+    "device": {
+      "title": "What stays on this device",
+      "body": "Photos of boxes and labels, the recognised text, your medicine list with the names on the boxes, your settings, the tokens of the outcome loop and of donations, and reminders. They live only in this browser; Janus has no account."
+    },
+    "sent": {
+      "title": "What is sent to Janus",
+      "body": "Product codes (only the GTIN, the expiry and the national product number of a pack code; never its serial or lot number), NDCs, the words you type or choose for a search, the ids of the medicines you confirmed with their start months, and the choices you make. Not the photos, not the recognised text as a whole and not the names on the boxes. Requests are not stored."
+    },
+    "stored": {
+      "title": "What is stored",
+      "body": "Only if you choose: a donated report (age band, optional sex, region, medicines, event, kind, week, consent version), and the doctor's answers to a note's QR code. Janus also keeps a code of used or withdrawn notes until they expire, so a link cannot be used twice."
+    },
+    "where": {
+      "title": "Where donated data are stored",
+      "region": "Donated data are stored in: {region}{eu}.",
+      "inEu": " (European Union)",
+      "disabled": "Donations are switched off on this server.",
+      "unknown": "The storage region cannot be shown right now."
+    },
+    "howLong": {
+      "title": "For how long",
+      "body": "Donated reports and doctors' answers: at most 24 months. Outcome-loop links: about five weeks (28 to 35 days)."
+    },
+    "delete": {
+      "title": "How to delete",
+      "body": "A donation: with its deletion token. Outcome-loop data: withdraw with the note's token. Everything on this device: Settings › Delete everything on this device."
+    },
+    "protection": {
+      "title": "How shared numbers are protected, and the limits",
+      "body": "Counts from donations and doctors' answers are shown only for groups of at least 20, with random noise added (Hidden under 20, noise added). This is not formal differential privacy for the release as a whole.",
+      "limits": "Known limits: comparing a set of counts in two steps, (A) − (A,B) − (A,C) + (A,B,C), is not covered. Until rate limits exist (Phase 5), someone who can add donations can pad a group and re-draw its noise; anyone can create note tokens and report outcomes, so a group of doctors' answers can be padded in the same way."
+    },
+    "legal": {
+      "title": "Legal frame",
+      "body": "In the EU, donations rely on explicit consent under the GDPR; in Türkiye, on explicit consent under the KVKK. In the US, Janus is not a HIPAA covered entity and follows the strictest of these rule sets. No outside body has audited Janus, and Janus is not a medical device."
+    },
+    "sources": {
+      "title": "Data sources",
+      "body": "openFDA (NDC Directory and FAERS / FDA AEMS), TİTCK (Türkiye), BDPM (France), CIMA by AEMPS (Spain), Wikidata, the PIPC list of prescribing cascades, Crossref and Retraction Watch for retraction checks, and MedDRA terms in report statistics (MedDRA® trademark is registered by IFPMA on behalf of ICH). Each result shows its source and date; none of these publishers endorses Janus."
+    }
   },
   "Memory": {
     "screening": "This is a screening statistic. Many medicine–event pairs are examined at once and most of them meet these criteria, so meeting them is common and is not evidence that the medicine causes the event.",

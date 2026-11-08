@@ -142,6 +142,13 @@ export function generate(repoRoot) {
     ),
     english_names: Object.fromEntries(ingredients.map((r) => [r.key, r.en])),
   };
+  // The doctor page's small message map: the `Doctor` namespace and the disclaimer (design §11).
+  out["../doctor/messages.json"] = Object.fromEntries(
+    LOCALES.map((lang) => {
+      const m = JSON.parse(read(`apps/web/messages/${lang}.json`));
+      return [lang, { ...m.Doctor, disclaimer: m.Disclaimer.text }];
+    }),
+  );
   return out;
 }
 

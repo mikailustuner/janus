@@ -1,0 +1,18 @@
+{
+  "name": "Janus",
+  "short_name": "Janus",
+  "description": "Reads the medicines at home and points out prescribing-cascade patterns that may be worth discussing with your doctor.",
+  "start_url": "/en",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#1B1F3B",
+  "theme_color": "#1B1F3B",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

@@ -210,6 +210,22 @@ function Footer() {
             {t("Shell.demoCodes")}
           </Link>
         </li>
+        <li>
+          <Link
+            href="/privacy"
+            className="inline-flex min-h-11 items-center px-1 underline underline-offset-4"
+          >
+            {t("Shell.privacy")}
+          </Link>
+        </li>
+        <li>
+          <Link
+            href="/donate"
+            className="inline-flex min-h-11 items-center px-1 underline underline-offset-4"
+          >
+            {t("Shell.donate")}
+          </Link>
+        </li>
       </ul>
     </footer>
   );

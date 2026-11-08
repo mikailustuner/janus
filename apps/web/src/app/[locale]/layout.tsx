@@ -3,6 +3,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { Suspense } from "react";
 import { getLocale, getTranslations } from "next-intl/server";
 
+import { ServiceWorker } from "@/components/ServiceWorker";
 import { Shell } from "@/components/Shell";
 import { routing } from "@/i18n/routing";
 import { fontVariables } from "@/theme/fonts";
@@ -20,6 +21,8 @@ export async function generateMetadata(): Promise<Metadata> {
     title: t("title"),
     description: t("description"),
     referrer: "no-referrer",
+    manifest: "/manifest.webmanifest",
+    icons: { icon: "/icon.svg" },
   };
 }
 
@@ -48,6 +51,7 @@ export default async function LocaleLayout({
         <script dangerouslySetInnerHTML={{ __html: PREPAINT_SOURCE }} />
       </head>
       <body className="antialiased">
+        <ServiceWorker />
         <NextIntlClientProvider>
           {/* Dynamic paths (the not-found catch-all) render the shell on the client. */}
           <Suspense

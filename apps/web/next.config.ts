@@ -14,6 +14,11 @@ const apiOrigin = (
 
 const dev = process.env.NODE_ENV === "development";
 
+// A build version for the service worker's cache name (DP22).
+const build =
+  process.env.JANUS_BUILD_ID ||
+  new Date().toISOString().replace(/\D/g, "").slice(0, 14);
+
 // DP31: connect, image, font and worker sources limited to the own origin. Inline scripts are
 // needed by the App Router payload on static pages; wasm for the barcode reader. React needs
 // eval only in development (debugging call stacks).
@@ -46,6 +51,7 @@ const nextConfig: NextConfig = {
   outputFileTracingRoot: workspaceRoot,
   poweredByHeader: false,
   agentRules: false,
+  env: { NEXT_PUBLIC_JANUS_BUILD: build },
   devIndicators: false,
   cacheComponents: true,
   partialPrefetching: true,

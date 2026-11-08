@@ -550,6 +550,16 @@ will show. No fixtures, no numbers.
   ≤ 6 MB, PDF chunk + fonts ≤ 900 KB), measured by `scripts/bundle-budget.mjs` on `next build` output; the measured
   values are recorded here in task 21 and the budget is the measured value + 10 % when under these ceilings.
 - **Rendering:** results for 15 items render < 2 s after the response on the dev machine (Playwright timing, local).
+- **Measured 2026-11-08 (task 21, production build; budget = measured + 10 %, DP38):**
+
+| Part | Measured (gzip unless noted) | Budget |
+|---|---|---|
+| Doctor page `/o`, JS before interaction | 183.1 KB; form ready median 2,139 ms (C5) | 202 KB |
+| Largest patient route (`/en/note`) | 220.3 KB (other routes 199–214 KB) | 243 KB |
+| zxing reader JS + wasm | 947 KB | 1,042 KB |
+| OCR worker + core + largest language (tur) | 8,361 KB (raw) | 9,197 KB |
+| PDF chunk + embedded fonts | 826 KB | 909 KB |
+| 15-item results render | 55–252 ms after the response | < 2 s |
 
 ## 17. Testing strategy
 - **Vitest** (node environment, `src/**/*.test.{ts,tsx}`): unit tests and **fast-check** properties P1–P30 of pure
@@ -655,6 +665,9 @@ The seed's properties are P12 (keys), P8 (disclaimer and phrases), P14 (demo) an
 | DP35 | The finding detail is `/[locale]/results/finding#<position>`: the finding's position is in the URL fragment, never its id (which holds ingredient keys), so no health data reaches the web server in a path or an access log (privacy.md). | `/results/[finding]` with the finding id. | A path is sent to the server on load and on prefetch. |
 | DP36 | Playwright (C1–C4, C6) runs locally against the production build and its results are recorded in tasks.md; the `web-e2e` CI job (browser install in CI) is left for the owner to enable. | Add the job now. | Owner instruction for Phase 3 runs: keep browser installs out of CI unless already supported. |
 | DP37 | The evidence view requests the finding's `evidence_ids` together with the ids of its `excluded_evidence`, so a retracted source can be shown among the sources not used with its stamp (Req 15.2). | Only `evidence_ids`. | Without the excluded ids the response cannot describe them. |
+| DP38 | Budgets recorded at measured + 10 % instead of the first ceilings: the Next.js 16 / React 19 runtime alone is about 160 KB gzip, so 110 KB for `/o` and 190 KB per route cannot hold without leaving the framework; `/o` still meets the requirement that matters (form ready in 2.1 s on the 4G profile, C5). OCR: `tessdata_fast` Turkish is 4.5 MB and the core 3.9 MB, so one language is 8.4 MB, not 6 MB; loaded only on the label-photo tab. | Server-render the doctor page without client React; `tessdata_fast` eng only. | Owner decision listed in the wording review. |
+| DP39 | Review polish (owner, 2026-11-08): Atkinson Hyperlegible Next's slashed zero replaced by an unslashed zero drawn from its own `O` (OFL, no reserved name; codes keep IBM Plex Mono); Glass colour fields drawn on a fixed layer behind a transparent body (they were covered by the body background); result cards fold the class chain, start months, priority, notes and integrity notices into "Details" (the `corrected_notice` comes from the API per finding: the PIPC list itself carries a published correction, so every PIPC finding shows it); safe-area padding; a `web-e2e` CI job for en and tr. | — | Owner review of the checkpoint-1 screenshots. |
+| DP40 | The demo session's patient id and the scan tab can come from the URL fragment (`/scan#label`, `/donate#event=<key>`); fragments never reach the server. The outcome-loop token record keeps the findings' event keys (browser only) so the 28-day reminder can open the donation with the event chosen. | Query strings. | privacy.md: nothing medical in a path or a query. |
 
 ## 20. Open items (for the owner)
 1. **Brand names in the demo.** The gate-1 box is AMLIPIN (a real Turkish product; TİTCK strings are not committed and

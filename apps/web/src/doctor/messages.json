@@ -1,0 +1,122 @@
+{
+ "en": {
+  "errors": {
+   "invalid_token": "This link is not valid.",
+   "token_expired": "This link has expired.",
+   "token_not_usable": "This link can no longer be used.",
+   "token_used": "An answer was already sent for this note.",
+   "unavailable": "Not available right now. Please try again later."
+  },
+  "title": "Janus · report on a note",
+  "loading": "Loading the form…",
+  "demo": "Demo · synthetic patient. This form sends nothing.",
+  "first": "First medicine",
+  "second": "Second medicine",
+  "send": "Send",
+  "sending": "Sending…",
+  "sent": "Thank you. {count, plural, one {# answer was} other {# answers were}} stored.",
+  "noAnswer": "Answer at least one question to send.",
+  "network": "Janus cannot be reached. Please try again; your answers are kept on this page.",
+  "retry": "Send again",
+  "medicineQuestion": "Which medicine?",
+  "notConfirmed": "Product form not confirmed",
+  "expires": "This link works until {date}.",
+  "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+ },
+ "tr": {
+  "errors": {
+   "invalid_token": "Bu bağlantı geçerli değil.",
+   "token_expired": "Bu bağlantının süresi doldu.",
+   "token_not_usable": "Bu bağlantı artık kullanılamaz.",
+   "token_used": "Bu not için zaten bir yanıt gönderildi.",
+   "unavailable": "Şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin."
+  },
+  "title": "Janus · bir not hakkında bildirim",
+  "loading": "Form yükleniyor…",
+  "demo": "Demo · sentetik hasta. Bu form hiçbir şey göndermez.",
+  "first": "Birinci ilaç",
+  "second": "İkinci ilaç",
+  "send": "Gönder",
+  "sending": "Gönderiliyor…",
+  "sent": "Teşekkürler. {count, plural, one {# yanıt} other {# yanıt}} kaydedildi.",
+  "noAnswer": "Göndermek için en az bir soruyu yanıtlayın.",
+  "network": "Janus'a ulaşılamıyor. Lütfen tekrar deneyin; yanıtlarınız bu sayfada duruyor.",
+  "retry": "Yeniden gönder",
+  "medicineQuestion": "Hangi ilaç?",
+  "notConfirmed": "Ürün formu doğrulanmadı",
+  "expires": "Bu bağlantı {date} tarihine kadar çalışır.",
+  "disclaimer": "Janus bilgi sağlar, tıbbi tavsiye vermez. Araştırma prototipi — tıbbi cihaz değildir."
+ },
+ "de": {
+  "errors": {
+   "invalid_token": "Dieser Link ist nicht gültig.",
+   "token_expired": "Dieser Link ist abgelaufen.",
+   "token_not_usable": "Dieser Link kann nicht mehr verwendet werden.",
+   "token_used": "Zu dieser Notiz wurde bereits eine Antwort gesendet.",
+   "unavailable": "Gerade nicht verfügbar. Bitte versuchen Sie es später erneut."
+  },
+  "title": "Janus · Rückmeldung zu einer Notiz",
+  "loading": "Das Formular wird geladen …",
+  "demo": "Demo · synthetische Patientendaten. Dieses Formular sendet nichts.",
+  "first": "Erstes Medikament",
+  "second": "Zweites Medikament",
+  "send": "Senden",
+  "sending": "Wird gesendet …",
+  "sent": "Vielen Dank. {count, plural, one {# Antwort wurde} other {# Antworten wurden}} gespeichert.",
+  "noAnswer": "Beantworten Sie mindestens eine Frage, um zu senden.",
+  "network": "Janus ist nicht erreichbar. Bitte versuchen Sie es erneut; Ihre Antworten bleiben auf dieser Seite erhalten.",
+  "retry": "Erneut senden",
+  "medicineQuestion": "Welches Medikament?",
+  "notConfirmed": "Darreichungsform nicht bestätigt",
+  "expires": "Dieser Link funktioniert bis {date}.",
+  "disclaimer": "Janus bietet Informationen, keine medizinische Beratung. Forschungsprototyp – kein Medizinprodukt."
+ },
+ "fr": {
+  "errors": {
+   "invalid_token": "Ce lien n'est pas valide.",
+   "token_expired": "Ce lien a expiré.",
+   "token_not_usable": "Ce lien ne peut plus être utilisé.",
+   "token_used": "Une réponse a déjà été envoyée pour cette note.",
+   "unavailable": "Indisponible pour le moment. Veuillez réessayer plus tard."
+  },
+  "title": "Janus · retour sur une note",
+  "loading": "Chargement du formulaire…",
+  "demo": "Démo · patient fictif. Ce formulaire n'envoie rien.",
+  "first": "Premier médicament",
+  "second": "Deuxième médicament",
+  "send": "Envoyer",
+  "sending": "Envoi…",
+  "sent": "Merci. {count, plural, one {# réponse a été enregistrée} other {# réponses ont été enregistrées}}.",
+  "noAnswer": "Répondez à au moins une question pour envoyer.",
+  "network": "Janus est injoignable. Veuillez réessayer ; vos réponses sont conservées sur cette page.",
+  "retry": "Renvoyer",
+  "medicineQuestion": "Quel médicament ?",
+  "notConfirmed": "Forme du produit non confirmée",
+  "expires": "Ce lien fonctionne jusqu'au {date}.",
+  "disclaimer": "Janus fournit des informations, pas des conseils médicaux. Prototype de recherche — pas un dispositif médical."
+ },
+ "es": {
+  "errors": {
+   "invalid_token": "Este enlace no es válido.",
+   "token_expired": "Este enlace ha caducado.",
+   "token_not_usable": "Este enlace ya no se puede usar.",
+   "token_used": "Ya se envió una respuesta para esta nota.",
+   "unavailable": "No está disponible ahora. Inténtelo más tarde."
+  },
+  "title": "Janus · respuesta sobre una nota",
+  "loading": "Cargando el formulario…",
+  "demo": "Demo · paciente ficticio. Este formulario no envía nada.",
+  "first": "Primer medicamento",
+  "second": "Segundo medicamento",
+  "send": "Enviar",
+  "sending": "Enviando…",
+  "sent": "Gracias. {count, plural, one {Se guardó # respuesta} other {Se guardaron # respuestas}}.",
+  "noAnswer": "Responda al menos una pregunta para enviar.",
+  "network": "No se puede conectar con Janus. Inténtelo de nuevo; sus respuestas se conservan en esta página.",
+  "retry": "Enviar de nuevo",
+  "medicineQuestion": "¿Qué medicamento?",
+  "notConfirmed": "Forma del producto no confirmada",
+  "expires": "Este enlace funciona hasta el {date}.",
+  "disclaimer": "Janus ofrece información, no consejo médico. Prototipo de investigación: no es un producto sanitario."
+ }
+}

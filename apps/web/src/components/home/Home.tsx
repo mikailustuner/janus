@@ -1,5 +1,6 @@
 "use client";
 import { EmergencyNotice } from "@/components/EmergencyNotice";
+import { ReminderCard } from "@/components/loop/ReminderCard";
 import { ButtonLink, Card, PageTitle } from "@/components/ui";
 import { useDemo } from "@/demo/session";
 import { useList } from "@/store/hooks";
@@ -15,6 +16,7 @@ export function Home() {
   return (
     <>
       <EmergencyNotice />
+      <ReminderCard />
       <PageTitle eyebrow={w("Home.tagline")}>{t("Home.title")}</PageTitle>
       <p className="text-lg">{t("Home.intro")}</p>
       {ready && count > 0 && !demo ? (

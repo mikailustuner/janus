@@ -52,7 +52,9 @@
       }
     },
     "privacy": "Gizlilik",
-    "demoCodes": "Demo kodları"
+    "demoCodes": "Demo kodları",
+    "demoDoctor": "Demo doktor sayfasını aç",
+    "donate": "Rapor paylaş"
   },
   "Emergency": {
     "title": "Acil durumda",
@@ -456,7 +458,19 @@
     "unavailable": "Not şu anda hazırlanamıyor. Sonuçlar kullanılmaya devam ediyor.",
     "qr_no_findings": "Bu notta doktorun bildireceği bir şey yok.",
     "qr_unavailable": "QR kodu şu anda kullanılamıyor. Not QR kodu olmadan yazdırılabilir.",
-    "productNotKnown": "(kutudaki ad girilmedi)"
+    "productNotKnown": "(kutudaki ad girilmedi)",
+    "qrTitle": "Doktordan geri bildirim isteyin (isteğe bağlı)",
+    "qrIntro": "Nottaki bir QR kodu, doktorun hesap açmadan bir örüntünün reçete kaskadı olup olmadığını ve ne yapıldığını bildirmesini sağlar. Önce bunun ne anlama geldiğini okuyun.",
+    "qrAccept": "Bunu okudum ve QR kodunun notta yer almasını istiyorum.",
+    "qrMake": "QR kodunu ekle",
+    "qrMaking": "QR kodu hazırlanıyor…",
+    "qrRegion": "Doktor hangi bölgede?",
+    "qrAlt": "Bu nota ilişkin doktor bildirimi için QR kodu",
+    "qrTooLong": "Bu Janus'un adresi QR kodu için çok uzun; not QR kodu olmadan yazdırılabilir.",
+    "qrDemo": "Demo: QR kodu, hiçbir şey göndermeyen bir demo formu açar.",
+    "qrAdded": "QR kodu notta yer alıyor. Bağlantı {date} tarihine kadar çalışır.",
+    "qrCoverage": "QR kodu, toplam {total} örüntüden 1 ile {covered} numaralı örüntüleri kapsar.",
+    "withdrawLink": "Sonuç döngüsü verilerini geri çek"
   },
   "Research": {
     "title": {
@@ -490,7 +504,8 @@
     "back": {
       "twoFaces": "Gölge yüzüne dön",
       "glass": "Hasta bölümüne dön"
-    }
+    },
+    "empty": "Henüz gösterilecek bir şey yok."
   },
   "Doctor": {
     "errors": {
@@ -499,13 +514,34 @@
       "token_not_usable": "Bu bağlantı artık kullanılamaz.",
       "token_used": "Bu not için zaten bir yanıt gönderildi.",
       "unavailable": "Şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin."
-    }
+    },
+    "title": "Janus · bir not hakkında bildirim",
+    "loading": "Form yükleniyor…",
+    "demo": "Demo · sentetik hasta. Bu form hiçbir şey göndermez.",
+    "first": "Birinci ilaç",
+    "second": "İkinci ilaç",
+    "send": "Gönder",
+    "sending": "Gönderiliyor…",
+    "sent": "Teşekkürler. {count, plural, one {# yanıt} other {# yanıt}} kaydedildi.",
+    "noAnswer": "Göndermek için en az bir soruyu yanıtlayın.",
+    "network": "Janus'a ulaşılamıyor. Lütfen tekrar deneyin; yanıtlarınız bu sayfada duruyor.",
+    "retry": "Yeniden gönder",
+    "medicineQuestion": "Hangi ilaç?",
+    "notConfirmed": "Ürün formu doğrulanmadı",
+    "expires": "Bu bağlantı {date} tarihine kadar çalışır."
   },
   "Withdraw": {
     "errors": {
       "invalid_token": "Bu belirteç geçerli değil.",
       "unavailable": "Geri çekme şu anda mümkün değil. Belirteç bu cihazda tutuluyor; lütfen daha sonra tekrar deneyin."
-    }
+    },
+    "title": "Sonuç döngüsü verilerini geri çek",
+    "intro": "QR kodlu her notun bu cihazda tutulan bir belirteci vardır. Geri çekmek, o not için doktorun yanıtlarını durdurur ve önceden gönderilmiş yanıtları siler.",
+    "none": "Bu cihazda not belirteci tutulmuyor.",
+    "item": "{date} tarihli not: QR kodu {total} örüntüden {covered} tanesini kapsar",
+    "button": "Geri çek",
+    "working": "Geri çekiliyor…",
+    "done": "Geri çekildi. Doktor artık bu notla yanıt veremez ve önceden gönderilmiş yanıtlar silindi."
   },
   "Donate": {
     "errors": {
@@ -514,8 +550,63 @@
     },
     "delete": {
       "not_found": "Bu belirteç için bağış bulunamadı (zaten silinmiş veya hiç kaydedilmemiş).",
-      "invalid_token": "Bu silme belirteci geçerli değil."
-    }
+      "invalid_token": "Bu silme belirteci geçerli değil.",
+      "title": "Bir bağışı sil",
+      "intro": "Aldığınız silme belirtecini yapıştırın veya bu cihazda tutulan bir belirteci seçin.",
+      "label": "Silme belirteci",
+      "kept": "Bu cihazda tutulan belirteçler",
+      "submit": "Bağışı sil",
+      "working": "Siliniyor…",
+      "done": "Bağış silindi."
+    },
+    "title": "Rapor paylaş",
+    "intro": "Bir deneyiminizi anonim bir bağışlanan rapor olarak paylaşabilirsiniz: hangi ilaçlar, hangi olay ve bunun istenmeyen bir etki mi yoksa bir iyileşme mi olduğu. Rapor, Kolektif Bellek'te yalnızca 20 veya daha fazla raporluk gruplar içinde, gürültü eklenerek sayılır.",
+    "noItems": "Raporun hangi ilaçlarla ilgili olduğunu seçmek için önce ilaç ekleyin.",
+    "event": "Olay",
+    "eventSearch": "Olay ara",
+    "direction": "Bu neydi?",
+    "adverse": "İstenmeyen bir etki",
+    "benefit": "Bir iyileşme",
+    "ingredients": "Raporun ilgili olduğu ilaçlar (1 ile 20 arası)",
+    "ageBand": "Yaş aralığı",
+    "age": "{from}–{to}",
+    "age90": "90 ve üzeri",
+    "sex": "Cinsiyet (isteğe bağlı)",
+    "female": "Kadın",
+    "male": "Erkek",
+    "notGiven": "Belirtmek istemiyorum",
+    "region": "Bölge",
+    "storedTitle": "Neler saklanacak",
+    "storedEvent": "Olay: {event}",
+    "storedDirection": "Tür: {direction}",
+    "storedIngredients": "İlaçlar: {list}",
+    "storedAge": "Yaş aralığı: {band}",
+    "storedSex": "Cinsiyet: {sex}",
+    "storedRegion": "Bölge: {region}",
+    "storedWeek": "Raporun haftası; sunucu tarafından belirlenir (gün değil).",
+    "storedConsent": "Kabul ettiğiniz onay metninin sürümü.",
+    "storedNothingElse": "Başka hiçbir şey: ad, e-posta, tarih, yer veya cihaz kimliği yok.",
+    "consent": {
+      "2026-11-v1": {
+        "heading": "Açık rızanız",
+        "body": "Bu alanlar sağlık verisidir. Janus bunları yalnızca açık rızanızla saklar (AB'de: GDPR Madde 9(2)(a); Türkiye'de: KVKK kapsamında açık rıza). Amaç, bağışlanan raporları Kolektif Bellek'te saymak ve araştırmadır. Veriler gizlilik sayfasında gösterilen bölgede saklanır ve en fazla 24 ay tutulur.",
+        "delete": "Gönderdikten sonra bir silme belirteci alırsınız. Bununla bağışı istediğiniz zaman silebilirsiniz. Belirteç olmadan bağış, 24 ay dolmadan silinemez.",
+        "check": "Yukarıdaki alanları anonim bir bağışlanan rapor olarak paylaşmayı açıkça kabul ediyorum."
+      }
+    },
+    "submit": "Raporu paylaş",
+    "sending": "Gönderiliyor…",
+    "needConsent": "Lütfen önce onay metnini okuyun ve kutuyu işaretleyin.",
+    "needFields": "Lütfen bir olay, en az bir ilaç, bir yaş aralığı ve bir bölge seçin.",
+    "doneTitle": "Teşekkürler. Rapor kaydedildi.",
+    "token": "Silme belirteciniz",
+    "tokenOnce": "Bu belirteç yalnızca bir kez gösterilir. Belirteç olmadan bağış, 24 ay sonra kaldırılmadan önce silinemez.",
+    "keep": "Belirteci bu cihazda tut",
+    "kept": "Bu cihazda tutuluyor.",
+    "copy": "Belirteci kopyala",
+    "copied": "Kopyalandı.",
+    "storedRecord": "Kaydedilen: {summary}",
+    "deleteLink": "Bir bağışı sil"
   },
   "Confirm": {
     "title": "İlacı onaylayın",
@@ -560,6 +651,65 @@
     "showMore": "Daha fazla sonuç göster",
     "demoNoAdd": "Demo ilaçları kendi listenize eklenmez.",
     "back": "Taramaya dön"
+  },
+  "OutcomeConsent": {
+    "2026-11-v1": {
+      "heading": "QR kodu ne yapar",
+      "asked": "Doktordan, nottaki her örüntü için bunun bir reçete kaskadı olup olmadığını ve ne yapıldığını (örneğin doz değiştirildi ya da değişiklik yapılmadı) belirtmesi istenir.",
+      "stored": "Janus yalnızca doktorun yanıtlarını, yanıtın haftasını, notun bölgesini ve örüntülerin kodlarını saklar. Ad yok, kutu adı yok ve haftadan daha ayrıntılı tarih yok. İlaç listesi bu cihazda kalır.",
+      "howLong": "Bağlantı yaklaşık beş hafta çalışır. Yanıtlar en fazla 24 ay saklanır ve yalnızca en az 20 yanıtlık gruplar için, gürültü eklenerek, sayı olarak gösterilir.",
+      "withdraw": "Bu cihazda tutulan belirteçle istediğiniz zaman geri çekebilirsiniz: doktor artık yanıt veremez ve önceden gönderilmiş yanıtlar silinir."
+    }
+  },
+  "Reminder": {
+    "title": "Konuştuğunuz belirti düzeldi mi?",
+    "body": "{date} tarihinde doktor için bir not hazırladınız. İsterseniz nasıl geçtiğini anonim bir bağışlanan rapor olarak paylaşabilirsiniz.",
+    "report": "Nasıl geçtiğini paylaş",
+    "dismiss": "Bunu gizle"
+  },
+  "Privacy": {
+    "title": "Gizlilik",
+    "intro": "Janus bir araştırma prototipidir, tıbbi cihaz değildir. Bu sayfa neyin cihazınızda kaldığını, neyin gönderildiğini, neyin saklandığını, ne kadar süre saklandığını ve nasıl silineceğini açıklar.",
+    "device": {
+      "title": "Bu cihazda kalanlar",
+      "body": "Kutuların ve etiketlerin fotoğrafları, okunan metin, kutulardaki adlarla birlikte ilaç listeniz, ayarlarınız, sonuç döngüsünün ve bağışların belirteçleri ve hatırlatmalar. Bunlar yalnızca bu tarayıcıda bulunur; Janus'ta hesap yoktur."
+    },
+    "sent": {
+      "title": "Janus'a gönderilenler",
+      "body": "Ürün kodları (bir kutu kodunun yalnızca GTIN'i, son kullanma tarihi ve ulusal ürün numarası; seri veya parti numarası asla), NDC'ler, arama için yazdığınız veya seçtiğiniz sözcükler, onayladığınız ilaçların kimlikleri ve başlangıç ayları ve yaptığınız seçimler. Fotoğraflar, okunan metnin tamamı ve kutulardaki adlar gönderilmez. İstekler saklanmaz."
+    },
+    "stored": {
+      "title": "Saklananlar",
+      "body": "Yalnızca siz seçerseniz: bir bağışlanan rapor (yaş aralığı, isteğe bağlı cinsiyet, bölge, ilaçlar, olay, tür, hafta, onay sürümü) ve doktorun bir notun QR koduna verdiği yanıtlar. Janus ayrıca kullanılmış veya geri çekilmiş notların bir kodunu süreleri dolana kadar tutar; böylece bir bağlantı iki kez kullanılamaz."
+    },
+    "where": {
+      "title": "Bağışlanan veriler nerede saklanır",
+      "region": "Bağışlanan veriler şurada saklanır: {region}{eu}.",
+      "inEu": " (Avrupa Birliği)",
+      "disabled": "Bu sunucuda bağışlar kapalı.",
+      "unknown": "Saklama bölgesi şu anda gösterilemiyor."
+    },
+    "howLong": {
+      "title": "Ne kadar süre",
+      "body": "Bağışlanan raporlar ve doktor yanıtları: en fazla 24 ay. Sonuç döngüsü bağlantıları: yaklaşık beş hafta (28 ile 35 gün)."
+    },
+    "delete": {
+      "title": "Nasıl silinir",
+      "body": "Bir bağış: silme belirteciyle. Sonuç döngüsü verileri: notun belirteciyle geri çekin. Bu cihazdaki her şey: Ayarlar › Bu cihazdaki her şeyi sil."
+    },
+    "protection": {
+      "title": "Paylaşılan sayılar nasıl korunur ve sınırları",
+      "body": "Bağışlardan ve doktor yanıtlarından gelen sayılar yalnızca en az 20'lik gruplar için, rastgele gürültü eklenerek gösterilir (20'nin altında gizlenir, gürültü eklenir). Bu, yayının bütünü için biçimsel diferansiyel gizlilik değildir.",
+      "limits": "Bilinen sınırlar: bir sayı kümesini iki adımda karşılaştırmak, (A) − (A,B) − (A,C) + (A,B,C), kapsanmaz. Hız sınırları gelene kadar (5. aşama), bağış ekleyebilen biri bir grubu şişirip gürültüsünü yeniden çektirebilir; herkes not belirteci oluşturup sonuç bildirebilir, bu nedenle bir doktor yanıtları grubu da aynı şekilde şişirilebilir."
+    },
+    "legal": {
+      "title": "Hukuki çerçeve",
+      "body": "AB'de bağışlar GDPR kapsamında açık rızaya, Türkiye'de KVKK kapsamında açık rızaya dayanır. ABD'de Janus, HIPAA kapsamındaki bir kuruluş (covered entity) değildir ve bu kural setlerinin en katısını uygular. Janus'u hiçbir dış kuruluş denetlemedi ve Janus tıbbi cihaz değildir."
+    },
+    "sources": {
+      "title": "Veri kaynakları",
+      "body": "openFDA (NDC Directory ve FAERS / FDA AEMS), TİTCK (Türkiye), BDPM (Fransa), AEMPS'nin CIMA'sı (İspanya), Wikidata, PIPC reçete kaskadları listesi, geri çekme kontrolleri için Crossref ve Retraction Watch ve rapor istatistiklerinde MedDRA terimleri (MedDRA® ticari markası ICH adına IFPMA tarafından tescil edilmiştir). Her sonuç kaynağını ve tarihini gösterir; bu yayıncıların hiçbiri Janus'u desteklemez."
+    }
   },
   "Memory": {
     "screening": "Bu bir tarama istatistiğidir. Çok sayıda ilaç–olay çifti aynı anda incelenir ve çoğu bu ölçütleri karşılar; bu yüzden ölçütleri karşılamak yaygındır ve ilacın olaya neden olduğuna dair bir kanıt değildir.",

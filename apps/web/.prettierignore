@@ -4,6 +4,7 @@ build/
 next-env.d.ts
 # Generated files (scripts/gen-vocabulary.mjs, gen-demo-codes.mjs, record-demo.mjs)
 src/vocabulary/*.json
+src/doctor/messages.json
 src/demo/fixtures/*.json
 src/demo/codes.svg.json
 test-results/
