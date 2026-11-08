@@ -151,6 +151,8 @@
     synthetic patient in five languages (invented product names) reviewed for wording; `docs/pre-launch-checklist.md`
     items of design §15; key rotation runbook in `docs/`; dated entry in `docs/kiro-usage.md`. _Requirements: 7.3, 7.7, 14_
 
-- [ ] 17. Final checkpoint
+- [x] 17. Final checkpoint
+  - 2026-11-08: ruff, ruff format, pyright, 817 API tests (`HYPOTHESIS_PROFILE=ci`, PostgreSQL 16), 12 real-data tests,
+    web lint, typecheck and 78 web tests all pass locally; CI result in the report.
   - Every step green (API, web, CI); report what was built, counterexamples the property tests found and how they were
     fixed, and the open items.
