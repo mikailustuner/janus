@@ -55,9 +55,12 @@ async def _run(request: Request, fn: Callable[..., ResolutionResult], *args: Any
     if not isinstance(db, Database):
         return _error(503, "resolution_unavailable")
 
+    # The accepted dose-form table, for the additive Passport fields (medication-passport Req 6.6).
+    forms = getattr(request.app.state, "dose_forms", None)
+
     def call() -> ResolutionResult:
         with db.read_only_tx() as conn:
-            return fn(conn, *args)
+            return fn(conn, *args, forms=forms)
 
     try:
         result = await run_in_threadpool(call)

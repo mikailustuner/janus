@@ -15,6 +15,8 @@ from typing import Any, cast
 import psycopg
 
 from janus.integrity.freshness import is_stale, parse_snapshot_date
+from janus.passport.forms import FormTable
+from janus.passport.strength import strength_code
 from janus.regions.base import (
     Country,
     ProductKey,
@@ -41,6 +43,7 @@ from janus.resolution.model import (
     ResolvedIngredient,
     ScanInfo,
     SourceRef,
+    StrengthCodeOut,
     is_homeopathic_product,
 )
 from janus.resolution.names import fold
@@ -128,10 +131,20 @@ def rank(key: str, hits: Iterable[repository.NameHit], limit: int) -> list[Ranke
 class _Builder:
     """Turns repository rows into result models with provenance."""
 
-    def __init__(self, conn: psycopg.Connection, cur: repository.Current) -> None:
+    def __init__(
+        self, conn: psycopg.Connection, cur: repository.Current, forms: FormTable | None = None
+    ) -> None:
         self.conn = conn
         self.cur = cur
         self.keys: dict[str, dict[str, Any]] = {}
+        # Only a table the owner accepted names groups in answers (medication-passport task 4).
+        self.forms = forms if forms is not None and forms.reviewed else None
+
+    def _strength(
+        self, source_id: str, strength: str | None, group: str | None
+    ) -> StrengthCodeOut | None:
+        code = strength_code(source_id, strength, group)
+        return None if code is None else StrengthCodeOut(**vars(code))
 
     def source(self, source_id: str) -> SourceRef:
         s = self.cur.sources.get(source_id)
@@ -170,6 +183,11 @@ class _Builder:
             f = r.fields
             src = self.source(r.source_id)
             cid = f"{f['region']}:{r.source_id}:{r.product_id}"
+            group = (
+                None
+                if self.forms is None
+                else self.forms.group(r.source_id, f["dosage_form"], f["routes"])
+            )
             out.append(
                 ProductCandidate(
                     candidate_id=cid,
@@ -211,10 +229,12 @@ class _Builder:
                             rxcuis=list(i["rxcuis"]),
                             rxcui_status=i["rxcui_status"],
                             source=src,
+                            strength_code=self._strength(r.source_id, i["strength"], group),
                         )
                         for i in r.ingredients
                     ],
                     source=src,
+                    dose_form_group=group,
                 )
             )
         return out
@@ -310,6 +330,8 @@ def resolve_scan(
     override: Region | None,
     today: dt.date,
     adapters: Sequence[RegionAdapter] = ADAPTERS,
+    *,
+    forms: FormTable | None = None,
 ) -> ResolutionResult:
     data = parse_element_string(content, today)  # Gs1Error → 422 in the router
     chosen = choose_adapters(adapters, data.gtin14, override)
@@ -322,7 +344,7 @@ def resolve_scan(
         ],
     )
     searched = [a for a in chosen if a.source_id is not None and a.source_id in cur.sources]
-    b = _Builder(conn, cur)
+    b = _Builder(conn, cur, forms)
     hint = gs1_prefix_region(data.gtin14)
     extra: list[Notice] = []
     if override is None and hint in NOT_YET:
@@ -372,10 +394,12 @@ def resolve_scan(
     )
 
 
-def resolve_ndc(conn: psycopg.Connection, ndc: str, today: dt.date) -> ResolutionResult:
+def resolve_ndc(
+    conn: psycopg.Connection, ndc: str, today: dt.date, *, forms: FormTable | None = None
+) -> ResolutionResult:
     keys = sorted(ProductKey(k.kind, k.code) for k in parse_ndc_input(ndc))  # NdcError → 422
     cur = _current(conn, ["openfda_ndc"])
-    b = _Builder(conn, cur)
+    b = _Builder(conn, cur, forms)
     refs: set[repository.ProductRef] = set()
     for kind in sorted({k.kind for k in keys}):
         refs |= set(
@@ -387,7 +411,13 @@ def resolve_ndc(conn: psycopg.Connection, ndc: str, today: dt.date) -> Resolutio
 
 
 def search(
-    conn: psycopg.Connection, query: str, region: Region | None, limit: int, today: dt.date
+    conn: psycopg.Connection,
+    query: str,
+    region: Region | None,
+    limit: int,
+    today: dt.date,
+    *,
+    forms: FormTable | None = None,
 ) -> ResolutionResult:
     key = fold(query)
     if len(key) < 2:
@@ -399,7 +429,7 @@ def search(
     cur = _current(conn, required)
     sources = [s for r in wanted for s in REGION_SOURCES[r] if s in cur.sources]
     regions: list[Region] = [r for r in wanted if any(s in sources for s in REGION_SOURCES[r])]
-    b = _Builder(conn, cur)
+    b = _Builder(conn, cur, forms)
     hits = rank(key, repository.search_names(conn, cur.dataset_id, key, wanted), limit)
     candidates: list[ProductCandidate | IngredientCandidate] = []
     for h in hits:  # keep rank order
@@ -413,7 +443,11 @@ def search(
 
 
 def resolve_products(
-    conn: psycopg.Connection, candidate_ids: Sequence[str], today: dt.date
+    conn: psycopg.Connection,
+    candidate_ids: Sequence[str],
+    today: dt.date,
+    *,
+    forms: FormTable | None = None,
 ) -> ResolutionResult:
     refs: list[repository.ProductRef] = []
     regions: list[Region] = []
@@ -427,7 +461,7 @@ def resolve_products(
     regions.sort()
     sources = sorted({source_id for source_id, _ in refs})
     cur = _current(conn, sources)
-    b = _Builder(conn, cur)
+    b = _Builder(conn, cur, forms)
     found = b.products(refs, "candidate_id")
     extra = (
         []

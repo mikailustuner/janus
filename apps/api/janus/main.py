@@ -27,6 +27,7 @@ from janus.observability.logging import (
     register_route_templates,
 )
 from janus.observability.middleware import AccessLogMiddleware
+from janus.passport.forms import load as load_dose_forms
 from janus.settings import EVENT_VOCABULARY, Settings
 
 
@@ -88,6 +89,12 @@ def create_app(
         "contributions": ContributionsSource(),
         "outcomes": OutcomesSource(),
     }
+    # Dose-form table (medication-passport §5.2): a defect stops startup; a missing file makes
+    # `/passport/presence` answer 503 and leaves the resolution fields null (Req 5.3, 6.6).
+    try:
+        app.state.dose_forms = load_dose_forms()
+    except FileNotFoundError:
+        app.state.dose_forms = None
     app.state.note_keyring = (
         Keyring(settings.note_keys, settings.note_signing_key_id)
         if settings.note_keys and settings.note_signing_key_id
@@ -101,6 +108,7 @@ def create_app(
     from janus.memory.router import snapshot_router as memory_snapshot_router
     from janus.notes.router import donation as notes_donation_router
     from janus.notes.router import router as notes_router
+    from janus.passport.router import router as passport_router
     from janus.privacy.router import router as privacy_router
     from janus.resolution.router import router as resolution_router
 
@@ -115,6 +123,7 @@ def create_app(
         memory_snapshot_router,
         notes_router,
         notes_donation_router,
+        passport_router,
         *extra_routers,
     ]
     for router in routers:

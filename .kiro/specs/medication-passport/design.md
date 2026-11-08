@@ -199,7 +199,7 @@ cached per `(source_id, published, form_group)` (12,766 distinct strings).
 
 | Source | Accepted grammar (after trimming, case-insensitive units) | Basis |
 |---|---|---|
-| `openfda_ndc` | `A U/D` and `A U/N DU`: A a decimal (`.5` allowed); U ∈ {`kg`,`g`,`mg`,`ug`,`mcg`} or {`[iU]`,`[IU]`}; D = `1`; DU ∈ {`mL`,`g`} | `/1` → `unit`; `/N mL` → `mL` (A ÷ N); `/N g` → `g` |
+| `openfda_ndc` | `A U/D` and `A U/N DU`: A a decimal (`.5` allowed); U ∈ {`kg`,`g`,`mg`,`ug`,`mcg`} or {`[iU]`,`[IU]`}; D = `1`; DU ∈ {`mL`,`g`} | `/1` → `unit` only when `form_group` ∈ `COUNTABLE_GROUPS` (else `None`: per spray or per actuation; review R2, accepted); `/N mL` → `mL` (A ÷ N); `/N g` → `g` |
 | `eu_fr_bdpm` | `A U` with French decimals (`0,5`) and space-grouped thousands (`1 000`); U ∈ {`mg`,`g`,`microgramme(s)`,`µg`,`UI`} | `unit` only when `form_group` ∈ `COUNTABLE_GROUPS`; else `None` |
 | `eu_es_cima` | parsed for tests and reports, but no form is loaded | always `None` (basis unknown) |
 | `titck` | no strength stored | always `None` |
@@ -212,22 +212,37 @@ groups (§5.2). Unit-amount equivalence is exact: `1 g/1` and `1000 mg/1` give t
 
 ### 5.2 Dose-form groups (`forms.py`, `data/dose_form_groups.csv`)
 ```
-source_id,published_form,group,note
-openfda_ndc,"TABLET, FILM COATED",tablet,
-openfda_ndc,"TABLET, EXTENDED RELEASE",tablet_modified_release,
-eu_fr_bdpm,comprimé pelliculé,tablet,
-eu_fr_bdpm,comprimé à libération prolongée,tablet_modified_release,
-eu_fr_bdpm,poudre et  solvant pour solution injectable,injection,"two spaces as published"
+source_id,published_form,route,group,note
+openfda_ndc,"TABLET, FILM COATED",ORAL,oral_solid,proposed; …
+openfda_ndc,"TABLET, EXTENDED RELEASE",ORAL,oral_solid_modified_release,proposed; …
+openfda_ndc,SOLUTION,OPHTHALMIC,ophthalmic,proposed; …
+eu_fr_bdpm,comprimé pelliculé,*,oral_solid,proposed; …
+eu_fr_bdpm,poudre et  solvant pour solution injectable,*,injection,proposed; … (two spaces as published)
 ```
 - Key: the exact published string of the source (no folding: the BDPM data are matched as published). A string not in
   the table, or with an empty group, is unknown.
-- Draft groups (granularity decided in the review, OD4): `tablet`, `tablet_modified_release`, `tablet_gastro_resistant`,
-  `tablet_orodispersible`, `capsule`, `capsule_modified_release`, `capsule_gastro_resistant`, `oral_solution`,
-  `oral_suspension`, `oral_powder_granules`, `injection`, `infusion`, `inhalation`, `nasal`, `eye`, `ear`,
-  `cutaneous_semisolid`, `cutaneous_liquid`, `transdermal_patch`, `rectal`, `vaginal`, `oromucosal`.
-  `COUNTABLE_GROUPS` = the seven tablet and capsule groups.
-- Where it comes from: drafted by `forms_draft.py` from the distinct `(source_id, dosage_form)` values of the current
-  dataset (openFDA 142, BDPM 358) with keyword rules, then reviewed row by row by `agent://pharmacologist` and accepted
+- ~~Draft groups (22 fine groups)~~ superseded by owner decision 6: a coarse Janus grouping, **accepted after the
+  task 4 review (2026-11-08, `dose-form-review.md` Part C)**. Fourteen groups: `oral_solid`,
+  `oral_solid_delayed_release` (gastro-resistant), `oral_solid_prolonged_release` (extended, prolonged, modified,
+  osmotic), `oral_liquid`, `injection`, `inhaled`, `nasal`, `ophthalmic`, `otic`, `cutaneous`, `transdermal`, `rectal`,
+  `vaginal`, `other`. The owner's twelve with oral modified release split in two (Req 6.5; review R1). A
+  modified-release form outside the oral solids (depot injection, prolonged-release eye drops, vaginal ring), a
+  liposomal or lipid-complex injection and a multi-part pack of different forms have no group and stay unknown.
+  `COUNTABLE_GROUPS` = the three oral solid groups. `other` (sublingual, buccal and dental forms, lozenges, kits,
+  devices) is shown but **never compared** (`NOT_COMPARED_GROUPS`).
+- *(Added in task 3; DP22, DP23.)* **Route column.** openFDA and the BDPM publish forms that do not name the route (`SOLUTION`
+  1,729 oral / 1,042 topical / 323 ophthalmic products; `TABLET` 17,971 oral / 242 sublingual; `crème`, `gel`,
+  `solution`), so the key is `(source_id, published_form, route)`: `route` is `*` (any route set), an empty string (no
+  route published) or the product's `res_product.routes` sorted and joined with `|` as published. A product takes the
+  row of its own route set first, then the `*` row. `group(source_id, published_form, routes)` gains the routes
+  argument; the presence statement (§4.2) also selects `r.routes`, and task 5 passes `ProductCandidate.routes`. A `*`
+  row exists only where the group does not depend on the route or the form string fixes the route; the column
+  `route_from_form` then names the route class (film-coated tablet, capsule, orodispersible tablet, transdermal patch,
+  eye drops, suppository; DP23). A product without a published route takes that route; otherwise no route is guessed.
+- **Packaged:** the table ships as `apps/api/janus/passport/dose_form_groups.csv` (the API image is built from
+  `apps/api`); a test checks that it equals `data/dose_form_groups.csv`.
+- Where it comes from: drafted by `forms_draft.py` from the distinct `(source_id, dosage_form, routes)` values of the
+  current dataset (openFDA 142 forms, BDPM 358; 927 rows) with keyword rules, then reviewed row by row by `agent://pharmacologist` and accepted
   by the owner (task 4). EDQM Standard Terms are not used (registration and reuse terms not checked; OD4). Licence of
   the table: Apache-2.0 (Janus curated); the published strings it contains are cited with their source.
 - Startup loads and validates it (unique keys, group in the closed set, source id known); a defect stops startup, a
@@ -447,12 +462,37 @@ The seed's four properties are P1–P4.
 | DP19 | The request carries no item region; the server answers every source; the client marks the item's own source. | Send the item's region and skip it. | One less field about the patient; the own-source row is useful as a check ("this box's source lists it"). |
 | DP20 | The note stays `doctor-loop`'s; the Passport only fills `product_name_slot` with the box name and the origin label in the note language. | A Passport-specific note section. | No server change; product names and origins stay in the browser. |
 | DP21 | **Proposed, needs the owner:** optional entry of strength and form from the box for items whose source has none (TİTCK, typed German boxes), labelled "as entered by you". | No entry (TİTCK and German items never comparable). | Without it, the two regions of the main user story never get a comparison; the values stay in the browser and are sent as codes only. |
+| DP22 | *(Added in task 3, accepted 2026-11-08.)* The dose-form table is keyed by `(source, published form, published route set)`, with `*` for any route set. | Key by the published form alone; map route-ambiguous forms to nothing. | openFDA `SOLUTION` is oral, topical, ophthalmic and sublingual; `TABLET` is oral and sublingual. One group per string would put eye drops with oral solutions; mapping them to nothing would lose most liquids. |
+| DP23 | *(Owner decision 2026-11-08.)* No route is guessed: a product without a published route has no group unless the form string fixes the route (`route_from_form`); a `*` row exists only then or when the group does not depend on the route. | Treat tablets without a route as oral (3,068 openFDA products); keep every `*` row the draft wrote. | A sublingual or vaginal tablet without a route would be compared as oral; a `*` row from observed data generalises to route sets never seen. |
 
 ## 13. Performance
 Measured 2026-11-08 (§1): 273–428 ms for 14 common keys with the partial index, 1.07 s for the 50 most frequent keys.
+**Loader cost of the index (task 1, 2026-11-08):** writing the 317,055 `res_product_ingredient` rows of the dev dataset
+into a copy of the table, three runs each in a rolled-back transaction: 1.45–1.48 s with the primary key only,
+2.45–2.50 s with the partial index added, so about +1.0 s per dataset load (the full load, preparation included, takes
+minutes). Task 1.1 checks on a synthetic dataset of 40,000 products that the §4.2 key lookup is an index scan of
+`res_product_ingredient_key`.
 Targets (Req 13): p95 ≤ 500 ms for 15 items, ≤ 2 s worst case, 3 s statement limit. `bench.py` records p50/p95 in this
 section (task 7). If the 15-item p95 misses the target: first a two-step fetch (hits, then rows by primary key), then the
 loader-built signature table (DP12 fallback). The pure evaluation is linear in signatures × items (≤ 7,611 × 50).
+
+**Benchmark (task 7.6, 2026-11-08).** `python -m janus.passport.bench --runs 30`, full HTTP route in-process, dev dataset
+`7db3a513…` copied into `janus_test` at migration head (index present; the dev database itself stays at 0011 because
+`main` does not know 0012 yet). The machine was shared with another build (load average 6–8 on 8 cores); three runs:
+
+| List | Items | Products behind it | p50 | p95 | Target |
+|---|---|---|---|---|---|
+| common (15 frequent medicines of older adults, `bench.COMMON`) | 15 | 12,459 | 238–243 ms | 267–332 ms | ≤ 500 ms: **met** |
+| worst (50 keys with the most products) | 50 | 55,805 | 1,465–2,102 ms | 1,703–2,251 ms | ≤ 2 s: met in 2 of 3 runs |
+| stress (15 keys with the most products; not a Req 13 case) | 15 | 28,677 | 653–734 ms | 700–1,093 ms | (500 ms) |
+
+Without the index (dev database, 5 runs) the worst case took p95 2,072 ms. Profile of the stress case: the statement
+takes about 480 ms (a parallel hash join of the hit products with their ingredient rows, then grouping by signature);
+signatures and evaluation 50 ms; the rest is HTTP and JSON. Variants measured and rejected (median, 15 / 50 keys):
+current 483 / 864 ms; forced index nested loop 569 / 1,426 ms; lateral per-product fetch (the "two-step" fallback) 750
+/ 1,018 ms; no parallel workers 688 / 1,114 ms; final grouping in Python 455 / 806 ms. The 15-item target holds; the worst
+case sits at the 2 s line under load and below it on an idle run. **Open (owner):** if the worst case must hold under load,
+the remaining fallback is the loader-built signature table (DP12), a `drug-resolution` loader and dataset change.
 
 ## 14. Open items and open decisions
 - **OD1 (owner):** load the BDPM `reference` quantity and the Nomenclátor form code and routes (`drug-resolution` loader,
@@ -463,8 +503,8 @@ loader-built signature table (DP12 fallback). The pure evaluation is linear in s
   amount). Free-text parsing of a source whose redistribution terms are unclear; needs review. Recommendation: not now;
   DP21 covers the user story.
 - **OD3 (owner):** show the distinct published strengths of a source (as published) next to the counts.
-- **OD4 (pharmacologist, owner):** granularity of the dose-form groups (film-coated vs plain, gastro-resistant as its own
-  group, orodispersible); whether EDQM Standard Terms may be used under their terms.
+- ~~**OD4 (pharmacologist, owner):** granularity of the dose-form groups; EDQM Standard Terms.~~ **Closed 2026-11-08**:
+  fourteen groups, no EDQM data (owner decision 6; `dose-form-review.md` Part C).
 - **OD5 (owner):** `fast-check` dev dependency (DP16).
 - **DP21 (owner):** manual strength/form entry.
 - **Seams to record in other specs (task 13):** `experience` open items (routes and mounting of the two screens, list

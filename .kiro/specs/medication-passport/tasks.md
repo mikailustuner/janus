@@ -11,57 +11,72 @@
 > `janus_test`, vitest (`npm test`), web lint and typecheck (`npm run lint`, `npm run typecheck`); then commit, push and
 > confirm GitHub CI is green. The full API suite takes 15 minutes or more: run it with `nohup`, one suite at a time.
 
-- [ ] 1. Index migration (`migrations/versions/0012_passport_presence_index.py`, design §4.1)
+- [x] 1. Index migration (`migrations/versions/0012_passport_presence_index.py`, design §4.1)
+  - *Done 2026-11-08 (Claude Code): partial index; loader write of the 317,055 ingredient rows +1.0 s, recorded in §13.*
   - Partial index `res_product_ingredient_key`; downgrade drops it. Measure the loader time on the dev dataset before
     and after and record it in design §13.
-  - [ ] 1.1 Migration upgrade → downgrade → upgrade on `janus_test`; the index exists only after upgrade; the plan of
+  - [x] 1.1 *(`tests/test_passport_index.py`: reversible; index scan on a 40,000-product synthetic dataset.)* Migration upgrade → downgrade → upgrade on `janus_test`; the index exists only after upgrade; the plan of
     the §4.2 statement uses it (EXPLAIN check on a synthetic dataset). _Requirements: 13.1_
 
-- [ ] 2. Strength codes (`passport/strength.py`, design §5.1)
+- [x] 2. Strength codes (`passport/strength.py`, design §5.1)
+  - *Done 2026-11-08: coded share openFDA 59.7 %, BDPM 48.8 % (countable forms), CIMA and TİTCK 0 (review sheet A.3).*
   - Per-source grammars, exact `Decimal` conversion, canonical amount, cache; a report command printing the parsed share
     per source on the dev dataset (counts only).
-  - [ ] 2.1 Property test P5: equal quantities equal codes; `None` cases; never raises; pattern of §3.1. _Requirements: 6.3, 6.4_
+  - [x] 2.1 *(`tests/test_passport_strength_properties.py`, Decimal reference.)* Property test P5: equal quantities equal codes; `None` cases; never raises; pattern of §3.1. _Requirements: 6.3, 6.4_
 
-- [ ] 3. Dose-form table (`passport/forms.py`, `passport/forms_draft.py`, `data/dose_form_groups.csv`, design §5.2)
+- [x] 3. Dose-form table (`passport/forms.py`, `passport/forms_draft.py`, `data/dose_form_groups.csv`, design §5.2)
+  - *Done 2026-11-08: 927 rows, all `proposed`; 13 groups (owner decision 6 + Req 6.5); route column added (design §5.2,
+    owner to accept); coverage openFDA 84.1 %, BDPM 97.2 %.*
   - Loader, closed group set, `COUNTABLE_GROUPS`, version hash; the draft command writes every distinct
     `(source_id, dosage_form)` of the current dataset (openFDA 142, BDPM 358) with product counts and a proposed group;
     commit the draft with every row marked `proposed` in `note`. `data/README.md` gains the licence and source line.
-  - [ ] 3.1 Property test P6: committed table loads; each injected defect named; `group()` total. _Requirements: 6.5_
+  - [x] 3.1 *(`tests/test_passport_forms_properties.py`, incl. the Req 6.5 check on the committed table.)* Property test P6: committed table loads; each injected defect named; `group()` total. _Requirements: 6.5_
 
-- [ ] 4. Dose-form and strength review **(review stop)**
+- [x] 4. Dose-form and strength review **(review stop)**
+  - *2026-11-08: pharmacologist pass (accept with changes R1–R3); owner answers in Part C, applied in Part D: 14 groups,
+    DP22/DP23, `route_from_form`, 107 wildcard rows made route-specific, table packaged, 931 rows `accepted`.*
   - Run `agent://pharmacologist` (self-contained prompt: the draft table, the grammar table of §5.1, OD4) and write
     `dose-form-review.md` (flagged rows, granularity questions, EDQM terms question). Commit, push, CI green, then
     **stop and wait for the owner**. Apply the answers in one commit (rows accepted, groups final, OD4 closed in design).
     _Requirements: 6.4, 6.5_
 
-- [ ] 5. Resolution fields (`resolution/model.py`, `resolution/service.py`)
+- [x] 5. Resolution fields (`resolution/model.py`, `resolution/service.py`)
+  - *Done 2026-11-08: fields filled only from an accepted table (`app.state.dose_forms`); contract test lists the two
+    additions. The `drug-resolution` open-items note is task 13.*
   - `ResolvedIngredient.strength_code: StrengthCodeOut | None = None`, `ProductCandidate.dose_form_group: str | None =
     None`, computed with the Passport functions on stored values; forms table passed through `app.state`. No other
     change. Note the change in `drug-resolution` open items (task 13).
-  - [ ] 5.1 Property test P17: fields equal the pure functions; all other fields unchanged (snapshot). _Requirements: 6.6_
+  - [x] 5.1 *(`test_passport_resolution_fields_properties.py`.)* Property test P17: fields equal the pure functions; all other fields unchanged (snapshot). _Requirements: 6.6_
 
-- [ ] 6. Presence evaluation and repository (`passport/presence.py`, `passport/repository.py`, design §4.2, §5.3)
+- [x] 6. Presence evaluation and repository (`passport/presence.py`, `passport/repository.py`, design §4.2, §5.3)
   - Signature building (strength codes, form groups, homeopathic decision with `is_homeopathic_name` for EU), the
     statement of §4.2 with `SET LOCAL statement_timeout`, `known_keys`, pure `evaluate`.
-  - [ ] 6.1 Property test P7: presence equals a brute-force model on synthetic datasets (DB). _Requirements: 2.4, 2.6, 2.7, 6.2_
-  - [ ] 6.2 Property test P3 (server part): no `matched` with an unknown side; `differs` only when all comparable. _Requirements: 2.2, 6.1, 6.2_
-  - [ ] 6.3 Property test P8: homeopathic parity with `/resolve/products`; SQL and Python patterns agree. _Requirements: 2.6, 1.5_
-  - [ ] 6.4 Property test P9: comparison counts and result function. _Requirements: 6.2_
-  - [ ] 6.5 Property test P10: order, repetition and split invariance. _Requirements: 4.4_
+  - [x] 6.1 *(`test_passport_presence_properties.py`, plus a worked example.)* Property test P7: presence equals a brute-force model on synthetic datasets (DB). _Requirements: 2.4, 2.6, 2.7, 6.2_
+  - [x] 6.2 Property test P3 (server part): no `matched` with an unknown side; `differs` only when all comparable. _Requirements: 2.2, 6.1, 6.2_
+  - [x] 6.3 Property test P8: homeopathic parity with `/resolve/products`; SQL and Python patterns agree. _Requirements: 2.6, 1.5_
+  - [x] 6.4 Property test P9: comparison counts and result function. _Requirements: 6.2_
+  - [x] 6.5 Property test P10: order, repetition and split invariance. _Requirements: 4.4_
 
-- [ ] 7. Route (`passport/schemas.py`, `service.py`, `router.py`, `main.py`, `bench.py`)
+- [x] 7. Route (`passport/schemas.py`, `service.py`, `router.py`, `main.py`, `bench.py`)
+  - *Done 2026-11-08: p95 267–332 ms (15 common items), 1,703–2,251 ms (50-key worst case, machine under load);
+    recorded in design §13 with the variants tried.*
   - `POST /passport/presence` on `medical_router()`; strict body parsing as `resolution/router.py`; 422 / 503 of §3.3;
     source blocks with staleness from `repository.current`; register in `create_app`; benchmark (15 common items and the
     50-key worst case on the dev dataset) and record p50/p95 in design §13.
-  - [ ] 7.1 Property test P11: stateless, silent logs, closed schema, no echo. _Requirements: 4.1–4.3, 5.2, 9.1, 9.2_
-  - [ ] 7.2 Property test P12: validation bounds and boundary values. _Requirements: 5.1, 5.2_
-  - [ ] 7.3 Property test P13: every answer names its source; missing sources; Germany; staleness. _Requirements: 2.1, 5.4, 7.1, 7.4, 7.5_
-  - [ ] 7.4 Property test P14: 503 cases with nothing partial. _Requirements: 5.3_
-  - [ ] 7.5 Property test P15: constant statement budget for 1–50 items. _Requirements: 13.2_
-  - [ ] 7.6 Benchmark meets Req 13.1 (p95 ≤ 500 ms for 15 items, ≤ 2 s worst case), else apply the DP12 fallback and
+  - [x] 7.1 *(`test_passport_api_properties.py`.)* Property test P11: stateless, silent logs, closed schema, no echo. _Requirements: 4.1–4.3, 5.2, 9.1, 9.2_
+  - [x] 7.2 Property test P12: validation bounds and boundary values. _Requirements: 5.1, 5.2_
+  - [x] 7.3 Property test P13: every answer names its source; missing sources; Germany; staleness. _Requirements: 2.1, 5.4, 7.1, 7.4, 7.5_
+  - [x] 7.4 Property test P14: 503 cases with nothing partial. _Requirements: 5.3_
+  - [x] 7.5 Property test P15: constant statement budget for 1–50 items. _Requirements: 13.2_
+  - [x] 7.6 *(15-item target met; worst case at the 2 s line under load, DP12 loader table left open for the owner.)*
+    Benchmark meets Req 13.1 (p95 ≤ 500 ms for 15 items, ≤ 2 s worst case), else apply the DP12 fallback and
     measure again. _Requirements: 13.1_
 
-- [ ] 8. Checkpoint 1: server side
+- [x] 8. Checkpoint 1: server side
+  - *2026-11-08: ruff, ruff format, pyright strict clean; pytest ci profile 863 passed, 8 skipped (database tests after
+    `alembic upgrade head` on `janus_test`); vitest 78, web lint and typecheck green; API image (also the `migrate`
+    image) rebuilt and the packaged table loads in it; log-guard and medical-language-guard clean. Committed on the
+    worktree branch; not pushed (the owner's manager merges), so no CI run yet.*
   - All steps of the header green, including the database properties after `alembic upgrade head` on `janus_test`;
     rebuild the `api` and `migrate` images; the `log-guard` and `medical-language-guard` hooks report nothing. Commit,
     push, CI green.
