@@ -33,3 +33,5 @@ next-env.d.ts
 apps/web/test-results/
 apps/web/playwright-report/
 apps/web/public/vendor/
+
+# Claude Code agent worktrees
