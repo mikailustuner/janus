@@ -87,24 +87,52 @@ def test_p34_phase1_equality_survives_other_languages_lists(tokens: list[str], l
         assert spelling_key(f, lang) == fn.spelling_key(f)
 
 
-def test_p34_rules_version_is_phase1_by_default_and_follows_every_list() -> None:
-    assert names.rules_version() == fn.RULES_VERSION  # nothing enabled: the Phase 1 hash
-    base = names.rules_version()
-    seen = {base}
-    changes: list[dict[str, object]] = [
-        {"EXTRA_SALT_WORDS": {**name_lists.EXTRA_SALT_WORDS, "fr": frozenset({"x1"})}},
-        {"EXTRA_NOT_ALONE": {**name_lists.EXTRA_NOT_ALONE, "es": frozenset({"x2"})}},
-        {"CONNECTORS": {**name_lists.CONNECTORS, "fr": frozenset({"de"})}},
-        {"BIOLOGIC_SUFFIX_ENABLED": True},
-        {"ES_FINAL_VOWEL_ENABLED": True},
-        {"ACID_WORD_ORDER_ENABLED": True},
-    ]
-    for change in changes:
-        with rule_data(**change):
-            v = names.rules_version()
-        assert v not in seen
-        seen.add(v)
-    assert names.rules_version() == base  # restored
+EMPTY_LISTS: dict[Lang, frozenset[str]] = {lg: frozenset[str]() for lg in LANGS}
+PHASE1_STATE: dict[str, object] = {
+    "EXTRA_SALT_WORDS": EMPTY_LISTS,
+    "EXTRA_NOT_ALONE": EMPTY_LISTS,
+    "CONNECTORS": EMPTY_LISTS,
+    "BIOLOGIC_SUFFIX_ENABLED": False,
+    "ES_FINAL_VOWEL_ENABLED": False,
+    "ACID_WORD_ORDER_ENABLED": False,
+}
+
+
+def test_p34_rules_version_follows_every_list_and_switch() -> None:
+    """The version changes with every list and every switch, and returns when they are restored.
+
+    (The committed lists are the accepted Phase 2 data; the Phase 1 state is set by hand.)
+    """
+    committed = names.rules_version()
+    with rule_data(**PHASE1_STATE):
+        base = names.rules_version()
+        assert base != committed  # the accepted lists are part of the version
+        seen = {base}
+        changes: list[dict[str, object]] = [
+            {"EXTRA_SALT_WORDS": {**EMPTY_LISTS, "fr": frozenset({"x1"})}},
+            {"EXTRA_NOT_ALONE": {**EMPTY_LISTS, "es": frozenset({"x2"})}},
+            {"CONNECTORS": {**EMPTY_LISTS, "fr": frozenset({"de"})}},
+            {"BIOLOGIC_SUFFIX_ENABLED": True},
+            {"ES_FINAL_VOWEL_ENABLED": True},
+            {"ACID_WORD_ORDER_ENABLED": True},
+        ]
+        for change in changes:
+            with rule_data(**change):
+                v = names.rules_version()
+            assert v not in seen
+            seen.add(v)
+        assert names.rules_version() == base
+    assert names.rules_version() == committed  # restored
+
+
+def test_p34_accepted_switches_are_the_owners_decision() -> None:
+    """Owner decision 2026-11-08: biologic_suffix and acid_word_order on, es_final_vowel off."""
+    assert name_lists.BIOLOGIC_SUFFIX_ENABLED is True
+    assert name_lists.ACID_WORD_ORDER_ENABLED is True
+    assert name_lists.ES_FINAL_VOWEL_ENABLED is False
+    assert name_lists.CONNECTORS["fr"] == frozenset({"de", "d"})
+    assert name_lists.CONNECTORS["es"] == frozenset({"de"})
+    assert "lauroxil" not in name_lists.EXTRA_SALT_WORDS["en"]  # prodrugs stay out
 
 
 @given(
@@ -280,8 +308,10 @@ def test_examples_of_the_reviewed_shapes(name: str, lang: Lang, expected: str) -
 
 def test_french_acid_word_order_and_spanish_final_vowel_are_switchable() -> None:
     ref = spelling_key(fold("ascorbic acid"))
-    assert spelling_key(fold("acide ascorbique"), "fr") != ref  # off by default
-    assert spelling_key(fold("duloxetina"), "es") != spelling_key(fold("duloxetine"))
+    off = {k: False for k in ALL_SWITCHES}
+    with rule_data(**off):
+        assert spelling_key(fold("acide ascorbique"), "fr") != ref
+        assert spelling_key(fold("duloxetina"), "es") != spelling_key(fold("duloxetine"))
     with rule_data(**ALL_SWITCHES):
         assert spelling_key(fold("acide ascorbique"), "fr") == ref
         assert spelling_key(fold("ascorbico acido"), "es") == ref
@@ -289,6 +319,9 @@ def test_french_acid_word_order_and_spanish_final_vowel_are_switchable() -> None
         assert spelling_key(fold("sildenafilo"), "es") == spelling_key(fold("sildenafil"))
         # English names are not touched by the Spanish rule
         assert spelling_key(fold("duloxetina"), "en") == fn.spelling_key(fold("duloxetina"))
+    # the committed state: acid order on, Spanish vowel rule off
+    assert spelling_key(fold("acide ascorbique"), "fr") == ref
+    assert spelling_key(fold("duloxetina"), "es") != spelling_key(fold("duloxetine"))
 
 
 def test_connector_sets_are_what_the_test_lists_say() -> None:

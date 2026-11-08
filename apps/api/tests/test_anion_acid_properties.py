@@ -93,9 +93,14 @@ def test_p37_acid_must_resolve_to_exactly_one_key() -> None:
             table.check_acids(lambda label, keys=keys: keys)
 
 
-def test_p37_committed_table_is_empty_and_valid() -> None:
-    """Nothing is enabled before the review (Req 12.11)."""
-    assert AnionAcidTable.load().rows == ()
+def test_p37_committed_table_is_the_reviewed_one() -> None:
+    """The seven accepted rows (name-rules review, Appendix B), valid and each with a note."""
+    table = AnionAcidTable.load()
+    assert len(table.rows) == 7
+    assert table.lookup("fr", "mycophenolate") == ("mycophenolic acid",)
+    assert table.lookup("es", "micofenolato") == ("mycophenolic acid",)
+    assert table.lookup("en", "micofenolato") == ()
+    assert all(r.note and "salicylate" not in r.anion for r in table.rows)
 
 
 def test_p37_salicylate_salts_do_not_become_salicylic_acid() -> None:
@@ -135,8 +140,8 @@ def test_p38_base_suffix_maps_to_the_base(base: str, suffix: str) -> None:
 @given(base=WORD, suffix=SUFFIX, other=st.sampled_from(["tr", "fr", "es"]))
 def test_p38_near_misses_and_switch_change_nothing(base: str, suffix: str, other: Lang) -> None:
     index = _bio_index(("Q1", base))
-    plain = map_name(f"{base}-{suffix}", index, lang="en")
-    assert plain.status == "none"  # the switch is off by default (Req 12.11)
+    with rule_data(BIOLOGIC_SUFFIX_ENABLED=False):
+        assert map_name(f"{base}-{suffix}", index, lang="en").status == "none"  # switch off
     with rule_data(BIOLOGIC_SUFFIX_ENABLED=True):
         near = [
             f"{base}-{suffix[:3]}",  # three letters

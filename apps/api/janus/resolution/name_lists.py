@@ -72,16 +72,75 @@ BASE_NOT_ALONE: frozenset[str] = frozenset(
 
 _NONE: frozenset[str] = frozenset()
 
-# Phase 2 additions per language (Req 12.2). Empty until task 21.
-EXTRA_SALT_WORDS: dict[Lang, frozenset[str]] = {"tr": _NONE, "en": _NONE, "fr": _NONE, "es": _NONE}
-EXTRA_NOT_ALONE: dict[Lang, frozenset[str]] = {"tr": _NONE, "en": _NONE, "fr": _NONE, "es": _NONE}
+# Phase 2 additions per language (Req 12.2), accepted by the owner on 2026-11-08 from the review
+# sheet `.kiro/specs/drug-resolution/name-rules-review.md` (Appendix A).
+EXTRA_SALT_WORDS: dict[Lang, frozenset[str]] = {
+    "tr": _NONE,
+    "en": frozenset(
+        """
+        camsylate cypionate diacetate diolamine ditosylate enanthate esylate ethanolate
+        hippurate mandelate metazoate methylsulfate pivalate terephthalate tetrahydrochloride
+        """.split()
+    ),
+    "fr": frozenset(
+        """
+        anhydre bromure calcique chlorhydrate chlorure dichlorhydrate dipotassique disodique
+        hemifumarate hydrogenosuccinate monocalcique monopotassique monosodique potassique
+        sodique tricalcique trisodique
+        """.split()
+    ),
+    "es": frozenset(
+        """
+        acetato anhidra axetilo benzoato besilato bitartrato bromuro calcica calcico calcio
+        cilexetilo citrato cloruro digluconato dihidrato dihidrocloruro dipropionato disodio
+        erbumina esilato fosfato fumarato gluconato hemifumarato hemihidrato hemipentahidrato
+        hiclato hidrobromuro hidrocloruro hidrogenosuccinato hidrogenosulfato lactato magnesico
+        magnesio malato maleato medoxomilo mesilato mofetilo monohidrato monosodio nitrato
+        olamina oxalato pentahidrato potasico potasio propionato resinato sesquihidrato sodica
+        sodico sodio succinato sulfato tartrato tosilato trihidrato trisodio xinafoato
+        """.split()
+    ),
+}
+EXTRA_NOT_ALONE: dict[Lang, frozenset[str]] = {
+    "tr": _NONE,
+    "en": frozenset(
+        """
+        alginate ion pidolate
+        """.split()
+    ),
+    "fr": frozenset(
+        """
+        argent cuivre fer fluorure hydroxyde iodure ion oxyde
+        """.split()
+    ),
+    "es": frozenset(
+        """
+        alginato aluminio bicarbonato carbonato cinc cobre edetato fluoruro glicerofosfato
+        hidroxido hierro ioduro ion oxido plata
+        """.split()
+    ),
+}
 # Connector words, removed only at the start or end of a name once salt words are gone (Req 12.3).
-CONNECTORS: dict[Lang, frozenset[str]] = {"tr": _NONE, "en": _NONE, "fr": _NONE, "es": _NONE}
+CONNECTORS: dict[Lang, frozenset[str]] = {
+    "tr": _NONE,
+    "en": _NONE,
+    "fr": frozenset(
+        """
+        d de
+        """.split()
+    ),
+    "es": frozenset(
+        """
+        de
+        """.split()
+    ),
+}
 
-# Switches of the Phase 2 rewrite rules (Req 12.5, 12.8). Off until the review.
-BIOLOGIC_SUFFIX_ENABLED = False
+# Switches of the Phase 2 rewrite rules (Req 12.5, 12.8). Owner decision 2026-11-08: biologic_suffix
+# and acid_word_order on; es_final_vowel stays off (the variant is a possible later change).
+BIOLOGIC_SUFFIX_ENABLED = True
 ES_FINAL_VOWEL_ENABLED = False
-ACID_WORD_ORDER_ENABLED = False
+ACID_WORD_ORDER_ENABLED = True
 
 # The unsplit check ignores spans made only of salt or connector words in these languages (new
 # sources, nothing to preserve; Req 12.12). Turkish and English keep the Phase 1 behaviour.

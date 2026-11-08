@@ -592,6 +592,11 @@ P1–P7 are the seven original properties; P8–P22 were added in the refinement
   form-unconfirmed, and words the codes in five languages; `doctor-loop` decides whether
   form-unconfirmed findings belong in the note's main section and shows `item_warnings` next to
   each medicine; `collective-memory` adds `dataset:faers` and `faers_locator` (DP22).
+- **Follow-up from drug-resolution (owner decision 9, 2026-11-08): doxepin.** The Spanish label
+  `Doxepina` sits on two Wikidata items (the (E/Z) item with topical `D04AX01` and the cidoxepin
+  item with `N06AA12`), so FAERS `DOXEPIN` is now ambiguous at name level. Planned, not done: a
+  curated Janus key for doxepin whose codes make it a member of the tricyclic group `N06AA`
+  (row 33-35 index). No change now.
 - Coverage numbers and synonym proposals are recorded here after task 12.
 - **[Later phase: OnSIDES]** Requirement 3 (exploratory mode).
 

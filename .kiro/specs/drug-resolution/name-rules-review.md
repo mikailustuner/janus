@@ -7,8 +7,8 @@
 > `data/ingredient_synonyms.csv` are unchanged; the appendices are the exact text to paste after the
 > owner's decision.
 >
-> **Review status.** Reviewed by the AI pharmacologist agent on 2026-11-08; accepted by the owner:
-> **pending**. It **still needs a review by a pharmacist or physician before any public claim** is
+> **Review status.** Reviewed by the AI pharmacologist agent on 2026-11-08; **accepted by the owner on
+> 2026-11-08** (Section 10). It **still needs a review by a pharmacist or physician before any public claim** is
 > made about these rules.
 >
 > Accepted set measured with the what-if tool (`coverage_snapshot snapshot --label accepted`,
@@ -481,37 +481,39 @@ cases and why each is acceptable:
 - **Two Wikidata label problems found** (a correction upstream is outside this project): the Spanish
   label of the dydrogesterone item, and doxepin split over two items.
 
-## 10. Owner decisions
+## 10. Owner decisions (answered 2026-11-08)
 
-1. **`es_final_vowel`.** Recommend **leave off** now. Optional: approve the code variant (drop the
-   vowel once, last token only, 5 or more letters; Nomenclátor 86.07 % → 89.06 %), with the two
-   conditional synonym rows (`DOXEPIN`, `CHONDROITIN SULFATE A`) and `pidolato`, `gluceptato` in the
-   Spanish `NOT_ALONE` (Section 4.2). Accept that `GUARANA` (2 occurrences) would map to guar gum.
-2. **Phase 1 correction, `aceponate` in `BASE_SALT_WORDS`.** WHOCC D07AC gives methylprednisolone
-   aceponate (D07AC14) and hydrocortisone aceponate (D07AC16) codes of their own, yet the base list
-   strips the word, so the hydrocortisone aceponate item (D07AC16, topical) is indexed as
-   "hydrocortisone" and 5,230 FAERS occurrences plus 181 openFDA ingredient lines of hydrocortisone
-   acetate, sodium succinate, valerate, phosphate and hemisuccinate sit on it instead of on
-   hydrocortisone (H02AB09 systemic). Removing `aceponate` and the Turkish `aseponat` moves them to
-   hydrocortisone and changes 3 TİTCK names to another key. Recommend a separate decision and a
-   small change; I did not include it.
-3. **`anhydre` as a hydrate word.** A one-regex change (`_HYDRATE_WORD` also matching `anhydr[a-z]*`)
-   maps 58 more BDPM occurrences (81.95 % → 82.16 %): calcium chloride, magnesium sulfate, sodium
-   sulfate, sodium acetate, zinc sulfate in `… ANHYDRE` form. Recommend.
-4. **Pancrelipase.** Leave unmapped (no pancrelipase item), or map the three parts to pancreatin
-   (Q426846; A09AA02 "multienzymes") if you accept the two as one ingredient. Recommend leave.
-5. **Fenofibric acid and the electrolyte spellings** (Appendix D): confirm the rows, and that the
-   Turkish row stays in the data-directory file.
-6. **English `NOT_ALONE` entries `alginate` and `pidolate`** turn 401 FAERS occurrences from a wrong
-   key to unmapped (Section 9). Recommend accept; they are Phase 1 false mappings.
-7. **Connectors** trimmed to fr `{de, d}`, es `{de}` (Section 3). Recommend accept.
-8. **TİTCK fully mapped products** 20,427 → 20,419 (3 names become ambiguous instead of pointing at
-   the wrong salt). Recommend accept.
-9. **Doxepin.** Phase 1 maps FAERS `DOXEPIN` to the (E/Z) item whose only code is topical (D04AX01);
-   the antidepressant code N06AA12 is on the cidoxepin item. This is a cascade-engine question
-   (membership of the tricyclic class), not a name rule; I recommend a curated Janus key later.
-10. **Public claims.** Pharmacist or physician review is still needed before anything is said
-    publicly about these rules.
+The owner reviewed the sheet and accepted it: the anion-acid table (Appendix B), the French route
+rows (Appendix C), the word lists and connectors (Appendix A), the synonym rows (Appendix D), and the
+switches `biologic_suffix` and `acid_word_order` **on**. The ten points:
+
+1. **`es_final_vowel`: leave off.** The targets are met without it, and the variant still maps
+   `GUARANA` to guar gum (a wrong substance). **Recorded as a possible later change:** the variant (drop
+   the vowel once, last token only, 5 or more letters) measured Nomenclátor 86.07 % → 89.06 %, TİTCK 79.25
+   % of occurrences (+35, 2 ambiguous), FAERS 86.59 %, and needs two synonym rows (`DOXEPIN`,
+   `CHONDROITIN SULFATE A`) and `pidolato` and `gluceptato` in the Spanish `NOT_ALONE`; the switch
+   `ES_FINAL_VOWEL_ENABLED` stays `False` in `name_lists.py`.
+2. **`aceponate`: approved**, as a separate small change with its own commit (done, Section 10a:
+   `aceponate` and `aseponat` left the base salt words; test that hydrocortisone acetate, sodium
+   succinate and valerate map to hydrocortisone, H02AB09, not the aceponate item). The names that
+   changed key are listed in Section 10a (4 TİTCK names, not 3: the fourth is a methylprednisolone
+   aceponate spelling that now reaches its own item).
+3. **`anhydre` as a hydrate word: accepted.** `_HYDRATE_WORD` also matches `anhydr[a-z]*` (it applies only
+   to words that are in the salt list of the language, so Turkish and English are unchanged); expected
+   gain about 58 BDPM occurrences.
+4. **Pancrelipase: leave unmapped.** No synonym row; the three FAERS part names stay in the unmapped list.
+5. **Appendix D rows confirmed**, including fenofibric acid and the electrolyte spellings. The Turkish row
+   (`Fenofibrik asit`) stays in the data-directory file `$JANUS_DATA_DIR/resolution/local_synonyms.csv`
+   and is never committed. The loader reads that optional file (`read_local_synonyms`) and its rows are
+   part of the dataset version, so the row has effect on the machine that holds the file.
+6. **English `NOT_ALONE` `alginate` and `pidolate`: accepted** (they turn 401 FAERS occurrences from a
+   wrong key into unmapped).
+7. **Connectors accepted:** French `{de, d}`, Spanish `{de}`.
+8. **TİTCK fully mapped products 20,427 → 20,419: accepted** (three names become ambiguous instead of
+   pointing at the wrong salt).
+9. **Doxepin:** follow-up recorded in `cascade-engine` (design §11): a curated Janus key whose codes make
+   the tricyclic class membership right. No change now.
+10. **Pharmacist or physician review stays on `docs/pre-launch-checklist.md`** before any public claim.
 
 ## 10a. The `aceponate` correction, applied 2026-11-08 (owner decision 2, own commit)
 

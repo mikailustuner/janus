@@ -27,7 +27,7 @@ from janus.resolution.atc import (
     select_codes,
 )
 from janus.resolution.canonical import canonical_line
-from janus.resolution.matching import IndexItem, Match, NameIndex, map_name
+from janus.resolution.matching import IndexItem, Match, NameIndex, label_keys, map_name
 from janus.resolution.name_lists import Lang
 from janus.resolution.names import fold
 from janus.resolution.ndc import canonical_package, canonical_product
@@ -284,7 +284,9 @@ def build_name_index(
     """The name index of `prepare_dataset` without the TİTCK bridge (steps 0-5): what any
     caller that maps non-Turkish names (e.g. the FAERS count builder) needs."""
     items, _codes, _base = eligible_items(wikidata_rows, rules, curated_rows)
-    return NameIndex.build((index_item(r) for r in items.values()), synonyms, acid=acid)
+    index = NameIndex.build((index_item(r) for r in items.values()), synonyms, acid=acid)
+    index.acid.check_acids(lambda label: label_keys(index, label))
+    return index
 
 
 def prepare_dataset(
@@ -320,6 +322,7 @@ def prepare_dataset(
                 bridge[raw.names[0][0]].update(code2q[p])
 
     index = NameIndex.build((index_item(r) for r in items.values()), synonyms, bridge, acid)
+    index.acid.check_acids(lambda label: label_keys(index, label))  # Req 12.7: refuse a bad row
     cache: dict[tuple[str, Lang], Match] = {}
     for raw in raws:
         for name, _ in raw.names:

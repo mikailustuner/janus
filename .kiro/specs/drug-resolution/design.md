@@ -1076,6 +1076,19 @@ by the API (DP19, DP42). The two entries below are kept as the record of the opt
 changed to the Nomenclátor (DP27); French and Spanish rule data enabled only after the review
 stop (Req 12.11); EU sources optional (DP35).
 
+**Possible later change (owner decision 1, 2026-11-08): Spanish final-vowel key.** The variant
+(`ES_FINAL_VOWEL_ENABLED`) stays off. The targets of Section 9 are met without it, and it also maps
+`GUARANA` to guar gum. Its measurements are in `name-rules-review.md` Sections 4.2 and 10 (what it
+changes for the worse: `DOXEPIN` mapped→ambiguous in FAERS, `FOLITROPINA ALFA` unmapped, `GUARANA` to guar gum). It can be reopened
+with a guard against such cases; until then the switch is off and `rules_version()` records that.
+
+**Measured with the accepted rule data (task 21, 2026-11-08).** Occurrences mapped / products fully
+mapped: TİTCK 84.6 % / 88.42 % (20,419 products fully mapped, down from 20,427 before the rules: owner
+decision 8), openFDA Rx 92.41 % / 94.13 %, BDPM (no homeopathic) 82.17 % /
+87.19 %, Nomenclátor 86.07 % / 85.53 %, FAERS 86.61 %. Against Section 9: equal for TİTCK,
+Nomenclátor and FAERS; BDPM +59 occurrences and +4 products and openFDA Rx +1 occurrence, all from
+the `anhydre`/`anhydr*`/`susuz` hydrate words (owner decision 3).
+
 **For information, no decision needed now.**
 - Parts of combination strings with no ingredient-level code (`CARBIDOPA` 16,311, `VILANTEROL`
   13,859 occurrences, …) cannot reach Collective Memory through any ATC-based key. Counting them

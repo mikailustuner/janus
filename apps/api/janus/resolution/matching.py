@@ -166,6 +166,12 @@ def _hit(step: Step, keys: frozenset[str] | None) -> Match | None:
 _SUFFIX = re.compile(r"^(.+)-([A-Za-z]{4})$")
 
 
+def label_keys(index: NameIndex, label: str) -> frozenset[str]:
+    """The keys the label steps find for a folded label (labels win over aliases)."""
+    tier = index.any_label.get(label)
+    return (tier[0] or tier[1]) if tier else frozenset()
+
+
 def _anion_acid(stripped: str, index: NameIndex, lang: Lang) -> Match | None:
     """Step `anion_acid`: the salt-stripped name is a reviewed anion; look its acid up by label."""
     keys: set[str] = set()

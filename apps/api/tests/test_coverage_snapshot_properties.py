@@ -107,9 +107,9 @@ def test_rule_file_is_a_what_if_and_changes_nothing_committed(tmp_path: Path) ->
     rules.write_text(
         json.dumps(
             {
-                "extra_salt_words": {"fr": ["chlorhydrate"]},
+                "extra_salt_words": {"fr": ["zzword"]},
                 "connectors": {"fr": ["de"]},
-                "switches": ["biologic_suffix"],
+                "switches": ["es_final_vowel"],
                 "anion_acid": [["any", "Mycophenolate", "mycophenolic acid", "candidate"]],
                 "synonyms": [["foo", "Q1"]],
             }
@@ -124,13 +124,13 @@ def test_rule_file_is_a_what_if_and_changes_nothing_committed(tmp_path: Path) ->
         "code",  # pyright: ignore[reportArgumentType]
     )
     changes, new = load_rule_file(rules, inputs)
-    assert changes["EXTRA_SALT_WORDS"]["fr"] == frozenset({"chlorhydrate"})
-    assert changes["EXTRA_SALT_WORDS"]["en"] == frozenset()
-    assert changes["CONNECTORS"]["fr"] == frozenset({"de"})
-    assert changes["BIOLOGIC_SUFFIX_ENABLED"] is True
+    assert changes["EXTRA_SALT_WORDS"]["fr"] == name_lists.EXTRA_SALT_WORDS["fr"] | {"zzword"}
+    assert changes["EXTRA_SALT_WORDS"]["en"] == name_lists.EXTRA_SALT_WORDS["en"]
+    assert changes["CONNECTORS"]["fr"] == name_lists.CONNECTORS["fr"] | {"de"}
+    assert changes["ES_FINAL_VOWEL_ENABLED"] is True
     assert [(r.lang, r.anion, r.acid) for r in new.acid.rows] == [
         ("any", "mycophenolate", "mycophenolic acid")
     ]
     assert new.synonyms == (("a", "Q9"), ("foo", "Q1"))
-    assert name_lists.EXTRA_SALT_WORDS["fr"] == frozenset()  # nothing was changed globally
-    assert name_lists.BIOLOGIC_SUFFIX_ENABLED is False
+    assert "zzword" not in name_lists.EXTRA_SALT_WORDS["fr"]  # nothing was changed globally
+    assert name_lists.ES_FINAL_VOWEL_ENABLED is False

@@ -20,3 +20,27 @@ INTRACAUDAL,C01CA;N01B,Caudal block: local anaesthetics and added epinephrine
 INTRA-ARTICULAR,H02AB;N01B,Joint injection: corticosteroids and local anaesthetics
 RECTAL,A;B;C01;C02;C03;C04;C05A;C05C;C07;C08;C09;C10;G03;H;J;L;M01;M03;M04;M05;M09;N;P01;P02;R01B;R03C;R03D;R05;R06;V03;V08,Suppositories and enemas act locally in the bowel (A06 A07 C05A) or systemically (analgesics; anti-emetics; anticonvulsants; corticosteroids); rectal contrast media (V08)
 VAGINAL,G01;G02;G03,Vaginal products: gynaecological anti-infectives; other gynaecologicals (rings; prostaglandins); vaginal hormones
+orale,A;B;C01;C02;C03;C04;C05C;C07;C08;C09;C10;D01B;D05B;D10B;G02CB;G03;G04;H;J;L;M01;M03;M04;M05;M09;N;P01;P02;R01B;R02;R03C;R03D;R05;R06;R07;S01EC;V03;V06;V08,"French ""orale"" = ORAL: same groups"
+intraveineuse,A02;A03;A04;A10;A11;A12;A16;B;C01;C02;C03;C04;C05BB;C07;C08;C09;C10;G02A;G03;G04BE;H;J;L;M01;M03;M04;M05;M09;N;P01;R03C;R03D;R06;R07;S01EC;S01JA;S01LA;V03;V04;V06;V07;V08;V09;V10,"French ""intraveineuse"" = INTRAVENOUS: same groups"
+sous-cutanée,A02;A03;A04;A06AH;A10;A11;A12;A16;B;C01;C02;C03;C04;C07;C08;C09;C10;D02BB;D11AH;D11AX;G02A;G03;H;J;L;M01;M03;M04;M05;M09;N;P01;R03C;R03D;R06;R07;V03;V04;V06;V07;V08;V09;V10,"French ""sous-cutanée"" = SUBCUTANEOUS: same groups"
+intramusculaire,A02;A03;A04;A10;A11;A12;A16;B;C01;C02;C03;C04;C07;C08;C09;C10;G02A;G03;H;J;L;M01;M03;M04;M05;M09;N;P01;R03C;R03D;R06;R07;V03;V04;V06;V07;V08;V09;V10,"French ""intramusculaire"" = INTRAMUSCULAR: same groups"
+cutanée,C05A;C05B;D;G03;M02;N07BA;P03,"French ""cutanée"" = CUTANEOUS: same groups"
+inhalée,A10AF;B01AC;J01;J05;N01A;N04B;N05A;P01CX;R03A;R03B;R05;R07;V03AB;V03AN;V09E,"French ""inhalée"" = RESPIRATORY (INHALATION): same groups"
+ophtalmique,S01;S03,"French ""ophtalmique"" = OPHTHALMIC: same groups"
+sublinguale,A;B;C01;C02;C03;C04;C05C;C07;C08;C09;C10;D01B;D05B;D10B;G02CB;G03;G04;H;J;L;M01;M03;M04;M05;M09;N;P01;P02;R01B;R02;R03C;R03D;R05;R06;R07;S01EC;V01;V03;V06,"French ""sublinguale"" = SUBLINGUAL: same groups"
+intraartérielle,A02;A03;A04;A10;A11;A12;A16;B;C01;C02;C03;C04;C05BB;C07;C08;C09;C10;G02A;G03;G04BE;H;J;L;M01;M03;M04;M05;M09;N;P01;R03C;R03D;R06;R07;S01EC;S01JA;S01LA;V03;V04;V06;V07;V08;V09;V10,"Given into an artery: contrast media, radiopharmaceuticals, cytostatics and anticoagulants are the same systemic groups as INTRAVENOUS (no separate English row)"
+voie buccale autre,A;B;C01;C02;C03;C04;C05C;C07;C08;C09;C10;D01B;D05B;D10B;G02CB;G03;G04;H;J;L;M01;M03;M04;M05;M09;N;P01;P02;R01B;R02;R03C;R03D;R05;R06;R07;S01EC;V03;V06,"French ""voie buccale autre"" (other buccal route: lozenges, mouth rinses, oromucosal products) = BUCCAL: same groups"
+rectale,A;B;C01;C02;C03;C04;C05A;C05C;C07;C08;C09;C10;G03;H;J;L;M01;M03;M04;M05;M09;N;P01;P02;R01B;R03C;R03D;R05;R06;V03;V08,"French ""rectale"" = RECTAL: same groups"
+transdermique,A04;C01;C02;D;G03;G04;M02;N,"French ""transdermique"" = TRANSDERMAL: same groups"
+intrathécale,J01;L01;M03;M09;N01B;N02;V08,Injected into the spinal canal: local anesthetics (N01B); opioids and ziconotide (N02: N02A N02BG08); baclofen (M03BX01); nusinersen (M09AX07); intrathecal antibiotics and cytostatics (J01 L01); myelography contrast (V08)
+péridurale,C01CA;C02AC;N01B;N02A,"French ""péridurale"" = EPIDURAL: same groups"
+vaginale,G01;G02;G03,"French ""vaginale"" = VAGINAL: same groups"
+nasale,A03FA;B03BA;C01CA;G03;H01;H04;H05;M01AB;N;R01A;V03AB,"French ""nasale"" = NASAL: same groups"
+intraarticulaire,H02AB;N01B,"French ""intraarticulaire"" = INTRA-ARTICULAR: same groups"
+périneurale,C01CA;N01B,"French ""périneurale"" = PERINEURAL: same groups"
+infiltration,C01CA;M01A;N01B,"French ""infiltration"" = INFILTRATION: same groups"
+intra-utérine,G02B,Intrauterine systems: the G02B group lists them by device (G02BA03 plastic IUD with progestogen); nothing else is given into the uterus in this list
+dentaire,A01;N01B;R02AA,"French ""dentaire"" = DENTAL: same groups"
+gingivale,A01;N01B;R02AA,Applied to the gums: same groups as DENTAL
+intravitréenne,S01,"Injected or implanted in the vitreous: ophthalmological group S01 only (S01LA anti-vascular agents, S01BA corticosteroid implants, S01XA); systemic codes of the same drugs (for example aflibercept L01XX44) are dropped"
+périarticulaire,H02AB;N01B,Injected around a joint: same groups as INTRA-ARTICULAR (corticosteroids and local anesthetics)

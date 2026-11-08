@@ -104,12 +104,12 @@ def test_a_clean_salt_word_only_adds_mappings_and_reports_the_atc_agreement() ->
     src = SourceNames(
         "synthetic",
         "fr",
-        {"chlorhydrate de tramadol": 10, "tramadol": 5},
-        single_products=[("chlorhydrate de tramadol", "N02AX02"), ("tramadol", "N02AX02")],
+        {"xsalt de tramadol": 10, "tramadol": 5},
+        single_products=[("xsalt de tramadol", "N02AX02"), ("tramadol", "N02AX02")],
     )
     wikidata = [{"label_en": "tramadol"}]
     impact = evaluate_word(
-        "chlorhydrate",
+        "xsalt",
         src,
         build_index=lambda: NameIndex.build(items),
         label_tokens=label_tokens_of(wikidata),
@@ -145,7 +145,11 @@ def test_agreement_counts_only_valid_codes() -> None:
 def test_switch_evaluation_restores_the_switch() -> None:
     items = _items(["infliximab"])
     src = SourceNames("synthetic", "en", {"INFLIXIMAB-DYYB": 100, "infliximab": 5})
-    result = evaluate_switch(src, lambda: NameIndex.build(items), {"BIOLOGIC_SUFFIX_ENABLED": True})
+    with name_lists.override(BIOLOGIC_SUFFIX_ENABLED=False):
+        result = evaluate_switch(
+            src, lambda: NameIndex.build(items), {"BIOLOGIC_SUFFIX_ENABLED": True}
+        )
+        assert name_lists.BIOLOGIC_SUFFIX_ENABLED is False
     assert result["names"] == {"unmapped_to_mapped": 1}
     assert result["occurrences"] == {"unmapped_to_mapped": 100}
-    assert name_lists.BIOLOGIC_SUFFIX_ENABLED is False
+    assert name_lists.BIOLOGIC_SUFFIX_ENABLED is True  # the committed state is back

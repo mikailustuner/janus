@@ -126,6 +126,16 @@ def read_synonyms(path: Path = SYNONYMS_FILE) -> tuple[tuple[str, str], ...]:
         return tuple((r["name"], r["qid"]) for r in reader)
 
 
+LOCAL_SYNONYMS = "local_synonyms.csv"
+
+
+def read_local_synonyms(data_dir: Path) -> tuple[tuple[str, str], ...]:
+    """Synonym rows that stay in the data directory and are never committed (owner decision
+    2026-11-08: the Turkish spelling of fenofibric acid). Optional; part of the dataset version."""
+    path = data_dir / "resolution" / LOCAL_SYNONYMS
+    return read_synonyms(path) if path.is_file() else ()
+
+
 @dataclass(frozen=True)
 class Curated:
     """Janus ingredient keys from `data/janus_ingredients.csv` (owner decision 2026-11-07)."""
@@ -232,7 +242,7 @@ def gather(
         artifacts,
         rules or CombinationRules.load(),
         route_map or RouteMap.load(),
-        read_synonyms() if synonyms is None else synonyms,
+        (*read_synonyms(), *read_local_synonyms(data_dir)) if synonyms is None else synonyms,
         code_version(),
         cadences,
         read_curated(),
@@ -241,6 +251,13 @@ def gather(
 
 
 def prepare_inputs(inputs: Inputs) -> PreparedDataset:
+    try:
+        return _prepare(inputs)
+    except atc.RulesFileError as exc:
+        raise LoadError(f"data/anion_acid_forms.csv: {exc}") from exc
+
+
+def _prepare(inputs: Inputs) -> PreparedDataset:
     return prepare_dataset(
         inputs.artifacts[TITCK].rows,
         inputs.artifacts[OPENFDA].rows,

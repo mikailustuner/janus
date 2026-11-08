@@ -107,3 +107,29 @@ ibuprofen lizin,Q186969,ibuprofen. Ibuprofen lysine. Evidence: TİTCK products w
 %50 insulin lispro protamin,Q3492616,Insulin Lispro. As above. Evidence: TİTCK products with this name publish A10AD04. Proposed from the PIPC coverage report (medium confidence); approved by the owner and added 2026-11-07
 % 50 insulin lispro protamin,Q3492616,Insulin Lispro. As above. Evidence: TİTCK products with this name publish A10AD04. Proposed from the PIPC coverage report (medium confidence); approved by the owner and added 2026-11-07
 %75insulin lispro protamin,Q3492616,Insulin Lispro. As above. Evidence: TİTCK products with this name publish A10AD04. Proposed from the PIPC coverage report (medium confidence); approved by the owner and added 2026-11-07
+CABOZANTINIB S-MALATE,Q795057,"S-malate salt; the stereo marker S blocks the salt rule. WHOCC https://atcddd.fhi.no/atc_ddd_index/?code=L01EX&showdescription=no checked 2026-11-08: L01EX07 cabozantinib (the item still carries the older code L01XE26), no salt code. FAERS 7,888, openFDA 13"
+RIBOFLAVIN 5^-PHOSPHATE SODIUM,Q130365,"Phosphate ester sodium salt of riboflavin. WHOCC https://atcddd.fhi.no/atc_ddd_index/?code=A11HA&showdescription=no checked 2026-11-08: A11HA04 riboflavin (vit B2), no code for the phosphate. FAERS 3,381, openFDA 14 (the apostrophe spelling folds to the same string)"
+ASPIRIN DL-LYSINE,Q18216,"Lysine acetylsalicylate. WHOCC https://atcddd.fhi.no/atc_ddd_index/?code=N02BA&showdescription=no checked 2026-11-08: N02BA01 acetylsalicylic acid, parenteral DDD note names lysine acetylsalicylate. FAERS 2,027"
+ASPIRIN LYSINE,Q18216,Same substance and evidence as the previous row. FAERS 324
+ROPIVACAINE,Q279504,"Ropivacaine is the S-enantiomer by definition; the item label starts with (S)-, which blocks the label step. WHOCC https://atcddd.fhi.no/atc_ddd_index/?code=N01BB&showdescription=no checked 2026-11-08: N01BB09 ropivacaine. FAERS 355, openFDA 1, BDPM 2"
+ROPIVACAINE HYDROCHLORIDE,Q279504,"Same as ROPIVACAINE. FAERS 530, openFDA 95"
+SEVELAMER CARBONATE,Q904153,"Carbonate is a protected word, so the rule cannot strip it. WHOCC https://atcddd.fhi.no/atc_ddd_index/?code=V03AE&showdescription=no checked 2026-11-08: V03AE02 sevelamer (lanthanum carbonate is a different code). FAERS 364, openFDA 62"
+SEVELAMERO CARBONATO,Q904153,Spanish spelling of the previous row. Nomenclátor 17
+FENOFIBRIC ACID,Q27259379,"WHOCC https://atcddd.fhi.no/atc_ddd_index/?code=C10AB&showdescription=no checked 2026-11-08: C10AB11 choline fenofibrate, note refers to fenofibric acid. Needed because acid_word_order lets a Spanish alias of the fenofibrate item (Q419724) catch this name. FAERS 67, openFDA 12. The Turkish spelling is in the data-directory file"
+SODIO CLORURO,Q2314,"Inverted word order; every word is a salt word, so the rule leaves the name whole. WHOCC https://atcddd.fhi.no/atc_ddd_index/?code=B05XA&showdescription=no checked 2026-11-08: B05XA03 sodium chloride (also A12CA01, B05CB01). Nomenclátor 346"
+SODIO BICARBONATO,Q179731,WHOCC https://atcddd.fhi.no/atc_ddd_index/?code=B05XA&showdescription=no checked 2026-11-08: B05XA02 sodium bicarbonate. Nomenclátor 76
+CALCIO CLORURO DIHIDRATO,Q208451,WHOCC https://atcddd.fhi.no/atc_ddd_index/?code=B05XA&showdescription=no checked 2026-11-08: B05XA07 calcium chloride. Nomenclátor 32
+CALCIO CLORURO,Q208451,Same item as the previous row. Nomenclátor 9
+POVIDONA IODADA,Q241516,Povidone-iodine; the Spanish label of the item is yodopovidona. WHOCC https://atcddd.fhi.no/atc_ddd_index/?code=D08AG&showdescription=no checked 2026-11-08: D08AG02 povidone-iodine. Nomenclátor 42
+FLUOCINOLONA ACETONIDO,Q924467,Differs from the label only by the Spanish final vowel (switch off). WHOCC https://atcddd.fhi.no/atc_ddd_index/?code=D07AC&showdescription=no checked 2026-11-08: D07AC04 fluocinolone acetonide. Nomenclátor 28
+NITRICO OXIDO,Q207843,Word order and final vowel. WHOCC https://atcddd.fhi.no/atc_ddd_index/?code=R07AX&showdescription=no checked 2026-11-08: R07AX01 nitric oxide. Nomenclátor 27
+ISOSORBIDA MONONITRATO,Q423401,Final vowel; mononitrate has its own code. WHOCC https://atcddd.fhi.no/atc_ddd_index/?code=C01DA&showdescription=no checked 2026-11-08: C01DA14 isosorbide mononitrate (dinitrate is C01DA08). Nomenclátor 24
+BENZOILO PEROXIDO,Q411424,Spanish spelling. WHOCC https://atcddd.fhi.no/atc_ddd_index/?code=D10AE&showdescription=no checked 2026-11-08: D10AE01 benzoyl peroxide. Nomenclátor 24
+CHLORHYDRATE DE ROPIVACAÏNE,Q279504,French spelling of ropivacaine hydrochloride; evidence as ROPIVACAINE. BDPM 24
+CHLORHYDRATE DE ROPIVACAÏNE ANHYDRE,Q279504,As the previous row. BDPM 9
+ROPIVACAÏNE BASE,Q279504,As ROPIVACAINE. BDPM 6
+SODIUM (CHLORURE DE),Q2314,Inverted BDPM order of sodium chloride (evidence as SODIO CLORURO). BDPM 38
+POTASSIUM (CHLORURE DE),Q184630,WHOCC https://atcddd.fhi.no/atc_ddd_index/?code=B05XA&showdescription=no checked 2026-11-08: B05XA01 potassium chloride. BDPM 29
+CALCIUM (CHLORURE DE) DIHYDRATÉ,Q208451,Evidence as CALCIO CLORURO DIHIDRATO. BDPM 16
+MAGNÉSIUM (CHLORURE DE) HEXAHYDRATÉ,Q265414,WHOCC https://atcddd.fhi.no/atc_ddd_index/?code=B05XA&showdescription=no checked 2026-11-08: B05XA11 magnesium chloride. BDPM 7
+SODIUM (BICARBONATE DE),Q179731,"Keeps the Phase 1 mapping of these 5 occurrences, which the connector rule would otherwise drop (Phase 1 reached the key by a spelling coincidence). Evidence as SODIO BICARBONATO. BDPM 5"

@@ -47,7 +47,7 @@ def fold(text: str) -> str:
 
 
 _HYDRATE = re.compile(r"^[0-9]*h2o$")
-_HYDRATE_WORD = re.compile(r"^(?:[a-z]*hidrat|[a-z]*hydrate|anhidr[a-z]*|anhydrous|susuz)$")
+_HYDRATE_WORD = re.compile(r"^(?:[a-z]*hidrat|[a-z]*hydrate|anhidr[a-z]*|anhydr[a-z]*|susuz)$")
 
 
 def is_salt_word(token: str, lang: Lang = "en") -> bool:
@@ -195,6 +195,7 @@ def rules_version() -> str:
                 "salt_words": sorted(name_lists.BASE_SALT_WORDS),
                 "not_alone": sorted(name_lists.BASE_NOT_ALONE),
                 "hydrate": _HYDRATE.pattern,
+                "hydrate_word": _HYDRATE_WORD.pattern,
                 "tokens": TOKEN_RULES,
                 "spelling": SPELLING_RULES,
                 **_phase2_parts(),

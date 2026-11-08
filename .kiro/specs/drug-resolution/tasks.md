@@ -245,13 +245,13 @@
     data is enabled (checked: `name_lists.py`, `anion_acid_forms.csv`, the route map and the synonym
     file are unchanged). Task 21 starts only after the owner's answers.
 
-- [ ] 21. Enable the reviewed rule data
+- [x] 21. Enable the reviewed rule data
   - Turn on `BIOLOGIC_SUFFIX_ENABLED` if the owner accepted the rule. Put the accepted words into
     `name_lists.py`, the accepted rows into `data/anion_acid_forms.csv`,
     the French rows into `data/route_atc_groups.csv`, the accepted synonyms into
     `data/ingredient_synonyms.csv`; update `data/README.md` (derivation, date, re-review note).
-  - [ ] 21.1 Re-run P34–P40 with the real lists as the generators' source; the frozen-function regression (P34) is the guard for TR and US. _Requirements: 12.1–12.12_
-  - [ ] 21.2 Example tests from the review sheet: `CHLORHYDRATE DE TRAMADOL`, `AMLODIPINO BESILATO`, `MYCOPHENOLATE MOFETIL`, `INFLIXIMAB-DYYB`, `INSULIN GLARGINE-YFGN` map to their bases; `MAGNESIUM SALICYLATE` does not map to salicylic acid; `ARIPIPRAZOLE LAUROXIL` stays unmapped; `MALÉATE D'ÉNALAPRIL` is not `unsplit`. _Requirements: 12.4, 12.7, 12.8, 12.12_
+  - [x] 21.1 Re-run P34–P40 with the real lists as the generators' source; the frozen-function regression (P34) is the guard for TR and US. _Requirements: 12.1–12.12_
+  - [x] 21.2 Example tests from the review sheet: `CHLORHYDRATE DE TRAMADOL`, `AMLODIPINO BESILATO`, `MYCOPHENOLATE MOFETIL`, `INFLIXIMAB-DYYB`, `INSULIN GLARGINE-YFGN` map to their bases; `MAGNESIUM SALICYLATE` does not map to salicylic acid; `ARIPIPRAZOLE LAUROXIL` stays unmapped; `MALÉATE D'ÉNALAPRIL` is not `unsplit`. _Requirements: 12.4, 12.7, 12.8, 12.12_
   - Re-run the comparison of task 18.8 on TİTCK and openFDA; list changed names by kind (counts).
   - _Requirements: 12.1, 13.3_
 
