@@ -255,12 +255,12 @@ observations): they are kept to measure misses honestly.
   in §5.3 (FAERS cannot be restricted, §8.3). The candidates of the case's goal are rebuilt and ranked (§6).
 - **Sensitivity (all labels).** All regions, no removal: the ranking the researcher sees.
 - A case is **not evaluable** in a run when the case drug has no label left (e.g. thalidomide: its only US label is
-  indicated for both later uses). A goal without active mapping terms gives every case of it `no_signal_type`.
+  indicated for both later uses). A goal without active mapping terms gives every case of it `no_label_mapping`.
 
 ### 8.3 Result per case and run
 `rank {best, worst} | null, population, hit: worst ≤ TOP_K (10), informative: population > TOP_K, labels_used,
 labels_removed {indication, not_in_openfda}, signal_types_present, reason ∈ {hit, ranked_below_top, not_a_candidate,
-no_signal_type, not_evaluable}`, and the FAERS numbers of (case drug, goal PTs): cells, ROR and interval, `a`, flag
+no_label_mapping, not_evaluable}`, and the FAERS numbers of (case drug, goal PTs): cells, ROR and interval, `a`, flag
 `faers_includes_later_indication: true`. **Status** = `experimental` iff no case is an informative hit in the primary run
 (Req 5.3); otherwise `prototype` (still a research prototype; hits are never called proof).
 
@@ -354,7 +354,7 @@ in Glass); no new component library. Screens under `/research` (the shell alread
 | DP12 | FAERS locator of an inverse signal: `faers:ingredient=<key>;event=;region=ALL;scope=any` with the goal named separately | A new locator grammar with a goal | The collective-memory grammar has no PT-set form; adding one changes another spec. The card states the PT set |
 | DP13 | Export: JSON from the API, CSV built in the browser; CC BY 4.0; only shown counts | CSV endpoint; CC0 | One contract; CC BY carries OnSIDES's attribution requirement |
 | DP14 | Mechanism not shown yet: the card says no mechanism source is connected; ChEMBL arrives with the séance spec's molecular witness | Fetch ChEMBL mechanisms here | ChEMBL is CC BY-SA 3.0 (share-alike would bind the export); the séance spec owns the molecular witness; parallel work would duplicate it |
-| DP15 | Goals with no mapped term are allowed (validation goals like multiple myeloma) and give `no_signal_type` | Leave such cases out | Keeps the method's blind spots visible |
+| DP15 | Goals with no mapped term are allowed (validation goals like multiple myeloma) and give `no_label_mapping` | Leave such cases out | Keeps the method's blind spots visible |
 | DP16 | Candidates are not checked against the drug's current indications | Check every candidate against openFDA indications | Only US labels have an indication text; a partial check would mislead. Stated as a limit on the hypotheses screen |
 | DP17 | TOP_K = 10; hit = worst tied rank ≤ 10; informative iff population > 10 | Percentile; top 5; best rank | A researcher reads about one screen; worst rank is conservative under ties; a small population makes any hit trivial |
 | DP18 | Researcher screens call the API directly (no demo fixtures); e2e uses a fixture recorded from the real build | Demo-client fixtures | The researcher area is not part of the patient demo; the fixture keeps e2e offline |

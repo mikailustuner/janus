@@ -1,0 +1,30 @@
+term,goal,status,evidence,rationale
+Hypertrichosis,alopecia,active,paper:zappacosta_1980:nejm198012183032516;paper:yang_2011:pone.0028025,Excess hair growth is the effect seen with oral minoxidil before its topical use for hair loss.
+Hairiness,alopecia,active,paper:zappacosta_1980:nejm198012183032516;paper:yang_2011:pone.0028025,MedDRA lower-level term for excess hair growth.
+Abnormal hair growth,alopecia,active,paper:zappacosta_1980:nejm198012183032516;paper:yang_2011:pone.0028025,Lower-level term; includes excess growth.
+Hair growth abnormal,alopecia,active,paper:zappacosta_1980:nejm198012183032516;paper:yang_2011:pone.0028025,Preferred term; includes excess growth.
+Application site hypertrichosis,alopecia,active,paper:zappacosta_1980:nejm198012183032516;paper:yang_2011:pone.0028025,Local excess hair growth where a product is applied.
+Hirsutism,alopecia,excluded,paper:yang_2011:pone.0028025,"Androgen-pattern hair growth in women; androgenic medicines worsen androgenetic hair loss, so this effect does not point to the goal."
+Growth of eyelashes,eyelash_hypotrichosis,active,paper:smith_2012:j.jaad.2011.06.005;paper:yang_2011:pone.0028025,Eyelash growth seen with prostaglandin-analogue eye drops before bimatoprost was studied for sparse eyelashes.
+Eyelash thickening,eyelash_hypotrichosis,active,paper:smith_2012:j.jaad.2011.06.005;paper:yang_2011:pone.0028025,"Thicker eyelashes, the same effect."
+Eyelash changes,eyelash_hypotrichosis,active,paper:smith_2012:j.jaad.2011.06.005;paper:yang_2011:pone.0028025,"In prostaglandin-analogue labels this term describes longer, thicker or darker eyelashes; it can also mean other changes."
+Madarosis,eyelash_hypotrichosis,excluded,paper:yang_2011:pone.0028025,Loss of eyelashes is the opposite effect.
+Erection increased,erectile_dysfunction,active,paper:goldstein_1998:nejm199805143382001;paper:yang_2011:pone.0028025,Erections were reported during the angina trials of sildenafil.
+Spontaneous penile erection,erectile_dysfunction,active,paper:goldstein_1998:nejm199805143382001;paper:yang_2011:pone.0028025,The same pro-erectile effect.
+Priapism,erectile_dysfunction,active,paper:goldstein_1998:nejm199805143382001;paper:yang_2011:pone.0028025,"A prolonged erection is the extreme of a pro-erectile effect; it is also caused by alpha-1 blockade (trazodone, antipsychotics), a different mechanism."
+Painful erection,erectile_dysfunction,excluded,paper:yang_2011:pone.0028025,"Describes pain, not a pro-erectile effect."
+Weight decreased,obesity,active,paper:bray_2003:oby.2003.102;paper:yang_2011:pone.0028025,"Weight loss seen with topiramate in epilepsy before its study in obesity. Also caused by illness and toxicity (for example cancer medicines), which this term cannot separate."
+Weight loss,obesity,active,paper:bray_2003:oby.2003.102;paper:yang_2011:pone.0028025,Lower-level term of weight decreased.
+Decreased appetite,obesity,active,paper:bray_2003:oby.2003.102;paper:yang_2011:pone.0028025,Less appetite is a route to weight loss; it is also a sign of toxicity.
+Anorexia,obesity,active,paper:bray_2003:oby.2003.102;paper:yang_2011:pone.0028025,MedDRA lower-level term for loss of appetite (not anorexia nervosa).
+Appetite decreased NOS,obesity,active,paper:bray_2003:oby.2003.102;paper:yang_2011:pone.0028025,Lower-level term of decreased appetite.
+Appetite lost,obesity,active,paper:bray_2003:oby.2003.102;paper:yang_2011:pone.0028025,Lower-level term of decreased appetite.
+Somnolence,insomnia,active,paper:yang_2011:pone.0028025,Sleepiness as an unwanted effect points to a possible use for poor sleep.
+Sedation,insomnia,active,paper:yang_2011:pone.0028025,The same effect.
+Hypersomnolence,insomnia,active,paper:yang_2011:pone.0028025,Lower-level term of excessive sleepiness.
+Ejaculation delayed,premature_ejaculation,active,paper:yang_2011:pone.0028025,Delayed ejaculation as an unwanted effect points to a possible use for premature ejaculation.
+Anhidrosis,hyperhidrosis,active,paper:yang_2011:pone.0028025,Absence of sweating as an unwanted effect points to a possible use for excessive sweating.
+Constipation,diarrhoea,active,paper:yang_2011:pone.0028025,Slower bowel movement as an unwanted effect points to a possible use for diarrhoea.
+Diarrhoea,constipation,active,paper:yang_2011:pone.0028025,Looser stools as an unwanted effect point to a possible use for constipation.
+Hypotension,hypertension,active,paper:yang_2011:pone.0028025,Low blood pressure as an unwanted effect points to a blood-pressure-lowering action.
+Blood pressure decreased,hypertension,active,paper:yang_2011:pone.0028025,The same effect.

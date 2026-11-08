@@ -1,0 +1,19 @@
+key,label_en,label_tr,label_de,label_fr,label_es,faers_pts,benefit_keys,note
+alopecia,Hair loss (alopecia),Saç dökülmesi (alopesi),Haarausfall (Alopezie),Chute de cheveux (alopécie),Caída del cabello (alopecia),Alopecia|Alopecia areata|Androgenetic alopecia|Diffuse alopecia,,
+eyelash_hypotrichosis,Sparse eyelashes (eyelash hypotrichosis),Seyrek kirpikler (kirpik hipotrikozu),Spärliche Wimpern (Wimpernhypotrichose),Cils clairsemés (hypotrichose des cils),Pestañas escasas (hipotricosis de las pestañas),Madarosis,,
+erectile_dysfunction,Erectile dysfunction,Erektil disfonksiyon,Erektile Dysfunktion,Dysfonction érectile,Disfunción eréctil,Erectile dysfunction|Organic erectile dysfunction,,
+obesity,Obesity,Obezite,Adipositas,Obésité,Obesidad,Central obesity|Obesity,,
+insomnia,Insomnia,Uykusuzluk (insomni),Schlaflosigkeit (Insomnie),Insomnie,Insomnio,Initial insomnia|Insomnia|Middle insomnia|Terminal insomnia,improvement_sleep,
+premature_ejaculation,Premature ejaculation,Erken boşalma,Vorzeitiger Samenerguss,Éjaculation précoce,Eyaculación precoz,Premature ejaculation,,
+hyperhidrosis,Excessive sweating (hyperhidrosis),Aşırı terleme (hiperhidroz),Übermäßiges Schwitzen (Hyperhidrose),Transpiration excessive (hyperhidrose),Sudoración excesiva (hiperhidrosis),Hyperhidrosis,,
+hypertension,High blood pressure (hypertension),Yüksek tansiyon (hipertansiyon),Bluthochdruck (Hypertonie),Hypertension artérielle,Presión arterial alta (hipertensión),Blood pressure increased|Hypertension,,
+diarrhoea,Diarrhoea,İshal,Durchfall,Diarrhée,Diarrea,Diarrhoea,,
+constipation,Constipation,Kabızlık,Verstopfung,Constipation,Estreñimiento,Constipation,,
+nausea,Nausea,Bulantı,Übelkeit,Nausées,Náuseas,Nausea,improvement_nausea,
+low_mood,Low mood,Düşük ruh hali,Gedrückte Stimmung,Humeur dépressive,Estado de ánimo bajo,Depression,improvement_mood,
+swelling,Swelling (oedema),Şişlik (ödem),Schwellung (Ödem),Gonflement (œdème),Hinchazón (edema),Oedema|Oedema peripheral,improvement_swelling,
+pain,Pain,Ağrı,Schmerzen,Douleur,Dolor,,improvement_pain,"No FAERS PT set: pain is reported with almost every medicine, so a lower-than-expected count would mostly reflect reporting volume."
+pulmonary_arterial_hypertension,Pulmonary arterial hypertension,Pulmoner arteriyel hipertansiyon,Pulmonale arterielle Hypertonie,Hypertension artérielle pulmonaire,Hipertensión arterial pulmonar,Pulmonary arterial hypertension,,Validation goal; no side-effect term points to it (DP15).
+multiple_myeloma,Multiple myeloma,Multipl miyelom,Multiples Myelom,Myélome multiple,Mieloma múltiple,Plasma cell myeloma,,Validation goal; no side-effect term points to it (DP15).
+erythema_nodosum_leprosum,Erythema nodosum leprosum,Eritema nodozum leprozum,Erythema nodosum leprosum,Érythème noueux lépreux,Eritema nudoso leproso,Type 2 lepra reaction,,Validation goal; no side-effect term points to it (DP15). MedDRA names it Type 2 lepra reaction.
+parkinsons_disease,Parkinson's disease,Parkinson hastalığı,Parkinson-Krankheit,Maladie de Parkinson,Enfermedad de Parkinson,Parkinson's disease,,Validation goal; no side-effect term points to it (DP15).

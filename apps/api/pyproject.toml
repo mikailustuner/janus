@@ -53,6 +53,8 @@ select = ["E", "F", "W", "I", "B", "UP", "S", "N", "RUF"]
 "janus/notes/phrases.py" = ["RUF001"]
 "tests/test_notes_*.py" = ["RUF001", "S101"]
 "tests/test_faers_build_properties.py" = ["S608"]
+# Generated Markdown report: long table rows and typographic dashes are content.
+"janus/light/report.py" = ["E501", "RUF001"]
 
 [tool.pyright]
 pythonVersion = "3.12"
