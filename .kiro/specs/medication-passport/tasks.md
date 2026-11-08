@@ -130,6 +130,9 @@
     `doctor-loop` open items: the origin label in `product_name_slot`. Dated entry for the owner's log (not
     `docs/kiro-usage.md` unless the owner asks).
 
-- [ ] 14. Final checkpoint
+- [x] 14. Final checkpoint
+  - *Done 2026-11-08: ruff, format, pyright clean; web lint, typecheck, vitest 388 (FC_PROFILE=ci); Playwright passport +
+    routes (en, de) 26 passed; CI green on the final commit. Counterexamples: "40,680" read as 40.68 (DP25), partial
+    items read as present (DP24). Open: OD1 (drug-resolution follow-up), origin label in the note slot.*
   - Every step of the header green (API, web, CI); report what was built, the benchmark numbers, counterexamples the
     property tests found and how they were fixed, and the remaining open decisions (OD1–OD3).
