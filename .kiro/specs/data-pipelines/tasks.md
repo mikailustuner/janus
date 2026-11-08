@@ -145,27 +145,27 @@
   - Full checks (see header). Re-run the Phase 1 pipelines' tests unchanged. Ask the owner to
     confirm DP16 (region basis) and DP21 (scopes and denominators) before the FAERS tasks.
 
-- [ ] 19. `eu_fr_bdpm` job (`jobs/eu_fr_bdpm.py`)
+- [x] 19. `eu_fr_bdpm` job (`jobs/eu_fr_bdpm.py`)
   - Fetch the page and dates, download the three files (confirm the page's own links match the
     URL pattern), `--input DIR`; strict per-file decoding; line-based tab split; join; rows,
     name-only convention, metrics (design §13.1). `JANUS_CONTACT` optional.
-  - [ ] 19.1 Property test P19: cells are never altered (leading space, accents, quotes). _Requirements: 11.4_
-  - [ ] 19.2 Property test P20: strict per-file decoding, invalid bytes fail naming the file. _Requirements: 11.2_
-  - [ ] 19.3 Property test P21: CIP13 accepted exactly when 13 digits, `3400`, valid check digit; else name-only. _Requirements: 11.5_
-  - [ ] 19.4 Property test P22: join, orphans, empty composition, malformed lines, row accounting. _Requirements: 11.3, 11.6, 1.5_
-  - [ ] 19.5 Property test P23: update dates read per file; snapshot is the oldest; missing label fails. _Requirements: 11.1_
-  - [ ] 19.6 Example tests: metformin/vildagliptin composition keeps `FT` and `SA` lines with link numbers in file order; a presentation whose CIS is missing is kept with `specialty_missing`. _Requirements: 11.3, 11.6, 11.7_
+  - [x] 19.1 Property test P19: cells are never altered (leading space, accents, quotes). _Requirements: 11.4_
+  - [x] 19.2 Property test P20: strict per-file decoding, invalid bytes fail naming the file. _Requirements: 11.2_
+  - [x] 19.3 Property test P21: CIP13 accepted exactly when 13 digits, `3400`, valid check digit; else name-only. _Requirements: 11.5_
+  - [x] 19.4 Property test P22: join, orphans, empty composition, malformed lines, row accounting. _Requirements: 11.3, 11.6, 1.5_
+  - [x] 19.5 Property test P23: update dates read per file; snapshot is the oldest; missing label fails. _Requirements: 11.1_
+  - [x] 19.6 Example tests: metformin/vildagliptin composition keeps `FT` and `SA` lines with link numbers in file order; a presentation whose CIS is missing is kept with `specialty_missing`. _Requirements: 11.3, 11.6, 11.7_
 
-- [ ] 20. `eu_es_cima` job (`jobs/eu_es_cima.py`)
+- [x] 20. `eu_es_cima` job (`jobs/eu_es_cima.py`)
   - Fetch the archive with the pipelines' User-Agent (403 → clear message); streaming parse with
     defusedxml; dictionary join; GS1 validity; rows and metrics; advice elements never read
     (design §13.2). `--input FILE`.
-  - [ ] 20.1 Property test P24: `is_valid_gs1` and NTIN construction. _Requirements: 12.3_
-  - [ ] 20.2 Property test P25: generated Nomenclátor parses to the generated presentations in any order; ingredients in `orden_colacion` order; extra and advice elements ignored; missing header date fails. _Requirements: 12.1, 12.2, 12.5_
-  - [ ] 20.3 Property test P26: 6-digit `cod_nacion` kept, else name-only; shared NTIN/GTIN kept on all presentations. _Requirements: 12.3, 12.4_
-  - [ ] 20.4 Example tests: a presentation with NTIN and GTIN; HTTP 403 gives the User-Agent message; an ingredient code absent from the dictionary keeps the code with a null name. _Requirements: 12.2, 12.7_
+  - [x] 20.1 Property test P24: `is_valid_gs1` and NTIN construction. _Requirements: 12.3_
+  - [x] 20.2 Property test P25: generated Nomenclátor parses to the generated presentations in any order; ingredients in `orden_colacion` order; extra and advice elements ignored; missing header date fails. _Requirements: 12.1, 12.2, 12.5_
+  - [x] 20.3 Property test P26: 6-digit `cod_nacion` kept, else name-only; shared NTIN/GTIN kept on all presentations. _Requirements: 12.3, 12.4_
+  - [x] 20.4 Example tests: a presentation with NTIN and GTIN; HTTP 403 gives the User-Agent message; an ingredient code absent from the dictionary keeps the code with a null name. _Requirements: 12.2, 12.7_
 
-- [ ] 21. Checkpoint: both EU pipelines run locally
+- [x] 21. Checkpoint: both EU pipelines run locally
   - Run `eu_fr_bdpm` and `eu_es_cima` against the live sources; compare every manifest figure with
     design §10 (20,918 presentations, 30,900 presentations, NTIN and GTIN counts; differences
     are explained by newer data, not by parser faults); record the figures in this spec.

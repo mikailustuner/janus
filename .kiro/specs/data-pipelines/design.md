@@ -392,6 +392,13 @@ encoding facts for the two EU adapters are in `.kiro/specs/drug-resolution/eu-co
 | CIMA REST API v1.19 (AEMPS PDF) | Base `https://cima.aemps.es/cima/rest/`, JSON in UTF-8, dates as Unix epoch; `medicamento?cn=` and `presentacion/:cn` return active ingredients and ATC; list endpoints take `pagina`. No rate limit is documented. | Not used by the pipeline (Req 12.6); the adapter's request path may use it under the HTTP policy |
 | Licences | BDPM: Licence Ouverte (terms above). AEMPS legal notice: reproduction allowed when the origin is cited, and the date of the last update must be stated (applies to subdomains). FAERS: FDA publishes the quarterly files as public data; the registry records CC0 as in Phase 1. | NOTICE and manifests carry source, date and no-endorsement wording (registry task 16) |
 
+### 10.1 First live runs (2026-11-08, task 21)
+
+| Pipeline | Result | Compared with §10 |
+|---|---|---|
+| `eu_fr_bdpm` (run `20261108T001742Z-d5847f6f-82e5`) | succeeded; snapshot 2026-11-03 (oldest of the three file dates: specialties 03/11, compositions 03/11, presentations 08/11). 20,914 presentations, 0 name-only, 0 duplicate CIP13, 4 with `specialty_missing`, 2 CIS without composition, 5,515 `FT` lines, 99.56 % active presentations, no malformed lines. | The presentations file had been refreshed that day: 20,914 lines instead of 20,918; every other figure as in §10. |
+| `eu_es_cima` (run `20261108T001801Z-f037cd98-51fd`) | succeeded; snapshot 2026-11-07. 30,900 presentations, 0 name-only, 512 without ingredient, NTIN on 17,855, GTIN on 4,552, both on 210, neither on 8,703, 0 invalid GS1 values, 2 shared codes, 2 non-standard NTINs, 3 NTINs whose embedded code differs from `cod_nacion` (the 5 of §10 included the 2 non-standard ones), dictionary of 3,389 names. | Same as §10. |
+
 ## 11. Code layout (additions)
 
 ```

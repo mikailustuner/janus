@@ -4,7 +4,8 @@ ETL jobs, one per source (spec: `.kiro/specs/data-pipelines/`). A separate uv pr
 dependencies stay out of the API image. Research prototype, not a medical device.
 
 Phase 1 jobs: `pipc`, `titck`, `wikidata_ingredients`, `us_ndc`, `retractions`.
-Later phases: `eu_fr_bdpm`, `eu_es_cima`, `onsides`, `faers`, `canon`.
+Phase 2 jobs: `eu_fr_bdpm`, `eu_es_cima`, `faers`.
+Later phases: `onsides`, `canon`.
 
 ## Commands
 
@@ -17,6 +18,11 @@ uv run janus-pipelines run titck --input FILE.xlsx [--snapshot-date YYYY-MM-DD]
 uv run janus-pipelines run us_ndc               # openFDA NDC bulk download
 uv run janus-pipelines run wikidata_ingredients # needs JANUS_CONTACT
 uv run janus-pipelines run retractions          # run after pipc
+uv run janus-pipelines run eu_fr_bdpm           # France: BDPM files (Licence Ouverte)
+uv run janus-pipelines run eu_fr_bdpm --input DIR --snapshot-date YYYY-MM-DD   # local copies
+uv run janus-pipelines run eu_es_cima           # Spain: AEMPS Nomenclátor de prescripción
+uv run janus-pipelines run faers                # FDA AEMS (FAERS) latest four quarters, ~250 MB
+uv run janus-pipelines run faers --quarters 2026Q3,2026Q2   # named quarters (back-fill)
 uv run janus-pipelines status                   # current artifact per pipeline
 uv run janus-pipelines promote NAME RUN_ID --by NAME   # promote a needs_review run
 uv run janus-pipelines notice [--check]         # NOTICE from sources.toml
@@ -35,11 +41,26 @@ unknown source).
 | `HYPOTHESIS_PROFILE` | `dev` (default, 100 examples) or `ci` (300, derandomised). |
 | `JANUS_TITCK_LIST` | Optional local TİTCK list for the integration test (skipped when unset). |
 
+## Phase 2 notes
+- `eu_fr_bdpm`: the three files use different encodings (Windows-1252, UTF-8, Windows-1252) and
+  are decoded strictly; text is kept exactly as published (the licence forbids altering it).
+  The snapshot date is the oldest of the three file dates.
+- `eu_es_cima`: one 16 MB archive, XML read as a stream. The AEMPS host refused a generic
+  command-line User-Agent on 2026-11-08; the pipelines send their own.
+- `faers`: one row per deduplicated report (latest version per case, DELETE files applied);
+  removed reports are in `removed.parquet` next to `rows.parquet`. Ingredient names stay as
+  published; `python -m janus.memory.faers_build` (in `apps/api`) maps them and writes the
+  DuckDB count tables for Collective Memory under `artifacts/faers_counts/`.
+- Large outputs: a job may write its rows to Parquet itself; the core then hashes them in a
+  bounded-memory stream (same hash as the in-memory rule) and records side tables in the manifest.
+- Spill files go to `staging/<pipeline>/_scratch`, removed after every run.
+
 ## Data directory
 
 ```
 .data/artifacts/<pipeline>/runs/<run_id>/   rows.parquet, manifest.json, evidence_source.json
 .data/artifacts/<pipeline>/current          symlink to the promoted run (atomic switch)
+.data/artifacts/<pipeline>/runs/<run_id>/<name>.parquet   side tables (e.g. faers removed.parquet)
 .data/raw/<pipeline>/<run_id>/              downloads of cache-rule sources (never TİTCK)
 ```
 

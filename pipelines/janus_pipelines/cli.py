@@ -36,6 +36,9 @@ JOBS: dict[str, tuple[str, str]] = {
     ),
     "us_ndc": ("janus_pipelines.jobs.us_ndc", "UsNdcJob"),
     "retractions": ("janus_pipelines.jobs.retractions", "RetractionsJob"),
+    "eu_fr_bdpm": ("janus_pipelines.jobs.eu_fr_bdpm", "EuFrBdpmJob"),
+    "eu_es_cima": ("janus_pipelines.jobs.eu_es_cima", "EuEsCimaJob"),
+    "faers": ("janus_pipelines.jobs.faers", "FaersJob"),
 }
 
 
@@ -119,6 +122,8 @@ def cmd_run(args: argparse.Namespace, repo_root: Path) -> int:
         options["input"] = str(Path(args.input).resolve())
     if args.snapshot_date:
         options["snapshot_date"] = args.snapshot_date
+    if args.quarters:
+        options["quarters"] = args.quarters
     try:
         result = run_job(job, make_context(repo_root, options))
     except (UnknownSourceError, LicenceViolationError) as exc:
@@ -197,6 +202,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     run.add_argument("pipeline", choices=names)
     run.add_argument("--input", help="read a local source file instead of downloading")
     run.add_argument("--snapshot-date", help="publication date (YYYY-MM-DD) for --input")
+    run.add_argument("--quarters", help="faers only: comma-separated quarters, e.g. 2026Q3,2026Q2")
 
     promote = sub.add_parser("promote", help="promote a needs_review run")
     promote.add_argument("pipeline", choices=names)
