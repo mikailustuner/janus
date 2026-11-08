@@ -503,7 +503,7 @@ switches `biologic_suffix` and `acid_word_order` **on**. The ten points:
    gain about 58 BDPM occurrences.
 4. **Pancrelipase: leave unmapped.** No synonym row; the three FAERS part names stay in the unmapped list.
 5. **Appendix D rows confirmed**, including fenofibric acid and the electrolyte spellings. The Turkish row
-   (`Fenofibrik asit`) stays in the data-directory file `$JANUS_DATA_DIR/resolution/local_synonyms.csv`
+   (the Turkish spelling of fenofibric acid) stays in the data-directory file `$JANUS_DATA_DIR/resolution/local_synonyms.csv`
    and is never committed. The loader reads that optional file (`read_local_synonyms`) and its rows are
    part of the dataset version, so the row has effect on the machine that holds the file.
 6. **English `NOT_ALONE` `alginate` and `pidolate`: accepted** (they turn 401 FAERS occurrences from a

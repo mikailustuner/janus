@@ -44,7 +44,8 @@ def test_synonym_file_holds_the_confirmed_rows_and_no_turkish_row() -> None:
     rows = list(csv.DictReader((DATA_DIR / "ingredient_synonyms.csv").open(encoding="utf-8")))
     names = {r["name"] for r in rows}
     assert len(rows) == 134 and "FENOFIBRIC ACID" in names and "SODIUM (BICARBONATE DE)" in names
-    assert "Fenofibrik asit" not in names  # the Turkish row never enters the repository
+    # the Turkish row never enters the repository: the one item has only its English-label row
+    assert {r["name"] for r in rows if r["qid"] == "Q27259379"} == {"FENOFIBRIC ACID"}
     assert "PANCRELIPASE AMYLASE" not in names  # owner decision 4: leave unmapped
     assert len(read_synonyms()) == 134
 
