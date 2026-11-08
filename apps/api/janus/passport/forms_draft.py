@@ -1,11 +1,13 @@
-"""Draft of `data/dose_form_groups.csv` (medication-passport design §5.2, task 3). Dev tool.
+"""Draft of the dose-form table (medication-passport design §5.2, tasks 3 and 4). Dev tool.
 
-Usage: `python -m janus.passport.forms_draft [--out PATH]` with `DATABASE_URL` (a loaded database).
-Reads, in one read-only transaction, every distinct (source, published dose form, published route
-set) of the current dataset with its product count, proposes a group by the keyword rules below and
-writes one row per form: a `*` row when every route set of that form gives the same proposal, else
-one row per route set. Every row is `proposed`; the note gives the rule and the product count. The
-proposal is a starting point for the pharmacologist's review, not a decision. Prints counts only.
+Usage: `python -m janus.passport.forms_draft [--status proposed|accepted]` with `DATABASE_URL` (a
+loaded database). Reads, in one read-only transaction, every distinct (source, published dose form,
+published route set) of the current dataset with its product count, proposes a group by the keyword
+rules below (reviewed by the pharmacologist agent, accepted by the owner on 2026-11-08) and
+writes `data/dose_form_groups.csv` and its packaged copy `janus/passport/dose_form_groups.csv`.
+A `*` row is written only where the group does not depend on the route or the form string fixes
+the route (`route_from_form`); otherwise one row per route set seen. The note gives the status, the
+rule and the product count. Re-run and diff at each dataset refresh. Prints counts only.
 
 Only openFDA (SPL dose form names) and the BDPM (French pharmaceutical forms) publish a form; both
 are open data (CC0; Licence Ouverte, kept as published). TİTCK and the Nomenclátor publish none.
@@ -19,10 +21,10 @@ import io
 import sys
 from collections import Counter, defaultdict
 from collections.abc import Iterable, Sequence
-from pathlib import Path
 
 from janus.passport.forms import (
     ANY_ROUTE,
+    DATA_FILE,
     FORMS_FILE,
     HEADER,
     NOT_COMPARED_GROUPS,
@@ -288,10 +290,14 @@ POWDER = (
 TO_LIQUID = ("for solution", "for suspension", "pour solution", "pour suspension")
 
 
+DELAYED = ("delayed release", "gastro-résistant")
+PROLONGED = ("extended release", "libération prolongée", "libération modifiée", "osmotique")
+
+
 def form_kind(form: str) -> tuple[str, str]:
     """(kind, rule) of a published form, checked in this order. Kinds: `fixed:<group>` (the form
-    names the group), `solid`, `solid_mr`, `liquid`, `semisolid`, `patch`, `powder`, `rectal`,
-    `insert` (the route decides) and `unknown`. The rule goes into the note."""
+    names the group), `solid`, `solid_dr`, `solid_pr`, `liquid`, `spray`, `semisolid`, `patch`,
+    `powder`, `rectal`, `insert` (the route decides) and `unknown`. The rule goes into the note."""
     f = form.lower().strip()
     if _has(f, "radiopharmaceutique", "trousse"):
         return ("fixed:other", "radiopharmaceutical kit")
@@ -320,8 +326,13 @@ def form_kind(form: str) -> tuple[str, str]:
     if _has(f, *SOLID) or f in ("film orodispersible", "film, soluble"):
         if "coated pellets" in f and not _has(f, "delayed", "extended"):
             return ("unknown", "coated pellets: release not stated")
-        if _has(f, *MODIFIED):
-            return ("solid_mr", "modified-release tablet or capsule")
+        delayed, prolonged = _has(f, *DELAYED), _has(f, *PROLONGED)
+        if delayed and prolonged:
+            return ("unknown", "both delayed and prolonged release words")
+        if delayed:
+            return ("solid_dr", "delayed-release (gastro-resistant) tablet or capsule")
+        if prolonged:
+            return ("solid_pr", "prolonged-release tablet or capsule")
         return ("solid", "tablet or capsule")
     if _has(f, *POWDER):
         if _has(f, *TO_LIQUID):
@@ -338,6 +349,36 @@ def form_kind(form: str) -> tuple[str, str]:
     return ("unknown", "no rule")
 
 
+FIXED_ROUTE = {  # a group named by the form string fixes its route class
+    "injection": "parenteral",
+    "inhaled": "inhaled",
+    "ophthalmic": "ophthalmic",
+    "oral_liquid": "oral",
+    "vaginal": "vaginal",
+}
+
+
+def route_from_form(form: str) -> str | None:
+    """The route class that the form string fixes by itself (owner decision 2026-11-08: a
+    film-coated tablet, a capsule, a transdermal patch, eye drops, a suppository), else `None`.
+    A plain `TABLET`, `SOLUTION` or `crème` fixes nothing: its route comes from the product."""
+    kind, _ = form_kind(form)
+    f = form.lower()
+    if kind.startswith("fixed:"):
+        return FIXED_ROUTE.get(kind.removeprefix("fixed:"))
+    if kind in ("solid", "solid_dr", "solid_pr"):
+        if _has(f, "capsule", "gélule", "film coated", "pelliculé", "orally", "orodispersible"):
+            return "oral"
+        if "buvable" in f:
+            return "oral"
+        return None
+    if kind == "patch":
+        return "transdermal" if _has(f, "transdermal", "transdermique") else None
+    if kind == "rectal":
+        return "rectal"
+    return None
+
+
 ROUTE_GROUP: dict[str, dict[str, str]] = {
     # kind -> route class -> group (a route class not listed: unknown)
     "solid": {
@@ -345,8 +386,10 @@ ROUTE_GROUP: dict[str, dict[str, str]] = {
         "oromucosal": "other",
         "vaginal": "vaginal",
         "rectal": "rectal",
+        "inhaled": "inhaled",  # inhalation capsules (owner decision R3)
     },
-    "solid_mr": {"oral": "oral_solid_modified_release", "oromucosal": "other"},
+    "solid_dr": {"oral": "oral_solid_delayed_release", "oromucosal": "other"},
+    "solid_pr": {"oral": "oral_solid_prolonged_release", "oromucosal": "other"},
     "liquid": {
         "oral": "oral_liquid",
         "parenteral": "injection",
@@ -388,13 +431,13 @@ ROUTE_GROUP: dict[str, dict[str, str]] = {
         "oromucosal": "other",
     },
 }
-# Kinds that may carry a modified-release word and keep a group (oral solid MR has its own group;
-# a transdermal patch is a prolonged-release form by nature; `other` is never compared).
-MR_ALLOWED = ("solid_mr", "patch", "fixed:other")
+# Kinds that may carry a modified-release word and keep a group (oral solid DR and PR have their
+# own groups; a transdermal patch is a prolonged-release form by nature; `other` is never compared).
+MR_ALLOWED = ("solid_dr", "solid_pr", "patch", "fixed:other")
 
 
-def propose(form: str, routes: Sequence[str]) -> tuple[str | None, str]:
-    """(group or None, rule) for one published form and route set."""
+def propose_class(form: str, rc: str) -> tuple[str | None, str]:
+    """(group or None, rule) for one published form and route class (`none`, `mixed` or a class)."""
     kind, rule = form_kind(form)
     if kind == "unknown":
         return (None, rule)
@@ -405,35 +448,67 @@ def propose(form: str, routes: Sequence[str]) -> tuple[str | None, str]:
     parts = {p.strip() for p in form.lower().split(" et ") if p.strip()}
     if len(parts) > 1:
         return (None, "presentation of several different forms")
-    rc = routes_class(routes)
     group = ROUTE_GROUP[kind].get(rc)
     if kind == "patch" and group not in ("transdermal", "other") and _has(form.lower(), *MODIFIED):
         return (None, "modified-release patch on a cutaneous route (Req 6.5)")
     return (group, f"{rule}; route {rc}")
 
 
-def draft_rows(observed: Iterable[tuple[str, str, Sequence[str], int]]) -> list[list[str]]:
-    """Rows of the draft table from (source, form, routes, products) observations."""
-    by_form: dict[tuple[str, str], list[tuple[str, int]]] = defaultdict(list)
+def propose(form: str, routes: Sequence[str]) -> tuple[str | None, str]:
+    """(group or None, rule) for one published form and route set."""
+    return propose_class(form, routes_class(routes))
+
+
+def route_independent(form: str) -> bool:
+    """The group does not depend on the route: a group named by the form, or unknown."""
+    kind = form_kind(form)[0]
+    return kind.startswith("fixed:") or kind == "unknown"
+
+
+def draft_rows(
+    observed: Iterable[tuple[str, str, Sequence[str], int]], status: str = "proposed"
+) -> list[list[str]]:
+    """Rows of the table from (source, form, routes, products) observations.
+
+    - group named by the form, or unknown: one `*` row;
+    - the form string fixes the route (`route_from_form`): a `*` row for that route class, plus a
+      row for every route set seen whose group differs from it;
+    - otherwise: one row per route set seen (no route published: unknown)."""
+    by_form: dict[tuple[str, str], Counter[str]] = defaultdict(Counter)
     for source, form, routes, count in observed:
         if form and form.strip():
-            by_form[(source, form)].append((route_key(routes), count))
+            by_form[(source, form)][route_key(routes)] += count
     out: list[list[str]] = []
-    for (source, form), sets in sorted(by_form.items()):
-        proposals = {rk: propose(form, rk.split("|") if rk else []) for rk, _ in sets}
-        counts = Counter[str]()
-        for rk, n in sets:
-            counts[rk] += n
-        if len({g for g, _ in proposals.values()}) == 1:
-            group, rule = next(iter(proposals.values()))
-            if "; route" in rule:
-                rule = rule.split("; route")[0] + "; same for every route set seen"
-            note = f"proposed; {rule}; {sum(counts.values())} products"
-            out.append([source, form, ANY_ROUTE, group or "", note])
+    for (source, form), counts in sorted(by_form.items()):
+        total = sum(counts.values())
+        rff = route_from_form(form)
+        if route_independent(form):
+            group, rule = propose_class(form, "none")
+            out.append(
+                [
+                    source,
+                    form,
+                    ANY_ROUTE,
+                    group or "",
+                    rff or "",
+                    f"{status}; {rule}; {total} products",
+                ]
+            )
             continue
+        wildcard: str | None = None
+        if rff is not None:
+            wildcard, rule = propose_class(form, rff)
+            note = f"{status}; {rule.split('; route')[0]}; route from form; {total} products"
+            out.append([source, form, ANY_ROUTE, wildcard or "", rff, note])
         for rk in sorted(counts):
-            group, rule = proposals[rk]
-            out.append([source, form, rk, group or "", f"proposed; {rule}; {counts[rk]} products"])
+            if rff is not None and rk == "":
+                continue  # no route published: the route the form fixes (the `*` row)
+            group, rule = propose(form, rk.split("|") if rk else [])
+            if rff is not None and group == wildcard:
+                continue
+            out.append(
+                [source, form, rk, group or "", "", f"{status}; {rule}; {counts[rk]} products"]
+            )
     return out
 
 
@@ -459,7 +534,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     from janus.settings import Settings
 
     ap = argparse.ArgumentParser(prog="python -m janus.passport.forms_draft")
-    ap.add_argument("--out", type=Path, default=FORMS_FILE)
+    ap.add_argument("--status", choices=("proposed", "accepted"), default="proposed")
     args = ap.parse_args(argv)
     settings = Settings.from_env()
     if not settings.database_url:
@@ -468,9 +543,10 @@ def main(argv: Sequence[str] | None = None) -> int:
     with psycopg.connect(settings.database_url) as conn, conn.transaction():
         conn.execute("SET TRANSACTION READ ONLY")
         observed = [(s, f, list(r), int(n)) for s, f, r, n in conn.execute(_SQL)]
-    text = render(draft_rows(observed))
+    text = render(draft_rows(observed, args.status))
     table = parse(text)  # the draft must load
-    args.out.write_text(text, encoding="utf-8")
+    for path in (DATA_FILE, FORMS_FILE):  # the reviewed copy and the packaged copy
+        path.write_text(text, encoding="utf-8")
     covered: Counter[str] = Counter()
     compared: Counter[str] = Counter()
     total: Counter[str] = Counter()

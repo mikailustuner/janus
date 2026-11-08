@@ -5,8 +5,9 @@ normalised code (amount, unit, basis) or `None`. Exact rational arithmetic: mass
 kept apart, no tolerance, no rounding. A value is given only where the source states (or, for the
 BDPM, the form implies) what the amount refers to:
 
-- `openfda_ndc`: `A U/1` (per unit), `A U/N mL` (per mL, A / N; `/mL` is `/1 mL`), `A U/N g`
-  (per g).
+- `openfda_ndc`: `A U/1` (per unit, only for the countable form groups: elsewhere `/1` may be per
+  spray or per actuation, owner decision R2), `A U/N mL` (per mL, A / N; `/mL` is `/1 mL`),
+  `A U/N g` (per g).
 - `eu_fr_bdpm`: `A U` with French decimals and space-grouped thousands; per unit only for the
   countable form groups, else `None` (the reference quantity is not loaded).
 - `eu_es_cima`: `A U`, parsed for reports; the basis is not loaded, so always `None`.
@@ -165,6 +166,8 @@ def strength_code(
         basis = "unit" if form_group in COUNTABLE_GROUPS else None
     elif source_id != "openfda_ndc":
         basis = None  # the Nomenclátor basis is not loaded (OD1, owner decision 3)
+    elif basis == "unit" and form_group not in COUNTABLE_GROUPS:
+        basis = None  # `/1` is per spray or per actuation outside tablets and capsules (R2)
     if basis is None:
         return None
     amount = canonical(q.amount)

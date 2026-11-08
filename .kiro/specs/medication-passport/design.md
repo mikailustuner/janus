@@ -199,7 +199,7 @@ cached per `(source_id, published, form_group)` (12,766 distinct strings).
 
 | Source | Accepted grammar (after trimming, case-insensitive units) | Basis |
 |---|---|---|
-| `openfda_ndc` | `A U/D` and `A U/N DU`: A a decimal (`.5` allowed); U ∈ {`kg`,`g`,`mg`,`ug`,`mcg`} or {`[iU]`,`[IU]`}; D = `1`; DU ∈ {`mL`,`g`} | `/1` → `unit`; `/N mL` → `mL` (A ÷ N); `/N g` → `g` |
+| `openfda_ndc` | `A U/D` and `A U/N DU`: A a decimal (`.5` allowed); U ∈ {`kg`,`g`,`mg`,`ug`,`mcg`} or {`[iU]`,`[IU]`}; D = `1`; DU ∈ {`mL`,`g`} | `/1` → `unit` only when `form_group` ∈ `COUNTABLE_GROUPS` (else `None`: per spray or per actuation; review R2, accepted); `/N mL` → `mL` (A ÷ N); `/N g` → `g` |
 | `eu_fr_bdpm` | `A U` with French decimals (`0,5`) and space-grouped thousands (`1 000`); U ∈ {`mg`,`g`,`microgramme(s)`,`µg`,`UI`} | `unit` only when `form_group` ∈ `COUNTABLE_GROUPS`; else `None` |
 | `eu_es_cima` | parsed for tests and reports, but no form is loaded | always `None` (basis unknown) |
 | `titck` | no strength stored | always `None` |
@@ -221,21 +221,26 @@ eu_fr_bdpm,poudre et  solvant pour solution injectable,*,injection,proposed; …
 ```
 - Key: the exact published string of the source (no folding: the BDPM data are matched as published). A string not in
   the table, or with an empty group, is unknown.
-- ~~Draft groups (22 fine groups)~~ superseded by owner decision 6: a coarse Janus grouping. *(Implemented 2026-11-08,
-  task 3; pending the task 4 review, `dose-form-review.md`.)* Thirteen groups: `oral_solid`,
-  `oral_solid_modified_release`, `oral_liquid`, `injection`, `inhaled`, `nasal`, `ophthalmic`, `otic`, `cutaneous`,
-  `transdermal`, `rectal`, `vaginal`, `other`. The owner's twelve plus `oral_solid_modified_release`, which Req 6.5
-  requires (modified-release forms never share a group with immediate-release ones); a modified-release form outside
-  the oral solids (depot injection, prolonged-release eye drops, vaginal ring) has no group and stays unknown.
-  `COUNTABLE_GROUPS` = `oral_solid`, `oral_solid_modified_release`. `other` (sublingual, buccal and dental forms,
-  lozenges, kits, devices) is shown but **never compared** (`NOT_COMPARED_GROUPS`): two products in `other` need not
-  share a form.
-- *(Added in task 3.)* **Route column.** openFDA and the BDPM publish forms that do not name the route (`SOLUTION`
+- ~~Draft groups (22 fine groups)~~ superseded by owner decision 6: a coarse Janus grouping, **accepted after the
+  task 4 review (2026-11-08, `dose-form-review.md` Part C)**. Fourteen groups: `oral_solid`,
+  `oral_solid_delayed_release` (gastro-resistant), `oral_solid_prolonged_release` (extended, prolonged, modified,
+  osmotic), `oral_liquid`, `injection`, `inhaled`, `nasal`, `ophthalmic`, `otic`, `cutaneous`, `transdermal`, `rectal`,
+  `vaginal`, `other`. The owner's twelve with oral modified release split in two (Req 6.5; review R1). A
+  modified-release form outside the oral solids (depot injection, prolonged-release eye drops, vaginal ring), a
+  liposomal or lipid-complex injection and a multi-part pack of different forms have no group and stay unknown.
+  `COUNTABLE_GROUPS` = the three oral solid groups. `other` (sublingual, buccal and dental forms, lozenges, kits,
+  devices) is shown but **never compared** (`NOT_COMPARED_GROUPS`).
+- *(Added in task 3; DP22, DP23.)* **Route column.** openFDA and the BDPM publish forms that do not name the route (`SOLUTION`
   1,729 oral / 1,042 topical / 323 ophthalmic products; `TABLET` 17,971 oral / 242 sublingual; `crème`, `gel`,
   `solution`), so the key is `(source_id, published_form, route)`: `route` is `*` (any route set), an empty string (no
   route published) or the product's `res_product.routes` sorted and joined with `|` as published. A product takes the
   row of its own route set first, then the `*` row. `group(source_id, published_form, routes)` gains the routes
-  argument; the presence statement (§4.2) must also select `r.routes`, and task 5 passes `ProductCandidate.routes`.
+  argument; the presence statement (§4.2) also selects `r.routes`, and task 5 passes `ProductCandidate.routes`. A `*`
+  row exists only where the group does not depend on the route or the form string fixes the route; the column
+  `route_from_form` then names the route class (film-coated tablet, capsule, orodispersible tablet, transdermal patch,
+  eye drops, suppository; DP23). A product without a published route takes that route; otherwise no route is guessed.
+- **Packaged:** the table ships as `apps/api/janus/passport/dose_form_groups.csv` (the API image is built from
+  `apps/api`); a test checks that it equals `data/dose_form_groups.csv`.
 - Where it comes from: drafted by `forms_draft.py` from the distinct `(source_id, dosage_form, routes)` values of the
   current dataset (openFDA 142 forms, BDPM 358; 927 rows) with keyword rules, then reviewed row by row by `agent://pharmacologist` and accepted
   by the owner (task 4). EDQM Standard Terms are not used (registration and reuse terms not checked; OD4). Licence of
@@ -457,6 +462,8 @@ The seed's four properties are P1–P4.
 | DP19 | The request carries no item region; the server answers every source; the client marks the item's own source. | Send the item's region and skip it. | One less field about the patient; the own-source row is useful as a check ("this box's source lists it"). |
 | DP20 | The note stays `doctor-loop`'s; the Passport only fills `product_name_slot` with the box name and the origin label in the note language. | A Passport-specific note section. | No server change; product names and origins stay in the browser. |
 | DP21 | **Proposed, needs the owner:** optional entry of strength and form from the box for items whose source has none (TİTCK, typed German boxes), labelled "as entered by you". | No entry (TİTCK and German items never comparable). | Without it, the two regions of the main user story never get a comparison; the values stay in the browser and are sent as codes only. |
+| DP22 | *(Added in task 3, accepted 2026-11-08.)* The dose-form table is keyed by `(source, published form, published route set)`, with `*` for any route set. | Key by the published form alone; map route-ambiguous forms to nothing. | openFDA `SOLUTION` is oral, topical, ophthalmic and sublingual; `TABLET` is oral and sublingual. One group per string would put eye drops with oral solutions; mapping them to nothing would lose most liquids. |
+| DP23 | *(Owner decision 2026-11-08.)* No route is guessed: a product without a published route has no group unless the form string fixes the route (`route_from_form`); a `*` row exists only then or when the group does not depend on the route. | Treat tablets without a route as oral (3,068 openFDA products); keep every `*` row the draft wrote. | A sublingual or vaginal tablet without a route would be compared as oral; a `*` row from observed data generalises to route sets never seen. |
 
 ## 13. Performance
 Measured 2026-11-08 (§1): 273–428 ms for 14 common keys with the partial index, 1.07 s for the 50 most frequent keys.
@@ -478,8 +485,8 @@ loader-built signature table (DP12 fallback). The pure evaluation is linear in s
   amount). Free-text parsing of a source whose redistribution terms are unclear; needs review. Recommendation: not now;
   DP21 covers the user story.
 - **OD3 (owner):** show the distinct published strengths of a source (as published) next to the counts.
-- **OD4 (pharmacologist, owner):** granularity of the dose-form groups (film-coated vs plain, gastro-resistant as its own
-  group, orodispersible); whether EDQM Standard Terms may be used under their terms.
+- ~~**OD4 (pharmacologist, owner):** granularity of the dose-form groups; EDQM Standard Terms.~~ **Closed 2026-11-08**:
+  fourteen groups, no EDQM data (owner decision 6; `dose-form-review.md` Part C).
 - **OD5 (owner):** `fast-check` dev dependency (DP16).
 - **DP21 (owner):** manual strength/form entry.
 - **Seams to record in other specs (task 13):** `experience` open items (routes and mounting of the two screens, list

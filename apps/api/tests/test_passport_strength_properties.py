@@ -76,18 +76,28 @@ def us_ref(
     n=st.one_of(st.none(), decimals),
     du=st.sampled_from([None, "mL", "g"]),
     space=st.sampled_from(["", " "]),
+    group=st.sampled_from([*GROUPS, None]),
 )
 def test_p5_openfda_matches_the_reference(
-    a: tuple[int, int], unit: str, n: tuple[int, int] | None, du: str | None, space: str
+    a: tuple[int, int],
+    unit: str,
+    n: tuple[int, int] | None,
+    du: str | None,
+    space: str,
+    group: str | None,
 ) -> None:
-    """Feature: medication-passport, Property P5. Validates Req 6.3."""
+    """Feature: medication-passport, Property P5. Validates Req 6.3; owner decision R2: `/1` is
+    per unit only for the countable groups."""
     denominator = "" if n is None else text_of(n) + space
     published = f"{text_of(a)} {unit}/{denominator}{du or ''}"
     if n is None and du is None:
         published = f"{text_of(a)} {unit}/1"
         n = (1, 0)
-    got = strength_code("openfda_ndc", published, None)
-    assert got == us_ref(a, unit, n, du)
+    got = strength_code("openfda_ndc", published, group)
+    expected = us_ref(a, unit, n, du)
+    if expected is not None and expected.basis == "unit" and group not in COUNTABLE_GROUPS:
+        expected = None
+    assert got == expected
     if got is not None:
         assert PATTERN.fullmatch(got.amount) and Decimal(got.amount) > 0
 
@@ -105,7 +115,7 @@ def test_p5_equal_quantities_equal_codes(q: int, basis: str) -> None:
     ]
     if basis != "1":
         spellings.append(f"{q * 5} ug/5 {basis}")  # A ÷ N
-    codes = {strength_code("openfda_ndc", s, None) for s in spellings}
+    codes = {strength_code("openfda_ndc", s, "oral_solid") for s in spellings}
     assert len(codes) == 1
     (code,) = codes
     if code is not None:
@@ -115,12 +125,17 @@ def test_p5_equal_quantities_equal_codes(q: int, basis: str) -> None:
 def test_p5_examples() -> None:
     """Feature: medication-passport, Property P5. Validates Req 6.3, 6.4 (design examples)."""
     us = "openfda_ndc"
-    assert strength_code(us, "1 g/1", None) == strength_code(us, "1000 mg/1", None)
-    assert strength_code(us, "250 mg/5mL", None) == strength_code(us, "50 mg/mL", None)
-    assert strength_code(us, "250 mg/5mL", None) == StrengthCode("50000", "ug", "mL")
-    assert strength_code(us, ".5 mg/1", None) == StrengthCode("500", "ug", "unit")
-    assert strength_code(us, "100 mg/3 mL", None) is None  # does not end within six decimals
-    assert strength_code(us, "1 [iU]/1", None) == StrengthCode("1", "IU", "unit")
+    assert strength_code(us, "1 g/1", "oral_solid") == strength_code(us, "1000 mg/1", "oral_solid")
+    assert strength_code(us, "250 mg/5mL", "oral_solid") == strength_code(
+        us, "50 mg/mL", "oral_solid"
+    )
+    assert strength_code(us, "250 mg/5mL", "oral_solid") == StrengthCode("50000", "ug", "mL")
+    assert strength_code(us, ".5 mg/1", "oral_solid") == StrengthCode("500", "ug", "unit")
+    assert strength_code(us, "100 mg/3 mL", "oral_solid") is None  # does not end within 6 places
+    assert strength_code(us, "50 ug/1", "nasal") is None  # per spray, not per unit (R2)
+    assert strength_code(us, "50 ug/1", None) is None
+    assert strength_code(us, "50 ug/mL", "nasal") == StrengthCode("50", "ug", "mL")
+    assert strength_code(us, "1 [iU]/1", "oral_solid") == StrengthCode("1", "IU", "unit")
     for unsupported in (
         "6 [hp_X]/mL",
         "30 [hp_C]/1",

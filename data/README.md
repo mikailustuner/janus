@@ -127,8 +127,10 @@ them whenever WHOCC publishes a new ATC version**, together with the combination
   exactly as the source publishes it: openFDA NDC directory SPL dosage form names (CC0 1.0, snapshot 2026-11-06) and
   BDPM pharmaceutical forms (Base de données publique des médicaments, Licence Ouverte / Etalab, data of 2026-11-03,
   shown as published; the BDPM does not endorse Janus). `route` is `*`, empty (no route published) or the product's
-  published route set joined with `|`; `group` is one of thirteen Janus groups or empty (unknown). No EDQM Standard
-  Terms are used. Drafted on 2026-11-08 by `python -m janus.passport.forms_draft` from the dev dataset (927 rows, every
-  row `proposed`) and reviewed by the pharmacologist agent (`.kiro/specs/medication-passport/dose-form-review.md`);
-  **not yet accepted by the owner**, so no user-facing answer uses it. It still needs a review by a pharmacist before any
-  public claim. Re-draft and diff it whenever a source adds dose forms or route sets.
+  published route set joined with `|`; `group` is one of fourteen Janus groups or empty (unknown); `route_from_form`
+  names the route class a `*` row's form string fixes by itself (no route is guessed otherwise). No EDQM Standard Terms
+  are used. Drafted on 2026-11-08 by `python -m janus.passport.forms_draft` from the dev dataset, reviewed by the
+  pharmacologist agent and **accepted by the owner on 2026-11-08** (931 rows, `.kiro/specs/medication-passport/
+  dose-form-review.md`). A byte-identical copy ships in the API package (`apps/api/janus/passport/dose_form_groups.csv`;
+  a test checks it). It still needs a review by a pharmacist before any public claim. Re-draft and diff it whenever a
+  source adds dose forms or route sets.

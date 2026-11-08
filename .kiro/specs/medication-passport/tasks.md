@@ -32,9 +32,9 @@
     commit the draft with every row marked `proposed` in `note`. `data/README.md` gains the licence and source line.
   - [x] 3.1 *(`tests/test_passport_forms_properties.py`, incl. the Req 6.5 check on the committed table.)* Property test P6: committed table loads; each injected defect named; `group()` total. _Requirements: 6.5_
 
-- [ ] 4. Dose-form and strength review **(review stop)**
-  - *2026-11-08: `dose-form-review.md` written with the pharmacologist pass (verdict: accept with changes R1–R3);
-    committed on the worktree branch, not pushed. **Waiting for the owner.** Tasks 5–8 not started.*
+- [x] 4. Dose-form and strength review **(review stop)**
+  - *2026-11-08: pharmacologist pass (accept with changes R1–R3); owner answers in Part C, applied in Part D: 14 groups,
+    DP22/DP23, `route_from_form`, 107 wildcard rows made route-specific, table packaged, 931 rows `accepted`.*
   - Run `agent://pharmacologist` (self-contained prompt: the draft table, the grammar table of §5.1, OD4) and write
     `dose-form-review.md` (flagged rows, granularity questions, EDQM terms question). Commit, push, CI green, then
     **stop and wait for the owner**. Apply the answers in one commit (rows accepted, groups final, OD4 closed in design).

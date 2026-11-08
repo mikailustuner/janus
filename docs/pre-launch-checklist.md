@@ -65,6 +65,9 @@ defers a check to launch.
 - [ ] **`privacy.md` token line:** it still says the token holds "note id + HMAC signature + expiry only"; the token also carries
   finding codes, language, region, issue week, key id and consent version (owner decision 2026-11-08, no personal data). The
   owner left `privacy.md` unchanged; decide whether to update the line before launch.
+- [ ] **Dose-form groups and strength codes (Passport):** `data/dose_form_groups.csv` (931 rows, 14 groups) and the strength
+  grammar of `janus/passport/strength.py` were reviewed by the pharmacologist agent and accepted by the owner on 2026-11-08
+  (`.kiro/specs/medication-passport/dose-form-review.md`); a pharmacist or physician must review them before any public claim.
 - [ ] **Privacy page text:** the outcome loop stores hashes of used note ids until the token expires and the doctor's answers
   by week and region; the QR token is a signed list of codes.
 
