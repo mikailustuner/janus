@@ -247,7 +247,7 @@
    ]
   },
   "osteoporosis_fracture": {
-   "label": "Kemik erimesi (osteoporoz)",
+   "label": "Kemik erimesi veya kırıklar (osteoporoz)",
    "safety_line": null,
    "direction": "adverse",
    "pipc_positions": [
@@ -271,7 +271,7 @@
    ]
   },
   "gastric_ulcer_bleed": {
-   "label": "Mide ülseri veya mide-bağırsak kanaması",
+   "label": "Mide tahrişi, mide ülseri veya mide-bağırsak kanaması",
    "safety_line": "urgent_care_gi",
    "direction": "adverse",
    "pipc_positions": [

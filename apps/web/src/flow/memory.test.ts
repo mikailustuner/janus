@@ -7,7 +7,14 @@ import { check, fc } from "@/test/fc";
 import { PAIRS } from "@/test/results";
 import type { Assessment, PairOut, SharedOut } from "@/api/contracts";
 
-import { ciBar, OVER, pairPanel, ratioOf, sharedPanel } from "./memory";
+import {
+  ciBar,
+  OVER,
+  pairPanel,
+  ratioOf,
+  sharedPanel,
+  splitCaveats,
+} from "./memory";
 
 const assessments: Assessment[] = [
   "no_reports",
@@ -144,5 +151,24 @@ describe("P11 CI bar and numbers", () => {
         },
       ),
     );
+  });
+});
+
+describe("caveats outside the fold (owner decision 2026-11-08, safety A1)", () => {
+  it("keeps spontaneous reporting, not incidence and the weak label visible, in order", () => {
+    const keys = [
+      "codes.disproportionate",
+      "codes.spontaneous_reporting",
+      "screening",
+      "codes.not_incidence",
+      "codes.weak",
+    ];
+    const { visible, folded } = splitCaveats(keys);
+    expect(visible).toEqual([
+      "codes.spontaneous_reporting",
+      "codes.not_incidence",
+      "codes.weak",
+    ]);
+    expect(folded).toEqual(["codes.disproportionate", "screening"]);
   });
 });

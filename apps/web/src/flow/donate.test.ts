@@ -78,7 +78,7 @@ describe("P28 donation request", () => {
               ].includes(k),
             ),
           ).toBe(true);
-          expect(b.consent).toEqual({ version: "2026-11-v1", explicit: true });
+          expect(b.consent).toEqual({ version: "2026-11-v2", explicit: true });
           expect((AGE_BANDS as readonly number[]).includes(b.age_band)).toBe(
             true,
           );

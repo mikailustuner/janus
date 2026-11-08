@@ -71,3 +71,12 @@ defers a check to launch.
 - [ ] **Privacy page text:** the outcome loop stores hashes of used note ids until the token expires and the doctor's answers
   by week and region; the QR token is a signed list of codes.
 
+
+## Experience (Phase 3, owner decisions 2026-11-08)
+- [ ] **Native-speaker review of the new namespaces** in Turkish, German, French and Spanish (Findings, Confirm, Medicines, Timeline, Evidence, MemoryView, Note, OutcomeConsent v2, Donate v2, Doctor, Privacy, Home), including the terms listed in `.kiro/specs/experience/wording-localization-review.md` ("reçete kaskadı", "Bildirim odds oranı (ROR)", "Medikament" vs "Arzneimittel", repurposing terms, "razón de odds de notificación").
+- [ ] **Pharmacist or physician sign-off** of the timing-based status labels in app and note, the 12-month window for every row, the class inclusions and the doctor form (`wording-pharmacologist-review.md`, "Needs a physician or pharmacist").
+- [ ] **Print-and-scan test of the demo QR at 50 mm** on A4 with several phones (Android and iOS, different cameras).
+- [ ] **Re-check of the emergency and crisis numbers** per region in all five languages, and of the urgent-care thresholds.
+- [ ] **Consent versions in the deployment:** `JANUS_CONSENT_VERSIONS=2026-11-v1,2026-11-v2` and `JANUS_OUTCOME_CONSENT_VERSIONS=2026-11-v1,2026-11-v2` (the client sends v2; v1 keeps tokens and donations made under it valid). Privacy and legal review of both v2 texts (GDPR Art. 9(2)(a), KVKK).
+- [ ] **Home hero art direction** (bust or isometric home diorama, possibly 3D): swap it in `apps/web/src/components/home/HomeHero.tsx` (experience DP45); check contrast, alt text and the 375 px layout again.
+- [ ] **Real devices:** local speech voices, camera scanning, PDF fonts and the Print button (it opens the PDF; check popup behaviour on iOS Safari).

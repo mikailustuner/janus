@@ -21,6 +21,13 @@ import type { FindingView } from "@/flow/findings";
 import { useT, useTheme, useThemeWord } from "@/theme/words";
 import { cascadeName, type Loaded } from "@/vocabulary";
 
+const ORDER_LABEL = {
+  within_window: "fits",
+  after_window: "fitsLate",
+  same_month: "notConfirmed",
+  date_unknown: "notConfirmed",
+} as const;
+
 export function useFindingWords(vocab: Loaded) {
   return (fv: FindingView) => {
     const f = fv.finding;
@@ -90,7 +97,12 @@ export function FindingCard({
       .map((i) => boxNames[i] ?? "")
       .filter(Boolean)
       .join(", ");
-  const status = t(`Findings.status.${f.status}`);
+  // The chip describes the order from the timing, never "probable"/"possible" (DP43): the engine
+  // status `possible` also covers a known order after the window.
+  const status = t(`Findings.order.${ORDER_LABEL[f.timing]}`);
+  const orderKnown =
+    f.timing === "within_window" || f.timing === "after_window";
+  const row = f.rule_id.split(":")[1] ?? "";
   const startLine = (name: string, start: string | null) =>
     start
       ? t("Findings.started", { name, month: formatMonth(start, locale) })
@@ -127,7 +139,8 @@ export function FindingCard({
           </div>
         </div>
         <p>
-          {t("Findings.medicines", {
+          {/* "then" only when the order is known (owner decision 2026-11-08, pharmacologist B2). */}
+          {t(orderKnown ? "Findings.medicines" : "Findings.medicinesRoles", {
             index: words.index,
             indexBox: boxes(f.index.items),
             marker: words.marker,
@@ -135,6 +148,7 @@ export function FindingCard({
           })}
         </p>
         <p>{t("Findings.pattern")}</p>
+        <p className="text-sm text-muted">{t("Findings.source", { row })}</p>
         <p>
           {t(`Findings.timing.${f.timing}`, {
             index: words.index,
@@ -160,13 +174,15 @@ export function FindingCard({
           </ul>
           {f.priority ? (
             <p className="text-sm">
-              {t("Findings.priority", {
-                measure: t(`Findings.measure.${f.priority.measure}`),
+              {t(`Findings.priority.${f.priority.measure}`, {
                 value: f.priority.value,
                 low: f.priority.ci_low,
                 high: f.priority.ci_high,
               })}
             </p>
+          ) : null}
+          {f.rule_id === "pipc:49" ? (
+            <p className="text-sm">{t("Findings.row49")}</p>
           ) : null}
           {view.supporting ? (
             <p className="text-sm">{t("Findings.supporting")}</p>

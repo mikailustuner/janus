@@ -8,7 +8,7 @@
   "rule_base_version": "8d4881fc6418ee6437d4c2052283f89e6c21ea32405bcd6061f89e9637e32f8f",
   "integrity_version": "8a5b888f0a9f8791e7091da918e6904817211b90f5a573d2418a7432c728b84e",
   "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-  "glossary_version": "226aaf2ed17fcb666da86de250ab1fc8631a37b35aba0e61f31d05ff645d3934"
+  "glossary_version": "3b810442089acdbc8b44fb4070cc73a1a44bdc456674e8dd77199953e0a6f332"
  },
  "items": [
   {
@@ -109,7 +109,8 @@
          "run_id": "20261107T180936Z-0738c719-f9ff",
          "region": "TR",
          "snapshot_date": "2026-11-06"
-        }
+        },
+        "strength_code": null
        }
       ],
       "source": {
@@ -117,7 +118,8 @@
        "run_id": "20261107T180936Z-0738c719-f9ff",
        "region": "TR",
        "snapshot_date": "2026-11-06"
-      }
+      },
+      "dose_form_group": null
      }
     ],
     "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
@@ -526,7 +528,8 @@
          "run_id": "20261107T180936Z-0738c719-f9ff",
          "region": "TR",
          "snapshot_date": "2026-11-06"
-        }
+        },
+        "strength_code": null
        }
       ],
       "source": {
@@ -534,7 +537,8 @@
        "run_id": "20261107T180936Z-0738c719-f9ff",
        "region": "TR",
        "snapshot_date": "2026-11-06"
-      }
+      },
+      "dose_form_group": null
      }
     ],
     "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
@@ -4979,7 +4983,7 @@
     "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
     "integrity_version": "8a5b888f0a9f8791e7091da918e6904817211b90f5a573d2418a7432c728b84e",
     "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-    "glossary_version": "226aaf2ed17fcb666da86de250ab1fc8631a37b35aba0e61f31d05ff645d3934"
+    "glossary_version": "3b810442089acdbc8b44fb4070cc73a1a44bdc456674e8dd77199953e0a6f332"
    },
    "as_of_month": "2026-11",
    "removals": [],
@@ -5239,6 +5243,17 @@
         },
         {
          "type": "sentence",
+         "id": "pipc:1:Q412666:Q221637:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "Order fits the pattern",
+         "evidence_ids": [
+          "rule:pipc:1"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
          "id": "pipc:1:Q412666:Q221637:timing",
          "template": "finding.timing.within_window",
          "kind": "claim",
@@ -5286,6 +5301,17 @@
          "numbers": [
           "51"
          ]
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:51:Q186969:Q286846:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "Order fits the pattern",
+         "evidence_ids": [
+          "rule:pipc:51"
+         ],
+         "numbers": []
         },
         {
          "type": "sentence",
@@ -5671,14 +5697,14 @@
          "id": "about:versions",
          "template": "about.versions",
          "kind": "fixed",
-         "text": "Versions: rules 8d4881fc, medicine data 7db3a513, evidence 8a5b888f, report counts 20261108, glossary 226aaf2e.",
+         "text": "Versions: rules 8d4881fc, medicine data 7db3a513, evidence 8a5b888f, report counts 20261108, glossary 3b810442.",
          "evidence_ids": [],
          "numbers": [
           "8d4881fc",
           "7db3a513",
           "8a5b888f",
           "20261108",
-          "226aaf2e"
+          "3b810442"
          ]
         },
         {
@@ -5721,7 +5747,7 @@
     "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
     "integrity_version": "8a5b888f0a9f8791e7091da918e6904817211b90f5a573d2418a7432c728b84e",
     "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-    "glossary_version": "226aaf2ed17fcb666da86de250ab1fc8631a37b35aba0e61f31d05ff645d3934"
+    "glossary_version": "3b810442089acdbc8b44fb4070cc73a1a44bdc456674e8dd77199953e0a6f332"
    },
    "as_of_month": "2026-11",
    "removals": [],
@@ -5984,6 +6010,17 @@
         },
         {
          "type": "sentence",
+         "id": "pipc:1:Q412666:Q221637:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "Sıra örüntüye uyuyor",
+         "evidence_ids": [
+          "rule:pipc:1"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
          "id": "pipc:1:Q412666:Q221637:timing",
          "template": "finding.timing.within_window",
          "kind": "claim",
@@ -6031,6 +6068,17 @@
          "numbers": [
           "51"
          ]
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:51:Q186969:Q286846:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "Sıra örüntüye uyuyor",
+         "evidence_ids": [
+          "rule:pipc:51"
+         ],
+         "numbers": []
         },
         {
          "type": "sentence",
@@ -6107,7 +6155,7 @@
            "id": "stat:Q412666:cough:ALL:ratio",
            "template": "stat.reports_ratio",
            "kind": "claim",
-           "text": "Tüm bölgeler: 160 bildirimde ramipril, “Öksürük” olayıyla birlikte yer almaktadır; bildirim olasılık oranı (ROR) 3,51 (güven aralığı 2,99 ile 4,12 arası).",
+           "text": "Tüm bölgeler: 160 bildirimde ramipril, “Öksürük” olayıyla birlikte yer almaktadır; bildirim odds oranı (ROR) 3,51 (güven aralığı 2,99 ile 4,12 arası).",
            "evidence_ids": [
             "dataset:faers"
            ],
@@ -6161,7 +6209,7 @@
            "id": "stat:Q186969:gastric_ulcer_bleed:ALL:ratio",
            "template": "stat.reports_ratio",
            "kind": "claim",
-           "text": "Tüm bölgeler: 409 bildirimde ibuprofen, “Gastrit/mide ülseri/gastrointestinal kanama” olayıyla birlikte yer almaktadır; bildirim olasılık oranı (ROR) 9,20 (güven aralığı 8,31 ile 10,2 arası).",
+           "text": "Tüm bölgeler: 409 bildirimde ibuprofen, “Gastrit/mide ülseri/gastrointestinal kanama” olayıyla birlikte yer almaktadır; bildirim odds oranı (ROR) 9,20 (güven aralığı 8,31 ile 10,2 arası).",
            "evidence_ids": [
             "dataset:faers"
            ],
@@ -6354,7 +6402,7 @@
          "id": "integrity:by_status",
          "template": "integrity.by_status",
          "kind": "claim",
-         "text": "Kontrol edilen kaynakların durumu: bildirim yok 1, düzeltme 1, endişe bildirimi 0, henüz kontrol edilmedi 0.",
+         "text": "Kontrol edilen kaynakların durumu: duyuru yok 1, düzeltme 1, endişe ifadesi 0, henüz kontrol edilmedi 0.",
          "evidence_ids": [
           "dataset:faers",
           "dataset:pipc",
@@ -6416,14 +6464,14 @@
          "id": "about:versions",
          "template": "about.versions",
          "kind": "fixed",
-         "text": "Sürümler: kurallar 8d4881fc, ilaç verileri 7db3a513, kanıtlar 8a5b888f, bildirim sayıları 20261108, sözlük 226aaf2e.",
+         "text": "Sürümler: kurallar 8d4881fc, ilaç verileri 7db3a513, kanıtlar 8a5b888f, bildirim sayıları 20261108, sözlük 3b810442.",
          "evidence_ids": [],
          "numbers": [
           "8d4881fc",
           "7db3a513",
           "8a5b888f",
           "20261108",
-          "226aaf2e"
+          "3b810442"
          ]
         },
         {
@@ -6466,7 +6514,7 @@
     "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
     "integrity_version": "8a5b888f0a9f8791e7091da918e6904817211b90f5a573d2418a7432c728b84e",
     "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-    "glossary_version": "226aaf2ed17fcb666da86de250ab1fc8631a37b35aba0e61f31d05ff645d3934"
+    "glossary_version": "3b810442089acdbc8b44fb4070cc73a1a44bdc456674e8dd77199953e0a6f332"
    },
    "as_of_month": "2026-11",
    "removals": [],
@@ -6535,7 +6583,7 @@
          "id": "safety:urgent_care_gi",
          "template": "safety.urgent_care_gi",
          "kind": "fixed",
-         "text": "Bluterbrechen oder schwarzer Stuhl braucht dringend ärztliche Hilfe. Wenn Ihnen dabei schwindelig wird oder Sie sich sehr schlecht fühlen, wählen Sie 112.",
+         "text": "Bluterbrechen oder schwarzer Stuhl braucht dringend ärztliche Hilfe. Wenn Sie sich dabei einer Ohnmacht nahe oder sehr schlecht fühlen, wählen Sie 112.",
          "evidence_ids": [],
          "numbers": [
           "112"
@@ -6726,6 +6774,17 @@
         },
         {
          "type": "sentence",
+         "id": "pipc:1:Q412666:Q221637:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "Reihenfolge passt zum Muster",
+         "evidence_ids": [
+          "rule:pipc:1"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
          "id": "pipc:1:Q412666:Q221637:timing",
          "template": "finding.timing.within_window",
          "kind": "claim",
@@ -6773,6 +6832,17 @@
          "numbers": [
           "51"
          ]
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:51:Q186969:Q286846:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "Reihenfolge passt zum Muster",
+         "evidence_ids": [
+          "rule:pipc:51"
+         ],
+         "numbers": []
         },
         {
          "type": "sentence",
@@ -7158,14 +7228,14 @@
          "id": "about:versions",
          "template": "about.versions",
          "kind": "fixed",
-         "text": "Versionen: Regeln 8d4881fc, Arzneimitteldaten 7db3a513, Evidenz 8a5b888f, Meldezahlen 20261108, Glossar 226aaf2e.",
+         "text": "Versionen: Regeln 8d4881fc, Arzneimitteldaten 7db3a513, Evidenz 8a5b888f, Meldezahlen 20261108, Glossar 3b810442.",
          "evidence_ids": [],
          "numbers": [
           "8d4881fc",
           "7db3a513",
           "8a5b888f",
           "20261108",
-          "226aaf2e"
+          "3b810442"
          ]
         },
         {
@@ -7208,7 +7278,7 @@
     "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
     "integrity_version": "8a5b888f0a9f8791e7091da918e6904817211b90f5a573d2418a7432c728b84e",
     "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-    "glossary_version": "226aaf2ed17fcb666da86de250ab1fc8631a37b35aba0e61f31d05ff645d3934"
+    "glossary_version": "3b810442089acdbc8b44fb4070cc73a1a44bdc456674e8dd77199953e0a6f332"
    },
    "as_of_month": "2026-11",
    "removals": [],
@@ -7277,7 +7347,7 @@
          "id": "safety:urgent_care_gi",
          "template": "safety.urgent_care_gi",
          "kind": "fixed",
-         "text": "Des vomissements de sang ou des selles noires nécessitent des soins médicaux urgents. Si vous avez en plus des vertiges ou si vous vous sentez très mal, appelez le 112.",
+         "text": "Des vomissements de sang ou des selles noires nécessitent des soins médicaux urgents. Si vous avez en plus une sensation d'évanouissement ou si vous vous sentez très mal, appelez le 112.",
          "evidence_ids": [],
          "numbers": [
           "le 112"
@@ -7468,6 +7538,17 @@
         },
         {
          "type": "sentence",
+         "id": "pipc:1:Q412666:Q221637:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "L'ordre correspond au schéma",
+         "evidence_ids": [
+          "rule:pipc:1"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
          "id": "pipc:1:Q412666:Q221637:timing",
          "template": "finding.timing.within_window",
          "kind": "claim",
@@ -7515,6 +7596,17 @@
          "numbers": [
           "51"
          ]
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:51:Q186969:Q286846:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "L'ordre correspond au schéma",
+         "evidence_ids": [
+          "rule:pipc:51"
+         ],
+         "numbers": []
         },
         {
          "type": "sentence",
@@ -7900,14 +7992,14 @@
          "id": "about:versions",
          "template": "about.versions",
          "kind": "fixed",
-         "text": "Versions : règles 8d4881fc, données médicaments 7db3a513, sources 8a5b888f, comptes de signalements 20261108, glossaire 226aaf2e.",
+         "text": "Versions : règles 8d4881fc, données médicaments 7db3a513, sources 8a5b888f, comptes de signalements 20261108, glossaire 3b810442.",
          "evidence_ids": [],
          "numbers": [
           "8d4881fc",
           "7db3a513",
           "8a5b888f",
           "20261108",
-          "226aaf2e"
+          "3b810442"
          ]
         },
         {
@@ -7950,7 +8042,7 @@
     "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
     "integrity_version": "8a5b888f0a9f8791e7091da918e6904817211b90f5a573d2418a7432c728b84e",
     "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-    "glossary_version": "226aaf2ed17fcb666da86de250ab1fc8631a37b35aba0e61f31d05ff645d3934"
+    "glossary_version": "3b810442089acdbc8b44fb4070cc73a1a44bdc456674e8dd77199953e0a6f332"
    },
    "as_of_month": "2026-11",
    "removals": [],
@@ -8019,7 +8111,7 @@
          "id": "safety:urgent_care_gi",
          "template": "safety.urgent_care_gi",
          "kind": "fixed",
-         "text": "Vomitar sangre o tener heces negras necesita atención médica urgente. Si además se siente mareado o muy mal, llame al 112.",
+         "text": "Vomitar sangre o tener heces negras necesita atención médica urgente. Si además tiene sensación de desmayo o se siente muy mal, llame al 112.",
          "evidence_ids": [],
          "numbers": [
           "112"
@@ -8213,6 +8305,17 @@
         },
         {
          "type": "sentence",
+         "id": "pipc:1:Q412666:Q221637:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "El orden coincide con el patrón",
+         "evidence_ids": [
+          "rule:pipc:1"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
          "id": "pipc:1:Q412666:Q221637:timing",
          "template": "finding.timing.within_window",
          "kind": "claim",
@@ -8263,6 +8366,17 @@
         },
         {
          "type": "sentence",
+         "id": "pipc:51:Q186969:Q286846:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "El orden coincide con el patrón",
+         "evidence_ids": [
+          "rule:pipc:51"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
          "id": "pipc:51:Q186969:Q286846:timing",
          "template": "finding.timing.within_window",
          "kind": "claim",
@@ -8303,7 +8417,7 @@
        "id": "statistics",
        "heading": {
         "template": "statistics.heading",
-        "text": "Informes a FDA AEMS (antes FAERS)"
+        "text": "Notificaciones a FDA AEMS (antes FAERS)"
        },
        "blocks": [
         {
@@ -8336,7 +8450,7 @@
            "id": "stat:Q412666:cough:ALL:ratio",
            "template": "stat.reports_ratio",
            "kind": "claim",
-           "text": "Todas las regiones: 160 informes citan ramipril junto con el evento «Tos»; razón de odds de notificación (ROR) 3,51 (intervalo de confianza de 2,99 a 4,12).",
+           "text": "Todas las regiones: 160 notificaciones citan ramipril junto con el evento «Tos»; razón de odds de notificación (ROR) 3,51 (intervalo de confianza de 2,99 a 4,12).",
            "evidence_ids": [
             "dataset:faers"
            ],
@@ -8352,7 +8466,7 @@
            "id": "stat:Q412666:cough:ALL:assessment",
            "template": "stat.assessment.disproportionate",
            "kind": "claim",
-           "text": "El evento aparece en una proporción mayor de los informes que nombran este medicamento que en los demás informes que nombran un medicamento reconocido.",
+           "text": "El evento aparece en una proporción mayor de las notificaciones que nombran este medicamento que en las demás notificaciones que nombran un medicamento reconocido.",
            "evidence_ids": [
             "dataset:faers"
            ],
@@ -8390,7 +8504,7 @@
            "id": "stat:Q186969:gastric_ulcer_bleed:ALL:ratio",
            "template": "stat.reports_ratio",
            "kind": "claim",
-           "text": "Todas las regiones: 409 informes citan ibuprofeno junto con el evento «Gastritis/úlcera gástrica/hemorragia digestiva»; razón de odds de notificación (ROR) 9,20 (intervalo de confianza de 8,31 a 10,2).",
+           "text": "Todas las regiones: 409 notificaciones citan ibuprofeno junto con el evento «Gastritis/úlcera gástrica/hemorragia digestiva»; razón de odds de notificación (ROR) 9,20 (intervalo de confianza de 8,31 a 10,2).",
            "evidence_ids": [
             "dataset:faers"
            ],
@@ -8406,7 +8520,7 @@
            "id": "stat:Q186969:gastric_ulcer_bleed:ALL:assessment",
            "template": "stat.assessment.disproportionate",
            "kind": "claim",
-           "text": "El evento aparece en una proporción mayor de los informes que nombran este medicamento que en los demás informes que nombran un medicamento reconocido.",
+           "text": "El evento aparece en una proporción mayor de las notificaciones que nombran este medicamento que en las demás notificaciones que nombran un medicamento reconocido.",
            "evidence_ids": [
             "dataset:faers"
            ],
@@ -8419,7 +8533,7 @@
          "id": "statistics:spontaneous_reporting",
          "template": "stat.limit.spontaneous_reporting",
          "kind": "fixed",
-         "text": "Los informes se envían de forma voluntaria y no se verifican.",
+         "text": "Las notificaciones se envían de forma voluntaria y no se verifican.",
          "evidence_ids": [],
          "numbers": []
         },
@@ -8455,7 +8569,7 @@
          "id": "statistics:absence",
          "template": "stat.absence",
          "kind": "fixed",
-         "text": "La ausencia de informes, o un patrón poco claro, no significa que no haya asociación ni que los medicamentos del paciente estén libres de problemas.",
+         "text": "La ausencia de notificaciones, o un patrón poco claro, no significa que no haya asociación ni que los medicamentos del paciente estén libres de problemas.",
          "evidence_ids": [],
          "numbers": []
         },
@@ -8464,7 +8578,7 @@
          "id": "statistics:window",
          "template": "stat.window",
          "kind": "fixed",
-         "text": "Los recuentos cubren los informes recibidos o actualizados en los cuatro trimestres 2025Q4–2026Q3, incluidas las versiones de seguimiento de casos recibidos antes.",
+         "text": "Los recuentos cubren las notificaciones recibidas o actualizadas en los cuatro trimestres 2025Q4–2026Q3, incluidas las versiones de seguimiento de casos recibidos antes.",
          "evidence_ids": [],
          "numbers": [
           "2025Q4",
@@ -8476,7 +8590,7 @@
          "id": "statistics:denominator",
          "template": "stat.denominator",
          "kind": "fixed",
-         "text": "Los recuentos usan solo los informes que nombran al menos un medicamento que Janus reconoce (84,8 % de los informes de este periodo). Algunas grafías no se reconocen, por lo que un patrón puede pasar inadvertido.",
+         "text": "Los recuentos usan solo las notificaciones que nombran al menos un medicamento que Janus reconoce (84,8 % de las notificaciones de este periodo). Algunas grafías no se reconocen, por lo que un patrón puede pasar inadvertido.",
          "evidence_ids": [],
          "numbers": [
           "84,8 %"
@@ -8645,14 +8759,14 @@
          "id": "about:versions",
          "template": "about.versions",
          "kind": "fixed",
-         "text": "Versiones: reglas 8d4881fc, datos de medicamentos 7db3a513, evidencia 8a5b888f, recuentos de informes 20261108, glosario 226aaf2e.",
+         "text": "Versiones: reglas 8d4881fc, datos de medicamentos 7db3a513, evidencia 8a5b888f, recuentos de notificaciones 20261108, glosario 3b810442.",
          "evidence_ids": [],
          "numbers": [
           "8d4881fc",
           "7db3a513",
           "8a5b888f",
           "20261108",
-          "226aaf2e"
+          "3b810442"
          ]
         },
         {
@@ -8669,7 +8783,7 @@
          "id": "about:faers",
          "template": "about.faers",
          "kind": "fixed",
-         "text": "Los recuentos de informes proceden de los datos trimestrales públicos de FDA AEMS (antes FAERS).",
+         "text": "Los recuentos de notificaciones proceden de los datos trimestrales públicos de FDA AEMS (antes FAERS).",
          "evidence_ids": [],
          "numbers": []
         },
@@ -8803,7 +8917,7 @@
   "texts": {
    "heading": "Rückmeldung zum Ergebnis",
    "intro": "Bitte geben Sie für jedes geprüfte Muster an, ob es eine Verschreibungskaskade war und was unternommen wurde. Wenn Sie unsicher sind, lassen Sie ein Muster unbeantwortet.",
-   "stored_fields": "Janus speichert nur Ihre Antworten, die Woche der Meldung, die Region des Hinweises und die Codes der Arzneimittel und des Ereignisses. Keine Namen, kein genaues Datum und nichts über Sie.",
+   "stored_fields": "Janus speichert nur Ihre Antworten, die Woche der Antwort, die Region des Hinweises und für jedes Muster seine Regel und die Codes der Arzneimittel und des Ereignisses. Keine Namen, kein genaues Datum und nichts über Sie.",
    "limits": "Antworten werden nur als Anzahl für Gruppen von mindestens 20 Antworten gezeigt, mit hinzugefügtem Rauschen, und nie zu Meldungen von Patienten addiert.",
    "question_assessment": "War das eine Verschreibungskaskade?",
    "question_action": "Was wurde unternommen? (freiwillig)",

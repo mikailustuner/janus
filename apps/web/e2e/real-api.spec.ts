@@ -88,7 +88,7 @@ test("outcome loop and donation on the real API", async ({ page }, info) => {
   await page.getByLabel("Age band").selectOption("70");
   await page
     .getByLabel(
-      "I explicitly agree to share the fields above as an anonymous donated report.",
+      "I explicitly agree to share the fields above as a donated report, without my name or contact details.",
     )
     .check();
   await page.getByTestId("donate-submit").click();

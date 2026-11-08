@@ -24,12 +24,12 @@
     "privacy": "What stays on this device",
     "howTitle": "How it works",
     "how1": "Scan the code on the box, or type the name.",
-    "how2": "Janus checks {patterns} published prescribing-cascade patterns and public reports of side effects.",
+    "how2": "Janus compares your medicines with {patterns} published prescribing-cascade patterns and public reports of side effects.",
     "how3": "You get a note with sources for your doctor, in the doctor's language.",
     "coverageTitle": "Regions and languages",
     "regions": "Medicine boxes from",
     "languages": "Languages",
-    "privacyLine": "Photos of the boxes and your medicine list stay on this device; Janus has no account and sends only what the check needs."
+    "privacyLine": "Photos of the boxes stay on this device. Janus has no account, does not store your medicine list and sends only the codes the check needs."
   },
   "Shell": {
     "skip": "Skip to content",
@@ -226,7 +226,7 @@
       },
       "ohio": {
         "name": "Ohio",
-        "summary": "US pharmacy vials, found by NDC."
+        "summary": "US pharmacy tablets and capsules, found by NDC."
       }
     },
     "codes": "Printable demo codes",
@@ -293,24 +293,15 @@
     "medicines": "{index} ({indexBox}), then {marker} ({markerBox})",
     "started": "{name}: since {month}",
     "startUnknown": "{name}: start not known",
-    "status": {
-      "probable": "Probable",
-      "possible": "Possible"
-    },
     "statusMonths": "{status} · {months, plural, one {# month apart} other {# months apart}}",
     "timing": {
-      "within_window": "{marker} was started {months, plural, one {# month} other {# months}} after {index}, within the {window}-month window used for this kind of pattern.",
-      "after_window": "{marker} was started {months, plural, one {# month} other {# months}} after {index}, later than the {window}-month window used for this kind of pattern.",
+      "within_window": "{marker} was started {months, plural, one {# month} other {# months}} after {index}, within the {window}-month window Janus uses for these patterns.",
+      "after_window": "{marker} was started {months, plural, one {# month} other {# months}} after {index}, later than the {window}-month window Janus uses for these patterns.",
       "same_month": "Both medicines were started in the same month, so their order is not known.",
       "date_unknown": "At least one start month is not known, so the order of the two medicines could not be checked."
     },
     "lowPriority": "Lower priority pattern",
-    "priority": "Published data (BMJ 2026 abstract): {measure} {value} (range {low} to {high})",
-    "measure": {
-      "incidence": "incidence, %",
-      "adjusted_sequence_ratio": "adjusted sequence ratio"
-    },
-    "supporting": "The same cascade is also described in another published cascade list (ThinkCascades).",
+    "supporting": "This pattern is also described in another published cascade list (ThinkCascades).",
     "formExtension": "The match includes a non-oral form of the first medicine (for example eye drops) that can act on the whole body.",
     "integrity": {
       "corrected_notice": "A correction has been published for a source of this pattern.",
@@ -326,7 +317,7 @@
       "glass": "Possible prescribing cascades"
     },
     "groupUnconfirmed": "Product form not confirmed",
-    "groupUnconfirmedIntro": "These matches use the codes {codes}. The exact product (for example tablet or eye drops) was not confirmed, so every form of the ingredient was considered. Please confirm the product to be sure the pattern applies.",
+    "groupUnconfirmedIntro": "These matches use the codes {codes}. The exact product (for example tablet or eye drops) was not confirmed, so every form of the ingredient was considered. Please confirm the product to check whether the pattern applies to this form.",
     "chains": "Chains of patterns",
     "chainsIntro": "These patterns link up into a chain:",
     "chainsTruncated": "Not all chains are shown.",
@@ -334,7 +325,7 @@
     "scopeChecked": "Janus checked {checked} of the {total} patterns of the PIPC list.",
     "scopeRule": "Row {row} ({cascade}) cannot be checked: {reason}.",
     "notMatchable": {
-      "no_atc_code": "the medicine class has no code",
+      "no_atc_code": "the medicine named in the pattern has no ATC code",
       "not_a_drug_class": "the entry is not a medicine class",
       "ambiguous_text": "the published text is ambiguous"
     },
@@ -354,7 +345,19 @@
     "makeNote": "Prepare the doctor note",
     "memory": "Reports for the whole list",
     "medicinesHeading": "Medicines checked",
-    "safetyHeading": "When to get urgent help"
+    "safetyHeading": "When to get urgent help",
+    "medicinesRoles": "First medicine of the pattern: {index} ({indexBox}). Second: {marker} ({markerBox}).",
+    "priority": {
+      "incidence": "In a published study of older adults in Ontario, Canada (BMJ 2026, abstract), this pattern was among those with the highest incidence of the two-medicine combination: {value}% (confidence interval {low} to {high}).",
+      "adjusted_sequence_ratio": "In a published study of older adults in Ontario, Canada (BMJ 2026, abstract), this pattern was among those with the highest adjusted sequence ratio: {value} (confidence interval {low} to {high}). A ratio above one means the second medicine was started after the first more often than before it."
+    },
+    "source": "Source: PIPC list (Rochon et al., Eur Geriatr Med 2025), row {row}.",
+    "row49": "This row of the list names the second medicine as a deficiency, as published. Janus checks vitamin B12, magnesium and oral iron supplements for it.",
+    "order": {
+      "fits": "Order fits the pattern",
+      "fitsLate": "Order fits, later than the usual window",
+      "notConfirmed": "Order not confirmed"
+    }
   },
   "ReadAloud": {
     "read": "Read aloud",
@@ -431,7 +434,7 @@
     "basis": "{region}: {occurrence} by the country of the event, {fallback} by the country of the reporter",
     "adrreports": "EU reports are published by the EMA (EudraVigilance, adrreports.eu)",
     "donatedTitle": "Donated reports (Janus)",
-    "outcomesTitle": "Doctor-confirmed outcomes",
+    "outcomesTitle": "Outcomes reported through doctor notes (not verified)",
     "cell": "{region}: {value}",
     "eventPicker": "Event",
     "tooMany": "The list has more than 20 ingredients. Please choose up to 20 to compare.",
@@ -441,7 +444,7 @@
   },
   "Note": {
     "title": "Doctor note",
-    "intro": "One page for the doctor, with sources, in the doctor's language. The list stays on this device; the names on the boxes are filled in here and never sent.",
+    "intro": "One page for the doctor, with sources, in the doctor's language. Janus does not store the list; the names on the boxes are filled in here and never leave this device.",
     "language": "Language of the note",
     "patientLanguage": "Your language: {language}",
     "statisticsRegion": "Report statistics region",
@@ -506,7 +509,7 @@
       },
       "export": {
         "title": "Dataset export",
-        "body": "The open, anonymised dataset for research."
+        "body": "The open dataset for research, with counts only for groups large enough to protect privacy."
       }
     },
     "back": {
@@ -568,7 +571,7 @@
       "done": "The donation was deleted."
     },
     "title": "Share a report",
-    "intro": "You can share one experience as an anonymous donated report: which medicines, which event, and whether it was unwanted or an improvement. It is counted in Collective Memory only in groups of 20 or more, with noise added.",
+    "intro": "You can share one experience as a donated report, without your name or contact details: which medicines, which event, and whether it was unwanted or an improvement. It is counted in Collective Memory only in groups of 20 or more, with noise added.",
     "noItems": "Add medicines first, to choose which ones the report concerns.",
     "event": "Event",
     "eventSearch": "Find an event",
@@ -593,13 +596,13 @@
     "storedRegion": "Region: {region}",
     "storedWeek": "The week of the report, set by the server (not the day).",
     "storedConsent": "The version of the consent text you accepted.",
-    "storedNothingElse": "Nothing else: no name, email, date, place or device identifier.",
+    "storedNothingElse": "Nothing else: no name, email, exact date, place finer than the region, or device identifier.",
     "consent": {
-      "2026-11-v1": {
+      "2026-11-v2": {
         "heading": "Your explicit consent",
         "body": "These fields are health data. Janus stores them only with your explicit consent (in the EU: GDPR Article 9(2)(a); in Türkiye: explicit consent under KVKK), for the purpose of counting donated reports in Collective Memory and for research. They are stored in the region shown on the privacy page and kept for at most 24 months.",
         "delete": "After sending you receive a deletion token. With it you can delete the donation at any time. Without it the donation cannot be deleted before the 24 months end.",
-        "check": "I explicitly agree to share the fields above as an anonymous donated report."
+        "check": "I explicitly agree to share the fields above as a donated report, without my name or contact details."
       }
     },
     "submit": "Share the report",
@@ -661,17 +664,17 @@
     "back": "Back to scanning"
   },
   "OutcomeConsent": {
-    "2026-11-v1": {
+    "2026-11-v2": {
       "heading": "What the QR code does",
       "asked": "The doctor is asked, for each pattern on the note, whether it was a prescribing cascade and what was done (for example dose changed, or no change).",
-      "stored": "Janus stores only the doctor's answers, the week of the answer, the region of the note and the codes of the patterns. No names, no box names and no dates finer than a week. The medicine list stays on this device.",
+      "stored": "Janus stores only the doctor's answers, the week of the answer, the region of the note, and for each answered pattern its rule, the codes of its two medicines and of the event, the direction (unwanted or improvement) and whether the product was confirmed. No names, no box names and no dates finer than a week. The medicine list itself is not stored.",
       "howLong": "The link works for about five weeks. Answers are kept for at most 24 months and are shown only as counts for groups of at least 20 answers, with noise added.",
       "withdraw": "You can withdraw at any time with the token kept on this device: the doctor can then no longer answer, and answers already sent are deleted."
     }
   },
   "Reminder": {
     "title": "Did the symptom you discussed get better?",
-    "body": "You made a note for the doctor on {date}. If you like, you can share how it went as an anonymous donated report.",
+    "body": "You made a note for the doctor on {date}. If you like, you can share how it went as a donated report, without your name or contact details.",
     "report": "Share how it went",
     "dismiss": "Hide this"
   },

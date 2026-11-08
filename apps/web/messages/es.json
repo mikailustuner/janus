@@ -24,12 +24,12 @@
     "privacy": "Qué se queda en este dispositivo",
     "howTitle": "Cómo funciona",
     "how1": "Escanee el código de la caja o escriba el nombre.",
-    "how2": "Janus comprueba {patterns} patrones publicados de cascada de prescripción y notificaciones públicas de efectos adversos.",
+    "how2": "Janus compara sus medicamentos con {patterns} patrones publicados de cascada de prescripción y con notificaciones públicas de efectos adversos.",
     "how3": "Recibe una nota con fuentes para su médico, en el idioma del médico.",
     "coverageTitle": "Regiones e idiomas",
     "regions": "Cajas de medicamentos de",
     "languages": "Idiomas",
-    "privacyLine": "Las fotos de las cajas y su lista de medicamentos se quedan en este dispositivo; Janus no tiene cuenta y solo envía lo que la comprobación necesita."
+    "privacyLine": "Las fotos de las cajas se quedan en este dispositivo. Janus no tiene cuenta, no guarda su lista de medicamentos y solo envía los códigos que la comprobación necesita."
   },
   "Shell": {
     "skip": "Ir al contenido",
@@ -226,7 +226,7 @@
       },
       "ohio": {
         "name": "Ohio",
-        "summary": "Frascos de farmacia de EE. UU., encontrados por NDC."
+        "summary": "Comprimidos y cápsulas de farmacias de EE. UU., encontrados por NDC."
       }
     },
     "codes": "Códigos de demo para imprimir",
@@ -293,24 +293,15 @@
     "medicines": "{index} ({indexBox}), después {marker} ({markerBox})",
     "started": "{name}: desde {month}",
     "startUnknown": "{name}: inicio desconocido",
-    "status": {
-      "probable": "Probable",
-      "possible": "Posible"
-    },
     "statusMonths": "{status} · {months, plural, one {# mes de diferencia} other {# meses de diferencia}}",
     "timing": {
-      "within_window": "{marker} se empezó {months, plural, one {# mes} other {# meses}} después de {index}, dentro de la ventana de {window} meses que se usa para este tipo de patrón.",
-      "after_window": "{marker} se empezó {months, plural, one {# mes} other {# meses}} después de {index}, más tarde que la ventana de {window} meses que se usa para este tipo de patrón.",
+      "within_window": "{marker} se empezó {months, plural, one {# mes} other {# meses}} después de {index}, dentro de la ventana de {window} meses que Janus usa para estos patrones.",
+      "after_window": "{marker} se empezó {months, plural, one {# mes} other {# meses}} después de {index}, más tarde que la ventana de {window} meses que Janus usa para estos patrones.",
       "same_month": "Los dos medicamentos se empezaron el mismo mes, así que no se conoce su orden.",
       "date_unknown": "Se desconoce al menos un mes de inicio, así que no se pudo comprobar el orden de los dos medicamentos."
     },
     "lowPriority": "Patrón de menor prioridad",
-    "priority": "Datos publicados (resumen de BMJ 2026): {measure} {value} (intervalo de {low} a {high})",
-    "measure": {
-      "incidence": "incidencia, %",
-      "adjusted_sequence_ratio": "razón de secuencia ajustada"
-    },
-    "supporting": "La misma cascada también se describe en otra lista publicada de cascadas (ThinkCascades).",
+    "supporting": "Este patrón también se describe en otra lista publicada de cascadas (ThinkCascades).",
     "formExtension": "La coincidencia incluye una forma no oral del primer medicamento (por ejemplo, un colirio) que puede actuar en todo el cuerpo.",
     "integrity": {
       "corrected_notice": "Se ha publicado una corrección de una fuente de este patrón.",
@@ -334,7 +325,7 @@
     "scopeChecked": "Janus comprobó {checked} de los {total} patrones de la lista PIPC.",
     "scopeRule": "La fila {row} ({cascade}) no se puede comprobar: {reason}.",
     "notMatchable": {
-      "no_atc_code": "la clase de medicamentos no tiene código",
+      "no_atc_code": "el medicamento citado en el patrón no tiene código ATC",
       "not_a_drug_class": "la entrada no es una clase de medicamentos",
       "ambiguous_text": "el texto publicado es ambiguo"
     },
@@ -354,7 +345,19 @@
     "makeNote": "Preparar la nota para el médico",
     "memory": "Notificaciones de toda la lista",
     "medicinesHeading": "Medicamentos comprobados",
-    "safetyHeading": "Cuándo pedir ayuda urgente"
+    "safetyHeading": "Cuándo pedir ayuda urgente",
+    "medicinesRoles": "Primer medicamento del patrón: {index} ({indexBox}). Segundo: {marker} ({markerBox}).",
+    "priority": {
+      "incidence": "En un estudio publicado en adultos mayores de Ontario (Canadá) (BMJ 2026, resumen), este patrón estaba entre los de mayor incidencia de la combinación de los dos medicamentos: {value} % (intervalo de confianza de {low} a {high}).",
+      "adjusted_sequence_ratio": "En un estudio publicado en adultos mayores de Ontario (Canadá) (BMJ 2026, resumen), este patrón estaba entre los de mayor razón de secuencia ajustada: {value} (intervalo de confianza de {low} a {high}). Una razón superior a uno significa que el segundo medicamento se inició más a menudo después del primero que antes."
+    },
+    "source": "Fuente: lista PIPC (Rochon et al., Eur Geriatr Med 2025), fila {row}.",
+    "row49": "Esta fila de la lista nombra el segundo medicamento como una carencia, tal como se publicó. Janus comprueba para ella los suplementos de vitamina B12, magnesio y hierro oral.",
+    "order": {
+      "fits": "El orden coincide con el patrón",
+      "fitsLate": "El orden coincide, después de la ventana habitual",
+      "notConfirmed": "Orden no confirmado"
+    }
   },
   "ReadAloud": {
     "read": "Leer en voz alta",
@@ -431,7 +434,7 @@
     "basis": "{region}: {occurrence} por el país del evento, {fallback} por el país de quien notifica",
     "adrreports": "La EMA publica las notificaciones de la UE (EudraVigilance, adrreports.eu)",
     "donatedTitle": "Notificaciones donadas (Janus)",
-    "outcomesTitle": "Resultados confirmados por un médico",
+    "outcomesTitle": "Resultados comunicados mediante notas al médico (no verificados)",
     "cell": "{region}: {value}",
     "eventPicker": "Evento",
     "tooMany": "La lista tiene más de 20 principios activos. Elija como máximo 20 para comparar.",
@@ -441,7 +444,7 @@
   },
   "Note": {
     "title": "Nota para el médico",
-    "intro": "Una página para el médico, con fuentes, en el idioma del médico. La lista se queda en este dispositivo; los nombres de las cajas se rellenan aquí y nunca se envían.",
+    "intro": "Una página para el médico, con fuentes, en el idioma del médico. Janus no guarda la lista; los nombres de las cajas se rellenan aquí y nunca salen de este dispositivo.",
     "language": "Idioma de la nota",
     "patientLanguage": "Su idioma: {language}",
     "statisticsRegion": "Región de las estadísticas de notificaciones",
@@ -506,7 +509,7 @@
       },
       "export": {
         "title": "Exportación del conjunto de datos",
-        "body": "El conjunto de datos abierto y anonimizado para la investigación."
+        "body": "El conjunto de datos abierto para la investigación, con recuentos solo para grupos lo bastante grandes como para proteger la privacidad."
       }
     },
     "back": {
@@ -525,7 +528,7 @@
     },
     "title": "Janus · respuesta sobre una nota",
     "loading": "Cargando el formulario…",
-    "demo": "Demo · paciente ficticio. Este formulario no envía nada.",
+    "demo": "Demo · paciente sintético. Este formulario no envía nada.",
     "first": "Primer medicamento",
     "second": "Segundo medicamento",
     "send": "Enviar",
@@ -568,7 +571,7 @@
       "done": "La donación se ha borrado."
     },
     "title": "Compartir una notificación",
-    "intro": "Puede compartir una experiencia como notificación donada anónima: qué medicamentos, qué evento y si fue un efecto no deseado o una mejoría. Solo se cuenta en la Memoria colectiva en grupos de 20 o más, con ruido añadido.",
+    "intro": "Puede compartir una experiencia como notificación donada, sin su nombre ni sus datos de contacto: qué medicamentos, qué evento y si fue un efecto no deseado o una mejoría. Solo se cuenta en la Memoria colectiva en grupos de 20 o más, con ruido añadido.",
     "noItems": "Añada primero medicamentos para elegir a cuáles se refiere la notificación.",
     "event": "Evento",
     "eventSearch": "Buscar un evento",
@@ -593,13 +596,13 @@
     "storedRegion": "Región: {region}",
     "storedWeek": "La semana de la notificación, fijada por el servidor (no el día).",
     "storedConsent": "La versión del texto de consentimiento que aceptó.",
-    "storedNothingElse": "Nada más: ni nombre, ni correo electrónico, ni fecha, ni lugar, ni identificador del dispositivo.",
+    "storedNothingElse": "Nada más: ni nombre, ni correo electrónico, ni fecha exacta, ni lugar más preciso que la región, ni identificador del dispositivo.",
     "consent": {
-      "2026-11-v1": {
+      "2026-11-v2": {
         "heading": "Su consentimiento explícito",
         "body": "Estos campos son datos de salud. Janus solo los guarda con su consentimiento explícito (en la UE: artículo 9.2.a) del RGPD; en Turquía: consentimiento explícito según la KVKK), con el fin de contar las notificaciones donadas en la Memoria colectiva y para la investigación. Se guardan en la región indicada en la página de privacidad y se conservan como máximo 24 meses.",
         "delete": "Tras el envío recibe un token de borrado. Con él puede borrar la donación en cualquier momento. Sin él, la donación no se puede borrar antes de que terminen los 24 meses.",
-        "check": "Acepto explícitamente compartir los campos anteriores como notificación donada anónima."
+        "check": "Acepto explícitamente compartir los campos anteriores como notificación donada, sin mi nombre ni mis datos de contacto."
       }
     },
     "submit": "Compartir la notificación",
@@ -623,7 +626,7 @@
     "none": "No se encontró ningún medicamento en: {regions}.",
     "sources": "Fuentes consultadas: {sources}",
     "noOpenDatabase": "No hay una base de datos abierta de productos para este país. Use la foto de la etiqueta o escriba el nombre; Janus no adivina el producto.",
-    "regionNotSupported": "Esta región todavía no está disponible.",
+    "regionNotSupported": "Janus todavía no admite esta región.",
     "unmapped": "Algunos principios activos no se pueden comprobar.",
     "outdated": "Los datos de {source} pueden no estar actualizados.",
     "unknownIds": "Algunos resultados anteriores ya no están en los datos de medicamentos.",
@@ -661,17 +664,17 @@
     "back": "Volver a escanear"
   },
   "OutcomeConsent": {
-    "2026-11-v1": {
+    "2026-11-v2": {
       "heading": "Qué hace el código QR",
       "asked": "Se pregunta al médico, para cada patrón de la nota, si era una cascada de prescripción y qué se hizo (por ejemplo, se cambió la dosis o no hubo cambios).",
-      "stored": "Janus guarda solo las respuestas del médico, la semana de la respuesta, la región de la nota y los códigos de los patrones. Ningún nombre, ningún nombre de caja y ninguna fecha más precisa que la semana. La lista de medicamentos se queda en este dispositivo.",
+      "stored": "Janus guarda solo las respuestas del médico, la semana de la respuesta, la región de la nota y, para cada patrón respondido, su regla, los códigos de sus dos medicamentos y del evento, el sentido (no deseado o mejoría) y si se confirmó el producto. Ningún nombre, ningún nombre de caja y ninguna fecha más precisa que la semana. La lista de medicamentos en sí no se guarda.",
       "howLong": "El enlace funciona unas cinco semanas. Las respuestas se conservan como máximo 24 meses y solo se muestran como recuentos de grupos de al menos 20 respuestas, con ruido añadido.",
       "withdraw": "Puede retirar los datos en cualquier momento con el token guardado en este dispositivo: el médico ya no podrá responder y las respuestas ya enviadas se borran."
     }
   },
   "Reminder": {
     "title": "¿Mejoró el síntoma que comentó?",
-    "body": "El {date} preparó una nota para el médico. Si lo desea, puede compartir cómo fue como notificación donada anónima.",
+    "body": "El {date} preparó una nota para el médico. Si lo desea, puede compartir cómo fue como notificación donada, sin su nombre ni sus datos de contacto.",
     "report": "Compartir cómo fue",
     "dismiss": "Ocultar"
   },
@@ -738,34 +741,34 @@
       "UNKNOWN": "llame al número de emergencias local"
     },
     "codes": {
-      "spontaneous_reporting": "Los informes se envían de forma voluntaria y no se verifican.",
+      "spontaneous_reporting": "Las notificaciones se envían de forma voluntaria y no se verifican.",
       "not_incidence": "Los recuentos no muestran con qué frecuencia ocurre un evento.",
       "deduplicated_by_case_version_only": "Solo se fusionan las versiones repetidas de un mismo caso, por lo que un mismo evento puede aparecer en más de un caso.",
-      "window_includes_follow_ups": "Los recuentos cubren los informes recibidos o actualizados en los cuatro trimestres {first}–{last}, incluidas las versiones de seguimiento de casos recibidos antes.",
-      "denominator_mapped_reports": "Los recuentos usan solo los informes que nombran al menos un medicamento que Janus reconoce ({share} de los informes de este periodo). Algunas grafías no se reconocen, por lo que un patrón puede pasar inadvertido. Las cifras de todos los informes se muestran al lado.",
-      "region_is_report_origin": "La región de un informe es el país donde se dice que ocurrió el evento o, si falta, el del notificador. No indica dónde se tomó o se compró el medicamento.",
+      "window_includes_follow_ups": "Los recuentos cubren las notificaciones recibidas o actualizadas en los cuatro trimestres {first}–{last}, incluidas las versiones de seguimiento de casos recibidos antes.",
+      "denominator_mapped_reports": "Los recuentos usan solo las notificaciones que nombran al menos un medicamento que Janus reconoce ({share} de las notificaciones de este periodo). Algunas grafías no se reconocen, por lo que un patrón puede pasar inadvertido. Las cifras de todas las notificaciones se muestran al lado.",
+      "region_is_report_origin": "La región de una notificación es el país donde se dice que ocurrió el evento o, si falta, el del notificador. No indica dónde se tomó o se compró el medicamento.",
       "eu_member_states_not_separable": "UE significa los 27 Estados miembros juntos; FAERS no puede distinguirlos.",
-      "regions_not_comparable": "Las regiones no son comparables como tasas, porque los hábitos de notificación difieren. Una etiqueta distinta en dos regiones puede deberse a un número distinto de informes y no a un patrón distinto. Cada región se compara solo con los demás informes de la misma región.",
-      "absence_is_not_reassurance": "La falta de informes, o un patrón poco claro, no significa que no exista asociación ni que sus medicamentos estén libres de problemas.",
+      "regions_not_comparable": "Las regiones no son comparables como tasas, porque los hábitos de notificación difieren. Una etiqueta distinta en dos regiones puede deberse a un número distinto de notificaciones y no a un patrón distinto. Cada región se compara solo con las demás notificaciones de la misma región.",
+      "absence_is_not_reassurance": "La falta de notificaciones, o un patrón poco claro, no significa que no exista asociación ni que sus medicamentos estén libres de problemas.",
       "counts_built_against_other_dataset": "Estos recuentos se elaboraron con una versión distinta de la lista de nombres de medicamentos que la que se usa ahora.",
       "source_may_be_outdated": "Los datos de FAERS son más antiguos de lo esperado según su calendario de actualización.",
-      "reported_together_only": "Estos recuentos solo muestran que los medicamentos aparecen juntos en los informes.",
-      "no_reports": "No se encontraron informes en este periodo.",
-      "insufficient_data": "Hay muy pocos informes para mostrar un patrón (menos de 3).",
-      "not_disproportionate": "El evento no aparece en una proporción claramente mayor de los informes que nombran este medicamento. Esto no significa que no exista asociación.",
-      "weak": "Pocos informes; considérelo un patrón débil.",
-      "weak_pattern": "Pocos informes; considérelo un patrón débil.",
-      "disproportionate": "El evento aparece en una proporción mayor de los informes que nombran este medicamento que en los demás informes que nombran un medicamento reconocido.",
+      "reported_together_only": "Estos recuentos solo muestran que los medicamentos aparecen juntos en las notificaciones.",
+      "no_reports": "No se encontraron notificaciones en este periodo.",
+      "insufficient_data": "Hay muy pocas notificaciones para mostrar un patrón (menos de 3).",
+      "not_disproportionate": "El evento no aparece en una proporción claramente mayor de las notificaciones que nombran este medicamento. Esto no significa que no exista asociación.",
+      "weak": "Pocas notificaciones; considérelo un patrón débil.",
+      "weak_pattern": "Pocas notificaciones; considérelo un patrón débil.",
+      "disproportionate": "El evento aparece en una proporción mayor de las notificaciones que nombran este medicamento que en las demás notificaciones que nombran un medicamento reconocido.",
       "estimate_uses_continuity_correction": "El tamaño de esta razón depende de un pequeño ajuste hecho porque un recuento es cero.",
-      "interval_approximate": "El intervalo es aproximado y menos fiable cuando hay pocos informes.",
-      "denominator_sensitive": "El resultado cambia cuando se usan todos los informes como comparación.",
-      "combination_caveat": "Estos recuentos corresponden a los informes que nombran todos estos medicamentos. El grupo de comparación es el resto de los informes, incluidos los que nombran solo algunos de ellos, por lo que un patrón puede provenir de uno solo de los medicamentos. No muestra que tomarlos juntos tenga un efecto.",
-      "set_counts_are_lower_bounds": "Los recuentos de un conjunto de medicamentos son límites inferiores: un informe solo cuenta si se reconoció cada medicamento que contiene.",
-      "below_display_threshold": "Hay muy pocos informes que nombren todos estos medicamentos, por lo que se muestran grupos más pequeños.",
+      "interval_approximate": "El intervalo es aproximado y menos fiable cuando hay pocas notificaciones.",
+      "denominator_sensitive": "El resultado cambia cuando se usan todas las notificaciones como comparación.",
+      "combination_caveat": "Estos recuentos corresponden a las notificaciones que nombran todos estos medicamentos. El grupo de comparación es el resto de las notificaciones, incluidas las que nombran solo algunos de ellos, por lo que un patrón puede provenir de uno solo de los medicamentos. No muestra que tomarlos juntos tenga un efecto.",
+      "set_counts_are_lower_bounds": "Los recuentos de un conjunto de medicamentos son límites inferiores: una notificación solo cuenta si se reconoció cada medicamento que contiene.",
+      "below_display_threshold": "Hay muy pocas notificaciones que nombren todos estos medicamentos, por lo que se muestran grupos más pequeños.",
       "pairwise_shown": "Se muestran pares de estos medicamentos.",
       "single_shown": "Cada medicamento se muestra por separado.",
       "event_not_reported_in_window": "Este evento no se notificó en este periodo.",
-      "benefit_not_in_faers": "FAERS no tiene un tipo de informe para las mejorías; solo los informes donados a Janus pueden mostrarlo.",
+      "benefit_not_in_faers": "FAERS no tiene un tipo de notificación para las mejorías; solo las notificaciones donadas a Janus pueden mostrarlo.",
       "hidden": "No se muestra.",
       "hidden_under_20_noise_added": "Oculto por debajo de 20, se añade ruido.",
       "layer_unavailable": "Esta capa no está disponible por ahora.",
@@ -774,10 +777,10 @@
       "crisis_support": "Si aparecen pensamientos de hacerse daño, {crisis}.",
       "urgent_care_skin": "Una erupción cutánea intensa, que se extiende o forma ampollas, o que viene con fiebre o llagas en la boca, necesita atención médica urgente. Si se hinchan la cara o los labios, le cuesta respirar o se siente muy mal, llame al {emergency}.",
       "urgent_care_heart": "Llame al {emergency} si hay dolor en el pecho, dificultad para respirar o desmayo. Un latido rápido o irregular también necesita atención médica urgente.",
-      "urgent_care_gi": "Vomitar sangre o tener heces negras necesita atención médica urgente. Si además se siente mareado o muy mal, llame al {emergency}.",
+      "urgent_care_gi": "Vomitar sangre o tener heces negras necesita atención médica urgente. Si además tiene sensación de desmayo o se siente muy mal, llame al {emergency}.",
       "urgent_care_seizure": "Una convulsión necesita atención médica urgente. Llame al {emergency} si dura más de 5 minutos, se repite o viene con una lesión o dificultad para respirar.",
       "urgent_care_breathing": "La falta de aire repentina o que empeora necesita atención médica urgente. Si es intensa o viene con dolor en el pecho, llame al {emergency}.",
-      "tr_reports_small_self_selected": "Los informes de Türkiye son pocos y se envían de forma voluntaria. No muestran cómo se usan los medicamentos en Türkiye."
+      "tr_reports_small_self_selected": "Las notificaciones de Turquía son pocas y se envían de forma voluntaria. No muestran cómo se usan los medicamentos en Turquía."
     }
   }
 }

@@ -24,12 +24,12 @@
     "privacy": "Ce qui reste sur cet appareil",
     "howTitle": "Comment ça marche",
     "how1": "Scannez le code de la boîte, ou saisissez le nom.",
-    "how2": "Janus vérifie {patterns} schémas publiés de cascade de prescription et des déclarations publiques d'effets indésirables.",
+    "how2": "Janus compare vos médicaments à {patterns} schémas publiés de cascade de prescription et à des signalements publics d'effets indésirables.",
     "how3": "Vous obtenez une note avec sources pour votre médecin, dans la langue du médecin.",
     "coverageTitle": "Régions et langues",
     "regions": "Boîtes de médicaments de",
     "languages": "Langues",
-    "privacyLine": "Les photos des boîtes et votre liste de médicaments restent sur cet appareil ; Janus n'a pas de compte et n'envoie que ce dont la vérification a besoin."
+    "privacyLine": "Les photos des boîtes restent sur cet appareil. Janus n'a pas de compte, n'enregistre pas votre liste de médicaments et n'envoie que les codes dont la vérification a besoin."
   },
   "Shell": {
     "skip": "Aller au contenu",
@@ -66,8 +66,8 @@
   },
   "Emergency": {
     "title": "En cas d'urgence",
-    "text": "Douleur dans la poitrine, difficulté à respirer, signes d'AVC ou réaction allergique grave : appelez d'abord les secours ({emergency}).",
-    "short": "Urgence : {emergency}"
+    "text": "Douleur dans la poitrine, difficulté à respirer, signes d'AVC ou réaction allergique grave : appelez d'abord les secours en composant {emergency}.",
+    "short": "Urgence : composez {emergency}"
   },
   "Common": {
     "loading": "Chargement…",
@@ -201,7 +201,7 @@
     "research": "Section recherche",
     "privacy": "Confidentialité",
     "deleteTitle": "Tout effacer sur cet appareil",
-    "deleteBody": "Retire de ce navigateur la liste des médicaments, les réglages et les jetons enregistrés. Les données données et les réponses des médecins ne peuvent être effacées qu'avec leur jeton de suppression ou leur jeton de note.",
+    "deleteBody": "Retire de ce navigateur la liste des médicaments, les réglages et les jetons enregistrés. Les données issues des dons et les réponses des médecins ne peuvent être effacées qu'avec leur jeton de suppression ou leur jeton de note.",
     "deleteButton": "Tout effacer",
     "deleteConfirm": "Effacer tout ce que Janus garde sur cet appareil ? Cette action est définitive.",
     "deleteDone": "Tout ce que Janus gardait sur cet appareil a été effacé."
@@ -226,14 +226,14 @@
       },
       "ohio": {
         "name": "Ohio",
-        "summary": "Flacons de pharmacie américains, trouvés par NDC."
+        "summary": "Comprimés et gélules de pharmacies américaines, trouvés par NDC."
       }
     },
     "codes": "Codes de démo à imprimer",
     "codesIntro": "Un code par produit de démo. Ils utilisent une plage de codes qu'aucun médicament n'utilise, et Janus les reconnaît avant toute requête.",
     "codeLabel": "DÉMO — produit synthétique, pas un médicament",
     "serialNote": "Le code porte aussi un numéro de série, volontairement : Janus ne l'envoie jamais.",
-    "neverDonated": "Les données de démo ne sont jamais données.",
+    "neverDonated": "Les données de démo ne font jamais l'objet d'un don.",
     "noList": "Votre propre liste n'est pas affichée en mode démo et les médicaments de démo n'y sont jamais ajoutés."
   },
   "Medicines": {
@@ -268,8 +268,8 @@
     "intro": "Mois de début dans l'ordre du temps.",
     "empty": "Ajoutez des mois de début pour voir la chronologie.",
     "unknownLane": "Début inconnu",
-    "link": "{marker} a été commencé {months, plural, one {# mois} other {# mois}} après {index}.",
-    "linkSameMonth": "{marker} et {index} ont été commencés le même mois.",
+    "link": "{marker} : début {months, plural, one {# mois} other {# mois}} après {index}.",
+    "linkSameMonth": "{marker} et {index} : début le même mois.",
     "linkUnknown": "{marker} et {index} : l'ordre n'est pas connu."
   },
   "Findings": {
@@ -293,24 +293,15 @@
     "medicines": "{index} ({indexBox}), puis {marker} ({markerBox})",
     "started": "{name} : depuis {month}",
     "startUnknown": "{name} : début inconnu",
-    "status": {
-      "probable": "Probable",
-      "possible": "Possible"
-    },
     "statusMonths": "{status} · {months, plural, one {# mois d'écart} other {# mois d'écart}}",
     "timing": {
-      "within_window": "{marker} a été commencé {months, plural, one {# mois} other {# mois}} après {index}, dans la fenêtre de {window} mois utilisée pour ce type de schéma.",
-      "after_window": "{marker} a été commencé {months, plural, one {# mois} other {# mois}} après {index}, au-delà de la fenêtre de {window} mois utilisée pour ce type de schéma.",
+      "within_window": "{marker} : début {months, plural, one {# mois} other {# mois}} après {index}, dans la fenêtre de {window} mois que Janus utilise pour ces schémas.",
+      "after_window": "{marker} : début {months, plural, one {# mois} other {# mois}} après {index}, au-delà de la fenêtre de {window} mois que Janus utilise pour ces schémas.",
       "same_month": "Les deux médicaments ont été commencés le même mois, leur ordre n'est donc pas connu.",
       "date_unknown": "Au moins un mois de début est inconnu ; l'ordre des deux médicaments n'a donc pas pu être vérifié."
     },
     "lowPriority": "Schéma de priorité moindre",
-    "priority": "Données publiées (résumé BMJ 2026) : {measure} {value} (intervalle de {low} à {high})",
-    "measure": {
-      "incidence": "incidence, %",
-      "adjusted_sequence_ratio": "rapport de séquence ajusté"
-    },
-    "supporting": "La même cascade est aussi décrite dans une autre liste publiée de cascades (ThinkCascades).",
+    "supporting": "Ce schéma est aussi décrit dans une autre liste publiée de cascades (ThinkCascades).",
     "formExtension": "La correspondance inclut une forme non orale du premier médicament (par exemple un collyre) qui peut agir sur tout l'organisme.",
     "integrity": {
       "corrected_notice": "Un erratum a été publié pour une source de ce schéma.",
@@ -334,7 +325,7 @@
     "scopeChecked": "Janus a vérifié {checked} des {total} schémas de la liste PIPC.",
     "scopeRule": "La ligne {row} ({cascade}) ne peut pas être vérifiée : {reason}.",
     "notMatchable": {
-      "no_atc_code": "la classe de médicaments n'a pas de code",
+      "no_atc_code": "le médicament cité dans le schéma n'a pas de code ATC",
       "not_a_drug_class": "l'entrée n'est pas une classe de médicaments",
       "ambiguous_text": "le texte publié est ambigu"
     },
@@ -354,7 +345,19 @@
     "makeNote": "Préparer la note pour le médecin",
     "memory": "Signalements pour toute la liste",
     "medicinesHeading": "Médicaments vérifiés",
-    "safetyHeading": "Quand demander de l'aide en urgence"
+    "safetyHeading": "Quand demander de l'aide en urgence",
+    "medicinesRoles": "Premier médicament du schéma : {index} ({indexBox}). Deuxième : {marker} ({markerBox}).",
+    "priority": {
+      "incidence": "Dans une étude publiée menée auprès d'adultes âgés en Ontario (Canada) (BMJ 2026, résumé), ce schéma figurait parmi ceux dont l'incidence de l'association des deux médicaments est la plus élevée : {value} % (intervalle de confiance de {low} à {high}).",
+      "adjusted_sequence_ratio": "Dans une étude publiée menée auprès d'adultes âgés en Ontario (Canada) (BMJ 2026, résumé), ce schéma figurait parmi ceux dont le rapport de séquence ajusté est le plus élevé : {value} (intervalle de confiance de {low} à {high}). Un rapport supérieur à un signifie que le second médicament a été commencé plus souvent après le premier qu'avant lui."
+    },
+    "source": "Source : liste PIPC (Rochon et al., Eur Geriatr Med 2025), ligne {row}.",
+    "row49": "Cette ligne de la liste désigne le second médicament comme une carence, tel que publié. Janus vérifie pour elle les compléments en vitamine B12, en magnésium et en fer par voie orale.",
+    "order": {
+      "fits": "L'ordre correspond au schéma",
+      "fitsLate": "L'ordre correspond, au-delà de la fenêtre habituelle",
+      "notConfirmed": "Ordre non confirmé"
+    }
   },
   "ReadAloud": {
     "read": "Lire à voix haute",
@@ -430,8 +433,8 @@
     "unknownRegion": "Région inconnue : {count} ({share})",
     "basis": "{region} : {occurrence} selon le pays de l'événement, {fallback} selon le pays du déclarant",
     "adrreports": "Les signalements de l'UE sont publiés par l'EMA (EudraVigilance, adrreports.eu)",
-    "donatedTitle": "Signalements donnés (Janus)",
-    "outcomesTitle": "Issues confirmées par un médecin",
+    "donatedTitle": "Signalements issus de dons (Janus)",
+    "outcomesTitle": "Issues signalées via les notes au médecin (non vérifiées)",
     "cell": "{region} : {value}",
     "eventPicker": "Événement",
     "tooMany": "La liste compte plus de 20 substances. Veuillez en choisir 20 au plus pour la comparaison.",
@@ -441,7 +444,7 @@
   },
   "Note": {
     "title": "Note pour le médecin",
-    "intro": "Une page pour le médecin, avec sources, dans la langue du médecin. La liste reste sur cet appareil ; les noms inscrits sur les boîtes sont ajoutés ici et ne sont jamais envoyés.",
+    "intro": "Une page pour le médecin, avec sources, dans la langue du médecin. Janus n'enregistre pas la liste ; les noms inscrits sur les boîtes sont ajoutés ici et ne quittent jamais cet appareil.",
     "language": "Langue de la note",
     "patientLanguage": "Votre langue : {language}",
     "statisticsRegion": "Région des statistiques de signalements",
@@ -506,7 +509,7 @@
       },
       "export": {
         "title": "Export du jeu de données",
-        "body": "Le jeu de données ouvert et anonymisé pour la recherche."
+        "body": "Le jeu de données ouvert pour la recherche, avec des chiffres uniquement pour des groupes assez grands pour protéger la vie privée."
       }
     },
     "back": {
@@ -525,7 +528,7 @@
     },
     "title": "Janus · retour sur une note",
     "loading": "Chargement du formulaire…",
-    "demo": "Démo · patient fictif. Ce formulaire n'envoie rien.",
+    "demo": "Démo · patient synthétique. Ce formulaire n'envoie rien.",
     "first": "Premier médicament",
     "second": "Deuxième médicament",
     "send": "Envoyer",
@@ -568,7 +571,7 @@
       "done": "Le don a été effacé."
     },
     "title": "Partager un signalement",
-    "intro": "Vous pouvez partager une expérience sous forme de signalement donné anonyme : quels médicaments, quel événement, et s'il s'agissait d'un effet indésirable ou d'une amélioration. Il n'est compté dans la Mémoire collective que dans des groupes de 20 ou plus, avec du bruit ajouté.",
+    "intro": "Vous pouvez partager une expérience sous forme de signalement issu d'un don, sans votre nom ni vos coordonnées : quels médicaments, quel événement, et s'il s'agissait d'un effet indésirable ou d'une amélioration. Il n'est compté dans la Mémoire collective que dans des groupes de 20 ou plus, avec du bruit ajouté.",
     "noItems": "Ajoutez d'abord des médicaments pour choisir ceux que concerne le signalement.",
     "event": "Événement",
     "eventSearch": "Rechercher un événement",
@@ -593,13 +596,13 @@
     "storedRegion": "Région : {region}",
     "storedWeek": "La semaine du signalement, fixée par le serveur (pas le jour).",
     "storedConsent": "La version du texte de consentement que vous avez acceptée.",
-    "storedNothingElse": "Rien d'autre : ni nom, ni e-mail, ni date, ni lieu, ni identifiant d'appareil.",
+    "storedNothingElse": "Rien d'autre : ni nom, ni e-mail, ni date exacte, ni lieu plus précis que la région, ni identifiant d'appareil.",
     "consent": {
-      "2026-11-v1": {
+      "2026-11-v2": {
         "heading": "Votre consentement explicite",
         "body": "Ces champs sont des données de santé. Janus ne les enregistre qu'avec votre consentement explicite (dans l'UE : article 9, paragraphe 2, point a), du RGPD ; en Turquie : consentement explicite au titre de la KVKK), afin de compter les signalements donnés dans la Mémoire collective et pour la recherche. Ils sont stockés dans la région indiquée sur la page de confidentialité et conservés 24 mois au plus.",
         "delete": "Après l'envoi, vous recevez un jeton de suppression. Avec ce jeton, vous pouvez effacer le don à tout moment. Sans lui, le don ne peut pas être effacé avant la fin des 24 mois.",
-        "check": "J'accepte explicitement de partager les champs ci-dessus sous forme de signalement donné anonyme."
+        "check": "J'accepte explicitement de partager les champs ci-dessus sous forme de signalement issu d'un don, sans mon nom ni mes coordonnées."
       }
     },
     "submit": "Partager le signalement",
@@ -661,17 +664,17 @@
     "back": "Retour au scan"
   },
   "OutcomeConsent": {
-    "2026-11-v1": {
+    "2026-11-v2": {
       "heading": "Ce que fait le code QR",
       "asked": "Pour chaque schéma de la note, il est demandé au médecin s'il s'agissait d'une cascade de prescription et ce qui a été fait (par exemple dose modifiée, ou aucun changement).",
-      "stored": "Janus enregistre uniquement les réponses du médecin, la semaine de la réponse, la région de la note et les codes des schémas. Aucun nom, aucun nom de boîte et aucune date plus précise que la semaine. La liste des médicaments reste sur cet appareil.",
+      "stored": "Janus enregistre uniquement les réponses du médecin, la semaine de la réponse, la région de la note et, pour chaque schéma ayant reçu une réponse, sa règle, les codes de ses deux médicaments et de l'événement, le sens (indésirable ou amélioration) et si le produit a été confirmé. Aucun nom, aucun nom de boîte et aucune date plus précise que la semaine. La liste des médicaments elle-même n'est pas enregistrée.",
       "howLong": "Le lien fonctionne environ cinq semaines. Les réponses sont conservées 24 mois au plus et ne sont montrées que sous forme de chiffres pour des groupes d'au moins 20 réponses, avec du bruit ajouté.",
       "withdraw": "Vous pouvez retirer ces données à tout moment avec le jeton conservé sur cet appareil : le médecin ne peut alors plus répondre, et les réponses déjà envoyées sont effacées."
     }
   },
   "Reminder": {
     "title": "Le symptôme dont vous avez parlé s'est-il amélioré ?",
-    "body": "Vous avez rédigé une note pour le médecin le {date}. Si vous le souhaitez, vous pouvez partager comment cela s'est passé sous forme de signalement donné anonyme.",
+    "body": "Vous avez rédigé une note pour le médecin le {date}. Si vous le souhaitez, vous pouvez partager comment cela s'est passé sous forme de signalement issu d'un don, sans votre nom ni vos coordonnées.",
     "report": "Partager comment cela s'est passé",
     "dismiss": "Masquer"
   },
@@ -688,7 +691,7 @@
     },
     "stored": {
       "title": "Ce qui est enregistré",
-      "body": "Seulement si vous le choisissez : un signalement donné (tranche d'âge, sexe facultatif, région, médicaments, événement, type, semaine, version du consentement) et les réponses du médecin au code QR d'une note. Janus conserve aussi un code des notes utilisées ou retirées jusqu'à leur expiration, pour qu'un lien ne puisse pas servir deux fois."
+      "body": "Seulement si vous le choisissez : un signalement issu d'un don (tranche d'âge, sexe facultatif, région, médicaments, événement, type, semaine, version du consentement) et les réponses du médecin au code QR d'une note. Janus conserve aussi un code des notes utilisées ou retirées jusqu'à leur expiration, pour qu'un lien ne puisse pas servir deux fois."
     },
     "where": {
       "title": "Où sont stockées les données issues des dons",
@@ -699,7 +702,7 @@
     },
     "howLong": {
       "title": "Pour combien de temps",
-      "body": "Signalements donnés et réponses des médecins : 24 mois au plus. Liens de la boucle de retour : environ cinq semaines (28 à 35 jours)."
+      "body": "Signalements issus de dons et réponses des médecins : 24 mois au plus. Liens de la boucle de retour : environ cinq semaines (28 à 35 jours)."
     },
     "delete": {
       "title": "Comment effacer",
@@ -774,10 +777,10 @@
       "crisis_support": "Si des pensées de vous faire du mal apparaissent, {crisis}.",
       "urgent_care_skin": "Une éruption cutanée sévère, qui s'étend ou forme des cloques, ou qui s'accompagne de fièvre ou de plaies dans la bouche, nécessite des soins médicaux urgents. Si le visage ou les lèvres gonflent, si vous avez du mal à respirer ou si vous vous sentez très mal, appelez {emergency}.",
       "urgent_care_heart": "Appelez {emergency} en cas de douleur thoracique, de difficulté à respirer ou d'évanouissement. Un cœur qui bat très vite ou de façon irrégulière nécessite aussi des soins médicaux urgents.",
-      "urgent_care_gi": "Des vomissements de sang ou des selles noires nécessitent des soins médicaux urgents. Si vous avez en plus des vertiges ou si vous vous sentez très mal, appelez {emergency}.",
+      "urgent_care_gi": "Des vomissements de sang ou des selles noires nécessitent des soins médicaux urgents. Si vous avez en plus une sensation d'évanouissement ou si vous vous sentez très mal, appelez {emergency}.",
       "urgent_care_seizure": "Une crise convulsive nécessite des soins médicaux urgents. Appelez {emergency} si elle dure plus de 5 minutes, se répète ou s'accompagne d'une blessure ou de difficultés à respirer.",
       "urgent_care_breathing": "Un essoufflement soudain ou qui s'aggrave nécessite des soins médicaux urgents. S'il est intense ou s'accompagne d'une douleur thoracique, appelez {emergency}.",
-      "tr_reports_small_self_selected": "Les signalements en provenance de Türkiye sont peu nombreux et envoyés volontairement. Ils ne montrent pas comment les médicaments sont utilisés en Türkiye."
+      "tr_reports_small_self_selected": "Les signalements en provenance de Turquie sont peu nombreux et envoyés volontairement. Ils ne montrent pas comment les médicaments sont utilisés en Turquie."
     }
   }
 }

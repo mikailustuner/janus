@@ -264,8 +264,9 @@ def test_decision_texts_are_in_the_committed_glossary() -> None:
         texts = " ".join(
             s[i].texts[lang] for i in s if i.startswith(("stat.", "statistics", "about"))
         )
-        assert ("signalement" if lang == "fr" else "informe") in texts.lower()
-        assert not any(w in texts.lower() for w in ("déclaration", "notificacion"))
+        # ES "notificación" everywhere (owner decision 2026-11-08, doctor-loop DP40)
+        assert ("signalement" if lang == "fr" else "notificaci") in texts.lower()
+        assert not any(w in texts.lower() for w in ("déclaration", "informe"))
     assert "Ontario" in s["finding.priority.incidence"].texts["en"]
     assert "window" in s["finding.timing.after_window"].texts["en"]
     assert s["finding.row49"].texts["en"].count("{supplements}") == 1

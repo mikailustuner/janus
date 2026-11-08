@@ -7,7 +7,7 @@ inclusion: always
 Janus reads the medicines in a person's home — by scanning the code on the box or the pharmacy label, or by name — in **three regions: Türkiye, the European Union and the United States**, and:
 
 1. **Shadow face — Ghost Diseases.** Finds prescribing cascades: a side effect of drug A mistaken for a new condition and treated with drug B. Produces a one-page, fully cited note for the patient's doctor, in the doctor's language.
-2. **Collective Memory.** Shows how often the same medicines and events appear together in public adverse-event reports (FDA FAERS from day one), plus consented, anonymized Janus contributions and doctor-confirmed outcomes — always as **reports**, never as "people like you".
+2. **Collective Memory.** Shows how often the same medicines and events appear together in public adverse-event reports (FDA FAERS from day one), plus consented, pseudonymous Janus contributions (shown only as noisy counts of groups of at least 20) and outcomes reported through doctor notes (not verified) — always as **reports**, never as "people like you".
 3. **Light face — Dead Drugs Rise.** For researchers: turns the same side-effect knowledge around to surface drug-repurposing **hypotheses**, and proves its method by rediscovering known repurposings.
 4. **The Séance — Three Witnesses.** A hypothesis is strong only when three independent witnesses agree: the past (Ibn Sina's Canon, Book 2, and sampled Ottoman texts), the present (Collective Memory) and science (molecular evidence).
 5. **Evidence Integrity — no zombie evidence.** Every source Janus cites is checked against retraction data (Crossref / Retraction Watch) and stamped with its version date. Janus never warns a patient on the basis of a retracted paper.
@@ -26,7 +26,7 @@ Vision line: *"Billions of people take medicine combinations at home every day �
 - Older adult (large text, voice, simple steps).
 - People living across borders (e.g. Turkish families in Germany) and travellers with boxes from two countries.
 - Family doctor (reads the note in 2 minutes, in their own language; reports the outcome via QR without an account).
-- Researcher (repurposing hypotheses, open anonymized dataset).
+- Researcher (repurposing hypotheses, open dataset of aggregated counts).
 - Hackathon judge (a built-in demo mode with sample codes; judges will not have Turkish boxes).
 
 ## Product rules

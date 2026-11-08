@@ -23,7 +23,7 @@ import { Card, PageTitle, SectionTitle } from "@/components/ui";
 import { inputKey, toEvaluateIn } from "@/flow/evaluate";
 import { resultCache, useSession } from "@/flow/janus";
 import { eventKeyOf } from "@/flow/locator";
-import { noticeKey, ratioOf, sharedPanel } from "@/flow/memory";
+import { noticeKey, ratioOf, sharedPanel, splitCaveats } from "@/flow/memory";
 import { useCall, type CallState } from "@/flow/useCall";
 import { listIngredientKeys } from "@/store/list";
 import { useT } from "@/theme/words";
@@ -67,17 +67,29 @@ function Notices({
 }) {
   const t = useT();
   const say = useMemorySentence(snapshot);
+  const caveats = splitCaveats(codes.map(noticeKey));
   return (
-    <details>
-      <summary className="flex min-h-11 cursor-pointer items-center font-bold">
-        {t("MemoryView.detailsHeading")}
-      </summary>
-      <ul className="flex flex-col gap-2 pt-2 text-sm">
-        {codes.map((c) => (
-          <li key={c}>{say(noticeKey(c), window)}</li>
-        ))}
-      </ul>
-    </details>
+    <>
+      {caveats.visible.length ? (
+        <ul className="flex flex-col gap-2 text-sm">
+          {caveats.visible.map((k) => (
+            <li key={k}>{say(k, window)}</li>
+          ))}
+        </ul>
+      ) : null}
+      {caveats.folded.length ? (
+        <details>
+          <summary className="flex min-h-11 cursor-pointer items-center font-bold">
+            {t("MemoryView.detailsHeading")}
+          </summary>
+          <ul className="flex flex-col gap-2 pt-2 text-sm">
+            {caveats.folded.map((k) => (
+              <li key={k}>{say(k, window)}</li>
+            ))}
+          </ul>
+        </details>
+      ) : null}
+    </>
   );
 }
 

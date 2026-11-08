@@ -49,6 +49,29 @@ export function noticeKey(code: string): string {
   return code === "screening_statistic" ? "screening" : `codes.${code}`;
 }
 
+/**
+ * The caveats shown without expanding (owner decision 2026-11-08, safety audit A1): spontaneous
+ * reporting, not an incidence, the weak-pattern label and the deduplication limit (rule 6). The
+ * other sentences may be folded.
+ */
+export const VISIBLE_CAVEATS: ReadonlySet<string> = new Set([
+  "codes.spontaneous_reporting",
+  "codes.not_incidence",
+  "codes.weak",
+  "codes.weak_pattern",
+  "codes.deduplicated_by_case_version_only",
+]);
+
+export function splitCaveats(keys: readonly string[]): {
+  visible: string[];
+  folded: string[];
+} {
+  return {
+    visible: keys.filter((k) => VISIBLE_CAVEATS.has(k)),
+    folded: keys.filter((k) => !VISIBLE_CAVEATS.has(k)),
+  };
+}
+
 export function pairPanel(p: PairOut): PairPanel {
   const stats = p.status === "ok" ? p.stats : null;
   const assessment = stats?.assessment ?? null;

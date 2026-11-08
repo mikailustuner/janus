@@ -247,7 +247,7 @@
    ]
   },
   "osteoporosis_fracture": {
-   "label": "Fragilité osseuse (ostéoporose)",
+   "label": "Fragilité osseuse ou fractures (ostéoporose)",
    "safety_line": null,
    "direction": "adverse",
    "pipc_positions": [
@@ -271,7 +271,7 @@
    ]
   },
   "gastric_ulcer_bleed": {
-   "label": "Ulcère de l'estomac ou saignement digestif",
+   "label": "Irritation ou ulcère de l'estomac, ou saignement digestif",
    "safety_line": "urgent_care_gi",
    "direction": "adverse",
    "pipc_positions": [

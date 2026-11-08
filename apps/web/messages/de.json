@@ -15,7 +15,7 @@
       "twoFaces": "Die zwei Gesichter einer Nebenwirkung",
       "glass": "Ein Blick auf die Medikamente zu Hause"
     },
-    "intro": "Scannen oder tippen Sie die Medikamente zu Hause ein. Janus sucht nach in der Literatur beschriebenen Mustern von Verschreibungskaskaden und erstellt eine Notiz mit Quellen für die Ärztin oder den Arzt, in deren Sprache.",
+    "intro": "Scannen oder tippen Sie die Medikamente zu Hause ein. Janus sucht nach in der Literatur beschriebenen Mustern von Verschreibungskaskaden und erstellt eine Notiz mit Quellen für die Ärztin oder den Arzt, in ihrer oder seiner Sprache.",
     "start": "Mit meinen Medikamenten beginnen",
     "demo": "Demo ausprobieren",
     "demoHint": "Ohne Anmeldung. Drei synthetische Patienten mit erfundenen Produktnamen.",
@@ -24,12 +24,12 @@
     "privacy": "Was auf diesem Gerät bleibt",
     "howTitle": "So funktioniert es",
     "how1": "Scannen Sie den Code auf der Packung oder tippen Sie den Namen ein.",
-    "how2": "Janus prüft {patterns} veröffentlichte Muster von Verschreibungskaskaden und öffentliche Meldungen zu Nebenwirkungen.",
-    "how3": "Sie erhalten eine Notiz mit Quellen für Ihre Ärztin oder Ihren Arzt, in deren Sprache.",
+    "how2": "Janus vergleicht Ihre Medikamente mit {patterns} veröffentlichten Mustern von Verschreibungskaskaden und mit öffentlichen Meldungen zu Nebenwirkungen.",
+    "how3": "Sie erhalten eine Notiz mit Quellen für Ihre Ärztin oder Ihren Arzt, in ihrer oder seiner Sprache.",
     "coverageTitle": "Regionen und Sprachen",
     "regions": "Medikamentenpackungen aus",
     "languages": "Sprachen",
-    "privacyLine": "Fotos der Packungen und Ihre Medikamentenliste bleiben auf diesem Gerät; Janus hat kein Konto und sendet nur, was die Prüfung braucht."
+    "privacyLine": "Fotos der Packungen bleiben auf diesem Gerät. Janus hat kein Konto, speichert Ihre Medikamentenliste nicht und sendet nur die Codes, die die Prüfung braucht."
   },
   "Shell": {
     "skip": "Zum Inhalt springen",
@@ -196,7 +196,7 @@
     "largeText": "Große Schrift",
     "reduceTransparency": "Transparenz reduzieren",
     "reduceTransparencyHint": "Einfarbige Karten statt Milchglas (Design Glas).",
-    "readAloud": "Befunde vorlesen",
+    "readAloud": "Ergebnisse vorlesen",
     "readAloudHint": "Nutzt die Stimme dieses Browsers. Es wird nichts an einen Server gesendet.",
     "research": "Forschungsbereich",
     "privacy": "Datenschutz",
@@ -211,7 +211,7 @@
     "labelWith": "Demo · synthetischer Patient: {patient}",
     "exit": "Demo beenden",
     "title": "Demo ausprobieren",
-    "intro": "Drei synthetische Patienten. Die Produktnamen sind erfunden; Wirkstoffe, Befunde, Meldestatistiken und Notiztext wurden aus der echten Regelbasis und dem Datenstand aufgezeichnet. Es wird nichts gesendet und nichts gespeichert.",
+    "intro": "Drei synthetische Patienten. Die Produktnamen sind erfunden; Wirkstoffe, Ergebnisse, Meldestatistiken und Notiztext wurden aus der echten Regelbasis und dem Datenstand aufgezeichnet. Es wird nichts gesendet und nichts gespeichert.",
     "open": "Patient {patient} öffnen",
     "items": "{count, plural, one {# Medikament} other {# Medikamente}}",
     "recorded": "Aufgezeichnet am {date}. Regeln {rules}, Arzneimitteldaten {dataset}, Evidenz {integrity}.",
@@ -226,7 +226,7 @@
       },
       "ohio": {
         "name": "Ohio",
-        "summary": "US-Apothekendosen, gefunden über die NDC."
+        "summary": "Tabletten und Kapseln aus US-Apotheken, gefunden über die NDC."
       }
     },
     "codes": "Druckbare Demo-Codes",
@@ -279,11 +279,11 @@
     },
     "count": {
       "twoFaces": "{count, plural, =0 {Kein Geist gefunden} one {# Geist gefunden} other {# Geister gefunden}}",
-      "glass": "{count, plural, =0 {Keine mögliche Verschreibungskaskade} one {# mögliche Verschreibungskaskade} other {# mögliche Verschreibungskaskaden}}"
+      "glass": "{count, plural, =0 {Keine mögliche Verschreibungs­kaskade} one {# mögliche Verschreibungs­kaskade} other {# mögliche Verschreibungs­kaskaden}}"
     },
     "kind": {
       "twoFaces": "Geist: ein Muster einer Verschreibungskaskade",
-      "glass": "Mögliche Verschreibungskaskade"
+      "glass": "Mögliche Verschreibungs­kaskade"
     },
     "checkedOf": "{items, plural, one {# Medikament} other {# Medikamente}} mit {total} Mustern abgeglichen",
     "evaluating": "Die Medikamente werden geprüft …",
@@ -293,24 +293,15 @@
     "medicines": "{index} ({indexBox}), danach {marker} ({markerBox})",
     "started": "{name}: seit {month}",
     "startUnknown": "{name}: Beginn nicht bekannt",
-    "status": {
-      "probable": "Wahrscheinlich",
-      "possible": "Möglich"
-    },
     "statusMonths": "{status} · {months, plural, one {# Monat Abstand} other {# Monate Abstand}}",
     "timing": {
-      "within_window": "{marker} wurde {months, plural, one {# Monat} other {# Monate}} nach {index} begonnen, innerhalb des Zeitfensters von {window} Monaten, das für solche Muster verwendet wird.",
-      "after_window": "{marker} wurde {months, plural, one {# Monat} other {# Monate}} nach {index} begonnen, später als das Zeitfenster von {window} Monaten, das für solche Muster verwendet wird.",
+      "within_window": "{marker} wurde {months, plural, one {# Monat} other {# Monate}} nach {index} begonnen, innerhalb des Zeitfensters von {window} Monaten, das Janus für diese Muster verwendet.",
+      "after_window": "{marker} wurde {months, plural, one {# Monat} other {# Monate}} nach {index} begonnen, später als das Zeitfenster von {window} Monaten, das Janus für diese Muster verwendet.",
       "same_month": "Beide Medikamente wurden im selben Monat begonnen, daher ist ihre Reihenfolge nicht bekannt.",
       "date_unknown": "Mindestens ein Beginnmonat ist nicht bekannt, daher konnte die Reihenfolge der beiden Medikamente nicht geprüft werden."
     },
     "lowPriority": "Muster mit geringerer Priorität",
-    "priority": "Veröffentlichte Daten (BMJ 2026, Abstract): {measure} {value} (Bereich {low} bis {high})",
-    "measure": {
-      "incidence": "Inzidenz, %",
-      "adjusted_sequence_ratio": "adjustiertes Sequenzverhältnis"
-    },
-    "supporting": "Dieselbe Kaskade ist auch in einer anderen veröffentlichten Kaskadenliste (ThinkCascades) beschrieben.",
+    "supporting": "Dieses Muster ist auch in einer anderen veröffentlichten Kaskadenliste (ThinkCascades) beschrieben.",
     "formExtension": "Die Übereinstimmung umfasst eine nicht orale Form des ersten Medikaments (zum Beispiel Augentropfen), die auf den ganzen Körper wirken kann.",
     "integrity": {
       "corrected_notice": "Zu einer Quelle dieses Musters wurde eine Korrektur veröffentlicht.",
@@ -323,7 +314,7 @@
     },
     "groupConfirmed": {
       "twoFaces": "Geister",
-      "glass": "Mögliche Verschreibungskaskaden"
+      "glass": "Mögliche Verschreibungs­kaskaden"
     },
     "groupUnconfirmed": "Darreichungsform nicht bestätigt",
     "groupUnconfirmedIntro": "Diese Übereinstimmungen nutzen die Codes {codes}. Das genaue Präparat (zum Beispiel Tablette oder Augentropfen) wurde nicht bestätigt, daher wurden alle Formen des Wirkstoffs berücksichtigt. Bitte bestätigen Sie das Präparat, damit klar ist, ob das Muster zutrifft.",
@@ -334,7 +325,7 @@
     "scopeChecked": "Janus hat {checked} der {total} Muster der PIPC-Liste geprüft.",
     "scopeRule": "Zeile {row} ({cascade}) kann nicht geprüft werden: {reason}.",
     "notMatchable": {
-      "no_atc_code": "die Arzneimittelklasse hat keinen Code",
+      "no_atc_code": "das im Muster genannte Arzneimittel hat keinen ATC-Code",
       "not_a_drug_class": "der Eintrag ist keine Arzneimittelklasse",
       "ambiguous_text": "der veröffentlichte Text ist mehrdeutig"
     },
@@ -354,7 +345,19 @@
     "makeNote": "Arztnotiz vorbereiten",
     "memory": "Meldungen für die ganze Liste",
     "medicinesHeading": "Geprüfte Medikamente",
-    "safetyHeading": "Wann dringend Hilfe nötig ist"
+    "safetyHeading": "Wann dringend Hilfe nötig ist",
+    "medicinesRoles": "Erstes Arzneimittel des Musters: {index} ({indexBox}). Zweites: {marker} ({markerBox}).",
+    "priority": {
+      "incidence": "In einer veröffentlichten Studie an älteren Erwachsenen in Ontario, Kanada (BMJ 2026, Abstract), gehörte dieses Muster zu denen mit der höchsten Inzidenz der Kombination der beiden Arzneimittel: {value} % (Konfidenzintervall {low} bis {high}).",
+      "adjusted_sequence_ratio": "In einer veröffentlichten Studie an älteren Erwachsenen in Ontario, Kanada (BMJ 2026, Abstract), gehörte dieses Muster zu denen mit der höchsten adjustierten Sequenzratio: {value} (Konfidenzintervall {low} bis {high}). Eine Ratio über eins bedeutet, dass das zweite Arzneimittel häufiger nach dem ersten als vor ihm begonnen wurde."
+    },
+    "source": "Quelle: PIPC-Liste (Rochon et al., Eur Geriatr Med 2025), Zeile {row}.",
+    "row49": "Diese Zeile der Liste nennt das zweite Arzneimittel wie veröffentlicht als Mangel. Janus prüft dafür Vitamin-B12-, Magnesium- und orale Eisenpräparate.",
+    "order": {
+      "fits": "Reihenfolge passt zum Muster",
+      "fitsLate": "Reihenfolge passt, später als das übliche Zeitfenster",
+      "notConfirmed": "Reihenfolge nicht bestätigt"
+    }
   },
   "ReadAloud": {
     "read": "Vorlesen",
@@ -431,7 +434,7 @@
     "basis": "{region}: {occurrence} nach dem Land des Ereignisses, {fallback} nach dem Land der meldenden Stelle",
     "adrreports": "EU-Meldungen veröffentlicht die EMA (EudraVigilance, adrreports.eu)",
     "donatedTitle": "Gespendete Meldungen (Janus)",
-    "outcomesTitle": "Ärztlich bestätigte Ergebnisse",
+    "outcomesTitle": "Über Arztnotizen gemeldete Behandlungsverläufe (nicht überprüft)",
     "cell": "{region}: {value}",
     "eventPicker": "Ereignis",
     "tooMany": "Die Liste hat mehr als 20 Wirkstoffe. Bitte wählen Sie höchstens 20 zum Vergleich.",
@@ -441,7 +444,7 @@
   },
   "Note": {
     "title": "Arztnotiz",
-    "intro": "Eine Seite für die Ärztin oder den Arzt, mit Quellen, in deren Sprache. Die Liste bleibt auf diesem Gerät; die Namen auf den Packungen werden hier eingesetzt und nie gesendet.",
+    "intro": "Eine Seite für die Ärztin oder den Arzt, mit Quellen, in ihrer oder seiner Sprache. Janus speichert die Liste nicht; die Namen auf den Packungen werden hier eingesetzt und verlassen dieses Gerät nie.",
     "language": "Sprache der Notiz",
     "patientLanguage": "Ihre Sprache: {language}",
     "statisticsRegion": "Region der Meldestatistik",
@@ -506,7 +509,7 @@
       },
       "export": {
         "title": "Datensatz-Export",
-        "body": "Der offene, anonymisierte Datensatz für die Forschung."
+        "body": "Der offene Datensatz für die Forschung, mit Zahlen nur für Gruppen, die groß genug sind, um die Privatsphäre zu schützen."
       }
     },
     "back": {
@@ -525,7 +528,7 @@
     },
     "title": "Janus · Rückmeldung zu einer Notiz",
     "loading": "Das Formular wird geladen …",
-    "demo": "Demo · synthetische Patientendaten. Dieses Formular sendet nichts.",
+    "demo": "Demo · synthetischer Patient. Dieses Formular sendet nichts.",
     "first": "Erstes Medikament",
     "second": "Zweites Medikament",
     "send": "Senden",
@@ -568,7 +571,7 @@
       "done": "Die Spende wurde gelöscht."
     },
     "title": "Eine Meldung teilen",
-    "intro": "Sie können eine Erfahrung als anonyme gespendete Meldung teilen: welche Medikamente, welches Ereignis und ob es eine unerwünschte Wirkung oder eine Besserung war. Sie wird im Kollektiven Gedächtnis nur in Gruppen von 20 oder mehr gezählt, mit hinzugefügtem Rauschen.",
+    "intro": "Sie können eine Erfahrung als gespendete Meldung ohne Ihren Namen und Ihre Kontaktdaten teilen: welche Medikamente, welches Ereignis und ob es eine unerwünschte Wirkung oder eine Besserung war. Sie wird im Kollektiven Gedächtnis nur in Gruppen von 20 oder mehr gezählt, mit hinzugefügtem Rauschen.",
     "noItems": "Fügen Sie zuerst Medikamente hinzu, um auszuwählen, welche die Meldung betrifft.",
     "event": "Ereignis",
     "eventSearch": "Ein Ereignis suchen",
@@ -593,13 +596,13 @@
     "storedRegion": "Region: {region}",
     "storedWeek": "Die Woche der Meldung, vom Server festgelegt (nicht der Tag).",
     "storedConsent": "Die Version des Einwilligungstextes, dem Sie zugestimmt haben.",
-    "storedNothingElse": "Sonst nichts: kein Name, keine E-Mail, kein Datum, kein Ort und keine Gerätekennung.",
+    "storedNothingElse": "Sonst nichts: kein Name, keine E-Mail, kein genaues Datum, kein Ort genauer als die Region und keine Gerätekennung.",
     "consent": {
-      "2026-11-v1": {
+      "2026-11-v2": {
         "heading": "Ihre ausdrückliche Einwilligung",
         "body": "Diese Angaben sind Gesundheitsdaten. Janus speichert sie nur mit Ihrer ausdrücklichen Einwilligung (in der EU: Art. 9 Abs. 2 lit. a DSGVO; in der Türkei: ausdrückliche Einwilligung nach dem KVKK), um gespendete Meldungen im Kollektiven Gedächtnis zu zählen, und für die Forschung. Sie werden in der Region gespeichert, die auf der Datenschutzseite angegeben ist, und höchstens 24 Monate aufbewahrt.",
         "delete": "Nach dem Senden erhalten Sie ein Lösch-Token. Damit können Sie die Spende jederzeit löschen. Ohne das Token kann die Spende nicht vor Ablauf der 24 Monate gelöscht werden.",
-        "check": "Ich stimme ausdrücklich zu, die obigen Angaben als anonyme gespendete Meldung zu teilen."
+        "check": "Ich stimme ausdrücklich zu, die obigen Angaben als gespendete Meldung ohne meinen Namen und meine Kontaktdaten zu teilen."
       }
     },
     "submit": "Meldung teilen",
@@ -661,17 +664,17 @@
     "back": "Zurück zum Scannen"
   },
   "OutcomeConsent": {
-    "2026-11-v1": {
+    "2026-11-v2": {
       "heading": "Was der QR-Code bewirkt",
       "asked": "Die Ärztin oder der Arzt wird zu jedem Muster auf der Notiz gefragt, ob es eine Verschreibungskaskade war und was getan wurde (zum Beispiel Dosis geändert oder keine Änderung).",
-      "stored": "Janus speichert nur die Antworten der Ärztin oder des Arztes, die Woche der Antwort, die Region der Notiz und die Codes der Muster. Keine Namen, keine Packungsnamen und keine Datumsangaben genauer als eine Woche. Die Medikamentenliste bleibt auf diesem Gerät.",
+      "stored": "Janus speichert nur die Antworten der Ärztin oder des Arztes, die Woche der Antwort, die Region der Notiz und für jedes beantwortete Muster seine Regel, die Codes seiner zwei Arzneimittel und des Ereignisses, die Richtung (unerwünscht oder Besserung) und ob das Präparat bestätigt war. Keine Namen, keine Packungsnamen und keine Datumsangaben genauer als eine Woche. Die Medikamentenliste selbst wird nicht gespeichert.",
       "howLong": "Der Link funktioniert etwa fünf Wochen. Antworten werden höchstens 24 Monate aufbewahrt und nur als Zahlen für Gruppen von mindestens 20 Antworten gezeigt, mit hinzugefügtem Rauschen.",
       "withdraw": "Sie können jederzeit mit dem auf diesem Gerät gespeicherten Token widerrufen: Die Ärztin oder der Arzt kann dann nicht mehr antworten, und bereits gesendete Antworten werden gelöscht."
     }
   },
   "Reminder": {
     "title": "Hat sich das besprochene Symptom gebessert?",
-    "body": "Sie haben am {date} eine Notiz für die Ärztin oder den Arzt erstellt. Wenn Sie möchten, können Sie als anonyme gespendete Meldung teilen, wie es verlaufen ist.",
+    "body": "Sie haben am {date} eine Notiz für die Ärztin oder den Arzt erstellt. Wenn Sie möchten, können Sie als gespendete Meldung ohne Ihren Namen und Ihre Kontaktdaten teilen, wie es verlaufen ist.",
     "report": "Teilen, wie es verlaufen ist",
     "dismiss": "Ausblenden"
   },
@@ -684,7 +687,7 @@
     },
     "sent": {
       "title": "Was an Janus gesendet wird",
-      "body": "Produktcodes (von einem Packungscode nur die GTIN, das Verfalldatum und die nationale Produktnummer; nie die Serien- oder Chargennummer), NDCs, die Wörter, die Sie für eine Suche eingeben oder auswählen, die IDs der von Ihnen bestätigten Medikamente mit ihren Startmonaten und Ihre Auswahl. Nicht die Fotos, nicht der erkannte Text als Ganzes und nicht die Namen auf den Packungen. Anfragen werden nicht gespeichert."
+      "body": "Produktcodes (von einem Packungscode nur die GTIN, das Verfalldatum und die nationale Produktnummer; nie die Serien- oder Chargennummer), NDCs, die Wörter, die Sie für eine Suche eingeben oder auswählen, die IDs der von Ihnen bestätigten Medikamente mit ihren Beginnmonaten und Ihre Auswahl. Nicht die Fotos, nicht der erkannte Text als Ganzes und nicht die Namen auf den Packungen. Anfragen werden nicht gespeichert."
     },
     "stored": {
       "title": "Was gespeichert wird",
@@ -774,10 +777,10 @@
       "crisis_support": "Wenn Gedanken an Selbstverletzung aufkommen, {crisis}.",
       "urgent_care_skin": "Bei einem starken, sich ausbreitenden oder Blasen bildenden Hautausschlag oder einem Hautausschlag mit Fieber oder Wunden im Mund brauchen Sie dringend ärztliche Hilfe. Wenn Gesicht oder Lippen anschwellen, Sie schlecht Luft bekommen oder sich sehr schlecht fühlen, wählen Sie {emergency}.",
       "urgent_care_heart": "Wählen Sie bei Brustschmerzen, Atemnot oder Ohnmacht {emergency}. Auch ein rasender oder unregelmäßiger Herzschlag braucht dringend ärztliche Hilfe.",
-      "urgent_care_gi": "Bluterbrechen oder schwarzer Stuhl braucht dringend ärztliche Hilfe. Wenn Ihnen dabei schwindelig wird oder Sie sich sehr schlecht fühlen, wählen Sie {emergency}.",
+      "urgent_care_gi": "Bluterbrechen oder schwarzer Stuhl braucht dringend ärztliche Hilfe. Wenn Sie sich dabei einer Ohnmacht nahe oder sehr schlecht fühlen, wählen Sie {emergency}.",
       "urgent_care_seizure": "Bei einem Krampfanfall brauchen Sie dringend ärztliche Hilfe. Wählen Sie {emergency}, wenn er länger als 5 Minuten dauert, sich wiederholt oder mit einer Verletzung oder Atemnot einhergeht.",
       "urgent_care_breathing": "Bei plötzlicher oder zunehmender Atemnot brauchen Sie dringend ärztliche Hilfe. Wenn sie stark ist oder mit Brustschmerzen einhergeht, wählen Sie {emergency}.",
-      "tr_reports_small_self_selected": "Meldungen aus Türkiye sind wenige und werden freiwillig gesendet. Sie zeigen nicht, wie Arzneimittel in Türkiye angewendet werden."
+      "tr_reports_small_self_selected": "Meldungen aus der Türkei sind wenige und werden freiwillig gesendet. Sie zeigen nicht, wie Arzneimittel in der Türkei angewendet werden."
     }
   }
 }

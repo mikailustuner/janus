@@ -20,7 +20,7 @@ test("demo flow end to end, with no API request", async ({ page }) => {
 
   const row5 = page.locator('[data-testid="finding"][data-rule="pipc:5"]');
   await expect(row5).toBeVisible();
-  await expect(row5).toContainText("Probable · 5 months apart");
+  await expect(row5).toContainText("Order fits the pattern · 5 months apart");
   await expect(row5).toContainText(
     "Calcium channel blocker → Peripheral edema → Diuretic",
   );

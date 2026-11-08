@@ -8,7 +8,7 @@
   "rule_base_version": "8d4881fc6418ee6437d4c2052283f89e6c21ea32405bcd6061f89e9637e32f8f",
   "integrity_version": "8a5b888f0a9f8791e7091da918e6904817211b90f5a573d2418a7432c728b84e",
   "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-  "glossary_version": "226aaf2ed17fcb666da86de250ab1fc8631a37b35aba0e61f31d05ff645d3934"
+  "glossary_version": "3b810442089acdbc8b44fb4070cc73a1a44bdc456674e8dd77199953e0a6f332"
  },
  "items": [
   {
@@ -116,7 +116,8 @@
          "run_id": "20261107T180936Z-0738c719-f9ff",
          "region": "TR",
          "snapshot_date": "2026-11-06"
-        }
+        },
+        "strength_code": null
        },
        {
         "position": 1,
@@ -161,7 +162,8 @@
          "run_id": "20261107T180936Z-0738c719-f9ff",
          "region": "TR",
          "snapshot_date": "2026-11-06"
-        }
+        },
+        "strength_code": null
        }
       ],
       "source": {
@@ -169,7 +171,8 @@
        "run_id": "20261107T180936Z-0738c719-f9ff",
        "region": "TR",
        "snapshot_date": "2026-11-06"
-      }
+      },
+      "dose_form_group": null
      }
     ],
     "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
@@ -274,7 +277,8 @@
          "run_id": "20261107T180936Z-0738c719-f9ff",
          "region": "TR",
          "snapshot_date": "2026-11-06"
-        }
+        },
+        "strength_code": null
        }
       ],
       "source": {
@@ -282,7 +286,8 @@
        "run_id": "20261107T180936Z-0738c719-f9ff",
        "region": "TR",
        "snapshot_date": "2026-11-06"
-      }
+      },
+      "dose_form_group": null
      }
     ],
     "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
@@ -387,7 +392,8 @@
          "run_id": "20261107T180936Z-0738c719-f9ff",
          "region": "TR",
          "snapshot_date": "2026-11-06"
-        }
+        },
+        "strength_code": null
        }
       ],
       "source": {
@@ -395,7 +401,8 @@
        "run_id": "20261107T180936Z-0738c719-f9ff",
        "region": "TR",
        "snapshot_date": "2026-11-06"
-      }
+      },
+      "dose_form_group": null
      }
     ],
     "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
@@ -500,7 +507,8 @@
          "run_id": "20261107T180936Z-0738c719-f9ff",
          "region": "TR",
          "snapshot_date": "2026-11-06"
-        }
+        },
+        "strength_code": null
        }
       ],
       "source": {
@@ -508,7 +516,8 @@
        "run_id": "20261107T180936Z-0738c719-f9ff",
        "region": "TR",
        "snapshot_date": "2026-11-06"
-      }
+      },
+      "dose_form_group": null
      }
     ],
     "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
@@ -613,7 +622,8 @@
          "run_id": "20261107T180936Z-0738c719-f9ff",
          "region": "TR",
          "snapshot_date": "2026-11-06"
-        }
+        },
+        "strength_code": null
        }
       ],
       "source": {
@@ -621,7 +631,8 @@
        "run_id": "20261107T180936Z-0738c719-f9ff",
        "region": "TR",
        "snapshot_date": "2026-11-06"
-      }
+      },
+      "dose_form_group": null
      }
     ],
     "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
@@ -726,7 +737,8 @@
          "run_id": "20261107T180936Z-0738c719-f9ff",
          "region": "TR",
          "snapshot_date": "2026-11-06"
-        }
+        },
+        "strength_code": null
        }
       ],
       "source": {
@@ -734,7 +746,8 @@
        "run_id": "20261107T180936Z-0738c719-f9ff",
        "region": "TR",
        "snapshot_date": "2026-11-06"
-      }
+      },
+      "dose_form_group": null
      }
     ],
     "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
@@ -839,7 +852,8 @@
          "run_id": "20261107T180936Z-0738c719-f9ff",
          "region": "TR",
          "snapshot_date": "2026-11-06"
-        }
+        },
+        "strength_code": null
        }
       ],
       "source": {
@@ -847,7 +861,8 @@
        "run_id": "20261107T180936Z-0738c719-f9ff",
        "region": "TR",
        "snapshot_date": "2026-11-06"
-      }
+      },
+      "dose_form_group": null
      }
     ],
     "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
@@ -952,7 +967,8 @@
          "run_id": "20261107T180936Z-0738c719-f9ff",
          "region": "TR",
          "snapshot_date": "2026-11-06"
-        }
+        },
+        "strength_code": null
        }
       ],
       "source": {
@@ -960,7 +976,8 @@
        "run_id": "20261107T180936Z-0738c719-f9ff",
        "region": "TR",
        "snapshot_date": "2026-11-06"
-      }
+      },
+      "dose_form_group": null
      }
     ],
     "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
@@ -1065,7 +1082,8 @@
          "run_id": "20261107T180936Z-0738c719-f9ff",
          "region": "TR",
          "snapshot_date": "2026-11-06"
-        }
+        },
+        "strength_code": null
        }
       ],
       "source": {
@@ -1073,7 +1091,8 @@
        "run_id": "20261107T180936Z-0738c719-f9ff",
        "region": "TR",
        "snapshot_date": "2026-11-06"
-      }
+      },
+      "dose_form_group": null
      }
     ],
     "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
@@ -7002,7 +7021,7 @@
     "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
     "integrity_version": "8a5b888f0a9f8791e7091da918e6904817211b90f5a573d2418a7432c728b84e",
     "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-    "glossary_version": "226aaf2ed17fcb666da86de250ab1fc8631a37b35aba0e61f31d05ff645d3934"
+    "glossary_version": "3b810442089acdbc8b44fb4070cc73a1a44bdc456674e8dd77199953e0a6f332"
    },
    "as_of_month": "2026-11",
    "removals": [],
@@ -7379,6 +7398,17 @@
         },
         {
          "type": "sentence",
+         "id": "pipc:9:Q668093:Q57055:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "Order fits the pattern",
+         "evidence_ids": [
+          "rule:pipc:9"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
          "id": "pipc:9:Q668093:Q57055:timing",
          "template": "finding.timing.within_window",
          "kind": "claim",
@@ -7444,6 +7474,17 @@
         },
         {
          "type": "sentence",
+         "id": "pipc:5:Q411347:Q388801:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "Order fits the pattern",
+         "evidence_ids": [
+          "rule:pipc:5"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
          "id": "pipc:5:Q411347:Q388801:timing",
          "template": "finding.timing.within_window",
          "kind": "claim",
@@ -7505,6 +7546,17 @@
         },
         {
          "type": "sentence",
+         "id": "pipc:6:Q411347:Q422689:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "Order fits the pattern",
+         "evidence_ids": [
+          "rule:pipc:6"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
          "id": "pipc:6:Q411347:Q422689:timing",
          "template": "finding.timing.within_window",
          "kind": "claim",
@@ -7552,6 +7604,17 @@
          "numbers": [
           "12"
          ]
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:12:Q668093:Q319877:order",
+         "template": "finding.order.not_confirmed",
+         "kind": "claim",
+         "text": "Order not confirmed",
+         "evidence_ids": [
+          "rule:pipc:12"
+         ],
+         "numbers": []
         },
         {
          "type": "sentence",
@@ -8057,14 +8120,14 @@
          "id": "about:versions",
          "template": "about.versions",
          "kind": "fixed",
-         "text": "Versions: rules 8d4881fc, medicine data 7db3a513, evidence 8a5b888f, report counts 20261108, glossary 226aaf2e.",
+         "text": "Versions: rules 8d4881fc, medicine data 7db3a513, evidence 8a5b888f, report counts 20261108, glossary 3b810442.",
          "evidence_ids": [],
          "numbers": [
           "8d4881fc",
           "7db3a513",
           "8a5b888f",
           "20261108",
-          "226aaf2e"
+          "3b810442"
          ]
         },
         {
@@ -8107,7 +8170,7 @@
     "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
     "integrity_version": "8a5b888f0a9f8791e7091da918e6904817211b90f5a573d2418a7432c728b84e",
     "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-    "glossary_version": "226aaf2ed17fcb666da86de250ab1fc8631a37b35aba0e61f31d05ff645d3934"
+    "glossary_version": "3b810442089acdbc8b44fb4070cc73a1a44bdc456674e8dd77199953e0a6f332"
    },
    "as_of_month": "2026-11",
    "removals": [],
@@ -8484,6 +8547,17 @@
         },
         {
          "type": "sentence",
+         "id": "pipc:9:Q668093:Q57055:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "Sıra örüntüye uyuyor",
+         "evidence_ids": [
+          "rule:pipc:9"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
          "id": "pipc:9:Q668093:Q57055:timing",
          "template": "finding.timing.within_window",
          "kind": "claim",
@@ -8549,6 +8623,17 @@
         },
         {
          "type": "sentence",
+         "id": "pipc:5:Q411347:Q388801:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "Sıra örüntüye uyuyor",
+         "evidence_ids": [
+          "rule:pipc:5"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
          "id": "pipc:5:Q411347:Q388801:timing",
          "template": "finding.timing.within_window",
          "kind": "claim",
@@ -8610,6 +8695,17 @@
         },
         {
          "type": "sentence",
+         "id": "pipc:6:Q411347:Q422689:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "Sıra örüntüye uyuyor",
+         "evidence_ids": [
+          "rule:pipc:6"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
          "id": "pipc:6:Q411347:Q422689:timing",
          "template": "finding.timing.within_window",
          "kind": "claim",
@@ -8657,6 +8753,17 @@
          "numbers": [
           "12"
          ]
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:12:Q668093:Q319877:order",
+         "template": "finding.order.not_confirmed",
+         "kind": "claim",
+         "text": "Sıra doğrulanmadı",
+         "evidence_ids": [
+          "rule:pipc:12"
+         ],
+         "numbers": []
         },
         {
          "type": "sentence",
@@ -8729,7 +8836,7 @@
            "id": "stat:Q668093:myalgia_myositis:ALL:ratio",
            "template": "stat.reports_ratio",
            "kind": "claim",
-           "text": "Tüm bölgeler: 784 bildirimde atorvastatin, “Miyalji/miyozit” olayıyla birlikte yer almaktadır; bildirim olasılık oranı (ROR) 15,3 (güven aralığı 14,1 ile 16,5 arası).",
+           "text": "Tüm bölgeler: 784 bildirimde atorvastatin, “Miyalji/miyozit” olayıyla birlikte yer almaktadır; bildirim odds oranı (ROR) 15,3 (güven aralığı 14,1 ile 16,5 arası).",
            "evidence_ids": [
             "dataset:faers"
            ],
@@ -8783,7 +8890,7 @@
            "id": "stat:Q411347:peripheral_oedema:ALL:ratio",
            "template": "stat.reports_ratio",
            "kind": "claim",
-           "text": "Tüm bölgeler: 424 bildirimde amlodipin, “Periferik ödem” olayıyla birlikte yer almaktadır; bildirim olasılık oranı (ROR) 5,14 (güven aralığı 4,65 ile 5,67 arası).",
+           "text": "Tüm bölgeler: 424 bildirimde amlodipin, “Periferik ödem” olayıyla birlikte yer almaktadır; bildirim odds oranı (ROR) 5,14 (güven aralığı 4,65 ile 5,67 arası).",
            "evidence_ids": [
             "dataset:faers"
            ],
@@ -8837,7 +8944,7 @@
            "id": "stat:Q411347:constipation:ALL:ratio",
            "template": "stat.reports_ratio",
            "kind": "claim",
-           "text": "Tüm bölgeler: 157 bildirimde amlodipin, “Kabızlık” olayıyla birlikte yer almaktadır; bildirim olasılık oranı (ROR) 1,54 (güven aralığı 1,31 ile 1,80 arası).",
+           "text": "Tüm bölgeler: 157 bildirimde amlodipin, “Kabızlık” olayıyla birlikte yer almaktadır; bildirim odds oranı (ROR) 1,54 (güven aralığı 1,31 ile 1,80 arası).",
            "evidence_ids": [
             "dataset:faers"
            ],
@@ -8891,7 +8998,7 @@
            "id": "stat:Q668093:insomnia:ALL:ratio",
            "template": "stat.reports_ratio",
            "kind": "claim",
-           "text": "Tüm bölgeler: 144 bildirimde atorvastatin, “Uykusuzluk” olayıyla birlikte yer almaktadır; bildirim olasılık oranı (ROR) 1,60 (güven aralığı 1,35 ile 1,89 arası).",
+           "text": "Tüm bölgeler: 144 bildirimde atorvastatin, “Uykusuzluk” olayıyla birlikte yer almaktadır; bildirim odds oranı (ROR) 1,60 (güven aralığı 1,35 ile 1,89 arası).",
            "evidence_ids": [
             "dataset:faers"
            ],
@@ -9088,7 +9195,7 @@
          "id": "integrity:by_status",
          "template": "integrity.by_status",
          "kind": "claim",
-         "text": "Kontrol edilen kaynakların durumu: bildirim yok 3, düzeltme 1, endişe bildirimi 0, henüz kontrol edilmedi 0.",
+         "text": "Kontrol edilen kaynakların durumu: duyuru yok 3, düzeltme 1, endişe ifadesi 0, henüz kontrol edilmedi 0.",
          "evidence_ids": [
           "dataset:faers",
           "dataset:pipc",
@@ -9162,14 +9269,14 @@
          "id": "about:versions",
          "template": "about.versions",
          "kind": "fixed",
-         "text": "Sürümler: kurallar 8d4881fc, ilaç verileri 7db3a513, kanıtlar 8a5b888f, bildirim sayıları 20261108, sözlük 226aaf2e.",
+         "text": "Sürümler: kurallar 8d4881fc, ilaç verileri 7db3a513, kanıtlar 8a5b888f, bildirim sayıları 20261108, sözlük 3b810442.",
          "evidence_ids": [],
          "numbers": [
           "8d4881fc",
           "7db3a513",
           "8a5b888f",
           "20261108",
-          "226aaf2e"
+          "3b810442"
          ]
         },
         {
@@ -9212,7 +9319,7 @@
     "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
     "integrity_version": "8a5b888f0a9f8791e7091da918e6904817211b90f5a573d2418a7432c728b84e",
     "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-    "glossary_version": "226aaf2ed17fcb666da86de250ab1fc8631a37b35aba0e61f31d05ff645d3934"
+    "glossary_version": "3b810442089acdbc8b44fb4070cc73a1a44bdc456674e8dd77199953e0a6f332"
    },
    "as_of_month": "2026-11",
    "removals": [],
@@ -9589,6 +9696,17 @@
         },
         {
          "type": "sentence",
+         "id": "pipc:9:Q668093:Q57055:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "Reihenfolge passt zum Muster",
+         "evidence_ids": [
+          "rule:pipc:9"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
          "id": "pipc:9:Q668093:Q57055:timing",
          "template": "finding.timing.within_window",
          "kind": "claim",
@@ -9654,6 +9772,17 @@
         },
         {
          "type": "sentence",
+         "id": "pipc:5:Q411347:Q388801:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "Reihenfolge passt zum Muster",
+         "evidence_ids": [
+          "rule:pipc:5"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
          "id": "pipc:5:Q411347:Q388801:timing",
          "template": "finding.timing.within_window",
          "kind": "claim",
@@ -9715,6 +9844,17 @@
         },
         {
          "type": "sentence",
+         "id": "pipc:6:Q411347:Q422689:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "Reihenfolge passt zum Muster",
+         "evidence_ids": [
+          "rule:pipc:6"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
          "id": "pipc:6:Q411347:Q422689:timing",
          "template": "finding.timing.within_window",
          "kind": "claim",
@@ -9762,6 +9902,17 @@
          "numbers": [
           "12"
          ]
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:12:Q668093:Q319877:order",
+         "template": "finding.order.not_confirmed",
+         "kind": "claim",
+         "text": "Reihenfolge nicht bestätigt",
+         "evidence_ids": [
+          "rule:pipc:12"
+         ],
+         "numbers": []
         },
         {
          "type": "sentence",
@@ -10267,14 +10418,14 @@
          "id": "about:versions",
          "template": "about.versions",
          "kind": "fixed",
-         "text": "Versionen: Regeln 8d4881fc, Arzneimitteldaten 7db3a513, Evidenz 8a5b888f, Meldezahlen 20261108, Glossar 226aaf2e.",
+         "text": "Versionen: Regeln 8d4881fc, Arzneimitteldaten 7db3a513, Evidenz 8a5b888f, Meldezahlen 20261108, Glossar 3b810442.",
          "evidence_ids": [],
          "numbers": [
           "8d4881fc",
           "7db3a513",
           "8a5b888f",
           "20261108",
-          "226aaf2e"
+          "3b810442"
          ]
         },
         {
@@ -10317,7 +10468,7 @@
     "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
     "integrity_version": "8a5b888f0a9f8791e7091da918e6904817211b90f5a573d2418a7432c728b84e",
     "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-    "glossary_version": "226aaf2ed17fcb666da86de250ab1fc8631a37b35aba0e61f31d05ff645d3934"
+    "glossary_version": "3b810442089acdbc8b44fb4070cc73a1a44bdc456674e8dd77199953e0a6f332"
    },
    "as_of_month": "2026-11",
    "removals": [],
@@ -10694,6 +10845,17 @@
         },
         {
          "type": "sentence",
+         "id": "pipc:9:Q668093:Q57055:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "L'ordre correspond au schéma",
+         "evidence_ids": [
+          "rule:pipc:9"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
          "id": "pipc:9:Q668093:Q57055:timing",
          "template": "finding.timing.within_window",
          "kind": "claim",
@@ -10759,6 +10921,17 @@
         },
         {
          "type": "sentence",
+         "id": "pipc:5:Q411347:Q388801:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "L'ordre correspond au schéma",
+         "evidence_ids": [
+          "rule:pipc:5"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
          "id": "pipc:5:Q411347:Q388801:timing",
          "template": "finding.timing.within_window",
          "kind": "claim",
@@ -10820,6 +10993,17 @@
         },
         {
          "type": "sentence",
+         "id": "pipc:6:Q411347:Q422689:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "L'ordre correspond au schéma",
+         "evidence_ids": [
+          "rule:pipc:6"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
          "id": "pipc:6:Q411347:Q422689:timing",
          "template": "finding.timing.within_window",
          "kind": "claim",
@@ -10867,6 +11051,17 @@
          "numbers": [
           "12"
          ]
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:12:Q668093:Q319877:order",
+         "template": "finding.order.not_confirmed",
+         "kind": "claim",
+         "text": "Ordre non confirmé",
+         "evidence_ids": [
+          "rule:pipc:12"
+         ],
+         "numbers": []
         },
         {
          "type": "sentence",
@@ -11372,14 +11567,14 @@
          "id": "about:versions",
          "template": "about.versions",
          "kind": "fixed",
-         "text": "Versions : règles 8d4881fc, données médicaments 7db3a513, sources 8a5b888f, comptes de signalements 20261108, glossaire 226aaf2e.",
+         "text": "Versions : règles 8d4881fc, données médicaments 7db3a513, sources 8a5b888f, comptes de signalements 20261108, glossaire 3b810442.",
          "evidence_ids": [],
          "numbers": [
           "8d4881fc",
           "7db3a513",
           "8a5b888f",
           "20261108",
-          "226aaf2e"
+          "3b810442"
          ]
         },
         {
@@ -11422,7 +11617,7 @@
     "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
     "integrity_version": "8a5b888f0a9f8791e7091da918e6904817211b90f5a573d2418a7432c728b84e",
     "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-    "glossary_version": "226aaf2ed17fcb666da86de250ab1fc8631a37b35aba0e61f31d05ff645d3934"
+    "glossary_version": "3b810442089acdbc8b44fb4070cc73a1a44bdc456674e8dd77199953e0a6f332"
    },
    "as_of_month": "2026-11",
    "removals": [],
@@ -11799,6 +11994,17 @@
         },
         {
          "type": "sentence",
+         "id": "pipc:9:Q668093:Q57055:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "El orden coincide con el patrón",
+         "evidence_ids": [
+          "rule:pipc:9"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
          "id": "pipc:9:Q668093:Q57055:timing",
          "template": "finding.timing.within_window",
          "kind": "claim",
@@ -11864,6 +12070,17 @@
         },
         {
          "type": "sentence",
+         "id": "pipc:5:Q411347:Q388801:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "El orden coincide con el patrón",
+         "evidence_ids": [
+          "rule:pipc:5"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
          "id": "pipc:5:Q411347:Q388801:timing",
          "template": "finding.timing.within_window",
          "kind": "claim",
@@ -11925,6 +12142,17 @@
         },
         {
          "type": "sentence",
+         "id": "pipc:6:Q411347:Q422689:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "El orden coincide con el patrón",
+         "evidence_ids": [
+          "rule:pipc:6"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
          "id": "pipc:6:Q411347:Q422689:timing",
          "template": "finding.timing.within_window",
          "kind": "claim",
@@ -11975,6 +12203,17 @@
         },
         {
          "type": "sentence",
+         "id": "pipc:12:Q668093:Q319877:order",
+         "template": "finding.order.not_confirmed",
+         "kind": "claim",
+         "text": "Orden no confirmado",
+         "evidence_ids": [
+          "rule:pipc:12"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
          "id": "pipc:12:Q668093:Q319877:timing",
          "template": "finding.timing.date_unknown",
          "kind": "claim",
@@ -12011,7 +12250,7 @@
        "id": "statistics",
        "heading": {
         "template": "statistics.heading",
-        "text": "Informes a FDA AEMS (antes FAERS)"
+        "text": "Notificaciones a FDA AEMS (antes FAERS)"
        },
        "blocks": [
         {
@@ -12044,7 +12283,7 @@
            "id": "stat:Q668093:myalgia_myositis:ALL:ratio",
            "template": "stat.reports_ratio",
            "kind": "claim",
-           "text": "Todas las regiones: 784 informes citan atorvastatina junto con el evento «Mialgia/miositis»; razón de odds de notificación (ROR) 15,3 (intervalo de confianza de 14,1 a 16,5).",
+           "text": "Todas las regiones: 784 notificaciones citan atorvastatina junto con el evento «Mialgia/miositis»; razón de odds de notificación (ROR) 15,3 (intervalo de confianza de 14,1 a 16,5).",
            "evidence_ids": [
             "dataset:faers"
            ],
@@ -12060,7 +12299,7 @@
            "id": "stat:Q668093:myalgia_myositis:ALL:assessment",
            "template": "stat.assessment.disproportionate",
            "kind": "claim",
-           "text": "El evento aparece en una proporción mayor de los informes que nombran este medicamento que en los demás informes que nombran un medicamento reconocido.",
+           "text": "El evento aparece en una proporción mayor de las notificaciones que nombran este medicamento que en las demás notificaciones que nombran un medicamento reconocido.",
            "evidence_ids": [
             "dataset:faers"
            ],
@@ -12098,7 +12337,7 @@
            "id": "stat:Q411347:peripheral_oedema:ALL:ratio",
            "template": "stat.reports_ratio",
            "kind": "claim",
-           "text": "Todas las regiones: 424 informes citan amlodipina junto con el evento «Edema periférico»; razón de odds de notificación (ROR) 5,14 (intervalo de confianza de 4,65 a 5,67).",
+           "text": "Todas las regiones: 424 notificaciones citan amlodipina junto con el evento «Edema periférico»; razón de odds de notificación (ROR) 5,14 (intervalo de confianza de 4,65 a 5,67).",
            "evidence_ids": [
             "dataset:faers"
            ],
@@ -12114,7 +12353,7 @@
            "id": "stat:Q411347:peripheral_oedema:ALL:assessment",
            "template": "stat.assessment.disproportionate",
            "kind": "claim",
-           "text": "El evento aparece en una proporción mayor de los informes que nombran este medicamento que en los demás informes que nombran un medicamento reconocido.",
+           "text": "El evento aparece en una proporción mayor de las notificaciones que nombran este medicamento que en las demás notificaciones que nombran un medicamento reconocido.",
            "evidence_ids": [
             "dataset:faers"
            ],
@@ -12152,7 +12391,7 @@
            "id": "stat:Q411347:constipation:ALL:ratio",
            "template": "stat.reports_ratio",
            "kind": "claim",
-           "text": "Todas las regiones: 157 informes citan amlodipina junto con el evento «Estreñimiento»; razón de odds de notificación (ROR) 1,54 (intervalo de confianza de 1,31 a 1,80).",
+           "text": "Todas las regiones: 157 notificaciones citan amlodipina junto con el evento «Estreñimiento»; razón de odds de notificación (ROR) 1,54 (intervalo de confianza de 1,31 a 1,80).",
            "evidence_ids": [
             "dataset:faers"
            ],
@@ -12168,7 +12407,7 @@
            "id": "stat:Q411347:constipation:ALL:assessment",
            "template": "stat.assessment.weak",
            "kind": "claim",
-           "text": "Pocos informes; considérelo un patrón débil.",
+           "text": "Pocas notificaciones; considérelo un patrón débil.",
            "evidence_ids": [
             "dataset:faers"
            ],
@@ -12206,7 +12445,7 @@
            "id": "stat:Q668093:insomnia:ALL:ratio",
            "template": "stat.reports_ratio",
            "kind": "claim",
-           "text": "Todas las regiones: 144 informes citan atorvastatina junto con el evento «Insomnio»; razón de odds de notificación (ROR) 1,60 (intervalo de confianza de 1,35 a 1,89).",
+           "text": "Todas las regiones: 144 notificaciones citan atorvastatina junto con el evento «Insomnio»; razón de odds de notificación (ROR) 1,60 (intervalo de confianza de 1,35 a 1,89).",
            "evidence_ids": [
             "dataset:faers"
            ],
@@ -12222,7 +12461,7 @@
            "id": "stat:Q668093:insomnia:ALL:assessment",
            "template": "stat.assessment.weak",
            "kind": "claim",
-           "text": "Pocos informes; considérelo un patrón débil.",
+           "text": "Pocas notificaciones; considérelo un patrón débil.",
            "evidence_ids": [
             "dataset:faers"
            ],
@@ -12235,7 +12474,7 @@
          "id": "statistics:spontaneous_reporting",
          "template": "stat.limit.spontaneous_reporting",
          "kind": "fixed",
-         "text": "Los informes se envían de forma voluntaria y no se verifican.",
+         "text": "Las notificaciones se envían de forma voluntaria y no se verifican.",
          "evidence_ids": [],
          "numbers": []
         },
@@ -12271,7 +12510,7 @@
          "id": "statistics:absence",
          "template": "stat.absence",
          "kind": "fixed",
-         "text": "La ausencia de informes, o un patrón poco claro, no significa que no haya asociación ni que los medicamentos del paciente estén libres de problemas.",
+         "text": "La ausencia de notificaciones, o un patrón poco claro, no significa que no haya asociación ni que los medicamentos del paciente estén libres de problemas.",
          "evidence_ids": [],
          "numbers": []
         },
@@ -12280,7 +12519,7 @@
          "id": "statistics:window",
          "template": "stat.window",
          "kind": "fixed",
-         "text": "Los recuentos cubren los informes recibidos o actualizados en los cuatro trimestres 2025Q4–2026Q3, incluidas las versiones de seguimiento de casos recibidos antes.",
+         "text": "Los recuentos cubren las notificaciones recibidas o actualizadas en los cuatro trimestres 2025Q4–2026Q3, incluidas las versiones de seguimiento de casos recibidos antes.",
          "evidence_ids": [],
          "numbers": [
           "2025Q4",
@@ -12292,7 +12531,7 @@
          "id": "statistics:denominator",
          "template": "stat.denominator",
          "kind": "fixed",
-         "text": "Los recuentos usan solo los informes que nombran al menos un medicamento que Janus reconoce (84,8 % de los informes de este periodo). Algunas grafías no se reconocen, por lo que un patrón puede pasar inadvertido.",
+         "text": "Los recuentos usan solo las notificaciones que nombran al menos un medicamento que Janus reconoce (84,8 % de las notificaciones de este periodo). Algunas grafías no se reconocen, por lo que un patrón puede pasar inadvertido.",
          "evidence_ids": [],
          "numbers": [
           "84,8 %"
@@ -12477,14 +12716,14 @@
          "id": "about:versions",
          "template": "about.versions",
          "kind": "fixed",
-         "text": "Versiones: reglas 8d4881fc, datos de medicamentos 7db3a513, evidencia 8a5b888f, recuentos de informes 20261108, glosario 226aaf2e.",
+         "text": "Versiones: reglas 8d4881fc, datos de medicamentos 7db3a513, evidencia 8a5b888f, recuentos de notificaciones 20261108, glosario 3b810442.",
          "evidence_ids": [],
          "numbers": [
           "8d4881fc",
           "7db3a513",
           "8a5b888f",
           "20261108",
-          "226aaf2e"
+          "3b810442"
          ]
         },
         {
@@ -12501,7 +12740,7 @@
          "id": "about:faers",
          "template": "about.faers",
          "kind": "fixed",
-         "text": "Los recuentos de informes proceden de los datos trimestrales públicos de FDA AEMS (antes FAERS).",
+         "text": "Los recuentos de notificaciones proceden de los datos trimestrales públicos de FDA AEMS (antes FAERS).",
          "evidence_ids": [],
          "numbers": []
         },
@@ -12709,9 +12948,9 @@
    ]
   },
   "texts": {
-   "heading": "Sonuç bildirimi",
+   "heading": "Sonuç hakkında yanıt",
    "intro": "Değerlendirdiğiniz her örüntü için bunun bir reçeteleme kaskadı olup olmadığını ve ne yapıldığını belirtin. Emin değilseniz bir örüntüyü yanıtsız bırakabilirsiniz.",
-   "stored_fields": "Janus yalnızca yanıtlarınızı, bildirimin haftasını, notun bölgesini ve ilaçlarla olayın kodlarını saklar. Ad, kesin tarih veya sizinle ilgili herhangi bir bilgi saklanmaz.",
+   "stored_fields": "Janus yalnızca yanıtlarınızı, yanıtın haftasını, notun bölgesini ve her örüntü için kuralını, ilaçlarla olayın kodlarını saklar. Ad, kesin tarih veya sizinle ilgili herhangi bir bilgi saklanmaz.",
    "limits": "Yanıtlar yalnızca en az 20 yanıttan oluşan gruplar için, gürültü eklenerek sayı olarak gösterilir ve hasta bildirimlerine asla eklenmez.",
    "question_assessment": "Bu bir reçeteleme kaskadı mıydı?",
    "question_action": "Ne yapıldı? (isteğe bağlı)",

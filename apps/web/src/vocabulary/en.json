@@ -247,7 +247,7 @@
    ]
   },
   "osteoporosis_fracture": {
-   "label": "Weaker bones (osteoporosis)",
+   "label": "Weaker bones or fractures (osteoporosis)",
    "safety_line": null,
    "direction": "adverse",
    "pipc_positions": [
@@ -271,7 +271,7 @@
    ]
   },
   "gastric_ulcer_bleed": {
-   "label": "Stomach ulcer or bleeding in the stomach or bowel",
+   "label": "Stomach irritation, ulcer or bleeding in the stomach or bowel",
    "safety_line": "urgent_care_gi",
    "direction": "adverse",
    "pipc_positions": [

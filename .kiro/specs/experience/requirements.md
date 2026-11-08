@@ -346,6 +346,15 @@ language, and keeps the person's list in the browser.
 4. THE home page SHALL be a website home: the emergency notice first, a hero with the product sentence (no forbidden or "first" claims), "Try the demo" as the main action, "How it works" in three steps, the three regions and five languages, privacy in one sentence and the disclaimer. In Two Faces the hero MAY show the mask as a functional SVG linking to the two faces; Glass uses the colour fields.
 5. Axe (WCAG 2.2 A/AA) and no horizontal scroll SHALL hold at 1280 px as at 375 px; screenshots at 1280 and 1440 px are reviewed for home, results, memory, note and settings in both themes.
 
+### Requirement 28: Wording decisions of the review *(Owner decision 2026-11-08)*
+**User story:** As a patient or a doctor, I want the wording to say no more than the data support, so that a timing class is not read as a verdict and a consent text does not understate.
+1. THE finding chip SHALL describe the order from the timing ("Order fits the pattern", "Order fits, later than the usual window", "Order not confirmed") in every language, and the doctor note SHALL print the same wording for each finding; the engine codes stay `probable` / `possible` and are not shown.
+2. WHEN the order of the two medicines is not known (`same_month`, `date_unknown`) THE card SHALL name them by role ("First medicine of the pattern … Second …"), never with "then".
+3. THE outcome-loop and donation consent texts SHALL be version `2026-11-v2`; the donation SHALL be described as "a donated report, without your name or contact details", and no user-facing text SHALL call donated data anonymous.
+4. EACH language SHALL use one word for a report (EN report, TR bildirim, DE Meldung, FR signalement, ES notificación) across the app, Collective Memory and the note.
+5. THE caveats `spontaneous_reporting`, `not_incidence` and the weak-pattern label SHALL be visible without expanding wherever report counts are shown.
+6. THE note screen SHALL show the emergency notice first when the note has a safety section, and Print SHALL produce the PDF (disclaimer, demo label and page numbers on every page).
+
 ## Properties to test (PBT candidates)
 - For every supported locale, every user-facing string key has a translation (no fallback keys rendered).
 - For every supported locale, rendered findings contain the mandatory disclaimer and none of the forbidden phrases.

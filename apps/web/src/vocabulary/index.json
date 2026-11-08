@@ -2,8 +2,8 @@
  "sources": {
   "apps/api/janus/notes/glossary/ingredients.csv": "269561b4e1d5707fb96551b984b8cea8ea043ad179337dc0772e6d71580555d9",
   "apps/api/janus/notes/glossary/cascades.csv": "4d4172059608b8d56a54dfb0a169c28b6f32d08beeff4625fe78bd0198ac4c3f",
-  "apps/api/janus/notes/glossary/sentences.csv": "bbf04f48c398174a41e86ffa88053214ced3fd9ff8e7cda2d44486eac6ce9f05",
-  "apps/api/janus/memory/memory_events.csv": "3a7325c340673c1093d76f2c2a7976581d1f54306ab72dee109e3b6c4bdae876",
+  "apps/api/janus/notes/glossary/sentences.csv": "5b89e9d9b6726c1a0d9a5b028ec0daed7737c1b5c2fe46f2b6f8d59de77ce506",
+  "apps/api/janus/memory/memory_events.csv": "dd24adec4ece889b5b5bce2cb42f5872f72aa0a350fd2df5a7356222e479a534",
   "data/pipc.csv": "2030ae28388507ac361656586e12f241b06da31c701ba6839fc127be002f7a64"
  },
  "english_names": {

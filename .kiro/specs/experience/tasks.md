@@ -271,10 +271,22 @@
   > (how1–3, coverageTitle, regions, languages, privacyLine) are **not yet reviewed** by the localization pass; they
   > join the owner's wording batch. Routes axe and no-horizontal-scroll green at 375 and 1280.
 
-- [ ] 23. Apply the owner's decisions and final checkpoint
+- [x] 23. Apply the owner's decisions and final checkpoint
   - Apply the wording and open-item decisions (demo names, Spanish status codes, demo cases, shadcn/ui) in one commit;
     record them in requirements.md and design.md (DPs, §20); re-record fixtures if the demo cases changed; add the
     pre-launch items (native-speaker review of the new namespaces, print-and-scan test of the demo QR at 50 mm on
     several phones, re-check of the emergency and crisis numbers) to `docs/pre-launch-checklist.md`.
   - Every checkpoint step green (web, e2e, CI); report what was built, counterexamples the property tests found and how
     they were fixed, and the open items.
+  > Done 2026-11-08 (Claude Code): the ten owner decisions of `wording-review.md` applied (Req 28; DP42–DP45;
+  > doctor-loop DP40–DP41; collective-memory DP25): order labels from the timing in app and note, "then" only when the
+  > order is known, consent texts v2 (server accepts v1 and v2), pseudonymous donations ("anonymous" removed, also from
+  > `privacy.md` and `product.md`), TR "bildirim" / ES "notificación" everywhere, DE/FR/ES local names of Türkiye,
+  > Memory caveats outside the fold, the smaller batch (incl. source line on the card, Print opens the PDF, emergency
+  > notice on the note screen, 404 disclaimer, "faint", event labels), Ohio fixture with oral products (all three
+  > fixtures re-recorded on the real engine), budgets as measured (OCR lazy), home hero isolated in `HomeHero.tsx`.
+  > Localization and safety passes on every changed row and the `Home` namespace: `wording-owner-decisions-review.md`
+  > (6 blocking findings, all fixed before the checkpoint; the safety pass found that `possible` also covers a known
+  > order after the window, so a third label "Order fits, later than the usual window" was added for the owner to
+  > confirm). Pre-launch items added to `docs/pre-launch-checklist.md`.
+  > Counterexamples found by the property tests over Phase 3 and their fixes are recorded in the notes of tasks 1–21.

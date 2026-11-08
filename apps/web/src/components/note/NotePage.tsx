@@ -15,6 +15,7 @@ import { QrOptIn } from "./QrOptIn";
 import { noteBody, pinsIn } from "@/api/builders";
 import type { Locale, NoteOut } from "@/api/contracts";
 import type { ApiError } from "@/api/errors";
+import { EmergencyNotice } from "@/components/EmergencyNotice";
 import { SelectField } from "@/components/Field";
 import { DownloadIcon, PrintIcon } from "@/components/icons";
 import { StateView } from "@/components/StateView";
@@ -309,8 +310,12 @@ export function NotePage() {
     }
   };
 
-  const download = async () => {
+  // Print opens the PDF (safety audit A6, owner decision 2026-11-08): only the PDF repeats the
+  // disclaimer, the demo label and the page numbers on every page. The tab is opened during the
+  // click so a popup blocker lets it through; without it the PDF is saved instead.
+  const download = async (mode: "save" | "print" = "save") => {
     if (state.s !== "ok") return;
+    const tab = mode === "print" ? window.open("", "_blank") : null;
     setPdf("busy");
     try {
       const { renderNotePdf } = await import("@/note/pdf");
@@ -333,6 +338,12 @@ export function NotePage() {
         location.origin,
       );
       const url = URL.createObjectURL(blob);
+      if (tab) {
+        tab.location.href = url;
+        setTimeout(() => URL.revokeObjectURL(url), 60_000);
+        setPdf("idle");
+        return;
+      }
       const a = document.createElement("a");
       a.href = url;
       a.download = pdfFileName(state.layout.asOfMonth);
@@ -342,12 +353,20 @@ export function NotePage() {
       setTimeout(() => URL.revokeObjectURL(url), 10_000);
       setPdf("idle");
     } catch {
+      tab?.close();
       setPdf("failed");
     }
   };
 
   return (
     <>
+      {/* Rule 10 (safety audit A4): the note can carry urgent-care lines. */}
+      {state.s === "ok" &&
+      state.layout.documents[0]?.sections.some(
+        (x) => x.id === "safety" && x.blocks.length > 0,
+      ) ? (
+        <EmergencyNotice />
+      ) : null}
       <PageTitle>{t("Note.title")}</PageTitle>
       <p className="max-w-[72ch]">{t("Note.intro")}</p>
       {/* Desktop (Req 27): the paper page centred on the left, the actions in a sticky aside. */}
@@ -392,7 +411,7 @@ export function NotePage() {
               />
               <div className="flex flex-wrap gap-3">
                 <Button
-                  onClick={download}
+                  onClick={() => download()}
                   disabled={pdfState === "busy"}
                   data-testid="download-pdf"
                 >
@@ -401,7 +420,11 @@ export function NotePage() {
                     ? t("Note.preparingPdf")
                     : t("Note.download")}
                 </Button>
-                <Button variant="secondary" onClick={() => window.print()}>
+                <Button
+                  variant="secondary"
+                  onClick={() => download("print")}
+                  disabled={pdfState === "busy"}
+                >
                   <PrintIcon size={20} />
                   {t("Note.print")}
                 </Button>

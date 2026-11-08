@@ -16,7 +16,7 @@ import { join } from "node:path";
 const API = process.env.JANUS_RECORD_API ?? "http://127.0.0.1:8010";
 const OUT = join(import.meta.dirname, "../src/demo/fixtures");
 const LANGUAGES = ["en", "tr", "de", "fr", "es"];
-const OUTCOME_CONSENT_VERSION = "2026-11-v1";
+const OUTCOME_CONSENT_VERSION = "2026-11-v2";
 const tr = (query, atc) => ({
   how: "tr_by_code",
   query,
@@ -77,25 +77,37 @@ const PATIENTS = [
     noteLanguage: "en",
     outcomeRegion: "US",
     items: [
+      // Oral products whose strength matches the box name (owner decision 2026-11-08, A13).
       item(
-        { how: "us_by_ndc", query: "donepezil" },
+        {
+          how: "us_by_ndc",
+          query: "donepezil",
+          form: "TABLET",
+          strength: "10 mg/1",
+        },
         "2024-04",
-        "Donedem 10 mg vial (demo)",
+        "Donedem 10 mg tablets (demo)",
       ),
       item(
-        { how: "us_by_ndc", query: "oxybutynin" },
+        {
+          how: "us_by_ndc",
+          query: "oxybutynin",
+          form: "EXTENDED RELEASE",
+          strength: "10 mg/1",
+        },
         "2024-09",
-        "Oxydem 5 mg vial (demo)",
+        "Oxydem 10 mg ER tablets (demo)",
       ),
       item(
-        { how: "us_by_ndc", query: "gabapentin" },
+        { how: "us_by_ndc", query: "gabapentin", ndc: "65862-199-01" },
         "2025-02",
-        "Gabadem 300 mg vial (demo)",
+        "Gabadem 300 mg capsules (demo)",
       ),
+      // The US search ranks injections and 100 mg capsules first; these two by their NDC.
       item(
-        { how: "us_by_ndc", query: "furosemide" },
+        { how: "us_by_ndc", query: "furosemide", ndc: "0054-4297-25" },
         "2025-06",
-        "Furodem US 20 mg vial (demo)",
+        "Furodem US 20 mg tablets (demo)",
       ),
     ],
   },
@@ -160,10 +172,16 @@ async function resolve(plan) {
       return { resolution, pick, route: "products" };
     }
     case "us_by_ndc": {
+      if (plan.ndc) {
+        const resolution = await ok("/resolve/ndc", { ndc: plan.ndc });
+        if (!resolution.candidates.length)
+          throw new Error("no US product for the NDC");
+        return { resolution, pick: 0, route: "ndc" };
+      }
       const search = await ok("/resolve/search", {
         query: plan.query,
         region: "US",
-        limit: 10,
+        limit: 20,
       });
       const product = search.candidates.find(
         (c) =>
@@ -171,7 +189,9 @@ async function resolve(plan) {
           !c.homeopathic &&
           !c.name_only &&
           c.ingredients?.length === 1 &&
-          c.packages.length > 0,
+          c.packages.length > 0 &&
+          (!plan.form || (c.dosage_form ?? "").includes(plan.form)) &&
+          (!plan.strength || c.ingredients[0]?.strength === plan.strength),
       );
       if (!product) throw new Error(`no US product for the query`);
       const ndc = product.packages[0].ndc_published;

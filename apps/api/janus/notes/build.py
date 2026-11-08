@@ -39,6 +39,15 @@ NOTICE_TEMPLATES: Final = {
 }
 
 
+# Timing → order label (doctor-loop DP41, experience DP43).
+ORDER_LABEL: Final = {
+    "within_window": "fits",
+    "after_window": "fits_late",
+    "same_month": "not_confirmed",
+    "date_unknown": "not_confirmed",
+}
+
+
 class LanguageUnavailableError(ValueError):
     pass
 
@@ -208,6 +217,11 @@ class _B:
                 rule + pipc,
             )
         ]
+        # The order as timing wording, never "probable"/"possible" (doctor-loop DP41): taken from
+        # the timing, since `possible` also covers a known order after the window.
+        out.append(
+            self.sentence(f"{fid}:order", f"finding.order.{ORDER_LABEL[f.timing]}", None, rule)
+        )
         window = self.i.result.window_months
         if f.timing in ("within_window", "after_window"):
             # The window paper supports the sentence for both; the auditor drops it if the

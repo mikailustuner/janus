@@ -247,7 +247,7 @@
    ]
   },
   "osteoporosis_fracture": {
-   "label": "Knochenschwund (Osteoporose)",
+   "label": "Knochenschwund oder Knochenbrüche (Osteoporose)",
    "safety_line": null,
    "direction": "adverse",
    "pipc_positions": [
@@ -271,7 +271,7 @@
    ]
   },
   "gastric_ulcer_bleed": {
-   "label": "Magengeschwür oder Blutung im Magen-Darm-Trakt",
+   "label": "Magenreizung, Magengeschwür oder Blutung im Magen-Darm-Trakt",
    "safety_line": "urgent_care_gi",
    "direction": "adverse",
    "pipc_positions": [

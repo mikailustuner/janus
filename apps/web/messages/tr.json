@@ -18,18 +18,18 @@
     "intro": "Evdeki ilaçları tarayın veya adlarını yazın. Janus literatürde tanımlanmış reçete kaskadı örüntülerini arar ve doktor için, doktorun dilinde, kaynaklı bir not hazırlar.",
     "start": "İlaçlarımla başla",
     "demo": "Demoyu dene",
-    "demoHint": "Kayıt gerekmez. Ürün adları uydurma olan üç sentetik hasta.",
+    "demoHint": "Kayıt gerekmez. Üç sentetik hasta; ürün adları uydurmadır.",
     "resume": "Listenizle devam edin",
     "resumeCount": "{count, plural, one {Bu cihazda # ilaç} other {Bu cihazda # ilaç}}",
     "privacy": "Bu cihazda neler kalır",
     "howTitle": "Nasıl çalışır",
     "how1": "Kutudaki kodu tarayın ya da adını yazın.",
-    "how2": "Janus, yayımlanmış {patterns} reçete kaskadı örüntüsünü ve yan etkilerle ilgili kamuya açık bildirimleri kontrol eder.",
+    "how2": "Janus ilaçlarınızı yayımlanmış {patterns} reçete kaskadı örüntüsüyle ve yan etkilerle ilgili kamuya açık bildirimlerle karşılaştırır.",
     "how3": "Doktorunuz için, doktorun dilinde, kaynaklı bir not alırsınız.",
     "coverageTitle": "Bölgeler ve diller",
     "regions": "İlaç kutularının geldiği yerler",
     "languages": "Diller",
-    "privacyLine": "Kutu fotoğrafları ve ilaç listeniz bu cihazda kalır; Janus'ta hesap yoktur ve yalnızca kontrol için gerekenler gönderilir."
+    "privacyLine": "Kutu fotoğrafları bu cihazda kalır. Janus'ta hesap yoktur; Janus ilaç listenizi saklamaz ve yalnızca kontrol için gereken kodları gönderir."
   },
   "Shell": {
     "skip": "İçeriğe geç",
@@ -62,7 +62,7 @@
     "privacy": "Gizlilik",
     "demoCodes": "Demo kodları",
     "demoDoctor": "Demo doktor sayfasını aç",
-    "donate": "Rapor paylaş"
+    "donate": "Bildirim paylaş"
   },
   "Emergency": {
     "title": "Acil durumda",
@@ -185,7 +185,7 @@
     "scanRegion": "Kutu ve etiketlerin geldiği yer",
     "scanRegionAuto": "Otomatik algıla",
     "userRegion": "Yaşadığınız yer (acil numaraları)",
-    "statisticsRegion": "Nottaki rapor istatistiklerinin bölgesi (isteğe bağlı)",
+    "statisticsRegion": "Nottaki bildirim istatistiklerinin bölgesi (isteğe bağlı)",
     "statisticsRegionNone": "Yok",
     "appearance": "Görünüm",
     "theme": "Tema",
@@ -210,8 +210,8 @@
     "label": "Demo · sentetik hasta",
     "labelWith": "Demo · sentetik hasta: {patient}",
     "exit": "Demodan çık",
-    "title": "Demoyu deneyin",
-    "intro": "Üç sentetik hasta. Ürün adları uydurmadır; etkin maddeler, bulgular, rapor istatistikleri ve not metni gerçek kural tabanından ve veri anlık görüntüsünden kaydedildi. Hiçbir şey gönderilmez ve saklanmaz.",
+    "title": "Demoyu dene",
+    "intro": "Üç sentetik hasta. Ürün adları uydurmadır; etkin maddeler, bulgular, bildirim istatistikleri ve not metni gerçek kural tabanından ve veri anlık görüntüsünden kaydedildi. Hiçbir şey gönderilmez ve saklanmaz.",
     "open": "{patient} hastasını aç",
     "items": "{count, plural, one {# ilaç} other {# ilaç}}",
     "recorded": "{date} tarihinde kaydedildi. Kurallar {rules}, ilaç verisi {dataset}, kanıt {integrity}.",
@@ -226,7 +226,7 @@
       },
       "ohio": {
         "name": "Ohio",
-        "summary": "NDC ile bulunan ABD eczane şişeleri."
+        "summary": "NDC ile bulunan ABD eczane tabletleri ve kapsülleri."
       }
     },
     "codes": "Yazdırılabilir demo kodları",
@@ -293,28 +293,19 @@
     "medicines": "{index} ({indexBox}), sonra {marker} ({markerBox})",
     "started": "{name}: {month} tarihinden beri",
     "startUnknown": "{name}: başlangıç bilinmiyor",
-    "status": {
-      "probable": "Muhtemel",
-      "possible": "Olası"
-    },
     "statusMonths": "{status} · {months, plural, one {# ay arayla} other {# ay arayla}}",
     "timing": {
-      "within_window": "{marker}, {index} ilacından {months, plural, one {# ay} other {# ay}} sonra başlandı; bu tür örüntüler için kullanılan {window} aylık pencerenin içinde.",
-      "after_window": "{marker}, {index} ilacından {months, plural, one {# ay} other {# ay}} sonra başlandı; bu tür örüntüler için kullanılan {window} aylık pencereden daha geç.",
+      "within_window": "{marker}, {index} ilacından {months, plural, one {# ay} other {# ay}} sonra başlandı; Janus'un bu örüntüler için kullandığı {window} aylık pencerenin içinde.",
+      "after_window": "{marker}, {index} ilacından {months, plural, one {# ay} other {# ay}} sonra başlandı; Janus'un bu örüntüler için kullandığı {window} aylık pencereden daha geç.",
       "same_month": "İki ilaç aynı ay başlandığı için sıraları bilinmiyor.",
       "date_unknown": "En az bir başlangıç ayı bilinmediği için iki ilacın sırası kontrol edilemedi."
     },
     "lowPriority": "Daha düşük öncelikli örüntü",
-    "priority": "Yayımlanmış veri (BMJ 2026 özeti): {measure} {value} (aralık {low} ile {high})",
-    "measure": {
-      "incidence": "insidans, %",
-      "adjusted_sequence_ratio": "düzeltilmiş sıra oranı"
-    },
-    "supporting": "Aynı kaskad, yayımlanmış başka bir kaskad listesinde (ThinkCascades) de tanımlanmaktadır.",
+    "supporting": "Bu örüntü, yayımlanmış başka bir kaskad listesinde (ThinkCascades) de tanımlanmaktadır.",
     "formExtension": "Eşleşme, birinci ilacın ağız yoluyla alınmayan ve tüm vücudu etkileyebilen bir formunu (örneğin göz damlası) içeriyor.",
     "integrity": {
       "corrected_notice": "Bu örüntünün bir kaynağı için düzeltme yayımlandı.",
-      "expression_of_concern_notice": "Bu örüntünün bir kaynağı için endişe bildirimi yayımlandı.",
+      "expression_of_concern_notice": "Bu örüntünün bir kaynağı için endişe ifadesi yayımlandı.",
       "integrity_unknown": "Bir kaynağın geri çekilme durumu kontrol edilemedi.",
       "source_may_be_outdated": "Bu örüntünün bir kaynağı güncel olmayabilir.",
       "integrity_check_may_be_out_of_date": "Bir kaynağın geri çekilme kontrolü güncel olmayabilir.",
@@ -326,7 +317,7 @@
       "glass": "Olası reçete kaskadları"
     },
     "groupUnconfirmed": "Ürün formu doğrulanmadı",
-    "groupUnconfirmedIntro": "Bu eşleşmeler {codes} kodlarını kullanıyor. Ürünün tam olarak hangisi olduğu (örneğin tablet veya göz damlası) doğrulanmadı; bu nedenle etkin maddenin tüm formları dikkate alındı. Örüntünün geçerli olduğundan emin olmak için lütfen ürünü doğrulayın.",
+    "groupUnconfirmedIntro": "Bu eşleşmeler {codes} kodlarını kullanıyor. Ürünün tam olarak hangisi olduğu (örneğin tablet veya göz damlası) doğrulanmadı; bu nedenle etkin maddenin tüm formları dikkate alındı. Örüntünün bu form için geçerli olup olmadığını görmek için lütfen ürünü doğrulayın.",
     "chains": "Örüntü zincirleri",
     "chainsIntro": "Bu örüntüler bir zincir oluşturuyor:",
     "chainsTruncated": "Zincirlerin hepsi gösterilmiyor.",
@@ -334,7 +325,7 @@
     "scopeChecked": "Janus, PIPC listesindeki {total} örüntüden {checked} tanesini kontrol etti.",
     "scopeRule": "Satır {row} ({cascade}) kontrol edilemiyor: {reason}.",
     "notMatchable": {
-      "no_atc_code": "ilaç sınıfının kodu yok",
+      "no_atc_code": "örüntüde adı geçen ilacın ATC kodu yok",
       "not_a_drug_class": "kayıt bir ilaç sınıfı değil",
       "ambiguous_text": "yayımlanmış metin belirsiz"
     },
@@ -350,11 +341,23 @@
     "outOfDate": "Bu kontrolden sonra liste değişti. Lütfen yeniden kontrol edin.",
     "checkAgain": "Yeniden kontrol et",
     "empty": "Kontrol etmek için ilaç ekleyin.",
-    "openDetail": "Kanıt ve raporlar",
+    "openDetail": "Kanıt ve bildirimler",
     "makeNote": "Doktor notunu hazırla",
-    "memory": "Tüm liste için raporlar",
+    "memory": "Tüm liste için bildirimler",
     "medicinesHeading": "Kontrol edilen ilaçlar",
-    "safetyHeading": "Ne zaman acil yardım alınmalı"
+    "safetyHeading": "Ne zaman acil yardım alınmalı",
+    "medicinesRoles": "Örüntünün ilk ilacı: {index} ({indexBox}). İkincisi: {marker} ({markerBox}).",
+    "priority": {
+      "incidence": "Kanada'nın Ontario eyaletinde yaşlı erişkinlerle yapılan yayımlanmış bir çalışmada (BMJ 2026, özet) bu örüntü, iki ilacın birlikte kullanım sıklığı en yüksek olanlar arasındaydı: %{value} (güven aralığı: {low} ile {high} arası).",
+      "adjusted_sequence_ratio": "Kanada'nın Ontario eyaletinde yaşlı erişkinlerle yapılan yayımlanmış bir çalışmada (BMJ 2026, özet) bu örüntü, düzeltilmiş sıra oranı en yüksek olanlar arasındaydı: {value} (güven aralığı: {low} ile {high} arası). Birin üzerindeki bir oran, ikinci ilacın birinciden sonra, ondan önce başlanmasından daha sık başlandığı anlamına gelir."
+    },
+    "source": "Kaynak: PIPC listesi (Rochon ve ark., Eur Geriatr Med 2025), satır {row}.",
+    "row49": "Listenin bu satırı ikinci ilacı, yayımlandığı haliyle, bir eksiklik olarak adlandırır. Janus bu satır için B12 vitamini, magnezyum ve oral demir takviyelerini kontrol eder.",
+    "order": {
+      "fits": "Sıra örüntüye uyuyor",
+      "fitsLate": "Sıra uyuyor, olağan pencereden daha geç",
+      "notConfirmed": "Sıra doğrulanmadı"
+    }
   },
   "ReadAloud": {
     "read": "Sesli oku",
@@ -366,9 +369,9 @@
     "unavailable": "Kaynak kontrolleri şu anda kullanılamıyor.",
     "cited": "Bu örüntünün dayandığı kaynaklar",
     "status": {
-      "ok": "Bildirim yok",
+      "ok": "Duyuru yok",
       "corrected": "Düzeltme yayımlandı",
-      "expression_of_concern": "Endişe bildirimi",
+      "expression_of_concern": "Endişe ifadesi",
       "retracted": "Geri çekildi",
       "unknown": "Durum bilinmiyor"
     },
@@ -383,13 +386,13 @@
     "notice": "{type} ({date})",
     "noticeType": {
       "correction": "Düzeltme",
-      "expression_of_concern": "Endişe bildirimi",
+      "expression_of_concern": "Endişe ifadesi",
       "retraction": "Geri çekme",
-      "other": "Bildirim"
+      "other": "Duyuru"
     },
     "line": {
       "sources": "{total, plural, one {# kaynak} other {# kaynak}}; {checked} tanesi DOI ile geri çekilme verisine göre kontrol edildi.",
-      "byStatus": "Bildirim yok: {ok} · düzeltme: {corrected} · endişe bildirimi: {eoc} · bilinmiyor: {unknown}",
+      "byStatus": "Duyuru yok: {ok} · düzeltme: {corrected} · endişe ifadesi: {eoc} · bilinmiyor: {unknown}",
       "range": "Kontroller {first} ile {last} arasında yapıldı.",
       "stale": "{source} verileri {date} tarihlidir ve güncel olmayabilir.",
       "noRetracted": "Geri çekilmiş hiçbir kaynak kullanılmadı.",
@@ -410,41 +413,41 @@
   },
   "MemoryView": {
     "title": "Kolektif Bellek",
-    "intro": "İlaçların ve olayların herkese açık advers olay raporlarında ne sıklıkla birlikte geçtiği.",
-    "pairTitle": "FDA'ya gönderilen raporlar (FAERS)",
+    "intro": "İlaçların ve olayların herkese açık istenmeyen olay bildirimlerinde ne sıklıkla birlikte geçtiği.",
+    "pairTitle": "FDA'ya gönderilen bildirimler (FAERS)",
     "pairHeading": "{ingredient} ve “{event}”",
-    "reports": "{count, plural, =0 {Rapor yok} one {# rapor} other {# rapor}}",
-    "ratio": "Raporlama oranı (ROR) {ror}, aralık {low} ile {high}",
-    "ratioLabel": "Raporlama oranı (ROR)",
+    "reports": "{count, plural, =0 {Bildirim yok} one {# bildirim} other {# bildirim}}",
+    "ratio": "Bildirim odds oranı (ROR) {ror}, aralık: {low} ile {high} arası",
+    "ratioLabel": "Bildirim odds oranı (ROR)",
     "noDifference": "1 = fark yok",
     "over1000": "1.000'in üzerinde",
     "assessmentHeading": "Sayıların gösterdiği",
     "detailsHeading": "Ayrıntılar",
     "pts": "Bu sayılardaki MedDRA Tercih Edilen Terimleri: {pts}",
-    "scopeSuspect": "İlacın şüpheli olarak adlandırıldığı raporlar",
+    "scopeSuspect": "İlacın şüpheli olarak belirtildiği bildirimler",
     "regionLine": "Bölge: {region}",
     "combinationTitle": "Listedeki tüm ilaçlar birlikte",
-    "combinationReports": "{count, plural, =0 {Hepsini adlandıran rapor yok} one {Hepsini adlandıran # rapor} other {Hepsini adlandıran # rapor}}",
-    "eventsHeading": "Bu raporlardaki olaylar",
+    "combinationReports": "{count, plural, =0 {Hepsinin geçtiği bildirim yok} one {Hepsinin geçtiği # bildirim} other {Hepsinin geçtiği # bildirim}}",
+    "eventsHeading": "Bu bildirimlerdeki olaylar",
     "regionsTitle": "Bölgeye göre",
     "unknownRegion": "Bölgesi bilinmeyen: {count} ({share})",
     "basis": "{region}: olayın ülkesine göre {occurrence}, bildirenin ülkesine göre {fallback}",
-    "adrreports": "AB raporları EMA tarafından yayımlanır (EudraVigilance, adrreports.eu)",
-    "donatedTitle": "Bağışlanan raporlar (Janus)",
-    "outcomesTitle": "Doktorun doğruladığı sonuçlar",
+    "adrreports": "AB bildirimleri EMA tarafından yayımlanır (EudraVigilance, adrreports.eu)",
+    "donatedTitle": "Bağışlanan bildirimler (Janus)",
+    "outcomesTitle": "Doktor notları üzerinden gelen sonuçlar (doğrulanmamış)",
     "cell": "{region}: {value}",
     "eventPicker": "Olay",
     "tooMany": "Listede 20'den fazla etkin madde var. Karşılaştırmak için lütfen en fazla 20 tane seçin.",
     "fewKeys": "Birlikte göstermek için en az iki etkin madde gerekir.",
-    "loading": "Raporlar yükleniyor…",
+    "loading": "Bildirimler yükleniyor…",
     "snapshot": "FAERS anlık görüntüsü {date}, dönem {first} ile {last}"
   },
   "Note": {
     "title": "Doktor notu",
-    "intro": "Doktor için, doktorun dilinde, kaynaklı tek bir sayfa. Liste bu cihazda kalır; kutulardaki adlar burada doldurulur ve hiçbir zaman gönderilmez.",
+    "intro": "Doktor için, doktorun dilinde, kaynaklı tek bir sayfa. Janus listeyi saklamaz; kutulardaki adlar burada doldurulur ve bu cihazdan hiç çıkmaz.",
     "language": "Notun dili",
     "patientLanguage": "Sizin diliniz: {language}",
-    "statisticsRegion": "Rapor istatistiklerinin bölgesi",
+    "statisticsRegion": "Bildirim istatistiklerinin bölgesi",
     "make": "Notu hazırla",
     "making": "Not hazırlanıyor…",
     "preview": "Önizleme",
@@ -467,13 +470,13 @@
     "qr_no_findings": "Bu notta doktorun bildireceği bir şey yok.",
     "qr_unavailable": "QR kodu şu anda kullanılamıyor. Not QR kodu olmadan yazdırılabilir.",
     "productNotKnown": "(kutudaki ad girilmedi)",
-    "qrTitle": "Doktordan geri bildirim isteyin (isteğe bağlı)",
+    "qrTitle": "Doktordan yanıt isteyin (isteğe bağlı)",
     "qrIntro": "Nottaki bir QR kodu, doktorun hesap açmadan bir örüntünün reçete kaskadı olup olmadığını ve ne yapıldığını bildirmesini sağlar. Önce bunun ne anlama geldiğini okuyun.",
     "qrAccept": "Bunu okudum ve QR kodunun notta yer almasını istiyorum.",
     "qrMake": "QR kodunu ekle",
     "qrMaking": "QR kodu hazırlanıyor…",
     "qrRegion": "Doktor hangi bölgede?",
-    "qrAlt": "Bu nota ilişkin doktor bildirimi için QR kodu",
+    "qrAlt": "Bu nota ilişkin doktor yanıtı için QR kodu",
     "qrTooLong": "Bu Janus'un adresi QR kodu için çok uzun; not QR kodu olmadan yazdırılabilir.",
     "qrDemo": "Demo: QR kodu, hiçbir şey göndermeyen bir demo formu açar.",
     "qrAdded": "QR kodu notta yer alıyor. Bağlantı {date} tarihine kadar çalışır.",
@@ -491,7 +494,7 @@
     "entries": {
       "hypotheses": {
         "title": "Hipotez kartları",
-        "body": "Yan etki raporlarından yeniden kullanım hipotezleri, her biri kanıtıyla."
+        "body": "Yan etki bildirimlerinden yeniden kullanım hipotezleri, her biri kanıtıyla."
       },
       "seance": {
         "title": {
@@ -506,7 +509,7 @@
       },
       "export": {
         "title": "Veri seti dışa aktarımı",
-        "body": "Araştırma için açık, anonimleştirilmiş veri seti."
+        "body": "Araştırma için açık veri seti; sayılar yalnızca gizliliği koruyacak kadar büyük gruplar için."
       }
     },
     "back": {
@@ -523,7 +526,7 @@
       "token_used": "Bu not için zaten bir yanıt gönderildi.",
       "unavailable": "Şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin."
     },
-    "title": "Janus · bir not hakkında bildirim",
+    "title": "Janus · bir not hakkında yanıt",
     "loading": "Form yükleniyor…",
     "demo": "Demo · sentetik hasta. Bu form hiçbir şey göndermez.",
     "first": "Birinci ilaç",
@@ -567,15 +570,15 @@
       "working": "Siliniyor…",
       "done": "Bağış silindi."
     },
-    "title": "Rapor paylaş",
-    "intro": "Bir deneyiminizi anonim bir bağışlanan rapor olarak paylaşabilirsiniz: hangi ilaçlar, hangi olay ve bunun istenmeyen bir etki mi yoksa bir iyileşme mi olduğu. Rapor, Kolektif Bellek'te yalnızca 20 veya daha fazla raporluk gruplar içinde, gürültü eklenerek sayılır.",
-    "noItems": "Raporun hangi ilaçlarla ilgili olduğunu seçmek için önce ilaç ekleyin.",
+    "title": "Bildirim paylaş",
+    "intro": "Bir deneyiminizi, adınız ve iletişim bilgileriniz olmadan bağışlanan bir bildirim olarak paylaşabilirsiniz: hangi ilaçlar, hangi olay ve bunun istenmeyen bir etki mi yoksa bir iyileşme mi olduğu. Bildirim, Kolektif Bellek'te yalnızca 20 veya daha fazla bildirimlik gruplar içinde, gürültü eklenerek sayılır.",
+    "noItems": "Bildirimin hangi ilaçlarla ilgili olduğunu seçmek için önce ilaç ekleyin.",
     "event": "Olay",
     "eventSearch": "Olay ara",
     "direction": "Bu neydi?",
     "adverse": "İstenmeyen bir etki",
     "benefit": "Bir iyileşme",
-    "ingredients": "Raporun ilgili olduğu ilaçlar (1 ile 20 arası)",
+    "ingredients": "Bildirimin ilgili olduğu ilaçlar (1 ile 20 arası)",
     "ageBand": "Yaş aralığı",
     "age": "{from}–{to}",
     "age90": "90 ve üzeri",
@@ -591,22 +594,22 @@
     "storedAge": "Yaş aralığı: {band}",
     "storedSex": "Cinsiyet: {sex}",
     "storedRegion": "Bölge: {region}",
-    "storedWeek": "Raporun haftası; sunucu tarafından belirlenir (gün değil).",
+    "storedWeek": "Bildirimin haftası; sunucu tarafından belirlenir (gün değil).",
     "storedConsent": "Kabul ettiğiniz onay metninin sürümü.",
-    "storedNothingElse": "Başka hiçbir şey: ad, e-posta, tarih, yer veya cihaz kimliği yok.",
+    "storedNothingElse": "Başka hiçbir şey: ad, e-posta, kesin tarih, bölgeden daha ayrıntılı yer veya cihaz kimliği yok.",
     "consent": {
-      "2026-11-v1": {
+      "2026-11-v2": {
         "heading": "Açık rızanız",
-        "body": "Bu alanlar sağlık verisidir. Janus bunları yalnızca açık rızanızla saklar (AB'de: GDPR Madde 9(2)(a); Türkiye'de: KVKK kapsamında açık rıza). Amaç, bağışlanan raporları Kolektif Bellek'te saymak ve araştırmadır. Veriler gizlilik sayfasında gösterilen bölgede saklanır ve en fazla 24 ay tutulur.",
+        "body": "Bu alanlar sağlık verisidir. Janus bunları yalnızca açık rızanızla saklar (AB'de: GDPR Madde 9(2)(a); Türkiye'de: KVKK kapsamında açık rıza). Amaç, bağışlanan bildirimleri Kolektif Bellek'te saymak ve araştırmadır. Veriler gizlilik sayfasında gösterilen bölgede saklanır ve en fazla 24 ay tutulur.",
         "delete": "Gönderdikten sonra bir silme belirteci alırsınız. Bununla bağışı istediğiniz zaman silebilirsiniz. Belirteç olmadan bağış, 24 ay dolmadan silinemez.",
-        "check": "Yukarıdaki alanları anonim bir bağışlanan rapor olarak paylaşmayı açıkça kabul ediyorum."
+        "check": "Yukarıdaki alanları, adım ve iletişim bilgilerim olmadan bağışlanan bir bildirim olarak paylaşmayı açıkça kabul ediyorum."
       }
     },
-    "submit": "Raporu paylaş",
+    "submit": "Bildirimi paylaş",
     "sending": "Gönderiliyor…",
     "needConsent": "Lütfen önce onay metnini okuyun ve kutuyu işaretleyin.",
     "needFields": "Lütfen bir olay, en az bir ilaç, bir yaş aralığı ve bir bölge seçin.",
-    "doneTitle": "Teşekkürler. Rapor kaydedildi.",
+    "doneTitle": "Teşekkürler. Bildirim kaydedildi.",
     "token": "Silme belirteciniz",
     "tokenOnce": "Bu belirteç yalnızca bir kez gösterilir. Belirteç olmadan bağış, 24 ay sonra kaldırılmadan önce silinemez.",
     "keep": "Belirteci bu cihazda tut",
@@ -645,7 +648,7 @@
       "serialised_true": "Kutularda seri numarası var",
       "serialised_false": "Kutularda seri numarası yok",
       "registration": "Ruhsat durum kodu {code}, {date} tarihinden beri (AEMPS'in yayımladığı durum kodu)",
-      "presentation": "Sunum durum kodu {code}, {date} tarihinden beri (AEMPS'in yayımladığı durum kodu)"
+      "presentation": "Ambalaj durum kodu {code}, {date} tarihinden beri (AEMPS'in yayımladığı durum kodu)"
     },
     "marketingEnd": "Pazarlama bitiş tarihi: {date}",
     "expiry": "Kutudaki son kullanma tarihi: {date}",
@@ -661,17 +664,17 @@
     "back": "Taramaya dön"
   },
   "OutcomeConsent": {
-    "2026-11-v1": {
+    "2026-11-v2": {
       "heading": "QR kodu ne yapar",
       "asked": "Doktordan, nottaki her örüntü için bunun bir reçete kaskadı olup olmadığını ve ne yapıldığını (örneğin doz değiştirildi ya da değişiklik yapılmadı) belirtmesi istenir.",
-      "stored": "Janus yalnızca doktorun yanıtlarını, yanıtın haftasını, notun bölgesini ve örüntülerin kodlarını saklar. Ad yok, kutu adı yok ve haftadan daha ayrıntılı tarih yok. İlaç listesi bu cihazda kalır.",
+      "stored": "Janus yalnızca doktorun yanıtlarını, yanıtın haftasını, notun bölgesini ve yanıtlanan her örüntü için kuralını, iki ilacının ve olayının kodlarını, yönünü (istenmeyen etki ya da iyileşme) ve ürünün doğrulanıp doğrulanmadığını saklar. Ad yok, kutu adı yok ve haftadan daha ayrıntılı tarih yok. İlaç listesinin kendisi saklanmaz.",
       "howLong": "Bağlantı yaklaşık beş hafta çalışır. Yanıtlar en fazla 24 ay saklanır ve yalnızca en az 20 yanıtlık gruplar için, gürültü eklenerek, sayı olarak gösterilir.",
       "withdraw": "Bu cihazda tutulan belirteçle istediğiniz zaman geri çekebilirsiniz: doktor artık yanıt veremez ve önceden gönderilmiş yanıtlar silinir."
     }
   },
   "Reminder": {
     "title": "Konuştuğunuz belirti düzeldi mi?",
-    "body": "{date} tarihinde doktor için bir not hazırladınız. İsterseniz nasıl geçtiğini anonim bir bağışlanan rapor olarak paylaşabilirsiniz.",
+    "body": "{date} tarihinde doktor için bir not hazırladınız. İsterseniz nasıl geçtiğini, adınız ve iletişim bilgileriniz olmadan bağışlanan bir bildirim olarak paylaşabilirsiniz.",
     "report": "Nasıl geçtiğini paylaş",
     "dismiss": "Bunu gizle"
   },
@@ -688,7 +691,7 @@
     },
     "stored": {
       "title": "Saklananlar",
-      "body": "Yalnızca siz seçerseniz: bir bağışlanan rapor (yaş aralığı, isteğe bağlı cinsiyet, bölge, ilaçlar, olay, tür, hafta, onay sürümü) ve doktorun bir notun QR koduna verdiği yanıtlar. Janus ayrıca kullanılmış veya geri çekilmiş notların bir kodunu süreleri dolana kadar tutar; böylece bir bağlantı iki kez kullanılamaz."
+      "body": "Yalnızca siz seçerseniz: bağışlanan bir bildirim (yaş aralığı, isteğe bağlı cinsiyet, bölge, ilaçlar, olay, tür, hafta, onay sürümü) ve doktorun bir notun QR koduna verdiği yanıtlar. Janus ayrıca kullanılmış veya geri çekilmiş notların bir kodunu süreleri dolana kadar tutar; böylece bir bağlantı iki kez kullanılamaz."
     },
     "where": {
       "title": "Bağışlanan veriler nerede saklanır",
@@ -699,7 +702,7 @@
     },
     "howLong": {
       "title": "Ne kadar süre",
-      "body": "Bağışlanan raporlar ve doktor yanıtları: en fazla 24 ay. Sonuç döngüsü bağlantıları: yaklaşık beş hafta (28 ile 35 gün)."
+      "body": "Bağışlanan bildirimler ve doktor yanıtları: en fazla 24 ay. Sonuç döngüsü bağlantıları: yaklaşık beş hafta (28 ile 35 gün)."
     },
     "delete": {
       "title": "Nasıl silinir",
@@ -716,7 +719,7 @@
     },
     "sources": {
       "title": "Veri kaynakları",
-      "body": "openFDA (NDC Directory ve FAERS / FDA AEMS), TİTCK (Türkiye), BDPM (Fransa), AEMPS'nin CIMA'sı (İspanya), Wikidata, PIPC reçete kaskadları listesi, geri çekme kontrolleri için Crossref ve Retraction Watch ve rapor istatistiklerinde MedDRA terimleri (MedDRA® ticari markası ICH adına IFPMA tarafından tescil edilmiştir). Her sonuç kaynağını ve tarihini gösterir; bu yayıncıların hiçbiri Janus'u desteklemez."
+      "body": "openFDA (NDC Directory ve FAERS / FDA AEMS), TİTCK (Türkiye), BDPM (Fransa), AEMPS'nin CIMA'sı (İspanya), Wikidata, PIPC reçete kaskadları listesi, geri çekme kontrolleri için Crossref ve Retraction Watch ve bildirim istatistiklerinde MedDRA terimleri (MedDRA® ticari markası ICH adına IFPMA tarafından tescil edilmiştir). Her sonuç kaynağını ve tarihini gösterir; bu yayıncıların hiçbiri Janus'u desteklemez."
     }
   },
   "Memory": {
@@ -770,7 +773,7 @@
       "hidden_under_20_noise_added": "20'nin altında gizlenir, gürültü eklenir.",
       "layer_unavailable": "Bu katman şu anda kullanılamıyor.",
       "not_available": "Henüz mevcut değil.",
-      "memory_unavailable": "Kolektif Hafıza verileri şu anda kullanılamıyor.",
+      "memory_unavailable": "Kolektif Bellek verileri şu anda kullanılamıyor.",
       "crisis_support": "Kendinize zarar verme düşünceleri ortaya çıkarsa {crisis}.",
       "urgent_care_skin": "Şiddetli, yayılan veya kabarcıklı bir döküntü ya da ateşin veya ağız yaralarının eşlik ettiği bir döküntü için acil tıbbi bakım alın. Yüzünüz veya dudaklarınız şişerse, nefes almakta zorlanırsanız ya da kendinizi çok kötü hissederseniz {emergency} arayın.",
       "urgent_care_heart": "Göğüs ağrısı, nefes almada güçlük veya bayılma için {emergency} arayın. Hızlı ya da düzensiz kalp atışı da acil tıbbi bakım gerektirir.",

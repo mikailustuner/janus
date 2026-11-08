@@ -9,7 +9,7 @@ import { useLocale } from "next-intl";
 import type { PairOut, SnapshotOut } from "@/api/contracts";
 import { formatCount, formatDate, formatShare } from "@/components/format";
 import { Card, SectionTitle } from "@/components/ui";
-import { pairPanel } from "@/flow/memory";
+import { pairPanel, splitCaveats } from "@/flow/memory";
 import { useT } from "@/theme/words";
 
 import { CiBar } from "./CiBar";
@@ -43,6 +43,7 @@ export function PairPanel({
   const locale = useLocale();
   const say = useMemorySentence(snapshot);
   const p = pairPanel(pair);
+  const caveats = splitCaveats(p.sentences);
   return (
     <Card aria-labelledby="pair" data-testid="pair-panel">
       <p className="text-sm text-muted">{t("MemoryView.pairTitle")}</p>
@@ -62,12 +63,19 @@ export function PairPanel({
           </p>
           <p className="text-sm text-muted">{t("MemoryView.scopeSuspect")}</p>
           {p.ratio ? <CiBar ratio={p.ratio} /> : null}
+          {caveats.visible.length ? (
+            <ul className="flex flex-col gap-2" data-testid="visible-caveats">
+              {caveats.visible.map((k) => (
+                <li key={k}>{say(k, p.window)}</li>
+              ))}
+            </ul>
+          ) : null}
           <details className="flex flex-col gap-2">
             <summary className="flex min-h-11 cursor-pointer items-center font-bold">
               {t("MemoryView.assessmentHeading")}
             </summary>
             <ul className="flex flex-col gap-2 pt-2">
-              {p.sentences.map((k) => (
+              {caveats.folded.map((k) => (
                 <li key={k}>{say(k, p.window)}</li>
               ))}
             </ul>

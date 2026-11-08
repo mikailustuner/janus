@@ -134,6 +134,10 @@ SPECS: Final[tuple[Spec, ...]] = (
         "index:term;marker:term;months:int;window:int",
     ),
     _s("finding.timing.same_month", "claim", ("rule",)),
+    # The order as timing wording (doctor-loop DP41); shared with the web chip.
+    _s("finding.order.fits", "claim", ("rule",), shared="Findings.order.fits"),
+    _s("finding.order.fits_late", "claim", ("rule",), shared="Findings.order.fitsLate"),
+    _s("finding.order.not_confirmed", "claim", ("rule",), shared="Findings.order.notConfirmed"),
     _s("finding.timing.date_unknown", "claim", ("rule",)),
     _s(
         "finding.priority.incidence",

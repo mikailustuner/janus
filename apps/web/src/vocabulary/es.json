@@ -247,7 +247,7 @@
    ]
   },
   "osteoporosis_fracture": {
-   "label": "Huesos debilitados (osteoporosis)",
+   "label": "Huesos debilitados o fracturas (osteoporosis)",
    "safety_line": null,
    "direction": "adverse",
    "pipc_positions": [
@@ -271,7 +271,7 @@
    ]
   },
   "gastric_ulcer_bleed": {
-   "label": "Úlcera de estómago o hemorragia digestiva",
+   "label": "Irritación o úlcera de estómago, o hemorragia digestiva",
    "safety_line": "urgent_care_gi",
    "direction": "adverse",
    "pipc_positions": [

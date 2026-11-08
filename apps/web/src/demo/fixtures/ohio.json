@@ -8,7 +8,7 @@
   "rule_base_version": "8d4881fc6418ee6437d4c2052283f89e6c21ea32405bcd6061f89e9637e32f8f",
   "integrity_version": "8a5b888f0a9f8791e7091da918e6904817211b90f5a573d2418a7432c728b84e",
   "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-  "glossary_version": "226aaf2ed17fcb666da86de250ab1fc8631a37b35aba0e61f31d05ff645d3934"
+  "glossary_version": "3b810442089acdbc8b44fb4070cc73a1a44bdc456674e8dd77199953e0a6f332"
  },
  "items": [
   {
@@ -18,7 +18,7 @@
     "kind": "ndc",
     "ndc": "0295-2680-01"
    },
-   "boxName": "Donedem 10 mg vial (demo)",
+   "boxName": "Donedem 10 mg tablets (demo)",
    "started": "2024-04",
    "choices": [],
    "resolution": {
@@ -50,8 +50,8 @@
       "country": null,
       "matched_by": "ndc",
       "score": null,
-      "product_name": "Donedem 10 mg vial (demo)",
-      "brand_name": "Donedem 10 mg vial (demo)",
+      "product_name": "Donedem 10 mg tablets (demo)",
+      "brand_name": "Donedem 10 mg tablets (demo)",
       "generic_name": "donepezil",
       "ingredient_text": "donepezil",
       "published_atc": null,
@@ -133,6 +133,11 @@
          "run_id": "20261107T180945Z-941214ac-7657",
          "region": "US",
          "snapshot_date": "2026-11-06"
+        },
+        "strength_code": {
+         "amount": "10000",
+         "unit": "ug",
+         "basis": "unit"
         }
        }
       ],
@@ -141,7 +146,8 @@
        "run_id": "20261107T180945Z-941214ac-7657",
        "region": "US",
        "snapshot_date": "2026-11-06"
-      }
+      },
+      "dose_form_group": "oral_solid"
      }
     ],
     "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
@@ -155,7 +161,7 @@
     "kind": "ndc",
     "ndc": "0295-2681-01"
    },
-   "boxName": "Oxydem 5 mg vial (demo)",
+   "boxName": "Oxydem 10 mg ER tablets (demo)",
    "started": "2024-09",
    "choices": [],
    "resolution": {
@@ -187,8 +193,8 @@
       "country": null,
       "matched_by": "ndc",
       "score": null,
-      "product_name": "Oxydem 5 mg vial (demo)",
-      "brand_name": "Oxydem 5 mg vial (demo)",
+      "product_name": "Oxydem 10 mg ER tablets (demo)",
+      "brand_name": "Oxydem 10 mg ER tablets (demo)",
       "generic_name": "oxybutynin",
       "ingredient_text": "oxybutynin",
       "published_atc": null,
@@ -253,6 +259,11 @@
          "run_id": "20261107T180945Z-941214ac-7657",
          "region": "US",
          "snapshot_date": "2026-11-06"
+        },
+        "strength_code": {
+         "amount": "10000",
+         "unit": "ug",
+         "basis": "unit"
         }
        }
       ],
@@ -261,7 +272,8 @@
        "run_id": "20261107T180945Z-941214ac-7657",
        "region": "US",
        "snapshot_date": "2026-11-06"
-      }
+      },
+      "dose_form_group": "oral_solid_prolonged_release"
      }
     ],
     "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
@@ -275,7 +287,7 @@
     "kind": "ndc",
     "ndc": "0295-2682-01"
    },
-   "boxName": "Gabadem 300 mg vial (demo)",
+   "boxName": "Gabadem 300 mg capsules (demo)",
    "started": "2025-02",
    "choices": [],
    "resolution": {
@@ -302,13 +314,13 @@
     "candidates": [
      {
       "kind": "product",
-      "candidate_id": "US:openfda_ndc:58895",
+      "candidate_id": "US:openfda_ndc:59114",
       "region": "US",
       "country": null,
       "matched_by": "ndc",
       "score": null,
-      "product_name": "Gabadem 300 mg vial (demo)",
-      "brand_name": "Gabadem 300 mg vial (demo)",
+      "product_name": "Gabadem 300 mg capsules (demo)",
+      "brand_name": "Gabadem 300 mg capsules (demo)",
       "generic_name": "gabapentin",
       "ingredient_text": "gabapentin",
       "published_atc": null,
@@ -341,6 +353,26 @@
        {
         "ndc_published": "0295-2683-01",
         "ndc11": "02952680301"
+       },
+       {
+        "ndc_published": "0295-2684-01",
+        "ndc11": "02952680401"
+       },
+       {
+        "ndc_published": "0295-2685-01",
+        "ndc11": "02952680501"
+       },
+       {
+        "ndc_published": "0295-2686-01",
+        "ndc11": "02952680601"
+       },
+       {
+        "ndc_published": "0295-2687-01",
+        "ndc11": "02952680701"
+       },
+       {
+        "ndc_published": "0295-2688-01",
+        "ndc11": "02952680801"
        }
       ],
       "ingredients": [
@@ -397,6 +429,11 @@
          "run_id": "20261107T180945Z-941214ac-7657",
          "region": "US",
          "snapshot_date": "2026-11-06"
+        },
+        "strength_code": {
+         "amount": "300000",
+         "unit": "ug",
+         "basis": "unit"
         }
        }
       ],
@@ -405,7 +442,8 @@
        "run_id": "20261107T180945Z-941214ac-7657",
        "region": "US",
        "snapshot_date": "2026-11-06"
-      }
+      },
+      "dose_form_group": "oral_solid"
      }
     ],
     "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
@@ -419,7 +457,7 @@
     "kind": "ndc",
     "ndc": "0295-2683-01"
    },
-   "boxName": "Furodem US 20 mg vial (demo)",
+   "boxName": "Furodem US 20 mg tablets (demo)",
    "started": "2025-06",
    "choices": [],
    "resolution": {
@@ -446,13 +484,13 @@
     "candidates": [
      {
       "kind": "product",
-      "candidate_id": "US:openfda_ndc:58618",
+      "candidate_id": "US:openfda_ndc:58702",
       "region": "US",
       "country": null,
       "matched_by": "ndc",
       "score": null,
-      "product_name": "Furodem US 20 mg vial (demo)",
-      "brand_name": "Furodem US 20 mg vial (demo)",
+      "product_name": "Furodem US 20 mg tablets (demo)",
+      "brand_name": "Furodem US 20 mg tablets (demo)",
       "generic_name": "furosemide",
       "ingredient_text": "furosemide",
       "published_atc": null,
@@ -465,7 +503,11 @@
       "homeopathic": false,
       "status_published": [],
       "product_rxcuis": [
-       "1719286"
+       "197730",
+       "197731",
+       "197732",
+       "310429",
+       "313988"
       ],
       "packages": [
        {
@@ -521,6 +563,11 @@
          "run_id": "20261107T180945Z-941214ac-7657",
          "region": "US",
          "snapshot_date": "2026-11-06"
+        },
+        "strength_code": {
+         "amount": "20000",
+         "unit": "ug",
+         "basis": "unit"
         }
        }
       ],
@@ -529,7 +576,8 @@
        "run_id": "20261107T180945Z-941214ac-7657",
        "region": "US",
        "snapshot_date": "2026-11-06"
-      }
+      },
+      "dose_form_group": "oral_solid"
      }
     ],
     "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
@@ -4960,7 +5008,7 @@
     "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
     "integrity_version": "8a5b888f0a9f8791e7091da918e6904817211b90f5a573d2418a7432c728b84e",
     "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-    "glossary_version": "226aaf2ed17fcb666da86de250ab1fc8631a37b35aba0e61f31d05ff645d3934"
+    "glossary_version": "3b810442089acdbc8b44fb4070cc73a1a44bdc456674e8dd77199953e0a6f332"
    },
    "as_of_month": "2026-11",
    "removals": [],
@@ -5167,6 +5215,17 @@
         },
         {
          "type": "sentence",
+         "id": "pipc:24:Q415081:Q1060922:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "Order fits the pattern",
+         "evidence_ids": [
+          "rule:pipc:24"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
          "id": "pipc:24:Q415081:Q1060922:timing",
          "template": "finding.timing.within_window",
          "kind": "claim",
@@ -5214,6 +5273,17 @@
          "numbers": [
           "31"
          ]
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:31:Q410352:Q388801:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "Order fits the pattern",
+         "evidence_ids": [
+          "rule:pipc:31"
+         ],
+         "numbers": []
         },
         {
          "type": "sentence",
@@ -5579,14 +5649,14 @@
          "id": "about:versions",
          "template": "about.versions",
          "kind": "fixed",
-         "text": "Versions: rules 8d4881fc, medicine data 7db3a513, evidence 8a5b888f, report counts 20261108, glossary 226aaf2e.",
+         "text": "Versions: rules 8d4881fc, medicine data 7db3a513, evidence 8a5b888f, report counts 20261108, glossary 3b810442.",
          "evidence_ids": [],
          "numbers": [
           "8d4881fc",
           "7db3a513",
           "8a5b888f",
           "20261108",
-          "226aaf2e"
+          "3b810442"
          ]
         },
         {
@@ -5629,7 +5699,7 @@
     "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
     "integrity_version": "8a5b888f0a9f8791e7091da918e6904817211b90f5a573d2418a7432c728b84e",
     "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-    "glossary_version": "226aaf2ed17fcb666da86de250ab1fc8631a37b35aba0e61f31d05ff645d3934"
+    "glossary_version": "3b810442089acdbc8b44fb4070cc73a1a44bdc456674e8dd77199953e0a6f332"
    },
    "as_of_month": "2026-11",
    "removals": [],
@@ -5836,6 +5906,17 @@
         },
         {
          "type": "sentence",
+         "id": "pipc:24:Q415081:Q1060922:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "Sıra örüntüye uyuyor",
+         "evidence_ids": [
+          "rule:pipc:24"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
          "id": "pipc:24:Q415081:Q1060922:timing",
          "template": "finding.timing.within_window",
          "kind": "claim",
@@ -5883,6 +5964,17 @@
          "numbers": [
           "31"
          ]
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:31:Q410352:Q388801:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "Sıra örüntüye uyuyor",
+         "evidence_ids": [
+          "rule:pipc:31"
+         ],
+         "numbers": []
         },
         {
          "type": "sentence",
@@ -5993,7 +6085,7 @@
            "id": "stat:Q410352:peripheral_oedema:ALL:ratio",
            "template": "stat.reports_ratio",
            "kind": "claim",
-           "text": "Tüm bölgeler: 148 bildirimde gabapentin, “Periferik ödem” olayıyla birlikte yer almaktadır; bildirim olasılık oranı (ROR) 2,22 (güven aralığı 1,89 ile 2,62 arası).",
+           "text": "Tüm bölgeler: 148 bildirimde gabapentin, “Periferik ödem” olayıyla birlikte yer almaktadır; bildirim odds oranı (ROR) 2,22 (güven aralığı 1,89 ile 2,62 arası).",
            "evidence_ids": [
             "dataset:faers"
            ],
@@ -6186,7 +6278,7 @@
          "id": "integrity:by_status",
          "template": "integrity.by_status",
          "kind": "claim",
-         "text": "Kontrol edilen kaynakların durumu: bildirim yok 1, düzeltme 1, endişe bildirimi 0, henüz kontrol edilmedi 0.",
+         "text": "Kontrol edilen kaynakların durumu: duyuru yok 1, düzeltme 1, endişe ifadesi 0, henüz kontrol edilmedi 0.",
          "evidence_ids": [
           "dataset:faers",
           "dataset:pipc",
@@ -6248,14 +6340,14 @@
          "id": "about:versions",
          "template": "about.versions",
          "kind": "fixed",
-         "text": "Sürümler: kurallar 8d4881fc, ilaç verileri 7db3a513, kanıtlar 8a5b888f, bildirim sayıları 20261108, sözlük 226aaf2e.",
+         "text": "Sürümler: kurallar 8d4881fc, ilaç verileri 7db3a513, kanıtlar 8a5b888f, bildirim sayıları 20261108, sözlük 3b810442.",
          "evidence_ids": [],
          "numbers": [
           "8d4881fc",
           "7db3a513",
           "8a5b888f",
           "20261108",
-          "226aaf2e"
+          "3b810442"
          ]
         },
         {
@@ -6298,7 +6390,7 @@
     "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
     "integrity_version": "8a5b888f0a9f8791e7091da918e6904817211b90f5a573d2418a7432c728b84e",
     "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-    "glossary_version": "226aaf2ed17fcb666da86de250ab1fc8631a37b35aba0e61f31d05ff645d3934"
+    "glossary_version": "3b810442089acdbc8b44fb4070cc73a1a44bdc456674e8dd77199953e0a6f332"
    },
    "as_of_month": "2026-11",
    "removals": [],
@@ -6505,6 +6597,17 @@
         },
         {
          "type": "sentence",
+         "id": "pipc:24:Q415081:Q1060922:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "Reihenfolge passt zum Muster",
+         "evidence_ids": [
+          "rule:pipc:24"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
          "id": "pipc:24:Q415081:Q1060922:timing",
          "template": "finding.timing.within_window",
          "kind": "claim",
@@ -6552,6 +6655,17 @@
          "numbers": [
           "31"
          ]
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:31:Q410352:Q388801:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "Reihenfolge passt zum Muster",
+         "evidence_ids": [
+          "rule:pipc:31"
+         ],
+         "numbers": []
         },
         {
          "type": "sentence",
@@ -6917,14 +7031,14 @@
          "id": "about:versions",
          "template": "about.versions",
          "kind": "fixed",
-         "text": "Versionen: Regeln 8d4881fc, Arzneimitteldaten 7db3a513, Evidenz 8a5b888f, Meldezahlen 20261108, Glossar 226aaf2e.",
+         "text": "Versionen: Regeln 8d4881fc, Arzneimitteldaten 7db3a513, Evidenz 8a5b888f, Meldezahlen 20261108, Glossar 3b810442.",
          "evidence_ids": [],
          "numbers": [
           "8d4881fc",
           "7db3a513",
           "8a5b888f",
           "20261108",
-          "226aaf2e"
+          "3b810442"
          ]
         },
         {
@@ -6967,7 +7081,7 @@
     "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
     "integrity_version": "8a5b888f0a9f8791e7091da918e6904817211b90f5a573d2418a7432c728b84e",
     "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-    "glossary_version": "226aaf2ed17fcb666da86de250ab1fc8631a37b35aba0e61f31d05ff645d3934"
+    "glossary_version": "3b810442089acdbc8b44fb4070cc73a1a44bdc456674e8dd77199953e0a6f332"
    },
    "as_of_month": "2026-11",
    "removals": [],
@@ -7174,6 +7288,17 @@
         },
         {
          "type": "sentence",
+         "id": "pipc:24:Q415081:Q1060922:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "L'ordre correspond au schéma",
+         "evidence_ids": [
+          "rule:pipc:24"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
          "id": "pipc:24:Q415081:Q1060922:timing",
          "template": "finding.timing.within_window",
          "kind": "claim",
@@ -7221,6 +7346,17 @@
          "numbers": [
           "31"
          ]
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:31:Q410352:Q388801:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "L'ordre correspond au schéma",
+         "evidence_ids": [
+          "rule:pipc:31"
+         ],
+         "numbers": []
         },
         {
          "type": "sentence",
@@ -7586,14 +7722,14 @@
          "id": "about:versions",
          "template": "about.versions",
          "kind": "fixed",
-         "text": "Versions : règles 8d4881fc, données médicaments 7db3a513, sources 8a5b888f, comptes de signalements 20261108, glossaire 226aaf2e.",
+         "text": "Versions : règles 8d4881fc, données médicaments 7db3a513, sources 8a5b888f, comptes de signalements 20261108, glossaire 3b810442.",
          "evidence_ids": [],
          "numbers": [
           "8d4881fc",
           "7db3a513",
           "8a5b888f",
           "20261108",
-          "226aaf2e"
+          "3b810442"
          ]
         },
         {
@@ -7636,7 +7772,7 @@
     "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
     "integrity_version": "8a5b888f0a9f8791e7091da918e6904817211b90f5a573d2418a7432c728b84e",
     "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-    "glossary_version": "226aaf2ed17fcb666da86de250ab1fc8631a37b35aba0e61f31d05ff645d3934"
+    "glossary_version": "3b810442089acdbc8b44fb4070cc73a1a44bdc456674e8dd77199953e0a6f332"
    },
    "as_of_month": "2026-11",
    "removals": [],
@@ -7846,6 +7982,17 @@
         },
         {
          "type": "sentence",
+         "id": "pipc:24:Q415081:Q1060922:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "El orden coincide con el patrón",
+         "evidence_ids": [
+          "rule:pipc:24"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
          "id": "pipc:24:Q415081:Q1060922:timing",
          "template": "finding.timing.within_window",
          "kind": "claim",
@@ -7896,6 +8043,17 @@
         },
         {
          "type": "sentence",
+         "id": "pipc:31:Q410352:Q388801:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "El orden coincide con el patrón",
+         "evidence_ids": [
+          "rule:pipc:31"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
          "id": "pipc:31:Q410352:Q388801:timing",
          "template": "finding.timing.within_window",
          "kind": "claim",
@@ -7936,7 +8094,7 @@
        "id": "statistics",
        "heading": {
         "template": "statistics.heading",
-        "text": "Informes a FDA AEMS (antes FAERS)"
+        "text": "Notificaciones a FDA AEMS (antes FAERS)"
        },
        "blocks": [
         {
@@ -7965,7 +8123,7 @@
            "id": "stat:Q415081:urinary_incontinence:ALL:coverage",
            "template": "stat.coverage.no_reports",
            "kind": "claim",
-           "text": "Todas las regiones: ningún informe de este periodo cita donepezilo junto con el evento «Incontinencia urinaria».",
+           "text": "Todas las regiones: ninguna notificación de este periodo cita donepezilo junto con el evento «Incontinencia urinaria».",
            "evidence_ids": [
             "dataset:faers"
            ],
@@ -8003,7 +8161,7 @@
            "id": "stat:Q410352:peripheral_oedema:ALL:ratio",
            "template": "stat.reports_ratio",
            "kind": "claim",
-           "text": "Todas las regiones: 148 informes citan gabapentina junto con el evento «Edema periférico»; razón de odds de notificación (ROR) 2,22 (intervalo de confianza de 1,89 a 2,62).",
+           "text": "Todas las regiones: 148 notificaciones citan gabapentina junto con el evento «Edema periférico»; razón de odds de notificación (ROR) 2,22 (intervalo de confianza de 1,89 a 2,62).",
            "evidence_ids": [
             "dataset:faers"
            ],
@@ -8019,7 +8177,7 @@
            "id": "stat:Q410352:peripheral_oedema:ALL:assessment",
            "template": "stat.assessment.disproportionate",
            "kind": "claim",
-           "text": "El evento aparece en una proporción mayor de los informes que nombran este medicamento que en los demás informes que nombran un medicamento reconocido.",
+           "text": "El evento aparece en una proporción mayor de las notificaciones que nombran este medicamento que en las demás notificaciones que nombran un medicamento reconocido.",
            "evidence_ids": [
             "dataset:faers"
            ],
@@ -8032,7 +8190,7 @@
          "id": "statistics:spontaneous_reporting",
          "template": "stat.limit.spontaneous_reporting",
          "kind": "fixed",
-         "text": "Los informes se envían de forma voluntaria y no se verifican.",
+         "text": "Las notificaciones se envían de forma voluntaria y no se verifican.",
          "evidence_ids": [],
          "numbers": []
         },
@@ -8068,7 +8226,7 @@
          "id": "statistics:absence",
          "template": "stat.absence",
          "kind": "fixed",
-         "text": "La ausencia de informes, o un patrón poco claro, no significa que no haya asociación ni que los medicamentos del paciente estén libres de problemas.",
+         "text": "La ausencia de notificaciones, o un patrón poco claro, no significa que no haya asociación ni que los medicamentos del paciente estén libres de problemas.",
          "evidence_ids": [],
          "numbers": []
         },
@@ -8077,7 +8235,7 @@
          "id": "statistics:window",
          "template": "stat.window",
          "kind": "fixed",
-         "text": "Los recuentos cubren los informes recibidos o actualizados en los cuatro trimestres 2025Q4–2026Q3, incluidas las versiones de seguimiento de casos recibidos antes.",
+         "text": "Los recuentos cubren las notificaciones recibidas o actualizadas en los cuatro trimestres 2025Q4–2026Q3, incluidas las versiones de seguimiento de casos recibidos antes.",
          "evidence_ids": [],
          "numbers": [
           "2025Q4",
@@ -8089,7 +8247,7 @@
          "id": "statistics:denominator",
          "template": "stat.denominator",
          "kind": "fixed",
-         "text": "Los recuentos usan solo los informes que nombran al menos un medicamento que Janus reconoce (84,8 % de los informes de este periodo). Algunas grafías no se reconocen, por lo que un patrón puede pasar inadvertido.",
+         "text": "Los recuentos usan solo las notificaciones que nombran al menos un medicamento que Janus reconoce (84,8 % de las notificaciones de este periodo). Algunas grafías no se reconocen, por lo que un patrón puede pasar inadvertido.",
          "evidence_ids": [],
          "numbers": [
           "84,8 %"
@@ -8258,14 +8416,14 @@
          "id": "about:versions",
          "template": "about.versions",
          "kind": "fixed",
-         "text": "Versiones: reglas 8d4881fc, datos de medicamentos 7db3a513, evidencia 8a5b888f, recuentos de informes 20261108, glosario 226aaf2e.",
+         "text": "Versiones: reglas 8d4881fc, datos de medicamentos 7db3a513, evidencia 8a5b888f, recuentos de notificaciones 20261108, glosario 3b810442.",
          "evidence_ids": [],
          "numbers": [
           "8d4881fc",
           "7db3a513",
           "8a5b888f",
           "20261108",
-          "226aaf2e"
+          "3b810442"
          ]
         },
         {
@@ -8282,7 +8440,7 @@
          "id": "about:faers",
          "template": "about.faers",
          "kind": "fixed",
-         "text": "Los recuentos de informes proceden de los datos trimestrales públicos de FDA AEMS (antes FAERS).",
+         "text": "Los recuentos de notificaciones proceden de los datos trimestrales públicos de FDA AEMS (antes FAERS).",
          "evidence_ids": [],
          "numbers": []
         },
@@ -8417,7 +8575,7 @@
   "texts": {
    "heading": "Outcome report",
    "intro": "For each pattern you reviewed, please say whether it was a prescribing cascade and what was done. Leave a pattern unanswered if you are not sure.",
-   "stored_fields": "Janus stores only your answers, the week of the report, the region of the note and the codes of the medicines and the event. No names, no exact dates and nothing about you.",
+   "stored_fields": "Janus stores only your answers, the week of the answer, the region of the note and, for each pattern, its rule and the codes of the medicines and the event. No names, no exact dates and nothing about you.",
    "limits": "Answers are shown only as counts for groups of at least 20 answers, with noise added, and are never added to patient reports.",
    "question_assessment": "Was this a prescribing cascade?",
    "question_action": "What was done? (optional)",
