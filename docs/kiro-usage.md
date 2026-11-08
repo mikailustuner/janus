@@ -312,3 +312,19 @@ found, what hooks blocked. Three to five lines per day.
 - `faers_mapping_gap` is deferred to the `drug-resolution` EU and name-rules work (recorded there).
 - Still on `docs/pre-launch-checklist.md`: pharmacist or physician review of the mapping, native-speaker check,
   re-check of every number and of the link, MSSO terms for PT display.
+## 2026-11-08 — Phase 2: drug-resolution EU and name rules, tasks 15–19 and the review stop (task 20)
+- Spec refined (requirements, design §11–§19, tasks 15–28) and owner decisions applied: imipenem option (b)
+  (one reviewed component-code pair, DP43; `J01DH51` counts for a curated imipenem key only), AI (712) approved
+  (DP19 extended; the API now **rejects** AI (21) with 422 `gs1_serial_not_accepted` instead of dropping it, test
+  P50), `faers_mapping_gap` not built (DP36).
+- Built, with no rule data enabled: coverage snapshot tool with `compare` and a `--rules` what-if option; region
+  `EU` and key groups in the adapter interface; AI 712 in the parser; migration `0008`; language-aware name
+  functions (`name_lists`, `names`, `matching`) with the anion-acid and biologic-suffix steps; rule-impact report.
+  The dataset built with the new code maps every name of the five sources as before (0 changed names).
+- Counterexamples and findings: the first Spanish vowel rule replaced the keys of Spanish labels and unmapped 5 TİTCK
+  names on real data (fixed: French and Spanish labels get their own and the neutral keys; property P34 monotonic);
+  `ruff check .` in CI also covers `migrations/` (two unused `noqa` failed the first push). 585 API tests green
+  locally, CI green after the lint fix.
+- Pharmacologist agent wrote `name-rules-review.md`. Accepted-set what-if: BDPM 67.6 → 81.9 %, Nomenclátor
+  48.1 → 86.1 %, FAERS 84.0 → 86.6 %, TİTCK 84.6 % unchanged. Stopped at task 20 for the owner's review; ten
+  decisions listed in the sheet (Section 10). WHOCC has no code for imipenem alone (only J01DH51).

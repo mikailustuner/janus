@@ -238,6 +238,12 @@
   - **Stop.** Show the owner the sheet with a short summary of the numbers. Continue only after the
     owner's answers; record them in the sheet and in design §19.
   - _Requirements: 12.11_
+  - **Status 2026-11-08: sheet written, waiting for the owner.** `name-rules-review.md` (734 lines,
+    pharmacologist agent). Accepted set measured with the what-if tool: BDPM 67.6 → 81.9 %, Nomenclátor
+    48.1 → 86.1 %, FAERS 84.0 → 86.6 %, TİTCK 84.6 % unchanged, openFDA Rx 91.7 → 92.4 % of
+    occurrences; no mapped name changes to another key. Ten owner decisions in its Section 10. No rule
+    data is enabled (checked: `name_lists.py`, `anion_acid_forms.csv`, the route map and the synonym
+    file are unchanged). Task 21 starts only after the owner's answers.
 
 - [ ] 21. Enable the reviewed rule data
   - Turn on `BIOLOGIC_SUFFIX_ENABLED` if the owner accepted the rule. Put the accepted words into
