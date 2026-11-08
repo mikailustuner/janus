@@ -69,7 +69,7 @@ class ProductRow:
 _PRODUCT_COLS: tuple[LiteralString, ...] = (
     "region", "product_name", "brand_name", "generic_name", "ingredient_text", "published_atc",
     "product_type", "routes", "dosage_form", "marketing_end_date", "suspension_status",
-    "name_only", "product_rxcuis",
+    "name_only", "product_rxcuis", "status_published",
 )  # fmt: skip
 _INGREDIENT_COLS: tuple[LiteralString, ...] = (
     "position", "published_name", "strength", "status", "reason", "qid", "key_candidates",

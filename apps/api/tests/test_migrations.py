@@ -249,3 +249,27 @@ def test_0008_accepts_eu_kinds_and_the_downgrade_removes_eu_datasets(
     }
     assert "status_published" in cols_after
     db_conn.execute("DELETE FROM res_dataset")
+
+
+@pytest.mark.db
+def test_0009_indexes_the_product_code_foreign_key_and_is_reversible(
+    db_url: str, db_conn: psycopg.Connection
+) -> None:
+    """drug-resolution task 23: deleting products must not scan `res_product_code`."""
+    cfg = alembic_config(db_url)
+
+    def index_columns() -> list[str] | None:
+        row = db_conn.execute(
+            "SELECT indexdef FROM pg_indexes WHERE tablename = 'res_product_code' "
+            "AND indexname = 'res_product_code_product'"
+        ).fetchone()
+        return None if row is None else [str(row[0])]
+
+    found = index_columns()
+    assert found is not None and "(dataset_id, source_id, product_id)" in found[0]
+    command.downgrade(cfg, "0008")
+    try:
+        assert index_columns() is None
+    finally:
+        command.upgrade(cfg, "head")
+    assert index_columns() is not None

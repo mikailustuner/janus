@@ -242,6 +242,11 @@ def sources(draw: st.DrawFn) -> tuple[list[Any], list[Any], list[Any]]:
 # --- BDPM- and Nomenclátor-shaped rows (drug-resolution Phase 2) ----------------------------------
 
 
+def cip13_of(i: int) -> str:
+    """A CIP13 with a valid EAN-13 check digit: `3400` + 8 digits + check."""
+    return with_check_digit(f"3400{i:08d}")
+
+
 def bdpm_row(
     i: int,
     denomination: str,
@@ -260,7 +265,7 @@ def bdpm_row(
         lines.append(_line(name, "FT", k))
         if sa and k in sa:
             lines.append(_line(sa[k], "SA", k))
-    code = cip13 if cip13 is not None else f"3400{i:09d}"
+    code = cip13 if cip13 is not None else cip13_of(i)
     return {
         "cip13": code,
         "name_only": False,

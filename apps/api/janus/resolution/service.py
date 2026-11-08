@@ -15,7 +15,17 @@ from typing import Any, cast
 import psycopg
 
 from janus.integrity.freshness import is_stale, parse_snapshot_date
-from janus.regions.base import ProductKey, Region, RegionAdapter, gs1_prefix_region
+from janus.regions.base import (
+    Country,
+    ProductKey,
+    Region,
+    RegionAdapter,
+    gs1_prefix_region,
+    no_open_database_country,
+)
+from janus.regions.eu_es.adapter import EsNomenclatorAdapter
+from janus.regions.eu_fr.adapter import FrCip13Adapter
+from janus.regions.eu_name.adapter import EuNameAdapter
 from janus.regions.tr.adapter import TitckAdapter
 from janus.regions.us.adapter import OpenFdaNdcAdapter
 from janus.resolution import repository
@@ -35,14 +45,33 @@ from janus.resolution.model import (
 )
 from janus.resolution.names import fold
 from janus.resolution.ndc import parse_ndc_input
+from janus.resolution.prepare_eu import is_homeopathic_name
 
-ADAPTERS: tuple[RegionAdapter, ...] = (TitckAdapter(), OpenFdaNdcAdapter())
+# A new country is one adapter and one line here (Req 4.5, 10).
+ADAPTERS: tuple[RegionAdapter, ...] = (
+    TitckAdapter(),
+    OpenFdaNdcAdapter(),
+    FrCip13Adapter(),
+    EsNomenclatorAdapter(),
+    EuNameAdapter(),
+)
 WIKIDATA = "wikidata"
 JANUS_CURATED = "janus_curated"  # curated Janus ingredient keys (J<n>)
 # Staleness follows the shared freshness rule (twice the cadence, evidence-integrity DP17).
-STALENESS_SOURCES = ("titck", "openfda_ndc")
-REGION_SOURCES: dict[Region, str] = {"TR": "titck", "US": "openfda_ndc"}
-NOT_YET: tuple[str, ...] = ("FR", "ES", "DE")  # Phase 2 adapters (eu_fr, eu_es, eu_name)
+STALENESS_SOURCES = ("titck", "openfda_ndc", "eu_fr_bdpm", "eu_es_cima")
+REGION_SOURCES: dict[Region, tuple[str, ...]] = {
+    "TR": ("titck",),
+    "US": ("openfda_ndc",),
+    "EU": ("eu_fr_bdpm", "eu_es_cima"),
+}
+# The EU sources are optional at load time (Req 9.7); a default search or scan uses them only if
+# they are loaded, while a request that names region EU needs both.
+OPTIONAL_SOURCES: frozenset[str] = frozenset({"eu_fr_bdpm", "eu_es_cima"})
+COUNTRY_OF_SOURCE: dict[str, Country] = {
+    a.source_id: a.country for a in ADAPTERS if a.source_id is not None and a.country is not None
+}
+# Region hints for which no adapter exists yet (none today: FR, ES and DE have adapters).
+NOT_YET: tuple[str, ...] = ()
 
 
 class ResolutionUnavailableError(RuntimeError):
@@ -56,7 +85,9 @@ def choose_adapters(
     if override is not None:
         return [a for a in adapters if a.region == override]
     accepting = [a for a in adapters if a.accepts_gtin(gtin14)]
-    return sorted(accepting, key=lambda a: (not a.structural_hint(gtin14), a.region))
+    return sorted(
+        accepting, key=lambda a: (not a.structural_hint(gtin14), a.region, a.country or "")
+    )
 
 
 @dataclass(frozen=True)
@@ -143,6 +174,7 @@ class _Builder:
                 ProductCandidate(
                     candidate_id=cid,
                     region=f["region"],
+                    country=COUNTRY_OF_SOURCE.get(r.source_id),
                     matched_by=matched_by,  # pyright: ignore[reportArgumentType]
                     score=(scores or {}).get(cid),
                     product_name=f["product_name"],
@@ -156,7 +188,12 @@ class _Builder:
                     marketing_end_date=f["marketing_end_date"],
                     suspension_status=f["suspension_status"],
                     name_only=f["name_only"],
-                    homeopathic=is_homeopathic_product(i["strength"] for i in r.ingredients),
+                    homeopathic=is_homeopathic_product(i["strength"] for i in r.ingredients)
+                    or (
+                        f["region"] == "EU"
+                        and any(is_homeopathic_name(i["published_name"]) for i in r.ingredients)
+                    ),
+                    status_published=list(f["status_published"]),
                     product_rxcuis=list(f["product_rxcuis"]),
                     packages=[Package(ndc_published=p, ndc11=c) for p, c in r.packages],
                     ingredients=[
@@ -244,20 +281,27 @@ def _notices(
 def _result(
     b: _Builder,
     regions: Sequence[Region],
+    sources: Iterable[str],
     candidates: Sequence[ProductCandidate | IngredientCandidate],
     today: dt.date,
     scan: ScanInfo | None = None,
     extra: Sequence[Notice] = (),
 ) -> ResolutionResult:
-    sources = sorted({REGION_SOURCES[r] for r in regions} | {WIKIDATA})
+    searched = sorted({*sources, WIKIDATA})
     return ResolutionResult(
         dataset_version=b.cur.dataset_id,
-        regions_searched=list(regions),
-        sources=[b.source(s) for s in sources],
+        regions_searched=list(dict.fromkeys(regions)),
+        sources=[b.source(s) for s in searched],
         scan=scan,
-        notices=[*extra, *_notices(b, sources, candidates, today)],
+        notices=[*extra, *_notices(b, searched, candidates, today)],
         candidates=list(candidates),
     )
+
+
+def _needs_source(a: RegionAdapter, gtin14: str, override: Region | None) -> bool:
+    """Whether a missing source of this adapter is an error (design §13.2). An EU adapter that
+    merely accepts the code (Spain accepts any valid GTIN) is asked only if its source is loaded."""
+    return override is not None or a.region != "EU" or a.structural_hint(gtin14)
 
 
 def resolve_scan(
@@ -269,14 +313,31 @@ def resolve_scan(
 ) -> ResolutionResult:
     data = parse_element_string(content, today)  # Gs1Error → 422 in the router
     chosen = choose_adapters(adapters, data.gtin14, override)
-    cur = _current(conn, [a.source_id for a in chosen if a.source_id is not None])
+    cur = _current(
+        conn,
+        [
+            a.source_id
+            for a in chosen
+            if a.source_id is not None and _needs_source(a, data.gtin14, override)
+        ],
+    )
+    searched = [a for a in chosen if a.source_id is not None and a.source_id in cur.sources]
     b = _Builder(conn, cur)
     hint = gs1_prefix_region(data.gtin14)
     extra: list[Notice] = []
     if override is None and hint in NOT_YET:
         extra.append(Notice(code="region_adapter_not_available", region=hint))
+    country = no_open_database_country(data.gtin14)
+    if (
+        country is not None
+        and override in (None, "EU")
+        and any(a.source_id is None and a.accepts_gtin(data.gtin14) for a in chosen)
+    ):
+        # No open product-code database for this country: no candidate, the client offers name
+        # search and on-device text recognition (Req 4.3).
+        extra.append(Notice(code="no_open_product_database", region="EU", country=country))
     candidates: list[ProductCandidate | IngredientCandidate] = []
-    for a in chosen:
+    for a in searched:
         # Key groups in order of trust: the first group that finds a product wins (design §13.1).
         for group in a.key_groups(data):
             refs: list[repository.ProductRef] = []
@@ -300,7 +361,15 @@ def resolve_scan(
         lot_present=data.lot_present,
         structural_hint=hint,
     )
-    return _result(b, [a.region for a in chosen], candidates, today, scan, extra)
+    return _result(
+        b,
+        [a.region for a in searched],
+        [a.source_id for a in searched if a.source_id is not None],
+        candidates,
+        today,
+        scan,
+        extra,
+    )
 
 
 def resolve_ndc(conn: psycopg.Connection, ndc: str, today: dt.date) -> ResolutionResult:
@@ -314,7 +383,7 @@ def resolve_ndc(conn: psycopg.Connection, ndc: str, today: dt.date) -> Resolutio
                 conn, cur.dataset_id, kind, [k.code for k in keys if k.kind == kind]
             )
         )
-    return _result(b, ["US"], b.products(sorted(refs), "ndc"), today)
+    return _result(b, ["US"], ["openfda_ndc"], b.products(sorted(refs), "ndc"), today)
 
 
 def search(
@@ -323,10 +392,15 @@ def search(
     key = fold(query)
     if len(key) < 2:
         raise ValueError("query_too_short")
-    regions: list[Region] = [region] if region else ["TR", "US"]
-    cur = _current(conn, [REGION_SOURCES[r] for r in regions])
+    # Without a region: Türkiye and the US always, the EU sources if the dataset holds them. A
+    # request that names a region needs all of that region's sources (Req 6.2).
+    wanted: list[Region] = [region] if region else ["TR", "US", "EU"]
+    required = REGION_SOURCES[region] if region else (*REGION_SOURCES["TR"], *REGION_SOURCES["US"])
+    cur = _current(conn, required)
+    sources = [s for r in wanted for s in REGION_SOURCES[r] if s in cur.sources]
+    regions: list[Region] = [r for r in wanted if any(s in sources for s in REGION_SOURCES[r])]
     b = _Builder(conn, cur)
-    hits = rank(key, repository.search_names(conn, cur.dataset_id, key, regions), limit)
+    hits = rank(key, repository.search_names(conn, cur.dataset_id, key, wanted), limit)
     candidates: list[ProductCandidate | IngredientCandidate] = []
     for h in hits:  # keep rank order
         if h.kind == "product":
@@ -335,7 +409,7 @@ def search(
             candidates += b.products([(source_id, int(pid))], "name", {h.ref: h.score})
         else:
             candidates += b.ingredient_candidates([h.ref], {h.ref: h.score})
-    return _result(b, regions, candidates, today)
+    return _result(b, regions, sources, candidates, today)
 
 
 def resolve_products(
@@ -345,13 +419,14 @@ def resolve_products(
     regions: list[Region] = []
     for cid in dict.fromkeys(candidate_ids):
         region, source_id, pid = cid.split(":")
-        if REGION_SOURCES.get(cast(Region, region)) != source_id:
+        if source_id not in REGION_SOURCES.get(cast(Region, region), ()):
             continue
         refs.append((source_id, int(pid)))
         if region not in regions:
             regions.append(cast(Region, region))
     regions.sort()
-    cur = _current(conn, [REGION_SOURCES[r] for r in regions])
+    sources = sorted({source_id for source_id, _ in refs})
+    cur = _current(conn, sources)
     b = _Builder(conn, cur)
     found = b.products(refs, "candidate_id")
     extra = (
@@ -359,7 +434,7 @@ def resolve_products(
         if len(found) == len(refs) == len(set(candidate_ids))
         else [Notice(code="unknown_candidate_ids")]
     )
-    return _result(b, regions, found, today, extra=extra)
+    return _result(b, regions, sources, found, today, extra=extra)
 
 
 # --- Read-only helpers for the cascade engine (cascade-engine design §6.2) -----------------------
@@ -383,13 +458,17 @@ def current_dataset_id(conn: psycopg.Connection) -> str | None:
 def rule_inputs(
     conn: psycopg.Connection, candidate_ids: Sequence[str], qids: Sequence[str]
 ) -> RuleInputs:
-    """Re-resolve list items in the request's read-only transaction (codes via `rule_input`)."""
-    cur = _current(conn, REGION_SOURCES.values())
+    """Re-resolve list items in the request's read-only transaction (codes via `rule_input`).
+
+    Needs the sources of the regions that occur in `candidate_ids` (plus Wikidata): a list of
+    Turkish boxes works on a dataset without EU data (Req 9.7); 503 still means "a needed source
+    is missing"."""
     refs: list[repository.ProductRef] = []
     for cid in dict.fromkeys(candidate_ids):
         region, source_id, pid = cid.split(":")
-        if REGION_SOURCES.get(cast(Region, region)) == source_id:
+        if source_id in REGION_SOURCES.get(cast(Region, region), ()):
             refs.append((source_id, int(pid)))
+    cur = _current(conn, sorted({source_id for source_id, _ in refs}))
     b = _Builder(conn, cur)
     products = {p.candidate_id: p for p in b.products(refs, "candidate_id")}
     wanted = sorted(set(qids))

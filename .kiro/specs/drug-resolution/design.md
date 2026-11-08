@@ -839,6 +839,13 @@ Downgrade deletes the datasets that contain EU kinds or `EU` products (reference
 as in migration 0006), drops the column and restores the check. The index
 `res_product_code_lookup (dataset_id, kind, code)` already serves the new kinds.
 
+### 14.6 Migration `0009_res_product_code_product_index` (task 23)
+`CREATE INDEX res_product_code_product ON res_product_code (dataset_id, source_id, product_id)`.
+Found when the loader retired old datasets on the development database: deleting a `res_product` row
+checks its `res_product_code` rows through the foreign key, and without this index each deleted
+product scanned the whole table (a retirement of one dataset of 160,000 products ran for more than
+50 minutes). The migration for imipenem (task 27) is `0010`.
+
 ## 15. Name rules
 
 ### 15.1 One language parameter

@@ -196,8 +196,11 @@ def test_errors_and_override(client: TestClient, monkeypatch: pytest.MonkeyPatch
     r = client.post("/resolve/scan", json={"content": _gtin(BARCODES[0]), "region": "US"})
     assert r.status_code == 200 and r.json()["regions_searched"] == ["US"]
     assert r.json()["candidates"] == []
+    # A French code on a dataset without the BDPM is "unavailable", not a false "not found"
+    # (Req 6.2, design §13.2); the Turkish and US requests above work on the same dataset.
     r = client.post("/resolve/scan", json={"content": with_check_digit("340093000000")})  # FR
-    notices = [n["code"] for n in r.json()["notices"]]
-    assert "region_adapter_not_available" in notices
+    assert (r.status_code, r.json()) == (503, {"error": "resolution_unavailable"})
+    r = client.post("/resolve/scan", json={"content": _gtin(BARCODES[0]), "region": "EU"})
+    assert (r.status_code, r.json()) == (503, {"error": "resolution_unavailable"})
     r = client.post("/resolve/ndc", json={"ndc": "1234567890"})
     assert r.status_code == 200 and [c["brand_name"] for c in r.json()["candidates"]] == ["NORVASC"]

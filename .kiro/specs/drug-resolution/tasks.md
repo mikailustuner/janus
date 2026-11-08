@@ -274,20 +274,20 @@
   - [x] 22.8 Re-run P5, P7, P17, P18 over French-like and Spanish-like sources (P44, pure part). _Requirements: 5.1, 5.2, 5.4_
   - _Requirements: 4.1, 4.2, 5.8–5.11, 9.7–9.9_
 
-- [ ] 23. Adapters, repository, service and routes
+- [x] 23. Adapters, repository, service and routes
   - `regions/eu_fr/adapter.py`, `eu_es/adapter.py`, `eu_name/adapter.py`; service changes of design
     §13 (`REGION_SOURCES`, key groups in order, sources a scan needs, `rule_inputs`, notices,
     staleness, name search with region `EU`); repository reads `status_published`; routes accept
     region `EU`.
-  - [ ] 23.1 Property test P27: French key. _Requirements: 4.1_
-  - [ ] 23.2 Property test P28: French lookups are complete; name-only rows. _Requirements: 4.1, 2.3_
-  - [ ] 23.3 Property test P30: Spanish order of trust. _Requirements: 4.2_
-  - [ ] 23.4 Property test P31: no external call (sockets blocked; import-graph test; extend the privacy harness's `assert_stateless`). _Requirements: 4.2, 7.1_
-  - [ ] 23.5 Property test P32: no open database. _Requirements: 4.3, 6.2_
-  - [ ] 23.6 Property test P33: EU name search by language and region. _Requirements: 4.4_
-  - [ ] 23.7 Property test P47 (request part): a request that needs a missing EU source answers 503; Turkish and US requests on a dataset without EU data behave as in Phase 1; `rule_inputs` needs only the regions present. _Requirements: 6.2, 9.7_
-  - [ ] 23.8 Re-run P13, P14, P19, P20, P21, P22 with EU sources (P44, database part). _Requirements: 2.1, 2.3, 6.2, 7.2, 8_
-  - [ ] 23.9 Example tests: the stale-source notices for BDPM (60 days) and the Nomenclátor (14 days); a presentation with an empty ingredient list; the BDPM text is returned exactly as published (leading and trailing spaces, accents). _Requirements: 4.1, 4.2_
+  - [x] 23.1 Property test P27: French key. _Requirements: 4.1_
+  - [x] 23.2 Property test P28: French lookups are complete; name-only rows. _Requirements: 4.1, 2.3_
+  - [x] 23.3 Property test P30: Spanish order of trust. _Requirements: 4.2_
+  - [x] 23.4 Property test P31: no external call (sockets blocked; import-graph test; extend the privacy harness's `assert_stateless`). _Requirements: 4.2, 7.1_
+  - [x] 23.5 Property test P32: no open database. _Requirements: 4.3, 6.2_
+  - [x] 23.6 Property test P33: EU name search by language and region. _Requirements: 4.4_
+  - [x] 23.7 Property test P47 (request part): a request that needs a missing EU source answers 503; Turkish and US requests on a dataset without EU data behave as in Phase 1; `rule_inputs` needs only the regions present. _Requirements: 6.2, 9.7_
+  - [x] 23.8 Re-run P13, P14, P19, P20, P21, P22 with EU sources (P44, database part). _Requirements: 2.1, 2.3, 6.2, 7.2, 8_
+  - [x] 23.9 Example tests: the stale-source notices for BDPM (60 days) and the Nomenclátor (14 days); a presentation with an empty ingredient list; the BDPM text is returned exactly as published (leading and trailing spaces, accents). _Requirements: 4.1, 4.2_
   - _Requirements: 1.5, 4.1–4.7, 6.2, 7.1_
 
 - [ ] 24. Checkpoint: EU resolution end to end and coverage after
@@ -333,7 +333,7 @@
     in `atc_codes`: the loader's rule "codes must be ingredient-level" gets a documented
     exception for a curated key whose only code comes from `component_codes.csv`);
     `data/component_codes.csv` (`key, code, evidence, whocc_url, whocc_date, note`); migration
-    `0009` for `res_component_code`; `atc.py`/`prepare.py` carry the (key, code) pair as
+    `0010` for `res_component_code` (`0009` is the index of task 23); `atc.py`/`prepare.py` carry the (key, code) pair as
     `atc_selection = component_code`; `cascades/inputs.py` and `repository.combination_codes`
     accept exactly the listed pairs; re-check the WHOCC `J01DH` page and put URL and date in the
     note. `cascade-engine` DP23 and requirements record the exception.
