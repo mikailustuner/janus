@@ -7,15 +7,14 @@ lookup never returns them (Req 2.3).
 
 from __future__ import annotations
 
-from typing import Literal
-
-from janus.regions.base import ProductKey, Region, gs1_prefix_region
+from janus.regions.base import Country, KeyGroup, ProductKey, Region, gs1_prefix_region
+from janus.resolution.gs1 import Gs1Data
 
 
 class TitckAdapter:
     region: Region = "TR"
+    country: Country | None = None
     source_id = "titck"
-    matched_by: Literal["barcode", "ndc_gtin"] = "barcode"
 
     def accepts_gtin(self, gtin14: str) -> bool:
         return len(gtin14) == 14 and gtin14.startswith("0")
@@ -25,3 +24,7 @@ class TitckAdapter:
 
     def structural_hint(self, gtin14: str) -> bool:
         return gs1_prefix_region(gtin14) == "TR"
+
+    def key_groups(self, data: Gs1Data) -> list[KeyGroup]:
+        keys = self.keys_from_gtin(data.gtin14)
+        return [KeyGroup("barcode", tuple(keys))] if keys else []

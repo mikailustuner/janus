@@ -194,7 +194,7 @@ def aggregate(reports: Iterable[ReportFact], matches: Mapping[str, Match]) -> Co
 
 def map_names(candidates: Iterable[str], index: NameIndex) -> dict[str, Match]:
     """The resolution ladder in non-Turkish mode (steps 0, 2-5 and the unsplit check)."""
-    return {name: map_name(name, index, turkish=False) for name in sorted(set(candidates))}
+    return {name: map_name(name, index, lang="en") for name in sorted(set(candidates))}
 
 
 # --- artifact ------------------------------------------------------------------------------
@@ -690,7 +690,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         for a in inputs.artifacts.values():
             a.verify()
         wikidata = inputs.artifacts[resolution_load.WIKIDATA].rows
-        index = build_name_index(wikidata, inputs.rules, inputs.synonyms, inputs.curated.rows)
+        index = build_name_index(
+            wikidata, inputs.rules, inputs.synonyms, inputs.curated.rows, inputs.acid
+        )
         described = inputs.describe()
         result = build_counts(
             data_dir,

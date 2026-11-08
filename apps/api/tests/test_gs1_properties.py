@@ -88,29 +88,84 @@ def test_short_gtins_padded(short: str) -> None:
     gtin=gtin14s(),
     expiry=valid_yymmdd(),
     lot=st.text(alphabet=CSET82, min_size=1, max_size=20),
-    serial=st.text(alphabet=CSET82, min_size=1, max_size=20),
-    order=st.permutations(["01", "17", "10", "21"]),
+    national=st.text(alphabet="0123456789", min_size=7, max_size=7),
+    order=st.permutations(["01", "17", "10", "712"]),
 )
-def test_round_trip(gtin: str, expiry: str, lot: str, serial: str, order: list[str]) -> None:
+def test_round_trip(gtin: str, expiry: str, lot: str, national: str, order: list[str]) -> None:
     """Feature: drug-resolution, Property P3. Validates Req 1.1, 1.3.
 
-    Building an FNC1 element string from (GTIN, expiry, lot, serial) and parsing it returns the
-    same GTIN and expiry; serial and lot are reported only as present.
+    Building an FNC1 element string from (GTIN, expiry, lot, AI 712) and parsing it returns the
+    same GTIN and expiry and the national code; the lot is reported only as present.
     """
-    values = {"01": gtin, "17": expiry, "10": lot, "21": serial}
+    values = {"01": gtin, "17": expiry, "10": lot, "712": national}
     f = Gs1Fields(tuple((ai, values[ai]) for ai in order))
     data = parse_element_string(render_fnc1(f, identifier="]d2"), TODAY)
     assert data.gtin14 == gtin
     assert data.expiry == parse_expiry(expiry, TODAY)
     assert data.expiry_status == "valid"
-    assert data.serial_present and data.lot_present
+    assert data.lot_present and not data.serial_present
+    assert data.national_code == national
     assert set(Gs1Data.__dataclass_fields__) == {
         "gtin14",
         "expiry",
         "expiry_status",
         "serial_present",
         "lot_present",
+        "national_code",
     }
+
+
+@given(
+    gtin=gtin14s(),
+    national=st.one_of(
+        st.text(alphabet="0123456789", min_size=1, max_size=6),
+        st.text(alphabet="0123456789", min_size=8, max_size=20),
+        st.text(alphabet="ABCDEFG", min_size=7, max_size=7),
+    ),
+    form=st.sampled_from(["paren", "fnc1"]),
+)
+def test_bad_national_code_is_dropped(gtin: str, national: str, form: str) -> None:
+    """Feature: drug-resolution, Property P50 (AI 712 part). Validates Req 1.1.
+
+    An AI (712) value that is not exactly 7 digits is dropped; the GTIN still resolves.
+    """
+    f = Gs1Fields((("01", gtin), ("712", national)))
+    content = render_parenthesised(f) if form == "paren" else render_fnc1(f)
+    data = parse_element_string(content, TODAY)
+    assert data.gtin14 == gtin
+    assert data.national_code is None
+
+
+@given(
+    gtin=gtin14s(),
+    serial=st.text(alphabet=CSET82, min_size=1, max_size=25),
+    others=st.lists(st.sampled_from(["10", "17", "712"]), unique=True, max_size=3),
+    position=st.integers(0, 3),
+    form=st.sampled_from(["paren", "fnc1"]),
+    identifier=st.sampled_from(["", "]d2"]),
+)
+def test_serial_is_rejected(
+    gtin: str, serial: str, others: list[str], position: int, form: str, identifier: str
+) -> None:
+    """Feature: drug-resolution, Property P50. Validates Req 1.4 (owner decision 2026-11-08).
+
+    An element string that carries AI (21), in either form and at any position, is rejected with
+    the fixed code and the error never contains the serial. The serial is not validated: even
+    a value with a bad length or characters gives the same code.
+    """
+    sample = {"10": "LOT1", "17": "280531", "712": "6543217"}
+    fields: list[tuple[str, str]] = [("01", gtin)] + [(ai, sample[ai]) for ai in others]
+    fields.insert(min(position, len(fields)), ("21", serial))
+    f = Gs1Fields(tuple(fields))
+    if form == "paren":
+        assume("(" not in serial and ")" not in serial)
+        content = render_parenthesised(f)
+    else:
+        content = render_fnc1(f, identifier=identifier)
+    with pytest.raises(Gs1Error) as exc:
+        parse_element_string(content, TODAY)
+    assert exc.value.code is Gs1ErrorCode.SERIAL_NOT_ACCEPTED
+    assert str(exc.value) == "gs1_serial_not_accepted"  # a fixed code, nothing of the input
 
 
 def _reference_year(yy: int, today: date) -> int:
@@ -154,20 +209,23 @@ def test_invalid_expiry_still_resolves_gtin(gtin: str, month: str) -> None:
 
 def test_examples() -> None:
     amlipin = "08680199094206"
-    data = parse_element_string(f"]d201{amlipin}17280500{GS}10AB12{GS}21XYZ", TODAY)
+    data = parse_element_string(f"]d201{amlipin}17280500{GS}10AB12", TODAY)
     assert data.gtin14 == amlipin
     assert data.expiry == date(2028, 5, 31)
+    with pytest.raises(Gs1Error) as serial_exc:  # the serial of a real box never reaches us
+        parse_element_string(f"]d201{amlipin}17280500{GS}10AB12{GS}21XYZ", TODAY)
+    assert serial_exc.value.code is Gs1ErrorCode.SERIAL_NOT_ACCEPTED
     with pytest.raises(Gs1Error) as exc:
         parse_element_string("(01)08680199094206(99)1", TODAY)
     assert exc.value.code is Gs1ErrorCode.UNKNOWN_AI
     with pytest.raises(Gs1Error) as exc:
-        parse_element_string("(10)AB(21)CD", TODAY)
+        parse_element_string("(10)AB(11)010101", TODAY)
     assert exc.value.code is Gs1ErrorCode.GTIN_MISSING
     with pytest.raises(Gs1Error) as exc:
-        parse_element_string(f"01{amlipin}21A{GS}21B", TODAY)
+        parse_element_string(f"01{amlipin}10A{GS}10B", TODAY)
     assert exc.value.code is Gs1ErrorCode.DUPLICATE_AI
     with pytest.raises(Gs1Error) as exc:
-        parse_element_string(f"01{amlipin}21" + "A" * 21, TODAY)
+        parse_element_string(f"01{amlipin}10" + "A" * 21, TODAY)
     assert exc.value.code is Gs1ErrorCode.FIELD_LENGTH
 
 

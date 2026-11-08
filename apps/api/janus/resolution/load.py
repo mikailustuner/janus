@@ -29,7 +29,18 @@ import psycopg
 from janus.db.pool import Database
 from janus.integrity.registry import read_sources
 from janus.observability.logging import LogEvent, configure_logging, log_event
-from janus.resolution import atc, canonical, matching, names, ndc, prepare
+from janus.resolution import (
+    anion_acid,
+    atc,
+    canonical,
+    matching,
+    name_lists,
+    names,
+    ndc,
+    prepare,
+    prepare_eu,
+)
+from janus.resolution.anion_acid import AnionAcidTable
 from janus.resolution.atc import DATA_DIR, CombinationRules, RouteMap
 from janus.resolution.prepare import (
     JANUS_CURATED,
@@ -56,7 +67,7 @@ CURATED_HEADER = [
 CURATED_KEY = re.compile(r"^J[1-9][0-9]{0,5}$")
 CURATED_SCHEMA = "janus_ingredients-1"
 REGISTRY_FILE = DATA_DIR.parent / "pipelines" / "sources.toml"
-_CODE_MODULES = (atc, canonical, matching, names, ndc, prepare)
+_CODE_MODULES = (anion_acid, atc, canonical, matching, name_lists, names, ndc, prepare, prepare_eu)
 
 type Hook = Callable[[str], None]
 
@@ -173,6 +184,7 @@ class Inputs:
     # source id -> cadence_days from pipelines/sources.toml (freshness rule, DP17)
     cadences: Mapping[str, int | None] = field(default_factory=dict[str, int | None])
     curated: Curated = field(default_factory=Curated)
+    acid: AnionAcidTable = field(default_factory=AnionAcidTable)
 
     def describe(self) -> dict[str, Any]:
         syn = hashlib.sha256(json.dumps(self.synonyms, ensure_ascii=False).encode()).hexdigest()
@@ -188,7 +200,8 @@ class Inputs:
             "combination_rules": self.rules.version,
             "route_map": self.route_map.version,
             "synonyms": syn,
-            "name_rules": names.RULES_VERSION,
+            "name_rules": names.rules_version(),
+            "anion_acid": self.acid.version,
             "cadences": dict(sorted(self.cadences.items())),
             "curated_keys": self.curated.sha256,
             "code": self.code,
@@ -223,6 +236,7 @@ def gather(
         code_version(),
         cadences,
         read_curated(),
+        AnionAcidTable.load(),
     )
 
 
@@ -235,6 +249,7 @@ def prepare_inputs(inputs: Inputs) -> PreparedDataset:
         inputs.route_map,
         inputs.synonyms,
         inputs.curated.rows,
+        inputs.acid,
     )
 
 

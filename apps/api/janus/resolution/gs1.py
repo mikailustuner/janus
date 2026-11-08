@@ -1,8 +1,11 @@
 """GS1 element-string parsing (drug-resolution design §4.5). Pure: no I/O, no clock.
 
-The client sends only AI (01) and (17) (owner decision DP19). If serial (21) or lot (10) still
-arrive, their values are read only to find the end of the field and to detect a repeated AI with
-a different value; they are never stored in the result, returned or logged (Req 1.4).
+The client sends only AI (01), (17) and, if present, (712) (owner decision DP19, extended
+2026-11-08). The serial (21) identifies a single box and must never leave the device: an element
+string that carries AI (21) is rejected with `gs1_serial_not_accepted` before any value is read
+(Req 1.4). A lot (10) that still arrives is read only to find the end of the field and to detect
+a repeated AI with a different value; it is never stored, returned or logged. AI (712) is the
+Spanish national code (a product number) and is kept as `national_code` if it has 7 digits.
 Errors carry a fixed code and never include any part of the input (Req 8.4).
 """
 
@@ -63,6 +66,7 @@ class Gs1ErrorCode(StrEnum):
     FIELD_CHARACTERS = "gs1_field_characters"
     GTIN_MISSING = "gtin_missing"
     GTIN_CHECK_DIGIT = "gtin_check_digit"
+    SERIAL_NOT_ACCEPTED = "gs1_serial_not_accepted"
 
 
 class Gs1Error(ValueError):
@@ -78,13 +82,18 @@ ExpiryStatus = Literal["absent", "valid", "invalid"]
 
 @dataclass(frozen=True)
 class Gs1Data:
-    """What resolution keeps from a scan. There is deliberately no serial or lot field."""
+    """What resolution keeps from a scan. There is deliberately no serial or lot value.
+
+    `serial_present` is always False (a serial is rejected, never parsed); it stays for contract
+    compatibility. `national_code` is the AI (712) value of 7 digits, else None.
+    """
 
     gtin14: str
     expiry: date | None
     expiry_status: ExpiryStatus
     serial_present: bool
     lot_present: bool
+    national_code: str | None = None
 
 
 def gtin_check_digit(body: str) -> int:
@@ -152,10 +161,17 @@ def _check_value(spec: AiSpec, value: str) -> None:
         raise Gs1Error(Gs1ErrorCode.FIELD_CHARACTERS)
 
 
+SERIAL_AI = "21"
+NATIONAL_CODE_AI = "712"
+_NATIONAL_CODE = re.compile(r"^[0-9]{7}$")
+
+
 def _match_ai(text: str, pos: int) -> str:
     for size in (2, 3, 4):
         ai = text[pos : pos + size]
         if len(ai) == size and ai in AI_TABLE:
+            if ai == SERIAL_AI:
+                raise Gs1Error(Gs1ErrorCode.SERIAL_NOT_ACCEPTED)
             return ai
     raise Gs1Error(Gs1ErrorCode.UNKNOWN_AI)
 
@@ -201,6 +217,8 @@ def _fields_parenthesised(text: str) -> list[tuple[str, str]]:
         ai = m.group(1)
         if ai not in AI_TABLE:
             raise Gs1Error(Gs1ErrorCode.UNKNOWN_AI)
+        if ai == SERIAL_AI:
+            raise Gs1Error(Gs1ErrorCode.SERIAL_NOT_ACCEPTED)
         start = m.end()
         nxt = text.find("(", start)
         end = n if nxt == -1 else nxt
@@ -241,10 +259,12 @@ def parse_element_string(content: str, today: date) -> Gs1Data:
         expiry = parse_expiry(seen["17"], today)
         status = "valid" if expiry is not None else "invalid"
 
+    national = seen.get(NATIONAL_CODE_AI)
     return Gs1Data(
         gtin14=gtin14,
         expiry=expiry,
         expiry_status=status,
-        serial_present="21" in seen,
+        serial_present=False,
         lot_present="10" in seen,
+        national_code=national if national and _NATIONAL_CODE.match(national) else None,
     )

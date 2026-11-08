@@ -51,6 +51,7 @@ Health data is the biggest risk in Janus. Privacy is a product feature: on-devic
 
 #### Acceptance criteria
 1. THE client SHALL decode barcodes and run OCR in the browser and SHALL NOT upload images. **[Client: experience spec]**
+   - *(Added 2026-11-08, `drug-resolution` DP19 as extended by the owner.)* From a decoded GS1 code THE client SHALL send the API only the Application Identifiers (01) GTIN, (17) expiry and, if the code carries it, (712) national product reimbursement number. THE serial number (21) identifies a single box and SHALL never leave the device; the lot (10) SHALL NOT be sent either. THE API SHALL reject any request that carries AI (21) (HTTP 422, code `gs1_serial_not_accepted`) without looking anything up or echoing it, and SHALL drop a lot value it still receives. **[Client: experience spec]** for the sending side.
 2. THE client SHALL keep the medication list in browser storage by default and SHALL work without an account. **[Client: experience spec]**
 3. THE client SHALL render the doctor note PDF in the browser. **[Client: experience spec]**
 4. *(Added in refinement, server side of 1.1.)* THE API SHALL NOT offer any endpoint that accepts an image or file upload.

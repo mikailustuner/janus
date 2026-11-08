@@ -114,3 +114,21 @@ Source: `collective-memory` design §5 (contracts), §7 (message catalogue), Req
 - **Privacy page** states the residual limits of `collective-memory` Requirement 5.9 (two-step differencing; padding a cell
   before rate limiting exists) and "hidden under 20, noise added".
 - **Errors.** 422 names failing fields only; 503 `memory_unavailable` has no numbers (show `Memory.codes.memory_unavailable`).
+
+## Open items from drug-resolution Phase 2 (2026-11-08)
+
+Source: `drug-resolution` requirements 1.4, 4, 12 and design §13, §19. The API contract grows; nothing here is built in the client yet.
+- **Regions.** Scan and search requests accept `region: "EU"` (France and Spain adapters; any German-prefix code gets a notice). Result candidates carry `region: "EU"` and
+  `country` (`FR` or `ES`); candidate ids look like `EU:eu_fr_bdpm:123`. `matched_by` has new values: `cip13`, `ntin`, `gtin`, `ai_712`,
+  `ntin_digits`. For `ntin_digits` and `ai_712` say that the match came from the digits of the code, not from a listed product code
+  (`eu-code-encodings.md`: less certain than a table hit).
+- **AI (712), owner decision 2026-11-08: approved (`drug-resolution` DP19 extended, DP42).** The client sends exactly AI (01), (17) and, when the code carries it, (712) (a national product reimbursement number, not a serial); never serial (21) and never lot (10). The API rejects any element string that carries AI (21) with 422 `gs1_serial_not_accepted`; the client must strip it before sending and treat that error as a client defect, not as a user error.
+- **Germany and other countries without an open product database.** The result has the notice `no_open_product_database` with `country`: offer on-device OCR and name search, never a guessed product,
+  and do not word it as "not found". The notice `region_adapter_not_available` remains for any future region.
+- **Source attribution (BDPM, Nomenclátor).** Show the source name, its update date (`source.snapshot_date`) and, for the BDPM, that the data are shown as published and that the BDPM does not endorse Janus; product text is shown
+  exactly as published (French or Spanish, not translated by Janus). The licence asks for source and date.
+- **Status fields.** `status_published` is a list of strings as published (authorisation and marketing status); show it on the product card as information. Products with a stop declaration
+  have `marketing_end_date`; never use these fields to say that a medicine is or is not safe or needed.
+- **Homeopathic EU products.** BDPM products with the homeopathic marker have `homeopathic = true`: show "homeopathic product, not checked" as for the US (Requirement 11.1 of `drug-resolution`).
+- **Name search by language.** With region `EU` or none, ingredient search finds German, French and Spanish names; typed national codes (CIP7, a printed Spanish CN, a German PZN) are not accepted as codes: send OCR text to name search, and send a printed CIP13 or EAN-13 as bare digits to the scan route.
+- **503 for a missing EU source.** `resolution_unavailable` for region `EU` means the French or Spanish data are not loaded; do not say "not found".

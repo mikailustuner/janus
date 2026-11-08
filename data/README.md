@@ -30,6 +30,12 @@ fetched at runtime and must not be committed; CI fails if one is tracked.
   J1 dimenhydrinate, `R06AA11` (owner decision 2026-11-07). Codes only, checked by hand on the
   WHOCC index (URL and date in the note).
 
+- `anion_acid_forms.csv`: reviewed anion-to-acid rows of the `anion_acid` ladder step
+  (`drug-resolution` Req 12.7, design §15.4). Columns `lang,anion,acid,note`; `lang` is
+  `tr`, `en`, `fr`, `es` or `any`. **Empty (header only) until the owner has accepted the name-rules
+  review sheet** (`.kiro/specs/drug-resolution/name-rules-review.md`). A row names the evidence it
+  rests on; a code, if discussed, is checked by hand on the WHOCC index (URL and date in the note).
+  There is no generic "-ate → -ic acid" rewrite.
 ## Curated evidence files (Janus, Apache-2.0)
 - `evidence_papers.csv`: papers that Janus cites as evidence (`evidence-integrity` design §3.1,
   DP13). Columns: `key` (id part: the evidence id is `paper:<source_id>:<key>`), `doi`,

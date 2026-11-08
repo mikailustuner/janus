@@ -8,7 +8,7 @@ import random
 from collections import Counter
 from collections.abc import Iterator
 from dataclasses import dataclass
-from typing import Any, Literal
+from typing import Any
 
 import psycopg
 import pytest
@@ -16,8 +16,9 @@ from hypothesis import given, settings
 from hypothesis import strategies as st
 
 from janus.db.pool import Database
-from janus.regions.base import ProductKey, Region
+from janus.regions.base import Country, KeyGroup, Region
 from janus.resolution import repository, service
+from janus.resolution.gs1 import Gs1Data
 from janus.resolution.load import load
 from janus.resolution.names import fold
 from janus.resolution.ndc import canonical_package, layouts_of_ndc10
@@ -46,41 +47,47 @@ def database(db_url: str) -> Iterator[Database]:
 @dataclass
 class StubAdapter:
     region: Region
-    source_id: str
+    country: Country | None
+    source_id: str | None
     accept: bool
     hint: bool
-    matched_by: Literal["barcode", "ndc_gtin"] = "barcode"
 
     def accepts_gtin(self, gtin14: str) -> bool:
         return self.accept
 
-    def keys_from_gtin(self, gtin14: str) -> list[ProductKey]:
-        return []
-
     def structural_hint(self, gtin14: str) -> bool:
         return self.hint
 
+    def key_groups(self, data: Gs1Data) -> list[KeyGroup]:
+        return []
+
 
 @given(
-    flags=st.lists(st.tuples(st.booleans(), st.booleans()), min_size=2, max_size=2),
-    override=st.one_of(st.none(), st.sampled_from(["TR", "US"])),
-    gtin=st.sampled_from(["08680199094206", "00300024462301", "03400930000001"]),
+    flags=st.lists(st.tuples(st.booleans(), st.booleans()), min_size=5, max_size=5),
+    override=st.one_of(st.none(), st.sampled_from(["TR", "US", "EU"])),
+    gtin=st.sampled_from(["08680199094206", "00300024462301", "03400930000001", "04012345678901"]),
 )
 def test_adapter_dispatch(
     flags: list[tuple[bool, bool]], override: Region | None, gtin: str
 ) -> None:
     """Feature: drug-resolution, Property P21. Validates Req 1.5.
 
-    With an override only that region's adapter is asked; without one, exactly the adapters
-    whose `accepts_gtin` is true, hinted ones first.
+    With an override only that region's adapters are asked (for `EU`: France, Spain and the
+    no-open-database adapter); without one, exactly the adapters whose `accepts_gtin` is true,
+    hinted ones first.
     """
-    tr = StubAdapter("TR", "titck", *flags[0])
-    us = StubAdapter("US", "openfda_ndc", *flags[1])
-    chosen = service.choose_adapters([tr, us], gtin, override)
+    adapters = [
+        StubAdapter("TR", None, "titck", *flags[0]),
+        StubAdapter("US", None, "openfda_ndc", *flags[1]),
+        StubAdapter("EU", "FR", "eu_fr_bdpm", *flags[2]),
+        StubAdapter("EU", "ES", "eu_es_cima", *flags[3]),
+        StubAdapter("EU", None, None, *flags[4]),
+    ]
+    chosen = service.choose_adapters(adapters, gtin, override)
     if override is not None:
-        assert [a.region for a in chosen] == [override]
+        assert chosen == [a for a in adapters if a.region == override]
         return
-    assert {a.region for a in chosen} == {a.region for a in (tr, us) if a.accept}
+    assert {id(a) for a in chosen} == {id(a) for a in adapters if a.accept}
     hinted = [a.structural_hint(gtin) for a in chosen]
     assert hinted == sorted(hinted, reverse=True)
 

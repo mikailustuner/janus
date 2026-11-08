@@ -62,9 +62,9 @@ def _gtin(barcode: str) -> str:
     serial=st.one_of(ascii_sentinels(), sentinels()),
     lot=st.one_of(ascii_sentinels(), sentinels()),
     form=st.sampled_from(["paren", "fnc1"]),
-    extra=st.sampled_from(["", "(21)ZZDUPZZ", "(99)1"]),
+    extra=st.sampled_from(["", "(99)1"]),
 )
-def test_serial_and_lot_never_leave_the_parser(
+def test_serial_is_rejected_and_never_echoed(
     client: TestClient,
     db_conn: psycopg.Connection,
     barcode: str,
@@ -73,10 +73,11 @@ def test_serial_and_lot_never_leave_the_parser(
     form: str,
     extra: str,
 ) -> None:
-    """Feature: drug-resolution, Property P10. Validates Req 1.4, 8.3, 8.4.
+    """Feature: drug-resolution, Properties P10 and P50. Validates Req 1.4, 8.3, 8.4.
 
-    Serial and lot values (valid or invalid, with or without a parse error) never appear in the
-    response body or headers, in any log output, or in the database.
+    A scan that carries AI (21) is rejected with 422 `gs1_serial_not_accepted` (owner decision
+    2026-11-08); the serial and the lot never appear in the response, in any log output or in the
+    database, and nothing is looked up (the database snapshot is unchanged).
     """
     gtin = _gtin(barcode)
     if form == "paren":
@@ -96,9 +97,46 @@ def test_serial_and_lot_never_leave_the_parser(
         assert secret not in wire
         assert secret not in logs.getvalue()
     assert response.headers["cache-control"] == "no-store"
+    assert response.status_code == 422
+    assert response.json() == {"error": "gs1_serial_not_accepted"}
+
+
+@settings(max_examples=DB_EXAMPLES)
+@given(
+    barcode=st.sampled_from(BARCODES),
+    lot=st.one_of(ascii_sentinels(), sentinels()),
+    form=st.sampled_from(["paren", "fnc1"]),
+    extra=st.sampled_from(["", "(99)1"]),
+)
+def test_lot_never_leaves_the_parser(
+    client: TestClient,
+    db_conn: psycopg.Connection,
+    barcode: str,
+    lot: str,
+    form: str,
+    extra: str,
+) -> None:
+    """Feature: drug-resolution, Property P10 (lot part). Validates Req 1.4, 8.3, 8.4.
+
+    A lot value (valid or invalid, with or without a parse error) never appears in the response
+    body or headers, in any log output, or in the database; the result only says it was present.
+    """
+    gtin = _gtin(barcode)
+    if form == "paren":
+        content = f"(01){gtin}(17)300131(10){lot}{extra}"
+    else:
+        content = f"]d201{gtin}17300131" + f"10{lot}" + extra.replace("(", "").replace(")", "")
+    with isolated_tempdir() as tmp, capture_logs() as logs:
+        response = assert_stateless(
+            db_conn, tmp, lambda: client.post("/resolve/scan", json={"content": content})
+        )
+    wire = response.text + " ".join(f"{k}: {v}" for k, v in response.headers.items())
+    assert lot not in wire
+    assert lot not in logs.getvalue()
+    assert response.headers["cache-control"] == "no-store"
     if response.status_code == 200:
         scan = response.json()["scan"]
-        assert scan["serial_present"] and scan["lot_present"]
+        assert scan["lot_present"] and not scan["serial_present"]
 
 
 def _requests(value: str) -> list[tuple[str, dict[str, Any]]]:

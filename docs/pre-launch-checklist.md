@@ -12,6 +12,14 @@ defers a check to launch.
 - [ ] **GS1 AI table and a real box.** Confirm AI 710 to 714 from the GS1 General Specifications
   and test the French and Spanish adapters with a real box if one becomes available
   (`.kiro/specs/drug-resolution/eu-code-encodings.md`).
+- [ ] **Phase 2 name rules and EU data (`drug-resolution` Req 12, design §15, §19).** A pharmacist or physician reviews
+  the French, Spanish and English salt and ester word lists, the anion-acid table (`data/anion_acid_forms.csv`), the
+  French route rows of `data/route_atc_groups.csv` and the synonym rows added after the review sheet
+  (`.kiro/specs/drug-resolution/name-rules-review.md`). The owner accepted the sheet; a clinical review has not happened.
+  Also: confirm the GS1 company-prefix ranges of the country table (France, Spain, Germany; add other EU countries only
+  from the GS1 prefix list); test the French and Spanish adapters with a real box; check that the client shows the BDPM and
+  AEMPS attribution, the update date and the "not endorsed" wording; re-check the WHOCC `J01DH` page for imipenem if the
+  owner chose a component-code exception.
 - [ ] **Pharmacist or physician review of the whole event mapping.** The Janus event vocabulary
   (`apps/api/janus/memory/memory_events.csv`: 34 adverse keys with their PT lists, 5 benefit keys) was drafted by the AI
   assistant, reviewed by the pharmacologist agent and accepted by the project owner on 2026-11-08. A pharmacist or

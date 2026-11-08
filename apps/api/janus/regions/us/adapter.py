@@ -6,16 +6,15 @@ Ten digits do not say which layout (4-4-2, 5-3-2, 5-4-1) they use, so all three 
 
 from __future__ import annotations
 
-from typing import Literal
-
-from janus.regions.base import ProductKey, Region
+from janus.regions.base import Country, KeyGroup, ProductKey, Region
+from janus.resolution.gs1 import Gs1Data
 from janus.resolution.ndc import layouts_of_ndc10, ndc_from_gtin
 
 
 class OpenFdaNdcAdapter:
     region: Region = "US"
+    country: Country | None = None
     source_id = "openfda_ndc"
-    matched_by: Literal["barcode", "ndc_gtin"] = "ndc_gtin"
 
     def accepts_gtin(self, gtin14: str) -> bool:
         return ndc_from_gtin(gtin14) is not None
@@ -28,3 +27,7 @@ class OpenFdaNdcAdapter:
 
     def structural_hint(self, gtin14: str) -> bool:
         return self.accepts_gtin(gtin14)
+
+    def key_groups(self, data: Gs1Data) -> list[KeyGroup]:
+        keys = self.keys_from_gtin(data.gtin14)
+        return [KeyGroup("ndc_gtin", tuple(keys))] if keys else []

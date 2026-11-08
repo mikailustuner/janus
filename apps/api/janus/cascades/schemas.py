@@ -16,7 +16,7 @@ DISCLAIMER = (
 )
 MAX_ITEMS = 50
 QID = r"^(Q[1-9][0-9]{0,9}|J[1-9][0-9]{0,5})$"  # Wikidata QID or Janus curated key
-CANDIDATE = r"^(TR|US):[a-z_]+:[0-9]{1,9}$"
+CANDIDATE = r"^(TR|US|EU):[a-z_]+:[0-9]{1,9}$"
 MONTH = r"^\d{4}-(0[1-9]|1[0-2])$"
 
 

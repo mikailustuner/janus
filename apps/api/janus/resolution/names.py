@@ -1,14 +1,18 @@
-"""Ingredient-name normalisation (drug-resolution design §5.2, Req 5.3, 5.7). Pure.
+"""Ingredient-name normalisation (drug-resolution design §5.2, §15, Req 5.3, 5.7, 12). Pure.
 
 - `fold`: one key for case, Turkish dotted/dotless i and diacritic variants.
 - `strip_salts`: remove salt, ester, hydrate and counter-ion words ("amlodipin besilat" →
   "amlodipin"), so that different salts of one active substance meet (WHO ATC usually gives
-  different salts one code).
+  different salts one code). Per language (Phase 2): the Phase 1 lists apply to every language,
+  the per-language additions and connector words live in `name_lists`.
 - `spelling_key`: remove regular Turkish / English / INN spelling differences
-  ("siprofloksasin" and "ciprofloxacin" → "siprofloksasin").
+  ("siprofloksasin" and "ciprofloxacin" → "siprofloksasin"); for Spanish and French names two
+  reviewed, switchable rules (final vowel, acid word order).
 
 The word lists and rewrite rules are data, reviewed by the pharmacologist agent; any change
-changes `RULES_VERSION` and therefore the dataset version.
+changes `rules_version()` and therefore the dataset version. For `tr` and `en`, and while the
+Phase 2 lists and switches are empty, every function returns exactly what Phase 1 returned
+(property P34, oracle `tests/frozen_names.py`).
 """
 
 from __future__ import annotations
@@ -17,6 +21,13 @@ import hashlib
 import json
 import re
 import unicodedata
+
+from janus.resolution import name_lists
+from janus.resolution.name_lists import Lang
+
+# Phase 1 names kept for callers and tests.
+SALT_WORDS = name_lists.BASE_SALT_WORDS
+NOT_ALONE = name_lists.BASE_NOT_ALONE
 
 # Letters that NFKD does not decompose.
 _EXTRA = str.maketrans({"æ": "ae", "œ": "oe", "ø": "o", "đ": "d", "ł": "l", "\u0131": "i"})
@@ -35,79 +46,51 @@ def fold(text: str) -> str:
     return " ".join(_NON_KEY.sub(" ", s).split())
 
 
-# Folded tokens. Words where the counter-ion changes the substance are deliberately absent:
-# oxide/hydroxide/carbonate (metal compounds), mononitrate/dinitrate (isosorbide).
-SALT_WORDS: frozenset[str] = frozenset(
-    """
-    hidroklorur hidroklorid hcl hci dihidroklorur monohidroklorur hidrobromur
-    hydrochloride dihydrochloride monohydrochloride hydrobromide
-    mesilat dimesilat besilat mesylate dimesylate besylate tosilat tosylate
-    maleat dimaleat maleate fumarat hemifumarat fumarate sitrat citrate
-    tartarat tartrat bitartarat bitartrat tartrate bitartrate suksinat succinate
-    sulfat hemisulfat bisulfat sulphate sulfate hemisulfate bisulfate fosfat phosphate
-    asetat acetate nitrat nitrate laktat lactate glukonat gluconate klorur chloride
-    bromur bromide oksalat oxalate pamoat embonat pamoate sakkarat saccharate
-    aspartat aspartate hiklat hyclate olamin olamine erbumin erbumine
-    propiyonat propionat dipropiyonat dipropionat propionate dipropionate
-    ksinafoat xinafoate medoksomil medoxomil asetonid acetonide aksetil axetil
-    valerat valerate benzoat benzoate dekanoat decanoate palmitat palmitate
-    trometamol trometamin tromethamine meglumin meglumine dietilamin diethylamine
-    tert butilamin butylamine baz base
-    sodyum sodium disodyum disodium potasyum potassium dipotasyum dipotassium
-    kalsiyum calcium magnezyum magnesium
-    monohidrat dihidrat trihidrat tetrahidrat pentahidrat hekzahidrat heptahidrat
-    hemihidrat seskihidrat hidrat anhidr anhidrit anhidroz
-    monohydrate dihydrate trihydrate tetrahydrate pentahydrate hexahydrate heptahydrate
-    hemihydrate sesquihydrate hydrate anhydrous
-    sileksetil cilexetil proksetil proxetil pivoksil pivoxil dipivoksil dipivoxil mofetil
-    anhidrat anhidrus susuz oktahidrat hemiheptahidrat hemipentahidrat dekahidrat
-    octahydrate hemiheptahydrate hemipentahydrate decahydrate hbr trifenatat trifenatate
-    ksinofoat diglukonat digluconate dietilamonyum diethylammonium dimeglumin dimeglumine
-    malat malate etabonat etabonate aseponat aceponate hemisuksinat hemisuccinate mezilat
-    hidrojen hydrogen
-    """.split()
-)
-# Pharmacologist review 2026-11-07: furoate is not a salt word (fluticasone/mometasone furoate
-# have codes of their own); butylbromide, mono-/di-/trinitrate, disoproxil and alafenamide must
-# never be added (they distinguish substances).
-
-# If stripping would leave only these, the counter-ion is the substance or the leftover is not
-# a substance on its own (sodium vs potassium bicarbonate, zinc acetate vs zinc gluconate,
-# sodium calcium edetate vs edetate disodium): keep the name unchanged.
-NOT_ALONE: frozenset[str] = frozenset(
-    """
-    carbonate karbonat bicarbonate bikarbonat oxide oksit hydroxide hidroksit peroxide peroksit
-    fluoride florur iodide iyodur silicate silikat trisilicate trisilikat glycerophosphate
-    gliserofosfat levulinate levulinat edetate edetat hypochlorite hipoklorit perchlorate
-    perklorat nitrite nitrit thiosulfate tiyosulfat sulfide sulfur dibasic monobasic tribasic
-    dibazik monobazik tribazik dl zinc cinko iron demir ferrous ferric ferro ferri silver gumus
-    aluminium aluminum aluminyum copper bakir bismuth bizmut lithium lityum mercury civa
-    ammonium amonyum methyl metil ethyl etil dimethyl dimetil diethyl dietil benzyl benzil
-    butyl butil propyl propil ii iii
-    """.split()
-)
 _HYDRATE = re.compile(r"^[0-9]*h2o$")
 _HYDRATE_WORD = re.compile(r"^(?:[a-z]*hidrat|[a-z]*hydrate|anhidr[a-z]*|anhydrous|susuz)$")
 
 
-def _is_hydrate(token: str) -> bool:
-    """`2h2o`, or a hydrate/anhydrous word from `SALT_WORDS`."""
+def is_salt_word(token: str, lang: Lang = "en") -> bool:
+    """A salt, ester, hydrate or counter-ion word of the language (Phase 1 list + additions)."""
+    return token in name_lists.BASE_SALT_WORDS or token in name_lists.EXTRA_SALT_WORDS[lang]
+
+
+def is_not_alone(token: str, lang: Lang = "en") -> bool:
+    """A counter-ion that is a substance in its own right (kept when nothing else is left)."""
+    return token in name_lists.BASE_NOT_ALONE or token in name_lists.EXTRA_NOT_ALONE[lang]
+
+
+def is_connector(token: str, lang: Lang = "en") -> bool:
+    return token in name_lists.CONNECTORS[lang]
+
+
+def _is_hydrate(token: str, lang: Lang) -> bool:
+    """`2h2o`, or a hydrate/anhydrous word from the salt list."""
     if _HYDRATE.match(token):
         return True
-    return token in SALT_WORDS and _HYDRATE_WORD.match(token) is not None
+    return is_salt_word(token, lang) and _HYDRATE_WORD.match(token) is not None
 
 
-def strip_salts(folded: str) -> str:
+def strip_salts(folded: str, lang: Lang = "en") -> str:
     """Remove salt words from a folded name.
 
     Hydrate words are always removed (water of crystallisation is never the substance). Other
     salt words are removed unless that would leave nothing, or only words in `NOT_ALONE`; then
     the hydrate-free name is returned ("kalsiyum klorür dihidrat" → "kalsiyum klorur").
+    Connector words (`de`, `d`, `du`, `del`, …) are removed only at the start or end of what is
+    left after the salt words, and count like salt words for the "nothing left" test, so
+    `SODIUM (CHLORURE DE)` is never reduced to `de` (Req 12.3).
     """
     tokens = folded.split()
-    base = [t for t in tokens if not _is_hydrate(t)] or tokens
-    keep = [t for t in base if t not in SALT_WORDS]
-    if not keep or all(t in NOT_ALONE for t in keep):
+    base = [t for t in tokens if not _is_hydrate(t, lang)] or tokens
+    keep = [t for t in base if not is_salt_word(t, lang)]
+    connectors = name_lists.CONNECTORS[lang]
+    if connectors:
+        while keep and keep[0] in connectors:
+            keep = keep[1:]
+        while keep and keep[-1] in connectors:
+            keep = keep[:-1]
+    if not keep or all(is_not_alone(t, lang) or t in connectors for t in keep):
         return " ".join(base)
     return " ".join(keep)
 
@@ -136,29 +119,89 @@ SPELLING_RULES: tuple[tuple[str, str], ...] = (
 )
 _COMPILED = tuple((re.compile(p), r) for p, r in SPELLING_RULES)
 
+# Phase 2 rules (switchable, Req 12.5). Spanish INN stems end in -a or -o where the English
+# label ends in -e or in a consonant (duloxetina / duloxetine, sildenafilo / sildenafil); the
+# rule drops that vowel from the end of the whole key, inside the fixed-point loop, so the key
+# stays idempotent. The acid word order maps `acide ascorbique` and `ascorbico acido` to the
+# English `ascorbic acid`.
+_ES_FINAL_VOWEL = re.compile(r"(?<=[a-z0-9]{4})[ao]$")
+_ACID_WORDS = frozenset({"acide", "acido"})
+_ACID_ADJECTIVE = re.compile(r"(ique|ico|ica)$")
 
-def spelling_key(folded: str) -> str:
+
+def _acid_word_order(tokens: list[str]) -> list[str]:
+    """`[acide, X-ique]` or `[X-ico, acido]` → `[X-ic, acid]`; anything else is unchanged."""
+    if len(tokens) != 2:
+        return tokens
+    a, b = tokens
+    if a in _ACID_WORDS and b not in _ACID_WORDS:
+        adjective = b
+    elif b in _ACID_WORDS and a not in _ACID_WORDS:
+        adjective = a
+    else:
+        return tokens
+    return [_ACID_ADJECTIVE.sub("ic", adjective), "acid"]
+
+
+def spelling_key(folded: str, lang: Lang = "en") -> str:
     """Spelling-insensitive key of a folded name (spaces removed)."""
     tokens = [TOKEN_RULES.get(t, t) for t in folded.split()]
+    if name_lists.ACID_WORD_ORDER_ENABLED and lang in ("fr", "es"):
+        tokens = _acid_word_order(tokens)
     s = re.sub(r"[^a-z0-9]", "", "".join(tokens))
+    vowel = name_lists.ES_FINAL_VOWEL_ENABLED and lang == "es"
     for _ in range(32):
         before = s
         for pattern, repl in _COMPILED:
             s = pattern.sub(repl, s)
+        if vowel:
+            s = _ES_FINAL_VOWEL.sub("", s)
         if s == before:
             return s
     raise AssertionError("spelling rules did not reach a fixed point")  # pragma: no cover
 
 
-RULES_VERSION = hashlib.sha256(
-    json.dumps(
-        {
-            "salt_words": sorted(SALT_WORDS),
-            "not_alone": sorted(NOT_ALONE),
-            "hydrate": _HYDRATE.pattern,
-            "tokens": TOKEN_RULES,
-            "spelling": SPELLING_RULES,
-        },
-        sort_keys=True,
-    ).encode()
-).hexdigest()
+def _words(d: dict[Lang, frozenset[str]]) -> dict[str, list[str]]:
+    return {k: sorted(v) for k, v in sorted(d.items())}
+
+
+def _phase2_parts() -> dict[str, object]:
+    """Phase 2 lists and switches; absent while empty, so a Phase 1 state hashes as in Phase 1."""
+    parts: dict[str, object] = {}
+    extra_salt = _words(name_lists.EXTRA_SALT_WORDS)
+    extra_alone = _words(name_lists.EXTRA_NOT_ALONE)
+    connectors = _words(name_lists.CONNECTORS)
+    if any(extra_salt.values()):
+        parts["extra_salt_words"] = extra_salt
+    if any(extra_alone.values()):
+        parts["extra_not_alone"] = extra_alone
+    if any(connectors.values()):
+        parts["connectors"] = connectors
+    switches = {
+        "biologic_suffix": name_lists.BIOLOGIC_SUFFIX_ENABLED,
+        "es_final_vowel": name_lists.ES_FINAL_VOWEL_ENABLED,
+        "acid_word_order": name_lists.ACID_WORD_ORDER_ENABLED,
+    }
+    if any(switches.values()):
+        parts["switches"] = switches
+    return parts
+
+
+def rules_version() -> str:
+    """Hash of every list, switch and rule of this module and `name_lists` as they are now."""
+    return hashlib.sha256(
+        json.dumps(
+            {
+                "salt_words": sorted(name_lists.BASE_SALT_WORDS),
+                "not_alone": sorted(name_lists.BASE_NOT_ALONE),
+                "hydrate": _HYDRATE.pattern,
+                "tokens": TOKEN_RULES,
+                "spelling": SPELLING_RULES,
+                **_phase2_parts(),
+            },
+            sort_keys=True,
+        ).encode()
+    ).hexdigest()
+
+
+RULES_VERSION = rules_version()

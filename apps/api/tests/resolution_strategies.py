@@ -70,7 +70,8 @@ def _value_for(ai: str, parens_allowed: bool) -> st.SearchStrategy[str]:
     return st.text(alphabet=alphabet, min_size=1, max_size=spec.length)
 
 
-OPTIONAL_AIS = [ai for ai in AI_TABLE if ai != "01"]
+# AI (21) is rejected by the API (drug-resolution DP19, P50), so general field sets never carry it.
+OPTIONAL_AIS = [ai for ai in AI_TABLE if ai not in ("01", "21")]
 
 
 @st.composite

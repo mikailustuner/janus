@@ -13,8 +13,11 @@ from typing import Annotated, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints
 
-Region = Literal["TR", "US"]
-CANDIDATE_ID = r"^(TR|US):[a-z_]+:[0-9]{1,9}$"
+Region = Literal["TR", "US", "EU"]
+# Regions a request may name. `EU` joins in task 23, when the EU adapters and sources are wired.
+RequestRegion = Literal["TR", "US"]
+Country = Literal["FR", "ES"]
+CANDIDATE_ID = r"^(TR|US|EU):[a-z_]+:[0-9]{1,9}$"
 
 
 class _In(BaseModel):
@@ -23,7 +26,7 @@ class _In(BaseModel):
 
 class ScanIn(_In):
     content: Annotated[str, StringConstraints(min_length=1, max_length=512)]
-    region: Region | None = None
+    region: RequestRegion | None = None
 
 
 class NdcIn(_In):
@@ -32,7 +35,7 @@ class NdcIn(_In):
 
 class SearchIn(_In):
     query: Annotated[str, StringConstraints(strip_whitespace=True, min_length=2, max_length=100)]
-    region: Region | None = None
+    region: RequestRegion | None = None
     limit: Annotated[int, Field(ge=1, le=20)] = 10
 
 
@@ -108,7 +111,19 @@ class ProductCandidate(_Out):
     kind: Literal["product"] = "product"
     candidate_id: str
     region: Region
-    matched_by: Literal["barcode", "ndc_gtin", "ndc", "name", "candidate_id"]
+    country: Country | None = None  # EU products only (Phase 2)
+    matched_by: Literal[
+        "barcode",
+        "ndc_gtin",
+        "ndc",
+        "name",
+        "candidate_id",
+        "cip13",
+        "ntin",
+        "gtin",
+        "ai_712",
+        "ntin_digits",
+    ]
     score: float | None = None
     product_name: str | None
     brand_name: str | None
@@ -122,6 +137,8 @@ class ProductCandidate(_Out):
     suspension_status: int | None
     name_only: bool
     homeopathic: bool = False  # strengths in homeopathic units: not evaluated as the substance
+    # EU authorisation and marketing status as published (display only; no rule reads it).
+    status_published: list[str] = Field(default_factory=list[str])
     product_rxcuis: list[str]
     packages: list[Package]
     ingredients: list[ResolvedIngredient]
@@ -155,8 +172,10 @@ class Notice(_Out):
         "region_adapter_not_available",
         "unmapped_ingredients",
         "unknown_candidate_ids",
+        "no_open_product_database",
     ]
     region: str | None = None
+    country: str | None = None
     source_id: str | None = None
     date: str | None = None
 

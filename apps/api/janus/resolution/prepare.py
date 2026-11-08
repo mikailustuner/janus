@@ -13,6 +13,7 @@ from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass, field
 from typing import Any, Literal
 
+from janus.resolution.anion_acid import AnionAcidTable
 from janus.resolution.atc import (
     AtcCode,
     CombinationCheck,
@@ -27,6 +28,7 @@ from janus.resolution.atc import (
 )
 from janus.resolution.canonical import canonical_line
 from janus.resolution.matching import IndexItem, Match, NameIndex, map_name
+from janus.resolution.name_lists import Lang
 from janus.resolution.names import fold
 from janus.resolution.ndc import canonical_package, canonical_product
 
@@ -166,7 +168,7 @@ class _Raw:
 
     product: dict[str, Any]
     names: list[tuple[str, str | None]]  # (published name, strength)
-    turkish: bool
+    lang: Lang
     matches: list[Match] = field(default_factory=list[Match])
 
 
@@ -197,7 +199,7 @@ def _titck_products(rows: Sequence[Row]) -> list[_Raw]:
                     "codes": codes,
                 },
                 [(str(n), None) for n in _strs(r.get("ingredients"))],
-                turkish=True,
+                lang="tr",
             )
         )
     return out
@@ -244,7 +246,7 @@ def _openfda_products(rows: Sequence[Row], stats: Counter[str]) -> list[_Raw]:
                     "codes": tuple(codes),
                 },
                 ingredients,
-                turkish=False,
+                lang="en",
             )
         )
     return out
@@ -277,11 +279,12 @@ def build_name_index(
     rules: CombinationRules,
     synonyms: Iterable[tuple[str, str]] = (),
     curated_rows: Sequence[Row] = (),
+    acid: AnionAcidTable | None = None,
 ) -> NameIndex:
     """The name index of `prepare_dataset` without the TİTCK bridge (steps 0-5): what any
     caller that maps non-Turkish names (e.g. the FAERS count builder) needs."""
     items, _codes, _base = eligible_items(wikidata_rows, rules, curated_rows)
-    return NameIndex.build((index_item(r) for r in items.values()), synonyms)
+    return NameIndex.build((index_item(r) for r in items.values()), synonyms, acid=acid)
 
 
 def prepare_dataset(
@@ -292,6 +295,7 @@ def prepare_dataset(
     route_map: RouteMap,
     synonyms: Iterable[tuple[str, str]] = (),
     curated_rows: Sequence[Row] = (),
+    acid: AnionAcidTable | None = None,
 ) -> PreparedDataset:
     """`curated_rows` are Janus ingredient keys (`J<n>`) in the shape of Wikidata rows, for
     substances that no Wikidata item in the extract covers with a code (owner decision,
@@ -311,24 +315,24 @@ def prepare_dataset(
     bridge: defaultdict[str, set[str]] = defaultdict(set)
     for raw in raws:
         p = raw.product["published_atc"]
-        if raw.turkish and len(raw.names) == 1 and is_ingredient_level(p):
+        if raw.lang == "tr" and len(raw.names) == 1 and is_ingredient_level(p):
             if not base.is_combination(p) and len(code2q.get(p, ())) == 1:
                 bridge[raw.names[0][0]].update(code2q[p])
 
-    index = NameIndex.build((index_item(r) for r in items.values()), synonyms, bridge)
-    cache: dict[tuple[str, bool], Match] = {}
+    index = NameIndex.build((index_item(r) for r in items.values()), synonyms, bridge, acid)
+    cache: dict[tuple[str, Lang], Match] = {}
     for raw in raws:
         for name, _ in raw.names:
-            key = (name, raw.turkish)
+            key = (name, raw.lang)
             if key not in cache:
-                cache[key] = map_name(name, index, turkish=raw.turkish)
+                cache[key] = map_name(name, index, lang=raw.lang)
             raw.matches.append(cache[key])
 
     # Observation rule input: codes of TİTCK products with >= 2 distinct mapped keys.
     observed: set[str] = set()
     for raw in raws:
         p = raw.product["published_atc"]
-        if raw.turkish and is_ingredient_level(p):
+        if raw.lang == "tr" and is_ingredient_level(p):
             keys = {m.keys[0] for m in raw.matches if m.status == "mapped"}
             if len(keys) >= 2:
                 observed.add(p)
@@ -338,7 +342,7 @@ def prepare_dataset(
     single: dict[str, dict[str, int]] = defaultdict(dict)
     for raw in raws:
         p = raw.product["published_atc"]
-        if raw.turkish and len(raw.matches) == 1 and raw.matches[0].status == "mapped":
+        if raw.lang == "tr" and len(raw.matches) == 1 and raw.matches[0].status == "mapped":
             if is_ingredient_level(p) and not check.is_combination(p):
                 qid = raw.matches[0].keys[0]
                 pid = raw.product["product_id"]

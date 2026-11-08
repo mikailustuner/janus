@@ -699,6 +699,12 @@ P17–P40 are new in the Phase 2 refinement. P23 is example-driven where Hypothe
 | DP30 | Raw downloads stay under `raw/<pipeline>/<run_id>/` (FAERS about 250 MB per run); pruning old runs is a maintainer action. | Delete after parse. | Provenance and re-parsing; disk is the maintainer's to manage. |
 | DP31 | The count file lives in `$JANUS_DATA_DIR/memory/faers_counts/` with the `runs/` + `current` layout and atomic link swap of Phase 1. | Under `artifacts/` (first build); a table in PostgreSQL. | `tech.md` keeps FAERS-derived tables in read-only DuckDB files. `artifacts/` holds pipeline output only: the integrity loader and the resolution loader read every directory in it and failed on the first build (found by the real-artifacts test), so the counts moved to `memory/`, next to the coverage reports. |
 
+### 17.1 Decision added 2026-11-08
+
+| # | Decision | Alternatives considered | Why |
+|---|---|---|---|
+| DP34 | **`faers_mapping_gap` is not built** (and `collective-memory` gets no `mapping_gap_possible`). Reopened only if the owner rejects the biologic-suffix or acid-form rules at the `drug-resolution` review stop. If reopened: table `faers_mapping_gap(ingredient_key, region, scope, reports)` written by the builder from `faers_unmapped` (reports whose unmapped spelling contains the mapped ingredient's name as whole words), counts schema `faers_counts-3`. | Build it now; build it after the rules. | Once the rules exist the leak the table was meant to flag is measured at 45 ingredients and 8,302 occurrences (0.13 % of 6.2 million), mostly mixtures and devices that are not leaks; before the rules the same scan found 221 ingredients and 150,082 occurrences. Names with no key at all cannot carry a per-ingredient flag, and the denominator sentence already states the limit. Numbers: `drug-resolution` design §11 and §16.3. |
+
 ## 18. Open items (Phase 2)
 
 Owner decisions of 2026-11-08 are applied: region basis and territories (DP16), the denominator
@@ -707,11 +713,13 @@ of the bounded-memory core change (DP18).
 
 1. ~~Region basis~~ Decided (DP16).
 2. ~~Denominator~~ Decided (DP32); the statistician agent reviews it in the `collective-memory` spec.
-3. **FAERS name rules in `drug-resolution`.** Not now. Recorded as a follow-up in `drug-resolution`
-   design §10 for pharmacologist review (FDA four-letter biologic suffix, `MYCOPHENOLATE MOFETIL`,
-   single parts of combination strings). The count builder's coverage report lists the occurrences
-   each candidate rule would affect (`faers_unmapped`, `coverage.candidates`), so the impact is known
-   before the decision.
+3. ~~FAERS name rules in `drug-resolution`~~ **Taken up 2026-11-08** with the EU work
+   (`drug-resolution` Req 12, design §15, tasks 18–25). Measured there: the biologic suffix rule maps
+   114,106 of the 258,823 occurrences it touches (the rest have bases with no ingredient-level
+   code), `MYCOPHENOLATE …` is a reviewed anion-acid row, and parts of combination strings get no
+   automatic rule (97 % name substances without a code of their own). The builder calls the ladder
+   in `en` mode after the review stop (task 20 there) and the counts file is rebuilt (task 25
+   there). `faers_mapping_gap` is not built (DP34 below).
 4. ~~MedDRA~~ Decided (DP33); the Phase 5 check is in `docs/pre-launch-checklist.md`.
 5. **Facts only partly verified (see `eu-code-encodings.md`).** Unchanged.
 6. **Registry and NOTICE.** Task 17.

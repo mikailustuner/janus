@@ -8,6 +8,11 @@
 > Owner decisions of 2026-11-07 applied (§9): DP3–DP6, DP9–DP11, DP14, DP15, DP18, DP22
 > confirmed; DP19 changed (client sends only AI 01 and 17; the API still drops serial and lot);
 > DP20 chosen (route and dosage form in `us_ndc-2`, reviewed route map, §5.5).
+>
+> **Phase 2 (refined 2026-11-08): §11–§19 below** design the EU adapters (`eu_fr`, `eu_es`,
+> `eu_name`), the name rules for French, Spanish and English sources, the coverage comparison, the
+> `faers_mapping_gap` decision and the imipenem follow-up. §1–§10 describe Phase 1 and are changed
+> only where §11–§19 say so (the Phase 1 sections keep their text; the changes are listed in §12.1).
 
 ## 1. Overview
 
@@ -527,7 +532,7 @@ owner's DP20 decision.
 | DP16 | One write transaction per load plus a `res_current` pointer; previous dataset kept for `--activate`; request reads in `REPEATABLE READ, READ ONLY`; `write_tx` allowed in `resolution/load.py`. | Table swap by rename; materialised views. | PostgreSQL atomicity gives P23 without custom code; ~1 M rows is a small transaction. |
 | DP17 | Dataset version = hash of source content hashes, rule version, curated-file hashes and prepare code version. | Timestamp. | Same inputs → same version (P8); any rule change is visible. |
 | DP18 | Staleness notice when TİTCK or openFDA data is older than twice its cadence (14 days for the weekly sources). **Confirmed by the owner.** *(2026-11-07, owner decision `evidence-integrity` DP17: the rule is the shared freshness rule and the cadence comes from `pipelines/sources.toml`; no constant in `resolution/`.)* | No notice; 7 days. | The weekly schedule only starts in Phase 5; users should see the list date. |
-| DP19 | **Owner decision:** the serial identifies a single box and must not leave the device. The client sends only AI (01) and (17) (`experience`); the API parser still drops serial and lot if they arrive (defence in depth) and never logs or returns them. | API-only stripping (proposed). | Data minimisation at the source; the server-side drop keeps old or third-party clients safe. |
+| DP19 | **Owner decision:** the serial identifies a single box and must not leave the device. The client sends only AI (01) and (17) (`experience`); the API parser still drops serial and lot if they arrive (defence in depth) and never logs or returns them. **Updated 2026-11-08 (owner):** the client may also send AI (712), a national product reimbursement number (not a serial, not a person identifier), so the allowed set is exactly (01), (17), (712); and the API **rejects** an element string that carries AI (21) with 422 `gs1_serial_not_accepted` instead of dropping it (lot (10) is still read only to find the field end and dropped). | API-only stripping (proposed). | Data minimisation at the source; rejection tells a defective client early and keeps the serial out of every code path. |
 | DP20 | **Owner decision:** add `route` and `dosage_form` to `us_ndc` (`us_ndc-2`) and a small reviewed route → ATC-group map (§5.5); selection `route_group`; no allowed code → `unmapped/no_ingredient_atc_for_route`, never a fallback to another route's codes; route missing or unknown → `all_codes`. | No route context in Phase 1 (proposed default). | A US betamethasone cream must not carry the systemic `H02AB01` into the cascade engine. |
 | DP21 | TİTCK test data is synthetic; small CC0 openFDA/Wikidata fixtures may be committed; real-artifact tests are local only. | Commit a TİTCK sample. | Licence (data-pipelines DP12). |
 | DP22 | Coverage targets, reported and not test-blocking: TİTCK ≥ 85 % of ingredient occurrences mapped, US Rx ≥ 92 % of products fully mapped, ≥ 97 % group agreement after excluding documented WHO re-codings. **Confirmed by the owner.** | Hard CI gates. | The numbers depend on source data that changes weekly; the report makes regressions visible. |
@@ -551,8 +556,9 @@ owner's DP20 decision.
 - `cascade-engine` must read codes only through `rule_input`, and treat `atc_selection =
   all_codes` as less specific (recorded there when that spec is refined).
 - `data-pipelines` Req 6.4, 6.6 and 8.3 change with DP9, DP10 and DP20 (updated in task 5).
-- Phase 2: `eu_fr`, `eu_es`, `eu_name` adapters; de/fr/es labels in the name index; CIMA calls
-  under the HTTP policy.
+- Phase 2: `eu_fr`, `eu_es`, `eu_name` adapters; de/fr/es labels in the name index. *(Changed
+  2026-11-08: "CIMA calls under the HTTP policy" is dropped; Spanish data come from the
+  Nomenclátor artifact, DP27.)* Designed in §11–§19.
 - **Phase 2 inputs recorded 2026-11-08 (from `data-pipelines` Phase 2).**
   `eu-code-encodings.md` in this folder records how the DataMatrix carries the CIP13 (GTIN-14 =
   `0` + CIP13) and the Spanish national code (NTIN `0847000` + CN + check digit, or GTIN + AI
@@ -565,14 +571,520 @@ owner's DP20 decision.
 - **FAERS name coverage (2026-11-08).** The US ladder maps 84.0 % of FAERS ingredient occurrences
   (80.5 % in suspect roles). The count builder of `data-pipelines` reuses the ladder through a
   `build_name_index()` extracted from `prepare_dataset` (that spec's task 24, no behaviour
-  change). **Follow-up item (owner decision 2026-11-08: not now).** Candidate rules for pharmacologist review, whose coverage impact the FAERS coverage report logs: FDA's
-  four-letter biologic suffix (`INFLIXIMAB-DYYB`), `MYCOPHENOLATE MOFETIL`, single parts of
-  combination strings (`CARBIDOPA`).
+  change). **Follow-up item (owner decision 2026-11-08: not now; taken up later on
+  2026-11-08 together with the EU work: Req 12, §15).** Candidate rules for pharmacologist review,
+  whose coverage impact the FAERS coverage report logs: FDA's four-letter biologic suffix
+  (`INFLIXIMAB-DYYB`), `MYCOPHENOLATE MOFETIL`, single parts of combination strings (`CARBIDOPA`).
 - **Follow-up from `cascade-engine` (owner decision 2026-11-07):** imipenem is marketed only with
   cilastatin, and its only code is the combination code `J01DH51`, so the imipenem ingredient has
   no ingredient-level code and cannot match the carbapenem rule (PIPC row 58). Give the imipenem
   ingredient an ingredient-level carbapenem code (reviewed, e.g. through the curated files) in a
-  later drug-resolution task.
+  later drug-resolution task. *(Update 2026-11-08: WHOCC lists no code for imipenem alone, so the
+  premise fails; Req 14 and §19 O1 give the options. Waits for the owner.)*
 
 ### Follow-up recorded 2026-11-08: `faers_mapping_gap` (from `collective-memory`)
+**Decided 2026-11-08 (DP36): the table is not built.** Measured numbers in §11 and §16.3; the
+original text follows for the record.
+
 The owner deferred the optional table `faers_mapping_gap(ingredient_key, reports_in_candidate_spellings)` to the EU and name-rules work of this area. It would list, per ingredient, reports that leak through candidate name rules the FAERS builder already counts (biologic suffix, salt forms, parts of combination strings), so that a Collective Memory response can say `mapping_gap_possible`. Take it up together with the FAERS name rules (`data-pipelines` design, open item 3), because both change which spellings map to an ingredient key; decide the table in `data-pipelines` and the response field in `collective-memory` then (design §8.2 there). Nothing in Phase 2 depends on it.
+
+---
+
+# Phase 2 (refined 2026-11-08): EU adapters and name rules
+
+## 11. Overview and facts checked
+
+Phase 2 adds three things to a request path and a loader that already work: **EU product lookup**
+from two open-data artifacts that sit in PostgreSQL like TİTCK and openFDA; **name rules** so that
+the French, Spanish and English spellings of one substance reach one ingredient key; and the
+**measurements** that show what the rules do. Medical decisions stay at load time in pure
+functions; the request path stays a read-only lookup with no external call (DP6, DP27).
+
+```mermaid
+flowchart LR
+  subgraph load[Loader, CLI, write transaction]
+    BD[(eu_fr_bdpm artifact)] --> PE[prepare_eu.py<br/>FT/SA per link, status,<br/>homeopathic flag]
+    CI[(eu_es_cima artifact)] --> PE
+    WD[(wikidata + rule files<br/>+ anion_acid_forms.csv)] --> NI[name index<br/>lang-aware ladder]
+    PE --> NI --> PR[prepare.py<br/>codes, route / published-ATC selection]
+    PR --> DB[(res_* tables, dataset version)]
+    PR --> CR[coverage report<br/>TR, US, FR, ES]
+  end
+  subgraph req[Request, medical route, read-only tx]
+    S[scan / search / products] --> A{adapters<br/>tr us eu_fr eu_es eu_name}
+    A -->|key groups in order of trust| R[repository]
+    R --> DB
+    A -->|DE prefix| N[notice no_open_product_database<br/>no lookup]
+  end
+  FB[faers_build.py, lang en] --> NI
+```
+
+Facts checked on 2026-11-08 against the current artifacts (BDPM snapshot 2026-11-03, Nomenclátor
+2026-11-07, FAERS snapshot 2026-10-28, Wikidata run `20261107T163917Z-6bb8fcbc-6855`) with the committed
+rule files, by throw-away scripts that are not committed (scratch copies in `/tmp/janus_probe`).
+Rule candidates are measured with prototypes of §15; the final figures come from the code in
+task 24, and Req 13 compares them with these baselines.
+
+| Topic | Observed | Design consequence |
+|---|---|---|
+| Phase 1 baselines (design §1, task 9) | TİTCK 83.9 % of 31,885 ingredient occurrences, 87.9 % of 23,093 products fully mapped; openFDA Rx 92.6 % of 55,840 products fully mapped, 91.0 % of occurrences | Req 13.4 floors for TR and US |
+| **Baseline snapshot 2026-11-08** (`coverage_snapshot snapshot --label baseline`, task 15; the Phase 1 code on the current artifacts and the 102 reviewed synonyms; it also equals the same run with all Phase 2 rule data off, task 18.8) | TİTCK: 4,502 names, 31,885 occurrences, **84.6 %** mapped, **88.5 %** of 23,093 products fully mapped (4,362 multi-ingredient: 2,895 fully mapped). openFDA: Rx 65,160 occurrences **91.7 %** mapped, **93.3 %** of 57,102 products fully mapped; Rx+OTC 52.7 % / 70.2 %; all types 53.8 % / 70.0 %. BDPM (without 274 homeopathic): 27,477 occurrences **67.6 %**, 71.4 % of 20,634 presentations. Nomenclátor: 35,875 occurrences **48.1 %**, 45.5 % of 30,388. FAERS: 6,201,428 occurrences **84.0 %** | The baseline is higher than the Phase 1 task 9 figures because of the later synonym review; Req 13.4 floors for TR and US are these numbers (84.6 %, 93.3 %) |
+| BDPM composition lines | 20,914 presentations; 29,065 `SA` and 8,269 `FT` lines; every line has a link number. Per link: 20,722 only `SA`; 8,195 one `FT` + one `SA`; 30 one `FT` + two `SA`; 30 two `SA`; 22 two `FT` + one `SA`; 2 three `SA`. Example from the file: `SA RANITIDINE (CHLORHYDRATE DE)` and `FT RANITIDINE BASE` share link 1 | Ingredient per link, `FT` before `SA` (§14.2, DP28); the unusual shapes are covered by one rule and a property (P29) |
+| BDPM name mapping with the Phase 1 ladder (`FT` else `SA` per link, non-Turkish mode) | 3,183 distinct names, 29,057 occurrences: **63.9 %** mapped; **70.5 %** of 20,908 presentations fully mapped; `SA` names only: 45.6 % / 47.2 %; `FT` lines alone: 81.7 % of 8,269. Statuses by occurrence: 9,742 no key, 442 ambiguous, 292 unsplit. Most frequent unmapped tokens: `de` 3,954, `pour` 1,680, `préparations` 1,639, `homéopathiques` 1,573, `chlorhydrate` 1,170, `anhydre` 786, `d` 710, `acide` 475, `sodique` 412, `chlorure` 408 | French salt words, connectors and the homeopathic marker are the gap (§15.2); `FT` first is worth 18 points |
+| BDPM homeopathic products | 274 presentations have a substance named `… POUR PRÉPARATIONS HOMÉOPATHIQUES`; the procedure "Enreg homéo (Proc. Nat.)" marks 99 of them (a subset) | Flag by the name marker (DP37); without them: 27,477 occurrences, **67.6 %** mapped, 71.4 % of 20,634 presentations fully mapped |
+| BDPM false `unsplit` | `MALÉATE D'ÉNALAPRIL` (49 occurrences), `NITRATE D'ÉCONAZOLE` (43) and `NADROPARINE CALCIQUE` (18) are reported as possible unsplit combinations: a salt word counts as an ingredient span (`TRYPTOPHANE L`, 74, is the same symptom with a stereo marker and is not addressed here) | Unsplit check ignores salt and connector spans (Req 12.12, P39) |
+| BDPM routes and status | `routes` is text split at `;`; 68 distinct route strings; the 30 most frequent contain every route of 99.2 % of presentations (the top 25: 98.8 %) (`orale` 13,440, `intraveineuse` 3,419, `sous-cutanée` 1,433, …); 4 presentations without route. No ATC code in the BDPM. Authorisation status: 19,624 active, 983 repealed, 289 archived; commercialisation: 17,242 declared, 3,505 stopped | French route rows in `route_atc_groups.csv` (DP33); no published ATC, so no `p` for FR; status fields kept as published (DP41) |
+| Nomenclátor | 30,900 presentations; **every one has an ATC code** (30,249 of 7 characters); 25,952 with one ingredient, 4,436 with several, 512 with none; 60 distinct numeric route codes (not used) | Published ATC acts as `p` (Req 5.10, DP34); empty ingredient list stays empty |
+| Nomenclátor name mapping with the Phase 1 ladder (Spanish names, non-Turkish mode) | 2,583 distinct names, 35,875 occurrences: **48.1 %** mapped; 45.5 % of 30,388 presentations with ingredients fully mapped. Most frequent unmapped tokens: `hidrocloruro` 4,311, `sodio` 909, `trihidrato` 795, `monohidrato` 703, `calcica` 697, `sodica` 647, `sodico` 633, `acido` 509, `fumarato` 509, `besilato` 500; Spanish INN forms (`duloxetina`, `sildenafilo`) | Spanish salt words, hydrates, acid word order and final-vowel INN forms are the gap |
+| Prototype of the Phase 2 word lists and connectors (one union list for French and Spanish, no acid or vowel rules; throw-away) | BDPM (without homeopathic): **80.0 %** of occurrences, 86.1 % of presentations fully mapped; Nomenclátor: **81.3 %**, 80.6 % of presentations. Residual: `ACIDE …` and `… ACIDO` names, Spanish `-a`/`-o` stems (`DULOXETINA HIDROCLORURO`), counter-ion names that stay ambiguous (`CHLORURE DE CALCIUM`), amino acids, oils, vaccine strains, biologics without a code | Targets of Req 13.4 (≥ 80 %) are reachable; acid and vowel handling is the next step (§15.6) |
+| FAERS baseline | 6,716 distinct names, 6,201,428 occurrences, **84.0 %** mapped (5,209,387) | Req 13.4: ≥ 86 % |
+| FAERS: biologic suffix | 213 names with a hyphen and four letters, 258,823 occurrences. After removing the suffix the base maps by a label for names covering **114,106** occurrences (44 %); for the other 144,717 the base itself has no ingredient-level code in the extract (`RISANKIZUMAB`, `BIMEKIZUMAB`, `NEMOLIZUMAB`: new substances). Nine of the names that map carry bases outside an antibody-type stem list (insulin glargine, lispro, aspart, immunoglobulin G, ropeginterferon alfa-2b: 3,388 occurrences) | One rule, no stem list (DP31); no rule can add the 144,717 |
+| FAERS: salts and acid forms | `MYCOPHENOLATE MOFETIL` 21,351, `MYCOPHENOLATE SODIUM` 1,420 (the base `MYCOPHENOLIC ACID` maps, 3,538). A generic "-ate → -ic acid" rewrite would map 18 names / 23,750 occurrences, among them magnesium, calcium and diethylamine salicylate (34 occurrences) to salicylic acid, a different substance. English ester/salt words found by single-word removal: `pivalate` 2,768, `ditosylate` 1,771, `terephthalate` 1,624, `cypionate` 944, `probutate` 416, `enanthate` 412, `glycinate`, `arginine`, `lysine`, `hippurate`; `lauroxil` (384) is a prodrug with its own INN and stays out (owner rule) | Reviewed anion-acid table instead of a generic rewrite (DP30); ester words one by one, with ATC agreement (Req 12.2) |
+| FAERS: parts of combination strings | 938 unmapped names occur in multi-ingredient drug lines (205,167 occurrences, 3.3 % of all). Against all 3,766 Wikidata items (also those that only have combination codes) only 5,874 occurrences name any item (5,578 of them `VITAMINS`, a class item). The rest are components with no ingredient-level code of their own: `CARBIDOPA` 16,311, `VILANTEROL TRIFENATATE` 13,859, `FOSLEVODOPA`/`FOSCARBIDOPA` 10,325 each, `PANCRELIPASE` AMYLASE/LIPASE/PROTEASE 8,228 each, `SACUBITRIL` 5,802 | No automatic rule (DP32); pancrelipase parts can be curated synonyms; the rest stays unmapped and listed |
+| FAERS: upper bound of every one-word rule | Removing any single word (or the suffix) from an unmapped name makes **193,658** of its 992,041 unmapped occurrences map; the rules of this phase can add at most this much on top of 84.0 % (+3.1 points). It is an upper bound that also counts false matches (removing `vitamin` from `VITAMIN D` leaves `d`), so the reviewed rules will add less | Expect FAERS ≈ 86–87 % |
+| FAERS: what would still leak | After that upper bound, names that contain a mapped ingredient's name as whole words (the "whole-word part" scan): 45 ingredients, 8,302 occurrences (0.13 % of occurrences); examples are mixtures and devices (`HAND SANITIZER (ISOPROPYL ALCOHOL)`, `DONOR HUMAN STOOL SPORES (ETHANOL TREATED)`), so most of them are not leaks at all. Before the rules the same scan found 221 ingredients and 150,082 occurrences | `faers_mapping_gap` is not needed once the rules exist (DP36, §16.3) |
+| Wikidata extract | 3,766 items, 3,272 eligible (ingredient-level, non-combination code); labels de 2,284, fr 2,813, es 2,284, tr 1,269 | de/fr/es labels join the name index with region `EU` (DP39) |
+| Imipenem | Wikidata has `imipenem/cilastatin` (J01DH51) and `imipenem/cilastatin/relebactam` (J01DH56), no item for imipenem alone. Products naming imipenem: TİTCK 7, openFDA 13, BDPM 12, Nomenclátor 8. **WHOCC page `J01DH` (fetched 2026-11-08, index last updated 2026-01-20)** lists J01DH51 "imipenem and cilastatin" with the note "Refers to imipenem" and J01DH56; there is no code for imipenem alone | The follow-up's premise fails; options in §19 O1 |
+| Existing structure that Phase 2 builds on | `Region = Literal["TR", "US"]` in `regions/base.py` and `resolution/model.py`; `REGION_SOURCES` maps one source per region (`service.py`); `res_product.region` and `res_source_version.region` already allow `EU` (migration 0002); `res_product_code.kind` allows only `tr_barcode`, `ndc_product9`, `ndc_package11`; `rule_inputs` needs both TR and US sources; `cascades/schemas.py` and `resolution/model.py` hold the candidate-id pattern `^(TR\|US):…`; `cascades/coverage.py` buckets every non-TR product as US; the regions folders `eu_fr`, `eu_es`, `eu_name` exist with an empty `__init__.py` | The change list of §12.1 |
+
+## 12. Code layout (additions and changes)
+
+### 12.1 Changes to existing files (all verified against the repository on 2026-11-08)
+| File | Change |
+|---|---|
+| `regions/base.py` | `Region` adds `"EU"`; `Country = Literal["FR","ES"]`; `ProductKey.kind` adds `fr_cip13`, `es_ntin`, `es_gtin`, `es_cn`; `KeyGroup(matched_by, keys)`; `RegionAdapter` gains `country` and `key_groups(data: Gs1Data)`; the GS1 prefix table (FR 300–379, ES 840–849, DE 400–440) moves into one reviewed table with source and date per row, `gs1_prefix_region` reads it |
+| `resolution/gs1.py` | `Gs1Data.national_code` (AI 712 value or `None`); no other AI value is kept; AI (21) raises `Gs1Error(SERIAL_NOT_ACCEPTED)` (422 `gs1_serial_not_accepted`, DP19); lot is read only to find the field end; `serial_present` stays on `Gs1Data` and `ScanInfo`, always `False` |
+| `resolution/names.py` | `lang` parameter; word lists move to `name_lists.py`; `RULES_VERSION` hashes all lists and rules |
+| `resolution/matching.py` | `lang` replaces the boolean `turkish`; steps `anion_acid` and `biologic_suffix`; `detect_unsplit` ignores salt and connector spans |
+| `resolution/prepare.py` | `prepare_dataset` takes optional `fr_rows`, `es_rows`; `_Raw.turkish` becomes `_Raw.lang`; `PreparedProduct.region` and `.status_published`; EU name entries; coverage sections |
+| `resolution/atc.py` | no change to `select_codes`; `ProductContext` carries the Nomenclátor code as `published_atc` and the French routes as `routes` |
+| `resolution/load.py` | `PIPELINES` and `SCHEMAS` add `eu_fr_bdpm` and `eu_es_cima` (optional); `Inputs.describe` hashes the new files; `write_dataset` writes the new code kinds and `status_published` |
+| `resolution/repository.py` | `products()` reads `status_published`; `search_names` takes region `EU` |
+| `resolution/service.py` | `REGION_SOURCES` becomes region → tuple of sources; `ADAPTERS` adds the three EU adapters; ordered key groups; `rule_inputs` needs only the sources of the regions present in its candidate ids; notices |
+| `resolution/model.py` | `Region` adds `"EU"`; `CANDIDATE_ID` pattern adds `EU`; `ProductCandidate.country`, `.status_published`; `matched_by` and `Notice.code` additions; `Notice.country`; homeopathic name marker |
+| `cascades/schemas.py` | `CANDIDATE` pattern adds `EU` |
+| `cascades/coverage.py` | bucket `EU`; hint kind `member_name_part` (§16.4) |
+| `memory/faers_build.py` | `map_names` passes `lang="en"`; `_candidate_impact` keeps only the parts-of-combination count |
+| `migrations/versions/0008_eu_resolution.py` | widens `res_product_code_kind`; adds `res_product.status_published text[] NOT NULL DEFAULT '{}'`; downgrade deletes datasets that hold EU rows or kinds, then restores the check |
+
+### 12.2 New files
+```
+apps/api/janus/
+  regions/eu_fr/adapter.py        FrCip13Adapter          (pure)
+  regions/eu_es/adapter.py        EsNomenclatorAdapter    (pure)
+  regions/eu_name/adapter.py      EuNameAdapter           (pure: country table, notice only)
+  resolution/name_lists.py        language word lists, connectors, rewrite rules (data)
+  resolution/anion_acid.py        AnionAcidTable (like RouteMap): CSV text -> table, step lookup
+  resolution/prepare_eu.py        bdpm_products(), cima_products(), is_homeopathic_name()  (pure)
+  resolution/name_rules_report.py  review tool: impact and ATC agreement per candidate rule  (data dir only)
+  resolution/coverage_snapshot.py  baseline / after snapshots, `compare`, and `--rules FILE` what-if runs
+                                   (a JSON of candidate lists, switches, anion-acid rows and synonyms is
+                                   applied for one run only; nothing is enabled or committed)
+data/
+  anion_acid_forms.csv            lang, anion, acid, note            (curated, reviewed)
+  route_atc_groups.csv            + French route rows                (reviewed)
+  ingredient_synonyms.csv         + reviewed rows only
+apps/api/tests/
+  frozen_names.py                 Phase 1 fold/strip_salts/spelling_key/map_name, copied verbatim
+  test_names_lang_properties.py   test_anion_acid_properties.py   test_eu_prepare_properties.py
+  test_eu_adapters_properties.py  test_eu_db_properties.py        test_eu_real_artifacts.py (local only)
+  resolution_strategies.py        + BDPM-like and Nomenclátor-like sources, language word strategies
+.kiro/specs/drug-resolution/name-rules-review.md   review sheet (task 20)
+```
+The three adapters are pure like the Phase 1 ones: they turn a parsed scan into key groups; the
+lookup is the shared repository. The `eu_name` adapter has no source: it answers with a notice.
+No new runtime dependency.
+
+## 13. Request path (EU)
+
+### 13.1 Adapters and key groups
+```python
+@dataclass(frozen=True)
+class KeyGroup:
+    matched_by: str                 # cip13 | ntin | gtin | ai_712 | ntin_digits | barcode | ndc_gtin
+    keys: tuple[ProductKey, ...]
+
+class RegionAdapter(Protocol):
+    region: Region                  # "TR" | "US" | "EU"
+    country: Country | None         # "FR" | "ES" for EU adapters
+    source_id: str | None           # None for eu_name
+    def accepts_gtin(self, gtin14: str) -> bool: ...
+    def structural_hint(self, gtin14: str) -> bool: ...
+    def key_groups(self, data: Gs1Data) -> list[KeyGroup]: ...   # ordered by trust
+```
+`key_groups` replaces `keys_from_gtin` and the class attribute `matched_by`; the TR and US
+adapters return one group. The service looks the groups of an adapter up in order and keeps the
+rows of the **first group that finds any** (P30); it never merges groups.
+
+| Adapter | `accepts_gtin` | Key groups |
+|---|---|---|
+| `TitckAdapter`, `OpenFdaNdcAdapter` | unchanged | one group (`barcode`, `ndc_gtin`) |
+| `FrCip13Adapter` (`FR`, `eu_fr_bdpm`) | `^0(3400[0-9]{9})$` | `cip13`: `fr_cip13` = last 13 digits |
+| `EsNomenclatorAdapter` (`ES`, `eu_es_cima`) | 8, 12, 13 or 14 digits with a valid check digit, or `national_code` present | 1. `ntin`: `es_ntin` = the GTIN-14. 2. `gtin`: `es_gtin` = the GTIN-14. 3. `ai_712`: `es_cn` = first six digits of `national_code`. 4. `ntin_digits`: only if `^0847000[0-9]{7}$`: `es_cn` = digits 8–13 |
+| `EuNameAdapter` (no source) | GS1 prefix in the country table (today 400–440 → DE) | none; the service adds the notice |
+
+`accepts_gtin` is intentionally broad for Spain (any valid GTIN may be a company GTIN listed in the
+Nomenclátor); a miss costs one indexed query. Dispatch order (Req 1.5): hinted adapters first, then
+by `(region, country)`. `TitckAdapter` still accepts every GTIN-14 that starts with `0`, so a
+French `0` + CIP13 also asks the TİTCK list (1 TİTCK barcode with prefix 340 exists); the result
+holds the hits of every adapter, labelled by region (Req 1.5).
+
+### 13.2 Service
+- `REGION_SOURCES = {"TR": ("titck",), "US": ("openfda_ndc",), "EU": ("eu_fr_bdpm", "eu_es_cima")}`.
+  `_current(conn, needed)` raises `ResolutionUnavailableError` (503) if any needed source is missing;
+  a search or scan with region `EU` needs both EU sources (Req 6.2).
+- **Which sources a scan needs.** With an override, the sources of that region's adapters. With no
+  override, the sources of every accepting adapter that is *hinted* (its GS1 prefix matches) or is
+  a TR or US adapter; an accepting EU adapter that is not hinted (the Spanish adapter accepts any
+  valid GTIN, the Turkish one any GTIN starting with `0`) is asked only if its source is loaded and
+  is skipped silently otherwise. So a Turkish scan works on a dataset without EU data, while a
+  French-prefix scan on such a dataset answers 503 instead of a false "not found" (Req 6.2).
+  `regions_searched` lists only regions with a searched source.
+- DE: when `EuNameAdapter` accepts and no override other than `EU` is given, add
+  `Notice(code="no_open_product_database", region="EU", country="DE")`; no German lookup exists.
+  The Spanish adapter is still asked (it accepts any valid GTIN) and returns a candidate only for
+  an exact table hit; `regions_searched` names `EU` only if a French or Spanish source was
+  searched, and the notice is what the client shows for Germany.
+- `NOT_YET` shrinks to the structural hints without an adapter (today none of FR, ES, DE; the
+  notice code `region_adapter_not_available` stays in the model for future regions).
+- `ProductCandidate`: `region = "EU"`, `country`, `matched_by` from the group, `status_published`
+  (list of strings, display only), `published_atc` (ES only), `routes` (FR only), `dosage_form`
+  (FR: pharmaceutical form).
+- Staleness: `STALENESS_SOURCES` adds `eu_fr_bdpm` (cadence 30 days) and `eu_es_cima` (7 days)
+  from `res_source_version.cadence_days`, with the shared rule (twice the cadence).
+- `rule_inputs(conn, candidate_ids, qids)` needs the sources of the regions that occur in
+  `candidate_ids` (plus Wikidata) instead of every source: with optional EU sources, a TR-only list
+  must not fail because the EU data is not loaded. (Strictly more permissive than Phase 1, which
+  needed TR and US even for a TR-only list; 503 still means "a needed source is missing".)
+
+### 13.3 Name search
+`search()` default regions become `["TR", "US", "EU"]` and `repository.search_names` already
+filters `region = '' OR region = ANY(...)`. Entries (§14.4): English and Turkish ingredient labels
+keep region `""`; de/fr/es labels and published EU ingredient names get region `EU`; product names
+of BDPM and Nomenclátor get region `EU`. Ranking, folding and the `limit` rule are unchanged.
+`SearchIn.region` and `ScanIn.region` accept `EU`. `POST /resolve/ndc` is unchanged (US only).
+
+### 13.4 Privacy
+Nothing changes: the routes are the same medical routes (Req 8), the AI (712) value is a product
+number that is used for one query and never logged or returned (`ScanInfo` reports no value), and
+the parser still drops serial and lot (Req 1.4).
+
+## 14. Load-time preparation (EU)
+
+### 14.1 Inputs
+`gather()` also reads `eu_fr_bdpm` and `eu_es_cima` if their `current` artifact exists (manifest,
+hash and schema check as for the other sources; an invalid present artifact refuses the load).
+`Inputs.describe()` records which sources are included, the new rule files' hashes, and
+`RULES_VERSION`. `res_source_version` gets one row per source, with licence text and cadence from
+`pipelines/sources.toml`.
+
+### 14.2 BDPM (`prepare_eu.bdpm_products`)
+- One product per presentation row, in canonical order (as Phase 1). `product_name` = denomination,
+  `dosage_form` = pharmaceutical form, `routes` = the `;`-split route text (empty list if none),
+  `published_atc` = `None`, `ingredient_text` = `None`, codes = `("fr_cip13", cip13, cip13)` unless
+  name-only.
+- **Ingredient names** (Req 5.8): group `composition` by `link` in order of first occurrence;
+  per link `names = FT names if any else SA names`, each with the dosage of its own line. All `FT`
+  lines of a link are ingredients (2 `FT` + 1 `SA`: 22 links); extra `SA` lines of a link with an
+  `FT` are superseded (30 links). Every line is accounted for in a per-product record that
+  `prepare` counts (`superseded_sa_lines`, `multi_ft_links`) for the coverage report.
+- `status_published` = authorisation status, procedure, and the presentation's commercialisation
+  status with its declaration date (strings exactly as published). `marketing_end_date` = the
+  declaration date converted to ISO when the presentation status is a stop ("Déclaration d'arrêt de
+  commercialisation" or "Arrêt de commercialisation …"), else `None`.
+- Homeopathic: a product is homeopathic when any substance name carries the marker (Req 12.10).
+  `is_homeopathic_name(folded)` is `pour preparations homeopathiques` ∈ folded name; computed on the
+  request path from the stored published names like DP24 (no column).
+- Language `fr` for the ladder; `select_codes` gets `ProductContext(None, n_ingredients, routes)`.
+
+### 14.3 Nomenclátor (`prepare_eu.cima_products`)
+- One product per presentation row. `product_name` = presentation name (else the medicine name),
+  `brand_name` = medicine name, `published_atc` = `atc_code`, `routes` = `()`, codes =
+  `("es_cn", cn, cn)`, one `("es_ntin", ntin14, ntin)` per NTIN and one `("es_gtin", gtin14,
+  gtin)` per GTIN (GTIN padded to 14 digits; the published form is kept in `code_published`).
+- Ingredients in `orden_colacion` order (a missing order sorts last, in file order); strength =
+  dose + unit as published. An ingredient whose dictionary name is null is listed
+  `unmapped / no_ingredient_key` with the published name `(unnamed ingredient)`, so the user still
+  sees that an ingredient exists; none occurs today (`data-pipelines` §10.1: 0 in the live run).
+- `status_published` = commercialisation flag, registration status (code and date), presentation
+  status (code and date), serialisation flag, as published.
+- Language `es`; `select_codes` gets `ProductContext(atc_code, n_ingredients, ())`.
+
+### 14.4 Codes, evidence and names
+- **Evidence for codes (DP34).** Nomenclátor products with ≥ 2 distinct mapped keys and a valid
+  seven-character code feed the `observed` set of the combination check (more combination codes are
+  recognised; strictly safer). They do **not** feed `single` evidence (an ingredient's codes) or the
+  ATC bridge: TİTCK stays the only regulator list that adds codes to an ingredient in Phase 2. The
+  combination check, `select_codes` and the final leak guard are unchanged.
+- **Name entries.** Wikidata labels and aliases in `de`, `fr`, `es` become `ingredient` entries with
+  region `EU` (`SEARCH_LANGS` splits into `""`-scoped `en`, `tr` and `EU`-scoped `de`, `fr`, `es`);
+  BDPM denominations and Nomenclátor medicine/presentation names become `product` entries
+  (region `EU`); mapped EU published ingredient names become `ingredient` entries (region `EU`),
+  as TİTCK's do. Homeopathic BDPM products are indexed as products (findable by name) and flagged.
+- **Coverage.** `_coverage` adds `eu_fr_bdpm` and `eu_es_cima` sections built by `_source_coverage`
+  on products that are not homeopathic.
+
+### 14.5 Migration `0008_eu_resolution` (forward-only with downgrade)
+```
+ALTER TABLE res_product_code DROP CONSTRAINT res_product_code_kind;
+ALTER TABLE res_product_code ADD CONSTRAINT res_product_code_kind CHECK (kind IN (
+  'tr_barcode','ndc_product9','ndc_package11','fr_cip13','es_cn','es_ntin','es_gtin'));
+ALTER TABLE res_product ADD COLUMN status_published text[] NOT NULL DEFAULT '{}';
+```
+Downgrade deletes the datasets that contain EU kinds or `EU` products (reference data, reloadable
+as in migration 0006), drops the column and restores the check. The index
+`res_product_code_lookup (dataset_id, kind, code)` already serves the new kinds.
+
+## 15. Name rules
+
+### 15.1 One language parameter
+`strip_salts(folded, lang)`, `spelling_key(folded, lang)`, `ladder(name, index, *, lang)`,
+`map_name(name, index, *, lang)`, `detect_unsplit(name, index, lang)`. Call sites: `prepare` uses the
+raw product's language (`tr` TİTCK, `en` openFDA, `fr` BDPM, `es` Nomenclátor), `faers_build.map_names`
+uses `en`. Index entries are built with the function of the label's own language (Wikidata labels in
+`de` use the neutral function). `lang="tr"` keeps the Turkish label step; every other language skips
+it, as `turkish=False` did. The Phase 1 behaviour for `tr` and `en` is the base of every list.
+
+**Index keys of French and Spanish labels (found at task 19 on the real data).** A French or
+Spanish label is indexed under the keys of its own language **and** under the neutral (English)
+keys. The first version indexed it under its own language only; turning on the Spanish vowel rule
+then replaced the keys of Spanish labels and five TİTCK names that had matched through such a
+label became unmapped. With both keys a Phase 2 rule can only add keys, so a Turkish or English
+name that mapped still maps (it can become ambiguous when a new key collides). Property P34
+(monotonic part) checks this; the rule-impact report lists the remaining mapped-to-ambiguous
+cases for the review.
+
+### 15.2 Word lists (`name_lists.py`)
+```
+SALT_WORDS = {"base": Phase 1 set, "tr": +reviewed, "en": +reviewed, "fr": reviewed, "es": reviewed}
+NOT_ALONE  = {"base": Phase 1 set, "fr": +reviewed, "es": +reviewed, ...}
+CONNECTORS = {"fr": {"de","d","du","des"}, "es": {"de","del"}}
+```
+Effective set for a language = `base` ∪ the language's own. Initial content in task 18 equals
+Phase 1 (nothing enabled); the candidates below are proposals for the review sheet (task 20), each
+entered with counts and evidence. Measured demand (distinct names touched / occurrences):
+
+| Language | Candidate words (measured) |
+|---|---|
+| fr | `chlorhydrate` 1,170, `dichlorhydrate` 113, `anhydre` 786, `sodique` 412, `potassique` 85, `calcique`, `magnesique`, `fumarate` 218, `hemifumarate` 70, `acetate` 188, `maleate` 115, `tartrate`, `propionate` 76, `digluconate` 85, `chlorure`/`bromure` (also `NOT_ALONE`), the hydrate words already in the list |
+| es | `hidrocloruro` 4,311, `dihidrocloruro` 247, `hidrobromuro` 273, `besilato` 500, `medoxomilo` 411, `cilexetilo` 192, `axetilo`, `etexilato`, `trihidrato` 795, `monohidrato` 703, `dihidrato`, `hemihidrato`, `calcica`/`calcico`, `sodica`/`sodico`, `potasico`, `magnesico`, `fumarato` 509, `maleato`, `citrato`, `oxalato` 258, `mesilato` 191, `succinato`, `tartrato` 209, `hidrogeno…`, `sodio`/`potasio`/`calcio` as counter-ions |
+| en | `cypionate`, `enanthate`, `pivalate`, `ditosylate`, `terephthalate`, `probutate`, `glycinate`, `hippurate`, `mandelate`, `arginine`/`lysine` as counter-ions (`NOT_ALONE` guards the amino acid itself); **not** `lauroxil`, `enacarbil` (prodrugs with own INN) |
+
+The review decides, per word, with: names touched, an example, and the **ATC agreement**: for
+single-ingredient products that publish a code (TİTCK, Nomenclátor), the share whose mapped
+ingredient has a code with the same five-character group as the published one, with and without the
+word. A word whose agreement drops, or that makes a substance with a code of its own collapse into
+its parent, is rejected (`furoate`, the 2026-11-07 precedent).
+
+### 15.3 Connectors
+After `strip_salts` removes salt words, tokens in `CONNECTORS[lang]` at the start or end of what
+remains are removed (while at least one token stays). `CHLORHYDRATE DE TRAMADOL` → `tramadol`.
+For the "nothing left" and `NOT_ALONE` tests, connectors count like salt words: `SODIUM (CHLORURE
+DE)` folds to `sodium chlorure de`, whose remainder after the salt words is only a connector, so
+the name is returned unchanged (hydrate words removed), exactly as `calcium chloride` is today; it
+stays `ambiguous` or `unmapped` and is never reduced to `de`.
+
+### 15.4 Anion-acid table (`anion_acid.py`, `data/anion_acid_forms.csv`)
+Columns `lang, anion, acid, note` (`lang` ∈ `tr, en, fr, es, any`; `anion` and `acid` folded
+single-word and multi-word forms; `note` holds the evidence and the WHOCC lookup if a code is
+discussed). Loader checks (Req 12.7): no repeated `(lang, anion)`, non-empty note, every `acid`
+resolves through the label steps to exactly one eligible key at load. Step `anion_acid`: take
+`strip_salts(f, lang)`; if what remains is one token (or exactly the table's `anion`) with a row for
+`lang` or `any`, run the label steps (`any_label`, `salt_normalised`) for the row's `acid`; a hit is
+`Match(step="anion_acid")`. First candidate rows (task 20 proposes, the review decides):
+`mycophenolate → mycophenolic acid` (en/any), `folate → folic acid`, `valproate → valproic acid`,
+`alendronate → alendronic acid`, `zoledronate → zoledronic acid`, `aminosalicylate → aminosalicylic
+acid`, and the French and Spanish forms (`mycophénolate → acide mycophénolique`,
+`micofenolato → acido micofenolico`). Salicylate salts are **not** rows.
+
+### 15.5 Biologic suffix
+`re.fullmatch(r"(.+)-([A-Za-z]{4})", name)`; `base` is looked up with the label steps only
+(`curated_synonym`, `any_label`, `salt_normalised`); exactly one key → `Match("mapped",
+"biologic_suffix", (key,))`. Applies to `en` (openFDA names carry no suffix today; FAERS names
+do). Order: after steps 0–5, before the unsplit check and the bridge. The step is gated by
+`BIOLOGIC_SUFFIX_ENABLED` in `name_lists.py` (off until the review, part of `RULES_VERSION`), as
+all Phase 2 rule data is (Req 12.11). DP31 records why no stem list.
+
+### 15.6 Spelling keys by language
+- `es`: for each token of 5 or more letters ending in `a` or `o`, drop that letter before the
+  common rules (`duloxetina`/`duloxetine` → `duloxetin`, `sildenafilo`/`sildenafil`). A collision
+  between two substances gives `ambiguous`, never a choice.
+- `fr`, `es`: the acid word order: a token `acide`, `acido` or `acid` is moved to the end and an
+  adjective ending `ique`, `ico`, `ica` on the token before it becomes `ic` (`ACIDE ASCORBIQUE`,
+  `ASCORBICO ACIDO` → `ascorbic acid`), then the common rules. `tr` keeps `asit → acid`.
+- All of it is a pure function with a fixed point (the Phase 1 loop) and a property (P34).
+
+### 15.7 Unsplit guard and parts of combination strings
+`detect_unsplit` ignores spans whose tokens are all salt or connector words of the language, for
+`fr` and `es` only (`name_lists.UNSPLIT_GUARD_LANGS`; Turkish and English keep the Phase 1
+behaviour, Req 12.1); the longest-span search then cannot cut `maleate | d | enalapril` into three
+spans. With the connectors in place the French and Spanish forms are mapped by the salt step
+before this check is reached. For FAERS parts no
+mapping rule is added (DP32): `curated_synonym` (step 0, exact folded name → key) is the only way,
+by owner review; the pancrelipase parts are the one measured case (3 × 8,228 occurrences) and go
+to the synonym proposals of the review sheet if the extract holds a pancrelipase item.
+
+### 15.8 Review gate and tooling
+`name_rules_report.py` (dev tool, writes to `$JANUS_DATA_DIR/resolution/name-rules-<ruleset>.json`,
+prints counts only) computes for every candidate word, table row and rule: distinct names and
+occurrences touched per source, example names (data directory only), mapped ingredient, and the
+ATC agreement of §15.2. The pharmacologist agent reads that file and writes
+`name-rules-review.md` (counts and decisions, no source names beyond public INNs, like
+`mapping-review.md`): one section per list, a table of accepted/rejected words with the reason,
+the anion-acid rows with their WHOCC checks (URL and date), the French route rows, the synonym
+proposals and a list of doubtful names left unmapped. **Task 20 stops there for the owner.** The
+rule data in the repository stays at the Phase 1 content until the owner accepts the sheet.
+
+## 16. Coverage, FAERS builder and `faers_mapping_gap`
+
+### 16.1 Baseline and comparison (Req 13)
+Task 15 runs the Phase 1 code on the current artifacts and writes
+`$JANUS_DATA_DIR/resolution/coverage-baseline-<dataset 8>.json` with, for TR, US, FR, ES and FAERS:
+distinct names, occurrences and products as in `_source_coverage`, plus the per-name table (name →
+status, key, step) in a local sidecar (names stay out of the repository). For FR and ES the baseline
+uses the same `bdpm_products` / `cima_products` builders with the Phase 1 ladder (`lang` ignored),
+so before and after use one code path. Task 24 writes the "after" file and a comparison file:
+counts by change kind (Req 13.3). A mapped name that changes key, or becomes ambiguous or unmapped,
+fails the comparison until reviewed (P45 for synthetic data; the real run lists them).
+
+### 16.2 FAERS builder
+`map_names(candidates, index, lang="en")`. `_candidate_impact` keeps `single_part_of_combination`
+(it measures what the rules cannot reach). The counts schema `faers_counts-2` is unchanged; the
+metadata `rules_version` and `resolution_dataset_version` change, so a rebuilt counts file carries
+the new ladder (task 25 rebuilds it and records the new coverage; the memory service already
+answers with `counts_built_against_other_dataset` between a resolution reload and the rebuild).
+
+### 16.3 Is `faers_mapping_gap` still needed? No (DP36)
+The table was meant to say, per ingredient, that some of its reports sit in spellings the ladder
+cannot map, so a response could carry `mapping_gap_possible`. The measurements of §11 show:
+(a) the three rules that created the known leaks (biologic suffix, salt and acid forms) are now
+ladder steps, so those reports are counted under the right key; (b) what the rules cannot reach
+falls into two groups: names whose substance has **no key at all** (new biologics, components
+with no solo code; 144,717 and ~205,000 occurrences), which cannot be tied to an ingredient and so
+belong to no per-ingredient flag, and mixtures, devices and brand strings, where a "whole-word
+part" scan finds only 45 ingredients and 8,302 occurrences (0.13 %), many of them false matches;
+(c) the existing sentence of Collective Memory (`denominator_mapped_reports`: "some spellings are
+not recognized, so a pattern can be missed") and the unmapped list (`faers_unmapped`, coverage
+report) already carry the limit honestly. A flag built from (b) would be noisy and would suggest a
+precision the scan does not have. **If the owner rejects the biologic-suffix or acid-form rules at
+the review stop, this decision is reopened:** the table would then hold `ingredient_key, region,
+scope, reports` of reports whose unmapped spelling contains the mapped ingredient's name as whole
+words (221 ingredients, 150,082 occurrences before the rules), written by the builder from
+`faers_unmapped`, and `collective-memory` would add `mapping_gap_possible` to the pair response.
+`data-pipelines` design (open item 3, DP34) and `collective-memory` design §8.2 record the
+decision; no table, builder code or response field is added.
+
+### 16.4 Coverage report hint: "a member's name is a whole-word part" (cascade-engine follow-up)
+`cascades/coverage.py::_class_report` gains a hint kind `member_name_part`: an `unmapped` name
+(not `ambiguous`, not homeopathic) whose folded, salt-stripped token sequence contains the folded
+label or alias of a class member as a contiguous whole-word sequence (member names of at least five
+characters, unique to that member) is hinted with that member. It finds `lithium carbonate` →
+`lithium` and the atorvastatin solvate that the trigram rule (threshold 0.6) misses; it needs no new
+threshold. Hints stay a curation aid and never make findings (cascade-engine Req 8.3). The EU
+bucket (`EU`) is added to `bucket()` and to the `present` and `cannot_fire_in` loops. P49.
+
+## 17. Correctness properties (Phase 2)
+
+Tagged `Feature: drug-resolution, Property Pn` in each test's docstring, profiles as in §7.
+Properties of Phase 1 not listed here keep their numbers; P5, P7, P17, P18, P19, P20, P21 and P22
+are re-run with French-like and Spanish-like sources in the strategies (P44).
+
+| # | Property (for all …) | Validates | Hypothesis approach |
+|---|---|---|---|
+| P27 | **French key.** A GTIN-14 is accepted by `FrCip13Adapter` exactly when it matches `^0(3400[0-9]{9})$` with a valid check digit, and its key is the last 13 digits; every CIP13 of a generated source round-trips through `"0" + cip13` and its check digit. | Req 4.1 | Free 9-digit tails + computed check digit; mutations of prefix, length and check digit. |
+| P28 | **French lookups are complete.** For any generated BDPM source with duplicate and name-only presentations, a CIP13 lookup returns exactly the rows with that code in `product_id` order; name-only rows are never returned for a code and are found by their exact denomination. | Req 4.1, 2.3 | DB-backed synthetic loads; as P13 and P14. |
+| P29 | **BDPM ingredient derivation.** For any generated composition (links with 0–3 `FT` and 0–3 `SA` lines), the ingredient names are, per link in first-occurrence order, the `FT` names if the link has one, else the `SA` names; no line is dropped without being counted; links are never merged. | Req 5.8 | Compositions built from a link model; render, derive, compare with a reference. |
+| P30 | **Spanish order of trust.** For any generated Nomenclátor and scan (NTIN, GTIN, AI 712, NTIN digits, mixtures), the candidates are exactly the presentations of the first applicable step, `matched_by` names that step, and later steps are not consulted; a value shared by several presentations returns all of them; an NTIN whose embedded CN belongs to another presentation resolves through the table. | Req 4.2 | Generated presentations with NTIN/GTIN lists and shared/mismatched values; reference implementation of the order. |
+| P31 | **No external call.** With sockets blocked, every resolution route (scan with each adapter, ndc, search, products) answers from the database; the modules under `janus/resolution` and `janus/regions` import no HTTP client (`httpx`, `requests`, `urllib.request`, `http.client`, `aiohttp`). | Req 4.2, 7.1 | Monkeypatch `socket.socket` to raise; import-graph test over the package. |
+| P32 | **No open database.** For any GTIN with a prefix in the country table and a request with no override or override `EU` (EU sources loaded), the result has the `no_open_product_database` notice naming the country and never a German candidate; every candidate is an exact code hit of an enabled French or Spanish source; the country is not added to the searched regions and the result has no "not found" statement for it; with no override and the EU sources unloaded the notice is still given and no 503 is raised (the notice adapter has no source); with override `EU` and a missing EU source the answer is 503. | Req 4.3, 6.2 | GTINs from DE, FR, ES, TR, US, other prefixes; with and without EU sources loaded. |
+| P33 | **EU name search.** For any ingredient item with labels in de, fr, es, searching a label (case, diacritic, Turkish-i variants) with region `EU` or none returns the item; with `TR` or `US` it does not return it by that label; English and INN labels return it from every region; `rank` stays order independent. | Req 4.4 | DB-backed; labels with accents and different cases. |
+| P34 | **Language name functions.** For every language, `fold`, `strip_salts(·, lang)` and `spelling_key(·, lang)` are idempotent and never empty; for `tr` and `en` and any name with no token from the Phase 2 additions they equal `tests/frozen_names.py` (the Phase 1 functions); `RULES_VERSION` changes when any list changes. | Req 12.1, 12.2, 5.7 | Text over Latin, Turkish, French, Spanish letters and the word lists; frozen copy for the equality. |
+| P35 | **Salt, hydrate and connector invariance.** For any base name B with no salt word and any sequence of salt, hydrate and connector words of language L placed around it in L's word order, `strip_salts(·, L)` returns B; a name made only of such words is returned unchanged and non-empty; the ladder result equals that of B. | Req 12.2, 12.3 | Bases from generated items; word sequences from the lists; positions before and after. |
+| P36 | **Counter-ion substances stay apart.** For any two names that differ only in a `NOT_ALONE` word (zinc acetate / zinc gluconate, sodium / potassium bicarbonate, and their French and Spanish forms), they do not map to the same key by salt stripping, and a prodrug ester word that is not in the lists (e.g. `lauroxil`) is never removed. | Req 12.4 | Pairs from the lists; generated bases. |
+| P37 | **Anion-acid step.** The step can only return a key that the label steps return for the row's acid; it never changes a name that steps 0–5 map; the table loader refuses a repeated `(lang, anion)`, an empty note and an acid with no unique eligible key; a name whose remainder is not in the table is unaffected. | Req 12.6, 12.7 | Generated tables and indexes; names built to hit each step. |
+| P38 | **Biologic suffix.** For any base that maps to exactly one key by a label step and any four ASCII letters (any case), `base-XXXX` maps to that key with step `biologic_suffix`; a suffix of 3 or 5 letters, a missing hyphen, digits in the suffix, an unmapped or ambiguous base, or an earlier step hit leave the result as without the rule. | Req 12.8, 12.6 | Items and bases from the index; suffix strategies with near misses. |
+| P39 | **Unsplit guard.** A name made of one known ingredient and salt or connector words is never `unsplit`; two known ingredients in one name are still `unsplit`; the span search result does not depend on index order. | Req 12.12, 5.3 | Extends P16's generators with salt and connector tokens. |
+| P40 | **Parts are not guessed.** For any name that is one part of a generated combination string and has no label, alias, table or curated-synonym hit, the status is not `mapped`; a curated synonym maps only the exact folded name. | Req 12.9 | Combination strings split at `\`; index without the part. |
+| P41 | **Homeopathic French products.** A BDPM product is homeopathic exactly when some substance name contains the marker (any case, with or without accents) or a strength is in homeopathic units; the flag does not depend on ingredient order; such products are absent from the coverage counts and never reach `rule_input` consumers as evaluated products (cascade-engine P23 re-run over a French item). | Req 12.10, 5.11, 11.1 | Names with and without the marker, accents stripped, mixed lists. |
+| P42 | **French route selection.** For any BDPM-like product, route strings from the map and unmapped strings, and item codes: if some route is mapped every selected code is allowed for one of the routes, an ingredient with no allowed code is `unmapped/no_ingredient_atc_for_route`, no route mapped gives all codes with `all_codes`, the result is independent of route order and of `;`-splitting order. | Req 5.9 | As P24 with the French map; `;`-joined route strings. |
+| P43 | **Spanish published ATC.** For a single-ingredient Nomenclátor product whose published code is a valid, non-combination code of the mapped ingredient, that code is selected (`single_ingredient_product`); for a multi-ingredient product the published code is never an ingredient code; a combination code in `atc_code` is display only. | Req 5.10, 5.2 | As P5 and P17 with Spanish rows. |
+| P44 | **Phase 1 properties over the new sources.** P5 (decomposition invariance), P7 (no combination code), P17 (well-formed codes of the ingredient), P18 (unmapped stay visible), P19 (not found only when loaded), P20 (provenance), P21 (adapter dispatch, now with EU override) and P22 (stateless routes) hold when the synthetic sources include French-like and Spanish-like rows. | Req 5, 6, 7, 10 | Existing tests parametrised by source shape. |
+| P45 | **Honest comparison.** Coverage counts equal an independent recount and leave out homeopathic products; for any index and any added rule data, a name that was `mapped` stays mapped to the same key or is listed as changed; every changed name appears in exactly one change-kind count. | Req 13.2, 13.3 | Synthetic index before/after a generated rule addition; recount from products. |
+| P46 | **Dataset version.** For generated rule-file and source-version changes, the dataset version differs exactly when some Phase 2 input differs, and is equal for equal inputs. | Req 9.8, 9.4 | Hash the `describe()` of generated `Inputs`. |
+| P47 | **Optional EU sources.** For any subset of loaded sources: TR and US requests behave as in Phase 1; a request that needs a missing EU source answers 503; `rule_inputs` needs only the regions present in its ids; a present but invalid EU artifact refuses the whole load and leaves the previous dataset serving. | Req 9.7, 6.2 | DB-backed loads of subsets (as P23). |
+| P48 | **Component-code exception (option (b), owner decision).** For any generated dataset and any reviewed (key, code) pairs: the code reaches `rule_input` only for exactly the listed keys; for any other ingredient (including cilastatin and every unlisted key) and any other combination code the guards still raise or refuse, in `prepare` and in the engine's input guard; a forced leak of a combination code to an unlisted key raises `CombinationCodeLeakError`; the loader refuses a pair whose code is not a combination code, whose key is unknown, repeated, or without note and lookup date; the pair is stored and cited to `janus_curated`. Plus the example: a carbapenem rule fires on imipenem and not on cilastatin or on meropenem-free lists. | Req 14 | Generated combination codes and keys; forced-leak double as P7; example test with the real J2 row. |
+| P50 | **Serial is rejected.** For any element string (FNC1 or parenthesised, any AI order, any serial value of the character set, with or without other AIs) that contains AI (21), the parser raises `gs1_serial_not_accepted` and `/resolve/scan` answers 422 with that fixed code, performs no lookup, and the serial value appears in no response, log or database row; AI (712) of 7 digits is kept as `national_code`, any other length or character is dropped and the GTIN still resolves. | Req 1.1, 1.4, 8.3 | Extends P1/P3/P10 generators with a serial; sentinel serials from `tests/sentinels.py`; harness log capture. |
+| P49 | **Whole-word-part hints.** For any synthetic dataset and class, a `member_name_part` hint's name contains a member name as a contiguous whole-word sequence, never names a `mapped`, `ambiguous` or homeopathic ingredient, appears at most once per name and member, and the ranking is by product count; cascade-engine P22's recount still holds with the EU bucket. | Req 14 (hint), cascade-engine Req 8 | Names built from member names with prefixes and suffixes; short member names excluded. |
+
+Example tests (not properties): the migration 0008 up/down/up; the TR and US JSON for fixed inputs
+differs from Phase 1 only by the additive fields (Req 4.5); CIP13 and NTIN samples taken from the
+real artifacts resolve (local, `test_eu_real_artifacts.py`); the AMLIPIN example of Req 5.2 is
+unchanged.
+
+## 18. Decisions (Phase 2)
+
+| # | Decision | Alternatives considered | Why |
+|---|---|---|---|
+| DP26 | EU products have region `EU` and a `country` (`FR`, `ES`); one adapter per country behind `RegionAdapter`; override `EU` asks all EU adapters. | Regions `FR` and `ES`; one EU adapter with country switch. | `product.md`, donations and FAERS use TR / EU / US; `res_product.region` already allows `EU`; adding a country adds an adapter (`tech.md`). |
+| DP27 | **Owner decision 2026-11-08.** Spanish codes resolve from the Nomenclátor artifact loaded into PostgreSQL, not from the CIMA REST API; no external call on the request path (DP6 stays). Req 4.2 and the CIMA mention in Req 7.1 changed accordingly. | CIMA REST at request time under the HTTP policy (the original text). | Privacy (no product code leaves the server), the Nomenclátor lists NTIN/GTIN values that map a GTIN to a CN without a call, determinism and offline tests (Req 7.3), no outage path. Cost: data are as old as the last pipeline run (7-day cadence, notice after 14 days). |
+| DP28 | BDPM ingredients: per link number, `FT` names before `SA` names. | `SA` only; `FT` only; both. | Measured: 63.9 % vs 45.6 % of occurrences; the `FT` is the moiety Wikidata names; `SA` is the salt form (data-pipelines DP23). |
+| DP29 | One `lang` parameter on the name functions; Phase 1 lists stay the base of `tr` and `en`; changes for `tr`/`en` only through reviewed additions, with a frozen-function regression property (P34). | A separate function set per language; global lists. | TİTCK and openFDA results must not move by accident; one code path for the ladder. |
+| DP30 | Anion-to-acid is a reviewed table, not a generic "-ate → -ic acid" rewrite. | Generic rewrite (maps 18 names / 23,750 occurrences); curated synonyms only. | The generic rewrite maps salicylate salts to salicylic acid (34 occurrences of a different substance); the table is reviewable row by row and extends to fr/es. |
+| DP31 | Biologic suffix: hyphen + exactly four letters, base must map by a label step to one key; no stem list. | Stem list (`-mab`, `-cept`, …); any hyphenated suffix. | A stem list would miss insulin, immunoglobulin and interferon names (3,388 occurrences measured); the base-must-map condition already prevents inventing a key. Result: 114,106 occurrences. |
+| DP32 | No rule for parts of combination strings; curated synonyms for reviewed single ingredients; the rest stays unmapped and listed. | Map a part to its parent combination; map to any item named by the part. | 97 % of such occurrences name substances with no ingredient-level code (carbidopa, vilanterol): a mapping would be a guess or a proxy (owner rule). |
+| DP33 | French route strings join `route_atc_groups.csv` (exact strings), drafted by the pharmacologist agent from the 30 most frequent strings (every route of 99.2 % of presentations), reviewed by the owner. | Ignore routes for FR (`all_codes`); translate to English route names. | Same safeguard as DP20 for topical vs systemic corticosteroids; exact strings need no translation step. Unmapped strings fall back to `all_codes`, marked not route-confirmed. |
+| DP34 | Nomenclátor published ATC acts as the product code `p` and feeds the combination `observed` set; it does not add codes to an ingredient or to the bridge. | Treat it like TİTCK in every way; ignore it. | It is a regulator's code on every presentation, so selection by group is as good as for TİTCK; adding codes to ingredients would change TR/US results (kept for a later, measured decision). |
+| DP35 | EU sources are optional at load; requests that need a missing source answer 503; `rule_inputs` needs only the regions present in its ids. | Require all five sources. | A development database or an older deployment without EU data keeps working; fail-closed 503 keeps "not found" honest (Req 6.2). |
+| DP36 | `faers_mapping_gap` is not built; Collective Memory gets no `mapping_gap_possible` field. Reopened only if the owner rejects the suffix or acid-form rules. | Build the table now; build it after the rules. | §16.3: after the rules the measurable leak is 0.13 % of occurrences and mostly false matches; the denominator sentence already states the limit. |
+| DP37 | French homeopathic products are flagged by the substance-name marker "POUR PRÉPARATIONS HOMÉOPATHIQUES"; computed on the request path from stored names (no column). | The procedure "Enreg homéo"; a stored flag. | The marker finds 274 presentations, the procedure only 99 (a subset); same pattern as DP24. |
+| DP38 | German and other no-open-database countries: a notice, no lookup, no typed PZN input in this phase. | Parse PZN and look it up by a paid database; guess by name. | `data-sources.md`: no open PZN database; never guess. |
+| DP39 | de/fr/es ingredient labels and published EU names are indexed with region `EU`; en/tr stay region-free. | Index all languages for all regions. | A TR or US search would otherwise hit foreign words (noise) for no benefit; EU users get all five languages. |
+| DP40 | The "before" report is produced by the same code path as the "after" report (task 15 before any rule is enabled). | Quote the Phase 1 numbers only. | FR and ES have no Phase 1 numbers; the comparison must use one definition. |
+| DP41 | EU authorisation and marketing status are stored as published strings in `status_published`, display only. | Parse into booleans and dates; reuse `suspension_status`. | The two sources use different vocabularies (text vs codes); no rule reads them; parsing would be a medical-looking interpretation of a regulator's text. |
+| DP42 | **Owner decision 2026-11-08: approved.** The parser keeps the AI (712) value as `national_code` (product number, not box number); the client sends it with (01) and (17); DP19 is extended and AI (21) is rejected with `gs1_serial_not_accepted` (422). | Never use AI 712 (tables only); keep dropping the serial. | 8,703 of 30,900 presentations list neither NTIN nor GTIN, so some Spanish packs resolve only through AI 712. A rejected serial cannot reach any later code path. |
+| DP43 | **Owner decision 2026-11-08: option (b).** Imipenem gets a curated Janus key `J2` and the one combination code `J01DH51` counts for that key only, through the reviewed file `data/component_codes.csv` (`res_component_code`, `atc_selection = component_code`). Recorded in `cascade-engine` as its DP23. | (a) leave imipenem "cannot be checked"; (c) class membership by key in the rule base. | No WHO code for imipenem alone (WHOCC `J01DH`, 2026-11-08: only `J01DH51`, "Refers to imipenem"); a proxy is forbidden; PIPC row 58 names imipenem first; the exception is narrow, listed and tested, and every other combination code keeps being refused. |
+| DP44 | Coverage report hint `member_name_part` (whole-word part) instead of a lower trigram threshold. | Lower the threshold to 0.5 (1,026 hints, mostly unrelated salts). | Finds `lithium carbonate` and the atorvastatin solvate without noise. |
+
+## 19. Open items
+
+**Answered by the owner on 2026-11-08.** O1: option (b) (DP43). O2: approved, and AI (21) is rejected
+by the API (DP19, DP42). The two entries below are kept as the record of the options.
+
+**Waiting for the owner (genuinely open) — closed.**
+- **O1. Imipenem (Req 14).** WHOCC has no code for imipenem alone: only J01DH51 "imipenem and
+  cilastatin" with the note "Refers to imipenem". Options:
+  (a) **Leave imipenem "cannot be checked"** (as the saliva substitute): no change; row 58 does not
+  see imipenem; imipenem is a hospital injection (7 TİTCK, 13 US, 12 BDPM, 8 Nomenclátor products).
+  (b) **A key-specific component-code exception:** curated Janus key `J2` imipenem; a reviewed file
+  `data/component_codes.csv` (`key, code, evidence, WHOCC URL and date`, one row: `J2, J01DH51`)
+  lets that one code reach `rule_input` for that one key (`atc_selection = component_code`);
+  `J01DH51` stays a combination code everywhere else, cilastatin gets no code, the cascade input
+  guard accepts only the listed (key, code) pairs. Touches `atc.py`, `prepare.py`, one new table
+  (`res_component_code`, migration in task 27), `cascades/inputs.py` and P7. It bends the rule "a
+  combination code is never an ingredient code" for one reviewed pair.
+  (c) **Class membership by key in the cascade rule base** (a `key` pattern next to ATC prefixes):
+  larger change in two specs and a second matcher beside `class_match`; not recommended.
+  Recommendation: (b), because PIPC names imipenem first in row 58 and the exception is narrow,
+  auditable and property-tested; choose (a) if the owner prefers the strict reading of the rule.
+  Task 27 waits for the answer.
+- **O2. AI (712) and DP19.** DP19 says the client sends only AI (01) and (17). A Spanish pack whose
+  GTIN is not in the Nomenclátor resolves only through AI (712), a product number. Recommendation:
+  extend DP19 to "AI (01), (17) and, if present, (712)"; serial and lot never leave the device.
+  If declined, step 3 of Req 4.2 is dropped.
+
+**Decided in this refinement, for the record.** `faers_mapping_gap` not built (DP36); Req 4.2
+changed to the Nomenclátor (DP27); French and Spanish rule data enabled only after the review
+stop (Req 12.11); EU sources optional (DP35).
+
+**For information, no decision needed now.**
+- Parts of combination strings with no ingredient-level code (`CARBIDOPA` 16,311, `VILANTEROL`
+  13,859 occurrences, …) cannot reach Collective Memory through any ATC-based key. Counting them
+  would need an ingredient key without an ATC code (an identity-only key), a different design with
+  consequences for the cascade engine's eligibility rule. Not proposed.
+- The 144,717 occurrences of new biologics without a code in the Wikidata extract (`RISANKIZUMAB`,
+  `BIMEKIZUMAB`, …) wait for Wikidata to carry their ATC codes; a pipeline re-run picks them up.
+- Pre-launch checklist additions: pharmacist or physician review of the name rules, the anion-acid
+  table and the French route map; confirmation of the GS1 prefix table and of AI 710–714; a real
+  French and a real Spanish box; display of the BDPM and AEMPS attribution and update date.
+- Typed national codes (CIP7, CN with dot, PZN) are not accepted as codes; OCR text goes to name
+  search (Req 4.7).

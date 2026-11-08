@@ -171,3 +171,81 @@ def test_0007_accepts_janus_keys_and_the_downgrade_removes_them(
         command.upgrade(cfg, "head")
     _insert(db_conn, row(["J1"]))
     db_conn.execute("TRUNCATE contributions")
+
+
+def _insert_eu_dataset(conn: psycopg.Connection, dataset: str, kind: str) -> None:
+    conn.execute(
+        "INSERT INTO res_dataset (id, status, inputs) VALUES (%s, 'ready', '{}'::jsonb)", (dataset,)
+    )
+    conn.execute(
+        "INSERT INTO res_source_version (dataset_id, source_id, run_id, region, snapshot_date, "
+        "snapshot_is_retrieval_time, content_sha256, schema_version, license, source_url) "
+        "VALUES (%s, 'eu_fr_bdpm', 'r1', 'EU', '2026-11-03', false, 'h', 'eu_fr_bdpm-1', 'l', 'u')",
+        (dataset,),
+    )
+    conn.execute(
+        "INSERT INTO res_product (dataset_id, source_id, product_id, region, routes, name_only, "
+        "product_rxcuis, status_published) "
+        "VALUES (%s, 'eu_fr_bdpm', 1, 'EU', '{}', false, '{}', ARRAY['Autorisation active'])",
+        (dataset,),
+    )
+    conn.execute(
+        "INSERT INTO res_product_code (dataset_id, kind, code, code_published, source_id, "
+        "product_id) VALUES (%s, %s, '3400935955838', '3400935955838', 'eu_fr_bdpm', 1)",
+        (dataset, kind),
+    )
+    conn.execute("INSERT INTO res_current (one, dataset_id) VALUES (true, %s)", (dataset,))
+
+
+@pytest.mark.db
+def test_0008_accepts_eu_kinds_and_the_downgrade_removes_eu_datasets(
+    db_url: str, db_conn: psycopg.Connection
+) -> None:
+    """drug-resolution task 17.1: EU code kinds and `status_published`; a reversible migration."""
+    cfg = alembic_config(db_url)
+    db_conn.execute("DELETE FROM res_current")
+    db_conn.execute("DELETE FROM res_dataset")
+    ds = "a" * 64
+    for kind in ("fr_cip13", "es_cn", "es_ntin", "es_gtin"):
+        db_conn.execute("DELETE FROM res_current")
+        db_conn.execute("DELETE FROM res_dataset")
+        _insert_eu_dataset(db_conn, ds, kind)
+    with pytest.raises(psycopg.errors.CheckViolation):
+        db_conn.execute(
+            "INSERT INTO res_product_code (dataset_id, kind, code, code_published, source_id, "
+            "product_id) VALUES (%s, 'unknown_kind', '1', '1', 'eu_fr_bdpm', 1)",
+            (ds,),
+        )
+    other = "b" * 64  # a Phase 1 dataset has no EU row and survives the downgrade
+    db_conn.execute(
+        "INSERT INTO res_dataset (id, status, inputs) VALUES (%s, 'retired', '{}')", (other,)
+    )
+    command.downgrade(cfg, "0007")
+    try:
+        ids = {r[0] for r in db_conn.execute("SELECT id FROM res_dataset").fetchall()}
+        assert ids == {other}  # the EU dataset is gone, the plain one is kept
+        assert db_conn.execute("SELECT count(*) FROM res_current").fetchone() == (0,)
+        cols = {
+            r[0]
+            for r in db_conn.execute(
+                "SELECT column_name FROM information_schema.columns "
+                "WHERE table_name = 'res_product'"
+            ).fetchall()
+        }
+        assert "status_published" not in cols
+        with pytest.raises(psycopg.errors.CheckViolation):
+            db_conn.execute(
+                "INSERT INTO res_product_code (dataset_id, kind, code, code_published, source_id, "
+                "product_id) VALUES (%s, 'fr_cip13', '1', '1', 'x', 1)",
+                (other,),
+            )
+    finally:
+        command.upgrade(cfg, "head")
+    cols_after = {
+        r[0]
+        for r in db_conn.execute(
+            "SELECT column_name FROM information_schema.columns WHERE table_name = 'res_product'"
+        ).fetchall()
+    }
+    assert "status_published" in cols_after
+    db_conn.execute("DELETE FROM res_dataset")

@@ -9,13 +9,23 @@ of sets, so the result never depends on the order of index entries.
 
 from __future__ import annotations
 
+import re
 from collections import defaultdict
 from collections.abc import Iterable, Mapping
 from dataclasses import dataclass, field
 from functools import cache
 from typing import Literal
 
-from janus.resolution.names import fold, spelling_key, strip_salts
+from janus.resolution import name_lists
+from janus.resolution.anion_acid import AnionAcidTable
+from janus.resolution.name_lists import Lang
+from janus.resolution.names import (
+    fold,
+    is_connector,
+    is_salt_word,
+    spelling_key,
+    strip_salts,
+)
 
 Step = Literal[
     "curated_synonym",
@@ -24,9 +34,19 @@ Step = Literal[
     "salt_normalised",
     "spelling_key",
     "spelling_key_salt",
+    "anion_acid",
+    "biologic_suffix",
     "titck_atc_bridge",
 ]
 LANGS = ("en", "tr", "de", "fr", "es")
+
+
+_LABEL_LANGS: dict[str, Lang] = {"tr": "tr", "en": "en", "fr": "fr", "es": "es"}
+
+
+def label_lang(lang: str) -> Lang:
+    """The name functions of a Wikidata label's language (German labels use the neutral ones)."""
+    return _LABEL_LANGS.get(lang, "en")
 
 
 @dataclass(frozen=True)
@@ -71,6 +91,7 @@ class NameIndex:
     spell: Tiered
     spell_salt: Tiered
     bridge: Keys = field(default_factory=dict[str, frozenset[str]])
+    acid: AnionAcidTable = field(default_factory=AnionAcidTable)
 
     @classmethod
     def build(
@@ -78,6 +99,7 @@ class NameIndex:
         items: Iterable[IndexItem],
         synonyms: Iterable[tuple[str, str]] = (),
         bridge: Mapping[str, Iterable[str]] | None = None,
+        acid: AnionAcidTable | None = None,
     ) -> NameIndex:
         """`items` must already be restricted to eligible ingredient keys (design §5.3)."""
         syn: defaultdict[str, set[str]] = defaultdict(set)
@@ -91,17 +113,22 @@ class NameIndex:
                 f = fold(name)
                 if not f:
                     continue
+                ll = label_lang(lang)
                 if lang == "tr":
                     tr.add(f, item.qid, is_label=is_label)
                 anyl.add(f, item.qid, is_label=is_label)
-                salt.add(strip_salts(f), item.qid, is_label=is_label)
-                spell.add(spelling_key(f), item.qid, is_label=is_label)
-                spell_salt.add(spelling_key(strip_salts(f)), item.qid, is_label=is_label)
+                # French and Spanish labels get the keys of their own language and the neutral
+                # (English) keys, so a Phase 2 rule can only add keys: a Turkish or English
+                # query finds what it found before (design §15.1, P34).
+                for v in dict.fromkeys((ll, "en")) if ll in ("fr", "es") else (ll,):
+                    salt.add(strip_salts(f, v), item.qid, is_label=is_label)
+                    spell.add(spelling_key(f, v), item.qid, is_label=is_label)
+                    spell_salt.add(spelling_key(strip_salts(f, v), v), item.qid, is_label=is_label)
         # Keyed by the salt-normalised name, so "x hidroklorür" on a single product and "x" in a
         # combination meet (P5 counterexample: only the salt form was bridged).
         br: defaultdict[str, set[str]] = defaultdict(set)
         for name, qids in (bridge or {}).items():
-            br[strip_salts(fold(name))].update(qids)
+            br[strip_salts(fold(name), "tr")].update(qids)
         return cls(
             _freeze(syn),
             tr.freeze(),
@@ -110,6 +137,7 @@ class NameIndex:
             spell.freeze(),
             spell_salt.freeze(),
             _freeze(br),
+            acid or AnionAcidTable(),
         )
 
 
@@ -135,45 +163,83 @@ def _hit(step: Step, keys: frozenset[str] | None) -> Match | None:
     return Match("mapped" if len(keys) == 1 else "ambiguous", step, tuple(sorted(keys)))
 
 
-def ladder(name: str, index: NameIndex, *, turkish: bool) -> Match | None:
-    """Steps 0-5 (design §5.3); None if no step hits."""
+_SUFFIX = re.compile(r"^(.+)-([A-Za-z]{4})$")
+
+
+def _anion_acid(stripped: str, index: NameIndex, lang: Lang) -> Match | None:
+    """Step `anion_acid`: the salt-stripped name is a reviewed anion; look its acid up by label."""
+    keys: set[str] = set()
+    for acid in sorted(set(index.acid.lookup(lang, stripped))):
+        hit = _tier(index.any_label, acid) or _tier(index.salt, strip_salts(acid, lang))
+        keys |= hit or set()
+    return _hit("anion_acid", frozenset(keys))
+
+
+def _biologic_suffix(name: str, index: NameIndex, lang: Lang) -> Match | None:
+    """Step `biologic_suffix`: `BASE-XXXX` maps to the key of BASE if BASE maps by a label step
+    to exactly one key. No list of biologic stems is used (Req 12.8)."""
+    if lang != "en" or not name_lists.BIOLOGIC_SUFFIX_ENABLED:
+        return None
+    m = _SUFFIX.match(name.strip())
+    base = fold(m.group(1)) if m else ""
+    if not base:
+        return None
+    for keys in (
+        index.synonyms.get(base),
+        _tier(index.any_label, base),
+        _tier(index.salt, strip_salts(base, lang)),
+    ):
+        if keys:
+            return Match("mapped", "biologic_suffix", tuple(keys)) if len(keys) == 1 else None
+    return None
+
+
+def ladder(name: str, index: NameIndex, *, lang: Lang) -> Match | None:
+    """Steps 0-5 (design §5.3), then `anion_acid` and `biologic_suffix` (design §15); None if no
+    step hits. Later steps never change a name that an earlier step maps."""
     f = fold(name)
     if not f:
         return None
-    s = strip_salts(f)
+    s = strip_salts(f, lang)
     steps: list[tuple[Step, frozenset[str] | None]] = [
         ("curated_synonym", index.synonyms.get(f)),
-        ("tr_label", _tier(index.tr_label, f) if turkish else None),
+        ("tr_label", _tier(index.tr_label, f) if lang == "tr" else None),
         ("any_label", _tier(index.any_label, f)),
         ("salt_normalised", _tier(index.salt, s)),
-        ("spelling_key", _tier(index.spell, spelling_key(f))),
-        ("spelling_key_salt", _tier(index.spell_salt, spelling_key(s))),
+        ("spelling_key", _tier(index.spell, spelling_key(f, lang))),
+        ("spelling_key_salt", _tier(index.spell_salt, spelling_key(s, lang))),
     ]
     for step, keys in steps:
         hit = _hit(step, keys)
         if hit is not None:
             return hit
-    return None
+    return _anion_acid(s, index, lang) or _biologic_suffix(name, index, lang)
 
 
-def _span_key(tokens: tuple[str, ...], index: NameIndex) -> str | None:
+def _span_key(tokens: tuple[str, ...], index: NameIndex, lang: Lang) -> str | None:
     """The single key of a token span by exact or salt-normalised label, else None."""
     f = " ".join(tokens)
     for keys in (
         _tier(index.tr_label, f),
         _tier(index.any_label, f),
-        _tier(index.salt, strip_salts(f)),
+        _tier(index.salt, strip_salts(f, lang)),
     ):
         if keys:
             return next(iter(keys)) if len(keys) == 1 else None
     return None
 
 
-def detect_unsplit(name: str, index: NameIndex) -> tuple[str, ...] | None:
-    """Keys of a split into >= 2 consecutive spans that each map to one different key."""
+def detect_unsplit(name: str, index: NameIndex, lang: Lang = "en") -> tuple[str, ...] | None:
+    """Keys of a split into >= 2 consecutive spans that each map to one different key.
+
+    For languages in `name_lists.UNSPLIT_GUARD_LANGS` (French, Spanish) a span made only of salt
+    or connector words is not an ingredient span, so `MALÉATE D'ÉNALAPRIL` is never cut into
+    `maleate | d | enalapril` (Req 12.12).
+    """
     tokens = tuple(fold(name).split())
     if len(tokens) < 2 or len(tokens) > 12:
         return None
+    guard = lang in name_lists.UNSPLIT_GUARD_LANGS
 
     @cache
     def best(start: int) -> tuple[str, ...] | None:
@@ -181,7 +247,10 @@ def detect_unsplit(name: str, index: NameIndex) -> tuple[str, ...] | None:
         if start == len(tokens):
             return ()
         for end in range(len(tokens), start, -1):  # longest span first: deterministic
-            key = _span_key(tokens[start:end], index)
+            span = tokens[start:end]
+            if guard and all(is_salt_word(t, lang) or is_connector(t, lang) for t in span):
+                continue
+            key = _span_key(span, index, lang)
             if key is None:
                 continue
             rest = best(end)
@@ -195,20 +264,21 @@ def detect_unsplit(name: str, index: NameIndex) -> tuple[str, ...] | None:
     return tuple(sorted(keys))
 
 
-def map_name(name: str, index: NameIndex, *, turkish: bool) -> Match:
-    """Full ladder: steps 0-5, then the unsplit check, then the TİTCK ATC bridge (step 6).
+def map_name(name: str, index: NameIndex, *, lang: Lang) -> Match:
+    """Full ladder: steps 0-5, `anion_acid`, `biologic_suffix`, then the unsplit check, then the
+    TİTCK ATC bridge (Turkish names only).
 
     The unsplit check runs before the bridge so that a name naming two substances is never
     mapped through a product code.
     """
-    hit = ladder(name, index, turkish=turkish)
+    hit = ladder(name, index, lang=lang)
     if hit is not None:
         return hit
-    parts = detect_unsplit(name, index)
+    parts = detect_unsplit(name, index, lang)
     if parts is not None:
         return Match("unsplit", None, parts)
-    if turkish:
-        bridged = _hit("titck_atc_bridge", index.bridge.get(strip_salts(fold(name))))
+    if lang == "tr":
+        bridged = _hit("titck_atc_bridge", index.bridge.get(strip_salts(fold(name), lang)))
         if bridged is not None:
             return bridged
     return NO_MATCH

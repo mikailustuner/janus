@@ -450,7 +450,7 @@ fixed by the statistician review (§8, Q6, Q11) and by `medical-safety.md` rules
 The client shows a ratio above 1,000 as "over 1,000" (the API returns the number).
 
 ### 8.2 Left open by the review
-The Evans paper's own χ² form and DOI (owner checks in Crossref); optional table `faers_mapping_gap` (builder lists ingredients whose reports leak through candidate name rules, so a response can say `mapping_gap_possible`; **deferred by the owner on 2026-11-08 to the `drug-resolution` EU and name-rules work**, where it is recorded); the review did not tabulate EU, OTHER and US by class; rate limiting (Phase 5) decides how serious the padding limit of Q9 is.
+The Evans paper's own χ² form and DOI (owner checks in Crossref); optional table `faers_mapping_gap` (builder lists ingredients whose reports leak through candidate name rules, so a response can say `mapping_gap_possible`; **deferred by the owner on 2026-11-08 to the `drug-resolution` EU and name-rules work; decided there on 2026-11-08 (DP36): not built, no `mapping_gap_possible` field**, because the name rules now map the known leaks and the measured remainder is 0.13 % of occurrences, mostly mixtures and devices; reopened only if the owner rejects the biologic-suffix or acid-form rules; the denominator sentence `denominator_mapped_reports` keeps carrying the limit; numbers in `drug-resolution` design §11 and §16.3); the review did not tabulate EU, OTHER and US by class; rate limiting (Phase 5) decides how serious the padding limit of Q9 is.
 
 ## 9. Testing strategy
 
@@ -543,5 +543,5 @@ Owner decisions of 2026-11-08 are applied: DP12 (dataset-level citation), migrat
 
 Open:
 1. **Pharmacist or physician review of the whole mapping** before any public claim; native-speaker check of labels and messages (both on `docs/pre-launch-checklist.md`).
-2. Decided 2026-11-08: the three further safety lines (DP24 below), regional crisis and emergency numbers in the catalogue, the adrreports.eu link, the MedDRA notice wording, US spelling of English labels, and the deferral of `faers_mapping_gap` to `drug-resolution`. Re-checks before launch (numbers, link, MSSO terms) are on the checklist.
+2. Decided 2026-11-08: the three further safety lines (DP24 below), regional crisis and emergency numbers in the catalogue, the adrreports.eu link, the MedDRA notice wording, US spelling of English labels, and the deferral of `faers_mapping_gap` to `drug-resolution` (decided there: not built, §8.2). Re-checks before launch (numbers, link, MSSO terms) are on the checklist.
 3. The privacy page text must state the residual limits of Req 5.9 (`experience`).

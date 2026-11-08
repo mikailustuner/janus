@@ -6,8 +6,11 @@ from hypothesis import given
 from hypothesis import strategies as st
 
 from janus.resolution.matching import IndexItem, NameIndex, _tier, map_name  # pyright: ignore[reportPrivateUsage]
+from janus.resolution.name_lists import Lang
 from janus.resolution.names import fold, spelling_key, strip_salts
 from tests.resolution_strategies import SALTS, WORDS
+
+LANG: dict[bool, Lang] = {True: "tr", False: "en"}  # the old boolean flag, as a language
 
 QIDS = [f"Q{i}" for i in range(1, 7)]
 NAME = st.one_of(
@@ -79,8 +82,8 @@ def test_ladder(
         for i in shuffled
     ]
     other = NameIndex.build(reversed_items, list(reversed(synonyms)))
-    match = map_name(name, index, turkish=turkish)
-    assert match == map_name(name, other, turkish=turkish)
+    match = map_name(name, index, lang=LANG[turkish])
+    assert match == map_name(name, other, lang=LANG[turkish])
 
     steps = _steps(index, name, turkish)
     first = next(((step, keys) for step, keys in steps if keys), None)
@@ -101,7 +104,7 @@ def test_unsplit_names_are_flagged(a: str, b: str, salt: str) -> None:
     if a == b:
         return
     index = NameIndex.build([IndexItem("Q1", {"en": a}), IndexItem("Q2", {"tr": b})])
-    match = map_name(f"{a}{salt} {b}", index, turkish=True)
+    match = map_name(f"{a}{salt} {b}", index, lang="tr")
     assert (match.status, set(match.keys)) == ("unsplit", {"Q1", "Q2"})
 
 
@@ -113,7 +116,7 @@ def test_label_beats_alias() -> None:
             IndexItem("Q553223", {"en": "esomeprazole"}, {"en": ("omeprazole",)}),
         ]
     )
-    match = map_name("OMEPRAZOLE", index, turkish=False)
+    match = map_name("OMEPRAZOLE", index, lang="en")
     assert (match.status, match.keys) == ("mapped", ("Q422210",))
 
 
@@ -122,6 +125,6 @@ def test_bridge_only_after_unsplit_check() -> None:
         [IndexItem("Q1", {"en": "alfazin"}), IndexItem("Q2", {"en": "betorol"})],
         bridge={"alfazin betorol": {"Q1"}, "gorvacin": {"Q1", "Q2"}},
     )
-    assert map_name("alfazin betorol", index, turkish=True).status == "unsplit"
-    assert map_name("gorvacin", index, turkish=True).status == "ambiguous"
-    assert map_name("gorvacin", index, turkish=False).status == "none"
+    assert map_name("alfazin betorol", index, lang="tr").status == "unsplit"
+    assert map_name("gorvacin", index, lang="tr").status == "ambiguous"
+    assert map_name("gorvacin", index, lang="en").status == "none"

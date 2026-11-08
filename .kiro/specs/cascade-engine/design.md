@@ -532,6 +532,8 @@ P1–P7 are the seven original properties; P8–P22 were added in the refinement
 | DP21 | Exploratory mode is not built in Phase 1; the API has no option and the result no field for it. | A stub that returns an empty list. | YAGNI; Req 3 stays as the contract for when `onsides` exists. |
 | DP22 | **Owner decision 2026-11-08 (collective-memory DP12).** A finding cites FAERS through the existing dataset record `dataset:faers` plus a deterministic locator `faers:ingredient=<index key>;event=<janus event key>;region=ALL;scope=suspect`; there are no `faers_stat:` ids. Minimal change: optional `RuleBase.faers_event_keys` (PIPC position → Janus event key, empty until the owner has reviewed the event vocabulary), `Finding.faers_locator` / `FindingOut.faers_locator`, and `dataset:faers` added to the ids that already pass through `_cite`. | Per-cell `faers_stat:` evidence ids registered by a loader. | The API is stateless; per-cell records would add thousands of rows per build. The dataset record already has source, licence, snapshot date and freshness. When `dataset:faers` is not registered, `_cite` drops it and the locator is `None`. |
 
+| DP23 | **Owner decision 2026-11-08 (`drug-resolution` DP43): a narrow component-code exception for imipenem.** WHOCC lists no code for imipenem alone, only `J01DH51` "imipenem and cilastatin" ("Refers to imipenem"). The one reviewed pair (`J2` imipenem, `J01DH51`) in `data/component_codes.csv` may reach `rule_input` for that key, with `atc_selection = component_code`. The engine's input guard (Req 1.3) keeps refusing `J01DH51` and every other combination code of the dataset for every other ingredient; it accepts a combination code only as a listed (key, code) pair. The carbapenem class (`J01DH`) is unchanged; no pattern changes. | (a) leave imipenem "cannot be checked"; (c) a key pattern in the class mapping (a second matcher beside `class_match`). | PIPC row 58 names imipenem first; the exception is one auditable row, tested so that no other combination code gets it (`drug-resolution` P48). Built in `drug-resolution` task 27; the row-58 note in `cascade_classes.csv` and `mapping-review.md` is updated then. |
+
 ## 11. Open items
 - Owner decisions on the design (2026-11-07): DP18 decided (the three ThinkCascades-only
   cascades are not added); the abrupt-stop list and the row 49 reading are decided at the
@@ -636,6 +638,15 @@ P1–P7 are the seven original properties; P8–P22 were added in the refinement
   and aripiprazole lauroxil, and the elemental names iron, zinc and selenium.
 - **Follow-up (coverage report):** add a hint kind "a member's name is a whole-word part of the
   unmapped name"; the trigram rule missed lithium carbonate and the atorvastatin solvate.
+  *(Planned 2026-11-08: Requirement 8.8, `drug-resolution` design §16.4, task 26 and property P49,
+  together with the `EU` bucket of Requirement 8.7.)*
+- **Follow-up (imipenem), update 2026-11-08:** WHOCC lists no code for imipenem alone, only
+  J01DH51 "imipenem and cilastatin" ("Refers to imipenem"), so row 58 cannot get an ingredient-level
+  code. `drug-resolution` Requirement 14 and design §19 O1 give the owner three options; the
+  carbapenem class note ("matches only once resolution gives imipenem an ingredient-level code")
+  stays true until the owner chooses. If option (b) is chosen, the engine's input guard
+  (`cascades/inputs.py`) accepts exactly the listed (key, code) pairs and cascade-engine P7/P-guard
+  properties are extended in `drug-resolution` task 27.
 - **Follow-up (privacy spec):** donations accept QIDs only; allow Janus keys `J<n>` there too.
 - **Re-run after the synonym review (2026-11-07):** dataset `0a2da39a…` (108 synonym rows, J1
   dimenhydrinate, homeopathic products excluded), rule base `472f35a9…` (codeine on the

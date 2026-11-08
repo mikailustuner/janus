@@ -269,7 +269,7 @@ def resolve_scan(
 ) -> ResolutionResult:
     data = parse_element_string(content, today)  # Gs1Error → 422 in the router
     chosen = choose_adapters(adapters, data.gtin14, override)
-    cur = _current(conn, [a.source_id for a in chosen])
+    cur = _current(conn, [a.source_id for a in chosen if a.source_id is not None])
     b = _Builder(conn, cur)
     hint = gs1_prefix_region(data.gtin14)
     extra: list[Notice] = []
@@ -277,17 +277,21 @@ def resolve_scan(
         extra.append(Notice(code="region_adapter_not_available", region=hint))
     candidates: list[ProductCandidate | IngredientCandidate] = []
     for a in chosen:
-        refs: list[repository.ProductRef] = []
-        by_kind: dict[str, list[str]] = {}
-        for k in a.keys_from_gtin(data.gtin14):
-            by_kind.setdefault(k.kind, []).append(k.code)
-        for kind, codes in sorted(by_kind.items()):
-            refs += [
-                r
-                for r in repository.refs_by_codes(conn, cur.dataset_id, kind, codes)
-                if r[0] == a.source_id
-            ]
-        candidates += b.products(sorted(set(refs)), a.matched_by)
+        # Key groups in order of trust: the first group that finds a product wins (design §13.1).
+        for group in a.key_groups(data):
+            refs: list[repository.ProductRef] = []
+            by_kind: dict[str, list[str]] = {}
+            for k in group.keys:
+                by_kind.setdefault(k.kind, []).append(k.code)
+            for kind, codes in sorted(by_kind.items()):
+                refs += [
+                    r
+                    for r in repository.refs_by_codes(conn, cur.dataset_id, kind, codes)
+                    if r[0] == a.source_id
+                ]
+            if refs:
+                candidates += b.products(sorted(set(refs)), group.matched_by)
+                break
     scan = ScanInfo(
         gtin=data.gtin14,
         expiry=data.expiry,
