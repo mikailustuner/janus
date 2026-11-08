@@ -282,6 +282,8 @@ name = "Aliasl J, Khoshzaban F. Traditional Herbal Remedies for Burn Wound Heali
 license = "CC BY 3.0"
 notes = ["Only the name columns (name in the Canon, common name, scientific name) are stored, in data/canon_gold_pmc3941892.csv."]
 storage = "commit"
+# A published article: re-check yearly (corrections, retraction) with the evidence data.
+cadence_days = 365
 urls = ["https://pmc.ncbi.nlm.nih.gov/articles/PMC3941892/"]
 
 [[sources]]
