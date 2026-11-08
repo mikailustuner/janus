@@ -8,10 +8,36 @@ import { useT } from "@/theme/words";
 import { AlertIcon } from "./icons";
 import { useUserRegion } from "./region";
 
-export function EmergencyNotice({ compact = false }: { compact?: boolean }) {
+export function EmergencyNotice({
+  compact = false,
+  slim = false,
+}: {
+  compact?: boolean;
+  /** The home's one-line bar (DP46): one sentence with the number, expandable to the full text. */
+  slim?: boolean;
+}) {
   const t = useT();
   const region = useUserRegion();
   const emergency = t(`Memory.emergency.${region}`);
+  if (slim)
+    return (
+      <aside
+        aria-label={t("Emergency.title")}
+        data-testid="emergency-notice"
+        className="emergency-slim"
+      >
+        <details>
+          <summary>
+            <AlertIcon size={18} className="shrink-0 text-risk" />
+            <span>{t("Emergency.line", { emergency })}</span>
+            <span aria-hidden className="emergency-chevron">
+              ▾
+            </span>
+          </summary>
+          <p>{t("Emergency.text", { emergency })}</p>
+        </details>
+      </aside>
+    );
   return (
     <aside
       aria-label={t("Emergency.title")}

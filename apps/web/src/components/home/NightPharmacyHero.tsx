@@ -9,7 +9,7 @@
  * loaded after hydration; under reduced motion, Save-Data, a slow connection or a video error the
  * stage falls back to the three stills (`data-still`, home-scenes.css).
  */
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { startDemo } from "@/demo/session";
 import { Link, useRouter } from "@/i18n/navigation";
@@ -26,12 +26,15 @@ export const ISTANBUL_GHOSTS = [
   { rule: "pipc:12", position: 3, key: "pipc12" },
 ] as const;
 
-/** Where the ghosts rise in the cabinet room: the boxes on the shelves (percent of the image). */
-const BOXES = [
-  { x: 77.8, y: 32.9 },
-  { x: 71.1, y: 42.8 },
-  { x: 73.9, y: 46.8 },
-  { x: 77.8, y: 47.8 },
+/**
+ * Where the ghosts hover in the cabinet room, in front of the shelves they rose from (percent of
+ * the image; same order as ISTANBUL_GHOSTS).
+ */
+const SHELVES = [
+  { x: 70.5, y: 30 },
+  { x: 78.5, y: 33 },
+  { x: 69, y: 45 },
+  { x: 77.5, y: 49 },
 ];
 
 /** Where the ghosts rise in the diorama: shop windows and the door (percent of the image). */
@@ -62,6 +65,11 @@ export function NightPharmacyHero({ active }: { active: boolean }) {
     };
   }, [active]);
 
+  const [hot, setHot] = useState<number | null>(null);
+  const prepareNote = () => {
+    startDemo("istanbul");
+    router.push("/note");
+  };
   const openFinding = (position: number) => {
     startDemo("istanbul");
     router.push(`/results/finding#${position}`);
@@ -154,17 +162,35 @@ export function NightPharmacyHero({ active }: { active: boolean }) {
           <div className="scene-box np-box-cabinet">
             <ScenePicture name="night-cabinet" alt={t("Home.alt.cabinet")} />
             <span className="np-note-glow" aria-hidden />
-            <div className="np-ghosts" aria-hidden>
-              {BOXES.map((b, i) => (
-                <span
-                  key={i}
+            {/* Pointer shortcuts over the picture; the same actions are the buttons of the
+                text column, so these stay out of the tab order and the accessibility tree. */}
+            <div className="np-ghosts np-cabinet-ghosts" aria-hidden>
+              {ISTANBUL_GHOSTS.map((g, i) => (
+                <button
+                  key={g.rule}
+                  type="button"
+                  tabIndex={-1}
                   className="np-ghost"
-                  style={{ left: `${b.x}%`, top: `${b.y}%` }}
+                  data-hot={hot === i ? "" : undefined}
+                  style={{
+                    left: `${SHELVES[i]!.x}%`,
+                    top: `${SHELVES[i]!.y}%`,
+                  }}
+                  onPointerEnter={() => setHot(i)}
+                  onPointerLeave={() => setHot(null)}
+                  onClick={() => openFinding(g.position)}
                 >
-                  <Ghost size={64} animated />
-                </span>
+                  <Ghost size={56} animated />
+                </button>
               ))}
             </div>
+            <button
+              type="button"
+              tabIndex={-1}
+              aria-hidden
+              className="np-note-hotspot"
+              onClick={prepareNote}
+            />
           </div>
         </div>
       </div>
@@ -185,21 +211,22 @@ export function NightPharmacyHero({ active }: { active: boolean }) {
           </h2>
           <p className="scene-lead">{w("Home.scene3Intro")}</p>
           <ul className="flex flex-col gap-3">
-            {ISTANBUL_GHOSTS.map((g) => {
+            {ISTANBUL_GHOSTS.map((g, i) => {
               const label = t(`Home.ghosts.${g.key}`);
               return (
                 <li key={g.rule}>
                   <button
                     type="button"
                     className="np-finding"
+                    data-hot={hot === i ? "" : undefined}
                     aria-label={t("Home.ghostOpen", { finding: label })}
                     onClick={() => openFinding(g.position)}
+                    onPointerEnter={() => setHot(i)}
+                    onPointerLeave={() => setHot(null)}
+                    onFocus={() => setHot(i)}
+                    onBlur={() => setHot(null)}
                   >
-                    <Ghost
-                      size={44}
-                      animated
-                      className="shrink-0 drop-shadow-[0_0_10px_var(--ghost-edge)]"
-                    />
+                    <Ghost size={36} animated className="shrink-0" />
                     <span>{label}</span>
                   </button>
                 </li>
@@ -210,10 +237,7 @@ export function NightPharmacyHero({ active }: { active: boolean }) {
             <button
               type="button"
               className="scene-btn scene-btn-primary"
-              onClick={() => {
-                startDemo("istanbul");
-                router.push("/note");
-              }}
+              onClick={prepareNote}
             >
               {t("Home.prepareDemoNote")}
             </button>

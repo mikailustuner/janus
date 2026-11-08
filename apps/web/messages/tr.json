@@ -91,7 +91,8 @@
   "Emergency": {
     "title": "Acil durumda",
     "text": "Göğüs ağrısı, nefes almada güçlük, inme belirtileri veya ağır alerjik tepki: acil yardım için önce {emergency} arayın.",
-    "short": "Acil durumda {emergency} arayın"
+    "short": "Acil durumda {emergency} arayın",
+    "line": "Acil durumda önce {emergency} arayın."
   },
   "Common": {
     "loading": "Yükleniyor…",

@@ -134,3 +134,20 @@ test("LCP of the home (recorded)", async ({ page }, info) => {
   expect(metrics.cls).toBeLessThan(0.1);
   expect(metrics.lcp).toBeLessThan(4000);
 });
+
+test("the emergency bar is on the first screen, under the header, also in demo mode", async ({
+  page,
+}) => {
+  await page.addInitScript(() =>
+    sessionStorage.setItem("janus.v1.demo", "istanbul"),
+  );
+  await page.goto("/en", { waitUntil: "networkidle" });
+  const bar = page.locator("#content").getByTestId("emergency-notice");
+  await expect(bar).toBeInViewport();
+  const header = await page.locator("header").first().boundingBox();
+  const box = await bar.boundingBox();
+  expect(box!.y).toBeGreaterThanOrEqual(header!.y + header!.height - 1);
+  // It opens to the full text.
+  await bar.locator("summary").click();
+  await expect(bar).toContainText("Chest pain");
+});

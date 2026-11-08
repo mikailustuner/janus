@@ -31,12 +31,16 @@ export function Home() {
   return (
     <>
       {/* The home is full-bleed (DP46): the hero spans the window, the rest keeps the page width. */}
-      <div className="mx-auto flex w-full max-w-[720px] flex-col gap-5 px-4 lg:max-w-[1120px]">
-        <EmergencyNotice />
-        <ReminderCard />
+      {/* The emergency notice stays first on the first screen (Req 1.2), as a one-line bar over
+          the top of the hero, under the header (DP46). */}
+      <div className="relative">
+        <div className="home-emergency">
+          <EmergencyNotice slim />
+        </div>
+        <HomeHero />
       </div>
-      <HomeHero />
-      <div className="mx-auto flex w-full max-w-[720px] flex-col gap-5 px-4 lg:max-w-[1120px]">
+      <div className="mx-auto flex w-full max-w-[720px] flex-col gap-5 px-4 pt-5 lg:max-w-[1120px]">
+        <ReminderCard />
         {ready && count > 0 && !demo ? (
           <Card>
             <p className="font-bold">{t("Home.resume")}</p>
@@ -46,7 +50,7 @@ export function Home() {
             </ButtonLink>
           </Card>
         ) : null}
-        <Card aria-labelledby="how" id="how-it-works" className="scroll-mt-4">
+        <Card aria-labelledby="how" id="how-it-works" className="scroll-mt-24">
           <SectionTitle id="how">{t("Home.howTitle")}</SectionTitle>
           <ol className="grid gap-4 md:grid-cols-3">
             {steps.map((s, i) => (

@@ -174,7 +174,8 @@ describe("home (Req 27)", () => {
         const html = render(locale, theme, <Home />);
         expectSafe(html, locale, theme);
         const m = messages[locale];
-        const first = html.indexOf(m.Emergency.title);
+        // The home's slim bar (DP47): its one-line sentence comes first.
+        const first = html.indexOf(m.Emergency.line.split("{")[0]!);
         expect(first).toBeGreaterThan(-1);
         expect(first).toBeLessThan(html.indexOf(m.Home.intro));
         expect(html).toContain(m.Home.demo);

@@ -91,7 +91,8 @@
   "Emergency": {
     "title": "In an emergency",
     "text": "Chest pain, trouble breathing, signs of a stroke or a severe allergic reaction: call emergency services ({emergency}) first.",
-    "short": "Emergency: {emergency}"
+    "short": "Emergency: {emergency}",
+    "line": "In an emergency, call {emergency} first."
   },
   "Common": {
     "loading": "Loading…",

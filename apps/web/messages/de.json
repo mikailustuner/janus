@@ -91,7 +91,8 @@
   "Emergency": {
     "title": "Im Notfall",
     "text": "Brustschmerzen, Atemnot, Anzeichen eines Schlaganfalls oder eine schwere allergische Reaktion: Rufen Sie zuerst den Notruf ({emergency}).",
-    "short": "Notruf: {emergency}"
+    "short": "Notruf: {emergency}",
+    "line": "Rufen Sie im Notfall zuerst den Notruf ({emergency})."
   },
   "Common": {
     "loading": "Wird geladen …",

@@ -91,7 +91,8 @@
   "Emergency": {
     "title": "En cas d'urgence",
     "text": "Douleur dans la poitrine, difficulté à respirer, signes d'AVC ou réaction allergique grave : appelez d'abord les secours en composant {emergency}.",
-    "short": "Urgence : composez {emergency}"
+    "short": "Urgence : composez {emergency}",
+    "line": "En cas d'urgence, appelez d'abord les secours en composant {emergency}."
   },
   "Common": {
     "loading": "Chargement…",

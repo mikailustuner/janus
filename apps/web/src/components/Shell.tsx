@@ -6,7 +6,7 @@
  * floating pill). One component set; the theme changes tokens and a few variant classes.
  */
 import { useLocale } from "next-intl";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useRef, useSyncExternalStore, type ReactNode } from "react";
 
 import { exitDemo, useDemo } from "@/demo/session";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
@@ -285,6 +285,20 @@ function Footer() {
   );
 }
 
+const onScroll = (l: () => void) => {
+  addEventListener("scroll", l, { passive: true });
+  return () => removeEventListener("scroll", l);
+};
+
+/** True once the page is scrolled (the home header turns to glass). */
+function useScrolled(): boolean {
+  return useSyncExternalStore(
+    onScroll,
+    () => scrollY > 8,
+    () => false,
+  );
+}
+
 export function Shell({ children }: { children: ReactNode }) {
   const t = useT();
   const theme = useTheme();
@@ -292,6 +306,23 @@ export function Shell({ children }: { children: ReactNode }) {
   const research =
     pathname === "/research" || pathname.startsWith("/research/");
   const wide = WIDE.includes(pathname);
+  const home = pathname === "/";
+  const scrolled = useScrolled();
+  const header = useRef<HTMLElement>(null);
+  // The home's emergency bar sits under the header, whatever its height (demo bar, notices).
+  useEffect(() => {
+    const el = header.current;
+    if (!home || !el) return;
+    const root = document.documentElement;
+    const ro = new ResizeObserver(() =>
+      root.style.setProperty("--home-header-h", `${el.offsetHeight}px`),
+    );
+    ro.observe(el);
+    return () => {
+      ro.disconnect();
+      root.style.removeProperty("--home-header-h");
+    };
+  }, [home]);
   return (
     <>
       <FaceSync />
@@ -301,33 +332,45 @@ export function Shell({ children }: { children: ReactNode }) {
       >
         {t("Shell.skip")}
       </a>
+      {/* The home is one scene: its header lies over the hero, glass once scrolled (DP46). */}
       <header
-        className={`mx-auto flex w-full ${wide ? "max-w-[720px] lg:max-w-[1120px]" : "max-w-[720px] md:max-w-[1120px]"} flex-col gap-2 px-4 pt-3 no-print`}
+        ref={header}
+        className={
+          home
+            ? `home-header no-print ${scrolled ? "home-header-scrolled" : ""}`
+            : undefined
+        }
       >
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <Link
-            href="/"
-            className="flex min-h-11 items-center gap-2 font-display text-xl font-semibold no-underline"
-          >
-            <FacesIcon size={22} />
-            Janus
-          </Link>
-          <HeaderNav />
-          <div className="flex items-center gap-1">
-            {theme === "two-faces" ? <MaskSwitch research={research} /> : null}
-            <ThemeToggle />
-            <LanguageSwitcher />
+        <div
+          className={`mx-auto flex w-full ${wide ? "max-w-[720px] lg:max-w-[1120px]" : "max-w-[720px] md:max-w-[1120px]"} flex-col gap-2 px-4 pt-3 ${home ? "pb-2" : ""} no-print`}
+        >
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <Link
+              href="/"
+              className="flex min-h-11 items-center gap-2 font-display text-xl font-semibold no-underline"
+            >
+              <FacesIcon size={22} />
+              Janus
+            </Link>
+            <HeaderNav />
+            <div className="flex items-center gap-1">
+              {theme === "two-faces" ? (
+                <MaskSwitch research={research} />
+              ) : null}
+              <ThemeToggle />
+              <LanguageSwitcher />
+            </div>
           </div>
+          <DemoBar />
+          <StorageNotice />
         </div>
-        <DemoBar />
-        <StorageNotice />
       </header>
       <main
         id="content"
         tabIndex={-1}
         className={
-          pathname === "/"
-            ? "flex w-full flex-col gap-5 pt-4 outline-none"
+          home
+            ? "flex w-full flex-col gap-5 outline-none"
             : `mx-auto flex w-full max-w-[720px] flex-col gap-5 px-4 pt-4 outline-none ${wide ? "lg:max-w-[1120px]" : ""}`
         }
       >

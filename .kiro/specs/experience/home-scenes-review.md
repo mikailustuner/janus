@@ -33,3 +33,17 @@ Checked with no finding: forbidden phrases and reassurance in all five languages
 first on the home in both themes), rule 9 (disclaimer in the footer), product claims, privacy (same-origin assets only, no
 data in the inline preload script, nothing of the hidden theme's images loaded), focus order and accessible names, alt
 texts, AI-generated provenance in `NOTICE` and `public/home/README.md`.
+
+## Owner review of the screenshots (2026-11-08) and the slim emergency bar (DP47)
+
+Applied: hero fills the first viewport (header over the hero, glass once scrolled, in both themes); the emergency notice
+is a one-line bar under the header (`Emergency.line`, expandable to `Emergency.text`), still the first content; whole
+house and cabinet room framed at 1280, 1440 and 1920 px; ghosts redrawn as glowing mist; scene 3 text column only, the
+ghosts hover over the shelves and are linked to their findings (hover/focus highlights both), the note on the table is
+the pointer hotspot for "Prepare the demo doctor note"; phones show the whole house or room in the upper part.
+
+Combined localization and safety check of the bar: rule 10 met (first content, full text on expand, 44 px target, text
+contrast ≥ 6.9:1). Applied: the bar's offset follows the measured header height (demo bar, notices; new e2e test in demo
+mode), a rotating chevron shows it expands, the focus ring is drawn inside the bar, DE wording "Rufen Sie im Notfall
+zuerst den Notruf ({emergency})." Not applied: ES "su número de emergencias local" (the same value fills "llame al
+{emergency}" in the urgent-care lines, where it would be ungrammatical); left for the native-speaker review.

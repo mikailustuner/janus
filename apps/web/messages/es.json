@@ -91,7 +91,8 @@
   "Emergency": {
     "title": "En una emergencia",
     "text": "Dolor en el pecho, dificultad para respirar, signos de un ictus o una reacción alérgica grave: llame primero a emergencias ({emergency}).",
-    "short": "Emergencias: {emergency}"
+    "short": "Emergencias: {emergency}",
+    "line": "En una emergencia, llame primero a emergencias ({emergency})."
   },
   "Common": {
     "loading": "Cargando…",
