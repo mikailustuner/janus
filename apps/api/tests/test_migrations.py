@@ -136,3 +136,38 @@ def test_database_logging_is_terse(db_conn: psycopg.Connection) -> None:
     assert settings["log_error_verbosity"] == ("terse",)
     assert settings["log_min_error_statement"] == ("panic",)
     assert settings["log_statement"] == ("none",)
+
+
+@pytest.mark.db
+def test_0007_accepts_janus_keys_and_the_downgrade_removes_them(
+    db_url: str, db_conn: psycopg.Connection
+) -> None:
+    """collective-memory DP17: donations accept `J<n>`; the downgrade restores the old check."""
+    cfg = alembic_config(db_url)
+    db_conn.execute("TRUNCATE contributions")
+    n = [0]
+
+    def row(ingredients: list[str]) -> dict[str, Any]:
+        n[0] += 1
+        return {
+            **VALID,
+            "ingredients": ingredients,
+            "deletion_token_hash": n[0].to_bytes(32, "big"),
+        }
+
+    _insert(db_conn, row(["Q18216", "J1"]))
+    _insert(db_conn, row(["J123456"]))
+    for bad in (["J0"], ["J1234567"], ["j1"], ["J"], ["Q1", "X2"], ["Q0"], ["J01"]):
+        with pytest.raises(psycopg.errors.CheckViolation):
+            _insert(db_conn, row(bad))
+    _insert(db_conn, row(["Q18216"]))
+    command.downgrade(cfg, "0006")
+    try:
+        left = db_conn.execute("SELECT count(*) FROM contributions").fetchone()
+        assert left is not None and left[0] == 1  # only the donation without a Janus key remains
+        with pytest.raises(psycopg.errors.CheckViolation):
+            _insert(db_conn, row(["J1"]))
+    finally:
+        command.upgrade(cfg, "head")
+    _insert(db_conn, row(["J1"]))
+    db_conn.execute("TRUNCATE contributions")

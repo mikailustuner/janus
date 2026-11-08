@@ -33,4 +33,15 @@ def parse_vocabulary(text: str) -> frozenset[str]:
 
 
 def load_vocabulary(path: Path) -> frozenset[str]:
+    if path.suffix == ".csv":
+        from janus.memory.vocabulary import VocabularyError as EventsError
+        from janus.memory.vocabulary import load_events
+
+        try:
+            keys = frozenset(k.key for k in load_events(path).active())
+        except EventsError as exc:
+            raise VocabularyError(f"event vocabulary file is invalid ({exc.code})") from exc
+        if not keys:
+            raise VocabularyError("event vocabulary has no active key")
+        return keys
     return parse_vocabulary(path.read_text(encoding="utf-8"))

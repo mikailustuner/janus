@@ -7,7 +7,7 @@ changes afterwards. Engine input and result types join this module in task 6.
 from __future__ import annotations
 
 from collections.abc import Mapping
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Literal
 
 Role = Literal["index", "marker"]
@@ -129,6 +129,9 @@ class RuleBase:
     source_paper_id: str = SOURCE_PAPER_ID
     window_evidence_id: str = WINDOW_EVIDENCE_ID
     engine_version: str = ENGINE_RULES_VERSION
+    # PIPC position -> Janus event key of `collective-memory` (active keys only; empty by default).
+    # A finding of such a rule also cites the FAERS snapshot with a locator (cascade-engine DP22).
+    faers_event_keys: Mapping[int, str] = field(default_factory=dict[int, str])
 
 
 # --- Engine input and result (design §4) ---------------------------------------------------
@@ -229,6 +232,7 @@ class Finding:
     evidence_ids: tuple[str, ...]
     excluded_evidence: tuple[tuple[str, str], ...]
     integrity_codes: tuple[str, ...]
+    faers_locator: str | None = None
 
 
 @dataclass(frozen=True)

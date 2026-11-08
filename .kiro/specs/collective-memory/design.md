@@ -6,7 +6,7 @@
 > Reuses `data-pipelines` (counts file, DP15, DP16, DP20, DP21, DP31–DP33), `privacy`
 > (`memory/disclosure.py`, `noise.py`, route kinds, body policy, `read_only_tx`) and
 > `evidence-integrity` (`cite`, `register_records`, `freshness`). Property numbers P1–P31 and
-> decision numbers DP1–DP22 are this spec's own; upstream decisions are written "data-pipelines DPn".
+> decision numbers DP1–DP23 are this spec's own; upstream decisions are written "data-pipelines DPn".
 > Statistics parameters come from the statistician agent's review (`statistics-review.md`, §8 here).
 
 ## 1. Overview
@@ -48,7 +48,7 @@ scripts in `/tmp/janus-cm-bench`, not committed):
 | Same, sorted plus ART indexes | p50 4.1 ms, file 319 MB (2.6 times larger) | No index (DP13) |
 | Combination (report-level) | Count by region 12–17 ms and top 50 events 17–27 ms for the 2, 3, 5 and 10 largest ingredients; pairwise co-report counts 14 ms (2), 19 (3), 32 (5), 40 (10), 54 (12), 70 (20 ingredients) | One statement per part; targets in Req 9.4 |
 | Janus key = union of PTs (largest ingredient, commonest PTs) | 1 PT 27 ms, 3 PTs 43 ms, 6 PTs 60 ms (max 74 ms) | Fine for 6 PTs; `mapped` flag added to `faers_report` so the union needs no EXISTS |
-| DuckDB settings | `max_temp_directory_size='0GB'`, `memory_limit='1GB'`, `threads=2`, `enable_external_access=false` all accepted on a read-only connection; a 24-million-row join still runs under them | Stateless read path: no spill, no external access (DP14) |
+| DuckDB settings | `max_temp_directory_size='0GB'`, `memory_limit='1GB'`, `threads=4`, `enable_external_access=false` all accepted on a read-only connection; a 24-million-row join still runs under them | Stateless read path: no spill, no external access (DP14) |
 | Pairs in ALL / scope suspect | 829,531; 372,863 with a ≥ 3; 456,668 with a < 3; 1,690 ingredients and 9,046 events with a ≥ 3. No negative cell with either N | 55% of stored pairs are "insufficient data" |
 | Evans criteria (PRR ≥ 2, χ² ≥ 4, a ≥ 3) | 250,026 pairs (67% of those with a ≥ 3) with Pearson χ²; 242,100 with Yates. ROR lower bound > 1: 258,000 (a ≥ 5: 201,730) | The criteria hardly discriminate: wording and ordering by reports, not by signal (Req 1.8, DP3) |
 | Denominator sensitivity (N = all reports) | Evans verdict lost for 1,056 pairs, gained for 4,890 (1.6% of 372,863). PRR(all)/PRR(mapped): median 1.07, p95 1.19, max 1.23 | DP32 choice has a small effect on classification; the sensitivity table is returned (Req 1.7) |
@@ -57,6 +57,20 @@ scripts in `/tmp/janus-cm-bench`, not committed):
 | Keys | Ingredient keys are `Q…` or the one Janus key `J1`; PT strings have no case-only duplicates and no stray spaces; longest PT 97 characters | Request pattern accepts both key forms; PT limit 200 |
 | Donations | `contributions.ingredients` accepts only `Q…` keys (`QID_PATTERN`); `res_ingredient` accepts `J<n>` since migration 0006 | A donor cannot report dimenhydrinate (DP17) |
 | PIPC adverse events | 65 rows, 41 phrasings (e.g. "Cognitive Impairment" / "Cognitive impairment", "Orthostatic hypotension, dizziness" / "…/dizziness") | About 35 Janus event keys after merging (§4.6) |
+
+### Results of the build (checkpoint 2, 2026-11-08, real file `…-4714`, dev machine, quiet, warm)
+| Measure | p50 | p95 | Target (Req 9) |
+|---|---:|---:|---|
+| Pair, database part (one statement) | 5.3 ms | 6.7 ms | 10 ms |
+| Pair, HTTP route in-process | 9.8 ms | 11.7 ms | 25 ms |
+| Regional breakdown, database / route | 5.9 / 12.3 ms | 7.1 / 14.6 ms | 15 / 40 ms |
+| Janus key = 6 commonest PTs, largest ingredient (database) | 60 ms | 73 ms | 100 ms |
+| Combination of 2 / 5 / 10 / 20 ingredients (route; the 20 largest) | 58 / 57 / 127 / 178 ms | 60 / 64 / 148 / 196 ms | 250 ms |
+| Pair route, 8 concurrent clients | 43 ms | 60 ms | 5 × 25 ms |
+| First lookup after open | 5.8 ms | | 100 ms |
+The two real-data differential checks (150 real pairs: precomputed path equals report-level path in all six regions; every PT
+of the vocabulary exists in the file) pass. A property test found one defect on the way: a region without any report has
+no row in `faers_totals`, so the pair query lost that region (fixed with a left join).
 
 ## 2. Code layout
 
@@ -77,8 +91,8 @@ apps/api/janus/memory/
   schemas.py                 request and response models
   router.py                  /memory/* routes
   bench.py                   `python -m janus.memory.bench` local latency script
-data/memory_events.csv       Janus event vocabulary (curated)
-data/memory_events_review.md proposals and open choices for the owner (like the synonym proposals)
+apps/api/janus/memory/memory_events.csv       Janus event vocabulary (curated)
+event-mapping-review.md proposals and open choices for the owner (like the synonym proposals)
 apps/api/migrations/versions/0007_contribution_janus_keys.py     (DP17)
 apps/web/messages/{en,tr,de,fr,es}.json      namespace `Memory`
 apps/web/src/i18n/memory-words.ts            people / causal / reassurance word lists + test
@@ -151,7 +165,7 @@ Measured: this differs for 9,278 of 372,863 pairs (2.5%); an Evans-only comparis
 
 ### 4.1 `CountsReader`
 - Opens `$JANUS_DATA_DIR/memory/faers_counts/current/faers_counts.duckdb` with
-  `duckdb.connect(path, read_only=True)` and sets `memory_limit='1GB'`, `threads=2`,
+  `duckdb.connect(path, read_only=True)` and sets `memory_limit='1GB'`, `threads=4`,
   `max_temp_directory_size='0GB'`, `enable_external_access=false` (DP14). One connection at
   startup; each request uses `con.cursor()` inside `run_in_threadpool`.
 - Reads `faers_meta` once into `SnapshotMeta` (build id, snapshot date, window, FAERS run id,
@@ -200,8 +214,9 @@ a one-PT key gives the same cells as the precomputed path.
   one statement, self-join of `faers_report_ingredient` on `report_id` with `x.key < y.key`, restricted
   to the request's keys, grouped by `(x.key, y.key)`; pairs reaching `MIN_REPORTS` keep their top events
   by a window function (`row_number() OVER (PARTITION BY k1, k2 ORDER BY a DESC, pt)`), at most 10 each.
-  If this exceeds the Req 9.4 target on the 20 largest ingredients, events are returned only for the
-  10 pairs with the most reports (decided at the checkpoint, noted in the results).
+  It exceeded the Req 9.4 target on the 20 largest ingredients (1.06 s at first), so events are returned only for the
+  5 pairs with the most reports (`events_omitted` on the others) and the statement filters to reports naming at least two
+  of the keys before the self-join; DuckDB uses 4 threads (2 threads: 124 ms for the pair counts alone, 4 threads: 79 ms).
 - **Single** (final level): per ingredient, top 10 events from `faers_pair_counts` with a window
   function over the request's keys (sorted table: zone-map pruned), cells as in §4.2.
 - **Ladder** (`ladder.py`, pure): `choose_level(n, combo_count, pair_counts, threshold)` returns the
@@ -222,7 +237,7 @@ with its own N. `unknown` = `{reports, share}` from `faers_totals`; `basis` from
 `faers_region_basis` (occurrence vs reporter country, per region). Regional counts must add up to
 `ALL` for N, the ingredient count and a; the service asserts it and fails loudly otherwise (P13).
 
-### 4.6 Janus event vocabulary (`data/memory_events.csv`, Req 6)
+### 4.6 Janus event vocabulary (`apps/api/janus/memory/memory_events.csv`, Req 6)
 ```
 key,direction,label_en,label_tr,label_de,label_fr,label_es,pts,pipc_positions,status,note
 cough,adverse,Cough,Öksürük,Husten,Toux,Tos,Cough,1,active,"…"
@@ -232,10 +247,10 @@ improvement_pain,benefit,Less pain,…,,,active,"…"
 the key stands for (`;`-separated), so a finding can find its key; `status` is `active` or
 `deprecated`. The loader validates (P15): unique keys, key regex, five labels, direction, non-empty
 `pts` for `adverse`, every `pipc_positions` entry in 1–65 and every PIPC row covered by exactly one
-key, NFC strings, no `|` inside a PT. The placeholder keys (`peripheral_oedema`, `cough`,
+key, NFC strings, no `|` inside a PT. The former placeholder keys (`peripheral_oedema`, `cough`,
 `dizziness`, `constipation`, `urinary_incontinence`, `insomnia`, `improvement_pain`,
-`improvement_sleep`) stay. The PT lists are proposed from the FAERS PT list of the current counts
-file, written to `data/memory_events_review.md` with the count of reports per PT, and applied only
+`improvement_sleep`) are kept. The PT lists are proposed from the FAERS PT list of the current counts
+file, written to `event-mapping-review.md` with the count of reports per PT, and applied only
 after the owner's review (§10, same procedure as the cascade synonym proposals). The build report
 lists any PT that is not in the counts file (Req 6.5).
 
@@ -359,11 +374,11 @@ note stores the numbers it printed. No change to evidence-integrity code.
 
 ### 7.1 Closed set of codes (`messages.py`)
 Notices: `spontaneous_reporting`, `not_incidence`, `deduplicated_by_case_version_only`,
-`screening_statistic`, `many_pairs_examined`, `window_includes_follow_ups`, `denominator_mapped_reports`,
+`screening_statistic`, `window_includes_follow_ups`, `denominator_mapped_reports`,
 `region_is_report_origin`, `eu_member_states_not_separable`, `regions_not_comparable`,
 `absence_is_not_reassurance`, `counts_built_against_other_dataset`, `source_may_be_outdated`,
-`reported_together_only`. Result codes: `no_reports`, `insufficient_data`, `not_disproportionate`, `weak`,
-`disproportionate`, `corrected_estimate`, `denominator_sensitive`, `below_display_threshold`,
+`reported_together_only`, `tr_reports_small_self_selected`. Result codes: `no_reports`, `insufficient_data`, `not_disproportionate`, `weak`,
+`disproportionate`, `denominator_sensitive`, `below_display_threshold`,
 `estimate_uses_continuity_correction`, `interval_approximate`, `weak_pattern`, `combination_caveat`,
 `set_counts_are_lower_bounds`, `pairwise_shown`, `single_shown`, `event_not_reported_in_window`, `benefit_not_in_faers`,
 `hidden`, `hidden_under_20_noise_added`, `layer_unavailable`, `not_available`, `memory_unavailable`.
@@ -381,6 +396,11 @@ fixed by the statistician review (§8, Q6, Q11) and by `medical-safety.md` rules
   FR `cause, provoque, risque, probabilité, sûr, dangereux, normal, inhabituel, interaction, effet secondaire, réaction`;
   ES `causa, provoca, riesgo, probabilidad, seguro, peligroso, normal, inusual, interacción, efecto secundario, reacción`.
   "Incidence" is not on the list because the required limits sentence says "not incidence".
+- **The one exception** (owner decision 2026-11-08): the screening sentence of §8.1 contains the causal words
+  `causes` / `neden olduğuna` / `verursacht` / `provoque` / `cause`. It passes only as the complete value of
+  `Memory.screening` (and as the English canonical sentence of `screening_statistic` in `messages.py`), by exact
+  string equality in each language. A test checks that the exact string passes and that the same sentence
+  altered, embedded in a longer string or stored under another key fails (P25).
 - These lists are proposals; the `localization-reviewer` and `safety-auditor` agents review them and the
   translations (task 12), and matching follows `findForbiddenPhrases` (whole words, case-insensitive).
 
@@ -406,9 +426,14 @@ fixed by the statistician review (§8, Q6, Q11) and by `medical-safety.md` rules
 ### 8.1 Canonical English sentences (from the review; the translations are task 12)
 - Pattern (Q11a): "The event appears in a larger share of the reports that name this medicine than in the other reports that name a recognised medicine." Not disproportionate: "The event does not appear in a clearly larger share of the reports that name this medicine. This does not mean there is no association."
 - Weak: "Few reports; treat as a weak pattern."
-- Screening (Q6): "This is a screening statistic. Many medicine–event pairs are examined at once and most of them meet these criteria, so meeting them is common and shows only a pattern in the reports, not what lies behind it." (No causal word, so the word list of §7.2 needs no exception.)
+- Screening (Q6; owner decision 2026-11-08: the only allow-listed exception to the causal-word list, in all five languages; the value of the single message `Memory.screening`; a test lets only these exact strings pass):
+  - EN: "This is a screening statistic. Many medicine–event pairs are examined at once and most of them meet these criteria, so meeting them is common and is not evidence that the medicine causes the event."
+  - TR: "Bu bir tarama istatistiğidir. Çok sayıda ilaç–olay çifti aynı anda incelenir ve çoğu bu ölçütleri karşılar; bu yüzden ölçütleri karşılamak yaygındır ve ilacın olaya neden olduğuna dair bir kanıt değildir."
+  - DE: "Dies ist eine Screening-Statistik. Viele Kombinationen aus Arzneimittel und Ereignis werden gleichzeitig geprüft und die meisten erfüllen diese Kriterien. Diese Kriterien zu erfüllen ist daher häufig und kein Beleg dafür, dass das Arzneimittel das Ereignis verursacht."
+  - FR: "Il s'agit d'une statistique de dépistage. De nombreuses associations médicament–événement sont examinées en même temps et la plupart remplissent ces critères ; les remplir est donc courant et ne prouve pas que le médicament provoque l'événement."
+  - ES: "Es una estadística de cribado. Se examinan a la vez muchas combinaciones de medicamento y evento y la mayoría cumple estos criterios; cumplirlos es habitual y no es una prueba de que el medicamento cause el evento."
 - Limits (Q11b): "Reports are sent voluntarily and are not checked. The counts do not show how often an event happens. Only repeated versions of the same case are merged, so one event can still appear in more than one case."
-- Region (Q11c): "A report's region is the country where the event is said to have happened or, when that is missing, where the reporter is. It does not tell where the patient lives or where the medicine was bought."
+- Region (Q11c): "A report's region is the country where the event is said to have happened or, when that is missing, where the reporter is. It does not tell where the medicine was taken or where it was bought." (Changed from the review's wording to avoid a people noun in the `Memory` namespace.)
 - Denominator (Q11d): "Counts use only reports that name at least one medicine Janus recognises (<share> of the reports in this window). Some spellings are not recognised, so a pattern can be missed. Figures for all reports are shown beside these." (The share comes from the snapshot, not from copy.)
 - Interval (Q4): "The range is approximate and is less reliable when few reports are involved."
 - Continuity correction (Q2): "The size of this ratio depends on a small adjustment made because a count is zero."
@@ -494,7 +519,7 @@ P1–P3 and the regional, layer and "people" properties repeat the first seed's 
 | DP11 | Janus event vocabulary: curated CSV derived from PIPC phrasings; adverse keys name PT lists, benefit keys none; keys never change meaning; union semantics. | Use FAERS PTs for donations; free text; MedDRA hierarchy. | `privacy` requires a Janus vocabulary without MedDRA; donations must be comparable with FAERS where possible; the PT lists are clinical judgement, so they go through owner review. |
 | DP12 | **Owner decision 2026-11-08.** One dataset-level evidence record per FAERS snapshot (`dataset:faers`, written by the existing integrity loader); a statistic cites it with a deterministic locator (ingredient, event, region, scope). No per-pair records and no loader that writes records. Cascade-engine and evidence-integrity changes stay minimal and are recorded as a DP in each spec (cascade-engine DP22, evidence-integrity DP22). | Per-cell `faers_stat` records written by a loader (first design); a virtual `cite` rule for well-formed `faers_stat` ids. | The API is stateless and cannot register at request time; thousands of records per build add load and stale records; the dataset record already carries source, licence, snapshot date and freshness, and the locator makes the citation specific. |
 | DP13 | Count file: physically sorted tables, `faers_report.mapped`, `faers_region_basis`, schema `faers_counts-2`; no ART index. | ART indexes; no change. | Sorted: pair lookup p95 14 → 5 ms at the same file size; indexes gave no further gain and made the file 2.6 times larger (§1). |
-| DP14 | DuckDB opened read-only with `memory_limit=1GB`, `threads=2`, `max_temp_directory_size=0`, `enable_external_access=false`. | Defaults. | The route must not write (spill files) or read other files (`privacy` Req 2.1). A query that would need more memory fails (503) instead of writing. |
+| DP14 | DuckDB opened read-only with `memory_limit=1GB`, `threads=4`, `max_temp_directory_size=0`, `enable_external_access=false`. | Defaults. | The route must not write (spill files) or read other files (`privacy` Req 2.1). A query that would need more memory fails (503) instead of writing. |
 | DP15 | The reader follows `current` and swaps to a newly promoted build; in-flight requests finish on the old handle. | Restart the API after each build. | Builds are atomic link swaps (`data-pipelines` Req 15.8); no restart needed; a file handle is not a result cache. |
 | DP16 | Messages: the API returns codes, numbers and English canonical sentences; translations live in `apps/web/messages` (`Memory`); both are scanned by the same word lists. | Server-side translation. | Same split as `cascade-engine`; the client formats numbers by locale (`experience` Req 2.3). |
 | DP17 | Donations accept Janus keys `J<n>` (migration `0007`, model pattern). | Leave as is; map `J1` to a Q key. | Otherwise a donor cannot report a substance the resolver already knows (`J1` dimenhydrinate); mapping to a parent substance is the guess the owner ruled out. |
@@ -503,11 +528,12 @@ P1–P3 and the regional, layer and "people" properties repeat the first seed's 
 | DP20 | An event is matched as an exact NFC string; an unknown PT is `a = 0`, `reported_in_window: false`, not a 404. | Case-insensitive match; 404. | PT strings have no case-only duplicates; absence of reports is a valid answer and a 404 would invite guessing which terms exist. |
 | DP21 | No PT search or autocomplete endpoint in this spec. | `GET /memory/events?q=`. | The experience gets events from the Janus vocabulary; researchers' PT search belongs to `light-face`, which can read the same `CountsReader`. |
 | DP22 | Sibling rule before `release_table` for user-layer cells (Req 5.8); coverage sentences cite `dataset:faers` instead of a new evidence kind; `denominator_sensitive` compares the five classes; χ² is Yates. **All from the statistics review.** | Exact-set matching; a cell limit per request; a noisy threshold; Pearson χ²; a `faers_snapshot` kind. | Measured: nested cells differ by ±4 with 97% probability, exact-set matching removes the meaning of "donations naming A", per-request limits do not stop repeated requests; Yates is the conservative form (7,926 fewer Evans verdicts, no contradiction with the ROR bound); `dataset:faers` already carries source, licence and snapshot. |
+| DP23 | The Janus event vocabulary lives in the package, `apps/api/janus/memory/memory_events.csv`, not in `data/`. The donation vocabulary (`contributions`) reads the `active` keys of the same file; `placeholder_events.txt` is removed. **Owner review 2026-11-08: all 34 adverse and 5 benefit keys accepted and `active`.** | Keep it in `data/` and copy it into the image. | The API image is built from `apps/api` only (`data/` is not in the build context), and the vocabulary is read at runtime by donations, the key path and the finding hook; one file, no copy to drift. `data/README.md` points to it. |
 
 ## 12. Open items
-Owner decisions of 2026-11-08 are applied: DP12 (dataset-level citation), the PT lists (proposed, pharmacologist-reviewed, then the owner's review stop before any use, §4.6), migration `0007` (DP17), and the Evans paper (verified in Crossref; added to `data/evidence_papers.csv` and `sources.toml` as `evans_2001`; criteria named "Evans criteria (Yates-corrected χ²)", the Yates form cited from secondary use because the full text is paywalled).
+Owner decisions of 2026-11-08 are applied: DP12 (dataset-level citation), migration `0007` (DP17), the Evans paper (verified in Crossref; `evans_2001`; criteria named "Evans criteria (Yates-corrected χ²)"), and the owner's review of the PT lists (all 39 keys `active`, DP23; the key path, the finding hook and donations use them).
 
 Open:
-1. **Owner review of the PT lists** (`event-mapping-review.md`). Until then no vocabulary key is `active`; the key path and the finding hook stay dormant, and donations keep the placeholder vocabulary.
+1. **Pharmacist or physician review of the whole mapping** before any public claim; native-speaker check of labels and messages; further safety lines (GI bleeding, seizures, heart failure), crisis-line numbers per region (all on `docs/pre-launch-checklist.md`).
 2. Optional `faers_mapping_gap` table (§8.2); needs a `data-pipelines` decision.
 3. Verify the adrreports.eu address form before the link is used (Req 3.2); the privacy page text must state the residual limits of Req 5.9 (`experience`); `docs/pre-launch-checklist.md` already carries the MedDRA item.

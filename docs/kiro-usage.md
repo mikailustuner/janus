@@ -257,3 +257,41 @@ found, what hooks blocked. Three to five lines per day.
   mistakes (a wrong expected PRR in an example; the Haldane correction adds 0.5 to all four cells).
 - Checkpoint 1: `apps/api` 409 passed (CI profile, PostgreSQL 16 after `alembic upgrade head`), ruff,
   pyright strict, `pipelines` 138 passed, web lint, types and tests green.
+
+## 2026-11-08 — Phase 2: Collective Memory, FAERS layer built
+- Owner review of the event mapping: all 34 adverse and 5 benefit keys accepted with changes
+  (arrhythmia gains Torsade de pointes and ventricular tachycardia/fibrillation; balanoposthitis
+  stays out). For `peripheral_oedema` I computed the assessment with and without "Peripheral
+  swelling" for amlodipine, nifedipine, gabapentin and pregabalin: no class changed, so the key was
+  activated. All 39 keys are `active`; the vocabulary is the package file
+  `apps/api/janus/memory/memory_events.csv` (the API image build context is `apps/api`), the
+  placeholder list is removed, and donations read the same file. The whole mapping still needs a
+  pharmacist or physician before any public claim (pre-launch checklist).
+- Built: `CountsReader` (read-only DuckDB, 1 GB memory limit, 4 threads, no external access),
+  `POST /memory/pair`, `/memory/combination`, `/memory/regions`, `/memory/shared` and
+  `GET /memory/snapshot`; the combination view with a pairwise fallback; the sibling rule and
+  `release_table` for the user layers (k = 20, Laplace noise); migration `0007` so donations can
+  name Janus keys `J<n>`; the dataset-level citation `dataset:faers` with a deterministic locator
+  and a small cascade-engine hook; the `Memory` message catalogue in EN, TR, DE, FR and ES with a
+  word-list guard (forbidden phrases, people nouns, causal, risk and reassurance words). One exact
+  sentence ("not evidence that the medicine causes the event") is allow-listed in all five
+  languages, and a test checks that only that exact sentence passes.
+- Reviews: localization-reviewer (labels, then messages), safety-auditor and pharmacologist. Applied:
+  number-first crisis and urgent-care lines (depression, severe skin reactions, arrhythmia) attached
+  to every row that includes those events, citations on every object that carries a count, a notice
+  that Turkish reports are few and self-selected, "not verified" wording in EN and DE, and a set of
+  TR, FR and DE wording fixes. Not applied, owner decides: further safety lines (GI bleeding,
+  seizures, heart failure), native-speaker check, EN-US spelling of "oedema/diarrhoea", crisis-line
+  numbers per region. All are in `docs/pre-launch-checklist.md`.
+- Counterexamples found by tests: a region with no reports has no `faers_totals` row, so the pair
+  query lost it (fixed with a LEFT JOIN); a 422 response echoed an unknown field name from the
+  request (now never echoed); the Spanish subjunctive "cause" was missing from the causal word
+  list; plus mistakes in my own generators and expected values.
+- Measured on the real counts file (build `20261108T020842Z-7445632a-f55a79cf-4714`, 1,510,804
+  reports, 1,252,900 mapped): pair lookup p95 6.7 ms in the database and 11.7 ms through the route;
+  regions 7.1 / 14.6 ms; a key over 6 PTs 73 ms; a 20-ingredient combination p95 196 ms (target
+  250 ms); 8 concurrent clients p95 60 ms. Two threads were slower than four. The pairwise fallback
+  lists events for the 5 pairs with the most reports and sets `events_omitted`.
+- Open items for the owner are in design §12 and the pre-launch checklist: pharmacist review of the
+  mapping, native-speaker check, extra safety lines, crisis-line numbers, the EudraVigilance public
+  address, MedDRA notice wording (IFPMA), optional `faers_mapping_gap` table.

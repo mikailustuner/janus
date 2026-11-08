@@ -39,6 +39,7 @@ from janus.integrity.citability import Verdict, verdict_map
 from janus.integrity.gate import rule_gate
 from janus.integrity.model import IntegritySnapshot
 from janus.integrity.view import build_item
+from janus.memory.evidence import FAERS_EVIDENCE_ID, EventRef, faers_locator
 
 NOT_REGISTERED = Verdict(False, "not_registered")
 
@@ -169,6 +170,7 @@ def evaluate(
             )
             continue
         checked += 1
+        event_key = rb.faers_event_keys.get(rule.position)
         assert rule.index_class is not None and rule.marker_class is not None  # noqa: S101
         index_exp = exp(rb.classes[rule.index_class], True)
         marker_exp = exp(rb.classes[rule.marker_class], False)
@@ -196,8 +198,14 @@ def evaluate(
                     *([rule.priority.evidence_id] if rule.priority else []),
                     *rule.supporting,
                     *(ext_evidence if a.via_extension else []),
+                    *([FAERS_EVIDENCE_ID] if event_key else []),
                 ]
                 kept, removed = _cite(verdicts, ids)
+                locator = (
+                    faers_locator((a.key,), EventRef(key=event_key), "ALL", "suspect")
+                    if event_key and FAERS_EVIDENCE_ID in kept
+                    else None
+                )
                 status = t.status if (t.timing != "within_window" or window_ok) else "possible"
                 priority = (
                     rule.priority
@@ -226,6 +234,7 @@ def evaluate(
                         evidence_ids=tuple(kept),
                         excluded_evidence=tuple(removed),
                         integrity_codes=integrity_codes(kept),
+                        faers_locator=locator,
                     )
                 )
     findings.sort(key=_sort_key)

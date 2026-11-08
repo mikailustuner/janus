@@ -1,9 +1,9 @@
 # Implementation Plan: Collective Memory, Phase 2
 
 > Scope: `apps/api` (`janus/memory/`, one migration) and the message files in `apps/web`.
-> Requirement numbers refer to requirements.md; property numbers (P1–P31) and decisions (DP1–DP22)
-> refer to design.md. Tasks are not executed yet: the owner answers the open items first
-> (design §12). No health data in logs, fixtures or test output; tests use sentinel values.
+> Requirement numbers refer to requirements.md; property numbers (P1–P31) and decisions (DP1–DP23)
+> refer to design.md. Tasks 1–13 executed 2026-11-08 (checkpoint 1 is `338d7ce`; task 14 is the
+> final checkpoint). No health data in logs, fixtures or test output; tests use sentinel values.
 > Checkpoints run every lint, format, type-check and test step (ruff, ruff format, pyright strict,
 > pytest with `HYPOTHESIS_PROFILE=ci` including database tests against PostgreSQL 16, vitest and
 > web lint), then commit, push and confirm GitHub CI passes. The full API suite takes 10 minutes or
@@ -40,52 +40,52 @@
   - [x] 3.7 Property test P9 (pure part): sensitivity formulas and the flag. _Requirements: 1.7_
   - [x] 3.8 Example tests (Yates form, integer decision at PRR = 2 and χ² = 4 boundaries): the worked table (a=20, b=180, c=100, d=9,700); c = 0 with Haldane; a negative cell raises `StatsError`. _Requirements: 1.1, 1.2_
 
-- [x] 4. Janus event vocabulary (`vocabulary.py`, `data/memory_events.csv`, DP11)
+- [x] 4. Janus event vocabulary (`vocabulary.py`, `apps/api/janus/memory/memory_events.csv`, DP11)
   - Done: loader, 34 adverse + 5 benefit keys proposed (all `status = proposed`), `event_proposals.py`, review sheet `event-mapping-review.md`, pharmacologist review `event-mapping-pharmacologist-review.md`.
   - Loader and validator (design §4.6). Script that lists, for each of the 41 PIPC phrasings,
     candidate PTs from the real counts file with their report counts, and writes
-    `data/memory_events_review.md`. Proposed `data/memory_events.csv` with the placeholder keys kept.
+    `data/memory_events_review.md`. Proposed `apps/api/janus/memory/memory_events.csv` with the placeholder keys kept.
   - [x] 4.1 Property test P15: valid file accepted, each defect rejected, missing-PT report exact. _Requirements: 6.2, 6.5, 6.6_
-  - [ ] 4.2 **Review stop (owner).** The owner reviews every key, label (five languages) and PT list,
+  - [x] 4.2 Done 2026-11-08: owner review, all 39 keys active, setting switched, placeholder removed. **Review stop (owner).** The owner reviews every key, label (five languages) and PT list,
     with the pharmacologist agent's check of the clinical choices; decisions are recorded in the
     review file, the CSV and requirements.md. Status line kept: reviewed by the project owner with AI
     assistance, needs a pharmacist or physician before any public claim. Then switch
     `Settings.event_vocabulary_path` default from the placeholder file to the new vocabulary
     (`contributions` loader reads keys only) and remove the placeholder. _Requirements: 6.2, 6.3_
 
-- [ ] 5. Checkpoint 1: statistics, count file, vocabulary
+- [x] 5. Checkpoint 1: statistics, count file, vocabulary
   - All steps green, including P1–P6, P9 (pure part), P15, P28 and the extended builder tests;
     the `log-guard` and `medical-language-guard` hooks report nothing. Commit, push, CI passes.
 
-- [ ] 6. Counts reader (`janus/memory/reader.py`, DP14, DP15)
+- [x] 6. Counts reader (`janus/memory/reader.py`, DP14, DP15)
   - `CountsReader` with the DuckDB settings, `SnapshotMeta`, schema-version and table checks,
     follow-`current` swap, statement counter; freshness and version notices (pure functions).
-  - [ ] 6.1 Property test P22: missing, wrong-version, tampered, half-written files give `memory_unavailable`; a promoted build is picked up. _Requirements: 7.6, 11.4_
-  - [ ] 6.2 Property test P23: `stale` iff age > 182 days; version-mismatch notice iff versions differ. _Requirements: 7.7, 7.8_
+  - [x] 6.1 Property test P22: missing, wrong-version, tampered, half-written files give `memory_unavailable`; a promoted build is picked up. _Requirements: 7.6, 11.4_
+  - [x] 6.2 Property test P23: `stale` iff age > 182 days; version-mismatch notice iff versions differ. _Requirements: 7.7, 7.8_
 
-- [ ] 7. Pair, regional breakdown and snapshot (`service.py`, `schemas.py`, `router.py`, DP4–DP6)
+- [x] 7. Pair, regional breakdown and snapshot (`service.py`, `schemas.py`, `router.py`, DP4–DP6)
   - Models (design §5), `POST /memory/pair`, `POST /memory/regions` (pair and key paths), `GET /memory/snapshot`
     (operational: add to `OPERATIONAL_ALLOWLIST` with a test); `messages.py` with the closed code set and English
     sentences; wire into `create_app()` (reader opened in the lifespan; routes answer 503 when no file).
-  - [ ] 7.1 Property test P7: cells equal a recount from the report facts (differential against `aggregate`); negative cell fails loudly. _Requirements: 1.1_
-  - [ ] 7.2 Property test P8: report order and request order do not change the response. _Requirements: 7.4_
-  - [ ] 7.3 Property test P9 (service part): sensitivity table and flag from real count tables. _Requirements: 1.7_
-  - [ ] 7.4 Property test P10: lists ordered by reports then PT, independent of assessments and `PARAMS`. _Requirements: 1.8, 2.1_
-  - [ ] 7.5 Property test P13: regions add up; filter equals breakdown row; shares; fallback counts. _Requirements: 3.1, 3.3, 3.5_
-  - [ ] 7.6 Property test P14: Janus key union equals recount; one-PT key equals PT path; unknown PT. _Requirements: 6.4_
-  - [ ] 7.7 Property test P20: invalid input gets 422, no statement, no echo. _Requirements: 7.3_
-  - [ ] 7.8 Property test P21: byte-identical repeats, `assert_stateless`, `no-store`, sentinel logging. _Requirements: 7.2, 7.4, 7.10_
-  - [ ] 7.9 Property test P24 (pair and regions): statement budget. _Requirements: 9.6_
+  - [x] 7.1 Property test P7: cells equal a recount from the report facts (differential against `aggregate`); negative cell fails loudly. _Requirements: 1.1_
+  - [x] 7.2 Property test P8: report order and request order do not change the response. _Requirements: 7.4_
+  - [x] 7.3 Property test P9 (service part): sensitivity table and flag from real count tables. _Requirements: 1.7_
+  - [x] 7.4 Property test P10: lists ordered by reports then PT, independent of assessments and `PARAMS`. _Requirements: 1.8, 2.1_
+  - [x] 7.5 Property test P13: regions add up; filter equals breakdown row; shares; fallback counts. _Requirements: 3.1, 3.3, 3.5_
+  - [x] 7.6 Property test P14: Janus key union equals recount; one-PT key equals PT path; unknown PT. _Requirements: 6.4_
+  - [x] 7.7 Property test P20: invalid input gets 422, no statement, no echo. _Requirements: 7.3_
+  - [x] 7.8 Property test P21: byte-identical repeats, `assert_stateless`, `no-store`, sentinel logging. _Requirements: 7.2, 7.4, 7.10_
+  - [x] 7.9 Property test P24 (pair and regions): statement budget. _Requirements: 9.6_
 
-- [ ] 8. Combination view (`ladder.py`, `service.combination`, DP6, DP8)
+- [x] 8. Combination view (`ladder.py`, `service.combination`, DP6, DP8)
   - Set count, top events, pairwise fallback and single level in the statements of design §4.4;
     `POST /memory/combination`.
-  - [ ] 8.1 Property test P11: combination count recount, monotonicity, duplicate lines, order, one-ingredient equals the precomputed pair. _Requirements: 2.1_
-  - [ ] 8.1a Property test P31: members alone, `exposure` and `comparison` fields. _Requirements: 2.3_
-  - [ ] 8.2 Property test P12: ladder levels, skipped reasons, `no_reports`. _Requirements: 2.2, 2.4_
-  - [ ] 8.3 Property test P24 (combination): statement budget for 2–20 ingredients. _Requirements: 9.6_
+  - [x] 8.1 Property test P11: combination count recount, monotonicity, duplicate lines, order, one-ingredient equals the precomputed pair. _Requirements: 2.1_
+  - [x] 8.1a Property test P31: members alone, `exposure` and `comparison` fields. _Requirements: 2.3_
+  - [x] 8.2 Property test P12: ladder levels, skipped reasons, `no_reports`. _Requirements: 2.2, 2.4_
+  - [x] 8.3 Property test P24 (combination): statement budget for 2–20 ingredients. _Requirements: 9.6_
 
-- [ ] 9. Checkpoint 2: FAERS API on the real counts file
+- [x] 9. Checkpoint 2: FAERS API on the real counts file
   - Local real-data test (skipped without a counts file): 200 random pairs equal a direct SQL recount;
     vocabulary PTs exist in the file; a sample response per route is read for wording.
   - `python -m janus.memory.bench`: print percentiles for pair, regions, key path, combination (2, 5,
@@ -94,21 +94,21 @@
     fallback of design §4.4 and note it.
   - All steps green; commit, push, CI passes. _Requirements: 9.1–9.8_
 
-- [ ] 10. User layers (`shared.py`, migration `0007`, DP9, DP10, DP17)
+- [x] 10. User layers (`shared.py`, migration `0007`, DP9, DP10, DP17)
   - Migration `0007_contribution_janus_keys` (upgrade and downgrade; table CHECK and the model
     pattern accept `J<n>`); `UserLayerSource` protocol; `ContributionsSource` (read-only transaction,
     per-cell version from contributor ids, `ingredients @> …`); `OutcomesUnavailable`; `POST /memory/shared`
     through `release_table` with k, ε and the noise key from settings; layer answers `layer_unavailable`
     / `not_available`. The sibling rule of Req 5.8 runs before `release_table` (one extra grouped statement).
-  - [ ] 10.1 Property test P16: hidden is uniform for true counts 0–19; hidden cells never change released values or the total; integers ≥ 0; determinism; deletion changes the version. _Requirements: 4.5, 4.6, 5.1, 5.2, 5.4_
-  - [ ] 10.1a Property test P30: sibling rule (nested cells differ by 0 or at least 20; ineligible equals hidden). _Requirements: 5.8_
-  - [ ] 10.2 Property test P17: no cross-layer number in any response. _Requirements: 4.3, 4.4_
-  - [ ] 10.3 Property test P18: no key or no database gives `layer_unavailable`, never a count. _Requirements: 5.5_
-  - [ ] 10.4 Property test P19: outcomes interface and stub source. _Requirements: 4.7_
-  - [ ] 10.5 Property tests re-run for the new route: logging (P21), stateless, route kind. _Requirements: 5.7, 7.2_
-  - [ ] 10.6 Example tests: migration upgrade → downgrade → upgrade; a donation with `J1` is accepted and a malformed key is rejected by both model and CHECK. _Requirements: 4.1_
+  - [x] 10.1 Property test P16: hidden is uniform for true counts 0–19; hidden cells never change released values or the total; integers ≥ 0; determinism; deletion changes the version. _Requirements: 4.5, 4.6, 5.1, 5.2, 5.4_
+  - [x] 10.1a Property test P30: sibling rule (nested cells differ by 0 or at least 20; ineligible equals hidden). _Requirements: 5.8_
+  - [x] 10.2 Property test P17: no cross-layer number in any response. _Requirements: 4.3, 4.4_
+  - [x] 10.3 Property test P18: no key or no database gives `layer_unavailable`, never a count. _Requirements: 5.5_
+  - [x] 10.4 Property test P19: outcomes interface and stub source. _Requirements: 4.7_
+  - [x] 10.5 Property tests re-run for the new route: logging (P21), stateless, route kind. _Requirements: 5.7, 7.2_
+  - [x] 10.6 Example tests: migration upgrade → downgrade → upgrade; a donation with `J1` is accepted and a malformed key is rejected by both model and CHECK. _Requirements: 4.1_
 
-- [ ] 11. Citation (`evidence.py`, DP12; owner decision 2026-11-08)
+- [x] 11. Citation (`evidence.py`, DP12; owner decision 2026-11-08; locator and cascade hook, no loader)
   - Pure `faers_locator`, `parse_locator`, `FAERS_EVIDENCE_ID`; `citation` in the pair, combination and
     regions responses (design §6). Cascade-engine hook, minimal: optional `RuleBase.faers_event_keys`
     (filled from `active` vocabulary keys by the service), `Finding.faers_locator`, `dataset:faers` through
@@ -116,21 +116,21 @@
     `dataset:faers` is registered by the loader from the faers artifact (run the integrity loader on the dev DB).
   - Record the decision as a DP in `cascade-engine` (DP22) and `evidence-integrity` (DP22) designs and fix
     the `faers_stat` mentions in their requirements and open items.
-  - [ ] 11.1 Property test P27: locator round trip, no run id/date, malformed rejected; finding hook with and without the record. _Requirements: 10.3, 10.4_
-  - [ ] 11.2 Property test P26: statistic sentences carry the citation; a < 3 yields no number; `cite` drops them without the record. _Requirements: 8.8, 10.3_
-  - [ ] 11.3 Example test: the cascade engine test suite: a finding carries `dataset:faers` and the locator when the rule has a key and the record is registered, and neither when not. _Requirements: 10.4_
+  - [x] 11.1 Property test P27: locator round trip, no run id/date, malformed rejected; finding hook with and without the record. _Requirements: 10.3, 10.4_
+  - [x] 11.2 Property test P26: statistic sentences carry the citation; a < 3 yields no number; `cite` drops them without the record. _Requirements: 8.8, 10.3_
+  - [x] 11.3 Example test: the cascade engine test suite: a finding carries `dataset:faers` and the locator when the rule has a key and the record is registered, and neither when not. _Requirements: 10.4_
 
-- [ ] 12. Message catalogue and wording guard
+- [x] 12. Message catalogue and wording guard
   - `Memory` namespace in `apps/web/messages/{en,tr,de,fr,es}.json` for every code (design §7.1),
     sentences from the statistics review; `apps/web/src/i18n/memory-words.ts` with the lists of
     §7.2 and a vitest that applies them to the namespace; a pytest scan of `messages.py`.
   - Run the `localization-reviewer` and `safety-auditor` agents over the namespace, the English
     sentences and the word lists (read-only); apply their findings; record them.
-  - [ ] 12.1 Property test P25 (vitest `describe.each(locales)` and pytest scan): keys, no empty strings, forbidden phrases, people nouns, causal/risk/reassurance words. _Requirements: 8.1–8.4_
-  - [ ] 12.2 Example test: the required sentences (disclaimer, limits, window, attribution, MedDRA notice, nothing-found) are present in every language. _Requirements: 8.6, 8.7_
+  - [x] 12.1 Property test P25 (vitest `describe.each(locales)` and pytest scan): keys, no empty strings, forbidden phrases, people nouns, causal/risk/reassurance words. _Requirements: 8.1–8.4_
+  - [x] 12.2 Example test: the required sentences (disclaimer, limits, window, attribution, MedDRA notice, nothing-found) are present in every language. _Requirements: 8.6, 8.7_
 
-- [ ] 13. Contracts, data docs and write-up
-  - Optional, if the owner wants it: `faers_mapping_gap` table in the builder (design §8.2).
+- [x] 13. Contracts, data docs and write-up
+  - Optional `faers_mapping_gap` table in the builder (design §8.2): not built, the owner has not asked for it.
   - Record the contracts of design §5 in the open items of `experience` (rendering, five-language
     wording, separate panels, MedDRA notice, demo exclusion), `medication-passport` (pair and
     combination for the merged list), `doctor-loop` (numbers printed in the note, regional ids, outcomes

@@ -115,6 +115,7 @@ class FindingOut(_Out):
     evidence_ids: list[str]
     excluded_evidence: list[ExcludedOut]
     integrity_codes: list[str]
+    faers_locator: str | None = None
     codes: list[Literal["matches_published_pattern"]] = ["matches_published_pattern"]
 
 

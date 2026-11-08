@@ -236,3 +236,9 @@ Detect prescribing cascades in a user's medication list: drug A causes an advers
 - **Status today.** The PIPC list (`dataset:pipc`) is `corrected` (a publisher correction notice
   of 2025-12-18). It stays citable and its notice is returned with every PIPC rule.
   - *Resolved in refinement:* Req 1.5 (integrity codes on every finding).
+
+## Open items from collective-memory (2026-11-08)
+- Done (DP22): `RuleBase.faers_event_keys` (PIPC position -> Janus event key of the active vocabulary,
+  `apps/api/janus/memory/memory_events.csv`), `Finding.faers_locator`, and `dataset:faers` in `evidence_ids` through the existing
+  `cite`. The locator names the index ingredient, the Janus key, region ALL and scope `suspect`. The numbers come from
+  `POST /memory/pair`; the finding itself carries no FAERS figure.

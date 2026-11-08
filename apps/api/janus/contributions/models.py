@@ -25,7 +25,8 @@ Sex = Literal["female", "male"]
 Region = Literal["TR", "EU", "US"]
 Direction = Literal["adverse", "benefit"]
 
-QID_PATTERN: Final = r"^Q[1-9][0-9]{0,9}$"
+# Wikidata items and curated Janus keys `J<n>` (collective-memory DP17, migration 0007).
+QID_PATTERN: Final = r"^(Q[1-9][0-9]{0,9}|J[1-9][0-9]{0,5})$"
 EVENT_PATTERN: Final = r"^[a-z0-9][a-z0-9_.-]{0,63}$"
 CONSENT_PATTERN: Final = r"^[a-z0-9][a-z0-9.-]{0,31}$"
 TOKEN_PATTERN: Final = r"^jdt_[A-Za-z0-9_-]{43}$"  # noqa: S105 (a format, not a secret)

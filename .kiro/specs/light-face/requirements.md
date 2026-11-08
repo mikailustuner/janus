@@ -41,3 +41,12 @@ For researchers and clinicians: turn side-effect knowledge around to generate dr
 - Adding unrelated reports never removes an existing candidate's supporting evidence.
 - No card text contains forbidden treatment language in any supported language.
 - The evaluation is deterministic for a fixed data snapshot.
+
+## Open items from collective-memory (2026-11-08)
+- The researcher area reads the same counts file through `janus.memory.reader.CountsReader` (read-only, in process); there is
+  no PT search endpoint in `collective-memory` (DP21). Inverse signals use the same statistics (`janus.memory.stats`): Yates
+  chi-squared, Woolf interval, Haldane when a cell is zero, `MIN_REPORTS = 3`, and the sensitivity table with N = all reports.
+- Lists are ordered by report count, never by the ratio. Every inverse signal carries the screening sentence
+  (`Memory.screening`), the limits sentences and the snapshot date and window. Reporting bias (notoriety, indication bias) is
+  this spec's own warning. Evans criteria (Yates-corrected chi-squared) are screening criteria and 65 percent of examined pairs
+  meet them: do not present them as findings.

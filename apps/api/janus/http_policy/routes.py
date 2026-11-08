@@ -15,7 +15,15 @@ from fastapi.routing import APIRoute
 from starlette.routing import BaseRoute, Route
 
 OPERATIONAL_ALLOWLIST: Final = frozenset(
-    {"/health", "/privacy/storage", "/openapi.json", "/docs", "/docs/oauth2-redirect", "/redoc"}
+    {
+        "/health",
+        "/privacy/storage",
+        "/memory/snapshot",
+        "/openapi.json",
+        "/docs",
+        "/docs/oauth2-redirect",
+        "/redoc",
+    }
 )
 
 

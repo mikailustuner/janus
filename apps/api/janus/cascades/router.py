@@ -53,7 +53,9 @@ async def cascades_evaluate(request: Request) -> Any:
 
     def call() -> CascadeResult:
         with db.read_only_tx() as conn:
-            return service.evaluate_request(conn, body, day)
+            return service.evaluate_request(
+                conn, body, day, request.app.state.event_vocabulary.pipc_event_keys()
+            )
 
     try:
         result = await run_in_threadpool(call)

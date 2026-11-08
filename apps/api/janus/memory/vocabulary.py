@@ -1,12 +1,17 @@
 """Janus event vocabulary (collective-memory design §4.6, Req 6). Pure apart from `load_events`.
 
-`data/memory_events.csv`: one row per Janus event key,
+`apps/api/janus/memory/memory_events.csv`: one row per Janus event key,
 
-    key,direction,label_en,label_tr,label_de,label_fr,label_es,pts,pipc_positions,status,note
+    key,direction,label_en,label_tr,label_de,label_fr,label_es,pts,pipc_positions,status,safety_line,note
 
 - `pts`: Preferred Terms as published in FAERS, `|`-separated; empty for `benefit` keys.
 - `pipc_positions`: the PIPC rows (1-65) whose adverse event the key stands for, `;`-separated.
   Every PIPC row belongs to exactly one adverse key.
+- `safety_line`: empty, or the code of a line the client must show with any result for the key
+  (owner decision 2026-11-08): `crisis_support` (depression), `urgent_care_skin` (rash: a severe
+  skin reaction), `urgent_care_heart` (arrhythmia: fainting, racing or irregular heartbeat). PT
+  names are shown only in a details view, never in a banner. The wording is in the `Memory`
+  message namespace.
 - `status`: `proposed` (not reviewed: nothing user-facing may use the key), `active` (reviewed by
   the owner) or `deprecated` (kept for stored donations, never removed).
 
@@ -20,7 +25,7 @@ import csv
 import io
 import re
 import unicodedata
-from collections.abc import Mapping, Set
+from collections.abc import Mapping, Sequence, Set
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Final
@@ -38,8 +43,10 @@ COLUMNS: Final = (
     "pts",
     "pipc_positions",
     "status",
+    "safety_line",
     "note",
 )
+SAFETY_LINES: Final = ("crisis_support", "urgent_care_skin", "urgent_care_heart")
 LANGUAGES: Final = ("en", "tr", "de", "fr", "es")
 DIRECTIONS: Final = ("adverse", "benefit")
 STATUSES: Final = ("proposed", "active", "deprecated")
@@ -75,6 +82,7 @@ class EventKey:
     pts: tuple[str, ...]
     pipc_positions: tuple[int, ...]
     status: str
+    safety_line: str
     note: str
 
 
@@ -92,6 +100,21 @@ class EventVocabulary:
         """The key only if it is `active`; proposed keys are never used (Req 6.3)."""
         k = self.get(key)
         return k if k is not None and k.status == "active" else None
+
+    def line_for_pts(self, pts: Sequence[str]) -> str | None:
+        """The safety line for a result about these PTs: the line of any active key that lists one
+        of them (safety review S3). A PT in several keys with lines gets the first in
+        `SAFETY_LINES` order, so the answer does not depend on file order."""
+        wanted = set(pts)
+        found = {
+            k.safety_line
+            for k in self.keys
+            if k.status == "active" and k.safety_line and wanted & set(k.pts)
+        }
+        for line in SAFETY_LINES:
+            if line in found:
+                return line
+        return None
 
     def pipc_event_keys(self) -> Mapping[int, str]:
         """PIPC position -> Janus key for active adverse keys (the finding hook, design §6.3)."""
@@ -173,7 +196,20 @@ def parse_events(text: str, *, require_full_pipc: bool = True) -> EventVocabular
             raise VocabularyError("benefit_has_pts", key)
         if r["direction"] == "benefit" and positions:
             raise VocabularyError("benefit_has_positions", key)
-        keys.append(EventKey(key, r["direction"], labels, pts, positions, r["status"], r["note"]))
+        if r["safety_line"] and r["safety_line"] not in SAFETY_LINES:
+            raise VocabularyError("bad_safety_line", key)
+        keys.append(
+            EventKey(
+                key,
+                r["direction"],
+                labels,
+                pts,
+                positions,
+                r["status"],
+                r["safety_line"],
+                r["note"],
+            )
+        )
     owners: dict[int, str] = {}
     for k in keys:
         for p in k.pipc_positions:

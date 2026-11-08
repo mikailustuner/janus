@@ -7,7 +7,9 @@ ingredient keys with start months; codes come from the current resolution datase
 
 from __future__ import annotations
 
+import dataclasses
 import datetime as dt
+from collections.abc import Mapping
 
 import psycopg
 
@@ -63,13 +65,20 @@ def _month_of(today: dt.date) -> int:
     return today.year * 12 + today.month - 1
 
 
-def evaluate_request(conn: psycopg.Connection, body: EvaluateIn, today: dt.date) -> CascadeResult:
+def evaluate_request(
+    conn: psycopg.Connection,
+    body: EvaluateIn,
+    today: dt.date,
+    faers_event_keys: Mapping[int, str] | None = None,
+) -> CascadeResult:
     rb = repository.current_rule_base(conn)
     current = resolution.current_dataset_id(conn)
     if rb is None or current is None:
         raise CascadesUnavailableError
     if body.dataset_version != current:
         raise DatasetVersionMismatchError
+    if faers_event_keys:
+        rb = dataclasses.replace(rb, faers_event_keys=dict(faers_event_keys))
     snapshot = integrity_repository.load_snapshot(conn)
     if not snapshot.records:
         raise CascadesUnavailableError
@@ -180,6 +189,7 @@ def _finding(f: Finding) -> FindingOut:
         evidence_ids=list(f.evidence_ids),
         excluded_evidence=[ExcludedOut(id=i, reason=r_) for i, r_ in f.excluded_evidence],
         integrity_codes=list(f.integrity_codes),
+        faers_locator=f.faers_locator,
     )
 
 

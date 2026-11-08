@@ -28,7 +28,7 @@ ASSESSMENT_ORDER: Final[tuple[Assessment, ...]] = (
 
 # Ingredient keys: a Wikidata item or a Janus key (data/janus_ingredients.csv).
 INGREDIENT_KEY_PATTERN: Final = r"^(Q[1-9][0-9]{0,9}|J[1-9][0-9]{0,5})$"
-# Janus event keys (data/memory_events.csv).
+# Janus event keys (apps/api/janus/memory/memory_events.csv).
 EVENT_KEY_PATTERN: Final = r"^[a-z0-9][a-z0-9_.-]{0,39}$"
 
 MAX_INGREDIENTS: Final = 20

@@ -45,13 +45,14 @@ fetched at runtime and must not be committed; CI fails if one is tracked.
   text is paywalled, so the Yates-corrected chi-squared is cited from its use in the literature. A paper
   whose DOI cannot be verified is not added.
 ## Curated collective-memory files (Janus, Apache-2.0)
-- `memory_events.csv`: the Janus event vocabulary (`collective-memory` design §4.6, Req 6): one row per
-  event key with labels in five languages, the FAERS MedDRA Preferred Terms it covers (as published in
-  FAERS; MedDRA® is a registered trademark of ICH, no hierarchy), the PIPC rows it stands for, and a
-  `status`. **Every row is `proposed` (2026-11-08): the mapping was drafted by the AI assistant and
-  reviewed by the pharmacologist agent, and waits for the project owner's review
-  (`.kiro/specs/collective-memory/event-mapping-review.md`). Nothing user-facing uses a key that is
-  not `active`.** It still needs review by a pharmacist or physician before any public claim.
+- `memory_events.csv` is **not** in `data/`: it ships inside the API package as
+  `apps/api/janus/memory/memory_events.csv` (the API image is built from `apps/api` only). It is the Janus
+  event vocabulary (`collective-memory` design §4.6, DP23): one row per event key with labels in five
+  languages, the FAERS MedDRA Preferred Terms it covers (as published in FAERS; MedDRA® is a registered
+  trademark of ICH, no hierarchy), the PIPC rows it stands for, and a `status`. Drafted by the AI
+  assistant, reviewed by the pharmacologist agent and the localization-reviewer agent, and **accepted by the
+  project owner on 2026-11-08** (`.kiro/specs/collective-memory/event-mapping-review.md`). The whole mapping
+  still needs review by a pharmacist or physician, and the labels a native check, before any public claim.
 
 ## Curated cascade-engine files (Janus, Apache-2.0)
 

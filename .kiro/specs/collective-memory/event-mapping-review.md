@@ -1,8 +1,9 @@
 # Event mapping review: Janus event vocabulary (collective-memory task 4)
 
-> **Status: PROPOSED. Nothing user-facing uses these mappings until the owner has reviewed them.**
-> Every key in `data/memory_events.csv` has `status = proposed`; the FAERS key path, the finding hook
-> and the donation vocabulary ignore keys that are not `active`.
+> **Status: ACCEPTED by the owner on 2026-11-08 (section 4); all keys are `active` in
+> `apps/api/janus/memory/memory_events.csv`.** The whole mapping still needs review by a pharmacist or
+> physician before any public claim (`docs/pre-launch-checklist.md`). The FAERS key path, the finding hook
+> and the donation vocabulary use only `active` keys.
 > Written 2026-11-08. Counts: FAERS window 2025Q4-2026Q3, region ALL, deduplicated reports; the second
 > number is reports with a mapped ingredient. Counts are reports, never people. PTs are MedDRA Preferred
 > Terms as published in FAERS (MedDRA® is a registered trademark of ICH). The labels in tr, de, fr, es are
@@ -30,7 +31,7 @@
 ## 1. Reviewer verdict (pharmacologist agent, 2026-11-08): approved with changes
 
 Full review: `event-mapping-pharmacologist-review.md` (drafting-level, AI agent, not a clinical sign-off).
-**The revised proposal below and in `data/memory_events.csv` already applies the reviewer's recommendations**
+**The revised proposal below and in `apps/api/janus/memory/memory_events.csv` already applies the reviewer's recommendations**
 (rows marked "added by review"); the owner can reject any of them. No SPLIT or MERGE was recommended.
 
 Changes applied: PT additions for oedema (Fluid retention), gout (Blood uric acid increased), hypertension (systolic and
@@ -133,7 +134,6 @@ Open points the reviewer leaves to the owner (also in section 4):
 | core | Oedema peripheral | 6,117 | 5,471 | |
 | core | Generalised oedema | 1,019 | 888 | |
 | core (added by review) | Fluid retention | 3,145 | 2,775 | |
-| borderline, not in CSV | Fluid retention | 3,145 | 2,775 | mechanism rather than the sign |
 
 ### `constipation` (placeholder key)
 - PIPC rows: 6, 34, 65; phrasings: Constipation
@@ -156,7 +156,6 @@ Open points the reviewer leaves to the owner (also in section 4):
 | core | Hyperuricaemia | 333 | 315 | |
 | core | Gouty arthritis | 38 | 35 | |
 | core (added by review) | Blood uric acid increased | 514 | 477 | |
-| borderline, not in CSV | Blood uric acid increased | 514 | 477 | laboratory finding reported as the event |
 
 ### `urinary_incontinence` (placeholder key)
 - PIPC rows: 8, 24, 32, 35; phrasings: Urinary Incontinence; Urinary incontinence
@@ -282,7 +281,7 @@ Open points the reviewer leaves to the owner (also in section 4):
 ### `arrhythmia`
 - PIPC rows: 21, 63; phrasings: Arrhythmia
 - Index classes: Antipsychotic; Erythromycin
-- Label (en): Irregular heartbeat (arrhythmia)
+- Label (en): Fast or irregular heartbeat (arrhythmia)
 
 | Proposed | PT | Reports | Mapped | Note |
 |---|---|---:|---:|---|
@@ -293,11 +292,10 @@ Open points the reviewer leaves to the owner (also in section 4):
 | core (added by review) | Tachyarrhythmia | 111 | 108 | |
 | core (added by review) | Supraventricular tachyarrhythmia | 10 | 10 | |
 | core (added by review) | Torsade de pointes | 495 | 494 | |
+| core (added by review) | Ventricular tachycardia | 1,045 | 992 | |
+| core (added by review) | Ventricular fibrillation | 689 | 665 | |
 | borderline, not in CSV | Electrocardiogram QT prolonged | 2,549 | 2,477 | the usual form of the antipsychotic/erythromycin concern |
-| borderline, not in CSV | Torsade de pointes | 495 | 494 | the arrhythmia of QT prolongation |
 | borderline, not in CSV | Long QT syndrome | 115 | 114 |  |
-| borderline, not in CSV | Ventricular tachycardia | 1,045 | 992 |  |
-| borderline, not in CSV | Ventricular fibrillation | 689 | 665 |  |
 | borderline, not in CSV | Supraventricular tachycardia | 556 | 499 |  |
 | borderline, not in CSV | Atrial fibrillation | 6,155 | 5,319 | very common, mostly unrelated |
 
@@ -383,7 +381,6 @@ Open points the reviewer leaves to the owner (also in section 4):
 | core | Psychotic symptom | 202 | 198 | |
 | core | Psychotic behaviour | 42 | 40 | |
 | core (added by review) | Delusion | 1,137 | 1,074 | |
-| borderline, not in CSV | Delusion | 1,137 | 1,074 | a psychotic symptom, 1,137 reports |
 | borderline, not in CSV | Delusional disorder, unspecified type | 40 | 34 | a diagnosis |
 
 **Question:** Rows 30 and 60 are 'psychotic symptoms, hallucinations' and 'psychosis'. Keep one key?
@@ -513,7 +510,6 @@ Open points the reviewer leaves to the owner (also in section 4):
 | core | Duodenal ulcer haemorrhage | 151 | 146 | |
 | core (added by review) | Haematemesis | 1,323 | 1,197 | |
 | core (added by review) | Melaena | 1,052 | 974 | |
-| borderline, not in CSV | Melaena | 1,052 | 974 | a sign of upper GI bleeding |
 | borderline, not in CSV | Lower gastrointestinal haemorrhage | 273 | 259 | not gastric |
 | borderline, not in CSV | Duodenal ulcer perforation | 1,383 | 1,378 | 1,383 reports; perforation not bleeding |
 
@@ -550,7 +546,7 @@ Open points the reviewer leaves to the owner (also in section 4):
 ### `seizures`
 - PIPC rows: 58; phrasings: Seizures
 - Index classes: Carbapenem (e.g., imipenem, meropenem, ertapenem)
-- Label (en): Seizures (fits)
+- Label (en): Seizures (convulsions)
 
 | Proposed | PT | Reports | Mapped | Note |
 |---|---|---:|---:|---|
@@ -576,6 +572,51 @@ Open points the reviewer leaves to the owner (also in section 4):
 | `improvement_nausea` | Less nausea | new proposal |
 | `improvement_swelling` | Less swelling | new proposal |
 
-## 4. Owner decisions
+## 4. Owner decisions (2026-11-08)
 
-*(To be filled in at the review stop: per key accept / change PT list / drop; the seven open points of section 1; labels; benefit keys; then switch `status` to `active`.)*
+**All 34 adverse keys and all 5 benefit keys are accepted as revised by the pharmacologist, with these changes.
+Every key is `active`.** The whole mapping still needs review by a pharmacist or physician before any public claim.
+
+1. **arrhythmia.** Torsade de pointes stays core. Ventricular tachycardia and Ventricular fibrillation are added as
+   core (ventricular arrhythmias are the QT concern of rows 21 and 63). Electrocardiogram QT prolonged and Long QT
+   syndrome stay out (ECG findings, not the event); Atrial fibrillation and Supraventricular tachycardia stay out
+   (common and mostly unrelated).
+2. **genital_fungal_infection.** Balanoposthitis stays out (the PT does not say fungal), as the reviewer applied.
+3. **peripheral_oedema.** Peripheral swelling stays core. Check before activation (region ALL, scope suspect,
+   N = mapped reports; the key's PTs with and without Peripheral swelling; amlodipine Q411347, nifedipine Q39111,
+   gabapentin Q410352, pregabalin Q412174): **no assessment class changes** (all eight cells are
+   `disproportionate`), so the key is activated. The ratios do change, roughly halving the PRR, which is why the key
+   is on the pharmacist's list:
+
+   | Ingredient | Key | Event set | a | Ingredient reports | Event reports | PRR | ROR (95% CI) | chi-squared (Yates) | Assessment |
+   |---|---|---|---:|---:|---:|---:|---|---:|---|
+   | amlodipine | Q411347 | with Peripheral swelling | 424 | 6,995 | 15,964 | 4.86 | 5.11 (4.63-5.64) | 1277.8 | disproportionate |
+   | amlodipine | Q411347 | without | 258 | 6,995 | 5,471 | 8.82 | 9.11 (8.03-10.35) | 1703.2 | disproportionate |
+   | nifedipine | Q39111 | with Peripheral swelling | 28 | 768 | 15,964 | 2.86 | 2.94 (2.01-4.28) | 32.5 | disproportionate |
+   | nifedipine | Q39111 | without | 23 | 768 | 5,471 | 6.88 | 7.06 (4.66-10.71) | 109.9 | disproportionate |
+   | gabapentin | Q410352 | with Peripheral swelling | 148 | 5,362 | 15,964 | 2.18 | 2.21 (1.88-2.60) | 93.3 | disproportionate |
+   | gabapentin | Q410352 | without | 92 | 5,362 | 5,471 | 3.98 | 4.03 (3.27-4.96) | 199.7 | disproportionate |
+   | pregabalin | Q412174 | with Peripheral swelling | 449 | 6,764 | 15,964 | 5.33 | 5.64 (5.12-6.21) | 1551.2 | disproportionate |
+   | pregabalin | Q412174 | without | 250 | 6,764 | 5,471 | 8.82 | 9.12 (8.02-10.38) | 1654.2 | disproportionate |
+
+   The "Duodenal ulcer perforation" cluster (about 1,000 reports sharing one drug list, 578 of them also coded
+   Peripheral swelling) is recorded as a **known limit of case-version deduplication**; there is no new duplicate
+   detection now (`data-pipelines` design section 18, item 9).
+4. **oedema.** Fluid retention stays core, as applied.
+5. **vitamin_mineral_deficiency.** The iron PTs stay (they follow the cascade-engine narrowing of row 49 to oral iron).
+   The blood-loss point is a pharmacist question on `docs/pre-launch-checklist.md`.
+6. **Support and urgent-care lines.** Yes: depression (crisis or support line), severe skin reactions and arrhythmia or
+   torsade (seek urgent care). Recorded as `experience` Requirement 7; the vocabulary carries a `safety_line` per key
+   (`depression` = `crisis_support`, `rash` = `urgent_care_skin`, `arrhythmia` = `urgent_care_heart`). PT names are shown
+   only in a details view, never in a banner.
+7. **Labels in tr, de, fr, es.** The localization-reviewer was run over all 39 rows (`event-labels-localization-review.md`:
+   approved with changes, two blocking fixes, 0 forbidden-phrase hits). All fixes were applied, including the two blocking
+   ones (fr akathisia "Agitation intérieure", tr oedema "Vücutta sıvı tutulması") and the arrhythmia label in four
+   languages ("Fast or irregular heartbeat"). A native-speaker check stays on the pre-launch checklist. Open for you: the
+   English labels use British spelling ("oedema", "Diarrhoea"), as MedDRA does; the app also serves the US.
+8. **Wording of the screening sentence (statistics review Q6).** The exact sentence ending "not evidence that the medicine
+   causes the event" is allowed as a single exception to the causal-word rule, in all five languages, with a test that
+   only that exact string passes (`design.md` section 8.1).
+
+Applied: keys set to `active`, `Settings.event_vocabulary_path` switched to the packaged vocabulary
+(`apps/api/janus/memory/memory_events.csv`, DP23), `placeholder_events.txt` removed.

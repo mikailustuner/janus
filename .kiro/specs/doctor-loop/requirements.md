@@ -48,3 +48,14 @@ Give the doctor a one-page, cited note in the doctor's language, and let the doc
   already filtered by the integrity snapshot; resolve them with `POST /evidence/resolve` for the
   integrity line. `rule_base_version` and `integrity_version` identify what the note was made
   with.
+
+## Open items from collective-memory (2026-11-08)
+- **Numbers in the note.** The note prints the statistics it received from `/memory/pair` (cells, ratio with its range,
+  report count, snapshot date and window), each with its `citation` (`dataset:faers` plus the locator); it does not re-query
+  later, so a rebuild never changes an issued note. A cell with fewer than 3 reports prints the coverage sentence only.
+- **Regions.** Regional statistics are cited by the same record with `region=TR|EU|US` in the locator.
+- **Outcomes layer.** `collective-memory` defines the interface (`UserLayerSource`: true contributor counts per cell,
+  region TR, EU or US); the outcome store of this spec plugs in by returning cells for (ingredient set, Janus event key,
+  direction). Until then `POST /memory/shared` answers `not_available` for `outcomes`. Outcomes are released through the same
+  k = 20, noise and sibling rule; they are never summed with donations.
+- The note carries the safety lines for events whose Janus key has a `safety_line`.

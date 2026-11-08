@@ -138,6 +138,8 @@ def mutate(rows: list[Row], defect: str) -> tuple[list[Row], tuple[str, ...]]:
     elif defect == "position_uncovered":
         parts = withpos[0]["pipc_positions"].split(";")
         withpos[0]["pipc_positions"] = ";".join(parts[1:])
+    elif defect == "bad_safety_line":
+        rows[0]["safety_line"] = "call_us"
     elif defect == "placeholder_key_missing":
         rows = [r for r in rows if r["key"] != "improvement_sleep"]
     else:
@@ -160,6 +162,7 @@ DEFECTS = [
     ("bad_position", "bad_position"),
     ("position_covered_twice", "position_covered_twice"),
     ("position_uncovered", "position_uncovered"),
+    ("bad_safety_line", "bad_safety_line"),
     ("placeholder_key_missing", "placeholder_key_missing"),
 ]
 
@@ -211,18 +214,41 @@ def test_partial_coverage_is_allowed_only_when_asked() -> None:
     assert len(parse_events(render(rows), require_full_pipc=False).keys) == len(PLACEHOLDER_KEYS)
 
 
-DATA_FILE = Path(__file__).resolve().parents[3] / "data" / "memory_events.csv"
+DATA_FILE = Path(__file__).resolve().parents[1] / "janus" / "memory" / "memory_events.csv"
 
 
-def test_the_committed_proposal_is_valid_and_nothing_is_active_without_review() -> None:
+def test_the_committed_vocabulary_is_valid_and_accepted() -> None:
     vocab = load_events(DATA_FILE)
     adverse = [k for k in vocab.keys if k.direction == "adverse"]
     benefit = [k for k in vocab.keys if k.direction == "benefit"]
     assert (len(adverse), len(benefit)) == (34, 5)
     assert sorted(p for k in adverse for p in k.pipc_positions) == list(range(1, 66))
     assert {k.key for k in vocab.keys} >= set(PLACEHOLDER_KEYS)
-    # Owner decision 2026-11-08: nothing user-facing uses an unreviewed mapping. The status moves to
-    # `active` only at the owner's review stop (event-mapping-review.md, section 4).
-    assert all(k.status == "proposed" for k in vocab.keys)
-    assert not vocab.pipc_event_keys()
-    assert all(vocab.usable(k.key) is None for k in vocab.keys)
+    # Owner review 2026-11-08 (event-mapping-review.md, section 4): all keys are accepted.
+    assert all(k.status == "active" for k in vocab.keys)
+    assert set(vocab.pipc_event_keys()) == set(range(1, 66))
+    assert all(vocab.usable(k.key) is not None for k in vocab.keys)
+    # owner decisions applied
+    arrhythmia = vocab.get("arrhythmia")
+    assert arrhythmia is not None
+    assert {"Torsade de pointes", "Ventricular tachycardia", "Ventricular fibrillation"} <= set(
+        arrhythmia.pts
+    )
+    assert not {
+        "Electrocardiogram QT prolonged",
+        "Long QT syndrome",
+        "Atrial fibrillation",
+        "Supraventricular tachycardia",
+    } & set(arrhythmia.pts)
+    genital = vocab.get("genital_fungal_infection")
+    assert genital is not None and "Balanoposthitis" not in genital.pts
+    # safety lines (owner decision 2026-11-08)
+    assert {k.key: k.safety_line for k in vocab.keys if k.safety_line} == {
+        "depression": "crisis_support",
+        "rash": "urgent_care_skin",
+        "arrhythmia": "urgent_care_heart",
+    }
+    periph = vocab.get("peripheral_oedema")
+    assert periph is not None and "Peripheral swelling" in periph.pts
+    assert "Fluid retention" in (vocab.get("oedema") or periph).pts
+    assert "Dementia" not in (vocab.get("cognitive_impairment") or periph).pts

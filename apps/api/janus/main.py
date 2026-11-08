@@ -13,6 +13,9 @@ from janus.contributions.vocabulary import load_vocabulary
 from janus.db.pool import Database
 from janus.http_policy.body_limits import BodyPolicyMiddleware
 from janus.http_policy.routes import classify, operational_router
+from janus.memory.reader import CountsHolder
+from janus.memory.shared import ContributionsSource
+from janus.memory.vocabulary import load_events
 from janus.observability.logging import (
     LogEvent,
     configure_logging,
@@ -20,7 +23,7 @@ from janus.observability.logging import (
     register_route_templates,
 )
 from janus.observability.middleware import AccessLogMiddleware
-from janus.settings import Settings
+from janus.settings import EVENT_VOCABULARY, Settings
 
 
 class Health(BaseModel):
@@ -67,10 +70,16 @@ def create_app(
     app.state.settings = settings
     app.state.database = database
     app.state.events = load_vocabulary(settings.event_vocabulary_path)
+    path = settings.event_vocabulary_path
+    app.state.event_vocabulary = load_events(path if path.suffix == ".csv" else EVENT_VOCABULARY)
+    app.state.counts = CountsHolder(settings.data_dir)
+    app.state.user_layer_sources = {"contributions": ContributionsSource()}
     # Imported here to avoid an import cycle (the routers read settings from app.state).
     from janus.cascades.router import router as cascades_router
     from janus.contributions.router import router as contributions_router
     from janus.integrity.router import router as integrity_router
+    from janus.memory.router import router as memory_router
+    from janus.memory.router import snapshot_router as memory_snapshot_router
     from janus.privacy.router import router as privacy_router
     from janus.resolution.router import router as resolution_router
 
@@ -81,6 +90,8 @@ def create_app(
         resolution_router,
         integrity_router,
         cascades_router,
+        memory_router,
+        memory_snapshot_router,
         *extra_routers,
     ]
     for router in routers:

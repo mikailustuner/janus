@@ -19,7 +19,8 @@ K_MIN = 20
 EPSILON_MAX = Fraction(10)
 NOISE_KEY_MIN_BYTES = 32
 CONSENT_VERSION_RE = re.compile(r"^[a-z0-9][a-z0-9.-]{0,31}$")
-PLACEHOLDER_VOCABULARY = Path(__file__).parent / "contributions" / "placeholder_events.txt"
+# The Janus event vocabulary ships inside the package (collective-memory DP23).
+EVENT_VOCABULARY = Path(__file__).parent / "memory" / "memory_events.csv"
 
 
 class SettingsError(ValueError):
@@ -44,9 +45,7 @@ class Settings:
             database_url=_optional(e, "DATABASE_URL"),
             donation_region=_optional(e, "JANUS_DONATION_REGION"),
             consent_versions=parse_consent_versions(e.get("JANUS_CONSENT_VERSIONS", "")),
-            event_vocabulary_path=Path(
-                _optional(e, "JANUS_EVENT_VOCABULARY") or PLACEHOLDER_VOCABULARY
-            ),
+            event_vocabulary_path=Path(_optional(e, "JANUS_EVENT_VOCABULARY") or EVENT_VOCABULARY),
             k=parse_k(e.get("JANUS_K", str(K_MIN))),
             epsilon=parse_epsilon(e.get("JANUS_DP_EPSILON", "1")),
             noise_key=parse_noise_key(e.get("JANUS_NOISE_KEY", "")),

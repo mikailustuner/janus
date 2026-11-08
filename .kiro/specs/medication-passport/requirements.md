@@ -35,3 +35,10 @@ Many families live across borders (for example Turkish families in Germany), and
 - Two items are flagged as duplicates if and only if they share an ingredient key.
 - Equivalent-presence results never assert a strength/form match when either side is unknown.
 - No Passport output contains substitution language in any supported language.
+
+## Open items from collective-memory (2026-11-08)
+- The merged list's ingredient keys (Wikidata `Q…` or Janus `J<n>`) are the keys of `POST /memory/combination` (2 to 20 keys,
+  default scope `any`) and `POST /memory/regions`. The response says which level it shows (`combination`, `pairwise`,
+  `single`), that the counts are lower bounds for sets, and that the comparison group includes reports naming only some of
+  the medicines. It never says the medicines interact or recommends a change. Ingredient order and duplicates in the list
+  change nothing.

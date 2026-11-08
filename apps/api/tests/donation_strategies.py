@@ -8,10 +8,10 @@ from hypothesis import strategies as st
 
 from janus.contributions.models import AGE_BANDS
 from janus.contributions.vocabulary import load_vocabulary
-from janus.settings import PLACEHOLDER_VOCABULARY
+from janus.settings import EVENT_VOCABULARY
 
 CONSENT_VERSIONS = frozenset({"2026-11-v1", "2026-12-v2"})
-EVENTS = load_vocabulary(PLACEHOLDER_VOCABULARY)
+EVENTS = load_vocabulary(EVENT_VOCABULARY)
 CONTEXT = {"consent_versions": CONSENT_VERSIONS, "events": EVENTS}
 
 qids = st.integers(1, 9_999_999_999).map(lambda n: f"Q{n}")

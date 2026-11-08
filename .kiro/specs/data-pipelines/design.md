@@ -717,3 +717,9 @@ of the bounded-memory core change (DP18).
 6. **Registry and NOTICE.** Task 17.
 7. ~~Size of `faers_pair_counts`~~ Measured: 6.2 million rows, 121 MB file; no minimum count.
 8. ~~Peak memory target (4 GiB)~~ Measured: 2.5 GiB for the `faers` run, 2.9 GiB for the builder.
+9. **Known limit of case-version deduplication (2026-11-08, found by the pharmacologist review of the event
+   vocabulary).** About 1,000 reports of "Duodenal ulcer perforation" share one drug list of five ingredients
+   (each in 936 to 1,041 of them), spread evenly over the four quarters, and 578 of them also carry "Peripheral
+   swelling". They may be duplicates across different case ids, which DP15 does not merge. **Owner decision: no
+   new duplicate detection now**; it stays a known limit, stated on every FAERS result ("only repeated versions of
+   the same case are merged, so one event can still appear in more than one case") and noted for the statistics.
