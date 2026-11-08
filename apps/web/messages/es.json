@@ -807,5 +807,177 @@
       "urgent_care_breathing": "La falta de aire repentina o que empeora necesita atención médica urgente. Si es intensa o viene con dolor en el pecho, llame al {emergency}.",
       "tr_reports_small_self_selected": "Las notificaciones de Turquía son pocas y se envían de forma voluntaria. No muestran cómo se usan los medicamentos en Turquía."
     }
+  },
+  "Passport": {
+    "nav": "Pasaporte",
+    "title": "Pasaporte de medicamentos",
+    "intro": "Todas las cajas en una sola lista, vengan del país que vengan. Para cada caja, Janus indica si los datos públicos de productos de Turquía, Francia, España y Estados Unidos incluyen un producto con los mismos principios activos.",
+    "listingsOnly": "Janus solo muestra registros de datos públicos. Solo su médico o su farmacéutico puede decir qué medicamento es adecuado para usted.",
+    "open": "Ver registros en otros países",
+    "fromMedicine": "Ver esta caja en el pasaporte",
+    "back": "Volver al pasaporte",
+    "boxes": "{count, plural, one {# caja} other {# cajas}}",
+    "ingredients": "Principios activos",
+    "origin": {
+      "TR": "Caja de Turquía",
+      "FR": "Caja de Francia",
+      "ES": "Caja de España",
+      "DE": "Caja de Alemania",
+      "US": "Caja de Estados Unidos",
+      "EU": "Caja de la Unión Europea",
+      "OTHER": "Caja de otro país"
+    },
+    "country": {
+      "TR": "Turquía",
+      "FR": "Francia",
+      "ES": "España",
+      "DE": "Alemania",
+      "US": "Estados Unidos"
+    },
+    "sourceName": {
+      "titck": "TİTCK",
+      "bdpm": "BDPM",
+      "cima": "Nomenclátor (AEMPS)",
+      "openfda": "openFDA NDC"
+    },
+    "enteredByName": "Introducida por el nombre, no por un código",
+    "germanyByName": "Alemania no tiene una base de datos abierta de productos; esta caja se identificó por su nombre.",
+    "homeopathic": "Producto homeopático, no comprobado.",
+    "notCheckable": {
+      "no_key": "No se puede comprobar: Janus no reconoció los principios activos de esta caja.",
+      "partial": "No se puede comprobar: Janus no reconoció todos los principios activos de esta caja.",
+      "too_many": "No se puede comprobar: esta caja indica más de 10 principios activos."
+    },
+    "duplicate": {
+      "chip": "Mismo principio activo con nombres distintos",
+      "text": "Mismo principio activo con nombres distintos: {ingredient} está en {boxes}. {count, plural, =2 {Las dos siguen en su lista.} other {Todas siguen en su lista.}} Puede ser útil comentarlo con su médico o su farmacéutico.",
+      "summary": "{count, plural, one {# principio activo está} other {# principios activos están}} en más de una caja de esta lista."
+    },
+    "detail": {
+      "title": "Registros en otros países",
+      "caption": "Registros de los principios activos de esta caja en cada fuente",
+      "sourceColumn": "País y fuente",
+      "resultColumn": "Lo que muestran los datos de la fuente",
+      "ownSource": "Fuente de esta caja",
+      "germany": "Alemania",
+      "comparisonTitle": "Comparación con esta caja",
+      "withOther": "{count, plural, one {# producto contiene} other {# productos contienen}} {ingredients, plural, one {este principio activo} other {estos principios activos}} junto con otros principios activos.",
+      "keysFound": "Registrados en esta fuente como principios activos de otros productos: {names}.",
+      "boxValues": "Esta caja: {values}",
+      "boxValuesNone": "No se conocen la dosis ni la forma de esta caja."
+    },
+    "status": {
+      "present": "{source} registra {count, plural, one {# producto} other {# productos}} con {ingredients, plural, one {este principio activo y ningún otro} other {exactamente estos principios activos y ningún otro}} (datos del {date}).",
+      "not_present": "{source} no registra ningún producto con {ingredients, plural, one {este principio activo y ningún otro} other {exactamente estos principios activos y ningún otro}} (datos del {date}).",
+      "not_in_source": "{source} no registra ningún producto con {ingredients, plural, one {este principio activo} other {alguno de estos principios activos}} con un nombre que Janus reconozca (datos del {date}). Esto no demuestra que no {ingredients, plural, one {esté disponible} other {estén disponibles}} en {country}.",
+      "source_unavailable": "No comprobado en esta fuente."
+    },
+    "reason": {
+      "no_open_product_database": "Alemania no tiene una base de datos abierta de productos que Janus pueda consultar. No comprobado.",
+      "not_loaded": "Esta fuente no está disponible en este momento. No comprobado."
+    },
+    "stale": "Puede que esta fuente no esté actualizada.",
+    "homeopathicLeftOut": "{count, plural, one {# producto homeopático no se comprobó} other {# productos homeopáticos no se comprobaron}}.",
+    "compareLabel": {
+      "strength": "Dosis",
+      "dose_form": "Forma",
+      "strength_and_dose_form": "Dosis y forma juntas"
+    },
+    "compare": {
+      "strength": {
+        "matched": "{equal, plural, one {# de estos productos figura} other {# de estos productos figuran}} con la misma dosis indicada que esta caja ({strength}).",
+        "differs": "Ninguno de estos productos figura con la dosis indicada de esta caja. Las fuentes pueden indicar la cantidad de una sal o de la base, así que esto no demuestra una dosis diferente.",
+        "could_not_compare": "Dosis no comparada: {reason}"
+      },
+      "dose_form": {
+        "matched": "{equal, plural, one {# de estos productos figura} other {# de estos productos figuran}} en el mismo grupo de formas que esta caja ({form}).",
+        "differs": "Ninguno de estos productos figura en el grupo de formas de esta caja ({form}).",
+        "could_not_compare": "Forma no comparada: {reason}"
+      },
+      "strength_and_dose_form": {
+        "matched": "{equal, plural, one {# de estos productos figura} other {# de estos productos figuran}} a la vez con la dosis indicada y en el grupo de formas de esta caja.",
+        "differs": "Ninguno de estos productos figura a la vez con la dosis indicada y en el grupo de formas de esta caja.",
+        "could_not_compare": "Dosis y forma juntas no comparadas: {reason}"
+      }
+    },
+    "compareReason": {
+      "not_known_for_item": "no se conoce el valor de esta caja.",
+      "not_known_in_source": "la fuente no lo indica de una manera que Janus pueda comparar.",
+      "not_all_comparable": "solo {comparable} de {products} productos lo indican de una manera que Janus pueda comparar, y ninguno de ellos figura con el valor de esta caja."
+    },
+    "form": {
+      "oral_solid": "Comprimido o cápsula para tragar",
+      "oral_solid_delayed_release": "Comprimido o cápsula gastrorresistente",
+      "oral_solid_prolonged_release": "Comprimido o cápsula de liberación prolongada",
+      "oral_liquid": "Líquido para tragar",
+      "injection": "Inyección o perfusión",
+      "inhaled": "Para inhalar",
+      "nasal": "Para la nariz",
+      "ophthalmic": "Para los ojos",
+      "otic": "Para los oídos",
+      "cutaneous": "Para la piel",
+      "transdermal": "Parche transdérmico",
+      "rectal": "Vía rectal",
+      "vaginal": "Vía vaginal",
+      "other": "Otra forma"
+    },
+    "strengthValue": "{amount} {unit} por {basis}",
+    "unit": {
+      "mg": "mg",
+      "g": "g",
+      "ug": "µg",
+      "IU": "UI"
+    },
+    "basis": {
+      "unit": "comprimido, cápsula o unidad",
+      "mL": "ml",
+      "g": "g"
+    },
+    "entered": "tal como se introdujo desde la caja",
+    "entry": {
+      "open": "Añadir la dosis y la forma de la caja",
+      "title": "Dosis y forma, tal como figuran en la caja",
+      "hint": "Opcional. Janus usa estos valores solo para comparar los registros. Solo se envían los códigos de la dosis y la forma, nunca el nombre de la caja.",
+      "ingredient": "Dosis de {ingredient}",
+      "amount": "Cantidad",
+      "amountHint": "Por ejemplo 40 o 2,5, sin separador de miles.",
+      "unit": "Unidad",
+      "basis": "Por",
+      "form": "Forma",
+      "formNone": "No indicada",
+      "save": "Usar estos valores",
+      "clear": "Borrar los valores introducidos",
+      "invalid": "Escriba la cantidad en cifras, por ejemplo 40 o 2,5."
+    },
+    "states": {
+      "loading": "Comprobando los registros…",
+      "loaded": "Resultados cargados para {count, plural, one {# fuente} other {# fuentes}}.",
+      "empty": "Su lista está vacía. Añada una caja escaneando su código o escribiendo su nombre.",
+      "emptyAction": "Añadir una caja",
+      "error": "Estos registros no se pudieron comprobar ahora.",
+      "partial": "Algunas fuentes no se pudieron comprobar ahora. Se muestran las demás filas.",
+      "recorded": "Respuesta grabada el {date}."
+    },
+    "notice": {
+      "presence_is_lower_bound": "No se cuentan los productos cuyos principios activos Janus no pudo reconocer.",
+      "unknown_ingredient_keys": "Algunos principios activos de esta caja no están en los datos actuales de medicamentos, así que no se pudo comprobar ninguna fuente para ellos."
+    },
+    "attribution": {
+      "titck": "Fuente: TİTCK, lista de medicamentos de uso humano autorizados, datos del {date}.",
+      "bdpm": "Fuente: Base de données publique des médicaments (BDPM), datos del {date}. Se muestra tal como se publica; la BDPM no avala a Janus.",
+      "cima": "Fuente: AEMPS, Nomenclátor de prescripción, datos del {date}.",
+      "openfda": "Fuente: openFDA NDC directory, datos del {date}. No es un aval de la FDA."
+    },
+    "memory": {
+      "entry": "Notificaciones sobre los principios activos de esta lista",
+      "intro": "La Memoria colectiva muestra con qué frecuencia estos principios activos aparecen juntos en las notificaciones públicas de eventos adversos.",
+      "tooMany": "La Memoria colectiva examina como máximo 20 principios activos a la vez. Elija cuáles examinar.",
+      "choose": "Elija como máximo 20 principios activos",
+      "chosen": "{count} de 20 elegidos",
+      "open": "Abrir la Memoria colectiva"
+    },
+    "demo": {
+      "intro": "Las cajas turcas y alemanas del paciente de demostración de Colonia. Los nombres de producto son inventados; los registros proceden de los datos públicos reales."
+    }
   }
 }

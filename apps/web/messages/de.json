@@ -807,5 +807,177 @@
       "urgent_care_breathing": "Bei plötzlicher oder zunehmender Atemnot brauchen Sie dringend ärztliche Hilfe. Wenn sie stark ist oder mit Brustschmerzen einhergeht, wählen Sie {emergency}.",
       "tr_reports_small_self_selected": "Meldungen aus der Türkei sind wenige und werden freiwillig gesendet. Sie zeigen nicht, wie Arzneimittel in der Türkei angewendet werden."
     }
+  },
+  "Passport": {
+    "nav": "Pass",
+    "title": "Medikamentenpass",
+    "intro": "Alle Packungen in einer Liste, aus welchem Land sie auch kommen. Für jede Packung zeigt Janus, ob die öffentlichen Produktdaten der Türkei, Frankreichs, Spaniens und der Vereinigten Staaten ein Produkt mit denselben Wirkstoffen führen.",
+    "listingsOnly": "Janus zeigt nur Einträge in öffentlichen Daten. Welches Medikament zu Ihnen passt, kann nur Ihre Ärztin, Ihr Arzt oder Ihre Apotheke sagen.",
+    "open": "Einträge in anderen Ländern anzeigen",
+    "fromMedicine": "Diese Packung im Pass anzeigen",
+    "back": "Zurück zum Pass",
+    "boxes": "{count, plural, one {# Packung} other {# Packungen}}",
+    "ingredients": "Wirkstoffe",
+    "origin": {
+      "TR": "Packung aus der Türkei",
+      "FR": "Packung aus Frankreich",
+      "ES": "Packung aus Spanien",
+      "DE": "Packung aus Deutschland",
+      "US": "Packung aus den Vereinigten Staaten",
+      "EU": "Packung aus der Europäischen Union",
+      "OTHER": "Packung aus einem anderen Land"
+    },
+    "country": {
+      "TR": "der Türkei",
+      "FR": "Frankreich",
+      "ES": "Spanien",
+      "DE": "Deutschland",
+      "US": "den Vereinigten Staaten"
+    },
+    "sourceName": {
+      "titck": "TİTCK",
+      "bdpm": "BDPM",
+      "cima": "Nomenclátor (AEMPS)",
+      "openfda": "openFDA NDC"
+    },
+    "enteredByName": "Über den Namen eingegeben, nicht über einen Code",
+    "germanyByName": "Für Deutschland gibt es keine offene Produktdatenbank; diese Packung wurde über ihren Namen erkannt.",
+    "homeopathic": "Homöopathisches Produkt, nicht geprüft.",
+    "notCheckable": {
+      "no_key": "Kann nicht geprüft werden: Janus hat die Wirkstoffe dieser Packung nicht erkannt.",
+      "partial": "Kann nicht geprüft werden: Janus hat nicht jeden Wirkstoff dieser Packung erkannt.",
+      "too_many": "Kann nicht geprüft werden: Diese Packung nennt mehr als 10 Wirkstoffe."
+    },
+    "duplicate": {
+      "chip": "Derselbe Wirkstoff unter verschiedenen Namen",
+      "text": "Derselbe Wirkstoff unter verschiedenen Namen: {ingredient} ist in {boxes}. {count, plural, =2 {Beide bleiben auf Ihrer Liste.} other {Alle bleiben auf Ihrer Liste.}} Es kann sinnvoll sein, das Ihrer Ärztin, Ihrem Arzt oder Ihrer Apotheke zu sagen.",
+      "summary": "{count, plural, one {# Wirkstoff ist} other {# Wirkstoffe sind}} in mehr als einer Packung dieser Liste."
+    },
+    "detail": {
+      "title": "Einträge in anderen Ländern",
+      "caption": "Einträge der Wirkstoffe dieser Packung in jeder Quelle",
+      "sourceColumn": "Land und Quelle",
+      "resultColumn": "Was die Daten der Quelle zeigen",
+      "ownSource": "Quelle dieser Packung",
+      "germany": "Deutschland",
+      "comparisonTitle": "Verglichen mit dieser Packung",
+      "withOther": "{count, plural, one {# Produkt enthält} other {# Produkte enthalten}} {ingredients, plural, one {diesen Wirkstoff} other {diese Wirkstoffe}} zusammen mit weiteren Wirkstoffen.",
+      "keysFound": "In dieser Quelle als Wirkstoff anderer Produkte geführt: {names}.",
+      "boxValues": "Diese Packung: {values}",
+      "boxValuesNone": "Wirkstärke und Darreichungsform dieser Packung sind nicht bekannt."
+    },
+    "status": {
+      "present": "{source} führt {count, plural, one {# Produkt} other {# Produkte}} mit {ingredients, plural, one {diesem Wirkstoff und keinem anderen} other {genau diesen Wirkstoffen und keinem anderen}} (Datenstand {date}).",
+      "not_present": "{source} führt kein Produkt mit {ingredients, plural, one {diesem Wirkstoff und keinem anderen} other {genau diesen Wirkstoffen und keinem anderen}} (Datenstand {date}).",
+      "not_in_source": "{source} führt kein Produkt mit {ingredients, plural, one {diesem Wirkstoff} other {einem dieser Wirkstoffe}} unter einem Namen, den Janus erkennt (Datenstand {date}). Das zeigt nicht, dass es {ingredients, plural, one {diesen Wirkstoff} other {diese Wirkstoffe}} in {country} nicht gibt.",
+      "source_unavailable": "In dieser Quelle nicht geprüft."
+    },
+    "reason": {
+      "no_open_product_database": "Für Deutschland gibt es keine offene Produktdatenbank, die Janus prüfen kann. Nicht geprüft.",
+      "not_loaded": "Diese Quelle ist gerade nicht verfügbar. Nicht geprüft."
+    },
+    "stale": "Diese Quelle ist möglicherweise nicht aktuell.",
+    "homeopathicLeftOut": "{count, plural, one {# homöopathisches Produkt wurde} other {# homöopathische Produkte wurden}} nicht geprüft.",
+    "compareLabel": {
+      "strength": "Wirkstärke",
+      "dose_form": "Darreichungsform",
+      "strength_and_dose_form": "Wirkstärke und Darreichungsform zusammen"
+    },
+    "compare": {
+      "strength": {
+        "matched": "{equal, plural, one {# dieser Produkte wird} other {# dieser Produkte werden}} mit derselben angegebenen Wirkstärke wie diese Packung geführt ({strength}).",
+        "differs": "Keines dieser Produkte wird mit der angegebenen Wirkstärke dieser Packung geführt. Quellen können die Menge eines Salzes oder der Base angeben; das beweist also keine andere Dosis.",
+        "could_not_compare": "Wirkstärke nicht verglichen: {reason}"
+      },
+      "dose_form": {
+        "matched": "{equal, plural, one {# dieser Produkte wird} other {# dieser Produkte werden}} in derselben Formgruppe wie diese Packung geführt ({form}).",
+        "differs": "Keines dieser Produkte wird in der Formgruppe dieser Packung geführt ({form}).",
+        "could_not_compare": "Darreichungsform nicht verglichen: {reason}"
+      },
+      "strength_and_dose_form": {
+        "matched": "{equal, plural, one {# dieser Produkte wird} other {# dieser Produkte werden}} sowohl mit der angegebenen Wirkstärke als auch in der Formgruppe dieser Packung geführt.",
+        "differs": "Keines dieser Produkte wird sowohl mit der angegebenen Wirkstärke als auch in der Formgruppe dieser Packung geführt.",
+        "could_not_compare": "Wirkstärke und Darreichungsform zusammen nicht verglichen: {reason}"
+      }
+    },
+    "compareReason": {
+      "not_known_for_item": "Der Wert dieser Packung ist nicht bekannt.",
+      "not_known_in_source": "Die Quelle gibt ihn nicht so an, dass Janus vergleichen kann.",
+      "not_all_comparable": "Nur {comparable} von {products} Produkten geben ihn so an, dass Janus vergleichen kann, und keines davon wird mit dem Wert dieser Packung geführt."
+    },
+    "form": {
+      "oral_solid": "Tablette oder Kapsel zum Schlucken",
+      "oral_solid_delayed_release": "Magensaftresistente Tablette oder Kapsel",
+      "oral_solid_prolonged_release": "Retardtablette oder -kapsel",
+      "oral_liquid": "Flüssigkeit zum Einnehmen",
+      "injection": "Injektion oder Infusion",
+      "inhaled": "Zum Inhalieren",
+      "nasal": "Für die Nase",
+      "ophthalmic": "Für das Auge",
+      "otic": "Für das Ohr",
+      "cutaneous": "Für die Haut",
+      "transdermal": "Pflaster (transdermal)",
+      "rectal": "Rektal",
+      "vaginal": "Vaginal",
+      "other": "Andere Form"
+    },
+    "strengthValue": "{amount} {unit} pro {basis}",
+    "unit": {
+      "mg": "mg",
+      "g": "g",
+      "ug": "µg",
+      "IU": "I.E."
+    },
+    "basis": {
+      "unit": "Tablette, Kapsel oder Einheit",
+      "mL": "ml",
+      "g": "g"
+    },
+    "entered": "wie von der Packung eingegeben",
+    "entry": {
+      "open": "Wirkstärke und Form von der Packung eingeben",
+      "title": "Wirkstärke und Form, wie auf der Packung gedruckt",
+      "hint": "Freiwillig. Janus nutzt diese Werte nur zum Vergleich der Einträge. Gesendet werden nur die Codes für Wirkstärke und Form, nie der Name der Packung.",
+      "ingredient": "Wirkstärke von {ingredient}",
+      "amount": "Menge",
+      "amountHint": "Zum Beispiel 40 oder 2,5, ohne Tausenderpunkte.",
+      "unit": "Einheit",
+      "basis": "Pro",
+      "form": "Darreichungsform",
+      "formNone": "Nicht angegeben",
+      "save": "Diese Werte verwenden",
+      "clear": "Eingegebene Werte leeren",
+      "invalid": "Bitte geben Sie die Menge in Ziffern ein, zum Beispiel 40 oder 2,5."
+    },
+    "states": {
+      "loading": "Einträge werden geprüft …",
+      "loaded": "Ergebnisse für {count, plural, one {# Quelle} other {# Quellen}} geladen.",
+      "empty": "Ihre Liste ist leer. Fügen Sie eine Packung hinzu, indem Sie ihren Code scannen oder ihren Namen eingeben.",
+      "emptyAction": "Packung hinzufügen",
+      "error": "Diese Einträge konnten gerade nicht geprüft werden.",
+      "partial": "Einige Quellen konnten gerade nicht geprüft werden. Die anderen Zeilen werden angezeigt.",
+      "recorded": "Aufgezeichnete Antwort vom {date}."
+    },
+    "notice": {
+      "presence_is_lower_bound": "Produkte, deren Wirkstoffe Janus nicht erkennen konnte, werden nicht gezählt.",
+      "unknown_ingredient_keys": "Einige Wirkstoffe dieser Packung sind nicht in den aktuellen Arzneimitteldaten; für sie konnte keine Quelle geprüft werden."
+    },
+    "attribution": {
+      "titck": "Quelle: TİTCK, Liste der zugelassenen Humanarzneimittel, Datenstand {date}.",
+      "bdpm": "Quelle: Base de données publique des médicaments (BDPM), Datenstand {date}. Wie veröffentlicht angezeigt; keine Billigung von Janus durch die BDPM.",
+      "cima": "Quelle: AEMPS, Nomenclátor de prescripción, Datenstand {date}.",
+      "openfda": "Quelle: openFDA NDC directory, Datenstand {date}. Keine Billigung durch die FDA."
+    },
+    "memory": {
+      "entry": "Meldungen zu den Wirkstoffen dieser Liste",
+      "intro": "Das Kollektive Gedächtnis zeigt, wie oft diese Wirkstoffe gemeinsam in öffentlichen Meldungen über unerwünschte Ereignisse vorkommen.",
+      "tooMany": "Das Kollektive Gedächtnis betrachtet höchstens 20 Wirkstoffe auf einmal. Bitte wählen Sie, welche betrachtet werden sollen.",
+      "choose": "Höchstens 20 Wirkstoffe wählen",
+      "chosen": "{count} von 20 gewählt",
+      "open": "Kollektives Gedächtnis öffnen"
+    },
+    "demo": {
+      "intro": "Die türkischen und deutschen Packungen des Demo-Patienten aus Köln. Die Produktnamen sind erfunden; die Einträge stammen aus den echten öffentlichen Daten."
+    }
   }
 }

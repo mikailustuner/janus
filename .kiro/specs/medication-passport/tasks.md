@@ -93,12 +93,14 @@
   - [x] 9.4 Property test P20: memory keys sorted, distinct, checked only; > 20 needs a selection. _Requirements: 11.1, 11.2_
   - [x] 9.5 *(`entry-cases.json`, 500 cases from `tests/test_passport_web_fixtures.py`.)* Property test P21: entry parity with the Python fixture (only with DP21). _Requirements: 6.7_
 
-- [ ] 10. Passport messages and word lists (`apps/web/messages/*.json` namespace `Passport`, `passport/words.ts`)
+- [x] 10. Passport messages and word lists (`apps/web/messages/*.json` namespace `Passport`, `passport/words.ts`)
+  - *Done 2026-11-08: 124 keys per locale (EN reference, TR/DE/FR/ES drafts); owner wording "as entered from the box";
+    tests in `src/passport/messages.test.ts` (also the message part of P3: no "same" in could-not-compare texts).*
   - Draft all keys of design §7.1 in five languages (English reference texts of §7.2); word lists of §7.3; source names
     never translated; attribution sentences of Req 7.2.
-  - [ ] 10.1 Property test P4: no substitution, forbidden or reassurance word; removal list on duplicate texts; API body
+  - [x] 10.1 Property test P4: no substitution, forbidden or reassurance word; removal list on duplicate texts; API body
     walk. _Requirements: 1.3, 8.1, 8.2_
-  - [ ] 10.2 Property test P16: every API code and origin has a key in five locales with the same parameters. _Requirements: 8.1, 8.3, 10.2_
+  - [x] 10.2 Property test P16: every API code and origin has a key in five locales with the same parameters. _Requirements: 8.1, 8.3, 10.2_
 
 - [ ] 11. Wording review **(review stop)**
   - Run `agent://pharmacologist` and the localization reviewer (through `agent://wf-coder`, read-only role, report path)

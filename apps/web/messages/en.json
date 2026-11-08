@@ -807,5 +807,177 @@
       "urgent_care_breathing": "Get urgent medical care for sudden or worsening breathlessness. If it is severe or comes with chest pain, call {emergency}.",
       "tr_reports_small_self_selected": "Reports from Türkiye are few and are sent by choice. They do not show how medicines are used in Türkiye."
     }
+  },
+  "Passport": {
+    "nav": "Passport",
+    "title": "Medicine passport",
+    "intro": "All boxes in one list, whichever country they come from. For each box, Janus shows whether the public product data of Türkiye, France, Spain and the United States list a product with the same active ingredients.",
+    "listingsOnly": "Janus shows listings in public data only. Only your doctor or pharmacist can say which medicine fits you.",
+    "open": "Show listings in other countries",
+    "fromMedicine": "Show this box in the passport",
+    "back": "Back to the passport",
+    "boxes": "{count, plural, one {# box} other {# boxes}}",
+    "ingredients": "Active ingredients",
+    "origin": {
+      "TR": "Box from Türkiye",
+      "FR": "Box from France",
+      "ES": "Box from Spain",
+      "DE": "Box from Germany",
+      "US": "Box from the United States",
+      "EU": "Box from the European Union",
+      "OTHER": "Box from another country"
+    },
+    "country": {
+      "TR": "Türkiye",
+      "FR": "France",
+      "ES": "Spain",
+      "DE": "Germany",
+      "US": "the United States"
+    },
+    "sourceName": {
+      "titck": "TİTCK",
+      "bdpm": "BDPM",
+      "cima": "Nomenclátor (AEMPS)",
+      "openfda": "openFDA NDC"
+    },
+    "enteredByName": "Entered by name, not by a code",
+    "germanyByName": "Germany has no open product database, so this box was identified by its name.",
+    "homeopathic": "Homeopathic product, not checked.",
+    "notCheckable": {
+      "no_key": "Cannot be checked: Janus could not recognise the active ingredients of this box.",
+      "partial": "Cannot be checked: Janus could not recognise every active ingredient of this box.",
+      "too_many": "Cannot be checked: this box lists more than 10 active ingredients."
+    },
+    "duplicate": {
+      "chip": "Same active ingredient under different names",
+      "text": "Same active ingredient under different names: {ingredient} is in {boxes}. {count, plural, =2 {Both stay on your list.} other {All of them stay on your list.}} This may be worth mentioning to your doctor or pharmacist.",
+      "summary": "{count, plural, one {# active ingredient is} other {# active ingredients are}} in more than one box of this list."
+    },
+    "detail": {
+      "title": "Listings in other countries",
+      "caption": "Listings of this box's active ingredients in each source",
+      "sourceColumn": "Country and source",
+      "resultColumn": "What the source data show",
+      "ownSource": "This box's source",
+      "germany": "Germany",
+      "comparisonTitle": "Compared with this box",
+      "withOther": "{count, plural, one {# product contains} other {# products contain}} {ingredients, plural, one {this active ingredient} other {these active ingredients}} together with other active ingredients.",
+      "keysFound": "Listed in this source as an active ingredient of other products: {names}.",
+      "boxValues": "This box: {values}",
+      "boxValuesNone": "The strength and form of this box are not known."
+    },
+    "status": {
+      "present": "{source} lists {count, plural, one {# product} other {# products}} with {ingredients, plural, one {this active ingredient and no other} other {exactly these active ingredients and no other}} (data of {date}).",
+      "not_present": "{source} lists no product with {ingredients, plural, one {this active ingredient and no other} other {exactly these active ingredients and no other}} (data of {date}).",
+      "not_in_source": "{source} lists no product with {ingredients, plural, one {this active ingredient} other {any of these active ingredients}} under a name Janus recognises (data of {date}). This does not show that {ingredients, plural, one {it is} other {they are}} unavailable in {country}.",
+      "source_unavailable": "Not checked in this source."
+    },
+    "reason": {
+      "no_open_product_database": "Germany has no open product database that Janus can check. Not checked.",
+      "not_loaded": "This source is not available right now. Not checked."
+    },
+    "stale": "This source may be outdated.",
+    "homeopathicLeftOut": "{count, plural, one {# homeopathic product was} other {# homeopathic products were}} not checked.",
+    "compareLabel": {
+      "strength": "Strength",
+      "dose_form": "Form",
+      "strength_and_dose_form": "Strength and form together"
+    },
+    "compare": {
+      "strength": {
+        "matched": "{equal, plural, one {# of these products is} other {# of these products are}} listed with the same stated strength as this box ({strength}).",
+        "differs": "None of these products is listed with the stated strength of this box. Sources may state the amount of a salt or of the base, so this does not prove a different dose.",
+        "could_not_compare": "Strength not compared: {reason}"
+      },
+      "dose_form": {
+        "matched": "{equal, plural, one {# of these products is} other {# of these products are}} listed in the same form group as this box ({form}).",
+        "differs": "None of these products is listed in the form group of this box ({form}).",
+        "could_not_compare": "Form not compared: {reason}"
+      },
+      "strength_and_dose_form": {
+        "matched": "{equal, plural, one {# of these products is} other {# of these products are}} listed with both the stated strength and the form group of this box.",
+        "differs": "None of these products is listed with both the stated strength and the form group of this box.",
+        "could_not_compare": "Strength and form together not compared: {reason}"
+      }
+    },
+    "compareReason": {
+      "not_known_for_item": "the value of this box is not known.",
+      "not_known_in_source": "the source does not state it in a way Janus can compare.",
+      "not_all_comparable": "only {comparable} of {products} products state it in a way Janus can compare, and none of those is listed with the value of this box."
+    },
+    "form": {
+      "oral_solid": "Tablet or capsule to swallow",
+      "oral_solid_delayed_release": "Gastro-resistant tablet or capsule",
+      "oral_solid_prolonged_release": "Prolonged-release tablet or capsule",
+      "oral_liquid": "Liquid to swallow",
+      "injection": "Injection or infusion",
+      "inhaled": "To inhale",
+      "nasal": "For the nose",
+      "ophthalmic": "For the eye",
+      "otic": "For the ear",
+      "cutaneous": "For the skin",
+      "transdermal": "Skin patch",
+      "rectal": "Rectal",
+      "vaginal": "Vaginal",
+      "other": "Other form"
+    },
+    "strengthValue": "{amount} {unit} per {basis}",
+    "unit": {
+      "mg": "mg",
+      "g": "g",
+      "ug": "µg",
+      "IU": "IU"
+    },
+    "basis": {
+      "unit": "tablet, capsule or unit",
+      "mL": "mL",
+      "g": "g"
+    },
+    "entered": "as entered from the box",
+    "entry": {
+      "open": "Add strength and form from the box",
+      "title": "Strength and form, as printed on the box",
+      "hint": "Optional. Janus uses these values only to compare listings. Only the strength and form codes are sent, never the name of the box.",
+      "ingredient": "Strength of {ingredient}",
+      "amount": "Amount",
+      "amountHint": "For example 40 or 2.5, without thousands separators.",
+      "unit": "Unit",
+      "basis": "Per",
+      "form": "Form",
+      "formNone": "Not given",
+      "save": "Use these values",
+      "clear": "Clear the entered values",
+      "invalid": "Please type the amount in digits, for example 40 or 2.5."
+    },
+    "states": {
+      "loading": "Checking the listings…",
+      "loaded": "Results for {count, plural, one {# source} other {# sources}} loaded.",
+      "empty": "Your list is empty. Add a box by scanning its code or typing its name.",
+      "emptyAction": "Add a box",
+      "error": "These listings could not be checked now.",
+      "partial": "Some sources could not be checked now. The other rows are shown.",
+      "recorded": "Recorded answer of {date}."
+    },
+    "notice": {
+      "presence_is_lower_bound": "Products whose ingredients Janus could not recognise are not counted.",
+      "unknown_ingredient_keys": "Some active ingredients of this box are not in the current medicine data, so no source could be checked for them."
+    },
+    "attribution": {
+      "titck": "Source: TİTCK list of licensed medicinal products, data of {date}.",
+      "bdpm": "Source: Base de données publique des médicaments (BDPM), data of {date}. Shown as published; the BDPM does not endorse Janus.",
+      "cima": "Source: AEMPS, Nomenclátor de prescripción, data of {date}.",
+      "openfda": "Source: openFDA NDC directory, data of {date}. Not an FDA endorsement."
+    },
+    "memory": {
+      "entry": "Reports for the active ingredients of this list",
+      "intro": "Collective Memory shows how often these active ingredients appear together in public adverse-event reports.",
+      "tooMany": "Collective Memory looks at up to 20 active ingredients at once. Please choose which ones to look at.",
+      "choose": "Choose up to 20 active ingredients",
+      "chosen": "{count} of 20 chosen",
+      "open": "Open Collective Memory"
+    },
+    "demo": {
+      "intro": "The Turkish and German boxes of the Cologne demo patient. Product names are invented; the listings come from the real public data."
+    }
   }
 }
