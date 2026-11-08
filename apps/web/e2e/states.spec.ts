@@ -129,10 +129,13 @@ test("long German content at 375 px: wraps without horizontal scroll", async ({
   }
 });
 
-test("research: three light-face entries open their screens, no numbers", async ({
+test("research: the four Phase 4 entries open their screens, review status, no numbers", async ({
   page,
 }) => {
   await page.goto("/en/research");
-  await expect(page.getByRole("link", { name: /^Open/ })).toHaveCount(3);
+  await expect(page.getByRole("link", { name: /^Open/ })).toHaveCount(4);
+  await expect(page.getByTestId("research-review")).toContainText(
+    "AI-reviewed and pending expert review",
+  );
   await expect(page.locator("main")).not.toContainText(/\d{2,}/);
 });

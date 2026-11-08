@@ -21,6 +21,8 @@ const ROUTES = [
   "/memory",
   "/note",
   "/settings",
+  "/research",
+  "/research/seance",
 ];
 const PRECACHE = [
   ...LOCALES.flatMap((l) => ROUTES.map((r) => `/${l}${r}`)),

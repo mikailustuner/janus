@@ -33,6 +33,12 @@ const fx = JSON.parse(
   validation: unknown;
   export: unknown;
 };
+const seanceFx = JSON.parse(
+  readFileSync(
+    join(import.meta.dirname, "../src/seance/fixture.recorded.json"),
+    "utf8",
+  ),
+) as { catalogue: unknown };
 const messages = Object.fromEntries(
   LOCALES.map((l) => [
     l,
@@ -58,6 +64,7 @@ async function stubLight(page: Page) {
     },
     "/light/validation": { body: fx.validation },
     "/light/export": { body: fx.export },
+    "/seance/catalogue": { body: seanceFx.catalogue },
   });
 }
 

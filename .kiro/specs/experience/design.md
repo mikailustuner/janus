@@ -528,8 +528,8 @@ static assets. A version string from the build invalidates old caches. "Delete e
 
 ## 14. Researcher shell (DP12, Req 24)
 `/research` uses the normal theme (DP48), a section header ("Research"), the four entries and the
-repurposing rule-7 sentence. Each entry renders `StateView` empty with "coming in Phase 4" and one sentence about what it
-will show. No fixtures, no numbers.
+repurposing rule-7 sentence. *(Phase 4, 2026-11-08.)* All four entries open their screens (light-face design §10, séance
+design §12), and the page states that Phase 4 content is AI-reviewed and pending expert review (`Research.review`).
 
 ## 15. Passport seam (DP25, Req 26)
 - Store: `Item.candidate` carries everything the Passport needs; `listIngredientKeys(list)` (distinct, sorted) is

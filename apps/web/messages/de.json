@@ -498,7 +498,7 @@
     "title": "Forschung",
     "intro": "Dasselbe Wissen über Nebenwirkungen, für die Forschung umgekehrt. Dieser Bereich ist kein Teil des Patientenablaufs.",
     "rule7": "Ergebnisse zur Wiederverwendung sind untersuchenswerte Kandidaten — keine Behandlungen.",
-    "coming": "Kommt in Phase 4.",
+    "review": "Die Inhalte der Phase 4 (Hypothesenkarten, die drei Zeugen, Validierung und Export) wurden von einer KI geprüft; die Prüfung durch Fachleute steht aus.",
     "entries": {
       "hypotheses": {
         "title": "Hypothesenkarten",
@@ -1095,5 +1095,175 @@
     "errors": {
       "unavailable": "Die Forschungsdaten sind gerade nicht verfügbar. Bitte versuchen Sie es später erneut."
     }
+  },
+  "Seance": {
+    "title": {
+      "twoFaces": "Die Séance: drei Zeugen",
+      "glass": "Evidenzübersicht"
+    },
+    "intro": {
+      "twoFaces": "Drei Zeugen nehmen an einem Tisch Platz: die Vergangenheit (Ibn Sinas Kanon der Medizin, Buch 2), die Gegenwart (FAERS-Meldungen im Kollektiven Gedächtnis) und die Wissenschaft (durch die Evidenzprüfung geleitete Studien). Jeder spricht für sich; Janus fasst sie nie zu einem Wert zusammen.",
+      "glass": "Drei unabhängige Zeugen nebeneinander: die Vergangenheit (Ibn Sinas Kanon der Medizin, Buch 2), die Gegenwart (FAERS-Meldungen im Kollektiven Gedächtnis) und die Wissenschaft (durch die Evidenzprüfung geleitete Studien). Jeder wird für sich gezeigt; Janus fasst sie nie zu einem Wert zusammen."
+    },
+    "table": {
+      "twoFaces": "Der Séance-Tisch",
+      "glass": "Die drei Zeugen"
+    },
+    "framing": "Ein Kandidat, der eine Untersuchung wert ist – keine Behandlung.",
+    "review": "Inhalte der Phase 4: Die Kanon-Passagen, ihre maschinellen Übersetzungen, die Bestimmungen und die extrahierten Aussagen haben zwei KI-Prüfungen (Historiker- und Pharmakologen-Agent) durchlaufen; die Prüfung durch Fachleute steht aus.",
+    "researcherOnly": "Für Forschende. Nichts auf dieser Seite wird in den Patientenseiten gezeigt.",
+    "demo": "Demo: Der Katalog und die zwei Paare wurden am {date} aus den echten Daten aufgezeichnet; es wird keine Anfrage gesendet.",
+    "pick": {
+      "legend": "Ein Paar wählen",
+      "substance": "Substanz",
+      "condition": "Zustand",
+      "pairInfo": "{passages, plural, =0 {keine Passage} one {# Passage} other {# Passagen}} · {studies, plural, =0 {keine Studie} one {# Studie} other {# Studien}}"
+    },
+    "condition": {
+      "wound": "Wunden",
+      "burn": "Verbrennungen",
+      "ulcer": "Hautgeschwüre",
+      "infection": "Wund- und Hautinfektion"
+    },
+    "infectionBridge": "Der Kanon kennt den Begriff der Infektion nicht. Janus liest Fäulnis, Eiter, sich ausbreitende oder übel riechende Geschwüre, Nagelbettentzündung, Karbunkel, Gangrän und Fistel als „Infektion“; diese Brücke ist eine Deutung.",
+    "loading": "Die Zeugen werden geladen …",
+    "count": "{count} von 3 Zeugen",
+    "countNote": "Eine Zählung der Zeugen, die sprechen – kein Wert und kein Maß für Stärke.",
+    "missing": "Fehlende Zeugen: {names}",
+    "noneMissing": "Kein Zeuge fehlt. Es bleibt eine Hypothese, die geprüft werden muss.",
+    "zero": "In diesen Daten spricht kein Zeuge für dieses Paar.",
+    "witness": {
+      "past": "die Vergangenheit",
+      "present": "die Gegenwart",
+      "science": "die Wissenschaft"
+    },
+    "headline": {
+      "eligible": "Hat beide KI-Prüfungen durchlaufen und ist nicht als giftig oder ätzend markiert: darf als Demo-Beispiel gezeigt werden.",
+      "notEligible": "Wird nicht als Demo-Beispiel gezeigt: {reasons}.",
+      "reason": {
+        "no_eligible_passage": "keine Passage hat beide KI-Prüfungen durchlaufen",
+        "hazardous_substance": "die Substanz ist als giftig oder ätzend markiert"
+      }
+    },
+    "substance": {
+      "heading": "Überschrift im Kanon",
+      "identification": "Bestimmung: {name}",
+      "identified": "Bestimmt (stimmt mit PMC3941892 überein)",
+      "uncertain": "Bestimmung unsicher",
+      "gold": "Tabelle PMC3941892: {name}",
+      "notInGold": "Nicht in der Tabelle PMC3941892; nur eine Quelle.",
+      "hamdard": "Ebenfalls zitiert: {ref} (nur Zitat, kein Text)",
+      "note": "Anmerkung (Englisch): {text}",
+      "kind": {
+        "plant": "Pflanze",
+        "mineral": "Mineral",
+        "plant_resin": "Pflanzenharz",
+        "animal_product": "tierisches Produkt",
+        "preparation": "Zubereitung"
+      },
+      "hazard": {
+        "toxic": "Nur historischer Beleg – giftige Substanz.",
+        "caustic": "Nur historischer Beleg – ätzende Substanz."
+      }
+    },
+    "seat": {
+      "past": {
+        "title": "Die Vergangenheit",
+        "source": "Ibn Sina, Kanon der Medizin, Buch 2 (OpenITI-Text)"
+      },
+      "present": {
+        "title": "Die Gegenwart",
+        "source": "FAERS-Meldungen im Kollektiven Gedächtnis"
+      },
+      "science": {
+        "title": "Die Wissenschaft",
+        "source": "Durch die Evidenzprüfung geleitete Studien (Status bei jeder Studie)"
+      },
+      "speaks": "Spricht",
+      "silent": "Stützt nicht",
+      "confidence": "Vertrauen: {level}",
+      "items": "{count, plural, one {# Eintrag} other {# Einträge}}"
+    },
+    "confidence": {
+      "none": "keines",
+      "low": "gering",
+      "moderate": "mittel"
+    },
+    "missingReason": {
+      "no_canon_passage": "Keine Kanon-Passage für dieses Paar.",
+      "passages_rejected_by_review": "Die Passagen für dieses Paar wurden in einer KI-Prüfung abgelehnt.",
+      "no_faers_mapping": "Keine FAERS-Verknüpfung für diese Substanz.",
+      "exposure_differs": "Der FAERS-Wirkstoff ist eine andere Exposition; er wird nicht gezählt.",
+      "counts_unavailable": "FAERS-Zahlen sind gerade nicht verfügbar.",
+      "no_protective_association": "Kein Meldemuster unterhalb der Erwartung in FAERS.",
+      "too_few_reports": "Zu wenige FAERS-Meldungen, um nach einem Muster zu suchen.",
+      "no_study_listed": "Für dieses Paar ist keine Studie aufgeführt.",
+      "no_citable_study": "Keine aufgeführte Studie hat die Evidenzprüfung bestanden.",
+      "studies_do_not_support": "Die aufgeführten Studien stützen dieses Paar nicht.",
+      "integrity_unavailable": "Die Evidenzprüfung ist gerade nicht verfügbar; daher wird keine Studie gezeigt."
+    },
+    "past": {
+      "arabic": "Arabischer Text",
+      "mt": "Maschinelle Übersetzung (Englisch)",
+      "aiReviewed": "Von einer KI geprüft, Prüfung durch Fachleute steht aus",
+      "expertReviewed": "Von Fachleuten geprüft",
+      "summary": "Janus-Zusammenfassung (maschinell geschrieben, Englisch): {text}",
+      "locator": "Kanon, Buch {book}, Eintrag {entry}, Seite {page}, Zeilen {start}–{end} (OpenITI)",
+      "locatorNoPage": "Kanon, Buch {book}, Eintrag {entry}, Zeilen {start}–{end} (OpenITI)"
+    },
+    "present": {
+      "observed": "{both, plural, one {# Meldung} other {# Meldungen}} mit einem der Begriffe des Zustands, unter {total, plural, one {# FAERS-Meldung} other {# FAERS-Meldungen}}, die den verknüpften Wirkstoff (Wikidata {key}) als Verdachtsarzneimittel nennen.",
+      "match": {
+        "same": "Der FAERS-Wirkstoff ist dieselbe Substanz.",
+        "component": "Der FAERS-Wirkstoff ist ein Bestandteil dieser Substanz, nicht die Substanz selbst.",
+        "different": "Der FAERS-Wirkstoff ist eine andere Exposition (zum Beispiel als Infusion); er wird nicht als Zeuge gezählt."
+      },
+      "pts": "Für diesen Zustand gezählte MedDRA Preferred Terms: {pts}",
+      "snapshot": "FAERS-Stand {date}; alle Regionen; nur Verdachtsarzneimittel.",
+      "item": "{both, plural, one {# Meldung} other {# Meldungen}} von {total}, Reporting Odds Ratio unter 1"
+    },
+    "codes": {
+      "spontaneous_reports": "FAERS beruht auf Spontanmeldungen: Es zeigt nicht, wie häufig etwas vorkommt.",
+      "reports_not_people": "Gezählt werden Meldungen, nicht Personen.",
+      "not_deduplicated_across_cases": "Meldungen sind nicht dedupliziert: Ein Fall kann mehrfach gemeldet sein.",
+      "reporting_bias_notoriety_indication": "Meldeverzerrung: Bekannte Wirkungen werden häufiger gemeldet (Notoriety-Bias), und der Grund für die Gabe eines Arzneimittels wird oft als Indikation statt als Ereignis erfasst (Indikations-Bias).",
+      "screening_pattern_not_effect": "Eine Zahl unterhalb der Erwartung ist ein Screening-Muster, kein Nachweis einer Wirkung."
+    },
+    "science": {
+      "studyType": {
+        "systematic_review": "Systematische Übersichtsarbeit",
+        "rct": "Randomisierte kontrollierte Studie",
+        "clinical_other": "Andere klinische Studie",
+        "animal": "Tierstudie",
+        "in_vitro": "Laborstudie (in vitro)",
+        "narrative_review": "Narrative Übersichtsarbeit"
+      },
+      "finding": "Befund (maschinell geschriebene Zusammenfassung, Englisch): {text}",
+      "integrity": {
+        "ok": "Kein Hinweis",
+        "corrected": "Korrektur veröffentlicht",
+        "expression_of_concern": "Expression of Concern",
+        "unknown": "Noch nicht mit Rückzugsdaten abgeglichen"
+      },
+      "excluded": "{count, plural, one {# aufgeführte Studie wurde von der Evidenzprüfung entfernt (zurückgezogen oder nicht registriert).} other {# aufgeführte Studien wurden von der Evidenzprüfung entfernt (zurückgezogen oder nicht registriert).}}",
+      "targets": "Molekulare Zielstrukturen: noch keine Quelle angebunden.",
+      "titleWithheld": "Titel nicht angezeigt: Seine Formulierung liegt außerhalb der Sprachregeln von Janus. Öffnen Sie die DOI, um ihn zu lesen."
+    },
+    "sources": "Quellen und Lizenzen",
+    "licence": "Lizenz: {license}",
+    "errors": {
+      "unavailable": "Das Kanon-Datenpaket ist auf diesem Server nicht installiert; die drei Zeugen können daher nicht gezeigt werden."
+    },
+    "empty": "In diesen Daten ist kein Paar aufgeführt.",
+    "crossLink": {
+      "title": {
+        "twoFaces": "Auch am Séance-Tisch",
+        "glass": "Auch in der Evidenzübersicht"
+      },
+      "open": "{substance}: {condition}",
+      "same": "Dieser FAERS-Wirkstoff ist dieselbe Substanz wie eine im Kanon:",
+      "component": "Dieser FAERS-Wirkstoff ist ein Bestandteil einer Substanz des Kanons, nicht dieselbe Exposition:"
+    },
+    "notListed": "Das gewählte Paar ist hier nicht verfügbar; stattdessen wird das erste verfügbare Paar gezeigt."
   }
 }

@@ -28,7 +28,9 @@ export type Route =
   | "light/overview"
   | "light/cards"
   | "light/validation"
-  | "light/export";
+  | "light/export"
+  | "seance/catalogue"
+  | "seance/pair";
 
 export const ROUTES: readonly Route[] = [
   "resolve/scan",
@@ -55,6 +57,8 @@ export const ROUTES: readonly Route[] = [
   "light/cards",
   "light/validation",
   "light/export",
+  "seance/catalogue",
+  "seance/pair",
 ];
 
 export type ApiError =
@@ -104,6 +108,7 @@ export const MESSAGE_KEYS = [
   "Donate.delete.invalid_token",
   "Passport.states.error",
   "Light.errors.unavailable",
+  "Seance.errors.unavailable",
 ] as const;
 
 export type MessageKey = (typeof MESSAGE_KEYS)[number];
@@ -206,5 +211,12 @@ export function messageKeyFor(
     code === "light_unavailable"
   )
     return "Light.errors.unavailable";
+  // séance design §7.1: the Canon package is not installed.
+  if (
+    route.startsWith("seance/") &&
+    status === 503 &&
+    code === "seance_unavailable"
+  )
+    return "Seance.errors.unavailable";
   return "Errors.generic";
 }

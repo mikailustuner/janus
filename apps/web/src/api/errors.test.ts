@@ -58,6 +58,8 @@ const KNOWN_CODES = [
   "no_donation_for_token",
   "invalid_deletion",
   "internal_error",
+  "light_unavailable",
+  "seance_unavailable",
 ];
 
 const routeArb = fc.constantFrom(...ROUTES);
@@ -123,6 +125,10 @@ describe("message keys", () => {
     expect(messageKeyFor("outcomes", 409, "token_used")).toBe(
       "Doctor.errors.token_used",
     );
+    for (const route of ["seance/catalogue", "seance/pair"] as Route[])
+      expect(messageKeyFor(route, 503, "seance_unavailable")).toBe(
+        "Seance.errors.unavailable",
+      );
   });
 });
 

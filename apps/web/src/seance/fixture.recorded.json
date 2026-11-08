@@ -1,0 +1,1393 @@
+{
+  "recorded": "2026-11-08",
+  "catalogue": {
+    "schema_version": "seance-1",
+    "substances": [
+      {
+        "id": "acacia",
+        "name_en": "acacia (gum arabic tree)",
+        "transliteration": "aqaqiya",
+        "heading_ar": "أقاقيا",
+        "kind": "plant",
+        "identification": "Acacia arabica (Lam.) Willd. (now Vachellia nilotica)",
+        "identification_status": "matches_gold",
+        "identification_label": "identified",
+        "gold": {
+          "gold_id": "pmc3941892.t1.r02",
+          "scientific_name": "Acacia Arabica",
+          "citation": "Aliasl J, Khoshzaban F. Jundishapur J Nat Pharm Prod 2013;8(4):192-196. doi:10.17795/jjnpp-11686. PMC3941892, CC BY 3.0."
+        },
+        "hamdard_ref": "Hamdard 1998, alif no. 50, PDF p. 84",
+        "hazard": null,
+        "note": "Aqaqiya is the dried juice of the pods in the Greek tradition."
+      },
+      {
+        "id": "aloe",
+        "name_en": "aloe",
+        "transliteration": "sabir",
+        "heading_ar": "صبر",
+        "kind": "plant",
+        "identification": "Aloe sp. (dried leaf exudate; Socotrine aloe, Aloe perryi Baker; Hamdard A. littoralis, treated as a synonym of A. vera)",
+        "identification_status": "not_in_gold",
+        "identification_label": "uncertain",
+        "gold": null,
+        "hamdard_ref": "Hamdard 1998, sad no. 2, PDF p. 310",
+        "hazard": null,
+        "note": "Medieval sabir was the dried juice (Socotrine aloe); species uncertain."
+      },
+      {
+        "id": "asphodel",
+        "name_en": "asphodel",
+        "transliteration": "sirish",
+        "heading_ar": "سريش",
+        "kind": "plant",
+        "identification": "Asphodelaceae (genus uncertain)",
+        "identification_status": "uncertain",
+        "identification_label": "uncertain",
+        "gold": {
+          "gold_id": "pmc3941892.t2.r10",
+          "scientific_name": "Eremurus persicus (Jaub.& Soach) Boiss.",
+          "citation": "Aliasl J, Khoshzaban F. Jundishapur J Nat Pharm Prod 2013;8(4):192-196. doi:10.17795/jjnpp-11686. PMC3941892, CC BY 3.0."
+        },
+        "hamdard_ref": "Hamdard 1998, sin no. 14, PDF p. 272",
+        "hazard": null,
+        "note": "Sources disagree on the genus (gold Eremurus persicus, Hamdard Asphodelus tenuifolius)."
+      },
+      {
+        "id": "beet",
+        "name_en": "beet",
+        "transliteration": "silq",
+        "heading_ar": "سلق",
+        "kind": "plant",
+        "identification": "Beta vulgaris L.",
+        "identification_status": "matches_gold",
+        "identification_label": "identified",
+        "gold": {
+          "gold_id": "pmc3941892.t2.r12",
+          "scientific_name": "Beta vulgaris",
+          "citation": "Aliasl J, Khoshzaban F. Jundishapur J Nat Pharm Prod 2013;8(4):192-196. doi:10.17795/jjnpp-11686. PMC3941892, CC BY 3.0."
+        },
+        "hamdard_ref": "Hamdard entry not located in the PDF text layer",
+        "hazard": null,
+        "note": "One source only (gold)."
+      },
+      {
+        "id": "dragons_blood",
+        "name_en": "dragon's blood",
+        "transliteration": "dam al-akhawayn",
+        "heading_ar": "دم الآخوين",
+        "kind": "plant resin",
+        "identification": "dragon's blood resin; for the Canon most likely Dracaena cinnabari Balf.f. (Socotra); Hamdard gives Calamus draco Willd. (syn. Daemonorops draco)",
+        "identification_status": "not_in_gold",
+        "identification_label": "uncertain",
+        "gold": null,
+        "hamdard_ref": "Hamdard 1998, dal no. 17, PDF p. 227",
+        "hazard": null,
+        "note": "Dragon's blood came from several plants (Dracaena cinnabari, Daemonorops); source plant uncertain."
+      },
+      {
+        "id": "fenugreek",
+        "name_en": "fenugreek",
+        "transliteration": "hulba",
+        "heading_ar": "حلبة",
+        "kind": "plant",
+        "identification": "Trigonella foenum-graecum L.",
+        "identification_status": "matches_gold",
+        "identification_label": "identified",
+        "gold": {
+          "gold_id": "pmc3941892.t2.r05",
+          "scientific_name": "Trigonella foenum–graecum L.",
+          "citation": "Aliasl J, Khoshzaban F. Jundishapur J Nat Pharm Prod 2013;8(4):192-196. doi:10.17795/jjnpp-11686. PMC3941892, CC BY 3.0."
+        },
+        "hamdard_ref": "Hamdard 1998, ha no. 42, PDF p. 182",
+        "hazard": null,
+        "note": ""
+      },
+      {
+        "id": "frankincense",
+        "name_en": "frankincense",
+        "transliteration": "kundur",
+        "heading_ar": "كندر",
+        "kind": "plant resin",
+        "identification": "Boswellia sp. (gold B. carterii Birdw., now B. sacra Flueck.; Hamdard B. glabra Roxb., now B. serrata Roxb.)",
+        "identification_status": "uncertain",
+        "identification_label": "uncertain",
+        "gold": {
+          "gold_id": "pmc3941892.t2.r06",
+          "scientific_name": "Boswellia carterii Bird",
+          "citation": "Aliasl J, Khoshzaban F. Jundishapur J Nat Pharm Prod 2013;8(4):192-196. doi:10.17795/jjnpp-11686. PMC3941892, CC BY 3.0."
+        },
+        "hamdard_ref": "Hamdard 1998, kaf no. 37, PDF p. 413",
+        "hazard": null,
+        "note": "Genus agrees; species differ (gold B. carterii, Hamdard B. glabra)."
+      },
+      {
+        "id": "galium",
+        "name_en": "lady's bedstraw",
+        "transliteration": "ghaliyun",
+        "heading_ar": "غاليون",
+        "kind": "plant",
+        "identification": "Galium verum L.",
+        "identification_status": "matches_gold",
+        "identification_label": "identified",
+        "gold": {
+          "gold_id": "pmc3941892.t2.r03",
+          "scientific_name": "Galium verum",
+          "citation": "Aliasl J, Khoshzaban F. Jundishapur J Nat Pharm Prod 2013;8(4):192-196. doi:10.17795/jjnpp-11686. PMC3941892, CC BY 3.0."
+        },
+        "hamdard_ref": "Hamdard 1998, ghayn no. 5, PDF p. 351",
+        "hazard": null,
+        "note": ""
+      },
+      {
+        "id": "great_plantain",
+        "name_en": "great plantain",
+        "transliteration": "lisan al-hamal",
+        "heading_ar": "لسان الحمل",
+        "kind": "plant",
+        "identification": "Plantago major L.",
+        "identification_status": "matches_gold",
+        "identification_label": "identified",
+        "gold": {
+          "gold_id": "pmc3941892.t1.r12",
+          "scientific_name": "Plantago major L.",
+          "citation": "Aliasl J, Khoshzaban F. Jundishapur J Nat Pharm Prod 2013;8(4):192-196. doi:10.17795/jjnpp-11686. PMC3941892, CC BY 3.0."
+        },
+        "hamdard_ref": "Hamdard 1998, lam no. 13, PDF p. 431",
+        "hazard": null,
+        "note": ""
+      },
+      {
+        "id": "henna",
+        "name_en": "henna",
+        "transliteration": "hinna",
+        "heading_ar": "حناء",
+        "kind": "plant",
+        "identification": "Lawsonia inermis L.",
+        "identification_status": "matches_gold",
+        "identification_label": "identified",
+        "gold": {
+          "gold_id": "pmc3941892.t1.r06",
+          "scientific_name": "Lawsonia inermis L.",
+          "citation": "Aliasl J, Khoshzaban F. Jundishapur J Nat Pharm Prod 2013;8(4):192-196. doi:10.17795/jjnpp-11686. PMC3941892, CC BY 3.0."
+        },
+        "hamdard_ref": "Hamdard 1998, ha no. 51, PDF p. 189",
+        "hazard": null,
+        "note": ""
+      },
+      {
+        "id": "honey",
+        "name_en": "honey",
+        "transliteration": "asal",
+        "heading_ar": "عسل",
+        "kind": "animal product",
+        "identification": "bee honey",
+        "identification_status": "not_in_gold",
+        "identification_label": "uncertain",
+        "gold": null,
+        "hamdard_ref": "Hamdard 1998, ayn no. 13, PDF p. 336",
+        "hazard": null,
+        "note": "The entry also names cane-sugar 'honey'; the wound clause concerns bee honey only by context."
+      },
+      {
+        "id": "iris",
+        "name_en": "iris (lily)",
+        "transliteration": "sawsan",
+        "heading_ar": "سوسن",
+        "kind": "plant",
+        "identification": "Iris sp.",
+        "identification_status": "uncertain",
+        "identification_label": "uncertain",
+        "gold": {
+          "gold_id": "pmc3941892.t2.r11",
+          "scientific_name": "Iris spp",
+          "citation": "Aliasl J, Khoshzaban F. Jundishapur J Nat Pharm Prod 2013;8(4):192-196. doi:10.17795/jjnpp-11686. PMC3941892, CC BY 3.0."
+        },
+        "hamdard_ref": "Hamdard 1998, sin no. 47, PDF p. 291",
+        "hazard": null,
+        "note": "Gold gives the genus only; Hamdard a species of it."
+      },
+      {
+        "id": "isfidaj",
+        "name_en": "isfidaj (ceruse, white lead)",
+        "transliteration": "isfidaj",
+        "heading_ar": "إسفيداج",
+        "kind": "mineral",
+        "identification": "basic lead carbonate (ceruse)",
+        "identification_status": "uncertain",
+        "identification_label": "uncertain",
+        "gold": null,
+        "hamdard_ref": "Hamdard 1998, alif no. 29, PDF p. 71",
+        "hazard": "toxic",
+        "note": "Sources disagree: Hamdard gives zinc oxide; the Canon itself writes isfidaj al-rasas (white lead) elsewhere. Toxic lead compound."
+      },
+      {
+        "id": "lablab",
+        "name_en": "lablab",
+        "transliteration": "lablab",
+        "heading_ar": "لبلاب",
+        "kind": "plant",
+        "identification": "Lablab purpureus (L.) Sweet (syn. Dolichos lablab)",
+        "identification_status": "uncertain",
+        "identification_label": "uncertain",
+        "gold": {
+          "gold_id": "pmc3941892.t2.r07",
+          "scientific_name": "Dolicus lablab",
+          "citation": "Aliasl J, Khoshzaban F. Jundishapur J Nat Pharm Prod 2013;8(4):192-196. doi:10.17795/jjnpp-11686. PMC3941892, CC BY 3.0."
+        },
+        "hamdard_ref": "Hamdard 1998, lam no. 5, PDF p. 419",
+        "hazard": null,
+        "note": "Some readings take the Canon's lablab for a climbing plant such as ivy or bindweed; experts to check."
+      },
+      {
+        "id": "lentil",
+        "name_en": "lentil",
+        "transliteration": "adas",
+        "heading_ar": "عدس",
+        "kind": "plant",
+        "identification": "Lens culinaris Medik. (syn. Lens esculenta)",
+        "identification_status": "matches_gold",
+        "identification_label": "identified",
+        "gold": {
+          "gold_id": "pmc3941892.t2.r02",
+          "scientific_name": "Lens esculenta Moench",
+          "citation": "Aliasl J, Khoshzaban F. Jundishapur J Nat Pharm Prod 2013;8(4):192-196. doi:10.17795/jjnpp-11686. PMC3941892, CC BY 3.0."
+        },
+        "hamdard_ref": "Hamdard 1998, ayn no. 5, PDF p. 332",
+        "hazard": null,
+        "note": ""
+      },
+      {
+        "id": "litharge",
+        "name_en": "litharge",
+        "transliteration": "murdasanj",
+        "heading_ar": "مرداسنج",
+        "kind": "mineral",
+        "identification": "lead(II) oxide",
+        "identification_status": "not_in_gold",
+        "identification_label": "uncertain",
+        "gold": null,
+        "hamdard_ref": "Hamdard 1998, mim no. 15, PDF p. 447",
+        "hazard": "toxic",
+        "note": "Toxic lead compound."
+      },
+      {
+        "id": "mallow",
+        "name_en": "mallow",
+        "transliteration": "khubbazi",
+        "heading_ar": "خبازى",
+        "kind": "plant",
+        "identification": "Malva sp.",
+        "identification_status": "uncertain",
+        "identification_label": "uncertain",
+        "gold": {
+          "gold_id": "pmc3941892.t1.r08",
+          "scientific_name": "Malva sylvestris L., Malva neglecta Wallr.",
+          "citation": "Aliasl J, Khoshzaban F. Jundishapur J Nat Pharm Prod 2013;8(4):192-196. doi:10.17795/jjnpp-11686. PMC3941892, CC BY 3.0."
+        },
+        "hamdard_ref": "Hamdard 1998, kha no. 6, PDF p. 196",
+        "hazard": null,
+        "note": "Genus agrees; species differ (gold M. sylvestris / M. neglecta, Hamdard M. rotundifolia, a name also used for M. neglecta)."
+      },
+      {
+        "id": "myrtle",
+        "name_en": "myrtle",
+        "transliteration": "as",
+        "heading_ar": "آس",
+        "kind": "plant",
+        "identification": "Myrtus communis L.",
+        "identification_status": "matches_gold",
+        "identification_label": "identified",
+        "gold": {
+          "gold_id": "pmc3941892.t1.r01",
+          "scientific_name": "Myrtus communis L.",
+          "citation": "Aliasl J, Khoshzaban F. Jundishapur J Nat Pharm Prod 2013;8(4):192-196. doi:10.17795/jjnpp-11686. PMC3941892, CC BY 3.0."
+        },
+        "hamdard_ref": "Hamdard 1998, alif no. 5, PDF p. 56",
+        "hazard": null,
+        "note": ""
+      },
+      {
+        "id": "narcissus",
+        "name_en": "narcissus",
+        "transliteration": "narjis",
+        "heading_ar": "نرجس",
+        "kind": "plant",
+        "identification": "Narcissus tazetta L.",
+        "identification_status": "matches_gold",
+        "identification_label": "identified",
+        "gold": {
+          "gold_id": "pmc3941892.t2.r08",
+          "scientific_name": "Narcissus tazzeta",
+          "citation": "Aliasl J, Khoshzaban F. Jundishapur J Nat Pharm Prod 2013;8(4):192-196. doi:10.17795/jjnpp-11686. PMC3941892, CC BY 3.0."
+        },
+        "hamdard_ref": "Hamdard 1998, nun no. 11, PDF p. 466",
+        "hazard": "toxic",
+        "note": ""
+      },
+      {
+        "id": "oriental_plane",
+        "name_en": "oriental plane tree",
+        "transliteration": "dulb",
+        "heading_ar": "دلب",
+        "kind": "plant",
+        "identification": "Platanus orientalis L.",
+        "identification_status": "matches_gold",
+        "identification_label": "identified",
+        "gold": {
+          "gold_id": "pmc3941892.t1.r03",
+          "scientific_name": "Platanus orientalis",
+          "citation": "Aliasl J, Khoshzaban F. Jundishapur J Nat Pharm Prod 2013;8(4):192-196. doi:10.17795/jjnpp-11686. PMC3941892, CC BY 3.0."
+        },
+        "hamdard_ref": "Hamdard 1998, dal no. 15, PDF p. 225",
+        "hazard": null,
+        "note": ""
+      },
+      {
+        "id": "pellitory",
+        "name_en": "pellitory-of-the-wall",
+        "transliteration": "hashishat al-zujaj",
+        "heading_ar": "حشيشة الزجاج",
+        "kind": "plant",
+        "identification": "Parietaria officinalis L.",
+        "identification_status": "matches_gold",
+        "identification_label": "identified",
+        "gold": {
+          "gold_id": "pmc3941892.t1.r05",
+          "scientific_name": "Parietaria off",
+          "citation": "Aliasl J, Khoshzaban F. Jundishapur J Nat Pharm Prod 2013;8(4):192-196. doi:10.17795/jjnpp-11686. PMC3941892, CC BY 3.0."
+        },
+        "hamdard_ref": "Hamdard 1998, ha no. 40, PDF p. 181",
+        "hazard": null,
+        "note": ""
+      },
+      {
+        "id": "pine",
+        "name_en": "pine",
+        "transliteration": "sanawbar",
+        "heading_ar": "صنوبر",
+        "kind": "plant",
+        "identification": "Pinus sp.",
+        "identification_status": "matches_gold",
+        "identification_label": "identified",
+        "gold": {
+          "gold_id": "pmc3941892.t2.r09",
+          "scientific_name": "Pinus sp.",
+          "citation": "Aliasl J, Khoshzaban F. Jundishapur J Nat Pharm Prod 2013;8(4):192-196. doi:10.17795/jjnpp-11686. PMC3941892, CC BY 3.0."
+        },
+        "hamdard_ref": "Hamdard entry not located in the PDF text layer",
+        "hazard": null,
+        "note": "Gold gives the genus only."
+      },
+      {
+        "id": "pitch",
+        "name_en": "pitch",
+        "transliteration": "zift",
+        "heading_ar": "زفت",
+        "kind": "plant resin",
+        "identification": "pitch (Pix nigra, conifer wood tar); zift may also denote mineral bitumen",
+        "identification_status": "not_in_gold",
+        "identification_label": "uncertain",
+        "gold": null,
+        "hamdard_ref": "Hamdard 1998, za no. 15, PDF p. 256",
+        "hazard": null,
+        "note": ""
+      },
+      {
+        "id": "pomegranate",
+        "name_en": "pomegranate",
+        "transliteration": "rumman",
+        "heading_ar": "رمان",
+        "kind": "plant",
+        "identification": "Punica granatum L.",
+        "identification_status": "not_in_gold",
+        "identification_label": "uncertain",
+        "gold": null,
+        "hamdard_ref": "Hamdard 1998, ra no. 20, PDF p. 242",
+        "hazard": null,
+        "note": ""
+      },
+      {
+        "id": "rose",
+        "name_en": "rose",
+        "transliteration": "ward",
+        "heading_ar": "ورد",
+        "kind": "plant",
+        "identification": "Rosa damascena Mill. / Rosa centifolia L.",
+        "identification_status": "matches_gold",
+        "identification_label": "identified",
+        "gold": {
+          "gold_id": "pmc3941892.t1.r14",
+          "scientific_name": "Rosa centifolia L., Rosa damascena Mill.",
+          "citation": "Aliasl J, Khoshzaban F. Jundishapur J Nat Pharm Prod 2013;8(4):192-196. doi:10.17795/jjnpp-11686. PMC3941892, CC BY 3.0."
+        },
+        "hamdard_ref": "Hamdard 1998, waw no. 3, PDF p. 474",
+        "hazard": null,
+        "note": "Gold names two species; Hamdard one of them."
+      },
+      {
+        "id": "salt",
+        "name_en": "salt",
+        "transliteration": "milh",
+        "heading_ar": "ملح",
+        "kind": "mineral",
+        "identification": "sodium chloride (with other salts)",
+        "identification_status": "not_in_gold",
+        "identification_label": "uncertain",
+        "gold": null,
+        "hamdard_ref": "Hamdard 1998, mim no. 33, PDF p. 456",
+        "hazard": null,
+        "note": "The entry names several salts (borax-like, African)."
+      },
+      {
+        "id": "sarcocolla",
+        "name_en": "sarcocolla",
+        "transliteration": "anzarut",
+        "heading_ar": "أنزروت",
+        "kind": "plant resin",
+        "identification": "Astragalus sarcocolla Dymock / A. fasciculifolius Boiss. (anzarut gum resin); historical source disputed (Penaea)",
+        "identification_status": "not_in_gold",
+        "identification_label": "uncertain",
+        "gold": null,
+        "hamdard_ref": "Hamdard 1998, alif no. 65, PDF p. 92",
+        "hazard": null,
+        "note": "Botanical source of sarcocolla is disputed (Astragalus vs Penaea)."
+      },
+      {
+        "id": "st_johns_wort",
+        "name_en": "St John's wort",
+        "transliteration": "hayufariqun",
+        "heading_ar": "هيوفاريقون",
+        "kind": "plant",
+        "identification": "Hypericum perforatum L.",
+        "identification_status": "matches_gold",
+        "identification_label": "identified",
+        "gold": {
+          "gold_id": "pmc3941892.t2.r04",
+          "scientific_name": "Hypericum perforatum L.",
+          "citation": "Aliasl J, Khoshzaban F. Jundishapur J Nat Pharm Prod 2013;8(4):192-196. doi:10.17795/jjnpp-11686. PMC3941892, CC BY 3.0."
+        },
+        "hamdard_ref": "Hamdard 1998, ha no. 10, PDF p. 481",
+        "hazard": null,
+        "note": ""
+      },
+      {
+        "id": "tutty",
+        "name_en": "tutty",
+        "transliteration": "tutiya",
+        "heading_ar": "توتيا",
+        "kind": "mineral",
+        "identification": "impure zinc oxide",
+        "identification_status": "not_in_gold",
+        "identification_label": "uncertain",
+        "gold": null,
+        "hamdard_ref": "Hamdard entry not located in the PDF text layer",
+        "hazard": null,
+        "note": "Tutty is a furnace product; composition varies."
+      },
+      {
+        "id": "verdigris",
+        "name_en": "verdigris",
+        "transliteration": "zinjar",
+        "heading_ar": "زنجار",
+        "kind": "mineral",
+        "identification": "basic copper acetate",
+        "identification_status": "not_in_gold",
+        "identification_label": "uncertain",
+        "gold": null,
+        "hamdard_ref": "Hamdard 1998, za no. 17, PDF p. 258",
+        "hazard": "toxic",
+        "note": "Caustic copper salt."
+      },
+      {
+        "id": "vinegar",
+        "name_en": "vinegar",
+        "transliteration": "khall",
+        "heading_ar": "خل",
+        "kind": "preparation",
+        "identification": "vinegar (dilute acetic acid with other constituents)",
+        "identification_status": "matches_gold",
+        "identification_label": "identified",
+        "gold": {
+          "gold_id": "pmc3941892.t1.r09",
+          "scientific_name": "Acetum vinegar",
+          "citation": "Aliasl J, Khoshzaban F. Jundishapur J Nat Pharm Prod 2013;8(4):192-196. doi:10.17795/jjnpp-11686. PMC3941892, CC BY 3.0."
+        },
+        "hamdard_ref": "Hamdard 1998, kha no. 26, PDF p. 211",
+        "hazard": null,
+        "note": "Vinegar is not pure acetic acid; any modern link through acetic acid is a component-level bridge."
+      }
+    ],
+    "pairs": [
+      {
+        "substance": "acacia",
+        "condition": "burn",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "acacia",
+        "condition": "infection",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "aloe",
+        "condition": "ulcer",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "aloe",
+        "condition": "infection",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "asphodel",
+        "condition": "wound",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "asphodel",
+        "condition": "burn",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "asphodel",
+        "condition": "ulcer",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "asphodel",
+        "condition": "infection",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "beet",
+        "condition": "burn",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "beet",
+        "condition": "ulcer",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "beet",
+        "condition": "infection",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "dragons_blood",
+        "condition": "wound",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "dragons_blood",
+        "condition": "ulcer",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "frankincense",
+        "condition": "wound",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "frankincense",
+        "condition": "burn",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "frankincense",
+        "condition": "ulcer",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "frankincense",
+        "condition": "infection",
+        "past_passages": 2,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "galium",
+        "condition": "burn",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "great_plantain",
+        "condition": "wound",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "great_plantain",
+        "condition": "burn",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "great_plantain",
+        "condition": "ulcer",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "great_plantain",
+        "condition": "infection",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "henna",
+        "condition": "burn",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "honey",
+        "condition": "wound",
+        "past_passages": 1,
+        "science_studies": 1,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "honey",
+        "condition": "burn",
+        "past_passages": 0,
+        "science_studies": 1,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "honey",
+        "condition": "ulcer",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "honey",
+        "condition": "infection",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "iris",
+        "condition": "burn",
+        "past_passages": 2,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "iris",
+        "condition": "ulcer",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "isfidaj",
+        "condition": "ulcer",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "lablab",
+        "condition": "burn",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "lablab",
+        "condition": "infection",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "lentil",
+        "condition": "ulcer",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "lentil",
+        "condition": "infection",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "litharge",
+        "condition": "ulcer",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "mallow",
+        "condition": "burn",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "myrtle",
+        "condition": "burn",
+        "past_passages": 2,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "myrtle",
+        "condition": "ulcer",
+        "past_passages": 3,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "myrtle",
+        "condition": "infection",
+        "past_passages": 2,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "narcissus",
+        "condition": "wound",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "narcissus",
+        "condition": "burn",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "narcissus",
+        "condition": "ulcer",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "narcissus",
+        "condition": "infection",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "oriental_plane",
+        "condition": "wound",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "oriental_plane",
+        "condition": "burn",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "oriental_plane",
+        "condition": "infection",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "pellitory",
+        "condition": "burn",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "pellitory",
+        "condition": "infection",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "pine",
+        "condition": "wound",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "pine",
+        "condition": "burn",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "pine",
+        "condition": "ulcer",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "pitch",
+        "condition": "ulcer",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "pomegranate",
+        "condition": "wound",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "pomegranate",
+        "condition": "ulcer",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "pomegranate",
+        "condition": "infection",
+        "past_passages": 2,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "rose",
+        "condition": "ulcer",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "salt",
+        "condition": "burn",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "different",
+        "present_ingredient_key": "Q2314"
+      },
+      {
+        "substance": "sarcocolla",
+        "condition": "wound",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "st_johns_wort",
+        "condition": "wound",
+        "past_passages": 1,
+        "science_studies": 1,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "st_johns_wort",
+        "condition": "burn",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "st_johns_wort",
+        "condition": "ulcer",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "st_johns_wort",
+        "condition": "infection",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "tutty",
+        "condition": "ulcer",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "verdigris",
+        "condition": "ulcer",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "verdigris",
+        "condition": "infection",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "none",
+        "present_ingredient_key": null
+      },
+      {
+        "substance": "vinegar",
+        "condition": "wound",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "component",
+        "present_ingredient_key": "Q47512"
+      },
+      {
+        "substance": "vinegar",
+        "condition": "burn",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "component",
+        "present_ingredient_key": "Q47512"
+      },
+      {
+        "substance": "vinegar",
+        "condition": "ulcer",
+        "past_passages": 1,
+        "science_studies": 0,
+        "present_link": "component",
+        "present_ingredient_key": "Q47512"
+      },
+      {
+        "substance": "vinegar",
+        "condition": "infection",
+        "past_passages": 2,
+        "science_studies": 2,
+        "present_link": "component",
+        "present_ingredient_key": "Q47512"
+      }
+    ],
+    "sources": [
+      {
+        "id": "openiti_canon",
+        "citation": "Ibn Sina, al-Qanun fi al-Tibb, Book 2. OpenITI 0428IbnSina.QanunFiTibb.Shamela0010706-ara1, commit 81d1d9e (2025-11-27); OpenITI release 2025.1.9, doi:10.5281/zenodo.17767721. OpenITI flags typos and missing parts in this version.",
+        "license": "CC BY-NC-SA 4.0"
+      },
+      {
+        "id": "pmc3941892",
+        "citation": "Aliasl J, Khoshzaban F. Jundishapur J Nat Pharm Prod 2013;8(4):192-196. doi:10.17795/jjnpp-11686. PMC3941892, CC BY 3.0.",
+        "license": "CC BY 3.0"
+      },
+      {
+        "id": "hamdard",
+        "citation": "Al-Qanun fi'l-Tibb, Book II, English translation of the critical Arabic text. Jamia Hamdard, New Delhi, 1998. Cited only.",
+        "license": "© Jamia Hamdard"
+      },
+      {
+        "id": "faers",
+        "citation": "FDA Adverse Event Reporting System (FAERS) quarterly data (Collective Memory).",
+        "license": "CC0"
+      }
+    ],
+    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+  },
+  "pairs": [
+    {
+      "request": {
+        "substance": "st_johns_wort",
+        "condition": "wound"
+      },
+      "answer": {
+        "schema_version": "seance-1",
+        "substance": {
+          "id": "st_johns_wort",
+          "name_en": "St John's wort",
+          "transliteration": "hayufariqun",
+          "heading_ar": "هيوفاريقون",
+          "kind": "plant",
+          "identification": "Hypericum perforatum L.",
+          "identification_status": "matches_gold",
+          "identification_label": "identified",
+          "gold": {
+            "gold_id": "pmc3941892.t2.r04",
+            "scientific_name": "Hypericum perforatum L.",
+            "citation": "Aliasl J, Khoshzaban F. Jundishapur J Nat Pharm Prod 2013;8(4):192-196. doi:10.17795/jjnpp-11686. PMC3941892, CC BY 3.0."
+          },
+          "hamdard_ref": "Hamdard 1998, ha no. 10, PDF p. 481",
+          "hazard": null,
+          "note": ""
+        },
+        "condition": "wound",
+        "witnesses": {
+          "past": {
+            "supports": true,
+            "confidence": "low",
+            "missing_reason": null,
+            "items": [
+              {
+                "claim_id": "canon.b2.h0219.l12231.59572a:wound",
+                "locator": {
+                  "entry_id": "canon.b2.h0219",
+                  "span_id": "canon.b2.h0219.l12231.59572a",
+                  "book": 2,
+                  "page": "V01P447",
+                  "line_start": 12231,
+                  "line_end": 12232
+                },
+                "arabic_span": "ضماد ورقه ينفع من حرق النار ويدمل الجراحات العظيمة والقروح الرديئة وإذا دق ونثر على القروح المترهلة والمتعفنة ينفع.",
+                "translation": "A plaster of its leaves helps fire burns and closes large wounds and bad ulcers; pounded and sprinkled on flabby and putrefying ulcers it helps.",
+                "translation_kind": "machine_translation",
+                "use_en": "Leaves as a plaster; pounded and sprinkled on ulcers.",
+                "ai_review": "passed_both",
+                "expert_review": "pending",
+                "headline_eligible": true
+              }
+            ]
+          },
+          "present": {
+            "supports": false,
+            "confidence": "none",
+            "missing_reason": "no_faers_mapping",
+            "items": [],
+            "observed": null,
+            "pts": [
+              "Wound",
+              "Skin wound",
+              "Wound complication",
+              "Impaired healing",
+              "Wound dehiscence",
+              "Wound secretion",
+              "Wound haemorrhage"
+            ],
+            "codes": [
+              "spontaneous_reports",
+              "reports_not_people",
+              "not_deduplicated_across_cases",
+              "reporting_bias_notoriety_indication",
+              "screening_pattern_not_effect"
+            ]
+          },
+          "science": {
+            "supports": true,
+            "confidence": "low",
+            "missing_reason": null,
+            "items": [
+              {
+                "evidence_id": "paper:seance_science:samadi_2010",
+                "doi": "10.1089/acm.2009.0317",
+                "title": "The effect of Hypericum perforatum on the wound healing and scar of cesarean",
+                "study_type": "rct",
+                "finding_en": "Randomised double-blind trial in 144 women after caesarean section: a topical Hypericum perforatum ointment was associated with better wound-healing scores on day 10 and less scarring on day 40 than a placebo ointment or no ointment.",
+                "integrity_status": "unknown"
+              }
+            ],
+            "excluded": []
+          }
+        },
+        "supporting_witnesses": 2,
+        "missing_witnesses": ["present"],
+        "framing": "hypothesis_not_treatment",
+        "headline": {
+          "eligible": true,
+          "reasons": []
+        },
+        "sources": [
+          {
+            "id": "openiti_canon",
+            "citation": "Ibn Sina, al-Qanun fi al-Tibb, Book 2. OpenITI 0428IbnSina.QanunFiTibb.Shamela0010706-ara1, commit 81d1d9e (2025-11-27); OpenITI release 2025.1.9, doi:10.5281/zenodo.17767721. OpenITI flags typos and missing parts in this version.",
+            "license": "CC BY-NC-SA 4.0"
+          },
+          {
+            "id": "pmc3941892",
+            "citation": "Aliasl J, Khoshzaban F. Jundishapur J Nat Pharm Prod 2013;8(4):192-196. doi:10.17795/jjnpp-11686. PMC3941892, CC BY 3.0.",
+            "license": "CC BY 3.0"
+          },
+          {
+            "id": "hamdard",
+            "citation": "Al-Qanun fi'l-Tibb, Book II, English translation of the critical Arabic text. Jamia Hamdard, New Delhi, 1998. Cited only.",
+            "license": "© Jamia Hamdard"
+          },
+          {
+            "id": "faers",
+            "citation": "FDA Adverse Event Reporting System (FAERS) quarterly data (Collective Memory).",
+            "license": "CC0"
+          }
+        ],
+        "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+      }
+    },
+    {
+      "request": {
+        "substance": "vinegar",
+        "condition": "infection"
+      },
+      "answer": {
+        "schema_version": "seance-1",
+        "substance": {
+          "id": "vinegar",
+          "name_en": "vinegar",
+          "transliteration": "khall",
+          "heading_ar": "خل",
+          "kind": "preparation",
+          "identification": "vinegar (dilute acetic acid with other constituents)",
+          "identification_status": "matches_gold",
+          "identification_label": "identified",
+          "gold": {
+            "gold_id": "pmc3941892.t1.r09",
+            "scientific_name": "Acetum vinegar",
+            "citation": "Aliasl J, Khoshzaban F. Jundishapur J Nat Pharm Prod 2013;8(4):192-196. doi:10.17795/jjnpp-11686. PMC3941892, CC BY 3.0."
+          },
+          "hamdard_ref": "Hamdard 1998, kha no. 26, PDF p. 211",
+          "hazard": null,
+          "note": "Vinegar is not pure acetic acid; any modern link through acetic acid is a component-level bridge."
+        },
+        "condition": "infection",
+        "witnesses": {
+          "past": {
+            "supports": true,
+            "confidence": "low",
+            "missing_reason": null,
+            "items": [
+              {
+                "claim_id": "canon.b2.h0802.l19263.d706fc:infection",
+                "locator": {
+                  "entry_id": "canon.b2.h0802",
+                  "span_id": "canon.b2.h0802.l19263.d706fc",
+                  "book": 2,
+                  "page": "V01P714",
+                  "line_start": 19263,
+                  "line_end": 19265
+                },
+                "arabic_span": "يمنع حدوث الأورام وسعي الغانغرينا ويشفي الحمرة أكلا ونطلا ويمنع من سعي كل ورم وينفع من الداحس ويمنع من النملة والجمرة فإذا طلي به أن يحدث منه الورم.",
+                "translation": "It prevents swellings from forming and gangrene from spreading, heals erysipelas taken by mouth and poured over, stops the spread of every swelling, helps a whitlow, and keeps off namla and carbuncle; [garbled in the text:] when painted on, that a swelling arise from it [probably 'it prevents a swelling from arising'].",
+                "translation_kind": "machine_translation",
+                "use_en": "Taken and poured over; as a liniment to prevent swelling.",
+                "ai_review": "passed_both",
+                "expert_review": "pending",
+                "headline_eligible": true
+              },
+              {
+                "claim_id": "canon.b2.h0802.l19266.68dce9:infection",
+                "locator": {
+                  "entry_id": "canon.b2.h0802",
+                  "span_id": "canon.b2.h0802.l19266.68dce9",
+                  "book": 2,
+                  "page": "V01P714",
+                  "line_start": 19266,
+                  "line_end": 19267
+                },
+                "arabic_span": "إذا وضع على الجراحات صوف مبلول بخل منعها أن ترم وينفع سعي القروح الساعية والجرب والقوباء وينفع من حرق النار أسرع من كل شيء.",
+                "translation": "Wool soaked in vinegar and put on wounds keeps them from swelling; it helps creeping ulcers from spreading, and scabies and tetter; and it helps fire burns faster than anything.",
+                "translation_kind": "machine_translation",
+                "use_en": "Wool soaked in vinegar on wounds; applied to creeping ulcers and fire burns.",
+                "ai_review": "passed_both",
+                "expert_review": "pending",
+                "headline_eligible": true
+              }
+            ]
+          },
+          "present": {
+            "supports": false,
+            "confidence": "none",
+            "missing_reason": "too_few_reports",
+            "items": [],
+            "observed": {
+              "ingredient_key": "Q47512",
+              "exposure_match": "component",
+              "reports_with_both": 0,
+              "reports_with_ingredient": 59,
+              "ror": null,
+              "ror_ci": null,
+              "snapshot_date": "2026-10-28"
+            },
+            "pts": [
+              "Wound infection",
+              "Wound infection bacterial",
+              "Wound infection staphylococcal",
+              "Wound infection pseudomonas",
+              "Postoperative wound infection",
+              "Infected skin ulcer",
+              "Burn infection",
+              "Skin infection",
+              "Skin bacterial infection",
+              "Cellulitis",
+              "Erysipelas",
+              "Impetigo",
+              "Paronychia",
+              "Furuncle",
+              "Carbuncle",
+              "Subcutaneous abscess",
+              "Gangrene"
+            ],
+            "codes": [
+              "spontaneous_reports",
+              "reports_not_people",
+              "not_deduplicated_across_cases",
+              "reporting_bias_notoriety_indication",
+              "screening_pattern_not_effect"
+            ]
+          },
+          "science": {
+            "supports": true,
+            "confidence": "low",
+            "missing_reason": null,
+            "items": [
+              {
+                "evidence_id": "paper:seance_science:halstead_2015",
+                "doi": "10.1371/journal.pone.0136190",
+                "title": "The Antibacterial Activity of Acetic Acid against Biofilm-Producing Pathogens of Relevance to Burns Patients",
+                "study_type": "in_vitro",
+                "finding_en": "Laboratory study of 29 isolates of common burn-wound pathogens: dilute acetic acid (0.16-0.31 percent) inhibited growth, prevented biofilm formation and eradicated mature biofilms after three hours.",
+                "integrity_status": "unknown"
+              },
+              {
+                "evidence_id": "paper:seance_science:nagoba_2013",
+                "doi": "10.1016/j.jiph.2013.05.005",
+                "title": "Acetic acid treatment of pseudomonal wound infections - a review",
+                "study_type": "narrative_review",
+                "finding_en": "Narrative review of acetic acid as a topical agent for Pseudomonas aeruginosa wound infections, including multidrug-resistant strains.",
+                "integrity_status": "unknown"
+              }
+            ],
+            "excluded": []
+          }
+        },
+        "supporting_witnesses": 2,
+        "missing_witnesses": ["present"],
+        "framing": "hypothesis_not_treatment",
+        "headline": {
+          "eligible": true,
+          "reasons": []
+        },
+        "sources": [
+          {
+            "id": "openiti_canon",
+            "citation": "Ibn Sina, al-Qanun fi al-Tibb, Book 2. OpenITI 0428IbnSina.QanunFiTibb.Shamela0010706-ara1, commit 81d1d9e (2025-11-27); OpenITI release 2025.1.9, doi:10.5281/zenodo.17767721. OpenITI flags typos and missing parts in this version.",
+            "license": "CC BY-NC-SA 4.0"
+          },
+          {
+            "id": "pmc3941892",
+            "citation": "Aliasl J, Khoshzaban F. Jundishapur J Nat Pharm Prod 2013;8(4):192-196. doi:10.17795/jjnpp-11686. PMC3941892, CC BY 3.0.",
+            "license": "CC BY 3.0"
+          },
+          {
+            "id": "hamdard",
+            "citation": "Al-Qanun fi'l-Tibb, Book II, English translation of the critical Arabic text. Jamia Hamdard, New Delhi, 1998. Cited only.",
+            "license": "© Jamia Hamdard"
+          },
+          {
+            "id": "faers",
+            "citation": "FDA Adverse Event Reporting System (FAERS) quarterly data (Collective Memory).",
+            "license": "CC0"
+          }
+        ],
+        "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+      }
+    }
+  ]
+}

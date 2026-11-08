@@ -81,21 +81,56 @@ defers a check to launch.
 - [ ] **Home hero art direction** (bust or isometric home diorama, possibly 3D): swap it in `apps/web/src/components/home/HomeHero.tsx` (experience DP45); check contrast, alt text and the 375 px layout again.
 - [ ] **Real devices:** local speech voices, camera scanning, PDF fonts and the Print button (it opens the PDF; check popup behaviour on iOS Safari).
 
+## Expert review (Phase 4)
+Every Phase 4 result (light-face hypothesis cards, validation and export; the séance's Canon passages, identifications,
+claims and science findings; their wording) is **AI-reviewed and pending expert review**. The researcher area says so
+(`Research.review`, `Seance.review`, `Light.review`), and every Canon passage is labelled "AI-reviewed, pending expert
+review". Nothing below has been checked by a human expert. When an item is done, record who reviewed it and when, then
+remove the matching notice (and, for the Canon claims, set `expert_review = reviewed` and re-run `canon_package`).
+
+- [ ] **Light face: mappings** (pharmacist or physician). `data/light/goals.csv` (18 conditions, FAERS PT sets,
+  five-language names) and `data/light/effect_goal_map.csv` (30 side-effect term → condition rows, `nonspecific`
+  marker, citations). Questions (light-face design §13, §14; `.kiro/specs/light-face/mapping-pharmacologist-review.md`):
+  local (application-site) effects counted with systemic ones (DP21; the topical corticosteroids in the alopecia list);
+  the post-hoc exclusions of `Priapism`, `Abnormal hair growth`, `Hair growth abnormal` and the 13 `nonspecific` terms
+  (DP22); narrowing obesity by ATC class (L01); specific citations for the rows that cite only Yang and Agarwal 2011.
+- [ ] **Light face: validation decisions** (statistician). `data/light/validation_cases.csv` (13 cases) and
+  `docs/light-face-validation.md` (`.kiro/specs/light-face/validation-statistician-review.md`): the post-hoc ranking key
+  K1 (DP23) and mapping changes (DP22); the primary run as the worse of variants (a) and (b) (DP24); TOP_K = 10 and the
+  "informative" rule (DP17); the validation is not blind (DP10); negative controls; an FDR gate for inverse signals;
+  the Wilson bound over non-independent generic labels (DP5).
+- [ ] **Séance: identifications** (pharmacognosist or pharmacologist, with a historian of Arabic medicine). The 31
+  substances of `datasets/canon/substances.csv` (15 match the PMC3941892 gold table, 6 uncertain, 10 not in it; 4
+  hazard flags: isfidaj, litharge, verdigris, narcissus). Open questions (séance design §9): lablab vs ivy
+  (*habl al-masakin*); *sawsan* iris vs white lily; *sirish* Eremurus vs Asphodelus; frankincense and mallow species;
+  *isfidaj* white lead vs zinc oxide; the source plant of dragon's blood. The screen shows "Identified" only for gold
+  matches; check that rule too (DP9).
+- [ ] **Séance: extracted claims** (historian of Arabic medicine and a pharmacologist). The 43 clauses of
+  `datasets/canon/reader_ai.csv` and the 76 claims of `datasets/canon/claims.csv` (two AI passes:
+  `review_historian.csv`, `review_pharmacologist*.csv`; `quality.json`). Check every Arabic span against a printed
+  edition, every machine translation, every condition category, the locators, and: the "infection" bridge (DP4:
+  putrefaction, pus, spreading or foul ulcers, whitlow, carbuncle, gangrene, fistula), conditions as the intersection of
+  both passes (DP14), the historian's translation winning (DP15), "harfiyya" ulcers, pellitory "given to drink" for burns,
+  the 260-character span cut (DP5). The two headline pairs (St John's wort / wound, vinegar / infection, both "2 of 3
+  witnesses") rest on these claims.
+- [ ] **Séance: present and science witnesses** (clinician or pharmacologist). The one-line findings of
+  `data/seance_science.csv` against the four papers (Samadi 2010, Halstead 2015, Nagoba 2013, Jull 2015); the
+  component bridge vinegar → acetic acid in `data/seance_present.csv` (also used to link a hypothesis card of acetic acid
+  to the séance); salt → sodium chloride kept as a different exposure (DP11); the per-witness confidence levels (DP13).
+- [ ] **Wording** (native speaker per language and a clinician). The `Seance` and `Light` namespaces and
+  `Research.review` in TR, DE, FR, ES, after the localization-reviewer passes
+  (`.kiro/specs/seance/seance-screen-review.md`, light-face design §12); the condition names in `data/light/goals.csv`
+  and the four séance condition names; the points left for natives in the séance sheet (listed there under "For the
+  experts"); the excluded-study line (the contract gives no reason per excluded paper, so the screen says "retracted or
+  not registered" instead of the zombie stamp).
+
 ## Séance (Phase 4, owner decisions 2026-11-08)
-- [ ] **Expert review of the Canon claims** (historian of Arabic medicine and a pharmacognosist or pharmacologist): the 43 clauses in `datasets/canon/reader_ai.csv` and the 76 claims in `datasets/canon/claims.csv` were read by an AI reader and passed two AI review passes (historian, pharmacologist); none is expert-reviewed (`expert_review = pending`). Check every Arabic span against a printed edition, every machine translation, every condition category, and the 31 identifications in `datasets/canon/substances.csv` (open questions: lablab vs ivy, sawsan iris vs white lily, sirish genus, frankincense and mallow species, isfidaj white lead vs zinc oxide, dragon's blood source). Only then set `expert_review = reviewed`.
-- [ ] **Science witness:** a clinician or pharmacologist checks the one-line findings in `data/seance_science.csv` against the papers, and the component bridge vinegar → acetic acid in `data/seance_present.csv`.
 - [ ] **NC licence:** the Canon data package is CC BY-NC-SA 4.0. Re-check that the deployment and any prize or commercial use stay non-commercial, and that the package is never merged into Apache-licensed files.
 - [ ] **Ottoman samples:** none were added (no verifiable page-level source in Phase 4). Add 10-20 only from a thesis or edition the team has read, with citation and page; never claim "we mined Ottoman manuscripts".
+- [ ] **Retraction check of the séance papers:** run the `retractions` pipeline so the four séance DOIs leave "not yet checked"; reload integrity and re-record `apps/web/src/seance/fixture.recorded.json` (`scripts/record-seance.mjs`).
+- [ ] **API image:** ship `datasets/canon/` in the API Docker image (séance design §10); without it `/seance/*` answers 503 and the screen says the data package is not installed.
 
 ## Light face (Phase 4, owner decisions 2026-11-08)
-- [ ] **Expert review of the light-face curated files** (pharmacist or physician, and a statistician): `data/light/goals.csv`
-  (18 conditions, FAERS PT sets, five-language names), `data/light/effect_goal_map.csv` (side-effect term → condition, 30 rows,
-  nonspecific marker, citations) and `data/light/validation_cases.csv` (13 cases). All are "AI-reviewed, pending expert review"
-  (pharmacologist and statistician agent passes: `.kiro/specs/light-face/mapping-pharmacologist-review.md`,
-  `validation-statistician-review.md`). Open questions are listed in design §13 and §14 (local-effect rule, obesity narrowing by
-  ATC class, specific citations for the rows that cite only Yang and Agarwal 2011, the post-hoc ranking key and mapping changes,
-  negative controls, an FDR gate for inverse signals). Only then remove the "pending expert review" notice.
-- [ ] **Native-speaker check of the `Light` namespace** and of the condition names in `data/light/goals.csv` (TR, DE, FR, ES).
 - [ ] **Mechanism field:** connect the séance spec's molecular witness (ChEMBL, CC BY-SA 3.0) or keep "no mechanism source
   connected"; if ChEMBL data enters the export, the export licence must change (share-alike).
 - [ ] **OnSIDES refresh:** the pipeline pins the v3.1.1 asset by SHA-256; a new data release is a reviewed code change, after which

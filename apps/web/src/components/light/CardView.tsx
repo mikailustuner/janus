@@ -9,7 +9,7 @@ import { useLocale } from "next-intl";
 
 import { CiBar } from "@/components/memory/CiBar";
 import { formatCount, formatDate, formatRatio } from "@/components/format";
-import { Card, Chip } from "@/components/ui";
+import { ButtonLink, Card, Chip } from "@/components/ui";
 import { ratioOf } from "@/flow/memory";
 import type {
   Card as CardData,
@@ -18,6 +18,9 @@ import type {
   Source,
 } from "@/light/model";
 import { nameIn, rankText } from "@/light/view";
+import { requestPair } from "@/seance/client";
+import type { CatalogueOut } from "@/seance/model";
+import { crossLinks } from "@/seance/view";
 import { useT, useThemeWord } from "@/theme/words";
 
 function SourceList({
@@ -214,12 +217,67 @@ function Signal({ s, snapshot }: { s: CardSignal; snapshot: LightSnapshot }) {
   return null;
 }
 
+/**
+ * The séance pairs of the same FAERS ingredient (same exposure or a component; never a different
+ * exposure), as links that open the séance screen on that pair without putting it in the URL.
+ */
+function SeanceLinks({
+  cat,
+  ingredient,
+}: {
+  cat: CatalogueOut;
+  ingredient: string;
+}) {
+  const t = useT();
+  const w = useThemeWord();
+  const links = crossLinks(cat, ingredient);
+  if (!links.length) return null;
+  return (
+    <section className="flex flex-col gap-2 text-sm" data-testid="seance-links">
+      <h4 className="font-semibold">{w("Seance.crossLink.title")}</h4>
+      <ul className="flex flex-col gap-1">
+        {links.flatMap((l) =>
+          l.pairs.map((p) => (
+            <li key={`${p.substance}-${p.condition}`} className="flex flex-col">
+              <span>
+                {t(
+                  p.present_link === "same"
+                    ? "Seance.crossLink.same"
+                    : "Seance.crossLink.component",
+                )}
+              </span>
+              <ButtonLink
+                href="/research/seance"
+                variant="quiet"
+                className="px-0 text-start"
+                onClick={() =>
+                  requestPair({
+                    substance: p.substance,
+                    condition: p.condition,
+                  })
+                }
+              >
+                {t("Seance.crossLink.open", {
+                  substance: l.substance.name_en,
+                  condition: t(`Seance.condition.${p.condition}`),
+                })}
+              </ButtonLink>
+            </li>
+          )),
+        )}
+      </ul>
+    </section>
+  );
+}
+
 export function CardView({
   card,
   snapshot,
+  seance = null,
 }: {
   card: CardData;
   snapshot: LightSnapshot;
+  seance?: CatalogueOut | null;
 }) {
   const t = useT();
   const locale = useLocale();
@@ -252,6 +310,9 @@ export function CardView({
             <Signal key={s.type} s={s} snapshot={snapshot} />
           ))}
           <SourceList sources={card.sources} removed={card.removed_sources} />
+          {seance ? (
+            <SeanceLinks cat={seance} ingredient={card.ingredient.key} />
+          ) : null}
           <p className="text-sm">
             <span className="font-semibold">{t("Light.card.mechanism")}: </span>
             {t("Light.codes.mechanism_source_not_connected")}

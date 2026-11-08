@@ -498,7 +498,7 @@
     "title": "Research",
     "intro": "The same side-effect knowledge, turned around for research. This section is not part of the patient flow.",
     "rule7": "Repurposing outputs are candidates worth investigating — not treatments.",
-    "coming": "Coming in Phase 4.",
+    "review": "Phase 4 content (hypothesis cards, the three witnesses, validation and export) is AI-reviewed and pending expert review.",
     "entries": {
       "hypotheses": {
         "title": "Hypothesis cards",
@@ -1095,5 +1095,175 @@
     "errors": {
       "unavailable": "The research data is not available right now. Please try again later."
     }
+  },
+  "Seance": {
+    "title": {
+      "twoFaces": "The séance: three witnesses",
+      "glass": "Evidence summary"
+    },
+    "intro": {
+      "twoFaces": "Three witnesses take their seats at one table: the past (Ibn Sina's Canon of Medicine, Book 2), the present (FAERS reports in Collective Memory) and science (studies passed through Evidence Integrity). Each speaks for itself; Janus never merges them into one score.",
+      "glass": "Three independent witnesses side by side: the past (Ibn Sina's Canon of Medicine, Book 2), the present (FAERS reports in Collective Memory) and science (studies passed through Evidence Integrity). Each is shown on its own; Janus never merges them into one score."
+    },
+    "table": {
+      "twoFaces": "The séance table",
+      "glass": "The three witnesses"
+    },
+    "framing": "Candidate worth investigating — not a treatment.",
+    "review": "Phase 4 content: the Canon passages, their machine translations, the identifications and the extracted claims passed two AI review passes (historian and pharmacologist agents) and are pending expert review.",
+    "researcherOnly": "For researchers. Nothing on this page is shown in the patient pages.",
+    "demo": "Demo: the catalogue and the two pairs recorded from the real data on {date}; no request is sent.",
+    "pick": {
+      "legend": "Choose a pair",
+      "substance": "Substance",
+      "condition": "Condition",
+      "pairInfo": "{passages, plural, =0 {no passage} one {# passage} other {# passages}} · {studies, plural, =0 {no study} one {# study} other {# studies}}"
+    },
+    "condition": {
+      "wound": "Wounds",
+      "burn": "Burns",
+      "ulcer": "Skin ulcers",
+      "infection": "Wound and skin infection"
+    },
+    "infectionBridge": "The Canon has no concept of infection. Janus reads putrefaction, pus, spreading or foul ulcers, whitlow, carbuncle, gangrene and fistula as “infection”; this bridge is an interpretation.",
+    "loading": "Loading the witnesses…",
+    "count": "{count} of 3 witnesses",
+    "countNote": "A count of the witnesses that speak, not a score and not a measure of strength.",
+    "missing": "Missing witnesses: {names}",
+    "noneMissing": "No witness is missing. This is still a hypothesis to test.",
+    "zero": "No witness speaks for this pair in this data.",
+    "witness": {
+      "past": "the past",
+      "present": "the present",
+      "science": "science"
+    },
+    "headline": {
+      "eligible": "Passed both AI review passes and is not flagged as toxic or caustic: may be shown as a demo example.",
+      "notEligible": "Not shown as a demo example: {reasons}.",
+      "reason": {
+        "no_eligible_passage": "no passage passed both AI review passes",
+        "hazardous_substance": "the substance is flagged as toxic or caustic"
+      }
+    },
+    "substance": {
+      "heading": "Heading in the Canon",
+      "identification": "Identification: {name}",
+      "identified": "Identified (matches PMC3941892)",
+      "uncertain": "Identification uncertain",
+      "gold": "PMC3941892 table: {name}",
+      "notInGold": "Not in the PMC3941892 table; one source only.",
+      "hamdard": "Also cited: {ref} (citation only, no text shown)",
+      "note": "Note (English): {text}",
+      "kind": {
+        "plant": "plant",
+        "mineral": "mineral",
+        "plant_resin": "plant resin",
+        "animal_product": "animal product",
+        "preparation": "preparation"
+      },
+      "hazard": {
+        "toxic": "Historical record only — toxic substance.",
+        "caustic": "Historical record only — caustic substance."
+      }
+    },
+    "seat": {
+      "past": {
+        "title": "The past",
+        "source": "Ibn Sina, the Canon of Medicine, Book 2 (OpenITI text)"
+      },
+      "present": {
+        "title": "The present",
+        "source": "FAERS reports in Collective Memory"
+      },
+      "science": {
+        "title": "Science",
+        "source": "Studies passed through Evidence Integrity (status shown for each study)"
+      },
+      "speaks": "Speaks",
+      "silent": "Does not support",
+      "confidence": "Confidence: {level}",
+      "items": "{count, plural, one {# item} other {# items}}"
+    },
+    "confidence": {
+      "none": "none",
+      "low": "low",
+      "moderate": "moderate"
+    },
+    "missingReason": {
+      "no_canon_passage": "No Canon passage for this pair.",
+      "passages_rejected_by_review": "The passages for this pair were rejected by an AI review pass.",
+      "no_faers_mapping": "No FAERS link for this substance.",
+      "exposure_differs": "The FAERS ingredient is a different exposure; it is not counted.",
+      "counts_unavailable": "FAERS counts are not available right now.",
+      "no_protective_association": "No lower-than-expected reporting pattern in FAERS.",
+      "too_few_reports": "Too few FAERS reports to look for a pattern.",
+      "no_study_listed": "No study is listed for this pair.",
+      "no_citable_study": "No listed study passed Evidence Integrity.",
+      "studies_do_not_support": "The listed studies do not support this pair.",
+      "integrity_unavailable": "Evidence Integrity is not available right now, so no study is shown."
+    },
+    "past": {
+      "arabic": "Arabic text",
+      "mt": "Machine translation (English)",
+      "aiReviewed": "AI-reviewed, pending expert review",
+      "expertReviewed": "Expert-reviewed",
+      "summary": "Janus summary (machine-written, English): {text}",
+      "locator": "Canon, Book {book}, entry {entry}, page {page}, lines {start}–{end} (OpenITI)",
+      "locatorNoPage": "Canon, Book {book}, entry {entry}, lines {start}–{end} (OpenITI)"
+    },
+    "present": {
+      "observed": "{both, plural, one {# report} other {# reports}} with one of the condition's terms, among {total, plural, one {# FAERS report} other {# FAERS reports}} that name the linked ingredient (Wikidata {key}) as a suspect.",
+      "match": {
+        "same": "The FAERS ingredient is the same substance.",
+        "component": "The FAERS ingredient is a component of this substance, not the substance itself.",
+        "different": "The FAERS ingredient is a different exposure (for example given by drip); it is not counted as a witness."
+      },
+      "pts": "MedDRA Preferred Terms counted for this condition: {pts}",
+      "snapshot": "FAERS snapshot {date}; all regions; suspect medicines only.",
+      "item": "{both, plural, one {# report} other {# reports}} of {total}, reporting odds ratio below 1"
+    },
+    "codes": {
+      "spontaneous_reports": "FAERS is spontaneous reporting: it does not show how often something happens.",
+      "reports_not_people": "Counts are reports, not people.",
+      "not_deduplicated_across_cases": "Reports are not deduplicated: one case can be reported more than once.",
+      "reporting_bias_notoriety_indication": "Reporting bias: known effects are reported more often (notoriety bias), and the reason a medicine is given is often recorded as the indication rather than as an event (indication bias).",
+      "screening_pattern_not_effect": "A lower-than-expected count is a screening pattern, not evidence of an effect."
+    },
+    "science": {
+      "studyType": {
+        "systematic_review": "Systematic review",
+        "rct": "Randomised controlled trial",
+        "clinical_other": "Other clinical study",
+        "animal": "Animal study",
+        "in_vitro": "Laboratory (in vitro) study",
+        "narrative_review": "Narrative review"
+      },
+      "finding": "Finding (machine-written summary, English): {text}",
+      "integrity": {
+        "ok": "No notice",
+        "corrected": "Correction published",
+        "expression_of_concern": "Expression of concern",
+        "unknown": "Not yet checked against retraction data"
+      },
+      "excluded": "{count, plural, one {# listed study was removed by Evidence Integrity (retracted or not registered).} other {# listed studies were removed by Evidence Integrity (retracted or not registered).}}",
+      "targets": "Molecular targets: no source is connected yet.",
+      "titleWithheld": "Title not shown: its wording falls outside Janus's language rules. Open the DOI to read it."
+    },
+    "sources": "Sources and licences",
+    "licence": "Licence: {license}",
+    "errors": {
+      "unavailable": "The Canon data package is not installed on this server, so the three witnesses cannot be shown."
+    },
+    "empty": "No pair is listed in this data.",
+    "crossLink": {
+      "title": {
+        "twoFaces": "Also at the séance table",
+        "glass": "Also in the evidence summary"
+      },
+      "open": "{substance}: {condition}",
+      "same": "This FAERS ingredient is the same substance as one in the Canon:",
+      "component": "This FAERS ingredient is a component of a substance in the Canon, not the same exposure:"
+    },
+    "notListed": "The pair you chose is not available here; the first available pair is shown instead."
   }
 }

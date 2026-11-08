@@ -77,6 +77,17 @@ def test_every_pair_answers_with_separate_witnesses(client: TestClient) -> None:
         assert d["disclaimer"].startswith("Janus provides information, not medical advice.")
 
 
+def test_catalogue_pairs_carry_the_present_ingredient_key(client: TestClient) -> None:
+    """The catalogue names the FAERS ingredient of a present link (for the hypothesis-card
+    cross-reference) and nothing when there is no link."""
+    pairs = client.get("/seance/catalogue").json()["pairs"]
+    assert pairs
+    for p in pairs:
+        link = CAT.present.get(p["substance"])
+        assert p["present_link"] == (link.exposure_match if link else "none")
+        assert p["present_ingredient_key"] == (link.ingredient_key if link else None)
+
+
 def test_no_forbidden_or_reassuring_words(client: TestClient) -> None:
     """P18 (medical-safety rules 2, 3): no forbidden phrase or reassurance word in any English
     text of the catalogue or of a séance answer (Arabic quotations are not English text)."""

@@ -299,6 +299,7 @@ def catalogue(cat: Catalogue) -> CatalogueOut:
                         past_passages=past,
                         science_studies=science,
                         present_link=link.exposure_match if link else "none",
+                        present_ingredient_key=link.ingredient_key if link else None,
                     )
                 )
     return CatalogueOut(

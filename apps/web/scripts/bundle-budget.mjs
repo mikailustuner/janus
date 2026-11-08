@@ -54,6 +54,7 @@ const ROUTES = [
   "en/settings",
   "en/demo",
   "en/research",
+  "en/research/seance",
   "o",
 ];
 

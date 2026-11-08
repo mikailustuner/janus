@@ -498,7 +498,7 @@
     "title": "Recherche",
     "intro": "Les mêmes connaissances sur les effets indésirables, retournées pour la recherche. Cette section ne fait pas partie du parcours patient.",
     "rule7": "Les résultats de repositionnement sont des candidats à étudier — pas des traitements.",
-    "coming": "Prévu pour la phase 4.",
+    "review": "Le contenu de la phase 4 (fiches d'hypothèses, les trois témoins, validation et export) a été relu par une IA ; la relecture par des experts reste à faire.",
     "entries": {
       "hypotheses": {
         "title": "Fiches d'hypothèses",
@@ -1095,5 +1095,175 @@
     "errors": {
       "unavailable": "Les données de recherche ne sont pas disponibles pour le moment. Veuillez réessayer plus tard."
     }
+  },
+  "Seance": {
+    "title": {
+      "twoFaces": "La séance : trois témoins",
+      "glass": "Synthèse des preuves"
+    },
+    "intro": {
+      "twoFaces": "Trois témoins prennent place à une même table : le passé (le Canon de la médecine d'Ibn Sina, livre 2), le présent (les déclarations FAERS de la Mémoire collective) et la science (des études passées par l'Intégrité des preuves). Chacun parle pour lui-même ; Janus ne les fond jamais en un seul score.",
+      "glass": "Trois témoins indépendants côte à côte : le passé (le Canon de la médecine d'Ibn Sina, livre 2), le présent (les déclarations FAERS de la Mémoire collective) et la science (des études passées par l'Intégrité des preuves). Chacun est présenté à part ; Janus ne les fond jamais en un seul score."
+    },
+    "table": {
+      "twoFaces": "La table de la séance",
+      "glass": "Les trois témoins"
+    },
+    "framing": "Candidat qui mérite d'être étudié — pas un traitement.",
+    "review": "Contenu de la phase 4 : les passages du Canon, leurs traductions automatiques, les identifications et les affirmations extraites ont passé deux relectures par IA (agents historien et pharmacologue) ; la relecture par des experts reste à faire.",
+    "researcherOnly": "Pour les chercheurs. Rien sur cette page n'apparaît dans les pages patient.",
+    "demo": "Démo : le catalogue et les deux paires ont été enregistrés à partir des données réelles le {date} ; aucune requête n'est envoyée.",
+    "pick": {
+      "legend": "Choisir une paire",
+      "substance": "Substance",
+      "condition": "Affection",
+      "pairInfo": "{passages, plural, =0 {aucun passage} one {# passage} other {# passages}} · {studies, plural, =0 {aucune étude} one {# étude} other {# études}}"
+    },
+    "condition": {
+      "wound": "Plaies",
+      "burn": "Brûlures",
+      "ulcer": "Ulcères cutanés",
+      "infection": "Infection des plaies et de la peau"
+    },
+    "infectionBridge": "Le Canon ne connaît pas la notion d'infection. Janus lit la putréfaction, le pus, les ulcères extensifs ou fétides, le panaris, l'anthrax, la gangrène et la fistule comme « infection » ; ce pont est une interprétation.",
+    "loading": "Chargement des témoins…",
+    "count": "{count, plural, one {# témoin sur 3} other {# témoins sur 3}}",
+    "countNote": "Un décompte des témoins qui parlent, pas un score ni une mesure de force.",
+    "missing": "Témoins manquants : {names}",
+    "noneMissing": "Aucun témoin ne manque. Cela reste une hypothèse à tester.",
+    "zero": "Aucun témoin ne parle pour cette paire dans ces données.",
+    "witness": {
+      "past": "le passé",
+      "present": "le présent",
+      "science": "la science"
+    },
+    "headline": {
+      "eligible": "A passé les deux relectures par IA et n'est pas signalée comme toxique ou caustique : peut servir d'exemple de démo.",
+      "notEligible": "N'est pas montré comme exemple de démo : {reasons}.",
+      "reason": {
+        "no_eligible_passage": "aucun passage n'a passé les deux relectures par IA",
+        "hazardous_substance": "la substance est signalée comme toxique ou caustique"
+      }
+    },
+    "substance": {
+      "heading": "Titre dans le Canon",
+      "identification": "Identification : {name}",
+      "identified": "Identifiée (concorde avec PMC3941892)",
+      "uncertain": "Identification incertaine",
+      "gold": "Table PMC3941892 : {name}",
+      "notInGold": "Absente de la table PMC3941892 ; une seule source.",
+      "hamdard": "Également cité : {ref} (citation seulement, aucun texte affiché)",
+      "note": "Remarque (en anglais) : {text}",
+      "kind": {
+        "plant": "plante",
+        "mineral": "minéral",
+        "plant_resin": "résine végétale",
+        "animal_product": "produit animal",
+        "preparation": "préparation"
+      },
+      "hazard": {
+        "toxic": "Mention historique uniquement — substance toxique.",
+        "caustic": "Mention historique uniquement — substance caustique."
+      }
+    },
+    "seat": {
+      "past": {
+        "title": "Le passé",
+        "source": "Ibn Sina, le Canon de la médecine, livre 2 (texte OpenITI)"
+      },
+      "present": {
+        "title": "Le présent",
+        "source": "Déclarations FAERS de la Mémoire collective"
+      },
+      "science": {
+        "title": "La science",
+        "source": "Études passées par l'Intégrité des preuves (statut indiqué pour chaque étude)"
+      },
+      "speaks": "Parle",
+      "silent": "N'appuie pas",
+      "confidence": "Confiance : {level}",
+      "items": "{count, plural, one {# élément} other {# éléments}}"
+    },
+    "confidence": {
+      "none": "aucune",
+      "low": "faible",
+      "moderate": "modérée"
+    },
+    "missingReason": {
+      "no_canon_passage": "Aucun passage du Canon pour cette paire.",
+      "passages_rejected_by_review": "Les passages de cette paire ont été rejetés lors d'une relecture par IA.",
+      "no_faers_mapping": "Aucun lien FAERS pour cette substance.",
+      "exposure_differs": "La substance active FAERS est une autre exposition ; il n'est pas compté.",
+      "counts_unavailable": "Les décomptes FAERS ne sont pas disponibles pour le moment.",
+      "no_protective_association": "Aucun profil de déclaration inférieur à l'attendu dans FAERS.",
+      "too_few_reports": "Trop peu de déclarations FAERS pour chercher un profil.",
+      "no_study_listed": "Aucune étude n'est listée pour cette paire.",
+      "no_citable_study": "Aucune étude listée n'a passé l'Intégrité des preuves.",
+      "studies_do_not_support": "Les études listées n'appuient pas cette paire.",
+      "integrity_unavailable": "L'Intégrité des preuves n'est pas disponible pour le moment ; aucune étude n'est donc affichée."
+    },
+    "past": {
+      "arabic": "Texte arabe",
+      "mt": "Traduction automatique (anglais)",
+      "aiReviewed": "Relu par une IA, relecture par des experts en attente",
+      "expertReviewed": "Relu par des experts",
+      "summary": "Résumé de Janus (rédigé par machine, en anglais) : {text}",
+      "locator": "Canon, livre {book}, entrée {entry}, page {page}, lignes {start}–{end} (OpenITI)",
+      "locatorNoPage": "Canon, livre {book}, entrée {entry}, lignes {start}–{end} (OpenITI)"
+    },
+    "present": {
+      "observed": "{both, plural, one {# déclaration} other {# déclarations}} avec l'un des termes de l'affection, parmi {total, plural, one {# déclaration FAERS} other {# déclarations FAERS}} qui citent la substance active liée (Wikidata {key}) comme suspect.",
+      "match": {
+        "same": "La substance active FAERS est la même substance.",
+        "component": "La substance active FAERS est un composant de cette substance, pas la substance elle-même.",
+        "different": "La substance active FAERS est une autre exposition (par exemple en perfusion) ; il n'est pas compté comme témoin."
+      },
+      "pts": "Termes préférentiels MedDRA comptés pour cette affection : {pts}",
+      "snapshot": "Instantané FAERS du {date} ; toutes les régions ; médicaments suspects uniquement.",
+      "item": "{both, plural, one {# déclaration} other {# déclarations}} sur {total}, rapport de cotes de déclaration inférieur à 1"
+    },
+    "codes": {
+      "spontaneous_reports": "FAERS repose sur la notification spontanée : il ne montre pas à quelle fréquence quelque chose se produit.",
+      "reports_not_people": "On compte des déclarations, pas des personnes.",
+      "not_deduplicated_across_cases": "Les déclarations ne sont pas dédoublonnées : un même cas peut être déclaré plusieurs fois.",
+      "reporting_bias_notoriety_indication": "Biais de notification : les effets connus sont plus souvent déclarés (biais de notoriété), et la raison pour laquelle un médicament est donné est souvent enregistrée comme indication plutôt que comme événement (biais d'indication).",
+      "screening_pattern_not_effect": "Un nombre inférieur à l'attendu est un profil de dépistage, pas la preuve d'un effet."
+    },
+    "science": {
+      "studyType": {
+        "systematic_review": "Revue systématique",
+        "rct": "Essai contrôlé randomisé",
+        "clinical_other": "Autre étude clinique",
+        "animal": "Étude chez l'animal",
+        "in_vitro": "Étude de laboratoire (in vitro)",
+        "narrative_review": "Revue narrative"
+      },
+      "finding": "Résultat (résumé rédigé par machine, en anglais) : {text}",
+      "integrity": {
+        "ok": "Aucun avis",
+        "corrected": "Erratum publié",
+        "expression_of_concern": "Expression de préoccupation",
+        "unknown": "Pas encore vérifiée dans les données de rétractation"
+      },
+      "excluded": "{count, plural, one {# étude listée a été retirée par l'Intégrité des preuves (rétractée ou non enregistrée).} other {# études listées ont été retirées par l'Intégrité des preuves (rétractées ou non enregistrées).}}",
+      "targets": "Cibles moléculaires : aucune source n'est encore connectée.",
+      "titleWithheld": "Titre non affiché : sa formulation sort des règles de langage de Janus. Ouvrez le DOI pour le lire."
+    },
+    "sources": "Sources et licences",
+    "licence": "Licence : {license}",
+    "errors": {
+      "unavailable": "Le paquet de données du Canon n'est pas installé sur ce serveur ; les trois témoins ne peuvent donc pas être affichés."
+    },
+    "empty": "Aucune paire n'est listée dans ces données.",
+    "crossLink": {
+      "title": {
+        "twoFaces": "Aussi à la table de la séance",
+        "glass": "Aussi dans la synthèse des preuves"
+      },
+      "open": "{substance} : {condition}",
+      "same": "Cette substance active FAERS est la même qu'une substance du Canon :",
+      "component": "Cette substance active FAERS est un composant d'une substance du Canon, pas la même exposition :"
+    },
+    "notListed": "La paire choisie n'est pas disponible ici ; la première paire disponible est affichée à la place."
   }
 }

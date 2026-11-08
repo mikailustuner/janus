@@ -224,7 +224,8 @@ counts file or evidence store makes that witness missing; the request still answ
 
 ### 7.1 Calls
 - `GET /seance/catalogue` → `CatalogueOut`: `substances[]` (`SubstanceOut`), `pairs[]`
-  `{substance, condition, past_passages, science_studies, present_link: same|component|different|none}`,
+  `{substance, condition, past_passages, science_studies, present_link: same|component|different|none,
+  present_ingredient_key|null}` (the FAERS ingredient of the link; added 2026-11-08 for the hypothesis-card cross-reference),
   `sources[]`, `disclaimer`. Use it to build the pair picker; it lists only pairs with at least one
   passage or study.
 - `POST /seance/pair` body `{"substance": "<id>", "condition": "wound|burn|ulcer|infection"}` →
@@ -362,3 +363,16 @@ whether vinegar → acetic acid is an acceptable component bridge; each one-line
 Pipelines: `canon` (844 entries, 534 spans), `canon_gold` (29 rows), assembly (76 claims, 31
 substances). API: `/seance/pair`, `/seance/catalogue`. Gate 4: **not met** — best pairs have two of
 three witnesses (§4.5); the present witness is missing for structural reasons (DP11).
+
+## 12. Web screen (built 2026-11-08, `experience`)
+`/research/seance` (`apps/web/src/components/seance/Seance.tsx`, `src/seance/`): pair picker (substance, then its listed
+conditions; opens on St John's wort / wound), the substance card, the count card ("n of 3 witnesses", missing witnesses,
+rule-7 line, headline status, the infection bridge), the three seats in fixed order and the sources. Glass Janus calls it
+"evidence summary". Demo mode answers from `src/seance/fixture.recorded.json` (catalogue + the two headline pairs, recorded
+from the local API by `scripts/record-seance.mjs`) with no request. A hypothesis card links here when its ingredient is the
+present link of a séance substance with `same` or `component` exposure (today: acetic acid → vinegar; no recorded light
+card has it; salt → sodium chloride is `different` and never linked). Review passes and outcomes:
+`seance-screen-review.md`. Choices made there without stopping: titles holding a forbidden phrase are withheld (DOI kept);
+excluded studies say "retracted or not registered" (no per-id reason in the contract); a silent seat reads "Does not
+support".
+

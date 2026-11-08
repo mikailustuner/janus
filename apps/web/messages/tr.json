@@ -498,7 +498,7 @@
     "title": "Araştırma",
     "intro": "Aynı yan etki bilgisi, araştırma için tersine çevrilir. Bu bölüm hasta akışının bir parçası değildir.",
     "rule7": "Yeniden kullanım çıktıları araştırılmaya değer adaylardır — tedavi değildir.",
-    "coming": "4. aşamada geliyor.",
+    "review": "4. aşama içeriği (hipotez kartları, üç tanık, doğrulama ve dışa aktarma) yapay zekâ tarafından incelendi; uzman incelemesi bekleniyor.",
     "entries": {
       "hypotheses": {
         "title": "Hipotez kartları",
@@ -1095,5 +1095,175 @@
     "errors": {
       "unavailable": "Araştırma verileri şu anda kullanılamıyor. Lütfen daha sonra yeniden deneyin."
     }
+  },
+  "Seance": {
+    "title": {
+      "twoFaces": "Seans: üç tanık",
+      "glass": "Kanıt özeti"
+    },
+    "intro": {
+      "twoFaces": "Üç tanık aynı masaya oturur: geçmiş (İbn Sina'nın Tıp Kanunu, 2. kitap), bugün (Kolektif Bellek'teki FAERS bildirimleri) ve bilim (Kanıt Bütünlüğü'nden geçirilen çalışmalar). Her biri kendi adına konuşur; Janus bunları hiçbir zaman tek bir puanda birleştirmez.",
+      "glass": "Üç bağımsız tanık yan yana: geçmiş (İbn Sina'nın Tıp Kanunu, 2. kitap), bugün (Kolektif Bellek'teki FAERS bildirimleri) ve bilim (Kanıt Bütünlüğü'nden geçirilen çalışmalar). Her biri ayrı gösterilir; Janus bunları hiçbir zaman tek bir puanda birleştirmez."
+    },
+    "table": {
+      "twoFaces": "Seans masası",
+      "glass": "Üç tanık"
+    },
+    "framing": "Araştırılmaya değer aday — tedavi değildir.",
+    "review": "4. aşama içeriği: Kanun pasajları, makine çevirileri, tanımlamalar ve çıkarılan iddialar iki yapay zekâ incelemesinden (tarihçi ve farmakolog ajanları) geçti; uzman incelemesi bekleniyor.",
+    "researcherOnly": "Araştırmacılar için. Bu sayfadaki hiçbir şey hasta sayfalarında gösterilmez.",
+    "demo": "Demo: katalog ve iki eşleşme {date} tarihinde gerçek verilerden kaydedildi; hiçbir istek gönderilmez.",
+    "pick": {
+      "legend": "Bir eşleşme seçin",
+      "substance": "Madde",
+      "condition": "Durum",
+      "pairInfo": "{passages, plural, =0 {pasaj yok} one {# pasaj} other {# pasaj}} · {studies, plural, =0 {çalışma yok} one {# çalışma} other {# çalışma}}"
+    },
+    "condition": {
+      "wound": "Yaralar",
+      "burn": "Yanıklar",
+      "ulcer": "Deri ülserleri",
+      "infection": "Yara ve deri enfeksiyonu"
+    },
+    "infectionBridge": "Kanun'da enfeksiyon kavramı yoktur. Janus çürümeyi, irini, yayılan veya kötü kokulu ülserleri, dolamayı, şirpençeyi, kangreni ve fistülü “enfeksiyon” olarak okur; bu köprü bir yorumdur.",
+    "loading": "Tanıklar yükleniyor…",
+    "count": "3 tanıktan {count}",
+    "countNote": "Konuşan tanıkların sayısıdır; bir puan ya da güç ölçüsü değildir.",
+    "missing": "Eksik tanıklar: {names}",
+    "noneMissing": "Eksik tanık yok. Bu yine de test edilmesi gereken bir hipotezdir.",
+    "zero": "Bu verilerde bu eşleşme için hiçbir tanık konuşmuyor.",
+    "witness": {
+      "past": "geçmiş",
+      "present": "bugün",
+      "science": "bilim"
+    },
+    "headline": {
+      "eligible": "İki yapay zekâ incelemesinden geçti ve zehirli veya yakıcı olarak işaretlenmedi: demo örneği olarak gösterilebilir.",
+      "notEligible": "Demo örneği olarak gösterilmez: {reasons}.",
+      "reason": {
+        "no_eligible_passage": "hiçbir pasaj iki yapay zekâ incelemesinden geçmedi",
+        "hazardous_substance": "madde zehirli veya yakıcı olarak işaretli"
+      }
+    },
+    "substance": {
+      "heading": "Kanun'daki başlık",
+      "identification": "Tanımlama: {name}",
+      "identified": "Tanımlandı (PMC3941892 ile uyumlu)",
+      "uncertain": "Tanımlama belirsiz",
+      "gold": "PMC3941892 tablosu: {name}",
+      "notInGold": "PMC3941892 tablosunda yok; tek kaynak.",
+      "hamdard": "Ayrıca kaynak: {ref} (yalnızca atıf, metin gösterilmez)",
+      "note": "Not (İngilizce): {text}",
+      "kind": {
+        "plant": "bitki",
+        "mineral": "mineral",
+        "plant_resin": "bitki reçinesi",
+        "animal_product": "hayvansal ürün",
+        "preparation": "müstahzar"
+      },
+      "hazard": {
+        "toxic": "Yalnızca tarihsel kayıt — zehirli madde.",
+        "caustic": "Yalnızca tarihsel kayıt — yakıcı madde."
+      }
+    },
+    "seat": {
+      "past": {
+        "title": "Geçmiş",
+        "source": "İbn Sina, Tıp Kanunu, 2. kitap (OpenITI metni)"
+      },
+      "present": {
+        "title": "Bugün",
+        "source": "Kolektif Bellek'teki FAERS bildirimleri"
+      },
+      "science": {
+        "title": "Bilim",
+        "source": "Kanıt Bütünlüğü'nden geçirilen çalışmalar (durum her çalışmada gösterilir)"
+      },
+      "speaks": "Konuşuyor",
+      "silent": "Desteklemiyor",
+      "confidence": "Güven düzeyi: {level}",
+      "items": "{count, plural, one {# öğe} other {# öğe}}"
+    },
+    "confidence": {
+      "none": "yok",
+      "low": "düşük",
+      "moderate": "orta"
+    },
+    "missingReason": {
+      "no_canon_passage": "Bu eşleşme için Kanun'da pasaj yok.",
+      "passages_rejected_by_review": "Bu eşleşmenin pasajları bir yapay zekâ incelemesinde reddedildi.",
+      "no_faers_mapping": "Bu madde için FAERS bağlantısı yok.",
+      "exposure_differs": "FAERS'teki etkin madde farklı bir maruziyettir; sayılmaz.",
+      "counts_unavailable": "FAERS sayıları şu anda kullanılamıyor.",
+      "no_protective_association": "FAERS'te beklenenden düşük bir bildirim örüntüsü yok.",
+      "too_few_reports": "Bir örüntü aramak için FAERS bildirimi çok az.",
+      "no_study_listed": "Bu eşleşme için listelenmiş çalışma yok.",
+      "no_citable_study": "Listelenen çalışmaların hiçbiri Kanıt Bütünlüğü'nden geçmedi.",
+      "studies_do_not_support": "Listelenen çalışmalar bu eşleşmeyi desteklemiyor.",
+      "integrity_unavailable": "Kanıt Bütünlüğü şu anda kullanılamıyor; bu yüzden çalışma gösterilmiyor."
+    },
+    "past": {
+      "arabic": "Arapça metin",
+      "mt": "Makine çevirisi (İngilizce)",
+      "aiReviewed": "Yapay zekâ tarafından incelendi, uzman incelemesi bekleniyor",
+      "expertReviewed": "Uzman tarafından incelendi",
+      "summary": "Janus özeti (makine tarafından yazıldı, İngilizce): {text}",
+      "locator": "Kanun, {book}. kitap, madde {entry}, sayfa {page}, satır {start}–{end} (OpenITI)",
+      "locatorNoPage": "Kanun, {book}. kitap, madde {entry}, satır {start}–{end} (OpenITI)"
+    },
+    "present": {
+      "observed": "Bağlantılı etkin maddeyi (Wikidata {key}) şüpheli olarak anan {total, plural, one {# FAERS bildiriminden} other {# FAERS bildiriminden}} {both, plural, one {# bildirim} other {# bildirim}} durumun terimlerinden birini anıyor.",
+      "match": {
+        "same": "FAERS'teki etkin madde aynı maddedir.",
+        "component": "FAERS'teki etkin madde bu maddenin bir bileşenidir, maddenin kendisi değildir.",
+        "different": "FAERS'teki etkin madde farklı bir maruziyettir (örneğin damardan verilen); tanık olarak sayılmaz."
+      },
+      "pts": "Bu durum için sayılan MedDRA Tercih Edilen Terimleri: {pts}",
+      "snapshot": "FAERS anlık görüntüsü {date}; tüm bölgeler; yalnızca şüpheli ilaçlar.",
+      "item": "{total} bildirimden {both, plural, one {# bildirim} other {# bildirim}}, bildirim odds oranı 1'in altında"
+    },
+    "codes": {
+      "spontaneous_reports": "FAERS gönüllü bildirime dayanır: bir şeyin ne sıklıkla olduğunu göstermez.",
+      "reports_not_people": "Sayılar kişileri değil, bildirimleri gösterir.",
+      "not_deduplicated_across_cases": "Bildirimler tekilleştirilmemiştir: bir vaka birden fazla kez bildirilmiş olabilir.",
+      "reporting_bias_notoriety_indication": "Bildirim yanlılığı: bilinen etkiler daha sık bildirilir (bilinirlik yanlılığı) ve bir ilacın verilme nedeni çoğu zaman olay olarak değil endikasyon olarak kaydedilir (endikasyon yanlılığı).",
+      "screening_pattern_not_effect": "Beklenenden düşük bir sayı bir tarama örüntüsüdür, bir etkinin kanıtı değildir."
+    },
+    "science": {
+      "studyType": {
+        "systematic_review": "Sistematik derleme",
+        "rct": "Randomize kontrollü çalışma",
+        "clinical_other": "Diğer klinik çalışma",
+        "animal": "Hayvan çalışması",
+        "in_vitro": "Laboratuvar (in vitro) çalışması",
+        "narrative_review": "Anlatı derlemesi"
+      },
+      "finding": "Bulgu (makine tarafından yazılmış özet, İngilizce): {text}",
+      "integrity": {
+        "ok": "Duyuru yok",
+        "corrected": "Düzeltme yayımlandı",
+        "expression_of_concern": "Endişe ifadesi",
+        "unknown": "Geri çekilme verileriyle henüz denetlenmedi"
+      },
+      "excluded": "{count, plural, one {Listelenen # çalışma Kanıt Bütünlüğü tarafından çıkarıldı (geri çekilmiş veya kayıtlı değil).} other {Listelenen # çalışma Kanıt Bütünlüğü tarafından çıkarıldı (geri çekilmiş veya kayıtlı değil).}}",
+      "targets": "Moleküler hedefler: henüz bağlı bir kaynak yok.",
+      "titleWithheld": "Başlık gösterilmiyor: ifadesi Janus'un dil kurallarının dışında kalıyor. Okumak için DOI'yi açın."
+    },
+    "sources": "Kaynaklar ve lisanslar",
+    "licence": "Lisans: {license}",
+    "errors": {
+      "unavailable": "Kanun veri paketi bu sunucuda kurulu değil; bu yüzden üç tanık gösterilemiyor."
+    },
+    "empty": "Bu verilerde listelenmiş eşleşme yok.",
+    "crossLink": {
+      "title": {
+        "twoFaces": "Seans masasında da",
+        "glass": "Kanıt özetinde de"
+      },
+      "open": "{substance}: {condition}",
+      "same": "Bu FAERS etkin maddesi Kanun'daki bir maddeyle aynıdır:",
+      "component": "Bu FAERS etkin maddesi Kanun'daki bir maddenin bileşenidir, aynı maruziyet değildir:"
+    },
+    "notListed": "Seçtiğiniz eşleşme burada yok; bunun yerine ilk kullanılabilir eşleşme gösteriliyor."
   }
 }

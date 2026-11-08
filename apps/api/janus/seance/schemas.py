@@ -199,6 +199,9 @@ class PairSummaryOut(_Out):
     past_passages: int
     science_studies: int
     present_link: Literal["same", "component", "different", "none"]
+    # The FAERS ingredient key of the present link (null for "none"), so that a researcher screen
+    # can cross-reference the séance from a hypothesis card of the same ingredient.
+    present_ingredient_key: str | None
 
 
 class CatalogueOut(_Out):

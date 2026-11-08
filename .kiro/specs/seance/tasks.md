@@ -73,6 +73,12 @@
   - pyright strict, ruff, pytest (`HYPOTHESIS_PROFILE=ci`, DB tests after `alembic upgrade head`),
     license-guard, log-guard. Gate 4: not met (two of three witnesses at best; design §4.5).
 
+- [x] 15. Séance screen (built by `experience`, design §12)
+  - `/research/seance`, demo fixture recorded from the local API, `Seance` namespace in five languages, cross-link from
+    hypothesis cards, localization-reviewer and safety-auditor passes (`seance-screen-review.md`), vitest and
+    Playwright (axe, 375/1280, both themes, five locales).
+  - _Requirements: 4.4, 7_
+
 - [ ] 14. After the experts (not in Phase 4)
   - Apply the expert review (`expert_review = reviewed`), re-run assembly, re-check headline pairs.
   - Run the `retractions` pipeline so the four séance DOIs are checked; reload integrity.

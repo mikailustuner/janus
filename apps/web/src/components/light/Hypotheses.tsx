@@ -14,6 +14,8 @@ import { useCall } from "@/flow/useCall";
 import { lightClient } from "@/light/client";
 import type { Card as CardData, CardsOut, GoalSummary } from "@/light/model";
 import { nameIn } from "@/light/view";
+import { liveSeance } from "@/seance/client";
+import type { CatalogueOut } from "@/seance/model";
 import { useT } from "@/theme/words";
 
 import { CardView } from "./CardView";
@@ -64,7 +66,15 @@ function GoalPicker({
   );
 }
 
-function CardsPanel({ goal, summary }: { goal: string; summary: GoalSummary }) {
+function CardsPanel({
+  goal,
+  summary,
+  seance,
+}: {
+  goal: string;
+  summary: GoalSummary;
+  seance: CatalogueOut | null;
+}) {
   const t = useT();
   const locale = useLocale();
   const [extra, setExtra] = useState<CardData[]>([]);
@@ -125,7 +135,7 @@ function CardsPanel({ goal, summary }: { goal: string; summary: GoalSummary }) {
         <ol className="flex flex-col gap-3">
           {cards.map((c) => (
             <li key={c.ingredient.key}>
-              <CardView card={c} snapshot={d.snapshot} />
+              <CardView card={c} snapshot={d.snapshot} seance={seance} />
             </li>
           ))}
         </ol>
@@ -177,6 +187,8 @@ function CardsPanel({ goal, summary }: { goal: string; summary: GoalSummary }) {
 export function Hypotheses() {
   const t = useT();
   const ov = useCall(() => lightClient.overview(), []);
+  // The séance catalogue, for the cross-reference on a card; without it the cards show none.
+  const seance = useCall(() => liveSeance.catalogue(), []);
   const [goal, setGoal] = useState<string | null>(null);
   const data = ov.status === "ok" ? ov.data : null;
   const goals = data ? data.goals.filter((g) => g.candidates > 0) : [];
@@ -201,7 +213,12 @@ export function Hypotheses() {
       ) : chosen && summary ? (
         <>
           <GoalPicker goals={goals} value={chosen} onChange={setGoal} />
-          <CardsPanel key={chosen} goal={chosen} summary={summary} />
+          <CardsPanel
+            key={chosen}
+            goal={chosen}
+            summary={summary}
+            seance={seance.status === "ok" ? seance.data : null}
+          />
         </>
       ) : (
         <StateView state="empty" message={t("Light.hypotheses.empty")} />
