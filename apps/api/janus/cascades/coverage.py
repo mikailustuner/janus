@@ -1,8 +1,9 @@
 """PIPC coverage report (cascade-engine design §7, Req 8). Pure.
 
-For every rule and role: how many TİTCK and US products resolve to an ingredient in the class,
-which class members have no product, and which unmapped or ambiguous ingredient names probably
-belong to the class. Hints are a curation aid for the synonym file; they never make findings.
+For every rule and role: how many TİTCK, US and EU (French and Spanish) products resolve to an
+ingredient in the class, which class members have no product, and which unmapped or ambiguous
+ingredient names probably belong to the class. Hints are a curation aid for the synonym file;
+they never make findings.
 Class membership uses `class_match`, the engine's only matcher.
 """
 
@@ -18,7 +19,9 @@ from janus.cascades.model import AtcClass, RuleBase
 from janus.cascades.patterns import class_match
 from janus.resolution.names import fold, strip_salts
 
-BUCKETS = ("TR", "US_RX", "US_OTC", "US_OTHER")
+BUCKETS = ("TR", "US_RX", "US_OTC", "US_OTHER", "EU")
+REGIONS = ("TR", "US", "EU")
+MIN_PART_CHARS = 5  # a member name shorter than this is never matched as a part of another name
 OTC_SHARE_MARK = 0.5
 _WORD = re.compile(r"[a-z0-9]+")
 
@@ -60,6 +63,8 @@ def name_key(text: str) -> str:
 def bucket(p: ProductRow) -> str:
     if p.region == "TR":
         return "TR"
+    if p.region == "EU":
+        return "EU"
     if p.product_type == "HUMAN PRESCRIPTION DRUG":
         return "US_RX"
     if p.product_type == "HUMAN OTC DRUG":
@@ -112,6 +117,39 @@ class _SimilarityIndex:
         return out
 
 
+def tokens(text: str) -> tuple[str, ...]:
+    """Folded, salt-stripped words of a name."""
+    return tuple(_WORD.findall(name_key(text)))
+
+
+def member_sequences(members: dict[str, KeyRow]) -> dict[tuple[str, ...], str]:
+    """Word sequences of the class members' labels and aliases that belong to exactly one member
+    and have at least `MIN_PART_CHARS` characters (design §16.4)."""
+    owner: dict[tuple[str, ...], set[str]] = defaultdict(set)
+    for q, k in members.items():
+        for n in k.names:
+            seq = tokens(n)
+            if seq and len(" ".join(seq)) >= MIN_PART_CHARS:
+                owner[seq].add(q)
+    return {seq: next(iter(qs)) for seq, qs in owner.items() if len(qs) == 1}
+
+
+def part_member(name_tokens: tuple[str, ...], seqs: dict[tuple[str, ...], str]) -> str | None:
+    """The member whose name is a contiguous whole-word part of the name: the longest match
+    wins, the smallest key breaks ties; `None` if no member name is part of it."""
+    best: tuple[int, str] | None = None
+    n = len(name_tokens)
+    for i in range(n):
+        for j in range(i + 1, n + 1):
+            q = seqs.get(name_tokens[i:j])
+            if q is None:
+                continue
+            length = j - i
+            if best is None or length > best[0] or (length == best[0] and q < best[1]):
+                best = (length, q)
+    return None if best is None else best[1]
+
+
 def _class_report(
     cls: AtcClass,
     products: dict[tuple[str, int], ProductRow],
@@ -129,7 +167,9 @@ def _class_report(
         q for q, k in members.items() if not any(class_match(c, cls) is not None for c in k.codes)
     )
     by_bucket: dict[str, set[tuple[str, int]]] = {b: set() for b in BUCKETS}
-    present: dict[str, set[str]] = {"TR": set(), "US": set()}
+    present: dict[str, set[str]] = {r: set() for r in REGIONS}
+    seqs = member_sequences(members)
+    part_cache: dict[str, str | None] = {}
     hint_rows: dict[str, dict[str, Any]] = {}
 
     def hint(name: str, kind: str, row: IngredientRow, member: str | None) -> None:
@@ -170,7 +210,7 @@ def _class_report(
                 class_match(c, cls, active) is not None for c in row.codes
             ):
                 by_bucket[bucket(p)].add((row.source_id, row.product_id))
-                present["TR" if p.region == "TR" else "US"].add(row.qid)
+                present[p.region if p.region in ("TR", "EU") else "US"].add(row.qid)
             continue
         name = name_key(row.published_name)
         if p.region == "TR" and p.published_atc and class_match(p.published_atc, cls, active):
@@ -181,6 +221,12 @@ def _class_report(
                 hint(name, "ambiguous_member", row, hit[0])
         elif name in near:
             hint(name, "similar_name", row, near[name])
+        if row.status == "unmapped" and seqs:
+            if name not in part_cache:
+                part_cache[name] = part_member(tokens(row.published_name), seqs)
+            owner = part_cache[name]
+            if owner is not None:
+                hint(name, "member_name_part", row, owner)
 
     hint_list: list[dict[str, Any]] = [
         {
@@ -204,7 +250,7 @@ def _class_report(
                 ({"qid": q, "label_en": members[q].label_en} for q in set(members) - present[r]),
                 key=lambda m: str(m["qid"]),
             )
-            for r in ("TR", "US")
+            for r in REGIONS
         },
         "hints_total": len(hints),
         "hints": hints[:top],
@@ -223,6 +269,11 @@ def build_coverage(
     index = _SimilarityIndex(
         name_key(r.published_name) for r in ingredients if r.status == "unmapped"
     )
+    # EU is judged only if the dataset holds EU products; otherwise "cannot fire" would say
+    # nothing but "the EU sources are not loaded".
+    regions: list[tuple[str, tuple[str, ...]]] = [("TR", ("TR",)), ("US", ("US_RX", "US_OTC"))]
+    if any(p.region == "EU" for p in products):
+        regions.append(("EU", ("EU",)))
     classes: dict[str, dict[str, Any]] = {}
     for cid in sorted(rb.classes):
         classes[cid] = _class_report(
@@ -241,7 +292,7 @@ def build_coverage(
             "unmatchable": list(r.unmatchable) if r.unmatchable else None,
         }
         cannot: list[str] = []
-        for region, bs in (("TR", ("TR",)), ("US", ("US_RX", "US_OTC"))):
+        for region, bs in regions:
             for cid in (r.index_class, r.marker_class):
                 if cid is None or sum(classes[cid]["products"][b] for b in bs) == 0:
                     cannot.append(region)
@@ -267,6 +318,7 @@ def build_coverage(
             "not_matchable": [r["rule_id"] for r in rules if not r["matchable"]],
             "cannot_fire_in_tr": [r["rule_id"] for r in rules if "TR" in r["cannot_fire_in"]],
             "cannot_fire_in_us": [r["rule_id"] for r in rules if "US" in r["cannot_fire_in"]],
+            "cannot_fire_in_eu": [r["rule_id"] for r in rules if "EU" in r["cannot_fire_in"]],
             "otc_marker_classes": otc_markers,
         },
         "rules": rules,

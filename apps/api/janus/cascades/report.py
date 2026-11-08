@@ -13,6 +13,7 @@ import argparse
 import json
 import subprocess
 import sys
+from collections import Counter
 from collections.abc import Sequence
 from pathlib import Path
 from typing import Any, cast
@@ -24,6 +25,7 @@ from janus.cascades.coverage import IngredientRow, KeyRow, ProductRow, build_cov
 from janus.db.pool import Database
 from janus.resolution.atc import DATA_DIR, is_ingredient_level
 from janus.resolution.model import is_homeopathic_strength
+from janus.resolution.prepare_eu import is_homeopathic_name
 from janus.settings import Settings
 
 REPO = DATA_DIR.parent
@@ -61,8 +63,10 @@ def read_rows(
         (ds,),
     ).fetchall()
     homeopathic = {
-        (str(r[0]), int(r[1])) for r in raw if is_homeopathic_strength(r[7])
-    }  # same rule as ProductCandidate.homeopathic (any ingredient strength)
+        (str(r[0]), int(r[1]))
+        for r in raw
+        if is_homeopathic_strength(r[7]) or is_homeopathic_name(str(r[2]))
+    }  # same rule as ProductCandidate.homeopathic (a strength unit or a BDPM name marker)
     products = [
         ProductRow(
             str(r[0]), int(r[1]), str(r[2]), r[3], r[4], (str(r[0]), int(r[1])) in homeopathic
@@ -146,9 +150,14 @@ def main(argv: Sequence[str] | None = None) -> int:
     )
     s = report["summary"]
     print(f"rules {s['rules']}; not matchable {len(s['not_matchable'])}")
-    print(f"cannot fire in TR {len(s['cannot_fire_in_tr'])}; in US {len(s['cannot_fire_in_us'])}")
+    print(
+        f"cannot fire in TR {len(s['cannot_fire_in_tr'])}; in US {len(s['cannot_fire_in_us'])}; "
+        f"in EU {len(s['cannot_fire_in_eu'])}"
+    )
     print(f"marker classes with OTC share >= 0.5: {len(s['otc_marker_classes'])}")
     print(f"hints: {sum(c['hints_total'] for c in report['classes'].values())} over all classes")
+    kinds = Counter(k for c in report["classes"].values() for h in c["hints"] for k in h["kinds"])
+    print(f"hint kinds in the listed hints: {dict(sorted(kinds.items()))}")
     print(f"written to the data directory ({out.name})")
     return 0
 

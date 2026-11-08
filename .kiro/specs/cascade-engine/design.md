@@ -437,6 +437,19 @@ candidates) and ingredients (QID, codes, labels and aliases from `res_name`). Th
     by the folded, salt-stripped name, so the salt forms of one name count together. The default
     threshold is 0.6: on the real dataset 0.5 gave 1,026 hints led by unrelated salts (potassium
     vs calcium carbonate), 0.6 gave 493 and 0.7 gave 361 while dropping true variants (task 12).
+  - `member_name_part` (added with `drug-resolution` task 26, Req 8.8): an `unmapped` name whose
+    folded, salt-stripped words contain the words of a class member's label or alias as a
+    contiguous run, for member names of at least five characters that belong to that member only
+    (the longest match wins, the smallest key breaks ties). It finds names such as
+    `diclofenaco dietilamina` (member `diclofenac`) that the trigram threshold misses, needs no
+    threshold. It also fires for noise: a class whose members include an anion item hints every
+    name that carries that anion's label (`glicopirronio bromuro` through the item `bromide`,
+    Spanish label `bromuro`, a member of the sleep-agent class; `carbonate de sevelamer` through
+    the item `magnesium carbonate`). It stays a curation aid; the pharmacologist ignores these.
+- The `EU` bucket (Req 8.7): French and Spanish products are counted in `products.EU`, in
+  `members_without_products.EU` and in `summary.cannot_fire_in_eu`; EU is judged only when the
+  dataset holds EU products. A BDPM presentation with a homeopathic substance name is homeopathic
+  here too (`report.read_rows`).
 - Rules that cannot fire in a region (index or marker with no product there), not-matchable
   rules, and marker classes with `otc_share ≥ 0.5` listed first in the summary (Req 8.4: the OTC
   marking comes from the openFDA product type, not from a curated flag, DP17).
@@ -597,6 +610,13 @@ P1–P7 are the seven original properties; P8–P22 were added in the refinement
   item with `N06AA12`), so FAERS `DOXEPIN` is now ambiguous at name level. Planned, not done: a
   curated Janus key for doxepin whose codes make it a member of the tricyclic group `N06AA`
   (row 33-35 index). No change now.
+- **Task 26 of `drug-resolution` (2026-11-08): measured.** Dataset `904d9771…` (TR, US, FR, ES),
+  rule base `472f35a9…`. Hints in total: 343 on the previous dataset (TR and US, Phase 1 name
+  rules); 340 on the same TR and US rows with the Phase 2 name rules; 611 with the 50,000 EU
+  presentations added (EU names that do not map); **905** with the new kind `member_name_part`
+  (+294). Of the 905, the listed hints (top 50 per class) show 458 entries with the new kind and
+  255 with only that kind. Rules that cannot fire: 5 in TR, 4 in US, 2 in EU. Summary printed by
+  `python -m janus.cascades.report`: `cannot fire in TR 5; in US 4; in EU 2`.
 - Coverage numbers and synonym proposals are recorded here after task 12.
 - **[Later phase: OnSIDES]** Requirement 3 (exploratory mode).
 

@@ -290,7 +290,7 @@
   - [x] 23.9 Example tests: the stale-source notices for BDPM (60 days) and the Nomenclátor (14 days); a presentation with an empty ingredient list; the BDPM text is returned exactly as published (leading and trailing spaces, accents). _Requirements: 4.1, 4.2_
   - _Requirements: 1.5, 4.1–4.7, 6.2, 7.1_
 
-- [ ] 24. Checkpoint: EU resolution end to end and coverage after
+- [x] 24. Checkpoint: EU resolution end to end and coverage after
   - All lint, format, type-check and test steps green; commit, push, confirm CI passes.
   - Locally: `janus-pipelines` artifacts are current for all five sources; `python -m
     janus.resolution.load` (background, `nohup`); `docker compose up`. `POST /resolve/scan`: a
@@ -305,7 +305,7 @@
     Nomenclátor); compare with the targets of Req 13.4 and explain any miss.
   - _Requirements: 4.1–4.4, 13.1–13.4_
 
-- [ ] 25. FAERS builder and the `faers_mapping_gap` decision
+- [x] 25. FAERS builder and the `faers_mapping_gap` decision
   - `faers_build.map_names(..., lang="en")`; `_candidate_impact` reduced to the parts-of-combination
     count; rebuild the counts file (background); compare the coverage report with the baseline
     (84.0 % of 6,201,428 occurrences; 80.5 % in suspect roles): occurrences mapped, reports with a
@@ -316,14 +316,14 @@
     limit), with the numbers of design §11/§16.3 and the new measured residual (re-run the
     whole-word-part scan on the new build). If the owner rejected the suffix or acid-form rules in
     task 20, stop here and write the table instead (design §16.3).
-  - [ ] 25.1 Run the `data-pipelines` builder properties P33–P40 and the `collective-memory` suite unchanged; add one property: names `base-XXXX` in a generated artifact count under the base's key, once per report. _Requirements: data-pipelines 15.2, 15.4; drug-resolution 12.8_
+  - [x] 25.1 Run the `data-pipelines` builder properties P33–P40 and the `collective-memory` suite unchanged; add one property: names `base-XXXX` in a generated artifact count under the base's key, once per report. _Requirements: data-pipelines 15.2, 15.4; drug-resolution 12.8_
   - _Requirements: 12.7, 12.8, 13.2_
 
-- [ ] 26. Coverage report: EU bucket and `member_name_part` hints (`cascades/coverage.py`)
+- [x] 26. Coverage report: EU bucket and `member_name_part` hints (`cascades/coverage.py`)
   - `bucket()` and the `present` / `cannot_fire_in` loops handle `EU`; the hint kind of design
     §16.4 with its fixed rule; update `cascade-engine` requirements (Req 8, added bullet) and
     design §7/§11 (the follow-up is done; counts of hints before and after on the real dataset).
-  - [ ] 26.1 Property test P49 and the re-run of cascade-engine P22 with the EU bucket. _Requirements: cascade-engine 8.1–8.3_
+  - [x] 26.1 Property test P49 and the re-run of cascade-engine P22 with the EU bucket. _Requirements: cascade-engine 8.1–8.3_
   - Run `python -m janus.cascades.report` locally (background); record counts: hints before 343,
     after; `lithium carbonate` and the atorvastatin solvate now hinted if still unmapped.
   - _Requirements: cascade-engine 8_

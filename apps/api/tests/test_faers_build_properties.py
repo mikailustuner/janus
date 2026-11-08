@@ -561,3 +561,80 @@ def test_schema_version_is_faers_counts_2(tmp_path: Path) -> None:
     meta = dict(read(result.path, "SELECT key, value FROM faers_meta"))
     assert meta["schema_version"] == COUNTS_SCHEMA == "faers_counts-2"
     assert result.reports_mapped == 1
+
+
+# --- Phase 2 name rules in the builder (drug-resolution Req 12.8, data-pipelines Req 15.2) -------
+
+BIO_INDEX = NameIndex.build(
+    [IndexItem("Q6", {"en": "infliximab"}, {}), IndexItem("Q1", {"en": "aspirin"}, {})]
+)
+BIO_SPELLINGS = ["INFLIXIMAB", "INFLIXIMAB-DYYB", "INFLIXIMAB-ABDA", "infliximab-qbtx"]
+BIO_NAMES = [*BIO_SPELLINGS, "ASPIRIN", "UNKNOWN-DYYB", "NOT A DRUG"]
+
+
+@st.composite
+def biologic_reports(draw: st.DrawFn) -> list[ReportFact]:
+    line = st.tuples(
+        st.sampled_from(ROLES), st.lists(st.sampled_from(BIO_NAMES), max_size=3).map(tuple)
+    )
+    return [
+        ReportFact(
+            primaryid=str(100000 + i),
+            quarter="2026Q1",
+            region=draw(st.sampled_from(REGIONS)),
+            lines=tuple(draw(st.lists(line, max_size=4))),
+            events=tuple(draw(st.lists(st.sampled_from(PTS), max_size=3))),
+        )
+        for i in range(draw(st.integers(1, 10)))
+    ]
+
+
+@settings(max_examples=25, deadline=None)
+@given(biologic_reports())
+def test_biologic_suffix_names_count_under_the_base_key_once_per_report(
+    facts: list[ReportFact],
+) -> None:
+    """Feature: drug-resolution, Property P38 (builder) and data-pipelines P35 — Validates:
+    drug-resolution Req 12.8; data-pipelines Req 15.2, 15.4.
+
+    A name `base-XXXX` maps to the key of `base` with step `biologic_suffix`; replacing every such
+    name by its base gives identical count tables (the same report is counted once per key, even
+    when it carries several spellings); the SQL tables equal the Python reference.
+    """
+    names = {n for f in facts for _r, ing in f.lines for n in ing}
+    matches = map_names(names, BIO_INDEX)
+    for name in names & {"INFLIXIMAB-DYYB", "INFLIXIMAB-ABDA", "infliximab-qbtx"}:
+        assert (matches[name].keys, matches[name].step) == (("Q6",), "biologic_suffix")
+    if "UNKNOWN-DYYB" in matches:  # a suffix on an unknown base maps nothing
+        assert matches["UNKNOWN-DYYB"].status == "none"
+    plain = [
+        ReportFact(
+            f.primaryid,
+            f.quarter,
+            f.region,
+            tuple(
+                (r, tuple("INFLIXIMAB" if n in BIO_SPELLINGS else n for n in ing))
+                for r, ing in f.lines
+            ),
+            f.events,
+        )
+        for f in facts
+    ]
+    ref = aggregate(facts, matches)
+    ref_plain = aggregate(
+        plain, map_names({n for f in plain for _r, i in f.lines for n in i}, BIO_INDEX)
+    )
+    assert (ref.totals, ref.ingredient, ref.event, ref.pair) == (
+        ref_plain.totals,
+        ref_plain.ingredient,
+        ref_plain.event,
+        ref_plain.pair,
+    )
+    with tempfile.TemporaryDirectory() as d:
+        scratch = Path(d)
+        rows = scratch / "rows.parquet"
+        write_rows(rows, facts)
+        db = scratch / "counts.duckdb"
+        write_counts(db, rows, matches, scratch)
+        got = tables_from(db)
+    assert got["ingredient"] == ref.ingredient and got["pair"] == ref.pair

@@ -973,14 +973,17 @@ ladder steps, so those reports are counted under the right key; (b) what the rul
 falls into two groups: names whose substance has **no key at all** (new biologics, components
 with no solo code; 144,717 and ~205,000 occurrences), which cannot be tied to an ingredient and so
 belong to no per-ingredient flag, and mixtures, devices and brand strings, where a "whole-word
-part" scan finds only 45 ingredients and 8,302 occurrences (0.13 %), many of them false matches;
+part" scan finds 163 ingredients and 18,650 occurrences (0.30 % on the finished build; 2.48 % with
+the Phase 1 ladder), many of them false matches (`TYLENOL (ACETAMINOPHEN)` 1,890, the antibody-drug
+conjugate `TRASTUZUMAB DERUXTECAN` 5,586 with its suffixed spelling, salts the owner left unmapped
+such as `MAGNESIUM GLYCINATE`, and `ARIPIPRAZOLE LAUROXIL`);
 (c) the existing sentence of Collective Memory (`denominator_mapped_reports`: "some spellings are
 not recognized, so a pattern can be missed") and the unmapped list (`faers_unmapped`, coverage
 report) already carry the limit honestly. A flag built from (b) would be noisy and would suggest a
 precision the scan does not have. **If the owner rejects the biologic-suffix or acid-form rules at
 the review stop, this decision is reopened:** the table would then hold `ingredient_key, region,
 scope, reports` of reports whose unmapped spelling contains the mapped ingredient's name as whole
-words (221 ingredients, 150,082 occurrences before the rules), written by the builder from
+words (212 ingredients, 153,874 occurrences before the rules, measured with the scan of §19), written by the builder from
 `faers_unmapped`, and `collective-memory` would add `mapping_gap_possible` to the pair response.
 `data-pipelines` design (open item 3, DP34) and `collective-memory` design §8.2 record the
 decision; no table, builder code or response field is added.
@@ -1046,7 +1049,7 @@ unchanged.
 | DP33 | French route strings join `route_atc_groups.csv` (exact strings), drafted by the pharmacologist agent from the 30 most frequent strings (every route of 99.2 % of presentations), reviewed by the owner. | Ignore routes for FR (`all_codes`); translate to English route names. | Same safeguard as DP20 for topical vs systemic corticosteroids; exact strings need no translation step. Unmapped strings fall back to `all_codes`, marked not route-confirmed. |
 | DP34 | Nomenclátor published ATC acts as the product code `p` and feeds the combination `observed` set; it does not add codes to an ingredient or to the bridge. | Treat it like TİTCK in every way; ignore it. | It is a regulator's code on every presentation, so selection by group is as good as for TİTCK; adding codes to ingredients would change TR/US results (kept for a later, measured decision). |
 | DP35 | EU sources are optional at load; requests that need a missing source answer 503; `rule_inputs` needs only the regions present in its ids. | Require all five sources. | A development database or an older deployment without EU data keeps working; fail-closed 503 keeps "not found" honest (Req 6.2). |
-| DP36 | `faers_mapping_gap` is not built; Collective Memory gets no `mapping_gap_possible` field. Reopened only if the owner rejects the suffix or acid-form rules. | Build the table now; build it after the rules. | §16.3: after the rules the measurable leak is 0.13 % of occurrences and mostly false matches; the denominator sentence already states the limit. |
+| DP36 | `faers_mapping_gap` is not built; Collective Memory gets no `mapping_gap_possible` field. Reopened only if the owner rejects the suffix or acid-form rules. | Build the table now; build it after the rules. | §16.3: after the rules the measurable leak is 0.30 % of occurrences (re-measured on the finished build, §19) and mostly false matches; the denominator sentence already states the limit. |
 | DP37 | French homeopathic products are flagged by the substance-name marker "POUR PRÉPARATIONS HOMÉOPATHIQUES"; computed on the request path from stored names (no column). | The procedure "Enreg homéo"; a stored flag. | The marker finds 274 presentations, the procedure only 99 (a subset); same pattern as DP24. |
 | DP38 | German and other no-open-database countries: a notice, no lookup, no typed PZN input in this phase. | Parse PZN and look it up by a paid database; guess by name. | `data-sources.md`: no open PZN database; never guess. |
 | DP39 | de/fr/es ingredient labels and published EU names are indexed with region `EU`; en/tr stay region-free. | Index all languages for all regions. | A TR or US search would otherwise hit foreign words (noise) for no benefit; EU users get all five languages. |
@@ -1116,6 +1119,41 @@ the `anhydre`/`anhydr*`/`susuz` hydrate words (owner decision 3).
   because `SODIUM ALGINATE`, `MAGNESIUM ALGINATE` and `CALCIUM PIDOLATE` no longer map to the bare
   acid (`alginate` and `pidolate` are NOT_ALONE words, decision 6). FAERS counts did change as
   intended; no cascade result changed.
+
+**Task 25 (2026-11-08): the whole-word-part residual on the finished FAERS build.** Re-measured on the Phase 2 build (task 25, `20261108T073432Z-7445632a-26e5d0a0-3706`, scan: an unmapped name that contains a mapped FAERS name of at least five letters as whole words): 268 names, 18,650 occurrences (0.30 % of 6,201,428) for 163 ingredient keys; the same scan on the Phase 1 build finds 385 names, 153,874 occurrences (2.48 %), 212 keys. The earlier estimate (45 ingredients, 8,302 occurrences, 0.13 %) used a narrower scan. Counts rebuilt with the Phase 2 ladder: reports with a mapped ingredient 1,252,900 → 1,281,744 of 1,510,804; occurrences mapped 84.0 % → 86.6 %. `faers_mapping_gap` stays unbuilt (DP36).
+
+**Task 24 checkpoint (2026-11-08): before and after, with the EU sources loaded.** Dataset
+`904d9771…` (213,213 products: 161,399 TR/US + 20,914 BDPM + 30,900 Nomenclátor presentations) in
+the development database; the loader's coverage and the snapshot tool's independent recount agree
+on every Nomenclátor and TİTCK/openFDA number and on the BDPM product and name counts. "Mapped"
+is the snapshot's key-level meaning; the loader additionally requires an ingredient-level code
+that fits the product.
+
+| Source (Req 13.4 target) | Baseline occurrences mapped / products fully mapped | After: key level (snapshot) | After: loader, with a usable ATC code |
+|---|---|---|---|
+| TİTCK (not lower than 84.6 %) | 84.6 % / 88.5 % | 84.6 % / 88.4 % | 84.6 % / 88.4 % |
+| openFDA Rx (not lower than 93.3 % of products) | 91.7 % / 93.3 % | 92.4 % / 94.1 % | 92.4 % / 94.1 % |
+| BDPM, without homeopathic (≥ 80 %) | 67.6 % / 71.4 % | **82.2 %** / 87.2 % | **80.5 %** / 85.5 % |
+| Nomenclátor (≥ 80 %) | 48.1 % / 45.5 % | **86.1 %** / 85.5 % | **86.1 %** / 85.5 % |
+| FAERS (≥ 86 %) | 84.0 % | **86.6 %** | n/a (names only) |
+
+All targets are met. TİTCK products fully mapped fall by 8 products (88.46 % → 88.42 %) because
+some names became ambiguous (owner decision 8). The 1.7-point gap between the two BDPM columns is
+465 occurrences that map to an ingredient but have no code that fits the product's route
+(`no_ingredient_atc_for_route`). The largest groups are right refusals: `IODE` (the iodine of
+iodinated contrast agents, 200+ occurrences on intravascular routes) would otherwise take the
+antiseptic code `D08AG03`; `ACIDE GLUTAMIQUE` intravenous would take the digestive code `A09AB01`;
+`PRILOCAÏNE` on the skin and `ATOSIBAN` intravenous have only codes of another route group. The route
+rule stops each of them from reaching the cascade engine with a code that does not belong to the
+product. Selection in the Nomenclátor: 22,366 ingredient entries use the presentation's own code
+(`single_ingredient_product`), 6,012 the therapeutic group, 1,775 the anatomical group, 726 all
+codes.
+
+Request path checked on the real data (task 24): a CIP13 as `0` + CIP13, an NTIN, a GTIN of the
+GTIN list, an AI (712) value and a German-prefix GTIN resolve or answer as designed; EU name search
+finds `tramadol`, `Tramadol`, `ácido acetilsalicílico` and `paracétamol` in 0.26–0.34 s; the API and
+PostgreSQL logs hold none of the codes or names used. Retiring an old dataset took more than 50
+minutes before migration 0009 (§14.6) and about 2 minutes after it.
 
 **Task 22 check (2026-11-08): the new product builders reproduce the first baseline.** The Phase 1
 ladder (all Phase 2 lists and switches off, the 108 Phase 1 synonyms, an empty anion-acid table) run

@@ -496,25 +496,18 @@ def write_counts(
 
 
 def _candidate_impact(con: duckdb.DuckDBPyConnection) -> dict[str, int]:
-    """Occurrences that candidate `drug-resolution` name rules would affect (not applied)."""
+    """Unmapped name occurrences that are one part of a multi-ingredient drug line.
 
-    def one(sql: str) -> int:
-        row = con.execute(sql).fetchone()
-        return int(row[0] or 0) if row else 0
-
-    return {
-        "biologic_suffix": one(
-            "SELECT sum(occurrences) FROM faers_unmapped WHERE regexp_matches(name, '-[A-Z]{4}$')"
-        ),
-        "mycophenolate_salt_form": one(
-            "SELECT sum(occurrences) FROM faers_unmapped WHERE name LIKE 'MYCOPHENOLATE%'"
-        ),
-        "single_part_of_combination": one(
-            "SELECT count(*) FROM (SELECT unnest(drug.ingredients) AS n, "
-            "len(drug.ingredients) AS k FROM (SELECT unnest(drugs) AS drug FROM src)) x "
-            "JOIN faers_unmapped u ON u.name = x.n WHERE x.k > 1"
-        ),
-    }
+    The biologic suffix and the acid forms are rules of `drug-resolution` now (Phase 2, DP36); what
+    remains is the count of names that are a component with no ingredient-level key of its own
+    (`CARBIDOPA` of `CARBIDOPA\\LEVODOPA`), which no ATC-based key can count (not proposed).
+    """
+    row = con.execute(
+        "SELECT count(*) FROM (SELECT unnest(drug.ingredients) AS n, "
+        "len(drug.ingredients) AS k FROM (SELECT unnest(drugs) AS drug FROM src)) x "
+        "JOIN faers_unmapped u ON u.name = x.n WHERE x.k > 1"
+    ).fetchone()
+    return {"single_part_of_combination": int(row[0] or 0) if row else 0}
 
 
 # --- build ---------------------------------------------------------------------------------
