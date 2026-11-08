@@ -118,7 +118,15 @@
   - All steps green, including database properties against PostgreSQL 16; rebuild the `api` and `migrate` images after
     migration `0011`. Commit, push, CI passes.
 
-- [ ] 14. Glossary draft (`notes/glossary_draft.py`, design §11)
+- [x] 14. Glossary draft (`notes/glossary_draft.py`, design §11)
+  - Done 2026-11-08 (dev dataset `e9e55772…`, rule base `8d4881fc…`): `ingredients.csv` 1,129 rows, all `proposed`, names
+    en 1,129, tr 447, de 770, fr 840, es 710 (Wikidata labels of the name index; none left out by a check);
+    `cascades.csv` 65 rows (112 distinct PIPC texts translated into four languages); `sentences.csv` 112 rows (81 drafted
+    in five languages, 30 shared rows copied from the message files, the long MedDRA notice in English). All files load;
+    no language is available until the owner accepts the rows. TİTCK check (local list, counts only): 212 of the 447
+    Turkish cells, and 216 of the 1,129 English cells, are equal (case-folded) to an ingredient string of the TİTCK list;
+    they come from Wikidata, see `glossary-review.md`. Cascade names may be up to 200 characters (French and German PIPC
+    texts with examples exceed 120).
   - Run the draft command on the dev database: `ingredients.csv` for the in-scope keys, all `proposed`; draft
     `cascades.csv` (65 rows, four languages) and `sentences.csv` (all templates of design §5.2, five languages; shared rows
     copied); loader checks pass; counts per language recorded; no TİTCK string (checked against the local list, counts
