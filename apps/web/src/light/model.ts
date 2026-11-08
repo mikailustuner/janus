@@ -51,7 +51,11 @@ export const goalSummary = obj({
   inverse_expected_by_chance: num,
 });
 
-export const overviewOut = obj({ ...common, goals: arr(goalSummary), top_k: int });
+export const overviewOut = obj({
+  ...common,
+  goals: arr(goalSummary),
+  top_k: int,
+});
 
 const labelSignal = obj({
   regions: strs,

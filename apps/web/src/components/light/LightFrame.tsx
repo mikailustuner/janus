@@ -32,7 +32,11 @@ export function LightFrame({
   return (
     <>
       <nav aria-label={t("Light.nav.sections")}>
-        <ButtonLink href="/research" variant="quiet" className="self-start px-0">
+        <ButtonLink
+          href="/research"
+          variant="quiet"
+          className="self-start px-0"
+        >
           {t("Light.nav.back")}
         </ButtonLink>
       </nav>

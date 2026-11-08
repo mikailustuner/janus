@@ -152,3 +152,10 @@ them whenever WHOCC publishes a new ATC version**, together with the combination
 
 The Canon text itself and everything derived from it are **not** here: they are in the separate
 CC BY-NC-SA 4.0 data package `datasets/canon/`.
+
+## Light face (Janus, Apache-2.0; light-face design §4)
+
+- `light/goals.csv`, `light/effect_goal_map.csv`, `light/validation_cases.csv`: curated conditions, side-effect term → condition
+  mapping and the fixed retrospective-validation cases. Terms are OnSIDES MedDRA names (no MedDRA hierarchy is copied); every
+  active row and case cites a paper of `evidence_papers.csv` (Crossref checked 2026-11-08). Drafted by Claude Code, reviewed by the
+  pharmacologist and statistician agents: **AI-reviewed, pending expert review** (pre-launch checklist).

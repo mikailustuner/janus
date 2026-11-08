@@ -200,7 +200,11 @@ export function messageKeyFor(
   if (route === "passport/presence" && status === 503)
     return "Passport.states.error";
   // light-face design §9: no build or no integrity snapshot (fail closed).
-  if (route.startsWith("light/") && status === 503 && code === "light_unavailable")
+  if (
+    route.startsWith("light/") &&
+    status === 503 &&
+    code === "light_unavailable"
+  )
     return "Light.errors.unavailable";
   return "Errors.generic";
 }

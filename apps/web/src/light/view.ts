@@ -9,7 +9,10 @@ export type Labels = Record<string, string>;
 /** The name in the reader's language, else English, else the first one, else the key. */
 export function nameIn(labels: Labels, locale: string, key = ""): string {
   return (
-    labels[locale] ?? labels.en ?? Object.values(labels)[0] ?? key
+    labels[locale] ??
+    labels.en ??
+    Object.values(labels)[0] ??
+    key
   ).trim();
 }
 
@@ -63,7 +66,8 @@ function cell(v: unknown): string {
 /** RFC 4180 CSV: comma, CRLF, quotes doubled; lists joined with `|`. */
 export function toCsv(rows: readonly ExportRow[]): string {
   const lines = [CSV_COLUMNS.join(",")];
-  for (const r of rows) lines.push(CSV_COLUMNS.map((c) => cell(r[c])).join(","));
+  for (const r of rows)
+    lines.push(CSV_COLUMNS.map((c) => cell(r[c])).join(","));
   return lines.join("\r\n") + "\r\n";
 }
 

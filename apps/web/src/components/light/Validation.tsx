@@ -29,16 +29,21 @@ function Run({ title, run, k }: { title: string; run: CaseRun; k: number }) {
     <div className="flex flex-col gap-1">
       <h4 className="font-semibold">{title}</h4>
       <p>
-        <span className="mono">{rankLabel(t, run)}</span> · {t(`Light.validation.reason.${run.reason}`, { k })}
+        <span className="mono">{rankLabel(t, run)}</span> ·{" "}
+        {t(`Light.validation.reason.${run.reason}`, { k })}
       </p>
       {run.hit && !run.informative ? (
-        <p className="text-sm">{t("Light.validation.uninformative", { population: run.population })}</p>
+        <p className="text-sm">
+          {t("Light.validation.uninformative", { population: run.population })}
+        </p>
       ) : null}
       {run.rank && run.chance_hit !== null ? (
         <p className="text-sm">
           {t("Light.validation.chance", {
             k,
-            p: new Intl.NumberFormat(locale, { maximumFractionDigits: 3 }).format(run.chance_hit),
+            p: new Intl.NumberFormat(locale, {
+              maximumFractionDigits: 3,
+            }).format(run.chance_hit),
           })}
         </p>
       ) : null}
@@ -50,7 +55,9 @@ function CaseCard({ c, data }: { c: CaseResult; data: ValidationOut }) {
   const t = useT();
   const locale = useLocale();
   const goal = data.goals.find((g) => g.key === c.case.goal);
-  const ingredient = data.ingredients[c.case.ingredient_key] ?? { en: c.case.ingredient_name };
+  const ingredient = data.ingredients[c.case.ingredient_key] ?? {
+    en: c.case.ingredient_name,
+  };
   const title = t("Light.validation.case", {
     ingredient: nameIn(ingredient, locale, c.case.ingredient_name),
     goal: goal ? nameIn(goal.labels, locale, goal.key) : c.case.goal,
@@ -59,9 +66,17 @@ function CaseCard({ c, data }: { c: CaseResult; data: ValidationOut }) {
   return (
     <Card as="article" aria-label={title} data-testid="validation-case">
       <h3 className="text-lg font-semibold break-words">{title}</h3>
-      <p className="text-sm">{t("Light.validation.original", { use: c.case.original_use })}</p>
-      <p className="text-sm">{t("Light.validation.year", { year: c.case.later_year })}</p>
-      <Run title={t("Light.validation.primary")} run={c.primary} k={data.top_k} />
+      <p className="text-sm">
+        {t("Light.validation.original", { use: c.case.original_use })}
+      </p>
+      <p className="text-sm">
+        {t("Light.validation.year", { year: c.case.later_year })}
+      </p>
+      <Run
+        title={t("Light.validation.primary")}
+        run={c.primary}
+        k={data.top_k}
+      />
       <p className="text-sm">
         {t("Light.validation.variants", {
           a: rankLabel(t, c.primary_indication),
@@ -71,11 +86,21 @@ function CaseCard({ c, data }: { c: CaseResult; data: ValidationOut }) {
       <p className="text-sm">
         {t("Light.validation.labels", {
           used: formatCount(c.primary_strict.labels_used, locale),
-          indication: formatCount(c.primary_strict.labels_removed_indication, locale),
-          missing: formatCount(c.primary_strict.labels_removed_not_in_openfda, locale),
+          indication: formatCount(
+            c.primary_strict.labels_removed_indication,
+            locale,
+          ),
+          missing: formatCount(
+            c.primary_strict.labels_removed_not_in_openfda,
+            locale,
+          ),
         })}
       </p>
-      <Run title={t("Light.validation.sensitivityRun")} run={c.sensitivity} k={data.top_k} />
+      <Run
+        title={t("Light.validation.sensitivityRun")}
+        run={c.sensitivity}
+        k={data.top_k}
+      />
       <p className="text-sm">
         {c.faers && e
           ? t("Light.validation.faers", {
@@ -89,15 +114,26 @@ function CaseCard({ c, data }: { c: CaseResult; data: ValidationOut }) {
       </p>
       <p className="text-sm">{c.case.note}</p>
       <p className="text-sm">
-        <span className="font-semibold">{t("Light.validation.evidence")}: </span>
+        <span className="font-semibold">
+          {t("Light.validation.evidence")}:{" "}
+        </span>
         {c.case.evidence_ids.map((id) => {
           const s = data.sources.find((x) => x.id === id);
           return s ? (
-            <a key={id} href={s.url} target="_blank" rel="noreferrer noopener" className="underline break-words">
+            <a
+              data-inline="true"
+              key={id}
+              href={s.url}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="underline break-words"
+            >
               {s.title ?? id}
             </a>
           ) : (
-            <span key={id} className="mono break-words">{id}</span>
+            <span key={id} className="mono break-words">
+              {id}
+            </span>
           );
         })}
       </p>
@@ -121,16 +157,36 @@ export function Validation() {
       {call.status === "loading" ? (
         <StateView state="loading" label={t("Light.validation.loading")} />
       ) : call.status === "error" ? (
-        <StateView state="error" messageKey={call.error.messageKey} retry={call.retry} />
+        <StateView
+          state="error"
+          messageKey={call.error.messageKey}
+          retry={call.retry}
+        />
       ) : data ? (
         <>
           <Card as="section" data-testid="validation-summary">
             <SectionTitle>{t("Light.validation.title")}</SectionTitle>
             <p className="font-bold">
-              {t("Light.validation.summary", summaryValues(data.primary, data.cases.length, data.top_k, locale))}
+              {t(
+                "Light.validation.summary",
+                summaryValues(
+                  data.primary,
+                  data.cases.length,
+                  data.top_k,
+                  locale,
+                ),
+              )}
             </p>
             <p>
-              {t("Light.validation.sensitivity", summaryValues(data.sensitivity, data.cases.length, data.top_k, locale))}
+              {t(
+                "Light.validation.sensitivity",
+                summaryValues(
+                  data.sensitivity,
+                  data.cases.length,
+                  data.top_k,
+                  locale,
+                ),
+              )}
             </p>
             <p className="text-sm">{t("Light.codes.validation_not_blind")}</p>
             <p className="text-sm">{t("Light.ties")}</p>

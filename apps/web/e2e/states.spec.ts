@@ -129,10 +129,10 @@ test("long German content at 375 px: wraps without horizontal scroll", async ({
   }
 });
 
-test("research: four honest Phase 4 empty states, no numbers", async ({
+test("research: three light-face entries open their screens, no numbers", async ({
   page,
 }) => {
   await page.goto("/en/research");
-  await expect(page.getByText("Coming in Phase 4.")).toHaveCount(4);
+  await expect(page.getByRole("link", { name: /^Open/ })).toHaveCount(3);
   await expect(page.locator("main")).not.toContainText(/\d{2,}/);
 });

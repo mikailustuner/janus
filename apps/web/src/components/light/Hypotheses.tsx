@@ -5,7 +5,7 @@
  * the patient-reported entries without a card. Loading, empty, error and long-content states.
  */
 import { useLocale } from "next-intl";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { StateView } from "@/components/StateView";
 import { Button, Card, SectionTitle } from "@/components/ui";
@@ -33,13 +33,15 @@ function GoalPicker({
   const t = useT();
   const locale = useLocale();
   return (
-    <fieldset className="flex flex-col gap-2">
-      <legend className="mb-2 font-semibold">{t("Light.hypotheses.goal")}</legend>
+    <fieldset className="flex min-w-0 flex-col gap-2">
+      <legend className="mb-2 font-semibold">
+        {t("Light.hypotheses.goal")}
+      </legend>
       <div className="flex flex-wrap gap-2">
         {goals.map((g) => (
           <label
             key={g.key}
-            className={`chip flex min-h-11 cursor-pointer items-center gap-2 px-3 ${value === g.key ? "outline outline-2 outline-accent" : ""}`}
+            className={`chip flex min-h-11 cursor-pointer items-center gap-2 rounded-2xl px-3 whitespace-normal ${value === g.key ? "outline outline-2 outline-accent" : ""}`}
           >
             <input
               type="radio"
@@ -70,12 +72,20 @@ function CardsPanel({ goal, summary }: { goal: string; summary: GoalSummary }) {
     loading: false,
     error: null,
   });
-  const call = useCall<CardsOut>(() => lightClient.cards(goal, 0, PAGE), [goal]);
-  useEffect(() => setExtra([]), [goal]);
+  const call = useCall<CardsOut>(
+    () => lightClient.cards(goal, 0, PAGE),
+    [goal],
+  );
   if (call.status === "loading")
     return <StateView state="loading" label={t("Light.hypotheses.loading")} />;
   if (call.status === "error")
-    return <StateView state="error" messageKey={call.error.messageKey} retry={call.retry} />;
+    return (
+      <StateView
+        state="error"
+        messageKey={call.error.messageKey}
+        retry={call.retry}
+      />
+    );
   if (call.status !== "ok") return null;
   const d = call.data;
   const cards = [...d.cards, ...extra];
@@ -90,7 +100,9 @@ function CardsPanel({ goal, summary }: { goal: string; summary: GoalSummary }) {
   };
   return (
     <section className="flex flex-col gap-3" aria-live="polite">
-      <SectionTitle>{t("Light.hypotheses.total", { total: d.total, goal: goalName })}</SectionTitle>
+      <SectionTitle>
+        {t("Light.hypotheses.total", { total: d.total, goal: goalName })}
+      </SectionTitle>
       <p className="text-sm">{t("Light.ties")}</p>
       {summary.inverse_tested ? (
         <p className="text-sm">
@@ -102,7 +114,9 @@ function CardsPanel({ goal, summary }: { goal: string; summary: GoalSummary }) {
         </p>
       ) : null}
       {d.removed_by_integrity ? (
-        <p className="text-sm">{t("Light.hypotheses.removed", { count: d.removed_by_integrity })}</p>
+        <p className="text-sm">
+          {t("Light.hypotheses.removed", { count: d.removed_by_integrity })}
+        </p>
       ) : null}
       <p className="text-sm">{t("Light.notChecked")}</p>
       {cards.length === 0 ? (
@@ -118,9 +132,20 @@ function CardsPanel({ goal, summary }: { goal: string; summary: GoalSummary }) {
       )}
       {cards.length < d.total ? (
         <div className="flex flex-col items-start gap-2">
-          <p className="text-sm">{t("Light.hypotheses.shown", { shown: cards.length, total: d.total })}</p>
-          <Button variant="secondary" onClick={loadMore} disabled={more.loading}>
-            {more.loading ? t("Common.loading") : t("Light.hypotheses.showMore")}
+          <p className="text-sm">
+            {t("Light.hypotheses.shown", {
+              shown: cards.length,
+              total: d.total,
+            })}
+          </p>
+          <Button
+            variant="secondary"
+            onClick={loadMore}
+            disabled={more.loading}
+          >
+            {more.loading
+              ? t("Common.loading")
+              : t("Light.hypotheses.showMore")}
           </Button>
           {more.error ? <p role="alert">{t(more.error)}</p> : null}
         </div>
@@ -136,7 +161,9 @@ function CardsPanel({ goal, summary }: { goal: string; summary: GoalSummary }) {
             {d.patient_reported.map((p) => (
               <li key={`${p.ingredient.key}-${p.signal.event}`}>
                 {nameIn(p.ingredient.labels, locale, p.ingredient.key)}:{" "}
-                {t("Light.card.patientReleased", { value: formatCount(p.signal.total_of_released, locale) })}
+                {t("Light.card.patientReleased", {
+                  value: formatCount(p.signal.total_of_released, locale),
+                })}
               </li>
             ))}
           </ul>
@@ -166,11 +193,15 @@ export function Hypotheses() {
       {ov.status === "loading" ? (
         <StateView state="loading" label={t("Light.hypotheses.loading")} />
       ) : ov.status === "error" ? (
-        <StateView state="error" messageKey={ov.error.messageKey} retry={ov.retry} />
+        <StateView
+          state="error"
+          messageKey={ov.error.messageKey}
+          retry={ov.retry}
+        />
       ) : chosen && summary ? (
         <>
           <GoalPicker goals={goals} value={chosen} onChange={setGoal} />
-          <CardsPanel goal={chosen} summary={summary} />
+          <CardsPanel key={chosen} goal={chosen} summary={summary} />
         </>
       ) : (
         <StateView state="empty" message={t("Light.hypotheses.empty")} />

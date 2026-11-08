@@ -37,24 +37,42 @@ export function Export() {
       {call.status === "loading" ? (
         <StateView state="loading" label={t("Light.export.loading")} />
       ) : call.status === "error" ? (
-        <StateView state="error" messageKey={call.error.messageKey} retry={call.retry} />
+        <StateView
+          state="error"
+          messageKey={call.error.messageKey}
+          retry={call.retry}
+        />
       ) : data ? (
         <Card as="section" data-testid="export-panel">
-          <p className="font-bold">{t("Light.export.licence", { licence: data.licence })}</p>
+          <p className="font-bold">
+            {t("Light.export.licence", { licence: data.licence })}
+          </p>
           <p>{t("Light.codes.export_aggregated")}</p>
           <p className="text-sm">{t("Light.export.columns")}</p>
-          <p className="mono">{t("Light.export.rows", { count: data.rows.length })}</p>
+          <p className="mono">
+            {t("Light.export.rows", { count: data.rows.length })}
+          </p>
           <div className="flex flex-wrap gap-2">
             <Button
               onClick={() =>
-                save(fileName(data.snapshot.build_id, "json"), "application/json", JSON.stringify(data, null, 1))
+                save(
+                  fileName(data.snapshot.build_id, "json"),
+                  "application/json",
+                  JSON.stringify(data, null, 1),
+                )
               }
             >
               {t("Light.export.json")}
             </Button>
             <Button
               variant="secondary"
-              onClick={() => save(fileName(data.snapshot.build_id, "csv"), "text/csv", toCsv(data.rows))}
+              onClick={() =>
+                save(
+                  fileName(data.snapshot.build_id, "csv"),
+                  "text/csv",
+                  toCsv(data.rows),
+                )
+              }
             >
               {t("Light.export.csv")}
             </Button>

@@ -287,8 +287,8 @@ Errors: `422 {"error":"invalid_request","fields":[…]}` (unknown goal, bad pagi
 
 ## 10. Web (`apps/web`, Req 4, 5.2, 5.3)
 
-Design system: the existing tokens and components (design.md steering; light face in Night Pharmacy, "Research" section
-in Glass); no new component library. Screens under `/research` (the shell already gives the light face):
+Design system: the existing tokens and components (design.md steering; the normal theme of both Night Pharmacy and Glass,
+experience DP48: no light face); no new component library. Screens under `/research`:
 - **Research home** (`/research`): the three Phase 4 entries become links (hypotheses, validation, export); the séance
   entry is left to the séance spec. The experimental notice when `status = experimental`.
 - **Hypotheses** (`/research/hypotheses`): goal picker (radio chips, keyboard), card list (20 per page, "show more"),
@@ -360,6 +360,38 @@ in Glass); no new component library. Screens under `/research` (the shell alread
 | DP18 | Researcher screens call the API directly (no demo fixtures); e2e uses a fixture recorded from the real build | Demo-client fixtures | The researcher area is not part of the patient demo; the fixture keeps e2e offline |
 | DP19 | Review: pharmacologist and statistician passes as separate sheets, "AI-reviewed, pending expert review"; pre-launch checklist item | Owner review stop | Owner decision of the Phase 4 brief |
 | DP20 | Status `experimental` or `prototype` from the primary run only | From the sensitivity run | The sensitivity run includes labels written after the later indication |
+| DP21 | Local (application-site, topical) effects are not separated from systemic ones yet; the card shows the label sections and the pharmacologist's route-class rule is an expert question | Implement the route-class rule now | It needs a dose-form/route class per OnSIDES label (RxNorm dose forms) and changes no validation case; the topical corticosteroids in the alopecia list are a known limit |
+| DP22 | After the pharmacologist pass: `Priapism`, `Abnormal hair growth`, `Hair growth abnormal` excluded; `nonspecific` marker on 13 toxicity-sign terms (card sentence); PT sets extended; four cases added before the next run (doxepin, finasteride, glycopyrronium, semaglutide). Recorded as **post-hoc** (the first run's ranks had been seen); the first-run table stays in the report | Keep the first mapping; exclude ATC L01 from obesity | The exclusions are pharmacological, not tuned (Priapism exclusion improved sildenafil's rank; this is stated). The ATC L01 narrowing would move topiramate up and is left to the expert |
+| DP23 | Ranking key K1 (statistician C3): has label signal, Wilson bound, regions, labels, has inverse signal, FAERS reports. **Post-hoc**, recorded | K0 (signal types, regions first) | Regional coverage is very uneven (US 30k single-ingredient labels, EU 0.6k); K0 let the noisy inverse layer lead lists; K1 ranks the primary and sensitivity runs on the same principle |
+| DP24 | Primary run = worse of variant (a) (remove the case drug's labels naming the later use) and (b) (also those openFDA lacks); a hit only if both (statistician C4); chance = 10/population and percentile published, no p-value; inverse cards show E and O/E, `denominator_sensitive` = upper bound ≥ 1 with N = all (C1, C2) | Variant (b) only | Dropping unreadable labels raised topiramate's share (3 vs 21 of 254); the filter must never help the case drug |
 
 ## 14. Results and review outcomes
-Filled in by tasks 9 and 10 (build facts, validation table, review changes).
+
+### 14.1 Build facts (real data, 2026-11-08, build `ab895a49b4d43f82`; same numbers as `59eec825…`, only the code hash differs)
+- OnSIDES run `20261108T211606Z-7739c733-44ad`: 41,119 labels, 1,235,321 distinct (label, term, section) pairs, 4,142 combination
+  labels; 35,323 single-ingredient labels after key mapping; OnSIDES ingredients mapped 1,309 of 1,866 (1,225 by RxCUI, 84 by
+  English label; 557 unmapped, mostly OMOP extension ids).
+- openFDA label run `20261108T213649Z-9ead3ecb-cbf5`: 970 US labels for the 11 case ingredients (thalidomide: 0, Thalomid is not in
+  openFDA).
+- 2,990 candidates over 16 conditions; 1,020 inverse signals out of 11,318 pairs tested (about 283 expected by chance alone, which
+  the screens and the report state per condition).
+- Build: 5 s; deterministic (P4 on synthetic data; two real builds gave the same file).
+- API (in process, dev machine): overview 5 ms, cards of a goal 14 ms, validation 5 ms, export of all 2,990 rows 263 ms.
+
+### 14.2 Validation (published primary run, key K1, 13 cases)
+| Case | Primary | Sensitivity |
+|---|---|---|
+| minoxidil → alopecia | 1 of 126, hit (chance 0.079) | 1 of 142, hit |
+| sildenafil → erectile dysfunction | 1 of 47, hit (chance 0.213) | 7 of 55, hit |
+| topiramate → obesity | 21 of 254, miss (variant b alone: 3) | 9 of 400, hit |
+| doxepin → insomnia | 156 of 275, miss | 191 of 383 |
+| bimatoprost → sparse eyelashes | 3 of 3, uninformative | 3 of 4, uninformative |
+| finasteride → alopecia, glycopyrronium → hyperhidrosis | not a candidate | not a candidate |
+| liraglutide, semaglutide → obesity | not evaluable (no US label left) | 285–300 and 304 of 400 |
+| amantadine → Parkinson's; sildenafil → PAH; thalidomide → ENL, myeloma | no side-effect term maps | same |
+Primary: 2 informative hits of 13 (about 0.37 expected by chance); status **prototype** (not experimental). The FAERS layer found
+none of the cases (every case drug's condition is reported more often than expected: indication and notoriety bias).
+
+### 14.3 Review passes
+Pharmacologist pass: accept with changes (DP22, DP21 open). Statistician pass: change (DP23, DP24, C1, C2, C5 to C8 applied in the
+report). Both sheets end with questions for the human experts; the pre-launch checklist has the item.
