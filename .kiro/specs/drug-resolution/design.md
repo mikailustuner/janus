@@ -1089,6 +1089,23 @@ decision 8), openFDA Rx 92.41 % / 94.13 %, BDPM (no homeopathic) 82.17 % /
 Nomenclátor and FAERS; BDPM +59 occurrences and +4 products and openFDA Rx +1 occurrence, all from
 the `anhydre`/`anhydr*`/`susuz` hydrate words (owner decision 3).
 
+**Checks after enabling (task 21, 2026-11-08).**
+- *Dev database:* dataset `26e5d0a0…` loaded and current (161,399 products, unchanged count: no EU
+  rows before task 22).
+- *Cascade-engine gate 1, Istanbul case* (`test_cascades_real_artifacts.py`, real database): passes
+  with the same assertions as before; AMLIPIN still resolves to amlodipine `C08CA01` and
+  lisinopril `C09AA03`, the Istanbul cascade result is unchanged.
+- *Collective Memory counts rebuilt* (run `20261108T073432Z-7445632a-26e5d0a0-3706`, 1,510,804
+  reports): reports with a mapped ingredient 1,252,900 → 1,281,744 (+28,844); distinct ingredient
+  keys 2,213 → 2,220 (7 gained, none lost); 66 keys have more reports, 2,144 are equal, 3 have
+  fewer. The three decreases follow from accepted decisions: `Q15409432` (hydrocortisone aceponate
+  item) 2,527 → 2 and `Q190875` (hydrocortisone) 8,393 → 10,121, because hydrocortisone acetate,
+  hemisuccinate, sodium phosphate, sodium succinate and valerate now map to hydrocortisone (aceponate
+  correction, decision 2); `Q2034064` (alginic acid) 372 → 1 and `Q27291565` (pidolic acid) 37 → 31,
+  because `SODIUM ALGINATE`, `MAGNESIUM ALGINATE` and `CALCIUM PIDOLATE` no longer map to the bare
+  acid (`alginate` and `pidolate` are NOT_ALONE words, decision 6). FAERS counts did change as
+  intended; no cascade result changed.
+
 **For information, no decision needed now.**
 - Parts of combination strings with no ingredient-level code (`CARBIDOPA` 16,311, `VILANTEROL`
   13,859 occurrences, …) cannot reach Collective Memory through any ATC-based key. Counting them
