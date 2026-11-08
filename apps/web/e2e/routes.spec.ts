@@ -84,8 +84,9 @@ async function checks(
   if (theme === "glass")
     expect(findForbiddenPhrases(text, themeWords[locale])).toEqual([]);
   if (route === "") {
+    // The home is full-bleed (DP46): the notice is the first marked element of the page body.
     const first = await page
-      .locator("main > *")
+      .locator("main [data-testid]")
       .first()
       .getAttribute("data-testid");
     expect(first).toBe("emergency-notice");

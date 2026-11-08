@@ -11,8 +11,8 @@ import { useRef } from "react";
 
 import type { CascadeResult } from "@/api/contracts";
 import { AbruptStopLine } from "@/components/AbruptStopLine";
+import { Ghost } from "@/components/Ghost";
 import { formatMonth } from "@/components/format";
-import { GhostShape } from "@/components/icons";
 import { keyName } from "@/components/names";
 import { ReadAloud } from "@/components/ReadAloud";
 import { SafetyLine } from "@/components/SafetyLine";
@@ -118,7 +118,7 @@ export function FindingCard({
       <div ref={ref as never} className="flex flex-col gap-3">
         <div className="flex items-start gap-3">
           {theme === "two-faces" ? (
-            <GhostShape className="ghost-drift mt-1 shrink-0" />
+            <Ghost size={34} animated className="mt-1 shrink-0" />
           ) : null}
           <div className="flex min-w-0 flex-col gap-1">
             <p className="text-sm text-muted">{w("Findings.kind")}</p>

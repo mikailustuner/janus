@@ -1,0 +1,657 @@
+/*
+ * Home scenes (steering design.md "Home scenes", experience DP46). Night Pharmacy: a pinned,
+ * scroll-scrubbed stage (diorama → door transition video → medicine cabinet) with code-made
+ * ghosts; Glass Janus: one full-bleed glass mask with a light sweep. Colours of the scenes are
+ * fixed (the images are dark in every theme), so they live here and not in the face tokens.
+ *
+ * Two modes. Cinematic: `.np` is tall, `.np-sticky` is pinned and the scenes are stacked; the
+ * motion script (`nightMotion.ts`) sets `--v` (video opacity), `--c` (cabinet opacity), `--g`
+ * (hero ghosts) and the pointer `--mx`/`--my`. Still: under prefers-reduced-motion, or
+ * `data-still` (Save-Data, slow connection, video error), the three stills follow one another
+ * with a simple fade and the ghosts stand still.
+ */
+:root {
+  --ghost-core: #f6f1e7;
+  --ghost-edge: #7fd1c7;
+  --ghost-eye: #1b1f3b;
+  --scene-night: #0b0e26;
+  --scene-ink: #f6f1e7;
+  --scene-muted: #d9d6e6;
+  --scene-accent: #7fd1c7;
+  --scene-on-accent: #0e2a27;
+  --scene-glass: #0d1220;
+  --scene-firefly: #ffd27a;
+}
+
+/* ---------- Ghost ---------- */
+.ghost {
+  overflow: visible;
+  transform: rotate(var(--lean, 0deg));
+  transition: transform 600ms ease-out;
+}
+/* Ghost drift: 6 s, 3 px on the findings (Req 14.11); the home scenes float further. */
+.ghost-animated .ghost-body {
+  animation: ghost-float 6s ease-in-out infinite;
+  transform-origin: 50% 50%;
+}
+.ghost-animated .ghost-tail {
+  animation: ghost-tail 2.4s ease-in-out infinite;
+  transform-origin: 50% 0%;
+  transform-box: fill-box;
+}
+.ghost-animated .ghost-eyes {
+  animation: ghost-blink 7s infinite;
+  transform-origin: 50% 50%;
+  transform-box: fill-box;
+}
+@keyframes ghost-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(calc(-1 * var(--float, 3px)));
+  }
+}
+@keyframes ghost-tail {
+  0%,
+  100% {
+    transform: skewX(0deg) scaleY(1);
+  }
+  50% {
+    transform: skewX(-9deg) scaleY(1.06);
+  }
+}
+@keyframes ghost-blink {
+  0%,
+  46%,
+  50%,
+  100% {
+    transform: scaleY(1);
+  }
+  48% {
+    transform: scaleY(0.1);
+  }
+}
+
+/* ---------- Shared scene box: an image box sized like object-fit: cover, with a focal point ---------- */
+.scene {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  container-type: size;
+}
+.scene-box {
+  --bw: max(100cqw, 100cqh * 1.7917);
+  position: absolute;
+  top: 50%;
+  width: var(--bw);
+  aspect-ratio: 2752 / 1536;
+  left: max(100cqw - var(--bw), min(0px, 50cqw - var(--fx, 0.5) * var(--bw)));
+  transform: translate3d(
+    calc(var(--mx, 0) * var(--depth, 0px)),
+    calc(-50% + var(--my, 0) * var(--depth, 0px) * 0.6),
+    0
+  );
+  will-change: transform;
+}
+.scene-box img,
+.scene-box video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------- Night Pharmacy ---------- */
+.np {
+  --runway: 240svh;
+  position: relative;
+  overflow-x: clip;
+  background: var(--scene-night);
+  color: var(--scene-ink);
+}
+.np-sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+.np-runway {
+  height: var(--runway);
+}
+.np-sky {
+  position: absolute;
+  inset: -40px;
+  background:
+    radial-gradient(1px 1px at 12% 18%, var(--scene-ink) 50%, transparent 51%),
+    radial-gradient(1px 1px at 28% 8%, var(--scene-ink) 50%, transparent 51%),
+    radial-gradient(
+      1.5px 1.5px at 41% 22%,
+      var(--scene-ink) 50%,
+      transparent 51%
+    ),
+    radial-gradient(1px 1px at 8% 42%, var(--scene-muted) 50%, transparent 51%),
+    radial-gradient(
+      1px 1px at 33% 35%,
+      var(--scene-muted) 50%,
+      transparent 51%
+    ),
+    radial-gradient(
+      1.5px 1.5px at 19% 61%,
+      var(--scene-ink) 50%,
+      transparent 51%
+    ),
+    radial-gradient(1px 1px at 47% 12%, var(--scene-muted) 50%, transparent 51%);
+  opacity: 0.7;
+  transform: translate3d(
+    calc(var(--mx, 0) * -22px),
+    calc(var(--my, 0) * -14px),
+    0
+  );
+  pointer-events: none;
+}
+.np-box-night {
+  --fx: 0.72;
+  --depth: -10px;
+}
+.np-box-cabinet {
+  --fx: 0.72;
+  --depth: -10px;
+}
+.np-video {
+  opacity: var(--v, 0);
+}
+/* The diorama leaves once the video has taken over (it would show around the moved cabinet). */
+.np-hero {
+  opacity: calc(1 - var(--v, 0));
+}
+.np-cabinet {
+  opacity: var(--c, 0);
+}
+.np-mist {
+  position: absolute;
+  inset: auto -10% -8% -10%;
+  height: 38%;
+  background:
+    radial-gradient(
+      60% 70% at 30% 80%,
+      rgb(216 214 236 / 0.16),
+      transparent 70%
+    ),
+    radial-gradient(
+      50% 60% at 75% 90%,
+      rgb(216 214 236 / 0.12),
+      transparent 70%
+    );
+  filter: blur(8px);
+  transform: translate3d(calc(var(--mx, 0) * 18px), 0, 0);
+  pointer-events: none;
+  animation: np-mist 18s ease-in-out infinite alternate;
+}
+@keyframes np-mist {
+  to {
+    translate: 4% 0;
+  }
+}
+.np-fireflies {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.np-ghosts {
+  position: absolute;
+  inset: 0;
+  opacity: var(--g, 1);
+  pointer-events: none;
+}
+.np-ghost {
+  position: absolute;
+  width: 3.4%;
+  translate: -50% -100%;
+  animation: np-rise 1.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.np-ghost,
+.np-finding {
+  --float: 8px;
+}
+.np-ghost > .ghost {
+  width: 100%;
+  height: auto;
+}
+.np-ghost:nth-child(2) {
+  animation-delay: 0.35s;
+}
+.np-ghost:nth-child(3) {
+  animation-delay: 0.7s;
+}
+.np-ghost:nth-child(4) {
+  animation-delay: 1.05s;
+}
+@keyframes np-rise {
+  from {
+    opacity: 0;
+    transform: translateY(30%) scale(0.55);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-40%) scale(1);
+  }
+}
+.np-note-glow {
+  position: absolute;
+  left: 56.9%;
+  top: 49.6%;
+  width: 7%;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(255 230 170 / 0.55), transparent 65%);
+  animation: np-glow 2.8s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes np-glow {
+  50% {
+    opacity: 0.45;
+    scale: 1.15;
+  }
+}
+
+/* Copy over the first screen: real text over a scrim, left third on wide screens. */
+.np-copy {
+  opacity: var(--h, 1);
+}
+.np-copy,
+.gj-copy {
+  position: absolute;
+  inset: 0 0 auto 0;
+  min-height: 100svh;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1rem 1rem 2.5rem;
+  /* Phones: the scrim holds behind the whole text block (title included), then fades. */
+  background: linear-gradient(
+    to top,
+    rgb(8 10 30 / 0.95) 0%,
+    rgb(8 10 30 / 0.88) 62%,
+    rgb(8 10 30 / 0) 92%
+  );
+  color: var(--scene-ink);
+}
+.np-copy-inner,
+.gj-copy-inner {
+  display: flex;
+  max-width: 34rem;
+  flex-direction: column;
+  gap: 1rem;
+}
+@media (min-width: 768px) {
+  .np-copy,
+  .gj-copy {
+    justify-content: center;
+    padding: 2rem 2rem 2rem max(2rem, calc((100% - 1120px) / 2 + 1rem));
+    background: linear-gradient(
+      to right,
+      rgb(8 10 30 / 0.92) 0%,
+      rgb(8 10 30 / 0.78) 32%,
+      rgb(8 10 30 / 0) 62%
+    );
+  }
+}
+.scene-eyebrow {
+  color: var(--scene-muted);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.scene-title {
+  font-size: clamp(2rem, 5.2vw, 3.6rem);
+  line-height: 1.05;
+  font-weight: 700;
+  text-wrap: balance;
+}
+.scene-lead {
+  color: var(--scene-ink);
+  font-size: 1.125rem;
+  max-width: 60ch;
+}
+.scene-hint {
+  color: var(--scene-muted);
+  font-size: 0.875rem;
+}
+.scene-btn {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  padding: 0.6rem 1.25rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: 2px solid var(--scene-accent);
+  color: var(--scene-ink);
+  background: rgb(11 14 38 / 0.4);
+}
+.scene-btn-primary {
+  background: var(--scene-accent);
+  color: var(--scene-on-accent);
+}
+.scene-btn:focus-visible,
+.np-finding:focus-visible {
+  outline: 3px solid var(--scene-accent);
+  outline-offset: 3px;
+}
+
+/* Scene 3: ghosts rise out of the cabinet boxes and float to the list, where they become the
+   findings. */
+.np-box-cabinet .np-ghost {
+  opacity: 0;
+  animation: none;
+}
+.np[data-in] .np-box-cabinet .np-ghost {
+  animation: np-depart 1.6s cubic-bezier(0.3, 0.6, 0.2, 1) both;
+}
+.np[data-in] .np-box-cabinet .np-ghost:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.np[data-in] .np-box-cabinet .np-ghost:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.np[data-in] .np-box-cabinet .np-ghost:nth-child(4) {
+  animation-delay: 0.45s;
+}
+@keyframes np-depart {
+  0% {
+    opacity: 0;
+    transform: translateY(30%) scale(0.5);
+  }
+  35% {
+    opacity: 1;
+    transform: translateY(-60%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-900%, -120%) scale(0.8);
+  }
+}
+.np-scene3 {
+  position: relative;
+  z-index: 2;
+  min-height: 100svh;
+  margin-top: -100svh;
+  display: flex;
+  align-items: flex-end;
+  padding: 1rem 1rem 3rem;
+  background: linear-gradient(
+    to top,
+    rgb(8 10 30 / 0.94) 0%,
+    rgb(8 10 30 / 0.8) 55%,
+    transparent 85%
+  );
+}
+@media (min-width: 768px) {
+  .np-scene3 {
+    align-items: center;
+    padding: 3rem 2rem 3rem max(2rem, calc((100% - 1120px) / 2 + 1rem));
+    background: linear-gradient(
+      to right,
+      rgb(8 10 30 / 0.92) 0%,
+      rgb(8 10 30 / 0.75) 36%,
+      transparent 60%
+    );
+  }
+}
+.np-scene3-inner {
+  display: flex;
+  max-width: 34rem;
+  flex-direction: column;
+  gap: 1rem;
+}
+.np-finding {
+  display: flex;
+  width: 100%;
+  min-height: 3.5rem;
+  align-items: center;
+  gap: 0.9rem;
+  border-radius: 1rem;
+  border: 1px solid rgb(127 209 199 / 0.45);
+  background: rgb(14 18 48 / 0.7);
+  padding: 0.5rem 1rem 0.5rem 0.75rem;
+  color: var(--scene-ink);
+  text-align: start;
+  font-weight: 700;
+  opacity: 0;
+  transform: translate3d(40vw, -12px, 0) scale(0.9);
+  transition:
+    opacity 700ms ease,
+    transform 1100ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    background-color 200ms ease;
+}
+.np-finding:hover {
+  background: rgb(30 42 80 / 0.85);
+}
+.np-scene3[data-in] .np-finding {
+  opacity: 1;
+  transform: none;
+  transition-delay: 500ms;
+}
+.np-scene3[data-in] li:nth-child(2) .np-finding {
+  transition-delay: 620ms;
+}
+.np-scene3[data-in] li:nth-child(3) .np-finding {
+  transition-delay: 740ms;
+}
+.np-scene3[data-in] li:nth-child(4) .np-finding {
+  transition-delay: 860ms;
+}
+/* Focus brings a finding into view even before the entry (keyboard order hero → findings). */
+.np-finding:focus-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Phones: two ghosts in the hero, the 640 video (chosen in script). */
+@media (max-width: 767px) {
+  .np {
+    --runway: 220svh;
+  }
+  .np-ghost:nth-child(n + 3) {
+    display: none;
+  }
+  .np-ghost {
+    width: 6%;
+  }
+}
+
+/* Still mode: the three stills one after another, a simple fade, no motion. */
+.np-still-img {
+  display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .np .np-sticky,
+  .np[data-still] .np-sticky {
+    position: relative;
+    height: auto;
+    overflow: visible;
+  }
+}
+.np[data-still] .np-sticky {
+  position: relative;
+  height: auto;
+  overflow: visible;
+}
+@media (prefers-reduced-motion: reduce) {
+  .np .scene {
+    position: relative;
+    height: 100svh;
+  }
+  .np .np-runway,
+  .np .np-fireflies,
+  .np video {
+    display: none;
+  }
+  .np .np-still-img {
+    display: block;
+  }
+  .np .np-video,
+  .np .np-cabinet,
+  .np .np-ghosts {
+    opacity: 1;
+  }
+  .np .np-ghost,
+  .np .np-finding,
+  .np .np-mist,
+  .np .np-note-glow,
+  .ghost-animated .ghost-body,
+  .ghost-animated .ghost-tail,
+  .ghost-animated .ghost-eyes {
+    animation: none;
+    transition: opacity 400ms ease;
+    transform: none;
+  }
+  .np .np-ghost {
+    opacity: 1;
+  }
+  .np .np-finding {
+    opacity: 1;
+  }
+  .scene-box {
+    transform: translate3d(0, -50%, 0);
+  }
+}
+.np[data-still] .scene {
+  position: relative;
+  height: 100svh;
+}
+.np[data-still] .np-runway,
+.np[data-still] .np-fireflies,
+.np[data-still] video {
+  display: none;
+}
+.np[data-still] .np-still-img {
+  display: block;
+}
+.np[data-still] .np-video,
+.np[data-still] .np-cabinet,
+.np[data-still] .np-ghosts {
+  opacity: 1;
+}
+.np[data-still] .np-finding {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Glass Janus ---------- */
+.gj {
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+  background:
+    radial-gradient(60% 80% at 70% 40%, rgb(80 96 150 / 0.35), transparent 70%),
+    var(--scene-glass);
+  color: var(--scene-ink);
+}
+.gj .scene {
+  perspective: 1400px;
+}
+.gj-box {
+  --bw: max(100cqw, 100cqh * 1.7917);
+  left: calc(50cqw - 0.5 * var(--bw));
+  transform: translate3d(0, -50%, 0) rotateY(calc(var(--mx, 0) * 3deg))
+    rotateX(calc(var(--my, 0) * -2deg));
+  mask-image: linear-gradient(to right, transparent 0%, black 18%, black 100%);
+}
+@media (min-width: 768px) {
+  .gj-box {
+    left: calc(68cqw - 0.5 * var(--bw));
+  }
+}
+.gj-sweep {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgb(255 255 255 / 0.22) 48%,
+    rgb(190 230 255 / 0.12) 52%,
+    transparent 65%
+  );
+  background-size: 260% 100%;
+  mix-blend-mode: screen;
+  mask-image: radial-gradient(28% 46% at 50% 47%, black 60%, transparent 100%);
+  animation: gj-sweep 9s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes gj-sweep {
+  0% {
+    background-position: 120% 0;
+  }
+  60%,
+  100% {
+    background-position: -40% 0;
+  }
+}
+.gj-capsule {
+  position: absolute;
+  width: 0.5%;
+  aspect-ratio: 1 / 2.4;
+  border-radius: 999px;
+  background: linear-gradient(rgb(255 255 255 / 0.9), rgb(127 209 199 / 0.5));
+  filter: blur(0.5px);
+  opacity: 0.7;
+  animation: gj-float 7s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes gj-float {
+  50% {
+    transform: translateY(-14px) rotate(18deg);
+    opacity: 0.35;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gj-sweep,
+  .gj-capsule {
+    animation: none;
+  }
+  .gj-box {
+    transform: translate3d(0, -50%, 0);
+  }
+}
+
+/* Only the hero of the active theme is shown (both are server-rendered; the inactive one is
+   removed after hydration). */
+:root[data-theme-style="glass"] .np,
+:root:not([data-theme-style="glass"]) .gj {
+  display: none;
+}
+.gj .gj-copy {
+  position: relative;
+}
+.np-box-cabinet .np-ghosts {
+  opacity: 1;
+}
+
+/* Save-Data, slow connection or video error: no motion at all, as under reduced motion. */
+.np[data-still] .np-ghost,
+.np[data-still] .np-mist,
+.np[data-still] .np-note-glow,
+.np[data-still] .ghost-animated .ghost-body,
+.np[data-still] .ghost-animated .ghost-tail,
+.np[data-still] .ghost-animated .ghost-eyes,
+.gj[data-still] .gj-sweep,
+.gj[data-still] .gj-capsule {
+  animation: none;
+}
+.np[data-still] .np-ghost {
+  opacity: 1;
+  transform: none;
+}
+.np[data-still] .np-finding {
+  transition: opacity 400ms ease;
+}

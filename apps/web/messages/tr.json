@@ -29,7 +29,31 @@
     "coverageTitle": "Bölgeler ve diller",
     "regions": "İlaç kutularının geldiği yerler",
     "languages": "Diller",
-    "privacyLine": "Kutu fotoğrafları bu cihazda kalır. Janus'ta hesap yoktur; Janus ilaç listenizi saklamaz ve yalnızca kontrol için gereken kodları gönderir."
+    "privacyLine": "Kutu fotoğrafları bu cihazda kalır. Janus'ta hesap yoktur; Janus ilaç listenizi saklamaz ve yalnızca kontrol için gereken kodları gönderir.",
+    "nightHeadline": "Bir ilaç, başka bir ilacın yan etkisi için mi yazıldı?",
+    "glassHeadline": "Evinizdeki ilaçlara net bir bakış.",
+    "stepInside": "İçeri gir",
+    "scene3Title": {
+      "twoFaces": "Demo ilaç dolabında dört hayalet",
+      "glass": "Demo ilaç dolabında dört örüntü"
+    },
+    "scene3Intro": {
+      "twoFaces": "Her hayalet, Janus'un sentetik bir hastanın listesinde (İstanbul demosu) bulduğu bir reçete kaskadı örüntüsüdür. Birini açın ya da doktor notunu hazırlayın.",
+      "glass": "Her biri, Janus'un sentetik bir hastanın listesinde (İstanbul demosu) bulduğu bir reçete kaskadı örüntüsüdür. Birini açın ya da doktor notunu hazırlayın."
+    },
+    "ghosts": {
+      "pipc5": "Ayak bileklerinde şişlik, ardından eklenen bir idrar söktürücü",
+      "pipc6": "Kabızlık, ardından eklenen bir müshil",
+      "pipc9": "Kas ağrısı, ardından eklenen bir ağrı kesici",
+      "pipc12": "Uyku sorunu ve bir uyku ilacı (sıra bilinmiyor)"
+    },
+    "ghostOpen": "Demoda aç: {finding}",
+    "alt": {
+      "diorama": "Çizim: gece, pencereleri aydınlık ve kapısı aralık küçük bir eczane.",
+      "cabinet": "Çizim: eczanenin içi; duvarda parlayan açık bir ilaç dolabı ve küçük bir masada boş bir not.",
+      "glassHero": "Çizim: iki yüzü olan, içi kapsüllerle dolu cam bir baş."
+    },
+    "prepareDemoNote": "Demo doktor notunu hazırla"
   },
   "Shell": {
     "skip": "İçeriğe geç",
@@ -189,9 +213,9 @@
     "statisticsRegionNone": "Yok",
     "appearance": "Görünüm",
     "theme": "Tema",
-    "themeTwoFaces": "İki Yüz",
-    "themeTwoFacesHint": "Hasta tarafı için gece mavisi, araştırma tarafı için fildişi.",
-    "themeGlass": "Cam",
+    "themeTwoFaces": "Gece Eczanesi",
+    "themeTwoFacesHint": "Hasta tarafı için ışıklı pencereli gece mavisi, araştırma tarafı için fildişi.",
+    "themeGlass": "Cam Janus",
     "themeGlassHint": "Sade ve açık; tema simgeleri yok.",
     "largeText": "Büyük yazı",
     "reduceTransparency": "Saydamlığı azalt",

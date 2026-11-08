@@ -57,7 +57,7 @@ test("C7: reduced motion stops the ghost drift", async ({ browser }) => {
     sessionStorage.setItem("janus.v1.demo", "istanbul"),
   );
   await page.goto("/en/results");
-  const ghost = page.locator(".ghost-drift").first();
+  const ghost = page.locator('[data-testid="finding"] .ghost-body').first();
   await expect(ghost).toBeVisible();
   expect(await ghost.evaluate((el) => getComputedStyle(el).animationName)).toBe(
     "none",

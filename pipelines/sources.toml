@@ -431,3 +431,12 @@ name = "qrcode 1.5.4 (QR code of the doctor note)"
 license = "MIT"
 storage = "separate_package"
 urls = ["https://github.com/soldair/node-qrcode"]
+
+[[sources]]
+id = "art_home_scenes"
+section = "web"
+name = "Home scene images and door transition video (Night Pharmacy, Glass Janus)"
+publisher = "Generated for Janus"
+license = "AI-generated (Google Gemini) for Janus, 2026; project asset, no third-party artwork"
+notes = ["Committed under apps/web/public/home (AVIF, WebP, JPEG, H.264 MP4, VP9 WebM; audio removed); provenance in apps/web/public/home/README.md."]
+storage = "commit"

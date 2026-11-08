@@ -29,7 +29,31 @@
     "coverageTitle": "Regionen und Sprachen",
     "regions": "Medikamentenpackungen aus",
     "languages": "Sprachen",
-    "privacyLine": "Fotos der Packungen bleiben auf diesem Gerät. Janus hat kein Konto, speichert Ihre Medikamentenliste nicht und sendet nur die Codes, die die Prüfung braucht."
+    "privacyLine": "Fotos der Packungen bleiben auf diesem Gerät. Janus hat kein Konto, speichert Ihre Medikamentenliste nicht und sendet nur die Codes, die die Prüfung braucht.",
+    "nightHeadline": "Wurde ein Arzneimittel wegen der Nebenwirkung eines anderen verschrieben?",
+    "glassHeadline": "Ein klarer Blick auf die Medikamente bei Ihnen zu Hause.",
+    "stepInside": "Eintreten",
+    "scene3Title": {
+      "twoFaces": "Vier Geister in einem Demo-Arzneischrank",
+      "glass": "Vier Muster in einem Demo-Arzneischrank"
+    },
+    "scene3Intro": {
+      "twoFaces": "Jeder Geist ist ein Muster einer Verschreibungskaskade, das Janus in der Liste eines synthetischen Patienten (Istanbul-Demo) gefunden hat. Öffnen Sie einen oder erstellen Sie die Notiz für die Ärztin oder den Arzt.",
+      "glass": "Jedes ist ein Muster einer Verschreibungskaskade, das Janus in der Liste eines synthetischen Patienten (Istanbul-Demo) gefunden hat. Öffnen Sie eines oder erstellen Sie die Notiz für die Ärztin oder den Arzt."
+    },
+    "ghosts": {
+      "pipc5": "Geschwollene Knöchel, danach eine zusätzliche Entwässerungs­tablette",
+      "pipc6": "Verstopfung, danach ein zusätzliches Abführmittel",
+      "pipc9": "Muskelschmerzen, danach ein zusätzliches Schmerzmittel",
+      "pipc12": "Schlafprobleme und ein Schlafmittel (Reihenfolge unbekannt)"
+    },
+    "ghostOpen": "In der Demo öffnen: {finding}",
+    "alt": {
+      "diorama": "Illustration: eine kleine Apotheke bei Nacht, die Fenster erleuchtet, die Tür angelehnt.",
+      "cabinet": "Illustration: das Innere der Apotheke, ein offener, leuchtender Arzneischrank an der Wand und ein leerer Zettel auf einem kleinen Tisch.",
+      "glassHero": "Illustration: ein gläserner Kopf mit zwei Gesichtern, gefüllt mit Kapseln."
+    },
+    "prepareDemoNote": "Demo-Notiz für die Ärztin oder den Arzt erstellen"
   },
   "Shell": {
     "skip": "Zum Inhalt springen",
@@ -189,9 +213,9 @@
     "statisticsRegionNone": "Keine",
     "appearance": "Darstellung",
     "theme": "Design",
-    "themeTwoFaces": "Zwei Gesichter",
-    "themeTwoFacesHint": "Nachtblau für die Patientenseite, Elfenbein für die Forschungsseite.",
-    "themeGlass": "Glas",
+    "themeTwoFaces": "Nachtapotheke",
+    "themeTwoFacesHint": "Nachtblau mit erleuchteten Fenstern für die Patientenseite, Elfenbein für die Forschungsseite.",
+    "themeGlass": "Glas-Janus",
     "themeGlassHint": "Schlicht und hell, ohne Themensymbole.",
     "largeText": "Große Schrift",
     "reduceTransparency": "Transparenz reduzieren",

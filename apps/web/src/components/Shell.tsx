@@ -325,7 +325,11 @@ export function Shell({ children }: { children: ReactNode }) {
       <main
         id="content"
         tabIndex={-1}
-        className={`mx-auto flex w-full max-w-[720px] flex-col gap-5 px-4 pt-4 outline-none ${wide ? "lg:max-w-[1120px]" : ""}`}
+        className={
+          pathname === "/"
+            ? "flex w-full flex-col gap-5 pt-4 outline-none"
+            : `mx-auto flex w-full max-w-[720px] flex-col gap-5 px-4 pt-4 outline-none ${wide ? "lg:max-w-[1120px]" : ""}`
+        }
       >
         {children}
       </main>

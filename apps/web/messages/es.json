@@ -29,7 +29,31 @@
     "coverageTitle": "Regiones e idiomas",
     "regions": "Cajas de medicamentos de",
     "languages": "Idiomas",
-    "privacyLine": "Las fotos de las cajas se quedan en este dispositivo. Janus no tiene cuenta, no guarda su lista de medicamentos y solo envía los códigos que la comprobación necesita."
+    "privacyLine": "Las fotos de las cajas se quedan en este dispositivo. Janus no tiene cuenta, no guarda su lista de medicamentos y solo envía los códigos que la comprobación necesita.",
+    "nightHeadline": "¿Se recetó un medicamento por el efecto adverso de otro?",
+    "glassHeadline": "Una mirada clara a los medicamentos de su casa.",
+    "stepInside": "Entrar",
+    "scene3Title": {
+      "twoFaces": "Cuatro fantasmas en un botiquín de demostración",
+      "glass": "Cuatro patrones en un botiquín de demostración"
+    },
+    "scene3Intro": {
+      "twoFaces": "Cada fantasma es un patrón de cascada de prescripción que Janus encontró en la lista de un paciente sintético (demo de Estambul). Abra uno o prepare la nota para el médico.",
+      "glass": "Cada uno es un patrón de cascada de prescripción que Janus encontró en la lista de un paciente sintético (demo de Estambul). Abra uno o prepare la nota para el médico."
+    },
+    "ghosts": {
+      "pipc5": "Tobillos hinchados y después un diurético añadido",
+      "pipc6": "Estreñimiento y después un laxante añadido",
+      "pipc9": "Dolor muscular y después un analgésico añadido",
+      "pipc12": "Problemas para dormir y un somnífero (orden desconocido)"
+    },
+    "ghostOpen": "Abrir en la demo: {finding}",
+    "alt": {
+      "diorama": "Ilustración: una pequeña farmacia de noche, con las ventanas iluminadas y la puerta entreabierta.",
+      "cabinet": "Ilustración: el interior de la farmacia, un botiquín abierto que brilla en la pared y una nota en blanco sobre una mesita.",
+      "glassHero": "Ilustración: una cabeza de cristal de dos caras llena de cápsulas."
+    },
+    "prepareDemoNote": "Preparar la nota de demostración para el médico"
   },
   "Shell": {
     "skip": "Ir al contenido",
@@ -189,9 +213,9 @@
     "statisticsRegionNone": "Ninguna",
     "appearance": "Apariencia",
     "theme": "Tema",
-    "themeTwoFaces": "Dos Caras",
-    "themeTwoFacesHint": "Azul noche para el lado del paciente, marfil para el lado de investigación.",
-    "themeGlass": "Cristal",
+    "themeTwoFaces": "Farmacia nocturna",
+    "themeTwoFacesHint": "Azul noche con ventanas iluminadas para el lado del paciente, marfil para el de investigación.",
+    "themeGlass": "Janus de cristal",
     "themeGlassHint": "Sencillo y claro, sin símbolos del tema.",
     "largeText": "Texto grande",
     "reduceTransparency": "Reducir la transparencia",

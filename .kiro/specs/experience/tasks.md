@@ -290,3 +290,14 @@
   > order after the window, so a third label "Order fits, later than the usual window" was added for the owner to
   > confirm). Pre-launch items added to `docs/pre-launch-checklist.md`.
   > Counterexamples found by the property tests over Phase 3 and their fixes are recorded in the notes of tasks 1–21.
+
+- [x] 24. *(Owner request 2026-11-08, after task 23)* Theme names and cinematic homes
+  - Night Pharmacy (was Two Faces) and Glass Janus (was Glass) in five languages; Night Pharmacy home as a scroll-scrubbed
+    scene (diorama → door video → isometric cabinet room) with code-made ghosts that become the Istanbul demo's findings;
+    Glass Janus home with light sweep and tilt; stills under reduced motion, Save-Data, slow connection or video error.
+    _Requirements: 27.6–27.8, DP46_
+  > Done 2026-11-08 (Claude Code): assets in `apps/web/public/home` (AVIF/WebP/JPEG at 2752/1600/960, scrub-friendly
+  > video 1280/640, no audio; AI-generated for Janus, `NOTICE`); `components/Ghost.tsx` shared with the findings;
+  > `e2e/home-scenes.spec.ts` (ghost buttons into the demo, reduced motion and Save-Data request no video, Glass loads
+  > nothing of Night Pharmacy, LCP and CLS recorded in design §16). Localization and safety passes:
+  > `home-scenes-review.md` (13 advisory findings, all applied; none blocking).

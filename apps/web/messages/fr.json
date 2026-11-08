@@ -29,7 +29,31 @@
     "coverageTitle": "Régions et langues",
     "regions": "Boîtes de médicaments de",
     "languages": "Langues",
-    "privacyLine": "Les photos des boîtes restent sur cet appareil. Janus n'a pas de compte, n'enregistre pas votre liste de médicaments et n'envoie que les codes dont la vérification a besoin."
+    "privacyLine": "Les photos des boîtes restent sur cet appareil. Janus n'a pas de compte, n'enregistre pas votre liste de médicaments et n'envoie que les codes dont la vérification a besoin.",
+    "nightHeadline": "Un médicament a-t-il été prescrit pour l'effet indésirable d'un autre ?",
+    "glassHeadline": "Un regard clair sur les médicaments de la maison.",
+    "stepInside": "Entrer",
+    "scene3Title": {
+      "twoFaces": "Quatre fantômes dans une armoire à pharmacie de démo",
+      "glass": "Quatre schémas dans une armoire à pharmacie de démo"
+    },
+    "scene3Intro": {
+      "twoFaces": "Chaque fantôme est un schéma de cascade de prescription que Janus a trouvé dans la liste d'un patient synthétique (démo d'Istanbul). Ouvrez-en un, ou préparez la note pour le médecin.",
+      "glass": "Chacun est un schéma de cascade de prescription que Janus a trouvé dans la liste d'un patient synthétique (démo d'Istanbul). Ouvrez-en un, ou préparez la note pour le médecin."
+    },
+    "ghosts": {
+      "pipc5": "Chevilles enflées, puis un diurétique ajouté",
+      "pipc6": "Constipation, puis un laxatif ajouté",
+      "pipc9": "Douleurs musculaires, puis un antidouleur ajouté",
+      "pipc12": "Troubles du sommeil et un somnifère (ordre inconnu)"
+    },
+    "ghostOpen": "Ouvrir dans la démo : {finding}",
+    "alt": {
+      "diorama": "Illustration : une petite pharmacie la nuit, fenêtres éclairées et porte entrouverte.",
+      "cabinet": "Illustration : l'intérieur de la pharmacie, une armoire à pharmacie ouverte qui brille au mur et une note vierge sur une petite table.",
+      "glassHero": "Illustration : une tête de verre à deux visages, remplie de gélules."
+    },
+    "prepareDemoNote": "Préparer la note de démo pour le médecin"
   },
   "Shell": {
     "skip": "Aller au contenu",
@@ -189,9 +213,9 @@
     "statisticsRegionNone": "Aucune",
     "appearance": "Apparence",
     "theme": "Thème",
-    "themeTwoFaces": "Deux Visages",
-    "themeTwoFacesHint": "Bleu nuit pour le côté patient, ivoire pour le côté recherche.",
-    "themeGlass": "Verre",
+    "themeTwoFaces": "Pharmacie de nuit",
+    "themeTwoFacesHint": "Bleu nuit aux fenêtres éclairées côté patient, ivoire côté recherche.",
+    "themeGlass": "Janus de verre",
     "themeGlassHint": "Sobre et clair, sans symboles du thème.",
     "largeText": "Grand texte",
     "reduceTransparency": "Réduire la transparence",

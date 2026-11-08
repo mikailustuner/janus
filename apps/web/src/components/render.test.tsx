@@ -41,6 +41,7 @@ vi.mock("@/i18n/navigation", () => ({
 
 import { EvidenceBody } from "./evidence/EvidenceView";
 import { Home, PATTERNS } from "./home/Home";
+import { ISTANBUL_GHOSTS } from "./home/NightPharmacyHero";
 import { PairPanel } from "./memory/PairPanel";
 import { ResultsBody } from "./results/Results";
 
@@ -179,5 +180,23 @@ describe("home (Req 27)", () => {
         expect(html).toContain(m.Home.demo);
         expect(html).toContain(String(PATTERNS));
       }
+  });
+});
+
+describe("Night Pharmacy ghosts (Req 27.6)", () => {
+  it("open the Istanbul demo findings at their recorded positions", () => {
+    const fixture = JSON.parse(
+      readFileSync(join(__dirname, "../demo/fixtures/istanbul.json"), "utf8"),
+    ) as { evaluation: { findings: { rule_id: string; timing: string }[] } };
+    const order = fixture.evaluation.findings.map((f) => f.rule_id);
+    for (const g of ISTANBUL_GHOSTS) expect(order[g.position]).toBe(g.rule);
+    // "then" in the labels of rows 5, 6 and 9 only: their order is known; row 12's is not.
+    const timing = (rule: string) =>
+      fixture.evaluation.findings.find((f) => f.rule_id === rule)?.timing;
+    for (const r of ["pipc:5", "pipc:6", "pipc:9"])
+      expect(timing(r)).toBe("within_window");
+    expect(timing("pipc:12")).toBe("date_unknown");
+    expect(messages.en.Home.ghosts.pipc12).not.toMatch(/\bthen\b/);
+    expect(new Set(ISTANBUL_GHOSTS.map((g) => g.rule)).size).toBe(order.length);
   });
 });

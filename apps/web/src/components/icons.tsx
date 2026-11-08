@@ -114,27 +114,3 @@ export const FacesIcon = (p: IconProps) => (
     <path d="M12 3a9 9 0 0 0 0 18Z" fill="currentColor" />
   </Svg>
 );
-
-/**
- * The ghost of a finding (Two Faces): a shape with two eyes. Meaning is carried by the text label
- * next to it, so the shape itself is decorative.
- */
-export function GhostShape({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 34 40"
-      width="34"
-      height="40"
-      className={className}
-      aria-hidden
-      focusable="false"
-    >
-      <path
-        d="M17 2C9 2 3 8 3 16v20l5-4 4 4 5-4 5 4 4-4 5 4V16C31 8 25 2 17 2Z"
-        fill="var(--ghost)"
-      />
-      <circle cx="12" cy="16" r="2.2" fill="var(--surface)" />
-      <circle cx="22" cy="16" r="2.2" fill="var(--surface)" />
-    </svg>
-  );
-}

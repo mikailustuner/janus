@@ -5,9 +5,9 @@ fileMatchPattern: "apps/web/**"
 
 # Design system (owner decision 2026-11-08)
 
-Chosen with the `ui-ux-pro-max` skill from seven presented directions. Two themes, one component set. The user switches them in **Settings › Appearance**; the default is **Two Faces**. Content, safety rules and layout are identical in both themes; only the vocabulary of the theme devices and the visual tokens change.
+Chosen with the `ui-ux-pro-max` skill from seven presented directions. Two themes, one component set. The user switches them in **Settings › Appearance**; the default is **Night Pharmacy**. Owner decision 2026-11-08 (second): the themes are named **Night Pharmacy** (was Two Faces) and **Glass Janus** (was Glass); internal ids stay `two-faces` and `glass`. Content, safety rules and layout are identical in both themes; only the vocabulary of the theme devices and the visual tokens change.
 
-## Theme 1 (default): Two Faces
+## Theme 1 (default): Night Pharmacy (was Two Faces)
 The product is named after Janus, so the two faces are the two functions:
 - **Shadow face** (patient and caregiver side: scan, list, findings, Collective Memory, doctor note preview): midnight indigo background, ivory text.
 - **Light face** (researcher side: hypothesis cards, séance, validation, export; also the doctor note PDF and the doctor QR page): ivory background, midnight text.
@@ -30,12 +30,19 @@ The product is named after Janus, so the two faces are the two functions:
 
 Type: **Fraunces** (display, headings) and **Atkinson Hyperlegible** (all running text, labels, controls, the large-text mode; chosen for low-vision legibility, Option 2's rule). **IBM Plex Mono** for ATC codes, DOIs, ratios and ranges (`font-variant-numeric: tabular-nums`). Radius 16 px cards, 999 px chips, 14 px buttons.
 
-## Theme 2: Glass (plain, no Halloween)
+## Theme 2: Glass Janus (was Glass; plain, no Halloween)
 iOS-style layered glass, for users who prefer a neutral health app. Vocabulary: "possible prescribing cascade" (not ghost), "Patient / Research" sections (not mask), a plain "Retracted" label (not a stamp), "evidence summary" (not séance).
 - Soft background of three blurred colour fields (mint `#CFE9E3`, sand `#F3E3CC`, sky `#DCE6F2`) on `#EEF1F0`; cards are frosted glass at **at least 72 % opacity** with `backdrop-filter: blur(22px) saturate(1.6)`, 26 px radius, 1 px white inner edge; floating pill tab bar (Scan, Medicines, Results, Settings); round glass icon buttons.
 - **`prefers-reduced-transparency: reduce` or the in-app "Reduce transparency" setting** → solid cards (`#FFFFFF` light, `#1C1F22` dark) and no blur. Same for devices where `backdrop-filter` is unsupported.
 - Tokens (light / dark): `--bg #EEF1F0 / #0E1514`, `--surface rgba(255,255,255,.72) / rgba(28,31,34,.78)`, `--fg #0E1514 / #EEF3F2`, `--muted #4F5B59 / #A9B6B3`, `--line rgba(14,21,20,.12) / rgba(255,255,255,.12)`, `--accent #0B6C62 / #6FD3C4`, `--on-accent #FFFFFF / #062B27`, `--warn #8A4B00 / #FFC266`, `--risk #B3261E / #FF7B72`.
 - Type: system UI first (`-apple-system, "SF Pro Text"`), then **Figtree**; display 32 px large titles; IBM Plex Mono for codes.
+
+## Home scenes (owner decision 2026-11-08; experience Req 27.6, DP46)
+Each theme has its own cinematic home; every other screen keeps the tokens above. Assets: `apps/web/public/home` (AI-generated for Janus, provenance in its README and `NOTICE`).
+- **Night Pharmacy** — scroll-driven, pinned stage: (1) the isometric night pharmacy full-bleed (focal point on the house, the phone crop centres it), headline, sub-headline, "Try the demo", "How it works" and "Step inside" as real text in the left third over a scrim; pointer parallax on three layers (sky, house, mist), CSS/canvas fireflies and dust; 3–4 code-made ghosts rise out of the shop windows (2 on phones). (2) "Step inside" or scrolling scrubs the door video (currentTime tied to scroll; key frame every 6 frames). (3) The medicine cabinet: the camera moves right, the ghosts line up as the Istanbul demo's findings (each a button into the demo, keyboard focusable, accessible name) and the glowing note becomes "Prepare the doctor note". Then the normal home sections.
+- **Ghost** (`components/Ghost.tsx`, one component for the home and the findings): soft glowing mist body, teal edge `#7FD1C7`, two eyes, a wavy tail; idle float, tail wave, occasional blink, a curious lean toward the pointer. Never scary; always `aria-hidden`, the text next to it carries the meaning.
+- **Glass Janus** — the glass two-faced head full-bleed, headline and actions on the left over a scrim, a slow light sweep across the glass, tiny floating capsule highlights, gentle parallax and a 3° tilt on pointer move. No ghosts, no Halloween.
+- **Rules**: `prefers-reduced-motion`, Save-Data, a slow connection or a video error → no parallax, no scrubbing, no drift: the three stills with a simple fade and still ghosts. The LCP image is preloaded at the right size for the active theme only; the video loads lazily (metadata first); the hero motion is its own chunk; no layout shift. Text contrast ≥ 4.5:1 over images (gradient scrim); alt texts in five languages; the video is decorative; focus order hero → step inside → findings. The emergency notice and the disclaimer stay on the home.
 
 ## Shared rules (both themes)
 - **Red (`--risk`) only for real risk**: emergency notice, urgent-care lines, retracted evidence. Never for a finding, a ratio, or an assessment class.
@@ -44,7 +51,7 @@ iOS-style layered glass, for users who prefer a neutral health app. Vocabulary: 
 - **Contrast** ≥ 4.5:1 for text, ≥ 3:1 for UI boundaries and focus; verified by a test over every token pair that is used as text-on-surface in both themes and both colour schemes.
 - **Touch targets** ≥ 44 × 44 px; visible focus ring (3 px `--accent`, 2 px offset); keyboard order follows reading order.
 - **Large-text mode**: base 19 px (default 16 px), line height 1.6. **Read aloud**: Web Speech API, findings only, off by default.
-- **Motion**: ghosts may drift (6 s, 3 px) in Two Faces only; everything else 150–250 ms. `prefers-reduced-motion: reduce` stops all non-essential motion and the mask transition becomes instant.
+- **Motion**: ghosts may drift (6 s, 3 px) in Night Pharmacy only (the home scenes allow more, below); everything else 150–250 ms. `prefers-reduced-motion: reduce` stops all non-essential motion and the mask transition becomes instant.
 - **Layout**: mobile first, checked at 375 px and 1280 px; no horizontal scroll; max content width 720 px on desktop for reading screens.
 - **Icons**: inline SVG (Lucide shapes, 1.9 px stroke); never emoji.
 - **Medicine icons** combine shape and colour so they work for colour-blind users.

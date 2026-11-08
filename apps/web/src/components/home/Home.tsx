@@ -3,8 +3,7 @@
  * Home (design §3, §9; Req 27): the website's front page. The emergency notice first, then the
  * hero with the product sentence and "Try the demo" as the main action, how it works in three
  * steps, the regions and languages, and privacy in one sentence. The disclaimer is in the shell
- * footer of every page. Two Faces shows the mask as the hero illustration: its two halves are the
- * links to the two faces. Glass shows the three colour fields.
+ * footer of every page. The hero is the theme's scene (HomeHero, DP46).
  */
 import { EmergencyNotice } from "@/components/EmergencyNotice";
 import { ReminderCard } from "@/components/loop/ReminderCard";
@@ -31,64 +30,69 @@ export function Home() {
   ];
   return (
     <>
-      <EmergencyNotice />
-      <ReminderCard />
+      {/* The home is full-bleed (DP46): the hero spans the window, the rest keeps the page width. */}
+      <div className="mx-auto flex w-full max-w-[720px] flex-col gap-5 px-4 lg:max-w-[1120px]">
+        <EmergencyNotice />
+        <ReminderCard />
+      </div>
       <HomeHero />
-      {ready && count > 0 && !demo ? (
-        <Card>
-          <p className="font-bold">{t("Home.resume")}</p>
-          <p className="text-muted">{t("Home.resumeCount", { count })}</p>
-          <ButtonLink href="/medicines" className="self-start">
-            {t("Medicines.title")}
-          </ButtonLink>
-        </Card>
-      ) : null}
-      <Card aria-labelledby="how">
-        <SectionTitle id="how">{t("Home.howTitle")}</SectionTitle>
-        <ol className="grid gap-4 md:grid-cols-3">
-          {steps.map((s, i) => (
-            <li key={i} className="flex gap-3">
-              <span
-                aria-hidden
-                className="flex size-9 shrink-0 items-center justify-center rounded-full bg-accent font-bold text-on-accent"
-              >
-                {i + 1}
-              </span>
-              <span className="max-w-[40ch]">{s}</span>
-            </li>
-          ))}
-        </ol>
-      </Card>
-      <div className="grid gap-5 md:grid-cols-2">
-        <Card aria-labelledby="coverage">
-          <SectionTitle id="coverage">{t("Home.coverageTitle")}</SectionTitle>
-          <p>
-            <span className="font-bold">{t("Home.regions")}:</span>{" "}
-            {(["TR", "EU", "US"] as const)
-              .map((r) => t(`Common.region.${r}`))
-              .join(", ")}
-          </p>
-          <p>
-            <span className="font-bold">{t("Home.languages")}:</span>{" "}
-            {routing.locales.map((l, i) => (
-              <span key={l} lang={l}>
-                {i ? ", " : ""}
-                {localeNames[l]}
-              </span>
+      <div className="mx-auto flex w-full max-w-[720px] flex-col gap-5 px-4 lg:max-w-[1120px]">
+        {ready && count > 0 && !demo ? (
+          <Card>
+            <p className="font-bold">{t("Home.resume")}</p>
+            <p className="text-muted">{t("Home.resumeCount", { count })}</p>
+            <ButtonLink href="/medicines" className="self-start">
+              {t("Medicines.title")}
+            </ButtonLink>
+          </Card>
+        ) : null}
+        <Card aria-labelledby="how" id="how-it-works" className="scroll-mt-4">
+          <SectionTitle id="how">{t("Home.howTitle")}</SectionTitle>
+          <ol className="grid gap-4 md:grid-cols-3">
+            {steps.map((s, i) => (
+              <li key={i} className="flex gap-3">
+                <span
+                  aria-hidden
+                  className="flex size-9 shrink-0 items-center justify-center rounded-full bg-accent font-bold text-on-accent"
+                >
+                  {i + 1}
+                </span>
+                <span className="max-w-[40ch]">{s}</span>
+              </li>
             ))}
-          </p>
+          </ol>
         </Card>
-        <Card aria-labelledby="home-privacy">
-          <SectionTitle id="home-privacy">{t("Home.privacy")}</SectionTitle>
-          <p>{t("Home.privacyLine")}</p>
-          <ButtonLink
-            href="/privacy"
-            variant="secondary"
-            className="self-start"
-          >
-            {t("Shell.privacy")}
-          </ButtonLink>
-        </Card>
+        <div className="grid gap-5 md:grid-cols-2">
+          <Card aria-labelledby="coverage">
+            <SectionTitle id="coverage">{t("Home.coverageTitle")}</SectionTitle>
+            <p>
+              <span className="font-bold">{t("Home.regions")}:</span>{" "}
+              {(["TR", "EU", "US"] as const)
+                .map((r) => t(`Common.region.${r}`))
+                .join(", ")}
+            </p>
+            <p>
+              <span className="font-bold">{t("Home.languages")}:</span>{" "}
+              {routing.locales.map((l, i) => (
+                <span key={l} lang={l}>
+                  {i ? ", " : ""}
+                  {localeNames[l]}
+                </span>
+              ))}
+            </p>
+          </Card>
+          <Card aria-labelledby="home-privacy">
+            <SectionTitle id="home-privacy">{t("Home.privacy")}</SectionTitle>
+            <p>{t("Home.privacyLine")}</p>
+            <ButtonLink
+              href="/privacy"
+              variant="secondary"
+              className="self-start"
+            >
+              {t("Shell.privacy")}
+            </ButtonLink>
+          </Card>
+        </div>
       </div>
     </>
   );

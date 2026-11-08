@@ -29,7 +29,31 @@
     "coverageTitle": "Regions and languages",
     "regions": "Medicine boxes from",
     "languages": "Languages",
-    "privacyLine": "Photos of the boxes stay on this device. Janus has no account, does not store your medicine list and sends only the codes the check needs."
+    "privacyLine": "Photos of the boxes stay on this device. Janus has no account, does not store your medicine list and sends only the codes the check needs.",
+    "nightHeadline": "Was one medicine prescribed for the side effect of another?",
+    "glassHeadline": "A clear look at the medicines in your home.",
+    "stepInside": "Step inside",
+    "scene3Title": {
+      "twoFaces": "Four ghosts in a demo medicine cabinet",
+      "glass": "Four patterns in a demo medicine cabinet"
+    },
+    "scene3Intro": {
+      "twoFaces": "Each ghost is a prescribing-cascade pattern that Janus found in a synthetic patient's list (the Istanbul demo). Open one, or prepare the doctor note.",
+      "glass": "Each is a prescribing-cascade pattern that Janus found in a synthetic patient's list (the Istanbul demo). Open one, or prepare the doctor note."
+    },
+    "ghosts": {
+      "pipc5": "Swollen ankles, then an added water pill",
+      "pipc6": "Constipation, then an added laxative",
+      "pipc9": "Muscle pain, then an added pain reliever",
+      "pipc12": "Trouble sleeping and a sleeping pill (order not known)"
+    },
+    "ghostOpen": "Open in the demo: {finding}",
+    "alt": {
+      "diorama": "Illustration: a small pharmacy at night, its windows lit and the door ajar.",
+      "cabinet": "Illustration: inside the pharmacy, an open medicine cabinet glowing on the wall and a blank note on a small table.",
+      "glassHero": "Illustration: a two-faced glass head filled with capsules."
+    },
+    "prepareDemoNote": "Prepare the demo doctor note"
   },
   "Shell": {
     "skip": "Skip to content",
@@ -189,9 +213,9 @@
     "statisticsRegionNone": "None",
     "appearance": "Appearance",
     "theme": "Theme",
-    "themeTwoFaces": "Two Faces",
-    "themeTwoFacesHint": "Night blue for the patient side, ivory for the research side.",
-    "themeGlass": "Glass",
+    "themeTwoFaces": "Night Pharmacy",
+    "themeTwoFacesHint": "Night blue with lit windows for the patient side, ivory for the research side.",
+    "themeGlass": "Glass Janus",
     "themeGlassHint": "Plain and light, without theme symbols.",
     "largeText": "Large text",
     "reduceTransparency": "Reduce transparency",

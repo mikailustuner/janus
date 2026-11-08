@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "../theme/tokens.css";
+@import "../theme/home-scenes.css";
 
 /* Tokens as Tailwind utilities: bg-bg, text-fg, border-line, … (experience design §7). */
 @theme inline {
@@ -142,20 +143,6 @@
     width: max-content;
     max-width: 100%;
   }
-}
-
-/* Ghost drift: 6 s, 3 px, Two Faces only, stopped under reduced motion (Req 14.11, 3.1). */
-@keyframes ghost-drift {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-3px);
-  }
-}
-:root[data-theme-style="two-faces"] .ghost-drift {
-  animation: ghost-drift 6s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -8,7 +8,11 @@ test("home renders the disclaimer and the emergency notice", async ({
   await expect(page.getByTestId("disclaimer")).toHaveText(
     "Janus provides information, not medical advice. Research prototype — not a medical device.",
   );
-  await expect(page.getByTestId("emergency-notice")).toBeVisible();
+  // The shell streams in (Suspense in the layout; React reveals it shortly after load), so the
+  // fallback copy can still be in the DOM: look inside the real shell.
+  await expect(
+    page.locator("#content").getByTestId("emergency-notice"),
+  ).toBeVisible();
 });
 
 for (const path of ["/en", "/o"]) {
