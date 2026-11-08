@@ -1,0 +1,3 @@
+substance_id,ingredient_key,exposure_match,note
+vinegar,Q47512,component,"Acetic acid, the main active component of vinegar; FAERS acetic acid products are mostly topical (otic, vaginal, irrigation) solutions. Component-level bridge, reviewed by the pharmacologist agent (AI) 2026-11-08, pending expert review."
+salt,Q2314,different,"FAERS sodium chloride is mostly intravenous saline and diluent, not salt applied to skin: shown as context, never counted as a witness."

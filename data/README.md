@@ -134,3 +134,21 @@ them whenever WHOCC publishes a new ATC version**, together with the combination
   dose-form-review.md`). A byte-identical copy ships in the API package (`apps/api/janus/passport/dose_form_groups.csv`;
   a test checks it). It still needs a review by a pharmacist before any public claim. Re-draft and diff it whenever a
   source adds dose forms or route sets.
+
+## Séance files (Phase 4, `seance` design §5)
+
+- `canon_gold_pmc3941892.csv` (+ `.meta.json`): the identification gold table, written by
+  `janus-pipelines run canon_gold`. Name columns only (name in the Canon, common name, scientific
+  name) of Tables 1 and 2 of Aliasl J, Khoshzaban F, Jundishapur J Nat Pharm Prod
+  2013;8(4):192-196, doi:10.17795/jjnpp-11686, PMC3941892, **CC BY 3.0**. 29 rows.
+- `seance_conditions.csv` (Janus, Apache-2.0): séance condition → MedDRA Preferred Terms counted by
+  the present witness. PT names as published in FAERS (MedDRA notice in NOTICE).
+- `seance_present.csv` (Janus, Apache-2.0): substance → Janus ingredient key and how well the
+  FAERS exposure matches the ancient one (`same`, `component`, `different`; `different` is never
+  counted). Reviewed by the pharmacologist agent (AI) 2026-11-08, pending expert review.
+- `seance_science.csv` (Janus, Apache-2.0): (substance, condition) → listed studies (keys of
+  `evidence_papers.csv`, source `seance_science`), study type, direction and a one-line finding in
+  Janus's own words. Every DOI goes through Evidence Integrity.
+
+The Canon text itself and everything derived from it are **not** here: they are in the separate
+CC BY-NC-SA 4.0 data package `datasets/canon/`.
