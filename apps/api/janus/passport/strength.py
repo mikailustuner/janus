@@ -176,6 +176,38 @@ def strength_code(
     return None if amount is None else StrengthCode(amount, q.unit, basis)
 
 
+# --- typed entry from the box (DP21, design §6.6, P21) ---------------------------------------
+
+# The controlled inputs of the client: an amount with a decimal point or comma (at most six
+# decimals), a unit and "per tablet, capsule or unit" / "per mL". `apps/web/src/passport/entry.ts`
+# implements the same rule; a shared fixture of generated cases keeps the two equal (P21).
+# A separator followed by exactly three digits after a non-zero whole part ("1,000", "1.000") is
+# refused: it reads as a thousands group in English and as a decimal elsewhere (or the reverse in
+# German), and a misread amount must never become a "same strength" answer.
+ENTRY_UNITS: dict[str, tuple[Unit, int]] = {
+    "mg": ("ug", 10**3),
+    "g": ("ug", 10**6),
+    "ug": ("ug", 1),
+    "IU": ("IU", 1),
+}
+ENTRY_BASES: dict[str, Basis] = {"unit": "unit", "mL": "mL"}
+_ENTRY = re.compile(r"^([0-9]{1,9})(?:[.,]([0-9]{1,6}))?$")
+
+
+def entry_code(amount: str, unit: str, basis: str) -> StrengthCode | None:
+    """The strength code of a strength typed from the box, or `None` (never raises)."""
+    m = _ENTRY.fullmatch(amount.strip(" "))
+    spec = ENTRY_UNITS.get(unit)
+    per = ENTRY_BASES.get(basis)
+    if m is None or spec is None or per is None:
+        return None
+    if m[2] is not None and len(m[2]) == 3 and int(m[1]) != 0:
+        return None  # "1,000" / "1.000": thousands group or decimal, ambiguous
+    value = Fraction(f"{m[1]}.{m[2]}") if m[2] else Fraction(m[1])
+    text = canonical(value * spec[1])
+    return None if text is None else StrengthCode(text, spec[0], per)
+
+
 # --- report (counts only) -------------------------------------------------------------------
 
 _REPORT_SQL = """

@@ -1,0 +1,91 @@
+{
+ "status": [
+  "present",
+  "not_present",
+  "not_in_source",
+  "source_unavailable"
+ ],
+ "result": [
+  "matched",
+  "differs",
+  "could_not_compare"
+ ],
+ "cmp_reason": [
+  "not_known_for_item",
+  "not_known_in_source",
+  "not_all_comparable"
+ ],
+ "notice": [
+  "presence_is_lower_bound",
+  "unknown_ingredient_keys"
+ ],
+ "source_id": [
+  "titck",
+  "eu_fr_bdpm",
+  "eu_es_cima",
+  "openfda_ndc"
+ ],
+ "form_group": [
+  "oral_solid",
+  "oral_solid_delayed_release",
+  "oral_solid_prolonged_release",
+  "oral_liquid",
+  "injection",
+  "inhaled",
+  "nasal",
+  "ophthalmic",
+  "otic",
+  "cutaneous",
+  "transdermal",
+  "rectal",
+  "vaginal",
+  "other"
+ ],
+ "countable_groups": [
+  "oral_solid",
+  "oral_solid_delayed_release",
+  "oral_solid_prolonged_release"
+ ],
+ "not_compared_groups": [
+  "other"
+ ],
+ "region": [
+  "TR",
+  "EU",
+  "US"
+ ],
+ "country": [
+  "FR",
+  "ES",
+  "DE"
+ ],
+ "source_status": [
+  "loaded",
+  "source_unavailable"
+ ],
+ "unavailable_reason": [
+  "not_loaded",
+  "no_open_product_database"
+ ],
+ "attribution": [
+  "titck",
+  "bdpm",
+  "cima",
+  "openfda"
+ ],
+ "unit": [
+  "ug",
+  "IU"
+ ],
+ "basis": [
+  "unit",
+  "mL",
+  "g"
+ ],
+ "key_pattern": "^(Q[1-9][0-9]{0,9}|J[1-9][0-9]{0,5})$",
+ "amount_pattern": "^(0|[1-9][0-9]{0,8})(\\.[0-9]{0,5}[1-9])?$",
+ "max_items": 50,
+ "max_ingredients": 10,
+ "max_keys": 50,
+ "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+}

@@ -7,6 +7,8 @@ src/vocabulary/*.json
 src/doctor/messages.json
 src/demo/fixtures/*.json
 src/demo/codes.svg.json
+# Written by apps/api/tests/test_passport_web_fixtures.py
+src/passport/fixtures/*.json
 test-results/
 playwright-report/
 public/vendor/

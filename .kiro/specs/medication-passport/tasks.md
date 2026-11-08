@@ -81,14 +81,17 @@
     rebuild the `api` and `migrate` images; the `log-guard` and `medical-language-guard` hooks report nothing. Commit,
     push, CI green.
 
-- [ ] 9. Client list logic (`apps/web/src/passport/`: `model.ts`, `identity.ts`, `merge.ts`, `duplicates.ts`,
+- [x] 9. Client list logic (`apps/web/src/passport/`: `model.ts`, `identity.ts`, `merge.ts`, `duplicates.ts`,
   `request.ts`, `memory-keys.ts`, `entry.ts` if DP21 is accepted; `fast-check` dev dependency if OD5 is accepted)
+  - *Done 2026-11-08 (Claude Code): DP21 and OD5 accepted by the owner; `fromListItem` reads the experience store;
+    partly recognised items are not sent (DP24); ambiguous "1,000" refused in typed entry (DP25).*
   - Types mirror `schemas.py` (a Python test exports the literal sets to a JSON fixture the web tests read).
-  - [ ] 9.1 Property test P1: merge commutative, associative, idempotent but for counts, earliest month. _Requirements: 1.4_
-  - [ ] 9.2 Property test P2: duplicate groups iff shared key among checked items; nothing removed. _Requirements: 1.2, 1.3, 1.5, 1.6_
-  - [ ] 9.3 Property test P18: request bodies hold only keys and codes; limits; fan-back complete. _Requirements: 9.1, 4.3_
-  - [ ] 9.4 Property test P20: memory keys sorted, distinct, checked only; > 20 needs a selection. _Requirements: 11.1, 11.2_
-  - [ ] 9.5 Property test P21: entry parity with the Python fixture (only with DP21). _Requirements: 6.7_
+    *(`fixtures/schema-literals.json`; tests in `src/passport/list.test.ts`.)*
+  - [x] 9.1 Property test P1: merge commutative, associative, idempotent but for counts, earliest month. _Requirements: 1.4_
+  - [x] 9.2 Property test P2: duplicate groups iff shared key among checked items; nothing removed. _Requirements: 1.2, 1.3, 1.5, 1.6_
+  - [x] 9.3 Property test P18: request bodies hold only keys and codes; limits; fan-back complete. _Requirements: 9.1, 4.3_
+  - [x] 9.4 Property test P20: memory keys sorted, distinct, checked only; > 20 needs a selection. _Requirements: 11.1, 11.2_
+  - [x] 9.5 *(`entry-cases.json`, 500 cases from `tests/test_passport_web_fixtures.py`.)* Property test P21: entry parity with the Python fixture (only with DP21). _Requirements: 6.7_
 
 - [ ] 10. Passport messages and word lists (`apps/web/messages/*.json` namespace `Passport`, `passport/words.ts`)
   - Draft all keys of design §7.1 in five languages (English reference texts of §7.2); word lists of §7.3; source names

@@ -321,8 +321,8 @@ otherwise the selection prompt of Req 11.2 (P20).
 ### 6.6 Manual entry (DP21, needs owner confirmation)
 For an item whose source gives no strength or form, the detail view offers "Add strength and form from the box":
 amount (decimal), unit (`mg`, `g`, `µg`, `IU`), "per tablet/capsule/unit" or "per mL", and a form group picked from a
-short localised list. `strengthFromEntry` converts with the same rules as §5.1 (P21); the values are marked
-`entered` and the comparison rows say "as entered by you".
+short localised list. `strengthFromEntry` converts with the same rules as §5.1 (P21; `entry_code` in `strength.py`, ambiguous thousands groups
+refused, DP25); the values are marked `entered` and the comparison rows say "as entered from the box" (owner decision 1).
 
 ## 7. Wording (`Passport` namespace)
 
@@ -464,6 +464,8 @@ The seed's four properties are P1–P4.
 | DP21 | **Proposed, needs the owner:** optional entry of strength and form from the box for items whose source has none (TİTCK, typed German boxes), labelled "as entered by you". | No entry (TİTCK and German items never comparable). | Without it, the two regions of the main user story never get a comparison; the values stay in the browser and are sent as codes only. |
 | DP22 | *(Added in task 3, accepted 2026-11-08.)* The dose-form table is keyed by `(source, published form, published route set)`, with `*` for any route set. | Key by the published form alone; map route-ambiguous forms to nothing. | openFDA `SOLUTION` is oral, topical, ophthalmic and sublingual; `TABLET` is oral and sublingual. One group per string would put eye drops with oral solutions; mapping them to nothing would lose most liquids. |
 | DP23 | *(Owner decision 2026-11-08.)* No route is guessed: a product without a published route has no group unless the form string fixes the route (`route_from_form`); a `*` row exists only then or when the group does not depend on the route. | Treat tablets without a route as oral (3,068 openFDA products); keep every `*` row the draft wrote. | A sublingual or vaginal tablet without a route would be compared as oral; a `*` row from observed data generalises to route sets never seen. |
+| DP24 | *(Added in task 9, 2026-11-08; owner to confirm at the task 11 stop.)* An item is sent to the presence endpoint only when every ingredient has a key; an item with one recognised and one unrecognised ingredient stays "checked" for duplicate flags but shows "not every ingredient could be recognised" instead of presence rows (`request.ts`, reason `partial`). | Send the recognised keys alone (§6.4 as first written). | The recognised keys alone describe a smaller product: a combination box with an unmapped component would read "present" from single-ingredient products. Same rule as DP11 on the server side. |
+| DP25 | *(Added in task 9.5.)* Typed strengths (DP21): an amount with a separator followed by exactly three digits after a non-zero whole part ("1,000", "1.000") is refused with a hint to type it without grouping. Same rule in `entry_code` (Python) and `strengthFromEntry` (TS). | Read the comma as the decimal separator everywhere (§6.6 as first written). | "1,000 mg" is a thousand in English and one in German ("1.000" the reverse); a misread amount must never become a "same stated strength" answer. "0,125" and "2,5" are unaffected. |
 
 ## 13. Performance
 Measured 2026-11-08 (§1): 273–428 ms for 14 common keys with the partial index, 1.07 s for the 50 most frequent keys.
