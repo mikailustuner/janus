@@ -1,0 +1,440 @@
+<title>Janus Arayüz Seçenekleri</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Crimson+Pro:wght@500;600&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;600&family=Lexend:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Public+Sans:wght@400;600&display=swap">
+<style>
+/* Layout: a document shell (intro, five option sections, recommendation); each option pairs a phone mockup of the same findings screen with its spec. The shell follows the viewer theme; each mockup keeps its own fixed palette because the palette is the thing being compared. */
+:root{
+  --bg:#F3F4F6; --fg:#1B1E24; --muted:#555D6B; --line:#D5D9E0; --panel:#FFFFFF; --accent:#2E5E8C;
+  --f-display:"Fraunces",Georgia,serif; --f-body:"Atkinson Hyperlegible",system-ui,sans-serif; --f-mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#121418;--fg:#E7E9ED;--muted:#A3AAB6;--line:#2C313A;--panel:#1A1D23;--accent:#8DB6DE;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121418;--fg:#E7E9ED;--muted:#A3AAB6;--line:#2C313A;--panel:#1A1D23;--accent:#8DB6DE;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.55 var(--f-body)}
+.wrap{max-width:1120px;margin:0 auto;padding-block:40px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:40px}
+h1,h2{font-family:var(--f-display);font-weight:600;text-wrap:balance;margin:0}
+h1{font-size:clamp(28px,4vw,40px);line-height:1.15}
+h2{font-size:26px;line-height:1.2}
+.lede{max-width:68ch;color:var(--muted);margin:8px 0 0}
+.note{font-size:14px;color:var(--muted);max-width:72ch}
+.opt{display:grid;grid-template-columns:minmax(0,360px) minmax(0,1fr);gap:32px;border-top:1px solid var(--line);padding-top:32px}
+@media (max-width:820px){.opt{grid-template-columns:minmax(0,1fr)}}
+.spec{display:flex;flex-direction:column;gap:14px;min-width:0}
+.tag{font:600 12px/1 var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.idea{max-width:62ch;margin:0}
+.sw{display:flex;flex-wrap:wrap;gap:8px}
+.sw span{display:flex;align-items:center;gap:6px;font:13px var(--f-mono);color:var(--muted)}
+.sw i{width:22px;height:22px;border-radius:6px;border:1px solid var(--line);display:inline-block}
+dl{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:6px 16px;margin:0;font-size:15px}
+dt{color:var(--muted)}
+dd{margin:0}
+.pc{display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:15px}
+@media (max-width:520px){.pc{grid-template-columns:1fr}}
+.pc h3{font:600 13px var(--f-body);letter-spacing:.06em;text-transform:uppercase;margin:0 0 4px;color:var(--muted)}
+.pc ul{margin:0;padding-left:18px}
+.rec{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:10px}
+.rec p{margin:0;max-width:72ch}
+
+/* ---------- phone mockup (shared structure, per-option tokens) ---------- */
+.phone{width:100%;max-width:360px;border-radius:28px;padding:18px 16px 20px;background:var(--p-bg);color:var(--p-fg);font-family:var(--p-body);box-shadow:0 1px 0 var(--line),0 12px 30px rgba(0,0,0,.12);display:flex;flex-direction:column;gap:12px;align-self:start}
+.ph-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.brand{font-family:var(--p-display);font-size:20px;font-weight:600;display:flex;align-items:center;gap:8px}
+.mask{display:inline-flex;border:1px solid var(--p-line);border-radius:999px;overflow:hidden;font-size:12px}
+.mask b{padding:5px 10px;font-weight:600}
+.mask b:first-child{background:var(--p-accent);color:var(--p-on-accent)}
+.mask b:last-child{color:var(--p-muted)}
+.disc{font-size:12.5px;line-height:1.4;color:var(--p-muted);border-left:3px solid var(--p-line);padding-left:8px}
+.demo{font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--p-muted)}
+.h{font-family:var(--p-display);font-size:22px;line-height:1.2;margin:2px 0 0}
+.card{background:var(--p-card);border:1px solid var(--p-line);border-radius:var(--p-radius);padding:14px;display:flex;flex-direction:column;gap:8px}
+.ghost-row{display:flex;gap:10px;align-items:flex-start}
+.ghost{flex:0 0 34px;height:40px}
+.ghost path{fill:var(--p-ghost)}
+.ghost circle{fill:var(--p-bg)}
+.f-title{font-weight:700;font-size:16px;line-height:1.3}
+.chain{font-size:14.5px;line-height:1.45}
+.chain strong{color:var(--p-fg)}
+.status{display:inline-block;font-size:12px;font-weight:700;padding:3px 8px;border-radius:999px;background:var(--p-chip);color:var(--p-chip-fg);width:max-content}
+.stat{font-size:13px;line-height:1.45;color:var(--p-muted)}
+.stat .num{font-family:var(--p-mono);color:var(--p-fg)}
+.src{font-size:12.5px;display:flex;flex-direction:column;gap:4px}
+.src a{color:var(--p-link);text-decoration:underline;text-underline-offset:2px}
+.zombie{display:flex;gap:8px;align-items:center;font-size:12.5px;color:var(--p-muted)}
+.zombie s{color:var(--p-muted)}
+.stamp{font:700 10.5px/1 var(--p-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--p-risk);border:1.5px solid var(--p-risk);padding:3px 5px;border-radius:3px;transform:rotate(-4deg);white-space:nowrap}
+.med{display:flex;justify-content:space-between;gap:8px;font-size:14px;border-top:1px solid var(--p-line);padding-top:8px}
+.med small{display:block;color:var(--p-muted);font-family:var(--p-mono);font-size:11.5px}
+.warn{font-size:12.5px;font-weight:700;color:var(--p-warn)}
+.cta{display:block;text-align:center;font-weight:700;font-size:15px;padding:13px;border-radius:var(--p-radius);background:var(--p-accent);color:var(--p-on-accent);min-height:44px}
+.talk{font-size:14px;margin:0}
+
+/* Option 1 — Night Apothecary */
+.o1{--p-bg:#17141F;--p-fg:#EEE8F3;--p-muted:#B9AFC4;--p-card:#221D2C;--p-line:#3A3247;--p-accent:#E8B04B;--p-on-accent:#1C1408;--p-ghost:#D6CDE6;--p-chip:#3B2F1A;--p-chip-fg:#F3CD84;--p-link:#F3CD84;--p-risk:#F27E77;--p-warn:#F3CD84;--p-radius:12px;--p-display:"Crimson Pro",Georgia,serif;--p-body:"Atkinson Hyperlegible",system-ui,sans-serif;--p-mono:"IBM Plex Mono",monospace}
+.o1 .h,.o1 .brand{font-size:25px}
+/* Option 2 — Clinical Moonlight */
+.o2{--p-bg:#F4F7FA;--p-fg:#13293D;--p-muted:#4A5D70;--p-card:#FFFFFF;--p-line:#CFDAE5;--p-accent:#1F5F8B;--p-on-accent:#FFFFFF;--p-ghost:#8CA3B8;--p-chip:#E3EDF6;--p-chip-fg:#1F5F8B;--p-link:#1F5F8B;--p-risk:#B42318;--p-warn:#8A4B00;--p-radius:10px;--p-display:"Atkinson Hyperlegible",system-ui,sans-serif;--p-body:"Atkinson Hyperlegible",system-ui,sans-serif;--p-mono:"IBM Plex Mono",monospace}
+.o2 .card{border-style:solid}
+.o2 .ghost path{fill:none;stroke:var(--p-ghost);stroke-width:2;stroke-dasharray:4 3}
+.o2 .ghost circle{fill:var(--p-ghost)}
+/* Option 3 — Two Faces */
+.o3{--p-bg:#1B1F3B;--p-fg:#F6F1E7;--p-muted:#C3C2D6;--p-card:#252A4D;--p-line:#3A4070;--p-accent:#7FD1C7;--p-on-accent:#0E2A27;--p-ghost:#F6F1E7;--p-chip:#2F3A5E;--p-chip-fg:#A9E4DC;--p-link:#A9E4DC;--p-risk:#FF8A80;--p-warn:#F6D08A;--p-radius:16px;--p-display:"Fraunces",Georgia,serif;--p-body:"Public Sans",system-ui,sans-serif;--p-mono:"IBM Plex Mono",monospace}
+.o3-light{--p-bg:#F6F1E7;--p-fg:#1B1F3B;--p-muted:#4E5170;--p-card:#FFFDF8;--p-line:#DDD5C4;--p-accent:#1E6B62;--p-on-accent:#FFFFFF;--p-ghost:#1B1F3B;--p-chip:#E7EFEA;--p-chip-fg:#1E6B62;--p-link:#1E6B62;--p-risk:#A8322D;--p-warn:#7A4D00}
+.split{display:flex;flex-direction:column;gap:12px;max-width:360px;width:100%}
+.split .phone{max-width:none}
+.mini{padding:14px 16px}
+.mini .h{font-size:19px}
+/* Option 4 — Casebook */
+.o4{--p-bg:#F2F4F1;--p-fg:#1A1D1A;--p-muted:#4C544D;--p-card:#FFFFFF;--p-line:#C9D0C8;--p-accent:#2F6F62;--p-on-accent:#FFFFFF;--p-ghost:#B7C2BA;--p-chip:#E2ECE8;--p-chip-fg:#245A50;--p-link:#245A50;--p-risk:#A8322D;--p-warn:#7A4D00;--p-radius:4px;--p-display:"Newsreader",Georgia,serif;--p-body:"IBM Plex Sans",system-ui,sans-serif;--p-mono:"IBM Plex Mono",monospace}
+.o4 .h{font-size:26px;font-weight:500}
+.o4 .card{border-width:1px 0;border-radius:0;background:transparent;padding-inline:0}
+.o4 .src{font-family:var(--p-mono);font-size:11.5px}
+/* Option 5 — Soft Spectral */
+.o5{--p-bg:#12233A;--p-fg:#EAF2FA;--p-muted:#B5C6D8;--p-card:#1C3150;--p-line:#2E4A70;--p-accent:#7FD8C3;--p-on-accent:#0C2A23;--p-ghost:#CFC9F2;--p-chip:#26405F;--p-chip-fg:#B7EADF;--p-link:#B7EADF;--p-risk:#FF9A8F;--p-warn:#FFD48A;--p-radius:20px;--p-display:"Lexend",system-ui,sans-serif;--p-body:"Lexend",system-ui,sans-serif;--p-mono:"IBM Plex Mono",monospace}
+.o5{font-size:17px}
+.o5 .chain{font-size:15.5px}
+.o5 .ghost{flex-basis:44px;height:52px}
+
+/* ---------- Plain (non-Halloween) theme, iOS-style ---------- */
+.ios{--p-display:-apple-system,"SF Pro Display",system-ui,"Atkinson Hyperlegible",sans-serif;--p-body:-apple-system,"SF Pro Text",system-ui,"Atkinson Hyperlegible",sans-serif;--p-mono:ui-monospace,"SF Mono","IBM Plex Mono",monospace;width:100%;max-width:360px;border-radius:34px;background:var(--p-bg);color:var(--p-fg);font-family:var(--p-body);box-shadow:0 1px 0 var(--line),0 12px 30px rgba(0,0,0,.12);overflow:hidden;display:flex;flex-direction:column;align-self:start}
+.ios-bar{display:flex;justify-content:space-between;align-items:center;padding:14px 18px 4px;font-size:15px;color:var(--p-accent)}
+.ios-bar b{color:var(--p-fg);font-weight:600}
+.ios-body{padding:4px 16px 18px;display:flex;flex-direction:column;gap:14px}
+.ios-title{font-family:var(--p-display);font-size:30px;font-weight:700;letter-spacing:-.01em;line-height:1.15;margin:0}
+.ios-sub{font-size:13px;color:var(--p-muted);margin:-8px 0 0}
+.seg{display:grid;grid-template-columns:1fr 1fr 1fr;background:var(--p-seg);border-radius:10px;padding:2px;font-size:13px;font-weight:600;text-align:center}
+.seg span{padding:7px 4px;border-radius:8px;color:var(--p-fg)}
+.seg span.on{background:var(--p-card);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.grp-h{font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--p-muted);margin:0 0 -8px 14px}
+.grp{background:var(--p-card);border-radius:var(--p-radius);overflow:hidden}
+.row{display:flex;gap:12px;align-items:center;padding:12px 14px;min-height:48px}
+.row+.row{border-top:.5px solid var(--p-line)}
+.ico{flex:0 0 30px;height:30px;border-radius:8px;display:grid;place-items:center;background:var(--p-ico);color:#fff}
+.ico svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.row-main{flex:1;min-width:0}
+.row-t{font-size:16px;font-weight:600;line-height:1.3}
+.row-d{font-size:13.5px;color:var(--p-muted);line-height:1.4}
+.chev{color:var(--p-muted);font-size:18px}
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--p-chip);color:var(--p-chip-fg)}
+.fcard{background:var(--p-card);border-radius:var(--p-radius);padding:16px;display:flex;flex-direction:column;gap:10px}
+.fcard p{margin:0;font-size:15px;line-height:1.45}
+.metric{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;align-items:baseline;background:var(--p-seg);border-radius:12px;padding:10px 12px}
+.metric .big{font-family:var(--p-mono);font-size:22px;font-weight:600}
+.metric small{font-size:12.5px;color:var(--p-muted);grid-column:1/-1}
+.ret{font-size:12.5px;color:var(--p-muted)}
+.ret em{font-style:normal;font-weight:600;color:var(--p-risk)}
+.ios-cta{display:block;text-align:center;font-weight:600;font-size:17px;padding:14px;border-radius:14px;background:var(--p-accent);color:var(--p-on-accent);min-height:50px}
+.tog{width:51px;height:31px;border-radius:999px;background:var(--p-accent);position:relative;flex:0 0 51px}
+.tog::after{content:"";position:absolute;right:2px;top:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.tog.off{background:var(--p-seg)}
+.tog.off::after{right:auto;left:2px}
+.radio{color:var(--p-accent);font-weight:700;font-size:17px}
+.duo{display:flex;flex-direction:column;gap:14px;max-width:360px;width:100%}
+/* Option 6 — Sade (iOS light, system blue) */
+.o6{--p-bg:#F2F2F7;--p-fg:#111114;--p-muted:#5C5C66;--p-card:#FFFFFF;--p-line:#D1D1D8;--p-seg:#E5E5EA;--p-accent:#0062CC;--p-on-accent:#FFFFFF;--p-ico:#0062CC;--p-chip:#E6F0FB;--p-chip-fg:#004C9E;--p-risk:#C5221F;--p-warn:#8A4B00;--p-radius:14px}
+.o6-dark{--p-bg:#000000;--p-fg:#F5F5F7;--p-muted:#A1A1AA;--p-card:#1C1C1E;--p-line:#38383A;--p-seg:#2C2C2E;--p-accent:#4DA3FF;--p-on-accent:#00213F;--p-ico:#0A84FF;--p-chip:#0F2A47;--p-chip-fg:#8CC4FF;--p-risk:#FF6B61;--p-warn:#FFC266}
+/* Option 7 — Sakin (iOS tinted, teal, larger radius) */
+.o7{--p-bg:#EDF3F1;--p-fg:#10201C;--p-muted:#4F615C;--p-card:#FFFFFF;--p-line:#D3DEDA;--p-seg:#E1EAE7;--p-accent:#0F6B63;--p-on-accent:#FFFFFF;--p-ico:#0F6B63;--p-chip:#DCEFEA;--p-chip-fg:#0B5650;--p-risk:#B3261E;--p-warn:#7A4D00;--p-radius:22px}
+.o7 .ios-title{font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:31px}
+.o7 .ios-cta{border-radius:999px}
+.o7 .grp,.o7 .fcard{box-shadow:0 1px 2px rgba(16,32,28,.06)}
+
+@media (prefers-reduced-motion:no-preference){
+  .o1 .ghost{animation:drift 6s ease-in-out infinite}
+  .o5 .ghost{animation:bob 4s ease-in-out infinite}
+}
+@keyframes drift{50%{transform:translateY(-3px);opacity:.85}}
+@keyframes bob{50%{transform:translateY(-4px)}}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="tag">Faz 3 · Tasarım sistemi seçimi</span>
+    <h1>Janus için beş arayüz yönü</h1>
+    <p class="lede">Beşi de aynı ekranı gösteriyor: İstanbul demo hastasının bulgu ekranı. AMLIPIN içindeki amlodipinden sonra başlanan bir diüretik, kaskad motorunun gerçekten bulduğu “olası” örüntü. Rakamlar FAERS sayım dosyasından alındı. Seçtiğin yön <code>.kiro/steering/design.md</code> dosyasına yazılacak ve bütün ekranlar ona göre kurulacak.</p>
+    <p class="note">Bütün seçeneklerde aynı kurallar geçerli: kırmızı yalnızca gerçek risk için, metin kontrastı en az 4.5:1, 44 px dokunma alanı, hareket azaltma tercihine uyum, 375 px genişlikte yatay kaydırma yok. Hayalet = kaskad, maske = gölge/ışık yüzü, zombi damgası = geri çekilmiş kaynak.</p>
+  </header>
+
+  <!-- 1 -->
+  <section class="opt" aria-labelledby="t1">
+    <div class="phone o1" role="img" aria-label="Gece Eczanesi seçeneğinde bulgu ekranı örneği">
+      <div class="ph-top"><span class="brand">Janus</span><span class="mask"><b>Gölge</b><b>Işık</b></span></div>
+      <div class="disc">Janus bilgi verir, tıbbi tavsiye vermez. Araştırma prototipi, tıbbi cihaz değildir. Acil durumda 112.</div>
+      <div class="demo">Demo · sentetik hasta: İstanbul</div>
+      <h3 class="h">Bir hayalet bulundu</h3>
+      <div class="card">
+        <div class="ghost-row">
+          <svg class="ghost" viewBox="0 0 34 40" aria-hidden="true"><path d="M17 2C9 2 3 8 3 16v20l5-4 4 4 5-4 5 4 4-4 5 4V16C31 8 25 2 17 2Z"/><circle cx="12" cy="16" r="2.2"/><circle cx="22" cy="16" r="2.2"/></svg>
+          <div>
+            <div class="f-title">Bilek şişliği ve sonradan eklenen idrar söktürücü</div>
+            <span class="status">Olası · 5 ay arayla</span>
+          </div>
+        </div>
+        <p class="chain"><strong>Amlodipin</strong> (AMLIPIN) Ocak 2026’da, <strong>furosemid</strong> Haziran 2026’da başlamış. Bu ikili literatürde tanımlanmış bir reçete kaskadı örüntüsüne uyuyor.</p>
+        <p class="stat">FAERS: amlodipin geçen <span class="num">424</span> raporda bilek şişliği var. ROR <span class="num">5,11</span> (<span class="num">4,63–5,64</span>). Bunlar gönüllü raporlar, görülme sıklığı değil.</p>
+        <div class="src"><a href="#">Kural: PIPC satır 5 · McCarthy 2022</a>
+          <span class="zombie"><span class="stamp">Geri çekildi</span><s>2019 vaka serisi</s> kullanılmadı</span></div>
+        <p class="talk">Doktorunuzla konuşmaya değer olabilir.</p>
+      </div>
+      <div class="med"><span>Metoprolol<small>C07AB02</small></span><span class="warn">Bu ilacı birden bırakmayın.</span></div>
+      <a class="cta" href="#">Doktor notunu hazırla</a>
+    </div>
+    <div class="spec">
+      <span class="tag">Seçenek 1</span>
+      <h2 id="t1">Gece Eczanesi</h2>
+      <p class="idea">Gece açık kalan bir eczanenin sıcak ışığı. Koyu mürekkep-mor zemin, kehribar mum ışığı vurgusu, yavaşça süzülen yarı saydam hayaletler. Gizemli ama sakin; tema en güçlü bu seçenekte hissediliyor.</p>
+      <div class="sw"><span><i style="background:#17141F"></i>#17141F</span><span><i style="background:#221D2C"></i>#221D2C</span><span><i style="background:#E8B04B"></i>#E8B04B</span><span><i style="background:#D6CDE6"></i>#D6CDE6</span><span><i style="background:#F27E77"></i>#F27E77</span></div>
+      <dl><dt>Yazı</dt><dd>Crimson Pro (başlık) · Atkinson Hyperlegible (metin)</dd><dt>Hareket</dt><dd>Hayalet 6 sn’de bir hafifçe süzülür; hareket azaltmada durur</dd><dt>Mod</dt><dd>Koyu öncelikli; açık mod ikinci tema olarak</dd></dl>
+      <div class="pc"><div><h3>Güçlü</h3><ul><li>Cadılar Bayramı teması işlevsel ve güçlü</li><li>Videoda çok iyi görünür</li><li>Metin yazı tipi yaşlılar için okunaklı</li></ul></div><div><h3>Risk</h3><ul><li>Koyu zemin bazı yaşlılara zor gelebilir</li><li>Doktor notu ve PDF için ayrı açık stil gerekir</li></ul></div></div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="opt" aria-labelledby="t2">
+    <div class="phone o2" role="img" aria-label="Klinik Ay Işığı seçeneğinde bulgu ekranı örneği">
+      <div class="ph-top"><span class="brand">Janus</span><span class="mask"><b>Gölge</b><b>Işık</b></span></div>
+      <div class="disc">Janus bilgi verir, tıbbi tavsiye vermez. Araştırma prototipi, tıbbi cihaz değildir. Acil durumda 112.</div>
+      <div class="demo">Demo · sentetik hasta: İstanbul</div>
+      <h3 class="h">Bir hayalet bulundu</h3>
+      <div class="card">
+        <div class="ghost-row">
+          <svg class="ghost" viewBox="0 0 34 40" aria-hidden="true"><path d="M17 2C9 2 3 8 3 16v20l5-4 4 4 5-4 5 4 4-4 5 4V16C31 8 25 2 17 2Z"/><circle cx="12" cy="16" r="2.2"/><circle cx="22" cy="16" r="2.2"/></svg>
+          <div>
+            <div class="f-title">Bilek şişliği ve sonradan eklenen idrar söktürücü</div>
+            <span class="status">Olası · 5 ay arayla</span>
+          </div>
+        </div>
+        <p class="chain"><strong>Amlodipin</strong> (AMLIPIN) Ocak 2026’da, <strong>furosemid</strong> Haziran 2026’da başlamış. Bu ikili literatürde tanımlanmış bir reçete kaskadı örüntüsüne uyuyor.</p>
+        <p class="stat">FAERS: amlodipin geçen <span class="num">424</span> raporda bilek şişliği var. ROR <span class="num">5,11</span> (<span class="num">4,63–5,64</span>). Bunlar gönüllü raporlar, görülme sıklığı değil.</p>
+        <div class="src"><a href="#">Kural: PIPC satır 5 · McCarthy 2022</a>
+          <span class="zombie"><span class="stamp">Geri çekildi</span><s>2019 vaka serisi</s> kullanılmadı</span></div>
+        <p class="talk">Doktorunuzla konuşmaya değer olabilir.</p>
+      </div>
+      <div class="med"><span>Metoprolol<small>C07AB02</small></span><span class="warn">Bu ilacı birden bırakmayın.</span></div>
+      <a class="cta" href="#">Doktor notunu hazırla</a>
+    </div>
+    <div class="spec">
+      <span class="tag">Seçenek 2</span>
+      <h2 id="t2">Klinik Ay Işığı</h2>
+      <p class="idea">Önce güven. Açık, sakin mavi bir sağlık arayüzü; hayalet yalnızca kesik çizgili bir taslak, yani “orada olmayan hastalık”. Gece modu gölge yüzünün koyu sürümü olur. Doktorlar ve yaşlılar için en tanıdık seçenek.</p>
+      <div class="sw"><span><i style="background:#F4F7FA"></i>#F4F7FA</span><span><i style="background:#FFFFFF"></i>#FFFFFF</span><span><i style="background:#1F5F8B"></i>#1F5F8B</span><span><i style="background:#8CA3B8"></i>#8CA3B8</span><span><i style="background:#B42318"></i>#B42318</span></div>
+      <dl><dt>Yazı</dt><dd>Atkinson Hyperlegible (tek aile, düşük görme için tasarlandı)</dd><dt>Hareket</dt><dd>Neredeyse yok; yalnızca 150–200 ms geçişler</dd><dt>Mod</dt><dd>Açık öncelikli; koyu mod eşit kalitede</dd></dl>
+      <div class="pc"><div><h3>Güçlü</h3><ul><li>Erişilebilirlik ve okunabilirlik en yüksek</li><li>Doktor notu ve PDF ile aynı dil</li><li>Ciddi, güvenilir izlenim</li></ul></div><div><h3>Risk</h3><ul><li>Tema zayıf kalır; “Design” ve “Innovation” puanında sıradan görünebilir</li><li>Videoda akılda kalıcılığı düşük</li></ul></div></div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="opt" aria-labelledby="t3">
+    <div class="split" role="img" aria-label="İki Yüz seçeneğinde gölge ve ışık yüzü örneği">
+      <div class="phone o3">
+        <div class="ph-top"><span class="brand">Janus</span><span class="mask"><b>Gölge</b><b>Işık</b></span></div>
+        <div class="disc">Janus bilgi verir, tıbbi tavsiye vermez. Araştırma prototipi, tıbbi cihaz değildir. Acil durumda 112.</div>
+        <div class="demo">Demo · sentetik hasta: İstanbul</div>
+        <h3 class="h">Bir hayalet bulundu</h3>
+        <div class="card">
+          <div class="ghost-row">
+            <svg class="ghost" viewBox="0 0 34 40" aria-hidden="true"><path d="M17 2C9 2 3 8 3 16v20l5-4 4 4 5-4 5 4 4-4 5 4V16C31 8 25 2 17 2Z"/><circle cx="12" cy="16" r="2.2"/><circle cx="22" cy="16" r="2.2"/></svg>
+            <div>
+              <div class="f-title">Bilek şişliği ve sonradan eklenen idrar söktürücü</div>
+              <span class="status">Olası · 5 ay arayla</span>
+            </div>
+          </div>
+          <p class="chain"><strong>Amlodipin</strong> (AMLIPIN) Ocak 2026’da, <strong>furosemid</strong> Haziran 2026’da başlamış. Bu ikili literatürde tanımlanmış bir reçete kaskadı örüntüsüne uyuyor.</p>
+          <p class="stat">FAERS: amlodipin geçen <span class="num">424</span> raporda bilek şişliği var. ROR <span class="num">5,11</span> (<span class="num">4,63–5,64</span>). Gönüllü raporlar, görülme sıklığı değil.</p>
+          <div class="src"><a href="#">Kural: PIPC satır 5 · McCarthy 2022</a>
+            <span class="zombie"><span class="stamp">Geri çekildi</span><s>2019 vaka serisi</s> kullanılmadı</span></div>
+        </div>
+        <a class="cta" href="#">Doktor notunu hazırla</a>
+      </div>
+      <div class="phone o3 o3-light mini">
+        <div class="ph-top"><span class="brand">Janus</span><span class="mask"><b>Işık</b><b>Gölge</b></span></div>
+        <h3 class="h">Işık yüzü: araştırmacı için</h3>
+        <p class="chain">Aynı yan etki bilgisi tersine çevrilir: minoksidilin kıl uzatma etkisi gibi bilinen yeniden kullanımlar yeniden bulunur. <strong>Araştırılmaya değer aday, tedavi değil.</strong></p>
+      </div>
+    </div>
+    <div class="spec">
+      <span class="tag">Seçenek 3</span>
+      <h2 id="t3">İki Yüz</h2>
+      <p class="idea">Janus’un kendisi: iki yüzlü tanrı. Gölge yüzü (hasta tarafı) gece mavisi zemin üzerine fildişi; ışık yüzü (araştırmacı tarafı) fildişi üzerine gece mavisi. Maske düğmesi bütün temayı çevirir. Tema bir süs değil, ürünün iki işlevinin kendisi.</p>
+      <div class="sw"><span><i style="background:#1B1F3B"></i>#1B1F3B</span><span><i style="background:#F6F1E7"></i>#F6F1E7</span><span><i style="background:#7FD1C7"></i>#7FD1C7</span><span><i style="background:#1E6B62"></i>#1E6B62</span><span><i style="background:#FF8A80"></i>#FF8A80</span></div>
+      <dl><dt>Yazı</dt><dd>Fraunces (başlık, yumuşak serif) · Public Sans (metin, ABD devlet sitelerinin yazısı)</dd><dt>Hareket</dt><dd>Maske çevrilince tek bir 400 ms renk geçişi; başka hareket yok</dd><dt>Mod</dt><dd>Hasta tarafı koyu, araştırma tarafı açık; ayrıca sistem teması</dd></dl>
+      <div class="pc"><div><h3>Güçlü</h3><ul><li>Ürün adı, konsept ve tema tek fikirde birleşiyor</li><li>Videoda “maskeyi çevir” anı çok güçlü bir sahne</li><li>Işık yüzü doktor notu ve PDF için de uygun</li></ul></div><div><h3>Risk</h3><ul><li>İki tema iki kat test gerektirir</li><li>Tema çevirme hastayı şaşırtmamalı; araştırma tarafı ayrı menüde kalmalı</li></ul></div></div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="opt" aria-labelledby="t4">
+    <div class="phone o4" role="img" aria-label="Vaka Defteri seçeneğinde bulgu ekranı örneği">
+      <div class="ph-top"><span class="brand">Janus</span><span class="mask"><b>Gölge</b><b>Işık</b></span></div>
+      <div class="disc">Janus bilgi verir, tıbbi tavsiye vermez. Araştırma prototipi, tıbbi cihaz değildir. Acil durumda 112.</div>
+      <div class="demo">Demo · sentetik hasta: İstanbul</div>
+      <h3 class="h">Bir hayalet bulundu</h3>
+      <div class="card">
+        <div class="ghost-row">
+          <svg class="ghost" viewBox="0 0 34 40" aria-hidden="true"><path d="M17 2C9 2 3 8 3 16v20l5-4 4 4 5-4 5 4 4-4 5 4V16C31 8 25 2 17 2Z"/><circle cx="12" cy="16" r="2.2"/><circle cx="22" cy="16" r="2.2"/></svg>
+          <div>
+            <div class="f-title">Bilek şişliği ve sonradan eklenen idrar söktürücü</div>
+            <span class="status">Olası · 5 ay arayla</span>
+          </div>
+        </div>
+        <p class="chain"><strong>Amlodipin</strong> (AMLIPIN) Ocak 2026’da, <strong>furosemid</strong> Haziran 2026’da başlamış. Bu ikili literatürde tanımlanmış bir reçete kaskadı örüntüsüne uyuyor.¹</p>
+        <p class="stat">FAERS: amlodipin geçen <span class="num">424</span> raporda bilek şişliği var. ROR <span class="num">5,11</span> (<span class="num">4,63–5,64</span>).² Gönüllü raporlar, görülme sıklığı değil.</p>
+        <div class="src"><a href="#">¹ PIPC satır 5 · doi:10.1001/…</a><a href="#">² FAERS 2025Q4–2026Q3 · dataset:faers</a>
+          <span class="zombie"><span class="stamp">Geri çekildi</span><s>2019 vaka serisi</s> kullanılmadı</span></div>
+        <p class="talk">Doktorunuzla konuşmaya değer olabilir.</p>
+      </div>
+      <div class="med"><span>Metoprolol<small>C07AB02</small></span><span class="warn">Bu ilacı birden bırakmayın.</span></div>
+      <a class="cta" href="#">Doktor notunu hazırla</a>
+    </div>
+    <div class="spec">
+      <span class="tag">Seçenek 4</span>
+      <h2 id="t4">Vaka Defteri</h2>
+      <p class="idea">Bir hekimin vaka defteri ya da bilimsel dergi sayfası. Serin kâğıt rengi, siyah mürekkep, tek vurgu olarak bakır pası yeşili; dipnotlu kaynaklar ve tek aralıklı kodlar. Zombi damgası gerçek bir lastik mühür gibi. “Her cümlenin kanıtı var” fikri görsel olarak en net burada.</p>
+      <div class="sw"><span><i style="background:#F2F4F1"></i>#F2F4F1</span><span><i style="background:#1A1D1A"></i>#1A1D1A</span><span><i style="background:#2F6F62"></i>#2F6F62</span><span><i style="background:#C9D0C8"></i>#C9D0C8</span><span><i style="background:#A8322D"></i>#A8322D</span></div>
+      <dl><dt>Yazı</dt><dd>Newsreader (başlık) · IBM Plex Sans (metin) · IBM Plex Mono (ATC kodları, DOI)</dd><dt>Hareket</dt><dd>Yok denecek kadar az; damga basılırken tek bir hareket</dd><dt>Mod</dt><dd>Açık öncelikli; koyu mod “gece okuma” sürümü</dd></dl>
+      <div class="pc"><div><h3>Güçlü</h3><ul><li>Kanıt ve kaynak vurgusu en güçlü</li><li>Doktor notu ile birebir aynı görünüm</li><li>Jüriye “ciddi bilim” izlenimi verir</li></ul></div><div><h3>Risk</h3><ul><li>Hasta için soğuk ve yoğun durabilir</li><li>Cadılar Bayramı teması hafif kalır</li></ul></div></div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="opt" aria-labelledby="t5">
+    <div class="phone o5" role="img" aria-label="Yumuşak Hayalet seçeneğinde bulgu ekranı örneği">
+      <div class="ph-top"><span class="brand">Janus</span><span class="mask"><b>Gölge</b><b>Işık</b></span></div>
+      <div class="disc">Janus bilgi verir, tıbbi tavsiye vermez. Araştırma prototipi, tıbbi cihaz değildir. Acil durumda 112.</div>
+      <div class="demo">Demo · sentetik hasta: İstanbul</div>
+      <h3 class="h">Bir hayalet bulundu</h3>
+      <div class="card">
+        <div class="ghost-row">
+          <svg class="ghost" viewBox="0 0 34 40" aria-hidden="true"><path d="M17 2C9 2 3 8 3 16v20l5-4 4 4 5-4 5 4 4-4 5 4V16C31 8 25 2 17 2Z"/><circle cx="12" cy="16" r="2.2"/><circle cx="22" cy="16" r="2.2"/></svg>
+          <div>
+            <div class="f-title">Bilek şişliği ve sonradan eklenen idrar söktürücü</div>
+            <span class="status">Olası · 5 ay arayla</span>
+          </div>
+        </div>
+        <p class="chain"><strong>Amlodipin</strong> (AMLIPIN) Ocak 2026’da, <strong>furosemid</strong> Haziran 2026’da başlamış. Bu ikili literatürde tanımlanmış bir reçete kaskadı örüntüsüne uyuyor.</p>
+        <p class="stat">FAERS: amlodipin geçen <span class="num">424</span> raporda bilek şişliği var. ROR <span class="num">5,11</span> (<span class="num">4,63–5,64</span>). Gönüllü raporlar, görülme sıklığı değil.</p>
+        <div class="src"><a href="#">Kural: PIPC satır 5 · McCarthy 2022</a>
+          <span class="zombie"><span class="stamp">Geri çekildi</span><s>2019 vaka serisi</s> kullanılmadı</span></div>
+        <p class="talk">Doktorunuzla konuşmaya değer olabilir.</p>
+      </div>
+      <div class="med"><span>Metoprolol<small>C07AB02</small></span><span class="warn">Bu ilacı birden bırakmayın.</span></div>
+      <a class="cta" href="#">Doktor notunu hazırla</a>
+    </div>
+    <div class="spec">
+      <span class="tag">Seçenek 5</span>
+      <h2 id="t5">Yumuşak Hayalet</h2>
+      <p class="idea">Sevimli ve rahatlatıcı: derin gece laciverti, deniz köpüğü vurgusu, yuvarlak köşeler ve hafifçe sallanan dost canlısı hayaletler. Varsayılan metin 17 px. Bakım veren aileler için en sıcak, en az “klinik” seçenek.</p>
+      <div class="sw"><span><i style="background:#12233A"></i>#12233A</span><span><i style="background:#1C3150"></i>#1C3150</span><span><i style="background:#7FD8C3"></i>#7FD8C3</span><span><i style="background:#CFC9F2"></i>#CFC9F2</span><span><i style="background:#FF9A8F"></i>#FF9A8F</span></div>
+      <dl><dt>Yazı</dt><dd>Lexend (tek aile, okuma akıcılığı için tasarlandı)</dd><dt>Hareket</dt><dd>Hayaletler hafifçe sallanır, kartlar yumuşak girer; hareket azaltmada durur</dd><dt>Mod</dt><dd>Koyu öncelikli; açık mod ikinci tema olarak</dd></dl>
+      <div class="pc"><div><h3>Güçlü</h3><ul><li>Hasta ve aile için en sıcak, en az korkutucu</li><li>Büyük metin varsayılan</li><li>Mobilde dokunmaya çok uygun</li></ul></div><div><h3>Risk</h3><ul><li>Doktor için fazla oyuncak gibi durabilir</li><li>Tıbbi ciddiyet algısı düşebilir</li></ul></div></div>
+    </div>
+  </section>
+
+  <header style="border-top:1px solid var(--line);padding-top:32px">
+    <span class="tag">Ayarlardan seçilen ikinci tema</span>
+    <h2>Sade tema: iOS tarzı, Cadılar Bayramı yok</h2>
+    <p class="lede">Ayarlar › Görünüm altında “İki Yüz” yerine seçilebilir. İçerik ve kurallar aynı, yalnızca anlatım değişir: hayalet yerine “olası reçete kaskadı”, maske yerine “Hasta / Araştırma” bölümü, zombi damgası yerine düz bir “geri çekildi” etiketi. İki alternatif var; hangisini seçersen o eklenir.</p>
+  </header>
+
+  <!-- 6 -->
+  <section class="opt" aria-labelledby="t6">
+    <div class="duo" role="img" aria-label="Sade seçeneğinde bulgu ekranı ve koyu modda ayarlar ekranı">
+      <div class="ios o6">
+        <div class="ios-bar"><span>‹ İlaçlar</span><b>Sonuçlar</b><span>Not</span></div>
+        <div class="ios-body">
+          <h3 class="ios-title">1 olası kaskad</h3>
+          <p class="ios-sub">Demo · sentetik hasta: İstanbul · 4 ilaç kontrol edildi</p>
+          <div class="seg"><span class="on">Bulgular</span><span>Zaman çizelgesi</span><span>Kaynaklar</span></div>
+          <div class="fcard">
+            <div class="row" style="padding:0;min-height:0">
+              <span class="ico"><svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg></span>
+              <div class="row-main"><div class="row-t">Bilek şişliği ve sonradan eklenen idrar söktürücü</div><span class="pill">Olası · 5 ay arayla</span></div>
+            </div>
+            <p><strong>Amlodipin</strong> (AMLIPIN) Ocak 2026’da, <strong>furosemid</strong> Haziran 2026’da başlamış. Bu ikili literatürde tanımlanmış bir reçete kaskadı örüntüsüne uyuyor.</p>
+            <div class="metric"><span class="big">5,11</span><span>ROR · aralık 4,63–5,64</span><small>FAERS’te amlodipin geçen 424 raporda bilek şişliği var. Gönüllü raporlar, görülme sıklığı değil.</small></div>
+            <p class="ret"><em>Geri çekildi:</em> 2019 vaka serisi bu sonuçta kullanılmadı.</p>
+            <p>Doktorunuzla konuşmaya değer olabilir.</p>
+          </div>
+          <p class="grp-h">İlaçlar</p>
+          <div class="grp">
+            <div class="row"><div class="row-main"><div class="row-t">Metoprolol</div><div class="row-d" style="color:var(--p-warn);font-weight:600">Bu ilacı birden bırakmayın.</div></div><span class="chev">›</span></div>
+            <div class="row"><div class="row-main"><div class="row-t">AMLIPIN</div><div class="row-d">amlodipin + lisinopril</div></div><span class="chev">›</span></div>
+          </div>
+          <a class="ios-cta" href="#">Doktor notunu hazırla</a>
+          <p class="ios-sub" style="margin:0">Janus bilgi verir, tıbbi tavsiye vermez. Araştırma prototipi, tıbbi cihaz değildir. Acil durumda 112.</p>
+        </div>
+      </div>
+      <div class="ios o6 o6-dark">
+        <div class="ios-bar"><span>‹ Geri</span><b>Ayarlar</b><span></span></div>
+        <div class="ios-body">
+          <p class="grp-h">Görünüm</p>
+          <div class="grp">
+            <div class="row"><div class="row-main"><div class="row-t">İki Yüz</div><div class="row-d">Cadılar Bayramı teması: hayaletler, maske</div></div></div>
+            <div class="row"><div class="row-main"><div class="row-t">Sade</div><div class="row-d">Düz simgeler ve etiketler</div></div><span class="radio">✓</span></div>
+          </div>
+          <div class="grp">
+            <div class="row"><div class="row-main"><div class="row-t">Büyük metin</div></div><span class="tog"></span></div>
+            <div class="row"><div class="row-main"><div class="row-t">Bulguları sesli oku</div></div><span class="tog off"></span></div>
+            <div class="row"><div class="row-main"><div class="row-t">Arayüz dili</div></div><span class="row-d">Türkçe ›</span></div>
+            <div class="row"><div class="row-main"><div class="row-t">Doktor notu dili</div></div><span class="row-d">Deutsch ›</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="spec">
+      <span class="tag">Sade tema · Alternatif A</span>
+      <h2 id="t6">Sade</h2>
+      <p class="idea">Doğrudan iOS Ayarlar ve Sağlık uygulamalarının dili: açık gri zemin, beyaz gruplu listeler, büyük başlık, bölümlü seçici, sistem mavisi. Kullanıcı hiçbir şey öğrenmeden kullanır. Koyu modu gerçek siyah.</p>
+      <div class="sw"><span><i style="background:#F2F2F7"></i>#F2F2F7</span><span><i style="background:#FFFFFF"></i>#FFFFFF</span><span><i style="background:#0062CC"></i>#0062CC</span><span><i style="background:#1C1C1E"></i>#1C1C1E</span><span><i style="background:#C5221F"></i>#C5221F</span></div>
+      <dl><dt>Yazı</dt><dd>Sistem yazısı (Apple cihazlarda SF Pro), diğerlerinde Atkinson Hyperlegible</dd><dt>Köşe</dt><dd>Kart 14 px, buton 14 px, telefon çerçevesi 34 px</dd><dt>Hareket</dt><dd>iOS benzeri kısa geçişler (200–250 ms), sayfa kayması</dd><dt>Not</dt><dd>iOS mavisi #007AFF beyaz üstünde 4.5:1’i geçmediği için bir ton koyusu kullanıldı</dd></dl>
+      <div class="pc"><div><h3>Güçlü</h3><ul><li>En tanıdık, en az öğrenme gerektiren</li><li>Yaşlı kullanıcı için en güvenli</li><li>Doktor notuyla uyumlu</li></ul></div><div><h3>Risk</h3><ul><li>Kişiliği az, “herhangi bir uygulama” gibi durabilir</li><li>Android’de iOS taklidi gibi görünebilir</li></ul></div></div>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="opt" aria-labelledby="t7">
+    <div class="ios o7" role="img" aria-label="Sakin seçeneğinde bulgu ekranı örneği">
+      <div class="ios-bar"><span>‹ İlaçlar</span><b>Sonuçlar</b><span>Not</span></div>
+      <div class="ios-body">
+        <h3 class="ios-title">1 olası kaskad</h3>
+        <p class="ios-sub">Demo · sentetik hasta: İstanbul · 4 ilaç kontrol edildi</p>
+        <div class="seg"><span class="on">Bulgular</span><span>Zaman çizelgesi</span><span>Kaynaklar</span></div>
+        <div class="fcard">
+          <div class="row" style="padding:0;min-height:0">
+            <span class="ico"><svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg></span>
+            <div class="row-main"><div class="row-t">Bilek şişliği ve sonradan eklenen idrar söktürücü</div><span class="pill">Olası · 5 ay arayla</span></div>
+          </div>
+          <p><strong>Amlodipin</strong> (AMLIPIN) Ocak 2026’da, <strong>furosemid</strong> Haziran 2026’da başlamış. Bu ikili literatürde tanımlanmış bir reçete kaskadı örüntüsüne uyuyor.</p>
+          <div class="metric"><span class="big">5,11</span><span>ROR · aralık 4,63–5,64</span><small>FAERS’te amlodipin geçen 424 raporda bilek şişliği var. Gönüllü raporlar, görülme sıklığı değil.</small></div>
+          <p class="ret"><em>Geri çekildi:</em> 2019 vaka serisi bu sonuçta kullanılmadı.</p>
+          <p>Doktorunuzla konuşmaya değer olabilir.</p>
+        </div>
+        <p class="grp-h">İlaçlar</p>
+        <div class="grp">
+          <div class="row"><div class="row-main"><div class="row-t">Metoprolol</div><div class="row-d" style="color:var(--p-warn);font-weight:600">Bu ilacı birden bırakmayın.</div></div><span class="chev">›</span></div>
+          <div class="row"><div class="row-main"><div class="row-t">AMLIPIN</div><div class="row-d">amlodipin + lisinopril</div></div><span class="chev">›</span></div>
+        </div>
+        <a class="ios-cta" href="#">Doktor notunu hazırla</a>
+        <p class="ios-sub" style="margin:0">Janus bilgi verir, tıbbi tavsiye vermez. Araştırma prototipi, tıbbi cihaz değildir. Acil durumda 112.</p>
+      </div>
+    </div>
+    <div class="spec">
+      <span class="tag">Sade tema · Alternatif B</span>
+      <h2 id="t7">Sakin</h2>
+      <p class="idea">iOS yapısı, ama kendi kişiliğiyle: hafif yeşile çalan zemin, daha yuvarlak kartlar (22 px), hap şeklinde ana buton, başlıkta İki Yüz temasıyla aynı Fraunces yazısı. Böylece iki tema aynı ailenin üyesi gibi durur.</p>
+      <div class="sw"><span><i style="background:#EDF3F1"></i>#EDF3F1</span><span><i style="background:#FFFFFF"></i>#FFFFFF</span><span><i style="background:#0F6B63"></i>#0F6B63</span><span><i style="background:#DCEFEA"></i>#DCEFEA</span><span><i style="background:#B3261E"></i>#B3261E</span></div>
+      <dl><dt>Yazı</dt><dd>Fraunces (büyük başlık) · sistem yazısı / Atkinson Hyperlegible (metin)</dd><dt>Köşe</dt><dd>Kart 22 px, buton tam yuvarlak, telefon çerçevesi 34 px</dd><dt>Hareket</dt><dd>Kısa geçişler; kartlar yumuşak açılır</dd><dt>Koyu mod</dt><dd>Koyu yeşil-siyah zemin, aynı yapı</dd></dl>
+      <div class="pc"><div><h3>Güçlü</h3><ul><li>Modern ve sıcak, ama ciddi</li><li>İki Yüz ile marka bütünlüğü korunur</li><li>Sağlık uygulaması hissi güçlü</li></ul></div><div><h3>Risk</h3><ul><li>Saf iOS’tan biraz uzaklaşır</li><li>Yeşil vurgu “onay, sorun yok” gibi okunmamalı; sonuç cümleleri bu yüzden hep nötr</li></ul></div></div>
+    </div>
+  </section>
+
+  <section class="rec" aria-labelledby="tr">
+    <span class="tag">Önerim</span>
+    <h2 id="tr">Seçenek 3, İki Yüz, Seçenek 2’nin okunabilirlik kurallarıyla</h2>
+    <p>Kazanmak için en güçlüsü bu. Ürünün adı, iki işlevi ve Cadılar Bayramı teması tek bir görsel fikirde buluşuyor; jürinin “tema işlevsel mi” sorusuna doğrudan cevap veriyor ve videodaki maskeyi çevirme anı akılda kalıyor.</p>
+    <p>Riskini Seçenek 2’den iki kuralla kapatırız: metin boyutu ve büyük metin modu Atkinson Hyperlegible ile, doktor notu ve PDF ışık yüzünün açık paletiyle. Seçenek 4’ün dipnotlu kaynak stilini de kanıt bölümlerinde kullanabiliriz.</p>
+    <p>Sade tema için önerim <strong>B, Sakin</strong>. iOS yapısını koruyor, ama İki Yüz ile aynı başlık yazısını ve renk ailesini paylaştığı için iki tema tek bir ürün gibi duruyor. Geçiş ayarlardan yapılır; varsayılan İki Yüz, işletim sistemi “hareketi azalt” açıksa da tema aynı kalır, yalnızca animasyonlar durur.</p>
+    <p class="note">Karışım da seçebilirsin. Seçimini yazdığında design.md dosyasına kaydedip experience spec’ine geçeceğim.</p>
+  </section>
+</div>

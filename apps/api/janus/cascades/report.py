@@ -134,7 +134,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         with db.read_only_tx() as conn:
             rb = repository.current_rule_base(conn)
             if rb is None:
-                print("no rule base loaded (run python -m janus.cascades.load)", file=sys.stderr)
+                print(  # log-guard: ignore
+                    "no rule base loaded (run python -m janus.cascades.load)", file=sys.stderr
+                )
                 return 1
             ds, products, ingredients, keys = read_rows(conn)
     finally:

@@ -97,7 +97,7 @@ def test_gate1_istanbul_patient_on_real_data(env: tuple[TestClient, Database]) -
     assert "corrected_notice" in f5["integrity_codes"]
     assert {"pipc:6", "pipc:9"} <= set(by_rule)
     assert body["rules"]["checked"] == 63
-    print(  # counts only, for the task report
+    print(  # counts only, for the task report; log-guard: ignore
         f"gate 1: {len(body['findings'])} findings, {len(body['chains'])} chains, "
         f"{len(body['item_warnings'])} abrupt-stop warnings; rules "
         f"{sorted(by_rule)}"

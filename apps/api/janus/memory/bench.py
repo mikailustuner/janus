@@ -93,7 +93,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         ).fetchall()
     ]
     probe.close()
-    print(f"build {reader.meta.build_id}; {len(sample)} sampled pairs; top ingredients {len(top)}")
+    print(  # log-guard: ignore
+        f"build {reader.meta.build_id}; {len(sample)} sampled pairs; top ingredients {len(top)}"
+    )
 
     def db_pair() -> None:
         with reader.session() as s:

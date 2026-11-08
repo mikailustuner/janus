@@ -48,7 +48,7 @@ def test_real_artifacts() -> None:
 
     cov = ds.coverage
     rx = cov["openfda_ndc"]["rx"]["products_fully_mapped_share"]
-    print(  # local report, counts only
+    print(  # local report, counts only; log-guard: ignore
         "titck occurrences mapped", cov["titck"]["occurrences_mapped_share"],
         "| openFDA Rx products fully mapped", rx,
         "| group agreement", cov["titck"]["wikidata_group_agreement"]["share"],

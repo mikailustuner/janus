@@ -637,7 +637,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         result = load(db, inputs, report_dir=data_dir / "resolution")
         log_event(LogEvent.resolution_load, count=result.products)
         state = "loaded" if result.changed else "unchanged"
-        print(f"{state} dataset {result.dataset_version} ({result.products} products)")
+        print(  # log-guard: ignore
+            f"{state} dataset {result.dataset_version} ({result.products} products)"
+        )
         return 0
     except LoadError as exc:
         print(f"load refused: {exc}", file=sys.stderr)

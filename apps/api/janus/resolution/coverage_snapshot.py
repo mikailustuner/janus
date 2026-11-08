@@ -318,7 +318,7 @@ def run_compare(before: Path, after: Path) -> dict[str, Any]:
 
 def _print_counts(summary: Mapping[str, Any]) -> None:
     def line(label: str, part: Mapping[str, Any]) -> None:
-        print(
+        print(  # log-guard: ignore
             f"{label}: occurrences {part.get('occurrences')} mapped "
             f"{part.get('occurrences_mapped_share', 0):.1%}; products fully mapped "
             f"{part.get('products_fully_mapped_share', 0):.1%}"

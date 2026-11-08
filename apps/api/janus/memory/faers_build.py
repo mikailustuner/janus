@@ -713,7 +713,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     )
     write_coverage_report(meta["stats"], data_dir / "memory" / f"coverage-{result.build_id}.json")
     log_event(LogEvent.faers_build, count=result.reports)
-    print(
+    print(  # log-guard: ignore
         f"built {result.build_id}: {result.reports} reports, "
         f"{result.reports_mapped} with a mapped ingredient"
     )
