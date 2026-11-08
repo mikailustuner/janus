@@ -1136,9 +1136,9 @@ guard accepts a combination code only as a listed pair. WHOCC `J01DH` page re-ch
 (index updated 2026-01-20): `J01DH51` "imipenem and cilastatin" ("Refers to imipenem"), `J01DH56`
 "imipenem, cilastatin and relebactam" ("Refers to imipenem"), no code for imipenem alone.
 On the real dataset (`e9e55772…`): 38 ingredient entries map to `J2` with `component_code`
-(TİTCK 5 products, openFDA 13, BDPM 12, Nomenclátor 8; spellings `imipenem`, `imipenem monohidrat`,
-`IMIPENEM ANHYDROUS`, `IMIPÉNEM ANHYDRE`, `IMIPENEM MONOHIDRATO`); 2 TİTCK products name the
-three-substance combination as one string (`imipenem and enzyme inhibitor`) and stay unmapped
+(TİTCK 5 products in three spellings, openFDA 13, BDPM 12, Nomenclátor 8; the TİTCK spellings are
+not listed here); 2 TİTCK products name the
+three-substance combination as one string (a string of the imipenem, cilastatin and relebactam combination) and stay unmapped
 (Req 12.9: no guess); every cilastatin spelling in the four sources stays unmapped
 (`no_ingredient_key`, 39 entries). `J01DH51` is a combination code by the numbering rule
 everywhere else. FAERS counts rebuilt: the only change is the new key `J2` with 753 reports

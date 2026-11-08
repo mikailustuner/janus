@@ -152,11 +152,11 @@ def imipenem_dataset(extra_tr: list[Any] | None = None) -> Any:
     tr = [
         titck_row(
             barcode13(1),
-            "TIENAM",
-            ["imipenem monohidrat", "silastatin sodyum"],
+            "CARBA ONE",
+            ["imipenem", "cilastatin"],
             "J01DH51",
         ),
-        titck_row(barcode13(2), "MERONEM", ["meropenem"], "J01DH02"),
+        titck_row(barcode13(2), "CARBA TWO", ["meropenem"], "J01DH02"),
         titck_row(barcode13(3), "IMIPENEM ALONE", ["imipenem"], None),
         *(extra_tr or []),
     ]
@@ -175,7 +175,7 @@ def test_row_58_example_imipenem_is_a_carbapenem_and_cilastatin_is_not() -> None
     """Feature: drug-resolution, Property P48 (example). Validates Req 14.2, 14.3."""
     ds = imipenem_dataset()
     by_name = {p.product_name: p for p in ds.products}
-    tienam, meronem, alone = by_name["TIENAM"], by_name["MERONEM"], by_name["IMIPENEM ALONE"]
+    tienam, meronem, alone = by_name["CARBA ONE"], by_name["CARBA TWO"], by_name["IMIPENEM ALONE"]
     us = next(p for p in ds.products if p.region == "US")
     imipenem, cilastatin = tienam.ingredients
     assert (imipenem.status, imipenem.qid, imipenem.atc_selection) == (
@@ -288,7 +288,7 @@ def test_p48_through_the_database(database: Database, db_conn: psycopg.Connectio
     reset(db_conn)
     base = inputs(
         [
-            titck_row(barcode13(1), "TIENAM", ["imipenem", "silastatin sodyum"], "J01DH51"),
+            titck_row(barcode13(1), "CARBA ONE", ["imipenem", "cilastatin"], "J01DH51"),
             titck_row(barcode13(2), "KOMBI", ["meropenem", "betorol"], "J01DH51"),
         ],
         [],

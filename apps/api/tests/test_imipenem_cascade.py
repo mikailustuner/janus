@@ -40,9 +40,9 @@ WD = [
     wikidata_row("Q602", ["N03AX14"], {"en": "levetiracetam", "tr": "levetirasetam"}),
 ]
 TR = [
-    titck_row(barcode13(1), "TIENAM", ["imipenem monohidrat", "silastatin sodyum"], "J01DH51"),
-    titck_row(barcode13(2), "MERONEM", ["meropenem"], "J01DH02"),
-    titck_row(barcode13(3), "KEPPRA", ["levetirasetam"], "N03AX14"),
+    titck_row(barcode13(1), "CARBA ONE", ["imipenem", "cilastatin"], "J01DH51"),
+    titck_row(barcode13(2), "CARBA TWO", ["meropenem"], "J01DH02"),
+    titck_row(barcode13(3), "ANTI SEIZURE ONE", ["levetirasetam"], "N03AX14"),
 ]
 US = [
     us_row(
@@ -117,7 +117,9 @@ def test_row_58_fires_on_imipenem_with_the_reviewed_pair(env: Any) -> None:
     A carbapenem followed within the window by an anticonvulsant is a probable pattern. For
     imipenem the matched code is the reviewed pair's `J01DH51`, found through key `J2`."""
     client, ids, dataset = env
-    body = evaluate(client, dataset, [(ids["TIENAM"], "2024-01"), (ids["KEPPRA"], "2024-03")])
+    body = evaluate(
+        client, dataset, [(ids["CARBA ONE"], "2024-01"), (ids["ANTI SEIZURE ONE"], "2024-03")]
+    )
     (finding,) = row58(body)
     assert finding["index"]["ingredient_key"] == "J2"
     assert finding["index"]["matched_codes"] == ["J01DH51"]
@@ -128,10 +130,14 @@ def test_row_58_fires_on_imipenem_with_the_reviewed_pair(env: Any) -> None:
 
 def test_row_58_still_fires_on_meropenem_and_the_us_imipenem_product(env: Any) -> None:
     client, ids, dataset = env
-    mero = evaluate(client, dataset, [(ids["MERONEM"], "2024-01"), (ids["KEPPRA"], "2024-03")])
+    mero = evaluate(
+        client, dataset, [(ids["CARBA TWO"], "2024-01"), (ids["ANTI SEIZURE ONE"], "2024-03")]
+    )
     (f,) = row58(mero)
     assert f["index"]["ingredient_key"] == "Q600" and f["index"]["matched_codes"] == ["J01DH02"]
-    us = evaluate(client, dataset, [(ids["IMI US"], "2024-01"), (ids["KEPPRA"], "2024-03")])
+    us = evaluate(
+        client, dataset, [(ids["IMI US"], "2024-01"), (ids["ANTI SEIZURE ONE"], "2024-03")]
+    )
     (g,) = row58(us)
     assert g["index"]["ingredient_key"] == "J2"  # the same key whichever region's box it is
 
@@ -139,7 +145,9 @@ def test_row_58_still_fires_on_meropenem_and_the_us_imipenem_product(env: Any) -
 def test_row_58_does_not_fire_on_cilastatin_alone(env: Any) -> None:
     """Cilastatin gets no carbapenem code (Req 14.3): the product is listed as not checked."""
     client, ids, dataset = env
-    body = evaluate(client, dataset, [(ids["CILA ONLY"], "2024-01"), (ids["KEPPRA"], "2024-03")])
+    body = evaluate(
+        client, dataset, [(ids["CILA ONLY"], "2024-01"), (ids["ANTI SEIZURE ONE"], "2024-03")]
+    )
     assert row58(body) == []
     assert body["findings"] == []
     reasons = {n["reason"] for n in body["not_checked"]}
