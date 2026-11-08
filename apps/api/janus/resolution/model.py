@@ -71,6 +71,15 @@ class IngredientKey(_Out):
     labels: dict[str, str | None]
 
 
+class StrengthCodeOut(_Out):
+    """Janus's normalised strength (medication-passport design §5.1): Janus's comparison code,
+    not source data. `amount` per one `basis` (unit, mL or g), mass in micrograms or IU."""
+
+    amount: str
+    unit: Literal["ug", "IU"]
+    basis: Literal["unit", "mL", "g"]
+
+
 class ResolvedIngredient(_Out):
     position: int
     published_name: str
@@ -103,6 +112,8 @@ class ResolvedIngredient(_Out):
     rxcuis: list[str]
     rxcui_status: Literal["from_wikidata", "not_in_wikidata"] | None
     source: SourceRef
+    # Additive (medication-passport Req 6.6): null when unknown or not comparable.
+    strength_code: StrengthCodeOut | None = None
 
 
 class Package(_Out):
@@ -146,6 +157,8 @@ class ProductCandidate(_Out):
     packages: list[Package]
     ingredients: list[ResolvedIngredient]
     source: SourceRef
+    # Additive (medication-passport Req 6.6): the Janus dose-form group, null when unknown.
+    dose_form_group: str | None = None
 
 
 class IngredientCandidate(_Out):

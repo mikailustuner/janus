@@ -44,7 +44,8 @@ PHASE1: dict[str, set[str]] = {
 }  # fmt: skip
 
 ADDED: dict[str, set[str]] = {
-    "ProductCandidate": {"country", "status_published"},
+    "ProductCandidate": {"country", "status_published", "dose_form_group"},
+    "ResolvedIngredient": {"strength_code"},  # medication-passport Req 6.6
     "Notice": {"country"},
 }
 
