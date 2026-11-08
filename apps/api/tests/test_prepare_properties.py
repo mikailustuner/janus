@@ -13,7 +13,12 @@ from janus.resolution.atc import (
     RouteMap,
     is_ingredient_level,
 )
-from janus.resolution.canonical import GOLDEN_ROWS, GOLDEN_SCHEMA, content_hash
+from janus.resolution.canonical import (
+    GOLDEN_ROWS,
+    GOLDEN_SCHEMA,
+    content_hash,
+    content_hash_stream,
+)
 from janus.resolution.prepare import PreparedDataset, prepare_dataset
 from tests.resolution_strategies import (
     ROUTES,
@@ -176,5 +181,13 @@ def test_golden_hash_vector() -> None:
     """Same value as pipelines/tests/test_canonical_properties.py (design §6.2)."""
     assert (
         content_hash(GOLDEN_ROWS, GOLDEN_SCHEMA)
+        == "a7b073198be149895d161e694542975078a69999dd7fb1c284f8dcf1b6c5ec8b"
+    )
+
+
+def test_golden_hash_vector_streamed() -> None:
+    """The streamed hash gives the same golden value (data-pipelines P17)."""
+    assert (
+        content_hash_stream(GOLDEN_ROWS, GOLDEN_SCHEMA, chunk=1)
         == "a7b073198be149895d161e694542975078a69999dd7fb1c284f8dcf1b6c5ec8b"
     )

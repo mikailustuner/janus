@@ -50,12 +50,16 @@ BDPM — Base de données publique des médicaments (France)
   Publisher: base-donnees-publique.medicaments.gouv.fr (French Ministry of
   Health, ANSM, HAS, Assurance Maladie)
   License: Licence Ouverte (Etalab)
-  Source and update date are cited with each use; data is not altered; no
-  endorsement implied.
+  Source: base de données publique des médicaments,
+  http://base-donnees-publique.medicaments.gouv.fr.
+  The update date of each file is cited with each use. Data is not altered; no
+  official status or endorsement by ANSM, HAS or UNCAM is implied.
 
 CIMA — Centro de Información online de Medicamentos (Spain)
   Publisher: Agencia Española de Medicamentos y Productos Sanitarios (AEMPS)
   License: Reuse with attribution (Ley 37/2007)
+  Source: AEMPS, CIMA / Nomenclátor de prescripción. The date of the last update
+  is cited with each use (AEMPS legal notice). Not an AEMPS endorsement.
 
 Wikidata
   Publisher: Wikimedia Foundation and Wikidata contributors
@@ -97,11 +101,13 @@ ATC classification
 Adverse events
 --------------
 
-openFDA / FDA Adverse Event Reporting System (FAERS)
+FDA Adverse Event Monitoring System (AEMS, formerly FAERS) quarterly data files
   Publisher: U.S. Food and Drug Administration
   License: CC0 1.0
-  Spontaneous reports; not deduplicated; counts are reports, not people.
-  Not an FDA endorsement.
+  Spontaneous reports; not deduplicated across cases; counts are reports, not
+  people.
+  Event terms are MedDRA Preferred Terms as published in FAERS. MedDRA® is a
+  registered trademark of ICH. Not an FDA endorsement.
 
 Evidence integrity
 ------------------

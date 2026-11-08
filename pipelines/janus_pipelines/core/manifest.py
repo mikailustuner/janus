@@ -24,6 +24,15 @@ class Counts(BaseModel):
     excluded: dict[str, int] = Field(default_factory=dict[str, int])
 
 
+class SideTable(BaseModel):
+    """A table staged next to rows.parquet; not part of the content hash (Req 14.3)."""
+
+    model_config = ConfigDict(extra="forbid")
+    name: str
+    rows: int
+    sha256: str
+
+
 class Manifest(BaseModel):
     """Provenance of one run. Holds no user data and no source row content."""
 
@@ -51,6 +60,7 @@ class Manifest(BaseModel):
     errors: list[str] = Field(default_factory=list[str])
     previous_run_id: str | None = None
     query_sha256: dict[str, str] = Field(default_factory=dict[str, str])
+    side_tables: list[SideTable] = Field(default_factory=list[SideTable])
     started_at: dt.datetime
     finished_at: dt.datetime | None = None
 

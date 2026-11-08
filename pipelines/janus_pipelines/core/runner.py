@@ -5,8 +5,9 @@ from __future__ import annotations
 import datetime as dt
 import logging
 import secrets
+import shutil
 from abc import ABC, abstractmethod
-from collections.abc import Callable, Mapping
+from collections.abc import Callable, Iterator, Mapping
 from dataclasses import dataclass, field
 from fractions import Fraction
 from pathlib import Path
@@ -14,11 +15,18 @@ from typing import ClassVar
 
 import polars as pl
 
-from janus_pipelines.core.canonical import Json, Row, content_hash
+from janus_pipelines.core.canonical import Json, Row, content_hash, content_hash_stream
 from janus_pipelines.core.licensing import check_output_path, git_ignored
-from janus_pipelines.core.manifest import Counts, EvidenceSource, Manifest, Outcome, Promotion
+from janus_pipelines.core.manifest import (
+    Counts,
+    EvidenceSource,
+    Manifest,
+    Outcome,
+    Promotion,
+    SideTable,
+)
 from janus_pipelines.core.registry import Registry, Source, Storage
-from janus_pipelines.core.store import FaultHook, Store, no_fault
+from janus_pipelines.core.store import FaultHook, Store, file_sha256, no_fault
 from janus_pipelines.core.validation import (
     DEFAULT_REVIEW_THRESHOLD,
     ExpectedSchema,
@@ -54,6 +62,16 @@ class ParseResult:
     review_reasons: list[str] = field(default_factory=list[str])
     changes: list[dict[str, Json]] = field(default_factory=list[dict[str, Json]])
     doi: str | None = None
+    # File-backed output (Req 14.2): rows already written as Parquet with the job's schema.
+    # When set, `rows` stays empty and `output_rows` is the row count of the file.
+    rows_file: Path | None = None
+    output_rows: int = 0
+    # Side tables (Req 14.3): name -> Parquet file. Not part of the content hash.
+    side_tables: dict[str, Path] = field(default_factory=dict[str, Path])
+
+    @property
+    def n_output(self) -> int:
+        return self.output_rows if self.rows_file is not None else len(self.rows)
 
 
 @dataclass
@@ -66,6 +84,12 @@ class RunContext:
     fault: FaultHook = no_fault
     is_ignored: Callable[[Path], bool] | None = None
     options: dict[str, str] = field(default_factory=dict[str, str])
+
+    def scratch_dir(self, pipeline: str) -> Path:
+        """Working directory for a job that spills to disk; the runner removes it after the run."""
+        path = Store(self.data_dir, pipeline).scratch_dir()
+        path.mkdir(parents=True, exist_ok=True)
+        return path
 
     def ignored(self, path: Path) -> bool:
         if self.is_ignored is not None:
@@ -154,21 +178,32 @@ def run_job[T](job: Job[T], ctx: RunContext, raw: RawInput[T] | None = None) -> 
 
         result = job.parse(raw)
         manifest.extra_columns = list(result.schema.extra)
+        n_out = result.n_output
         manifest.counts = Counts(
-            input=result.input_rows, output=len(result.rows), excluded=dict(result.excluded)
+            input=result.input_rows, output=n_out, excluded=dict(result.excluded)
         )
         manifest.metrics = result.metrics
         manifest.changes = result.changes
-        check_accounting(result.input_rows, len(result.rows), result.excluded)
-        if not result.rows:
+        check_accounting(result.input_rows, n_out, result.excluded)
+        if n_out == 0:
             raise ValueError("the run produced no output rows")
-        manifest.content_sha256 = content_hash(result.rows, job.schema.version)
-
+        if result.rows_file is not None:
+            manifest.content_sha256 = content_hash_stream(
+                iter_parquet_rows(result.rows_file),
+                job.schema.version,
+                tmp_dir=store.scratch_dir_created(),
+            )
+            manifest.side_tables = [
+                SideTable(name=name, rows=parquet_rows(path), sha256=file_sha256(path))
+                for name, path in sorted(result.side_tables.items())
+            ]
+        else:
+            manifest.content_sha256 = content_hash(result.rows, job.schema.version)
         reasons = list(result.review_reasons)
         prev_count = previous.counts.output if previous else None
-        if review_needed(prev_count, len(result.rows), job.review_threshold):
+        if review_needed(prev_count, n_out, job.review_threshold):
             reasons.append(
-                f"output rows changed from {prev_count} to {len(result.rows)} "
+                f"output rows changed from {prev_count} to {n_out} "
                 f"(threshold {float(job.review_threshold):.0%})"
             )
         manifest.review_reasons = reasons
@@ -186,7 +221,12 @@ def run_job[T](job: Job[T], ctx: RunContext, raw: RawInput[T] | None = None) -> 
         )
         if source.storage is Storage.CACHE and raw.raw_files:
             store.write_raw(manifest.run_id, raw.raw_files)
-        store.stage(manifest.run_id, result.rows, job.polars_schema, manifest, evidence)
+        if result.rows_file is not None:
+            store.stage_file(
+                manifest.run_id, result.rows_file, result.side_tables, manifest, evidence
+            )
+        else:
+            store.stage(manifest.run_id, result.rows, job.polars_schema, manifest, evidence)
         store.finish(manifest.run_id)
         if manifest.outcome is Outcome.SUCCEEDED:
             store.promote(manifest.run_id)
@@ -196,6 +236,7 @@ def run_job[T](job: Job[T], ctx: RunContext, raw: RawInput[T] | None = None) -> 
             log.warning("pipeline=%s run_id=%s step=after_promote", job.name, manifest.run_id)
         else:
             _cleanup_tmp_links(store)
+            shutil.rmtree(store.scratch_dir(), ignore_errors=True)
             manifest.outcome = Outcome.FAILED
             manifest.errors = [f"{type(exc).__name__}: {exc}"]
             manifest.finished_at = ctx.now()
@@ -208,6 +249,7 @@ def run_job[T](job: Job[T], ctx: RunContext, raw: RawInput[T] | None = None) -> 
             )
             return RunResult(manifest.run_id, Outcome.FAILED, manifest, manifest.errors[0])
 
+    shutil.rmtree(store.scratch_dir(), ignore_errors=True)
     error: str | None = None
     if manifest.outcome is Outcome.SUCCEEDED:
         try:
@@ -223,6 +265,21 @@ def run_job[T](job: Job[T], ctx: RunContext, raw: RawInput[T] | None = None) -> 
         manifest.counts.output,
     )
     return RunResult(manifest.run_id, manifest.outcome, manifest, error)
+
+
+BATCH_ROWS = 50_000
+
+
+def parquet_rows(path: Path) -> int:
+    frame: pl.LazyFrame = pl.scan_parquet(path)
+    counted: pl.DataFrame = frame.select(pl.len().alias("n")).collect()  # pyright: ignore[reportUnknownMemberType]
+    return int(counted["n"][0])
+
+
+def iter_parquet_rows(path: Path, batch: int = BATCH_ROWS) -> Iterator[Row]:
+    """Rows of a Parquet file as plain dicts, a batch at a time (Req 14.2)."""
+    for frame in pl.scan_parquet(path).collect_batches(chunk_size=batch):
+        yield from frame.to_dicts()
 
 
 def _cleanup_tmp_links(store: Store) -> None:

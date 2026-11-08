@@ -8,7 +8,7 @@ import unicodedata
 from hypothesis import given
 from hypothesis import strategies as st
 
-from janus_pipelines.core.canonical import Json, content_hash
+from janus_pipelines.core.canonical import Json, content_hash, content_hash_stream
 from tests.strategies import rows
 
 
@@ -60,5 +60,24 @@ def test_golden_hash_vector() -> None:
     )
     assert (
         content_hash(rows, "golden-1")
+        == "a7b073198be149895d161e694542975078a69999dd7fb1c284f8dcf1b6c5ec8b"
+    )
+
+
+@given(rows(), st.integers(1, 10))
+def test_streamed_hash_equals_in_memory_hash(rs: list[dict[str, Json]], chunk: int) -> None:
+    """Feature: data-pipelines, Property P17 (hash part) — Validates: Req 14.1, 1.3.
+    For any rows and any chunk size the streamed hash equals the in-memory hash (also when empty).
+    """
+    assert content_hash_stream(iter(rs), "v1", chunk=chunk) == content_hash(rs, "v1")
+
+
+def test_golden_hash_vector_streamed() -> None:
+    rows = (
+        {"barcode": "8680199094206", "ingredients": ["b", "a"], "atc_code": "C09BB03", "n": 1},
+        {"barcode": None, "name_only": True, "product_name": "İ\u0307ç", "x": {"k": [1.5, False]}},
+    )
+    assert (
+        content_hash_stream(rows, "golden-1", chunk=1)
         == "a7b073198be149895d161e694542975078a69999dd7fb1c284f8dcf1b6c5ec8b"
     )

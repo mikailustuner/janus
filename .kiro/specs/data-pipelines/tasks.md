@@ -112,36 +112,36 @@
 
 ## Phase 2 (planned 2026-11-08)
 
-- [ ] 15. Streamed content hash (`core/canonical.py`, `apps/api/janus/resolution/canonical.py`)
+- [x] 15. Streamed content hash (`core/canonical.py`, `apps/api/janus/resolution/canonical.py`)
   - Add `content_hash_stream` (design §12.1): canonical lines in sorted chunks on disk, k-way
     merge into the digest, temp files removed in `finally`. Same function in the API copy; extend
     the shared golden-vector test of `drug-resolution` DP15 with a streamed case in both suites.
-  - [ ] 15.1 Property test P17 (hash part): for any rows and chunk sizes 1–10 the streamed hash
+  - [x] 15.1 Property test P17 (hash part): for any rows and chunk sizes 1–10 the streamed hash
     equals `content_hash`; empty input too. _Requirements: 14.1, 1.3_
 
-- [ ] 16. File-backed output and side tables (`core/runner.py`, `core/store.py`, `core/manifest.py`)
+- [x] 16. File-backed output and side tables (`core/runner.py`, `core/store.py`, `core/manifest.py`)
   - `ParseResult.rows_file`, `output_rows`, `side_tables`; the runner hashes the file in batches,
     moves it to `rows.parquet`, stages side tables with SHA-256 and row counts in the manifest
     (`side_tables`, optional field). Phase 1 jobs and manifests unchanged.
-  - [ ] 16.1 Property test P17 (round-trip part): rows → Parquet → batches → stream hash equals the
+  - [x] 16.1 Property test P17 (round-trip part): rows → Parquet → batches → stream hash equals the
     in-memory hash for nested lists, `None` and Unicode. _Requirements: 14.2, 1.3_
-  - [ ] 16.2 Property test P18: side tables never change the content hash; manifest SHA-256 equals
+  - [x] 16.2 Property test P18: side tables never change the content hash; manifest SHA-256 equals
     the file's; staged files are unchanged after the run. _Requirements: 14.3, 1.2_
-  - [ ] 16.3 Extend the P10 state machine with file-backed runs and faults at the new steps (write
+  - [x] 16.3 Extend the P10 state machine with file-backed runs and faults at the new steps (write
     spill, move rows file, stage side table); P1 and P3 still pass for Phase 1 jobs.
     _Requirements: 4.2, 14.2_
 
-- [ ] 17. Registry and NOTICE (`sources.toml`, `NOTICE`)
+- [x] 17. Registry and NOTICE (`sources.toml`, `NOTICE`)
   - `faers`: name "openFDA / FDA Adverse Event Monitoring System (AEMS, formerly FAERS)", URLs of
     the quarterly page; keep CC0 and the "not deduplicated, reports not people" note.
   - `bdpm`: URL of the download page, attribution lines (source, update date, data not altered, no
     endorsement). `cima`: URLs of the Nomenclátor and the REST API, attribution line with source and
     update date (AEMPS legal notice, Ley 37/2007). Keep `cadence_days` 91, 30, 7.
   - Regenerate `NOTICE`; check it keeps every existing entry; `notice --check` green.
-  - [ ] 17.1 Existing P8 still passes with the new registry; add the three sources to a manifest
+  - [x] 17.1 Existing P8 still passes with the new registry; add the three sources to a manifest
     set in the example test. _Requirements: 3.2_
 
-- [ ] 18. Checkpoint: core ready
+- [x] 18. Checkpoint: core ready
   - Full checks (see header). Re-run the Phase 1 pipelines' tests unchanged. Ask the owner to
     confirm DP16 (region basis) and DP21 (scopes and denominators) before the FAERS tasks.
 

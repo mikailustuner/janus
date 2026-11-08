@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import tempfile
 from fractions import Fraction
 from pathlib import Path
@@ -25,6 +26,7 @@ from janus_pipelines.core.store import Store
 from tests.strategies import TEXT
 from tests.stub_job import (
     STUB_SCHEMA,
+    FileStubJob,
     Records,
     StubJob,
     context,
@@ -142,6 +144,22 @@ class AlwaysUsableArtifact(RuleBasedStateMachine):
         result = run_job(StubJob(), self.ctx, raw_input(records))
         assert result.outcome is Outcome.SUCCEEDED
         self.last_promoted = result.run_id
+
+    @rule(records=RECORDS)
+    def run_success_file_backed(self, records: Records) -> None:
+        result = run_job(FileStubJob(self.data_dir), self.ctx, raw_input(records))
+        assert result.outcome is Outcome.SUCCEEDED
+        self.last_promoted = result.run_id
+
+    @rule(records=RECORDS, step=st.sampled_from(FAULT_STEPS))
+    def run_crash_file_backed(self, records: Records, step: str) -> None:
+        self.fault_at = step
+        try:
+            result = run_job(FileStubJob(self.data_dir), self.ctx, raw_input(records))
+        finally:
+            self.fault_at = None
+        assert result.outcome is Outcome.FAILED
+        assert not self.store.scratch_dir().exists()
 
     @rule(records=RECORDS, mutation=MUTATIONS, column=REQUIRED)
     def run_schema_failure(self, records: Records, mutation: str, column: str) -> None:
@@ -275,3 +293,48 @@ def test_unknown_source_is_refused(tmp_path: Path) -> None:
 def test_rows_type_alias_is_json() -> None:
     value: Json = {"a": [1, "b", None]}
     assert isinstance(value, dict)
+
+
+@given(RECORDS, st.integers(1, 5), st.integers(0, 4))
+def test_file_backed_run_has_same_hash_as_in_memory_run(
+    records: Records, row_group: int, side_rows: int
+) -> None:
+    """Feature: data-pipelines, Property P17 (round-trip part) — Validates: Req 14.2, 1.3.
+    Rows written to Parquet by the job, read back in batches and hashed in a stream give the
+    hash of the same rows held in memory; the scratch directory is gone afterwards.
+    """
+    with tempfile.TemporaryDirectory() as a, tempfile.TemporaryDirectory() as b:
+        mem = run_job(StubJob(), context(Path(a)), raw_input(records))
+        job = FileStubJob(Path(b), row_group=row_group, side_rows=side_rows)
+        file = run_job(job, context(Path(b)), raw_input(records))
+        assert mem.outcome is file.outcome is Outcome.SUCCEEDED
+        assert mem.manifest.content_sha256 == file.manifest.content_sha256
+        assert mem.manifest.counts == file.manifest.counts
+        store = Store(Path(b), "stub")
+        assert sorted(map(repr, store.read_rows(file.run_id))) == sorted(
+            map(repr, Store(Path(a), "stub").read_rows(mem.run_id))
+        )
+        assert not store.scratch_dir().exists()
+
+
+@given(RECORDS, st.integers(0, 4), st.integers(0, 4))
+def test_side_tables_are_outside_the_hash_and_recorded(
+    records: Records, side_a: int, side_b: int
+) -> None:
+    """Feature: data-pipelines, Property P18 — Validates: Req 14.3, 1.2.
+    Side tables never change the content hash; the manifest records each table's row count and
+    the SHA-256 of its file; the run's files do not change after the run.
+    """
+    with tempfile.TemporaryDirectory() as a, tempfile.TemporaryDirectory() as b:
+        ra = run_job(FileStubJob(Path(a), side_rows=side_a), context(Path(a)), raw_input(records))
+        rb = run_job(FileStubJob(Path(b), side_rows=side_b), context(Path(b)), raw_input(records))
+        assert ra.manifest.content_sha256 == rb.manifest.content_sha256
+        for result, d, n in ((ra, a, side_a), (rb, b, side_b)):
+            store = Store(Path(d), "stub")
+            (table,) = store.read_manifest(result.run_id).side_tables
+            path = store.run_dir(result.run_id) / "removed.parquet"
+            assert table.name == "removed" and table.rows == n
+            assert table.sha256 == hashlib.sha256(path.read_bytes()).hexdigest()
+            before = snapshot_tree(store.run_dir(result.run_id))
+            run_job(FileStubJob(Path(d)), context(Path(d)), raw_input(records))
+            assert snapshot_tree(store.run_dir(result.run_id)) == before

@@ -9,6 +9,7 @@ Layout under the data directory:
 
 from __future__ import annotations
 
+import hashlib
 import os
 import shutil
 from collections.abc import Callable, Mapping, Sequence
@@ -45,6 +46,14 @@ def _write_text(path: Path, text: str) -> None:
         f.write(text)
         f.flush()
         os.fsync(f.fileno())
+
+
+def file_sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as f:
+        for block in iter(lambda: f.read(1 << 20), b""):
+            digest.update(block)
+    return digest.hexdigest()
 
 
 class Store:
@@ -124,6 +133,38 @@ class Store:
         self.fault("write_rows")
         df = pl.DataFrame(list(rows), schema=dict(polars_schema), orient="row")
         df.write_parquet(staging / ROWS)
+        self.fault("write_manifest")
+        _write_text(staging / MANIFEST, dump(manifest))
+        if evidence is not None:
+            _write_text(staging / EVIDENCE, dump(evidence))
+        _fsync_dir(staging)
+
+    def scratch_dir(self) -> Path:
+        """Working space for jobs that spill rows to disk; removed by the runner after a run."""
+        return self.data_dir / "staging" / self.pipeline / "_scratch"
+
+    def scratch_dir_created(self) -> Path:
+        path = self.scratch_dir()
+        path.mkdir(parents=True, exist_ok=True)
+        return path
+
+    def stage_file(
+        self,
+        run_id: str,
+        rows_file: Path,
+        side_tables: Mapping[str, Path],
+        manifest: Manifest,
+        evidence: EvidenceSource | None,
+    ) -> None:
+        """Stage a run whose rows (and side tables) are already Parquet files (Req 14.2, 14.3)."""
+        staging = self.staging_dir(run_id)
+        staging.mkdir(parents=True, exist_ok=False)
+        self.fault("write_rows")
+        os.replace(rows_file, staging / ROWS)
+        for name, path in side_tables.items():
+            if "/" in name or name in ("", ".", "..", "rows", "manifest"):
+                raise ValueError(f"invalid side table name {name!r}")
+            os.replace(path, staging / f"{name}.parquet")
         self.fault("write_manifest")
         _write_text(staging / MANIFEST, dump(manifest))
         if evidence is not None:

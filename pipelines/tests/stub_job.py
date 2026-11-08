@@ -15,6 +15,7 @@ import polars as pl
 from janus_pipelines.core.canonical import Json, Row, sha256_bytes
 from janus_pipelines.core.registry import parse_registry
 from janus_pipelines.core.runner import Job, ParseResult, RawInput, RunContext
+from janus_pipelines.core.store import Store
 from janus_pipelines.core.validation import ExpectedSchema, Field, check_schema, observe
 
 STUB_SCHEMA = ExpectedSchema(
@@ -63,6 +64,42 @@ class StubJob(Job[Records]):
             excluded={},
             schema=report,
             review_reasons=list(self.review_reasons),
+        )
+
+
+class FileStubJob(StubJob):
+    """Same rows as StubJob, but written to Parquet by the job (file-backed output, Req 14.2)
+    with a side table (Req 14.3)."""
+
+    def __init__(
+        self,
+        data_dir: Path,
+        threshold: Fraction = Fraction(1000),
+        row_group: int = 3,
+        side_rows: int = 2,
+    ) -> None:
+        super().__init__(threshold)
+        self.data_dir = data_dir
+        self.row_group = row_group
+        self.side_rows = side_rows
+
+    def parse(self, raw: RawInput[Records]) -> ParseResult:
+        base = super().parse(raw)
+        scratch = Store(self.data_dir, self.name).scratch_dir_created()
+        rows_file = scratch / "rows-spill.parquet"
+        df = pl.DataFrame(list(base.rows), schema=dict(self.polars_schema), orient="row")
+        df.write_parquet(rows_file, row_group_size=self.row_group)
+        side = scratch / "removed-spill.parquet"
+        pl.DataFrame({"id": [f"x{i}" for i in range(self.side_rows)]}).write_parquet(side)
+        return ParseResult(
+            rows=[],
+            input_rows=base.input_rows,
+            excluded=base.excluded,
+            schema=base.schema,
+            review_reasons=base.review_reasons,
+            rows_file=rows_file,
+            output_rows=len(base.rows),
+            side_tables={"removed": side},
         )
 
 

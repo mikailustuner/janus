@@ -118,10 +118,14 @@ section = "product"
 name = "BDPM — Base de données publique des médicaments (France)"
 publisher = "base-donnees-publique.medicaments.gouv.fr (French Ministry of Health, ANSM, HAS, Assurance Maladie)"
 license = "Licence Ouverte (Etalab)"
-notes = ["Source and update date are cited with each use; data is not altered; no endorsement implied."]
+notes = [
+  "Source: base de données publique des médicaments, http://base-donnees-publique.medicaments.gouv.fr.",
+  "The update date of each file is cited with each use. Data is not altered; no official status or endorsement by ANSM, HAS or UNCAM is implied.",
+]
 storage = "cache"
 region = "EU"
 cadence_days = 30
+urls = ["https://base-donnees-publique.medicaments.gouv.fr/telechargement"]
 
 [[sources]]
 id = "cima"
@@ -129,9 +133,16 @@ section = "product"
 name = "CIMA — Centro de Información online de Medicamentos (Spain)"
 publisher = "Agencia Española de Medicamentos y Productos Sanitarios (AEMPS)"
 license = "Reuse with attribution (Ley 37/2007)"
+notes = [
+  "Source: AEMPS, CIMA / Nomenclátor de prescripción. The date of the last update is cited with each use (AEMPS legal notice). Not an AEMPS endorsement.",
+]
 storage = "cache"
 region = "EU"
 cadence_days = 7
+urls = [
+  "https://listadomedicamentos.aemps.gob.es/prescripcion.zip",
+  "https://cima.aemps.es/cima/rest/",
+]
 
 [[sources]]
 id = "wikidata"
@@ -208,16 +219,17 @@ storage = "cited_only"
 [[sources]]
 id = "faers"
 section = "adverse"
-name = "openFDA / FDA Adverse Event Reporting System (FAERS)"
+name = "FDA Adverse Event Monitoring System (AEMS, formerly FAERS) quarterly data files"
 publisher = "U.S. Food and Drug Administration"
 license = "CC0 1.0"
 notes = [
-  "Spontaneous reports; not deduplicated; counts are reports, not people.",
-  "Not an FDA endorsement.",
+  "Spontaneous reports; not deduplicated across cases; counts are reports, not people.",
+  "Event terms are MedDRA Preferred Terms as published in FAERS. MedDRA® is a registered trademark of ICH. Not an FDA endorsement.",
 ]
 storage = "cache"
 region = "US"
 cadence_days = 91
+urls = ["https://fis.fda.gov/extensions/FPD-QDE-FAERS/FPD-QDE-FAERS.html"]
 
 # --- Evidence integrity -----------------------------------------------------
 

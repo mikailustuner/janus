@@ -97,7 +97,7 @@ def test_committed_notice_matches_registry() -> None:
 
 def test_real_registry_keeps_notice_entries() -> None:
     reg = load_registry(REPO / "pipelines" / "sources.toml")
-    text = render_notice(reg)
+    text = " ".join(render_notice(reg).split())
     for needle in [
         "TİTCK — Ruhsatlı Beşeri Tıbbi Ürünler Listesi",
         "openFDA NDC Directory",
@@ -111,3 +111,16 @@ def test_real_registry_keeps_notice_entries() -> None:
         "Research prototype".lower(),
     ]:
         assert needle.lower() in text.lower(), needle
+
+
+def test_phase2_sources_have_notice_entries() -> None:
+    """Validates: Req 3.2 — the Phase 2 sources are in the registry and in NOTICE."""
+    registry = load_registry(Path(__file__).resolve().parents[1] / "sources.toml")
+    text = render_notice(registry, ["faers", "bdpm", "cima"])
+    for needle in (
+        "Adverse Event Monitoring System (AEMS, formerly FAERS)",
+        "MedDRA® is a registered trademark of ICH",
+        "Licence Ouverte (Etalab)",
+        "Reuse with attribution (Ley 37/2007)",
+    ):
+        assert " ".join(needle.split()) in " ".join(text.split())

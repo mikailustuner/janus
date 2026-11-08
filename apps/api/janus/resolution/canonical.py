@@ -7,9 +7,12 @@ the pipelines project). Both test suites assert the same golden vector so they c
 from __future__ import annotations
 
 import hashlib
+import heapq
 import json
+import tempfile
 import unicodedata
 from collections.abc import Iterable, Mapping, Sequence
+from pathlib import Path
 
 type Json = bool | int | float | str | Sequence[Json] | Mapping[str, Json] | None
 type Row = Mapping[str, Json]
@@ -41,6 +44,60 @@ def content_hash(rows: Iterable[Row], schema_version: str) -> str:
     digest.update(schema_version.encode("utf-8"))
     digest.update(b"\n")
     digest.update("\n".join(lines).encode("utf-8"))
+    return digest.hexdigest()
+
+
+DEFAULT_CHUNK = 100_000
+
+
+def content_hash_stream(
+    rows: Iterable[Row],
+    schema_version: str,
+    *,
+    chunk: int = DEFAULT_CHUNK,
+    tmp_dir: Path | None = None,
+) -> str:
+    """Same hash as `content_hash`, with memory bounded by `chunk` canonical lines (design §12.1).
+
+    Lines are sorted in chunks on disk and merged, so the digest sees exactly the bytes the
+    in-memory function feeds it. Canonical lines never contain a raw newline (JSON escapes it).
+    """
+    if chunk < 1:
+        raise ValueError("chunk must be at least 1")
+    digest = hashlib.sha256()
+    digest.update(schema_version.encode("utf-8"))
+    digest.update(b"\n")
+    with tempfile.TemporaryDirectory(dir=tmp_dir, prefix="hash-") as work:
+        parts: list[Path] = []
+        buffer: list[bytes] = []
+
+        def flush() -> None:
+            if not buffer:
+                return
+            buffer.sort()
+            path = Path(work) / f"part-{len(parts)}"
+            with path.open("wb") as f:
+                f.write(b"\n".join(buffer))
+                f.write(b"\n")
+            parts.append(path)
+            buffer.clear()
+
+        for row in rows:
+            buffer.append(canonical_line(row).encode("utf-8"))
+            if len(buffer) >= chunk:
+                flush()
+        flush()
+        files = [p.open("rb") for p in parts]
+        try:
+            first = True
+            for line in heapq.merge(*files):
+                if not first:
+                    digest.update(b"\n")
+                digest.update(line.rstrip(b"\n"))
+                first = False
+        finally:
+            for f in files:
+                f.close()
     return digest.hexdigest()
 
 
