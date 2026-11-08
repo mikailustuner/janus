@@ -964,5 +964,136 @@
       "DE": "Germany",
       "US": "United States"
     }
+  },
+  "Light": {
+    "nav": {
+      "open": "Open",
+      "back": "Back to the research section",
+      "sections": "Research pages"
+    },
+    "rule7": "Candidate worth investigating — not a treatment.",
+    "status": {
+      "experimental": "Experimental: in the retrospective check, no known repurposing ranked in the top 10 of its condition among more than 10 candidates.",
+      "prototype": "Research prototype: some known repurposings were found again in the retrospective check. That is not proof that the method works for new candidates."
+    },
+    "review": "The conditions, the side-effect mapping and the validation cases are AI-reviewed and pending expert review.",
+    "researcherOnly": "For researchers. These candidates are not shown in the patient pages.",
+    "notChecked": "Janus does not check whether a candidate is already an approved use of the medicine.",
+    "ties": "Equal positions are shown as a range of ranks.",
+    "snapshot": "Data: OnSIDES {onsides} (released {onsidesDate}), FAERS snapshot {faers} (quarters {window}), openFDA labels retrieved {openfda}.",
+    "attribution": "Sources and licences",
+    "codes": {
+      "label_effect_meaning": "The labels list this as an unwanted effect. An unwanted effect in one condition can point to a possible use in another; that has to be tested in studies before it means anything.",
+      "label_extraction_limits": "Side effects come from OnSIDES, which extracts them from drug labels with a language model; some are missed and some are wrong.",
+      "nonspecific_term": "This side effect is also a common sign of illness or of a medicine's toxicity; on its own it is weak support.",
+      "inverse_meaning": "The condition is reported less often than expected in the FAERS reports that name this medicine. This is not evidence that the medicine protects against it.",
+      "inverse_reporting_bias": "Reporting bias: an event that is already known for a medicine is reported more often (notoriety bias), and a condition that is the reason a medicine is given is often recorded as the indication rather than as an event (indication bias). Both can create or hide a lower-than-expected count.",
+      "patient_reported_meaning": "Donated reports of an improvement, counted only in groups of 20 or more, with noise added. The reports are not checked.",
+      "patient_layer_unavailable": "Donated reports cannot be counted right now.",
+      "mechanism_source_not_connected": "No source for a possible mechanism is connected yet.",
+      "faers_includes_later_use": "The FAERS reports of this window were sent after the later use was known; this number does not exclude it.",
+      "validation_not_blind": "The side-effect mapping was written knowing these cases, so this check is not blind.",
+      "export_aggregated": "Aggregated counts only. Donated reports are pseudonymous data and appear only as noisy counts of groups of 20 or more."
+    },
+    "hypotheses": {
+      "title": "Hypothesis cards",
+      "intro": "Choose a condition. Each card is a medicine whose label side effects or reports point to that condition.",
+      "goal": "Condition",
+      "goalCount": "{count, plural, =0 {no candidates} one {# candidate} other {# candidates}}",
+      "loading": "Loading the candidates…",
+      "empty": "No candidate for this condition in this data snapshot.",
+      "total": "{total, plural, one {# card} other {# cards}} for {goal}",
+      "removed": "{count, plural, one {# candidate was left out because its only sources were retracted.} other {# candidates were left out because their only sources were retracted.}}",
+      "inverseCount": "FAERS: {found} lower-than-expected results among {tested} medicines with at least 3 reports of this condition; about {chance} would be expected by chance alone.",
+      "patientOnly": "Donated reports of an improvement, without a card",
+      "patientOnlyNote": "These have no cited source yet, so they are not hypothesis cards.",
+      "showMore": "Show more cards",
+      "shown": "Showing {shown} of {total}"
+    },
+    "card": {
+      "title": "{ingredient} and {goal}",
+      "rank": "Rank {best} of {population}",
+      "rankTied": "Rank {best}–{worst} of {population} (tied)",
+      "signals": "Signal types",
+      "signal": {
+        "label_effect": "Side effect in drug labels",
+        "inverse_faers": "FAERS: reported less often than expected",
+        "patient_reported": "Donated reports of an improvement"
+      },
+      "labelCounts": "Listed in {with} of the {total} labels of this medicine (lower bound of the share: {share})",
+      "labelTerms": "Label terms: {terms}",
+      "regions": "Labelled in: {regions}",
+      "region": {
+        "US": "United States",
+        "EU": "European Union",
+        "UK": "United Kingdom",
+        "JP": "Japan"
+      },
+      "sections": "Label sections: {sections}",
+      "section": {
+        "AR": "adverse reactions",
+        "WP": "warnings and precautions",
+        "BW": "boxed warning",
+        "NA": "not stated"
+      },
+      "inverseReports": "{reports, plural, one {# report} other {# reports}} with the condition; about {expected} expected (ratio of observed to expected: {oe})",
+      "pts": "MedDRA terms of the condition: {pts}",
+      "faersSnapshot": "FAERS snapshot {date}, quarters {window}",
+      "patientReleased": "Donated reports (noisy count): {value}",
+      "patientCell": "{region}: {value}",
+      "patientHidden": "{region}: hidden (fewer than 20, or not releasable)",
+      "sources": "Sources",
+      "sourceStatus": {
+        "ok": "checked, no notice",
+        "corrected": "correction published",
+        "expression_of_concern": "expression of concern",
+        "unknown": "not yet checked",
+        "no_doi": "dataset (no DOI)"
+      },
+      "removedSources": "Sources not used",
+      "mechanism": "Possible mechanism",
+      "details": "Statistics and warnings"
+    },
+    "validation": {
+      "title": "Retrospective validation",
+      "intro": "The method is checked on fixed, cited cases of medicines that were later used for another condition. Each case shows where the medicine ranks among the candidates of that condition, with the data that excludes the later use where possible.",
+      "loading": "Loading the validation…",
+      "summary": "Primary run: {informative} of {cases} cases ranked in the top {k} among more than {k} candidates. About {chance} would be expected if each medicine were a random candidate.",
+      "sensitivity": "Sensitivity run (all labels): {informative} of {cases} cases in the top {k}; about {chance} expected by chance.",
+      "case": "{ingredient} and {goal}",
+      "original": "Original use: {use}",
+      "year": "Later use: {year} (year of the first report or the approval)",
+      "primary": "Primary run (later use removed where possible)",
+      "sensitivityRun": "Sensitivity run (all labels)",
+      "variants": "Variant (a), labels naming the later use removed: {a}. Variant (b), also labels openFDA does not have: {b}. The worse one is published.",
+      "noRank": "not ranked",
+      "chance": "A random candidate would be in the top {k} with probability {p}.",
+      "reason": {
+        "hit": "In the top {k}",
+        "ranked_below_top": "Below the top {k}",
+        "not_a_candidate": "Not among the candidates",
+        "no_label_mapping": "No side-effect term points to this condition",
+        "not_evaluable": "Not evaluable: no label of this medicine is left"
+      },
+      "uninformative": "Uninformative: only {population} candidates.",
+      "labels": "Labels used: {used}. Removed because they name the later use: {indication}. Removed because openFDA does not have them: {missing}.",
+      "faers": "FAERS: {reports, plural, one {# report} other {# reports}} with the condition; ROR {ror} ({low}–{high}).",
+      "faersNone": "FAERS: no ratio.",
+      "evidence": "Evidence",
+      "document": "The same report is published in the repository as docs/light-face-validation.md."
+    },
+    "export": {
+      "title": "Dataset export",
+      "intro": "All hypothesis cards of this data snapshot as one table: the same cards, numbers and integrity filter as the screens.",
+      "licence": "Licence: {licence}. Please cite OnSIDES (Tanaka et al., Med 2025) and FAERS as below.",
+      "rows": "{count, plural, one {# row} other {# rows}}",
+      "json": "Download JSON",
+      "csv": "Download CSV",
+      "loading": "Preparing the export…",
+      "columns": "Columns: condition, medicine key and name, rank range, signal types, label regions and counts, FAERS report count and ratio with its range, the released noisy count of donated reports, and source ids."
+    },
+    "errors": {
+      "unavailable": "The research data is not available right now. Please try again later."
+    }
   }
 }

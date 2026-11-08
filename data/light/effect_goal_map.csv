@@ -1,0 +1,30 @@
+term,goal,status,nonspecific,evidence,rationale
+Hypertrichosis,alopecia,active,no,paper:zappacosta_1980:nejm198012183032516;paper:yang_2011:pone.0028025,Excess hair growth is the effect seen with oral minoxidil before its topical use for hair loss.
+Hairiness,alopecia,active,no,paper:zappacosta_1980:nejm198012183032516;paper:yang_2011:pone.0028025,MedDRA lower-level term for excess hair growth.
+Abnormal hair growth,alopecia,excluded,no,paper:zappacosta_1980:nejm198012183032516;paper:yang_2011:pone.0028025,"Direction not stated (excess growth, loss or a change of texture); on its own it does not point to the goal. Excluded after the pharmacologist pass (non-blind change, DP22)."
+Hair growth abnormal,alopecia,excluded,no,paper:zappacosta_1980:nejm198012183032516;paper:yang_2011:pone.0028025,"Direction not stated (excess growth, loss or a change of texture); on its own it does not point to the goal. Excluded after the pharmacologist pass (non-blind change, DP22)."
+Application site hypertrichosis,alopecia,active,no,paper:zappacosta_1980:nejm198012183032516;paper:yang_2011:pone.0028025,"Local excess hair growth where a product is applied; a local effect (the local-effect rule is an open expert question, DP21)."
+Hirsutism,alopecia,excluded,no,paper:yang_2011:pone.0028025,"Androgen-pattern hair growth in women; androgenic medicines worsen androgenetic hair loss, so this effect does not point to the goal."
+Growth of eyelashes,eyelash_hypotrichosis,active,no,paper:johnstone_1997:S0002-9394.14.70870-0;paper:smith_2012:j.jaad.2011.06.005;paper:yang_2011:pone.0028025,Eyelash growth was first described with latanoprost eye drops (Johnstone 1997) and later studied with bimatoprost for sparse eyelashes (Smith 2012).
+Eyelash thickening,eyelash_hypotrichosis,active,no,paper:johnstone_1997:S0002-9394.14.70870-0;paper:smith_2012:j.jaad.2011.06.005;paper:yang_2011:pone.0028025,"Thicker eyelashes, the same effect."
+Eyelash changes,eyelash_hypotrichosis,active,no,paper:johnstone_1997:S0002-9394.14.70870-0;paper:smith_2012:j.jaad.2011.06.005;paper:yang_2011:pone.0028025,"In prostaglandin-analogue labels this term describes longer, thicker or darker eyelashes; it can also mean other changes."
+Madarosis,eyelash_hypotrichosis,excluded,no,paper:yang_2011:pone.0028025,Loss of eyelashes is the opposite effect.
+Erection increased,erectile_dysfunction,active,no,paper:ghofrani_2006:nrd2030;paper:goldstein_1998:nejm199805143382001;paper:yang_2011:pone.0028025,"A pro-erectile effect; sildenafil's erectile effect, first noticed in the angina programme, was later studied in erectile dysfunction (Ghofrani 2006, Goldstein 1998)."
+Spontaneous penile erection,erectile_dysfunction,active,no,paper:ghofrani_2006:nrd2030;paper:goldstein_1998:nejm199805143382001;paper:yang_2011:pone.0028025,The same pro-erectile effect.
+Priapism,erectile_dysfunction,excluded,no,paper:goldstein_1998:nejm199805143382001;paper:yang_2011:pone.0028025,"Mostly a rare reaction of alpha-1 blocking or serotonergic medicines, several of which more often impair erection; on its own it does not point to the goal. Excluded after the pharmacologist pass (non-blind change, DP22)."
+Painful erection,erectile_dysfunction,excluded,no,paper:yang_2011:pone.0028025,"Describes pain, not a pro-erectile effect."
+Weight decreased,obesity,active,yes,paper:bray_2003:oby.2003.102;paper:yang_2011:pone.0028025,"Weight loss seen with topiramate in epilepsy before its study in obesity. Also caused by illness and toxicity (for example cancer medicines), which this term cannot separate."
+Weight loss,obesity,active,yes,paper:bray_2003:oby.2003.102;paper:yang_2011:pone.0028025,Lower-level term of weight decreased.
+Decreased appetite,obesity,active,yes,paper:bray_2003:oby.2003.102;paper:yang_2011:pone.0028025,Less appetite is a route to weight loss; it is also a sign of toxicity.
+Anorexia,obesity,active,yes,paper:bray_2003:oby.2003.102;paper:yang_2011:pone.0028025,MedDRA lower-level term for loss of appetite (not anorexia nervosa).
+Appetite decreased NOS,obesity,active,yes,paper:bray_2003:oby.2003.102;paper:yang_2011:pone.0028025,Lower-level term of decreased appetite.
+Appetite lost,obesity,active,yes,paper:bray_2003:oby.2003.102;paper:yang_2011:pone.0028025,Lower-level term of decreased appetite.
+Somnolence,insomnia,active,yes,paper:yang_2011:pone.0028025,Sleepiness as an unwanted effect suggests an action that may be worth investigating for poor sleep.
+Sedation,insomnia,active,yes,paper:yang_2011:pone.0028025,The same effect.
+Hypersomnolence,insomnia,active,yes,paper:yang_2011:pone.0028025,Lower-level term of excessive sleepiness.
+Ejaculation delayed,premature_ejaculation,active,no,paper:yang_2011:pone.0028025,Delayed ejaculation as an unwanted effect suggests an action that may be worth investigating for premature ejaculation.
+Anhidrosis,hyperhidrosis,active,no,paper:yang_2011:pone.0028025,Absence of sweating as an unwanted effect suggests an action that may be worth investigating for excessive sweating.
+Constipation,diarrhoea,active,yes,paper:yang_2011:pone.0028025,Slower bowel movement as an unwanted effect suggests an action that may be worth investigating for diarrhoea.
+Diarrhoea,constipation,active,yes,paper:yang_2011:pone.0028025,Looser stools as an unwanted effect suggest an action that may be worth investigating for constipation.
+Hypotension,hypertension,active,yes,paper:yang_2011:pone.0028025,Low blood pressure as an unwanted effect suggests a blood-pressure-lowering action. In infusion and allergic reactions it is not a blood-pressure-lowering action.
+Blood pressure decreased,hypertension,active,yes,paper:yang_2011:pone.0028025,The same effect. In infusion and allergic reactions it is not a blood-pressure-lowering action.

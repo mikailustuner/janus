@@ -3,10 +3,16 @@ import { ButtonLink, Card, PageTitle } from "@/components/ui";
 import { useT, useThemeWord } from "@/theme/words";
 
 const ENTRIES = ["hypotheses", "seance", "validation", "export"] as const;
+/** Light-face screens (light-face design §10); the séance entry belongs to the séance spec. */
+const LIVE: Partial<Record<(typeof ENTRIES)[number], string>> = {
+  hypotheses: "/research/hypotheses",
+  validation: "/research/validation",
+  export: "/research/export",
+};
 
 /**
- * Researcher area shell (design §14, Req 24, DP12): the normal theme (DP48), four honest Phase 4
- * empty states, the rule-7 sentence; no example result, number or hypothesis.
+ * Researcher area (design §14, Req 24, DP12): the normal theme (DP48), the rule-7 sentence and the
+ * four entries; the light-face entries open their screens, the others stay honest empty states.
  */
 export function Research() {
   const t = useT();
@@ -25,7 +31,20 @@ export function Research() {
                 : t(`Research.entries.${e}.title`)}
             </h2>
             <p>{t(`Research.entries.${e}.body`)}</p>
-            <p className="chip">{t("Research.coming")}</p>
+            {LIVE[e] ? (
+              <ButtonLink
+                href={LIVE[e]}
+                variant="secondary"
+                className="self-start"
+              >
+                {t("Light.nav.open")}
+                <span className="sr-only">
+                  : {t(`Research.entries.${e}.title`)}
+                </span>
+              </ButtonLink>
+            ) : (
+              <p className="chip">{t("Research.coming")}</p>
+            )}
           </Card>
         ))}
       </ul>

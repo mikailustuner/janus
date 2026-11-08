@@ -86,3 +86,17 @@ defers a check to launch.
 - [ ] **Science witness:** a clinician or pharmacologist checks the one-line findings in `data/seance_science.csv` against the papers, and the component bridge vinegar → acetic acid in `data/seance_present.csv`.
 - [ ] **NC licence:** the Canon data package is CC BY-NC-SA 4.0. Re-check that the deployment and any prize or commercial use stay non-commercial, and that the package is never merged into Apache-licensed files.
 - [ ] **Ottoman samples:** none were added (no verifiable page-level source in Phase 4). Add 10-20 only from a thesis or edition the team has read, with citation and page; never claim "we mined Ottoman manuscripts".
+
+## Light face (Phase 4, owner decisions 2026-11-08)
+- [ ] **Expert review of the light-face curated files** (pharmacist or physician, and a statistician): `data/light/goals.csv`
+  (18 conditions, FAERS PT sets, five-language names), `data/light/effect_goal_map.csv` (side-effect term → condition, 30 rows,
+  nonspecific marker, citations) and `data/light/validation_cases.csv` (13 cases). All are "AI-reviewed, pending expert review"
+  (pharmacologist and statistician agent passes: `.kiro/specs/light-face/mapping-pharmacologist-review.md`,
+  `validation-statistician-review.md`). Open questions are listed in design §13 and §14 (local-effect rule, obesity narrowing by
+  ATC class, specific citations for the rows that cite only Yang and Agarwal 2011, the post-hoc ranking key and mapping changes,
+  negative controls, an FDR gate for inverse signals). Only then remove the "pending expert review" notice.
+- [ ] **Native-speaker check of the `Light` namespace** and of the condition names in `data/light/goals.csv` (TR, DE, FR, ES).
+- [ ] **Mechanism field:** connect the séance spec's molecular witness (ChEMBL, CC BY-SA 3.0) or keep "no mechanism source
+  connected"; if ChEMBL data enters the export, the export licence must change (share-alike).
+- [ ] **OnSIDES refresh:** the pipeline pins the v3.1.1 asset by SHA-256; a new data release is a reviewed code change, after which
+  the light build and `docs/light-face-validation.md` are regenerated.

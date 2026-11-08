@@ -181,7 +181,14 @@ section = "clinical"
 name = "OnSIDES v3.1.1"
 publisher = "Tatonetti Lab"
 license = "Data: CC BY 4.0. Code: MIT."
+notes = [
+  "Tanaka Y, Chen HY, Belloni P et al. OnSIDES database: Extracting adverse drug events from drug labels using natural language processing models. Med 2025;6(7):100642. doi:10.1016/j.medj.2025.100642.",
+  "Data release v3.1.1 of 2026-04-22 (labels from DailyMed, EMA, EMC and KEGG); licence checked in LICENSE-DATA on 2026-11-08.",
+  "Extracted by a language model: some side effects are missed and some are wrong. Not for patient or clinical decisions.",
+]
 storage = "cache"
+cadence_days = 91
+urls = ["https://github.com/tatonetti-lab/onsides/releases/download/v3.1.1/onsides-v3.1.1.zip"]
 
 [[sources]]
 id = "openfda_label"
@@ -189,9 +196,11 @@ section = "clinical"
 name = "openFDA Drug Label"
 publisher = "U.S. Food and Drug Administration"
 license = "CC0 1.0"
-notes = ["Not an FDA endorsement."]
+notes = ["Not an FDA endorsement.", "Indications text of the US labels of the light-face validation cases only."]
 storage = "cache"
 region = "US"
+cadence_days = 30
+urls = ["https://api.fda.gov/drug/label.json"]
 
 [[sources]]
 id = "rxnav"
@@ -331,6 +340,166 @@ section = "cited"
 name = "Evans SJW, Waller PC, Davis S, Pharmacoepidemiol Drug Saf 2001;10(6):483-486"
 license = "Subscription"
 notes = ["Cited only, for the proportional reporting ratio screening criteria (PRR >= 2, chi-squared >= 4, at least 3 reports)."]
+storage = "cited_only"
+
+[[sources]]
+id = "ashburn_2004"
+section = "cited"
+name = "Ashburn TT, Thor KB, Nat Rev Drug Discov 2004;3(8):673-683"
+license = "Subscription"
+notes = ["Cited for the list of known drug repositionings (light-face validation)."]
+storage = "cited_only"
+
+[[sources]]
+id = "yang_2011"
+section = "cited"
+name = "Yang L, Agarwal P, PLoS One 2011;6(12):e28025"
+license = "CC BY 4.0"
+notes = ["Cited for side-effect based drug repositioning (light-face mapping)."]
+storage = "cited_only"
+
+[[sources]]
+id = "zappacosta_1980"
+section = "cited"
+name = "Zappacosta AR, N Engl J Med 1980;303(25):1480-1481"
+license = "Subscription"
+notes = ["Cited for minoxidil and hair regrowth (light-face validation and mapping)."]
+storage = "cited_only"
+
+[[sources]]
+id = "goldstein_1998"
+section = "cited"
+name = "Goldstein I, Lue TF, Padma-Nathan H et al., N Engl J Med 1998;338(20):1397-1404"
+license = "Subscription"
+notes = ["Cited for sildenafil and erectile dysfunction (light-face validation and mapping)."]
+storage = "cited_only"
+
+[[sources]]
+id = "galie_2005"
+section = "cited"
+name = "Galiè N, Ghofrani HA, Torbicki A et al., N Engl J Med 2005;353(20):2148-2157"
+license = "Subscription"
+notes = ["Cited for sildenafil and pulmonary arterial hypertension (light-face validation)."]
+storage = "cited_only"
+
+[[sources]]
+id = "sheskin_1965"
+section = "cited"
+name = "Sheskin J, Clin Pharmacol Ther 1965;6(3):303-306"
+license = "Subscription"
+notes = ["Cited for thalidomide and lepra reactions (light-face validation)."]
+storage = "cited_only"
+
+[[sources]]
+id = "singhal_1999"
+section = "cited"
+name = "Singhal S, Mehta J, Desikan R et al., N Engl J Med 1999;341(21):1565-1571"
+license = "Subscription"
+notes = ["Cited for thalidomide and refractory multiple myeloma (light-face validation)."]
+storage = "cited_only"
+
+[[sources]]
+id = "smith_2012"
+section = "cited"
+name = "Smith S, Fagien S, Whitcup SM et al., J Am Acad Dermatol 2012;66(5):801-806"
+license = "Subscription"
+notes = ["Cited for bimatoprost and eyelash growth (light-face validation and mapping)."]
+storage = "cited_only"
+
+[[sources]]
+id = "bray_2003"
+section = "cited"
+name = "Bray GA, Hollander P, Klein S et al., Obes Res 2003;11(6):722-733"
+license = "Subscription"
+notes = ["Cited for topiramate and weight loss (light-face validation and mapping)."]
+storage = "cited_only"
+
+[[sources]]
+id = "pi_sunyer_2015"
+section = "cited"
+name = "Pi-Sunyer X, Astrup A, Fujioka K et al., N Engl J Med 2015;373(1):11-22"
+license = "Subscription"
+notes = ["Cited for liraglutide and weight management (light-face validation)."]
+storage = "cited_only"
+
+[[sources]]
+id = "schwab_1969"
+section = "cited"
+name = "Schwab RS, England AC, Poskanzer DC, Young RR, JAMA 1969;208(7):1168-1170"
+license = "Subscription"
+notes = ["Cited for amantadine and Parkinson's disease (light-face validation)."]
+storage = "cited_only"
+
+[[sources]]
+id = "pariente_2007"
+section = "cited"
+name = "Pariente A, Gregoire F, Fourrier-Reglat A et al., Drug Saf 2007;30(10):891-898"
+license = "Subscription"
+notes = ["Cited for notoriety bias in disproportionality analysis (light-face inverse-signal warning)."]
+storage = "cited_only"
+
+[[sources]]
+id = "uesawa_2026"
+section = "cited"
+name = "Uesawa Y, Drug Saf 2026"
+license = "CC BY-NC 4.0"
+notes = ["Cited for the interpretation of inverse disproportionality signals as lower-than-expected reporting (light-face inverse-signal wording)."]
+storage = "cited_only"
+
+[[sources]]
+id = "faillie_2019"
+section = "cited"
+name = "Faillie JL, Therapie 2019;74(2):225-232"
+license = "Subscription"
+notes = ["Cited for the reporting odds ratio and the limits of case-non-case studies (light-face inverse-signal warning)."]
+storage = "cited_only"
+
+[[sources]]
+id = "ghofrani_2006"
+section = "cited"
+name = "Ghofrani HA, Osterloh IH, Grimminger F, Nat Rev Drug Discov 2006;5(8):689-702"
+license = "Subscription"
+notes = ["Cited for the history of sildenafil (light-face mapping)."]
+storage = "cited_only"
+
+[[sources]]
+id = "johnstone_1997"
+section = "cited"
+name = "Johnstone MA, Am J Ophthalmol 1997;124(4):544-547"
+license = "Subscription"
+notes = ["Cited for eyelash growth with latanoprost (light-face mapping)."]
+storage = "cited_only"
+
+[[sources]]
+id = "wilding_2021"
+section = "cited"
+name = "Wilding JPH, Batterham RL, Calanna S et al., N Engl J Med 2021;384(11):989-1002"
+license = "Subscription"
+notes = ["Cited for semaglutide and weight management (light-face validation)."]
+storage = "cited_only"
+
+[[sources]]
+id = "krystal_2010"
+section = "cited"
+name = "Krystal AD, Durrence HH, Scharf M et al., Sleep 2010;33(11):1553-1561"
+license = "Subscription"
+notes = ["Cited for low-dose doxepin and insomnia (light-face validation)."]
+storage = "cited_only"
+
+[[sources]]
+id = "glaser_2019"
+section = "cited"
+name = "Glaser DA, Hebert AA, Nast A et al., J Am Acad Dermatol 2019;80(1):128-138"
+license = "Subscription"
+notes = ["Cited for topical glycopyrronium and hyperhidrosis (light-face validation)."]
+storage = "cited_only"
+
+[[sources]]
+id = "kaufman_1998"
+section = "cited"
+name = "Kaufman KD, Olsen EA, Whiting D et al., J Am Acad Dermatol 1998;39(4):578-589"
+license = "Subscription"
+notes = ["Cited for finasteride and androgenetic alopecia (light-face validation)."]
 storage = "cited_only"
 
 [[sources]]
