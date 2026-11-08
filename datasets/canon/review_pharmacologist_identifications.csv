@@ -1,0 +1,32 @@
+substance_id,verdict,status,janus_identification,hazard,note
+myrtle,accept,,,,
+acacia,accept,,,,"Accepted name Vachellia nilotica (L.) P.J.H.Hurter & Mabb.; aqaqiya is the pod extract, not the gum."
+sarcocolla,correct,,Astragalus sarcocolla Dymock / A. fasciculifolius Boiss. (anzarut gum resin); historical source disputed (Penaea),,Persian-medicine literature attributes anzarut mainly to A. fasciculifolius; add it.
+isfidaj,accept,,,toxic,"Keep uncertain. Span l13227 writes isfidaj al-rasas, supporting lead carbonate; Hamdard's zinc oxide looks like a modern Unani substitution. Toxic lead compound: never usable today."
+oriental_plane,accept,,,,
+dragons_blood,correct,,dragon's blood resin; for the Canon most likely Dracaena cinnabari Balf.f. (Socotra); Hamdard gives Calamus draco Willd. (syn. Daemonorops draco),,Calamus draco is a Southeast Asian source of later trade; the classical/medieval Arabic product is chiefly Socotran Dracaena. Do not present Hamdard's species as the identification.
+st_johns_wort,accept,,,,
+rose,accept,,,,
+pitch,correct,,"pitch (Pix nigra, conifer wood tar); zift may also denote mineral bitumen",,Zift covers wood pitch and bitumen in Arabic sources. Tars contain polycyclic aromatic hydrocarbons: historical record only.
+verdigris,accept,,,toxic,Basic copper acetate is caustic and toxic (copper absorbed through open wounds): never usable today.
+henna,accept,,,,
+fenugreek,accept,,,,
+pellitory,accept,,,,Match. Eastern Mediterranean material is often Parietaria judaica L.; the species-level name is a convention.
+frankincense,correct,,"Boswellia sp. (gold B. carterii Birdw., now B. sacra Flueck.; Hamdard B. glabra Roxb., now B. serrata Roxb.)",,Status uncertain is right; add the current accepted names of both species.
+great_plantain,accept,,,,
+lablab,correct,uncertain,,,"Gold and Hamdard agree on Dolichos lablab, but span l14707 names habl al-masakin, a climbing plant, and the Janus note already flags ivy/bindweed readings; label uncertain (medical-safety rule 8)."
+litharge,accept,,,toxic,"Lead(II) oxide: toxic, never usable today."
+salt,accept,,,,
+narcissus,accept,,,toxic,Match. Bulb is poisonous if ingested (lycorine) and sap causes contact dermatitis.
+iris,correct,uncertain,,,Arabic sawsan covers both Iris and white lily (Lilium candidum; the 'garden kind' in span l15907 is often the lily); the gold row itself pairs 'Lily' with Iris spp. Not a clean match.
+beet,accept,,,,
+asphodel,accept,,,,"Both candidate genera are Asphodelaceae, so the family-level identification is sound; Asphodelus tenuifolius is now A. fistulosus var. tenuifolius."
+lentil,accept,,,,
+honey,accept,,,,Bee honey sound. Raw honey is not medical-grade wound honey; never frame as usable today.
+pine,accept,,,,
+aloe,correct,,"Aloe sp. (dried leaf exudate; Socotrine aloe, Aloe perryi Baker; Hamdard A. littoralis, treated as a synonym of A. vera)",,Name the classical Socotrine source and the synonymy.
+pomegranate,accept,,,,
+tutty,accept,,,,"Impure zinc oxide sublimate is sound for the medieval term; later usage also applies tutiya to copper/zinc sulfates, and furnace tutty may hold lead or cadmium impurities."
+mallow,accept,,,,Keep uncertain; Malva rotundifolia L. is an ambiguous name (applied to M. neglecta and M. pusilla).
+vinegar,accept,,,,Gold 'Acetum vinegar' matches; component-level caveat is right.
+galium,accept,,,,

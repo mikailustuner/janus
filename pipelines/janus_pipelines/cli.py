@@ -29,6 +29,8 @@ EXIT_OK, EXIT_FAILED, EXIT_REFUSED, EXIT_NEEDS_REVIEW = 0, 1, 4, 3
 # never affect the others.
 JOBS: dict[str, tuple[str, str]] = {
     "pipc": ("janus_pipelines.jobs.pipc", "PipcJob"),
+    "canon": ("janus_pipelines.jobs.canon", "CanonJob"),
+    "canon_gold": ("janus_pipelines.jobs.canon_gold", "CanonGoldJob"),
     "titck": ("janus_pipelines.jobs.titck", "TitckJob"),
     "wikidata_ingredients": (
         "janus_pipelines.jobs.wikidata_ingredients",
