@@ -54,7 +54,8 @@ export function ScanPage() {
     () => "",
   );
   const [chosenTab, setTab] = useState<Tab | null>(null);
-  const tab: Tab = chosenTab ?? (hashTab === "label" || hashTab === "type" ? hashTab : "code");
+  const tab: Tab =
+    chosenTab ?? (hashTab === "label" || hashTab === "type" ? hashTab : "code");
   const [status, setStatus] = useState<Status>({ kind: "idle" });
   const region = session.demo ? null : settings.scanRegion;
 

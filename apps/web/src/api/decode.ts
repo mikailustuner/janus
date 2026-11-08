@@ -82,12 +82,14 @@ export function nullable<T>(d: Decoder<T>): Decoder<T | null> {
   });
 }
 
-/** A field the API may omit (absent and null both read as null). */
-export function optional<T>(d: Decoder<T>): Decoder<T | null> {
+type Optional<T> = Decoder<T | null> & { readonly __optional: true };
+
+/** A field the API may omit: absent stays absent (an optional property), null reads as null. */
+export function optional<T>(d: Decoder<T>): Optional<T> {
   return withMeta((v, p) => (v === undefined || v === null ? null : d(v, p)), {
     kind: "optional",
     inner: d,
-  });
+  }) as Optional<T>;
 }
 
 export function arr<T>(d: Decoder<T>, min = 0, max = Infinity): Decoder<T[]> {
@@ -114,7 +116,14 @@ export function record<T>(d: Decoder<T>): Decoder<Record<string, T>> {
 }
 
 type Shape = Record<string, Decoder<unknown>>;
-export type FromShape<S extends Shape> = { [K in keyof S]: Infer<S[K]> };
+type OptionalKeys<S> = {
+  [K in keyof S]: S[K] extends { readonly __optional: true } ? K : never;
+}[keyof S];
+export type FromShape<S extends Shape> = {
+  [K in Exclude<keyof S, OptionalKeys<S>>]: Infer<S[K]>;
+} & {
+  [K in OptionalKeys<S>]?: Infer<S[K]>;
+};
 
 export function obj<S extends Shape>(shape: S): Decoder<FromShape<S>> {
   return withMeta(
@@ -123,9 +132,12 @@ export function obj<S extends Shape>(shape: S): Decoder<FromShape<S>> {
         return fail(p);
       const src = v as Record<string, unknown>;
       const out: Record<string, unknown> = {};
-      // An absent field reads as undefined: `optional` accepts it, every other decoder fails.
-      for (const [k, d] of Object.entries(shape))
+      // An absent field reads as undefined: `optional` accepts it (and keeps it absent), every
+      // other decoder fails.
+      for (const [k, d] of Object.entries(shape)) {
+        if (d.meta?.kind === "optional" && !(k in src)) continue;
         out[k] = d(src[k], `${p}.${k}`);
+      }
       return out as FromShape<S>;
     },
     { kind: "obj", shape },
@@ -216,6 +228,10 @@ export const resolvedIngredient = obj({
   rxcuis: strs,
   rxcui_status: nullable(lit("from_wikidata", "not_in_wikidata")),
   source: sourceRef,
+  // Additive (medication-passport Req 6.6): Janus's normalised strength, null when unknown.
+  strength_code: optional(
+    obj({ amount: str, unit: lit("ug", "IU"), basis: lit("unit", "mL", "g") }),
+  ),
 });
 
 export const productCandidate = obj({
@@ -253,6 +269,8 @@ export const productCandidate = obj({
   packages: arr(obj({ ndc_published: str, ndc11: str })),
   ingredients: arr(resolvedIngredient),
   source: sourceRef,
+  // Additive (medication-passport): the dose-form group of the product, for equivalents.
+  dose_form_group: optional(str),
 });
 
 export const ingredientCandidate = obj({

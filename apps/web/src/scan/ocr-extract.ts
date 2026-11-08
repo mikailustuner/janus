@@ -20,6 +20,8 @@ export function selectionQuery(
 ): string | null {
   if (selected.length === 0) return null;
   const sorted = [...new Set(selected)].sort((a, b) => a - b);
+  // Counterexample (P22): an index past the recognised words must not send a shorter query.
+  if (sorted.some((i) => i < 0 || i >= words.length)) return null;
   for (let i = 1; i < sorted.length; i++)
     if (sorted[i]! !== sorted[i - 1]! + 1) return null;
   const q = sorted
