@@ -62,6 +62,30 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm test
 
+  web-e2e:
+    name: Web (Playwright, en + tr)
+    runs-on: ubuntu-latest
+    # Owner decision 2026-11-08: smoke and the axe / 375 px route checks for en and tr in both
+    # themes on the production build; the full five-language matrix runs locally.
+    env:
+      E2E_LOCALES: en,tr
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Cache Playwright Chromium
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+      - run: pnpm --filter @janus/web exec playwright install --with-deps chromium
+      - run: pnpm --filter @janus/web build
+      - run: pnpm --filter @janus/web exec playwright test e2e/smoke.spec.ts e2e/routes.spec.ts --project=phone
+
   api:
     name: API (lint, types, tests)
     runs-on: ubuntu-latest

@@ -66,11 +66,10 @@ export function ResultsBody({
           total: view.rules.total,
         })}
       >
-        {w("Findings.title")}
+        <span data-testid="finding-count">
+          {w("Findings.count", { count })}
+        </span>
       </PageTitle>
-      <p className="text-lg font-bold" data-testid="finding-count">
-        {w("Findings.count", { count })}
-      </p>
       {view.safetyLines.length ? (
         <Card aria-labelledby="safety">
           <SectionTitle id="safety">{t("Findings.safetyHeading")}</SectionTitle>
@@ -86,12 +85,17 @@ export function ResultsBody({
       ) : null}
       {view.confirmed.length ? (
         <section
-          aria-labelledby="group-confirmed"
+          aria-labelledby={
+            view.unconfirmed.length ? "group-confirmed" : undefined
+          }
           className="flex flex-col gap-3"
         >
-          <SectionTitle id="group-confirmed">
-            {w("Findings.groupConfirmed")}
-          </SectionTitle>
+          {/* A group heading only when both groups are shown (the page title names the findings). */}
+          {view.unconfirmed.length ? (
+            <SectionTitle id="group-confirmed">
+              {w("Findings.groupConfirmed")}
+            </SectionTitle>
+          ) : null}
           <ul className="flex flex-col gap-3">{view.confirmed.map(card)}</ul>
         </section>
       ) : null}

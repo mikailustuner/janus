@@ -139,8 +139,8 @@ function Nav() {
       aria-label={t("Shell.navLabel")}
       className={
         glass
-          ? "fixed inset-x-3.5 bottom-4 z-20 mx-auto max-w-[720px] rounded-full border border-[var(--card-edge)] bg-surface shadow-[var(--card-shadow)] backdrop-blur-xl no-print"
-          : "fixed inset-x-0 bottom-0 z-20 border-t border-line bg-surface no-print"
+          ? "fixed inset-x-3.5 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-20 mx-auto max-w-[720px] rounded-full border border-[var(--card-edge)] bg-surface shadow-[var(--card-shadow)] [backdrop-filter:var(--blur)] no-print"
+          : "fixed inset-x-0 bottom-0 z-20 border-t border-line bg-surface pb-[env(safe-area-inset-bottom)] no-print"
       }
     >
       <ul className="mx-auto grid max-w-[720px] grid-cols-4">
@@ -188,7 +188,7 @@ function Footer() {
   const w = useThemeWord();
   const region = useUserRegion();
   return (
-    <footer className="mx-auto mt-10 flex w-full max-w-[720px] flex-col gap-2 border-t border-line px-4 pt-4 pb-28 text-sm text-muted">
+    <footer className="mx-auto mt-10 flex w-full max-w-[720px] flex-col gap-2 border-t border-line px-4 pt-4 pb-[calc(6.5rem+env(safe-area-inset-bottom))] text-sm text-muted">
       <p data-testid="disclaimer">{t("Disclaimer.text")}</p>
       <p>
         {t("Emergency.short", { emergency: t(`Memory.emergency.${region}`) })}

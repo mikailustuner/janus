@@ -41,6 +41,30 @@ export function useFindingWords(vocab: Loaded) {
   };
 }
 
+/**
+ * The second line of detail of a card (class chain, start months, priority data, notes and the
+ * integrity notices): folded on the results screen, open on the finding detail.
+ */
+function Secondary({
+  open,
+  label,
+  children,
+}: {
+  open: boolean;
+  label: string;
+  children: React.ReactNode;
+}) {
+  if (open) return <>{children}</>;
+  return (
+    <details className="group flex flex-col gap-2">
+      <summary className="flex min-h-11 cursor-pointer items-center text-sm font-bold text-muted">
+        {label}
+      </summary>
+      <div className="flex flex-col gap-2 pt-1">{children}</div>
+    </details>
+  );
+}
+
 export function FindingCard({
   view,
   result,
@@ -102,13 +126,6 @@ export function FindingCard({
             </Chip>
           </div>
         </div>
-        <p className="text-sm text-muted">
-          {t("Findings.cascade", {
-            drug_a: words.cascade.drug_a,
-            event: words.cascade.adverse_event,
-            drug_b: words.cascade.drug_b,
-          })}
-        </p>
         <p>
           {t("Findings.medicines", {
             index: words.index,
@@ -117,10 +134,6 @@ export function FindingCard({
             markerBox: boxes(f.marker.items),
           })}
         </p>
-        <ul className="text-sm">
-          <li>{startLine(words.index, f.index.start)}</li>
-          <li>{startLine(words.marker, f.marker.start)}</li>
-        </ul>
         <p>{t("Findings.pattern")}</p>
         <p>
           {t(`Findings.timing.${f.timing}`, {
@@ -133,27 +146,40 @@ export function FindingCard({
         {f.low_priority ? (
           <p className="text-sm">{t("Findings.lowPriority")}</p>
         ) : null}
-        {f.priority ? (
-          <p className="text-sm">
-            {t("Findings.priority", {
-              measure: t(`Findings.measure.${f.priority.measure}`),
-              value: f.priority.value,
-              low: f.priority.ci_low,
-              high: f.priority.ci_high,
+        <Secondary open={!detail} label={t("Common.details")}>
+          <p className="text-sm text-muted">
+            {t("Findings.cascade", {
+              drug_a: words.cascade.drug_a,
+              event: words.cascade.adverse_event,
+              drug_b: words.cascade.drug_b,
             })}
           </p>
-        ) : null}
-        {view.supporting ? (
-          <p className="text-sm">{t("Findings.supporting")}</p>
-        ) : null}
-        {f.via_form_extension ? (
-          <p className="text-sm">{t("Findings.formExtension")}</p>
-        ) : null}
-        {f.integrity_codes.map((c) => (
-          <p key={c} className="text-sm text-muted">
-            {t(`Findings.integrity.${c}`)}
-          </p>
-        ))}
+          <ul className="text-sm">
+            <li>{startLine(words.index, f.index.start)}</li>
+            <li>{startLine(words.marker, f.marker.start)}</li>
+          </ul>
+          {f.priority ? (
+            <p className="text-sm">
+              {t("Findings.priority", {
+                measure: t(`Findings.measure.${f.priority.measure}`),
+                value: f.priority.value,
+                low: f.priority.ci_low,
+                high: f.priority.ci_high,
+              })}
+            </p>
+          ) : null}
+          {view.supporting ? (
+            <p className="text-sm">{t("Findings.supporting")}</p>
+          ) : null}
+          {f.via_form_extension ? (
+            <p className="text-sm">{t("Findings.formExtension")}</p>
+          ) : null}
+          {f.integrity_codes.map((c) => (
+            <p key={c} className="text-sm text-muted">
+              {t(`Findings.integrity.${c}`)}
+            </p>
+          ))}
+        </Secondary>
         {/* On the results screen the medicines section carries the line once per item (Req 14.5). */}
         {(detail ? [] : view.warnedItems).map((i) => (
           <div key={i} className="flex flex-col">

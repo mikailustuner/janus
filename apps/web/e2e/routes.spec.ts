@@ -84,8 +84,13 @@ async function checks(
   }
 }
 
+// CI runs en and tr only (E2E_LOCALES=en,tr); the full matrix runs locally (owner decision).
+const locales = process.env.E2E_LOCALES
+  ? LOCALES.filter((l) => process.env.E2E_LOCALES!.split(",").includes(l))
+  : LOCALES;
+
 for (const theme of THEMES)
-  for (const locale of LOCALES) {
+  for (const locale of locales) {
     test(`plain routes, ${locale}, ${theme}`, async ({ page }) => {
       await useTheme(page, theme);
       for (const route of PLAIN) {

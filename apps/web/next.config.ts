@@ -46,6 +46,7 @@ const nextConfig: NextConfig = {
   outputFileTracingRoot: workspaceRoot,
   poweredByHeader: false,
   agentRules: false,
+  devIndicators: false,
   cacheComponents: true,
   partialPrefetching: true,
   turbopack: {
