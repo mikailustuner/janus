@@ -132,16 +132,20 @@
     copied); loader checks pass; counts per language recorded; no TİTCK string (checked against the local list, counts
     only). _Requirements: 7.1, 7.2, 7.5_
 
-- [ ] 15. Glossary review and **review stop (owner)**
+- [x] 15. Glossary review and **review stop (owner)**
   - 2026-11-08: both reviews written (`glossary-pharmacologist-review.md`, `glossary-localization-review.md`); summary and
-    twelve decisions in `glossary-review.md`. Waiting for the owner; no row is `accepted`.
+    twelve decisions in `glossary-review.md`; the owner answered the same day (task 16).
   - Run `agent://pharmacologist` and the localization reviewer (through `agent://wf-coder`, read-only role, report path)
     with self-contained prompts; write `glossary-pharmacologist-review.md`, `glossary-localization-review.md` and the
     summary `glossary-review.md` (counts, flagged rows, the four disclaimer translations, the formatting table, the
     reassurance lists, decisions needed). Commit, push, CI green, then **stop and wait for the owner**. No row becomes
     `accepted` before the owner's answer. _Requirements: 7.3, 7.7_
 
-- [ ] 16. Apply the owner's glossary decisions and finish
+- [x] 16. Apply the owner's glossary decisions and finish
+  - 2026-11-08: done in two parts. First the wrong ATC codes in `drug-resolution` (Req 15, DP45, `atc-code-review.md`,
+    its own commit), then the glossary edits (all rows `accepted` except the three ingredient rows whose keys left the
+    index), template and builder changes (DP32–DP39, P35–P38), the committed-glossary tests, the key rotation runbook
+    (`docs/note-token-keys.md`), the pre-launch items, and example notes in `example-notes.md`.
   - Set statuses and edits in one commit; record decisions in `glossary-review.md`, requirements.md and design.md; a test
     loads the committed glossary (five languages available, 65 rows, in-scope coverage); example documents for a
     synthetic patient in five languages (invented product names) reviewed for wording; `docs/pre-launch-checklist.md`

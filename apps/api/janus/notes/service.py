@@ -230,6 +230,7 @@ def compose(
             r.position: (r.drug_a, r.adverse_event, r.drug_b) for r in derived.rule_base.rules
         },
         qr=None if qr is None else qr(ordered),
+        component_pairs=derived.component_pairs,
     )
     documents = [build_document(inputs, glossary, lang) for lang in body.languages]
     every = {i for d in documents for i in claim_ids(d.sections)}

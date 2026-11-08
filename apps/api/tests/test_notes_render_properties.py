@@ -88,18 +88,15 @@ def test_boundaries() -> None:
     assert render.format_ratio(12.25, "tr") == "12,2"  # half-even
 
 
-@given(lang=st.sampled_from(LANGS), months=st.integers(1, 60), window=st.integers(1, 60))
-def test_p13_fill_numbers_are_the_parameters(lang: str, months: int, window: int) -> None:
-    spec = CATALOGUE["finding.timing.after_window"]
+@given(lang=st.sampled_from(LANGS), checked=st.integers(1, 65), total=st.integers(1, 65))
+def test_p13_fill_numbers_are_the_parameters(lang: str, checked: int, total: int) -> None:
+    spec = CATALOGUE["scope.checked"]
     text, numbers = render.fill(
-        spec, "after {months} months; window {window}", {"months": months, "window": window}, lang
+        spec, "checked {checked} of {total}", {"checked": checked, "total": total}, lang
     )
-    assert (
-        render.numerals(text)
-        == numbers
-        == [render.format_int(months, lang), render.format_int(window, lang)]
-    )
+    assert numbers == [render.format_int(checked, lang), render.format_int(total, lang)]
+    assert not any(ch.isdigit() for ch in render.residue(text, numbers))
     with pytest.raises(ValueError):
-        render.fill(spec, "x", {"months": months}, lang)
+        render.fill(spec, "x", {"checked": checked}, lang)
     with pytest.raises(TypeError):
-        render.fill(spec, "x {months} {window}", {"months": "3", "window": window}, lang)
+        render.fill(spec, "x {checked} {total}", {"checked": "3", "total": total}, lang)

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import dataclasses
 from collections.abc import Callable
 from typing import Any
 
@@ -332,3 +333,94 @@ def _example() -> NoteInputs:
 
 def test_catalogue_kinds_cover_the_builder() -> None:
     assert all(s.kind != "claim" or s.evidence for s in CATALOGUE.values())
+
+
+# --- owner decisions of 2026-11-08 (P35-P38) ----------------------------------------------------
+
+
+@given(inputs=note_inputs())
+def test_p35_timing_cites_the_window_and_row_49_is_explained(inputs: NoteInputs) -> None:
+    """Feature: doctor-loop, Property P35 (decisions 6 and 8). Validates Req 1.3, 5.1."""
+    doc = build_document(inputs, GLOSSARY, "en")
+    for f in inputs.result.findings:
+        timing = [s for s in sentences(doc) if s.id == f"{f.finding_id}:timing"]
+        assert len(timing) == 1
+        if f.timing in ("within_window", "after_window"):
+            assert inputs.roles.window in timing[0].evidence_ids  # both cite the window paper
+            assert f"rule:pipc:{int(f.rule_id.split(':')[1])}" in timing[0].evidence_ids
+            assert str(f.months_between) in timing[0].numbers
+            assert str(inputs.result.window_months) in timing[0].numbers
+        row49 = [s for s in sentences(doc) if s.id == f"{f.finding_id}:row49"]
+        assert len(row49) == (1 if f.rule_id == "pipc:49" else 0)
+        for s in row49:
+            assert {"dataset:pipc", "rule:pipc:49"} <= set(s.evidence_ids)
+    # Retracting the window paper removes the timing sentences of dated findings only.
+    citable = EVERY_ID - {inputs.roles.window}
+    _, removals = audit([doc], citable)
+    gone = {r.sentence_id for r in removals}
+    dated = {
+        f"{f.finding_id}:timing"
+        for f in inputs.result.findings
+        if f.timing in ("within_window", "after_window")
+    }
+    assert dated <= gone
+    cites = {s.id: s.evidence_ids for s in sentences(doc)}
+    assert all(inputs.roles.window in cites[i] for i in gone)  # only sentences resting on it go
+
+
+@given(inputs=note_inputs())
+def test_p36_statistics_use_the_clinical_event_name(inputs: NoteInputs) -> None:
+    """Feature: doctor-loop, Property P36 (decision 7). Validates Req 9.1."""
+    findings = {f.finding_id: f for f in inputs.result.findings}
+    for lang in GLOSSARY_LANGS:
+        doc = build_document(inputs, GLOSSARY, lang)
+        for sec in doc.sections:
+            for b in sec.blocks:
+                if not isinstance(b, StatRow):
+                    continue
+                f = findings[b.finding_ids[0]]
+                clinical = inputs.rule_texts[int(f.rule_id.split(":")[1])]
+                want = clinical[1] if lang == "en" else f"{clinical[1]} {lang}"
+                main = b.sentences[0]
+                assert want in main.text
+                assert inputs.event_labels[b.event_key][lang] not in main.text
+
+
+@given(inputs=note_inputs(), data=st.data())
+def test_p37_a_reviewed_combination_code_is_labelled(
+    inputs: NoteInputs, data: st.DataObject
+) -> None:
+    """Feature: doctor-loop, Property P37 (decision 10). Validates Req 1.1."""
+    pairs = {(ing.key, code) for it in inputs.items for ing in it.ingredients for code in ing.codes}
+    chosen = frozenset(data.draw(st.sets(st.sampled_from(sorted(pairs)))))
+    doc = build_document(dataclasses.replace(inputs, component_pairs=chosen), GLOSSARY, "de")
+    meds = next(s for s in doc.sections if s.id == "medicines")
+    for row in meds.blocks:
+        assert isinstance(row, MedicineRow)
+        for ing in row.ingredients:
+            labelled = any((ing.key, c) in chosen for c in ing.atc)
+            assert (ing.combination_code is not None) == labelled
+            if labelled:
+                assert ing.combination_code is not None
+                assert ing.combination_code.text == GLOSSARY.text("name.combination_code", "de")
+    plain = build_document(inputs, GLOSSARY, "de")
+    assert all(
+        ing.combination_code is None
+        for row in next(s for s in plain.sections if s.id == "medicines").blocks
+        if isinstance(row, MedicineRow)
+        for ing in row.ingredients
+    )
+
+
+def test_p38_the_note_only_texts_are_not_the_shared_patient_texts() -> None:
+    """Feature: doctor-loop, Property P38 (decision 6). Validates Req 14.1."""
+    for tid in ("stat.absence", "stat.denominator"):
+        assert CATALOGUE[tid].shared is None
+    from janus.notes import glossary as gl
+
+    real = gl.load()
+    for lang in GLOSSARY_LANGS:
+        assert "your medicines" not in real.text("stat.absence", lang).lower() or lang != "en"
+        assert real.text("stat.denominator", lang)
+    assert "Figures for all reports" not in real.text("stat.denominator", "en")
+    assert "patient's medicines" in real.text("stat.absence", "en")

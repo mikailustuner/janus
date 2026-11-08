@@ -219,19 +219,21 @@ event vocabulary. Template drafts are listed in `glossary-review.md` (task 13), 
 ### 5.2 Template catalogue (ids; wording drafted in task 13)
 | Section | Template ids | Evidence roles |
 |---|---|---|
-| finding | `finding.cascade` ("{drug_a} → {event} → {drug_b}: {index} and then {marker} match this published pattern (PIPC, row {row})") | rule, pipc |
-| | `finding.timing.within_window`, `.after_window`, `.same_month`, `.date_unknown` | rule (+ window for within) |
+| finding | `finding.cascade` ("Match with the published prescribing-cascade pattern {drug_a} → {event} → {drug_b} (PIPC list, row {row}): {index} and {marker}."; it states the match only, the order is stated by the timing sentence, DP32) | rule, pipc |
+| | `finding.timing.within_window`, `.after_window` (params `index;marker;months;window`; cite the rule and the window paper, DP33), `.same_month`, `.date_unknown` | rule + window |
+| | `finding.row49` (row 49 only, DP35) with `label.row49_supplements` | rule |
 | | `finding.priority.incidence`, `.adjusted_sequence_ratio` | priority |
 | | `finding.supporting`, `finding.form_extension` | supporting / extension |
 | | `finding.notice.corrected`, `.expression_of_concern` | integrity_root |
 | | `finding.review` ("This pattern may be worth reviewing with the patient.") | fixed |
 | chains | `chain.sequence` | finding |
 | statistics | `stat.reports_ratio`, `stat.reports_ratio_over`, `stat.ratio_below`, `stat.coverage.no_reports`, `stat.coverage.insufficient`, `stat.weak` | faers |
-| | shared `Memory.codes.*` limits sentences, `Memory.screening`, `Memory.attribution`, `stat.window`, `stat.denominator`, `stat.meddra_long`, `statistics_unavailable` | fixed |
+| | shared `Memory.codes.*` limits sentences, `Memory.screening`, `Memory.attribution`, `stat.window`, `stat.meddra_long`, `statistics_unavailable` | fixed |
+| | note-only (not shared with the patient page, DP34): `stat.absence`, `stat.denominator`. `{event}` of a statistic sentence is the clinical cascade name of the finding's rule (DP36) | fixed |
 | scope | `scope.checked`, `scope.not_checked_rule`, `scope.no_pattern` (rule 3) | pipc |
 | integrity | `integrity.sources`, `.by_status`, `.checks_between`, `.stale_source`, `.no_retracted` | integrity_root |
-| fixed | `header.*`, `disclaimer` (shared), `abrupt_stop`, `safety.emergency_first`, safety lines (shared), `medicine.*` labels, `not_checked.<reason>`, `name.not_translated`, `name.not_reviewed`, `about.*` | – |
-| outcome page | `outcome.intro`, `outcome.stored_fields`, `outcome.question.assessment`, `outcome.option.<code>`, `outcome.question.action`, `outcome.action_on.<role>`, `outcome.limits` | – |
+| fixed | `header.*`, `disclaimer` (shared), `abrupt_stop`, `safety.emergency_first`, safety lines (shared), `medicine.*` labels, `not_checked.<reason>`, `name.not_translated`, `name.not_reviewed`, `name.combination_code` (DP38), `about.*` | – |
+| outcome page | `outcome.intro`, `outcome.stored_fields`, `outcome.question.assessment`, `outcome.option.<code>`, `outcome.question.action`, `outcome.action_on.<role>` (param `{name}`; one action per finding, DP37), `outcome.limits` | – |
 
 Claim templates are written for a doctor: they describe the published pattern and the order of starts, never a verdict,
 never "the patient has", and never advice (`medical-safety.md` rules 1, 5).
@@ -407,8 +409,7 @@ written (P25).
 
 ### 7.3 Form (`POST /outcomes/form`, medical kind, read-only)
 `{token}` → steps of §6.2 → `{language, expires_on, findings: [{ref, rule_id, cascade: {drug_a, adverse_event, drug_b},
-index: {key, name, atc}, marker: {key, name, atc}, form_confirmed}], options: {assessment, action, action_on: [{code,
-text}]}, texts: {intro, stored_fields, limits, disclaimer}}`, all in the token's language from the current glossary.
+index: {key, name, atc}, marker: {key, name, atc}, form_confirmed, action_on: [{code, text}]}], options: {assessment, action}, texts: {intro, stored_fields, limits, disclaimer}}`, all in the token's language from the current glossary.
 
 ### 7.4 Submit (`POST /outcomes`, donation kind)
 `OutcomeIn {token, answers: 1–255 × {ref: int, assessment, action?: …, action_on?: …}}`, distinct refs, action rule of
@@ -552,6 +553,10 @@ The seed's five properties are P2, P7, P10, P11 and P12; the others were added i
 | P32 | **Fragment-only transport (owner decision).** For any base URL accepted by the settings and any token, `outcome_url` has the base's scheme, host and path plus `/o`, an empty query and the token as its fragment, and the token occurs nowhere before `#`; no route of the app declares a path or query parameter; a request that carries a token only in the query string or in an unknown path gets 422 or 404, reads nothing, and the token appears in no log record. | Req 2.1, 13.2 | `urllib.parse.urlsplit`; FastAPI route introspection; sentinel tokens with `capture_logs`. |
 | P33 | **QR size (owner decision).** For any payload within the field bounds of §6.1 and any base of at most 40 bytes, `fit_findings` returns the longest prefix whose `outcome_url` fits version 25 at level M (`qr_version` ≤ 25, and one more finding would not fit), keeps at least 11 findings when the note has 11 or more, and the version computed by `qr_version` equals the ISO/IEC 18004 bit count against the capacity table; the measured realistic worst case (§6.6) is a recorded example test. | Req 2.1 | Worst-case and random field sizes; the capacity table checked against `segno` once (values recorded, no dependency). |
 | P34 | **Payload codec.** For any payload within bounds, `decode(encode(p)) = p`; the byte length equals the formula of §6.1; every out-of-range count, non-minimal varint, bad ATC packing, trailing byte or bad expiry offset is refused with `invalid_token` after a valid MAC. | Req 2.1, 2.2 | Generated payloads and byte mutations re-signed with the test key. |
+| P35 | **Timing cites its window; row 49 is explained.** A `within_window` or `after_window` timing sentence cites the rule and the window paper and carries the months and the window length as numbers; a `finding.row49` sentence exists for row 49 and for no other rule. | Req 1.3, 5.1 | Generated inputs; real glossary texts. |
+| P36 | **Statistics name the clinical event.** The `{event}` of a statistic row equals the clinical cascade name of the first finding's rule in every language. | Req 9.1 | Generated inputs, five languages. |
+| P37 | **Combination code label.** An ingredient line carries the "combination code" label exactly when its (key, code) pair is in the engine's component pairs. | Req 1.1 | Generated pair subsets. |
+| P38 | **Note-only texts.** `stat.absence` and `stat.denominator` are not shared with the patient page; the all-reports sentence is gone from the denominator text. | Req 14.1 | Catalogue and real glossary. |
 | P31 | **No change elsewhere.** For any request, `POST /cascades/evaluate` and `POST /evidence/resolve` bodies before and after DP25 and DP18 differ only in the disclaimer's dash; `memory/shared` for `contributions` is unchanged. | Req 14.3 | Baseline captured from the pre-change code in the same test run. |
 
 ## 14. Decisions
@@ -588,11 +593,22 @@ The seed's five properties are P2, P7, P10, P11 and P12; the others were added i
 | DP29 | Event keys are listed once per token and referenced by index; at most two matched codes per side. | One key string per finding; all matched codes. | Measured: a realistic 18-finding note has 8 distinct events, so the list saves about 100 bytes; no real class matched more than two codes on one side. |
 | DP30 | QR target version ≤ 25 at level M, byte mode, printed at ≥ 50 mm; the token keeps the longest fitting prefix of the findings (at least 11) and the note says which findings the QR code covers. | Refuse a token when the findings do not fit; a larger version; alphanumeric (base32) segments. | The measured largest realistic note (18 findings) needs version 21; a prefix keeps the loop working for longer lists without an unreadable code; byte mode works with every QR library (base32 in an alphanumeric segment would save two versions but needs mixed segments). |
 | DP31 | `JANUS_PUBLIC_BASE_URL` (optional) lets the server return the QR address; the size check assumes a base of at most 40 bytes. | The client always builds the address. | The size rule (P33) needs the full address; the fragment rule (P32) is tested where the address is built. |
+| DP32 | **Owner decision 2026-11-08 (glossary review 6): `finding.cascade` states the match only.** The sentence opens with "Match with the published … pattern" and the timing sentence states the order. | "{index} and then {marker} match" | The first draft claimed an order that the finding may not have (same month, unknown date) and started in lower case in two languages. |
+| DP33 | Timing sentences cite the rule and the window paper and say the window length; the "after window" text says Janus lists the pattern with lower priority. | Window mentioned without a citation. | Rule 5: the window is a claim and needs its source. |
+| DP34 | `stat.absence` and `stat.denominator` are note-only texts, written for the doctor (patient's medicines, share of recognized reports). The French and Spanish word for a report follows the reviewed web texts (*signalements*, *informes*). | Share with the patient page. | The patient page speaks to the user ("your medicines"); the doctor note must not. The owner's parenthetical named *notificaciones* for Spanish, but the web uses *informes* (26 uses, *notificaciones* once); *informes* is used and flagged for the owner. |
+| DP35 | Row 49 prints "as published" and a sentence that Janus checks vitamin B12, magnesium and oral iron supplements for it (owner decision 8). | Print the row as the only text. | PIPC names the second step in a way that repeats the event; the doctor needs to know what Janus actually matched. |
+| DP36 | `{event}` in statistic sentences is the clinical cascade name of the first finding's rule, quoted (owner decision 7). | MedDRA preferred term. | The doctor reads the pattern's name; the PT list stays in its own line. |
+| DP37 | The outcome page asks one action per finding, and the action labels name the two medicines (owner decision 9). | One action list for the whole note. | An action applies to a medicine of one pattern. |
+| DP38 | A combination code (for example J01DH51 for imipenem) is printed with the label "combination code" (owner decision 10); J keys have source `janus_curated`. | Hide the code. | The engine decomposes combination products; the doctor sees the code the pack carries. |
+| DP39 | Wrong non-English ingredient cells are cleared, not corrected (owner decision 1); English cells take the INN as `en` and the US name as `en_alt`; all rows are lower case except German nouns, binomials, acronyms and Turkish-correct casing (decision 3); no national forms are added until a native reviewer is found. | Machine translation of the missing forms. | DP16: no AI translation of clinical terms. |
 | DP27 | Glossary review: pharmacologist and localization reviewer (through `wf-coder`, so the full report lands in a file), one summary sheet, hard stop; statuses change only after the owner's answer. | Owner review only. | Same procedure as the cascade mapping and the event labels. |
 
 ## 15. Open items
 Owner decisions of 2026-11-08 are applied: DP1, DP2 (token with finding codes; the pending record rejected), DP11, DP13,
 DP16, DP18.
+
+Glossary review decisions of 2026-11-08 (twelve points) are applied: DP32–DP39, recorded in `glossary-review.md` §4. Wrong
+ATC codes found by the review are fixed first in `drug-resolution` (Req 15, DP45, `atc-code-review.md`).
 
 Open:
 1. `privacy.md` says "QR tokens contain no personal data: note id + HMAC signature + expiry only". The owner decided that

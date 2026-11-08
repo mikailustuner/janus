@@ -118,6 +118,11 @@ class CascadeNames(_Out):
     drug_b: str
 
 
+class OptionOut(_Out):
+    code: str
+    text: str
+
+
 class FormFinding(_Out):
     ref: int
     rule_id: str
@@ -125,17 +130,12 @@ class FormFinding(_Out):
     index: NamedIngredient
     marker: NamedIngredient
     form_confirmed: bool
-
-
-class OptionOut(_Out):
-    code: str
-    text: str
+    action_on: list[OptionOut]  # the medicine an action concerns, with its name (one per finding)
 
 
 class FormOptions(_Out):
     assessment: list[OptionOut]
     action: list[OptionOut]
-    action_on: list[OptionOut]
 
 
 class FormTexts(_Out):

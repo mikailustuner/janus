@@ -125,7 +125,8 @@ def csv_text(header: tuple[str, ...], rows: list[dict[str, str]]) -> str:
 
 def sentence_text(spec_id: str, params: tuple[tuple[str, str], ...], lang: str) -> str:
     holes = " ".join("{" + p + "}" for p, _ in params)
-    return f"[{lang}] {spec_id.replace('.', ' ')} {holes}".strip()
+    words = spec_id.replace(".", " ").translate(str.maketrans("0123456789", "abcdefghij"))
+    return f"[{lang}] {words} {holes}".strip()
 
 
 def sentence_rows(

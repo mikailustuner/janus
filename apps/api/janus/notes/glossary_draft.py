@@ -80,7 +80,8 @@ def draft_rows(
             rows.append(existing[key])
             continue
         row = {h: "" for h in INGREDIENT_HEADER}
-        row["key"], row["status"], row["source"] = key, "proposed", source
+        row["key"], row["status"] = key, "proposed"
+        row["source"] = "janus_curated" if key.startswith("J") else source
         for lang in LANGUAGES:
             raw = labels.get(key, {}).get(lang)
             row[lang] = clean(raw, lang)

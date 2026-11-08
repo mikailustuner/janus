@@ -226,6 +226,11 @@ def test_p30_form_lists_the_tokens_findings(env: Env) -> None:
         list(f.index_codes) for f in payload.findings
     ]
     assert [o["code"] for o in form["options"]["assessment"]] == ["confirmed", "not_a_cascade"]
+    assert "action_on" not in form["options"]
+    for f in form["findings"]:  # one action per finding; the label carries the ingredient name
+        assert [o["code"] for o in f["action_on"]] == ["index", "marker"]
+        assert f["index"]["name"] in f["action_on"][0]["text"]
+        assert f["marker"]["name"] in f["action_on"][1]["text"]
     assert form["texts"]["disclaimer"] == env.app.state.glossary.text("disclaimer", "de")
     forged = token[:-3] + ("AAA" if token[-3:] != "AAA" else "BBB")
     assert env.client.post("/outcomes/form", json={"token": forged}).json() == {

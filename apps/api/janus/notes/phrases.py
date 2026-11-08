@@ -1,9 +1,10 @@
 """Word lists of the note and the outcome page (doctor-loop design §5.4). Pure.
 
 `FORBIDDEN` mirrors `apps/web/src/i18n/forbidden-phrases.ts` (`medical-safety.md` rule 2); a test
-keeps the two equal. `REASSURANCE` holds the words of rule 3 ("no false reassurance") per language;
-the lists are proposals reviewed with the glossary (task 15). Matching follows
-`findForbiddenPhrases`: whole words, case-insensitive, Unicode letters as word characters.
+keeps the two equal. `REASSURANCE` holds the words of rule 3 ("no false reassurance") per
+language; accepted by the owner on 2026-11-08 with the localization review's additions (P1-P5).
+Matching follows `findForbiddenPhrases`: whole words, case-insensitive, Unicode letters as word
+characters.
 """
 
 from __future__ import annotations
@@ -41,12 +42,33 @@ FORBIDDEN: Final[Mapping[str, tuple[str, ...]]] = {
 }
 
 REASSURANCE: Final[Mapping[str, tuple[str, ...]]] = {
-    "en": ("safe", "no problems", "all clear", "harmless", "nothing to worry"),
-    "tr": ("güvenli", "sorun yok", "zararsız"),
-    "de": ("sicher", "unbedenklich", "harmlos", "keine Probleme"),
-    "fr": ("sûr", "sans danger", "aucun problème", "inoffensif"),
-    "es": ("seguro", "sin peligro", "sin problemas", "inofensivo"),
-}
+    "en": (
+        "safe", "safely", "no problem", "no problems", "no issues", "all clear", "harmless",
+        "risk-free", "no risk", "nothing wrong", "nothing to worry", "no cause for concern",
+        "no need to worry",
+    ),
+    "tr": (
+        "güvenli", "güvenlidir", "güvenle", "zararsız", "zararsızdır", "sorun yok", "sorun yoktur",
+        "sorun bulunmamaktadır", "risk yok", "risksiz", "tehlikesiz", "endişelenecek bir şey yok",
+    ),
+    "de": (
+        "sicher", "sichere", "sicheren", "sicheres", "unbedenklich", "unbedenkliche",
+        "unbedenklichen", "harmlos", "harmlose", "harmlosen", "ungefährlich", "unproblematisch",
+        "keine Probleme", "kein Problem", "keine Bedenken", "kein Risiko", "risikolos",
+        "bedenkenlos", "alles in Ordnung", "kein Grund zur Sorge",
+    ),
+    "fr": (
+        "sûr", "sûre", "sûrs", "sûres", "sans danger", "aucun problème", "pas de problème",
+        "sans problème", "inoffensif", "inoffensive", "inoffensifs", "inoffensives",
+        "sans risque", "aucun risque", "rien à craindre", "rien d'inquiétant",
+    ),
+    "es": (
+        "seguro", "segura", "seguros", "seguras", "sin peligro", "sin problemas", "sin problema",
+        "ningún problema", "no hay problema", "inofensivo", "inofensiva", "inofensivos",
+        "inofensivas", "inocuo", "inocua", "inocuos", "inocuas", "sin riesgo", "sin riesgos",
+        "nada de qué preocuparse", "todo en orden",
+    ),
+}  # fmt: skip
 
 LANGUAGES: Final = ("en", "tr", "de", "fr", "es")
 

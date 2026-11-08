@@ -63,6 +63,7 @@ class IngredientOut(_Out):
     name_basis: NameBasis
     tag: Text | None  # "name not translated" / "name not reviewed"
     atc: list[str]
+    combination_code: Text | None = None  # set when a printed code is a reviewed combination code
 
 
 class NotCheckedRow(_Out):
@@ -210,3 +211,5 @@ class NoteInputs:
     user_region: str
     rule_texts: Mapping[int, tuple[str, str, str]]  # PIPC position -> English (A, event, B)
     qr: tuple[int, int] | None = None  # (findings covered, findings total) for token notes
+    # Reviewed (key, combination code) pairs: the code is printed with a label (owner decision).
+    component_pairs: frozenset[tuple[str, str]] = frozenset()

@@ -44,3 +44,27 @@ defers a check to launch.
 - [ ] **EudraVigilance link: re-check.** The link is `https://www.adrreports.eu` (owner, 2026-11-08; link only, no ingestion;
   `collective-memory` Requirement 3.2). Check that it still opens the public reports site and that its reuse terms still
   allow a link from Janus.
+- [ ] **Doctor note glossary and templates: native-speaker and pharmacist or physician review.** The five-language
+  glossary (`apps/api/janus/notes/glossary/`: 1,126 ingredient names, 65 cascade names, 115 templates) was drafted by the
+  AI assistant, reviewed by the pharmacologist and localization-reviewer agents and accepted by the owner on 2026-11-08.
+  A pharmacist or physician and a native speaker per language must still review it before any public claim. Points the
+  reviewers left for natives (`.kiro/specs/doctor-loop/glossary-localization-review.md`): French *signalement* and
+  Spanish *informe* for "report"; *ROR* terms; the German title and *Verschreibung* against *Verordnung*; French
+  *schéma* for "pattern"; cascade rows 15, 20, 56 and the French supplement terms; Turkish *kesmek* in the abrupt-stop
+  line; every ingredient cell after the mechanical pass; the reassurance word lists. Cells cleared as wrong (about 80)
+  fall back to the English INN with "name not translated"; native forms can be added after the review.
+- [ ] **Wrong ATC codes: pharmacist review of the whole mapping.** `data/atc_code_exclusions.csv` removes 12 reviewed wrong
+  (key, code) pairs (`.kiro/specs/drug-resolution/atc-code-review.md`). 222 in-scope keys have one source only and were
+  checked by name against the WHOCC index; a pharmacist must review the rest. Re-check after every WHOCC ATC release.
+- [ ] **Duplicate ingredient keys** (five product items and the two mometasone items) are merged in `drug-resolution`.
+- [ ] **Outcome loop at the proxy:** request limits for `/notes/token`, `/notes/withdraw`, `/outcomes/form` and `/outcomes`
+  without storing or logging IP addresses (`doctor-loop` design §7.6). Until then the privacy page states the padding limit.
+- [ ] **Print-and-scan test of the QR code** at 50 mm on A4 with several phones (version 25, level M, byte mode; the
+  realistic worst case needs version 21). Key rotation runbook: `docs/note-token-keys.md`.
+- [ ] **FTC Health Breach Notification Rule:** re-check how it applies to the outcome loop (doctor-reported outcomes) before launch.
+- [ ] **`privacy.md` token line:** it still says the token holds "note id + HMAC signature + expiry only"; the token also carries
+  finding codes, language, region, issue week, key id and consent version (owner decision 2026-11-08, no personal data). The
+  owner left `privacy.md` unchanged; decide whether to update the line before launch.
+- [ ] **Privacy page text:** the outcome loop stores hashes of used note ids until the token expires and the doctor's answers
+  by week and region; the QR token is a signed list of codes.
+

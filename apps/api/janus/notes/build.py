@@ -32,6 +32,7 @@ from janus.notes.model import (
 from janus.notes.render import Value
 from janus.notes.templates import ASSESSMENT_CODES, CATALOGUE
 
+ROW_49: Final = 49  # PIPC row whose Drug B repeats the adverse event (owner decision 2026-11-08)
 NOTICE_TEMPLATES: Final = {
     "corrected_notice": "finding.notice.corrected",
     "expression_of_concern_notice": "finding.notice.expression_of_concern",
@@ -149,6 +150,7 @@ class _B:
                     tag = self.text("name.not_translated")
                 elif n.basis in ("not_reviewed", "code_only"):
                     tag = self.text("name.not_reviewed")
+                combination = any((ing.key, c) in self.i.component_pairs for c in ing.codes)
                 ingredients.append(
                     IngredientOut(
                         key=ing.key,
@@ -156,6 +158,9 @@ class _B:
                         name_basis=n.basis,
                         tag=tag,
                         atc=list(ing.codes),
+                        combination_code=self.text("name.combination_code")
+                        if combination
+                        else None,
                     )
                 )
             started = (
@@ -204,22 +209,20 @@ class _B:
             )
         ]
         window = self.i.result.window_months
-        if f.timing == "within_window":
+        if f.timing in ("within_window", "after_window"):
+            # The window paper supports the sentence for both; the auditor drops it if the
+            # paper is no longer citable (the engine then also lists the pattern as possible).
             out.append(
                 self.sentence(
                     f"{fid}:timing",
-                    "finding.timing.within_window",
-                    {"months": f.months_between or 0, "window": window},
-                    rule + ([r.window] if r.window in ids else []),
-                )
-            )
-        elif f.timing == "after_window":
-            out.append(
-                self.sentence(
-                    f"{fid}:timing",
-                    "finding.timing.after_window",
-                    {"months": f.months_between or 0, "window": window},
-                    rule,
+                    f"finding.timing.{f.timing}",
+                    {
+                        "index": index,
+                        "marker": marker,
+                        "months": f.months_between or 0,
+                        "window": window,
+                    },
+                    [*rule, r.window],
                 )
             )
         else:
@@ -234,6 +237,18 @@ class _B:
             pid = [p.evidence_id] if p.evidence_id in ids else []
             out.append(
                 self.sentence(f"{fid}:priority", f"finding.priority.{p.measure}", values, pid)
+            )
+        if int(f.rule_id.split(":")[1]) == ROW_49:
+            out.append(
+                self.sentence(
+                    f"{fid}:row49",
+                    "finding.row49",
+                    {
+                        "row": ROW_49,
+                        "supplements": self.g.text("label.row49_supplements", self.lang),
+                    },
+                    rule + pipc,
+                )
             )
         supporting = [s for s in r.supporting.get(f.rule_id, ()) if s in ids]
         if supporting:
@@ -317,7 +332,7 @@ class _B:
         for s in self.i.stats:
             f = findings[s.finding_ids[0]]
             ingredient = self.name(s.ingredient_key, f.index.label_en, f.index.matched_codes)
-            event = self.i.event_labels.get(s.event_key, {}).get(self.lang) or s.event_key
+            event = self.cascade(f)[1]  # the clinical name of the rule's adverse event
             region = self.g.text(f"region.{s.region}", self.lang)
             sid = f"stat:{s.ingredient_key}:{s.event_key}:{s.region}"
             base: dict[str, Value] = {"ingredient": ingredient, "event": event, "region": region}

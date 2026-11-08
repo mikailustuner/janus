@@ -5,6 +5,8 @@ from __future__ import annotations
 import csv
 import io
 import json
+import re
+import unicodedata
 from pathlib import Path
 
 import pytest
@@ -221,10 +223,54 @@ def test_cascade_names_need_the_current_english_text() -> None:
 # --- the committed files ----------------------------------------------------------------------
 
 
-def test_committed_glossary_loads() -> None:
-    """The real files parse; their status decides which languages exist (task 16 checks five)."""
+REJECTED = {"Q419020", "Q22075864", "Q422241"}  # left the index with their ATC codes (DP45)
+BINOMIALS = {"Q158289", "Q159376", "Q3395566"}
+STEREO = re.compile(r"^(\([^)]{1,12}\)-|(rac|DL|D|L)-)")
+
+
+def test_committed_glossary_is_accepted_and_complete() -> None:
+    """Task 16: five languages available, 65 PIPC rows, the owner's decisions of 2026-11-08."""
     g = gl.load()
-    assert g.available_languages() <= frozenset(GLOSSARY_LANGS)
+    assert g.available_languages() == frozenset(GLOSSARY_LANGS)
+    assert len(g.cascades) == 65 and len(g.sentences) == len(CATALOGUE)
+    assert {k for k, r in g.ingredients.items() if r.status == "rejected"} == REJECTED
+    assert all(r.status == "accepted" for k, r in g.ingredients.items() if k not in REJECTED)
+    assert all(r.status == "accepted" for r in (*g.cascades.values(), *g.sentences.values()))
+    assert all(r.names["en"] for k, r in g.ingredients.items() if k not in REJECTED)
+    # decision 10: curated keys carry their own source
+    raw = csv.DictReader(io.StringIO((gl.GLOSSARY_DIR / "ingredients.csv").read_text("utf-8")))
+    sources = {r["key"]: r["source"] for r in raw}
+    assert sources["J1"] == sources["J2"] == "janus_curated"
+    # decision 3: lower case except German, binomials and acronyms; what is reviewed is printed
+    for k, r in g.ingredients.items():
+        if k in BINOMIALS or k in REJECTED:
+            continue
+        for lang in ("en", "tr", "fr", "es"):
+            name = r.names[lang]
+            greek = name[:1] != "" and unicodedata.name(name[0]).startswith("GREEK")
+            assert not name[:1].isupper() or greek or name.split()[0].isupper(), (k, lang)
+        for lang in GLOSSARY_LANGS:
+            assert not STEREO.match(r.names[lang]), (k, lang)  # no stereo descriptors left
+        assert r.en_alt == r.en_alt.strip()
+
+
+def test_decision_texts_are_in_the_committed_glossary() -> None:
+    g = gl.load()
+    s = g.sentences
+    assert CATALOGUE["stat.absence"].shared is None and CATALOGUE["stat.denominator"].shared is None
+    assert "patient's medicines" in s["stat.absence"].texts["en"]
+    assert "Figures for all reports" not in s["stat.denominator"].texts["en"]
+    for lang in ("fr", "es"):  # the report words of the web texts
+        texts = " ".join(
+            s[i].texts[lang] for i in s if i.startswith(("stat.", "statistics", "about"))
+        )
+        assert ("signalement" if lang == "fr" else "informe") in texts.lower()
+        assert not any(w in texts.lower() for w in ("déclaration", "notificacion"))
+    assert "Ontario" in s["finding.priority.incidence"].texts["en"]
+    assert "window" in s["finding.timing.after_window"].texts["en"]
+    assert s["finding.row49"].texts["en"].count("{supplements}") == 1
+    assert "B12" in s["label.row49_supplements"].texts["en"]
+    assert "{name}" in s["outcome.action_on.index"].texts["en"]
 
 
 def _message(lang: str, key: str) -> str:

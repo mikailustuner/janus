@@ -74,6 +74,7 @@ class Derived:
     items: tuple[EngineItem, ...]
     rule_base: RuleBase
     snapshot: IntegritySnapshot
+    component_pairs: frozenset[tuple[str, str]] = frozenset()
 
 
 def evaluate_request(
@@ -157,7 +158,7 @@ def derive(
         items, rb, snapshot, today, found.combination_codes, unchecked, found.component_pairs
     )
     out = _out(result, rb.version, current, snapshot.version(), format_month(now), rb.window_months)
-    return Derived(out, tuple(items), rb, snapshot)
+    return Derived(out, tuple(items), rb, snapshot, frozenset(found.component_pairs))
 
 
 def _side(s: Side) -> SideOut:

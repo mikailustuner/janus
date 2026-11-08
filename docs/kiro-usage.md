@@ -368,3 +368,21 @@ found, what hooks blocked. Three to five lines per day.
 - Stopped at task 15: the pharmacologist and localization-reviewer agents reviewed the glossary drafts; twelve decisions in
   `.kiro/specs/doctor-loop/glossary-review.md`. The pharmacologist also found wrong Wikidata ATC codes on a few
   ingredient keys (for example ketoconazole with ketoprofen's code), a `drug-resolution` matter.
+
+## 2026-11-08: wrong ATC codes (drug-resolution) and the doctor-loop glossary decisions
+- The owner's glossary decisions came with one correctness bug that had to go first: ingredient keys carrying another
+  substance's ATC code (ketoconazole with ketoprofen's code, mefenamic acid with tramadol's, esomeprazole with a former
+  pregabalin code). Fixed in `drug-resolution` as its own change: a curated per-key exclusion file
+  (`data/atc_code_exclusions.csv`, twelve rows), loader and builders threaded with it, properties P49–P50, DP45, and a
+  review sheet (`.kiro/specs/drug-resolution/atc-code-review.md`) with the cross-check (RxClass, shared codes, WHOCC group
+  pages checked by hand) and the measured effect. Seven of the twelve codes came from TİTCK single-ingredient products,
+  not Wikidata as the pharmacologist agent had assumed. The dataset and the FAERS counts were rebuilt: three keys lost their
+  counts (45 mapped reports), gate 1 of the cascade engine is unchanged.
+- Glossary: all rows `accepted` after the owner's edits (wrong non-English ingredient cells cleared, English INN fixes,
+  case, curated keys, template rewording, row 49, combination-code label, one outcome action per finding). New properties
+  P35–P38; a test loads the committed glossary. Example notes for a synthetic patient in five languages were generated
+  from the real glossary and read; they exposed three wording defects that no property test sees (a Turkish and a French
+  sentence that started with a lower-case or an elided ingredient name, a German pronoun that did not match its noun).
+- A CSV edit by string replacement broke a row (an unquoted comma); the glossary loader refused it loudly, and the edit was
+  redone through the `csv` module.
+- Still open: native-speaker and pharmacist or physician review (pre-launch checklist), merging the duplicate product keys.

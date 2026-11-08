@@ -15,7 +15,7 @@ import psycopg
 from janus.cascades import repository as cascade_repository
 from janus.cascades.schemas import FindingOut
 from janus.db.pool import Database
-from janus.notes import qr, repository
+from janus.notes import qr, render, repository
 from janus.notes.glossary import Glossary
 from janus.notes.outcomes import deletion_hashes, outcome_rows
 from janus.notes.schemas import (
@@ -28,6 +28,7 @@ from janus.notes.schemas import (
     OptionOut,
     OutcomeFormOut,
 )
+from janus.notes.templates import CATALOGUE
 from janus.notes.token import (
     MAX_CODES_PER_SIDE,
     Keyring,
@@ -131,6 +132,12 @@ def _name(glossary: Glossary, key: str, codes: Sequence[str], lang: str) -> Name
     )
 
 
+def _action_on(glossary: Glossary, code: str, name: str, lang: str) -> OptionOut:
+    template = f"outcome.action_on.{code}"
+    text, _ = render.fill(CATALOGUE[template], glossary.text(template, lang), {"name": name}, lang)
+    return OptionOut(code=code, text=text)
+
+
 def form(conn: psycopg.Connection, payload: Payload, glossary: Glossary) -> OutcomeFormOut:
     state = repository.token_state(conn, payload.note_hash)
     if state == "used":
@@ -147,14 +154,20 @@ def form(conn: psycopg.Connection, payload: Payload, glossary: Glossary) -> Outc
         names = glossary.cascade(f.row, lang, english[f.row])
         if names is None:
             raise LoopUnavailableError
+        index = _name(glossary, f.index_key, f.index_codes, lang)
+        marker = _name(glossary, f.marker_key, f.marker_codes, lang)
         findings.append(
             FormFinding(
                 ref=ref,
                 rule_id=f"pipc:{f.row}",
                 cascade=CascadeNames(drug_a=names[0], adverse_event=names[1], drug_b=names[2]),
-                index=_name(glossary, f.index_key, f.index_codes, lang),
-                marker=_name(glossary, f.marker_key, f.marker_codes, lang),
+                index=index,
+                marker=marker,
                 form_confirmed=f.form_confirmed,
+                action_on=[
+                    _action_on(glossary, "index", index.name, lang),
+                    _action_on(glossary, "marker", marker.name, lang),
+                ],
             )
         )
 
@@ -171,7 +184,6 @@ def form(conn: psycopg.Connection, payload: Payload, glossary: Glossary) -> Outc
             action=options(
                 ("dose_changed", "medicine_changed", "stopped", "no_change"), "outcome.option"
             ),
-            action_on=options(("index", "marker"), "outcome.action_on"),
         ),
         texts=FormTexts(
             heading=t("outcome.heading", lang),
