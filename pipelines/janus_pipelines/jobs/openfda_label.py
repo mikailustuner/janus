@@ -1,4 +1,6 @@
-"""`openfda_label` pipeline: indications text of US labels for the light-face validation cases (design §3.2).
+# pyright: reportUnknownMemberType=false, reportUnknownVariableType=false
+# pyright: reportUnknownArgumentType=false
+"""`openfda_label` pipeline: indications of US labels for the light-face cases (design §3.2).
 
 Only the ingredients named in `data/light/validation_cases.csv` are queried, one request each
 (`openfda.generic_name:"<name>"`, at most 1,000 labels). The light build uses the text to remove
@@ -92,7 +94,8 @@ def parse_responses(responses: Mapping[str, bytes]) -> ParseResult:
                 excluded["malformed"] = excluded.get("malformed", 0) + 1
                 continue
             set_id = item.get("set_id")
-            openfda = item.get("openfda") if isinstance(item.get("openfda"), dict) else {}
+            raw_openfda = item.get("openfda")
+            openfda: dict[str, Any] = raw_openfda if isinstance(raw_openfda, dict) else {}
             generic = sorted({g.strip().lower() for g in _texts(openfda.get("generic_name"))})
             if not isinstance(set_id, str) or not set_id:
                 excluded["no_set_id"] = excluded.get("no_set_id", 0) + 1
@@ -153,4 +156,3 @@ class OpenfdaLabelJob(Job[Payload]):
 
     def parse(self, raw: RawInput[Payload]) -> ParseResult:
         return parse_responses(raw.payload.responses)
-

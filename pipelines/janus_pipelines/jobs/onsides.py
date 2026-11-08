@@ -1,4 +1,6 @@
-"""`onsides` pipeline: the pinned OnSIDES v3.1.1 release → one row per drug label (light-face design §3.1).
+# pyright: reportUnknownMemberType=false, reportUnknownVariableType=false
+# pyright: reportUnknownArgumentType=false
+"""`onsides` pipeline: pinned OnSIDES v3.1.1 → one row per drug label (light-face design §3.1).
 
 OnSIDES (Tatonetti lab; Tanaka et al., Med 2025, doi:10.1016/j.medj.2025.100642) extracts adverse
 effects from drug labels of the US (DailyMed), EU (EMA), UK (EMC) and Japan (KEGG) with a language
@@ -34,7 +36,9 @@ from janus_pipelines.core.validation import (
 
 RELEASE: Final = "v3.1.1"
 RELEASE_DATE: Final = "2026-04-22"  # data release date of v3.1.1 (GitHub release, README)
-URL: Final = f"https://github.com/tatonetti-lab/onsides/releases/download/{RELEASE}/onsides-{RELEASE}.zip"
+URL: Final = (
+    f"https://github.com/tatonetti-lab/onsides/releases/download/{RELEASE}/onsides-{RELEASE}.zip"
+)
 SHA256: Final = "7739c73336786c92e73ca383af92d3f2814caf5e94206e08475b86d5a5ec22b9"
 SOURCES: Final = ("US", "EU", "UK", "JP")
 SECTIONS: Final = ("AR", "BW", "WP", "NA")
@@ -195,7 +199,9 @@ def parse_release(archive: bytes, scratch: Path) -> ParseResult:
     meddra.write_parquet(meddra_file)
     ingredients.write_parquet(ingredients_file)
     by_source = rows.group_by("source").len().sort("source")
-    excluded = {k: v for k, v in {"no_ingredient": no_ingredient, "no_effect": no_effect}.items() if v}
+    excluded = {
+        k: v for k, v in {"no_ingredient": no_ingredient, "no_effect": no_effect}.items() if v
+    }
     return ParseResult(
         rows=[],
         rows_file=rows_file,
@@ -216,7 +222,7 @@ def parse_release(archive: bytes, scratch: Path) -> ParseResult:
             ),
             "meddra_terms": meddra.height,
             "ingredients": ingredients.height,
-            "limits": "Extracted by a language model from labels; some effects are missed or wrong.",
+            "limits": "Extracted by a language model; some effects are missed or wrong.",
         },
     )
 
@@ -224,7 +230,9 @@ def parse_release(archive: bytes, scratch: Path) -> ParseResult:
 def check_release(body: bytes, expected: str = SHA256) -> None:
     got = sha256_bytes(body)
     if got != expected:
-        raise ReleaseHashError(f"release archive hash {got[:12]}… is not the pinned {expected[:12]}…")
+        raise ReleaseHashError(
+            f"release archive hash {got[:12]}… is not the pinned {expected[:12]}…"
+        )
 
 
 class OnsidesJob(Job[Payload]):
@@ -249,4 +257,3 @@ class OnsidesJob(Job[Payload]):
 
     def parse(self, raw: RawInput[Payload]) -> ParseResult:
         return parse_release(raw.payload.archive, raw.payload.scratch)
-
