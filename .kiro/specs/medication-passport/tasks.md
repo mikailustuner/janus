@@ -123,7 +123,8 @@
   - [x] 12.3 State tests: loading (`aria-busy`, live region), empty, error with retry and no "not found", partial, long
     content (50 items, long names), not-checkable item; statuses carry text and icon, never `--risk`. _Requirements: 10.3–10.5_
 
-- [ ] 13. Cross-spec notes
+- [x] 13. Cross-spec notes
+  - *Done 2026-11-08: experience §20, drug-resolution §19, doctor-loop §15; owner's log in the Phase 3 draft.*
   - `experience` open items: screens to mount, list fields (`origin`, `boxes`, `demo`, strength/form origin), Cologne
     list, Memory selection prompt. `drug-resolution` open items: the two additive fields and migration `0012`.
     `doctor-loop` open items: the origin label in `product_name_slot`. Dated entry for the owner's log (not

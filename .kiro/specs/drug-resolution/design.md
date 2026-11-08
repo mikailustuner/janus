@@ -1073,6 +1073,14 @@ unchanged.
 
 ## 19. Open items
 
+**From medication-passport (2026-11-08, task 13).** Additive output fields `ResolvedIngredient.strength_code` and
+`ProductCandidate.dose_form_group` (passport Req 6.6, P17; null when unknown; no other behaviour changed); migration
+`0012_passport_presence_index` (partial index on `res_product_ingredient (dataset_id, qid, source_id, product_id)
+WHERE status = 'mapped'`, about +1.0 s per dataset load); `janus/passport/strength.py` gained `entry_code` (typed
+strengths, DP21/DP25; no resolution change). Follow-up owned here (passport owner decision 3, OD1): load the BDPM
+reference quantity and the Nomenclátor form code, basis and routes so French liquids and Spanish products become
+comparable.
+
 **Answered by the owner on 2026-11-08.** O1: option (b) (DP43). O2: approved, and AI (21) is rejected
 by the API (DP19, DP42). The two entries below are kept as the record of the options.
 

@@ -6,6 +6,8 @@
  */
 import { useCallback, useSyncExternalStore } from "react";
 
+import { entriesDoc } from "@/passport/entries";
+
 import { list, type ListDoc } from "./list";
 import { DEFAULT_SETTINGS, settings, type Settings } from "./settings";
 import { PREFIX, storage, type Doc, type Notice } from "./storage";
@@ -77,7 +79,8 @@ export async function deleteEverything(): Promise<void> {
   } catch {
     /* no cache storage */
   }
-  for (const doc of [settings, list, tokens] as Doc<unknown>[]) doc.reset();
+  for (const doc of [settings, list, tokens, entriesDoc] as Doc<unknown>[])
+    doc.reset();
   updateSettings({});
 }
 

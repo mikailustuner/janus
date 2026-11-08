@@ -692,6 +692,25 @@ The seed's properties are P12 (keys), P8 (disclaimer and phrases), P14 (demo) an
 4. **shadcn/ui** (`tech.md` lists it): this design builds the few primitives in-repo (DP26). Confirm, or keep shadcn/ui
    for the primitives under the steering tokens.
 
+### From medication-passport (2026-11-08, task 13)
+- **Mounted:** routes `/[locale]/passport` and `/[locale]/passport/item#<id>` (fragment, nothing in the path), a fifth
+  navigation entry (bottom bar now five columns; labels may hyphenate, DE "Medikamentenpass"), both routes in `WIDE`;
+  slots filled: `ItemBadges` (link "Show this box in the passport"), `ListSummaryExtra` (duplicate-ingredient notice,
+  information only); `ItemDetailExtra` stays empty. Routes are in `routes.spec` DEMO (C1–C4).
+- **List fields:** `origin`, `boxes`, `demo` and strength/form origin are not stored in `Item`; `passport/model.ts`
+  `fromListItem` derives them (one box per item; same box twice → one Passport item with two boxes). Typed strength and
+  form (DP21) live in `janus.v1.passport` (`passport/entries.ts`); "delete everything" removes it and resets the doc.
+  A typed German box is not marked DE in the store (only `EU`): it shows "Box from the European Union" unless the store
+  gains a country (open).
+- **Cologne list:** the Passport demo shows seven boxes (the four of `fixtures/cologne.json` with the same ids plus a
+  Turkish combination, a German amlodipine box and a homeopathic German box); the other screens keep four.
+- **Demo answers:** recorded for all three patients (`passport-<patient>.recorded.json`); demo mode makes no API call
+  (passport DP26, C4).
+- **Memory selection prompt:** the Passport links to `/memory`, which keeps its own > 20 ingredients selection
+  (`MemoryView.tooMany`); the Passport only states the limit (Req 11.2).
+- **Note:** the origin label in `product_name_slot` (passport Req 3.2) is not filled yet: `note/layout.ts` takes one
+  `boxNames` list for both documents; it needs the label in each document's language (open, doctor-loop note).
+
 ## Owner decisions (2026-11-08, Phase 3 review)
 1. **Demo brand names:** invented names only (real brand names are trademarks and TİTCK text, which is never committed). Accepted as written.
 2. **Spanish numeric status codes:** shown as published until their meaning is confirmed with AEMPS documentation (pre-launch checklist).

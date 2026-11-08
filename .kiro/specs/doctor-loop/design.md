@@ -617,6 +617,10 @@ Open:
    `privacy.md` stays as it is; the token now also carries finding codes, the key id, the week, language, region and
    consent version (no personal data). The line is left unchanged and flagged to the owner at the next stop.
 
+2. *(From medication-passport, 2026-11-08.)* Passport Req 3.2: the client fills each row's `product_name_slot` with the
+   box name and the origin label `Passport.origin.<country>` in the note's language ("Box from Türkiye"); neither reaches
+   the server and no server field is added. Not yet built: `apps/web/src/note/layout.ts` needs per-language labels.
+
 Pre-launch (added to `docs/pre-launch-checklist.md` in task 16): native-speaker clinical review of the glossary and
 templates; proxy rate limits for the loop routes; key rotation runbook; a print-and-scan test of a version-25 QR code at
 50 mm with several phones; re-check of the FTC Health Breach Notification Rule for the outcome loop.
