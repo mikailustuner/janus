@@ -41,7 +41,7 @@ GOALS_HEADER: Final = (
     "benefit_keys",
     "note",
 )
-MAPPING_HEADER: Final = ("term", "goal", "status", "evidence", "rationale")
+MAPPING_HEADER: Final = ("term", "goal", "status", "nonspecific", "evidence", "rationale")
 CASES_HEADER: Final = (
     "id",
     "ingredient_name",
@@ -139,10 +139,21 @@ def parse_mapping(
             raise CurationError(file, line, "no_evidence")
         if not row["rationale"]:
             raise CurationError(file, line, "no_rationale")
+        if row["nonspecific"] not in ("yes", "no"):
+            raise CurationError(file, line, "bad_nonspecific")
         if vocabulary is not None and term not in vocabulary:
             raise CurationError(file, line, "term_not_in_onsides")
         st: MapStatus = "active" if status == "active" else "excluded"
-        out.append(MappingRow(term, row["goal"], st, tuple(sorted(evidence)), row["rationale"]))
+        out.append(
+            MappingRow(
+                term,
+                row["goal"],
+                st,
+                tuple(sorted(evidence)),
+                row["rationale"],
+                row["nonspecific"] == "yes",
+            )
+        )
     return tuple(sorted(out, key=lambda m: m.term))
 
 

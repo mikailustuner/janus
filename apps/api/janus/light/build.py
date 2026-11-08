@@ -60,7 +60,7 @@ from janus.memory.evidence import FAERS_EVIDENCE_ID, EventRef, faers_locator
 from janus.memory.faers_build import COUNTS_DB, counts_root
 from janus.memory.reader import DUCKDB_SETTINGS, CountsReader, RawCells
 from janus.memory.service import stats_out
-from janus.memory.stats import Sensitivity, Stats
+from janus.memory.stats import PARAMS, Sensitivity, Stats
 from janus.memory.vocabulary import load_events
 from janus.settings import EVENT_VOCABULARY
 
@@ -258,8 +258,12 @@ def faers_counts(f: Faers, goal: str, key: str) -> Counts | None:
     return Counts(a.get(key, 0), ing, ev_mapped, ev_all, f.n_mapped, f.n_all)
 
 
-def inverse_signals(cur: Curated, f: Faers) -> dict[tuple[str, str], InverseSignal]:
+def inverse_signals(
+    cur: Curated, f: Faers
+) -> tuple[dict[tuple[str, str], InverseSignal], dict[str, int]]:
+    """Inverse signals, and per goal the number of pairs tested (at least MIN_REPORTS reports)."""
     out: dict[tuple[str, str], InverseSignal] = {}
+    tested: dict[str, int] = {}
     for goal, g in sorted(cur.goals.items()):
         if goal not in f.by_goal:
             continue
@@ -267,10 +271,12 @@ def inverse_signals(cur: Curated, f: Faers) -> dict[tuple[str, str], InverseSign
             c = faers_counts(f, goal, key)
             if c is None:
                 continue
+            if c.a >= PARAMS.min_reports:
+                tested[goal] = tested.get(goal, 0) + 1
             found = inverse_signal(c)
             if found is not None:
                 out[(key, goal)] = InverseSignal(key, goal, found[0], found[1], g.faers_pts)
-    return out
+    return out, tested
 
 
 # --- output --------------------------------------------------------------------------------------
@@ -295,14 +301,21 @@ def label_out(s: LabelSignal) -> LabelSignalOut:
         sections=list(s.sections),
         terms=list(s.terms),
         evidence_ids=list(s.evidence),
+        nonspecific=s.nonspecific,
     )
 
 
 def inverse_out(s: InverseSignal) -> InverseOut:
+    c = _counts_of(s.stats, s.sensitivity)
+    expected = c.ingredient * c.event_mapped / c.n_mapped
+    sens = s.sensitivity.stats.estimates
     return InverseOut(
-        stats=_stats_out(_counts_of(s.stats, s.sensitivity)),
+        stats=_stats_out(c),
         pts=list(s.pts),
         reports=s.stats.cells.a,
+        expected=expected,
+        observed_over_expected=s.stats.cells.a / expected,
+        upper_bound_sensitive=sens is None or sens.ror_ci.high >= 1.0,
         evidence_ids=[FAERS_EVIDENCE_ID],
         locator=faers_locator((s.key,), EventRef(), "ALL", "any"),
     )
@@ -338,8 +351,10 @@ def validation_out(
                 labels_removed_not_in_openfda=x.labels_removed_not_in_openfda,
                 signal_types=list(x.signal_types),
                 reason=x.reason,
+                chance_hit=x.chance_hit,
+                percentile=x.percentile,
             )
-            for x in (r.primary, r.sensitivity)
+            for x in (r.primary, r.primary_indication, r.primary_strict, r.sensitivity)
         ]
         counts = faers_counts_by_case.get(c.id)
         cases.append(
@@ -356,7 +371,9 @@ def validation_out(
                     note=c.note,
                 ),
                 primary=runs[0],
-                sensitivity=runs[1],
+                primary_indication=runs[1],
+                primary_strict=runs[2],
+                sensitivity=runs[3],
                 faers=_stats_out(counts) if counts else None,
                 faers_inverse=bool(r.faers and r.faers.inverse),
                 faers_includes_later_use=True,
@@ -369,6 +386,7 @@ def validation_out(
             informative_hits=s.informative_hits,
             misses=s.misses,
             not_evaluable=s.not_evaluable,
+            expected_hits_by_chance=s.expected_hits_by_chance,
         )
 
     return ValidationPart(
@@ -401,7 +419,7 @@ def build(data_dir: Path, curated_dir: Path = curation.DATA_DIR) -> LightFile:
     faers = read_faers(data_dir, {g: v.faers_pts for g, v in cur.goals.items()})
 
     signals = label_signals(labels, active, key_of)
-    inverse = inverse_signals(cur, faers)
+    inverse, tested = inverse_signals(cur, faers)
     ranked = rank_all(cur.goals, signals, inverse)
 
     inverse_by_goal: dict[str, list[InverseSignal]] = {}
@@ -453,6 +471,9 @@ def build(data_dir: Path, curated_dir: Path = curation.DATA_DIR) -> LightFile:
                 benefit_keys=list(g.benefit_keys),
                 label_terms=sorted(t for t, m in active.items() if m.goal == g.key),
                 note=g.note,
+                inverse_tested=tested.get(g.key, 0),
+                inverse_found=sum(1 for s in inverse.values() if s.goal == g.key),
+                inverse_expected_by_chance=0.025 * tested.get(g.key, 0),
             )
             for g in sorted(cur.goals.values(), key=lambda g: g.key)
         ],
@@ -463,6 +484,7 @@ def build(data_dir: Path, curated_dir: Path = curation.DATA_DIR) -> LightFile:
                 status=m.status,
                 evidence_ids=list(m.evidence),
                 rationale=m.rationale,
+                nonspecific=m.nonspecific,
             )
             for m in cur.mapping
         ],

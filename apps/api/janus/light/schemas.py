@@ -30,6 +30,9 @@ class GoalOut(_M):
     benefit_keys: list[str]
     label_terms: list[str]  # active mapping terms pointing to the goal
     note: str
+    inverse_tested: int  # ingredients with at least 3 reports of the condition
+    inverse_found: int
+    inverse_expected_by_chance: float  # 2.5 % of the tested pairs (one-sided 95 % bound)
 
 
 class MappingOut(_M):
@@ -38,6 +41,7 @@ class MappingOut(_M):
     status: Literal["active", "excluded"]
     evidence_ids: list[str]
     rationale: str
+    nonspecific: bool
 
 
 class LabelSignalOut(_M):
@@ -48,12 +52,16 @@ class LabelSignalOut(_M):
     sections: list[str]
     terms: list[str]
     evidence_ids: list[str]
+    nonspecific: bool
 
 
 class InverseOut(_M):
     stats: StatsOut
     pts: list[str]
     reports: int
+    expected: float  # ingredient reports x event reports / N (mapped)
+    observed_over_expected: float
+    upper_bound_sensitive: bool  # upper bound >= 1 when N = all reports (statistician C1)
     evidence_ids: list[str]
     locator: str
 
@@ -85,7 +93,7 @@ class CaseOut(_M):
 
 
 class CaseRunOut(_M):
-    run: Literal["primary", "sensitivity"]
+    run: Literal["primary", "primary_indication", "primary_strict", "sensitivity"]
     rank: RankOut | None
     population: int
     hit: bool
@@ -97,11 +105,15 @@ class CaseRunOut(_M):
     reason: Literal[
         "hit", "ranked_below_top", "not_a_candidate", "no_label_mapping", "not_evaluable"
     ]
+    chance_hit: float | None
+    percentile: float | None
 
 
 class CaseResultOut(_M):
     case: CaseOut
     primary: CaseRunOut
+    primary_indication: CaseRunOut
+    primary_strict: CaseRunOut
     sensitivity: CaseRunOut
     faers: StatsOut | None
     faers_inverse: bool
@@ -113,6 +125,7 @@ class SummaryOut(_M):
     informative_hits: int
     misses: int
     not_evaluable: int
+    expected_hits_by_chance: float
 
 
 class ValidationPart(_M):
@@ -250,6 +263,9 @@ class GoalSummaryOut(_M):
     label_terms: list[str]
     faers_pts: list[str]
     benefit_keys: list[str]
+    inverse_tested: int
+    inverse_found: int
+    inverse_expected_by_chance: float
 
 
 class Common(_M):

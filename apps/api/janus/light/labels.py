@@ -30,6 +30,7 @@ class _Acc:
     sections: set[str] = field(default_factory=set[str])
     terms: set[str] = field(default_factory=set[str])
     evidence: set[str] = field(default_factory=set[str])
+    specific: bool = False
 
 
 def label_signals(
@@ -58,6 +59,7 @@ def label_signals(
             a.sections.add(section)
             a.terms.add(term)
             a.evidence.update(row.evidence)
+            a.specific = a.specific or not row.nonspecific
     out: dict[tuple[str, str], LabelSignal] = {}
     for (key, goal), a in sorted(acc.items()):
         out[(key, goal)] = LabelSignal(
@@ -69,6 +71,7 @@ def label_signals(
             sections=tuple(sorted(a.sections)),
             terms=tuple(sorted(a.terms)),
             evidence=(ONSIDES_EVIDENCE_ID, *sorted(a.evidence)),
+            nonspecific=not a.specific,
         )
     return out
 

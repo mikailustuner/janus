@@ -1,10 +1,10 @@
-"""Ranking of a goal's candidates (design §6, DP5; P7, P9, P15). Pure.
+"""Ranking of a goal's candidates (design §6, DP5, DP23; P7, P9, P15). Pure.
 
-Key, in order: number of signal types, number of label regions, Wilson lower bound (95 %) of the
-share of the ingredient's labels that list the effect, number of such labels, FAERS reports of the
-inverse signal. All descending. The ratio (ROR, PRR) never enters the key. Equal keys share a tied
-rank range (competition ranking); within a tie the list order is the ingredient key, which is not a
-rank.
+Key K1 (statistician pass, adopted as a post-hoc change, DP23), in order, all descending: has a
+label signal, Wilson lower bound (95 %) of the share of the ingredient's labels that list the
+effect, number of label regions, number of such labels, has an inverse FAERS signal, FAERS reports
+of that signal. The ratio (ROR, PRR) never enters the key. Equal keys share a tied rank range
+(competition ranking); within a tie the list order is the ingredient key, which is not a rank.
 """
 
 from __future__ import annotations
@@ -30,17 +30,18 @@ def wilson_low(k: int, n: int, z: float = Z) -> float:
     return max(0.0, (centre - spread) / (2 * (n + z2)))
 
 
-type SortKey = tuple[int, int, float, int, int]
+type SortKey = tuple[int, float, int, int, int, int]
 
 
 def sort_key(label: LabelSignal | None, inverse: InverseSignal | None) -> SortKey:
     """Smaller sorts first (every component is negated)."""
-    types = (label is not None) + (inverse is not None)
-    regions = len(label.regions) if label else 0
+    has_label = label is not None
     share = wilson_low(label.labels_with_effect, label.labels_total) if label else 0.0
+    regions = len(label.regions) if label else 0
     labels = label.labels_with_effect if label else 0
+    has_inverse = inverse is not None
     reports = inverse.stats.cells.a if inverse else 0
-    return (-types, -regions, -share, -labels, -reports)
+    return (-has_label, -share, -regions, -labels, -has_inverse, -reports)
 
 
 def tied_ranks(keys: Sequence[SortKey]) -> list[Rank]:

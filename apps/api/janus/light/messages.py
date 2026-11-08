@@ -45,6 +45,10 @@ SENTENCES: Final[dict[str, str]] = {
         "Donated reports of an improvement, counted only in groups of 20 or more, with noise "
         "added. The reports are not checked."
     ),
+    "nonspecific_term": (
+        "This side effect is also a common sign of illness or of a medicine's toxicity; on its own "
+        "it is weak support."
+    ),
     "patient_layer_unavailable": "Donated reports cannot be counted right now.",
     "mechanism_source_not_connected": "No source for a possible mechanism is connected yet.",
     "not_checked_against_indications": (

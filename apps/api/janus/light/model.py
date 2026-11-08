@@ -24,7 +24,7 @@ REVIEW_STATUS: Final = "ai_reviewed_pending_expert"
 
 SignalType = Literal["label_effect", "inverse_faers", "patient_reported"]
 MapStatus = Literal["active", "excluded"]
-RunName = Literal["primary", "sensitivity"]
+RunName = Literal["primary", "primary_indication", "primary_strict", "sensitivity"]
 Reason = Literal["hit", "ranked_below_top", "not_a_candidate", "no_label_mapping", "not_evaluable"]
 LightStatus = Literal["experimental", "prototype"]
 
@@ -45,6 +45,7 @@ class MappingRow:
     status: MapStatus
     evidence: tuple[str, ...]  # paper evidence ids
     rationale: str
+    nonspecific: bool = False  # also a common sign of illness or toxicity (pharmacologist F4)
 
 
 @dataclass(frozen=True)
@@ -97,6 +98,7 @@ class LabelSignal:
     sections: tuple[str, ...]
     terms: tuple[str, ...]
     evidence: tuple[str, ...]  # dataset:onsides first, then the mapping papers (sorted)
+    nonspecific: bool = False  # every matched term is a nonspecific one
 
 
 @dataclass(frozen=True)
@@ -145,6 +147,8 @@ class CaseRun:
     labels_removed_not_in_openfda: int
     signal_types: tuple[SignalType, ...]
     reason: Reason
+    chance_hit: float | None  # TOP_K / population: a random candidate's chance of a hit
+    percentile: float | None  # worst rank / population
 
 
 @dataclass(frozen=True)
@@ -159,7 +163,9 @@ class CaseFaers:
 @dataclass(frozen=True)
 class CaseResult:
     case: Case
-    primary: CaseRun
+    primary: CaseRun  # the worse of the two primary variants
+    primary_indication: CaseRun
+    primary_strict: CaseRun
     sensitivity: CaseRun
     faers: CaseFaers | None
 
@@ -170,6 +176,7 @@ class RunSummary:
     informative_hits: int
     misses: int
     not_evaluable: int
+    expected_hits_by_chance: float  # sum of chance_hit over informative ranked cases
 
 
 @dataclass(frozen=True)

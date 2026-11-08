@@ -443,6 +443,54 @@ notes = ["Cited for the reporting odds ratio and the limits of case-non-case stu
 storage = "cited_only"
 
 [[sources]]
+id = "ghofrani_2006"
+section = "cited"
+name = "Ghofrani HA, Osterloh IH, Grimminger F, Nat Rev Drug Discov 2006;5(8):689-702"
+license = "Subscription"
+notes = ["Cited for the history of sildenafil (light-face mapping)."]
+storage = "cited_only"
+
+[[sources]]
+id = "johnstone_1997"
+section = "cited"
+name = "Johnstone MA, Am J Ophthalmol 1997;124(4):544-547"
+license = "Subscription"
+notes = ["Cited for eyelash growth with latanoprost (light-face mapping)."]
+storage = "cited_only"
+
+[[sources]]
+id = "wilding_2021"
+section = "cited"
+name = "Wilding JPH, Batterham RL, Calanna S et al., N Engl J Med 2021;384(11):989-1002"
+license = "Subscription"
+notes = ["Cited for semaglutide and weight management (light-face validation)."]
+storage = "cited_only"
+
+[[sources]]
+id = "krystal_2010"
+section = "cited"
+name = "Krystal AD, Durrence HH, Scharf M et al., Sleep 2010;33(11):1553-1561"
+license = "Subscription"
+notes = ["Cited for low-dose doxepin and insomnia (light-face validation)."]
+storage = "cited_only"
+
+[[sources]]
+id = "glaser_2019"
+section = "cited"
+name = "Glaser DA, Hebert AA, Nast A et al., J Am Acad Dermatol 2019;80(1):128-138"
+license = "Subscription"
+notes = ["Cited for topical glycopyrronium and hyperhidrosis (light-face validation)."]
+storage = "cited_only"
+
+[[sources]]
+id = "kaufman_1998"
+section = "cited"
+name = "Kaufman KD, Olsen EA, Whiting D et al., J Am Acad Dermatol 1998;39(4):578-589"
+license = "Subscription"
+notes = ["Cited for finasteride and androgenetic alopecia (light-face validation)."]
+storage = "cited_only"
+
+[[sources]]
 id = "eudravigilance"
 section = "cited"
 name = "EudraVigilance / adrreports.eu — European Medicines Agency"

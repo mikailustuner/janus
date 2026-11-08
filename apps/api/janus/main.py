@@ -13,6 +13,7 @@ from janus.contributions.vocabulary import load_vocabulary
 from janus.db.pool import Database
 from janus.http_policy.body_limits import BodyPolicyMiddleware
 from janus.http_policy.routes import classify, operational_router
+from janus.light.store import LightHolder
 from janus.memory.reader import CountsHolder
 from janus.memory.shared import ContributionsSource
 from janus.memory.vocabulary import load_events
@@ -78,6 +79,7 @@ def create_app(
     path = settings.event_vocabulary_path
     app.state.event_vocabulary = load_events(path if path.suffix == ".csv" else EVENT_VOCABULARY)
     app.state.counts = CountsHolder(settings.data_dir)
+    app.state.light = LightHolder(settings.data_dir)
     vocab = app.state.event_vocabulary
     app.state.glossary = load_glossary(
         extra=vocabulary_digest(
@@ -104,6 +106,7 @@ def create_app(
     from janus.cascades.router import router as cascades_router
     from janus.contributions.router import router as contributions_router
     from janus.integrity.router import router as integrity_router
+    from janus.light.router import router as light_router
     from janus.memory.router import router as memory_router
     from janus.memory.router import snapshot_router as memory_snapshot_router
     from janus.notes.router import donation as notes_donation_router
@@ -124,6 +127,7 @@ def create_app(
         notes_router,
         notes_donation_router,
         passport_router,
+        light_router,
         *extra_routers,
     ]
     for router in routers:
