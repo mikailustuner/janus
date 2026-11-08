@@ -247,6 +247,9 @@ def test_the_committed_vocabulary_is_valid_and_accepted() -> None:
         "depression": "crisis_support",
         "rash": "urgent_care_skin",
         "arrhythmia": "urgent_care_heart",
+        "gastric_ulcer_bleed": "urgent_care_gi",
+        "seizures": "urgent_care_seizure",
+        "heart_failure": "urgent_care_breathing",
     }
     periph = vocab.get("peripheral_oedema")
     assert periph is not None and "Peripheral swelling" in periph.pts

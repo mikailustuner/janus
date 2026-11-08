@@ -224,7 +224,7 @@ publisher = "U.S. Food and Drug Administration"
 license = "CC0 1.0"
 notes = [
   "Spontaneous reports; not deduplicated across cases; counts are reports, not people.",
-  "Event terms are MedDRA Preferred Terms as published in FAERS. MedDRA® is a registered trademark of ICH. Not an FDA endorsement.",
+  "Event terms are MedDRA Preferred Terms as published in FAERS. MedDRA® the Medical Dictionary for Regulatory Activities terminology is the international medical terminology developed under the auspices of ICH. MedDRA® trademark is registered by IFPMA on behalf of ICH. Not an FDA endorsement.",
 ]
 storage = "cache"
 region = "US"

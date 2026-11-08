@@ -74,7 +74,7 @@ def test_pair_contract(client: TestClient) -> None:
         "screening_statistic" in body["notices"]
         and "deduplicated_by_case_version_only" in body["notices"]
     )
-    assert body["meddra_notice"] == "MedDRA® is a registered trademark of ICH"
+    assert body["meddra_notice"] == "MedDRA® trademark is registered by IFPMA on behalf of ICH."
     assert body["disclaimer"].startswith("Janus provides information, not medical advice.")
     assert body["citation"] == {
         "evidence_id": "dataset:faers",
@@ -116,7 +116,7 @@ def test_regions_and_combination_contracts(client: TestClient) -> None:
         "/memory/regions", json={"ingredients": ["Q1"], "event": {"pt": "Cough"}}
     ).json()
     assert [row["region"] for row in r["rows"]] == ["TR", "EU", "US", "OTHER", "UNKNOWN", "ALL"]
-    assert r["adrreports_url"] == "https://www.adrreports.eu/"
+    assert r["adrreports_url"] == "https://www.adrreports.eu"
     assert {
         "region_is_report_origin",
         "eu_member_states_not_separable",

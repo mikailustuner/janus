@@ -119,7 +119,7 @@ def test_phase2_sources_have_notice_entries() -> None:
     text = render_notice(registry, ["faers", "bdpm", "cima"])
     for needle in (
         "Adverse Event Monitoring System (AEMS, formerly FAERS)",
-        "MedDRA® is a registered trademark of ICH",
+        "MedDRA® trademark is registered by IFPMA on behalf of ICH.",
         "Licence Ouverte (Etalab)",
         "Reuse with attribution (Ley 37/2007)",
     ):

@@ -60,7 +60,7 @@ from janus.memory.stats import (
 )
 from janus.memory.vocabulary import EventVocabulary
 
-ADRREPORTS_URL = "https://www.adrreports.eu/"  # fixed public address; form verified before launch
+ADRREPORTS_URL = "https://www.adrreports.eu"  # fixed public address, no user value
 PER_PAIR_EVENTS = 10
 PAIRS_WITH_EVENTS = 5
 SINGLE_EVENTS = 10
@@ -145,7 +145,7 @@ def common_fields(
         "notices": notices,
         "disclaimer": messages.DISCLAIMER,
         "attribution": messages.ATTRIBUTION.format(date=meta.snapshot_date),
-        "meddra_notice": meta.meddra_notice if has_pt else None,
+        "meddra_notice": messages.MEDDRA_NOTICE if has_pt else None,
     }
 
 
@@ -548,6 +548,6 @@ def snapshot(session: Session, ctx: Context, layers: Mapping[str, str]) -> Snaps
         unknown_share=(unknown / all_reports) if all_reports else 0.0,
         layers=dict(layers),
         notices=list(messages.BASE_NOTICES),
-        meddra_notice=meta.meddra_notice,
+        meddra_notice=messages.MEDDRA_NOTICE,
         attribution=messages.ATTRIBUTION.format(date=meta.snapshot_date),
     )

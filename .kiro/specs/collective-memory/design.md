@@ -284,7 +284,7 @@ Common {
   notices: [NoticeCode],               # closed set, §7
   disclaimer: "Janus provides information, not medical advice. Research prototype — not a medical device.",
   attribution: "Source: FDA AEMS (formerly FAERS), snapshot <date>. Not an FDA endorsement.",
-  meddra_notice: "MedDRA® is a registered trademark of ICH" | absent
+  meddra_notice: "MedDRA® trademark is registered by IFPMA on behalf of ICH." | absent
 }
 Cells  {a, b, c, d, n: int}                         # raw table
 Estimates {prr, ror: float, ror_ci: {low, high, level: 0.95, method: "woolf_log"},
@@ -309,7 +309,7 @@ CombinationOut { …Common, region, scope, level: "combination"|"pairwise"|"sing
   singles: [{key, reports: int, events: [{pt, reports, stats}]}] | [] }
 RegionsOut { …Common, scope, rows: [{region, n_primary: int, n_all: int, reports: int, stats: Stats | null}] (6 rows, ALL last),
   unknown: {reports: int, share: float}, basis: [{region, occurrence: int, reporter_fallback: int}],
-  adrreports_url: str }        # fixed public address of adrreports.eu (form verified in task 13); no user value
+  adrreports_url: str }        # "https://www.adrreports.eu" (owner decision 2026-11-08); no user value
 ```
 Floats are IEEE doubles, not rounded. `stats.estimates` is `null` exactly when `a = 0`. `citation` is built by `evidence.py` (§6).
 
@@ -382,6 +382,13 @@ Notices: `spontaneous_reporting`, `not_incidence`, `deduplicated_by_case_version
 `estimate_uses_continuity_correction`, `interval_approximate`, `weak_pattern`, `combination_caveat`,
 `set_counts_are_lower_bounds`, `pairwise_shown`, `single_shown`, `event_not_reported_in_window`, `benefit_not_in_faers`,
 `hidden`, `hidden_under_20_noise_added`, `layer_unavailable`, `not_available`, `memory_unavailable`.
+Safety lines (owner decisions 2026-11-08; `experience` Requirement 7): `crisis_support`, `urgent_care_skin`, `urgent_care_heart`,
+`urgent_care_gi`, `urgent_care_seizure`, `urgent_care_breathing`. Their sentences hold no number: `{emergency}` and `{crisis}` are
+filled by the client from `Memory.emergency.<region>` and `Memory.crisis.<region>` (region `US`, `TR`, `EU`, `OTHER`, `UNKNOWN`;
+tables `EMERGENCY` and `CRISIS` in `messages.py`, the same five tables in all five languages). The API returns only the line code.
+The MedDRA notice has a short form for the screen (`MEDDRA_NOTICE`, in every response with a PT, taken from the code, not from the
+counts file) and a long form for NOTICE and exports (`MEDDRA_NOTICE_LONG`, also written to the builder metadata of new builds).
+English wording uses US spelling (labels and messages); MedDRA PT strings stay as published.
 Each has an English canonical sentence in `messages.py` (scanned by the existing source-scan guard) and a
 key in the `Memory` namespace of the five message files. The wording of the statistical sentences is
 fixed by the statistician review (§8, Q6, Q11) and by `medical-safety.md` rules 1, 3, 5, 6, 9.
@@ -443,7 +450,7 @@ fixed by the statistician review (§8, Q6, Q11) and by `medical-safety.md` rules
 The client shows a ratio above 1,000 as "over 1,000" (the API returns the number).
 
 ### 8.2 Left open by the review
-The Evans paper's own χ² form and DOI (owner checks in Crossref); optional table `faers_mapping_gap` (builder lists ingredients whose reports leak through candidate name rules, so a response can say `mapping_gap_possible`; not blocking, needs a `data-pipelines` decision); the review did not tabulate EU, OTHER and US by class; rate limiting (Phase 5) decides how serious the padding limit of Q9 is.
+The Evans paper's own χ² form and DOI (owner checks in Crossref); optional table `faers_mapping_gap` (builder lists ingredients whose reports leak through candidate name rules, so a response can say `mapping_gap_possible`; **deferred by the owner on 2026-11-08 to the `drug-resolution` EU and name-rules work**, where it is recorded); the review did not tabulate EU, OTHER and US by class; rate limiting (Phase 5) decides how serious the padding limit of Q9 is.
 
 ## 9. Testing strategy
 
@@ -529,11 +536,12 @@ P1–P3 and the regional, layer and "people" properties repeat the first seed's 
 | DP21 | No PT search or autocomplete endpoint in this spec. | `GET /memory/events?q=`. | The experience gets events from the Janus vocabulary; researchers' PT search belongs to `light-face`, which can read the same `CountsReader`. |
 | DP22 | Sibling rule before `release_table` for user-layer cells (Req 5.8); coverage sentences cite `dataset:faers` instead of a new evidence kind; `denominator_sensitive` compares the five classes; χ² is Yates. **All from the statistics review.** | Exact-set matching; a cell limit per request; a noisy threshold; Pearson χ²; a `faers_snapshot` kind. | Measured: nested cells differ by ±4 with 97% probability, exact-set matching removes the meaning of "donations naming A", per-request limits do not stop repeated requests; Yates is the conservative form (7,926 fewer Evans verdicts, no contradiction with the ROR bound); `dataset:faers` already carries source, licence and snapshot. |
 | DP23 | The Janus event vocabulary lives in the package, `apps/api/janus/memory/memory_events.csv`, not in `data/`. The donation vocabulary (`contributions`) reads the `active` keys of the same file; `placeholder_events.txt` is removed. **Owner review 2026-11-08: all 34 adverse and 5 benefit keys accepted and `active`.** | Keep it in `data/` and copy it into the image. | The API image is built from `apps/api` only (`data/` is not in the build context), and the vocabulary is read at runtime by donations, the key path and the finding hook; one file, no copy to drift. `data/README.md` points to it. |
+| DP24 | **Owner decisions 2026-11-08 (second round).** Six safety lines (`crisis_support`, `urgent_care_skin`, `urgent_care_heart`, `urgent_care_gi` for `gastric_ulcer_bleed`, `urgent_care_seizure` for `seizures`, `urgent_care_breathing` for `heart_failure`); numbers live in `EMERGENCY` and `CRISIS` tables keyed by the user's region (US 911 and 988 call or text; TR 112; EU 112 plus the local crisis service; OTHER and UNKNOWN the local emergency number), not in the sentences; the MedDRA notice has a short and a long form; the EU link is `https://www.adrreports.eu`; English labels use US spelling. | Region-specific sentences per line (5 × 6 × 5 strings); numbers inside the sentences. | One place to re-check the numbers before launch, one sentence per line and language, and a test that no sentence holds a number. |
 
 ## 12. Open items
 Owner decisions of 2026-11-08 are applied: DP12 (dataset-level citation), migration `0007` (DP17), the Evans paper (verified in Crossref; `evans_2001`; criteria named "Evans criteria (Yates-corrected χ²)"), and the owner's review of the PT lists (all 39 keys `active`, DP23; the key path, the finding hook and donations use them).
 
 Open:
-1. **Pharmacist or physician review of the whole mapping** before any public claim; native-speaker check of labels and messages; further safety lines (GI bleeding, seizures, heart failure), crisis-line numbers per region (all on `docs/pre-launch-checklist.md`).
-2. Optional `faers_mapping_gap` table (§8.2); needs a `data-pipelines` decision.
-3. Verify the adrreports.eu address form before the link is used (Req 3.2); the privacy page text must state the residual limits of Req 5.9 (`experience`); `docs/pre-launch-checklist.md` already carries the MedDRA item.
+1. **Pharmacist or physician review of the whole mapping** before any public claim; native-speaker check of labels and messages (both on `docs/pre-launch-checklist.md`).
+2. Decided 2026-11-08: the three further safety lines (DP24 below), regional crisis and emergency numbers in the catalogue, the adrreports.eu link, the MedDRA notice wording, US spelling of English labels, and the deferral of `faers_mapping_gap` to `drug-resolution`. Re-checks before launch (numbers, link, MSSO terms) are on the checklist.
+3. The privacy page text must state the residual limits of Req 5.9 (`experience`).

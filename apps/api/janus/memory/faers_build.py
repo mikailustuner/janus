@@ -57,7 +57,11 @@ REGIONS = ("TR", "EU", "US", "OTHER", "UNKNOWN")
 ALL = "ALL"
 SUSPECT_ROLES = frozenset({"PS", "SS", "I"})
 EXPOSURE_ROLES = SUSPECT_ROLES | {"C"}
-MEDDRA_NOTICE = "MedDRA® is a registered trademark of ICH"
+MEDDRA_NOTICE = (
+    "MedDRA® the Medical Dictionary for Regulatory Activities terminology is the international "
+    "medical terminology developed under the auspices of ICH. MedDRA® trademark is registered "
+    "by IFPMA on behalf of ICH."
+)
 EVENT_TERMS_NOTE = "Event terms are MedDRA Preferred Terms as published in FAERS."
 COUNTS_DB = "faers_counts.duckdb"
 META = "meta.json"

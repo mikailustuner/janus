@@ -1,7 +1,7 @@
 # Implementation Plan: Collective Memory, Phase 2
 
 > Scope: `apps/api` (`janus/memory/`, one migration) and the message files in `apps/web`.
-> Requirement numbers refer to requirements.md; property numbers (P1–P31) and decisions (DP1–DP23)
+> Requirement numbers refer to requirements.md; property numbers (P1–P31) and decisions (DP1–DP24)
 > refer to design.md. Tasks 1–13 executed 2026-11-08 (checkpoint 1 is `338d7ce`; task 14 is the
 > final checkpoint). No health data in logs, fixtures or test output; tests use sentinel values.
 > Checkpoints run every lint, format, type-check and test step (ruff, ruff format, pyright strict,
@@ -130,7 +130,7 @@
   - [x] 12.2 Example test: the required sentences (disclaimer, limits, window, attribution, MedDRA notice, nothing-found) are present in every language. _Requirements: 8.6, 8.7_
 
 - [x] 13. Contracts, data docs and write-up
-  - Optional `faers_mapping_gap` table in the builder (design §8.2): not built, the owner has not asked for it.
+  - Optional `faers_mapping_gap` table in the builder (design §8.2): not built; deferred by the owner on 2026-11-08 to the `drug-resolution` EU and name-rules work.
   - Record the contracts of design §5 in the open items of `experience` (rendering, five-language
     wording, separate panels, MedDRA notice, demo exclusion), `medication-passport` (pair and
     combination for the merged list), `doctor-loop` (numbers printed in the note, regional ids, outcomes

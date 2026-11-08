@@ -58,4 +58,4 @@ Give the doctor a one-page, cited note in the doctor's language, and let the doc
   region TR, EU or US); the outcome store of this spec plugs in by returning cells for (ingredient set, Janus event key,
   direction). Until then `POST /memory/shared` answers `not_available` for `outcomes`. Outcomes are released through the same
   k = 20, noise and sibling rule; they are never summed with donations.
-- The note carries the safety lines for events whose Janus key has a `safety_line`.
+- The note carries the safety lines for events whose Janus key has a `safety_line` (six lines, with the emergency and crisis numbers of the user's region from the `Memory` catalogue), and the long MedDRA notice (`MEDDRA_NOTICE_LONG`) when it prints a Preferred Term.

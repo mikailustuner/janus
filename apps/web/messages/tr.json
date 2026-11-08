@@ -16,7 +16,21 @@
   "Memory": {
     "screening": "Bu bir tarama istatistiğidir. Çok sayıda ilaç–olay çifti aynı anda incelenir ve çoğu bu ölçütleri karşılar; bu yüzden ölçütleri karşılamak yaygındır ve ilacın olaya neden olduğuna dair bir kanıt değildir.",
     "attribution": "Kaynak: FDA AEMS (eski adıyla FAERS), veri tarihi {date}. FDA tarafından desteklenmemektedir.",
-    "meddra": "MedDRA® is a registered trademark of ICH",
+    "meddra": "MedDRA® trademark is registered by IFPMA on behalf of ICH.",
+    "emergency": {
+      "US": "911'i",
+      "TR": "112'yi",
+      "EU": "112'yi",
+      "OTHER": "yerel acil durum numaranızı",
+      "UNKNOWN": "yerel acil durum numaranızı"
+    },
+    "crisis": {
+      "US": "988'i arayın veya 988'e kısa mesaj gönderin (Suicide and Crisis Lifeline)",
+      "TR": "112'yi arayın",
+      "EU": "112'yi veya yerel kriz destek hizmetinizi arayın",
+      "OTHER": "yerel acil durum numaranızı arayın",
+      "UNKNOWN": "yerel acil durum numaranızı arayın"
+    },
     "codes": {
       "spontaneous_reporting": "Bildirimler gönüllü olarak gönderilir ve doğrulanmaz.",
       "not_incidence": "Sayılar, bir olayın ne sıklıkta görüldüğünü göstermez.",
@@ -51,9 +65,12 @@
       "layer_unavailable": "Bu katman şu anda kullanılamıyor.",
       "not_available": "Henüz mevcut değil.",
       "memory_unavailable": "Kolektif Hafıza verileri şu anda kullanılamıyor.",
-      "crisis_support": "Kendinize zarar verme düşünceleri ortaya çıkarsa yerel acil durum numaranızı (Türkiye ve AB'de 112, ABD'de 911) veya bölgenizdeki bir kriz hattını arayın.",
-      "urgent_care_skin": "Şiddetli, yayılan veya kabarcıklı bir döküntü ya da ateşin veya ağız yaralarının eşlik ettiği bir döküntü için acil tıbbi bakım alın. Yüzünüz veya dudaklarınız şişerse, nefes almakta zorlanırsanız ya da kendinizi çok kötü hissederseniz acil yardım hattını arayın (Türkiye ve AB'de 112, ABD'de 911).",
-      "urgent_care_heart": "Göğüs ağrısı, nefes almada güçlük veya bayılma için acil yardım hattını arayın (Türkiye ve AB'de 112, ABD'de 911). Hızlı ya da düzensiz kalp atışı da acil tıbbi bakım gerektirir.",
+      "crisis_support": "Kendinize zarar verme düşünceleri ortaya çıkarsa {crisis}.",
+      "urgent_care_skin": "Şiddetli, yayılan veya kabarcıklı bir döküntü ya da ateşin veya ağız yaralarının eşlik ettiği bir döküntü için acil tıbbi bakım alın. Yüzünüz veya dudaklarınız şişerse, nefes almakta zorlanırsanız ya da kendinizi çok kötü hissederseniz {emergency} arayın.",
+      "urgent_care_heart": "Göğüs ağrısı, nefes almada güçlük veya bayılma için {emergency} arayın. Hızlı ya da düzensiz kalp atışı da acil tıbbi bakım gerektirir.",
+      "urgent_care_gi": "Kan kusma ya da siyah renkli dışkı acil tıbbi bakım gerektirir. Kendinizi baygın veya çok kötü hissediyorsanız {emergency} arayın.",
+      "urgent_care_seizure": "Bir nöbet (havale) için acil tıbbi bakım alın. Nöbet 5 dakikadan uzun sürerse, tekrarlarsa ya da yaralanma veya nefes almada güçlük eşlik ederse {emergency} arayın.",
+      "urgent_care_breathing": "Ani başlayan veya giderek kötüleşen nefes darlığı için acil tıbbi bakım alın. Nefes darlığı şiddetliyse ya da göğüs ağrısı eşlik ediyorsa {emergency} arayın.",
       "tr_reports_small_self_selected": "Türkiye'den gelen bildirimler azdır ve isteğe bağlı olarak gönderilir. Türkiye'de ilaçların nasıl kullanıldığını göstermez."
     }
   }

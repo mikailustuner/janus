@@ -16,13 +16,27 @@
   "Memory": {
     "screening": "This is a screening statistic. Many medicine–event pairs are examined at once and most of them meet these criteria, so meeting them is common and is not evidence that the medicine causes the event.",
     "attribution": "Source: FDA AEMS (formerly FAERS), snapshot {date}. Not an FDA endorsement.",
-    "meddra": "MedDRA® is a registered trademark of ICH",
+    "meddra": "MedDRA® trademark is registered by IFPMA on behalf of ICH.",
+    "emergency": {
+      "US": "911",
+      "TR": "112",
+      "EU": "112",
+      "OTHER": "your local emergency number",
+      "UNKNOWN": "your local emergency number"
+    },
+    "crisis": {
+      "US": "call or text 988 (Suicide and Crisis Lifeline)",
+      "TR": "call 112",
+      "EU": "call 112 or your local crisis service",
+      "OTHER": "call your local emergency number",
+      "UNKNOWN": "call your local emergency number"
+    },
     "codes": {
       "spontaneous_reporting": "Reports are sent voluntarily and are not verified.",
       "not_incidence": "The counts do not show how often an event happens.",
       "deduplicated_by_case_version_only": "Only repeated versions of the same case are merged, so one event can still appear in more than one case.",
       "window_includes_follow_ups": "Counts cover reports received or updated in the four quarters {first}–{last}, including follow-up versions of cases first received earlier.",
-      "denominator_mapped_reports": "Counts use only reports that name at least one medicine Janus recognises ({share} of the reports in this window). Some spellings are not recognised, so a pattern can be missed. Figures for all reports are shown beside these.",
+      "denominator_mapped_reports": "Counts use only reports that name at least one medicine Janus recognizes ({share} of the reports in this window). Some spellings are not recognized, so a pattern can be missed. Figures for all reports are shown beside these.",
       "region_is_report_origin": "A report's region is the country where the event is said to have happened or, when that is missing, where the reporter is. It does not tell where the medicine was taken or where it was bought.",
       "eu_member_states_not_separable": "EU means the 27 member states pooled; FAERS cannot tell them apart.",
       "regions_not_comparable": "Regions are not comparable as rates, because reporting habits differ. A different label in two regions can come from different numbers of reports, not from a different pattern. Each region is compared only with the other reports from the same region.",
@@ -35,12 +49,12 @@
       "not_disproportionate": "The event does not appear in a clearly larger share of the reports that name this medicine. This does not mean there is no association.",
       "weak": "Few reports; treat as a weak pattern.",
       "weak_pattern": "Few reports; treat as a weak pattern.",
-      "disproportionate": "The event appears in a larger share of the reports that name this medicine than in the other reports that name a recognised medicine.",
+      "disproportionate": "The event appears in a larger share of the reports that name this medicine than in the other reports that name a recognized medicine.",
       "estimate_uses_continuity_correction": "The size of this ratio depends on a small adjustment made because a count is zero.",
       "interval_approximate": "The range is approximate and is less reliable when few reports are involved.",
       "denominator_sensitive": "The result changes when all reports are used as the comparison.",
       "combination_caveat": "These counts are for reports that name all of these medicines. The comparison group is every other report, including reports that name only some of them, so a pattern here may come from just one of the medicines. It does not show that taking them together has an effect.",
-      "set_counts_are_lower_bounds": "Counts for a set of medicines are lower bounds: a report counts only if every medicine in it was recognised.",
+      "set_counts_are_lower_bounds": "Counts for a set of medicines are lower bounds: a report counts only if every medicine in it was recognized.",
       "below_display_threshold": "Too few reports name all of these medicines, so smaller groups are shown.",
       "pairwise_shown": "Showing pairs of these medicines.",
       "single_shown": "Showing each medicine on its own.",
@@ -51,9 +65,12 @@
       "layer_unavailable": "This layer is not available right now.",
       "not_available": "Not available yet.",
       "memory_unavailable": "Collective Memory data is not available right now.",
-      "crisis_support": "If thoughts of self-harm come up, call your local emergency number (112 in Türkiye and the EU, 911 in the US) or a crisis line in your region.",
-      "urgent_care_skin": "Get urgent medical care for a rash that is severe, spreading or blistering, or that comes with fever or mouth sores. If your face or lips swell, you find it hard to breathe or you feel very unwell, call emergency services (112 in Türkiye and the EU, 911 in the US).",
-      "urgent_care_heart": "Call emergency services (112 in Türkiye and the EU, 911 in the US) for chest pain, trouble breathing or fainting. A racing or irregular heartbeat also needs urgent medical care.",
+      "crisis_support": "If thoughts of self-harm come up, {crisis}.",
+      "urgent_care_skin": "Get urgent medical care for a rash that is severe, spreading or blistering, or that comes with fever or mouth sores. If your face or lips swell, you find it hard to breathe or you feel very unwell, call {emergency}.",
+      "urgent_care_heart": "Call {emergency} for chest pain, trouble breathing or fainting. A racing or irregular heartbeat also needs urgent medical care.",
+      "urgent_care_gi": "Vomiting blood, or black stools, needs urgent medical care. If you also feel faint or very unwell, call {emergency}.",
+      "urgent_care_seizure": "Get urgent medical care for a seizure (convulsion). Call {emergency} if it lasts more than 5 minutes, repeats, or comes with an injury or trouble breathing.",
+      "urgent_care_breathing": "Get urgent medical care for sudden or worsening breathlessness. If it is severe or comes with chest pain, call {emergency}.",
       "tr_reports_small_self_selected": "Reports from Türkiye are few and are sent by choice. They do not show how medicines are used in Türkiye."
     }
   }

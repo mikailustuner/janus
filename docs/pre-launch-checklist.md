@@ -5,8 +5,9 @@ defers a check to launch.
 
 - [ ] **MedDRA terms for public display.** FAERS event terms are shown as the MedDRA Preferred
   Terms published by FDA, without any MedDRA hierarchy (SOC, HLT, LLT). Verify the MSSO terms for
-  public display of PTs, and confirm that the notice "MedDRA® is a registered trademark of ICH"
-  appears on every screen, export and document that shows a PT (`data-pipelines` DP33).
+  public display of PTs, and whether the notice may be translated (it is English in all five languages). The notice wording is decided (owner, 2026-11-08): short form on every screen that shows a PT
+  ("MedDRA® trademark is registered by IFPMA on behalf of ICH."), long form in NOTICE and exports (`MEDDRA_NOTICE_LONG`); confirm that it appears on every screen, export and
+  document that shows a PT, including the doctor note (`data-pipelines` DP33).
 - [ ] **Scheduling.** Weekly, monthly and quarterly pipeline runs (`data-pipelines` DP11, DP27).
 - [ ] **GS1 AI table and a real box.** Confirm AI 710 to 714 from the GS1 General Specifications
   and test the French and Spanish adapters with a real box if one becomes available
@@ -23,12 +24,11 @@ defers a check to launch.
   out (dementia, epilepsy).
 - [ ] **Native-speaker check of the labels** in Turkish, German, French and Spanish
   (`memory_events.csv`, and the `Memory` message namespace), after the localization-reviewer agent's pass.
-- [ ] **Crisis and support lines per region** (`experience` Requirement 7): curate and verify the numbers for TR, EU and US
-  before they are shown; confirm the urgent-care wording for severe skin reactions and arrhythmia with a clinician.
-- [ ] **EudraVigilance public address.** Verify the exact address form of adrreports.eu before the link is used
-  (`collective-memory` Requirement 3.2).
-- [ ] **MedDRA notice wording.** Check the exact required wording of the MedDRA trademark notice (the owner of MedDRA is
-  named as IFPMA acting for ICH) and whether it may be translated; the `Memory.meddra` string is English in all five
-  languages today (`collective-memory` safety review S10).
-- [ ] **Further safety lines.** The owner decides whether `gastric_ulcer_bleed` (blood in vomit or black stools), `seizures`
-  and `heart_failure` also get an urgent-care line (safety review S4, drafts in `memory-safety-review.md`).
+- [ ] **Crisis and emergency numbers per region: re-check.** Decided 2026-11-08 (`experience` Requirement 7.3; tables
+  `Memory.emergency` and `Memory.crisis` in five languages and `EMERGENCY`/`CRISIS` in `messages.py`): US 911 and 988
+  (call or text, Suicide and Crisis Lifeline); TR 112; EU 112 plus the local crisis service; OTHER and UNKNOWN the local
+  emergency number. Re-check every number and the 988 name against the official sources, and confirm the urgent-care wording of
+  the six lines (skin, heart, GI bleeding, seizure, breathlessness, crisis) with a clinician.
+- [ ] **EudraVigilance link: re-check.** The link is `https://www.adrreports.eu` (owner, 2026-11-08; link only, no ingestion;
+  `collective-memory` Requirement 3.2). Check that it still opens the public reports site and that its reuse terms still
+  allow a link from Janus.

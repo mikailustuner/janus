@@ -48,8 +48,11 @@ fetched at runtime and must not be committed; CI fails if one is tracked.
 - `memory_events.csv` is **not** in `data/`: it ships inside the API package as
   `apps/api/janus/memory/memory_events.csv` (the API image is built from `apps/api` only). It is the Janus
   event vocabulary (`collective-memory` design §4.6, DP23): one row per event key with labels in five
-  languages, the FAERS MedDRA Preferred Terms it covers (as published in FAERS; MedDRA® is a registered
-  trademark of ICH, no hierarchy), the PIPC rows it stands for, and a `status`. Drafted by the AI
+  languages (English with US spelling; the PT strings stay as published), the FAERS MedDRA Preferred Terms
+  it covers (as published in FAERS, no hierarchy; MedDRA® trademark is registered by IFPMA on behalf of ICH),
+  the PIPC rows it stands for, a `status`, and an optional `safety_line` (six lines, owner decisions
+  2026-11-08: `crisis_support`, `urgent_care_skin`, `urgent_care_heart`, `urgent_care_gi`, `urgent_care_seizure`,
+  `urgent_care_breathing`; wording and regional numbers are in the `Memory` message namespace). Drafted by the AI
   assistant, reviewed by the pharmacologist agent and the localization-reviewer agent, and **accepted by the
   project owner on 2026-11-08** (`.kiro/specs/collective-memory/event-mapping-review.md`). The whole mapping
   still needs review by a pharmacist or physician, and the labels a native check, before any public claim.

@@ -16,7 +16,21 @@
   "Memory": {
     "screening": "Es una estadística de cribado. Se examinan a la vez muchas combinaciones de medicamento y evento y la mayoría cumple estos criterios; cumplirlos es habitual y no es una prueba de que el medicamento cause el evento.",
     "attribution": "Fuente: FDA AEMS (antes FAERS), versión del {date}. No es un respaldo de la FDA.",
-    "meddra": "MedDRA® is a registered trademark of ICH",
+    "meddra": "MedDRA® trademark is registered by IFPMA on behalf of ICH.",
+    "emergency": {
+      "US": "911",
+      "TR": "112",
+      "EU": "112",
+      "OTHER": "número de emergencias local",
+      "UNKNOWN": "número de emergencias local"
+    },
+    "crisis": {
+      "US": "llame o envíe un mensaje de texto al 988 (Suicide and Crisis Lifeline)",
+      "TR": "llame al 112",
+      "EU": "llame al 112 o a un servicio de crisis local",
+      "OTHER": "llame al número de emergencias local",
+      "UNKNOWN": "llame al número de emergencias local"
+    },
     "codes": {
       "spontaneous_reporting": "Los informes se envían de forma voluntaria y no se verifican.",
       "not_incidence": "Los recuentos no muestran con qué frecuencia ocurre un evento.",
@@ -51,9 +65,12 @@
       "layer_unavailable": "Esta capa no está disponible por ahora.",
       "not_available": "Aún no está disponible.",
       "memory_unavailable": "Los datos de la Memoria colectiva no están disponibles por ahora.",
-      "crisis_support": "Si aparecen pensamientos de hacerse daño, llame al número de emergencias local (112 en Türkiye y la UE, 911 en EE. UU.) o a una línea de crisis de su región.",
-      "urgent_care_skin": "Una erupción cutánea intensa, que se extiende o forma ampollas, o que viene con fiebre o llagas en la boca, necesita atención médica urgente. Si se hinchan la cara o los labios, le cuesta respirar o se siente muy mal, llame a emergencias (112 en Türkiye y la UE, 911 en EE. UU.).",
-      "urgent_care_heart": "Llame a emergencias (112 en Türkiye y la UE, 911 en EE. UU.) si hay dolor en el pecho, dificultad para respirar o desmayo. Un latido rápido o irregular también necesita atención médica urgente.",
+      "crisis_support": "Si aparecen pensamientos de hacerse daño, {crisis}.",
+      "urgent_care_skin": "Una erupción cutánea intensa, que se extiende o forma ampollas, o que viene con fiebre o llagas en la boca, necesita atención médica urgente. Si se hinchan la cara o los labios, le cuesta respirar o se siente muy mal, llame al {emergency}.",
+      "urgent_care_heart": "Llame al {emergency} si hay dolor en el pecho, dificultad para respirar o desmayo. Un latido rápido o irregular también necesita atención médica urgente.",
+      "urgent_care_gi": "Vomitar sangre o tener heces negras necesita atención médica urgente. Si además se siente mareado o muy mal, llame al {emergency}.",
+      "urgent_care_seizure": "Una convulsión necesita atención médica urgente. Llame al {emergency} si dura más de 5 minutos, se repite o viene con una lesión o dificultad para respirar.",
+      "urgent_care_breathing": "La falta de aire repentina o que empeora necesita atención médica urgente. Si es intensa o viene con dolor en el pecho, llame al {emergency}.",
       "tr_reports_small_self_selected": "Los informes de Türkiye son pocos y se envían de forma voluntaria. No muestran cómo se usan los medicamentos en Türkiye."
     }
   }

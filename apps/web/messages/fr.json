@@ -16,7 +16,21 @@
   "Memory": {
     "screening": "Il s'agit d'une statistique de dépistage. De nombreuses associations médicament–événement sont examinées en même temps et la plupart remplissent ces critères ; les remplir est donc courant et ne prouve pas que le médicament provoque l'événement.",
     "attribution": "Source : FDA AEMS (anciennement FAERS), version du {date}. Ne constitue pas un aval de la FDA.",
-    "meddra": "MedDRA® is a registered trademark of ICH",
+    "meddra": "MedDRA® trademark is registered by IFPMA on behalf of ICH.",
+    "emergency": {
+      "US": "le 911",
+      "TR": "le 112",
+      "EU": "le 112",
+      "OTHER": "le numéro d'urgence local",
+      "UNKNOWN": "le numéro d'urgence local"
+    },
+    "crisis": {
+      "US": "appelez ou envoyez un SMS au 988 (Suicide and Crisis Lifeline)",
+      "TR": "appelez le 112",
+      "EU": "appelez le 112 ou un service local d'aide en cas de crise",
+      "OTHER": "appelez le numéro d'urgence local",
+      "UNKNOWN": "appelez le numéro d'urgence local"
+    },
     "codes": {
       "spontaneous_reporting": "Les signalements sont envoyés volontairement et ne sont pas vérifiés.",
       "not_incidence": "Les chiffres ne montrent pas la fréquence d'un événement.",
@@ -51,9 +65,12 @@
       "layer_unavailable": "Cette couche n'est pas disponible pour le moment.",
       "not_available": "Pas encore disponible.",
       "memory_unavailable": "Les données de la Mémoire collective ne sont pas disponibles pour le moment.",
-      "crisis_support": "Si des pensées de vous faire du mal apparaissent, appelez le numéro d'urgence local (le 112 en Türkiye et dans l'UE, le 911 aux États-Unis) ou une ligne d'écoute de crise de votre région.",
-      "urgent_care_skin": "Une éruption cutanée sévère, qui s'étend ou forme des cloques, ou qui s'accompagne de fièvre ou de plaies dans la bouche, nécessite des soins médicaux urgents. Si le visage ou les lèvres gonflent, si vous avez du mal à respirer ou si vous vous sentez très mal, appelez les secours (le 112 en Türkiye et dans l'UE, le 911 aux États-Unis).",
-      "urgent_care_heart": "Appelez les secours (le 112 en Türkiye et dans l'UE, le 911 aux États-Unis) en cas de douleur thoracique, de difficulté à respirer ou d'évanouissement. Un cœur qui bat très vite ou de façon irrégulière nécessite aussi des soins médicaux urgents.",
+      "crisis_support": "Si des pensées de vous faire du mal apparaissent, {crisis}.",
+      "urgent_care_skin": "Une éruption cutanée sévère, qui s'étend ou forme des cloques, ou qui s'accompagne de fièvre ou de plaies dans la bouche, nécessite des soins médicaux urgents. Si le visage ou les lèvres gonflent, si vous avez du mal à respirer ou si vous vous sentez très mal, appelez {emergency}.",
+      "urgent_care_heart": "Appelez {emergency} en cas de douleur thoracique, de difficulté à respirer ou d'évanouissement. Un cœur qui bat très vite ou de façon irrégulière nécessite aussi des soins médicaux urgents.",
+      "urgent_care_gi": "Des vomissements de sang ou des selles noires nécessitent des soins médicaux urgents. Si vous avez en plus des vertiges ou si vous vous sentez très mal, appelez {emergency}.",
+      "urgent_care_seizure": "Une crise convulsive nécessite des soins médicaux urgents. Appelez {emergency} si elle dure plus de 5 minutes, se répète ou s'accompagne d'une blessure ou de difficultés à respirer.",
+      "urgent_care_breathing": "Un essoufflement soudain ou qui s'aggrave nécessite des soins médicaux urgents. S'il est intense ou s'accompagne d'une douleur thoracique, appelez {emergency}.",
       "tr_reports_small_self_selected": "Les signalements en provenance de Türkiye sont peu nombreux et envoyés volontairement. Ils ne montrent pas comment les médicaments sont utilisés en Türkiye."
     }
   }

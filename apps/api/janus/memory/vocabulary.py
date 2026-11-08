@@ -46,7 +46,14 @@ COLUMNS: Final = (
     "safety_line",
     "note",
 )
-SAFETY_LINES: Final = ("crisis_support", "urgent_care_skin", "urgent_care_heart")
+SAFETY_LINES: Final = (
+    "crisis_support",
+    "urgent_care_skin",
+    "urgent_care_heart",
+    "urgent_care_gi",
+    "urgent_care_seizure",
+    "urgent_care_breathing",
+)
 LANGUAGES: Final = ("en", "tr", "de", "fr", "es")
 DIRECTIONS: Final = ("adverse", "benefit")
 STATUSES: Final = ("proposed", "active", "deprecated")

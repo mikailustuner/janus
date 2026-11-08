@@ -295,3 +295,20 @@ found, what hooks blocked. Three to five lines per day.
 - Open items for the owner are in design §12 and the pre-launch checklist: pharmacist review of the
   mapping, native-speaker check, extra safety lines, crisis-line numbers, the EudraVigilance public
   address, MedDRA notice wording (IFPMA), optional `faers_mapping_gap` table.
+
+## 2026-11-08 — Phase 2: Collective Memory, owner decisions on the open items
+- Three more safety lines: `urgent_care_gi` (`gastric_ulcer_bleed`), `urgent_care_seizure` (`seizures`),
+  `urgent_care_breathing` (`heart_failure`), recorded in `experience` Requirement 7 beside the first three
+  and in the vocabulary CSV (six lines in total).
+- Regional numbers moved out of the sentences into the `Memory` catalogue, keyed by the user's region
+  (`emergency` and `crisis` tables in all five languages, `EMERGENCY` and `CRISIS` in `messages.py`): US 911
+  and 988 (call or text), TR 112, EU 112 plus the local crisis service, OTHER and UNKNOWN the local emergency
+  number. Tests check that no safety sentence holds a number and that both tables have all five regions.
+- EudraVigilance link is `https://www.adrreports.eu` (link only). MedDRA notice: short form on screen
+  ("MedDRA® trademark is registered by IFPMA on behalf of ICH."), long form in NOTICE, `sources.toml` and
+  the builder metadata of new builds; responses take the short form from the code, so the existing counts
+  file needs no rebuild. English labels and messages use US spelling (edema, diarrhea, recognize); MedDRA PT
+  strings and the permanent keys are unchanged.
+- `faers_mapping_gap` is deferred to the `drug-resolution` EU and name-rules work (recorded there).
+- Still on `docs/pre-launch-checklist.md`: pharmacist or physician review of the mapping, native-speaker check,
+  re-check of every number and of the link, MSSO terms for PT display.

@@ -72,7 +72,7 @@ describe.each(routing.locales)("Memory namespace, %s", (locale) => {
   });
   it("keeps the MedDRA trademark notice and the placeholders of templates", () => {
     expect(messages.get("Memory.meddra")).toBe(
-      "MedDRA® is a registered trademark of ICH",
+      "MedDRA® trademark is registered by IFPMA on behalf of ICH.",
     );
     expect(messages.get("Memory.attribution")).toContain("{date}");
     expect(messages.get("Memory.codes.window_includes_follow_ups")).toMatch(
@@ -80,6 +80,56 @@ describe.each(routing.locales)("Memory namespace, %s", (locale) => {
     );
     expect(messages.get("Memory.codes.denominator_mapped_reports")).toContain(
       "{share}",
+    );
+  });
+});
+
+describe.each(routing.locales)("regional numbers, %s", (locale) => {
+  const messages = memory(locale);
+  const regions = ["US", "TR", "EU", "OTHER", "UNKNOWN"];
+  const safety = [
+    "crisis_support",
+    "urgent_care_skin",
+    "urgent_care_heart",
+    "urgent_care_gi",
+    "urgent_care_seizure",
+    "urgent_care_breathing",
+  ];
+  it("has every region as a key, in both tables", () => {
+    for (const region of regions) {
+      expect(messages.get(`Memory.emergency.${region}`), region).toBeTruthy();
+      expect(messages.get(`Memory.crisis.${region}`), region).toBeTruthy();
+    }
+  });
+  it("keeps the numbers out of the sentences and uses the placeholders", () => {
+    for (const code of safety) {
+      const text = messages.get(`Memory.codes.${code}`) ?? "";
+      expect(text, code).not.toMatch(/\d{3}/);
+      expect(text, code).toContain(
+        code === "crisis_support" ? "{crisis}" : "{emergency}",
+      );
+    }
+  });
+  it("gives 988 for the US, 112 for TR and EU, and no number for OTHER and UNKNOWN", () => {
+    expect(messages.get("Memory.crisis.US")).toContain("988");
+    expect(messages.get("Memory.emergency.US")).toContain("911");
+    for (const region of ["TR", "EU"]) {
+      expect(messages.get(`Memory.crisis.${region}`), region).toContain("112");
+      expect(messages.get(`Memory.emergency.${region}`), region).toContain(
+        "112",
+      );
+    }
+    for (const region of ["OTHER", "UNKNOWN"]) {
+      expect(messages.get(`Memory.crisis.${region}`), region).not.toMatch(/\d/);
+      expect(messages.get(`Memory.emergency.${region}`), region).not.toMatch(
+        /\d/,
+      );
+    }
+    expect(messages.get("Memory.crisis.OTHER")).toBe(
+      messages.get("Memory.crisis.UNKNOWN"),
+    );
+    expect(messages.get("Memory.emergency.OTHER")).toBe(
+      messages.get("Memory.emergency.UNKNOWN"),
     );
   });
 });

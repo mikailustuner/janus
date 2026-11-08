@@ -573,3 +573,6 @@ owner's DP20 decision.
   no ingredient-level code and cannot match the carbapenem rule (PIPC row 58). Give the imipenem
   ingredient an ingredient-level carbapenem code (reviewed, e.g. through the curated files) in a
   later drug-resolution task.
+
+### Follow-up recorded 2026-11-08: `faers_mapping_gap` (from `collective-memory`)
+The owner deferred the optional table `faers_mapping_gap(ingredient_key, reports_in_candidate_spellings)` to the EU and name-rules work of this area. It would list, per ingredient, reports that leak through candidate name rules the FAERS builder already counts (biologic suffix, salt forms, parts of combination strings), so that a Collective Memory response can say `mapping_gap_possible`. Take it up together with the FAERS name rules (`data-pipelines` design, open item 3), because both change which spellings map to an ingredient key; decide the table in `data-pipelines` and the response field in `collective-memory` then (design §8.2 there). Nothing in Phase 2 depends on it.

@@ -16,7 +16,21 @@
   "Memory": {
     "screening": "Dies ist eine Screening-Statistik. Viele Kombinationen aus Arzneimittel und Ereignis werden gleichzeitig geprüft und die meisten erfüllen diese Kriterien. Diese Kriterien zu erfüllen ist daher häufig und kein Beleg dafür, dass das Arzneimittel das Ereignis verursacht.",
     "attribution": "Quelle: FDA AEMS (früher FAERS), Stand {date}. Keine Billigung durch die FDA.",
-    "meddra": "MedDRA® is a registered trademark of ICH",
+    "meddra": "MedDRA® trademark is registered by IFPMA on behalf of ICH.",
+    "emergency": {
+      "US": "911",
+      "TR": "112",
+      "EU": "112",
+      "OTHER": "die örtliche Notrufnummer",
+      "UNKNOWN": "die örtliche Notrufnummer"
+    },
+    "crisis": {
+      "US": "rufen Sie die 988 an oder schreiben Sie eine SMS an die 988 (Suicide and Crisis Lifeline)",
+      "TR": "rufen Sie die 112 an",
+      "EU": "rufen Sie die 112 oder einen örtlichen Krisendienst an",
+      "OTHER": "rufen Sie die örtliche Notrufnummer an",
+      "UNKNOWN": "rufen Sie die örtliche Notrufnummer an"
+    },
     "codes": {
       "spontaneous_reporting": "Meldungen werden freiwillig eingereicht und nicht verifiziert.",
       "not_incidence": "Die Zahlen zeigen nicht, wie oft ein Ereignis auftritt.",
@@ -51,9 +65,12 @@
       "layer_unavailable": "Diese Ebene ist derzeit nicht verfügbar.",
       "not_available": "Noch nicht verfügbar.",
       "memory_unavailable": "Die Daten des Kollektiven Gedächtnisses sind derzeit nicht verfügbar.",
-      "crisis_support": "Wenn Gedanken an Selbstverletzung aufkommen, rufen Sie die örtliche Notrufnummer an (112 in Türkiye und der EU, 911 in den USA) oder eine Krisenhotline in Ihrer Region.",
-      "urgent_care_skin": "Bei einem starken, sich ausbreitenden oder Blasen bildenden Hautausschlag oder einem Hautausschlag mit Fieber oder Wunden im Mund brauchen Sie dringend ärztliche Hilfe. Wenn Gesicht oder Lippen anschwellen, Sie schlecht Luft bekommen oder sich sehr schlecht fühlen, wählen Sie den Notruf (112 in Türkiye und der EU, 911 in den USA).",
-      "urgent_care_heart": "Wählen Sie bei Brustschmerzen, Atemnot oder Ohnmacht den Notruf (112 in Türkiye und der EU, 911 in den USA). Auch ein rasender oder unregelmäßiger Herzschlag braucht dringend ärztliche Hilfe.",
+      "crisis_support": "Wenn Gedanken an Selbstverletzung aufkommen, {crisis}.",
+      "urgent_care_skin": "Bei einem starken, sich ausbreitenden oder Blasen bildenden Hautausschlag oder einem Hautausschlag mit Fieber oder Wunden im Mund brauchen Sie dringend ärztliche Hilfe. Wenn Gesicht oder Lippen anschwellen, Sie schlecht Luft bekommen oder sich sehr schlecht fühlen, wählen Sie {emergency}.",
+      "urgent_care_heart": "Wählen Sie bei Brustschmerzen, Atemnot oder Ohnmacht {emergency}. Auch ein rasender oder unregelmäßiger Herzschlag braucht dringend ärztliche Hilfe.",
+      "urgent_care_gi": "Bluterbrechen oder schwarzer Stuhl braucht dringend ärztliche Hilfe. Wenn Ihnen dabei schwindelig wird oder Sie sich sehr schlecht fühlen, wählen Sie {emergency}.",
+      "urgent_care_seizure": "Bei einem Krampfanfall brauchen Sie dringend ärztliche Hilfe. Wählen Sie {emergency}, wenn er länger als 5 Minuten dauert, sich wiederholt oder mit einer Verletzung oder Atemnot einhergeht.",
+      "urgent_care_breathing": "Bei plötzlicher oder zunehmender Atemnot brauchen Sie dringend ärztliche Hilfe. Wenn sie stark ist oder mit Brustschmerzen einhergeht, wählen Sie {emergency}.",
       "tr_reports_small_self_selected": "Meldungen aus Türkiye sind wenige und werden freiwillig gesendet. Sie zeigen nicht, wie Arzneimittel in Türkiye angewendet werden."
     }
   }

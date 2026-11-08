@@ -16,7 +16,14 @@ DISCLAIMER: Final = (
     "Janus provides information, not medical advice. Research prototype — not a medical device."
 )
 ATTRIBUTION: Final = "Source: FDA AEMS (formerly FAERS), snapshot {date}. Not an FDA endorsement."
-MEDDRA_NOTICE: Final = "MedDRA® is a registered trademark of ICH"
+# Short form shown wherever a PT is shown; the long form goes in NOTICE and exports (owner
+# decision 2026-11-08, wording from the MedDRA owner; MSSO terms check stays pre-launch).
+MEDDRA_NOTICE: Final = "MedDRA® trademark is registered by IFPMA on behalf of ICH."
+MEDDRA_NOTICE_LONG: Final = (
+    "MedDRA® the Medical Dictionary for Regulatory Activities terminology is the international "
+    "medical terminology developed under the auspices of ICH. MedDRA® trademark is registered "
+    "by IFPMA on behalf of ICH."
+)
 
 # The single allow-listed exception to the causal-word rule (statistics review Q6).
 SCREENING_SENTENCE: Final = (
@@ -39,8 +46,8 @@ SENTENCES: Final[dict[str, str]] = {
         "follow-up versions of cases first received earlier."
     ),
     "denominator_mapped_reports": (
-        "Counts use only reports that name at least one medicine Janus recognises ({share} of the "
-        "reports in this window). Some spellings are not recognised, so a pattern can be missed. "
+        "Counts use only reports that name at least one medicine Janus recognizes ({share} of the "
+        "reports in this window). Some spellings are not recognized, so a pattern can be missed. "
         "Figures for all reports are shown beside these."
     ),
     "region_is_report_origin": (
@@ -79,7 +86,7 @@ SENTENCES: Final[dict[str, str]] = {
     "weak_pattern": "Few reports; treat as a weak pattern.",
     "disproportionate": (
         "The event appears in a larger share of the reports that name this medicine than in the "
-        "other reports that name a recognised medicine."
+        "other reports that name a recognized medicine."
     ),
     "estimate_uses_continuity_correction": (
         "The size of this ratio depends on a small adjustment made because a count is zero."
@@ -96,7 +103,7 @@ SENTENCES: Final[dict[str, str]] = {
     ),
     "set_counts_are_lower_bounds": (
         "Counts for a set of medicines are lower bounds: a report counts only if every medicine "
-        "in it was recognised."
+        "in it was recognized."
     ),
     "below_display_threshold": (
         "Too few reports name all of these medicines, so smaller groups are shown."
@@ -113,20 +120,30 @@ SENTENCES: Final[dict[str, str]] = {
     "layer_unavailable": "This layer is not available right now.",
     "not_available": "Not available yet.",
     "memory_unavailable": "Collective Memory data is not available right now.",
-    # --- safety lines (owner decision 2026-11-08; experience Requirement 7) ---
-    "crisis_support": (
-        "If thoughts of self-harm come up, call your local emergency number (112 in Türkiye and "
-        "the EU, 911 in the US) or a crisis line in your region."
-    ),
+    # --- safety lines (owner decisions 2026-11-08; experience Requirement 7) ---
+    # `{crisis}` is replaced by CRISIS[region], `{emergency}` by EMERGENCY[region] (the user's
+    # region; the numbers are in the catalogue, not in the sentences).
+    "crisis_support": "If thoughts of self-harm come up, {crisis}.",
     "urgent_care_skin": (
         "Get urgent medical care for a rash that is severe, spreading or blistering, or that comes "
         "with fever or mouth sores. If your face or lips swell, you find it hard to breathe or you "
-        "feel very unwell, call emergency services (112 in Türkiye and the EU, 911 in the US)."
+        "feel very unwell, call {emergency}."
     ),
     "urgent_care_heart": (
-        "Call emergency services (112 in Türkiye and the EU, 911 in the US) for chest pain, "
-        "trouble breathing or fainting. A racing or irregular heartbeat also needs urgent medical "
-        "care."
+        "Call {emergency} for chest pain, trouble breathing or fainting. A racing or irregular "
+        "heartbeat also needs urgent medical care."
+    ),
+    "urgent_care_gi": (
+        "Vomiting blood, or black stools, needs urgent medical care. If you also feel faint or "
+        "very unwell, call {emergency}."
+    ),
+    "urgent_care_seizure": (
+        "Get urgent medical care for a seizure (convulsion). Call {emergency} if it lasts more "
+        "than 5 minutes, repeats, or comes with an injury or trouble breathing."
+    ),
+    "urgent_care_breathing": (
+        "Get urgent medical care for sudden or worsening breathlessness. If it is severe or comes "
+        "with chest pain, call {emergency}."
     ),
     # --- notices added by the safety review ---
     "tr_reports_small_self_selected": (
@@ -136,6 +153,24 @@ SENTENCES: Final[dict[str, str]] = {
 }
 
 CODES: Final[tuple[str, ...]] = tuple(SENTENCES)
+
+# Regional numbers (owner decision 2026-11-08). Keys are the user's region, as in `model.REGIONS`.
+# EMERGENCY fits "call {emergency}"; CRISIS fits "If thoughts of self-harm come up, {crisis}."
+# Every number is re-checked before launch (docs/pre-launch-checklist.md).
+EMERGENCY: Final[dict[str, str]] = {
+    "US": "911",
+    "TR": "112",
+    "EU": "112",
+    "OTHER": "your local emergency number",
+    "UNKNOWN": "your local emergency number",
+}
+CRISIS: Final[dict[str, str]] = {
+    "US": "call or text 988 (Suicide and Crisis Lifeline)",
+    "TR": "call 112",
+    "EU": "call 112 or your local crisis service",
+    "OTHER": "call your local emergency number",
+    "UNKNOWN": "call your local emergency number",
+}
 
 # Notices on every FAERS response (Req 1.4, 1.8, 7.5).
 BASE_NOTICES: Final[tuple[str, ...]] = (

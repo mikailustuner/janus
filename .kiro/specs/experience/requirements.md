@@ -52,15 +52,18 @@ The end-to-end product experience across five languages and three regions, inclu
 
 #### Acceptance criteria
 1. WHEN a finding, a Collective Memory result or a donation form shows an event whose Janus key has a `safety_line` (`apps/api/janus/memory/memory_events.csv`) THE client SHALL show that line next to it, in the interface language:
-   - `crisis_support` (key `depression`): a crisis or support line for the user's region, after the emergency notice (112 in Türkiye and the EU, 911 in the US; `medical-safety.md` rule 10);
-   - `urgent_care_skin` (key `rash`): a rash that is severe, spreading or blistering, or comes with fever or mouth sores, needs urgent medical care or a call to emergency services;
-   - `urgent_care_heart` (key `arrhythmia`, including torsade de pointes): fainting, or a racing or irregular heartbeat with chest pain or breathlessness, needs urgent care or a call to emergency services.
+   - `crisis_support` (key `depression`): the crisis line of the user's region (`Memory.crisis.<region>`), after the emergency notice (`medical-safety.md` rule 10);
+   - `urgent_care_skin` (key `rash`): a rash that is severe, spreading or blistering, or comes with fever or mouth sores, needs urgent medical care; signs of a severe allergic reaction need a call to the emergency number;
+   - `urgent_care_heart` (key `arrhythmia`, including torsade de pointes): fainting, or a racing or irregular heartbeat with chest pain or breathlessness, needs urgent care or a call to the emergency number;
+   - `urgent_care_gi` (key `gastric_ulcer_bleed`): vomiting blood or black stools needs urgent medical care; with faintness or feeling very unwell, call the emergency number *(owner decision 2026-11-08)*;
+   - `urgent_care_seizure` (key `seizures`): a seizure (convulsion) needs urgent medical care; call the emergency number if it lasts more than 5 minutes, repeats, or comes with an injury or trouble breathing *(owner decision 2026-11-08)*;
+   - `urgent_care_breathing` (key `heart_failure`): sudden or worsening breathlessness needs urgent medical care; if severe or with chest pain, call the emergency number *(owner decision 2026-11-08)*.
 2. THE lines SHALL NOT diagnose, SHALL NOT tell the user to start, stop or change a medicine, and SHALL be shown whatever the counts are (also for `no_reports` and `insufficient_data`).
-3. THE region's crisis or support line numbers SHALL come from a curated list verified before launch (`docs/pre-launch-checklist.md`); none is hard-coded from memory.
+3. *(Owner decision 2026-11-08.)* THE numbers are in the `Memory` message catalogue in all five languages, with the user's region as the key, and never inside a sentence: `Memory.emergency.<region>` fills `{emergency}` in the urgent-care lines and `Memory.crisis.<region>` fills `{crisis}` in `crisis_support`. Region is one of `US`, `TR`, `EU`, `OTHER`, `UNKNOWN` (the user's own setting, not the FAERS region filter); a missing setting is `UNKNOWN`. Values: emergency US 911, TR 112, EU 112, OTHER and UNKNOWN "your local emergency number"; crisis US "call or text 988 (Suicide and Crisis Lifeline)", TR "call 112", EU "call 112 or your local crisis service", OTHER and UNKNOWN "call your local emergency number". The numbers are re-checked before launch (`docs/pre-launch-checklist.md`).
 4. MedDRA Preferred Term names SHALL appear only in a details view, never in a banner, a list badge or a notification. THE default display of an event is its Janus label.
 5. THE API returns `event.safety_line` for a Janus key and for a PT (an active key that lists the PT) and `safety_line` on every event row of a combination; the client shows the line wherever the event is shown.
 6. THE depression screen SHALL show the abrupt-stop line ("Do not stop this medicine suddenly") beside any antidepressant, beta-blocker or other abrupt-stop class on the same screen as `crisis_support` (`medical-safety.md` rule 4). *(Collective-memory safety review S17.)*
-7. THE wording of the three lines is in the `Memory` message namespace in en, tr, de, fr, es (`collective-memory` task 12) and passes the forbidden-phrase and word-list checks.
+7. THE wording of the six lines and of the regional numbers is in the `Memory` message namespace in en, tr, de, fr, es (`collective-memory` task 12) and passes the forbidden-phrase and word-list checks.
 
 ## Properties to test (PBT candidates)
 - For every supported locale, every user-facing string key has a translation (no fallback keys rendered).
@@ -101,10 +104,13 @@ Source: `collective-memory` design §5 (contracts), §7 (message catalogue), Req
   count, never as a badge, colour or icon in a list. Show `estimates.ror_ci` with every ratio; a ratio above 1,000 as
   "over 1,000". For `insufficient_data` and `no_reports` the API returns no ratios: show the coverage sentence and
   `absence_is_not_reassurance`. Separate panels for the three layers; never a sum or a comparison across layers.
-- **Safety lines** (Requirement 7 above): `event.safety_line` is `crisis_support`, `urgent_care_skin`, `urgent_care_heart`
-  or null; show the line for any result of that event, whatever the counts.
+- **Safety lines** (Requirement 7 above): `event.safety_line` is `crisis_support`, `urgent_care_skin`, `urgent_care_heart`,
+  `urgent_care_gi`, `urgent_care_seizure`, `urgent_care_breathing` or null; show the line for any result of that event,
+  whatever the counts, with the numbers of the user's region (`Memory.emergency.<region>`, `Memory.crisis.<region>`).
+- **MedDRA notice.** Wherever a Preferred Term is shown, show the short notice `Memory.meddra` ("MedDRA® trademark is registered by IFPMA on behalf of ICH.", English in all
+  languages); the long notice (NOTICE, exports, the doctor note) is `MEDDRA_NOTICE_LONG` in `messages.py` *(owner decision 2026-11-08)*.
 - **Regions.** Show UNKNOWN as a count and a share, and `basis` (occurrence country vs reporter country); the EU link is
-  `adrreports_url`, a fixed address with no user value.
+  `adrreports_url` (`https://www.adrreports.eu`), a fixed address with no user value.
 - **Privacy page** states the residual limits of `collective-memory` Requirement 5.9 (two-step differencing; padding a cell
   before rate limiting exists) and "hidden under 20, noise added".
 - **Errors.** 422 names failing fields only; 503 `memory_unavailable` has no numbers (show `Memory.codes.memory_unavailable`).

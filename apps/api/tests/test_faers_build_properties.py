@@ -451,7 +451,7 @@ def test_metadata_carries_notices_and_versions(tmp_path: Path) -> None:
     )
     result = build(tmp_path)
     stored = dict(read(result.path, "SELECT key, value FROM faers_meta"))
-    assert "MedDRA® is a registered trademark of ICH" in stored["meddra_notice"]
+    assert "MedDRA® trademark is registered by IFPMA on behalf of ICH." in stored["meddra_notice"]
     assert "Preferred Terms" in stored["event_terms"]
     assert stored["resolution_dataset_version"] == "r" * 64
     assert stored["primary_denominator"] == "reports_mapped"
