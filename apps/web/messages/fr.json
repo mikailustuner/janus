@@ -21,7 +21,15 @@
     "demoHint": "Sans inscription. Trois patients synthétiques aux noms de produits inventés.",
     "resume": "Reprendre votre liste",
     "resumeCount": "{count, plural, one {# médicament sur cet appareil} other {# médicaments sur cet appareil}}",
-    "privacy": "Ce qui reste sur cet appareil"
+    "privacy": "Ce qui reste sur cet appareil",
+    "howTitle": "Comment ça marche",
+    "how1": "Scannez le code de la boîte, ou saisissez le nom.",
+    "how2": "Janus vérifie {patterns} schémas publiés de cascade de prescription et des déclarations publiques d'effets indésirables.",
+    "how3": "Vous obtenez une note avec sources pour votre médecin, dans la langue du médecin.",
+    "coverageTitle": "Régions et langues",
+    "regions": "Boîtes de médicaments de",
+    "languages": "Langues",
+    "privacyLine": "Les photos des boîtes et votre liste de médicaments restent sur cet appareil ; Janus n'a pas de compte et n'envoie que ce dont la vérification a besoin."
   },
   "Shell": {
     "skip": "Aller au contenu",

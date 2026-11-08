@@ -126,7 +126,7 @@ function Paper({
   return (
     <article
       lang={doc.language}
-      className="paper flex flex-col gap-3 rounded-[var(--radius-card)] border border-line bg-surface p-5 text-fg shadow-sm"
+      className="paper mx-auto flex w-full max-w-[720px] flex-col gap-3 rounded-[var(--radius-card)] border border-line bg-surface p-5 text-fg shadow-sm lg:aspect-[210/297] lg:p-10"
       data-testid="note-paper"
     >
       {demoLabel ? (
@@ -349,134 +349,146 @@ export function NotePage() {
   return (
     <>
       <PageTitle>{t("Note.title")}</PageTitle>
-      <p>{t("Note.intro")}</p>
-      <Card className="no-print">
-        <SelectField
-          label={t("Note.language")}
-          value={lang}
-          options={routing.locales.map((l) => ({
-            value: l,
-            label: localeNames[l],
-            lang: l,
-          }))}
-          onChange={(l) => {
-            setNoteLang(l);
-            setSize(paperFor(l, region));
-            setState({ s: "idle" });
-          }}
-        />
-        <p className="text-sm text-muted">
-          {t("Note.patientLanguage", { language: localeNames[locale] })}
-        </p>
-        <Button
-          className="self-start"
-          onClick={make}
-          disabled={state.s === "loading"}
-        >
-          {t("Note.make")}
-        </Button>
-      </Card>
-      {state.s === "loading" ? (
-        <StateView state="loading" label={t("Note.making")} />
-      ) : null}
-      {state.s === "error" ? (
-        <StateView
-          state="error"
-          messageKey={state.error.messageKey}
-          retry={
-            state.error.kind === "network" || state.error.kind === "timeout"
-              ? make
-              : undefined
-          }
-        />
-      ) : null}
-      {state.s === "ok" ? (
-        <>
+      <p className="max-w-[72ch]">{t("Note.intro")}</p>
+      {/* Desktop (Req 27): the paper page centred on the left, the actions in a sticky aside. */}
+      <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start">
+        <aside className="no-print flex min-w-0 flex-col gap-5 lg:sticky lg:top-4 lg:col-start-2 lg:row-start-1">
           <Card className="no-print">
             <SelectField
-              label={t("Note.paper")}
-              value={size}
-              options={[
-                { value: "A4", label: t("Note.a4") },
-                { value: "LETTER", label: t("Note.letter") },
-              ]}
-              onChange={setSize}
+              label={t("Note.language")}
+              value={lang}
+              options={routing.locales.map((l) => ({
+                value: l,
+                label: localeNames[l],
+                lang: l,
+              }))}
+              onChange={(l) => {
+                setNoteLang(l);
+                setSize(paperFor(l, region));
+                setState({ s: "idle" });
+              }}
             />
-            <div className="flex flex-wrap gap-3">
-              <Button
-                onClick={download}
-                disabled={pdfState === "busy"}
-                data-testid="download-pdf"
-              >
-                <DownloadIcon size={20} />
-                {pdfState === "busy"
-                  ? t("Note.preparingPdf")
-                  : t("Note.download")}
-              </Button>
-              <Button variant="secondary" onClick={() => window.print()}>
-                <PrintIcon size={20} />
-                {t("Note.print")}
-              </Button>
-            </div>
-            {pdfState === "failed" ? (
-              <p role="alert">{t("Note.pdfFailed")}</p>
-            ) : null}
+            <p className="text-sm text-muted">
+              {t("Note.patientLanguage", { language: localeNames[locale] })}
+            </p>
+            <Button
+              className="self-start"
+              onClick={make}
+              disabled={state.s === "loading"}
+            >
+              {t("Note.make")}
+            </Button>
           </Card>
-          <SectionTitle>{t("Note.preview")}</SectionTitle>
-          <Paper
-            doc={state.layout.documents[0]!}
-            demoLabel={demoLabel}
-            t={t}
-            uiLang={locale}
-            qr={state.qr}
-          />
-          {state.note.documents[0]?.sections.some(
-            (x) => x.id === "findings" || x.id === "findings_form_unconfirmed",
-          ) && evaluation.result.findings.length ? (
-            <QrOptIn
-              session={session}
-              noteIn={() =>
-                noteBody(
-                  evaluation.input,
-                  pinsIn({
-                    rule_base_version: evaluation.result.rule_base_version,
-                    integrity_version: evaluation.result.integrity_version,
-                    counts_build_id:
-                      snapshot.status === "ok" ? snapshot.data.build_id : null,
-                  }),
-                  [lang],
-                  region,
-                  session.demo ? null : settings.statisticsRegion,
-                )
-              }
-              language={lang}
-              events={evaluation.result.findings
-                .map((f) => parseLocator(f.faers_locator)?.event)
-                .filter((e): e is string => !!e)}
-              onIssued={(note, qr) =>
-                setState((st) =>
-                  st.s === "ok"
-                    ? {
-                        s: "ok",
-                        note: note ?? st.note,
-                        layout: note
-                          ? {
-                              ...layoutNote(note, boxNames, !!session.demo),
-                              sideBySide: st.layout.sideBySide,
-                            }
-                          : st.layout,
-                        qr,
-                      }
-                    : st,
-                )
+          {state.s === "ok" ? (
+            <Card className="no-print">
+              <SelectField
+                label={t("Note.paper")}
+                value={size}
+                options={[
+                  { value: "A4", label: t("Note.a4") },
+                  { value: "LETTER", label: t("Note.letter") },
+                ]}
+                onChange={setSize}
+              />
+              <div className="flex flex-wrap gap-3">
+                <Button
+                  onClick={download}
+                  disabled={pdfState === "busy"}
+                  data-testid="download-pdf"
+                >
+                  <DownloadIcon size={20} />
+                  {pdfState === "busy"
+                    ? t("Note.preparingPdf")
+                    : t("Note.download")}
+                </Button>
+                <Button variant="secondary" onClick={() => window.print()}>
+                  <PrintIcon size={20} />
+                  {t("Note.print")}
+                </Button>
+              </div>
+              {pdfState === "failed" ? (
+                <p role="alert">{t("Note.pdfFailed")}</p>
+              ) : null}
+            </Card>
+          ) : null}
+        </aside>
+        <div className="flex min-w-0 flex-col gap-5 lg:col-start-1 lg:row-start-1">
+          {state.s === "loading" ? (
+            <StateView state="loading" label={t("Note.making")} />
+          ) : null}
+          {state.s === "error" ? (
+            <StateView
+              state="error"
+              messageKey={state.error.messageKey}
+              retry={
+                state.error.kind === "network" || state.error.kind === "timeout"
+                  ? make
+                  : undefined
               }
             />
           ) : null}
-          {state.layout.sideBySide ? (
-            <SideBySide note={state.layout} t={t} />
+          {state.s === "ok" ? (
+            <>
+              <SectionTitle>{t("Note.preview")}</SectionTitle>
+              <Paper
+                doc={state.layout.documents[0]!}
+                demoLabel={demoLabel}
+                t={t}
+                uiLang={locale}
+                qr={state.qr}
+              />
+              {state.note.documents[0]?.sections.some(
+                (x) =>
+                  x.id === "findings" || x.id === "findings_form_unconfirmed",
+              ) && evaluation.result.findings.length ? (
+                <QrOptIn
+                  session={session}
+                  noteIn={() =>
+                    noteBody(
+                      evaluation.input,
+                      pinsIn({
+                        rule_base_version: evaluation.result.rule_base_version,
+                        integrity_version: evaluation.result.integrity_version,
+                        counts_build_id:
+                          snapshot.status === "ok"
+                            ? snapshot.data.build_id
+                            : null,
+                      }),
+                      [lang],
+                      region,
+                      session.demo ? null : settings.statisticsRegion,
+                    )
+                  }
+                  language={lang}
+                  events={evaluation.result.findings
+                    .map((f) => parseLocator(f.faers_locator)?.event)
+                    .filter((e): e is string => !!e)}
+                  onIssued={(note, qr) =>
+                    setState((st) =>
+                      st.s === "ok"
+                        ? {
+                            s: "ok",
+                            note: note ?? st.note,
+                            layout: note
+                              ? {
+                                  ...layoutNote(note, boxNames, !!session.demo),
+                                  sideBySide: st.layout.sideBySide,
+                                }
+                              : st.layout,
+                            qr,
+                          }
+                        : st,
+                    )
+                  }
+                />
+              ) : null}
+              {state.layout.sideBySide ? (
+                <SideBySide note={state.layout} t={t} />
+              ) : null}
+            </>
           ) : null}
-        </>
-      ) : null}
+        </div>
+      </div>
     </>
   );
 }

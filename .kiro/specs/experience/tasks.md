@@ -263,6 +263,13 @@
   > `wording-pharmacologist-review.md` and the summary `wording-review.md`. Defects found by the passes fixed before the
   > stop (safety B1, B2, A5, A8, A11; localization TR-1/TR-2; pharmacologist A2); every wording choice waits for the
   > owner. **Stopped here for the owner.**
+  > Desktop layout (Req 27, DP41, owner decision 2026-11-08) built before the stop: header navigation from 768 px,
+  > two-column results (sticky aside with medicines checked, scope, timeline summary, actions), medicines rows with
+  > the timeline beside them, Collective Memory panels side by side, the note paper at A4 proportions with the actions
+  > aside, two-column settings, and a website home (hero, "Try the demo", three steps, regions and languages, privacy
+  > sentence; mask halves as links in Two Faces, colour fields in Glass). New `Home.*` keys in five languages
+  > (how1–3, coverageTitle, regions, languages, privacyLine) are **not yet reviewed** by the localization pass; they
+  > join the owner's wording batch. Routes axe and no-horizontal-scroll green at 375 and 1280.
 
 - [ ] 23. Apply the owner's decisions and final checkpoint
   - Apply the wording and open-item decisions (demo names, Spanish status codes, demo cases, shadcn/ui) in one commit;

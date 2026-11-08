@@ -21,7 +21,15 @@
     "demoHint": "Kayıt gerekmez. Ürün adları uydurma olan üç sentetik hasta.",
     "resume": "Listenizle devam edin",
     "resumeCount": "{count, plural, one {Bu cihazda # ilaç} other {Bu cihazda # ilaç}}",
-    "privacy": "Bu cihazda neler kalır"
+    "privacy": "Bu cihazda neler kalır",
+    "howTitle": "Nasıl çalışır",
+    "how1": "Kutudaki kodu tarayın ya da adını yazın.",
+    "how2": "Janus, yayımlanmış {patterns} reçete kaskadı örüntüsünü ve yan etkilerle ilgili kamuya açık bildirimleri kontrol eder.",
+    "how3": "Doktorunuz için, doktorun dilinde, kaynaklı bir not alırsınız.",
+    "coverageTitle": "Bölgeler ve diller",
+    "regions": "İlaç kutularının geldiği yerler",
+    "languages": "Diller",
+    "privacyLine": "Kutu fotoğrafları ve ilaç listeniz bu cihazda kalır; Janus'ta hesap yoktur ve yalnızca kontrol için gerekenler gönderilir."
   },
   "Shell": {
     "skip": "İçeriğe geç",

@@ -12,7 +12,8 @@ import { StateView } from "@/components/StateView";
 import { ButtonLink, Card, PageTitle, SectionTitle } from "@/components/ui";
 import { inputKey, currentMonth, toEvaluateIn } from "@/flow/evaluate";
 import { resultCache, useSession } from "@/flow/janus";
-import { monthIndex, timeline } from "@/flow/timeline";
+import { monthIndex, timeline, type TimelineModel } from "@/flow/timeline";
+import type { Item } from "@/store/list";
 import { useT } from "@/theme/words";
 
 export function Timeline() {
@@ -94,23 +95,69 @@ export function Timeline() {
       ) : null}
       {model.links.length ? (
         <Card>
-          <ul className="flex flex-col gap-2">
-            {model.links.map((l) => {
-              const index = l.from.map(name).join(", ");
-              const marker = l.to.map(name).join(", ");
-              return (
-                <li key={l.findingId}>
-                  {l.months !== null
-                    ? t("Timeline.link", { marker, index, months: l.months })
-                    : l.timing === "same_month"
-                      ? t("Timeline.linkSameMonth", { marker, index })
-                      : t("Timeline.linkUnknown", { marker, index })}
-                </li>
-              );
-            })}
-          </ul>
+          <TimelineLinks model={model} name={name} />
         </Card>
       ) : null}
     </>
+  );
+}
+
+function TimelineLinks({
+  model,
+  name,
+}: {
+  model: TimelineModel;
+  name: (i: number) => string;
+}) {
+  const t = useT();
+  return (
+    <ul className="flex flex-col gap-2">
+      {model.links.map((l) => {
+        const index = l.from.map(name).join(", ");
+        const marker = l.to.map(name).join(", ");
+        return (
+          <li key={l.findingId}>
+            {l.months !== null
+              ? t("Timeline.link", { marker, index, months: l.months })
+              : l.timing === "same_month"
+                ? t("Timeline.linkSameMonth", { marker, index })
+                : t("Timeline.linkUnknown", { marker, index })}
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
+/** The timeline summary in the results aside (Req 27): the finding links, or the start months. */
+export function TimelineSummary({
+  items,
+  result,
+}: {
+  items: readonly Item[];
+  result: CascadeResult | null;
+}) {
+  const t = useT();
+  const locale = useLocale();
+  const model = timeline(items, result);
+  const name = (i: number) => items[i]?.boxName ?? "";
+  return (
+    <Card aria-labelledby="timeline-summary">
+      <SectionTitle id="timeline-summary">{t("Timeline.title")}</SectionTitle>
+      {model.links.length ? (
+        <TimelineLinks model={model} name={name} />
+      ) : model.dated.length ? (
+        <ul className="flex flex-col gap-1 text-sm">
+          {model.dated.map(({ item, started }) => (
+            <li key={item}>
+              <span className="font-bold">{name(item)}</span>{" "}
+              <span className="text-muted">{formatMonth(started, locale)}</span>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="text-sm">{t("Timeline.empty")}</p>
+      )}
+    </Card>
   );
 }

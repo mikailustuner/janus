@@ -40,6 +40,7 @@ vi.mock("@/i18n/navigation", () => ({
 }));
 
 import { EvidenceBody } from "./evidence/EvidenceView";
+import { Home, PATTERNS } from "./home/Home";
 import { PairPanel } from "./memory/PairPanel";
 import { ResultsBody } from "./results/Results";
 
@@ -153,5 +154,30 @@ describe("rendered screens", () => {
       ),
       { numRuns: 60 },
     );
+  });
+});
+
+describe("home (Req 27)", () => {
+  it("the pattern count is the rule base's", () => {
+    for (const l of routing.locales) {
+      const v = JSON.parse(
+        readFileSync(join(__dirname, `../vocabulary/${l}.json`), "utf8"),
+      ) as Vocabulary;
+      expect(Object.keys(v.cascades)).toHaveLength(PATTERNS);
+    }
+  });
+
+  it("starts with the emergency notice and makes no unsafe claim, in every language and theme", () => {
+    for (const locale of routing.locales)
+      for (const theme of ["two-faces", "glass"] as const) {
+        const html = render(locale, theme, <Home />);
+        expectSafe(html, locale, theme);
+        const m = messages[locale];
+        const first = html.indexOf(m.Emergency.title);
+        expect(first).toBeGreaterThan(-1);
+        expect(first).toBeLessThan(html.indexOf(m.Home.intro));
+        expect(html).toContain(m.Home.demo);
+        expect(html).toContain(String(PATTERNS));
+      }
   });
 });

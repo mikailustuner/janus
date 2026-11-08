@@ -21,7 +21,15 @@
     "demoHint": "Ohne Anmeldung. Drei synthetische Patienten mit erfundenen Produktnamen.",
     "resume": "Mit Ihrer Liste weitermachen",
     "resumeCount": "{count, plural, one {# Medikament auf diesem Gerät} other {# Medikamente auf diesem Gerät}}",
-    "privacy": "Was auf diesem Gerät bleibt"
+    "privacy": "Was auf diesem Gerät bleibt",
+    "howTitle": "So funktioniert es",
+    "how1": "Scannen Sie den Code auf der Packung oder tippen Sie den Namen ein.",
+    "how2": "Janus prüft {patterns} veröffentlichte Muster von Verschreibungskaskaden und öffentliche Meldungen zu Nebenwirkungen.",
+    "how3": "Sie erhalten eine Notiz mit Quellen für Ihre Ärztin oder Ihren Arzt, in deren Sprache.",
+    "coverageTitle": "Regionen und Sprachen",
+    "regions": "Medikamentenpackungen aus",
+    "languages": "Sprachen",
+    "privacyLine": "Fotos der Packungen und Ihre Medikamentenliste bleiben auf diesem Gerät; Janus hat kein Konto und sendet nur, was die Prüfung braucht."
   },
   "Shell": {
     "skip": "Zum Inhalt springen",

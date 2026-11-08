@@ -336,6 +336,16 @@ language, and keeps the person's list in the browser.
 2. THE item view and the list view SHALL expose the slots of design §15 for Passport components; THE shell, the theme and the shared components SHALL be used by the Passport screens unchanged.
 3. THE client SHALL send the list's distinct ingredient keys to `POST /memory/combination` and `POST /memory/regions` in any order; ingredient order and duplicates in the list SHALL change nothing (`medication-passport` open item).
 
+### Requirement 27: Desktop layout *(Owner decision 2026-11-08)*
+**User story:** As a visitor on a laptop, I want Janus to be a real website, not a phone column in the middle of the screen.
+
+#### Acceptance criteria
+1. Below 768 px THE client SHALL use the phone layout with the bottom tab bar. From 768 px THE navigation SHALL move into the header (Scan, Medicines, Results, Settings; Research behind the mask switch in Two Faces, a Research link in Glass) with the language and theme controls on the right; from 768 to 1023 px the content stays one column.
+2. From 1024 px THE results screen SHALL use two columns within about 1,120 px: the findings on the left (wider) and a sticky aside with "Medicines checked", "What Janus checked", the timeline summary and the primary actions (doctor note, reports for the whole list). Reading text SHALL stay within 72 characters per line.
+3. From 1024 px THE medicines list SHALL show the timeline beside it; Collective Memory SHALL place panels side by side where it helps; the note preview SHALL show the paper page centred at A4-like proportions with the actions in an aside; Settings SHALL be a two-column page.
+4. THE home page SHALL be a website home: the emergency notice first, a hero with the product sentence (no forbidden or "first" claims), "Try the demo" as the main action, "How it works" in three steps, the three regions and five languages, privacy in one sentence and the disclaimer. In Two Faces the hero MAY show the mask as a functional SVG linking to the two faces; Glass uses the colour fields.
+5. Axe (WCAG 2.2 A/AA) and no horizontal scroll SHALL hold at 1280 px as at 375 px; screenshots at 1280 and 1440 px are reviewed for home, results, memory, note and settings in both themes.
+
 ## Properties to test (PBT candidates)
 - For every supported locale, every user-facing string key has a translation (no fallback keys rendered).
 - For every supported locale, rendered findings contain the mandatory disclaimer and none of the forbidden phrases.

@@ -21,7 +21,15 @@
     "demoHint": "Sin registro. Tres pacientes sintéticos con nombres de producto inventados.",
     "resume": "Continuar con su lista",
     "resumeCount": "{count, plural, one {# medicamento en este dispositivo} other {# medicamentos en este dispositivo}}",
-    "privacy": "Qué se queda en este dispositivo"
+    "privacy": "Qué se queda en este dispositivo",
+    "howTitle": "Cómo funciona",
+    "how1": "Escanee el código de la caja o escriba el nombre.",
+    "how2": "Janus comprueba {patterns} patrones publicados de cascada de prescripción y notificaciones públicas de efectos adversos.",
+    "how3": "Recibe una nota con fuentes para su médico, en el idioma del médico.",
+    "coverageTitle": "Regiones e idiomas",
+    "regions": "Cajas de medicamentos de",
+    "languages": "Idiomas",
+    "privacyLine": "Las fotos de las cajas y su lista de medicamentos se quedan en este dispositivo; Janus no tiene cuenta y solo envía lo que la comprobación necesita."
   },
   "Shell": {
     "skip": "Ir al contenido",

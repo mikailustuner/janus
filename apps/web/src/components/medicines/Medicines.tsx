@@ -14,6 +14,7 @@ import { MonthPicker } from "@/components/MonthPicker";
 import { candidateIngredients } from "@/components/names";
 import { ItemBadges, ListSummaryExtra } from "@/components/passport/slots";
 import { SourceAttribution } from "@/components/SourceAttribution";
+import { TimelineSummary } from "@/components/medicines/Timeline";
 import { StateView } from "@/components/StateView";
 import { Button, ButtonLink, Card, Chip, PageTitle } from "@/components/ui";
 import { inputKey, MAX_ITEMS, toEvaluateIn } from "@/flow/evaluate";
@@ -83,8 +84,12 @@ function ItemRow({
   const ingredients = candidateIngredients(vocab, item.candidate, item.choices);
   const c = item.candidate;
   return (
-    <Card as="li" aria-labelledby={`item-${index}`}>
-      <div className="flex flex-wrap items-start justify-between gap-2">
+    <Card
+      as="li"
+      aria-labelledby={`item-${index}`}
+      className="lg:grid lg:grid-cols-[minmax(0,15rem)_minmax(0,1fr)] lg:gap-x-6"
+    >
+      <div className="flex flex-wrap items-start justify-between gap-2 lg:flex-col lg:justify-start">
         <h2 id={`item-${index}`} className="text-lg leading-snug font-bold">
           {item.boxName}
         </h2>
@@ -94,110 +99,112 @@ function ItemRow({
         ) : null}
         {item.needsConfirmation && !readOnly ? <Reconfirm item={item} /> : null}
       </div>
-      <ul
-        className="flex flex-col gap-1"
-        aria-label={t("Medicines.ingredients")}
-      >
-        {ingredients.map((g, i) => (
-          <li key={i} className="flex flex-wrap items-baseline gap-x-2">
-            <span>{g.name.text ?? g.key}</span>
-            {g.name.tag ? (
-              <span className="text-sm text-muted">({g.name.tag})</span>
-            ) : null}
-            {g.codes.length ? (
-              <span className="mono text-sm text-muted">
-                {g.codes.join(", ")}
-              </span>
-            ) : null}
-            {g.combinationCode ? (
-              <span className="text-sm text-muted">
-                {sentence(vocab, "name.combination_code")}
-              </span>
-            ) : null}
-            {g.notChecked ? (
-              <span className="text-sm font-bold">
-                {sentence(vocab, `not_checked.${g.notChecked}`)}
-              </span>
-            ) : null}
-          </li>
-        ))}
-      </ul>
-      {c.kind === "product" && c.ingredients.length > 1 && c.published_atc ? (
+      <div className="flex min-w-0 flex-col gap-3">
+        <ul
+          className="flex flex-col gap-1"
+          aria-label={t("Medicines.ingredients")}
+        >
+          {ingredients.map((g, i) => (
+            <li key={i} className="flex flex-wrap items-baseline gap-x-2">
+              <span>{g.name.text ?? g.key}</span>
+              {g.name.tag ? (
+                <span className="text-sm text-muted">({g.name.tag})</span>
+              ) : null}
+              {g.codes.length ? (
+                <span className="mono text-sm text-muted">
+                  {g.codes.join(", ")}
+                </span>
+              ) : null}
+              {g.combinationCode ? (
+                <span className="text-sm text-muted">
+                  {sentence(vocab, "name.combination_code")}
+                </span>
+              ) : null}
+              {g.notChecked ? (
+                <span className="text-sm font-bold">
+                  {sentence(vocab, `not_checked.${g.notChecked}`)}
+                </span>
+              ) : null}
+            </li>
+          ))}
+        </ul>
+        {c.kind === "product" && c.ingredients.length > 1 && c.published_atc ? (
+          <p className="text-sm text-muted">
+            {t("Medicines.combinationCode", { code: c.published_atc })}
+          </p>
+        ) : null}
+        {c.kind === "ingredient" ? (
+          <p className="text-sm text-muted">{t("Medicines.byName")}</p>
+        ) : null}
         <p className="text-sm text-muted">
-          {t("Medicines.combinationCode", { code: c.published_atc })}
+          {t(
+            `Common.region.${c.kind === "product" ? c.region : (item.sourceKey.kind === "search" && item.sourceKey.region) || "ALL"}`,
+          )}
+          {" · "}
+          <SourceAttribution candidate={c} />
         </p>
-      ) : null}
-      {c.kind === "ingredient" ? (
-        <p className="text-sm text-muted">{t("Medicines.byName")}</p>
-      ) : null}
-      <p className="text-sm text-muted">
-        {t(
-          `Common.region.${c.kind === "product" ? c.region : (item.sourceKey.kind === "search" && item.sourceKey.region) || "ALL"}`,
-        )}
-        {" · "}
-        <SourceAttribution candidate={c} />
-      </p>
-      <p>
-        {item.started
-          ? t("Medicines.since", { month: formatMonth(item.started, locale) })
-          : t("Medicines.startUnknown")}
-      </p>
-      {warned ? <AbruptStopLine vocab={vocab} /> : null}
-      {readOnly ? null : editing ? (
-        <div className="flex flex-col gap-3 border-t border-line pt-3">
-          <MonthPicker value={started} onChange={setStarted} />
-          <label className="flex flex-col gap-1">
-            <span className="font-bold">{t("Medicines.boxName")}</span>
-            <input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              maxLength={120}
-              className="min-h-11 rounded-[var(--radius-button)] border-2 border-muted bg-surface px-3 text-fg"
-            />
-          </label>
-          <div className="flex flex-wrap gap-3">
-            <Button
-              onClick={() => {
-                listActions().edit(item.id, {
-                  started,
-                  boxName: name.trim() || item.boxName,
-                });
-                setEditing(false);
-              }}
-            >
-              {t("Common.save")}
+        <p>
+          {item.started
+            ? t("Medicines.since", { month: formatMonth(item.started, locale) })
+            : t("Medicines.startUnknown")}
+        </p>
+        {warned ? <AbruptStopLine vocab={vocab} /> : null}
+        {readOnly ? null : editing ? (
+          <div className="flex flex-col gap-3 border-t border-line pt-3">
+            <MonthPicker value={started} onChange={setStarted} />
+            <label className="flex flex-col gap-1">
+              <span className="font-bold">{t("Medicines.boxName")}</span>
+              <input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                maxLength={120}
+                className="min-h-11 rounded-[var(--radius-button)] border-2 border-muted bg-surface px-3 text-fg"
+              />
+            </label>
+            <div className="flex flex-wrap gap-3">
+              <Button
+                onClick={() => {
+                  listActions().edit(item.id, {
+                    started,
+                    boxName: name.trim() || item.boxName,
+                  });
+                  setEditing(false);
+                }}
+              >
+                {t("Common.save")}
+              </Button>
+              <Button variant="secondary" onClick={() => setEditing(false)}>
+                {t("Common.cancel")}
+              </Button>
+            </div>
+          </div>
+        ) : confirmRemove ? (
+          <div
+            className="flex flex-wrap items-center gap-3"
+            role="alertdialog"
+            aria-label={t("Common.remove")}
+          >
+            <p className="font-bold">
+              {t("Medicines.removeConfirm", { name: item.boxName })}
+            </p>
+            <Button onClick={() => listActions().remove(item.id)}>
+              {t("Common.remove")}
             </Button>
-            <Button variant="secondary" onClick={() => setEditing(false)}>
+            <Button variant="secondary" onClick={() => setConfirmRemove(false)}>
               {t("Common.cancel")}
             </Button>
           </div>
-        </div>
-      ) : confirmRemove ? (
-        <div
-          className="flex flex-wrap items-center gap-3"
-          role="alertdialog"
-          aria-label={t("Common.remove")}
-        >
-          <p className="font-bold">
-            {t("Medicines.removeConfirm", { name: item.boxName })}
-          </p>
-          <Button onClick={() => listActions().remove(item.id)}>
-            {t("Common.remove")}
-          </Button>
-          <Button variant="secondary" onClick={() => setConfirmRemove(false)}>
-            {t("Common.cancel")}
-          </Button>
-        </div>
-      ) : (
-        <div className="flex flex-wrap gap-3">
-          <Button variant="secondary" onClick={() => setEditing(true)}>
-            {t("Common.edit")}
-          </Button>
-          <Button variant="quiet" onClick={() => setConfirmRemove(true)}>
-            {t("Common.remove")}
-          </Button>
-        </div>
-      )}
+        ) : (
+          <div className="flex flex-wrap gap-3">
+            <Button variant="secondary" onClick={() => setEditing(true)}>
+              {t("Common.edit")}
+            </Button>
+            <Button variant="quiet" onClick={() => setConfirmRemove(true)}>
+              {t("Common.remove")}
+            </Button>
+          </div>
+        )}
+      </div>
     </Card>
   );
 }
@@ -257,18 +264,25 @@ export function Medicines() {
               {t("Medicines.timeline")}
             </ButtonLink>
           </div>
-          <ul className="flex flex-col gap-3">
-            {items.map((item, i) => (
-              <ItemRow
-                key={item.id}
-                item={item}
-                index={i}
-                vocab={vocab}
-                warned={warned.has(i)}
-                readOnly={readOnly}
-              />
-            ))}
-          </ul>
+          {/* Desktop (Req 27): the list as rows, the timeline beside it. */}
+          <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(280px,340px)] lg:items-start">
+            <ul className="flex min-w-0 flex-col gap-3">
+              {items.map((item, i) => (
+                <ItemRow
+                  key={item.id}
+                  item={item}
+                  index={i}
+                  vocab={vocab}
+                  warned={warned.has(i)}
+                  readOnly={readOnly}
+                />
+              ))}
+            </ul>
+            {/* Desktop only: the phone keeps the timeline on its own screen, as before. */}
+            <aside className="hidden min-w-0 flex-col gap-5 lg:sticky lg:top-4 lg:flex">
+              <TimelineSummary items={items} result={result ?? null} />
+            </aside>
+          </div>
         </>
       )}
     </>

@@ -11,7 +11,7 @@ import { useEffect, type ReactNode } from "react";
 import { exitDemo, useDemo } from "@/demo/session";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { localeNames, routing } from "@/i18n/routing";
-import { useStorageNotices } from "@/store/hooks";
+import { updateSettings, useStorageNotices } from "@/store/hooks";
 import { faceFor } from "@/theme/prepaint";
 import { useT, useTheme, useThemeWord } from "@/theme/words";
 
@@ -139,8 +139,8 @@ function Nav() {
       aria-label={t("Shell.navLabel")}
       className={
         glass
-          ? "fixed inset-x-3.5 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-20 mx-auto max-w-[720px] rounded-full border border-[var(--card-edge)] bg-surface shadow-[var(--card-shadow)] [backdrop-filter:var(--blur)] no-print"
-          : "fixed inset-x-0 bottom-0 z-20 border-t border-line bg-surface pb-[env(safe-area-inset-bottom)] no-print"
+          ? "fixed inset-x-3.5 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-20 mx-auto max-w-[720px] rounded-full border border-[var(--card-edge)] bg-surface shadow-[var(--card-shadow)] [backdrop-filter:var(--blur)] no-print md:hidden"
+          : "fixed inset-x-0 bottom-0 z-20 border-t border-line bg-surface pb-[env(safe-area-inset-bottom)] no-print md:hidden"
       }
     >
       <ul className="mx-auto grid max-w-[720px] grid-cols-4">
@@ -170,6 +170,60 @@ function Nav() {
   );
 }
 
+/** Header navigation from 768 px (Req 27.1): the same four places, plus Research in Glass. */
+function HeaderNav() {
+  const t = useT();
+  const w = useThemeWord();
+  const theme = useTheme();
+  const pathname = usePathname();
+  const items: { href: string; label: string }[] = [
+    ...NAV.map(({ href, key }) => ({ href, label: t(`Shell.nav.${key}`) })),
+    ...(theme === "glass"
+      ? [{ href: "/research", label: w("Shell.nav.research") }]
+      : []),
+  ];
+  return (
+    <nav aria-label={t("Shell.navLabel")} className="hidden md:block">
+      <ul className="flex items-center gap-1">
+        {items.map(({ href, label }) => {
+          const active = pathname === href || pathname.startsWith(`${href}/`);
+          return (
+            <li key={href}>
+              <Link
+                href={href}
+                aria-current={active ? "page" : undefined}
+                className={`flex min-h-11 items-center rounded-full px-3 font-bold no-underline ${active ? "bg-chip text-chip-fg" : "text-fg hover:bg-chip"}`}
+              >
+                {label}
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+  );
+}
+
+/** Theme control in the header (Req 27.1): Two Faces ↔ Glass; Settings › Appearance has the rest. */
+function ThemeToggle() {
+  const t = useT();
+  const theme = useTheme();
+  const next = theme === "glass" ? "two-faces" : "glass";
+  return (
+    <button
+      type="button"
+      onClick={() => updateSettings({ theme: next })}
+      className="hidden min-h-11 items-center rounded-full px-3 text-sm font-bold hover:bg-chip md:flex"
+      aria-label={`${t("Settings.theme")}: ${t(theme === "glass" ? "Settings.themeGlass" : "Settings.themeTwoFaces")}`}
+    >
+      {t(theme === "glass" ? "Settings.themeGlass" : "Settings.themeTwoFaces")}
+    </button>
+  );
+}
+
+/** Routes laid out as a wide website page from 1024 px (Req 27.2–27.4, DP41). */
+const WIDE = ["/", "/results", "/medicines", "/memory", "/note", "/settings"];
+
 function StorageNotice() {
   const t = useT();
   const notices = useStorageNotices();
@@ -188,7 +242,7 @@ function Footer() {
   const w = useThemeWord();
   const region = useUserRegion();
   return (
-    <footer className="mx-auto mt-10 flex w-full max-w-[720px] flex-col gap-2 border-t border-line px-4 pt-4 pb-[calc(6.5rem+env(safe-area-inset-bottom))] text-sm text-muted">
+    <footer className="mx-auto mt-10 flex w-full max-w-[720px] flex-col gap-2 border-t border-line px-4 pt-4 pb-[calc(6.5rem+env(safe-area-inset-bottom))] text-sm text-muted md:max-w-[1120px] md:pb-8">
       <p data-testid="disclaimer">{t("Disclaimer.text")}</p>
       <p>
         {t("Emergency.short", { emergency: t(`Memory.emergency.${region}`) })}
@@ -237,6 +291,7 @@ export function Shell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const research =
     pathname === "/research" || pathname.startsWith("/research/");
+  const wide = WIDE.includes(pathname);
   return (
     <>
       <FaceSync />
@@ -246,8 +301,10 @@ export function Shell({ children }: { children: ReactNode }) {
       >
         {t("Shell.skip")}
       </a>
-      <header className="mx-auto flex w-full max-w-[720px] flex-col gap-2 px-4 pt-3 no-print">
-        <div className="flex items-center justify-between gap-2">
+      <header
+        className={`mx-auto flex w-full ${wide ? "max-w-[720px] lg:max-w-[1120px]" : "max-w-[720px] md:max-w-[1120px]"} flex-col gap-2 px-4 pt-3 no-print`}
+      >
+        <div className="flex flex-wrap items-center justify-between gap-2">
           <Link
             href="/"
             className="flex min-h-11 items-center gap-2 font-display text-xl font-semibold no-underline"
@@ -255,8 +312,10 @@ export function Shell({ children }: { children: ReactNode }) {
             <FacesIcon size={22} />
             Janus
           </Link>
+          <HeaderNav />
           <div className="flex items-center gap-1">
             {theme === "two-faces" ? <MaskSwitch research={research} /> : null}
+            <ThemeToggle />
             <LanguageSwitcher />
           </div>
         </div>
@@ -266,7 +325,7 @@ export function Shell({ children }: { children: ReactNode }) {
       <main
         id="content"
         tabIndex={-1}
-        className="mx-auto flex w-full max-w-[720px] flex-col gap-5 px-4 pt-4 outline-none"
+        className={`mx-auto flex w-full max-w-[720px] flex-col gap-5 px-4 pt-4 outline-none ${wide ? "lg:max-w-[1120px]" : ""}`}
       >
         {children}
       </main>

@@ -13,7 +13,9 @@ test("demo flow end to end, with no API request", async ({ page }) => {
   await page.goto("/en");
   await page.getByRole("link", { name: "Try the demo" }).click();
   await page.getByRole("button", { name: "Open the Istanbul patient" }).click();
-  await expect(page.getByText("Amlodis Plus 10/20 (demo)")).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Amlodis Plus 10/20 (demo)" }),
+  ).toBeVisible();
   await page.getByRole("link", { name: "Check for patterns" }).click();
 
   const row5 = page.locator('[data-testid="finding"][data-rule="pipc:5"]');

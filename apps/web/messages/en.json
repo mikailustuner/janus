@@ -21,7 +21,15 @@
     "demoHint": "No sign-up. Three synthetic patients with invented product names.",
     "resume": "Continue with your list",
     "resumeCount": "{count, plural, one {# medicine on this device} other {# medicines on this device}}",
-    "privacy": "What stays on this device"
+    "privacy": "What stays on this device",
+    "howTitle": "How it works",
+    "how1": "Scan the code on the box, or type the name.",
+    "how2": "Janus checks {patterns} published prescribing-cascade patterns and public reports of side effects.",
+    "how3": "You get a note with sources for your doctor, in the doctor's language.",
+    "coverageTitle": "Regions and languages",
+    "regions": "Medicine boxes from",
+    "languages": "Languages",
+    "privacyLine": "Photos of the boxes and your medicine list stay on this device; Janus has no account and sends only what the check needs."
   },
   "Shell": {
     "skip": "Skip to content",

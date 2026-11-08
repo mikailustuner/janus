@@ -353,7 +353,7 @@ export function MemoryPage() {
     <>
       {emergencyFirst ? <EmergencyNotice /> : null}
       <PageTitle>{t("MemoryView.title")}</PageTitle>
-      <p>{t("MemoryView.intro")}</p>
+      <p className="max-w-[72ch]">{t("MemoryView.intro")}</p>
       {snap ? (
         <p className="text-sm text-muted">
           {t("MemoryView.snapshot", {
@@ -400,37 +400,46 @@ export function MemoryPage() {
           </ul>
         </Card>
       ) : null}
-      {keys.length < 2 ? (
-        <StateView state="empty" message={t("MemoryView.fewKeys")} />
-      ) : (
-        <Panel call={combination}>
-          {(c) => <Combination c={c} vocab={vocab} snapshot={snap} />}
-        </Panel>
-      )}
-      <Panel call={regions}>{(r) => <Regions r={r} snapshot={snap} />}</Panel>
-      {events.length ? (
-        <label className="flex flex-col gap-1">
-          <span className="font-bold">{t("MemoryView.eventPicker")}</span>
-          <select
-            value={event ?? ""}
-            onChange={(e) => setEventPick(e.target.value)}
-            className="min-h-11 rounded-[var(--radius-button)] border-2 border-muted bg-surface px-3 text-fg"
-          >
-            {events.map((e) => (
-              <option key={e} value={e} className="bg-bg text-fg">
-                {vocab.vocab.events[e]?.label ?? e}
-              </option>
-            ))}
-          </select>
-        </label>
-      ) : null}
-      {chosenLine ? <SafetyLine code={chosenLine} /> : null}
-      <Panel call={contributions}>
-        {(s) => <Shared s={s} title={t("MemoryView.donatedTitle")} />}
-      </Panel>
-      <Panel call={outcomes}>
-        {(s) => <Shared s={s} title={t("MemoryView.outcomesTitle")} />}
-      </Panel>
+      {/* Desktop (Req 27): the combination panel beside the regional and shared panels. */}
+      <div className="grid gap-5 lg:grid-cols-2 lg:items-start">
+        <div className="flex min-w-0 flex-col gap-5">
+          {keys.length < 2 ? (
+            <StateView state="empty" message={t("MemoryView.fewKeys")} />
+          ) : (
+            <Panel call={combination}>
+              {(c) => <Combination c={c} vocab={vocab} snapshot={snap} />}
+            </Panel>
+          )}
+        </div>
+        <div className="flex min-w-0 flex-col gap-5">
+          <Panel call={regions}>
+            {(r) => <Regions r={r} snapshot={snap} />}
+          </Panel>
+          {events.length ? (
+            <label className="flex flex-col gap-1">
+              <span className="font-bold">{t("MemoryView.eventPicker")}</span>
+              <select
+                value={event ?? ""}
+                onChange={(e) => setEventPick(e.target.value)}
+                className="min-h-11 rounded-[var(--radius-button)] border-2 border-muted bg-surface px-3 text-fg"
+              >
+                {events.map((e) => (
+                  <option key={e} value={e} className="bg-bg text-fg">
+                    {vocab.vocab.events[e]?.label ?? e}
+                  </option>
+                ))}
+              </select>
+            </label>
+          ) : null}
+          {chosenLine ? <SafetyLine code={chosenLine} /> : null}
+          <Panel call={contributions}>
+            {(s) => <Shared s={s} title={t("MemoryView.donatedTitle")} />}
+          </Panel>
+          <Panel call={outcomes}>
+            {(s) => <Shared s={s} title={t("MemoryView.outcomesTitle")} />}
+          </Panel>
+        </div>
+      </div>
     </>
   );
 }
