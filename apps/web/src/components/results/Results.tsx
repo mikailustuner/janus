@@ -63,7 +63,7 @@ export function ResultsBody({
       <PageTitle
         eyebrow={t("Findings.checkedOf", {
           items: boxNames.length,
-          total: view.rules.total,
+          total: view.rules.checked, // patterns actually checked (pharmacologist review A2)
         })}
       >
         <span data-testid="finding-count">

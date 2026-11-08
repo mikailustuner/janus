@@ -24,7 +24,11 @@ export function ReadAloud({ text }: { text: () => string }) {
       setVoice(
         speechSynthesis
           .getVoices()
-          .find((v) => v.lang.toLowerCase().startsWith(locale)) ?? null,
+          // Only a voice of this device: a network voice would send the text to a speech service
+          // (safety audit B2). Without one, the control is hidden.
+          .find(
+            (v) => v.localService && v.lang.toLowerCase().startsWith(locale),
+          ) ?? null,
       );
     pick();
     speechSynthesis.addEventListener("voiceschanged", pick);

@@ -170,3 +170,28 @@ describe("13.2 zxing-wasm decodes the demo sheet", () => {
     }
   });
 });
+
+describe("typed element strings (safety audit A8)", () => {
+  it("never send a typed serial or lot as search text", () => {
+    check(
+      fc.property(
+        fieldsArb,
+        fc.constantFrom("paren" as const, "fnc1" as const),
+        ({ r, fields }, form) => {
+          const typed = classifyTyped(encode(fields, form, false));
+          if (form === "fnc1" && !/\x1d/.test(encode(fields, form, false)))
+            return; // bare digits: other rules
+          expect(typed.kind).toBe("scan");
+          if (typed.kind === "scan")
+            for (const sentinel of [r.serial, r.lot, r.otherValue])
+              if (sentinel) expect(typed.content).not.toContain(sentinel);
+        },
+      ),
+    );
+    const gtin = "0" + "869000000001" + checkDigit("0869000000001".slice(1));
+    expect(classifyTyped(`GTIN ${gtin} SN ZZSERIAL123 LOT ZZLOT9`).kind).toBe(
+      "scan",
+    );
+    expect(classifyTyped("SN 12345678 LOT 4455").kind).toBe("national_code");
+  });
+});

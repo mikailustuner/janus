@@ -252,12 +252,17 @@
   > doctor page). Budgets recorded in design §16 at measured + 10 %, above the first ceilings (DP38); 15-item results
   > render 55–252 ms after the response.
 
-- [ ] 22. Wording review and **review stop (owner)**
+- [x] 22. Wording review and **review stop (owner)**
   - Localization review of every new namespace in four languages (forbidden and near-forbidden forms, register, meaning
     parity, Glass vocabulary), pharmacologist review of the clinical wording (findings, timing, not-checked reasons,
     consent texts), written to `wording-localization-review.md` and `wording-pharmacologist-review.md` with a summary
     `wording-review.md` (counts, flagged keys, the final demo cases of §13.1, the open items of design §20). Commit,
     push, CI green, then **stop and wait for the owner**. _Requirements: 2.4, 7.7, 21, DP27_
+  > Done 2026-11-08 (Claude Code): localization-reviewer, safety-auditor and pharmacologist passes run as separate
+  > read-only agents from `.kiro/agents`; sheets `wording-localization-review.md`, `wording-safety-audit.md`,
+  > `wording-pharmacologist-review.md` and the summary `wording-review.md`. Defects found by the passes fixed before the
+  > stop (safety B1, B2, A5, A8, A11; localization TR-1/TR-2; pharmacologist A2); every wording choice waits for the
+  > owner. **Stopped here for the owner.**
 
 - [ ] 23. Apply the owner's decisions and final checkpoint
   - Apply the wording and open-item decisions (demo names, Spanish status codes, demo cases, shadcn/ui) in one commit;

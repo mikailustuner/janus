@@ -119,6 +119,10 @@ export function layoutDocument(
       .flatMap((s) => s.blocks)
       .find((b) => b.kind === "sentence" && /(^|:)disclaimer$/.test(b.id)) ??
     null;
+  // Rule 9: every page of the note carries the disclaimer; a note without it is a contract error
+  // (safety audit A5), never a PDF printed without it.
+  if (!disclaimer)
+    throw new ContractError(`documents.${doc.language}.disclaimer`);
   return {
     language: doc.language,
     sections,

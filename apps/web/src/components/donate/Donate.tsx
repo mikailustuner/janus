@@ -208,6 +208,12 @@ export function Donate() {
       <Card>
         <fieldset className="flex flex-col gap-2">
           <legend className="font-bold">{t("Donate.event")}</legend>
+          {/* The chosen event stays visible above the scrolling list (also when pre-selected). */}
+          {chosen ? (
+            <p className="font-bold" data-testid="chosen-event">
+              {t("Donate.storedEvent", { event: chosen.label })}
+            </p>
+          ) : null}
           <label className="flex flex-col gap-1 text-sm">
             {t("Donate.eventSearch")}
             <input

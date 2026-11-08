@@ -16,6 +16,8 @@ import type {
 } from "@/api/contracts";
 import { formatCount, formatDate, formatShare } from "@/components/format";
 import { keyName } from "@/components/names";
+import { EmergencyNotice } from "@/components/EmergencyNotice";
+import { SafetyLine } from "@/components/SafetyLine";
 import { StateView } from "@/components/StateView";
 import { Card, PageTitle, SectionTitle } from "@/components/ui";
 import { inputKey, toEvaluateIn } from "@/flow/evaluate";
@@ -26,7 +28,7 @@ import { useCall, type CallState } from "@/flow/useCall";
 import { listIngredientKeys } from "@/store/list";
 import { useT } from "@/theme/words";
 import type { CascadeResult } from "@/api/contracts";
-import type { Loaded } from "@/vocabulary";
+import type { Loaded, SafetyLineCode } from "@/vocabulary";
 import { useVocabulary } from "@/vocabulary/use";
 
 import { ratioText } from "./CiBar";
@@ -151,6 +153,9 @@ function Combination({
                               high: ratioText(r.high, locale, over),
                             })}
                           </span>
+                        ) : null}
+                        {e.safety_line ? (
+                          <SafetyLine code={e.safety_line as SafetyLineCode} />
                         ) : null}
                       </li>
                     );
@@ -327,8 +332,26 @@ export function MemoryPage() {
 
   if (!session.ready || !vocab) return <StateView state="loading" />;
   const snap = snapshot.status === "ok" ? snapshot.data : null;
+  // Rule 10, Req 7.8: when an event with a safety line can be shown here (the findings' events, or
+  // the events of the combination panel), the emergency notice comes first on the screen.
+  const combinationLines =
+    combination.status === "ok"
+      ? [
+          combination.data.events,
+          ...combination.data.pairs.map((p) => p.events),
+          ...combination.data.singles.map((x) => x.events),
+        ]
+          .flat()
+          .some((e) => e.safety_line)
+      : false;
+  const chosenLine = event
+    ? (vocab.vocab.events[event]?.safety_line ?? null)
+    : null;
+  const emergencyFirst =
+    combinationLines || events.some((e) => vocab.vocab.events[e]?.safety_line);
   return (
     <>
+      {emergencyFirst ? <EmergencyNotice /> : null}
       <PageTitle>{t("MemoryView.title")}</PageTitle>
       <p>{t("MemoryView.intro")}</p>
       {snap ? (
@@ -401,6 +424,7 @@ export function MemoryPage() {
           </select>
         </label>
       ) : null}
+      {chosenLine ? <SafetyLine code={chosenLine} /> : null}
       <Panel call={contributions}>
         {(s) => <Shared s={s} title={t("MemoryView.donatedTitle")} />}
       </Panel>

@@ -131,6 +131,23 @@ export type Typed =
 export function classifyTyped(input: string): Typed {
   const t = input.trim();
   const compact = t.replace(/[\s]/g, "");
+  // A typed or pasted element string, or a printed "GTIN … SN … LOT" line, goes through the
+  // outbound filter like a scanned code: never as search text (safety audit A8).
+  if (/\(\d{2,4}\)|\x1d/.test(t)) {
+    const out = outbound(t);
+    return out.kind === "send"
+      ? { kind: "scan", content: out.content }
+      : { kind: "invalid" };
+  }
+  const printed = /\bGTIN[:\s]*(\d{14})\b/i.exec(t);
+  if (printed) {
+    const out = outbound(`(01)${printed[1]}`);
+    return out.kind === "send"
+      ? { kind: "scan", content: out.content }
+      : { kind: "invalid" };
+  }
+  if (/\b(SN|LOT|PZN)\b/i.test(t) && /\d{6,}/.test(t))
+    return { kind: "national_code" };
   if (/^(\d{8}|\d{12}|\d{13}|\d{14})$/.test(compact) && validGtin(compact))
     return { kind: "scan", content: compact };
   const ndc = /^(?:NDC[:\s]*)?(\d{4,5}-\d{3,4}-\d{1,2})$/i.exec(t);
