@@ -28,6 +28,8 @@ from janus.observability.logging import (
 )
 from janus.observability.middleware import AccessLogMiddleware
 from janus.passport.forms import load as load_dose_forms
+from janus.seance.catalogue import PACKAGE_DIR as SEANCE_PACKAGE
+from janus.seance.catalogue import load_catalogue as load_seance
 from janus.settings import EVENT_VOCABULARY, Settings
 
 
@@ -95,6 +97,9 @@ def create_app(
         app.state.dose_forms = load_dose_forms()
     except FileNotFoundError:
         app.state.dose_forms = None
+    # Séance catalogue (séance design §5): an inconsistent file stops startup; a missing data
+    # package makes `/seance/*` answer 503.
+    app.state.seance = load_seance() if (SEANCE_PACKAGE / "claims.csv").is_file() else None
     app.state.note_keyring = (
         Keyring(settings.note_keys, settings.note_signing_key_id)
         if settings.note_keys and settings.note_signing_key_id
@@ -111,6 +116,7 @@ def create_app(
     from janus.passport.router import router as passport_router
     from janus.privacy.router import router as privacy_router
     from janus.resolution.router import router as resolution_router
+    from janus.seance.router import router as seance_router
 
     routers = [
         health_router,
@@ -124,6 +130,7 @@ def create_app(
         notes_router,
         notes_donation_router,
         passport_router,
+        seance_router,
         *extra_routers,
     ]
     for router in routers:

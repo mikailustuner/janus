@@ -1,0 +1,5 @@
+condition,pts,note
+wound,Wound|Skin wound|Wound complication|Impaired healing|Wound dehiscence|Wound secretion|Wound haemorrhage,Skin wounds and their healing. MedDRA Preferred Terms as published in FAERS; checked present in the counts build of 2026-11-08.
+burn,Thermal burn|Burns first degree|Burns second degree|Burns third degree|Burns fourth degree|Burn infection,"Thermal burns only; chemical and application-site burns are product reactions, not the ancient condition."
+ulcer,Skin ulcer|Decubitus ulcer|Skin ulcer haemorrhage|Infected skin ulcer,"Skin ulcers only; internal (gastric, intestinal) ulcers are out of the séance scope."
+infection,Wound infection|Wound infection bacterial|Wound infection staphylococcal|Wound infection pseudomonas|Postoperative wound infection|Infected skin ulcer|Burn infection|Skin infection|Skin bacterial infection|Cellulitis|Erysipelas|Impetigo|Paronychia|Furuncle|Carbuncle|Subcutaneous abscess|Gangrene,"Skin and wound infections. The Canon knows putrefaction, pus and spreading ulcers, not infection: the match is an interpretive bridge (design DP4)."
