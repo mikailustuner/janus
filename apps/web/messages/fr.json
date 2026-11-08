@@ -33,6 +33,8 @@
     "nightHeadline": "Un médicament a-t-il été prescrit pour l'effet indésirable d'un autre ?",
     "glassHeadline": "Un regard clair sur les médicaments de la maison.",
     "stepInside": "Entrer",
+    "skip": "Passer",
+    "replay": "Revoir l'entrée",
     "scene3Title": {
       "twoFaces": "Quatre fantômes dans une armoire à pharmacie de démo",
       "glass": "Quatre schémas dans une armoire à pharmacie de démo"
@@ -64,25 +66,8 @@
       "medicines": "Médicaments",
       "results": "Résultats",
       "settings": "Réglages",
-      "research": {
-        "twoFaces": "Face lumière",
-        "glass": "Recherche"
-      },
+      "research": "Recherche",
       "passport": "Passeport"
-    },
-    "mask": {
-      "label": {
-        "twoFaces": "Masque : choisir une face",
-        "glass": "Section"
-      },
-      "patient": {
-        "twoFaces": "Ombre",
-        "glass": "Patient"
-      },
-      "research": {
-        "twoFaces": "Lumière",
-        "glass": "Recherche"
-      }
     },
     "privacy": "Confidentialité",
     "demoCodes": "Codes de démo",
@@ -216,7 +201,7 @@
     "appearance": "Apparence",
     "theme": "Thème",
     "themeTwoFaces": "Pharmacie de nuit",
-    "themeTwoFacesHint": "Bleu nuit aux fenêtres éclairées côté patient, ivoire côté recherche.",
+    "themeTwoFacesHint": "Bleu nuit aux fenêtres éclairées, avec les symboles du thème.",
     "themeGlass": "Janus de verre",
     "themeGlassHint": "Sobre et clair, sans symboles du thème.",
     "largeText": "Grand texte",
@@ -510,10 +495,7 @@
     "withdrawLink": "Retirer les données de la boucle de retour"
   },
   "Research": {
-    "title": {
-      "twoFaces": "Face lumière : pour les chercheurs",
-      "glass": "Recherche"
-    },
+    "title": "Recherche",
     "intro": "Les mêmes connaissances sur les effets indésirables, retournées pour la recherche. Cette section ne fait pas partie du parcours patient.",
     "rule7": "Les résultats de repositionnement sont des candidats à étudier — pas des traitements.",
     "coming": "Prévu pour la phase 4.",
@@ -538,10 +520,7 @@
         "body": "Le jeu de données ouvert pour la recherche, avec des chiffres uniquement pour des groupes assez grands pour protéger la vie privée."
       }
     },
-    "back": {
-      "twoFaces": "Retour à la face ombre",
-      "glass": "Retour à la section patient"
-    },
+    "back": "Retour à la section patient",
     "empty": "Rien à afficher pour l'instant."
   },
   "Doctor": {

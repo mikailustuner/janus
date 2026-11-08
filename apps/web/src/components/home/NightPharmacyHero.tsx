@@ -1,13 +1,18 @@
 "use client";
 /**
- * Night Pharmacy home (steering design.md "Home scenes", experience Req 27.6, DP46). A pinned
- * stage scrubbed by scroll: the diorama with ghosts rising from the shop windows → the door
- * transition video → the medicine cabinet, where the ghosts line up as the Istanbul demo's
- * findings (each a button into the demo) and the glowing note becomes "Prepare the doctor note".
- * All text is real and translated; the images carry alt text, the video is decorative. The motion
- * (scrubbing, parallax, fireflies, the ghosts' lean) lives in `nightMotion.ts`, its own chunk,
- * loaded after hydration; under reduced motion, Save-Data, a slow connection or a video error the
- * stage falls back to the three stills (`data-still`, home-scenes.css).
+ * Night Pharmacy home (steering design.md "Home scenes", experience Req 27.6–27.9, DP46, DP49).
+ * Three scenes in one stage, switched by an explicit control, never by scroll:
+ * - `hero`: the diorama with ghosts rising from the shop windows, the copy, and "Step inside"
+ *   (a play button and a small scroll-down cue that does the same).
+ * - `door`: the door transition video plays once, full-bleed, at normal speed in a fixed layer
+ *   with a Skip control; at its end (or on Skip) it cross-fades into
+ * - `room`: the medicine cabinet, where the ghosts hover as the Istanbul demo's findings (each a
+ *   button into the demo), the glowing note is "Prepare the doctor note", and Replay plays the
+ *   way in again. Focus moves to the scene 3 heading.
+ * Under reduced motion, Save-Data, a slow connection or a video that cannot play, "Step inside"
+ * cross-fades straight to the room and the video is never requested. The ambient motion
+ * (fireflies, parallax, the ghosts' lean, pausing off-screen) and the idle preload of the video
+ * live in `nightMotion.ts`, its own chunk.
  */
 import { useEffect, useRef, useState } from "react";
 
@@ -16,7 +21,15 @@ import { Link, useRouter } from "@/i18n/navigation";
 import { useT, useThemeWord } from "@/theme/words";
 
 import { Ghost } from "@/components/Ghost";
+import {
+  ChevronIcon,
+  PlayIcon,
+  ReplayIcon,
+  SkipIcon,
+} from "@/components/icons";
 import { ScenePicture } from "./ScenePicture";
+import { stillReason } from "./still";
+import { loadDoorVideo } from "./video";
 
 /** The Istanbul demo's findings, in the order of its recorded result (checked by a test). */
 export const ISTANBUL_GHOSTS = [
@@ -45,11 +58,35 @@ const WINDOWS = [
   { x: 87, y: 60.4 },
 ];
 
+/** Fireflies: fixed positions (no randomness, so server and client render the same). */
+const FIREFLIES = Array.from({ length: 16 }, (_, i) => ({
+  x: (i * 37 + 11) % 100,
+  y: 30 + ((i * 53) % 65),
+  d: 7 + (i % 5) * 1.6,
+  delay: -((i * 1.7) % 9),
+}));
+
+/** If the video has not started this long after "Step inside", go straight to the room. */
+const START_TIMEOUT_MS = 6000;
+
+type Scene = "hero" | "door" | "room";
+
 export function NightPharmacyHero({ active }: { active: boolean }) {
   const t = useT();
   const w = useThemeWord();
   const router = useRouter();
   const root = useRef<HTMLElement>(null);
+  const video = useRef<HTMLVideoElement>(null);
+  const skip = useRef<HTMLButtonElement>(null);
+  const enterButton = useRef<HTMLButtonElement>(null);
+  const roomTitle = useRef<HTMLHeadingElement>(null);
+  const [scene, setScene] = useState<Scene>("hero");
+  const [hot, setHot] = useState<number | null>(null);
+  // Where focus goes after the next scene change (null: leave it alone).
+  const focusNext = useRef<"skip" | "room" | "enter" | null>(null);
+  const startTimer = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined,
+  );
 
   useEffect(() => {
     const el = root.current;
@@ -65,7 +102,54 @@ export function NightPharmacyHero({ active }: { active: boolean }) {
     };
   }, [active]);
 
-  const [hot, setHot] = useState<number | null>(null);
+  useEffect(() => {
+    const target = focusNext.current;
+    focusNext.current = null;
+    if (target === "skip") skip.current?.focus();
+    else if (target === "enter") enterButton.current?.focus();
+    else if (target === "room") {
+      // The stage is at the top of the page; bring it back if the visitor scrolled (on phones
+      // the button sits below the house). Instant: the video layer covers this jump.
+      const top = root.current?.getBoundingClientRect().top ?? 0;
+      if (top < 0) scrollBy({ top, behavior: "instant" });
+      roomTitle.current?.focus({ preventScroll: true });
+    }
+  }, [scene]);
+
+  useEffect(() => () => clearTimeout(startTimer.current), []);
+
+  const toRoom = () => {
+    clearTimeout(startTimer.current);
+    video.current?.pause();
+    focusNext.current = "room";
+    setScene("room");
+  };
+
+  const stepInside = () => {
+    const v = video.current;
+    const el = root.current;
+    if (!v || !el || stillReason() || el.hasAttribute("data-still")) {
+      toRoom();
+      return;
+    }
+    loadDoorVideo(v);
+    clearTimeout(startTimer.current);
+    startTimer.current = setTimeout(() => {
+      if (v.paused || v.readyState < 3) toRoom();
+    }, START_TIMEOUT_MS);
+    v.currentTime = 0;
+    v.play().catch(toRoom);
+    focusNext.current = "skip";
+    setScene("door");
+  };
+
+  const replay = () => {
+    if (stillReason() || root.current?.hasAttribute("data-still")) {
+      focusNext.current = "enter";
+      setScene("hero");
+    } else stepInside();
+  };
+
   const prepareNote = () => {
     startDemo("istanbul");
     router.push("/note");
@@ -74,57 +158,29 @@ export function NightPharmacyHero({ active }: { active: boolean }) {
     startDemo("istanbul");
     router.push(`/results/finding#${position}`);
   };
-  const stepInside = () => {
-    const el = root.current;
-    const target = el?.querySelector<HTMLElement>("[data-scene3]");
-    if (!target) return;
-    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    target.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
-    target.querySelector<HTMLElement>("h2")?.focus({ preventScroll: true });
-  };
+
+  const room = scene === "room";
 
   return (
     <section
       ref={root}
       className="np"
+      data-scene={scene}
       aria-labelledby="np-title"
       data-testid="night-hero"
     >
-      <div className="np-copy">
-        <div className="np-copy-inner">
-          <p className="scene-eyebrow">{t("Home.tagline.twoFaces")}</p>
-          <h1 id="np-title" className="scene-title">
-            {t("Home.nightHeadline")}
-          </h1>
-          <p className="scene-lead">{t("Home.intro")}</p>
-          <div className="flex flex-wrap gap-3">
-            <Link href="/demo" className="scene-btn scene-btn-primary">
-              {t("Home.demo")}
-            </Link>
-            <a href="#how-it-works" className="scene-btn">
-              {t("Home.howTitle")}
-            </a>
-            <button type="button" className="scene-btn" onClick={stepInside}>
-              {t("Home.stepInside")}
-              <span aria-hidden>↓</span>
-            </button>
-          </div>
-          <p className="scene-hint">{t("Home.demoHint")}</p>
-        </div>
-      </div>
-
-      <div className="np-sticky" data-stage>
-        <div className="scene np-hero">
+      <div className="np-stage" inert={scene === "door"}>
+        <div className="scene np-hero" aria-hidden={room}>
           <div className="np-sky" aria-hidden />
           <div className="scene-box np-box-night">
             <ScenePicture name="night-diorama" alt={t("Home.alt.diorama")} />
             <div className="np-ghosts" aria-hidden>
-              {WINDOWS.map((w, i) => (
+              {WINDOWS.map((p, i) => (
                 <span
                   key={i}
                   className="np-ghost"
                   data-ghost
-                  style={{ left: `${w.x}%`, top: `${w.y}%` }}
+                  style={{ left: `${p.x}%`, top: `${p.y}%` }}
                 >
                   <Ghost size={64} animated />
                 </span>
@@ -132,33 +188,23 @@ export function NightPharmacyHero({ active }: { active: boolean }) {
             </div>
           </div>
           <div className="np-mist" aria-hidden />
-          <canvas className="np-fireflies" aria-hidden data-fireflies />
-        </div>
-        <div className="scene np-video" aria-hidden>
-          <div className="scene-box np-box-night">
-            <video
-              muted
-              playsInline
-              preload="none"
-              disablePictureInPicture
-              tabIndex={-1}
-              data-video
-            />
-            <picture className="np-still-img">
-              <source type="image/avif" srcSet="/home/door-mid-1280.avif" />
-              <source type="image/webp" srcSet="/home/door-mid-1280.webp" />
-              <img
-                src="/home/door-mid-1280.jpg"
-                alt=""
-                width={1280}
-                height={720}
-                loading="lazy"
-                decoding="async"
+          <div className="np-fireflies" aria-hidden>
+            {FIREFLIES.map((f, i) => (
+              <span
+                key={i}
+                className="np-fly"
+                style={{
+                  left: `${f.x}%`,
+                  top: `${f.y}%`,
+                  animationDuration: `${f.d}s`,
+                  animationDelay: `${f.delay}s`,
+                }}
               />
-            </picture>
+            ))}
           </div>
         </div>
-        <div className="scene np-cabinet">
+
+        <div className="scene np-cabinet" aria-hidden={!room}>
           <div className="scene-box np-box-cabinet">
             <ScenePicture name="night-cabinet" alt={t("Home.alt.cabinet")} />
             <span className="np-note-glow" aria-hidden />
@@ -193,56 +239,140 @@ export function NightPharmacyHero({ active }: { active: boolean }) {
             />
           </div>
         </div>
-      </div>
-      <div className="np-runway" aria-hidden data-runway />
 
-      <div
-        className="np-scene3"
-        data-scene3
-        onFocus={(e) => {
-          e.currentTarget.setAttribute("data-in", "");
-          root.current?.setAttribute("data-in", "");
-        }}
-      >
-        <div className="np-scene3-inner">
-          <p className="scene-eyebrow">{t("Demo.label")}</p>
-          <h2 tabIndex={-1} className="scene-title text-3xl outline-none">
-            {w("Home.scene3Title")}
-          </h2>
-          <p className="scene-lead">{w("Home.scene3Intro")}</p>
-          <ul className="flex flex-col gap-3">
-            {ISTANBUL_GHOSTS.map((g, i) => {
-              const label = t(`Home.ghosts.${g.key}`);
-              return (
-                <li key={g.rule}>
+        <div className="np-copy">
+          <div className="np-copy-inner">
+            {/* In the room the heading stays for screen readers; the rest of the hero goes. */}
+            {room ? null : (
+              <p className="scene-eyebrow">{t("Home.tagline.twoFaces")}</p>
+            )}
+            <h1
+              id="np-title"
+              className={room ? "sr-only" : "scene-title np-title"}
+            >
+              {t("Home.nightHeadline")}
+            </h1>
+            {room ? null : (
+              <>
+                <p className="scene-lead">{t("Home.intro")}</p>
+                <div className="flex flex-wrap gap-3">
+                  <Link href="/demo" className="scene-btn scene-btn-primary">
+                    {t("Home.demo")}
+                  </Link>
+                  <a href="#how-it-works" className="scene-btn">
+                    {t("Home.howTitle")}
+                  </a>
+                </div>
+                <p className="scene-hint">{t("Home.demoHint")}</p>
+                <div className="np-enter">
+                  <button
+                    ref={enterButton}
+                    type="button"
+                    className="scene-btn np-enter-btn"
+                    onClick={stepInside}
+                  >
+                    <span className="np-enter-play" aria-hidden>
+                      <PlayIcon size={18} />
+                    </span>
+                    {t("Home.stepInside")}
+                  </button>
+                  {/* A pointer shortcut for the same action; the button above is the control. */}
                   <button
                     type="button"
-                    className="np-finding"
-                    data-hot={hot === i ? "" : undefined}
-                    aria-label={t("Home.ghostOpen", { finding: label })}
-                    onClick={() => openFinding(g.position)}
-                    onPointerEnter={() => setHot(i)}
-                    onPointerLeave={() => setHot(null)}
-                    onFocus={() => setHot(i)}
-                    onBlur={() => setHot(null)}
+                    tabIndex={-1}
+                    aria-hidden
+                    className="np-cue"
+                    onClick={stepInside}
                   >
-                    <Ghost size={36} animated className="shrink-0" />
-                    <span>{label}</span>
+                    <ChevronIcon size={26} />
                   </button>
-                </li>
-              );
-            })}
-          </ul>
-          <div>
-            <button
-              type="button"
-              className="scene-btn scene-btn-primary"
-              onClick={prepareNote}
-            >
-              {t("Home.prepareDemoNote")}
-            </button>
+                </div>
+              </>
+            )}
           </div>
+          {room ? (
+            <div className="np-scene3-inner">
+              <p className="scene-eyebrow">{t("Demo.label")}</p>
+              <h2
+                ref={roomTitle}
+                tabIndex={-1}
+                className="scene-title text-3xl outline-none"
+              >
+                {w("Home.scene3Title")}
+              </h2>
+              <p className="scene-lead">{w("Home.scene3Intro")}</p>
+              <ul className="flex flex-col gap-3">
+                {ISTANBUL_GHOSTS.map((g, i) => {
+                  const label = t(`Home.ghosts.${g.key}`);
+                  return (
+                    <li key={g.rule}>
+                      <button
+                        type="button"
+                        className="np-finding"
+                        data-hot={hot === i ? "" : undefined}
+                        aria-label={t("Home.ghostOpen", { finding: label })}
+                        onClick={() => openFinding(g.position)}
+                        onPointerEnter={() => setHot(i)}
+                        onPointerLeave={() => setHot(null)}
+                        onFocus={() => setHot(i)}
+                        onBlur={() => setHot(null)}
+                      >
+                        <Ghost size={36} animated className="shrink-0" />
+                        <span>{label}</span>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+              <div className="flex flex-wrap gap-3">
+                <button
+                  type="button"
+                  className="scene-btn scene-btn-primary"
+                  onClick={prepareNote}
+                >
+                  {t("Home.prepareDemoNote")}
+                </button>
+                <button type="button" className="scene-btn" onClick={replay}>
+                  <ReplayIcon size={20} />
+                  {t("Home.replay")}
+                </button>
+              </div>
+            </div>
+          ) : null}
         </div>
+      </div>
+
+      {/* The door transition: decorative, full-bleed over the viewport while it plays. */}
+      <div
+        className="np-door"
+        aria-hidden={scene !== "door"}
+        onKeyDown={(e) => {
+          if (e.key === "Escape") toRoom();
+        }}
+      >
+        <video
+          ref={video}
+          muted
+          playsInline
+          preload="none"
+          disablePictureInPicture
+          tabIndex={-1}
+          aria-hidden
+          data-video
+          onEnded={toRoom}
+          onError={toRoom}
+          onPlaying={() => clearTimeout(startTimer.current)}
+        />
+        <button
+          ref={skip}
+          type="button"
+          className="scene-btn np-skip"
+          tabIndex={scene === "door" ? 0 : -1}
+          onClick={toRoom}
+        >
+          {t("Home.skip")}
+          <SkipIcon size={18} />
+        </button>
       </div>
     </section>
   );

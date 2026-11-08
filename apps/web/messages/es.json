@@ -33,6 +33,8 @@
     "nightHeadline": "¿Se recetó un medicamento por el efecto adverso de otro?",
     "glassHeadline": "Una mirada clara a los medicamentos de su casa.",
     "stepInside": "Entrar",
+    "skip": "Saltar",
+    "replay": "Volver a ver la entrada",
     "scene3Title": {
       "twoFaces": "Cuatro fantasmas en un botiquín de demostración",
       "glass": "Cuatro patrones en un botiquín de demostración"
@@ -64,25 +66,8 @@
       "medicines": "Medicamentos",
       "results": "Resultados",
       "settings": "Ajustes",
-      "research": {
-        "twoFaces": "Cara de luz",
-        "glass": "Investigación"
-      },
+      "research": "Investigación",
       "passport": "Pasaporte"
-    },
-    "mask": {
-      "label": {
-        "twoFaces": "Máscara: elegir una cara",
-        "glass": "Sección"
-      },
-      "patient": {
-        "twoFaces": "Sombra",
-        "glass": "Paciente"
-      },
-      "research": {
-        "twoFaces": "Luz",
-        "glass": "Investigación"
-      }
     },
     "privacy": "Privacidad",
     "demoCodes": "Códigos de demo",
@@ -216,7 +201,7 @@
     "appearance": "Apariencia",
     "theme": "Tema",
     "themeTwoFaces": "Farmacia nocturna",
-    "themeTwoFacesHint": "Azul noche con ventanas iluminadas para el lado del paciente, marfil para el de investigación.",
+    "themeTwoFacesHint": "Azul noche con ventanas iluminadas y símbolos del tema.",
     "themeGlass": "Janus de cristal",
     "themeGlassHint": "Sencillo y claro, sin símbolos del tema.",
     "largeText": "Texto grande",
@@ -510,10 +495,7 @@
     "withdrawLink": "Retirar los datos del circuito de resultados"
   },
   "Research": {
-    "title": {
-      "twoFaces": "Cara de luz: para investigadores",
-      "glass": "Investigación"
-    },
+    "title": "Investigación",
     "intro": "El mismo conocimiento sobre efectos adversos, al revés, para la investigación. Esta sección no forma parte del recorrido del paciente.",
     "rule7": "Los resultados de reposicionamiento son candidatos que vale la pena investigar — no tratamientos.",
     "coming": "Llegará en la fase 4.",
@@ -538,10 +520,7 @@
         "body": "El conjunto de datos abierto para la investigación, con recuentos solo para grupos lo bastante grandes como para proteger la privacidad."
       }
     },
-    "back": {
-      "twoFaces": "Volver a la cara de sombra",
-      "glass": "Volver a la sección del paciente"
-    },
+    "back": "Volver a la sección del paciente",
     "empty": "Todavía no hay nada que mostrar."
   },
   "Doctor": {

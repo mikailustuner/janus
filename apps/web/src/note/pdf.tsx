@@ -1,6 +1,6 @@
 /**
  * The doctor note PDF, rendered in the browser (experience design §10.2, DP6, Req 17.7–17.10).
- * Light face; Fraunces, Atkinson Hyperlegible Next and IBM Plex Mono embedded from /fonts (Noto Sans
+ * White paper; Fraunces, Atkinson Hyperlegible Next and IBM Plex Mono embedded from /fonts (Noto Sans
  * as the last fallback for letters the text fonts lack); A4 or US Letter; on every page a footer
  * with the disclaimer, the demo label when demo, the versions and "page n of m". Real, selectable
  * text. Loaded only when "Download PDF" is pressed (a lazy chunk).
@@ -20,7 +20,7 @@ import {
 
 import type { LaidBlock, LaidDocument, NoteLayout } from "./layout";
 
-// Light-face tokens (.kiro/steering/design.md); the PDF has no CSS variables.
+// Paper tokens (.kiro/steering/design.md) on white; the PDF has no CSS variables.
 const C = {
   bg: "#FFFFFF",
   fg: "#1B1F3B",

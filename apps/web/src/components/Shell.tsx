@@ -1,19 +1,24 @@
 "use client";
 /**
- * The app shell (experience design §3, §7, Req 8): header (brand, demo label and exit, mask switch
- * in Two Faces, language switcher), main content (max 720 px), footer with the disclaimer, the
- * emergency number and the secondary links, and the navigation (Two Faces: bottom bar; Glass:
- * floating pill). One component set; the theme changes tokens and a few variant classes.
+ * The app shell (experience design §3, §7, Req 8): header (brand, navigation with Research, demo
+ * label and exit, theme and language switchers), main content (max 720 px), footer with the
+ * disclaimer, the emergency number and the secondary links, and the navigation (Night Pharmacy:
+ * bottom bar; Glass Janus: floating pill). One component set; the theme changes tokens and a few variant classes.
  */
 import { useLocale } from "next-intl";
-import { useEffect, useRef, useSyncExternalStore, type ReactNode } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+  type RefObject,
+} from "react";
 
 import { exitDemo, useDemo } from "@/demo/session";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { localeNames, routing } from "@/i18n/routing";
 import { updateSettings, useStorageNotices } from "@/store/hooks";
-import { faceFor } from "@/theme/prepaint";
-import { useT, useTheme, useThemeWord } from "@/theme/words";
+import { useT, useTheme } from "@/theme/words";
 
 import {
   FacesIcon,
@@ -25,18 +30,6 @@ import {
   SettingsIcon,
 } from "./icons";
 import { useUserRegion } from "./region";
-
-/** Keeps `data-face` in step with the route after client navigation (DP18). */
-function FaceSync() {
-  const pathname = usePathname();
-  const locale = useLocale();
-  useEffect(() => {
-    document.documentElement.dataset.face = faceFor(
-      `/${locale}${pathname === "/" ? "" : pathname}`,
-    );
-  }, [pathname, locale]);
-  return null;
-}
 
 function LanguageSwitcher() {
   const t = useT();
@@ -65,34 +58,6 @@ function LanguageSwitcher() {
         ))}
       </select>
     </label>
-  );
-}
-
-function MaskSwitch({ research }: { research: boolean }) {
-  const w = useThemeWord();
-  return (
-    <nav aria-label={w("Shell.mask.label")}>
-      <ul className="flex overflow-hidden rounded-full border-2 border-accent text-sm">
-        <li>
-          <Link
-            href="/"
-            aria-current={research ? undefined : "page"}
-            className={`flex min-h-11 items-center px-3 font-bold no-underline ${research ? "text-fg" : "bg-accent text-on-accent"}`}
-          >
-            {w("Shell.mask.patient")}
-          </Link>
-        </li>
-        <li>
-          <Link
-            href="/research"
-            aria-current={research ? "page" : undefined}
-            className={`flex min-h-11 items-center px-3 font-bold no-underline ${research ? "bg-accent text-on-accent" : "text-fg"}`}
-          >
-            {w("Shell.mask.research")}
-          </Link>
-        </li>
-      </ul>
-    </nav>
   );
 }
 
@@ -174,17 +139,13 @@ function Nav() {
   );
 }
 
-/** Header navigation from 768 px (Req 27.1): the same four places, plus Research in Glass. */
+/** Header navigation from 768 px (Req 27.1): the same places, plus Research (DP48). */
 function HeaderNav() {
   const t = useT();
-  const w = useThemeWord();
-  const theme = useTheme();
   const pathname = usePathname();
   const items: { href: string; label: string }[] = [
     ...NAV.map(({ href, key }) => ({ href, label: t(`Shell.nav.${key}`) })),
-    ...(theme === "glass"
-      ? [{ href: "/research", label: w("Shell.nav.research") }]
-      : []),
+    { href: "/research", label: t("Shell.nav.research") },
   ];
   return (
     <nav aria-label={t("Shell.navLabel")} className="hidden md:block">
@@ -252,7 +213,6 @@ function StorageNotice() {
 
 function Footer() {
   const t = useT();
-  const w = useThemeWord();
   const region = useUserRegion();
   return (
     <footer className="mx-auto mt-10 flex w-full max-w-[720px] flex-col gap-2 border-t border-line px-4 pt-4 pb-[calc(6.5rem+env(safe-area-inset-bottom))] text-sm text-muted md:max-w-[1120px] md:pb-8">
@@ -266,7 +226,7 @@ function Footer() {
             href="/research"
             className="inline-flex min-h-11 items-center px-1 underline underline-offset-4"
           >
-            {w("Shell.nav.research")}
+            {t("Shell.nav.research")}
           </Link>
         </li>
         <li>
@@ -298,29 +258,31 @@ function Footer() {
   );
 }
 
-const onScroll = (l: () => void) => {
-  addEventListener("scroll", l, { passive: true });
-  return () => removeEventListener("scroll", l);
-};
-
-/** True once the page is scrolled (the home header turns to glass). */
-function useScrolled(): boolean {
-  return useSyncExternalStore(
-    onScroll,
-    () => scrollY > 8,
-    () => false,
-  );
+/**
+ * True once the page is scrolled past a sentinel at the top (the home header turns to glass).
+ * An IntersectionObserver, not a scroll listener: nothing runs per scroll frame (DP49).
+ */
+function useScrolled(sentinel: RefObject<HTMLElement | null>, on: boolean) {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const el = sentinel.current;
+    if (!on || !el) return;
+    const io = new IntersectionObserver(([e]) =>
+      setScrolled(!(e?.isIntersecting ?? true)),
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [sentinel, on]);
+  return on && scrolled;
 }
 
 export function Shell({ children }: { children: ReactNode }) {
   const t = useT();
-  const theme = useTheme();
   const pathname = usePathname();
-  const research =
-    pathname === "/research" || pathname.startsWith("/research/");
   const wide = WIDE.includes(pathname);
   const home = pathname === "/";
-  const scrolled = useScrolled();
+  const sentinel = useRef<HTMLDivElement>(null);
+  const scrolled = useScrolled(sentinel, home);
   const header = useRef<HTMLElement>(null);
   // The home's emergency bar sits under the header, whatever its height (demo bar, notices).
   useEffect(() => {
@@ -338,7 +300,13 @@ export function Shell({ children }: { children: ReactNode }) {
   }, [home]);
   return (
     <>
-      <FaceSync />
+      {home ? (
+        <div
+          ref={sentinel}
+          aria-hidden
+          className="pointer-events-none absolute top-0 left-0 h-2 w-px"
+        />
+      ) : null}
       <a
         href="#content"
         className="sr-only z-30 rounded-[var(--radius-button)] bg-accent px-4 py-3 font-bold text-on-accent focus:not-sr-only focus:fixed focus:top-2 focus:left-2"
@@ -367,9 +335,6 @@ export function Shell({ children }: { children: ReactNode }) {
             </Link>
             <HeaderNav />
             <div className="flex items-center gap-1">
-              {theme === "two-faces" ? (
-                <MaskSwitch research={research} />
-              ) : null}
               <ThemeToggle />
               <LanguageSwitcher />
             </div>

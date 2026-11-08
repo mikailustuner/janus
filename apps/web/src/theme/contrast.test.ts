@@ -1,7 +1,7 @@
 // Feature: experience, Property P18: every token pair marked as text or boundary in tokens.css
-// passes WCAG contrast (text >= 4.5:1, boundary >= 3:1) in both themes, both colour schemes and
-// with reduced transparency on and off; Glass surfaces are composited over each background field
-// (Req 3.1). Example-based and exhaustive over the marked pairs.
+// passes WCAG contrast (text >= 4.5:1, boundary >= 3:1) in both themes, both colour schemes,
+// with reduced transparency on and off, and on the note paper (DP48); Glass surfaces are
+// composited over each background field (Req 3.1). Example-based and exhaustive over the marked pairs.
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
@@ -54,7 +54,7 @@ const rules = parseRules(css);
 interface Context {
   name: string;
   theme: "two-faces" | "glass";
-  face?: "shadow" | "light";
+  paper?: boolean; // the note paper (`.paper`) inside the theme
   dark?: boolean;
   reduce?: boolean; // setting, media query or no backdrop-filter
 }
@@ -67,9 +67,7 @@ function tokensFor(ctx: Context): Record<string, string> {
       const part = s.trim();
       if (part === ":root") return true;
       if (part.includes('data-theme-style="two-faces"'))
-        return (
-          ctx.theme === "two-faces" && part.includes(`data-face="${ctx.face}"`)
-        );
+        return ctx.theme === "two-faces";
       if (part.includes('data-theme-style="glass"')) {
         if (ctx.theme !== "glass") return false;
         if (part.includes("data-reduce-transparency")) return !!ctx.reduce;
@@ -88,6 +86,10 @@ function tokensFor(ctx: Context): Record<string, string> {
     });
     if (condOk) Object.assign(out, r.decls);
   }
+  // The paper overrides the theme's tokens, whatever the theme (it is a class inside the page).
+  if (ctx.paper)
+    for (const r of rules)
+      if (r.selector.trim() === ".paper") Object.assign(out, r.decls);
   return out;
 }
 
@@ -141,8 +143,8 @@ const TEXT = annotated("contrast-text");
 const BOUNDARY = annotated("contrast-boundary");
 
 const contexts: Context[] = [
-  { name: "Two Faces, shadow face", theme: "two-faces", face: "shadow" },
-  { name: "Two Faces, light face", theme: "two-faces", face: "light" },
+  { name: "Night Pharmacy", theme: "two-faces" },
+  { name: "Note paper", theme: "two-faces", paper: true },
   { name: "Glass light", theme: "glass" },
   { name: "Glass dark", theme: "glass", dark: true },
   { name: "Glass light, reduce transparency", theme: "glass", reduce: true },
@@ -214,12 +216,12 @@ it("matches the steering tokens of design.md exactly", () => {
     join(import.meta.dirname, "../../../../.kiro/steering/design.md"),
     "utf8",
   );
-  const shadow = tokensFor({ name: "", theme: "two-faces", face: "shadow" });
-  const light = tokensFor({ name: "", theme: "two-faces", face: "light" });
+  const night = tokensFor({ name: "", theme: "two-faces" });
+  const paper = tokensFor({ name: "", theme: "two-faces", paper: true });
   for (const row of steering.matchAll(
     /^\| `(--[a-z-]+)`[^|]*\| `?(#[0-9A-F]{6})`?[^|]*\| `?(#[0-9A-F]{6})/gm,
   )) {
-    expect(shadow[row[1]!]?.toLowerCase(), row[1]).toBe(row[2]!.toLowerCase());
-    expect(light[row[1]!]?.toLowerCase(), row[1]).toBe(row[3]!.toLowerCase());
+    expect(night[row[1]!]?.toLowerCase(), row[1]).toBe(row[2]!.toLowerCase());
+    expect(paper[row[1]!]?.toLowerCase(), row[1]).toBe(row[3]!.toLowerCase());
   }
 });

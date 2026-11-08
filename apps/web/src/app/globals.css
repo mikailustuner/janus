@@ -29,10 +29,6 @@
     color: var(--fg);
     font-family: var(--font-body);
     line-height: 1.5;
-    /* The mask switch: one 400 ms colour transition, instant under reduced motion. */
-    transition:
-      background-color 400ms ease,
-      color 400ms ease;
     -webkit-text-size-adjust: 100%;
   }
   html[data-large-text="on"] {
@@ -49,17 +45,11 @@
   html:lang(de) body {
     hyphens: auto;
   }
-  /* Glass: three soft colour fields behind the frosted cards, fixed to the viewport. The body
-     is transparent so the fixed layer behind it shows (the html element keeps --bg). */
-  :root[data-theme-style="glass"] body {
-    background: transparent;
-  }
-  :root[data-theme-style="glass"] body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
+  /* Glass: three soft colour fields behind the frosted cards, fixed to the viewport (DP49). They
+     are the root background, which covers the whole canvas however long the page is (iOS,
+     which ignores `fixed`, stretches them over the page instead of cutting them off); the body
+     is transparent. */
+  :root[data-theme-style="glass"] {
     background:
       radial-gradient(
         70% 45% at 12% 6%,
@@ -80,6 +70,10 @@
         transparent 74%
       ),
       var(--bg);
+    background-attachment: fixed;
+  }
+  :root[data-theme-style="glass"] body {
+    background: transparent;
   }
   h1,
   h2,
@@ -112,7 +106,7 @@
 }
 
 @layer components {
-  /* The doctor note preview: light-face paper in every theme (design §9). */
+  /* Paper: the doctor note preview and the doctor page card, in every theme (design §9, DP48). */
   .paper {
     font-family: var(--font-atkinson), system-ui, sans-serif;
     color: var(--fg);
@@ -146,9 +140,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    transition: none;
-  }
   *,
   *::before,
   *::after {

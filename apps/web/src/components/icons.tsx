@@ -121,3 +121,22 @@ export const FacesIcon = (p: IconProps) => (
     <path d="M12 3a9 9 0 0 0 0 18Z" fill="currentColor" />
   </Svg>
 );
+
+export const PlayIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M6 3l14 9-14 9V3z" />
+  </Svg>
+);
+
+export const SkipIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M5 4l10 8-10 8V4zM19 5v14" />
+  </Svg>
+);
+
+export const ReplayIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+    <path d="M3 3v5h5" />
+  </Svg>
+);

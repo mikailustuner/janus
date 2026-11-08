@@ -4,6 +4,8 @@
  * exactly as returned, the assessment, an optional action and, when the action needs it, which
  * medicine it concerns. Send is enabled with at least one answer; after success the form is
  * disabled. No advice: it asks what was done. Plain props, no app providers (the page is small).
+ * The form is a paper card (ivory, dark text) on the dark page: it reads like the printed note
+ * and stays legible on a phone in a bright room (DP48).
  */
 import { useState } from "react";
 
@@ -49,7 +51,7 @@ export function DoctorForm({
   return (
     <form
       lang={form.language}
-      className="flex flex-col gap-5"
+      className="paper flex flex-col gap-5 rounded-[var(--radius-card)] border border-line bg-bg p-4 text-fg"
       onSubmit={async (e) => {
         e.preventDefault();
         const answers = buildAnswers(form, state);

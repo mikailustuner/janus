@@ -1,8 +1,9 @@
 /*
  * Design tokens (.kiro/steering/design.md, owner decision 2026-11-08; experience design §7).
- * Two Faces: shadow face (patient side) and light face (researcher side, doctor note PDF, doctor
- * page). Glass: light and dark by the system colour scheme, solid cards when transparency is
- * reduced. Components use these tokens only, never a raw colour (src/theme/no-hex.test.ts).
+ * Night Pharmacy (id two-faces): one dark set on every screen (no light face, owner decision
+ * 2026-11-08, DP48). Paper: the doctor note preview and the doctor page card (the PDF uses the
+ * same values). Glass: light and dark by the system colour scheme, solid cards when transparency
+ * is reduced. Components use these tokens only, never a raw colour (src/theme/no-hex.test.ts).
  *
  * The colour values of --bg … --risk are exactly the steering tokens. Added here (design DP33):
  * Glass --chip/--chip-fg/--ghost (from the Glass mockup, docs/design/glass-options.html), the
@@ -13,9 +14,9 @@
  * @contrast-boundary accent/bg accent/surface muted/bg muted/surface
  */
 
-/* Two Faces, shadow face (also the default before the pre-paint script runs). */
+/* Night Pharmacy (also the default before the pre-paint script runs). */
 :root,
-:root[data-theme-style="two-faces"][data-face="shadow"] {
+:root[data-theme-style="two-faces"] {
   --bg: #1b1f3b;
   --surface: #252a4d;
   --fg: #f6f1e7;
@@ -43,8 +44,7 @@
   color-scheme: dark;
 }
 
-/* Two Faces, light face; also the "paper" of the doctor note preview in every theme. */
-:root[data-theme-style="two-faces"][data-face="light"],
+/* Paper: the doctor note preview and the doctor page card, in every theme (DP48). */
 .paper {
   --bg: #f6f1e7;
   --surface: #fffdf8;
@@ -58,6 +58,7 @@
   --warn: #7a4d00;
   --risk: #a8322d;
   --ghost: #1b1f3b;
+  --card-edge: var(--line);
   color-scheme: light;
 }
 
@@ -152,10 +153,4 @@
       --surface: #1c1f22;
     }
   }
-}
-
-/* The mask on the Two Faces home (Req 27): the shadow and the light face, in every face. */
-:root {
-  --mask-shadow: #1b1f3b;
-  --mask-light: #f6f1e7;
 }

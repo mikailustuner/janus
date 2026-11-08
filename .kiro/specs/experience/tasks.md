@@ -301,3 +301,17 @@
   > `e2e/home-scenes.spec.ts` (ghost buttons into the demo, reduced motion and Save-Data request no video, Glass loads
   > nothing of Night Pharmacy, LCP and CLS recorded in design §16). Localization and safety passes:
   > `home-scenes-review.md` (13 advisory findings, all applied; none blocking).
+
+- [x] 25. *(Owner decisions 2026-11-08, third)* No light mode; a home that scrolls smoothly
+  - Remove the shadow / light faces, the mask switch, `data-face` and the face messages (five languages); Research in
+    the header navigation of both themes; doctor note preview on paper, PDF on white, doctor page form on a paper card.
+  - Replace scroll-scrubbing with "Step inside" (play once, Skip, cross-fade to scene 3, focus its heading, Replay);
+    no sticky stage, no scroll listener; transform / opacity animations paused off-screen and in hidden tabs; video
+    preloaded when idle with a poster; reduced motion / Save-Data straight to scene 3. Glass fields fixed to the
+    viewport; desktop hero ghosts larger and brighter. Measure scrolling at 1440 and 375.
+    _Requirements: 6.1, 6.4, 8.2, 24.1, 27.1, 27.6–27.10, DP48, DP49_
+  > Done 2026-11-08 (Claude Code): `NightPharmacyHero.tsx`, `nightMotion.ts`, `video.ts`, `glassMotion.ts`,
+  > `home-scenes.css` rewritten; `e2e/home-scenes.spec.ts` (step inside → video plays at rate 1 → scene 3 focused,
+  > Skip, Replay; reduced motion and Save-Data request no video) and `e2e/home-scroll.spec.ts` (no long task while
+  > scrolling, numbers in design §16); `prepaint.test.ts` (no face attribute) and `contrast.test.ts` (note paper
+  > instead of the light face) updated. The door-mid stills and the JPEG poster were deleted.

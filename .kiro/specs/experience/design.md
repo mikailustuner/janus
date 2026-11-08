@@ -87,7 +87,7 @@ apps/web/
       [locale]/settings/          incl. Appearance
       [locale]/privacy/
       [locale]/demo/              patients; codes/ (printable sheet); doctor/ (demo doctor form)
-      [locale]/research/          layout (light face) + hypotheses/, seance/, validation/, export/
+      [locale]/research/          layout (normal theme, DP48) + hypotheses/, seance/, validation/, export/
       [locale]/[...rest]/         not found (existing)
       o/layout.tsx, o/page.tsx    doctor QR page, own root layout, no locale segment
       not-found.tsx               existing
@@ -131,7 +131,7 @@ apps/web/
     vocabulary/
       en.json tr.json de.json fr.json es.json index.json   generated (DP17)
       index.ts                    eventLabel, safetyLine, cascadeName, ingredientName, sentence (P13)
-    components/                   Shell, Header, MaskSwitch, Nav, Disclaimer, EmergencyNotice, DemoLabel, SafetyLine,
+    components/                   Shell, Header, Nav, Disclaimer, EmergencyNotice, DemoLabel, SafetyLine,
                                   AbruptStopLine, Ghost, ZombieStamp, CiBar, SourceAttribution, StateView, ReadAloud,
                                   Card, Chip, Button, Field, MonthPicker, LanguageSwitcher
     fonts/                        Fraunces, Atkinson Hyperlegible, IBM Plex Mono, Figtree (woff2 + ttf) + OFL.txt
@@ -156,7 +156,7 @@ Fonts (OFL 1.1, committed under `src/fonts/` with `OFL.txt`, listed in `NOTICE`)
 
 ## 3. Routes and pages
 
-| Route | Face | Purpose | Data |
+| Route | Surface (DP48) | Purpose | Data |
 |---|---|---|---|
 | `/[locale]` | shadow | emergency notice first, disclaimer, Start, Try the demo, resume list | store |
 | `/[locale]/start` | shadow | scan regions (TR, US, EU, automatic), user region | settings |
@@ -167,14 +167,14 @@ Fonts (OFL 1.1, committed under `src/fonts/` with `OFL.txt`, listed in `NOTICE`)
 | `/[locale]/results` | shadow | ghosts / possible cascades, groups, chains, scope, not checked, statement | `/cascades/evaluate` |
 | `/[locale]/results/finding#n` (DP35) | shadow | one finding: text, abrupt-stop and safety lines, evidence + integrity line, FAERS pair | `/evidence/resolve`, `/memory/pair` |
 | `/[locale]/memory` | shadow | list-level panels: combination, regions, donated reports, doctor-confirmed outcomes | `/memory/*` |
-| `/[locale]/note` | shadow (preview) / light (PDF) | languages, side-by-side, QR opt-in, PDF | `/notes/document`, `/notes/token` |
+| `/[locale]/note` | theme (page), paper (preview), white (PDF) | languages, side-by-side, QR opt-in, PDF | `/notes/document`, `/notes/token` |
 | `/[locale]/note/withdraw` | shadow | withdraw outcome-loop data | `/notes/withdraw` |
 | `/[locale]/donate`, `/donate/delete` | shadow | donation with consent; deletion by token | `/contributions*` |
 | `/[locale]/settings` | shadow | settings incl. Appearance, delete everything | store |
 | `/[locale]/privacy` | shadow | privacy page | `/privacy/storage` |
-| `/[locale]/demo`, `/demo/codes`, `/demo/doctor` | shadow / light | demo patients, printable sheet, demo doctor form | fixtures |
-| `/[locale]/research/**` | light | researcher shell, four Phase 4 empty states | none |
-| `/o` | light | doctor QR page (no locale segment) | `/outcomes/form`, `/outcomes` |
+| `/[locale]/demo`, `/demo/codes`, `/demo/doctor` | theme; paper card (demo doctor form) | demo patients, printable sheet, demo doctor form | fixtures |
+| `/[locale]/research/**` | theme | researcher shell, four Phase 4 empty states | none |
+| `/o` | Night Pharmacy page, paper card | doctor QR page (no locale segment) | `/outcomes/form`, `/outcomes` |
 
 `proxy.ts` matcher gains `o(?:$|/)` in its negative lookahead so `/o` is not locale-redirected (the fragment survives
 a redirect anyway, but the page must not depend on it). Every `[locale]` page is a server component shell around client
@@ -339,23 +339,21 @@ recognised text is dropped when the screen closes.
 
 ## 7. Theming (DP1, DP2, DP18, DP21, Req 6)
 
-- `theme/tokens.css` declares the steering tokens exactly under `:root[data-theme-style="two-faces"][data-face="shadow"]`,
-  `…[data-face="light"]`, `:root[data-theme-style="glass"]` (light) and `@media (prefers-color-scheme: dark)` (dark);
+- `theme/tokens.css` declares the steering tokens exactly under `:root[data-theme-style="two-faces"]`, `.paper` (the
+  note preview and the doctor page card, in every theme), `:root[data-theme-style="glass"]` (light) and `@media (prefers-color-scheme: dark)` (dark);
   reduce transparency under `:root[data-theme-style="glass"][data-reduce-transparency="on"]`,
   `@media (prefers-reduced-transparency: reduce)` and `@supports not (backdrop-filter: blur(1px))`.
   `globals.css` maps them with `@theme inline` (`--color-bg: var(--bg)` …) so components use `bg-bg text-fg` utilities;
   components never use raw hex (a lint test scans `src/components` and `src/app` for hex colours).
-- Face: derived from the route — `/[locale]/research/**`, `/o`, `/[locale]/demo/doctor` and the PDF are `light`,
-  everything else `shadow`. The mask switch is a link between the last patient route and `/research`; a client
-  component sets `data-face` on route change; `html { transition: background-color 400ms, color 400ms }`, `0ms` under
-  `prefers-reduced-motion`.
+- No faces (DP48, superseding DP18): every route of a theme uses that theme's tokens; there is no `data-face` attribute
+  and no mask switch. "Research" is a header navigation entry in both themes, a footer link and a Settings button.
 - Pre-paint (`theme/prepaint.ts`): an inline script in `<head>` reads `janus.v1.settings` in try/catch, validates each
-  field, and sets `data-theme-style`, `data-face` (from `location.pathname`), `data-large-text`,
-  `data-reduce-transparency` before first paint; any failure leaves the defaults (Two Faces, shadow, off) (P17).
+  field, and sets `data-theme-style`, `data-large-text`, `data-reduce-transparency` before first paint; any failure
+  leaves the defaults (Night Pharmacy, off) (P17).
 - Theme vocabulary (`theme/words.ts`): messages with paired keys `<Namespace>.<key>.twoFaces` / `.glass`; `useThemeWord`
   selects by setting. Glass strings must not contain theme-device words (P12).
 - Glass layout: floating pill tab bar (Scan, Medicines, Results, Settings), round glass icon buttons, 26 px cards,
-  32 px large titles. Two Faces: header with mask switch and language switcher, bottom navigation with the same four
+  32 px large titles. Two Faces: header with navigation, theme and language switchers, bottom navigation with the same four
   entries, 16 px cards, 999 px chips, 14 px buttons. Same components, variant classes by theme.
 - Large text: `html[data-large-text="on"] { font-size: 118.75% }` (19 px) and `line-height: 1.6`; layouts use `rem`.
 - Ghost: inline SVG shape + label text; drift 6 s / 3 px in Two Faces only, off under reduced motion. Zombie stamp:
@@ -429,7 +427,7 @@ Screen notes:
 - **Memory.** Four separate panels; FAERS combination (level, lower bounds, comparison group) and regions (UNKNOWN share,
   basis, `adrreports_url`), donated reports and doctor-confirmed outcomes (`hidden_under_20_noise_added`); no totals across.
 - **Note.** Language selectors (note language default from settings, statistics region optional), "Make the note" →
-  `/notes/document` with pins from the last evaluation; preview in the shadow face with the document in a light-face
+  `/notes/document` with pins from the last evaluation; preview on the theme's page with the document on a
   "paper" card; side-by-side when the languages differ; QR opt-in card (§10.3); "Download PDF" and "Print".
 
 ## 10. Doctor note: layout, PDF and QR
@@ -443,7 +441,7 @@ code labels, abrupt-stop sentence in the row; every `Sentence.text` copied verba
 
 ### 10.2 PDF (`note/pdf.tsx`, DP6)
 `@react-pdf/renderer` loaded on "Download PDF"; fonts registered from `/fonts/*.ttf` (same files as the web);
-light-face colours; A4 or Letter by locale (Letter for `en` with user region `US`, else A4; switch in the preview);
+paper colours on white; A4 or Letter by locale (Letter for `en` with user region `US`, else A4; switch in the preview);
 header with title and month, footer on every page with the disclaimer, the demo label when demo, versions short form and
 "page n of m"; `wrap` lets the findings section flow to page 2; the QR block (§10.3) never splits. Text is real text
 (selectable, accessible tags where the library supports them). The file name is `janus-note-<YYYY-MM>.pdf` (no name).
@@ -465,7 +463,8 @@ by month and findings count; withdraw → `POST /notes/withdraw` → same confir
 
 ## 11. Doctor page `/o` (DP19, Req 19)
 
-- `app/o/layout.tsx` is its own root layout: `<html lang>` updated to the form language, light-face tokens only, Atkinson
+- `app/o/layout.tsx` is its own root layout: `<html lang>` updated to the form language, Night Pharmacy tokens with the
+  form on a paper card (DP48), Atkinson
   Hyperlegible preloaded, no providers beyond a 2 KB `Doctor` message map for five languages embedded in the page chunk.
 - Script: read `location.hash.slice(1)`; if it starts with `demo-` → demo form from the fixture chunk, no request; if it
   does not match the token pattern → `invalid_token` message, no request; else `POST /api/outcomes/form {token}`.
@@ -528,7 +527,7 @@ fixtures at install; cache-first for those, network-only for `/api/*` (never cac
 static assets. A version string from the build invalidates old caches. "Delete everything" clears the caches.
 
 ## 14. Researcher shell (DP12, Req 24)
-`/research` layout sets the light face, a section header ("Light face" / "Research"), the four entries and the
+`/research` uses the normal theme (DP48), a section header ("Research"), the four entries and the
 repurposing rule-7 sentence. Each entry renders `StateView` empty with "coming in Phase 4" and one sentence about what it
 will show. No fixtures, no numbers.
 
@@ -563,6 +562,8 @@ will show. No fixtures, no numbers.
 | Home `/en` first-load JS (cinematic home, DP46; motion chunks lazy) | 205.0 KB | 243 KB |
 | Home LCP, desktop 1280 × 800, CPU 4×, 9 Mbit/s, 40 ms (Playwright, 4 runs) | 760–1,608 ms (median ≈ 980 ms), CLS 0.007, LCP element: hero image | < 2,500 ms |
 | Home LCP, phone 375 × 812, same throttling (4 runs) | 932–1,228 ms, CLS 0.015 | < 2,500 ms |
+| Home scroll, 2026-11-08 after DP49 (Playwright `e2e/home-scroll.spec.ts`, headless Chromium, wheel through the page and back, `longtask` observer between `performance.mark`s) | 1440 × 900: 0 long tasks in both themes; 375 × 812: 0 long tasks, frame p95 16.8 ms (Night Pharmacy and Glass Janus). Headless frame intervals at 1440 run on software compositing (p95 33–67 ms) and are not a GPU measure | no long task > 50 ms |
+| Home LCP after DP49 (same throttling as above, 1 run each) | desktop 812 ms, CLS 0.000; phone 1,056 ms, CLS 0.005 | < 2,500 ms |
 | Home media (lazy except the preloaded hero) | hero AVIF 1600 px 33 KB (night) / 36 KB (glass); door video 2.6 MB WebM / 3.6 MB MP4 (1280), 0.9 / 1.0 MB (640) | — |
 
 ## 17. Testing strategy
@@ -613,8 +614,8 @@ The seed's properties are P12 (keys), P8 (disclaimer and phrases), P14 (demo) an
 | P14 | **Demo isolation.** For any sequence of user actions in demo mode (commands: pick patient, scan demo code, open finding, open memory, make note, opt in to QR, open doctor demo, donate, withdraw, switch language/theme, exit), no network request is made, nothing is written to `list` or `tokens`, every rendered screen model carries the demo label, and the write and loop routes are unreachable (no method on `DemoClient`). | Req 4.3, 4.4, 4.7, 20.8 | `fc.commands` model-based test with a fetch spy. |
 | P15 | **Demo codes.** Every demo code is a valid GTIN in `0295268…`; for any real-prefix GTIN (TR, US, FR, ES, DE ranges) `isDemo` is false; for any input path (camera text, typed digits, OCR NDC line) a demo code is resolved from the fixture without a request. | Req 4.2, 4.5 | Generated GTINs per prefix range. |
 | P16 | **Storage.** For any sequence of reads and writes with any failure schedule (throwing `getItem`/`setItem`, quota, corrupt JSON, wrong version), no call throws to the caller, the session continues in memory with one notice, and valid documents round-trip (`load(save(x)) = x`). | Req 9.4, 9.5 | Fake storage with injected faults. |
-| P17 | **Pre-paint.** For any stored settings value (valid, partial, invalid types, non-JSON, throwing storage) and any pathname, the script sets only valid attribute values (defaults otherwise), sets `data-face="light"` exactly for the light routes, and never throws. | Req 6.7, 9.2 | Run the script source against a fake `document`/`localStorage`. |
-| P18 | **Contrast.** For every token pair marked as text-on-surface or boundary in `tokens.css` (both themes, both colour schemes, reduce transparency on/off; Glass surfaces composited over each background field), contrast is ≥ 4.5:1 for text and ≥ 3:1 for boundaries and focus. | Req 3.1 | Parse `tokens.css`; exhaustive over pairs (example-based). |
+| P17 | **Pre-paint.** For any stored settings value (valid, partial, invalid types, non-JSON, throwing storage) and any pathname, the script sets only valid attribute values (defaults otherwise), sets no face attribute (DP48), and never throws. | Req 6.7, 9.2 | Run the script source against a fake `document`/`localStorage`. |
+| P18 | **Contrast.** For every token pair marked as text-on-surface or boundary in `tokens.css` (both themes, both colour schemes, reduce transparency on/off, the note paper; Glass surfaces composited over each background field), contrast is ≥ 4.5:1 for text and ≥ 3:1 for boundaries and focus. | Req 3.1 | Parse `tokens.css`; exhaustive over pairs (example-based). |
 | P19 | **Decoders.** Every recorded fixture decodes; for any decoded response and any single mutation (drop a required field, wrong type, unknown enum value, array over bound), the decoder returns a contract error. | Req 22.2 | Mutations of fixtures. |
 | P20 | **Error mapping.** For any route, status, code (known, unknown, missing), body (JSON, non-JSON, empty), timeout or network failure, the client returns a typed `ApiError` with a message key that exists in every locale; no field value is ever in the message; `gs1_serial_not_accepted` and 422 `invalid_request` map to the client-defect message; `resolution_unavailable` never maps to "not found"; no exception escapes. | Req 22.4, 10.4, 12.6, 16.11, 19.4, 20.7 | Generated responses through a fake fetch. |
 | P21 | **Confirm view model.** For any `ResolutionResult`, no candidate is preselected; `no_open_product_database` offers OCR and name search and no "not found"; an empty candidate list with loaded sources gives "not found" with each source and date; `ntin_digits`/`ai_712` carry the digits note; homeopathic, component code, unmapped and ambiguous positions get their texts; attribution is present on every product card; `published_atc` is labelled "as published" and never listed as an ingredient code. | Req 12.1–12.11 | Generated results of every notice and field combination. |
@@ -632,7 +633,7 @@ The seed's properties are P12 (keys), P8 (disclaimer and phrases), P14 (demo) an
 
 | # | Decision | Alternatives considered | Why |
 |---|---|---|---|
-| DP1 | **Owner decision:** default theme Two Faces (shadow face for the patient side; light face for the researcher side, the doctor note PDF and the doctor QR page); Glass selectable in Settings › Appearance; tokens exactly as `design.md`. | Single theme; Glass default. | Recorded owner decision 2026-11-08 from seven directions. |
+| DP1 | **Owner decision:** default theme Two Faces (shadow face for the patient side; light face for the researcher side, the doctor note PDF and the doctor QR page; *the faces were removed by DP48*); Glass selectable in Settings › Appearance; tokens exactly as `design.md`. | Single theme; Glass default. | Recorded owner decision 2026-11-08 from seven directions. |
 | DP2 | **Owner decision:** Fraunces display, Atkinson Hyperlegible text, IBM Plex Mono codes; Glass system UI then Figtree. Self-hosted with `next/font/local` from committed OFL files; the same TTFs are embedded in the PDF. | `next/font/google` (downloads at build); CDN. | No third-party request (Req 23.4); one set of files for screen and PDF; offline demo. |
 | DP3 | **Owner decision:** everything medical is decided by the API; the client computes no cascade, timing, ratio, assessment or integrity verdict, only words codes and formats numbers. | Client-side rule checks for speed. | `tech.md` core principle; one tested engine. |
 | DP4 | **Owner decision:** the client never sends ATC codes or the box name (`product_name_slot` filled in the browser), never AI (21) or (10); it sends (01), (17) and (712) only. | Send the raw scan. | `privacy.md`; `drug-resolution` DP19/DP42; P1, P2. |
@@ -649,7 +650,7 @@ The seed's properties are P12 (keys), P8 (disclaimer and phrases), P14 (demo) an
 | DP15 | Same-origin API: `next.config` rewrite `/api/:path*` → `JANUS_API_ORIGIN` (build argument); no CORS on the API; CSP `connect-src 'self'`. | Route-handler proxy with an allowlist; CORS on FastAPI. | No API change; the browser never talks to another origin; Caddy does the same mapping in Phase 5. |
 | DP16 | Hand-written TypeScript contracts and strict decoders, validated against recorded fixtures. | `openapi-typescript` codegen; `zod` schemas. | No new dependency, no API run in CI; decoders are small and the fixtures are real responses; drift shows up when fixtures are re-recorded. |
 | DP17 | Clinical words (cascade names, event labels, safety-line keys, reviewed ingredient names, the abrupt-stop line and name tags) generated from the API's reviewed files into `src/vocabulary/`, with a parity test. | A new API route returning the glossary; copying by hand. | One reviewed source, no API change, works offline in demo; the parity test keeps them equal (doctor-loop DP7 spirit). |
-| DP18 | Face from the route (patient → shadow; research, doctor page, demo doctor, PDF → light); the mask switch is navigation; pre-paint script sets the attributes. | Face as a free toggle on every screen. | A patient never lands on the researcher side by surprise (`design.md`); deterministic paint. |
+| DP18 | *(Superseded by DP48.)* Face from the route (patient → shadow; research, doctor page, demo doctor, PDF → light); the mask switch is navigation; pre-paint script sets the attributes. | Face as a free toggle on every screen. | A patient never lands on the researcher side by surprise (`design.md`); deterministic paint. |
 | DP19 | Doctor page at `app/o/` with its own root layout, minimal JavaScript, language from the form response (browser language before it). | `/[locale]/o`; server-rendered form. | `qr_url` has no locale; the token must not reach the Next.js server (fragment); smallest bundle for the 3 s target. |
 | DP20 | Re-resolution after a dataset change by source key with the unique-equivalent rule; `/resolve/products` only within the same dataset version. | Re-send old candidate ids; ask the user for every item. | Candidate ids are stable only within one dataset version (`cascade-engine`); asking only when ambiguous keeps the flow short without guessing. |
 | DP21 | Theme vocabulary as paired message keys selected by setting; one component set. | Two component sets; CSS-only text swap. | Same content and safety rules (`design.md`); catalogue tests check Glass words (P12). |
@@ -664,7 +665,7 @@ The seed's properties are P12 (keys), P8 (disclaimer and phrases), P14 (demo) an
 | DP30 | Lists over 50 items are not evaluated; Collective Memory asks the user to choose when the list has more than 20 ingredient keys. | Silently truncate. | Engine and memory bounds; truncation would hide medicines. |
 | DP31 | Security headers: CSP with `connect-src`, `img-src`, `font-src`, `worker-src` limited to the own origin (inline scripts allowed for the App Router payload, wasm allowed), `Referrer-Policy: no-referrer`, `Permissions-Policy: camera=(self)`; no cookies, no analytics. | No CSP; nonce-based CSP. | Enforces Req 23.4 mechanically; nonces would make every page dynamic and break the static, offline demo shell. |
 | DP32 | Demo patients Cologne and Ohio are proposals checked on real data in the recording task; Istanbul is fixed to the gate-1 list. | Fixed by hand-made fixtures. | Real engine output only; if a row does not fire the case changes, not the output. |
-| DP33 | Fonts and tokens as built (2026-11-08): **Atkinson Hyperlegible Next** (OFL, 2024 release of the same family) replaces the 2020 Atkinson Hyperlegible, which has no `İ` (U+0130); Fraunces is a static SemiBold instance of the variable font; the PDF falls back to IBM Plex Mono (`→`) and a Noto Sans Greek/punctuation subset (`γ`, `Δ` in reviewed ingredient names). Tokens beyond the steering colours: Glass `--chip`/`--chip-fg`/`--ghost` and the three colour fields from the Glass mockup, `--card-edge`/`--card-shadow`, fonts, radii, blur; `.paper` reuses the light-face values for the note preview. The demo patient id is mirrored to `sessionStorage` (`janus.v1.demo`, the id only) so a reload stays in the demo. | Keep the 2020 font; system fallback in the PDF. | Turkish is a primary language; the PDF has no system fallback; contrast of every added pair is tested (P18). |
+| DP33 | Fonts and tokens as built (2026-11-08): **Atkinson Hyperlegible Next** (OFL, 2024 release of the same family) replaces the 2020 Atkinson Hyperlegible, which has no `İ` (U+0130); Fraunces is a static SemiBold instance of the variable font; the PDF falls back to IBM Plex Mono (`→`) and a Noto Sans Greek/punctuation subset (`γ`, `Δ` in reviewed ingredient names). Tokens beyond the steering colours: Glass `--chip`/`--chip-fg`/`--ghost` and the three colour fields from the Glass mockup, `--card-edge`/`--card-shadow`, fonts, radii, blur; `.paper` holds the paper values for the note preview (and, since DP48, the doctor page card). The demo patient id is mirrored to `sessionStorage` (`janus.v1.demo`, the id only) so a reload stays in the demo. | Keep the 2020 font; system fallback in the PDF. | Turkish is a primary language; the PDF has no system fallback; contrast of every added pair is tested (P18). |
 | DP34 | Demo fixtures keep only the chosen candidate of each resolution; Turkish single-ingredient boxes are resolved with `/resolve/products` from the product id the ingredient's ATC code was observed on (no database query, no TİTCK string in the recorder); notes are recorded once per language and the demo answers a two-language request with the two recorded documents (the API builds each language independently from the same inputs). | Scan real barcodes from the database; record every language pair (20 calls). | Real engine output, smaller fixtures, no TİTCK data in the repository. |
 | DP35 | The finding detail is `/[locale]/results/finding#<position>`: the finding's position is in the URL fragment, never its id (which holds ingredient keys), so no health data reaches the web server in a path or an access log (privacy.md). | `/results/[finding]` with the finding id. | A path is sent to the server on load and on prefetch. |
 | DP36 | Playwright (C1–C4, C6) runs locally against the production build and its results are recorded in tasks.md; the `web-e2e` CI job (browser install in CI) is left for the owner to enable. | Add the job now. | Owner instruction for Phase 3 runs: keep browser installs out of CI unless already supported. |
@@ -679,6 +680,8 @@ The seed's properties are P12 (keys), P8 (disclaimer and phrases), P14 (demo) an
 | DP45 | **Owner note 2026-11-08: home hero isolated.** The hero (product sentence, actions, art) lives in `HomeHero.tsx`; the art direction (bust or isometric home diorama, possibly 3D) is still open and can be swapped there. Contract: h1 `home-title`, `Home.intro`, the demo link first; Two Faces art stays functional (links to the two faces), decorative art is `aria-hidden`. | Hero inline in `Home.tsx`. | The art can change without touching the rest of the page or its tests. |
 | DP46 | **Owner decision 2026-11-08 (second): theme names and cinematic homes.** Night Pharmacy (was Two Faces) and Glass Janus (was Glass); internal ids `two-faces` / `glass` unchanged (stored settings stay valid). Night Pharmacy home: a pinned stage (`position: sticky`) over a scroll runway; one `requestAnimationFrame` loop maps scroll progress to the door video's `currentTime` (one seek at a time; files re-encoded with a key frame every 6 frames, no audio, 1280 and 640 px, WebM VP9 then H.264 MP4) and to the crossfades; pointer parallax, the ghosts' lean and the fireflies in the same loop (`nightMotion.ts`, a separate chunk loaded after hydration). Scene 3 is a normal-flow block that scrolls over the pinned cabinet (so it can grow with large text). Both heroes are server-rendered and CSS shows the active theme's (the theme is on `<html>` before paint); an inline script in the page preloads only that theme's first image (AVIF `imagesrcset`); the images are AVIF/WebP/JPEG at 2752/1600/960 px. Still mode (reduced motion via CSS; Save-Data, 2G and video error via `data-still`) shows the three stills. Ghost = one SVG component (home and findings). No GSAP: native sticky + rAF is enough and adds no dependency. | GSAP ScrollTrigger; a video autoplay; one hero per theme chosen in JS. | No dependency, no layout shift, no flash of the wrong theme, nothing loaded for the hidden theme. |
 | DP47 | **Owner review 2026-11-08 of the cinematic homes.** The hero fills the first viewport: the home header lies over it (transparent, glass blur once scrolled, scene colours in both themes) and the emergency notice is a one-line bar under the header (`Emergency.line` with the region number, red border, a `<details>` that opens the full `Emergency.text`); it stays the first content of the page (Req 1.2). From 1024 px the diorama and the cabinet room are framed whole (84 % of the viewport height, house centre at 70 % of the width, soft edges) right of a text column of at most min(34 rem, 40 vw); on phones the house or room fills the upper part and the text follows on a scrim. Ghosts are glowing mist (translucent radial body, teal outer glow, fading wispy tail, inner shimmer, soft dark eyes). In scene 3 the ghosts hover over the cabinet shelves, each linked to its finding (hover or focus on either highlights the other; the ghost is a pointer shortcut, the list item the accessible control), and the glowing note on the table is a pointer hotspot for "Prepare the demo doctor note", which is also a button in the text column. | 100 px notice block above the hero; cover framing; findings over the room. | The first screen reads as one scene; nothing overlaps the art; every action stays reachable by keyboard and screen reader. |
+| DP48 | **Owner decision 2026-11-08 (third): no light mode.** The shadow / light faces, the mask switch, `data-face`, the "Light face" link and the face messages are removed in all five languages; the researcher area keeps its place in the navigation ("Research" in the header in both themes, footer, Settings) and uses the normal theme. The doctor note preview stays on paper and the PDF on white paper (print). The doctor QR page is the Night Pharmacy page with the form on a paper card (ivory, dark text): it reads like the printed note the doctor holds and stays legible on a phone in a bright room. Glass Janus keeps following the system light / dark preference. Supersedes DP18; amends DP1, DP33. | Keep the light face for research; doctor page fully dark. | One theme set per theme is simpler and was the owner's call; the paper card keeps the doctor's view close to the print. |
+| DP49 | **Owner decision 2026-11-08 (third): a home that scrolls smoothly.** Scroll-scrubbing is replaced by an explicit control: "Step inside" (play icon; an animated scroll-down cue under it does the same, pointer only) plays the door video once at normal speed in a fixed full-bleed layer (under the header and the emergency bar, above the page) with Skip (also Escape); `ended`, Skip, an error, a rejected `play()` or no start within 6 s cross-fade to the cabinet room (scene 3) in place, scroll the stage back to the top behind the layer and focus the scene 3 heading; Replay plays it again (still mode: back to the street). Nothing is sticky; no scroll listener (the home header uses an IntersectionObserver sentinel). Fireflies are 16 DOM dots (8 on phones) and ghosts float as whole elements, so every running animation is transform / opacity; `data-paused` pauses them off-screen and in a hidden tab; the Glass light sweep moves a band by transform. The video (and its poster) is attached only in `requestIdleCallback` after the motion chunk loads; reduced motion, Save-Data, 2G and a failed source skip it. Glass colour fields are the root background with `background-attachment: fixed` (a full-page capture still paints fixed backgrounds over one viewport, which is what the review saw; a real scroll keeps them). Desktop hero ghosts 3.5 % of the image width (was 2.8 %) with a stronger outer glow. Amends DP46 (scrubbing, sticky stage, canvas fireflies and the three stills are gone; the door-mid stills are deleted). | Smoother scrubbing (more key frames, WebCodecs); autoplay on load. | Scrubbing tied decoding to scroll and janked; an explicit control plays the decoded video smoothly and keeps scrolling free. |
 
 ## 20. Open items (for the owner)
 1. **Brand names in the demo.** The gate-1 box is AMLIPIN (a real Turkish product; TİTCK strings are not committed and

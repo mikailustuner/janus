@@ -33,6 +33,8 @@
     "nightHeadline": "Bir ilaç, başka bir ilacın yan etkisi için mi yazıldı?",
     "glassHeadline": "Evinizdeki ilaçlara net bir bakış.",
     "stepInside": "İçeri gir",
+    "skip": "Geç",
+    "replay": "Girişi yeniden oynat",
     "scene3Title": {
       "twoFaces": "Demo ilaç dolabında dört hayalet",
       "glass": "Demo ilaç dolabında dört örüntü"
@@ -64,25 +66,8 @@
       "medicines": "İlaçlar",
       "results": "Sonuçlar",
       "settings": "Ayarlar",
-      "research": {
-        "twoFaces": "Işık yüzü",
-        "glass": "Araştırma"
-      },
+      "research": "Araştırma",
       "passport": "Pasaport"
-    },
-    "mask": {
-      "label": {
-        "twoFaces": "Maske: yüz seçin",
-        "glass": "Bölüm"
-      },
-      "patient": {
-        "twoFaces": "Gölge",
-        "glass": "Hasta"
-      },
-      "research": {
-        "twoFaces": "Işık",
-        "glass": "Araştırma"
-      }
     },
     "privacy": "Gizlilik",
     "demoCodes": "Demo kodları",
@@ -216,7 +201,7 @@
     "appearance": "Görünüm",
     "theme": "Tema",
     "themeTwoFaces": "Gece Eczanesi",
-    "themeTwoFacesHint": "Hasta tarafı için ışıklı pencereli gece mavisi, araştırma tarafı için fildişi.",
+    "themeTwoFacesHint": "Işıklı pencereli gece mavisi, tema simgeleriyle.",
     "themeGlass": "Cam Janus",
     "themeGlassHint": "Sade ve açık; tema simgeleri yok.",
     "largeText": "Büyük yazı",
@@ -510,10 +495,7 @@
     "withdrawLink": "Sonuç döngüsü verilerini geri çek"
   },
   "Research": {
-    "title": {
-      "twoFaces": "Işık yüzü: araştırmacılar için",
-      "glass": "Araştırma"
-    },
+    "title": "Araştırma",
     "intro": "Aynı yan etki bilgisi, araştırma için tersine çevrilir. Bu bölüm hasta akışının bir parçası değildir.",
     "rule7": "Yeniden kullanım çıktıları araştırılmaya değer adaylardır — tedavi değildir.",
     "coming": "4. aşamada geliyor.",
@@ -538,10 +520,7 @@
         "body": "Araştırma için açık veri seti; sayılar yalnızca gizliliği koruyacak kadar büyük gruplar için."
       }
     },
-    "back": {
-      "twoFaces": "Gölge yüzüne dön",
-      "glass": "Hasta bölümüne dön"
-    },
+    "back": "Hasta bölümüne dön",
     "empty": "Henüz gösterilecek bir şey yok."
   },
   "Doctor": {

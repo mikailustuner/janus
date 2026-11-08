@@ -2,7 +2,7 @@
 /**
  * The doctor note (design §9, §10, Req 17): note language (and the patient's language for the
  * side-by-side view), `POST /notes/document` with the pins of the results the patient saw, a
- * preview on light-face paper, and a PDF made in the browser. Box names are filled in here only.
+ * preview on paper, and a PDF made in the browser. Box names are filled in here only.
  */
 import { useLocale } from "next-intl";
 import { useState } from "react";
