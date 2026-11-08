@@ -72,7 +72,11 @@
     Benchmark meets Req 13.1 (p95 ≤ 500 ms for 15 items, ≤ 2 s worst case), else apply the DP12 fallback and
     measure again. _Requirements: 13.1_
 
-- [ ] 8. Checkpoint 1: server side
+- [x] 8. Checkpoint 1: server side
+  - *2026-11-08: ruff, ruff format, pyright strict clean; pytest ci profile 863 passed, 8 skipped (database tests after
+    `alembic upgrade head` on `janus_test`); vitest 78, web lint and typecheck green; API image (also the `migrate`
+    image) rebuilt and the packaged table loads in it; log-guard and medical-language-guard clean. Committed on the
+    worktree branch; not pushed (the owner's manager merges), so no CI run yet.*
   - All steps of the header green, including the database properties after `alembic upgrade head` on `janus_test`;
     rebuild the `api` and `migrate` images; the `log-guard` and `medical-language-guard` hooks report nothing. Commit,
     push, CI green.
