@@ -194,3 +194,35 @@ found, what hooks blocked. Three to five lines per day.
   in development did not reproduce in seven later runs and is recorded as unexplained.
 - Follow-up for drug-resolution: give imipenem an ingredient-level code (today only the
   combination code `J01DH51`, so row 58 cannot see imipenem).
+
+## 2026-11-08 — Phase 2: BDPM, CIMA and FAERS pipelines, FAERS count builder
+- Refined `data-pipelines` for Phase 2 (Requirements 11-15, 24 new properties P17-P40, decisions
+  DP14-DP33) and checked the sources first. Findings that changed the design: FDA now calls
+  FAERS "AEMS"; the quarterly page links `2025Q4` and `2026q3` with different letter case and has
+  a commented-out row and a wrong posting year for 2025 Q4; EU and EEA reports carry the single
+  country code `EU`; the BDPM files use three encodings (two Windows-1252, one UTF-8); the AEMPS
+  Nomenclátor already holds national code, ingredients, ATC, NTIN and GTIN, so the REST API is
+  not crawled; the AEMPS host rejected a generic command-line User-Agent.
+- `drug-resolution/eu-code-encodings.md` records, with sources, how the DataMatrix carries the
+  French CIP13 (GTIN-14 = `0` + CIP13) and the Spanish national code (NTIN `0847000` + code +
+  check digit, or GTIN + AI 712), and what is not verified (the Spanish code's check-digit
+  algorithm; AI 710 to 714 other than 712). No French or Spanish box was seen.
+- Owner decisions applied: region = occurrence country, else reporter country, US territories
+  count as US, EU means EU-27 only; N for the 2x2 tables = reports with a mapped ingredient
+  (all-reports total kept as a sensitivity figure); the FAERS name rules wait as a follow-up in
+  `drug-resolution`, with their coverage impact logged; MedDRA terms only as published in FAERS,
+  with the ICH trademark notice and a Phase 5 checklist item (`docs/pre-launch-checklist.md`).
+- Core change (approved): a bounded-memory content hash with the same result as the in-memory
+  rule, file-backed output and side tables. A first FAERS design would have needed 4 to 5 GiB;
+  the real run peaks at 2.5 GiB.
+- Real runs: BDPM 20,914 presentations; CIMA 30,900 presentations; FAERS 1,626,375 reports read,
+  1,510,804 kept (111,604 superseded versions, 3,967 deleted cases); builder: 1,252,900 reports
+  with a mapped ingredient, 84.0 % of ingredient occurrences mapped, 6.2 million pair rows.
+- Property tests found: the builder crashed when no report in the artifact named an ingredient
+  (P33 counterexample, empty mapping table; fixed). Generator mistakes fixed in my own tests:
+  too many malformed BDPM lines made the file-level column check fail (P22), and a line-end
+  check assumed that a report with a quote character survived deduplication (P31). Real data
+  found two defects the generated data did not: a Polars expression used as a number in the
+  FAERS parser, and the commented-out row and posting-date typo on the FDA page.
+- The `api` suite needs `alembic upgrade head` on the test database before the database tests
+  (otherwise 14 failures and 10 errors that are not code faults).

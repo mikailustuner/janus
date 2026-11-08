@@ -50,7 +50,7 @@ unknown source).
 - `faers`: one row per deduplicated report (latest version per case, DELETE files applied);
   removed reports are in `removed.parquet` next to `rows.parquet`. Ingredient names stay as
   published; `python -m janus.memory.faers_build` (in `apps/api`) maps them and writes the
-  DuckDB count tables for Collective Memory under `artifacts/faers_counts/`.
+  DuckDB count tables for Collective Memory under `memory/faers_counts/` (outside `artifacts/`, which the loaders scan).
 - Large outputs: a job may write its rows to Parquet itself; the core then hashes them in a
   bounded-memory stream (same hash as the in-memory rule) and records side tables in the manifest.
 - Spill files go to `staging/<pipeline>/_scratch`, removed after every run.

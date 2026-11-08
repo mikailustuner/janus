@@ -399,6 +399,7 @@ encoding facts for the two EU adapters are in `.kiro/specs/drug-resolution/eu-co
 | `eu_fr_bdpm` (run `20261108T001742Z-d5847f6f-82e5`) | succeeded; snapshot 2026-11-03 (oldest of the three file dates: specialties 03/11, compositions 03/11, presentations 08/11). 20,914 presentations, 0 name-only, 0 duplicate CIP13, 4 with `specialty_missing`, 2 CIS without composition, 5,515 `FT` lines, 99.56 % active presentations, no malformed lines. | The presentations file had been refreshed that day: 20,914 lines instead of 20,918; every other figure as in §10. |
 | `eu_es_cima` (run `20261108T001801Z-f037cd98-51fd`) | succeeded; snapshot 2026-11-07. 30,900 presentations, 0 name-only, 512 without ingredient, NTIN on 17,855, GTIN on 4,552, both on 210, neither on 8,703, 0 invalid GS1 values, 2 shared codes, 2 non-standard NTINs, 3 NTINs whose embedded code differs from `cod_nacion` (the 5 of §10 included the 2 non-standard ones), dictionary of 3,389 names. | Same as §10. |
 | `faers` (run `20261108T004801Z-b4dfb36a-b253`) | succeeded; window 2025Q4–2026Q3, snapshot 2026-10-28 (posting date of 2026Q3; the 2025Q4 posting date on the page, "27-Jan-2025", is impossible for that quarter and was dropped). 1,626,375 reports read, 111,604 `superseded_version`, 3,967 `deleted_case`, **1,510,804 kept** (28.67 % follow-ups). Regions with the owner's rule: US 1,024,607 (territories included), OTHER 318,314, EU 161,648, TR 4,027, UNKNOWN 2,208 (0.15 %). Line accounting: DRUG 6,728,770 lines (5,880,174 kept, 848,593 of removed reports, 3 orphans), REAC 5,436,734 (4,849,622 kept, 2 orphans); 127,674 blank `prod_ai`; every kept report has a drug and an event. Wall time 392 s including the four downloads; **peak memory 2.5 GiB** (target 4 GiB); artifact 50 MB, raw archives 246 MB, side table `removed` 115,571 rows. | Same as §10. |
+| `faers_build` (build `20261108T005927Z-7445632a-f55a79cf-61fc`) | built from the artifact above after the streamed hash check; 417 s, peak memory 2.9 GiB. **1,252,900 of 1,510,804 reports have a mapped ingredient** (82.9 %; `reports_mapped` is the primary N, DP32). Name coverage: 84.0 % of 6,201,428 ingredient occurrences map (80.5 % in suspect roles); steps `any_label` 4,153,139, `salt_normalised` 999,368, `curated_synonym` 34,616, `spelling_key` 17,668, `spelling_key_salt` 4,596; not mapped 983,753, ambiguous 3,148, unsplit 5,140. Roles excluded from counts: DN 1,113 occurrences. Rows: `faers_report` 1,510,804, `faers_report_ingredient` 3,810,867, `faers_report_event` 4,786,269, `faers_pair_counts` 6,195,095, `faers_ingredient_counts` 17,106, `faers_event_counts` 58,233, `faers_unmapped` 3,392; file 121 MB. Candidate name rules would touch (coverage report, not applied): biologic suffix 258,823 occurrences, `MYCOPHENOLATE…` 22,821, unmapped single parts of combination strings 207,811. | Coverage as in §10; the pair table is small enough that no minimum pair count is needed (open item 7 closed). |
 
 ## 11. Code layout (additions)
 
@@ -611,8 +612,9 @@ faers_unmapped(name, status, reports, suspect_reports)         ambiguous, unspli
 `report_id` is the rank of `primaryid` (as a number), so it does not depend on row order.
 `scope = any` counts a key once if the report has the key in any of PS, SS, I, C; `suspect`
 counts it if some PS/SS/I line has it, so suspect ⊆ any. 2×2: see Req 15.5. The size of
-`faers_pair_counts` (estimated between 5 and 15 million rows) is measured at the task 23
-checkpoint; a minimum count for stored pairs is an owner choice only if the file is unwieldy.
+`faers_pair_counts` has 6.2 million rows on the first real build (file 121 MB), so every pair with
+at least one report is stored. Table hashes are the SHA-256 of each table exported in sorted
+CSV form (DuckDB `ORDER BY ALL`), which does not depend on row order.
 
 ### 14.4 Differential test
 `aggregate(facts)` is a plain-Python reference over small generated reports. The SQL path is
@@ -620,7 +622,7 @@ tested against it on the same facts (P33–P36), so the SQL cannot drift from th
 
 ### 14.5 Read side
 The API opens the file with `duckdb.connect(path, read_only=True)` through the `current` link
-(`$JANUS_DATA_DIR/artifacts/faers_counts/current`). `collective-memory` owns the queries and the
+(`$JANUS_DATA_DIR/memory/faers_counts/current`). `collective-memory` owns the queries and the
 statistics (PRR, ROR, Haldane, thresholds). `faers_meta.resolution_dataset_version` lets it say
 when the counts were built against a different resolution dataset than the one now served.
 
@@ -695,7 +697,7 @@ P17–P40 are new in the Phase 2 refinement. P23 is example-driven where Hypothe
 | DP28 | Review thresholds: `faers` 15 %, others the default 10 %. | 10 % for all. | A new FAERS window replaces one quarter in four, so ±10 % can be normal. |
 | DP29 | The pipelines send their own User-Agent (with `JANUS_CONTACT` when set) to FDA, BDPM and AEMPS; none of them requires the contact. | Browser-like User-Agent. | AEMPS rejected the generic command-line agent and accepted ours on 2026-11-08; a browser disguise would hide who we are. If a host blocks ours, the run fails with a clear message (Req 12.7). |
 | DP30 | Raw downloads stay under `raw/<pipeline>/<run_id>/` (FAERS about 250 MB per run); pruning old runs is a maintainer action. | Delete after parse. | Provenance and re-parsing; disk is the maintainer's to manage. |
-| DP31 | The count file lives in `$JANUS_DATA_DIR/artifacts/faers_counts/` with the same `runs/` + `current` layout and atomic link swap. | A table in PostgreSQL. | `tech.md` keeps FAERS-derived tables in read-only DuckDB files; the layout matches Phase 1, so one habit for maintainers. |
+| DP31 | The count file lives in `$JANUS_DATA_DIR/memory/faers_counts/` with the `runs/` + `current` layout and atomic link swap of Phase 1. | Under `artifacts/` (first build); a table in PostgreSQL. | `tech.md` keeps FAERS-derived tables in read-only DuckDB files. `artifacts/` holds pipeline output only: the integrity loader and the resolution loader read every directory in it and failed on the first build (found by the real-artifacts test), so the counts moved to `memory/`, next to the coverage reports. |
 
 ## 18. Open items (Phase 2)
 
@@ -713,5 +715,5 @@ of the bounded-memory core change (DP18).
 4. ~~MedDRA~~ Decided (DP33); the Phase 5 check is in `docs/pre-launch-checklist.md`.
 5. **Facts only partly verified (see `eu-code-encodings.md`).** Unchanged.
 6. **Registry and NOTICE.** Task 17.
-7. **Size of `faers_pair_counts`.** Measured at the task 25/26 checkpoints.
-8. **Peak memory target (4 GiB).** Measured at the task 23 checkpoint.
+7. ~~Size of `faers_pair_counts`~~ Measured: 6.2 million rows, 121 MB file; no minimum count.
+8. ~~Peak memory target (4 GiB)~~ Measured: 2.5 GiB for the `faers` run, 2.9 GiB for the builder.

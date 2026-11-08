@@ -250,6 +250,40 @@ def _openfda_products(rows: Sequence[Row], stats: Counter[str]) -> list[_Raw]:
     return out
 
 
+def eligible_items(
+    wikidata_rows: Sequence[Row],
+    rules: CombinationRules,
+    curated_rows: Sequence[Row] = (),
+) -> tuple[dict[str, Row], frozenset[str], CombinationCheck]:
+    """Eligible ingredient keys: items with >= 1 ingredient-level, non-combination code, with
+    the curated Janus keys added. Returns (items by key, all Wikidata codes, base check).
+
+    The observation rule only flags codes that no Wikidata item carries, so eligibility is the
+    same under the full check computed later in `prepare_dataset`.
+    """
+    all_rows = [*wikidata_rows, *curated_rows]
+    wikidata_codes = frozenset(c for r in all_rows for c in _strs(r.get("atc_codes")))
+    base = CombinationCheck(rules, frozenset(), wikidata_codes)
+    items: dict[str, Row] = {}
+    for r in all_rows:
+        codes = _strs(r.get("atc_codes"))
+        if any(is_ingredient_level(c) and not base.is_combination(c) for c in codes):
+            items[str(r["qid"])] = r
+    return items, wikidata_codes, base
+
+
+def build_name_index(
+    wikidata_rows: Sequence[Row],
+    rules: CombinationRules,
+    synonyms: Iterable[tuple[str, str]] = (),
+    curated_rows: Sequence[Row] = (),
+) -> NameIndex:
+    """The name index of `prepare_dataset` without the TİTCK bridge (steps 0-5): what any
+    caller that maps non-Turkish names (e.g. the FAERS count builder) needs."""
+    items, _codes, _base = eligible_items(wikidata_rows, rules, curated_rows)
+    return NameIndex.build((index_item(r) for r in items.values()), synonyms)
+
+
 def prepare_dataset(
     titck_rows: Sequence[Row],
     us_rows: Sequence[Row],
@@ -263,18 +297,7 @@ def prepare_dataset(
     substances that no Wikidata item in the extract covers with a code (owner decision,
     2026-11-07: dimenhydrinate). They behave like items; their codes cite `janus_curated`."""
     curated_keys = frozenset(str(r["qid"]) for r in curated_rows)
-    wikidata_rows = [*wikidata_rows, *curated_rows]
-    wikidata_codes = frozenset(c for r in wikidata_rows for c in _strs(r.get("atc_codes")))
-    base = CombinationCheck(rules, frozenset(), wikidata_codes)
-
-    # Eligible ingredient keys: items with >= 1 ingredient-level, non-combination code. The
-    # observation rule only flags codes that no Wikidata item carries, so eligibility is the
-    # same under the full check computed below.
-    items: dict[str, Row] = {}
-    for r in wikidata_rows:
-        codes = _strs(r.get("atc_codes"))
-        if any(is_ingredient_level(c) and not base.is_combination(c) for c in codes):
-            items[str(r["qid"])] = r
+    items, wikidata_codes, base = eligible_items(wikidata_rows, rules, curated_rows)
     code2q: defaultdict[str, set[str]] = defaultdict(set)
     for qid, r in items.items():
         for c in _strs(r.get("atc_codes")):

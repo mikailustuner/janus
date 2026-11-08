@@ -3,7 +3,7 @@
 > Scope of tasks 1–14 (Phase 1, done): core (Req 1–4) and `pipc`, `titck`, `wikidata_ingredients`,
 > `us_ndc`, `retractions` (Req 5–9). Property numbers P1–P16 refer to design.md §7. Tests use no
 > network and no TİTCK data.
-> Scope of tasks 15–26 (Phase 2, planned 2026-11-08, **not started**): core changes (Req 14),
+> Scope of tasks 15–26 (Phase 2, planned and built 2026-11-08, **done**): core changes (Req 14),
 > `eu_fr_bdpm` (Req 11), `eu_es_cima` (Req 12), `faers` (Req 13) and the FAERS count builder
 > (Req 15). Properties P17–P40 refer to design.md §16. Tests use no network and no committed
 > source data. Every checkpoint runs ruff, ruff format, pyright, the full pytest suites with the
@@ -110,7 +110,7 @@
 
 ---
 
-## Phase 2 (planned 2026-11-08)
+## Phase 2 (built 2026-11-08)
 
 - [x] 15. Streamed content hash (`core/canonical.py`, `apps/api/janus/resolution/canonical.py`)
   - Add `content_hash_stream` (design §12.1): canonical lines in sorted chunks on disk, k-way
@@ -191,27 +191,27 @@
   - Confirm with the owner the region result and DP21; update the spec with the measured figures.
   - All checks, commit, push, CI.
 
-- [ ] 24. Name index extraction in `drug-resolution` (`apps/api/janus/resolution/prepare.py`)
+- [x] 24. Name index extraction in `drug-resolution` (`apps/api/janus/resolution/prepare.py`)
   - Extract `build_name_index(...)` from `prepare_dataset` without changing behaviour.
-  - [ ] 24.1 Regression: the drug-resolution suite (including P16 and the database tests) passes
+  - [x] 24.1 Regression: the drug-resolution suite (including P16 and the database tests) passes
     unchanged and the dataset version computed from the real artifacts is identical before and
     after. _Requirements: 15.2_
 
-- [ ] 25. FAERS count builder (`apps/api/janus/memory/faers_build.py`)
+- [x] 25. FAERS count builder (`apps/api/janus/memory/faers_build.py`)
   - `read_artifact` with streamed hash check; `map_names`; DuckDB facts and count tables; metadata
-    with table hashes; staging and atomic `current` swap under `artifacts/faers_counts/`;
+    with table hashes; staging and atomic `current` swap under `memory/faers_counts/`;
     coverage report to `$JANUS_DATA_DIR/memory/coverage-<build>.json` (never into the repository);
     `LogEvent.faers_build` with counts only; CLI (design §14).
-  - [ ] 25.1 Property test P33: SQL tables equal the Python reference; 2×2 identities. _Requirements: 15.5_
-  - [ ] 25.2 Property test P34: regions add up; `suspect` ≤ `any`; DN and unknown roles counted nowhere. _Requirements: 15.3, 15.5_
-  - [ ] 25.3 Property test P35: duplicate lines and repeated events change nothing. _Requirements: 15.4_
-  - [ ] 25.4 Property test P36: only `mapped` names are counted; unmapped occurrences add up. _Requirements: 15.2_
-  - [ ] 25.5 Property test P37: report order does not change tables or hashes; two builds agree. _Requirements: 15.7_
-  - [ ] 25.6 Property test P38: any changed artifact row or manifest hash is refused. _Requirements: 15.1_
-  - [ ] 25.7 Property test P39: stateful fault injection around the `current` swap. _Requirements: 15.8_
-  - [ ] 25.8 Property test P40: sentinel names never reach a log record; the privacy log-guard hook passes for the new module. _Requirements: 15.9_
+  - [x] 25.1 Property test P33: SQL tables equal the Python reference; 2×2 identities. _Requirements: 15.5_
+  - [x] 25.2 Property test P34: regions add up; `suspect` ≤ `any`; DN and unknown roles counted nowhere. _Requirements: 15.3, 15.5_
+  - [x] 25.3 Property test P35: duplicate lines and repeated events change nothing. _Requirements: 15.4_
+  - [x] 25.4 Property test P36: only `mapped` names are counted; unmapped occurrences add up. _Requirements: 15.2_
+  - [x] 25.5 Property test P37: report order does not change tables or hashes; two builds agree. _Requirements: 15.7_
+  - [x] 25.6 Property test P38: any changed artifact row or manifest hash is refused. _Requirements: 15.1_
+  - [x] 25.7 Property test P39: stateful fault injection around the `current` swap. _Requirements: 15.8_
+  - [x] 25.8 Property test P40: sentinel names never reach a log record; the privacy log-guard hook passes for the new module. _Requirements: 15.9_
 
-- [ ] 26. Final checkpoint: Phase 2 data ready for Collective Memory
+- [x] 26. Final checkpoint: Phase 2 data ready for Collective Memory
   - Run `faers` then the builder end to end on real data. Compare the coverage report with
     design §10 (84.0 % of occurrences, 80.5 % in suspect roles); report table row counts and file
     size (`faers_pair_counts`, open item 7), the share of reports with a mapped ingredient, and
