@@ -1,0 +1,109 @@
+# Implementation Plan: Medication Passport
+
+> Scope: `apps/api/janus/passport/`, migration `0012_passport_presence_index`, two additive fields in
+> `janus/resolution/model.py` and `service.py`, `data/dose_form_groups.csv`, `apps/web/src/passport/`, the `Passport`
+> message namespace and the Cologne demo list. Requirement numbers refer to requirements.md; properties P1–P21 and
+> decisions DP1–DP21 to design.md. Tasks 4 and 11 are hard stops for review; DP21 and OD5 need the owner's answer before
+> tasks 9 and 10 use them (until then, build without manual entry and without fast-check-only tests).
+> No health data in logs, fixtures or test output; tests use sentinel keys and invented names (never TİTCK strings).
+> **Checkpoints** run every step: `uv run ruff check .`, `uv run ruff format --check .`, pyright strict, pytest with
+> `HYPOTHESIS_PROFILE=ci` including the database tests against PostgreSQL 16 after `alembic upgrade head` on
+> `janus_test`, vitest (`npm test`), web lint and typecheck (`npm run lint`, `npm run typecheck`); then commit, push and
+> confirm GitHub CI is green. The full API suite takes 15 minutes or more: run it with `nohup`, one suite at a time.
+
+- [ ] 1. Index migration (`migrations/versions/0012_passport_presence_index.py`, design §4.1)
+  - Partial index `res_product_ingredient_key`; downgrade drops it. Measure the loader time on the dev dataset before
+    and after and record it in design §13.
+  - [ ] 1.1 Migration upgrade → downgrade → upgrade on `janus_test`; the index exists only after upgrade; the plan of
+    the §4.2 statement uses it (EXPLAIN check on a synthetic dataset). _Requirements: 13.1_
+
+- [ ] 2. Strength codes (`passport/strength.py`, design §5.1)
+  - Per-source grammars, exact `Decimal` conversion, canonical amount, cache; a report command printing the parsed share
+    per source on the dev dataset (counts only).
+  - [ ] 2.1 Property test P5: equal quantities equal codes; `None` cases; never raises; pattern of §3.1. _Requirements: 6.3, 6.4_
+
+- [ ] 3. Dose-form table (`passport/forms.py`, `passport/forms_draft.py`, `data/dose_form_groups.csv`, design §5.2)
+  - Loader, closed group set, `COUNTABLE_GROUPS`, version hash; the draft command writes every distinct
+    `(source_id, dosage_form)` of the current dataset (openFDA 142, BDPM 358) with product counts and a proposed group;
+    commit the draft with every row marked `proposed` in `note`. `data/README.md` gains the licence and source line.
+  - [ ] 3.1 Property test P6: committed table loads; each injected defect named; `group()` total. _Requirements: 6.5_
+
+- [ ] 4. Dose-form and strength review **(review stop)**
+  - Run `agent://pharmacologist` (self-contained prompt: the draft table, the grammar table of §5.1, OD4) and write
+    `dose-form-review.md` (flagged rows, granularity questions, EDQM terms question). Commit, push, CI green, then
+    **stop and wait for the owner**. Apply the answers in one commit (rows accepted, groups final, OD4 closed in design).
+    _Requirements: 6.4, 6.5_
+
+- [ ] 5. Resolution fields (`resolution/model.py`, `resolution/service.py`)
+  - `ResolvedIngredient.strength_code: StrengthCodeOut | None = None`, `ProductCandidate.dose_form_group: str | None =
+    None`, computed with the Passport functions on stored values; forms table passed through `app.state`. No other
+    change. Note the change in `drug-resolution` open items (task 13).
+  - [ ] 5.1 Property test P17: fields equal the pure functions; all other fields unchanged (snapshot). _Requirements: 6.6_
+
+- [ ] 6. Presence evaluation and repository (`passport/presence.py`, `passport/repository.py`, design §4.2, §5.3)
+  - Signature building (strength codes, form groups, homeopathic decision with `is_homeopathic_name` for EU), the
+    statement of §4.2 with `SET LOCAL statement_timeout`, `known_keys`, pure `evaluate`.
+  - [ ] 6.1 Property test P7: presence equals a brute-force model on synthetic datasets (DB). _Requirements: 2.4, 2.6, 2.7, 6.2_
+  - [ ] 6.2 Property test P3 (server part): no `matched` with an unknown side; `differs` only when all comparable. _Requirements: 2.2, 6.1, 6.2_
+  - [ ] 6.3 Property test P8: homeopathic parity with `/resolve/products`; SQL and Python patterns agree. _Requirements: 2.6, 1.5_
+  - [ ] 6.4 Property test P9: comparison counts and result function. _Requirements: 6.2_
+  - [ ] 6.5 Property test P10: order, repetition and split invariance. _Requirements: 4.4_
+
+- [ ] 7. Route (`passport/schemas.py`, `service.py`, `router.py`, `main.py`, `bench.py`)
+  - `POST /passport/presence` on `medical_router()`; strict body parsing as `resolution/router.py`; 422 / 503 of §3.3;
+    source blocks with staleness from `repository.current`; register in `create_app`; benchmark (15 common items and the
+    50-key worst case on the dev dataset) and record p50/p95 in design §13.
+  - [ ] 7.1 Property test P11: stateless, silent logs, closed schema, no echo. _Requirements: 4.1–4.3, 5.2, 9.1, 9.2_
+  - [ ] 7.2 Property test P12: validation bounds and boundary values. _Requirements: 5.1, 5.2_
+  - [ ] 7.3 Property test P13: every answer names its source; missing sources; Germany; staleness. _Requirements: 2.1, 5.4, 7.1, 7.4, 7.5_
+  - [ ] 7.4 Property test P14: 503 cases with nothing partial. _Requirements: 5.3_
+  - [ ] 7.5 Property test P15: constant statement budget for 1–50 items. _Requirements: 13.2_
+  - [ ] 7.6 Benchmark meets Req 13.1 (p95 ≤ 500 ms for 15 items, ≤ 2 s worst case), else apply the DP12 fallback and
+    measure again. _Requirements: 13.1_
+
+- [ ] 8. Checkpoint 1: server side
+  - All steps of the header green, including the database properties after `alembic upgrade head` on `janus_test`;
+    rebuild the `api` and `migrate` images; the `log-guard` and `medical-language-guard` hooks report nothing. Commit,
+    push, CI green.
+
+- [ ] 9. Client list logic (`apps/web/src/passport/`: `model.ts`, `identity.ts`, `merge.ts`, `duplicates.ts`,
+  `request.ts`, `memory-keys.ts`, `entry.ts` if DP21 is accepted; `fast-check` dev dependency if OD5 is accepted)
+  - Types mirror `schemas.py` (a Python test exports the literal sets to a JSON fixture the web tests read).
+  - [ ] 9.1 Property test P1: merge commutative, associative, idempotent but for counts, earliest month. _Requirements: 1.4_
+  - [ ] 9.2 Property test P2: duplicate groups iff shared key among checked items; nothing removed. _Requirements: 1.2, 1.3, 1.5, 1.6_
+  - [ ] 9.3 Property test P18: request bodies hold only keys and codes; limits; fan-back complete. _Requirements: 9.1, 4.3_
+  - [ ] 9.4 Property test P20: memory keys sorted, distinct, checked only; > 20 needs a selection. _Requirements: 11.1, 11.2_
+  - [ ] 9.5 Property test P21: entry parity with the Python fixture (only with DP21). _Requirements: 6.7_
+
+- [ ] 10. Passport messages and word lists (`apps/web/messages/*.json` namespace `Passport`, `passport/words.ts`)
+  - Draft all keys of design §7.1 in five languages (English reference texts of §7.2); word lists of §7.3; source names
+    never translated; attribution sentences of Req 7.2.
+  - [ ] 10.1 Property test P4: no substitution, forbidden or reassurance word; removal list on duplicate texts; API body
+    walk. _Requirements: 1.3, 8.1, 8.2_
+  - [ ] 10.2 Property test P16: every API code and origin has a key in five locales with the same parameters. _Requirements: 8.1, 8.3, 10.2_
+
+- [ ] 11. Wording review **(review stop)**
+  - Run `agent://pharmacologist` and the localization reviewer (through `agent://wf-coder`, read-only role, report path)
+    on the `Passport` texts and the word lists; write `passport-wording-review.md` (flagged strings per language,
+    decisions needed). Commit, push, CI green, then **stop and wait for the owner**. Apply the answers in one commit.
+    _Requirements: 8.4_
+
+- [ ] 12. Screens and demo (`passport/screens/`, `apps/web/src/demo/passport-cologne*.{ts,json}`, design §8, §9)
+  - Content and states of the list and detail views with the `experience` components (coordinate mounting and routes
+    with the `experience` author); the Cologne list; the recorded answer generated from the API by a script and
+    committed; visual check at 375 px and 1280 px in both themes and large text; keyboard pass.
+  - [ ] 12.1 Property test P3 (client part): rendered rows never say "same" for `could_not_compare` or a missing side. _Requirements: 2.2, 6.1_
+  - [ ] 12.2 Property test P19: demo items never in donation/outcome bodies; recorded answer schema-valid; demo label on
+    both screens. _Requirements: 9.3, 12_
+  - [ ] 12.3 State tests: loading (`aria-busy`, live region), empty, error with retry and no "not found", partial, long
+    content (50 items, long names), not-checkable item; statuses carry text and icon, never `--risk`. _Requirements: 10.3–10.5_
+
+- [ ] 13. Cross-spec notes
+  - `experience` open items: screens to mount, list fields (`origin`, `boxes`, `demo`, strength/form origin), Cologne
+    list, Memory selection prompt. `drug-resolution` open items: the two additive fields and migration `0012`.
+    `doctor-loop` open items: the origin label in `product_name_slot`. Dated entry for the owner's log (not
+    `docs/kiro-usage.md` unless the owner asks).
+
+- [ ] 14. Final checkpoint
+  - Every step of the header green (API, web, CI); report what was built, the benchmark numbers, counterexamples the
+    property tests found and how they were fixed, and the remaining open decisions (OD1–OD3).

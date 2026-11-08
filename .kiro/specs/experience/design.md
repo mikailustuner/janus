@@ -1,0 +1,672 @@
+# Design: Experience, Phase 3 (client)
+
+> Scope: `apps/web` only — routes and screens under `app/[locale]/` and the doctor page `app/o/`, the browser store, the
+> typed API client, the scan and OCR modules, the doctor note PDF and QR code, the two themes, the message catalogues,
+> the generated clinical vocabulary, the demo fixtures, the service worker, and the web tests (vitest, fast-check,
+> Playwright with axe). Plus small non-code changes: `docker-compose.yml` and `.env.example` gain the web's API origin
+> and the two consent versions, CI gains a Playwright job, `NOTICE` gains the fonts and libraries.
+> Not here: the Passport screens and logic (`medication-passport`, slots in §15), researcher content (**[Phase 4]**),
+> deployment, proxy rate limits and HTTPS (**[Phase 5]**). **No API change is planned**; if one becomes necessary the
+> API suite runs at that checkpoint.
+> Property numbers P1–P30, check numbers C1–C7 and decision numbers DP1–DP32 are this spec's own; upstream ones are
+> written "doctor-loop DPn" and so on.
+> **Owner decisions 2026-11-08 applied:** DP1–DP14 record them; they are not reopened here.
+
+## 1. Overview
+
+```mermaid
+flowchart LR
+  subgraph device[browser]
+    CAM[camera / photo] --> ZX[zxing-wasm<br/>DataMatrix, EAN, UPC]
+    CAM --> OCR[tesseract.js<br/>on-device OCR]
+    ZX --> F[outbound filter<br/>AI 01, 17, 712]
+    OCR --> X[local extraction<br/>NDC shapes, tapped words]
+    ST[(localStorage<br/>list, settings, tokens,<br/>reminders)]
+    VOC[(generated vocabulary<br/>labels, cascade names,<br/>ingredient names)]
+    PDF[PDF renderer<br/>fills box names, draws QR]
+    DEMO[(demo fixtures<br/>recorded responses)]
+  end
+  F -->|/api/resolve/scan| API
+  X -->|/api/resolve/ndc, /api/resolve/search| API
+  ST -->|ids, choices, start months| API[FastAPI via same-origin /api]
+  API -->|codes, numbers, note text| UI[screens: words from messages + VOC]
+  UI --> PDF
+  DEMO -.->|demo mode: no network| UI
+  QR[doctor scans QR<br/>/o#token] -->|token in JSON body| API
+```
+
+The client is a thin, careful presenter. Every medical result comes from the API (DP3); the client words the API's codes
+in the interface language, lays out note text verbatim, and keeps the person's list on the device (DP5). Demo mode swaps
+the HTTP client for a fixture client that has no network at all (DP11).
+
+Facts checked on 2026-11-08 that shaped this design:
+
+| What | Observed | Design consequence |
+|---|---|---|
+| API routes (`grep @router`, `@donation`, `@snapshot_router`) | 20 routes: `POST /resolve/{scan,ndc,search,products}`, `/cascades/evaluate`, `/evidence/resolve`, `/evidence/changes`, `/memory/{pair,combination,regions,shared}`, `GET /memory/snapshot`, `POST /contributions`, `/contributions/deletions`, `/notes/{document,token,withdraw}`, `/outcomes/form`, `/outcomes`, `GET /privacy/storage`, `GET /health` | The client uses all of them except `/evidence/changes` (researcher, Phase 4) |
+| CORS | No CORS middleware in `janus/main.py`; `proxy.ts` matcher already skips `/api` | Same-origin `/api/*` rewrite to the API (DP15) |
+| Request models | Every model `extra="forbid", strict=True`; error bodies `{error, fields?}`, fields only | Client builders produce exactly the model fields (P2); decoders and error map per route (§5) |
+| Event key in findings | `FindingOut` has no event key; `faers_locator` is `faers:ingredient=…;event=…;region=ALL;scope=suspect` or null | Event key from the locator, else from `pipc_positions` of the vocabulary (P6, Req 7.5) |
+| Localized clinical words | `CascadeResult.rule_text` is English PIPC text; five-language cascade names, event labels and reviewed ingredient names exist only in `apps/api/janus/notes/glossary/*.csv` (65 / 1,126 / 115 accepted rows) and `memory/memory_events.csv` | Generated vocabulary in the web with a parity test (DP17); no API change |
+| Resolution labels | `IngredientKey.labels` are Wikidata labels; the glossary review cleared wrong non-English cells (doctor-loop DP39) | Patient screens use the same name rule as the note (doctor-loop DP16), not raw Wikidata labels |
+| QR address | `qr_url` = `<JANUS_PUBLIC_BASE_URL>/o#<token>`, no locale segment; `null` when the base URL is unset | Doctor page at `app/o/` outside `[locale]` with its own root layout; client builds the address from its origin when null (DP19) |
+| Token pattern | `^[A-Za-z0-9_-]{40,4096}$` | A demo fragment `demo-<patient>` can never match it (DP11) |
+| Gate 1 (`apps/api/tests/test_cascades_real_artifacts.py`) | AMLIPIN (`C09BB03`) started 2024-01 + furosemide `C03CA01` 2024-06 + metformin, atorvastatin, paracetamol, omeprazole (start unknown), sertraline, lactulose, alprazolam (start unknown) → `pipc:5` `probable`, 5 months, `corrected_notice`; also rows 6, 9, 12; 2 abrupt-stop warnings; 63 rules checked | The Istanbul demo patient is exactly this list (§13.1). PIPC row 5's drug B is "Diuretic"; furosemide is a loop diuretic in that class |
+| TİTCK strings | Not committable (`structure.md`; CI "No TİTCK list files tracked"); doctor-loop tests use invented names | Fixtures scrub every product text field to invented names (§13.3) |
+| Web app today | Next.js 16.4.5, React 19.3, next-intl 4.14, Tailwind v4 (`@import "tailwindcss"` only), vitest 5 (`src/**/*.test.ts`, node env); messages hold `Metadata`, `LocaleSwitcher`, `Home`, `Disclaimer`, `Memory`; no shadcn/ui yet | Tokens and components built in-repo on Tailwind v4 (DP26); vitest include extended to `.tsx` |
+| Library versions (npm, 2026-11-08) | `@react-pdf/renderer` 4.9.0 (MIT, 2026-08-27), `qrcode` 1.5.4 (MIT), `zxing-wasm` 3.1.6 (MIT, 2026-10-19), `tesseract.js` 7.0.0 (Apache-2.0), `fast-check` 4.10.2 (MIT), `@playwright/test` 1.64.0 (Apache-2.0, 2026-10-07; 1.65.0 is 3 days old), `@axe-core/playwright` 4.14.0 (MPL-2.0, 2026-10-15) | Pinned exactly (§2.1) |
+
+## 2. Code layout
+
+```
+apps/web/
+  messages/<locale>.json          existing + new namespaces (§8)
+  public/manifest.webmanifest     PWA manifest (icons inline SVG → PNG at build)
+  public/sw.js                    hand-written service worker (DP22)
+  public/vendor/                  NOT committed: zxing reader wasm, tesseract worker/core, traineddata (§6.4)
+  scripts/
+    gen-vocabulary.mjs            glossary + memory_events.csv → src/vocabulary/*.json (DP17)
+    vendor-assets.mjs             copies wasm/worker from node_modules, fetches traineddata with pinned SHA-256
+    record-demo.ts                records demo fixtures from the local API, scrubs names (§13.3)
+    bundle-budget.mjs             sums gzip sizes per route from the build manifest (§16)
+  e2e/                            Playwright: routes.spec, a11y.spec, demo-flow.spec, doctor-page.spec, network.spec
+  playwright.config.ts
+  src/
+    app/
+      [locale]/layout.tsx         <html>, pre-paint script, fonts, providers, shell
+      [locale]/page.tsx           home
+      [locale]/start/             region choice (first step)
+      [locale]/scan/              camera, photo, label text, type
+      [locale]/confirm/           candidates, choices, box name, since when
+      [locale]/medicines/         list   (+ Passport slots)
+      [locale]/timeline/
+      [locale]/results/           findings; [finding]/ detail with evidence and Collective Memory pair
+      [locale]/memory/            list-level Collective Memory (combination, regions, shared)
+      [locale]/note/              preview, side-by-side, QR opt-in, PDF; withdraw/
+      [locale]/donate/            form, consent, done; delete/
+      [locale]/settings/          incl. Appearance
+      [locale]/privacy/
+      [locale]/demo/              patients; codes/ (printable sheet); doctor/ (demo doctor form)
+      [locale]/research/          layout (light face) + hypotheses/, seance/, validation/, export/
+      [locale]/[...rest]/         not found (existing)
+      o/layout.tsx, o/page.tsx    doctor QR page, own root layout, no locale segment
+      not-found.tsx               existing
+      globals.css                 @import "tailwindcss"; @import "../theme/tokens.css"; @theme inline mapping
+    api/
+      contracts.ts                request and response types per route (§5.1), hand-written from the Pydantic models
+      decode.ts                   strict decoders for every response type (DP16)
+      errors.ts                   ApiError union and the (route, status, code) → message-key map (§5.3)
+      client.ts                   JanusClient interface; HttpClient (fetch, timeouts, JSON, no retries on writes)
+      builders.ts                 the only functions that build request bodies (P2)
+    store/
+      storage.ts                  safe localStorage wrapper, in-memory fallback, schema version (P16)
+      list.ts settings.ts tokens.ts reminders.ts   documents and actions (useSyncExternalStore)
+    flow/
+      evaluate.ts                 list → EvaluateIn, item index map (P3)
+      reresolve.ts                409 re-resolution (P5)
+      locator.ts                  faers_locator parse, event key (P6)
+      findings.ts                 CascadeResult → findings view model (P7)
+      memory.ts                   Memory responses → panel view models (P10)
+      integrity.ts                EvidenceResolution → evidence view model (P30)
+      timeline.ts                 (P23)
+      confirm.ts                  ResolutionResult → confirm view model (P21)
+    scan/
+      gs1.ts                      element-string parser and outbound filter (P1)
+      zxing.ts camera.ts          lazy reader, camera stream, photo decoding
+      ocr.ts                      lazy tesseract worker
+      ocr-extract.ts              NDC shapes, word list for tapping (P22)
+    note/
+      layout.ts                   NoteOut + list → layout model, slot filling, side-by-side pairing (P4, P24)
+      pdf.tsx                     @react-pdf document (lazy chunk)
+      qr.ts                       qrcode wrapper: version, level M, byte mode, SVG (P25)
+    demo/
+      codes.ts                    demo code range and detection (P15)
+      client.ts                   DemoClient: fixture-only JanusClient without write routes (P14)
+      fixtures/istanbul.json cologne.json ohio.json   recorded, scrubbed
+      sheet.tsx                   printable codes
+    theme/
+      tokens.css                  both themes, exactly the steering tokens
+      prepaint.ts                 inline script source (P17)
+      words.ts                    theme vocabulary selector
+    vocabulary/
+      en.json tr.json de.json fr.json es.json index.json   generated (DP17)
+      index.ts                    eventLabel, safetyLine, cascadeName, ingredientName, sentence (P13)
+    components/                   Shell, Header, MaskSwitch, Nav, Disclaimer, EmergencyNotice, DemoLabel, SafetyLine,
+                                  AbruptStopLine, Ghost, ZombieStamp, CiBar, SourceAttribution, StateView, ReadAloud,
+                                  Card, Chip, Button, Field, MonthPicker, LanguageSwitcher
+    fonts/                        Fraunces, Atkinson Hyperlegible, IBM Plex Mono, Figtree (woff2 + ttf) + OFL.txt
+    passport/                     owned by `medication-passport` (empty here)
+    i18n/                         existing + new tests
+```
+
+### 2.1 Dependencies (pinned, exact versions; DP6, DP7, DP9, DP13)
+| Package | Version | Licence | Kind | Loaded |
+|---|---|---|---|---|
+| `zxing-wasm` | 3.1.6 | MIT (zxing-cpp Apache-2.0) | runtime | scan screen only, `zxing-wasm/reader` |
+| `tesseract.js` | 7.0.0 | Apache-2.0 (traineddata Apache-2.0) | runtime | label-text screen only |
+| `@react-pdf/renderer` | 4.9.0 | MIT | runtime | note "Download PDF" only |
+| `qrcode` + `@types/qrcode` | 1.5.4 / 1.5.6 | MIT | runtime / dev | note screen only |
+| `fast-check` | 4.10.2 | MIT | dev | vitest |
+| `@playwright/test` | 1.64.0 | Apache-2.0 | dev | e2e |
+| `@axe-core/playwright` | 4.14.0 | MPL-2.0 (dev only, not shipped) | dev | e2e |
+
+Fonts (OFL 1.1, committed under `src/fonts/` with `OFL.txt`, listed in `NOTICE`): Fraunces, Atkinson Hyperlegible
+(Latin + Latin Extended: covers ı İ ş ğ ç ö ü, ß, French and Spanish accents; a test reads each font's cmap through
+`@react-pdf/renderer`'s fontkit for every letter in the five catalogues), IBM Plex Mono, Figtree.
+
+## 3. Routes and pages
+
+| Route | Face | Purpose | Data |
+|---|---|---|---|
+| `/[locale]` | shadow | emergency notice first, disclaimer, Start, Try the demo, resume list | store |
+| `/[locale]/start` | shadow | scan regions (TR, US, EU, automatic), user region | settings |
+| `/[locale]/scan` | shadow | tabs: Scan code · Photo of label · Type name or NDC | camera, OCR, `/resolve/*` |
+| `/[locale]/confirm` | shadow | candidate choice, ambiguous positions, box name, since when | last resolution (memory) |
+| `/[locale]/medicines` | shadow | list, edit, remove, re-resolution prompts; Passport slots | store, `/resolve/products` |
+| `/[locale]/timeline` | shadow | start months, links of findings | store + last evaluation |
+| `/[locale]/results` | shadow | ghosts / possible cascades, groups, chains, scope, not checked, statement | `/cascades/evaluate` |
+| `/[locale]/results/[finding]` | shadow | one finding: text, abrupt-stop and safety lines, evidence + integrity line, FAERS pair | `/evidence/resolve`, `/memory/pair` |
+| `/[locale]/memory` | shadow | list-level panels: combination, regions, donated reports, doctor-confirmed outcomes | `/memory/*` |
+| `/[locale]/note` | shadow (preview) / light (PDF) | languages, side-by-side, QR opt-in, PDF | `/notes/document`, `/notes/token` |
+| `/[locale]/note/withdraw` | shadow | withdraw outcome-loop data | `/notes/withdraw` |
+| `/[locale]/donate`, `/donate/delete` | shadow | donation with consent; deletion by token | `/contributions*` |
+| `/[locale]/settings` | shadow | settings incl. Appearance, delete everything | store |
+| `/[locale]/privacy` | shadow | privacy page | `/privacy/storage` |
+| `/[locale]/demo`, `/demo/codes`, `/demo/doctor` | shadow / light | demo patients, printable sheet, demo doctor form | fixtures |
+| `/[locale]/research/**` | light | researcher shell, four Phase 4 empty states | none |
+| `/o` | light | doctor QR page (no locale segment) | `/outcomes/form`, `/outcomes` |
+
+`proxy.ts` matcher gains `o(?:$|/)` in its negative lookahead so `/o` is not locale-redirected (the fragment survives
+a redirect anyway, but the page must not depend on it). Every `[locale]` page is a server component shell around client
+components that read the store; until the store is read they render the loading state (no hydration mismatch, no flash
+of an empty list).
+
+## 4. Client state and storage (DP5, Req 9)
+
+### 4.1 Documents (`localStorage`, keys prefixed `janus.v1.`)
+```
+settings  { v:1, theme: "two-faces"|"glass", largeText: bool, reduceTransparency: bool, readAloud: bool,
+            noteLanguage: Locale, scanRegion: "TR"|"US"|"EU"|null, userRegion: "US"|"TR"|"EU"|"OTHER"|"UNKNOWN",
+            statisticsRegion: "TR"|"EU"|"US"|null }
+list      { v:1, items: Item[] }
+Item      { id: string (crypto.randomUUID, local only),
+            sourceKey: {kind:"scan", content: string /* filtered, §6.2 */}
+                     | {kind:"ndc", ndc: string}
+                     | {kind:"search", query: string, region: "TR"|"US"|"EU"|null,
+                        pick: {kind:"product", sourceId: string, productName: string|null}
+                            | {kind:"ingredient", qid: string}},
+            datasetVersion: string, candidate: ProductCandidate | IngredientCandidate,  // as returned, for display
+            choices: {position: number, ingredient: string}[], started: "YYYY-MM" | null,
+            boxName: string, needsConfirmation: bool }
+tokens    { v:1, notes: [{token, expiresOn, issuedOn /* local date */, findingsCovered, findingsTotal, language,
+            reminderDue, reminderDismissed: bool}], deletions: [{token, storedSummary}] }   // only if the user keeps them
+```
+- `storage.ts` wraps every `getItem`/`setItem`/`removeItem` in try/catch, validates with the same decoders as the API
+  client (§5.2), and falls back to an in-memory map with a one-time notice (`Storage.unavailable`) on any failure (P16).
+- The store is a small module with `subscribe/getSnapshot` used through `useSyncExternalStore`; no state library.
+- The last `CascadeResult`, evidence, memory and note responses are kept **in memory only**, keyed by a hash of the
+  evaluation input; any list change marks them out of date (Req 13.5). Medical results are never persisted.
+- Demo mode keeps its own in-memory session (`demo/client.ts`) and never reads or writes `list` or `tokens` (P14).
+
+### 4.2 Passport fields
+`candidate` already carries region, country, source with `snapshot_date`, ingredient keys and ATC codes (Req 26.1).
+
+## 5. API client
+
+### 5.1 Contracts the client depends on (from `apps/api/janus/**/model.py`, `schemas.py`, `models.py`, routers)
+All bodies JSON, strict, unknown fields rejected; errors `{error: code, fields?: string[]}` with field paths only.
+
+| Route | Request (exact fields) | Response fields used |
+|---|---|---|
+| `POST /resolve/scan` | `{content: 1–512 chars, region?: "TR"\|"US"\|"EU"}` | `ResolutionResult` |
+| `POST /resolve/ndc` | `{ndc: 1–32 chars}` | `ResolutionResult` |
+| `POST /resolve/search` | `{query: 2–100 chars, region?: "TR"\|"US"\|"EU", limit?: 1–20 (default 10)}` | `ResolutionResult` |
+| `POST /resolve/products` | `{candidate_ids: 1–50 × ^(TR\|US\|EU):[a-z_]+:[0-9]{1,9}$}` | `ResolutionResult` |
+| `POST /cascades/evaluate` | `EvaluateIn {dataset_version: hex64, items: 1–50 × {product?: candidate id \| ingredient?: ^(Q…\|J…)$, choices?: 1–10 × {position: 0–49, ingredient: QID}, started?: ^YYYY-MM$}}`; exactly one of product/ingredient; choices only with product, one per position | `CascadeResult` |
+| `POST /evidence/resolve` | `{evidence_ids: 1–200 distinct}` | `EvidenceResolution` |
+| `POST /memory/pair` | `{ingredient: key, event: {key} \| {pt}, region?: ALL\|TR\|EU\|US\|OTHER\|UNKNOWN, scope?: suspect\|any}` | `PairOut` |
+| `POST /memory/combination` | `{ingredients: 2–20 distinct keys, region?, scope? (default any), top_events?: 1–50}` | `CombinationOut` |
+| `POST /memory/regions` | `{ingredients: 1–20 distinct, event?: {key}\|{pt}, scope?}` | `RegionsOut` |
+| `POST /memory/shared` | `{layer: contributions\|outcomes, ingredients: 1–20 distinct, event: key, direction: adverse\|benefit}` | `SharedOut` |
+| `GET /memory/snapshot` | — | `SnapshotOut` |
+| `POST /notes/document` | `NoteIn {evaluation: EvaluateIn, pins?: {rule_base_version?, integrity_version?, counts_build_id?}, languages: 1–2 distinct, region: US\|TR\|EU\|OTHER\|UNKNOWN, statistics_region?: TR\|EU\|US}` | `NoteOut` |
+| `POST /notes/token` | `TokenIn {note: NoteIn (exactly 1 language), consent_version: ^[a-z0-9][a-z0-9.-]{0,31}$, outcome_region: TR\|EU\|US}` | `TokenOut {token, qr_url\|null, expires_on, findings_covered, findings_total, note: NoteOut}` |
+| `POST /outcomes/form` | `{token}` | `OutcomeFormOut {language, expires_on, findings: [{ref, rule_id, cascade{drug_a, adverse_event, drug_b}, index{key,name,name_basis,tag,atc}, marker{…}, form_confirmed, action_on: [{code,text}]}], options{assessment:[{code,text}], action:[…]}, texts{heading, intro, stored_fields, limits, question_assessment, question_action, disclaimer}}` |
+| `POST /outcomes` | `OutcomeIn {token, answers: 1–255 × {ref: 0–254, assessment: confirmed\|not_a_cascade, action?: dose_changed\|medicine_changed\|stopped\|no_change, action_on?: index\|marker}}`, distinct refs; `action_on` exactly for dose/medicine/stopped | `{stored: n}` |
+| `POST /notes/withdraw` | `{token}` | `{status: "withdrawn"}` |
+| `POST /contributions` | `{consent: {version, explicit: true}, age_band: 20,25,…,85,90, sex?: female\|male, region: TR\|EU\|US, ingredients: 1–20 distinct QIDs, event: key, direction: adverse\|benefit}` | 201 `{deletion_token: ^jdt_[A-Za-z0-9_-]{43}$, stored: {report_week, age_band, sex, region, ingredients, event, direction, consent_version}}` |
+| `POST /contributions/deletions` | `{deletion_token}` | `{deleted: true}` |
+| `GET /privacy/storage` | — | `{donation_storage_region: string\|null, in_eu: bool, donations_enabled: bool}` |
+
+Response types used (fields as in the Pydantic models, abbreviated):
+- `ResolutionResult {dataset_version, regions_searched[], sources: SourceRef[], scan?: {gtin, expiry, expiry_status, serial_present, lot_present, structural_hint}, notices: [{code: source_may_be_outdated|region_adapter_not_available|unmapped_ingredients|unknown_candidate_ids|no_open_product_database, region?, country?, source_id?, date?}], candidates: (ProductCandidate | IngredientCandidate)[], disclaimer}`.
+  `ProductCandidate {kind:"product", candidate_id, region, country?, matched_by (barcode|ndc_gtin|ndc|name|candidate_id|cip13|ntin|gtin|ai_712|ntin_digits), score?, product_name, brand_name, generic_name, ingredient_text, published_atc, product_type, routes[], dosage_form, marketing_end_date, suspension_status, name_only, homeopathic, status_published[], product_rxcuis[], packages[{ndc_published, ndc11}], ingredients: ResolvedIngredient[], source}`;
+  `ResolvedIngredient {position, published_name, strength, status: mapped|ambiguous|unmapped, reason?, ingredient_key?: {qid, label_en, labels}, key_candidates[], match_step, atc_codes[{code, source, product?}], atc_selection?, rxcuis[], rxcui_status?, source}`;
+  `IngredientCandidate {kind:"ingredient", matched_by:"name", score?, ingredient_key, atc_codes[], atc_selection, rxcuis[], rxcui_status, source}`; `SourceRef {source_id, run_id, region, snapshot_date}`.
+- `CascadeResult {rule_base_version, dataset_version, integrity_version, as_of_month, window_months, findings: FindingOut[], chains[{chain_id, ingredient_keys[], links[{index_key, marker_key, finding_ids[]}], status}], same_product[], item_warnings[{item, ingredient_key, code:"do_not_stop_suddenly", text}], not_checked[{item, position, reason}], rules{total, checked, disabled[{rule_id, reason, removed[]}], not_matchable[{rule_id, role, reason}]}, statement?: {code: no_pattern_found|rule_base_unavailable, text}, notices: ["chains_truncated"]?, disclaimer}`;
+  `FindingOut {finding_id, rule_id, rule_evidence_id, rule_text{system, kind, drug_a, adverse_event, drug_b, locator}, index{ingredient_key, label_en, items[], matched_codes[], form_confirmed, start, via_form_extension}, marker{…}, status: probable|possible, timing: within_window|date_unknown|same_month|after_window, months_between?, low_priority, form_confirmed, via_form_extension, priority?{measure, value, ci_low, ci_high, unit, locator, evidence_id}, abrupt_stop: (index|marker)[], evidence_ids[], excluded_evidence[{id, reason}], integrity_codes[], faers_locator?, codes}`.
+- `EvidenceResolution {integrity_version, as_of, items: [{id, registered, kind, title, doi, locator, source, freshness{state…}, doi_check, integrity{status, check_status, …notices[{type, source, date, notice_doi, notice_url}]}, roots[], citable, exclusion_reason?, codes[]}], citable_ids[], excluded[{id, reason}], line: IntegrityLine {sources_total, checked_by_doi, without_doi_check, by_status, oldest_check, newest_check, stale_sources[], integrity_check_stale, excluded[], no_retracted_used}, disclaimer}`.
+- `PairOut {layer:"faers", snapshot{build_id, snapshot_date, window[], stale, age_days, counts_match_served…}, notices[], disclaimer, attribution, meddra_notice?, status: ok|not_available, ingredient, event{pt, key, pts[], reported_in_window, safety_line}, stats?: {region, scope, cells{a,b,c,d,n}, haldane_applied, estimates?{prr, ror, ror_ci{low, high, level, method}, chi2, chi2_form}, evans_met, ror_signal, assessment, sensitivity{…}, denominator_sensitive, codes[]}, citation?}`; `CombinationOut` adds `level, skipped[], ingredients[{key, reports, assessment}], combination{reports, n}, events[EventStatsOut], pairs[], singles[]`; `RegionsOut {scope, event?, rows[{region, n_primary, n_all, reports, stats?, citation?}], unknown{reports, share}, basis[{region, occurrence, reporter_fallback}], adrreports_url}`; `SharedOut {layer, status: ok|layer_unavailable|not_available, cells[{region, status: released|hidden, value?}], total_of_released?, disclosure{k, epsilon, wording}, disclaimer, notices[]}`; `SnapshotOut {build_id, snapshot_date, window[], stale, age_days, totals[], unknown_share, layers{faers, contributions, outcomes}, notices[], meddra_notice, attribution}`.
+- `NoteOut {note_format:"janus-note-1", versions{…}, as_of_month, removals[{sentence_id, reason}], documents: [{language, sections: [{id, heading?: {template, text}, blocks: (Sentence|MedicineRow|StatRow)[]}]}]}` with `Sentence {type:"sentence", id, template, kind, text, evidence_ids[], numbers[]}`, `MedicineRow {type:"medicine", item, product_name_slot: true, product_label{text}, ingredients[{key, name?, name_basis, tag?, atc[], combination_code?}], not_checked[{position, reason, text}], started{text}, abrupt_stop?: Sentence}`, `StatRow {type:"stat", id, finding_ids[], region, ingredient_key, event_key, reports?, assessment, estimates?{ror, low, high}, pts?, citation, sentences[]}`; section ids in the order of `SECTION_ORDER` (doctor-loop §4.4).
+
+### 5.2 Decoders (DP16)
+`decode.ts` holds one decoder per response type: required fields and types, enum values, array bounds; unknown
+enum values become a contract error, not a silent default; unknown extra fields are ignored (forward-compatible
+reads). The recorded fixtures (§13) are the decoders' acceptance set; a mutation test rejects each removed required
+field and each wrong enum (P19). A decode failure is shown as the generic error and logged nowhere.
+
+### 5.3 Error mapping (`errors.ts`, Req 22.4, P20)
+`ApiError = {kind: "http", route, status, code, fields?} | {kind: "network"} | {kind: "timeout"} | {kind: "contract"}`.
+
+| Route(s) | Status / code | Message key | Behaviour |
+|---|---|---|---|
+| all | 422 `invalid_request` (fields) | `Errors.client_defect` | never show fields; no retry |
+| `/resolve/scan` | 422 `gs1_serial_not_accepted` | `Errors.client_defect` | client defect (Req 10.4) |
+| `/resolve/scan` | 422 `gs1_*`, `gtin_missing`, `gtin_check_digit` | `Scan.errors.<code>` | "this code could not be read; try again or type the name" |
+| `/resolve/ndc` | 422 `ndc_malformed` | `Scan.errors.ndc_malformed` | |
+| `/resolve/*` | 503 `resolution_unavailable` | `Errors.resolution_unavailable` | never "not found" (Req 12.6) |
+| `/cascades/evaluate` | 409 `dataset_version_mismatch` | — | re-resolution (§5.4) |
+| `/cascades/evaluate` | 503 `cascades_unavailable` | `Errors.cascades_unavailable` | no findings shown |
+| `/evidence/resolve` | 503 `integrity_unavailable` | `Evidence.unavailable` | ids still shown |
+| `/memory/*` | 503 `memory_unavailable` | `Memory.codes.memory_unavailable` | no numbers |
+| `/notes/document`, `/notes/token` | 409 `version_mismatch` / `dataset_version_mismatch` | `Note.version_changed` | re-evaluate, show, then print (Req 17.2) |
+| | 422 `note_language_unavailable` | `Note.language_unavailable` | offer other languages |
+| | 422 `no_findings` | `Note.qr_no_findings` | note without QR |
+| | 503 `notes_unavailable` | `Note.unavailable` / `Note.qr_unavailable` | |
+| `/outcomes/form`, `/outcomes` | 400 `invalid_token`; 410 `token_expired`, `token_not_usable`; 409 `token_used`; 503 | `Doctor.errors.<code>` | Req 19.4 |
+| `/notes/withdraw` | 400 `invalid_token`; 503 `notes_unavailable` | `Withdraw.errors.<code>` | keep token |
+| `/contributions` | 503 `donations_unavailable`; 422 `invalid_donation` (`consent.version`) | `Donate.errors.*` | Req 20.7 |
+| `/contributions/deletions` | 404 `no_donation_for_token`; 422 `invalid_deletion` | `Donate.delete.*` | |
+| any | network / timeout (10 s reads, 20 s note and token) | `Errors.network` | retry offered; writes retried only on user action |
+| any | unknown code / contract | `Errors.generic` | |
+
+### 5.4 Version changes (DP20, Req 22.3, P5)
+1. Before evaluating, if any item's `datasetVersion` differs from another's, re-resolve first (never mixed).
+2. On `409 dataset_version_mismatch`: for each item, call the route of its `sourceKey` (scan content, NDC, or search
+   with `query`/`region`). Accept the new candidate iff exactly one candidate is equivalent: for `scan`/`ndc`, the
+   candidates of the response with the same `source.source_id` (one result expected); for `search`, the one product
+   with the same `sourceId` and `productName`, or the ingredient with the same `qid`. Re-apply each choice iff the new
+   ingredient at that position lists the chosen key in `key_candidates`. Keep `started`, `boxName`.
+3. Otherwise set `needsConfirmation` and send the user to the confirm screen for that item.
+4. Evaluate once more; a second 409 shows `Errors.dataset_changed_again` (no loop).
+5. `/resolve/products` is used only to refresh display data when the served `dataset_version` equals the items'; a
+   response with another `dataset_version` is discarded and step 2 runs (ids are not stable across versions).
+
+### 5.5 Transport (DP15)
+`next.config.ts` `rewrites()` maps `/api/:path*` to `${JANUS_API_ORIGIN}/:path*` (`http://127.0.0.1:8000` by default,
+`http://api:8000` in compose, a build argument of the web image). `HttpClient` sends `content-type: application/json`,
+`credentials: "omit"`, `cache: "no-store"`, `referrerPolicy: "no-referrer"`, and an `AbortSignal.timeout`. `headers()`
+adds `Content-Security-Policy` (`default-src 'self'; connect-src 'self'; img-src 'self' data: blob:; worker-src 'self'
+blob:; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; font-src 'self';
+frame-ancestors 'none'`), `Referrer-Policy: no-referrer`, `Permissions-Policy: camera=(self), microphone=(),
+geolocation=()` (DP31). `'unsafe-inline'` for scripts is needed by the App Router's inline payload scripts on static
+pages (nonces would force dynamic rendering); the directives that enforce Req 23.4 are `connect-src`, `img-src`,
+`font-src` and `worker-src`.
+In Phase 5 Caddy maps `/api/*` to the API the same way.
+
+## 6. Scan and OCR
+
+### 6.1 Barcode reading (`scan/zxing.ts`, `camera.ts`, DP9)
+`zxing-wasm/reader` loaded on demand; `prepareZXingModule({overrides: {locateFile: () => "/vendor/zxing/zxing_reader.wasm"}})`
+so the wasm comes from the Janus origin. Camera: `getUserMedia({video: {facingMode: "environment"}})`, frames drawn to an
+offscreen canvas every 150 ms, `readBarcodes(imageData, {formats: ["DataMatrix","EAN-13","EAN-8","UPC-A","Code128"],
+tryHarder: true, maxNumberOfSymbols: 1})`; a picked photo is decoded the same way from an `ImageBitmap`. Frames and
+photos stay in memory and are released after decoding. The decoded text goes only to `gs1.ts`.
+
+### 6.2 Outbound filter (`scan/gs1.ts`, Req 10.2–10.3, P1)
+- Input: decoded text (FNC1 form with `\x1d`, optional symbology identifier `]d2`/`]C1`/`]Q3`, or parenthesised, or
+  bare digits).
+- Bare 8/12/13/14 digits → valid GTIN check digit → sent as digits.
+- Otherwise parse with the GS1 predefined-length table (two-digit prefixes with fixed lengths: 00 18, 01–04 14, 11–20 6
+  or 2, 31–36 6, 41 13) and variable-length AIs ended by FNC1 or the end; keep the values of (01), (17), (712) only;
+  output `"(01)<gtin>(17)<yymmdd>(712)<cn>"` with absent parts left out.
+- If the string cannot be parsed but starts with AI (01) and 14 valid digits, send only `(01)<gtin>`; else show
+  `Scan.errors.unreadable` and send nothing. The serial and lot values never leave `gs1.ts` (not stored, not logged).
+- Demo detection (`demo/codes.ts`) runs on the GTIN before any request (§13.2).
+
+### 6.3 Typed input (`Req 11.4`)
+Digits of length 8/12/13/14 with a valid check digit → scan route; NDC shapes (`\d{4,5}-\d{3,4}-\d{1,2}`, 10–11 digits
+with an `NDC` label) → NDC route; 7-digit CIP7, 6–7 digit CN, `PZN-\d{7,8}` → "cannot be looked up as a code" + name
+search; anything else (2–100 characters) → name search.
+
+### 6.4 OCR (`scan/ocr.ts`, `ocr-extract.ts`, DP9, DP10, P22)
+`tesseract.js` worker created on demand with `workerPath`, `corePath`, `langPath` under `/vendor/tesseract/`
+(`tessdata_fast` models eng, tur, deu, fra, spa; the interface language first). Assets are copied or fetched by
+`scripts/vendor-assets.mjs` at build with pinned SHA-256 and are not committed. The result is shown as tappable words
+and lines over the photo. Extraction: NDC shapes are offered as "look up NDC …" chips; the user taps the medicine name
+(one or more adjacent words, ≤ 100 characters) and confirms before `POST /resolve/search`. Nothing else is sent; the
+recognised text is dropped when the screen closes.
+
+## 7. Theming (DP1, DP2, DP18, DP21, Req 6)
+
+- `theme/tokens.css` declares the steering tokens exactly under `:root[data-theme-style="two-faces"][data-face="shadow"]`,
+  `…[data-face="light"]`, `:root[data-theme-style="glass"]` (light) and `@media (prefers-color-scheme: dark)` (dark);
+  reduce transparency under `:root[data-theme-style="glass"][data-reduce-transparency="on"]`,
+  `@media (prefers-reduced-transparency: reduce)` and `@supports not (backdrop-filter: blur(1px))`.
+  `globals.css` maps them with `@theme inline` (`--color-bg: var(--bg)` …) so components use `bg-bg text-fg` utilities;
+  components never use raw hex (a lint test scans `src/components` and `src/app` for hex colours).
+- Face: derived from the route — `/[locale]/research/**`, `/o`, `/[locale]/demo/doctor` and the PDF are `light`,
+  everything else `shadow`. The mask switch is a link between the last patient route and `/research`; a client
+  component sets `data-face` on route change; `html { transition: background-color 400ms, color 400ms }`, `0ms` under
+  `prefers-reduced-motion`.
+- Pre-paint (`theme/prepaint.ts`): an inline script in `<head>` reads `janus.v1.settings` in try/catch, validates each
+  field, and sets `data-theme-style`, `data-face` (from `location.pathname`), `data-large-text`,
+  `data-reduce-transparency` before first paint; any failure leaves the defaults (Two Faces, shadow, off) (P17).
+- Theme vocabulary (`theme/words.ts`): messages with paired keys `<Namespace>.<key>.twoFaces` / `.glass`; `useThemeWord`
+  selects by setting. Glass strings must not contain theme-device words (P12).
+- Glass layout: floating pill tab bar (Scan, Medicines, Results, Settings), round glass icon buttons, 26 px cards,
+  32 px large titles. Two Faces: header with mask switch and language switcher, bottom navigation with the same four
+  entries, 16 px cards, 999 px chips, 14 px buttons. Same components, variant classes by theme.
+- Large text: `html[data-large-text="on"] { font-size: 118.75% }` (19 px) and `line-height: 1.6`; layouts use `rem`.
+- Ghost: inline SVG shape + label text; drift 6 s / 3 px in Two Faces only, off under reduced motion. Zombie stamp:
+  SVG stamp with the text "Retracted · not used" in `--risk`, only in the excluded-sources list.
+
+## 8. Language, message catalogues and the vocabulary
+
+### 8.1 New namespaces (five languages each; drafted in task 4, reviewed in task 22)
+`Shell` (nav, mask, header), `Emergency`, `Common` (buttons, states: loading, empty, error, retry), `Errors`, `Storage`,
+`Settings` (incl. `Appearance`), `Start`, `Scan` (incl. `errors.*`, `ocr.*`), `Confirm` (matched_by notes, notices,
+attribution, status strings, homeopathic, component code), `Medicines`, `Timeline`, `Findings` (status, timing, priority,
+groups, chains, scope, not-checked reasons, statement rule 3 patient form, `twoFaces`/`glass` pairs), `Evidence`
+(statuses, notices, freshness, integrity line, zombie / retracted), `Note` (preview, side-by-side, PDF labels, QR
+opt-in), `OutcomeConsent` (versioned text), `Withdraw`, `Reminder`, `Donate` (form, consent text versioned, done,
+delete, errors), `Privacy`, `Demo`, `Research`, `Doctor` (page chrome only; form texts come from the API), `ReadAloud`.
+`Memory` stays as reviewed (`collective-memory`).
+
+### 8.2 Tests extended (P12)
+The existing tests (same keys in every locale, no empty value, forbidden phrases per locale, `Memory` word lists, the
+screening exception) run over every namespace. Added: ICU placeholders identical across locales; `*.glass` values
+contain none of the theme-device words (EN ghost, mask, zombie, séance; TR hayalet, maske, zombi, seans; DE Geist,
+Maske, Zombie, Séance; FR fantôme, masque, zombie, séance; ES fantasma, máscara, zombi, sesión espiritista); the
+reassurance words of `apps/api/janus/notes/phrases.py` (`REASSURANCE`, mirrored in `src/i18n/reassurance.ts` with a
+parity test) appear in no value; `Disclaimer.text` unchanged.
+
+### 8.3 Generated vocabulary (DP17, P13)
+`scripts/gen-vocabulary.mjs` (tiny CSV reader, no dependency) reads the `accepted` rows of
+`apps/api/janus/notes/glossary/{ingredients,cascades,sentences}.csv`, `apps/api/janus/memory/memory_events.csv` (status
+`active`) and `data/pipc.csv` (English cascade text), and writes `src/vocabulary/<locale>.json`:
+`{events: {key: {label, safety_line, direction, pipc_positions[]}}, cascades: {position: {drug_a, adverse_event, drug_b}},
+ingredients: {key: name}, sentences: {abrupt_stop, name.not_translated, name.not_reviewed, name.combination_code,
+not_checked.<reason>…}}` plus `index.json` (versions: hash of each source file). Each locale file is a lazy import.
+`ingredientName(key, locale, fallbackLabelEn, atc)` returns `{text, basis: glossary|english_fallback|not_reviewed, tag?}`
+exactly as doctor-loop DP16. A vitest parity test regenerates in memory and compares with the committed files.
+
+## 9. Screens: behaviour and states
+
+Every data view uses `StateView` with four states: **loading** (skeleton with a text label, `aria-busy`), **empty**
+(sentence + next action), **error** (message from §5.3 + retry when idempotent), **long content** (wrapping, no
+truncation of medical text; lists paginate at 20 rows with "show more"; long German compounds use `hyphens: auto` and
+`overflow-wrap: anywhere`). The disclaimer is in the footer of every screen; the demo label in the header while demo.
+
+| Screen | Loading | Empty | Error | Long content / other |
+|---|---|---|---|---|
+| Home | — | no list: Start, Try the demo | storage notice | resume card shows item count |
+| Start | — | — | — | user region `UNKNOWN` until set; emergency numbers follow |
+| Scan | camera starting; decoding | no code found after 15 s: "try a photo or type the name" | permission refused → photo / OCR / type; 503 → not available | demo code → demo prompt, no request |
+| Label text | model loading (progress) | no text recognised | worker failure → type | many words → scroll; tapped words highlighted |
+| Confirm | resolution in flight | not found with regions, sources, dates | §5.3 | many candidates → 10 shown, "show more" up to 20 |
+| Medicines | store reading | "no medicines yet" + Scan | storage notice | > 50 items warning (Req 1.6); `needsConfirmation` badge |
+| Timeline | — | "add start months to see the timeline" | — | unknown-start lane |
+| Results | evaluating | `no_pattern_found` → rule-3 sentence | 503 / rule base unavailable → not available, no rule-3 | groups, chains, scope; out-of-date banner after list change |
+| Finding detail | evidence and pair in flight (independent) | pair `not_available` → `Memory.codes.not_available` | per panel | evidence list paginated |
+| Memory | per panel | < 2 keys → combination not offered | per panel | > 20 keys → choose |
+| Note | document in flight | no items → back to list | §5.3 | overflow to page 2; side-by-side scroll-synced by block id |
+| Doctor `/o` | form loading | — | §5.3 Doctor | many findings → one card each |
+| Donate | — | no items → explain | §5.3 Donate | event picker grouped by label, searchable |
+| Privacy | storage endpoint | — | region unknown sentence | — |
+| Research | — | four "coming in Phase 4" states | — | — |
+
+Screen notes:
+- **Results.** Groups: `findings` (form-confirmed) then "Product form not confirmed" (P7). Each finding card: ghost or
+  "possible prescribing cascade", class names and event label from the vocabulary (`cascades[position]`, `events[key]`),
+  box names of `index.items` / `marker.items`, timing sentence from `Findings.timing.<timing>` with `months_between`,
+  status `Findings.status.<status>`, low priority, priority range in IBM Plex Mono, supporting and form-extension notes,
+  integrity notices, "may be worth discussing with your doctor", abrupt-stop lines for warned items, safety line of the
+  event, read-aloud control. Scope block: "{checked} of {total}", not-matchable and disabled rules by name.
+- **Finding detail.** Emergency notice first when the event has a safety line; evidence view with the integrity line
+  (Req 15, P30); FAERS pair panel (P10): report count, ratio + range + CI bar, assessment only here with the screening
+  sentence, limits, window, attribution, MedDRA notice when `pts` is shown (PT names only in this view).
+- **Memory.** Four separate panels; FAERS combination (level, lower bounds, comparison group) and regions (UNKNOWN share,
+  basis, `adrreports_url`), donated reports and doctor-confirmed outcomes (`hidden_under_20_noise_added`); no totals across.
+- **Note.** Language selectors (note language default from settings, statistics region optional), "Make the note" →
+  `/notes/document` with pins from the last evaluation; preview in the shadow face with the document in a light-face
+  "paper" card; side-by-side when the languages differ; QR opt-in card (§10.3); "Download PDF" and "Print".
+
+## 10. Doctor note: layout, PDF and QR
+
+### 10.1 Layout model (`note/layout.ts`, P4, P24)
+`layout(note, list, demo)` returns pages of blocks in `SECTION_ORDER`, with each `MedicineRow`'s product-name slot filled
+by `list.items[row.item].boxName` (`product_label.text` as the label), ingredients with `tag` and ATC codes, combination
+code labels, abrupt-stop sentence in the row; every `Sentence.text` copied verbatim; empty sections keep their heading
+(`section.empty` text is already in the document). Side-by-side pairs blocks of two documents by section id and block id
+(sentence id, `item`, stat row id); a missing partner is a contract error.
+
+### 10.2 PDF (`note/pdf.tsx`, DP6)
+`@react-pdf/renderer` loaded on "Download PDF"; fonts registered from `/fonts/*.ttf` (same files as the web);
+light-face colours; A4 or Letter by locale (Letter for `en` with user region `US`, else A4; switch in the preview);
+header with title and month, footer on every page with the disclaimer, the demo label when demo, versions short form and
+"page n of m"; `wrap` lets the findings section flow to page 2; the QR block (§10.3) never splits. Text is real text
+(selectable, accessible tags where the library supports them). The file name is `janus-note-<YYYY-MM>.pdf` (no name).
+
+### 10.3 QR (`note/qr.ts`, DP7, P25)
+`QRCode.create(url, {errorCorrectionLevel: "M", version: auto, segments: [{data: url, mode: "byte"}]})`; refuse to draw
+if `version > 25` (the API already guarantees ≤ 25 for bases ≤ 40 bytes; a longer origin gives `Note.qr_too_long` and no
+QR); drawn as SVG paths in the PDF at 50 mm with a 4-module quiet zone and the printed line "findings 1 to {k} of {n}"
+from the `outcome_loop` section. The address is `qr_url`, or `<location.origin>/o#<token>` when null. In demo the
+address is `<origin>/o#demo-<patient>`.
+
+### 10.4 Outcome-loop opt-in (Req 18)
+Opt-in card → `OutcomeConsent` text (versioned, `OUTCOME_CONSENT_VERSION` in `src/consent/versions.ts`) → accept →
+`POST /notes/token` (`note` = the same `NoteIn` with the note language only, `outcome_region` from the user region or
+asked) → the returned `note` replaces the preview → store `{token, expiresOn, issuedOn, reminderDue = issuedOn + 28
+days}`. Reminder: on any app open after `reminderDue`, a card "Did the symptom you discussed get better?" → donation
+flow with the event pre-selected; dismissible; never a push notification (DP23). Withdrawal screen lists stored tokens
+by month and findings count; withdraw → `POST /notes/withdraw` → same confirmation always; token removed after 200.
+
+## 11. Doctor page `/o` (DP19, Req 19)
+
+- `app/o/layout.tsx` is its own root layout: `<html lang>` updated to the form language, light-face tokens only, Atkinson
+  Hyperlegible preloaded, no providers beyond a 2 KB `Doctor` message map for five languages embedded in the page chunk.
+- Script: read `location.hash.slice(1)`; if it starts with `demo-` → demo form from the fixture chunk, no request; if it
+  does not match the token pattern → `invalid_token` message, no request; else `POST /api/outcomes/form {token}`.
+- Form: one card per finding (cascade names, the two ingredient names with tags and ATC codes, form-confirmed note);
+  assessment radio group, optional action radio group with the per-finding "which medicine" group shown when required;
+  "Send" enabled with ≥ 1 answer; `POST /api/outcomes {token, answers}`; success disables the form.
+- `performance.mark("janus:form-ready")` when the controls are enabled (for C5).
+- No analytics, no storage, `Referrer-Policy: no-referrer`, the token kept only in a closure.
+
+## 12. Donation, deletion and the privacy page
+
+- **Donate** (Req 20): steps on one page: (1) emergency notice, (2) event picker (Janus labels; safety line shown),
+  direction, ingredients from the list (checkboxes, 1–20), age band, sex (optional), region (TR/EU/US), (3) "what will be
+  stored" summary, (4) consent text `Donate.consent.<version>` with legal basis and the explicit checkbox, (5) submit →
+  deletion token screen (copy, keep on this device, or neither) with the `stored` record. `DONATION_CONSENT_VERSION` in
+  `src/consent/versions.ts` must be listed in `JANUS_CONSENT_VERSIONS` (`.env.example` documents it).
+- **Delete**: paste or pick a kept token → `POST /contributions/deletions`.
+- **Privacy page** (Req 21): sections in order — on this device, what is sent, what is stored and where (region from
+  `/privacy/storage`), how long, how to delete, protection of shared numbers and its limits (Req 21.3–21.4), legal frame,
+  sources and attributions. Copy is reviewed in task 22; no compliance claim (forbidden word list `privacy-words` in the
+  i18n tests: certified, compliant, HIPAA-compliant, GDPR-compliant and equivalents).
+
+## 13. Demo mode (DP11, Req 4)
+
+### 13.1 Patients
+| Patient | Items (start month) | Shows |
+|---|---|---|
+| Istanbul (user region TR) | the gate-1 list: combination box amlodipine + lisinopril (2024-01), furosemide (2024-06), metformin (2022-05), atorvastatin (2023-01), paracetamol (2023-05), omeprazole (unknown), sertraline (2021-03), lactulose (2024-03), alprazolam (unknown); all TR boxes by code | row 5 `probable` (5 months, correction notice), rows 6, 9, 12; abrupt-stop lines (sertraline, alprazolam); combination decomposition |
+| Cologne (user region EU) | proposed: TR boxes ramipril and pantoprazole by code; German boxes (prefix 400–440 → `no_open_product_database`) ibuprofen and a cough remedy by label text + name search | row 1 form-unconfirmed (ACE inhibitor → cough remedy), row 51 (NSAID → gastroprotective) with `urgent_care_gi`; mixed regions |
+| Ohio (user region US) | proposed: pharmacy vials by NDC from label text: donepezil, oxybutynin, metoprolol, sertraline | row 24 (cholinesterase inhibitor → bladder medicine), row 3 (beta-blocker → depression → antidepressant) with `crisis_support` and abrupt-stop lines beside both (Req 7.6) |
+The recording task checks each case on real data and records what the engine actually returns; if a proposed row does
+not fire, the patient is adjusted and the table updated (owner sees the final lists at the wording stop, task 22).
+
+### 13.2 Demo codes (P15)
+GTIN-13 in the GS1 restricted-circulation range: prefix `29` + `5268` + 6-digit product number + check digit (GTIN-14
+`0295268…`). No medicine source uses prefix 20–29 (TR 868/869, US 03, FR 034, ES 084, DE 400–440). The sheet prints, per
+product, a GS1 DataMatrix `(01)0295268…(17)YYMMDD(21)DEMO…` (the serial is there on purpose, so a judge sees it is
+stripped), the box name, "DEMO — synthetic product, not a medicine", and for Ohio a vial label with the line
+`NDC 0295-268x-xx DEMO`; `ocr-extract` maps `DEMO` NDC shapes to the fixture. Detection runs before any request in both
+modes; outside demo mode a demo code asks "This is a Janus demo code. Open the demo?".
+
+### 13.3 Fixtures (recorded)
+`scripts/record-demo.ts` runs against the local API with the real dataset (`docker compose up`, note keys and
+`JANUS_PUBLIC_BASE_URL` set locally): resolves each patient's items (TR products chosen by ingredient ATC through
+`/resolve/search`, as the gate-1 test does by `published_atc`; DE through `/resolve/scan` with a synthetic 400-prefix
+GTIN plus `/resolve/search` region `EU`; US through `/resolve/ndc`), evaluates, resolves evidence, calls the memory
+routes, `GET /memory/snapshot`, `/notes/document` once per language (five), `/notes/token` + `/outcomes/form` once
+(both write nothing), and writes `src/demo/fixtures/<patient>.json`:
+`{patient, recorded: {date, dataset_version, rule_base_version, integrity_version, counts_build_id, glossary_version},
+items: [{demoCode, sourceKey, boxName, started, resolution, pick, choices}], evaluation, evidence, memory: {snapshot,
+pairs: {locator: PairOut}, combination, regions, shared: {contributions, outcomes}}, notes: {lang: NoteOut},
+doctorForm}`. Scrubbing: `product_name`, `brand_name`, `generic_name`, `ingredient_text`, `published_name` and NDC
+packages are replaced by invented values from a table in the script; candidate ids stay (opaque). The token and
+`qr_url` are not stored. A vitest check fails if any product text field is not from the invented table.
+`DemoClient` implements the read routes from the fixture and has no method for the write and loop routes (P14).
+
+### 13.4 Offline (DP22)
+`public/sw.js` precaches the app shell of the demo routes for five locales, fonts, the vocabulary files and the
+fixtures at install; cache-first for those, network-only for `/api/*` (never cached), stale-while-revalidate for other
+static assets. A version string from the build invalidates old caches. "Delete everything" clears the caches.
+
+## 14. Researcher shell (DP12, Req 24)
+`/research` layout sets the light face, a section header ("Light face" / "Research"), the four entries and the
+repurposing rule-7 sentence. Each entry renders `StateView` empty with "coming in Phase 4" and one sentence about what it
+will show. No fixtures, no numbers.
+
+## 15. Passport seam (DP25, Req 26)
+- Store: `Item.candidate` carries everything the Passport needs; `listIngredientKeys(list)` (distinct, sorted) is
+  exported for memory calls (order and duplicates change nothing).
+- Slots: `<ItemBadges item>` (list row), `<ItemDetailExtra item>` (item sheet: equivalents), `<ListSummaryExtra list>`
+  (duplicate-ingredient notice) — render nothing until `src/passport/` provides them. Passport screens are routes the
+  passport spec adds under `app/[locale]/passport/` with the shell, theme and components of this spec.
+
+## 16. Performance targets (Req 25)
+- **Doctor page:** form ready (`janus:form-ready`) < 3,000 ms median of 5 cold loads on a phone profile: Chromium
+  375 × 812, Slow-4G-like network (150 ms RTT, 1.6 Mbit/s down, 750 kbit/s up), CPU 4× slowdown, the
+  `/outcomes/form` answer served by the Playwright route stub with a 300 ms delay (CI) or by the local API (local run).
+  JavaScript before interaction ≤ 110 KB gzip (framework included), page chunk ≤ 15 KB gzip, no web font blocking
+  render (`font-display: swap`).
+- **Other routes:** first-load JavaScript ≤ 190 KB gzip per route; zxing, tesseract and the PDF renderer in lazy chunks
+  excluded from that number but budgeted separately (zxing JS + wasm ≤ 1.2 MB, tesseract worker + core + one language
+  ≤ 6 MB, PDF chunk + fonts ≤ 900 KB), measured by `scripts/bundle-budget.mjs` on `next build` output; the measured
+  values are recorded here in task 21 and the budget is the measured value + 10 % when under these ceilings.
+- **Rendering:** results for 15 items render < 2 s after the response on the dev machine (Playwright timing, local).
+
+## 17. Testing strategy
+- **Vitest** (node environment, `src/**/*.test.{ts,tsx}`): unit tests and **fast-check** properties P1–P30 of pure
+  modules and of server-rendered markup (`react-dom/server` `renderToStaticMarkup` with `NextIntlClientProvider`), no
+  jsdom (DP13). Tag `Feature: experience, Property Pn`; profiles `dev` 100 runs, `ci` 300 runs
+  (`FC_PROFILE`), seed printed on failure.
+- **Arbitraries** (`src/test/arbitraries.ts`): `ResolutionResult`, `CascadeResult` (findings of every status, timing,
+  form flag, chains, warnings, not-checked reasons, rules), memory responses of every assessment and status,
+  `EvidenceResolution` with every integrity status, `NoteOut` with all section kinds in two languages, GS1 element
+  strings (all supported AIs, any order, FNC1/parenthesised, symbology ids), OCR texts with names, addresses and NDCs,
+  storage failure schedules, settings blobs. Strategies derive from the recorded fixtures where possible (shape-true).
+- **Existing i18n tests** extended (§8.2) and the source-scan guard (forbidden phrases in `apps/`) unchanged.
+- **Playwright checks** (`e2e/`, production build, Chromium, API stubbed by `page.route("**/api/**")` from fixtures):
+  - C1 axe (WCAG 2.2 A/AA tags) on every route × 5 locales × 2 themes: no violation.
+  - C2 at 375 px and 1280 px: `scrollWidth <= clientWidth`; interactive elements ≥ 44 × 44; visible focus on Tab.
+  - C3 every route shows the disclaimer; the home screen shows the emergency notice first; demo routes show the label;
+    rendered text has no forbidden phrase of its locale; Glass pages have no theme-device word.
+  - C4 network: during the whole demo flow and a stubbed real flow, every request is same-origin, none goes to an
+    outcome or contribution route in demo, no request body has an image type or exceeds 8 KiB except `/notes/*`.
+  - C5 doctor page performance (§16).
+  - C6 end-to-end demo flow: Istanbul → results (row 5 probable visible) → finding detail (evidence, FAERS pair) →
+    memory → note (two languages) → PDF downloaded (non-empty, `%PDF`, text contains the disclaimer) — in one test.
+  - C7 `prefers-reduced-motion` stops the ghost animation; reduce transparency gives solid cards.
+- **Contract checks:** decoders over the fixtures (P19); fixtures re-recorded when the API changes.
+- **CI:** the web job adds `pnpm test` with `FC_PROFILE=ci`, and a new `web-e2e` job (`pnpm exec playwright install
+  --with-deps chromium`, `pnpm --filter @janus/web e2e`). The API job is untouched.
+
+## 18. Correctness properties
+
+The seed's properties are P12 (keys), P8 (disclaimer and phrases), P14 (demo) and P9 (safety lines).
+
+| # | Property (for all …) | Validates | fast-check approach |
+|---|---|---|---|
+| P1 | **Outbound GS1 filter.** For any element string (FNC1 or parenthesised, any AI order, with or without symbology id, with (21), (10), (240), (710)–(716) and others), the output holds exactly the (01), (17), (712) values present, in that order, and no other AI; no serial or lot value of length ≥ 4 occurs in it unless it is a substring of a kept value; valid bare GTINs pass unchanged; unparseable input gives `(01)` only when a valid leading (01) exists, else nothing is sent. | Req 10.2, 10.3, 23.1 | Generated element strings from the AI table; serial/lot values as sentinels. |
+| P2 | **Request bodies.** For any list (box names, choices, starts), settings and form state, every body from `builders.ts` has exactly the keys of its route model (§5.1), satisfies its patterns, contains no box name, no ATC-code-shaped value, no Blob/ArrayBuffer, no `demo` key, and every URL has no query string; the token occurs only in `/notes/withdraw`, `/outcomes/form`, `/outcomes` bodies. | Req 23.1, 23.2, 17.4, 4.3 | Sentinel box names (`ZZBOX…`) and ATC-like strings in every text field; walk the bodies. |
+| P3 | **Evaluation input.** For any list of 1–50 confirmed items, `toEvaluateIn` keeps list order, gives exactly one of product/ingredient per item, choices with distinct positions drawn from `key_candidates`, `started` `YYYY-MM` not after the current month or null, one dataset version; the index map is a bijection item ↔ index; > 50 items gives no request; "since when" input maps every valid month and "don't know" correctly and rejects future months. | Req 14.1, 13.1, 1.6 | Generated lists and clocks across year ends. |
+| P4 | **Product-name slots.** For any `NoteOut` and list, every medicine row shows the box name of `list.items[row.item]`, nothing else changes in the document, and no request built afterwards contains a box name. | Req 17.4, 23.1 | Generated notes with permuted item indices. |
+| P5 | **Re-resolution.** For any list and any simulated new dataset (resolver answering zero, one or several candidates per source key), an item is replaced only by a unique equivalent candidate (§5.4), keeps start and box name, keeps a choice only if still in `key_candidates`; every other item is `needsConfirmation`; the next evaluation has one dataset version; at most one re-evaluation follows a 409. | Req 22.3, 14.2 | Model-based: fake resolver + fake engine returning 409 once. |
+| P6 | **Locator and event key.** For any locator built from the pattern, `parseLocator` returns its four parts; for any malformed string it returns null; the event key of a finding equals the locator's or, when null, the single key whose `pipc_positions` holds the rule's row. | Req 7.5, 16.1 | Generated locators and mutations; the real vocabulary. |
+| P7 | **Findings view model.** For any `CascadeResult`, each finding is in exactly one group by `form_confirmed` and in API order; `same_product` never becomes a finding; each item with `item_warnings` has exactly one abrupt-stop line on every screen model that shows it; every `not_checked` entry and every disabled or not-matchable rule appears as "cannot be checked"; `no_pattern_found` gives the rule-3 statement and `rule_base_unavailable` gives no statement and no finding; homeopathic items show "homeopathic product, not checked". | Req 1.3, 14.4–14.9 | Generated results. |
+| P8 | **Rendered safety text.** For any result, memory panel, note preview and locale, in both themes, the rendered markup contains `Disclaimer.text` of the locale exactly once, no forbidden phrase and no reassurance word of the locale; Glass markup contains no theme-device word. | Req 1.3, 6.5, 8.1, 2.4 | `renderToStaticMarkup` of the screens' presentational components. |
+| P9 | **Safety lines.** For any screen model showing an event whose key has a `safety_line`, the line is present with the user region's numbers, the emergency notice precedes it, `crisis_support` comes with the abrupt-stop line beside every warned item on the same screen, and no banner, list badge or notification text contains a PT string. | Req 7.1–7.8 | Generated events (all six lines and none) × five regions. |
+| P10 | **Memory display.** For any memory response, list-level models contain no assessment, colour class or icon for it; detail models show the assessment with range and report count; every ratio has its range; values > 1,000 render "over 1,000"; `insufficient_data`/`no_reports` render no ratio and include coverage and `absence_is_not_reassurance`; no displayed number is derived from two layers; hidden cells render the hidden wording. | Req 16.5–16.8 | Generated responses of every status. |
+| P11 | **CI bar and numbers.** For any `0 < low ≤ ror ≤ high`, the bar's positions on the log axis are ordered, the mark at 1 is drawn at its position or at the edge with an arrow when outside the axis, clamped ends say "over 1,000"; the bar's text equals the formatted numbers; numbers and dates format with `Intl` of the locale (decimal separator of the locale). | Req 16.6, 2.3, 3.6 | Generated triples incl. 0.005, 1, 999.9, 1,000.1, 10^6. |
+| P12 | **Catalogues.** Every key in every locale, no empty value, identical ICU placeholders, no forbidden phrase per locale, `Memory` word lists, the screening exception, reassurance and compliance words absent, `*.glass` without theme-device words. | Req 2.1, 2.4, 6.5, 16.4, 21.5 | Extends the existing tests (example-based over all keys). |
+| P13 | **Vocabulary.** The committed vocabulary equals the generator's output from the API files (accepted / active rows only); `ingredientName` follows doctor-loop DP16 exactly for any key, locale and availability pattern. | Req 2.5 | Regenerate in the test; generated availability patterns. |
+| P14 | **Demo isolation.** For any sequence of user actions in demo mode (commands: pick patient, scan demo code, open finding, open memory, make note, opt in to QR, open doctor demo, donate, withdraw, switch language/theme, exit), no network request is made, nothing is written to `list` or `tokens`, every rendered screen model carries the demo label, and the write and loop routes are unreachable (no method on `DemoClient`). | Req 4.3, 4.4, 4.7, 20.8 | `fc.commands` model-based test with a fetch spy. |
+| P15 | **Demo codes.** Every demo code is a valid GTIN in `0295268…`; for any real-prefix GTIN (TR, US, FR, ES, DE ranges) `isDemo` is false; for any input path (camera text, typed digits, OCR NDC line) a demo code is resolved from the fixture without a request. | Req 4.2, 4.5 | Generated GTINs per prefix range. |
+| P16 | **Storage.** For any sequence of reads and writes with any failure schedule (throwing `getItem`/`setItem`, quota, corrupt JSON, wrong version), no call throws to the caller, the session continues in memory with one notice, and valid documents round-trip (`load(save(x)) = x`). | Req 9.4, 9.5 | Fake storage with injected faults. |
+| P17 | **Pre-paint.** For any stored settings value (valid, partial, invalid types, non-JSON, throwing storage) and any pathname, the script sets only valid attribute values (defaults otherwise), sets `data-face="light"` exactly for the light routes, and never throws. | Req 6.7, 9.2 | Run the script source against a fake `document`/`localStorage`. |
+| P18 | **Contrast.** For every token pair marked as text-on-surface or boundary in `tokens.css` (both themes, both colour schemes, reduce transparency on/off; Glass surfaces composited over each background field), contrast is ≥ 4.5:1 for text and ≥ 3:1 for boundaries and focus. | Req 3.1 | Parse `tokens.css`; exhaustive over pairs (example-based). |
+| P19 | **Decoders.** Every recorded fixture decodes; for any decoded response and any single mutation (drop a required field, wrong type, unknown enum value, array over bound), the decoder returns a contract error. | Req 22.2 | Mutations of fixtures. |
+| P20 | **Error mapping.** For any route, status, code (known, unknown, missing), body (JSON, non-JSON, empty), timeout or network failure, the client returns a typed `ApiError` with a message key that exists in every locale; no field value is ever in the message; `gs1_serial_not_accepted` and 422 `invalid_request` map to the client-defect message; `resolution_unavailable` never maps to "not found"; no exception escapes. | Req 22.4, 10.4, 12.6, 16.11, 19.4, 20.7 | Generated responses through a fake fetch. |
+| P21 | **Confirm view model.** For any `ResolutionResult`, no candidate is preselected; `no_open_product_database` offers OCR and name search and no "not found"; an empty candidate list with loaded sources gives "not found" with each source and date; `ntin_digits`/`ai_712` carry the digits note; homeopathic, component code, unmapped and ambiguous positions get their texts; attribution is present on every product card; `published_atc` is labelled "as published" and never listed as an ingredient code. | Req 12.1–12.11 | Generated results of every notice and field combination. |
+| P22 | **OCR extraction.** For any recognised text (with names, addresses, prescriber lines, NDCs), nothing is sent without a user choice; an NDC chip sends exactly the NDC; a tapped selection sends exactly the selected words (2–100 characters, trimmed); typed CIP7, CN and PZN shapes are never sent as codes. | Req 11.2, 11.4 | Generated texts with sentinel personal lines. |
+| P23 | **Timeline.** For any list and result, dated items are in start order (stable), undated items are in their own lane, each finding is drawn exactly once from its index items to its marker items with its months between. | Req 13.3 | Generated lists and results. |
+| P24 | **Note layout.** For any `NoteOut` (one or two documents), the layout has the sections in `SECTION_ORDER`, each `Sentence.text` verbatim, empty sections with headings, the disclaimer on every page, the demo label on every page when demo, and side-by-side pairs exactly the same ids in both columns; overflow never splits the QR block. | Req 17.3, 17.6, 17.7, 17.9, 17.10 | Generated documents; page breaking with a fixed line model. |
+| P25 | **QR.** For any address `<origin ≤ 40 bytes>/o#<token within the API's bounds>`, the drawn code has version ≤ 25, level M, byte mode, and decodes (zxing-wasm in node) back to the same address; the token occurs only after `#`. | Req 18.2, 18.3 | Generated tokens up to the measured worst case (doctor-loop §6.6). |
+| P26 | **Doctor page transport.** For any fragment, the page sends the token only as `{token}` in JSON bodies to `/api/outcomes/form` and `/api/outcomes`; a non-matching fragment sends nothing; a `demo-` fragment sends nothing and shows the demo form; the token is written to no storage and appears in no URL. | Req 19.1, 19.7 | Generated fragments; fetch and storage spies. |
+| P27 | **Outcome answers.** For any form and any user input sequence, the built `OutcomeIn` has distinct refs below the findings count, `action_on` exactly for dose/medicine/stopped, omits unanswered findings, and Send is enabled iff ≥ 1 answer. | Req 19.2, 19.5 | Generated forms and click sequences. |
+| P28 | **Donation request.** For any form state, the request exists only with the consent ticked, has exactly the allowed fields, an adult band, region TR/EU/US, 1–20 distinct keys from the list, `consent.explicit === true` with the current version; never built in demo mode. | Req 20.2, 20.3, 20.8 | Generated form states. |
+| P29 | **Tokens and reminder.** For any issue date and clock, the reminder is due exactly 28 days after issue and shows until dismissed; a withdrawal removes the token only after a 200; a failed withdrawal keeps it. | Req 18.4, 18.5 | Generated clocks and responses. |
+| P30 | **Evidence view model.** For any `EvidenceResolution`, retracted sources appear only among excluded sources with the stamp/label, the stamp never marks a source a finding uses, the integrity line says "no retracted source used" iff `no_retracted_used`, and every exception of the line is listed. | Req 15.2, 15.3 | Generated resolutions of every status mix. |
+
+## 19. Decisions
+
+| # | Decision | Alternatives considered | Why |
+|---|---|---|---|
+| DP1 | **Owner decision:** default theme Two Faces (shadow face for the patient side; light face for the researcher side, the doctor note PDF and the doctor QR page); Glass selectable in Settings › Appearance; tokens exactly as `design.md`. | Single theme; Glass default. | Recorded owner decision 2026-11-08 from seven directions. |
+| DP2 | **Owner decision:** Fraunces display, Atkinson Hyperlegible text, IBM Plex Mono codes; Glass system UI then Figtree. Self-hosted with `next/font/local` from committed OFL files; the same TTFs are embedded in the PDF. | `next/font/google` (downloads at build); CDN. | No third-party request (Req 23.4); one set of files for screen and PDF; offline demo. |
+| DP3 | **Owner decision:** everything medical is decided by the API; the client computes no cascade, timing, ratio, assessment or integrity verdict, only words codes and formats numbers. | Client-side rule checks for speed. | `tech.md` core principle; one tested engine. |
+| DP4 | **Owner decision:** the client never sends ATC codes or the box name (`product_name_slot` filled in the browser), never AI (21) or (10); it sends (01), (17) and (712) only. | Send the raw scan. | `privacy.md`; `drug-resolution` DP19/DP42; P1, P2. |
+| DP5 | **Owner decision (local-first), detail chosen here:** versioned JSON documents in `localStorage`, every access in try/catch with an in-memory fallback; no IndexedDB. | IndexedDB (with `idb`), server sync. | The data are a few kilobytes; synchronous reads allow the pre-paint script; no dependency; owner allowed either. |
+| DP6 | **Owner decision (PDF in the browser), library chosen here:** `@react-pdf/renderer` 4.9.0 (MIT), lazy-loaded. | `pdf-lib` + fontkit (manual layout and line breaking); jsPDF; print CSS only. | Automatic wrapping and page breaks for long notes and five languages, font embedding, React components shared with the preview; print CSS cannot produce a file reliably on iOS. |
+| DP7 | **QR library:** `qrcode` 1.5.4 (MIT), SVG output, explicit level M, byte mode, version check ≤ 25. | `uqr`; the API returning a QR image. | Mature, controls version/level/mode; the API returns an address, and drawing stays in the browser. |
+| DP8 | **Owner decision:** the token only in the URL fragment; the doctor page reads `location.hash` and posts it in a JSON body. | Query string. | Fragments are not sent to servers or logs (doctor-loop DP10). |
+| DP9 | **Owner decision:** `zxing-wasm` 3.1.6 (reader build) for DataMatrix + GS1 and linear codes; `tesseract.js` 7.0.0 on-device OCR; images never leave the device. Wasm, worker, core and `tessdata_fast` traineddata are served from the Janus origin, copied or fetched at build with pinned SHA-256, not committed. | Native `BarcodeDetector` (no DataMatrix on many browsers); CDN-hosted assets. | Works on every current mobile browser; no third-party request; repository stays small. |
+| DP10 | **OCR text is never sent as a whole:** NDC shapes are extracted locally; the user taps the words of the medicine name before a search. Refines `drug-resolution`'s "send OCR text to name search". | Send the OCR text to name search. | Pharmacy labels carry the patient's name, the prescriber and the pharmacy; the search route accepts free text, so the client must keep personal text on the device (P22). |
+| DP11 | **Owner decision (demo), recommendation adopted:** fixed JSON fixtures of API responses recorded from the real local API with scrubbed, invented product names and codes; a fixture-only `DemoClient` without write or loop methods; demo GTINs in the restricted-circulation prefix `0295268…` recognised before any API call; demo doctor page via fragment `demo-<patient>`. | Demo against the live API with synthetic list; a demo flag sent to the API. | Works offline and with the API down; cannot reach contribution or outcome routes by construction; real engine output, no TİTCK strings committed. |
+| DP12 | **Owner decision:** researcher area is a Phase 3 shell with honest Phase 4 empty states. | Mock content. | No invented numbers (rule 5). |
+| DP13 | **Owner decision (testing), detail chosen here:** vitest + `fast-check` 4.10.2 (the one new dev dependency for properties) on pure modules and server-rendered markup in the node environment; Playwright 1.64.0 + `@axe-core/playwright` 4.14.0 for C1–C7, Chromium only. | jsdom + Testing Library for component tests; Lighthouse CI for performance; Pa11y. | `renderToStaticMarkup` needs no new dependency; the rendered checks (axe, 375 px, network, PDF, timing) need a real browser anyway, and axe-core is the reference rule engine. 1.65.0 was 3 days old, so 1.64.0 is pinned. |
+| DP14 | **Owner decision:** large text (19 px / 1.6), read aloud (Web Speech API, findings only, off by default), reduce transparency. | — | Older users (`product.md`). |
+| DP15 | Same-origin API: `next.config` rewrite `/api/:path*` → `JANUS_API_ORIGIN` (build argument); no CORS on the API; CSP `connect-src 'self'`. | Route-handler proxy with an allowlist; CORS on FastAPI. | No API change; the browser never talks to another origin; Caddy does the same mapping in Phase 5. |
+| DP16 | Hand-written TypeScript contracts and strict decoders, validated against recorded fixtures. | `openapi-typescript` codegen; `zod` schemas. | No new dependency, no API run in CI; decoders are small and the fixtures are real responses; drift shows up when fixtures are re-recorded. |
+| DP17 | Clinical words (cascade names, event labels, safety-line keys, reviewed ingredient names, the abrupt-stop line and name tags) generated from the API's reviewed files into `src/vocabulary/`, with a parity test. | A new API route returning the glossary; copying by hand. | One reviewed source, no API change, works offline in demo; the parity test keeps them equal (doctor-loop DP7 spirit). |
+| DP18 | Face from the route (patient → shadow; research, doctor page, demo doctor, PDF → light); the mask switch is navigation; pre-paint script sets the attributes. | Face as a free toggle on every screen. | A patient never lands on the researcher side by surprise (`design.md`); deterministic paint. |
+| DP19 | Doctor page at `app/o/` with its own root layout, minimal JavaScript, language from the form response (browser language before it). | `/[locale]/o`; server-rendered form. | `qr_url` has no locale; the token must not reach the Next.js server (fragment); smallest bundle for the 3 s target. |
+| DP20 | Re-resolution after a dataset change by source key with the unique-equivalent rule; `/resolve/products` only within the same dataset version. | Re-send old candidate ids; ask the user for every item. | Candidate ids are stable only within one dataset version (`cascade-engine`); asking only when ambiguous keeps the flow short without guessing. |
+| DP21 | Theme vocabulary as paired message keys selected by setting; one component set. | Two component sets; CSS-only text swap. | Same content and safety rules (`design.md`); catalogue tests check Glass words (P12). |
+| DP22 | Hand-written service worker: precache demo shell, fonts, vocabulary, fixtures; never cache `/api`. | Serwist / next-pwa. | Small and reviewable; no medical response is ever cached (Req 22.5). |
+| DP23 | Reminder inside the app only. | Push notifications; calendar file. | Push needs a server-side subscription (device identifier); a calendar entry would copy health context to another service. |
+| DP24 | Consent texts versioned in the catalogue (`Donate.consent.<v>`, `OutcomeConsent.<v>`) with `DONATION_CONSENT_VERSION` and `OUTCOME_CONSENT_VERSION` in `src/consent/versions.ts`; the API lists accepted versions in its environment. | Fetch consent versions from the API. | The consent text is the client's; a version mismatch is a clear 422 with a re-read prompt. |
+| DP25 | Passport seam: this spec owns the store, the shell, theming and shared components and exposes three slots; `medication-passport` owns `src/passport/` and its routes. | Passport owns the list store. | One list, no second store; parallel authors do not edit the same files. |
+| DP26 | Components built in-repo on Tailwind v4 tokens; shadcn/ui not added in Phase 3. | shadcn/ui (Radix). | `tech.md` lists shadcn/ui, but the two themes need their own visuals and few primitives (button, radio group, dialog, tabs); fewer dependencies; record for owner awareness (open item 4). |
+| DP27 | Wording drafted by the assistant in five languages, reviewed by the localization reviewer and the pharmacologist for clinical wording, accepted by the owner at a review stop before the final checkpoint. | Owner review only. | Same procedure as the glossary (doctor-loop DP27). |
+| DP28 | Numbers returned as numbers are formatted with `Intl` in the interface locale; note text is never re-formatted. | Format all numbers on the server. | Memory routes return raw floats (`collective-memory` Req 1.9); the note is server-rendered (doctor-loop DP3). |
+| DP29 | Medical responses are kept in memory only, keyed by the evaluation input hash; never in storage or caches. | Persist the last result. | Results depend on versions that change; `privacy.md` keeps derived health data minimal. |
+| DP30 | Lists over 50 items are not evaluated; Collective Memory asks the user to choose when the list has more than 20 ingredient keys. | Silently truncate. | Engine and memory bounds; truncation would hide medicines. |
+| DP31 | Security headers: CSP with `connect-src`, `img-src`, `font-src`, `worker-src` limited to the own origin (inline scripts allowed for the App Router payload, wasm allowed), `Referrer-Policy: no-referrer`, `Permissions-Policy: camera=(self)`; no cookies, no analytics. | No CSP; nonce-based CSP. | Enforces Req 23.4 mechanically; nonces would make every page dynamic and break the static, offline demo shell. |
+| DP32 | Demo patients Cologne and Ohio are proposals checked on real data in the recording task; Istanbul is fixed to the gate-1 list. | Fixed by hand-made fixtures. | Real engine output only; if a row does not fire the case changes, not the output. |
+
+## 20. Open items (for the owner)
+1. **Brand names in the demo.** The gate-1 box is AMLIPIN (a real Turkish product; TİTCK strings are not committed and
+   the name is a trademark). Recommendation: invented names ("Amlodis Plus 10/10 — demo") with the real ingredients;
+   the spec is written that way (Req 4.6). Confirm, or allow the real name in the video only.
+2. **Spanish numeric status codes** (`registration_status:<code>`, `presentation_status:<code>`): their meaning is not
+   in the artifact; until confirmed against the AEMPS documentation the client shows the code as published with "status
+   code as published by AEMPS" (Req 12.8). Confirm the meanings or keep that wording.
+3. **Cologne and Ohio cases** (§13.1, DP32): approve the proposed medicine lists (they appear in the video), or name
+   other cascades to show.
+4. **shadcn/ui** (`tech.md` lists it): this design builds the few primitives in-repo (DP26). Confirm, or keep shadcn/ui
+   for the primitives under the steering tokens.
+
+## Owner decisions (2026-11-08, Phase 3 review)
+1. **Demo brand names:** invented names only (real brand names are trademarks and TİTCK text, which is never committed). Accepted as written.
+2. **Spanish numeric status codes:** shown as published until their meaning is confirmed with AEMPS documentation (pre-launch checklist).
+3. **Demo cases:** Cologne (mixed TR + DE boxes): ramipril followed by a cough remedy, and ibuprofen followed by pantoprazole. Ohio (pharmacy vials): donepezil followed by oxybutynin, and gabapentin followed by furosemide (replaces metoprolol + sertraline: that case would put the depression crisis line in the video and its evidence is weaker). Every case is confirmed against the real engine during fixture recording; a case that does not reproduce is replaced and reported.
+4. **Controls:** built in-repo (no shadcn/ui); `tech.md` updated.
+5. **`fast-check`:** accepted as a web dev dependency (shared with medication-passport).
+6. **Build tool:** Phase 3 is implemented with Claude Code (Claude Opus 5.5) outside Kiro, following these specs, the steering files and the `.kiro/hooks` scripts (run through `.kiro/hooks/scripts/claude-dispatch.py`).

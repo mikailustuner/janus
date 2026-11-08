@@ -8,7 +8,7 @@ inclusion: always
 > `docs/internal/` holds private Turkish planning documents (idea, architecture, plan, research notes). It is gitignored and not part of the public repo; never link to it from public files. Public English docs (architecture, data sources, Kiro usage) are written in Phase 5.
 
 ## Stack
-- **Web:** Next.js (App Router) + TypeScript, installable PWA, Tailwind CSS + shadcn/ui, `next-intl` for EN/TR/DE/FR/ES. Barcode decoding in the browser with `zxing-wasm` (DataMatrix + GS1). OCR fallback on-device with `tesseract.js`. No images leave the device.
+- **Web:** Next.js (App Router) + TypeScript, installable PWA, Tailwind CSS with in-repo components (no shadcn/ui, owner decision 2026-11-08; design system in `design.md`), `next-intl` for EN/TR/DE/FR/ES. Barcode decoding in the browser with `zxing-wasm` (DataMatrix + GS1). OCR fallback on-device with `tesseract.js`. No images leave the device.
 - **Doctor note PDF:** generated **in the browser** (the medication list never needs to reach the server to produce the note); only evidence ids and the note token are exchanged with the API.
 - **API:** Python 3.12 + FastAPI + Pydantic v2. Property-based tests with **Hypothesis** (the documented Kiro PBT path); unit tests with pytest.
 - **Storage:** PostgreSQL 16 (`pg_trgm`, `unaccent` for multilingual name search) for application data; DuckDB (read-only files) for FAERS-derived tables and OnSIDES.
