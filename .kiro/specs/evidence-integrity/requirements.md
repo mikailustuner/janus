@@ -91,6 +91,7 @@ This is a trust layer inside Janus, not a standalone retraction checker (those e
 
 #### Acceptance criteria
 1. EVERY evidence record SHALL have: an evidence id, a kind (`dataset`, `rule`, `faers_stat`, `paper`, `label`, `ancient`, `chembl`, `outcome`), a source id from the source registry, a source URL, a licence, a snapshot date (and whether it is the retrieval time), and optionally a region, a DOI, a locator and a title.
+   - *(Owner decision 2026-11-08, DP22.)* The kind `faers_stat` stays valid but no record of that kind is written in Phase 2: FAERS statistics are cited through `dataset:faers` with a locator carried by the citing spec.
    - IF a record lacks a source URL, a licence or a snapshot date, or names a source that is not in the registry, THEN THE loader SHALL refuse it, name the field, and change nothing.
 2. THE evidence id of a record SHALL be derived from its kind, source id and a key (for example the table row of a rule) and SHALL NOT depend on run ids, load order or time. THE same source, loaded again, SHALL keep its ids.
    - THE loader SHALL NOT delete evidence records. A note issued earlier can still resolve its ids; a record that is no longer produced keeps its last state.

@@ -81,7 +81,7 @@ Detect prescribing cascades in a user's medication list: drug A causes an advers
    - *(Added in refinement.)* Findings SHALL still be reported one by one; a chain only groups them. THE number of chains SHALL be bounded (design); IF the bound is reached THEN THE result SHALL say so with the notice `chains_truncated`.
 7. Each finding SHALL include evidence ids (rule, source paper, and where available a FAERS statistic).
    - *(Added in refinement.)* THE evidence ids SHALL include the rule (`rule:pipc:<n>`) and the source paper (`dataset:pipc`, the PIPC article with its DOI), plus, where they apply and are citable, the window source (Req 2.2), the BMJ 2026 paper (Req 6.1), supporting papers (Req 6.2) and the form-extension source (Req 7.4).
-   - **[Phase 2: collective-memory]** FAERS statistic ids (`faers_stat:…`) are added when the `faers` pipeline and Collective Memory exist.
+   - **[Phase 2: collective-memory]** *(Owner decision 2026-11-08, DP22.)* FAERS is cited by the dataset record `dataset:faers` with a locator `faers:ingredient=…;event=…;region=ALL;scope=suspect` (field `faers_locator`), not by `faers_stat:` ids; added when the rule has a reviewed Janus event key.
 8. Medicines bought without prescription (e.g. laxatives, painkillers) SHALL be accepted as list items, because many marker drugs are over-the-counter.
    - *(Added in refinement.)* THE engine SHALL NOT filter by product type, prescription status or region. US OTC products (`HUMAN OTC DRUG`), TİTCK products and ingredients found by name SHALL be evaluated the same way.
    - **[Client: experience]** Adding OTC medicines and supplements by name.

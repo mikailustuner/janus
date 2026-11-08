@@ -18,6 +18,12 @@ a = pair, b = ingredient - a, c = event(mapped) - a, d = N - ingredient - event(
 MedDRA Preferred Terms as published in FAERS; no MedDRA hierarchy is stored.
 
 The pure reference `aggregate()` defines the counts; the SQL path is tested against it.
+
+Schema `faers_counts-2` (collective-memory Req 11): the tables are written physically sorted by
+their lookup keys (a pair lookup reads few row groups: p95 14 ms -> 5 ms on the real file),
+`faers_report` carries `mapped` (the report has a mapped ingredient), and `faers_region_basis`
+counts reports by region and by the country field that gave the region. Table hashes are
+computed on rows in sorted order, so the layout never changes them.
 """
 
 from __future__ import annotations
@@ -56,6 +62,8 @@ EVENT_TERMS_NOTE = "Event terms are MedDRA Preferred Terms as published in FAERS
 COUNTS_DB = "faers_counts.duckdb"
 META = "meta.json"
 
+COUNTS_SCHEMA = "faers_counts-2"
+
 TABLES: tuple[str, ...] = (
     "faers_report",
     "faers_report_ingredient",
@@ -65,6 +73,7 @@ TABLES: tuple[str, ...] = (
     "faers_event_counts",
     "faers_pair_counts",
     "faers_unmapped",
+    "faers_region_basis",
 )
 
 
@@ -240,7 +249,7 @@ _SQL_ROLES = "('PS','SS','I')"
 _SQL_EXPOSURE = "('PS','SS','I','C')"
 
 
-def _sha256_of_table(con: duckdb.DuckDBPyConnection, table: str, scratch: Path) -> str:
+def sha256_of_table(con: duckdb.DuckDBPyConnection, table: str, scratch: Path) -> str:
     """SHA-256 of the table's rows in a sorted CSV form (order independent)."""
     path = scratch / f"{table}.csv"
     con.execute(f"COPY (SELECT * FROM {table} ORDER BY ALL) TO '{path}' (FORMAT csv, HEADER)")
@@ -282,7 +291,7 @@ def write_counts(
             )
         con.execute(
             """
-            CREATE TABLE faers_report AS
+            CREATE TEMP TABLE rep_base AS
             SELECT CAST(row_number() OVER (ORDER BY CAST(primaryid AS BIGINT), quarter) AS INTEGER)
                      AS report_id,
                    primaryid, caseid, quarter, region, region_basis
@@ -294,7 +303,7 @@ def write_counts(
             CREATE TEMP TABLE drug_lines AS
             WITH d AS (SELECT primaryid, quarter, unnest(drugs) AS drug FROM src)
             SELECT r.report_id, drug.role AS role, unnest(drug.ingredients) AS name
-            FROM d JOIN faers_report r ON r.primaryid = d.primaryid AND r.quarter = d.quarter
+            FROM d JOIN rep_base r ON r.primaryid = d.primaryid AND r.quarter = d.quarter
             """
         )
         con.execute(
@@ -305,6 +314,7 @@ def write_counts(
             FROM drug_lines l JOIN name_map m ON m.name = l.name AND m.status = 'mapped'
             WHERE l.role IN {_SQL_EXPOSURE}
             GROUP BY l.report_id, m.ingredient_key
+            ORDER BY m.ingredient_key, l.report_id
             """
         )
         con.execute(
@@ -312,16 +322,32 @@ def write_counts(
             CREATE TABLE faers_report_event AS
             WITH e AS (SELECT primaryid, quarter, unnest(events) AS pt FROM src)
             SELECT DISTINCT r.report_id, e.pt
-            FROM e JOIN faers_report r ON r.primaryid = e.primaryid AND r.quarter = e.quarter
+            FROM e JOIN rep_base r ON r.primaryid = e.primaryid AND r.quarter = e.quarter
+            ORDER BY r.report_id, e.pt
             """
         )
         con.execute(
             """
-            CREATE TEMP TABLE rep AS
-            SELECT r.report_id, r.region,
+            CREATE TABLE faers_report AS
+            SELECT r.report_id, r.primaryid, r.caseid, r.quarter, r.region, r.region_basis,
                    EXISTS (SELECT 1 FROM faers_report_ingredient i WHERE i.report_id = r.report_id)
                      AS mapped
-            FROM faers_report r
+            FROM rep_base r
+            ORDER BY r.report_id
+            """
+        )
+        con.execute("CREATE TEMP VIEW rep AS SELECT report_id, region, mapped FROM faers_report")
+        con.execute(
+            """
+            CREATE TABLE faers_region_basis AS
+            WITH by_region AS (
+              SELECT region, region_basis AS basis, CAST(count(*) AS BIGINT) AS reports
+              FROM faers_report GROUP BY region, region_basis)
+            SELECT * FROM (
+              SELECT * FROM by_region
+              UNION ALL
+              SELECT 'ALL', basis, CAST(sum(reports) AS BIGINT) FROM by_region GROUP BY basis)
+            ORDER BY region, basis
             """
         )
         con.execute(
@@ -348,10 +374,12 @@ def write_counts(
             by_region AS (
               SELECT ingredient_key, region, scope, CAST(count(*) AS BIGINT) AS reports
               FROM x GROUP BY ALL)
-            SELECT * FROM by_region
-            UNION ALL
-            SELECT ingredient_key, 'ALL', scope, CAST(sum(reports) AS BIGINT)
-            FROM by_region GROUP BY ingredient_key, scope
+            SELECT * FROM (
+              SELECT * FROM by_region
+              UNION ALL
+              SELECT ingredient_key, 'ALL', scope, CAST(sum(reports) AS BIGINT)
+              FROM by_region GROUP BY ingredient_key, scope)
+            ORDER BY ingredient_key, scope, region
             """
         )
         con.execute(
@@ -363,10 +391,13 @@ def write_counts(
                      CAST(count(*) AS BIGINT) AS reports_all
               FROM faers_report_event e JOIN rep r ON r.report_id = e.report_id
               GROUP BY e.pt, r.region)
-            SELECT * FROM by_region
-            UNION ALL
-            SELECT pt, 'ALL', CAST(sum(reports_mapped) AS BIGINT), CAST(sum(reports_all) AS BIGINT)
-            FROM by_region GROUP BY pt
+            SELECT * FROM (
+              SELECT * FROM by_region
+              UNION ALL
+              SELECT pt, 'ALL', CAST(sum(reports_mapped) AS BIGINT),
+                     CAST(sum(reports_all) AS BIGINT)
+              FROM by_region GROUP BY pt)
+            ORDER BY pt, region
             """
         )
         con.execute(
@@ -382,10 +413,12 @@ def write_counts(
             by_region AS (
               SELECT ingredient_key, pt, region, scope, CAST(count(*) AS BIGINT) AS reports
               FROM x GROUP BY ALL)
-            SELECT * FROM by_region
-            UNION ALL
-            SELECT ingredient_key, pt, 'ALL', scope, CAST(sum(reports) AS BIGINT)
-            FROM by_region GROUP BY ingredient_key, pt, scope
+            SELECT * FROM (
+              SELECT * FROM by_region
+              UNION ALL
+              SELECT ingredient_key, pt, 'ALL', scope, CAST(sum(reports) AS BIGINT)
+              FROM by_region GROUP BY ingredient_key, pt, scope)
+            ORDER BY ingredient_key, pt, scope, region
             """
         )
         con.execute(
@@ -403,6 +436,7 @@ def write_counts(
                    CAST(coalesce(e.suspect_reports, 0) AS BIGINT) AS suspect_reports
             FROM name_map m JOIN occ o ON o.name = m.name LEFT JOIN exp e ON e.name = m.name
             WHERE m.status <> 'mapped'
+            ORDER BY m.name
             """
         )
         stats: dict[str, Any] = {}
@@ -451,7 +485,7 @@ def write_counts(
             ).fetchall()
         ]
         stats["candidates"] = _candidate_impact(con)
-        stats["table_sha256"] = {t: _sha256_of_table(con, t, scratch) for t in TABLES}
+        stats["table_sha256"] = {t: sha256_of_table(con, t, scratch) for t in TABLES}
         return stats
     finally:
         con.close()
@@ -548,7 +582,7 @@ def build_counts(
         stats = write_counts(staging / COUNTS_DB, art.rows, matches, staging)
         meta = {
             "build_id": bid,
-            "schema_version": "faers_counts-1",
+            "schema_version": COUNTS_SCHEMA,
             "faers_run_id": art.manifest["run_id"],
             "faers_content_sha256": art.manifest["content_sha256"],
             "snapshot_date": art.manifest.get("snapshot_date"),

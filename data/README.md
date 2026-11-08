@@ -39,8 +39,19 @@ fetched at runtime and must not be committed; CI fails if one is tracked.
   evidence records. Rows (added by `cascade-engine` on 2026-11-07, each DOI, title, authors,
   journal and year checked against its Crossref record first): BMJ 2026 (priority data for the
   cascades named in its abstract), ThinkCascades (supporting id, cited only), Hendrix 2024 (the
-  12-month window) and Vander Zanden 2001 (ophthalmic beta-blockers). A paper whose DOI cannot be
-  verified is not added.
+  12-month window) and Vander Zanden 2001 (ophthalmic beta-blockers). Added by `collective-memory` on
+  2026-11-08: Evans, Waller and Davis 2001 (DOI 10.1002/pds.677, checked in Crossref: journal article,
+  no notice), source of the screening criteria PRR >= 2, chi-squared >= 4, at least 3 reports; its full
+  text is paywalled, so the Yates-corrected chi-squared is cited from its use in the literature. A paper
+  whose DOI cannot be verified is not added.
+## Curated collective-memory files (Janus, Apache-2.0)
+- `memory_events.csv`: the Janus event vocabulary (`collective-memory` design §4.6, Req 6): one row per
+  event key with labels in five languages, the FAERS MedDRA Preferred Terms it covers (as published in
+  FAERS; MedDRA® is a registered trademark of ICH, no hierarchy), the PIPC rows it stands for, and a
+  `status`. **Every row is `proposed` (2026-11-08): the mapping was drafted by the AI assistant and
+  reviewed by the pharmacologist agent, and waits for the project owner's review
+  (`.kiro/specs/collective-memory/event-mapping-review.md`). Nothing user-facing uses a key that is
+  not `active`.** It still needs review by a pharmacist or physician before any public claim.
 
 ## Curated cascade-engine files (Janus, Apache-2.0)
 

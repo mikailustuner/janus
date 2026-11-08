@@ -226,3 +226,34 @@ found, what hooks blocked. Three to five lines per day.
   FAERS parser, and the commented-out row and posting-date typo on the FDA page.
 - The `api` suite needs `alembic upgrade head` on the test database before the database tests
   (otherwise 14 failures and 10 errors that are not code faults).
+
+## 2026-11-08 — Phase 2: Collective Memory spec and first build steps
+
+- Refined `collective-memory` (requirements, design with 31 properties and 22 decisions, tasks) from
+  what `data-pipelines` actually built, and measured first on the real counts file: pair lookup
+  p95 14 ms as built, 5.9 ms for one statement after physically sorting the tables (the file also
+  shrank from 120 MB to 80 MB; an ART index gave no gain and made it 2.6 times larger); 372,863 pairs
+  with at least 3 reports, 65 % of them meet the Evans criteria (Yates-corrected chi-squared), so the
+  criteria hardly discriminate; the N = mapped-reports choice changes the five-class assessment of
+  2.5 % of pairs against N = all reports.
+- The statistician agent reviewed the statistics (approved with changes): Yates chi-squared,
+  `disproportionate` needs at least 5 reports, no multiple-comparison correction but wording and
+  ordering by report count, five-class sensitivity flag, and a sibling rule for user-layer cells
+  because two nested cells, each at least 20, differ by 0 to ±4 within the noise and would reveal a
+  smaller group.
+- Owner decisions applied: FAERS is cited through one dataset record (`dataset:faers`) with a
+  deterministic locator, no per-pair evidence records (decision recorded in `collective-memory`,
+  `cascade-engine` and `evidence-integrity`); donations will accept Janus keys `J<n>`; Evans,
+  Waller and Davis 2001 verified in Crossref and added to the evidence papers (Yates form cited from
+  secondary use, full text paywalled).
+- Built: the count file schema `faers_counts-2` (sorted tables, `mapped` flag, region-basis table;
+  rebuilt in 421 s at 2.7 GiB peak, all unchanged table hashes identical), the pure statistics
+  (`janus.memory.stats`, exact integer and `Fraction` arithmetic for the decisions), and the event
+  vocabulary loader with a first proposal of 34 adverse and 5 benefit keys, all `proposed`.
+  The pharmacologist agent reviewed the PT mappings (approved with changes, applied to the
+  proposal). **Stop:** nothing uses the mappings until the owner reviews
+  `.kiro/specs/collective-memory/event-mapping-review.md`.
+- Property tests: P1–P6, P9 (pure part), P15, P28, P29. No counterexample beyond my own test
+  mistakes (a wrong expected PRR in an example; the Haldane correction adds 0.5 to all four cells).
+- Checkpoint 1: `apps/api` 409 passed (CI profile, PostgreSQL 16 after `alembic upgrade head`), ruff,
+  pyright strict, `pipelines` 138 passed, web lint, types and tests green.

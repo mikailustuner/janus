@@ -237,8 +237,8 @@ Chain: {chain_id, ingredient_keys: [qid], links: [{index_key, marker_key, findin
 Errors: 422 `{"error": "invalid_request", "fields": [[loc…]]}` (field names and item indexes
 only), 409 `{"error": "dataset_version_mismatch"}`, 503 `{"error": "cascades_unavailable"}`.
 **[Later phase: OnSIDES]** exploratory findings will be a separate top-level list; there is no
-field for them until then (DP21). **[Phase 2: collective-memory]** `faers_stat:` ids join
-`evidence_ids` through the same `cite` call.
+field for them until then (DP21). **[Phase 2: collective-memory]** `dataset:faers` joins
+`evidence_ids` through the same `cite` call, with `faers_locator` (DP22).
 
 ### 3.7 Database (migration `0005_cascade_rule_base`, forward-only, with downgrade)
 ```sql
@@ -530,6 +530,7 @@ P1–P7 are the seven original properties; P8–P22 were added in the refinement
 | DP19 | `write_tx` may be used by `cascades/load.py`; `LogEvent.cascade_load` (counts only). | Write from the service. | Writes stay in reviewable places (privacy DP5, resolution DP16, integrity DP20). |
 | DP20 | A rule role that cannot be mapped is marked not matchable with a reason and reported in every result and in the coverage report. | Leave it out of the rule base. | The statement "found no pattern from its rule list" must not cover rules that were never checked. |
 | DP21 | Exploratory mode is not built in Phase 1; the API has no option and the result no field for it. | A stub that returns an empty list. | YAGNI; Req 3 stays as the contract for when `onsides` exists. |
+| DP22 | **Owner decision 2026-11-08 (collective-memory DP12).** A finding cites FAERS through the existing dataset record `dataset:faers` plus a deterministic locator `faers:ingredient=<index key>;event=<janus event key>;region=ALL;scope=suspect`; there are no `faers_stat:` ids. Minimal change: optional `RuleBase.faers_event_keys` (PIPC position → Janus event key, empty until the owner has reviewed the event vocabulary), `Finding.faers_locator` / `FindingOut.faers_locator`, and `dataset:faers` added to the ids that already pass through `_cite`. | Per-cell `faers_stat:` evidence ids registered by a loader. | The API is stateless; per-cell records would add thousands of rows per build. The dataset record already has source, licence, snapshot date and freshness. When `dataset:faers` is not registered, `_cite` drops it and the locator is `None`. |
 
 ## 11. Open items
 - Owner decisions on the design (2026-11-07): DP18 decided (the three ThinkCascades-only
@@ -588,7 +589,7 @@ P1–P7 are the seven original properties; P8–P22 were added in the refinement
   or name so it can re-resolve after a 409, asks for the product when a finding is
   form-unconfirmed, and words the codes in five languages; `doctor-loop` decides whether
   form-unconfirmed findings belong in the note's main section and shows `item_warnings` next to
-  each medicine; `collective-memory` adds `faers_stat:` ids.
+  each medicine; `collective-memory` adds `dataset:faers` and `faers_locator` (DP22).
 - Coverage numbers and synonym proposals are recorded here after task 12.
 - **[Later phase: OnSIDES]** Requirement 3 (exploratory mode).
 

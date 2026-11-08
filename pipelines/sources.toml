@@ -309,6 +309,14 @@ notes = ["Cited only, for systemic effects of ophthalmic beta-blockers."]
 storage = "cited_only"
 
 [[sources]]
+id = "evans_2001"
+section = "cited"
+name = "Evans SJW, Waller PC, Davis S, Pharmacoepidemiol Drug Saf 2001;10(6):483-486"
+license = "Subscription"
+notes = ["Cited only, for the proportional reporting ratio screening criteria (PRR >= 2, chi-squared >= 4, at least 3 reports)."]
+storage = "cited_only"
+
+[[sources]]
 id = "eudravigilance"
 section = "cited"
 name = "EudraVigilance / adrreports.eu — European Medicines Agency"

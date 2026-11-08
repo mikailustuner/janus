@@ -23,6 +23,8 @@ from hypothesis import strategies as st
 from janus.memory.faers_build import (
     ALL,
     COUNTS_DB,
+    COUNTS_SCHEMA,
+    EXPOSURE_ROLES,
     REGIONS,
     TABLES,
     BuildError,
@@ -34,6 +36,7 @@ from janus.memory.faers_build import (
     iter_parquet_rows,
     map_names,
     no_fault,
+    sha256_of_table,
     write_counts,
 )
 from janus.resolution.canonical import content_hash_stream
@@ -482,3 +485,79 @@ def test_logs_never_carry_names(drug: str, event: str) -> None:
         text = buffer.getvalue()
     assert drug not in text and event not in text
     assert '"event":"faers_build"' in text
+
+
+# --- collective-memory Req 11 (schema faers_counts-2) ----------------------------------------
+
+SORT_ORDER: dict[str, tuple[int, ...]] = {
+    # table -> positions of the key columns in physical order
+    "faers_pair_counts": (0, 1, 3, 2),  # ingredient_key, pt, scope, region
+    "faers_ingredient_counts": (0, 2, 1),  # ingredient_key, scope, region
+    "faers_event_counts": (0, 1),  # pt, region
+    "faers_report_ingredient": (1, 0),  # ingredient_key, report_id
+    "faers_report_event": (0, 1),  # report_id, pt
+    "faers_report": (0,),  # report_id
+}
+
+
+@settings(max_examples=20, deadline=None)
+@given(reports())
+def test_layout_mapped_flag_and_region_basis(facts: list[ReportFact]) -> None:
+    """Feature: collective-memory, Property P28 — Validates: Req 11.1, 11.2, 11.3.
+    The tables are physically sorted by their lookup keys; the physical order never changes a
+    table hash; `faers_report.mapped` is "has a mapped ingredient"; `faers_region_basis` sums to
+    the region totals and to ALL.
+    """
+    with tempfile.TemporaryDirectory() as d:
+        scratch = Path(d)
+        rows = scratch / "rows.parquet"
+        write_rows(rows, facts)
+        matches = map_names({n for f in facts for _r, ing in f.lines for n in ing}, INDEX)
+        db = scratch / "counts.duckdb"
+        stats = write_counts(db, rows, matches, scratch)
+        for table, cols in SORT_ORDER.items():
+            data = read(db, f"SELECT * FROM {table}")
+            keys = [tuple(r[c] for c in cols) for r in data]
+            assert keys == sorted(keys), table
+        flagged = {str(p) for p, m in read(db, "SELECT primaryid, mapped FROM faers_report") if m}
+        expected = {
+            f.primaryid
+            for f in facts
+            if any(
+                role in EXPOSURE_ROLES and matches[n].status == "mapped"
+                for role, ing in f.lines
+                for n in ing
+            )
+        }
+        assert flagged == expected
+        totals = {r: (int(m), int(a)) for r, m, a in read(db, "SELECT * FROM faers_totals")}
+        assert totals[ALL][0] == len(expected)
+        by_region: dict[str, int] = {}
+        for region, _basis, n in read(db, "SELECT * FROM faers_region_basis"):
+            by_region[region] = by_region.get(region, 0) + int(n)
+        for region, (_m, all_reports) in totals.items():
+            assert by_region[region] == all_reports
+        # the physical order does not change a table hash
+        con = duckdb.connect(str(db))
+        try:
+            con.execute(
+                "CREATE OR REPLACE TABLE faers_pair_counts AS "
+                "SELECT * FROM faers_pair_counts ORDER BY reports DESC, pt DESC"
+            )
+            assert (
+                sha256_of_table(con, "faers_pair_counts", scratch)
+                == stats["table_sha256"]["faers_pair_counts"]
+            )
+        finally:
+            con.close()
+
+
+def test_schema_version_is_faers_counts_2(tmp_path: Path) -> None:
+    """Feature: collective-memory, Property P28 (schema part) — Validates: Req 11.4."""
+    write_artifact(
+        tmp_path, [ReportFact("100001", "2026Q3", "US", (("PS", ("ASPIRIN",)),), ("Pain",))]
+    )
+    result = build(tmp_path)
+    meta = dict(read(result.path, "SELECT key, value FROM faers_meta"))
+    assert meta["schema_version"] == COUNTS_SCHEMA == "faers_counts-2"
+    assert result.reports_mapped == 1
