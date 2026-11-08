@@ -964,7 +964,7 @@
     },
     "attribution": {
       "titck": "Source : TİTCK, liste des médicaments à usage humain autorisés, données du {date}.",
-      "bdpm": "Source : Base de données publique des médicaments (BDPM), données du {date}. Affiché tel que publié ; la BDPM n'approuve pas Janus.",
+      "bdpm": "Source : Base de données publique des médicaments (BDPM), données du {date}. Affiché tel que publié, sans approbation de Janus par la BDPM.",
       "cima": "Source : AEMPS, Nomenclátor de prescripción, données du {date}.",
       "openfda": "Source : openFDA NDC directory, données du {date}. Sans approbation de la FDA."
     },

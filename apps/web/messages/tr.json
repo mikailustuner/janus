@@ -966,7 +966,7 @@
       "titck": "Kaynak: TİTCK Ruhsatlı Beşeri Tıbbi Ürünler Listesi, {date} tarihli veri.",
       "bdpm": "Kaynak: Base de données publique des médicaments (BDPM), {date} tarihli veri. Yayımlandığı şekliyle gösterilir; BDPM, Janus'u desteklediğini beyan etmez.",
       "cima": "Kaynak: AEMPS, Nomenclátor de prescripción, {date} tarihli veri.",
-      "openfda": "Kaynak: openFDA NDC directory, {date} tarihli veri. FDA onayı değildir."
+      "openfda": "Kaynak: openFDA NDC directory, {date} tarihli veri. FDA tarafından desteklendiği anlamına gelmez."
     },
     "memory": {
       "entry": "Bu listedeki etkin maddeler için bildirimler",

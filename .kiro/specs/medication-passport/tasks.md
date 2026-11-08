@@ -103,6 +103,8 @@
   - [x] 10.2 Property test P16: every API code and origin has a key in five locales with the same parameters. _Requirements: 8.1, 8.3, 10.2_
 
 - [ ] 11. Wording review **(review stop)**
+  - *2026-11-08: localization and safety passes (Claude Code, `.kiro/agents` roles) in `passport-wording-review.md`;
+    L1, S1, S2 fixed; ten decisions open. Stopped for the owner; answers to be applied in one commit.*
   - Run `agent://pharmacologist` and the localization reviewer (through `agent://wf-coder`, read-only role, report path)
     on the `Passport` texts and the word lists; write `passport-wording-review.md` (flagged strings per language,
     decisions needed). Commit, push, CI green, then **stop and wait for the owner**. Apply the answers in one commit.

@@ -886,7 +886,7 @@
     "compare": {
       "strength": {
         "matched": "{equal, plural, one {# de estos productos figura} other {# de estos productos figuran}} con la misma dosis indicada que esta caja ({strength}).",
-        "differs": "Ninguno de estos productos figura con la dosis indicada de esta caja. Las fuentes pueden indicar la cantidad de una sal o de la base, así que esto no demuestra una dosis diferente.",
+        "differs": "Ninguno de estos productos figura con la dosis indicada de esta caja. Las fuentes pueden indicar la cantidad de una sal o de la base, así que esto no demuestra que la cantidad de principio activo sea diferente.",
         "could_not_compare": "Dosis no comparada: {reason}"
       },
       "dose_form": {
