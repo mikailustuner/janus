@@ -40,6 +40,8 @@ Unit = Literal["ug", "IU"]
 Basis = Literal["unit", "mL", "g"]
 AMOUNT = re.compile(r"^(0|[1-9][0-9]{0,8})(\.[0-9]{0,5}[1-9])?$")  # request pattern (§3.1)
 SCALE = 10**6  # at most six decimals
+# Sources for which `strength_code` can give a code at all (design §3.2 `can_compare.strength`).
+CODED_SOURCES: frozenset[str] = frozenset({"openfda_ndc", "eu_fr_bdpm"})
 
 MASS_UG: dict[str, int] = {
     "kg": 10**9,

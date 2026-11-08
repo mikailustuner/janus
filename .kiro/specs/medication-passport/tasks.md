@@ -40,31 +40,36 @@
     **stop and wait for the owner**. Apply the answers in one commit (rows accepted, groups final, OD4 closed in design).
     _Requirements: 6.4, 6.5_
 
-- [ ] 5. Resolution fields (`resolution/model.py`, `resolution/service.py`)
+- [x] 5. Resolution fields (`resolution/model.py`, `resolution/service.py`)
+  - *Done 2026-11-08: fields filled only from an accepted table (`app.state.dose_forms`); contract test lists the two
+    additions. The `drug-resolution` open-items note is task 13.*
   - `ResolvedIngredient.strength_code: StrengthCodeOut | None = None`, `ProductCandidate.dose_form_group: str | None =
     None`, computed with the Passport functions on stored values; forms table passed through `app.state`. No other
     change. Note the change in `drug-resolution` open items (task 13).
-  - [ ] 5.1 Property test P17: fields equal the pure functions; all other fields unchanged (snapshot). _Requirements: 6.6_
+  - [x] 5.1 *(`test_passport_resolution_fields_properties.py`.)* Property test P17: fields equal the pure functions; all other fields unchanged (snapshot). _Requirements: 6.6_
 
-- [ ] 6. Presence evaluation and repository (`passport/presence.py`, `passport/repository.py`, design §4.2, §5.3)
+- [x] 6. Presence evaluation and repository (`passport/presence.py`, `passport/repository.py`, design §4.2, §5.3)
   - Signature building (strength codes, form groups, homeopathic decision with `is_homeopathic_name` for EU), the
     statement of §4.2 with `SET LOCAL statement_timeout`, `known_keys`, pure `evaluate`.
-  - [ ] 6.1 Property test P7: presence equals a brute-force model on synthetic datasets (DB). _Requirements: 2.4, 2.6, 2.7, 6.2_
-  - [ ] 6.2 Property test P3 (server part): no `matched` with an unknown side; `differs` only when all comparable. _Requirements: 2.2, 6.1, 6.2_
-  - [ ] 6.3 Property test P8: homeopathic parity with `/resolve/products`; SQL and Python patterns agree. _Requirements: 2.6, 1.5_
-  - [ ] 6.4 Property test P9: comparison counts and result function. _Requirements: 6.2_
-  - [ ] 6.5 Property test P10: order, repetition and split invariance. _Requirements: 4.4_
+  - [x] 6.1 *(`test_passport_presence_properties.py`, plus a worked example.)* Property test P7: presence equals a brute-force model on synthetic datasets (DB). _Requirements: 2.4, 2.6, 2.7, 6.2_
+  - [x] 6.2 Property test P3 (server part): no `matched` with an unknown side; `differs` only when all comparable. _Requirements: 2.2, 6.1, 6.2_
+  - [x] 6.3 Property test P8: homeopathic parity with `/resolve/products`; SQL and Python patterns agree. _Requirements: 2.6, 1.5_
+  - [x] 6.4 Property test P9: comparison counts and result function. _Requirements: 6.2_
+  - [x] 6.5 Property test P10: order, repetition and split invariance. _Requirements: 4.4_
 
-- [ ] 7. Route (`passport/schemas.py`, `service.py`, `router.py`, `main.py`, `bench.py`)
+- [x] 7. Route (`passport/schemas.py`, `service.py`, `router.py`, `main.py`, `bench.py`)
+  - *Done 2026-11-08: p95 267–332 ms (15 common items), 1,703–2,251 ms (50-key worst case, machine under load);
+    recorded in design §13 with the variants tried.*
   - `POST /passport/presence` on `medical_router()`; strict body parsing as `resolution/router.py`; 422 / 503 of §3.3;
     source blocks with staleness from `repository.current`; register in `create_app`; benchmark (15 common items and the
     50-key worst case on the dev dataset) and record p50/p95 in design §13.
-  - [ ] 7.1 Property test P11: stateless, silent logs, closed schema, no echo. _Requirements: 4.1–4.3, 5.2, 9.1, 9.2_
-  - [ ] 7.2 Property test P12: validation bounds and boundary values. _Requirements: 5.1, 5.2_
-  - [ ] 7.3 Property test P13: every answer names its source; missing sources; Germany; staleness. _Requirements: 2.1, 5.4, 7.1, 7.4, 7.5_
-  - [ ] 7.4 Property test P14: 503 cases with nothing partial. _Requirements: 5.3_
-  - [ ] 7.5 Property test P15: constant statement budget for 1–50 items. _Requirements: 13.2_
-  - [ ] 7.6 Benchmark meets Req 13.1 (p95 ≤ 500 ms for 15 items, ≤ 2 s worst case), else apply the DP12 fallback and
+  - [x] 7.1 *(`test_passport_api_properties.py`.)* Property test P11: stateless, silent logs, closed schema, no echo. _Requirements: 4.1–4.3, 5.2, 9.1, 9.2_
+  - [x] 7.2 Property test P12: validation bounds and boundary values. _Requirements: 5.1, 5.2_
+  - [x] 7.3 Property test P13: every answer names its source; missing sources; Germany; staleness. _Requirements: 2.1, 5.4, 7.1, 7.4, 7.5_
+  - [x] 7.4 Property test P14: 503 cases with nothing partial. _Requirements: 5.3_
+  - [x] 7.5 Property test P15: constant statement budget for 1–50 items. _Requirements: 13.2_
+  - [x] 7.6 *(15-item target met; worst case at the 2 s line under load, DP12 loader table left open for the owner.)*
+    Benchmark meets Req 13.1 (p95 ≤ 500 ms for 15 items, ≤ 2 s worst case), else apply the DP12 fallback and
     measure again. _Requirements: 13.1_
 
 - [ ] 8. Checkpoint 1: server side

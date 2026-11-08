@@ -476,6 +476,24 @@ Targets (Req 13): p95 ≤ 500 ms for 15 items, ≤ 2 s worst case, 3 s statement
 section (task 7). If the 15-item p95 misses the target: first a two-step fetch (hits, then rows by primary key), then the
 loader-built signature table (DP12 fallback). The pure evaluation is linear in signatures × items (≤ 7,611 × 50).
 
+**Benchmark (task 7.6, 2026-11-08).** `python -m janus.passport.bench --runs 30`, full HTTP route in-process, dev dataset
+`7db3a513…` copied into `janus_test` at migration head (index present; the dev database itself stays at 0011 because
+`main` does not know 0012 yet). The machine was shared with another build (load average 6–8 on 8 cores); three runs:
+
+| List | Items | Products behind it | p50 | p95 | Target |
+|---|---|---|---|---|---|
+| common (15 frequent medicines of older adults, `bench.COMMON`) | 15 | 12,459 | 238–243 ms | 267–332 ms | ≤ 500 ms: **met** |
+| worst (50 keys with the most products) | 50 | 55,805 | 1,465–2,102 ms | 1,703–2,251 ms | ≤ 2 s: met in 2 of 3 runs |
+| stress (15 keys with the most products; not a Req 13 case) | 15 | 28,677 | 653–734 ms | 700–1,093 ms | (500 ms) |
+
+Without the index (dev database, 5 runs) the worst case took p95 2,072 ms. Profile of the stress case: the statement
+takes about 480 ms (a parallel hash join of the hit products with their ingredient rows, then grouping by signature);
+signatures and evaluation 50 ms; the rest is HTTP and JSON. Variants measured and rejected (median, 15 / 50 keys):
+current 483 / 864 ms; forced index nested loop 569 / 1,426 ms; lateral per-product fetch (the "two-step" fallback) 750
+/ 1,018 ms; no parallel workers 688 / 1,114 ms; final grouping in Python 455 / 806 ms. The 15-item target holds; the worst
+case sits at the 2 s line under load and below it on an idle run. **Open (owner):** if the worst case must hold under load,
+the remaining fallback is the loader-built signature table (DP12), a `drug-resolution` loader and dataset change.
+
 ## 14. Open items and open decisions
 - **OD1 (owner):** load the BDPM `reference` quantity and the Nomenclátor form code and routes (`drug-resolution` loader,
   `eu_es_cima` schema `eu_es_cima-2`, a column migration and a dataset reload) so that French liquids and all Spanish
