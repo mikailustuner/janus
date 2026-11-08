@@ -119,3 +119,16 @@ them whenever WHOCC publishes a new ATC version**, together with the combination
 - `abrupt_stop_classes.csv`: ATC patterns that get the warning "Do not stop this medicine
   suddenly." (`pattern,match,group,note`), systemic forms only. It covers the six groups of
   `medical-safety.md` rule 4 and ten more groups confirmed by the owner on 2026-11-07.
+
+## Curated medication-passport files (Janus, Apache-2.0)
+
+- `dose_form_groups.csv`: published dose form → coarse Janus dose-form group (`medication-passport` design §5.2, DP7,
+  owner decision 6 of 2026-11-08). Columns `source_id,published_form,route,group,note`. `published_form` is the form
+  exactly as the source publishes it: openFDA NDC directory SPL dosage form names (CC0 1.0, snapshot 2026-11-06) and
+  BDPM pharmaceutical forms (Base de données publique des médicaments, Licence Ouverte / Etalab, data of 2026-11-03,
+  shown as published; the BDPM does not endorse Janus). `route` is `*`, empty (no route published) or the product's
+  published route set joined with `|`; `group` is one of thirteen Janus groups or empty (unknown). No EDQM Standard
+  Terms are used. Drafted on 2026-11-08 by `python -m janus.passport.forms_draft` from the dev dataset (927 rows, every
+  row `proposed`) and reviewed by the pharmacologist agent (`.kiro/specs/medication-passport/dose-form-review.md`);
+  **not yet accepted by the owner**, so no user-facing answer uses it. It still needs a review by a pharmacist before any
+  public claim. Re-draft and diff it whenever a source adds dose forms or route sets.
