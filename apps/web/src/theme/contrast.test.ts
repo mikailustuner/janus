@@ -1,0 +1,225 @@
+// Feature: experience, Property P18: every token pair marked as text or boundary in tokens.css
+// passes WCAG contrast (text >= 4.5:1, boundary >= 3:1) in both themes, both colour schemes and
+// with reduced transparency on and off; Glass surfaces are composited over each background field
+// (Req 3.1). Example-based and exhaustive over the marked pairs.
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+
+import { describe, expect, it } from "vitest";
+
+const css = readFileSync(join(import.meta.dirname, "tokens.css"), "utf8");
+
+type Rule = {
+  conditions: string[];
+  selector: string;
+  decls: Record<string, string>;
+};
+
+/** A tiny parser for the token file: top-level rules and rules nested in @media / @supports. */
+function parseRules(source: string): Rule[] {
+  const text = source.replace(/\/\*[\s\S]*?\*\//g, "");
+  const rules: Rule[] = [];
+  const stack: string[] = [];
+  let i = 0;
+  let buf = "";
+  while (i < text.length) {
+    const c = text[i]!;
+    if (c === "{") {
+      const head = buf.trim();
+      buf = "";
+      if (head.startsWith("@")) {
+        stack.push(head);
+      } else {
+        const end = text.indexOf("}", i);
+        const body = text.slice(i + 1, end);
+        const decls: Record<string, string> = {};
+        for (const d of body.split(";")) {
+          const m = /^\s*(--[a-z0-9-]+)\s*:\s*([\s\S]+?)\s*$/.exec(d);
+          if (m) decls[m[1]!] = m[2]!;
+        }
+        rules.push({ conditions: [...stack], selector: head, decls });
+        i = end;
+      }
+    } else if (c === "}") {
+      stack.pop();
+      buf = "";
+    } else buf += c;
+    i++;
+  }
+  return rules;
+}
+
+const rules = parseRules(css);
+
+interface Context {
+  name: string;
+  theme: "two-faces" | "glass";
+  face?: "shadow" | "light";
+  dark?: boolean;
+  reduce?: boolean; // setting, media query or no backdrop-filter
+}
+
+function tokensFor(ctx: Context): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const r of rules) {
+    const sel = r.selector;
+    const matches = sel.split(",").some((s) => {
+      const part = s.trim();
+      if (part === ":root") return true;
+      if (part.includes('data-theme-style="two-faces"'))
+        return (
+          ctx.theme === "two-faces" && part.includes(`data-face="${ctx.face}"`)
+        );
+      if (part.includes('data-theme-style="glass"')) {
+        if (ctx.theme !== "glass") return false;
+        if (part.includes("data-reduce-transparency")) return !!ctx.reduce;
+        return true;
+      }
+      return false;
+    });
+    if (!matches) continue;
+    const condOk = r.conditions.every((cond) => {
+      if (cond.includes("prefers-color-scheme: dark") && !ctx.dark)
+        return false;
+      if (cond.includes("prefers-reduced-transparency") && !ctx.reduce)
+        return false;
+      if (cond.startsWith("@supports not") && !ctx.reduce) return false;
+      return true;
+    });
+    if (condOk) Object.assign(out, r.decls);
+  }
+  return out;
+}
+
+type RGBA = [number, number, number, number];
+function parseColor(v: string): RGBA {
+  const hex = /^#([0-9a-f]{6})$/i.exec(v.trim());
+  if (hex) {
+    const n = parseInt(hex[1]!, 16);
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255, 1];
+  }
+  const rgba =
+    /^rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\s*(?:,\s*([\d.]+)\s*)?\)$/.exec(
+      v.trim(),
+    );
+  if (rgba)
+    return [
+      Number(rgba[1]),
+      Number(rgba[2]),
+      Number(rgba[3]),
+      rgba[4] === undefined ? 1 : Number(rgba[4]),
+    ];
+  throw new Error(`not a colour: ${v}`);
+}
+const over = (top: RGBA, under: RGBA): RGBA => {
+  const a = top[3];
+  return [0, 1, 2]
+    .map((i) => top[i]! * a + under[i]! * (1 - a))
+    .concat(1) as RGBA;
+};
+function luminance([r, g, b]: RGBA): number {
+  const f = (c: number) => {
+    const s = c / 255;
+    return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+  };
+  return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
+}
+export function contrast(a: RGBA, b: RGBA): number {
+  const [x, y] = [luminance(a), luminance(b)].sort((p, q) => q - p) as [
+    number,
+    number,
+  ];
+  return (x + 0.05) / (y + 0.05);
+}
+
+const annotated = (tag: string) =>
+  (new RegExp(`@${tag}([^\\n]*)`).exec(css)?.[1] ?? "")
+    .trim()
+    .split(/\s+/)
+    .map((p) => p.split("/") as [string, string]);
+const TEXT = annotated("contrast-text");
+const BOUNDARY = annotated("contrast-boundary");
+
+const contexts: Context[] = [
+  { name: "Two Faces, shadow face", theme: "two-faces", face: "shadow" },
+  { name: "Two Faces, light face", theme: "two-faces", face: "light" },
+  { name: "Glass light", theme: "glass" },
+  { name: "Glass dark", theme: "glass", dark: true },
+  { name: "Glass light, reduce transparency", theme: "glass", reduce: true },
+  {
+    name: "Glass dark, reduce transparency",
+    theme: "glass",
+    dark: true,
+    reduce: true,
+  },
+];
+
+/** Every background a token can sit on in this context (Glass: the bg and each colour field). */
+function grounds(t: Record<string, string>, theme: Context["theme"]): RGBA[] {
+  const bg = parseColor(t["--bg"]!);
+  if (theme !== "glass") return [bg];
+  return [
+    bg,
+    ...["--field-1", "--field-2", "--field-3"].map((f) =>
+      over(parseColor(t[f]!), bg),
+    ),
+  ];
+}
+
+describe.each(contexts)("$name", (ctx) => {
+  const t = tokensFor(ctx);
+  const resolve = (name: string): RGBA[] => {
+    const ground = grounds(t, ctx.theme);
+    if (name === "bg") return ground;
+    const surface = ground.map((g) => over(parseColor(t["--surface"]!), g));
+    if (name === "surface") return surface;
+    // Chips and buttons sit on cards; an rgba chip is composited over each card colour.
+    const c = parseColor(t[`--${name}`]!);
+    return c[3] < 1 ? surface.map((s) => over(c, s)) : [c];
+  };
+
+  it.each(TEXT.map(([f, b]) => ({ f, b })))(
+    "text $f on $b >= 4.5:1",
+    ({ f, b }) => {
+      for (const fg of resolve(f))
+        for (const bg of resolve(b))
+          expect(contrast(fg, bg)).toBeGreaterThanOrEqual(4.5);
+    },
+  );
+
+  it.each(BOUNDARY.map(([f, b]) => ({ f, b })))(
+    "boundary $f on $b >= 3:1",
+    ({ f, b }) => {
+      for (const fg of resolve(f))
+        for (const bg of resolve(b))
+          expect(contrast(fg, bg)).toBeGreaterThanOrEqual(3);
+    },
+  );
+
+  it("uses at least 72% opaque cards and the steering values", () => {
+    const s = parseColor(t["--surface"]!);
+    expect(s[3]).toBeGreaterThanOrEqual(0.72);
+    if (ctx.reduce && ctx.theme === "glass")
+      expect(t["--surface"]).toBe(ctx.dark ? "#1c1f22" : "#ffffff");
+  });
+});
+
+it("annotates text and boundary pairs", () => {
+  expect(TEXT.length).toBeGreaterThanOrEqual(12);
+  expect(BOUNDARY.length).toBeGreaterThanOrEqual(2);
+});
+
+it("matches the steering tokens of design.md exactly", () => {
+  const steering = readFileSync(
+    join(import.meta.dirname, "../../../../.kiro/steering/design.md"),
+    "utf8",
+  );
+  const shadow = tokensFor({ name: "", theme: "two-faces", face: "shadow" });
+  const light = tokensFor({ name: "", theme: "two-faces", face: "light" });
+  for (const row of steering.matchAll(
+    /^\| `(--[a-z-]+)`[^|]*\| `?(#[0-9A-F]{6})`?[^|]*\| `?(#[0-9A-F]{6})/gm,
+  )) {
+    expect(shadow[row[1]!]?.toLowerCase(), row[1]).toBe(row[2]!.toLowerCase());
+    expect(light[row[1]!]?.toLowerCase(), row[1]).toBe(row[3]!.toLowerCase());
+  }
+});

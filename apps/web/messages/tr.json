@@ -6,12 +6,481 @@
   "LocaleSwitcher": {
     "label": "Dil"
   },
-  "Home": {
-    "title": "Janus",
-    "status": "Yapım aşamasında. Burada henüz hiçbir tıbbi veri işlenmiyor."
-  },
   "Disclaimer": {
     "text": "Janus bilgi sağlar, tıbbi tavsiye vermez. Araştırma prototipi — tıbbi cihaz değildir."
+  },
+  "Home": {
+    "title": "Janus",
+    "tagline": {
+      "twoFaces": "Bir yan etkinin iki yüzü",
+      "glass": "Evdeki ilaçların kontrolü"
+    },
+    "intro": "Evdeki ilaçları tarayın veya adlarını yazın. Janus literatürde tanımlanmış reçete kaskadı örüntülerini arar ve doktor için, doktorun dilinde, kaynaklı bir not hazırlar.",
+    "start": "İlaçlarımla başla",
+    "demo": "Demoyu dene",
+    "demoHint": "Kayıt gerekmez. Ürün adları uydurma olan üç sentetik hasta.",
+    "resume": "Listenizle devam edin",
+    "resumeCount": "{count, plural, one {Bu cihazda # ilaç} other {Bu cihazda # ilaç}}",
+    "privacy": "Bu cihazda neler kalır"
+  },
+  "Shell": {
+    "skip": "İçeriğe geç",
+    "navLabel": "Ana gezinme",
+    "nav": {
+      "home": "Ana sayfa",
+      "scan": "Tara",
+      "medicines": "İlaçlar",
+      "results": "Sonuçlar",
+      "settings": "Ayarlar",
+      "research": {
+        "twoFaces": "Işık yüzü",
+        "glass": "Araştırma"
+      }
+    },
+    "mask": {
+      "label": {
+        "twoFaces": "Maske: yüz seçin",
+        "glass": "Bölüm"
+      },
+      "patient": {
+        "twoFaces": "Gölge",
+        "glass": "Hasta"
+      },
+      "research": {
+        "twoFaces": "Işık",
+        "glass": "Araştırma"
+      }
+    },
+    "privacy": "Gizlilik",
+    "demoCodes": "Demo kodları"
+  },
+  "Emergency": {
+    "title": "Acil durumda",
+    "text": "Göğüs ağrısı, nefes almada güçlük, inme belirtileri veya ağır alerjik tepki: önce acil servisi ({emergency}) arayın.",
+    "short": "Acil: {emergency}"
+  },
+  "Common": {
+    "loading": "Yükleniyor…",
+    "retry": "Tekrar dene",
+    "back": "Geri",
+    "close": "Kapat",
+    "cancel": "Vazgeç",
+    "save": "Kaydet",
+    "edit": "Düzenle",
+    "remove": "Kaldır",
+    "showMore": "Daha fazla göster",
+    "continue": "Devam",
+    "dontKnow": "Bilmiyorum",
+    "details": "Ayrıntılar",
+    "hideDetails": "Ayrıntıları gizle",
+    "region": {
+      "TR": "Türkiye",
+      "US": "Amerika Birleşik Devletleri",
+      "EU": "Avrupa Birliği",
+      "ALL": "Tüm bölgeler",
+      "OTHER": "Başka bir ülke",
+      "UNKNOWN": "Belirtilmedi"
+    },
+    "source": {
+      "titck": "TİTCK",
+      "openfda_ndc": "openFDA NDC Rehberi",
+      "eu_fr_bdpm": "BDPM (Fransa)",
+      "eu_es_cima": "CIMA, AEMPS (İspanya)",
+      "wikidata": "Wikidata",
+      "other": "Kaynak {id}"
+    },
+    "sourceLine": "{source}, {date} tarihli veri",
+    "monthsBetween": "{months, plural, one {# ay} other {# ay}}"
+  },
+  "Errors": {
+    "generic": "Bir şeyler ters gitti. Lütfen tekrar deneyin.",
+    "network": "Janus'a ulaşılamıyor. Bağlantıyı kontrol edip tekrar deneyin.",
+    "client_defect": "Bizim tarafımızda bir hata oldu. Sizin bir şey değiştirmeniz gerekmiyor.",
+    "resolution_unavailable": "İlaç verileri şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin.",
+    "cascades_unavailable": "Kontrol şu anda yapılamıyor. Lütfen daha sonra tekrar deneyin.",
+    "dataset_changed": "Kontrol sırasında ilaç verileri güncellendi. Lütfen ilaçlarınızı yeniden onaylayın.",
+    "dataset_changed_again": "İlaç verileri yeniden değişti. Lütfen birkaç dakika sonra tekrar deneyin."
+  },
+  "Storage": {
+    "unavailable": "Bu tarayıcı verilerinizi bu cihazda saklayamıyor. Veriler yalnızca bu sayfa kapanana kadar tutulur.",
+    "invalid": "Bu cihazda kayıtlı bazı veriler okunamadı ve kullanılmadı. Hiçbir yere bir şey gönderilmedi."
+  },
+  "NotFound": {
+    "title": "Sayfa bulunamadı",
+    "body": "Bu sayfa mevcut değil.",
+    "home": "Ana sayfaya dön"
+  },
+  "Start": {
+    "title": "İlaçlar nereden?",
+    "intro": "Janus Türkiye, Avrupa Birliği ve Amerika Birleşik Devletleri'nden kutu ve etiketleri okur; aynı listede karışık da olabilir.",
+    "scanRegion": "Kutu ve etiketlerin geldiği yer",
+    "scanRegionAuto": "Otomatik algıla",
+    "userRegion": "Nerede yaşıyorsunuz?",
+    "userRegionHint": "Yalnızca doğru acil numaralarını göstermek için kullanılır. Bu cihazda kalır.",
+    "userRegionOther": "Başka bir ülke",
+    "userRegionUnknown": "Belirtmek istemiyorum",
+    "continue": "İlaçlara devam et"
+  },
+  "Scan": {
+    "title": "Tara",
+    "coming": "Tarama, etiket fotoğrafı ve yazarak arama hazırlanıyor. Bu sırada demo tüm akışı gösteriyor.",
+    "errors": {
+      "unreadable": "Bu kod okunamadı. Lütfen tekrar deneyin veya adını yazın.",
+      "gtin_check_digit": "Bu kodun rakamları tutmuyor. Lütfen kontrol edin veya adını yazın.",
+      "ndc_malformed": "Bu bir NDC'ye benzemiyor. Lütfen kontrol edin veya adını yazın."
+    }
+  },
+  "Settings": {
+    "title": "Ayarlar",
+    "saved": "Bu cihaza kaydedildi.",
+    "language": "Arayüz dili",
+    "noteLanguage": "Doktor notunun dili",
+    "noteLanguageSame": "Arayüzle aynı",
+    "regions": "Bölgeler",
+    "scanRegion": "Kutu ve etiketlerin geldiği yer",
+    "scanRegionAuto": "Otomatik algıla",
+    "userRegion": "Yaşadığınız yer (acil numaraları)",
+    "statisticsRegion": "Nottaki rapor istatistiklerinin bölgesi (isteğe bağlı)",
+    "statisticsRegionNone": "Yok",
+    "appearance": "Görünüm",
+    "theme": "Tema",
+    "themeTwoFaces": "İki Yüz",
+    "themeTwoFacesHint": "Hasta tarafı için gece mavisi, araştırma tarafı için fildişi.",
+    "themeGlass": "Cam",
+    "themeGlassHint": "Sade ve açık; tema simgeleri yok.",
+    "largeText": "Büyük yazı",
+    "reduceTransparency": "Saydamlığı azalt",
+    "reduceTransparencyHint": "Buzlu cam yerine düz kartlar (Cam teması).",
+    "readAloud": "Bulguları sesli oku",
+    "readAloudHint": "Bu tarayıcının sesini kullanır. Sunucuya hiçbir şey gönderilmez.",
+    "research": "Araştırma bölümü",
+    "privacy": "Gizlilik",
+    "deleteTitle": "Bu cihazdaki her şeyi sil",
+    "deleteBody": "İlaç listesini, ayarları ve kayıtlı belirteçleri bu tarayıcıdan kaldırır. Bağışlanan veriler ve doktor yanıtları yalnızca silme belirteci veya not belirteci ile silinebilir.",
+    "deleteButton": "Her şeyi sil",
+    "deleteConfirm": "Janus'un bu cihazda tuttuğu her şey silinsin mi? Bu işlem geri alınamaz.",
+    "deleteDone": "Janus'un bu cihazda tuttuğu her şey silindi."
+  },
+  "Demo": {
+    "label": "Demo · sentetik hasta",
+    "labelWith": "Demo · sentetik hasta: {patient}",
+    "exit": "Demodan çık",
+    "title": "Demoyu deneyin",
+    "intro": "Üç sentetik hasta. Ürün adları uydurmadır; etkin maddeler, bulgular, rapor istatistikleri ve not metni gerçek kural tabanından ve veri anlık görüntüsünden kaydedildi. Hiçbir şey gönderilmez ve saklanmaz.",
+    "open": "{patient} hastasını aç",
+    "items": "{count, plural, one {# ilaç} other {# ilaç}}",
+    "recorded": "{date} tarihinde kaydedildi. Kurallar {rules}, ilaç verisi {dataset}, kanıt {integrity}.",
+    "patients": {
+      "istanbul": {
+        "name": "İstanbul",
+        "summary": "Biri kombinasyon tablet olmak üzere dokuz Türk ilaç kutusu."
+      },
+      "cologne": {
+        "name": "Köln",
+        "summary": "Aynı listede Türk ve Alman kutuları."
+      },
+      "ohio": {
+        "name": "Ohio",
+        "summary": "NDC ile bulunan ABD eczane şişeleri."
+      }
+    },
+    "codes": "Yazdırılabilir demo kodları",
+    "codesIntro": "Her demo ürünü için bir kod. Hiçbir ilacın kullanmadığı bir kod aralığındadır ve Janus bunları her istekten önce tanır.",
+    "codeLabel": "DEMO — sentetik ürün, ilaç değildir",
+    "serialNote": "Kod bilerek bir seri numarası da taşır: Janus onu asla göndermez.",
+    "neverDonated": "Demo verileri asla bağışlanmaz.",
+    "noList": "Demo modunda kendi listeniz gösterilmez ve demo ilaçları listenize asla eklenmez."
+  },
+  "Medicines": {
+    "title": "İlaçlar",
+    "empty": "Henüz ilaç yok.",
+    "add": "Bir ilaç tarayın",
+    "count": "{count, plural, one {# ilaç} other {# ilaç}}",
+    "since": "{month} tarihinden beri",
+    "startUnknown": "Başlangıç bilinmiyor",
+    "byName": "Adıyla bulundu: ürün formu doğrulanmadı",
+    "ingredients": "Etkin maddeler",
+    "combinationCode": "Ürün kodu {code}, yayımlandığı gibi (etkin madde kodu değildir)",
+    "editStart": "Ne zamandan beri?",
+    "boxName": "Kutudaki ad",
+    "removeConfirm": "{name} listeden kaldırılsın mı?",
+    "tooMany": "Janus aynı anda en fazla 50 ilacı kontrol eder. Listeyi kontrol etmek için lütfen bazı ilaçları kaldırın.",
+    "needsConfirmation": "Lütfen bu ilacı yeniden onaylayın.",
+    "check": "Örüntüleri kontrol et",
+    "timeline": "Zaman çizelgesi",
+    "outOfDate": "Liste değişti. Daha önce gösterilen sonuçlar güncel değil.",
+    "demoReadOnly": "Bu bir demo listesidir; değiştirilemez."
+  },
+  "Month": {
+    "label": "Ne zamandan beri?",
+    "month": "Ay",
+    "year": "Yıl",
+    "dontKnow": "Bilmiyorum",
+    "future": "Ay, bu aydan sonra olamaz."
+  },
+  "Timeline": {
+    "title": "Zaman çizelgesi",
+    "intro": "Başlangıç ayları zaman sırasıyla.",
+    "empty": "Zaman çizelgesini görmek için başlangıç ayı ekleyin.",
+    "unknownLane": "Başlangıç bilinmiyor",
+    "link": "{marker}, {index} ilacından {months, plural, one {# ay} other {# ay}} sonra başlandı.",
+    "linkSameMonth": "{marker} ve {index} aynı ay başlandı.",
+    "linkUnknown": "{marker} ve {index}: sıra bilinmiyor."
+  },
+  "Findings": {
+    "title": {
+      "twoFaces": "Hayaletler",
+      "glass": "Sonuçlar"
+    },
+    "count": {
+      "twoFaces": "{count, plural, =0 {Hayalet bulunmadı} one {# hayalet bulundu} other {# hayalet bulundu}}",
+      "glass": "{count, plural, =0 {Olası reçete kaskadı yok} one {# olası reçete kaskadı} other {# olası reçete kaskadı}}"
+    },
+    "kind": {
+      "twoFaces": "Hayalet: bir reçete kaskadı örüntüsü",
+      "glass": "Olası reçete kaskadı"
+    },
+    "checkedOf": "{items, plural, one {# ilaç} other {# ilaç}} {total} örüntüye göre kontrol edildi",
+    "evaluating": "İlaçlar kontrol ediliyor…",
+    "pattern": "Bu iki ilaç, literatürde tanımlanmış bir reçete kaskadı örüntüsüne uyuyor.",
+    "discuss": "Bu konu doktorunuzla konuşmaya değer olabilir.",
+    "cascade": "{drug_a} → {event} → {drug_b}",
+    "medicines": "{index} ({indexBox}), sonra {marker} ({markerBox})",
+    "started": "{name}: {month} tarihinden beri",
+    "startUnknown": "{name}: başlangıç bilinmiyor",
+    "status": {
+      "probable": "Muhtemel",
+      "possible": "Olası"
+    },
+    "statusMonths": "{status} · {months, plural, one {# ay arayla} other {# ay arayla}}",
+    "timing": {
+      "within_window": "{marker}, {index} ilacından {months, plural, one {# ay} other {# ay}} sonra başlandı; bu tür örüntüler için kullanılan {window} aylık pencerenin içinde.",
+      "after_window": "{marker}, {index} ilacından {months, plural, one {# ay} other {# ay}} sonra başlandı; bu tür örüntüler için kullanılan {window} aylık pencereden daha geç.",
+      "same_month": "İki ilaç aynı ay başlandığı için sıraları bilinmiyor.",
+      "date_unknown": "En az bir başlangıç ayı bilinmediği için iki ilacın sırası kontrol edilemedi."
+    },
+    "lowPriority": "Daha düşük öncelikli örüntü",
+    "priority": "Yayımlanmış veri (BMJ 2026 özeti): {measure} {value} (aralık {low} ile {high})",
+    "measure": {
+      "incidence": "insidans, %",
+      "adjusted_sequence_ratio": "düzeltilmiş sıra oranı"
+    },
+    "supporting": "Aynı kaskad, yayımlanmış başka bir kaskad listesinde (ThinkCascades) de tanımlanmaktadır.",
+    "formExtension": "Eşleşme, birinci ilacın ağız yoluyla alınmayan ve tüm vücudu etkileyebilen bir formunu (örneğin göz damlası) içeriyor.",
+    "integrity": {
+      "corrected_notice": "Bu örüntünün bir kaynağı için düzeltme yayımlandı.",
+      "expression_of_concern_notice": "Bu örüntünün bir kaynağı için endişe bildirimi yayımlandı.",
+      "integrity_unknown": "Bir kaynağın geri çekilme durumu kontrol edilemedi.",
+      "source_may_be_outdated": "Bu örüntünün bir kaynağı güncel olmayabilir.",
+      "integrity_check_may_be_out_of_date": "Bir kaynağın geri çekilme kontrolü güncel olmayabilir.",
+      "excluded_retracted": "Geri çekilmiş bir kaynak bulundu ve kullanılmadı.",
+      "not_registered": "Bir kaynak kayıtlı değil ve kullanılmadı."
+    },
+    "groupConfirmed": {
+      "twoFaces": "Hayaletler",
+      "glass": "Olası reçete kaskadları"
+    },
+    "groupUnconfirmed": "Ürün formu doğrulanmadı",
+    "groupUnconfirmedIntro": "Bu eşleşmeler {codes} kodlarını kullanıyor. Ürünün tam olarak hangisi olduğu (örneğin tablet veya göz damlası) doğrulanmadı; bu nedenle etkin maddenin tüm formları dikkate alındı. Örüntünün geçerli olduğundan emin olmak için lütfen ürünü doğrulayın.",
+    "chains": "Örüntü zincirleri",
+    "chainsIntro": "Bu örüntüler bir zincir oluşturuyor:",
+    "chainsTruncated": "Zincirlerin hepsi gösterilmiyor.",
+    "scope": "Janus neyi kontrol etti",
+    "scopeChecked": "Janus, PIPC listesindeki {total} örüntüden {checked} tanesini kontrol etti.",
+    "scopeRule": "Satır {row} ({cascade}) kontrol edilemiyor: {reason}.",
+    "notMatchable": {
+      "no_atc_code": "ilaç sınıfının kodu yok",
+      "not_a_drug_class": "kayıt bir ilaç sınıfı değil",
+      "ambiguous_text": "yayımlanmış metin belirsiz"
+    },
+    "disabled": {
+      "no_source": "kaynağı yok",
+      "all_sources_retracted": "tüm kaynakları geri çekildi",
+      "no_citable_source": "atıf yapılabilecek kaynak yok"
+    },
+    "notChecked": "Kontrol edilemiyor",
+    "notCheckedItem": "{name}: {reason}",
+    "noPattern": "Janus kural listesinden bir örüntü bulmadı. Bu, ilaçlarınızda hiçbir sorun olmadığı anlamına gelmez.",
+    "unavailable": "Kontrol şu anda yapılamıyor. Lütfen daha sonra tekrar deneyin.",
+    "outOfDate": "Bu kontrolden sonra liste değişti. Lütfen yeniden kontrol edin.",
+    "checkAgain": "Yeniden kontrol et",
+    "empty": "Kontrol etmek için ilaç ekleyin.",
+    "openDetail": "Kanıt ve raporlar",
+    "makeNote": "Doktor notunu hazırla",
+    "memory": "Tüm liste için raporlar",
+    "medicinesHeading": "Kontrol edilen ilaçlar",
+    "safetyHeading": "Ne zaman acil yardım alınmalı"
+  },
+  "ReadAloud": {
+    "read": "Sesli oku",
+    "stop": "Okumayı durdur"
+  },
+  "Evidence": {
+    "title": "Kanıt",
+    "loading": "Kaynaklar kontrol ediliyor…",
+    "unavailable": "Kaynak kontrolleri şu anda kullanılamıyor.",
+    "cited": "Bu örüntünün dayandığı kaynaklar",
+    "status": {
+      "ok": "Bildirim yok",
+      "corrected": "Düzeltme yayımlandı",
+      "expression_of_concern": "Endişe bildirimi",
+      "retracted": "Geri çekildi",
+      "unknown": "Durum bilinmiyor"
+    },
+    "checkedOn": "{date} tarihinde kontrol edildi",
+    "notCheckedByDoi": "Kontrol edilecek DOI yok",
+    "freshness": {
+      "current": "Veri güncel",
+      "stale": "Veri güncel olmayabilir ({days} günlük)",
+      "not_applicable": "Sabit kaynak"
+    },
+    "roots": "Dayandığı kaynak",
+    "notice": "{type} ({date})",
+    "noticeType": {
+      "correction": "Düzeltme",
+      "expression_of_concern": "Endişe bildirimi",
+      "retraction": "Geri çekme",
+      "other": "Bildirim"
+    },
+    "line": {
+      "sources": "{total, plural, one {# kaynak} other {# kaynak}}; {checked} tanesi DOI ile geri çekilme verisine göre kontrol edildi.",
+      "byStatus": "Bildirim yok: {ok} · düzeltme: {corrected} · endişe bildirimi: {eoc} · bilinmiyor: {unknown}",
+      "range": "Kontroller {first} ile {last} arasında yapıldı.",
+      "stale": "{source} verileri {date} tarihlidir ve güncel olmayabilir.",
+      "noRetracted": "Geri çekilmiş hiçbir kaynak kullanılmadı.",
+      "exceptions": "{count, plural, one {# kaynak kullanılmadı} other {# kaynak kullanılmadı}}.",
+      "about": "Bu satır kaynakları anlatır, ilaçlarınızı değil."
+    },
+    "excluded": "Kullanılmayan kaynaklar",
+    "stamp": {
+      "twoFaces": "Geri çekildi · kullanılmadı",
+      "glass": "Geri çekildi"
+    },
+    "notUsed": "Janus bu kaynağı kullanmadı.",
+    "reason": {
+      "retracted": "geri çekildi",
+      "not_registered": "kayıtlı değil",
+      "no_citable_basis": "atıf yapılabilir dayanağı yok"
+    }
+  },
+  "MemoryView": {
+    "title": "Kolektif Bellek",
+    "intro": "İlaçların ve olayların herkese açık advers olay raporlarında ne sıklıkla birlikte geçtiği.",
+    "pairTitle": "FDA'ya gönderilen raporlar (FAERS)",
+    "pairHeading": "{ingredient} ve “{event}”",
+    "reports": "{count, plural, =0 {Rapor yok} one {# rapor} other {# rapor}}",
+    "ratio": "Raporlama oranı (ROR) {ror}, aralık {low} ile {high}",
+    "ratioLabel": "Raporlama oranı (ROR)",
+    "noDifference": "1 = fark yok",
+    "over1000": "1.000'in üzerinde",
+    "assessmentHeading": "Sayıların gösterdiği",
+    "detailsHeading": "Ayrıntılar",
+    "pts": "Bu sayılardaki MedDRA Tercih Edilen Terimleri: {pts}",
+    "scopeSuspect": "İlacın şüpheli olarak adlandırıldığı raporlar",
+    "regionLine": "Bölge: {region}",
+    "combinationTitle": "Listedeki tüm ilaçlar birlikte",
+    "combinationReports": "{count, plural, =0 {Hepsini adlandıran rapor yok} one {Hepsini adlandıran # rapor} other {Hepsini adlandıran # rapor}}",
+    "eventsHeading": "Bu raporlardaki olaylar",
+    "regionsTitle": "Bölgeye göre",
+    "unknownRegion": "Bölgesi bilinmeyen: {count} ({share})",
+    "basis": "{region}: olayın ülkesine göre {occurrence}, bildirenin ülkesine göre {fallback}",
+    "adrreports": "AB raporları EMA tarafından yayımlanır (EudraVigilance, adrreports.eu)",
+    "donatedTitle": "Bağışlanan raporlar (Janus)",
+    "outcomesTitle": "Doktorun doğruladığı sonuçlar",
+    "cell": "{region}: {value}",
+    "eventPicker": "Olay",
+    "tooMany": "Listede 20'den fazla etkin madde var. Karşılaştırmak için lütfen en fazla 20 tane seçin.",
+    "fewKeys": "Birlikte göstermek için en az iki etkin madde gerekir.",
+    "loading": "Raporlar yükleniyor…",
+    "snapshot": "FAERS anlık görüntüsü {date}, dönem {first} ile {last}"
+  },
+  "Note": {
+    "title": "Doktor notu",
+    "intro": "Doktor için, doktorun dilinde, kaynaklı tek bir sayfa. Liste bu cihazda kalır; kutulardaki adlar burada doldurulur ve hiçbir zaman gönderilmez.",
+    "language": "Notun dili",
+    "patientLanguage": "Sizin diliniz: {language}",
+    "statisticsRegion": "Rapor istatistiklerinin bölgesi",
+    "make": "Notu hazırla",
+    "making": "Not hazırlanıyor…",
+    "preview": "Önizleme",
+    "sideBySide": "Yan yana: doktorun okuduğu metin ve aynı metin sizin dilinizde.",
+    "doctorColumn": "Doktor için ({language})",
+    "patientColumn": "Sizin dilinizde ({language})",
+    "download": "PDF indir",
+    "preparingPdf": "PDF hazırlanıyor…",
+    "print": "Yazdır",
+    "paper": "Kâğıt boyutu",
+    "a4": "A4",
+    "letter": "US Letter",
+    "pdfFailed": "PDF bu cihazda oluşturulamadı. Lütfen bunun yerine yazdırmayı deneyin.",
+    "pageOf": "Sayfa {page} / {pages}",
+    "versions": "Kurallar {rules} · ilaç verisi {dataset} · kanıt {integrity}",
+    "empty": "Not hazırlamak için ilaç ekleyip kontrol edin.",
+    "version_changed": "Bu sonuçlardan sonra veriler değişti. Sonuçlar güncellendi; lütfen yazdırmadan önce yeniden bakın.",
+    "language_unavailable": "Not bu dilde henüz hazır değil.",
+    "unavailable": "Not şu anda hazırlanamıyor. Sonuçlar kullanılmaya devam ediyor.",
+    "qr_no_findings": "Bu notta doktorun bildireceği bir şey yok.",
+    "qr_unavailable": "QR kodu şu anda kullanılamıyor. Not QR kodu olmadan yazdırılabilir.",
+    "productNotKnown": "(kutudaki ad girilmedi)"
+  },
+  "Research": {
+    "title": {
+      "twoFaces": "Işık yüzü: araştırmacılar için",
+      "glass": "Araştırma"
+    },
+    "intro": "Aynı yan etki bilgisi, araştırma için tersine çevrilir. Bu bölüm hasta akışının bir parçası değildir.",
+    "rule7": "Yeniden kullanım çıktıları araştırılmaya değer adaylardır — tedavi değildir.",
+    "coming": "4. aşamada geliyor.",
+    "entries": {
+      "hypotheses": {
+        "title": "Hipotez kartları",
+        "body": "Yan etki raporlarından yeniden kullanım hipotezleri, her biri kanıtıyla."
+      },
+      "seance": {
+        "title": {
+          "twoFaces": "Seans: üç tanık",
+          "glass": "Kanıt özeti"
+        },
+        "body": "Eski metinler, Kolektif Bellek ve moleküler kanıt yan yana."
+      },
+      "validation": {
+        "title": "Geriye dönük doğrulama",
+        "body": "Yöntemin zaten bilinen yeniden kullanımları nasıl bulduğu."
+      },
+      "export": {
+        "title": "Veri seti dışa aktarımı",
+        "body": "Araştırma için açık, anonimleştirilmiş veri seti."
+      }
+    },
+    "back": {
+      "twoFaces": "Gölge yüzüne dön",
+      "glass": "Hasta bölümüne dön"
+    }
+  },
+  "Doctor": {
+    "errors": {
+      "invalid_token": "Bu bağlantı geçerli değil.",
+      "token_expired": "Bu bağlantının süresi doldu.",
+      "token_not_usable": "Bu bağlantı artık kullanılamaz.",
+      "token_used": "Bu not için zaten bir yanıt gönderildi.",
+      "unavailable": "Şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin."
+    }
+  },
+  "Withdraw": {
+    "errors": {
+      "invalid_token": "Bu belirteç geçerli değil.",
+      "unavailable": "Geri çekme şu anda mümkün değil. Belirteç bu cihazda tutuluyor; lütfen daha sonra tekrar deneyin."
+    }
+  },
+  "Donate": {
+    "errors": {
+      "unavailable": "Bağış şu anda mümkün değil.",
+      "consent_changed": "Onay metni güncellendi: lütfen yeniden okuyun."
+    },
+    "delete": {
+      "not_found": "Bu belirteç için bağış bulunamadı (zaten silinmiş veya hiç kaydedilmemiş).",
+      "invalid_token": "Bu silme belirteci geçerli değil."
+    }
   },
   "Memory": {
     "screening": "Bu bir tarama istatistiğidir. Çok sayıda ilaç–olay çifti aynı anda incelenir ve çoğu bu ölçütleri karşılar; bu yüzden ölçütleri karşılamak yaygındır ve ilacın olaya neden olduğuna dair bir kanıt değildir.",

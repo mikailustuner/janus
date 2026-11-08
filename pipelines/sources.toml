@@ -56,6 +56,11 @@ id = "cited"
 title = "CITED ONLY — NOT INGESTED OR REDISTRIBUTED"
 banner = true
 
+[[sections]]
+id = "web"
+title = "WEB APP — BUNDLED FONTS AND LIBRARIES (apps/web)"
+banner = true
+
 # --- Product identification -------------------------------------------------
 
 [[sources]]
@@ -340,3 +345,89 @@ name = "Ottoman medical texts (theses, TTK editions)"
 license = "Copyright with their authors"
 notes = ["Short cited quotations only."]
 storage = "cited_only"
+
+# --- Web app: fonts and runtime libraries (experience design §2.1) ------------
+
+[[sources]]
+id = "font_fraunces"
+section = "web"
+name = "Fraunces (font, static SemiBold instance)"
+publisher = "The Fraunces Project Authors"
+license = "SIL Open Font License 1.1"
+notes = ["Committed under apps/web/src/fonts and apps/web/public/fonts with OFL.txt; embedded in the doctor note PDF."]
+storage = "commit"
+urls = ["https://github.com/undercasetype/Fraunces"]
+
+[[sources]]
+id = "font_atkinson_hyperlegible_next"
+section = "web"
+name = "Atkinson Hyperlegible Next (font, Regular and Bold instances)"
+publisher = "The Atkinson Hyperlegible Next Project Authors (Braille Institute of America)"
+license = "SIL Open Font License 1.1"
+notes = ["Committed under apps/web/src/fonts and apps/web/public/fonts with OFL.txt; embedded in the doctor note PDF."]
+storage = "commit"
+urls = ["https://github.com/googlefonts/atkinson-hyperlegible-next"]
+
+[[sources]]
+id = "font_ibm_plex_mono"
+section = "web"
+name = "IBM Plex Mono (font, Regular and Medium, unmodified)"
+publisher = "IBM Corp."
+license = "SIL Open Font License 1.1, Reserved Font Name \"Plex\""
+notes = ["Committed under apps/web/src/fonts and apps/web/public/fonts with OFL.txt; embedded in the doctor note PDF."]
+storage = "commit"
+urls = ["https://github.com/IBM/plex"]
+
+[[sources]]
+id = "font_noto_sans_fallback"
+section = "web"
+name = "Noto Sans (font, Regular instance, subset to Greek, punctuation and arrows)"
+publisher = "The Noto Project Authors"
+license = "SIL Open Font License 1.1"
+notes = ["Committed under apps/web/public/fonts with OFL.txt; fallback for letters the PDF fonts lack (for example the γ of γ-aminobutyric acid)."]
+storage = "commit"
+urls = ["https://github.com/notofonts/latin-greek-cyrillic"]
+
+[[sources]]
+id = "font_figtree"
+section = "web"
+name = "Figtree (font, variable)"
+publisher = "The Figtree Project Authors"
+license = "SIL Open Font License 1.1"
+notes = ["Committed under apps/web/src/fonts with OFL.txt (Glass theme)."]
+storage = "commit"
+urls = ["https://github.com/erikdkennedy/figtree"]
+
+[[sources]]
+id = "lib_zxing_wasm"
+section = "web"
+name = "zxing-wasm 3.1.6 (barcode reader, includes zxing-cpp)"
+license = "MIT (zxing-cpp: Apache-2.0)"
+notes = ["npm package; the reader wasm is served from the Janus origin."]
+storage = "separate_package"
+urls = ["https://github.com/Sec-ant/zxing-wasm"]
+
+[[sources]]
+id = "lib_tesseract_js"
+section = "web"
+name = "tesseract.js 7.0.0 (on-device text recognition) and tessdata_fast models"
+license = "Apache-2.0"
+notes = ["npm package; worker, core and language data are served from the Janus origin, not committed."]
+storage = "separate_package"
+urls = ["https://github.com/naptha/tesseract.js", "https://github.com/tesseract-ocr/tessdata_fast"]
+
+[[sources]]
+id = "lib_react_pdf"
+section = "web"
+name = "@react-pdf/renderer 4.9.0 (doctor note PDF in the browser)"
+license = "MIT"
+storage = "separate_package"
+urls = ["https://github.com/diegomura/react-pdf"]
+
+[[sources]]
+id = "lib_qrcode"
+section = "web"
+name = "qrcode 1.5.4 (QR code of the doctor note)"
+license = "MIT"
+storage = "separate_package"
+urls = ["https://github.com/soldair/node-qrcode"]

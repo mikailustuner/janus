@@ -74,6 +74,9 @@ services:
     build:
       context: .
       dockerfile: apps/web/Dockerfile
+      args:
+        # Same-origin API: the web server maps /api/* to this address (experience DP15).
+        JANUS_API_ORIGIN: http://api:8000
     depends_on:
       api:
         condition: service_healthy

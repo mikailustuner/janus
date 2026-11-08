@@ -6,12 +6,481 @@
   "LocaleSwitcher": {
     "label": "Sprache"
   },
-  "Home": {
-    "title": "Janus",
-    "status": "Im Aufbau. Hier werden noch keine medizinischen Daten verarbeitet."
-  },
   "Disclaimer": {
     "text": "Janus bietet Informationen, keine medizinische Beratung. Forschungsprototyp – kein Medizinprodukt."
+  },
+  "Home": {
+    "title": "Janus",
+    "tagline": {
+      "twoFaces": "Die zwei Gesichter einer Nebenwirkung",
+      "glass": "Ein Blick auf die Medikamente zu Hause"
+    },
+    "intro": "Scannen oder tippen Sie die Medikamente zu Hause ein. Janus sucht nach in der Literatur beschriebenen Mustern von Verschreibungskaskaden und erstellt eine Notiz mit Quellen für die Ärztin oder den Arzt, in deren Sprache.",
+    "start": "Mit meinen Medikamenten beginnen",
+    "demo": "Demo ausprobieren",
+    "demoHint": "Ohne Anmeldung. Drei synthetische Patienten mit erfundenen Produktnamen.",
+    "resume": "Mit Ihrer Liste weitermachen",
+    "resumeCount": "{count, plural, one {# Medikament auf diesem Gerät} other {# Medikamente auf diesem Gerät}}",
+    "privacy": "Was auf diesem Gerät bleibt"
+  },
+  "Shell": {
+    "skip": "Zum Inhalt springen",
+    "navLabel": "Hauptnavigation",
+    "nav": {
+      "home": "Start",
+      "scan": "Scannen",
+      "medicines": "Medikamente",
+      "results": "Ergebnisse",
+      "settings": "Einstellungen",
+      "research": {
+        "twoFaces": "Lichtgesicht",
+        "glass": "Forschung"
+      }
+    },
+    "mask": {
+      "label": {
+        "twoFaces": "Maske: Gesicht wählen",
+        "glass": "Bereich"
+      },
+      "patient": {
+        "twoFaces": "Schatten",
+        "glass": "Patient"
+      },
+      "research": {
+        "twoFaces": "Licht",
+        "glass": "Forschung"
+      }
+    },
+    "privacy": "Datenschutz",
+    "demoCodes": "Demo-Codes"
+  },
+  "Emergency": {
+    "title": "Im Notfall",
+    "text": "Brustschmerzen, Atemnot, Anzeichen eines Schlaganfalls oder eine schwere allergische Reaktion: Rufen Sie zuerst den Notruf ({emergency}).",
+    "short": "Notruf: {emergency}"
+  },
+  "Common": {
+    "loading": "Wird geladen …",
+    "retry": "Erneut versuchen",
+    "back": "Zurück",
+    "close": "Schließen",
+    "cancel": "Abbrechen",
+    "save": "Speichern",
+    "edit": "Bearbeiten",
+    "remove": "Entfernen",
+    "showMore": "Mehr anzeigen",
+    "continue": "Weiter",
+    "dontKnow": "Weiß nicht",
+    "details": "Details",
+    "hideDetails": "Details ausblenden",
+    "region": {
+      "TR": "Türkei",
+      "US": "Vereinigte Staaten",
+      "EU": "Europäische Union",
+      "ALL": "Alle Regionen",
+      "OTHER": "Anderes Land",
+      "UNKNOWN": "Nicht angegeben"
+    },
+    "source": {
+      "titck": "TİTCK",
+      "openfda_ndc": "openFDA-NDC-Verzeichnis",
+      "eu_fr_bdpm": "BDPM (Frankreich)",
+      "eu_es_cima": "CIMA, AEMPS (Spanien)",
+      "wikidata": "Wikidata",
+      "other": "Quelle {id}"
+    },
+    "sourceLine": "{source}, Datenstand {date}",
+    "monthsBetween": "{months, plural, one {# Monat} other {# Monate}}"
+  },
+  "Errors": {
+    "generic": "Etwas ist schiefgegangen. Bitte versuchen Sie es erneut.",
+    "network": "Janus ist nicht erreichbar. Prüfen Sie die Verbindung und versuchen Sie es erneut.",
+    "client_defect": "Auf unserer Seite ist ein Fehler aufgetreten. Sie müssen nichts ändern.",
+    "resolution_unavailable": "Die Arzneimitteldaten sind gerade nicht verfügbar. Bitte versuchen Sie es später erneut.",
+    "cascades_unavailable": "Die Prüfung ist gerade nicht verfügbar. Bitte versuchen Sie es später erneut.",
+    "dataset_changed": "Die Arzneimitteldaten wurden während der Prüfung aktualisiert. Bitte bestätigen Sie Ihre Medikamente erneut.",
+    "dataset_changed_again": "Die Arzneimitteldaten haben sich erneut geändert. Bitte versuchen Sie es in einigen Minuten noch einmal."
+  },
+  "Storage": {
+    "unavailable": "Dieser Browser kann Ihre Daten nicht auf diesem Gerät speichern. Sie bleiben nur erhalten, bis diese Seite geschlossen wird.",
+    "invalid": "Einige gespeicherte Daten auf diesem Gerät konnten nicht gelesen werden und wurden nicht verwendet. Es wurde nichts gesendet."
+  },
+  "NotFound": {
+    "title": "Seite nicht gefunden",
+    "body": "Diese Seite gibt es nicht.",
+    "home": "Zurück zur Startseite"
+  },
+  "Start": {
+    "title": "Woher stammen die Medikamente?",
+    "intro": "Janus liest Packungen und Etiketten aus der Türkei, der Europäischen Union und den Vereinigten Staaten, auch gemischt in einer Liste.",
+    "scanRegion": "Packungen und Etiketten aus",
+    "scanRegionAuto": "Automatisch erkennen",
+    "userRegion": "Wo wohnen Sie?",
+    "userRegionHint": "Wird nur verwendet, um die richtigen Notrufnummern zu zeigen. Bleibt auf diesem Gerät.",
+    "userRegionOther": "Anderes Land",
+    "userRegionUnknown": "Keine Angabe",
+    "continue": "Weiter zu den Medikamenten"
+  },
+  "Scan": {
+    "title": "Scannen",
+    "coming": "Scannen, Etikettenfoto und Eintippen sind noch in Arbeit. Bis dahin zeigt die Demo den ganzen Ablauf.",
+    "errors": {
+      "unreadable": "Dieser Code konnte nicht gelesen werden. Bitte versuchen Sie es erneut oder tippen Sie den Namen ein.",
+      "gtin_check_digit": "Die Ziffern dieses Codes passen nicht zusammen. Bitte prüfen Sie sie oder tippen Sie den Namen ein.",
+      "ndc_malformed": "Das sieht nicht wie eine NDC aus. Bitte prüfen Sie sie oder tippen Sie den Namen ein."
+    }
+  },
+  "Settings": {
+    "title": "Einstellungen",
+    "saved": "Auf diesem Gerät gespeichert.",
+    "language": "Sprache der Oberfläche",
+    "noteLanguage": "Sprache der Arztnotiz",
+    "noteLanguageSame": "Wie die Oberfläche",
+    "regions": "Regionen",
+    "scanRegion": "Packungen und Etiketten aus",
+    "scanRegionAuto": "Automatisch erkennen",
+    "userRegion": "Wohnort (Notrufnummern)",
+    "statisticsRegion": "Region der Meldestatistik in der Notiz (optional)",
+    "statisticsRegionNone": "Keine",
+    "appearance": "Darstellung",
+    "theme": "Design",
+    "themeTwoFaces": "Zwei Gesichter",
+    "themeTwoFacesHint": "Nachtblau für die Patientenseite, Elfenbein für die Forschungsseite.",
+    "themeGlass": "Glas",
+    "themeGlassHint": "Schlicht und hell, ohne Themensymbole.",
+    "largeText": "Große Schrift",
+    "reduceTransparency": "Transparenz reduzieren",
+    "reduceTransparencyHint": "Einfarbige Karten statt Milchglas (Design Glas).",
+    "readAloud": "Befunde vorlesen",
+    "readAloudHint": "Nutzt die Stimme dieses Browsers. Es wird nichts an einen Server gesendet.",
+    "research": "Forschungsbereich",
+    "privacy": "Datenschutz",
+    "deleteTitle": "Alles auf diesem Gerät löschen",
+    "deleteBody": "Entfernt die Medikamentenliste, die Einstellungen und die gespeicherten Token aus diesem Browser. Gespendete Daten und Antworten von Ärztinnen und Ärzten lassen sich nur mit ihrem Lösch-Token oder Notiz-Token löschen.",
+    "deleteButton": "Alles löschen",
+    "deleteConfirm": "Alles löschen, was Janus auf diesem Gerät speichert? Das lässt sich nicht rückgängig machen.",
+    "deleteDone": "Alles, was Janus auf diesem Gerät gespeichert hatte, wurde gelöscht."
+  },
+  "Demo": {
+    "label": "Demo · synthetischer Patient",
+    "labelWith": "Demo · synthetischer Patient: {patient}",
+    "exit": "Demo beenden",
+    "title": "Demo ausprobieren",
+    "intro": "Drei synthetische Patienten. Die Produktnamen sind erfunden; Wirkstoffe, Befunde, Meldestatistiken und Notiztext wurden aus der echten Regelbasis und dem Datenstand aufgezeichnet. Es wird nichts gesendet und nichts gespeichert.",
+    "open": "Patient {patient} öffnen",
+    "items": "{count, plural, one {# Medikament} other {# Medikamente}}",
+    "recorded": "Aufgezeichnet am {date}. Regeln {rules}, Arzneimitteldaten {dataset}, Evidenz {integrity}.",
+    "patients": {
+      "istanbul": {
+        "name": "Istanbul",
+        "summary": "Neun türkische Packungen, darunter eine Kombinationstablette."
+      },
+      "cologne": {
+        "name": "Köln",
+        "summary": "Türkische und deutsche Packungen in einer Liste."
+      },
+      "ohio": {
+        "name": "Ohio",
+        "summary": "US-Apothekendosen, gefunden über die NDC."
+      }
+    },
+    "codes": "Druckbare Demo-Codes",
+    "codesIntro": "Ein Code pro Demo-Produkt. Sie nutzen einen Codebereich, den kein Arzneimittel verwendet, und Janus erkennt sie vor jeder Anfrage.",
+    "codeLabel": "DEMO — synthetisches Produkt, kein Arzneimittel",
+    "serialNote": "Der Code enthält absichtlich auch eine Seriennummer: Janus sendet sie nie.",
+    "neverDonated": "Demo-Daten werden nie gespendet.",
+    "noList": "Ihre eigene Liste wird im Demo-Modus nicht gezeigt, und Demo-Medikamente werden ihr nie hinzugefügt."
+  },
+  "Medicines": {
+    "title": "Medikamente",
+    "empty": "Noch keine Medikamente.",
+    "add": "Ein Medikament scannen",
+    "count": "{count, plural, one {# Medikament} other {# Medikamente}}",
+    "since": "Seit {month}",
+    "startUnknown": "Beginn nicht bekannt",
+    "byName": "Über den Namen gefunden: Darreichungsform nicht bestätigt",
+    "ingredients": "Wirkstoffe",
+    "combinationCode": "Produktcode {code}, wie veröffentlicht (kein Wirkstoffcode)",
+    "editStart": "Seit wann?",
+    "boxName": "Name auf der Packung",
+    "removeConfirm": "{name} aus der Liste entfernen?",
+    "tooMany": "Janus prüft höchstens 50 Medikamente auf einmal. Bitte entfernen Sie einige Medikamente, um die Liste zu prüfen.",
+    "needsConfirmation": "Bitte bestätigen Sie dieses Medikament erneut.",
+    "check": "Auf Muster prüfen",
+    "timeline": "Zeitleiste",
+    "outOfDate": "Die Liste hat sich geändert. Die zuvor gezeigten Ergebnisse sind nicht mehr aktuell.",
+    "demoReadOnly": "Dies ist eine Demo-Liste; sie kann nicht geändert werden."
+  },
+  "Month": {
+    "label": "Seit wann?",
+    "month": "Monat",
+    "year": "Jahr",
+    "dontKnow": "Weiß nicht",
+    "future": "Der Monat darf nicht nach dem aktuellen Monat liegen."
+  },
+  "Timeline": {
+    "title": "Zeitleiste",
+    "intro": "Beginnmonate in zeitlicher Reihenfolge.",
+    "empty": "Fügen Sie Beginnmonate hinzu, um die Zeitleiste zu sehen.",
+    "unknownLane": "Beginn nicht bekannt",
+    "link": "{marker} wurde {months, plural, one {# Monat} other {# Monate}} nach {index} begonnen.",
+    "linkSameMonth": "{marker} und {index} wurden im selben Monat begonnen.",
+    "linkUnknown": "{marker} und {index}: Die Reihenfolge ist nicht bekannt."
+  },
+  "Findings": {
+    "title": {
+      "twoFaces": "Geister",
+      "glass": "Ergebnisse"
+    },
+    "count": {
+      "twoFaces": "{count, plural, =0 {Kein Geist gefunden} one {# Geist gefunden} other {# Geister gefunden}}",
+      "glass": "{count, plural, =0 {Keine mögliche Verschreibungskaskade} one {# mögliche Verschreibungskaskade} other {# mögliche Verschreibungskaskaden}}"
+    },
+    "kind": {
+      "twoFaces": "Geist: ein Muster einer Verschreibungskaskade",
+      "glass": "Mögliche Verschreibungskaskade"
+    },
+    "checkedOf": "{items, plural, one {# Medikament} other {# Medikamente}} mit {total} Mustern abgeglichen",
+    "evaluating": "Die Medikamente werden geprüft …",
+    "pattern": "Diese beiden Medikamente passen zu einem in der Literatur beschriebenen Muster einer Verschreibungskaskade.",
+    "discuss": "Darüber kann ein Gespräch mit Ihrer Ärztin oder Ihrem Arzt sinnvoll sein.",
+    "cascade": "{drug_a} → {event} → {drug_b}",
+    "medicines": "{index} ({indexBox}), danach {marker} ({markerBox})",
+    "started": "{name}: seit {month}",
+    "startUnknown": "{name}: Beginn nicht bekannt",
+    "status": {
+      "probable": "Wahrscheinlich",
+      "possible": "Möglich"
+    },
+    "statusMonths": "{status} · {months, plural, one {# Monat Abstand} other {# Monate Abstand}}",
+    "timing": {
+      "within_window": "{marker} wurde {months, plural, one {# Monat} other {# Monate}} nach {index} begonnen, innerhalb des Zeitfensters von {window} Monaten, das für solche Muster verwendet wird.",
+      "after_window": "{marker} wurde {months, plural, one {# Monat} other {# Monate}} nach {index} begonnen, später als das Zeitfenster von {window} Monaten, das für solche Muster verwendet wird.",
+      "same_month": "Beide Medikamente wurden im selben Monat begonnen, daher ist ihre Reihenfolge nicht bekannt.",
+      "date_unknown": "Mindestens ein Beginnmonat ist nicht bekannt, daher konnte die Reihenfolge der beiden Medikamente nicht geprüft werden."
+    },
+    "lowPriority": "Muster mit geringerer Priorität",
+    "priority": "Veröffentlichte Daten (BMJ 2026, Abstract): {measure} {value} (Bereich {low} bis {high})",
+    "measure": {
+      "incidence": "Inzidenz, %",
+      "adjusted_sequence_ratio": "adjustiertes Sequenzverhältnis"
+    },
+    "supporting": "Dieselbe Kaskade ist auch in einer anderen veröffentlichten Kaskadenliste (ThinkCascades) beschrieben.",
+    "formExtension": "Die Übereinstimmung umfasst eine nicht orale Form des ersten Medikaments (zum Beispiel Augentropfen), die auf den ganzen Körper wirken kann.",
+    "integrity": {
+      "corrected_notice": "Zu einer Quelle dieses Musters wurde eine Korrektur veröffentlicht.",
+      "expression_of_concern_notice": "Zu einer Quelle dieses Musters wurde eine Expression of Concern veröffentlicht.",
+      "integrity_unknown": "Der Rückzugsstatus einer Quelle konnte nicht geprüft werden.",
+      "source_may_be_outdated": "Eine Quelle dieses Musters ist möglicherweise nicht aktuell.",
+      "integrity_check_may_be_out_of_date": "Die Rückzugsprüfung einer Quelle ist möglicherweise nicht aktuell.",
+      "excluded_retracted": "Eine zurückgezogene Quelle wurde gefunden und nicht verwendet.",
+      "not_registered": "Eine Quelle ist nicht registriert und wurde nicht verwendet."
+    },
+    "groupConfirmed": {
+      "twoFaces": "Geister",
+      "glass": "Mögliche Verschreibungskaskaden"
+    },
+    "groupUnconfirmed": "Darreichungsform nicht bestätigt",
+    "groupUnconfirmedIntro": "Diese Übereinstimmungen nutzen die Codes {codes}. Das genaue Präparat (zum Beispiel Tablette oder Augentropfen) wurde nicht bestätigt, daher wurden alle Formen des Wirkstoffs berücksichtigt. Bitte bestätigen Sie das Präparat, damit klar ist, ob das Muster zutrifft.",
+    "chains": "Ketten von Mustern",
+    "chainsIntro": "Diese Muster bilden eine Kette:",
+    "chainsTruncated": "Nicht alle Ketten werden gezeigt.",
+    "scope": "Was Janus geprüft hat",
+    "scopeChecked": "Janus hat {checked} der {total} Muster der PIPC-Liste geprüft.",
+    "scopeRule": "Zeile {row} ({cascade}) kann nicht geprüft werden: {reason}.",
+    "notMatchable": {
+      "no_atc_code": "die Arzneimittelklasse hat keinen Code",
+      "not_a_drug_class": "der Eintrag ist keine Arzneimittelklasse",
+      "ambiguous_text": "der veröffentlichte Text ist mehrdeutig"
+    },
+    "disabled": {
+      "no_source": "es gibt keine Quelle",
+      "all_sources_retracted": "alle Quellen wurden zurückgezogen",
+      "no_citable_source": "keine Quelle ist zitierfähig"
+    },
+    "notChecked": "Kann nicht geprüft werden",
+    "notCheckedItem": "{name}: {reason}",
+    "noPattern": "Janus hat kein Muster aus seiner Regelliste gefunden. Das bedeutet nicht, dass Ihre Medikamente frei von Problemen sind.",
+    "unavailable": "Die Prüfung ist gerade nicht verfügbar. Bitte versuchen Sie es später erneut.",
+    "outOfDate": "Die Liste hat sich nach dieser Prüfung geändert. Bitte prüfen Sie erneut.",
+    "checkAgain": "Erneut prüfen",
+    "empty": "Fügen Sie Medikamente hinzu, um sie zu prüfen.",
+    "openDetail": "Evidenz und Meldungen",
+    "makeNote": "Arztnotiz vorbereiten",
+    "memory": "Meldungen für die ganze Liste",
+    "medicinesHeading": "Geprüfte Medikamente",
+    "safetyHeading": "Wann dringend Hilfe nötig ist"
+  },
+  "ReadAloud": {
+    "read": "Vorlesen",
+    "stop": "Vorlesen beenden"
+  },
+  "Evidence": {
+    "title": "Evidenz",
+    "loading": "Die Quellen werden geprüft …",
+    "unavailable": "Quellenprüfungen sind gerade nicht verfügbar.",
+    "cited": "Quellen, auf die sich dieses Muster stützt",
+    "status": {
+      "ok": "Kein Hinweis",
+      "corrected": "Korrektur veröffentlicht",
+      "expression_of_concern": "Expression of Concern",
+      "retracted": "Zurückgezogen",
+      "unknown": "Status nicht bekannt"
+    },
+    "checkedOn": "Geprüft am {date}",
+    "notCheckedByDoi": "Keine DOI zum Prüfen",
+    "freshness": {
+      "current": "Daten aktuell",
+      "stale": "Daten möglicherweise nicht aktuell ({days} Tage alt)",
+      "not_applicable": "Feste Quelle"
+    },
+    "roots": "Gestützt auf",
+    "notice": "{type} ({date})",
+    "noticeType": {
+      "correction": "Korrektur",
+      "expression_of_concern": "Expression of Concern",
+      "retraction": "Rückzug",
+      "other": "Hinweis"
+    },
+    "line": {
+      "sources": "{total, plural, one {# Quelle} other {# Quellen}}, davon {checked} per DOI mit Rückzugsdaten abgeglichen.",
+      "byStatus": "Kein Hinweis: {ok} · Korrektur: {corrected} · Expression of Concern: {eoc} · nicht bekannt: {unknown}",
+      "range": "Prüfungen zwischen {first} und {last}.",
+      "stale": "Die Daten von {source} stammen vom {date} und sind möglicherweise nicht aktuell.",
+      "noRetracted": "Es wurde keine zurückgezogene Quelle verwendet.",
+      "exceptions": "{count, plural, one {# Quelle wurde nicht verwendet} other {# Quellen wurden nicht verwendet}}.",
+      "about": "Diese Zeile beschreibt die Quellen, nicht Ihre Medikamente."
+    },
+    "excluded": "Nicht verwendete Quellen",
+    "stamp": {
+      "twoFaces": "Zurückgezogen · nicht verwendet",
+      "glass": "Zurückgezogen"
+    },
+    "notUsed": "Janus hat diese Quelle nicht verwendet.",
+    "reason": {
+      "retracted": "zurückgezogen",
+      "not_registered": "nicht registriert",
+      "no_citable_basis": "keine zitierfähige Grundlage"
+    }
+  },
+  "MemoryView": {
+    "title": "Kollektives Gedächtnis",
+    "intro": "Wie oft Medikamente und Ereignisse gemeinsam in öffentlichen Meldungen über unerwünschte Ereignisse vorkommen.",
+    "pairTitle": "Meldungen an die FDA (FAERS)",
+    "pairHeading": "{ingredient} und „{event}“",
+    "reports": "{count, plural, =0 {Keine Meldungen} one {# Meldung} other {# Meldungen}}",
+    "ratio": "Reporting Odds Ratio {ror}, Bereich {low} bis {high}",
+    "ratioLabel": "Reporting Odds Ratio",
+    "noDifference": "1 = kein Unterschied",
+    "over1000": "über 1.000",
+    "assessmentHeading": "Was die Zahlen zeigen",
+    "detailsHeading": "Details",
+    "pts": "MedDRA Preferred Terms in diesen Zahlen: {pts}",
+    "scopeSuspect": "Meldungen, in denen das Medikament als verdächtigt genannt wird",
+    "regionLine": "Region: {region}",
+    "combinationTitle": "Alle Medikamente der Liste zusammen",
+    "combinationReports": "{count, plural, =0 {Keine Meldung nennt alle} one {# Meldung nennt alle} other {# Meldungen nennen alle}}",
+    "eventsHeading": "Ereignisse in diesen Meldungen",
+    "regionsTitle": "Nach Region",
+    "unknownRegion": "Region nicht bekannt: {count} ({share})",
+    "basis": "{region}: {occurrence} nach dem Land des Ereignisses, {fallback} nach dem Land der meldenden Stelle",
+    "adrreports": "EU-Meldungen veröffentlicht die EMA (EudraVigilance, adrreports.eu)",
+    "donatedTitle": "Gespendete Meldungen (Janus)",
+    "outcomesTitle": "Ärztlich bestätigte Ergebnisse",
+    "cell": "{region}: {value}",
+    "eventPicker": "Ereignis",
+    "tooMany": "Die Liste hat mehr als 20 Wirkstoffe. Bitte wählen Sie höchstens 20 zum Vergleich.",
+    "fewKeys": "Für die gemeinsame Anzeige sind mindestens zwei Wirkstoffe nötig.",
+    "loading": "Die Meldungen werden geladen …",
+    "snapshot": "FAERS-Datenstand {date}, Zeitraum {first} bis {last}"
+  },
+  "Note": {
+    "title": "Arztnotiz",
+    "intro": "Eine Seite für die Ärztin oder den Arzt, mit Quellen, in deren Sprache. Die Liste bleibt auf diesem Gerät; die Namen auf den Packungen werden hier eingesetzt und nie gesendet.",
+    "language": "Sprache der Notiz",
+    "patientLanguage": "Ihre Sprache: {language}",
+    "statisticsRegion": "Region der Meldestatistik",
+    "make": "Notiz erstellen",
+    "making": "Die Notiz wird erstellt …",
+    "preview": "Vorschau",
+    "sideBySide": "Nebeneinander: was die Ärztin oder der Arzt liest und derselbe Text in Ihrer Sprache.",
+    "doctorColumn": "Für die Ärztin oder den Arzt ({language})",
+    "patientColumn": "In Ihrer Sprache ({language})",
+    "download": "PDF herunterladen",
+    "preparingPdf": "Das PDF wird erstellt …",
+    "print": "Drucken",
+    "paper": "Papierformat",
+    "a4": "A4",
+    "letter": "US Letter",
+    "pdfFailed": "Das PDF konnte auf diesem Gerät nicht erstellt werden. Bitte drucken Sie stattdessen.",
+    "pageOf": "Seite {page} von {pages}",
+    "versions": "Regeln {rules} · Arzneimitteldaten {dataset} · Evidenz {integrity}",
+    "empty": "Fügen Sie Medikamente hinzu und prüfen Sie sie, um eine Notiz zu erstellen.",
+    "version_changed": "Die Daten haben sich seit diesen Ergebnissen geändert. Die Ergebnisse wurden aktualisiert; bitte sehen Sie sie vor dem Drucken noch einmal an.",
+    "language_unavailable": "Die Notiz ist in dieser Sprache noch nicht verfügbar.",
+    "unavailable": "Die Notiz kann gerade nicht erstellt werden. Die Ergebnisse bleiben verfügbar.",
+    "qr_no_findings": "Zu dieser Notiz gibt es für die Ärztin oder den Arzt nichts zu melden.",
+    "qr_unavailable": "Der QR-Code ist gerade nicht verfügbar. Die Notiz kann ohne ihn gedruckt werden.",
+    "productNotKnown": "(Name auf der Packung nicht angegeben)"
+  },
+  "Research": {
+    "title": {
+      "twoFaces": "Lichtgesicht: für Forschende",
+      "glass": "Forschung"
+    },
+    "intro": "Dasselbe Wissen über Nebenwirkungen, für die Forschung umgekehrt. Dieser Bereich ist kein Teil des Patientenablaufs.",
+    "rule7": "Ergebnisse zur Wiederverwendung sind untersuchenswerte Kandidaten — keine Behandlungen.",
+    "coming": "Kommt in Phase 4.",
+    "entries": {
+      "hypotheses": {
+        "title": "Hypothesenkarten",
+        "body": "Hypothesen zur Wiederverwendung aus Meldungen, jeweils mit ihrer Evidenz."
+      },
+      "seance": {
+        "title": {
+          "twoFaces": "Die Séance: drei Zeugen",
+          "glass": "Evidenzübersicht"
+        },
+        "body": "Historische Texte, Kollektives Gedächtnis und molekulare Evidenz nebeneinander."
+      },
+      "validation": {
+        "title": "Retrospektive Validierung",
+        "body": "Wie die Methode bereits bekannte Wiederverwendungen findet."
+      },
+      "export": {
+        "title": "Datensatz-Export",
+        "body": "Der offene, anonymisierte Datensatz für die Forschung."
+      }
+    },
+    "back": {
+      "twoFaces": "Zurück zum Schattengesicht",
+      "glass": "Zurück zum Patientenbereich"
+    }
+  },
+  "Doctor": {
+    "errors": {
+      "invalid_token": "Dieser Link ist nicht gültig.",
+      "token_expired": "Dieser Link ist abgelaufen.",
+      "token_not_usable": "Dieser Link kann nicht mehr verwendet werden.",
+      "token_used": "Zu dieser Notiz wurde bereits eine Antwort gesendet.",
+      "unavailable": "Gerade nicht verfügbar. Bitte versuchen Sie es später erneut."
+    }
+  },
+  "Withdraw": {
+    "errors": {
+      "invalid_token": "Dieses Token ist nicht gültig.",
+      "unavailable": "Der Widerruf ist gerade nicht möglich. Das Token bleibt auf diesem Gerät; bitte versuchen Sie es später erneut."
+    }
+  },
+  "Donate": {
+    "errors": {
+      "unavailable": "Spenden sind gerade nicht möglich.",
+      "consent_changed": "Der Einwilligungstext wurde aktualisiert: Bitte lesen Sie ihn erneut."
+    },
+    "delete": {
+      "not_found": "Zu diesem Token wurde keine Spende gefunden (bereits gelöscht oder nie gespeichert).",
+      "invalid_token": "Dieses Lösch-Token ist nicht gültig."
+    }
   },
   "Memory": {
     "screening": "Dies ist eine Screening-Statistik. Viele Kombinationen aus Arzneimittel und Ereignis werden gleichzeitig geprüft und die meisten erfüllen diese Kriterien. Diese Kriterien zu erfüllen ist daher häufig und kein Beleg dafür, dass das Arzneimittel das Ereignis verursacht.",

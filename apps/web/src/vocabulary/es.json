@@ -1,0 +1,1425 @@
+{
+ "events": {
+  "cough": {
+   "label": "Tos",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    1
+   ]
+  },
+  "dizziness": {
+   "label": "Mareo o presión baja al ponerse de pie",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    2,
+    56
+   ]
+  },
+  "depression": {
+   "label": "Depresión o ánimo bajo",
+   "safety_line": "crisis_support",
+   "direction": "adverse",
+   "pipc_positions": [
+    3,
+    36,
+    55
+   ]
+  },
+  "erectile_dysfunction": {
+   "label": "Disfunción eréctil",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    4
+   ]
+  },
+  "peripheral_oedema": {
+   "label": "Tobillos o piernas hinchados (edema periférico)",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    5,
+    31
+   ]
+  },
+  "oedema": {
+   "label": "Retención de líquidos o hinchazón (edema)",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    43
+   ]
+  },
+  "constipation": {
+   "label": "Estreñimiento",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    6,
+    34,
+    65
+   ]
+  },
+  "gout_hyperuricaemia": {
+   "label": "Gota o ácido úrico alto",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    7
+   ]
+  },
+  "urinary_incontinence": {
+   "label": "Incontinencia urinaria",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    8,
+    24,
+    32,
+    35
+   ]
+  },
+  "myalgia_myositis": {
+   "label": "Dolor o inflamación muscular (mialgia, miositis)",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    9,
+    10,
+    11
+   ]
+  },
+  "insomnia": {
+   "label": "Dificultad para dormir (insomnio)",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    12,
+    25,
+    59
+   ]
+  },
+  "nausea": {
+   "label": "Náuseas",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    13,
+    16,
+    52
+   ]
+  },
+  "hypertension": {
+   "label": "Presión arterial alta (hipertensión)",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    14,
+    38,
+    53,
+    61,
+    64
+   ]
+  },
+  "rash": {
+   "label": "Erupción cutánea",
+   "safety_line": "urgent_care_skin",
+   "direction": "adverse",
+   "pipc_positions": [
+    15
+   ]
+  },
+  "extrapyramidal_symptoms": {
+   "label": "Rigidez, movimientos lentos o anormales (síntomas extrapiramidales)",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    17,
+    18,
+    19,
+    37,
+    46
+   ]
+  },
+  "akathisia_tardive_movements": {
+   "label": "Inquietud interna o movimientos involuntarios (acatisia, discinesia tardía)",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    20
+   ]
+  },
+  "arrhythmia": {
+   "label": "Latido cardíaco rápido o irregular (arritmia)",
+   "safety_line": "urgent_care_heart",
+   "direction": "adverse",
+   "pipc_positions": [
+    21,
+    63
+   ]
+  },
+  "hyperglycaemia": {
+   "label": "Azúcar en sangre alto (hiperglucemia)",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    22
+   ]
+  },
+  "cognitive_impairment": {
+   "label": "Problemas de memoria o de pensamiento",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    23,
+    33
+   ]
+  },
+  "gastrointestinal_upset": {
+   "label": "Indigestión o molestias de estómago",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    26,
+    27
+   ]
+  },
+  "diarrhoea": {
+   "label": "Diarrea",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    28,
+    42,
+    47
+   ]
+  },
+  "rhinorrhoea": {
+   "label": "Secreción nasal",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    29
+   ]
+  },
+  "psychosis_hallucinations": {
+   "label": "Alucinaciones, ideas delirantes o síntomas psicóticos",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    30,
+    60
+   ]
+  },
+  "tremor": {
+   "label": "Temblor",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    39
+   ]
+  },
+  "joint_pain": {
+   "label": "Dolor en las articulaciones",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    40
+   ]
+  },
+  "genital_fungal_infection": {
+   "label": "Infección genital por hongos",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    41,
+    62
+   ]
+  },
+  "urinary_retention": {
+   "label": "Dificultad para orinar (retención urinaria)",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    45
+   ]
+  },
+  "osteoporosis_fracture": {
+   "label": "Huesos debilitados (osteoporosis)",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    48
+   ]
+  },
+  "vitamin_mineral_deficiency": {
+   "label": "Vitamina B12, magnesio o hierro bajos",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    49
+   ]
+  },
+  "gastritis": {
+   "label": "Inflamación del estómago (gastritis)",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    50
+   ]
+  },
+  "gastric_ulcer_bleed": {
+   "label": "Úlcera de estómago o hemorragia digestiva",
+   "safety_line": "urgent_care_gi",
+   "direction": "adverse",
+   "pipc_positions": [
+    51
+   ]
+  },
+  "heart_failure": {
+   "label": "Insuficiencia cardíaca",
+   "safety_line": "urgent_care_breathing",
+   "direction": "adverse",
+   "pipc_positions": [
+    44,
+    54
+   ]
+  },
+  "dry_mouth": {
+   "label": "Boca seca",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    57
+   ]
+  },
+  "seizures": {
+   "label": "Convulsiones (crisis convulsivas)",
+   "safety_line": "urgent_care_seizure",
+   "direction": "adverse",
+   "pipc_positions": [
+    58
+   ]
+  },
+  "improvement_pain": {
+   "label": "Menos dolor",
+   "safety_line": null,
+   "direction": "benefit",
+   "pipc_positions": []
+  },
+  "improvement_sleep": {
+   "label": "Mejor sueño",
+   "safety_line": null,
+   "direction": "benefit",
+   "pipc_positions": []
+  },
+  "improvement_mood": {
+   "label": "Mejor estado de ánimo",
+   "safety_line": null,
+   "direction": "benefit",
+   "pipc_positions": []
+  },
+  "improvement_nausea": {
+   "label": "Menos náuseas",
+   "safety_line": null,
+   "direction": "benefit",
+   "pipc_positions": []
+  },
+  "improvement_swelling": {
+   "label": "Menos hinchazón",
+   "safety_line": null,
+   "direction": "benefit",
+   "pipc_positions": []
+  }
+ },
+ "cascades": {
+  "1": {
+   "drug_a": "Inhibidor de la enzima convertidora de angiotensina",
+   "adverse_event": "Tos",
+   "drug_b": "Medicamento para la tos",
+   "translated": true
+  },
+  "2": {
+   "drug_a": "Antihipertensivo",
+   "adverse_event": "Hipotensión ortostática/mareo",
+   "drug_b": "Antiemético",
+   "translated": true
+  },
+  "3": {
+   "drug_a": "Betabloqueante (sobre todo lipófilo, p. ej., propranolol)",
+   "adverse_event": "Depresión",
+   "drug_b": "Antidepresivo",
+   "translated": true
+  },
+  "4": {
+   "drug_a": "Betabloqueante (sobre todo lipófilo, p. ej., propranolol)",
+   "adverse_event": "Disfunción eréctil",
+   "drug_b": "Inhibidor de la fosfodiesterasa 5, alprostadil",
+   "translated": true
+  },
+  "5": {
+   "drug_a": "Antagonista del calcio",
+   "adverse_event": "Edema periférico",
+   "drug_b": "Diurético",
+   "translated": true
+  },
+  "6": {
+   "drug_a": "Antagonista del calcio",
+   "adverse_event": "Estreñimiento",
+   "drug_b": "Laxante",
+   "translated": true
+  },
+  "7": {
+   "drug_a": "Diurético",
+   "adverse_event": "Gota o hiperuricemia",
+   "drug_b": "Antigotoso",
+   "translated": true
+  },
+  "8": {
+   "drug_a": "Diurético",
+   "adverse_event": "Incontinencia urinaria",
+   "drug_b": "Medicamento para la vejiga hiperactiva",
+   "translated": true
+  },
+  "9": {
+   "drug_a": "Inhibidor de la hidroximetilglutaril-coenzima A (HMG-CoA) reductasa (estatina)",
+   "adverse_event": "Mialgia/miositis",
+   "drug_b": "Analgésico",
+   "translated": true
+  },
+  "10": {
+   "drug_a": "Inhibidor de la HMG-CoA reductasa",
+   "adverse_event": "Mialgia/miositis",
+   "drug_b": "Suplemento mineral",
+   "translated": true
+  },
+  "11": {
+   "drug_a": "Inhibidor de la HMG-CoA reductasa",
+   "adverse_event": "Mialgia/miositis",
+   "drug_b": "Sulfato de quinina",
+   "translated": true
+  },
+  "12": {
+   "drug_a": "Inhibidor de la HMG-CoA reductasa",
+   "adverse_event": "Insomnio",
+   "drug_b": "Medicamento para dormir",
+   "translated": true
+  },
+  "13": {
+   "drug_a": "Digoxina",
+   "adverse_event": "Náuseas",
+   "drug_b": "Antiemético",
+   "translated": true
+  },
+  "14": {
+   "drug_a": "Midodrina",
+   "adverse_event": "Hipertensión",
+   "drug_b": "Antihipertensivo",
+   "translated": true
+  },
+  "15": {
+   "drug_a": "Anticonvulsivo",
+   "adverse_event": "Exantema",
+   "drug_b": "Corticoesteroide tópico",
+   "translated": true
+  },
+  "16": {
+   "drug_a": "Anticonvulsivo",
+   "adverse_event": "Náuseas",
+   "drug_b": "Antiemético",
+   "translated": true
+  },
+  "17": {
+   "drug_a": "Antipsicótico",
+   "adverse_event": "Síntomas extrapiramidales",
+   "drug_b": "Betabloqueante",
+   "translated": true
+  },
+  "18": {
+   "drug_a": "Antipsicótico",
+   "adverse_event": "Síntomas extrapiramidales",
+   "drug_b": "Antiparkinsoniano",
+   "translated": true
+  },
+  "19": {
+   "drug_a": "Antipsicótico",
+   "adverse_event": "Síntomas extrapiramidales",
+   "drug_b": "Antimuscarínico antitemblor",
+   "translated": true
+  },
+  "20": {
+   "drug_a": "Antipsicótico",
+   "adverse_event": "Acatisia o movimientos anormales tardíos",
+   "drug_b": "Sedante",
+   "translated": true
+  },
+  "21": {
+   "drug_a": "Antipsicótico",
+   "adverse_event": "Arritmia",
+   "drug_b": "Antiarrítmico",
+   "translated": true
+  },
+  "22": {
+   "drug_a": "Antipsicótico",
+   "adverse_event": "Hiperglucemia",
+   "drug_b": "Antihiperglucemiante",
+   "translated": true
+  },
+  "23": {
+   "drug_a": "Benzodiacepina",
+   "adverse_event": "Deterioro cognitivo",
+   "drug_b": "Inhibidor de la colinesterasa",
+   "translated": true
+  },
+  "24": {
+   "drug_a": "Inhibidor de la colinesterasa",
+   "adverse_event": "Incontinencia urinaria",
+   "drug_b": "Medicamento para la vejiga hiperactiva",
+   "translated": true
+  },
+  "25": {
+   "drug_a": "Inhibidor de la colinesterasa",
+   "adverse_event": "Insomnio",
+   "drug_b": "Medicamento para dormir",
+   "translated": true
+  },
+  "26": {
+   "drug_a": "Inhibidor de la colinesterasa",
+   "adverse_event": "Molestias gastrointestinales",
+   "drug_b": "Antiemético",
+   "translated": true
+  },
+  "27": {
+   "drug_a": "Inhibidor de la colinesterasa",
+   "adverse_event": "Molestias gastrointestinales",
+   "drug_b": "Subsalicilato de bismuto",
+   "translated": true
+  },
+  "28": {
+   "drug_a": "Inhibidor de la colinesterasa",
+   "adverse_event": "Diarrea",
+   "drug_b": "Antidiarreico",
+   "translated": true
+  },
+  "29": {
+   "drug_a": "Inhibidor de la colinesterasa",
+   "adverse_event": "Rinorrea",
+   "drug_b": "Antihistamínico",
+   "translated": true
+  },
+  "30": {
+   "drug_a": "Antiparkinsoniano dopaminérgico",
+   "adverse_event": "Síntomas psicóticos, alucinaciones",
+   "drug_b": "Antipsicótico",
+   "translated": true
+  },
+  "31": {
+   "drug_a": "Gabapentinoide",
+   "adverse_event": "Edema periférico",
+   "drug_b": "Diurético",
+   "translated": true
+  },
+  "32": {
+   "drug_a": "Inhibidor selectivo de la recaptación de serotonina/inhibidor de la recaptación de serotonina y noradrenalina (ISRS/IRSN)",
+   "adverse_event": "Incontinencia urinaria",
+   "drug_b": "Medicamento para la vejiga hiperactiva",
+   "translated": true
+  },
+  "33": {
+   "drug_a": "Antidepresivo tricíclico",
+   "adverse_event": "Deterioro cognitivo",
+   "drug_b": "Inhibidor de la colinesterasa",
+   "translated": true
+  },
+  "34": {
+   "drug_a": "Antidepresivo tricíclico",
+   "adverse_event": "Estreñimiento",
+   "drug_b": "Laxante",
+   "translated": true
+  },
+  "35": {
+   "drug_a": "Antidepresivo tricíclico",
+   "adverse_event": "Incontinencia urinaria",
+   "drug_b": "Medicamento para la vejiga hiperactiva",
+   "translated": true
+  },
+  "36": {
+   "drug_a": "Flunarizina",
+   "adverse_event": "Depresión",
+   "drug_b": "Antidepresivo",
+   "translated": true
+  },
+  "37": {
+   "drug_a": "Litio",
+   "adverse_event": "Síntomas extrapiramidales",
+   "drug_b": "Antiparkinsoniano",
+   "translated": true
+  },
+  "38": {
+   "drug_a": "Venlafaxina",
+   "adverse_event": "Hipertensión (dependiente de la dosis)",
+   "drug_b": "Antihipertensivo",
+   "translated": true
+  },
+  "39": {
+   "drug_a": "Venlafaxina",
+   "adverse_event": "Temblor",
+   "drug_b": "Benzodiacepina",
+   "translated": true
+  },
+  "40": {
+   "drug_a": "Inhibidor de la dipeptidil peptidasa 4 (DPP-4) (p. ej., sitagliptina, saxagliptina)",
+   "adverse_event": "Dolor articular",
+   "drug_b": "Antiinflamatorio no esteroideo",
+   "translated": true
+  },
+  "41": {
+   "drug_a": "Inhibidor del cotransportador de sodio-glucosa tipo 2 (SGLT2)",
+   "adverse_event": "Infecciones genitales micóticas",
+   "drug_b": "Antifúngico",
+   "translated": true
+  },
+  "42": {
+   "drug_a": "Metformina",
+   "adverse_event": "Diarrea",
+   "drug_b": "Antidiarreico",
+   "translated": true
+  },
+  "43": {
+   "drug_a": "Pioglitazona o rosiglitazona",
+   "adverse_event": "Edema",
+   "drug_b": "Diurético",
+   "translated": true
+  },
+  "44": {
+   "drug_a": "Rosiglitazona",
+   "adverse_event": "Insuficiencia cardíaca",
+   "drug_b": "Diurético",
+   "translated": true
+  },
+  "45": {
+   "drug_a": "Antiemético anticolinérgico",
+   "adverse_event": "Retención urinaria",
+   "drug_b": "Bloqueante de los receptores alfa-1",
+   "translated": true
+  },
+  "46": {
+   "drug_a": "Antiemético antidopaminérgico",
+   "adverse_event": "Síntomas extrapiramidales",
+   "drug_b": "Antiparkinsoniano",
+   "translated": true
+  },
+  "47": {
+   "drug_a": "Laxante",
+   "adverse_event": "Diarrea",
+   "drug_b": "Antidiarreico",
+   "translated": true
+  },
+  "48": {
+   "drug_a": "Inhibidor de la bomba de protones",
+   "adverse_event": "Osteoporosis, fracturas",
+   "drug_b": "Suplemento vitamínico",
+   "translated": true
+  },
+  "49": {
+   "drug_a": "Inhibidor de la bomba de protones",
+   "adverse_event": "Déficit de vitaminas o minerales",
+   "drug_b": "Déficit de vitaminas o minerales",
+   "translated": true
+  },
+  "50": {
+   "drug_a": "Bisfosfonato",
+   "adverse_event": "Gastritis",
+   "drug_b": "Gastroprotector",
+   "translated": true
+  },
+  "51": {
+   "drug_a": "Antiinflamatorio no esteroideo (AINE)",
+   "adverse_event": "Gastritis/úlcera gástrica/hemorragia digestiva",
+   "drug_b": "Gastroprotector",
+   "translated": true
+  },
+  "52": {
+   "drug_a": "AINE",
+   "adverse_event": "Náuseas",
+   "drug_b": "Antiemético",
+   "translated": true
+  },
+  "53": {
+   "drug_a": "AINE",
+   "adverse_event": "Hipertensión",
+   "drug_b": "Antihipertensivo",
+   "translated": true
+  },
+  "54": {
+   "drug_a": "AINE",
+   "adverse_event": "Empeoramiento de la insuficiencia cardíaca",
+   "drug_b": "Medicamento para la insuficiencia cardíaca",
+   "translated": true
+  },
+  "55": {
+   "drug_a": "Opioide",
+   "adverse_event": "Depresión",
+   "drug_b": "Antidepresivo",
+   "translated": true
+  },
+  "56": {
+   "drug_a": "Bloqueante de los receptores alfa-1",
+   "adverse_event": "Hipotensión ortostática, mareo",
+   "drug_b": "Supresor vestibular",
+   "translated": true
+  },
+  "57": {
+   "drug_a": "Anticolinérgico urinario",
+   "adverse_event": "Sequedad de boca",
+   "drug_b": "Sustituto de la saliva",
+   "translated": true
+  },
+  "58": {
+   "drug_a": "Carbapenémico (p. ej., imipenem, meropenem, ertapenem)",
+   "adverse_event": "Convulsiones",
+   "drug_b": "Anticonvulsivo",
+   "translated": true
+  },
+  "59": {
+   "drug_a": "Corticoesteroide",
+   "adverse_event": "Insomnio",
+   "drug_b": "Medicamento para dormir",
+   "translated": true
+  },
+  "60": {
+   "drug_a": "Corticoesteroide",
+   "adverse_event": "Psicosis",
+   "drug_b": "Antipsicótico",
+   "translated": true
+  },
+  "61": {
+   "drug_a": "Corticoesteroide",
+   "adverse_event": "Hipertensión",
+   "drug_b": "Antihipertensivo",
+   "translated": true
+  },
+  "62": {
+   "drug_a": "Acitretina",
+   "adverse_event": "Candidiasis vulvovaginal",
+   "drug_b": "Antifúngico",
+   "translated": true
+  },
+  "63": {
+   "drug_a": "Eritromicina",
+   "adverse_event": "Arritmia",
+   "drug_b": "Antiarrítmico",
+   "translated": true
+  },
+  "64": {
+   "drug_a": "Fludrocortisona",
+   "adverse_event": "Hipertensión",
+   "drug_b": "Antihipertensivo",
+   "translated": true
+  },
+  "65": {
+   "drug_a": "Suplemento de hierro",
+   "adverse_event": "Estreñimiento",
+   "drug_b": "Laxante",
+   "translated": true
+  }
+ },
+ "ingredients": {
+  "J1": "dimenhidrinato",
+  "J2": "imipenem",
+  "Q3515": "rabeprazol",
+  "Q18216": "ácido acetilsalicílico",
+  "Q19484": "metformina",
+  "Q20994": "nimesulida",
+  "Q23767": "carbonato de calcio",
+  "Q28128": "budipina",
+  "Q29428": "tropisetrón",
+  "Q39111": "nifedipina",
+  "Q44944": "tegaserod",
+  "Q45044": "citrato de magnesio",
+  "Q45050": "tenoxicam",
+  "Q46452": "opio",
+  "Q55434": "petidina",
+  "Q57055": "paracetamol",
+  "Q58356": "amoxapina",
+  "Q58376": "flufenazina",
+  "Q58396": "imipramina",
+  "Q58397": "amitriptilina",
+  "Q58614": "loxapina",
+  "Q58713": "clomipramina",
+  "Q59412": "ácido tolfenámico",
+  "Q60168": "heroína",
+  "Q61387": "nortriptilina",
+  "Q62947": "flunitrazepam",
+  "Q68484": "prucaloprida",
+  "Q73972": "hidroxocobalamina",
+  "Q81225": "morfina",
+  "Q121874": "yoduro de potasio",
+  "Q132501": "glicerol",
+  "Q139195": "calcitriol",
+  "Q139200": "ergocalciferol",
+  "Q139307": "calcifediol",
+  "Q139347": "colecalciferol",
+  "Q144085": "pimozida",
+  "Q145052": "zaleplon",
+  "Q152763": "sal de litio",
+  "Q155472": "valsartán",
+  "Q155883": "alfacalcidol",
+  "Q158289": "Hypericum perforatum",
+  "Q159376": "Ceratonia",
+  "Q166476": "darifenacina",
+  "Q166825": "ácido ibandrónico",
+  "Q174259": "droperidol",
+  "Q174723": "codeína",
+  "Q176301": "oxcarbazepina",
+  "Q178566": "clordiazepóxido",
+  "Q179996": "metadona",
+  "Q180912": "melatonina",
+  "Q181003": "triptófano",
+  "Q184564": "aldosterona",
+  "Q186257": "lormetazepam",
+  "Q186969": "ibuprofeno",
+  "Q187921": "fenolftaleína",
+  "Q188154": "pectina",
+  "Q189522": "quinina",
+  "Q190067": "Δ-9-tetrahidrocannabinol",
+  "Q191521": "sildenafilo",
+  "Q201370": "alprenolol",
+  "Q201872": "olanzapina",
+  "Q204954": "sulfato de zinc",
+  "Q205517": "ziprasidona",
+  "Q206844": "teobromina",
+  "Q208451": "cloruro de calcio",
+  "Q210021": "ácido γ-aminobutírico",
+  "Q210402": "diazepam",
+  "Q213511": "eritromicina",
+  "Q214769": "óxido de magnesio",
+  "Q214863": "sulfato de hierro(II)",
+  "Q216935": "lidocaína",
+  "Q218284": "zofenopril",
+  "Q218842": "zolpidem",
+  "Q219957": "zonisamida",
+  "Q220426": "zopiclona",
+  "Q221174": "topiramato",
+  "Q221361": "clozapina",
+  "Q221520": "triamtereno",
+  "Q221637": "ambroxol",
+  "Q228143": "zuclopentixol",
+  "Q238544": "5-hidroxitriptófano",
+  "Q239593": "cobamamida",
+  "Q239778": "bromhexina",
+  "Q240642": "ácido valproico",
+  "Q244408": "diclofenaco",
+  "Q245280": "sorbitol",
+  "Q248466": "natamicina",
+  "Q251005": "nistatina",
+  "Q251347": "haloperidol",
+  "Q252251": "cianocobalamina",
+  "Q254296": "lansoprazol",
+  "Q260326": "tioconazol",
+  "Q262210": "isoconazol",
+  "Q265414": "cloruro de magnesio",
+  "Q268997": "prociclidina",
+  "Q269111": "apomorfina",
+  "Q275926": "bumetanida",
+  "Q277785": "perindopril",
+  "Q277979": "nalbufina",
+  "Q280786": "terazosina",
+  "Q282902": "naloxona",
+  "Q284321": "ácido mefenámico",
+  "Q286846": "pantoprazol",
+  "Q288266": "sulfato de magnesio",
+  "Q290001": "gliclazida",
+  "Q300989": "levodopa",
+  "Q303646": "hidromorfona",
+  "Q304285": "ácido niflúmico",
+  "Q319877": "alprazolam",
+  "Q326224": "colchicina",
+  "Q337188": "escopolamina",
+  "Q337492": "aceite de ricino",
+  "Q338005": "acarbosa",
+  "Q341500": "acitretina",
+  "Q347613": "valdecoxib",
+  "Q368995": "betahistina",
+  "Q373243": "benorilato",
+  "Q375613": "acetilcisteína",
+  "Q377270": "dihidrocodeína",
+  "Q385370": "desoximetasona",
+  "Q385858": "ajmalina",
+  "Q386441": "meclizino",
+  "Q388801": "furosemida",
+  "Q395229": "agomelatina",
+  "Q402633": "selegilina",
+  "Q407125": "hidróxido de aluminio",
+  "Q407241": "fenobarbital",
+  "Q407535": "oxicodona",
+  "Q407541": "fentanilo",
+  "Q407548": "hidróxido de magnesio",
+  "Q407592": "tramadol",
+  "Q407617": "sertralina",
+  "Q407646": "manitol",
+  "Q407721": "buprenorfina",
+  "Q407781": "dextrometorfano",
+  "Q407841": "reserpina",
+  "Q407867": "cloruro de hierro",
+  "Q407883": "ketoconazol",
+  "Q407931": "carbonato de magnesio",
+  "Q407972": "clorpromazina",
+  "Q407988": "clonazepam",
+  "Q408099": "brivaracetam",
+  "Q408131": "levodropropizina",
+  "Q408265": "lorazepam",
+  "Q408432": "protriptilina",
+  "Q408446": "dextromoramida",
+  "Q408471": "paroxetina",
+  "Q408535": "quetiapina",
+  "Q408556": "levobunolol",
+  "Q408565": "rufinamida",
+  "Q408588": "vilazodona",
+  "Q408637": "dronedarona",
+  "Q408676": "piroxicam",
+  "Q408724": "ácido risedrónico",
+  "Q408801": "celecoxib",
+  "Q409192": "ketoprofeno",
+  "Q409231": "indometacina",
+  "Q409236": "fluvoxamina",
+  "Q409468": "metoprolol",
+  "Q409492": "cimetidina",
+  "Q409501": "fosfato trisódico",
+  "Q409558": "metiprilon",
+  "Q409579": "vinbarbital",
+  "Q409595": "isocarboxazida",
+  "Q409632": "pentobarbital",
+  "Q409672": "citalopram",
+  "Q409761": "amantadina",
+  "Q409898": "dapagliflozina",
+  "Q409948": "nomifensina",
+  "Q409966": "etizolam",
+  "Q409978": "rescinnamina",
+  "Q410011": "ondansetrón",
+  "Q410061": "amiodarona",
+  "Q410074": "losartán",
+  "Q410078": "nitrazepam",
+  "Q410083": "polietilenglicol",
+  "Q410265": "picosulfato sódico",
+  "Q410291": "verapamilo",
+  "Q410346": "lamotrigina",
+  "Q410352": "gabapentina",
+  "Q410400": "fenitoína",
+  "Q410412": "carbamazepina",
+  "Q410492": "lercanidipino",
+  "Q410618": "meptazinol",
+  "Q410965": "insulina detemir",
+  "Q411159": "famotidina",
+  "Q411188": "aripiprazol",
+  "Q411229": "itraconazol",
+  "Q411325": "atenolol",
+  "Q411347": "amlodipina",
+  "Q411412": "rofecoxib",
+  "Q411441": "hidrocodona",
+  "Q411457": "trazodona",
+  "Q411478": "fluconazol",
+  "Q411552": "doripenem",
+  "Q411594": "metoxiflurano",
+  "Q411697": "mefobarbital",
+  "Q411770": "silodosina",
+  "Q411799": "levacetilmetadol",
+  "Q411806": "loprazolam",
+  "Q411887": "rivastigmina",
+  "Q411985": "rotigotina",
+  "Q412107": "dibenzepina",
+  "Q412133": "dexmedetomidina",
+  "Q412143": "triazolam",
+  "Q412164": "clobazam",
+  "Q412174": "pregabalina",
+  "Q412182": "estiripentol",
+  "Q412208": "lisinopril",
+  "Q412221": "clonidina",
+  "Q412223": "anfotericina B",
+  "Q412299": "oxazepam",
+  "Q412340": "hidrato de cloral",
+  "Q412409": "barbital",
+  "Q412443": "risperidona",
+  "Q412486": "alopurinol",
+  "Q412496": "quinidina",
+  "Q412515": "bisoprolol",
+  "Q412534": "carvedilol",
+  "Q412621": "metildopa",
+  "Q412677": "pitavastatina",
+  "Q412690": "galantamina",
+  "Q413184": "eszopiclona",
+  "Q413486": "difenhidramina",
+  "Q413546": "clotrimazol",
+  "Q413581": "bromocriptina",
+  "Q413591": "sotalol",
+  "Q413717": "baclofeno",
+  "Q413739": "gluconato cálcico",
+  "Q413840": "tolcapona",
+  "Q413994": "timolol",
+  "Q414028": "meloxicam",
+  "Q414236": "glutetimida",
+  "Q414275": "tolbutamida",
+  "Q414378": "etofenamato",
+  "Q414463": "tapentadol",
+  "Q414626": "selenito de sodio",
+  "Q414788": "secobarbital",
+  "Q414796": "temazepam",
+  "Q414873": "isradipina",
+  "Q414904": "aliskiren",
+  "Q414914": "biperideno",
+  "Q415020": "lactitol",
+  "Q415026": "benzatropina",
+  "Q415051": "midodrina",
+  "Q415081": "donepezilo",
+  "Q415122": "fexofenadina",
+  "Q415159": "rosuvastatina",
+  "Q415578": "fenazona",
+  "Q415619": "noscapina",
+  "Q415752": "pergolida",
+  "Q415793": "pentazocina",
+  "Q415850": "amobarbital",
+  "Q415970": "candesartán",
+  "Q415997": "ketanserina",
+  "Q416025": "misoprostol",
+  "Q416132": "betametasona",
+  "Q416237": "flunarizina",
+  "Q416312": "metilcelulosa",
+  "Q416341": "ácido flufenámico",
+  "Q416370": "fumarato ferroso",
+  "Q416431": "difenoxilato",
+  "Q416444": "entacapona",
+  "Q416562": "opipramol",
+  "Q416584": "nitrendipino",
+  "Q416632": "nefazodona",
+  "Q416677": "racecadotril",
+  "Q416791": "doxepina",
+  "Q416992": "lurasidona",
+  "Q417141": "econazol",
+  "Q417178": "clometiazol",
+  "Q417204": "levomepromazina",
+  "Q417222": "metilprednisolona",
+  "Q417227": "levetiracetam",
+  "Q417296": "febuxostat",
+  "Q417317": "insulina glargina",
+  "Q417597": "procainamida",
+  "Q417654": "triprolidina",
+  "Q417689": "ramelteón",
+  "Q417740": "lovastatina",
+  "Q417762": "exenatida",
+  "Q417765": "pioglitazona",
+  "Q417874": "bisacodilo",
+  "Q417884": "ciproheptadina",
+  "Q417942": "fluvastatina",
+  "Q418050": "sertindol",
+  "Q418060": "desloratadina",
+  "Q418101": "pindolol",
+  "Q418130": "nebivolol",
+  "Q418139": "esmolol",
+  "Q418145": "clemastina",
+  "Q418361": "maprotilina",
+  "Q418480": "tamsulosina",
+  "Q418571": "ácido etacrínico",
+  "Q418785": "amisulprida",
+  "Q418850": "clorazepato",
+  "Q418857": "acebutolol",
+  "Q418928": "fenfluramina",
+  "Q418970": "reboxetina",
+  "Q418998": "flurazepam",
+  "Q419079": "nabilona",
+  "Q419175": "fenacetina",
+  "Q419379": "peróxido de magnesio",
+  "Q419468": "ciclopirox",
+  "Q419488": "seleniato de sodio",
+  "Q419503": "fosfato de aluminio",
+  "Q419550": "pirenzepina",
+  "Q419552": "esparteína",
+  "Q419693": "lactato de calcio",
+  "Q419820": "azelastina",
+  "Q419832": "sitagliptina",
+  "Q419841": "palonosetron",
+  "Q419890": "flurbiprofeno",
+  "Q419939": "doxazosina",
+  "Q419948": "torasemida",
+  "Q419987": "hidralazina",
+  "Q419991": "magaldrato",
+  "Q419995": "amilorida",
+  "Q420009": "diazóxido",
+  "Q420026": "bretilio",
+  "Q420031": "nitroprusiato",
+  "Q420057": "ácido alendrónico",
+  "Q420077": "lacosamida",
+  "Q420133": "clorfenamina",
+  "Q420280": "citrato de calcio",
+  "Q420377": "mexiletina",
+  "Q420383": "primidona",
+  "Q420394": "sucralfato",
+  "Q420586": "celiprolol",
+  "Q420590": "ropinirol",
+  "Q420626": "glibenclamida",
+  "Q420644": "felodipina",
+  "Q420673": "guanetidina",
+  "Q420682": "guaifenesina",
+  "Q420685": "rasagilina",
+  "Q420885": "tranilcipromina",
+  "Q421042": "vildagliptina",
+  "Q421058": "milnaciprán",
+  "Q421076": "tacrina",
+  "Q421091": "levocetirizina",
+  "Q421095": "metoclopramida",
+  "Q421104": "tetrazepam",
+  "Q421119": "captopril",
+  "Q421156": "olmesartán",
+  "Q421162": "bifonazol",
+  "Q421167": "goma karaya",
+  "Q421291": "gluconato ferroso",
+  "Q421301": "felbamato",
+  "Q421304": "pramipexol",
+  "Q421342": "fenilbutazona",
+  "Q421368": "iproniazida",
+  "Q421381": "flecainida",
+  "Q421429": "nimodipina",
+  "Q421475": "beclometasona",
+  "Q421567": "etosuximida",
+  "Q421663": "vigabatrina",
+  "Q421670": "meropenem",
+  "Q421930": "mirtazapina",
+  "Q421934": "moclobemida",
+  "Q421937": "hidroxicina",
+  "Q422071": "goma guar",
+  "Q422092": "ácido algínico",
+  "Q422185": "enalapril",
+  "Q422188": "espironolactona",
+  "Q422210": "omeprazol",
+  "Q422212": "budesonida",
+  "Q422222": "digoxina",
+  "Q422229": "diltiazem",
+  "Q422244": "fluoxetina",
+  "Q422252": "dexametasona",
+  "Q422418": "sulpirida",
+  "Q422423": "bromuro",
+  "Q422435": "bromazepam",
+  "Q422689": "lactulosa",
+  "Q422761": "metamizol",
+  "Q422917": "cannabidiol",
+  "Q422970": "prometazina",
+  "Q423037": "ranitidina",
+  "Q423071": "midazolam",
+  "Q423075": "cetirizina",
+  "Q423185": "cortisona",
+  "Q423288": "desipramina",
+  "Q423308": "cabergolina",
+  "Q423364": "propranolol",
+  "Q423390": "doxilamina",
+  "Q423437": "astemizol",
+  "Q423439": "cerivastatina",
+  "Q423450": "rupatadina",
+  "Q423498": "trimipramina",
+  "Q423520": "perfenazina",
+  "Q423538": "tizanidina",
+  "Q423751": "loperamida",
+  "Q423757": "escitalopram",
+  "Q423804": "eplerenona",
+  "Q423912": "metacualona",
+  "Q423930": "hidroclorotiazida",
+  "Q424049": "loratadina",
+  "Q424156": "tadalafilo",
+  "Q424161": "vardenafilo",
+  "Q424165": "minoxidil",
+  "Q424238": "domperidona",
+  "Q424260": "tianeptina",
+  "Q424312": "tolterodina",
+  "Q424342": "paraldehído",
+  "Q424412": "benperidol",
+  "Q424771": "rosiglitazona",
+  "Q424952": "nadolol",
+  "Q424972": "prednisona",
+  "Q424986": "tiabendazol",
+  "Q424997": "mesna",
+  "Q425097": "acepromazina",
+  "Q425111": "propifenazona",
+  "Q425120": "disopiramida",
+  "Q425207": "nabumetona",
+  "Q425289": "clortalidona",
+  "Q425293": "fosinopril",
+  "Q425295": "cisaprida",
+  "Q425296": "prazosina",
+  "Q425440": "dexketoprofeno",
+  "Q425729": "ivabradina",
+  "Q425838": "bupranolol",
+  "Q425963": "oxprenolol",
+  "Q430675": "psyllium",
+  "Q481757": "aceclofenaco",
+  "Q502327": "senósido",
+  "Q546434": "carteolol",
+  "Q553220": "ertapenem",
+  "Q553223": "esomeprazol",
+  "Q576684": "oxolamina",
+  "Q579348": "alprostadil",
+  "Q582556": "lafutidina",
+  "Q592802": "benazepril",
+  "Q596022": "quinapril",
+  "Q596708": "granisetrón",
+  "Q607349": "fluorometolona",
+  "Q621834": "aprepitant",
+  "Q631202": "etoricoxib",
+  "Q632405": "epinastina",
+  "Q656259": "feniramina",
+  "Q662511": "propafenona",
+  "Q665725": "vernakalant",
+  "Q667184": "cinolazepam",
+  "Q668093": "atorvastatina",
+  "Q670131": "simvastatina",
+  "Q715104": "buformina",
+  "Q729213": "nicardipina",
+  "Q731525": "cilnidipino",
+  "Q733186": "telmisartán",
+  "Q736113": "difluprednato",
+  "Q752861": "carbenoxolona",
+  "Q753100": "fenformina",
+  "Q772735": "miglitol",
+  "Q775073": "cinarizina",
+  "Q779118": "deflazacort",
+  "Q781329": "pargilina",
+  "Q793143": "benzidamina",
+  "Q794152": "betanidina",
+  "Q794162": "betaxolol",
+  "Q827916": "trimetadiona",
+  "Q834280": "bupropion",
+  "Q834660": "bopindolol",
+  "Q847560": "valpromida",
+  "Q848264": "flavoxato",
+  "Q850074": "brotizolam",
+  "Q867308": "ciclizina",
+  "Q867350": "cilazapril",
+  "Q868658": "perampanel",
+  "Q898407": "venlafaxina",
+  "Q900534": "aceite de lavanda",
+  "Q900898": "probenecid",
+  "Q904524": "butriptilina",
+  "Q906414": "metosuximida",
+  "Q907148": "viloxazina",
+  "Q907219": "tiagabina",
+  "Q908663": "caolín",
+  "Q909745": "linagliptina",
+  "Q909808": "creosota",
+  "Q910111": "dropropizina",
+  "Q911332": "linaza",
+  "Q924467": "acetónido de fluocinolona",
+  "Q929420": "trandolapril",
+  "Q944244": "penbutolol",
+  "Q947266": "irbesartán",
+  "Q958087": "labetalol",
+  "Q963093": "sulindaco",
+  "Q965999": "alclofenaco",
+  "Q999805": "fensuximida",
+  "Q1002165": "fluticasona",
+  "Q1044248": "mometasona",
+  "Q1074056": "triamcinolona",
+  "Q1075324": "clorpropamida",
+  "Q1078392": "indapamida",
+  "Q1169164": "bendroflumetiazida",
+  "Q1169561": "metolazona",
+  "Q1185089": "butorfanol",
+  "Q1188290": "nizatidina",
+  "Q1215575": "naproxeno",
+  "Q1232737": "perhexilina",
+  "Q1240093": "pravastatina",
+  "Q1320691": "salsalato",
+  "Q1324057": "trimazosina",
+  "Q1326389": "aloxiprin",
+  "Q1421936": "bentazepam",
+  "Q1623593": "tebipenem",
+  "Q1747559": "fenelzina",
+  "Q1749609": "oxaprozina",
+  "Q1752915": "trifluoperazina",
+  "Q1829318": "dolasetrón",
+  "Q2014797": "ketorolaco",
+  "Q2055825": "cloperastina",
+  "Q2062094": "pramlintida",
+  "Q2070778": "benzonatato",
+  "Q2072745": "triclormetiazida",
+  "Q2146170": "retigabina",
+  "Q2195995": "repaglinida",
+  "Q2203957": "carbasalato de calcio",
+  "Q2208070": "proglumetacina",
+  "Q2211523": "safinamida",
+  "Q2254797": "nateglinida",
+  "Q2268608": "dextropropoxifeno",
+  "Q2291605": "moexipril",
+  "Q2304195": "fenbufeno",
+  "Q2327739": "ebastina",
+  "Q2359690": "proclorperazina",
+  "Q2359711": "nialamida",
+  "Q2365493": "esketamina",
+  "Q2392530": "sulconazol",
+  "Q2397253": "ketazolam",
+  "Q2419445": "desvenlafaxina",
+  "Q2458673": "ketotifeno",
+  "Q2465218": "etodolaco",
+  "Q2471714": "cetobemidona",
+  "Q2496906": "salicilamida",
+  "Q2526479": "liraglutida",
+  "Q2555245": "fenoprofeno",
+  "Q2602750": "diflunisal",
+  "Q2603363": "clorotiazida",
+  "Q2606497": "bromfeniramina",
+  "Q2608288": "tiotixeno",
+  "Q2697578": "fludrocortisona",
+  "Q2723146": "acemetacina",
+  "Q2734874": "lornoxicam",
+  "Q2754775": "insulina aspart",
+  "Q2755412": "jarabe de ipecacuana",
+  "Q2758338": "ácido etidrónico",
+  "Q2760233": "mepindolol",
+  "Q2815334": "dioctilsulfosuccinato de sodio",
+  "Q2823284": "ácido meclofenámico",
+  "Q2873270": "avanafilo",
+  "Q2902977": "bilastina",
+  "Q2924764": "brexpiprazol",
+  "Q2928948": "butoconazol",
+  "Q2937681": "captodiamo",
+  "Q2938837": "cariprazina",
+  "Q2991856": "trihexifenidilo",
+  "Q3045264": "estazolam",
+  "Q3085140": "etclorvinol",
+  "Q3108899": "glipizida",
+  "Q3249706": "fosfato sódico",
+  "Q3267092": "olopatadina",
+  "Q3292273": "orfenadrina",
+  "Q3342150": "nisoldipino",
+  "Q3359058": "oxiconazol",
+  "Q3395266": "butobarbital",
+  "Q3395566": "Polygala senega",
+  "Q3479994": "sertaconazol",
+  "Q3486981": "fludiazepam",
+  "Q3492616": "insulina lispro",
+  "Q3563148": "vortioxetina",
+  "Q3564216": "veraliprida",
+  "Q3649490": "cadralazina",
+  "Q3661095": "clotiapina",
+  "Q3676519": "ciclopentiazida",
+  "Q3702534": "mirabegrón",
+  "Q3704421": "debrisoquina",
+  "Q3712521": "dofetilida",
+  "Q3728177": "carbinoxamina",
+  "Q3790542": "sulfinpirazona",
+  "Q3791612": "ibutilida",
+  "Q3791957": "hidroflumetiazida",
+  "Q3798358": "indoprofeno",
+  "Q3822815": "gluconato de zinc",
+  "Q3832559": "linaclotida",
+  "Q3887768": "oxametacina",
+  "Q3895202": "parametadiona",
+  "Q3927403": "quazepam",
+  "Q3930120": "citrato bismuto de ranitidina",
+  "Q3992411": "tolmetina",
+  "Q4012999": "viminol",
+  "Q4116192": "oxifenbutazona",
+  "Q4119838": "glicerofosfato de calcio",
+  "Q4199443": "iloperidona",
+  "Q4214595": "carbonato de hierro (II)",
+  "Q4224007": "clobetasol",
+  "Q4334652": "papaveretum",
+  "Q4376623": "prednicarbato",
+  "Q4385221": "cloxazolam",
+  "Q4445779": "sultoprida",
+  "Q4463264": "trifluperidol",
+  "Q4482372": "fesoterodina",
+  "Q4673274": "acetohexamida",
+  "Q4673282": "acetoxolona",
+  "Q4673302": "acetildihidrocodeína",
+  "Q4712362": "albiglutida",
+  "Q4713192": "alclometasona",
+  "Q4733653": "almagato",
+  "Q4733720": "almasilato",
+  "Q4738021": "alvimopán",
+  "Q4859855": "epanolol",
+  "Q4859862": "cloranolol",
+  "Q5030940": "canagliflozina",
+  "Q5033475": "canrenona",
+  "Q5102982": "clormidazol",
+  "Q5121012": "cinitaprida",
+  "Q5131021": "cleboprida",
+  "Q5132338": "clevidipina",
+  "Q5135114": "clopamida",
+  "Q5187464": "crofelemer",
+  "Q5199066": "ciclotiazida",
+  "Q5263885": "deserpidina",
+  "Q5268339": "dexlansoprazol",
+  "Q5275253": "difenpiramida",
+  "Q5308701": "droxicam",
+  "Q5373824": "empagliflozina",
+  "Q5376588": "endralazina",
+  "Q5402835": "etadiona",
+  "Q5404839": "etoperidona",
+  "Q5462632": "fludroxicortida",
+  "Q5462793": "fluocortolona",
+  "Q5473363": "fosfenitoína",
+  "Q5613599": "guanfacina",
+  "Q5641126": "halazepam",
+  "Q6042242": "insulina glulisina",
+  "Q6065438": "iproclozida",
+  "Q6144116": "mosapramina",
+  "Q6593346": "metipranolol",
+  "Q6659956": "lixisenatida",
+  "Q6695342": "lubiprostona",
+  "Q6804380": "mebutizida",
+  "Q6821618": "mesoridazina",
+  "Q6823919": "meticlotiazida",
+  "Q6824116": "metirosina",
+  "Q6827783": "mibefradil",
+  "Q6890329": "mofebutazona",
+  "Q6908807": "moperona",
+  "Q6912761": "morniflumato",
+  "Q6960846": "naldemedina",
+  "Q7160794": "pegloticasa",
+  "Q7194603": "pimavanserina",
+  "Q7226181": "policarbofilo",
+  "Q7227099": "politiazida",
+  "Q7237376": "practolol",
+  "Q7334443": "rimexolona",
+  "Q7650517": "suvorexant",
+  "Q7679533": "talinolol",
+  "Q7687250": "tasimelteón",
+  "Q7701687": "terconazol",
+  "Q7705238": "tertatolol",
+  "Q7814101": "tolazamida",
+  "Q7842199": "trimetobenzamida",
+  "Q9003473": "hidrotalcita",
+  "Q9053193": "oroato de magnesio",
+  "Q11426176": "prednisolona",
+  "Q12548019": "compuestos de calcio",
+  "Q15409425": "ipidacrina",
+  "Q15624030": "luliconazol",
+  "Q15708351": "naloxegol",
+  "Q16252338": "insulina degludec",
+  "Q18207095": "tartrato ferroso",
+  "Q21011225": "efinaconazol",
+  "Q21011228": "dulaglutida",
+  "Q21820633": "lesinurad",
+  "Q27077223": "ertugliflozina",
+  "Q27088208": "opicapona",
+  "Q27108485": "camsilato de trimetafán",
+  "Q27261089": "semaglutida",
+  "Q28559278": "plecanatida",
+  "Q45024802": "tilidina",
+  "Q59904170": "metilnaltrexona",
+  "Q76415423": "rolapitant",
+  "Q106029845": "glimepirida",
+  "Q108324770": "tirzepatida"
+ },
+ "sentences": {
+  "abrupt_stop": "No suspenda este medicamento de forma brusca.",
+  "name.not_translated": "nombre no traducido",
+  "name.not_reviewed": "nombre no revisado",
+  "name.combination_code": "código de combinación",
+  "not_checked.homeopathic_product": "Producto homeopático, no comprobado",
+  "not_checked.ambiguous": "Principio activo no identificado con certeza, no se puede comprobar",
+  "not_checked.no_ingredient_key": "Principio activo no reconocido, no se puede comprobar",
+  "not_checked.possible_unsplit_combination": "Posiblemente una combinación que no se pudo separar, no se puede comprobar",
+  "not_checked.no_ingredient_atc": "Sin código ATC a nivel de principio activo, no se puede comprobar",
+  "not_checked.no_ingredient_atc_for_route": "Sin código ATC para esta vía de administración, no se puede comprobar"
+ }
+}

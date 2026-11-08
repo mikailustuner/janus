@@ -1,0 +1,155 @@
+/*
+ * Design tokens (.kiro/steering/design.md, owner decision 2026-11-08; experience design §7).
+ * Two Faces: shadow face (patient side) and light face (researcher side, doctor note PDF, doctor
+ * page). Glass: light and dark by the system colour scheme, solid cards when transparency is
+ * reduced. Components use these tokens only, never a raw colour (src/theme/no-hex.test.ts).
+ *
+ * The colour values of --bg … --risk are exactly the steering tokens. Added here (design DP33):
+ * Glass --chip/--chip-fg/--ghost (from the Glass mockup, docs/design/glass-options.html), the
+ * three Glass background fields, and non-colour tokens (fonts, radii, blur).
+ *
+ * Pairs checked by the contrast test (P18; text >= 4.5:1, boundary >= 3:1):
+ * @contrast-text fg/bg fg/surface muted/bg muted/surface accent/bg accent/surface on-accent/accent chip-fg/chip warn/bg warn/surface risk/bg risk/surface
+ * @contrast-boundary accent/bg accent/surface muted/bg muted/surface
+ */
+
+/* Two Faces, shadow face (also the default before the pre-paint script runs). */
+:root,
+:root[data-theme-style="two-faces"][data-face="shadow"] {
+  --bg: #1b1f3b;
+  --surface: #252a4d;
+  --fg: #f6f1e7;
+  --muted: #c3c2d6;
+  --line: #3a4070;
+  --accent: #7fd1c7;
+  --on-accent: #0e2a27;
+  --chip: #2f3a5e;
+  --chip-fg: #a9e4dc;
+  --warn: #f6d08a;
+  --risk: #ff8a80;
+  --ghost: #f6f1e7;
+  --field-1: transparent;
+  --field-2: transparent;
+  --field-3: transparent;
+  --blur: none;
+  --card-edge: var(--line);
+  --card-shadow: none;
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-body: var(--font-atkinson), system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+  --radius-card: 16px;
+  --radius-button: 14px;
+  --title-size: 1.75rem;
+  color-scheme: dark;
+}
+
+/* Two Faces, light face; also the "paper" of the doctor note preview in every theme. */
+:root[data-theme-style="two-faces"][data-face="light"],
+.paper {
+  --bg: #f6f1e7;
+  --surface: #fffdf8;
+  --fg: #1b1f3b;
+  --muted: #4e5170;
+  --line: #ddd5c4;
+  --accent: #1e6b62;
+  --on-accent: #ffffff;
+  --chip: #e7efea;
+  --chip-fg: #1e6b62;
+  --warn: #7a4d00;
+  --risk: #a8322d;
+  --ghost: #1b1f3b;
+  color-scheme: light;
+}
+
+/* Glass, light. */
+:root[data-theme-style="glass"] {
+  --bg: #eef1f0;
+  --surface: rgba(255, 255, 255, 0.72);
+  --fg: #0e1514;
+  --muted: #4f5b59;
+  --line: rgba(14, 21, 20, 0.12);
+  --accent: #0b6c62;
+  --on-accent: #ffffff;
+  --chip: rgba(11, 108, 98, 0.12);
+  --chip-fg: #0b5a52;
+  --warn: #8a4b00;
+  --risk: #b3261e;
+  --ghost: #0e1514;
+  --field-1: #cfe9e3;
+  --field-2: #f3e3cc;
+  --field-3: #dce6f2;
+  --blur: blur(22px) saturate(1.6);
+  --card-edge: rgba(255, 255, 255, 0.85);
+  --card-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset, 0 8px 24px rgba(14, 21, 20, 0.08);
+  --font-display:
+    -apple-system, BlinkMacSystemFont, "SF Pro Display", var(--font-figtree),
+    sans-serif;
+  --font-body:
+    -apple-system, BlinkMacSystemFont, "SF Pro Text", var(--font-figtree),
+    sans-serif;
+  --radius-card: 26px;
+  --radius-button: 26px;
+  --title-size: 2rem;
+  color-scheme: light;
+}
+
+/* Glass, dark. */
+@media (prefers-color-scheme: dark) {
+  :root[data-theme-style="glass"] {
+    --bg: #0e1514;
+    --surface: rgba(28, 31, 34, 0.78);
+    --fg: #eef3f2;
+    --muted: #a9b6b3;
+    --line: rgba(255, 255, 255, 0.12);
+    --accent: #6fd3c4;
+    --on-accent: #062b27;
+    --chip: rgba(111, 211, 196, 0.16);
+    --chip-fg: #9de6da;
+    --warn: #ffc266;
+    --risk: #ff7b72;
+    --ghost: #eef3f2;
+    --field-1: #12302b;
+    --field-2: #2e2619;
+    --field-3: #1a2433;
+    --card-edge: rgba(255, 255, 255, 0.1);
+    --card-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 8px 24px rgba(0, 0, 0, 0.3);
+    color-scheme: dark;
+  }
+}
+
+/* Glass with reduced transparency: solid cards, no blur (Req 3.4). Three triggers. */
+:root[data-theme-style="glass"][data-reduce-transparency="on"] {
+  --surface: #ffffff;
+  --blur: none;
+}
+@media (prefers-color-scheme: dark) {
+  :root[data-theme-style="glass"][data-reduce-transparency="on"] {
+    --surface: #1c1f22;
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  :root[data-theme-style="glass"] {
+    --surface: #ffffff;
+    --blur: none;
+  }
+}
+@media (prefers-reduced-transparency: reduce) and (prefers-color-scheme: dark) {
+  :root[data-theme-style="glass"] {
+    --surface: #1c1f22;
+  }
+}
+@supports not (
+  (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+) {
+  :root[data-theme-style="glass"] {
+    --surface: #ffffff;
+    --blur: none;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root[data-theme-style="glass"] {
+      --surface: #1c1f22;
+    }
+  }
+}

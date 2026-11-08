@@ -13,6 +13,9 @@ RUN --mount=type=cache,target=/root/.local/share/pnpm/store \
     pnpm install --frozen-lockfile --filter @janus/web
 
 FROM deps AS build
+# Address of the API for the /api/* rewrite (read by next.config.ts at build time).
+ARG JANUS_API_ORIGIN=http://api:8000
+ENV JANUS_API_ORIGIN=$JANUS_API_ORIGIN
 COPY apps/web ./apps/web
 RUN pnpm --filter @janus/web build
 

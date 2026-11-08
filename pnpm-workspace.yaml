@@ -5,4 +5,5 @@ allowBuilds:
   "@parcel/watcher": false
   "@swc/core": false
   sharp: false
+  tesseract.js: false
   unrs-resolver: false

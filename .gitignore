@@ -28,3 +28,8 @@ next-env.d.ts
 
 # OS / editor
 .DS_Store
+
+# Web: Playwright output; vendored wasm/worker assets are copied at build (experience DP9)
+apps/web/test-results/
+apps/web/playwright-report/
+apps/web/public/vendor/

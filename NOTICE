@@ -171,3 +171,52 @@ Hamdard 1998 translation of the Canon, Book 2
 Ottoman medical texts (theses, TTK editions)
   License: Copyright with their authors
   Short cited quotations only.
+
+--------------------------------------------------------------------------------
+WEB APP — BUNDLED FONTS AND LIBRARIES (apps/web)
+--------------------------------------------------------------------------------
+
+Fraunces (font, static SemiBold instance)
+  Publisher: The Fraunces Project Authors
+  License: SIL Open Font License 1.1
+  Committed under apps/web/src/fonts and apps/web/public/fonts with OFL.txt;
+  embedded in the doctor note PDF.
+
+Atkinson Hyperlegible Next (font, Regular and Bold instances)
+  Publisher: The Atkinson Hyperlegible Next Project Authors (Braille Institute
+  of America)
+  License: SIL Open Font License 1.1
+  Committed under apps/web/src/fonts and apps/web/public/fonts with OFL.txt;
+  embedded in the doctor note PDF.
+
+IBM Plex Mono (font, Regular and Medium, unmodified)
+  Publisher: IBM Corp.
+  License: SIL Open Font License 1.1, Reserved Font Name "Plex"
+  Committed under apps/web/src/fonts and apps/web/public/fonts with OFL.txt;
+  embedded in the doctor note PDF.
+
+Noto Sans (font, Regular instance, subset to Greek, punctuation and arrows)
+  Publisher: The Noto Project Authors
+  License: SIL Open Font License 1.1
+  Committed under apps/web/public/fonts with OFL.txt; fallback for letters the
+  PDF fonts lack (for example the γ of γ-aminobutyric acid).
+
+Figtree (font, variable)
+  Publisher: The Figtree Project Authors
+  License: SIL Open Font License 1.1
+  Committed under apps/web/src/fonts with OFL.txt (Glass theme).
+
+zxing-wasm 3.1.6 (barcode reader, includes zxing-cpp)
+  License: MIT (zxing-cpp: Apache-2.0)
+  npm package; the reader wasm is served from the Janus origin.
+
+tesseract.js 7.0.0 (on-device text recognition) and tessdata_fast models
+  License: Apache-2.0
+  npm package; worker, core and language data are served from the Janus origin,
+  not committed.
+
+@react-pdf/renderer 4.9.0 (doctor note PDF in the browser)
+  License: MIT
+
+qrcode 1.5.4 (QR code of the doctor note)
+  License: MIT

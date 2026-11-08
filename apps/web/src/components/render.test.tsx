@@ -1,0 +1,157 @@
+// Feature: experience, Property P8: for any result, memory panel and evidence view, in every
+// locale and both themes, the rendered markup has no forbidden phrase and no reassurance word of
+// its locale, and Glass markup has no theme-device word (Req 1.3, 6.5, 8.1, 2.4). The disclaimer
+// is the shell's footer (once per screen, checked in the browser by C3), so the screen bodies
+// must not repeat it.
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+
+import { NextIntlClientProvider } from "next-intl";
+import { renderToStaticMarkup } from "react-dom/server";
+import { describe, expect, it, vi } from "vitest";
+
+import {
+  findForbiddenPhrases,
+  forbiddenPhrases,
+} from "@/i18n/forbidden-phrases";
+import { reassurance, themeWords } from "@/i18n/reassurance";
+import { routing } from "@/i18n/routing";
+import { check, fc } from "@/test/fc";
+import { cascadeResultArb, EVIDENCE, PAIRS } from "@/test/results";
+import { ThemeOverride } from "@/theme/words";
+import type { Loaded, Vocabulary, VocabularyIndex } from "@/vocabulary";
+import index from "@/vocabulary/index.json";
+
+vi.mock("@/i18n/navigation", () => ({
+  Link: ({
+    children,
+    href,
+    ...rest
+  }: {
+    children: React.ReactNode;
+    href: unknown;
+  }) => (
+    <a {...rest} data-href={String(href)}>
+      {children}
+    </a>
+  ),
+  usePathname: () => "/results",
+  useRouter: () => ({ push: () => {}, replace: () => {} }),
+}));
+
+import { EvidenceBody } from "./evidence/EvidenceView";
+import { PairPanel } from "./memory/PairPanel";
+import { ResultsBody } from "./results/Results";
+
+type Locale = (typeof routing.locales)[number];
+const messages = Object.fromEntries(
+  routing.locales.map((l) => [
+    l,
+    JSON.parse(
+      readFileSync(
+        join(import.meta.dirname, "../../messages", `${l}.json`),
+        "utf8",
+      ),
+    ),
+  ]),
+);
+const vocabs = Object.fromEntries(
+  routing.locales.map((l) => [
+    l,
+    {
+      locale: l,
+      vocab: JSON.parse(
+        readFileSync(
+          join(import.meta.dirname, "../vocabulary", `${l}.json`),
+          "utf8",
+        ),
+      ) as Vocabulary,
+      index: index as unknown as VocabularyIndex,
+    } satisfies Loaded,
+  ]),
+) as Record<Locale, Loaded>;
+
+function render(
+  locale: Locale,
+  theme: "two-faces" | "glass",
+  node: React.ReactNode,
+): string {
+  const html = renderToStaticMarkup(
+    <NextIntlClientProvider
+      locale={locale}
+      messages={messages[locale]}
+      timeZone="UTC"
+    >
+      <ThemeOverride.Provider value={theme}>{node}</ThemeOverride.Provider>
+    </NextIntlClientProvider>,
+  );
+  return html
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&#x27;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/&amp;/g, "&");
+}
+
+function expectSafe(text: string, locale: Locale, theme: string) {
+  expect(findForbiddenPhrases(text, forbiddenPhrases[locale])).toEqual([]);
+  expect(findForbiddenPhrases(text, reassurance[locale])).toEqual([]);
+  if (theme === "glass")
+    expect(findForbiddenPhrases(text, themeWords[locale])).toEqual([]);
+  expect(text).not.toContain(messages[locale].Disclaimer.text);
+}
+
+const target = fc.record({
+  locale: fc.constantFrom(...routing.locales),
+  theme: fc.constantFrom("two-faces" as const, "glass" as const),
+});
+
+describe("rendered screens", () => {
+  it("results and finding cards", () => {
+    check(
+      fc.property(
+        cascadeResultArb,
+        target,
+        ({ result, n }, { locale, theme }) => {
+          const boxes = Array.from({ length: n }, (_, i) => `Box ${i}`);
+          const text = render(
+            locale,
+            theme,
+            <ResultsBody
+              result={result}
+              boxNames={boxes}
+              vocab={vocabs[locale]}
+            />,
+          );
+          expectSafe(text, locale, theme);
+          if (result.statement?.code === "no_pattern_found")
+            expect(text).toContain(messages[locale].Findings.noPattern);
+        },
+      ),
+      { numRuns: 60 },
+    );
+  });
+  it("evidence views and FAERS pair panels", () => {
+    check(
+      fc.property(
+        fc.constantFrom(...EVIDENCE),
+        fc.constantFrom(...PAIRS),
+        target,
+        (ev, pair, { locale, theme }) => {
+          expectSafe(
+            render(locale, theme, <EvidenceBody resolution={ev} />),
+            locale,
+            theme,
+          );
+          const panel = render(
+            locale,
+            theme,
+            <PairPanel pair={pair} ingredient="x" event="y" snapshot={null} />,
+          );
+          expectSafe(panel, locale, theme);
+          expect(panel).toContain(messages[locale].Memory.screening);
+        },
+      ),
+      { numRuns: 60 },
+    );
+  });
+});

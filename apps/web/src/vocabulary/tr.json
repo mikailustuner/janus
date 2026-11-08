@@ -1,0 +1,1173 @@
+{
+ "events": {
+  "cough": {
+   "label": "Öksürük",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    1
+   ]
+  },
+  "dizziness": {
+   "label": "Baş dönmesi veya ayağa kalkınca tansiyon düşmesi",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    2,
+    56
+   ]
+  },
+  "depression": {
+   "label": "Depresyon veya çökkün ruh hali",
+   "safety_line": "crisis_support",
+   "direction": "adverse",
+   "pipc_positions": [
+    3,
+    36,
+    55
+   ]
+  },
+  "erectile_dysfunction": {
+   "label": "Ereksiyon sorunu",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    4
+   ]
+  },
+  "peripheral_oedema": {
+   "label": "Ayak bileklerinde veya bacaklarda şişlik (periferik ödem)",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    5,
+    31
+   ]
+  },
+  "oedema": {
+   "label": "Vücutta sıvı tutulması veya şişlik (ödem)",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    43
+   ]
+  },
+  "constipation": {
+   "label": "Kabızlık",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    6,
+    34,
+    65
+   ]
+  },
+  "gout_hyperuricaemia": {
+   "label": "Gut veya yüksek ürik asit",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    7
+   ]
+  },
+  "urinary_incontinence": {
+   "label": "İdrar kaçırma",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    8,
+    24,
+    32,
+    35
+   ]
+  },
+  "myalgia_myositis": {
+   "label": "Kas ağrısı veya kas iltihabı (miyalji, miyozit)",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    9,
+    10,
+    11
+   ]
+  },
+  "insomnia": {
+   "label": "Uyumakta zorluk (uykusuzluk)",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    12,
+    25,
+    59
+   ]
+  },
+  "nausea": {
+   "label": "Mide bulantısı",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    13,
+    16,
+    52
+   ]
+  },
+  "hypertension": {
+   "label": "Yüksek tansiyon",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    14,
+    38,
+    53,
+    61,
+    64
+   ]
+  },
+  "rash": {
+   "label": "Cilt döküntüsü",
+   "safety_line": "urgent_care_skin",
+   "direction": "adverse",
+   "pipc_positions": [
+    15
+   ]
+  },
+  "extrapyramidal_symptoms": {
+   "label": "Kas sertliği, yavaşlamış veya anormal hareketler (ekstrapiramidal belirtiler)",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    17,
+    18,
+    19,
+    37,
+    46
+   ]
+  },
+  "akathisia_tardive_movements": {
+   "label": "Yerinde duramama veya istemsiz hareketler (akatizi, tardif diskinezi)",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    20
+   ]
+  },
+  "arrhythmia": {
+   "label": "Hızlı veya düzensiz kalp atışı (aritmi)",
+   "safety_line": "urgent_care_heart",
+   "direction": "adverse",
+   "pipc_positions": [
+    21,
+    63
+   ]
+  },
+  "hyperglycaemia": {
+   "label": "Yüksek kan şekeri",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    22
+   ]
+  },
+  "cognitive_impairment": {
+   "label": "Hafıza veya düşünme sorunları",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    23,
+    33
+   ]
+  },
+  "gastrointestinal_upset": {
+   "label": "Hazımsızlık veya mide rahatsızlığı",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    26,
+    27
+   ]
+  },
+  "diarrhoea": {
+   "label": "İshal",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    28,
+    42,
+    47
+   ]
+  },
+  "rhinorrhoea": {
+   "label": "Burun akıntısı",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    29
+   ]
+  },
+  "psychosis_hallucinations": {
+   "label": "Halüsinasyon, sanrı veya psikotik belirtiler",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    30,
+    60
+   ]
+  },
+  "tremor": {
+   "label": "Ellerde veya vücutta titreme (tremor)",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    39
+   ]
+  },
+  "joint_pain": {
+   "label": "Eklem ağrısı",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    40
+   ]
+  },
+  "genital_fungal_infection": {
+   "label": "Genital mantar enfeksiyonu",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    41,
+    62
+   ]
+  },
+  "urinary_retention": {
+   "label": "İdrar yapmada güçlük (idrar retansiyonu)",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    45
+   ]
+  },
+  "osteoporosis_fracture": {
+   "label": "Kemik erimesi (osteoporoz)",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    48
+   ]
+  },
+  "vitamin_mineral_deficiency": {
+   "label": "Düşük B12 vitamini, magnezyum veya demir",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    49
+   ]
+  },
+  "gastritis": {
+   "label": "Mide iltihabı (gastrit)",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    50
+   ]
+  },
+  "gastric_ulcer_bleed": {
+   "label": "Mide ülseri veya mide-bağırsak kanaması",
+   "safety_line": "urgent_care_gi",
+   "direction": "adverse",
+   "pipc_positions": [
+    51
+   ]
+  },
+  "heart_failure": {
+   "label": "Kalp yetmezliği",
+   "safety_line": "urgent_care_breathing",
+   "direction": "adverse",
+   "pipc_positions": [
+    44,
+    54
+   ]
+  },
+  "dry_mouth": {
+   "label": "Ağız kuruluğu",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    57
+   ]
+  },
+  "seizures": {
+   "label": "Nöbet geçirme (konvülsiyon)",
+   "safety_line": "urgent_care_seizure",
+   "direction": "adverse",
+   "pipc_positions": [
+    58
+   ]
+  },
+  "improvement_pain": {
+   "label": "Ağrıda azalma",
+   "safety_line": null,
+   "direction": "benefit",
+   "pipc_positions": []
+  },
+  "improvement_sleep": {
+   "label": "Daha iyi uyku",
+   "safety_line": null,
+   "direction": "benefit",
+   "pipc_positions": []
+  },
+  "improvement_mood": {
+   "label": "Daha iyi ruh hali",
+   "safety_line": null,
+   "direction": "benefit",
+   "pipc_positions": []
+  },
+  "improvement_nausea": {
+   "label": "Daha az mide bulantısı",
+   "safety_line": null,
+   "direction": "benefit",
+   "pipc_positions": []
+  },
+  "improvement_swelling": {
+   "label": "Şişlikte azalma",
+   "safety_line": null,
+   "direction": "benefit",
+   "pipc_positions": []
+  }
+ },
+ "cascades": {
+  "1": {
+   "drug_a": "Anjiyotensin dönüştürücü enzim inhibitörü",
+   "adverse_event": "Öksürük",
+   "drug_b": "Öksürük ilacı",
+   "translated": true
+  },
+  "2": {
+   "drug_a": "Antihipertansif",
+   "adverse_event": "Ortostatik hipotansiyon/baş dönmesi",
+   "drug_b": "Antiemetik",
+   "translated": true
+  },
+  "3": {
+   "drug_a": "Beta bloker (özellikle lipofilik olanlar, ör. propranolol)",
+   "adverse_event": "Depresyon",
+   "drug_b": "Antidepresan",
+   "translated": true
+  },
+  "4": {
+   "drug_a": "Beta bloker (özellikle lipofilik olanlar, ör. propranolol)",
+   "adverse_event": "Erektil disfonksiyon",
+   "drug_b": "Fosfodiesteraz-5 inhibitörü, alprostadil",
+   "translated": true
+  },
+  "5": {
+   "drug_a": "Kalsiyum kanal blokeri",
+   "adverse_event": "Periferik ödem",
+   "drug_b": "Diüretik",
+   "translated": true
+  },
+  "6": {
+   "drug_a": "Kalsiyum kanal blokeri",
+   "adverse_event": "Kabızlık",
+   "drug_b": "Laksatif",
+   "translated": true
+  },
+  "7": {
+   "drug_a": "Diüretik",
+   "adverse_event": "Gut veya hiperürisemi",
+   "drug_b": "Gut ilacı",
+   "translated": true
+  },
+  "8": {
+   "drug_a": "Diüretik",
+   "adverse_event": "İdrar kaçırma",
+   "drug_b": "Aşırı aktif mesane ilacı",
+   "translated": true
+  },
+  "9": {
+   "drug_a": "Hidroksimetilglutaril-koenzim A (HMG-KoA) redüktaz inhibitörü (statin)",
+   "adverse_event": "Miyalji/miyozit",
+   "drug_b": "Ağrı kesici",
+   "translated": true
+  },
+  "10": {
+   "drug_a": "HMG-KoA redüktaz inhibitörü",
+   "adverse_event": "Miyalji/miyozit",
+   "drug_b": "Mineral takviyesi",
+   "translated": true
+  },
+  "11": {
+   "drug_a": "HMG-KoA redüktaz inhibitörü",
+   "adverse_event": "Miyalji/miyozit",
+   "drug_b": "Kinin sülfat",
+   "translated": true
+  },
+  "12": {
+   "drug_a": "HMG-KoA redüktaz inhibitörü",
+   "adverse_event": "Uykusuzluk",
+   "drug_b": "Uyku ilacı",
+   "translated": true
+  },
+  "13": {
+   "drug_a": "Digoksin",
+   "adverse_event": "Bulantı",
+   "drug_b": "Antiemetik",
+   "translated": true
+  },
+  "14": {
+   "drug_a": "Midodrin",
+   "adverse_event": "Hipertansiyon",
+   "drug_b": "Antihipertansif",
+   "translated": true
+  },
+  "15": {
+   "drug_a": "Antikonvülzan",
+   "adverse_event": "Döküntü",
+   "drug_b": "Topikal kortikosteroid",
+   "translated": true
+  },
+  "16": {
+   "drug_a": "Antikonvülzan",
+   "adverse_event": "Bulantı",
+   "drug_b": "Antiemetik",
+   "translated": true
+  },
+  "17": {
+   "drug_a": "Antipsikotik",
+   "adverse_event": "Ekstrapiramidal belirtiler",
+   "drug_b": "Beta bloker",
+   "translated": true
+  },
+  "18": {
+   "drug_a": "Antipsikotik",
+   "adverse_event": "Ekstrapiramidal belirtiler",
+   "drug_b": "Antiparkinson ilaç",
+   "translated": true
+  },
+  "19": {
+   "drug_a": "Antipsikotik",
+   "adverse_event": "Ekstrapiramidal belirtiler",
+   "drug_b": "Tremor için antimuskarinik ilaç",
+   "translated": true
+  },
+  "20": {
+   "drug_a": "Antipsikotik",
+   "adverse_event": "Akatizi veya tardif hareket bozuklukları",
+   "drug_b": "Sedatif",
+   "translated": true
+  },
+  "21": {
+   "drug_a": "Antipsikotik",
+   "adverse_event": "Aritmi",
+   "drug_b": "Antiaritmik",
+   "translated": true
+  },
+  "22": {
+   "drug_a": "Antipsikotik",
+   "adverse_event": "Hiperglisemi",
+   "drug_b": "Antihiperglisemik",
+   "translated": true
+  },
+  "23": {
+   "drug_a": "Benzodiazepin",
+   "adverse_event": "Bilişsel bozukluk",
+   "drug_b": "Kolinesteraz inhibitörü",
+   "translated": true
+  },
+  "24": {
+   "drug_a": "Kolinesteraz inhibitörü",
+   "adverse_event": "İdrar kaçırma",
+   "drug_b": "Aşırı aktif mesane ilacı",
+   "translated": true
+  },
+  "25": {
+   "drug_a": "Kolinesteraz inhibitörü",
+   "adverse_event": "Uykusuzluk",
+   "drug_b": "Uyku ilacı",
+   "translated": true
+  },
+  "26": {
+   "drug_a": "Kolinesteraz inhibitörü",
+   "adverse_event": "Gastrointestinal yakınmalar",
+   "drug_b": "Antiemetik",
+   "translated": true
+  },
+  "27": {
+   "drug_a": "Kolinesteraz inhibitörü",
+   "adverse_event": "Gastrointestinal yakınmalar",
+   "drug_b": "Bizmut subsalisilat",
+   "translated": true
+  },
+  "28": {
+   "drug_a": "Kolinesteraz inhibitörü",
+   "adverse_event": "İshal",
+   "drug_b": "Antidiyareik",
+   "translated": true
+  },
+  "29": {
+   "drug_a": "Kolinesteraz inhibitörü",
+   "adverse_event": "Burun akıntısı",
+   "drug_b": "Antihistaminik",
+   "translated": true
+  },
+  "30": {
+   "drug_a": "Dopaminerjik antiparkinson ilaç",
+   "adverse_event": "Psikotik belirtiler, halüsinasyonlar",
+   "drug_b": "Antipsikotik",
+   "translated": true
+  },
+  "31": {
+   "drug_a": "Gabapentinoid",
+   "adverse_event": "Periferik ödem",
+   "drug_b": "Diüretik",
+   "translated": true
+  },
+  "32": {
+   "drug_a": "Seçici serotonin geri alım inhibitörü/serotonin ve noradrenalin geri alım inhibitörü (SSRI/SNRI)",
+   "adverse_event": "İdrar kaçırma",
+   "drug_b": "Aşırı aktif mesane ilacı",
+   "translated": true
+  },
+  "33": {
+   "drug_a": "Trisiklik antidepresan",
+   "adverse_event": "Bilişsel bozukluk",
+   "drug_b": "Kolinesteraz inhibitörü",
+   "translated": true
+  },
+  "34": {
+   "drug_a": "Trisiklik antidepresan",
+   "adverse_event": "Kabızlık",
+   "drug_b": "Laksatif",
+   "translated": true
+  },
+  "35": {
+   "drug_a": "Trisiklik antidepresan",
+   "adverse_event": "İdrar kaçırma",
+   "drug_b": "Aşırı aktif mesane ilacı",
+   "translated": true
+  },
+  "36": {
+   "drug_a": "Flunarizin",
+   "adverse_event": "Depresyon",
+   "drug_b": "Antidepresan",
+   "translated": true
+  },
+  "37": {
+   "drug_a": "Lityum",
+   "adverse_event": "Ekstrapiramidal belirtiler",
+   "drug_b": "Antiparkinson ilaç",
+   "translated": true
+  },
+  "38": {
+   "drug_a": "Venlafaksin",
+   "adverse_event": "Hipertansiyon (doza bağlı)",
+   "drug_b": "Antihipertansif",
+   "translated": true
+  },
+  "39": {
+   "drug_a": "Venlafaksin",
+   "adverse_event": "Tremor",
+   "drug_b": "Benzodiazepin",
+   "translated": true
+  },
+  "40": {
+   "drug_a": "Dipeptidil peptidaz 4 (DPP-4) inhibitörü (ör. sitagliptin, saksagliptin)",
+   "adverse_event": "Eklem ağrısı",
+   "drug_b": "Steroid olmayan antiinflamatuvar ilaç",
+   "translated": true
+  },
+  "41": {
+   "drug_a": "Sodyum-glukoz kotransporter-2 (SGLT-2) inhibitörü",
+   "adverse_event": "Genital mantar enfeksiyonları",
+   "drug_b": "Antifungal",
+   "translated": true
+  },
+  "42": {
+   "drug_a": "Metformin",
+   "adverse_event": "İshal",
+   "drug_b": "Antidiyareik",
+   "translated": true
+  },
+  "43": {
+   "drug_a": "Pioglitazon veya rosiglitazon",
+   "adverse_event": "Ödem",
+   "drug_b": "Diüretik",
+   "translated": true
+  },
+  "44": {
+   "drug_a": "Rosiglitazon",
+   "adverse_event": "Kalp yetmezliği",
+   "drug_b": "Diüretik",
+   "translated": true
+  },
+  "45": {
+   "drug_a": "Antikolinerjik antiemetik",
+   "adverse_event": "İdrar retansiyonu",
+   "drug_b": "Alfa-1 reseptör blokeri",
+   "translated": true
+  },
+  "46": {
+   "drug_a": "Antidopaminerjik antiemetik",
+   "adverse_event": "Ekstrapiramidal belirtiler",
+   "drug_b": "Antiparkinson ilaç",
+   "translated": true
+  },
+  "47": {
+   "drug_a": "Laksatif",
+   "adverse_event": "İshal",
+   "drug_b": "Antidiyareik",
+   "translated": true
+  },
+  "48": {
+   "drug_a": "Proton pompası inhibitörü",
+   "adverse_event": "Osteoporoz, kırıklar",
+   "drug_b": "Vitamin takviyesi",
+   "translated": true
+  },
+  "49": {
+   "drug_a": "Proton pompası inhibitörü",
+   "adverse_event": "Vitamin veya mineral eksikliği",
+   "drug_b": "Vitamin veya mineral eksikliği",
+   "translated": true
+  },
+  "50": {
+   "drug_a": "Bifosfonat",
+   "adverse_event": "Gastrit",
+   "drug_b": "Mide koruyucu ilaç",
+   "translated": true
+  },
+  "51": {
+   "drug_a": "Steroid olmayan antiinflamatuvar ilaç (NSAİİ)",
+   "adverse_event": "Gastrit/mide ülseri/gastrointestinal kanama",
+   "drug_b": "Mide koruyucu ilaç",
+   "translated": true
+  },
+  "52": {
+   "drug_a": "NSAİİ",
+   "adverse_event": "Bulantı",
+   "drug_b": "Antiemetik",
+   "translated": true
+  },
+  "53": {
+   "drug_a": "NSAİİ",
+   "adverse_event": "Hipertansiyon",
+   "drug_b": "Antihipertansif",
+   "translated": true
+  },
+  "54": {
+   "drug_a": "NSAİİ",
+   "adverse_event": "Kalp yetmezliğinin kötüleşmesi",
+   "drug_b": "Kalp yetmezliği ilacı",
+   "translated": true
+  },
+  "55": {
+   "drug_a": "Opioid",
+   "adverse_event": "Depresyon",
+   "drug_b": "Antidepresan",
+   "translated": true
+  },
+  "56": {
+   "drug_a": "Alfa-1 reseptör blokeri",
+   "adverse_event": "Ortostatik hipotansiyon, baş dönmesi",
+   "drug_b": "Vestibüler baskılayıcı",
+   "translated": true
+  },
+  "57": {
+   "drug_a": "Üriner antikolinerjik",
+   "adverse_event": "Ağız kuruluğu",
+   "drug_b": "Yapay tükürük",
+   "translated": true
+  },
+  "58": {
+   "drug_a": "Karbapenem (ör. imipenem, meropenem, ertapenem)",
+   "adverse_event": "Nöbetler",
+   "drug_b": "Antikonvülzan",
+   "translated": true
+  },
+  "59": {
+   "drug_a": "Kortikosteroid",
+   "adverse_event": "Uykusuzluk",
+   "drug_b": "Uyku ilacı",
+   "translated": true
+  },
+  "60": {
+   "drug_a": "Kortikosteroid",
+   "adverse_event": "Psikoz",
+   "drug_b": "Antipsikotik",
+   "translated": true
+  },
+  "61": {
+   "drug_a": "Kortikosteroid",
+   "adverse_event": "Hipertansiyon",
+   "drug_b": "Antihipertansif",
+   "translated": true
+  },
+  "62": {
+   "drug_a": "Asitretin",
+   "adverse_event": "Vulvovajinal kandidiyaz",
+   "drug_b": "Antifungal",
+   "translated": true
+  },
+  "63": {
+   "drug_a": "Eritromisin",
+   "adverse_event": "Aritmi",
+   "drug_b": "Antiaritmik",
+   "translated": true
+  },
+  "64": {
+   "drug_a": "Fludrokortizon",
+   "adverse_event": "Hipertansiyon",
+   "drug_b": "Antihipertansif",
+   "translated": true
+  },
+  "65": {
+   "drug_a": "Demir takviyesi",
+   "adverse_event": "Kabızlık",
+   "drug_b": "Laksatif",
+   "translated": true
+  }
+ },
+ "ingredients": {
+  "J1": "dimenhidrinat",
+  "J2": "imipenem",
+  "Q3515": "rabeprazol",
+  "Q18216": "aspirin",
+  "Q19484": "metformin",
+  "Q20994": "nimesulid",
+  "Q23767": "kalsiyum karbonat",
+  "Q29428": "tropisetron",
+  "Q39111": "nifedipin",
+  "Q45044": "magnezyum sitrat",
+  "Q45050": "tenoksikam",
+  "Q46452": "afyon",
+  "Q55434": "petidin",
+  "Q57055": "parasetamol",
+  "Q58356": "amoksapin",
+  "Q58375": "tiyoridazin",
+  "Q58376": "flufenazin",
+  "Q58396": "imipramin",
+  "Q58397": "amitriptilin",
+  "Q58713": "klomipramin",
+  "Q60168": "eroin",
+  "Q61387": "nortriptilin",
+  "Q62947": "flunitrazepam",
+  "Q73972": "hidroksokobalamin",
+  "Q81225": "morfin",
+  "Q121874": "potasyum iyodür",
+  "Q132501": "gliserin",
+  "Q139195": "kalsitriol",
+  "Q139200": "ergokalsiferol",
+  "Q139347": "kolekalsiferol",
+  "Q152763": "lityum",
+  "Q155472": "valsartan",
+  "Q158289": "Kantaron",
+  "Q159376": "Ceratonia",
+  "Q174259": "droperidol",
+  "Q174723": "kodein",
+  "Q174786": "pentoksiverin",
+  "Q178566": "klordiazepoksid",
+  "Q179996": "metadon",
+  "Q180912": "melatonin",
+  "Q181003": "triptofan",
+  "Q184564": "aldosteron",
+  "Q186257": "lormetazepam",
+  "Q186969": "ibuprofen",
+  "Q187921": "fenolftalein",
+  "Q188154": "pektin",
+  "Q189522": "kinin",
+  "Q191521": "sildenafil",
+  "Q198473": "zikonotid",
+  "Q201872": "olanzapin",
+  "Q203483": "zimelidin",
+  "Q205517": "ziprasidon",
+  "Q206844": "teobromin",
+  "Q208451": "kalsiyum klorür",
+  "Q210021": "gamma aminobütirik asit",
+  "Q210402": "diazepam",
+  "Q213511": "eritromisin",
+  "Q216935": "lidokain",
+  "Q218842": "zolpidem",
+  "Q219957": "zonisamid",
+  "Q220426": "zopiklon",
+  "Q221174": "topiramat",
+  "Q221361": "klozapin",
+  "Q228143": "zuklopentiksol",
+  "Q238544": "5-hidroksitriptofan",
+  "Q240642": "valproik asit",
+  "Q244408": "diklofenak",
+  "Q245280": "sorbitol",
+  "Q248466": "natamisin",
+  "Q251005": "nistatin",
+  "Q251347": "haloperidol",
+  "Q252251": "siyanokobalamin",
+  "Q254296": "lansoprazol",
+  "Q265414": "magnezyum klorür",
+  "Q269111": "apomorfin",
+  "Q275926": "bumetanid",
+  "Q277979": "nalbufin",
+  "Q280786": "terazosin",
+  "Q282902": "nalokson",
+  "Q284321": "mefenamik asit",
+  "Q286846": "pantoprazol",
+  "Q288266": "magnezyum sülfat",
+  "Q290001": "gliklazid",
+  "Q303646": "hidromorfon",
+  "Q319877": "alprazolam",
+  "Q326224": "kolşisin",
+  "Q337188": "skopolamin",
+  "Q338005": "akarboz",
+  "Q341500": "asitretin",
+  "Q368995": "betahistin",
+  "Q372725": "tietilperazin",
+  "Q373243": "benorilat",
+  "Q375613": "asetilsistein",
+  "Q386441": "meklizin",
+  "Q388801": "furosemid",
+  "Q395229": "agomelatin",
+  "Q407241": "fenobarbital",
+  "Q407535": "oksikodon",
+  "Q407541": "fentanil",
+  "Q407548": "magnezyum hidroksit",
+  "Q407592": "tramadol",
+  "Q407617": "sertralin",
+  "Q407646": "mannitol",
+  "Q407721": "buprenorfin",
+  "Q407781": "dekstrometorfan",
+  "Q407883": "ketokonazol",
+  "Q407972": "klorpromazin",
+  "Q407988": "klonazepam",
+  "Q408099": "brivarasetam",
+  "Q408265": "lorazepam",
+  "Q408471": "paroksetin",
+  "Q408535": "ketiapin",
+  "Q408565": "rufinamid",
+  "Q408588": "vilazodon",
+  "Q408637": "dronedaron",
+  "Q408676": "piroksikam",
+  "Q408801": "selekoksib",
+  "Q409192": "ketoprofen",
+  "Q409231": "indometazin",
+  "Q409236": "fluvoksamin",
+  "Q409492": "simetidin",
+  "Q409632": "pentobarbital",
+  "Q409672": "sitalopram",
+  "Q409761": "amantadin",
+  "Q409898": "dapagliflozin",
+  "Q409948": "nomifensin",
+  "Q409966": "etizolam",
+  "Q410011": "ondansetron",
+  "Q410061": "amiodaron",
+  "Q410074": "losartan",
+  "Q410078": "nitrazepam",
+  "Q410083": "polietilen glikol",
+  "Q410291": "verapamil",
+  "Q410346": "lamotrijin",
+  "Q410352": "gabapentin",
+  "Q410400": "fenitoin",
+  "Q410412": "karbamazepin",
+  "Q410435": "benzbromaron",
+  "Q410492": "lerkanidipin",
+  "Q410965": "insülin detemir",
+  "Q411159": "famotidin",
+  "Q411188": "aripiprazol",
+  "Q411229": "itrakonazol",
+  "Q411251": "melitrasen",
+  "Q411325": "atenolol",
+  "Q411347": "amlodipin",
+  "Q411412": "rofekoksib",
+  "Q411441": "hidrokodon",
+  "Q411457": "trazodon",
+  "Q411478": "flukonazol",
+  "Q411594": "metoksifluran",
+  "Q411770": "silodosin",
+  "Q412107": "dibenzepin",
+  "Q412133": "deksmedetomidin",
+  "Q412143": "triazolam",
+  "Q412164": "klobazam",
+  "Q412174": "pregabalin",
+  "Q412182": "stiripentol",
+  "Q412208": "lisinopril",
+  "Q412221": "klonidin",
+  "Q412223": "amfoterisin B",
+  "Q412299": "oksazepam",
+  "Q412340": "kloralhidrat",
+  "Q412443": "risperidon",
+  "Q412486": "allopurinol",
+  "Q412496": "kinidin",
+  "Q412515": "bisoprolol",
+  "Q412534": "karvedilol",
+  "Q412621": "metildopa",
+  "Q412666": "ramipril",
+  "Q412677": "pitavastatin",
+  "Q412690": "galantamin",
+  "Q413184": "eszopiklon",
+  "Q413486": "difenhidramin",
+  "Q413546": "klotrimazol",
+  "Q413581": "bromokriptin",
+  "Q413591": "sotalol",
+  "Q413717": "baklofen",
+  "Q413739": "kalsiyum glukonat",
+  "Q413840": "tolkapon",
+  "Q413976": "piribedil",
+  "Q413994": "timolol",
+  "Q414028": "meloksikam",
+  "Q414463": "tapentadol",
+  "Q414547": "sodyum salisilat",
+  "Q414796": "temazepam",
+  "Q414914": "biperiden",
+  "Q415051": "midodrin",
+  "Q415081": "donepezil",
+  "Q415118": "pipamperon",
+  "Q415122": "feksofenadin",
+  "Q415159": "rosuvastatin",
+  "Q415203": "tripelennamin",
+  "Q415403": "flupirtin",
+  "Q415578": "fenazon",
+  "Q415793": "pentazosin",
+  "Q415970": "kandesartan",
+  "Q415972": "melperon",
+  "Q415997": "ketanserin",
+  "Q416025": "misoprostol",
+  "Q416132": "betametazon",
+  "Q416414": "tiaprid",
+  "Q416545": "asenapin",
+  "Q416562": "opipramol",
+  "Q416632": "nefazodon",
+  "Q416701": "mianserin",
+  "Q416992": "lurasidon",
+  "Q417178": "klometiazol",
+  "Q417204": "levomepromazin",
+  "Q417222": "metilprednizolon",
+  "Q417227": "levetirasetam",
+  "Q417317": "insülin glarjin",
+  "Q417689": "ramelteon",
+  "Q417740": "lovastatin",
+  "Q417762": "eksenatid",
+  "Q417874": "bisakodil",
+  "Q417942": "fluvastatin",
+  "Q418101": "pindolol",
+  "Q418130": "nebivolol",
+  "Q418351": "meprobamat",
+  "Q418361": "maprotilin",
+  "Q418480": "tamsulosin",
+  "Q418785": "amisülpirid",
+  "Q418850": "klorazepat",
+  "Q418928": "fenfluramin",
+  "Q418970": "reboksetin",
+  "Q418998": "flurazepam",
+  "Q419079": "nabilon",
+  "Q419175": "fenasetin",
+  "Q419820": "azelastin",
+  "Q419832": "sitagliptin",
+  "Q419841": "palonosetron",
+  "Q419890": "flurbiprofen",
+  "Q419948": "torasemid",
+  "Q419987": "hidralazin",
+  "Q419995": "amilorid",
+  "Q420009": "diazoksit",
+  "Q420057": "alendronik asit",
+  "Q420077": "lakozamid",
+  "Q420133": "klorfenamin",
+  "Q420377": "meksiletin",
+  "Q420383": "primidon",
+  "Q420590": "ropinirol",
+  "Q420626": "glibenklamid",
+  "Q420682": "guaifenesin",
+  "Q420685": "rasajilin",
+  "Q420885": "tranilsipromin",
+  "Q421042": "vildagliptin",
+  "Q421058": "milnasipran",
+  "Q421091": "levosetirizin",
+  "Q421095": "metoklopramid",
+  "Q421119": "kaptopril",
+  "Q421156": "olmesartan",
+  "Q421183": "heksobarbital",
+  "Q421304": "pramipeksol",
+  "Q421342": "fenilbutazon",
+  "Q421368": "iproniazid",
+  "Q421381": "flekainid",
+  "Q421429": "nimodipin",
+  "Q421475": "beklometazon",
+  "Q421567": "etosüksimid",
+  "Q421670": "meropenem",
+  "Q421930": "mirtazapin",
+  "Q421934": "moklobemid",
+  "Q421937": "hidroksizin",
+  "Q422185": "enalapril",
+  "Q422188": "spironolakton",
+  "Q422210": "omeprazol",
+  "Q422212": "budezonid",
+  "Q422222": "digoksin",
+  "Q422229": "diltiazem",
+  "Q422244": "fluoksetin",
+  "Q422252": "deksametazon",
+  "Q422418": "sülpirid",
+  "Q422423": "bromür",
+  "Q422435": "bromazepam",
+  "Q422689": "laktuloz",
+  "Q422761": "metamizol",
+  "Q422917": "kannabidiol",
+  "Q422970": "prometazin",
+  "Q423037": "ranitidin",
+  "Q423071": "midazolam",
+  "Q423075": "setirizin",
+  "Q423185": "kortizon",
+  "Q423288": "desipramin",
+  "Q423292": "paliperidon",
+  "Q423308": "kabergolin",
+  "Q423364": "propranolol",
+  "Q423390": "doksilamin",
+  "Q423450": "rupatadin",
+  "Q423498": "trimipramin",
+  "Q423520": "perfenazin",
+  "Q423538": "tizanidin",
+  "Q423751": "loperamid",
+  "Q423757": "essitalopram",
+  "Q423809": "klorprotiksen",
+  "Q423912": "metakualon",
+  "Q423930": "hidroklorotiyazid",
+  "Q424049": "loratadin",
+  "Q424156": "tadalafil",
+  "Q424161": "vardenafil",
+  "Q424165": "minoksidil",
+  "Q424238": "domperidon",
+  "Q424260": "tianeptin",
+  "Q424342": "paraldehit",
+  "Q424771": "rosiglitazon",
+  "Q424871": "mersalil",
+  "Q424952": "nadolol",
+  "Q424972": "prednizon",
+  "Q424997": "mesna",
+  "Q425097": "asepromazin",
+  "Q425289": "klortalidon",
+  "Q425295": "sisaprid",
+  "Q425296": "prazosin",
+  "Q425440": "deksketoprofen",
+  "Q425729": "ivabradin",
+  "Q481757": "aseklofenak",
+  "Q502327": "senna glikozidleri",
+  "Q546434": "karteolol",
+  "Q553220": "ertapenem",
+  "Q553223": "esomeprazol",
+  "Q553324": "etenzamid",
+  "Q567927": "pipotiazin",
+  "Q572796": "medazepam",
+  "Q576684": "oksolamin",
+  "Q593166": "molindon",
+  "Q596708": "granisetron",
+  "Q599052": "nefopam",
+  "Q621834": "aprepitant",
+  "Q631457": "niaprazin",
+  "Q656259": "feniramin",
+  "Q662511": "propafenon",
+  "Q668093": "atorvastatin",
+  "Q670131": "simvastatin",
+  "Q729213": "nikardipin",
+  "Q733186": "telmisartan",
+  "Q775073": "sinnarizin",
+  "Q784717": "eprosartan",
+  "Q793143": "benzidamin",
+  "Q794162": "betaksolol",
+  "Q834280": "bupropion",
+  "Q862414": "bendazak",
+  "Q867308": "siklizin",
+  "Q898407": "venlafaksin",
+  "Q904673": "iprindol",
+  "Q908663": "kaolin",
+  "Q911332": "keten tohumu",
+  "Q945537": "tofizopam",
+  "Q947266": "irbesartan",
+  "Q958087": "labetalol",
+  "Q963093": "sulindak",
+  "Q1002165": "flutikazon",
+  "Q1047468": "klorobütanol",
+  "Q1060922": "oksibutinin",
+  "Q1074056": "triamsinolon",
+  "Q1075324": "klorpropamid",
+  "Q1078392": "indapamid",
+  "Q1188290": "nizatidin",
+  "Q1215575": "naproksen",
+  "Q1240093": "pravastatin",
+  "Q1320691": "salsalat",
+  "Q1326389": "aloksiprin",
+  "Q1747559": "fenelzin",
+  "Q1749609": "oksaprozin",
+  "Q1752915": "trifluoperazin",
+  "Q1829318": "dolasetron",
+  "Q2014797": "ketorolak",
+  "Q2070778": "benzonatat",
+  "Q2268608": "dekstropropoksifen",
+  "Q2291605": "moeksipril",
+  "Q2327739": "ebastin",
+  "Q2359690": "proklorperazin",
+  "Q2360598": "butamirat",
+  "Q2365493": "esketamin",
+  "Q2393323": "klorsiklizin",
+  "Q2419445": "desvenlafaksin",
+  "Q2458673": "ketotifen",
+  "Q2465218": "etodolak",
+  "Q2526479": "liraglutid",
+  "Q2555245": "fenoprofen",
+  "Q2602750": "diflunisal",
+  "Q2603363": "klorotiazid",
+  "Q2608288": "tiotiksen",
+  "Q2650256": "gepiron",
+  "Q2697578": "fludrokortizon",
+  "Q2723146": "asemetasin",
+  "Q2815334": "dokusat sodyum",
+  "Q2902977": "bilastin",
+  "Q2924764": "brekspiprazol",
+  "Q2928948": "butokonazol",
+  "Q2938837": "kariprazin",
+  "Q2991856": "triheksifenidil",
+  "Q3045264": "estazolam",
+  "Q3068413": "fentikonazol",
+  "Q3180288": "nordazepam",
+  "Q3342150": "nisoldipin",
+  "Q3395566": "Polygala senega",
+  "Q3530618": "toloksaton",
+  "Q3651150": "kamazepam",
+  "Q3702534": "mirabegron",
+  "Q3731252": "erdostein",
+  "Q3836403": "lofeksidin",
+  "Q3927403": "kuazepam",
+  "Q4199443": "iloperidon",
+  "Q4409774": "itoprid",
+  "Q4445779": "sultoprid",
+  "Q4738021": "alvimopan",
+  "Q4815980": "udenafil",
+  "Q4904728": "bifemelan",
+  "Q4946040": "bornaprin",
+  "Q5030940": "kanagliflozin",
+  "Q5275251": "difenoksin",
+  "Q5373824": "empagliflozin",
+  "Q5404839": "etoperidon",
+  "Q5613599": "guanfasin",
+  "Q6593346": "metipranolol",
+  "Q6960846": "naldemedin",
+  "Q7650517": "suvoreksant",
+  "Q7705238": "tertatolol",
+  "Q7842199": "trimetobenzamid",
+  "Q11426176": "prednisolon",
+  "Q15305564": "triklofos",
+  "Q15624030": "lulikonazol",
+  "Q16252338": "insülin degludec",
+  "Q21011228": "dulaglutit",
+  "Q27261089": "semaglutid",
+  "Q28208887": "mometazon",
+  "Q28559278": "plekanatid",
+  "Q45024802": "tilidin",
+  "Q108324770": "tirzepatid"
+ },
+ "sentences": {
+  "abrupt_stop": "Bu ilacı aniden kesmeyin.",
+  "name.not_translated": "ad çevrilmedi",
+  "name.not_reviewed": "ad gözden geçirilmedi",
+  "name.combination_code": "kombinasyon kodu",
+  "not_checked.homeopathic_product": "Homeopatik ürün, kontrol edilmedi",
+  "not_checked.ambiguous": "Etkin madde kesin olarak belirlenemedi, kontrol edilemiyor",
+  "not_checked.no_ingredient_key": "Etkin madde tanınmadı, kontrol edilemiyor",
+  "not_checked.possible_unsplit_combination": "Ayrıştırılamayan bir kombinasyon olabilir, kontrol edilemiyor",
+  "not_checked.no_ingredient_atc": "Etkin madde düzeyinde ATC kodu yok, kontrol edilemiyor",
+  "not_checked.no_ingredient_atc_for_route": "Bu uygulama yolu için ATC kodu yok, kontrol edilemiyor"
+ }
+}
