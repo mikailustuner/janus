@@ -171,19 +171,19 @@
     are explained by newer data, not by parser faults); record the figures in this spec.
   - Update `pipelines/README.md` (commands, sources, raw files) and run all checks. Commit, push, CI.
 
-- [ ] 22. `faers` job (`jobs/faers.py`)
+- [x] 22. `faers` job (`jobs/faers.py`)
   - Page parsing and `select_quarters`; archive download; line-based `$` split with strict
     UTF-8; `choose_kept`; `derive_region`; `split_ai`; per-quarter column-wise joins; spill file
     and `removed` side table; metrics (design §13.3). Job threshold 15 %. `--quarters` option.
-  - [ ] 22.1 Property test P27: case deduplication with deletions, any order. _Requirements: 13.3, 1.5_
-  - [ ] 22.2 Property test P28: row accounting with malformed, orphan and blank lines. _Requirements: 13.2, 13.5, 1.5_
-  - [ ] 22.3 Property test P29: region rule. _Requirements: 13.6_
-  - [ ] 22.4 Property test P30: quarter window. _Requirements: 13.1_
-  - [ ] 22.5 Property test P31: LF, CRLF and mixed line ends; quote characters kept. _Requirements: 13.2_
-  - [ ] 22.6 Property test P32: no field outside `faers-1`. _Requirements: 13.4_
-  - [ ] 22.7 Example tests: a `SULFAMETHOXAZOLE\TRIMETHOPRIM` drug line splits into two names; role `DN` kept in the artifact (the builder excludes it); `COUNTRY NOT SPECIFIED` falls back to UNKNOWN; a follow-up version replaces the initial one from an earlier quarter. _Requirements: 13.3, 13.4, 13.6_
+  - [x] 22.1 Property test P27: case deduplication with deletions, any order. _Requirements: 13.3, 1.5_
+  - [x] 22.2 Property test P28: row accounting with malformed, orphan and blank lines. _Requirements: 13.2, 13.5, 1.5_
+  - [x] 22.3 Property test P29: region rule. _Requirements: 13.6_
+  - [x] 22.4 Property test P30: quarter window. _Requirements: 13.1_
+  - [x] 22.5 Property test P31: LF, CRLF and mixed line ends; quote characters kept. _Requirements: 13.2_
+  - [x] 22.6 Property test P32: no field outside `faers-1`. _Requirements: 13.4_
+  - [x] 22.7 Example tests: a `SULFAMETHOXAZOLE\TRIMETHOPRIM` drug line splits into two names; role `DN` kept in the artifact (the builder excludes it); `COUNTRY NOT SPECIFIED` falls back to UNKNOWN; a follow-up version replaces the initial one from an earlier quarter. _Requirements: 13.3, 13.4, 13.6_
 
-- [ ] 23. Checkpoint: FAERS artifact on real data
+- [x] 23. Checkpoint: FAERS artifact on real data
   - Run `faers` on the four latest quarters. Compare with design §10 (if the window is still
     2025 Q4 – 2026 Q3: 1,626,375 reports read, 111,604 superseded, 3,967 deleted, 1,510,804 kept;
     region counts of DP16). Report wall time, peak memory (target ≤ 4 GiB, Req 14.4) and the size
