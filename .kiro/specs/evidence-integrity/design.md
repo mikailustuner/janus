@@ -562,6 +562,9 @@ refinement.
 | DP21 | Tests build synthetic artifacts and states; the PIPC example is hand-built from the stored Crossref values (no fixture file). | Commit the stored Crossref response. | The values that matter are four fields; the real-artifacts test covers the full response locally. |
 | DP22 | **Owner decision 2026-11-08 (collective-memory DP12).** No new evidence records for FAERS statistics. The kind `faers_stat` stays valid and unused in Phase 2; FAERS is cited through the dataset record `dataset:faers`, which the loader already writes from the `faers` artifact, and the citing spec carries a locator next to the id (the locator belongs to the citation, not to the record). No change to loader, schema, `cite` or `register_records`. | Per-cell `faers_stat` records via `register_records`; a virtual rule making well-formed `faers_stat` ids citable. | Millions of possible cells; the API cannot write at request time; the virtual rule would change the fail-closed model for one source. |
 
+> **Change 2026-11-08 (`doctor-loop` DP18):** `DISCLAIMER` in `integrity/schemas.py` is now `memory/messages.py`'s rule-9
+> sentence with the em dash (it used an ASCII hyphen); the resolution and cascade responses use the same constant.
+
 ## 10. Open items
 - Owner decisions of 2026-11-07: DP4 (only `retracted` is excluded; `corrected`,
   `expression_of_concern` and `unknown` stay citable with their notice or status), DP14 (no

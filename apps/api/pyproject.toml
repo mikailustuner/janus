@@ -49,6 +49,9 @@ select = ["E", "F", "W", "I", "B", "UP", "S", "N", "RUF"]
 "janus/memory/faers_build.py" = ["S608"]
 # Sentences quote the en dash of "medicine–event" (statistics review wording).
 "janus/memory/messages.py" = ["RUF001"]
+# Five-language word lists and texts (Turkish dotless i, typographic dashes).
+"janus/notes/phrases.py" = ["RUF001"]
+"tests/test_notes_*.py" = ["RUF001", "S101"]
 "tests/test_faers_build_properties.py" = ["S608"]
 
 [tool.pyright]

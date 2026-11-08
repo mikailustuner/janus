@@ -356,8 +356,10 @@ def test_route_errors_and_logs(client: TestClient, conn: psycopg.Connection) -> 
         client.post("/memory/shared", json={**body, "ingredients": ["Q11", "Q11"]}).status_code
         == 422
     )
+    # doctor-loop registers the outcome store: the layer answers, hidden like any cell under 20
     out = client.post("/memory/shared", json={**body, "layer": "outcomes"}).json()
-    assert out["status"] == "not_available" and out["cells"] == []
+    assert out["status"] == "ok"
+    assert all(c["status"] == "hidden" and c["value"] is None for c in out["cells"])
     with capture_logs() as logs:
         client.post("/memory/shared", json={**body, "ingredients": ["Q99999"]})
     assert not leaked(logs.getvalue(), ["Q99999", EVENT])

@@ -100,6 +100,7 @@ Show how often the same medicines and events appear together in public adverse-e
 5. *(Added.)* A user-layer cell SHALL be (ingredient set, Janus event key, direction, region) with region TR, EU or US. Its true contributor count is the number of stored donations (or outcomes) that name all the ingredients of the set, the event and the direction in that region. A donation is a donation, not a person (`privacy` DP13).
 6. *(Added.)* THE system SHALL read user layers from the live stores in one read-only transaction, so a deleted donation is absent from the next response (`privacy` Requirement 3.3).
 7. *(Added.)* THE `outcomes` layer SHALL be defined as an interface (a source of cells with true contributor counts) and SHALL answer `not_available` until `doctor-loop` provides the outcome store. THE answer SHALL NOT be an empty or zero count.
+   - *(Closed 2026-11-08 by `doctor-loop` task 12.)* `OutcomesSource` (`janus/notes/source.py`) is registered: a cell counts doctor-reported outcomes with assessment `confirmed` whose ingredient pair contains the set; release is the same `release_table`, k = 20, noise and sibling rule; `GET /memory/snapshot` reports `outcomes: ok | unavailable`.
 8. *(Added.)* Demo data SHALL never reach the user layers (`experience` Requirement 4.3); the API has no way to mark a read as demo, so this holds because the client sends no donations in demo mode and the donation endpoints reject `"demo": true`.
 
 ### Requirement 5: Privacy of aggregates

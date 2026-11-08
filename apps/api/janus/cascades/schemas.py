@@ -11,9 +11,9 @@ from typing import Annotated, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr, model_validator
 
-DISCLAIMER = (
-    "Janus provides information, not medical advice. Research prototype - not a medical device."
-)
+from janus.memory import messages
+
+DISCLAIMER = messages.DISCLAIMER  # rule 9, em dash (doctor-loop DP18)
 MAX_ITEMS = 50
 QID = r"^(Q[1-9][0-9]{0,9}|J[1-9][0-9]{0,5})$"  # Wikidata QID or Janus curated key
 CANDIDATE = r"^(TR|US|EU):[a-z_]+:[0-9]{1,9}$"

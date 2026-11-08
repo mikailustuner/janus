@@ -20,10 +20,9 @@ from pydantic import (
 from janus.integrity.line import IntegrityLine
 from janus.integrity.model import is_evidence_id
 from janus.integrity.view import EvidenceItem, StatusCode
+from janus.memory import messages
 
-DISCLAIMER = (
-    "Janus provides information, not medical advice. Research prototype - not a medical device."
-)
+DISCLAIMER = messages.DISCLAIMER  # rule 9, em dash (doctor-loop DP18)
 
 MAX_IDS = 200
 _DATE = r"^\d{4}-\d{2}-\d{2}$"

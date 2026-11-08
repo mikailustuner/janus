@@ -142,14 +142,13 @@ async def memory_snapshot(request: Request) -> Any:
 
     def call() -> BaseModel:
         reader = holder.current()
+        user_ok = isinstance(db, Database) and settings.noise_key is not None
+        sources = request.app.state.user_layer_sources
         layers = {
             "faers": "ok",
-            "contributions": (
-                "ok"
-                if isinstance(db, Database) and settings.noise_key is not None
-                else "unavailable"
-            ),
-            "outcomes": "not_available",
+            "contributions": "ok" if user_ok and "contributions" in sources else "unavailable",
+            # doctor-loop provides the outcome store (collective-memory DP10 closed, 2026-11-08)
+            "outcomes": "ok" if user_ok and "outcomes" in sources else "unavailable",
         }
         ctx = service.Context(request.app.state.event_vocabulary, today(), None)
         with reader.session() as session:

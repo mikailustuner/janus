@@ -137,7 +137,9 @@ def test_snapshot_is_operational(client: TestClient) -> None:
     r = client.get("/memory/snapshot")
     assert r.status_code == 200
     body = r.json()
-    assert body["layers"]["faers"] == "ok" and body["layers"]["outcomes"] == "not_available"
+    assert (
+        body["layers"]["faers"] == "ok" and body["layers"]["outcomes"] == "unavailable"
+    )  # no database here
     assert [t["region"] for t in body["totals"]] == ["TR", "EU", "US", "OTHER", "UNKNOWN", "ALL"]
     assert body["totals"][-1]["reports_all"] == 6
     assert "MedDRA" in body["meddra_notice"] and "Not an FDA endorsement" in body["attribution"]

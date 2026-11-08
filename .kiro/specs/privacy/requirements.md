@@ -7,6 +7,7 @@
 > Criteria tagged **[Client: experience spec]** stay here as requirements but are implemented in
 > the `experience` spec (Phase 3). They are not part of this spec's tasks.
 > QR tokens (note id + HMAC + expiry, no personal data) are specified in `doctor-loop` Req 2.
+> *(2026-11-08, owner decision in `doctor-loop`.)* The token also carries the note's finding codes (PIPC rows, ingredient keys and ATC codes, Janus event keys, direction, language, region, issue week, expiry, key id, consent version) in a signed payload in the URL fragment; no personal data. The server stores only SHA-256 hashes of used or withdrawn note ids until expiry (`used_note_tokens`) and the outcomes (`outcomes`: report week, region, codes, answers, consent version, deletion hash). `privacy.md` is unchanged.
 
 ## Introduction
 Health data is the biggest risk in Janus. Privacy is a product feature: on-device processing, stateless APIs, explicit consent, k-anonymity and differential privacy — designed to GDPR (EU), KVKK (Türkiye) and US consumer-health-data expectations at the same time.

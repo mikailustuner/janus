@@ -16,6 +16,10 @@ from janus.http_policy.routes import classify, operational_router
 from janus.memory.reader import CountsHolder
 from janus.memory.shared import ContributionsSource
 from janus.memory.vocabulary import load_events
+from janus.notes.glossary import load as load_glossary
+from janus.notes.glossary import vocabulary_digest
+from janus.notes.source import OutcomesSource
+from janus.notes.token import Keyring
 from janus.observability.logging import (
     LogEvent,
     configure_logging,
@@ -73,13 +77,30 @@ def create_app(
     path = settings.event_vocabulary_path
     app.state.event_vocabulary = load_events(path if path.suffix == ".csv" else EVENT_VOCABULARY)
     app.state.counts = CountsHolder(settings.data_dir)
-    app.state.user_layer_sources = {"contributions": ContributionsSource()}
+    vocab = app.state.event_vocabulary
+    app.state.glossary = load_glossary(
+        extra=vocabulary_digest(
+            {k.key: dict(k.labels) for k in vocab.keys},
+            {k.key: k.safety_line for k in vocab.keys if k.safety_line},
+        )
+    )
+    app.state.user_layer_sources = {
+        "contributions": ContributionsSource(),
+        "outcomes": OutcomesSource(),
+    }
+    app.state.note_keyring = (
+        Keyring(settings.note_keys, settings.note_signing_key_id)
+        if settings.note_keys and settings.note_signing_key_id
+        else None
+    )
     # Imported here to avoid an import cycle (the routers read settings from app.state).
     from janus.cascades.router import router as cascades_router
     from janus.contributions.router import router as contributions_router
     from janus.integrity.router import router as integrity_router
     from janus.memory.router import router as memory_router
     from janus.memory.router import snapshot_router as memory_snapshot_router
+    from janus.notes.router import donation as notes_donation_router
+    from janus.notes.router import router as notes_router
     from janus.privacy.router import router as privacy_router
     from janus.resolution.router import router as resolution_router
 
@@ -92,6 +113,8 @@ def create_app(
         cascades_router,
         memory_router,
         memory_snapshot_router,
+        notes_router,
+        notes_donation_router,
         *extra_routers,
     ]
     for router in routers:

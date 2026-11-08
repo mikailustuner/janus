@@ -134,3 +134,34 @@ Source: `drug-resolution` requirements 1.4, 4, 12 and design §13, §19. The API
 - **503 for a missing EU source.** `resolution_unavailable` for region `EU` means the French or Spanish data are not loaded; do not say "not found". A scan whose code has a French GS1 prefix and a request for region `EU` answer 503 on a dataset without the BDPM or the Nomenclátor; a Turkish or US scan works on the same dataset.
 - **Status strings (built in task 23).** French `status_published` entries are the BDPM strings as published (for example `Autorisation active`, `Déclaration de commercialisation 16/03/2011`). Spanish entries are machine strings: `commercialised:true|false`, `registration_status:<code> <date>`, `presentation_status:<code> <date>`, `serialised:true|false`; the client words them in the user's language. The meaning of the numeric status codes is not in the artifact: confirm it against the AEMPS documentation before the client labels any of them.
 - **`atc_selection = component_code` (task 27).** An ingredient may carry the combination code `J01DH51` when its key is the curated imipenem key `J2` (a reviewed pair, `drug-resolution` DP43). Show it as a normal mapped ingredient; do not present `J01DH51` as imipenem's own WHO code, and never as the code of cilastatin, which has none.
+
+## Open items from doctor-loop (2026-11-08)
+
+Source: `doctor-loop` design §4, §6, §7, §9. The server side is built; the screens below belong to this spec.
+- **Note document.** `POST /notes/document` takes the body of `POST /cascades/evaluate` as `evaluation`, optional `pins`
+  (`rule_base_version`, `integrity_version`, `counts_build_id` the patient saw), one or two `languages` (note language, then
+  the patient's language for the side-by-side view), the user's `region` (emergency numbers) and an optional
+  `statistics_region`. It answers 409 `version_mismatch` with the pinned fields when anything changed: re-run the
+  evaluation and show the patient the new result before printing. The response holds one document per language with the
+  same sections and ids; lay it out, never re-word it.
+- **Product names.** Each medicine row has `product_name_slot: true`: fill it from the browser's own data (the name as on
+  the box). It never goes to the server.
+- **Names and tags.** An ingredient whose name is not in the reviewed glossary comes with `name_basis` and a `tag`
+  ("name not translated" or "name not reviewed"); show the tag and the ATC codes next to the name.
+- **Sections.** Safety lines come before the findings; form-unconfirmed findings are a separate section with its own
+  heading; the abrupt-stop line is in the medicine row; empty sections keep their heading. A note may not fit one page:
+  the findings section is ordered, overflow goes to a second page.
+- **QR code (outcome loop, opt-in).** `POST /notes/token` (one language, `consent_version` from the outcome-loop consent
+  text, `outcome_region` TR/EU/US) returns `token`, `qr_url` (`https://<host>/o#<token>`), `expires_on`, how many findings
+  the code covers and the note with an `outcome_loop` section. Print the QR code at 50 mm or more (version 25 at most,
+  level M, byte mode). The token lives only in the URL fragment: the doctor page reads `location.hash` and posts it in a
+  JSON body to `POST /outcomes/form` and `POST /outcomes`; never put it in a path, a query string or analytics.
+- **Doctor page.** No account; the form lists the token's findings in the note's language with two questions (assessment;
+  optional action and the medicine it concerns). Errors: `invalid_token` (400), `token_expired` and `token_not_usable`
+  (410), `token_used` (409).
+- **Withdrawal.** The patient withdraws with the same token (`POST /notes/withdraw`), also after use and after expiry; the
+  answer is the same whether or not outcomes were stored.
+- **Privacy page.** State that until rate limiting exists (Phase 5) anyone can create tokens and report outcomes, so a
+  cell of the outcomes layer can be padded, as for donations.
+- **Reminder.** The 4-week reminder to report whether the symptom resolved is stored in the browser only
+  (`doctor-loop` Req 3.3).

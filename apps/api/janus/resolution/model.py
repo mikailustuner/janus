@@ -13,6 +13,8 @@ from typing import Annotated, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints
 
+from janus.memory import messages
+
 Region = Literal["TR", "US", "EU"]
 # Regions a request may name. `EU` asks the French and Spanish adapters.
 RequestRegion = Literal["TR", "US", "EU"]
@@ -188,9 +190,7 @@ class ResolutionResult(_Out):
     scan: ScanInfo | None = None
     notices: list[Notice]
     candidates: list[ProductCandidate | IngredientCandidate]
-    disclaimer: str = (
-        "Janus provides information, not medical advice. Research prototype - not a medical device."
-    )
+    disclaimer: str = messages.DISCLAIMER  # rule 9, em dash (doctor-loop DP18)
 
 
 # Homeopathic strength units of openFDA (UCUM-style annotations: [hp_X], [hp_C], [hp_M],

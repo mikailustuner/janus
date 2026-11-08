@@ -213,7 +213,7 @@ rules: {total: 65, checked: int,
         not_matchable: [{rule_id, role, reason}]}
 statement: {code: "no_pattern_found" | "rule_base_unavailable", text} | null
 notices: ["chains_truncated"]
-disclaimer: "Janus provides information, not medical advice. Research prototype - not a medical device."
+disclaimer: "Janus provides information, not medical advice. Research prototype — not a medical device."   # em dash since doctor-loop DP18 (2026-11-08)
 
 Finding:
   finding_id: "pipc:<n>:<index qid>:<marker qid>", rule_id, rule_evidence_id

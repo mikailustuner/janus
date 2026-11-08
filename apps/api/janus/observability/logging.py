@@ -78,6 +78,7 @@ class LogEvent(StrEnum):
     integrity_load = "integrity_load"
     cascade_load = "cascade_load"
     faers_build = "faers_build"
+    note_purge = "note_purge"
 
 
 def register_route_templates(templates: Iterable[str]) -> None:

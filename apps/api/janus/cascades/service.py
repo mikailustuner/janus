@@ -16,7 +16,7 @@ import psycopg
 from janus.cascades import repository
 from janus.cascades.engine import evaluate
 from janus.cascades.inputs import ChoiceError, ingredient_item, product_item
-from janus.cascades.model import EngineItem, EngineResult, Finding, NotChecked, Side
+from janus.cascades.model import EngineItem, EngineResult, Finding, NotChecked, RuleBase, Side
 from janus.cascades.schemas import (
     CascadeResult,
     ChainOut,
@@ -39,6 +39,7 @@ from janus.cascades.schemas import (
 )
 from janus.cascades.timing import format_month, parse_month
 from janus.integrity import repository as integrity_repository
+from janus.integrity.model import IntegritySnapshot
 from janus.resolution import service as resolution
 from janus.resolution.service import ResolutionUnavailableError
 
@@ -65,12 +66,32 @@ def _month_of(today: dt.date) -> int:
     return today.year * 12 + today.month - 1
 
 
+@dataclasses.dataclass(frozen=True)
+class Derived:
+    """What one evaluation used and produced (doctor-loop DP25): the response and its inputs."""
+
+    result: CascadeResult
+    items: tuple[EngineItem, ...]
+    rule_base: RuleBase
+    snapshot: IntegritySnapshot
+
+
 def evaluate_request(
     conn: psycopg.Connection,
     body: EvaluateIn,
     today: dt.date,
     faers_event_keys: Mapping[int, str] | None = None,
 ) -> CascadeResult:
+    return derive(conn, body, today, faers_event_keys).result
+
+
+def derive(
+    conn: psycopg.Connection,
+    body: EvaluateIn,
+    today: dt.date,
+    faers_event_keys: Mapping[int, str] | None = None,
+) -> Derived:
+    """The evaluation inside the caller's transaction; `POST /notes/document` reuses it."""
     rb = repository.current_rule_base(conn)
     current = resolution.current_dataset_id(conn)
     if rb is None or current is None:
@@ -135,9 +156,8 @@ def evaluate_request(
     result = evaluate(
         items, rb, snapshot, today, found.combination_codes, unchecked, found.component_pairs
     )
-    return _out(
-        result, rb.version, current, snapshot.version(), format_month(now), rb.window_months
-    )
+    out = _out(result, rb.version, current, snapshot.version(), format_month(now), rb.window_months)
+    return Derived(out, tuple(items), rb, snapshot)
 
 
 def _side(s: Side) -> SideOut:

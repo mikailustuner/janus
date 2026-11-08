@@ -36,6 +36,7 @@ const EXTENSIONS = new Set([
 ]);
 const EXCLUDE = [
   /(^|\/)forbidden-phrases\.ts$/, // the phrase list itself
+  /(^|\/)janus\/notes\/phrases\.py$/, // its Python mirror (doctor-loop; a parity test keeps them equal)
   /\.test\.tsx?$/, // tests may quote phrases on purpose
   /(^|\/)test_[^/]*\.py$/,
   /(^|\/)(package|tsconfig)\.json$/,

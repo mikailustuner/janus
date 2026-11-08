@@ -60,6 +60,7 @@ script `/tmp/janus-dl/scope.py`, not committed):
 | `contributions/` | Deletion token: 256 random bits, SHA-256 stored; `report_week(now)` = Monday of the UTC ISO week; retention 24 months (`retention_cutoff`); purge CLI; storage-region guard `region_allows_donations` → 503 | Same patterns for the outcome store (DP17, DP19) |
 | Route kinds and writes | `medical`, `donation`, `operational`; `write_tx` allowed only in four modules (`tests/test_stateless_properties.py`) | `notes/repository.py` becomes the fifth `write_tx` user; the three writing routes are `donation` kind (DP19) |
 | Settings | Secrets parsed once (`JANUS_NOISE_KEY`: base64url, ≥ 32 bytes); errors name the variable only | `JANUS_NOTE_KEYS`, `JANUS_NOTE_SIGNING_KEY_ID`, `JANUS_OUTCOME_CONSENT_VERSIONS` follow the same rules (§3) |
+| Note benchmark (task 7, `python -m janus.notes.bench`, dev database, real counts file, placeholder glossary) | 16 medicines, 9 findings, 12 statistic rows, two languages, 30 runs: p50 306 ms, p95 345 ms, max 762 ms (first run) | Inside the 1.5 s target of Req 15.1; the pair lookups for the Janus keys dominate |
 | Event vocabulary | `memory_events.csv`: every PIPC row covered by exactly one key (`pipc_positions`), five reviewed labels, `safety_line` on six keys; 34 adverse keys, the longest 27 characters | The rule's Janus key is always known; event names and safety lines are reused, not copied (DP7); the token lists each distinct event key once (§6.1) |
 | ATC code → ingredient key | 3,898 ingredient-level codes in the dataset; **60 map to more than one key** (for example `N02BE01` to two paracetamol items, `B03BB01` to two folic acid items) | The token carries the ingredient keys as well as the ATC codes the owner listed; the codes alone cannot identify the ingredient (DP28) |
 | QR capacity (level M, byte mode; `segno` 1.6.6 in a scratch venv, binary search per version) | 14, 26, 42 … 666 (v20), 711, 779, 857, 911, **997 (v25)** … 2,331 (v40) bytes; equals ISO/IEC 18004 data codewords minus the mode and count bits | `notes/qr.py` holds the table and computes the version exactly (P33) |
@@ -243,12 +244,15 @@ Fixed per-language rules, no locale library:
 | decimal | `.` | `,` | `,` | `,` | `,` |
 | grouping | `,` | `.` | `.` | U+202F | `.` from 5 digits (CLDR minimum grouping 2) |
 | month | `03/2026` | `03.2026` | `03.2026` | `03/2026` | `03/2026` |
-| percent | `11.9%` | `%11,9` | `11,9 %` | `11,9 %` (U+202F) | `11,9 %` |
+| percent | `11.9%` | `%11,9` | `11,9 %` (NBSP) | `11,9 %` (U+202F) | `11,9 %` (NBSP) |
+| date | `2026-11-08` | `08.11.2026` | `08.11.2026` | `08/11/2026` | `08/11/2026` |
 
-Ratios: ≥ 1,000 → template `…_over` with the constant 1,000; ≥ 100 → 0 decimals; ≥ 10 → 1; else 2; a value that would
-print as 0.00 → `stat.ratio_below` with 0.01. Published priority values keep their published decimals; only the
-separator changes. Dates (`snapshot_date`, check dates) print as the month form plus the day: `2026-11-08` → `08/11/2026`
-style per the table's order. These rules are reviewed by the localization reviewer with the templates.
+Ratios (built in task 4): 2 decimals below 10, 1 below 100, else 0, judged on the rounded value (half-even); from 1,000
+`>1,000`; a value that would print as 0.00 `<0.01`. Published priority values keep their published decimals; only the
+separator changes. English dates are ISO 8601 because day and month order differ between English-speaking countries;
+months print as `MM/YYYY` (or `MM.YYYY`), which no reader misreads. `numbers` of a sentence holds the rendered
+parameters that contain digits; the auditor removes each once from the text and refuses any digit left (§5.5). These
+rules are reviewed by the localization reviewer with the templates.
 
 ### 5.4 Word lists (`phrases.py`)
 - `FORBIDDEN[lang]`: exactly the lists of `forbidden-phrases.ts` (parity test).
@@ -270,7 +274,8 @@ for each sentence id s present in the documents:
                                                                -> foreign_number
     fixed:  any failure -> AuditError (500; the glossary loader should have refused it; P14 shows it cannot happen
             with an accepted glossary)
-removals sorted by sentence id; a section left empty keeps its heading with the fixed text `section.empty`
+removals sorted by sentence id; a statistic row goes with its main sentence; a section left empty keeps its
+  heading (the findings section of a note without findings carries the fixed text `section.empty`)
 ```
 Claim templates contain no digit (loader check), so their numbers come only from params; the builder fills
 `numbers` from the same formatting call that wrote the text. Fixed texts may contain the digits of their reviewed
@@ -302,7 +307,7 @@ issue week   2 bytes  weeks since Monday 1970-01-05 (the Monday of the UTC ISO w
 expiry week  2 bytes  issue week + 5 (DP11); the token expires at 00:00 UTC of that Monday
 lang_region  1 byte   language index (en tr de fr es = 0–4) × 3 + region index (TR EU US = 0–2)
 consent      1 byte length c (1–32), c bytes [a-z0-9.-]
-events       1 byte count e (1–34), then e × (1 byte length, key bytes)   # distinct keys, sorted
+events       1 byte count e, then e × (1 byte length, key bytes)   # the distinct keys used, sorted, each used
 findings     1 byte count n (1–255), then n ×
                row        1 byte  PIPC position 1–65
                flags      1 byte  bit 7 form_confirmed, bit 6 direction (0 adverse, 1 benefit),
@@ -352,11 +357,12 @@ holds the issue week and the expiry week only; the used-token store holds the ex
   bytes) fits version 25; the response says how many it covers; the note's `outcome_loop` section names them. With every
   field at its maximum (kid 8, consent 32, two codes per side, 10-digit keys, a distinct 27-character event per finding),
   11 findings always fit (P33).
-- **Measured worst case of the largest realistic note** (20 common geriatric medicines with staggered starts, real engine,
-  dev dataset 2026-11-08): 18 findings, 8 distinct events, payload 490 bytes, token 654 characters; with a 30-byte base
-  the QR code is **version 21** (101 modules), inside the target. Larger synthetic lists: 25 medicines, 24 findings, 631
-  bytes, version 24; 30 medicines, 37 findings, 868 bytes: does not fit, the token keeps a prefix. Recomputed with the
-  final encoder in task 1 and recorded here.
+- **Measured worst case of the largest realistic note** (task 1, final encoder; 20 common geriatric medicines with
+  staggered starts, real engine, dev dataset `e9e55772…`, 2026-11-08): 18 findings, 8 distinct events, token 493 bytes =
+  658 characters; with a 30-byte base the QR code is **version 21** (101 modules), inside the target. Other lists:
+  15 medicines, 7 findings, 302 characters, version 14; 25 medicines, 24 findings, 846 characters, version 24; 30
+  medicines, 37 findings, 1,162 characters: does not fit, the token keeps the first 28 findings. Worst case with every
+  field at its maximum: 11 findings fit (989 bytes of the 997 of version 25).
 
 ## 7. Outcome loop
 
