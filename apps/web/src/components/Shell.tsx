@@ -18,6 +18,7 @@ import { useT, useTheme, useThemeWord } from "@/theme/words";
 import {
   FacesIcon,
   GlobeIcon,
+  PassportIcon,
   PillIcon,
   ResultsIcon,
   ScanIcon,
@@ -125,6 +126,7 @@ function DemoBar() {
 const NAV = [
   { href: "/scan", key: "scan", Icon: ScanIcon },
   { href: "/medicines", key: "medicines", Icon: PillIcon },
+  { href: "/passport", key: "passport", Icon: PassportIcon },
   { href: "/results", key: "results", Icon: ResultsIcon },
   { href: "/settings", key: "settings", Icon: SettingsIcon },
 ] as const;
@@ -143,7 +145,7 @@ function Nav() {
           : "fixed inset-x-0 bottom-0 z-20 border-t border-line bg-surface pb-[env(safe-area-inset-bottom)] no-print md:hidden"
       }
     >
-      <ul className="mx-auto grid max-w-[720px] grid-cols-4">
+      <ul className="mx-auto grid max-w-[720px] grid-cols-5">
         {NAV.map(({ href, key, Icon }) => {
           const active = pathname === href || pathname.startsWith(`${href}/`);
           return (
@@ -160,7 +162,9 @@ function Nav() {
                 }`}
               >
                 <Icon size={24} />
-                {t(`Shell.nav.${key}`)}
+                <span className="max-w-full text-center [overflow-wrap:anywhere] hyphens-auto">
+                  {t(`Shell.nav.${key}`)}
+                </span>
               </Link>
             </li>
           );
@@ -222,7 +226,16 @@ function ThemeToggle() {
 }
 
 /** Routes laid out as a wide website page from 1024 px (Req 27.2–27.4, DP41). */
-const WIDE = ["/", "/results", "/medicines", "/memory", "/note", "/settings"];
+const WIDE = [
+  "/",
+  "/results",
+  "/medicines",
+  "/memory",
+  "/note",
+  "/settings",
+  "/passport",
+  "/passport/item",
+];
 
 function StorageNotice() {
   const t = useT();

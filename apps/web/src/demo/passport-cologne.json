@@ -1,0 +1,224 @@
+{
+  "patient": "cologne",
+  "items": [
+    {
+      "id": "demo-cologne-0",
+      "demo": true,
+      "origin": {
+        "region": "TR",
+        "country": "TR"
+      },
+      "source": {
+        "source_id": "titck",
+        "snapshot_date": "2026-11-06"
+      },
+      "code": {
+        "kind": "scan",
+        "value": "(01)02952680000116"
+      },
+      "boxName": "Ramidem 5 (demo)",
+      "ingredients": [
+        {
+          "key": "Q412666",
+          "label": "ramipril",
+          "status": "mapped",
+          "strength": null,
+          "strengthOrigin": null
+        }
+      ],
+      "doseForm": null,
+      "homeopathic": false,
+      "boxes": 1,
+      "started": "2024-02"
+    },
+    {
+      "id": "demo-cologne-3",
+      "demo": true,
+      "origin": {
+        "region": "TR",
+        "country": "TR"
+      },
+      "source": {
+        "source_id": "titck",
+        "snapshot_date": "2026-11-06"
+      },
+      "code": null,
+      "boxName": "Pantodem 40 (demo)",
+      "ingredients": [
+        {
+          "key": "Q286846",
+          "label": "pantoprazole",
+          "status": "mapped",
+          "strength": {
+            "amount": "40000",
+            "unit": "ug",
+            "basis": "unit"
+          },
+          "strengthOrigin": "entered"
+        }
+      ],
+      "doseForm": {
+        "group": "oral_solid_delayed_release",
+        "origin": "entered"
+      },
+      "homeopathic": false,
+      "boxes": 1,
+      "started": null
+    },
+    {
+      "id": "demo-cologne-passport-2",
+      "demo": true,
+      "origin": {
+        "region": "TR",
+        "country": "TR"
+      },
+      "source": {
+        "source_id": "titck",
+        "snapshot_date": "2026-11-06"
+      },
+      "code": null,
+      "boxName": "Amlodem Plus 5/20 (demo)",
+      "ingredients": [
+        {
+          "key": "Q411347",
+          "label": "amlodipine",
+          "status": "mapped",
+          "strength": null,
+          "strengthOrigin": null
+        },
+        {
+          "key": "Q412208",
+          "label": "lisinopril",
+          "status": "mapped",
+          "strength": null,
+          "strengthOrigin": null
+        }
+      ],
+      "doseForm": null,
+      "homeopathic": false,
+      "boxes": 1,
+      "started": null
+    },
+    {
+      "id": "demo-cologne-1",
+      "demo": true,
+      "origin": {
+        "region": "EU",
+        "country": "DE"
+      },
+      "source": {
+        "entered_by_name": true
+      },
+      "code": null,
+      "boxName": "Hustendem Saft (Demo)",
+      "ingredients": [
+        {
+          "key": "Q221637",
+          "label": "ambroxol",
+          "status": "mapped",
+          "strength": null,
+          "strengthOrigin": null
+        }
+      ],
+      "doseForm": {
+        "group": "oral_liquid",
+        "origin": "entered"
+      },
+      "homeopathic": false,
+      "boxes": 1,
+      "started": null
+    },
+    {
+      "id": "demo-cologne-2",
+      "demo": true,
+      "origin": {
+        "region": "EU",
+        "country": "DE"
+      },
+      "source": {
+        "entered_by_name": true
+      },
+      "code": null,
+      "boxName": "Ibudem 400 (Demo)",
+      "ingredients": [
+        {
+          "key": "Q186969",
+          "label": "ibuprofen",
+          "status": "mapped",
+          "strength": {
+            "amount": "400000",
+            "unit": "ug",
+            "basis": "unit"
+          },
+          "strengthOrigin": "entered"
+        }
+      ],
+      "doseForm": {
+        "group": "oral_solid",
+        "origin": "entered"
+      },
+      "homeopathic": false,
+      "boxes": 1,
+      "started": null
+    },
+    {
+      "id": "demo-cologne-passport-5",
+      "demo": true,
+      "origin": {
+        "region": "EU",
+        "country": "DE"
+      },
+      "source": {
+        "entered_by_name": true
+      },
+      "code": null,
+      "boxName": "Amlodem 5 mg (Demo)",
+      "ingredients": [
+        {
+          "key": "Q411347",
+          "label": "amlodipine",
+          "status": "mapped",
+          "strength": {
+            "amount": "5000",
+            "unit": "ug",
+            "basis": "unit"
+          },
+          "strengthOrigin": "entered"
+        }
+      ],
+      "doseForm": {
+        "group": "oral_solid",
+        "origin": "entered"
+      },
+      "homeopathic": false,
+      "boxes": 1,
+      "started": null
+    },
+    {
+      "id": "demo-cologne-passport-6",
+      "demo": true,
+      "origin": {
+        "region": "EU",
+        "country": "DE"
+      },
+      "source": {
+        "entered_by_name": true
+      },
+      "code": null,
+      "boxName": "Arnidem Globuli (Demo)",
+      "ingredients": [
+        {
+          "key": null,
+          "label": "Arnica montana",
+          "status": "unmapped",
+          "strength": null,
+          "strengthOrigin": null
+        }
+      ],
+      "doseForm": null,
+      "homeopathic": true,
+      "boxes": 1,
+      "started": null
+    }
+  ]
+}

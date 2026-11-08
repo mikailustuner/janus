@@ -23,7 +23,8 @@ export type Route =
   | "outcomes"
   | "contributions"
   | "contributions/deletions"
-  | "privacy/storage";
+  | "privacy/storage"
+  | "passport/presence";
 
 export const ROUTES: readonly Route[] = [
   "resolve/scan",
@@ -45,6 +46,7 @@ export const ROUTES: readonly Route[] = [
   "contributions",
   "contributions/deletions",
   "privacy/storage",
+  "passport/presence",
 ];
 
 export type ApiError =
@@ -92,6 +94,7 @@ export const MESSAGE_KEYS = [
   "Donate.errors.consent_changed",
   "Donate.delete.not_found",
   "Donate.delete.invalid_token",
+  "Passport.states.error",
 ] as const;
 
 export type MessageKey = (typeof MESSAGE_KEYS)[number];
@@ -184,5 +187,8 @@ export function messageKeyFor(
       return "Donate.delete.invalid_token";
     if (status === 503) return "Donate.errors.unavailable";
   }
+  // medication-passport §3.3: no partial answer; the screen offers a retry, never "not found".
+  if (route === "passport/presence" && status === 503)
+    return "Passport.states.error";
   return "Errors.generic";
 }

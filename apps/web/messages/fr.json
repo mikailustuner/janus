@@ -67,7 +67,8 @@
       "research": {
         "twoFaces": "Face lumière",
         "glass": "Recherche"
-      }
+      },
+      "passport": "Passeport"
     },
     "mask": {
       "label": {
@@ -809,7 +810,6 @@
     }
   },
   "Passport": {
-    "nav": "Passeport",
     "title": "Passeport médicaments",
     "intro": "Toutes les boîtes dans une seule liste, quel que soit leur pays d'origine. Pour chaque boîte, Janus indique si les données publiques sur les produits de la Turquie, de la France, de l'Espagne et des États-Unis listent un produit avec les mêmes substances actives.",
     "listingsOnly": "Janus montre uniquement ce qui est répertorié dans des données publiques. Seul votre médecin ou votre pharmacien peut dire quel médicament vous convient.",
@@ -972,13 +972,18 @@
       "entry": "Signalements pour les substances actives de cette liste",
       "intro": "La Mémoire collective montre à quelle fréquence ces substances actives apparaissent ensemble dans les signalements publics d'événements indésirables.",
       "tooMany": "La Mémoire collective examine au plus 20 substances actives à la fois. Veuillez choisir celles à examiner.",
-      "choose": "Choisir au plus 20 substances actives",
-      "chosen": "{count} sur 20 choisies",
       "open": "Ouvrir la Mémoire collective"
     },
     "demo": {
       "intro": "Les boîtes turques et allemandes du patient de démonstration de Cologne. Les noms de produits sont inventés ; les listes proviennent des vraies données publiques."
     },
-    "presentNote": "Être répertorié ne signifie pas que le médicament est en vente ou disponible en pharmacie."
+    "presentNote": "Être répertorié ne signifie pas que le médicament est en vente ou disponible en pharmacie.",
+    "place": {
+      "TR": "Turquie",
+      "FR": "France",
+      "ES": "Espagne",
+      "DE": "Allemagne",
+      "US": "États-Unis"
+    }
   }
 }

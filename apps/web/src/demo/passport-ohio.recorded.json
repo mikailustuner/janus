@@ -1,0 +1,686 @@
+{
+ "recorded": {
+  "date": "2026-11-08",
+  "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+  "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3"
+ },
+ "request": {
+  "items": [
+   {
+    "ingredients": [
+     {
+      "key": "Q415081",
+      "strength": {
+       "amount": "10000",
+       "unit": "ug",
+       "basis": "unit"
+      }
+     }
+    ],
+    "dose_form": "oral_solid"
+   },
+   {
+    "ingredients": [
+     {
+      "key": "Q1060922",
+      "strength": {
+       "amount": "10000",
+       "unit": "ug",
+       "basis": "unit"
+      }
+     }
+    ],
+    "dose_form": "oral_solid_prolonged_release"
+   },
+   {
+    "ingredients": [
+     {
+      "key": "Q410352",
+      "strength": {
+       "amount": "300000",
+       "unit": "ug",
+       "basis": "unit"
+      }
+     }
+    ],
+    "dose_form": "oral_solid"
+   },
+   {
+    "ingredients": [
+     {
+      "key": "Q388801",
+      "strength": {
+       "amount": "20000",
+       "unit": "ug",
+       "basis": "unit"
+      }
+     }
+    ],
+    "dose_form": "oral_solid"
+   }
+  ]
+ },
+ "response": {
+  "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+  "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
+  "sources": [
+   {
+    "source": 0,
+    "source_id": "titck",
+    "region": "TR",
+    "country": null,
+    "status": "loaded",
+    "reason": null,
+    "snapshot_date": "2026-11-06",
+    "stale": false,
+    "attribution": "titck",
+    "as_published": false,
+    "can_compare": {
+     "strength": false,
+     "dose_form": false
+    }
+   },
+   {
+    "source": 1,
+    "source_id": "eu_fr_bdpm",
+    "region": "EU",
+    "country": "FR",
+    "status": "loaded",
+    "reason": null,
+    "snapshot_date": "2026-11-03",
+    "stale": false,
+    "attribution": "bdpm",
+    "as_published": true,
+    "can_compare": {
+     "strength": true,
+     "dose_form": true
+    }
+   },
+   {
+    "source": 2,
+    "source_id": "eu_es_cima",
+    "region": "EU",
+    "country": "ES",
+    "status": "loaded",
+    "reason": null,
+    "snapshot_date": "2026-11-07",
+    "stale": false,
+    "attribution": "cima",
+    "as_published": false,
+    "can_compare": {
+     "strength": false,
+     "dose_form": false
+    }
+   },
+   {
+    "source": 3,
+    "source_id": null,
+    "region": "EU",
+    "country": "DE",
+    "status": "source_unavailable",
+    "reason": "no_open_product_database",
+    "snapshot_date": null,
+    "stale": false,
+    "attribution": null,
+    "as_published": false,
+    "can_compare": {
+     "strength": false,
+     "dose_form": false
+    }
+   },
+   {
+    "source": 4,
+    "source_id": "openfda_ndc",
+    "region": "US",
+    "country": null,
+    "status": "loaded",
+    "reason": null,
+    "snapshot_date": "2026-11-06",
+    "stale": false,
+    "attribution": "openfda",
+    "as_published": false,
+    "can_compare": {
+     "strength": true,
+     "dose_form": true
+    }
+   }
+  ],
+  "items": [
+   {
+    "item": 0,
+    "keys": [
+     "Q415081"
+    ],
+    "unknown_keys": [],
+    "answers": [
+     {
+      "source": 0,
+      "status": "present",
+      "products": 83,
+      "with_other_ingredients": 68,
+      "keys_found": [
+       "Q415081"
+      ],
+      "homeopathic_left_out": 0,
+      "comparison": {
+       "strength": {
+        "result": "could_not_compare",
+        "reason": "not_known_in_source",
+        "comparable": 0,
+        "equal": 0
+       },
+       "dose_form": {
+        "result": "could_not_compare",
+        "reason": "not_known_in_source",
+        "comparable": 0,
+        "equal": 0
+       },
+       "strength_and_dose_form": {
+        "result": "could_not_compare",
+        "reason": "not_known_in_source",
+        "comparable": 0,
+        "equal": 0
+       }
+      }
+     },
+     {
+      "source": 1,
+      "status": "present",
+      "products": 23,
+      "with_other_ingredients": 0,
+      "keys_found": [
+       "Q415081"
+      ],
+      "homeopathic_left_out": 0,
+      "comparison": {
+       "strength": {
+        "result": "matched",
+        "reason": null,
+        "comparable": 23,
+        "equal": 4
+       },
+       "dose_form": {
+        "result": "matched",
+        "reason": null,
+        "comparable": 23,
+        "equal": 23
+       },
+       "strength_and_dose_form": {
+        "result": "matched",
+        "reason": null,
+        "comparable": 23,
+        "equal": 4
+       }
+      }
+     },
+     {
+      "source": 2,
+      "status": "present",
+      "products": 149,
+      "with_other_ingredients": 6,
+      "keys_found": [
+       "Q415081"
+      ],
+      "homeopathic_left_out": 0,
+      "comparison": {
+       "strength": {
+        "result": "could_not_compare",
+        "reason": "not_known_in_source",
+        "comparable": 0,
+        "equal": 0
+       },
+       "dose_form": {
+        "result": "could_not_compare",
+        "reason": "not_known_in_source",
+        "comparable": 0,
+        "equal": 0
+       },
+       "strength_and_dose_form": {
+        "result": "could_not_compare",
+        "reason": "not_known_in_source",
+        "comparable": 0,
+        "equal": 0
+       }
+      }
+     },
+     {
+      "source": 3,
+      "status": "source_unavailable",
+      "products": 0,
+      "with_other_ingredients": 0,
+      "keys_found": [],
+      "homeopathic_left_out": 0,
+      "comparison": null
+     },
+     {
+      "source": 4,
+      "status": "present",
+      "products": 98,
+      "with_other_ingredients": 18,
+      "keys_found": [
+       "Q415081"
+      ],
+      "homeopathic_left_out": 0,
+      "comparison": {
+       "strength": {
+        "result": "matched",
+        "reason": null,
+        "comparable": 78,
+        "equal": 30
+       },
+       "dose_form": {
+        "result": "matched",
+        "reason": null,
+        "comparable": 78,
+        "equal": 78
+       },
+       "strength_and_dose_form": {
+        "result": "matched",
+        "reason": null,
+        "comparable": 78,
+        "equal": 30
+       }
+      }
+     }
+    ]
+   },
+   {
+    "item": 1,
+    "keys": [
+     "Q1060922"
+    ],
+    "unknown_keys": [],
+    "answers": [
+     {
+      "source": 0,
+      "status": "present",
+      "products": 7,
+      "with_other_ingredients": 0,
+      "keys_found": [
+       "Q1060922"
+      ],
+      "homeopathic_left_out": 0,
+      "comparison": {
+       "strength": {
+        "result": "could_not_compare",
+        "reason": "not_known_in_source",
+        "comparable": 0,
+        "equal": 0
+       },
+       "dose_form": {
+        "result": "could_not_compare",
+        "reason": "not_known_in_source",
+        "comparable": 0,
+        "equal": 0
+       },
+       "strength_and_dose_form": {
+        "result": "could_not_compare",
+        "reason": "not_known_in_source",
+        "comparable": 0,
+        "equal": 0
+       }
+      }
+     },
+     {
+      "source": 1,
+      "status": "present",
+      "products": 7,
+      "with_other_ingredients": 0,
+      "keys_found": [
+       "Q1060922"
+      ],
+      "homeopathic_left_out": 0,
+      "comparison": {
+       "strength": {
+        "result": "differs",
+        "reason": null,
+        "comparable": 7,
+        "equal": 0
+       },
+       "dose_form": {
+        "result": "differs",
+        "reason": null,
+        "comparable": 7,
+        "equal": 0
+       },
+       "strength_and_dose_form": {
+        "result": "differs",
+        "reason": null,
+        "comparable": 7,
+        "equal": 0
+       }
+      }
+     },
+     {
+      "source": 2,
+      "status": "not_in_source",
+      "products": 0,
+      "with_other_ingredients": 0,
+      "keys_found": [],
+      "homeopathic_left_out": 0,
+      "comparison": null
+     },
+     {
+      "source": 3,
+      "status": "source_unavailable",
+      "products": 0,
+      "with_other_ingredients": 0,
+      "keys_found": [],
+      "homeopathic_left_out": 0,
+      "comparison": null
+     },
+     {
+      "source": 4,
+      "status": "present",
+      "products": 131,
+      "with_other_ingredients": 0,
+      "keys_found": [
+       "Q1060922"
+      ],
+      "homeopathic_left_out": 0,
+      "comparison": {
+       "strength": {
+        "result": "matched",
+        "reason": null,
+        "comparable": 116,
+        "equal": 25
+       },
+       "dose_form": {
+        "result": "matched",
+        "reason": null,
+        "comparable": 117,
+        "equal": 61
+       },
+       "strength_and_dose_form": {
+        "result": "matched",
+        "reason": null,
+        "comparable": 115,
+        "equal": 25
+       }
+      }
+     }
+    ]
+   },
+   {
+    "item": 2,
+    "keys": [
+     "Q410352"
+    ],
+    "unknown_keys": [],
+    "answers": [
+     {
+      "source": 0,
+      "status": "present",
+      "products": 49,
+      "with_other_ingredients": 0,
+      "keys_found": [
+       "Q410352"
+      ],
+      "homeopathic_left_out": 0,
+      "comparison": {
+       "strength": {
+        "result": "could_not_compare",
+        "reason": "not_known_in_source",
+        "comparable": 0,
+        "equal": 0
+       },
+       "dose_form": {
+        "result": "could_not_compare",
+        "reason": "not_known_in_source",
+        "comparable": 0,
+        "equal": 0
+       },
+       "strength_and_dose_form": {
+        "result": "could_not_compare",
+        "reason": "not_known_in_source",
+        "comparable": 0,
+        "equal": 0
+       }
+      }
+     },
+     {
+      "source": 1,
+      "status": "present",
+      "products": 77,
+      "with_other_ingredients": 0,
+      "keys_found": [
+       "Q410352"
+      ],
+      "homeopathic_left_out": 0,
+      "comparison": {
+       "strength": {
+        "result": "matched",
+        "reason": null,
+        "comparable": 77,
+        "equal": 17
+       },
+       "dose_form": {
+        "result": "matched",
+        "reason": null,
+        "comparable": 77,
+        "equal": 77
+       },
+       "strength_and_dose_form": {
+        "result": "matched",
+        "reason": null,
+        "comparable": 77,
+        "equal": 17
+       }
+      }
+     },
+     {
+      "source": 2,
+      "status": "present",
+      "products": 128,
+      "with_other_ingredients": 0,
+      "keys_found": [
+       "Q410352"
+      ],
+      "homeopathic_left_out": 0,
+      "comparison": {
+       "strength": {
+        "result": "could_not_compare",
+        "reason": "not_known_in_source",
+        "comparable": 0,
+        "equal": 0
+       },
+       "dose_form": {
+        "result": "could_not_compare",
+        "reason": "not_known_in_source",
+        "comparable": 0,
+        "equal": 0
+       },
+       "strength_and_dose_form": {
+        "result": "could_not_compare",
+        "reason": "not_known_in_source",
+        "comparable": 0,
+        "equal": 0
+       }
+      }
+     },
+     {
+      "source": 3,
+      "status": "source_unavailable",
+      "products": 0,
+      "with_other_ingredients": 0,
+      "keys_found": [],
+      "homeopathic_left_out": 0,
+      "comparison": null
+     },
+     {
+      "source": 4,
+      "status": "present",
+      "products": 630,
+      "with_other_ingredients": 0,
+      "keys_found": [
+       "Q410352"
+      ],
+      "homeopathic_left_out": 0,
+      "comparison": {
+       "strength": {
+        "result": "matched",
+        "reason": null,
+        "comparable": 599,
+        "equal": 146
+       },
+       "dose_form": {
+        "result": "matched",
+        "reason": null,
+        "comparable": 593,
+        "equal": 573
+       },
+       "strength_and_dose_form": {
+        "result": "matched",
+        "reason": null,
+        "comparable": 593,
+        "equal": 146
+       }
+      }
+     }
+    ]
+   },
+   {
+    "item": 3,
+    "keys": [
+     "Q388801"
+    ],
+    "unknown_keys": [],
+    "answers": [
+     {
+      "source": 0,
+      "status": "present",
+      "products": 37,
+      "with_other_ingredients": 6,
+      "keys_found": [
+       "Q388801"
+      ],
+      "homeopathic_left_out": 0,
+      "comparison": {
+       "strength": {
+        "result": "could_not_compare",
+        "reason": "not_known_in_source",
+        "comparable": 0,
+        "equal": 0
+       },
+       "dose_form": {
+        "result": "could_not_compare",
+        "reason": "not_known_in_source",
+        "comparable": 0,
+        "equal": 0
+       },
+       "strength_and_dose_form": {
+        "result": "could_not_compare",
+        "reason": "not_known_in_source",
+        "comparable": 0,
+        "equal": 0
+       }
+      }
+     },
+     {
+      "source": 1,
+      "status": "present",
+      "products": 42,
+      "with_other_ingredients": 1,
+      "keys_found": [
+       "Q388801"
+      ],
+      "homeopathic_left_out": 0,
+      "comparison": {
+       "strength": {
+        "result": "matched",
+        "reason": null,
+        "comparable": 33,
+        "equal": 12
+       },
+       "dose_form": {
+        "result": "matched",
+        "reason": null,
+        "comparable": 42,
+        "equal": 33
+       },
+       "strength_and_dose_form": {
+        "result": "matched",
+        "reason": null,
+        "comparable": 33,
+        "equal": 12
+       }
+      }
+     },
+     {
+      "source": 2,
+      "status": "present",
+      "products": 45,
+      "with_other_ingredients": 0,
+      "keys_found": [
+       "Q388801"
+      ],
+      "homeopathic_left_out": 0,
+      "comparison": {
+       "strength": {
+        "result": "could_not_compare",
+        "reason": "not_known_in_source",
+        "comparable": 0,
+        "equal": 0
+       },
+       "dose_form": {
+        "result": "could_not_compare",
+        "reason": "not_known_in_source",
+        "comparable": 0,
+        "equal": 0
+       },
+       "strength_and_dose_form": {
+        "result": "could_not_compare",
+        "reason": "not_known_in_source",
+        "comparable": 0,
+        "equal": 0
+       }
+      }
+     },
+     {
+      "source": 3,
+      "status": "source_unavailable",
+      "products": 0,
+      "with_other_ingredients": 0,
+      "keys_found": [],
+      "homeopathic_left_out": 0,
+      "comparison": null
+     },
+     {
+      "source": 4,
+      "status": "present",
+      "products": 246,
+      "with_other_ingredients": 0,
+      "keys_found": [
+       "Q388801"
+      ],
+      "homeopathic_left_out": 0,
+      "comparison": {
+       "strength": {
+        "result": "matched",
+        "reason": null,
+        "comparable": 228,
+        "equal": 57
+       },
+       "dose_form": {
+        "result": "matched",
+        "reason": null,
+        "comparable": 223,
+        "equal": 131
+       },
+       "strength_and_dose_form": {
+        "result": "matched",
+        "reason": null,
+        "comparable": 223,
+        "equal": 57
+       }
+      }
+     }
+    ]
+   }
+  ],
+  "notices": [
+   "presence_is_lower_bound"
+  ],
+  "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+ }
+}

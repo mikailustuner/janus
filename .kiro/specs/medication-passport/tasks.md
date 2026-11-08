@@ -110,14 +110,17 @@
     decisions needed). Commit, push, CI green, then **stop and wait for the owner**. Apply the answers in one commit.
     _Requirements: 8.4_
 
-- [ ] 12. Screens and demo (`passport/screens/`, `apps/web/src/demo/passport-cologne*.{ts,json}`, design §8, §9)
+- [x] 12. Screens and demo (`passport/screens/`, `apps/web/src/demo/passport-cologne*.{ts,json}`, design §8, §9)
+  - *Done 2026-11-08: `/passport` and `/passport/item#<id>`, navigation entry, link from each medicine, duplicate
+    notice slot; Cologne list of 7 boxes; recorded answers for all three demo patients (DP26); typed entry (DP21);
+    Playwright `e2e/passport.spec.ts` (axe, scroll, targets at 375/1280, both themes) and both routes in `routes.spec`.*
   - Content and states of the list and detail views with the `experience` components (coordinate mounting and routes
     with the `experience` author); the Cologne list; the recorded answer generated from the API by a script and
     committed; visual check at 375 px and 1280 px in both themes and large text; keyboard pass.
-  - [ ] 12.1 Property test P3 (client part): rendered rows never say "same" for `could_not_compare` or a missing side. _Requirements: 2.2, 6.1_
-  - [ ] 12.2 Property test P19: demo items never in donation/outcome bodies; recorded answer schema-valid; demo label on
+  - [x] 12.1 Property test P3 (client part): rendered rows never say "same" for `could_not_compare` or a missing side. _Requirements: 2.2, 6.1_
+  - [x] 12.2 Property test P19: demo items never in donation/outcome bodies; recorded answer schema-valid; demo label on
     both screens. _Requirements: 9.3, 12_
-  - [ ] 12.3 State tests: loading (`aria-busy`, live region), empty, error with retry and no "not found", partial, long
+  - [x] 12.3 State tests: loading (`aria-busy`, live region), empty, error with retry and no "not found", partial, long
     content (50 items, long names), not-checkable item; statuses carry text and icon, never `--risk`. _Requirements: 10.3–10.5_
 
 - [ ] 13. Cross-spec notes

@@ -67,7 +67,8 @@
       "research": {
         "twoFaces": "Light face",
         "glass": "Research"
-      }
+      },
+      "passport": "Passport"
     },
     "mask": {
       "label": {
@@ -809,7 +810,6 @@
     }
   },
   "Passport": {
-    "nav": "Passport",
     "title": "Medicine passport",
     "intro": "All boxes in one list, whichever country they come from. For each box, Janus shows whether the public product data of Türkiye, France, Spain and the United States list a product with the same active ingredients.",
     "listingsOnly": "Janus shows listings in public data only. Only your doctor or pharmacist can say which medicine fits you.",
@@ -972,13 +972,18 @@
       "entry": "Reports for the active ingredients of this list",
       "intro": "Collective Memory shows how often these active ingredients appear together in public adverse-event reports.",
       "tooMany": "Collective Memory looks at up to 20 active ingredients at once. Please choose which ones to look at.",
-      "choose": "Choose up to 20 active ingredients",
-      "chosen": "{count} of 20 chosen",
       "open": "Open Collective Memory"
     },
     "demo": {
       "intro": "The Turkish and German boxes of the Cologne demo patient. Product names are invented; the listings come from the real public data."
     },
-    "presentNote": "Being listed does not mean the medicine is on sale or available at a pharmacy."
+    "presentNote": "Being listed does not mean the medicine is on sale or available at a pharmacy.",
+    "place": {
+      "TR": "Türkiye",
+      "FR": "France",
+      "ES": "Spain",
+      "DE": "Germany",
+      "US": "United States"
+    }
   }
 }

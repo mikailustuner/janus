@@ -67,7 +67,8 @@
       "research": {
         "twoFaces": "Lichtgesicht",
         "glass": "Forschung"
-      }
+      },
+      "passport": "Medikamentenpass"
     },
     "mask": {
       "label": {
@@ -809,7 +810,6 @@
     }
   },
   "Passport": {
-    "nav": "Medikamentenpass",
     "title": "Medikamentenpass",
     "intro": "Alle Packungen in einer Liste, aus welchem Land sie auch kommen. Für jede Packung zeigt Janus, ob die öffentlichen Produktdaten der Türkei, Frankreichs, Spaniens und der Vereinigten Staaten ein Produkt mit denselben Wirkstoffen führen.",
     "listingsOnly": "Janus zeigt nur Einträge in öffentlichen Daten. Welches Medikament zu Ihnen passt, kann nur Ihre Ärztin, Ihr Arzt oder Ihre Apotheke sagen.",
@@ -972,13 +972,18 @@
       "entry": "Meldungen zu den Wirkstoffen dieser Liste",
       "intro": "Das Kollektive Gedächtnis zeigt, wie oft diese Wirkstoffe gemeinsam in öffentlichen Meldungen über unerwünschte Ereignisse vorkommen.",
       "tooMany": "Das Kollektive Gedächtnis betrachtet höchstens 20 Wirkstoffe auf einmal. Bitte wählen Sie, welche betrachtet werden sollen.",
-      "choose": "Höchstens 20 Wirkstoffe wählen",
-      "chosen": "{count} von 20 gewählt",
       "open": "Kollektives Gedächtnis öffnen"
     },
     "demo": {
       "intro": "Die türkischen und deutschen Packungen des Demo-Patienten aus Köln. Die Produktnamen sind erfunden; die Einträge stammen aus den echten öffentlichen Daten."
     },
-    "presentNote": "Gelistet heißt nicht, dass das Medikament im Handel oder in einer Apotheke erhältlich ist."
+    "presentNote": "Gelistet heißt nicht, dass das Medikament im Handel oder in einer Apotheke erhältlich ist.",
+    "place": {
+      "TR": "Türkei",
+      "FR": "Frankreich",
+      "ES": "Spanien",
+      "DE": "Deutschland",
+      "US": "Vereinigte Staaten"
+    }
   }
 }

@@ -67,7 +67,8 @@
       "research": {
         "twoFaces": "Cara de luz",
         "glass": "Investigación"
-      }
+      },
+      "passport": "Pasaporte"
     },
     "mask": {
       "label": {
@@ -809,7 +810,6 @@
     }
   },
   "Passport": {
-    "nav": "Pasaporte",
     "title": "Pasaporte de medicamentos",
     "intro": "Todas las cajas en una sola lista, vengan del país que vengan. Para cada caja, Janus indica si los datos públicos de productos de Turquía, Francia, España y Estados Unidos incluyen un producto con los mismos principios activos.",
     "listingsOnly": "Janus solo muestra lo que figura en listados de datos públicos. Solo su médico o su farmacéutico puede decir qué medicamento es adecuado para usted.",
@@ -972,13 +972,18 @@
       "entry": "Notificaciones sobre los principios activos de esta lista",
       "intro": "La Memoria colectiva muestra con qué frecuencia estos principios activos aparecen juntos en las notificaciones públicas de eventos adversos.",
       "tooMany": "La Memoria colectiva examina como máximo 20 principios activos a la vez. Elija cuáles examinar.",
-      "choose": "Elija como máximo 20 principios activos",
-      "chosen": "{count} de 20 elegidos",
       "open": "Abrir la Memoria colectiva"
     },
     "demo": {
       "intro": "Las cajas turcas y alemanas del paciente de demostración de Colonia. Los nombres de producto son inventados; los listados proceden de los datos públicos reales."
     },
-    "presentNote": "Figurar en el listado no significa que el medicamento esté a la venta o disponible en una farmacia."
+    "presentNote": "Figurar en el listado no significa que el medicamento esté a la venta o disponible en una farmacia.",
+    "place": {
+      "TR": "Turquía",
+      "FR": "Francia",
+      "ES": "España",
+      "DE": "Alemania",
+      "US": "Estados Unidos"
+    }
   }
 }

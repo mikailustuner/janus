@@ -1,4002 +1,4002 @@
 [
- {
-  "amount": "40,680",
-  "unit": "mg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "319123516,7145606",
-  "unit": "g",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "999999999,177718",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "999999999.177718",
-   "unit": "ug",
-   "basis": "unit"
+  {
+    "amount": "40,680",
+    "unit": "mg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "319123516,7145606",
+    "unit": "g",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "999999999,177718",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "999999999.177718",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "5,4",
+    "unit": "g",
+    "basis": "unit",
+    "code": {
+      "amount": "5400000",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1000",
+    "unit": "g",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "1,000",
+    "unit": "IU",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "-5",
+    "unit": "mg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "999999999",
+    "unit": "mg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": " 40 ",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "40",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "0.55",
+    "unit": "g",
+    "basis": "mL",
+    "code": {
+      "amount": "550000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "1",
+    "unit": "g",
+    "basis": "mL",
+    "code": {
+      "amount": "1000000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "1,186570",
+    "unit": "mg",
+    "basis": "g",
+    "code": null
+  },
+  {
+    "amount": "0",
+    "unit": "IU",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": " ",
+    "unit": "ug",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "0,395751",
+    "unit": "g",
+    "basis": "mL",
+    "code": {
+      "amount": "395751",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "0,125",
+    "unit": "mg",
+    "basis": "unit",
+    "code": {
+      "amount": "125",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "1",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "1",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "5.1946",
+    "unit": "IU",
+    "basis": "mL",
+    "code": {
+      "amount": "5.1946",
+      "unit": "IU",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": " 40 ",
+    "unit": "mg",
+    "basis": "mL",
+    "code": {
+      "amount": "40000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "0",
+    "unit": "ug",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "1000",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "1000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "-5",
+    "unit": "IU",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "1000",
+    "unit": "IU",
+    "basis": "mL",
+    "code": {
+      "amount": "1000",
+      "unit": "IU",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "١٢",
+    "unit": "mg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "0,000001",
+    "unit": "IU",
+    "basis": "mL",
+    "code": {
+      "amount": "0.000001",
+      "unit": "IU",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "10000000000",
+    "unit": "g",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "250,85",
+    "unit": "ug",
+    "basis": "tablet",
+    "code": null
+  },
+  {
+    "amount": "250",
+    "unit": "g",
+    "basis": "unit",
+    "code": {
+      "amount": "250000000",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "١٢",
+    "unit": "mg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "250",
+    "unit": "g",
+    "basis": "unit",
+    "code": {
+      "amount": "250000000",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "0",
+    "unit": "g",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "5",
+    "unit": "mg",
+    "basis": "unit",
+    "code": {
+      "amount": "5000",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1.468146",
+    "unit": "mg",
+    "basis": "mL",
+    "code": {
+      "amount": "1468.146",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "242565078.880182",
+    "unit": "mg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "0",
+    "unit": "IU",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "2.25",
+    "unit": "g",
+    "basis": "unit",
+    "code": {
+      "amount": "2250000",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "4,5,6",
+    "unit": "ug",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "999999999.0834553",
+    "unit": "mg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "176019038",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "176019038",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "999999999",
+    "unit": "mg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "67853244.1913",
+    "unit": "mg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "١٢",
+    "unit": "mg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "5",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "5",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "١٢",
+    "unit": "ug",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "122637456",
+    "unit": "g",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "1000,407054",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "1000.407054",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "250",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "250",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "1.",
+    "unit": "mg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "1000",
+    "unit": "mg",
+    "basis": "unit",
+    "code": {
+      "amount": "1000000",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "40.6",
+    "unit": "µg",
+    "basis": "tablet",
+    "code": null
+  },
+  {
+    "amount": "1,315729",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "1.315729",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "5.5297",
+    "unit": "mg",
+    "basis": "mL",
+    "code": {
+      "amount": "5529.7",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "442586961.4",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "442586961.4",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1000",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "1000",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "5.1344654",
+    "unit": "mg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "1",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "1",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "0,686",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "0.686",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "215952246",
+    "unit": "µg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "1.",
+    "unit": "mg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "518680863,2232",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "518680863.2232",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "40",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "40",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "",
+    "unit": "mg",
+    "basis": "tablet",
+    "code": null
+  },
+  {
+    "amount": "999999999",
+    "unit": "IU",
+    "basis": "mL",
+    "code": {
+      "amount": "999999999",
+      "unit": "IU",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "1.",
+    "unit": "ug",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "995747268.780",
+    "unit": "",
+    "basis": "g",
+    "code": null
+  },
+  {
+    "amount": "0,125",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "0.125",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "",
+    "unit": "ug",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "999999999,316",
+    "unit": "mg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "١٢",
+    "unit": "",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "0",
+    "unit": "ug",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "5,21063",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "5.21063",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1000",
+    "unit": "g",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "999999999,4489169",
+    "unit": "IU",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "40,1",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "40.1",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "40",
+    "unit": "mg",
+    "basis": "unit",
+    "code": {
+      "amount": "40000",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "40",
+    "unit": "g",
+    "basis": "unit",
+    "code": {
+      "amount": "40000000",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "40",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "40",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "1",
+    "unit": "g",
+    "basis": "mL",
+    "code": {
+      "amount": "1000000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "999999999",
+    "unit": "g",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": " ",
+    "unit": "mg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "250.26",
+    "unit": "IU",
+    "basis": "mL",
+    "code": {
+      "amount": "250.26",
+      "unit": "IU",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "40mg",
+    "unit": "IU",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "192164691,2",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "192164691.2",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": ".5",
+    "unit": "kg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "5",
+    "unit": "g",
+    "basis": "unit",
+    "code": {
+      "amount": "5000000",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "250",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "250",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1000",
+    "unit": "IU",
+    "basis": "mL",
+    "code": {
+      "amount": "1000",
+      "unit": "IU",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "5",
+    "unit": "mg",
+    "basis": "mL",
+    "code": {
+      "amount": "5000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "250",
+    "unit": "g",
+    "basis": "mL",
+    "code": {
+      "amount": "250000000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "40",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "40",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1000.099540",
+    "unit": "g",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "248235189",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "248235189",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "0",
+    "unit": "g",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "10000000000",
+    "unit": "IU",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "5,373",
+    "unit": "ug",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "0,9",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "0.9",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "0",
+    "unit": "mg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "0,16131",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "0.16131",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1",
+    "unit": "mg",
+    "basis": "mL",
+    "code": {
+      "amount": "1000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "1 000",
+    "unit": "ug",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "4,5,6",
+    "unit": "IU",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "40,9",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "40.9",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1000",
+    "unit": "g",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "1000,7",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "1000.7",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "1",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "1",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "10000000000",
+    "unit": "",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "5",
+    "unit": "IU",
+    "basis": "mL",
+    "code": {
+      "amount": "5",
+      "unit": "IU",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "999999999,77",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "999999999.77",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "40",
+    "unit": "g",
+    "basis": "mL",
+    "code": {
+      "amount": "40000000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "0,125",
+    "unit": "IU",
+    "basis": "mL",
+    "code": {
+      "amount": "0.125",
+      "unit": "IU",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "2.25",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "2.25",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "999999999.459",
+    "unit": "ug",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": ".5",
+    "unit": "g",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "0",
+    "unit": "g",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "40",
+    "unit": "mcg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "5",
+    "unit": "mg",
+    "basis": "unit",
+    "code": {
+      "amount": "5000",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "5",
+    "unit": "g",
+    "basis": "mL",
+    "code": {
+      "amount": "5000000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "1000",
+    "unit": "kg",
+    "basis": "g",
+    "code": null
+  },
+  {
+    "amount": "0,000001",
+    "unit": "g",
+    "basis": "unit",
+    "code": {
+      "amount": "1",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "0",
+    "unit": "ug",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "0.0000001",
+    "unit": "g",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "1",
+    "unit": "IU",
+    "basis": "mL",
+    "code": {
+      "amount": "1",
+      "unit": "IU",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "250",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "250",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "1,40",
+    "unit": "g",
+    "basis": "mL",
+    "code": {
+      "amount": "1400000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "999999999,66879",
+    "unit": "g",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "1000,99579",
+    "unit": "g",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "40",
+    "unit": "mg",
+    "basis": "mL",
+    "code": {
+      "amount": "40000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "250",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "250",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "-5",
+    "unit": "mg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "1",
+    "unit": "g",
+    "basis": "unit",
+    "code": {
+      "amount": "1000000",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "10000000000",
+    "unit": "ug",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "1,9224223",
+    "unit": "mcg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "999999999",
+    "unit": "mg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "40,91",
+    "unit": "IU",
+    "basis": "tablet",
+    "code": null
+  },
+  {
+    "amount": "0",
+    "unit": "g",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "0,71",
+    "unit": "mg",
+    "basis": "unit",
+    "code": {
+      "amount": "710",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "0,000001",
+    "unit": "kg",
+    "basis": "tablet",
+    "code": null
+  },
+  {
+    "amount": "40mg",
+    "unit": "mg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "0,125",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "0.125",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "-5",
+    "unit": "ug",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "250",
+    "unit": "g",
+    "basis": "unit",
+    "code": {
+      "amount": "250000000",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1e3",
+    "unit": "IU",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "0.145370",
+    "unit": "g",
+    "basis": "mL",
+    "code": {
+      "amount": "145370",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "5",
+    "unit": "g",
+    "basis": "unit",
+    "code": {
+      "amount": "5000000",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1000",
+    "unit": "mg",
+    "basis": "unit",
+    "code": {
+      "amount": "1000000",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "999999999,68",
+    "unit": "mg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "1",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "1",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1",
+    "unit": "g",
+    "basis": "mL",
+    "code": {
+      "amount": "1000000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "1000.3739683",
+    "unit": "ug",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "250,4883",
+    "unit": "mg",
+    "basis": "mL",
+    "code": {
+      "amount": "250488.3",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "1",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "1",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "980527341.918574",
+    "unit": "IU",
+    "basis": "mL",
+    "code": {
+      "amount": "980527341.918574",
+      "unit": "IU",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "999999999",
+    "unit": "IU",
+    "basis": "mL",
+    "code": {
+      "amount": "999999999",
+      "unit": "IU",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "1",
+    "unit": "g",
+    "basis": "mL",
+    "code": {
+      "amount": "1000000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "0",
+    "unit": "ug",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "0.0",
+    "unit": "kg",
+    "basis": "g",
+    "code": null
+  },
+  {
+    "amount": "40,9",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "40.9",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "5",
+    "unit": "g",
+    "basis": "mL",
+    "code": {
+      "amount": "5000000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "١٢",
+    "unit": "mg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "-5",
+    "unit": "mg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "5.01",
+    "unit": "g",
+    "basis": "mL",
+    "code": {
+      "amount": "5010000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "1000.08267",
+    "unit": "IU",
+    "basis": "mL",
+    "code": {
+      "amount": "1000.08267",
+      "unit": "IU",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "1000",
+    "unit": "µg",
+    "basis": "g",
+    "code": null
+  },
+  {
+    "amount": "0,6",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "0.6",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "1000",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "1000",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "999999999",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "999999999",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1000.180",
+    "unit": "µg",
+    "basis": "tablet",
+    "code": null
+  },
+  {
+    "amount": "796013420",
+    "unit": "g",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "5",
+    "unit": "ug",
+    "basis": "tablet",
+    "code": null
+  },
+  {
+    "amount": "1.6556268",
+    "unit": "kg",
+    "basis": "tablet",
+    "code": null
+  },
+  {
+    "amount": "0,125",
+    "unit": "mg",
+    "basis": "unit",
+    "code": {
+      "amount": "125",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1000,0",
+    "unit": "g",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "1e3",
+    "unit": "mg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "1",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "1",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "40.8557",
+    "unit": "g",
+    "basis": "unit",
+    "code": {
+      "amount": "40855700",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1000.4",
+    "unit": "ug",
+    "basis": "tablet",
+    "code": null
+  },
+  {
+    "amount": "250.5",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "250.5",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "40mg",
+    "unit": "g",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "999999999",
+    "unit": "mg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "12,500",
+    "unit": "IU",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "10000000000",
+    "unit": "g",
+    "basis": "tablet",
+    "code": null
+  },
+  {
+    "amount": "1000",
+    "unit": "IU",
+    "basis": "mL",
+    "code": {
+      "amount": "1000",
+      "unit": "IU",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "250,5209",
+    "unit": "g",
+    "basis": "unit",
+    "code": {
+      "amount": "250520900",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "1",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1 000",
+    "unit": "mg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "1e3",
+    "unit": "mg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "10000000000",
+    "unit": "mg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "1.000",
+    "unit": "ug",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "250.08812",
+    "unit": "mg",
+    "basis": "unit",
+    "code": {
+      "amount": "250088.12",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "0",
+    "unit": "IU",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "1000",
+    "unit": "µg",
+    "basis": "tablet",
+    "code": null
+  },
+  {
+    "amount": "641729575.58",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "641729575.58",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "999999999",
+    "unit": "IU",
+    "basis": "mL",
+    "code": {
+      "amount": "999999999",
+      "unit": "IU",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "1",
+    "unit": "mg",
+    "basis": "unit",
+    "code": {
+      "amount": "1000",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "339880491.9049310",
+    "unit": "IU",
+    "basis": "g",
+    "code": null
+  },
+  {
+    "amount": "0",
+    "unit": "ug",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "40.629660",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "40.62966",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "999999999",
+    "unit": "mg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "0.0",
+    "unit": "g",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "1 000",
+    "unit": "ug",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "0",
+    "unit": "mg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "503817125",
+    "unit": "mg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "999999999.36034",
+    "unit": "g",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "1,62",
+    "unit": "g",
+    "basis": "unit",
+    "code": {
+      "amount": "1620000",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1000.647502",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "1000.647502",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "999999999,6876838",
+    "unit": "mg",
+    "basis": "tablet",
+    "code": null
+  },
+  {
+    "amount": "40",
+    "unit": "mg",
+    "basis": "unit",
+    "code": {
+      "amount": "40000",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "1",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "40mg",
+    "unit": "g",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "1.33",
+    "unit": "mg",
+    "basis": "unit",
+    "code": {
+      "amount": "1330",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "١٢",
+    "unit": "ug",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "1e3",
+    "unit": "ug",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "0.9295",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "0.9295",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1",
+    "unit": "g",
+    "basis": "mL",
+    "code": {
+      "amount": "1000000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "250",
+    "unit": "mg",
+    "basis": "unit",
+    "code": {
+      "amount": "250000",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "0,125",
+    "unit": "IU",
+    "basis": "mL",
+    "code": {
+      "amount": "0.125",
+      "unit": "IU",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "12,500",
+    "unit": "IU",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "5.68",
+    "unit": "mg",
+    "basis": "unit",
+    "code": {
+      "amount": "5680",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "250",
+    "unit": "mg",
+    "basis": "unit",
+    "code": {
+      "amount": "250000",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "",
+    "unit": "IU",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "40.409557",
+    "unit": "mg",
+    "basis": "mL",
+    "code": {
+      "amount": "40409.557",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "10000000000",
+    "unit": "g",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": " ",
+    "unit": "mg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "425951781.044",
+    "unit": "mg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "1000",
+    "unit": "g",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "0,000001",
+    "unit": "mg",
+    "basis": "unit",
+    "code": {
+      "amount": "0.001",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "5.74",
+    "unit": "g",
+    "basis": "mL",
+    "code": {
+      "amount": "5740000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "1.03972",
+    "unit": "mg",
+    "basis": "unit",
+    "code": {
+      "amount": "1039.72",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "5",
+    "unit": "mg",
+    "basis": "mL",
+    "code": {
+      "amount": "5000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "40",
+    "unit": "g",
+    "basis": "mL",
+    "code": {
+      "amount": "40000000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "1000",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "1000",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "999999999",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "999999999",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "1",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "1",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "0.0",
+    "unit": "g",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "0.0000001",
+    "unit": "g",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "1000",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "1000",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "0",
+    "unit": "mg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "40",
+    "unit": "g",
+    "basis": "mL",
+    "code": {
+      "amount": "40000000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "5",
+    "unit": "mg",
+    "basis": "mL",
+    "code": {
+      "amount": "5000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "250",
+    "unit": "g",
+    "basis": "mL",
+    "code": {
+      "amount": "250000000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "1000",
+    "unit": "µg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "1,000",
+    "unit": "IU",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "40",
+    "unit": "mg",
+    "basis": "mL",
+    "code": {
+      "amount": "40000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "5",
+    "unit": "IU",
+    "basis": "mL",
+    "code": {
+      "amount": "5",
+      "unit": "IU",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "999999999",
+    "unit": "mg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "1",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "1",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1 000",
+    "unit": "mg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "5",
+    "unit": "mg",
+    "basis": "mL",
+    "code": {
+      "amount": "5000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "1000",
+    "unit": "g",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "1,29143",
+    "unit": "g",
+    "basis": "unit",
+    "code": {
+      "amount": "1291430",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "1",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1000",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "1000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "999999999",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "999999999",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "40",
+    "unit": "ug",
+    "basis": "tablet",
+    "code": null
+  },
+  {
+    "amount": "-5",
+    "unit": "",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "1.000",
+    "unit": "ug",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "636310439",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "636310439",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1000",
+    "unit": "g",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "0",
+    "unit": "IU",
+    "basis": "g",
+    "code": null
+  },
+  {
+    "amount": "1 000",
+    "unit": "mg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "250",
+    "unit": "mcg",
+    "basis": "tablet",
+    "code": null
+  },
+  {
+    "amount": "0",
+    "unit": "ug",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "1000",
+    "unit": "mg",
+    "basis": "unit",
+    "code": {
+      "amount": "1000000",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "322324564.86471",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "322324564.86471",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "999999999,13",
+    "unit": "mg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": " 40 ",
+    "unit": "mg",
+    "basis": "g",
+    "code": null
+  },
+  {
+    "amount": "250,9",
+    "unit": "mg",
+    "basis": "mL",
+    "code": {
+      "amount": "250900",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "250.561",
+    "unit": "mcg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "5",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "5",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "1000,85023",
+    "unit": "g",
+    "basis": "g",
+    "code": null
+  },
+  {
+    "amount": "322988236,9058",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "322988236.9058",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "5",
+    "unit": "g",
+    "basis": "mL",
+    "code": {
+      "amount": "5000000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "5",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "5",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "999999999",
+    "unit": "IU",
+    "basis": "mL",
+    "code": {
+      "amount": "999999999",
+      "unit": "IU",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "0",
+    "unit": "IU",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "5",
+    "unit": "mg",
+    "basis": "tablet",
+    "code": null
+  },
+  {
+    "amount": "1000",
+    "unit": "mg",
+    "basis": "unit",
+    "code": {
+      "amount": "1000000",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "250",
+    "unit": "IU",
+    "basis": "mL",
+    "code": {
+      "amount": "250",
+      "unit": "IU",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "0,7018630",
+    "unit": "g",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "999999999",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "999999999",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "0,000001",
+    "unit": "mg",
+    "basis": "mL",
+    "code": {
+      "amount": "0.001",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "40.5952",
+    "unit": "",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "999999999,8932",
+    "unit": "mg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "0.92",
+    "unit": "g",
+    "basis": "mL",
+    "code": {
+      "amount": "920000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "",
+    "unit": "mg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "0,566577",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "0.566577",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "999999999",
+    "unit": "g",
+    "basis": "g",
+    "code": null
+  },
+  {
+    "amount": "4,5,6",
+    "unit": "ug",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "0",
+    "unit": "IU",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "5.5306132",
+    "unit": "g",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "999999999",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "999999999",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "40",
+    "unit": "IU",
+    "basis": "mL",
+    "code": {
+      "amount": "40",
+      "unit": "IU",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "729127058",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "729127058",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "0,000001",
+    "unit": "kg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "999999999",
+    "unit": "mg",
+    "basis": "tablet",
+    "code": null
+  },
+  {
+    "amount": "5",
+    "unit": "ug",
+    "basis": "tablet",
+    "code": null
+  },
+  {
+    "amount": "250,249530",
+    "unit": "mg",
+    "basis": "mL",
+    "code": {
+      "amount": "250249.53",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "250",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "250",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1",
+    "unit": "mg",
+    "basis": "mL",
+    "code": {
+      "amount": "1000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "0",
+    "unit": "mg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "5",
+    "unit": "mcg",
+    "basis": "tablet",
+    "code": null
+  },
+  {
+    "amount": "1.000",
+    "unit": "IU",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "250,15",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "250.15",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "0.0",
+    "unit": "mg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "5.805",
+    "unit": "IU",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "1",
+    "unit": "IU",
+    "basis": "mL",
+    "code": {
+      "amount": "1",
+      "unit": "IU",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "250,627",
+    "unit": "mg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "40",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "40",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "40",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "40",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "1",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "0.02",
+    "unit": "g",
+    "basis": "mL",
+    "code": {
+      "amount": "20000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "12,500",
+    "unit": "mg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "1000",
+    "unit": "mg",
+    "basis": "unit",
+    "code": {
+      "amount": "1000000",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "999999999",
+    "unit": "mg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "1.",
+    "unit": "ug",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "5",
+    "unit": "µg",
+    "basis": "tablet",
+    "code": null
+  },
+  {
+    "amount": "250.176540",
+    "unit": "g",
+    "basis": "mL",
+    "code": {
+      "amount": "250176540",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "1.000",
+    "unit": "mg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "1,9439",
+    "unit": "mg",
+    "basis": "unit",
+    "code": {
+      "amount": "1943.9",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1",
+    "unit": "mg",
+    "basis": "unit",
+    "code": {
+      "amount": "1000",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "401491301",
+    "unit": "mg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "0,000001",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "0.000001",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "999999999",
+    "unit": "mg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "999999999.0368828",
+    "unit": "mg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "1",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "1",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "0",
+    "unit": "ug",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "717387091,42",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "717387091.42",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "0,125",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "0.125",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": " ",
+    "unit": "mg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "1,000",
+    "unit": "IU",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "",
+    "unit": "g",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "999999999",
+    "unit": "IU",
+    "basis": "mL",
+    "code": {
+      "amount": "999999999",
+      "unit": "IU",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "5.41233",
+    "unit": "g",
+    "basis": "tablet",
+    "code": null
+  },
+  {
+    "amount": "999999999",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "999999999",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": " 40 ",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "40",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1,000",
+    "unit": "g",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "999999999.126",
+    "unit": "ug",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "250",
+    "unit": "mcg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "250",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "250",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "5,587",
+    "unit": "IU",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "5,9878",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "5.9878",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "0",
+    "unit": "IU",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "0",
+    "unit": "ug",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "5.4010",
+    "unit": "mg",
+    "basis": "mL",
+    "code": {
+      "amount": "5401",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "40.75",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "40.75",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "0.64",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "0.64",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "1",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "1",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "١٢",
+    "unit": "mg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "1",
+    "unit": "mcg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "367015143",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "367015143",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "4,5,6",
+    "unit": "mg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "1.9030561",
+    "unit": "g",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "0.0",
+    "unit": "mg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "40",
+    "unit": "IU",
+    "basis": "mL",
+    "code": {
+      "amount": "40",
+      "unit": "IU",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "1",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "1",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "2.25",
+    "unit": "",
+    "basis": "tablet",
+    "code": null
+  },
+  {
+    "amount": "5",
+    "unit": "g",
+    "basis": "unit",
+    "code": {
+      "amount": "5000000",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "0.0000001",
+    "unit": "mg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "60989908",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "60989908",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "999999999",
+    "unit": "g",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "1000.58331",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "1000.58331",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "250",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "250",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "1",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "1",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1e3",
+    "unit": "ug",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "12,500",
+    "unit": "ug",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "250,6560",
+    "unit": "g",
+    "basis": "mL",
+    "code": {
+      "amount": "250656000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "1000",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "1000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "250",
+    "unit": "mg",
+    "basis": "mL",
+    "code": {
+      "amount": "250000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "850298025.0",
+    "unit": "µg",
+    "basis": "tablet",
+    "code": null
+  },
+  {
+    "amount": "888044276",
+    "unit": "IU",
+    "basis": "mL",
+    "code": {
+      "amount": "888044276",
+      "unit": "IU",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "1,000",
+    "unit": "mg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "1",
+    "unit": "mg",
+    "basis": "mL",
+    "code": {
+      "amount": "1000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "999999999",
+    "unit": "mg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "40",
+    "unit": "g",
+    "basis": "unit",
+    "code": {
+      "amount": "40000000",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "5.8",
+    "unit": "mg",
+    "basis": "unit",
+    "code": {
+      "amount": "5800",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1e3",
+    "unit": "mg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "5",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "5",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "0",
+    "unit": "IU",
+    "basis": "g",
+    "code": null
+  },
+  {
+    "amount": "0",
+    "unit": "g",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "999999999",
+    "unit": "IU",
+    "basis": "g",
+    "code": null
+  },
+  {
+    "amount": "979898407",
+    "unit": "µg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "999999999",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "999999999",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "999999999,67",
+    "unit": "IU",
+    "basis": "mL",
+    "code": {
+      "amount": "999999999.67",
+      "unit": "IU",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "999999999,842841",
+    "unit": "mg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "1000,60164",
+    "unit": "IU",
+    "basis": "mL",
+    "code": {
+      "amount": "1000.60164",
+      "unit": "IU",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "701319051",
+    "unit": "g",
+    "basis": "g",
+    "code": null
+  },
+  {
+    "amount": "5.592",
+    "unit": "IU",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "999999999.181933",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "999999999.181933",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "40",
+    "unit": "IU",
+    "basis": "mL",
+    "code": {
+      "amount": "40",
+      "unit": "IU",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "59493975,5403060",
+    "unit": "IU",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "2.25",
+    "unit": "g",
+    "basis": "mL",
+    "code": {
+      "amount": "2250000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "0",
+    "unit": "",
+    "basis": "g",
+    "code": null
+  },
+  {
+    "amount": "5,4681",
+    "unit": "",
+    "basis": "tablet",
+    "code": null
+  },
+  {
+    "amount": "0.721237",
+    "unit": "IU",
+    "basis": "mL",
+    "code": {
+      "amount": "0.721237",
+      "unit": "IU",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "40mg",
+    "unit": "IU",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "0",
+    "unit": "IU",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": " 40 ",
+    "unit": "IU",
+    "basis": "mL",
+    "code": {
+      "amount": "40",
+      "unit": "IU",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "40mg",
+    "unit": "IU",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "0",
+    "unit": "mg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "10000000000",
+    "unit": "g",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "250,8373",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "250.8373",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "40",
+    "unit": "IU",
+    "basis": "mL",
+    "code": {
+      "amount": "40",
+      "unit": "IU",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "١٢",
+    "unit": "IU",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": " 40 ",
+    "unit": "g",
+    "basis": "mL",
+    "code": {
+      "amount": "40000000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "12,500",
+    "unit": "ug",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "40",
+    "unit": "mg",
+    "basis": "mL",
+    "code": {
+      "amount": "40000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "0.0000001",
+    "unit": "g",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "115914791",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "115914791",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1000",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "1000",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "0.14400",
+    "unit": "mg",
+    "basis": "mL",
+    "code": {
+      "amount": "144",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "0",
+    "unit": "ug",
+    "basis": "tablet",
+    "code": null
+  },
+  {
+    "amount": "1,6981756",
+    "unit": "IU",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "40,8603",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "40.8603",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1.000",
+    "unit": "ug",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "999999999",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "999999999",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "40",
+    "unit": "g",
+    "basis": "mL",
+    "code": {
+      "amount": "40000000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "-5",
+    "unit": "µg",
+    "basis": "tablet",
+    "code": null
+  },
+  {
+    "amount": "5",
+    "unit": "mg",
+    "basis": "unit",
+    "code": {
+      "amount": "5000",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1000",
+    "unit": "IU",
+    "basis": "tablet",
+    "code": null
+  },
+  {
+    "amount": "1000",
+    "unit": "mg",
+    "basis": "unit",
+    "code": {
+      "amount": "1000000",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "40.74911",
+    "unit": "mg",
+    "basis": "unit",
+    "code": {
+      "amount": "40749.11",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "5",
+    "unit": "kg",
+    "basis": "g",
+    "code": null
+  },
+  {
+    "amount": "0",
+    "unit": "mg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "1000,931",
+    "unit": "g",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "١٢",
+    "unit": "ug",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "999999999,92",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "999999999.92",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "5.995",
+    "unit": "ug",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "1",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "1",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "5.9333",
+    "unit": "g",
+    "basis": "mL",
+    "code": {
+      "amount": "5933300",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "40,725705",
+    "unit": "g",
+    "basis": "unit",
+    "code": {
+      "amount": "40725705",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "309230661,0403",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "309230661.0403",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "0,01710",
+    "unit": "mg",
+    "basis": "mL",
+    "code": {
+      "amount": "17.1",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": ".5",
+    "unit": "IU",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "5.2",
+    "unit": "IU",
+    "basis": "tablet",
+    "code": null
+  },
+  {
+    "amount": "",
+    "unit": "g",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "1000.7431",
+    "unit": "mg",
+    "basis": "mL",
+    "code": {
+      "amount": "1000743.1",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "0,6864",
+    "unit": "g",
+    "basis": "unit",
+    "code": {
+      "amount": "686400",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1,5988",
+    "unit": "mg",
+    "basis": "unit",
+    "code": {
+      "amount": "1598.8",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1",
+    "unit": "",
+    "basis": "g",
+    "code": null
+  },
+  {
+    "amount": "1",
+    "unit": "mg",
+    "basis": "mL",
+    "code": {
+      "amount": "1000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "40",
+    "unit": "g",
+    "basis": "mL",
+    "code": {
+      "amount": "40000000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "5",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "5",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "40mg",
+    "unit": "",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "1",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "1",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "999999999,344",
+    "unit": "ug",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "0",
+    "unit": "IU",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "1.3024139",
+    "unit": "mg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "190674994,06",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "190674994.06",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "12,500",
+    "unit": "g",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "١٢",
+    "unit": "g",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "72167766.381880",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "72167766.38188",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "40,10",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "40.1",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1 000",
+    "unit": "mg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "1e3",
+    "unit": "ug",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "999999999",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "999999999",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "40",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "40",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "0,125",
+    "unit": "g",
+    "basis": "unit",
+    "code": {
+      "amount": "125000",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "0.0000001",
+    "unit": "ug",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "0,000001",
+    "unit": "IU",
+    "basis": "mL",
+    "code": {
+      "amount": "0.000001",
+      "unit": "IU",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "5",
+    "unit": "g",
+    "basis": "unit",
+    "code": {
+      "amount": "5000000",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "5,7",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "5.7",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1",
+    "unit": "IU",
+    "basis": "mL",
+    "code": {
+      "amount": "1",
+      "unit": "IU",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "0",
+    "unit": "g",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "40",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "40",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "999999999.21903",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "999999999.21903",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": ".5",
+    "unit": "g",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": ".5",
+    "unit": "IU",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "-5",
+    "unit": "mg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "2.25",
+    "unit": "IU",
+    "basis": "g",
+    "code": null
+  },
+  {
+    "amount": "0.0000001",
+    "unit": "kg",
+    "basis": "g",
+    "code": null
+  },
+  {
+    "amount": ".5",
+    "unit": "ug",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "1,3041093",
+    "unit": "mg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "0,03037",
+    "unit": "mg",
+    "basis": "unit",
+    "code": {
+      "amount": "30.37",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "999999999,526",
+    "unit": "IU",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": ".5",
+    "unit": "mg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "0",
+    "unit": "IU",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "١٢",
+    "unit": "mg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "1e3",
+    "unit": "ug",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "250.85884",
+    "unit": "g",
+    "basis": "mL",
+    "code": {
+      "amount": "250858840",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "1.000",
+    "unit": "ug",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "1000",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "1000",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "1,35",
+    "unit": "IU",
+    "basis": "unit",
+    "code": {
+      "amount": "1.35",
+      "unit": "IU",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "0.0000001",
+    "unit": "ug",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "10000000000",
+    "unit": "mg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "0,000001",
+    "unit": "ug",
+    "basis": "unit",
+    "code": {
+      "amount": "0.000001",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "1",
+    "unit": "g",
+    "basis": "unit",
+    "code": {
+      "amount": "1000000",
+      "unit": "ug",
+      "basis": "unit"
+    }
+  },
+  {
+    "amount": "0,81",
+    "unit": "ug",
+    "basis": "mL",
+    "code": {
+      "amount": "0.81",
+      "unit": "ug",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "",
+    "unit": "ug",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "1000",
+    "unit": "g",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "0",
+    "unit": "g",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "",
+    "unit": "ug",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "239305977",
+    "unit": "µg",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "250,9493845",
+    "unit": "IU",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "283206258",
+    "unit": "IU",
+    "basis": "mL",
+    "code": {
+      "amount": "283206258",
+      "unit": "IU",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "1000",
+    "unit": "IU",
+    "basis": "mL",
+    "code": {
+      "amount": "1000",
+      "unit": "IU",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "999999999",
+    "unit": "mg",
+    "basis": "mL",
+    "code": null
+  },
+  {
+    "amount": "1",
+    "unit": "IU",
+    "basis": "mL",
+    "code": {
+      "amount": "1",
+      "unit": "IU",
+      "basis": "mL"
+    }
+  },
+  {
+    "amount": "",
+    "unit": "ug",
+    "basis": "unit",
+    "code": null
+  },
+  {
+    "amount": "5,96992",
+    "unit": "mg",
+    "basis": "mL",
+    "code": {
+      "amount": "5969.92",
+      "unit": "ug",
+      "basis": "mL"
+    }
   }
- },
- {
-  "amount": "5,4",
-  "unit": "g",
-  "basis": "unit",
-  "code": {
-   "amount": "5400000",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1000",
-  "unit": "g",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "1,000",
-  "unit": "IU",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "-5",
-  "unit": "mg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "999999999",
-  "unit": "mg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": " 40 ",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "40",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "0.55",
-  "unit": "g",
-  "basis": "mL",
-  "code": {
-   "amount": "550000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "1",
-  "unit": "g",
-  "basis": "mL",
-  "code": {
-   "amount": "1000000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "1,186570",
-  "unit": "mg",
-  "basis": "g",
-  "code": null
- },
- {
-  "amount": "0",
-  "unit": "IU",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": " ",
-  "unit": "ug",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "0,395751",
-  "unit": "g",
-  "basis": "mL",
-  "code": {
-   "amount": "395751",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "0,125",
-  "unit": "mg",
-  "basis": "unit",
-  "code": {
-   "amount": "125",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "1",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "1",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "5.1946",
-  "unit": "IU",
-  "basis": "mL",
-  "code": {
-   "amount": "5.1946",
-   "unit": "IU",
-   "basis": "mL"
-  }
- },
- {
-  "amount": " 40 ",
-  "unit": "mg",
-  "basis": "mL",
-  "code": {
-   "amount": "40000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "0",
-  "unit": "ug",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "1000",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "1000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "-5",
-  "unit": "IU",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "1000",
-  "unit": "IU",
-  "basis": "mL",
-  "code": {
-   "amount": "1000",
-   "unit": "IU",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "١٢",
-  "unit": "mg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "0,000001",
-  "unit": "IU",
-  "basis": "mL",
-  "code": {
-   "amount": "0.000001",
-   "unit": "IU",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "10000000000",
-  "unit": "g",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "250,85",
-  "unit": "ug",
-  "basis": "tablet",
-  "code": null
- },
- {
-  "amount": "250",
-  "unit": "g",
-  "basis": "unit",
-  "code": {
-   "amount": "250000000",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "١٢",
-  "unit": "mg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "250",
-  "unit": "g",
-  "basis": "unit",
-  "code": {
-   "amount": "250000000",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "0",
-  "unit": "g",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "5",
-  "unit": "mg",
-  "basis": "unit",
-  "code": {
-   "amount": "5000",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1.468146",
-  "unit": "mg",
-  "basis": "mL",
-  "code": {
-   "amount": "1468.146",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "242565078.880182",
-  "unit": "mg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "0",
-  "unit": "IU",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "2.25",
-  "unit": "g",
-  "basis": "unit",
-  "code": {
-   "amount": "2250000",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "4,5,6",
-  "unit": "ug",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "999999999.0834553",
-  "unit": "mg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "176019038",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "176019038",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "999999999",
-  "unit": "mg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "67853244.1913",
-  "unit": "mg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "١٢",
-  "unit": "mg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "5",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "5",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "١٢",
-  "unit": "ug",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "122637456",
-  "unit": "g",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "1000,407054",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "1000.407054",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "250",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "250",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "1.",
-  "unit": "mg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "1000",
-  "unit": "mg",
-  "basis": "unit",
-  "code": {
-   "amount": "1000000",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "40.6",
-  "unit": "µg",
-  "basis": "tablet",
-  "code": null
- },
- {
-  "amount": "1,315729",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "1.315729",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "5.5297",
-  "unit": "mg",
-  "basis": "mL",
-  "code": {
-   "amount": "5529.7",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "442586961.4",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "442586961.4",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1000",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "1000",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "5.1344654",
-  "unit": "mg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "1",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "1",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "0,686",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "0.686",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "215952246",
-  "unit": "µg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "1.",
-  "unit": "mg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "518680863,2232",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "518680863.2232",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "40",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "40",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "",
-  "unit": "mg",
-  "basis": "tablet",
-  "code": null
- },
- {
-  "amount": "999999999",
-  "unit": "IU",
-  "basis": "mL",
-  "code": {
-   "amount": "999999999",
-   "unit": "IU",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "1.",
-  "unit": "ug",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "995747268.780",
-  "unit": "",
-  "basis": "g",
-  "code": null
- },
- {
-  "amount": "0,125",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "0.125",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "",
-  "unit": "ug",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "999999999,316",
-  "unit": "mg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "١٢",
-  "unit": "",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "0",
-  "unit": "ug",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "5,21063",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "5.21063",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1000",
-  "unit": "g",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "999999999,4489169",
-  "unit": "IU",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "40,1",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "40.1",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "40",
-  "unit": "mg",
-  "basis": "unit",
-  "code": {
-   "amount": "40000",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "40",
-  "unit": "g",
-  "basis": "unit",
-  "code": {
-   "amount": "40000000",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "40",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "40",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "1",
-  "unit": "g",
-  "basis": "mL",
-  "code": {
-   "amount": "1000000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "999999999",
-  "unit": "g",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": " ",
-  "unit": "mg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "250.26",
-  "unit": "IU",
-  "basis": "mL",
-  "code": {
-   "amount": "250.26",
-   "unit": "IU",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "40mg",
-  "unit": "IU",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "192164691,2",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "192164691.2",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": ".5",
-  "unit": "kg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "5",
-  "unit": "g",
-  "basis": "unit",
-  "code": {
-   "amount": "5000000",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "250",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "250",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1000",
-  "unit": "IU",
-  "basis": "mL",
-  "code": {
-   "amount": "1000",
-   "unit": "IU",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "5",
-  "unit": "mg",
-  "basis": "mL",
-  "code": {
-   "amount": "5000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "250",
-  "unit": "g",
-  "basis": "mL",
-  "code": {
-   "amount": "250000000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "40",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "40",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1000.099540",
-  "unit": "g",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "248235189",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "248235189",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "0",
-  "unit": "g",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "10000000000",
-  "unit": "IU",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "5,373",
-  "unit": "ug",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "0,9",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "0.9",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "0",
-  "unit": "mg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "0,16131",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "0.16131",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1",
-  "unit": "mg",
-  "basis": "mL",
-  "code": {
-   "amount": "1000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "1 000",
-  "unit": "ug",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "4,5,6",
-  "unit": "IU",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "40,9",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "40.9",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1000",
-  "unit": "g",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "1000,7",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "1000.7",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "1",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "1",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "10000000000",
-  "unit": "",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "5",
-  "unit": "IU",
-  "basis": "mL",
-  "code": {
-   "amount": "5",
-   "unit": "IU",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "999999999,77",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "999999999.77",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "40",
-  "unit": "g",
-  "basis": "mL",
-  "code": {
-   "amount": "40000000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "0,125",
-  "unit": "IU",
-  "basis": "mL",
-  "code": {
-   "amount": "0.125",
-   "unit": "IU",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "2.25",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "2.25",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "999999999.459",
-  "unit": "ug",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": ".5",
-  "unit": "g",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "0",
-  "unit": "g",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "40",
-  "unit": "mcg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "5",
-  "unit": "mg",
-  "basis": "unit",
-  "code": {
-   "amount": "5000",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "5",
-  "unit": "g",
-  "basis": "mL",
-  "code": {
-   "amount": "5000000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "1000",
-  "unit": "kg",
-  "basis": "g",
-  "code": null
- },
- {
-  "amount": "0,000001",
-  "unit": "g",
-  "basis": "unit",
-  "code": {
-   "amount": "1",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "0",
-  "unit": "ug",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "0.0000001",
-  "unit": "g",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "1",
-  "unit": "IU",
-  "basis": "mL",
-  "code": {
-   "amount": "1",
-   "unit": "IU",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "250",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "250",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "1,40",
-  "unit": "g",
-  "basis": "mL",
-  "code": {
-   "amount": "1400000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "999999999,66879",
-  "unit": "g",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "1000,99579",
-  "unit": "g",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "40",
-  "unit": "mg",
-  "basis": "mL",
-  "code": {
-   "amount": "40000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "250",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "250",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "-5",
-  "unit": "mg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "1",
-  "unit": "g",
-  "basis": "unit",
-  "code": {
-   "amount": "1000000",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "10000000000",
-  "unit": "ug",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "1,9224223",
-  "unit": "mcg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "999999999",
-  "unit": "mg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "40,91",
-  "unit": "IU",
-  "basis": "tablet",
-  "code": null
- },
- {
-  "amount": "0",
-  "unit": "g",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "0,71",
-  "unit": "mg",
-  "basis": "unit",
-  "code": {
-   "amount": "710",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "0,000001",
-  "unit": "kg",
-  "basis": "tablet",
-  "code": null
- },
- {
-  "amount": "40mg",
-  "unit": "mg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "0,125",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "0.125",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "-5",
-  "unit": "ug",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "250",
-  "unit": "g",
-  "basis": "unit",
-  "code": {
-   "amount": "250000000",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1e3",
-  "unit": "IU",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "0.145370",
-  "unit": "g",
-  "basis": "mL",
-  "code": {
-   "amount": "145370",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "5",
-  "unit": "g",
-  "basis": "unit",
-  "code": {
-   "amount": "5000000",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1000",
-  "unit": "mg",
-  "basis": "unit",
-  "code": {
-   "amount": "1000000",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "999999999,68",
-  "unit": "mg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "1",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "1",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1",
-  "unit": "g",
-  "basis": "mL",
-  "code": {
-   "amount": "1000000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "1000.3739683",
-  "unit": "ug",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "250,4883",
-  "unit": "mg",
-  "basis": "mL",
-  "code": {
-   "amount": "250488.3",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "1",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "1",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "980527341.918574",
-  "unit": "IU",
-  "basis": "mL",
-  "code": {
-   "amount": "980527341.918574",
-   "unit": "IU",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "999999999",
-  "unit": "IU",
-  "basis": "mL",
-  "code": {
-   "amount": "999999999",
-   "unit": "IU",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "1",
-  "unit": "g",
-  "basis": "mL",
-  "code": {
-   "amount": "1000000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "0",
-  "unit": "ug",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "0.0",
-  "unit": "kg",
-  "basis": "g",
-  "code": null
- },
- {
-  "amount": "40,9",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "40.9",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "5",
-  "unit": "g",
-  "basis": "mL",
-  "code": {
-   "amount": "5000000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "١٢",
-  "unit": "mg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "-5",
-  "unit": "mg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "5.01",
-  "unit": "g",
-  "basis": "mL",
-  "code": {
-   "amount": "5010000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "1000.08267",
-  "unit": "IU",
-  "basis": "mL",
-  "code": {
-   "amount": "1000.08267",
-   "unit": "IU",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "1000",
-  "unit": "µg",
-  "basis": "g",
-  "code": null
- },
- {
-  "amount": "0,6",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "0.6",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "1000",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "1000",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "999999999",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "999999999",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1000.180",
-  "unit": "µg",
-  "basis": "tablet",
-  "code": null
- },
- {
-  "amount": "796013420",
-  "unit": "g",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "5",
-  "unit": "ug",
-  "basis": "tablet",
-  "code": null
- },
- {
-  "amount": "1.6556268",
-  "unit": "kg",
-  "basis": "tablet",
-  "code": null
- },
- {
-  "amount": "0,125",
-  "unit": "mg",
-  "basis": "unit",
-  "code": {
-   "amount": "125",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1000,0",
-  "unit": "g",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "1e3",
-  "unit": "mg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "1",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "1",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "40.8557",
-  "unit": "g",
-  "basis": "unit",
-  "code": {
-   "amount": "40855700",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1000.4",
-  "unit": "ug",
-  "basis": "tablet",
-  "code": null
- },
- {
-  "amount": "250.5",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "250.5",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "40mg",
-  "unit": "g",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "999999999",
-  "unit": "mg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "12,500",
-  "unit": "IU",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "10000000000",
-  "unit": "g",
-  "basis": "tablet",
-  "code": null
- },
- {
-  "amount": "1000",
-  "unit": "IU",
-  "basis": "mL",
-  "code": {
-   "amount": "1000",
-   "unit": "IU",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "250,5209",
-  "unit": "g",
-  "basis": "unit",
-  "code": {
-   "amount": "250520900",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "1",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1 000",
-  "unit": "mg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "1e3",
-  "unit": "mg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "10000000000",
-  "unit": "mg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "1.000",
-  "unit": "ug",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "250.08812",
-  "unit": "mg",
-  "basis": "unit",
-  "code": {
-   "amount": "250088.12",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "0",
-  "unit": "IU",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "1000",
-  "unit": "µg",
-  "basis": "tablet",
-  "code": null
- },
- {
-  "amount": "641729575.58",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "641729575.58",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "999999999",
-  "unit": "IU",
-  "basis": "mL",
-  "code": {
-   "amount": "999999999",
-   "unit": "IU",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "1",
-  "unit": "mg",
-  "basis": "unit",
-  "code": {
-   "amount": "1000",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "339880491.9049310",
-  "unit": "IU",
-  "basis": "g",
-  "code": null
- },
- {
-  "amount": "0",
-  "unit": "ug",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "40.629660",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "40.62966",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "999999999",
-  "unit": "mg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "0.0",
-  "unit": "g",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "1 000",
-  "unit": "ug",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "0",
-  "unit": "mg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "503817125",
-  "unit": "mg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "999999999.36034",
-  "unit": "g",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "1,62",
-  "unit": "g",
-  "basis": "unit",
-  "code": {
-   "amount": "1620000",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1000.647502",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "1000.647502",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "999999999,6876838",
-  "unit": "mg",
-  "basis": "tablet",
-  "code": null
- },
- {
-  "amount": "40",
-  "unit": "mg",
-  "basis": "unit",
-  "code": {
-   "amount": "40000",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "1",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "40mg",
-  "unit": "g",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "1.33",
-  "unit": "mg",
-  "basis": "unit",
-  "code": {
-   "amount": "1330",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "١٢",
-  "unit": "ug",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "1e3",
-  "unit": "ug",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "0.9295",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "0.9295",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1",
-  "unit": "g",
-  "basis": "mL",
-  "code": {
-   "amount": "1000000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "250",
-  "unit": "mg",
-  "basis": "unit",
-  "code": {
-   "amount": "250000",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "0,125",
-  "unit": "IU",
-  "basis": "mL",
-  "code": {
-   "amount": "0.125",
-   "unit": "IU",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "12,500",
-  "unit": "IU",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "5.68",
-  "unit": "mg",
-  "basis": "unit",
-  "code": {
-   "amount": "5680",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "250",
-  "unit": "mg",
-  "basis": "unit",
-  "code": {
-   "amount": "250000",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "",
-  "unit": "IU",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "40.409557",
-  "unit": "mg",
-  "basis": "mL",
-  "code": {
-   "amount": "40409.557",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "10000000000",
-  "unit": "g",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": " ",
-  "unit": "mg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "425951781.044",
-  "unit": "mg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "1000",
-  "unit": "g",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "0,000001",
-  "unit": "mg",
-  "basis": "unit",
-  "code": {
-   "amount": "0.001",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "5.74",
-  "unit": "g",
-  "basis": "mL",
-  "code": {
-   "amount": "5740000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "1.03972",
-  "unit": "mg",
-  "basis": "unit",
-  "code": {
-   "amount": "1039.72",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "5",
-  "unit": "mg",
-  "basis": "mL",
-  "code": {
-   "amount": "5000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "40",
-  "unit": "g",
-  "basis": "mL",
-  "code": {
-   "amount": "40000000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "1000",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "1000",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "999999999",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "999999999",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "1",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "1",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "0.0",
-  "unit": "g",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "0.0000001",
-  "unit": "g",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "1000",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "1000",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "0",
-  "unit": "mg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "40",
-  "unit": "g",
-  "basis": "mL",
-  "code": {
-   "amount": "40000000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "5",
-  "unit": "mg",
-  "basis": "mL",
-  "code": {
-   "amount": "5000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "250",
-  "unit": "g",
-  "basis": "mL",
-  "code": {
-   "amount": "250000000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "1000",
-  "unit": "µg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "1,000",
-  "unit": "IU",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "40",
-  "unit": "mg",
-  "basis": "mL",
-  "code": {
-   "amount": "40000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "5",
-  "unit": "IU",
-  "basis": "mL",
-  "code": {
-   "amount": "5",
-   "unit": "IU",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "999999999",
-  "unit": "mg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "1",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "1",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1 000",
-  "unit": "mg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "5",
-  "unit": "mg",
-  "basis": "mL",
-  "code": {
-   "amount": "5000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "1000",
-  "unit": "g",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "1,29143",
-  "unit": "g",
-  "basis": "unit",
-  "code": {
-   "amount": "1291430",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "1",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1000",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "1000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "999999999",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "999999999",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "40",
-  "unit": "ug",
-  "basis": "tablet",
-  "code": null
- },
- {
-  "amount": "-5",
-  "unit": "",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "1.000",
-  "unit": "ug",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "636310439",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "636310439",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1000",
-  "unit": "g",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "0",
-  "unit": "IU",
-  "basis": "g",
-  "code": null
- },
- {
-  "amount": "1 000",
-  "unit": "mg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "250",
-  "unit": "mcg",
-  "basis": "tablet",
-  "code": null
- },
- {
-  "amount": "0",
-  "unit": "ug",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "1000",
-  "unit": "mg",
-  "basis": "unit",
-  "code": {
-   "amount": "1000000",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "322324564.86471",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "322324564.86471",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "999999999,13",
-  "unit": "mg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": " 40 ",
-  "unit": "mg",
-  "basis": "g",
-  "code": null
- },
- {
-  "amount": "250,9",
-  "unit": "mg",
-  "basis": "mL",
-  "code": {
-   "amount": "250900",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "250.561",
-  "unit": "mcg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "5",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "5",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "1000,85023",
-  "unit": "g",
-  "basis": "g",
-  "code": null
- },
- {
-  "amount": "322988236,9058",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "322988236.9058",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "5",
-  "unit": "g",
-  "basis": "mL",
-  "code": {
-   "amount": "5000000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "5",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "5",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "999999999",
-  "unit": "IU",
-  "basis": "mL",
-  "code": {
-   "amount": "999999999",
-   "unit": "IU",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "0",
-  "unit": "IU",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "5",
-  "unit": "mg",
-  "basis": "tablet",
-  "code": null
- },
- {
-  "amount": "1000",
-  "unit": "mg",
-  "basis": "unit",
-  "code": {
-   "amount": "1000000",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "250",
-  "unit": "IU",
-  "basis": "mL",
-  "code": {
-   "amount": "250",
-   "unit": "IU",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "0,7018630",
-  "unit": "g",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "999999999",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "999999999",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "0,000001",
-  "unit": "mg",
-  "basis": "mL",
-  "code": {
-   "amount": "0.001",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "40.5952",
-  "unit": "",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "999999999,8932",
-  "unit": "mg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "0.92",
-  "unit": "g",
-  "basis": "mL",
-  "code": {
-   "amount": "920000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "",
-  "unit": "mg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "0,566577",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "0.566577",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "999999999",
-  "unit": "g",
-  "basis": "g",
-  "code": null
- },
- {
-  "amount": "4,5,6",
-  "unit": "ug",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "0",
-  "unit": "IU",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "5.5306132",
-  "unit": "g",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "999999999",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "999999999",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "40",
-  "unit": "IU",
-  "basis": "mL",
-  "code": {
-   "amount": "40",
-   "unit": "IU",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "729127058",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "729127058",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "0,000001",
-  "unit": "kg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "999999999",
-  "unit": "mg",
-  "basis": "tablet",
-  "code": null
- },
- {
-  "amount": "5",
-  "unit": "ug",
-  "basis": "tablet",
-  "code": null
- },
- {
-  "amount": "250,249530",
-  "unit": "mg",
-  "basis": "mL",
-  "code": {
-   "amount": "250249.53",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "250",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "250",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1",
-  "unit": "mg",
-  "basis": "mL",
-  "code": {
-   "amount": "1000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "0",
-  "unit": "mg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "5",
-  "unit": "mcg",
-  "basis": "tablet",
-  "code": null
- },
- {
-  "amount": "1.000",
-  "unit": "IU",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "250,15",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "250.15",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "0.0",
-  "unit": "mg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "5.805",
-  "unit": "IU",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "1",
-  "unit": "IU",
-  "basis": "mL",
-  "code": {
-   "amount": "1",
-   "unit": "IU",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "250,627",
-  "unit": "mg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "40",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "40",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "40",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "40",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "1",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "0.02",
-  "unit": "g",
-  "basis": "mL",
-  "code": {
-   "amount": "20000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "12,500",
-  "unit": "mg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "1000",
-  "unit": "mg",
-  "basis": "unit",
-  "code": {
-   "amount": "1000000",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "999999999",
-  "unit": "mg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "1.",
-  "unit": "ug",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "5",
-  "unit": "µg",
-  "basis": "tablet",
-  "code": null
- },
- {
-  "amount": "250.176540",
-  "unit": "g",
-  "basis": "mL",
-  "code": {
-   "amount": "250176540",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "1.000",
-  "unit": "mg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "1,9439",
-  "unit": "mg",
-  "basis": "unit",
-  "code": {
-   "amount": "1943.9",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1",
-  "unit": "mg",
-  "basis": "unit",
-  "code": {
-   "amount": "1000",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "401491301",
-  "unit": "mg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "0,000001",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "0.000001",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "999999999",
-  "unit": "mg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "999999999.0368828",
-  "unit": "mg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "1",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "1",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "0",
-  "unit": "ug",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "717387091,42",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "717387091.42",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "0,125",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "0.125",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": " ",
-  "unit": "mg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "1,000",
-  "unit": "IU",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "",
-  "unit": "g",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "999999999",
-  "unit": "IU",
-  "basis": "mL",
-  "code": {
-   "amount": "999999999",
-   "unit": "IU",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "5.41233",
-  "unit": "g",
-  "basis": "tablet",
-  "code": null
- },
- {
-  "amount": "999999999",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "999999999",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": " 40 ",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "40",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1,000",
-  "unit": "g",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "999999999.126",
-  "unit": "ug",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "250",
-  "unit": "mcg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "250",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "250",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "5,587",
-  "unit": "IU",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "5,9878",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "5.9878",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "0",
-  "unit": "IU",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "0",
-  "unit": "ug",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "5.4010",
-  "unit": "mg",
-  "basis": "mL",
-  "code": {
-   "amount": "5401",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "40.75",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "40.75",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "0.64",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "0.64",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "1",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "1",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "١٢",
-  "unit": "mg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "1",
-  "unit": "mcg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "367015143",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "367015143",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "4,5,6",
-  "unit": "mg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "1.9030561",
-  "unit": "g",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "0.0",
-  "unit": "mg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "40",
-  "unit": "IU",
-  "basis": "mL",
-  "code": {
-   "amount": "40",
-   "unit": "IU",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "1",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "1",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "2.25",
-  "unit": "",
-  "basis": "tablet",
-  "code": null
- },
- {
-  "amount": "5",
-  "unit": "g",
-  "basis": "unit",
-  "code": {
-   "amount": "5000000",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "0.0000001",
-  "unit": "mg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "60989908",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "60989908",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "999999999",
-  "unit": "g",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "1000.58331",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "1000.58331",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "250",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "250",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "1",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "1",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1e3",
-  "unit": "ug",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "12,500",
-  "unit": "ug",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "250,6560",
-  "unit": "g",
-  "basis": "mL",
-  "code": {
-   "amount": "250656000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "1000",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "1000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "250",
-  "unit": "mg",
-  "basis": "mL",
-  "code": {
-   "amount": "250000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "850298025.0",
-  "unit": "µg",
-  "basis": "tablet",
-  "code": null
- },
- {
-  "amount": "888044276",
-  "unit": "IU",
-  "basis": "mL",
-  "code": {
-   "amount": "888044276",
-   "unit": "IU",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "1,000",
-  "unit": "mg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "1",
-  "unit": "mg",
-  "basis": "mL",
-  "code": {
-   "amount": "1000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "999999999",
-  "unit": "mg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "40",
-  "unit": "g",
-  "basis": "unit",
-  "code": {
-   "amount": "40000000",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "5.8",
-  "unit": "mg",
-  "basis": "unit",
-  "code": {
-   "amount": "5800",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1e3",
-  "unit": "mg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "5",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "5",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "0",
-  "unit": "IU",
-  "basis": "g",
-  "code": null
- },
- {
-  "amount": "0",
-  "unit": "g",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "999999999",
-  "unit": "IU",
-  "basis": "g",
-  "code": null
- },
- {
-  "amount": "979898407",
-  "unit": "µg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "999999999",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "999999999",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "999999999,67",
-  "unit": "IU",
-  "basis": "mL",
-  "code": {
-   "amount": "999999999.67",
-   "unit": "IU",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "999999999,842841",
-  "unit": "mg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "1000,60164",
-  "unit": "IU",
-  "basis": "mL",
-  "code": {
-   "amount": "1000.60164",
-   "unit": "IU",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "701319051",
-  "unit": "g",
-  "basis": "g",
-  "code": null
- },
- {
-  "amount": "5.592",
-  "unit": "IU",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "999999999.181933",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "999999999.181933",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "40",
-  "unit": "IU",
-  "basis": "mL",
-  "code": {
-   "amount": "40",
-   "unit": "IU",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "59493975,5403060",
-  "unit": "IU",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "2.25",
-  "unit": "g",
-  "basis": "mL",
-  "code": {
-   "amount": "2250000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "0",
-  "unit": "",
-  "basis": "g",
-  "code": null
- },
- {
-  "amount": "5,4681",
-  "unit": "",
-  "basis": "tablet",
-  "code": null
- },
- {
-  "amount": "0.721237",
-  "unit": "IU",
-  "basis": "mL",
-  "code": {
-   "amount": "0.721237",
-   "unit": "IU",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "40mg",
-  "unit": "IU",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "0",
-  "unit": "IU",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": " 40 ",
-  "unit": "IU",
-  "basis": "mL",
-  "code": {
-   "amount": "40",
-   "unit": "IU",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "40mg",
-  "unit": "IU",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "0",
-  "unit": "mg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "10000000000",
-  "unit": "g",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "250,8373",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "250.8373",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "40",
-  "unit": "IU",
-  "basis": "mL",
-  "code": {
-   "amount": "40",
-   "unit": "IU",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "١٢",
-  "unit": "IU",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": " 40 ",
-  "unit": "g",
-  "basis": "mL",
-  "code": {
-   "amount": "40000000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "12,500",
-  "unit": "ug",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "40",
-  "unit": "mg",
-  "basis": "mL",
-  "code": {
-   "amount": "40000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "0.0000001",
-  "unit": "g",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "115914791",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "115914791",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1000",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "1000",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "0.14400",
-  "unit": "mg",
-  "basis": "mL",
-  "code": {
-   "amount": "144",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "0",
-  "unit": "ug",
-  "basis": "tablet",
-  "code": null
- },
- {
-  "amount": "1,6981756",
-  "unit": "IU",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "40,8603",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "40.8603",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1.000",
-  "unit": "ug",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "999999999",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "999999999",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "40",
-  "unit": "g",
-  "basis": "mL",
-  "code": {
-   "amount": "40000000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "-5",
-  "unit": "µg",
-  "basis": "tablet",
-  "code": null
- },
- {
-  "amount": "5",
-  "unit": "mg",
-  "basis": "unit",
-  "code": {
-   "amount": "5000",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1000",
-  "unit": "IU",
-  "basis": "tablet",
-  "code": null
- },
- {
-  "amount": "1000",
-  "unit": "mg",
-  "basis": "unit",
-  "code": {
-   "amount": "1000000",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "40.74911",
-  "unit": "mg",
-  "basis": "unit",
-  "code": {
-   "amount": "40749.11",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "5",
-  "unit": "kg",
-  "basis": "g",
-  "code": null
- },
- {
-  "amount": "0",
-  "unit": "mg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "1000,931",
-  "unit": "g",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "١٢",
-  "unit": "ug",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "999999999,92",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "999999999.92",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "5.995",
-  "unit": "ug",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "1",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "1",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "5.9333",
-  "unit": "g",
-  "basis": "mL",
-  "code": {
-   "amount": "5933300",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "40,725705",
-  "unit": "g",
-  "basis": "unit",
-  "code": {
-   "amount": "40725705",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "309230661,0403",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "309230661.0403",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "0,01710",
-  "unit": "mg",
-  "basis": "mL",
-  "code": {
-   "amount": "17.1",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": ".5",
-  "unit": "IU",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "5.2",
-  "unit": "IU",
-  "basis": "tablet",
-  "code": null
- },
- {
-  "amount": "",
-  "unit": "g",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "1000.7431",
-  "unit": "mg",
-  "basis": "mL",
-  "code": {
-   "amount": "1000743.1",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "0,6864",
-  "unit": "g",
-  "basis": "unit",
-  "code": {
-   "amount": "686400",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1,5988",
-  "unit": "mg",
-  "basis": "unit",
-  "code": {
-   "amount": "1598.8",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1",
-  "unit": "",
-  "basis": "g",
-  "code": null
- },
- {
-  "amount": "1",
-  "unit": "mg",
-  "basis": "mL",
-  "code": {
-   "amount": "1000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "40",
-  "unit": "g",
-  "basis": "mL",
-  "code": {
-   "amount": "40000000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "5",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "5",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "40mg",
-  "unit": "",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "1",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "1",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "999999999,344",
-  "unit": "ug",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "0",
-  "unit": "IU",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "1.3024139",
-  "unit": "mg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "190674994,06",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "190674994.06",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "12,500",
-  "unit": "g",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "١٢",
-  "unit": "g",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "72167766.381880",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "72167766.38188",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "40,10",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "40.1",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1 000",
-  "unit": "mg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "1e3",
-  "unit": "ug",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "999999999",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "999999999",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "40",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "40",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "0,125",
-  "unit": "g",
-  "basis": "unit",
-  "code": {
-   "amount": "125000",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "0.0000001",
-  "unit": "ug",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "0,000001",
-  "unit": "IU",
-  "basis": "mL",
-  "code": {
-   "amount": "0.000001",
-   "unit": "IU",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "5",
-  "unit": "g",
-  "basis": "unit",
-  "code": {
-   "amount": "5000000",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "5,7",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "5.7",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1",
-  "unit": "IU",
-  "basis": "mL",
-  "code": {
-   "amount": "1",
-   "unit": "IU",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "0",
-  "unit": "g",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "40",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "40",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "999999999.21903",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "999999999.21903",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": ".5",
-  "unit": "g",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": ".5",
-  "unit": "IU",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "-5",
-  "unit": "mg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "2.25",
-  "unit": "IU",
-  "basis": "g",
-  "code": null
- },
- {
-  "amount": "0.0000001",
-  "unit": "kg",
-  "basis": "g",
-  "code": null
- },
- {
-  "amount": ".5",
-  "unit": "ug",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "1,3041093",
-  "unit": "mg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "0,03037",
-  "unit": "mg",
-  "basis": "unit",
-  "code": {
-   "amount": "30.37",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "999999999,526",
-  "unit": "IU",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": ".5",
-  "unit": "mg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "0",
-  "unit": "IU",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "١٢",
-  "unit": "mg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "1e3",
-  "unit": "ug",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "250.85884",
-  "unit": "g",
-  "basis": "mL",
-  "code": {
-   "amount": "250858840",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "1.000",
-  "unit": "ug",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "1000",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "1000",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "1,35",
-  "unit": "IU",
-  "basis": "unit",
-  "code": {
-   "amount": "1.35",
-   "unit": "IU",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "0.0000001",
-  "unit": "ug",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "10000000000",
-  "unit": "mg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "0,000001",
-  "unit": "ug",
-  "basis": "unit",
-  "code": {
-   "amount": "0.000001",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "1",
-  "unit": "g",
-  "basis": "unit",
-  "code": {
-   "amount": "1000000",
-   "unit": "ug",
-   "basis": "unit"
-  }
- },
- {
-  "amount": "0,81",
-  "unit": "ug",
-  "basis": "mL",
-  "code": {
-   "amount": "0.81",
-   "unit": "ug",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "",
-  "unit": "ug",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "1000",
-  "unit": "g",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "0",
-  "unit": "g",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "",
-  "unit": "ug",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "239305977",
-  "unit": "µg",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "250,9493845",
-  "unit": "IU",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "283206258",
-  "unit": "IU",
-  "basis": "mL",
-  "code": {
-   "amount": "283206258",
-   "unit": "IU",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "1000",
-  "unit": "IU",
-  "basis": "mL",
-  "code": {
-   "amount": "1000",
-   "unit": "IU",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "999999999",
-  "unit": "mg",
-  "basis": "mL",
-  "code": null
- },
- {
-  "amount": "1",
-  "unit": "IU",
-  "basis": "mL",
-  "code": {
-   "amount": "1",
-   "unit": "IU",
-   "basis": "mL"
-  }
- },
- {
-  "amount": "",
-  "unit": "ug",
-  "basis": "unit",
-  "code": null
- },
- {
-  "amount": "5,96992",
-  "unit": "mg",
-  "basis": "mL",
-  "code": {
-   "amount": "5969.92",
-   "unit": "ug",
-   "basis": "mL"
-  }
- }
 ]

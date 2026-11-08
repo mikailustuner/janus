@@ -67,7 +67,8 @@
       "research": {
         "twoFaces": "Işık yüzü",
         "glass": "Araştırma"
-      }
+      },
+      "passport": "Pasaport"
     },
     "mask": {
       "label": {
@@ -809,7 +810,6 @@
     }
   },
   "Passport": {
-    "nav": "Pasaport",
     "title": "İlaç pasaportu",
     "intro": "Hangi ülkeden gelirse gelsin, tüm kutular tek listede. Janus her kutu için Türkiye, Fransa, İspanya ve Amerika Birleşik Devletleri'nin herkese açık ürün verilerinde aynı etkin maddeleri içeren bir ürünün listelenip listelenmediğini gösterir.",
     "listingsOnly": "Janus yalnızca herkese açık listelerde yer alanları gösterir. Size hangi ilacın uygun olduğunu yalnızca doktorunuz veya eczacınız söyleyebilir.",
@@ -972,13 +972,18 @@
       "entry": "Bu listedeki etkin maddeler için bildirimler",
       "intro": "Kolektif Bellek, bu etkin maddelerin herkese açık istenmeyen olay bildirimlerinde ne sıklıkla birlikte geçtiğini gösterir.",
       "tooMany": "Kolektif Bellek aynı anda en fazla 20 etkin maddeye bakar. Lütfen hangilerine bakılacağını seçin.",
-      "choose": "En fazla 20 etkin madde seçin",
-      "chosen": "{count} / 20 seçildi",
       "open": "Kolektif Belleği aç"
     },
     "demo": {
       "intro": "Köln demo hastasının Türk ve Alman kutuları. Ürün adları kurgusaldır; listedeki bilgiler gerçek herkese açık verilerden gelir."
     },
-    "presentNote": "Listede yer alması, ilacın satışta olduğu veya eczanede bulunduğu anlamına gelmez."
+    "presentNote": "Listede yer alması, ilacın satışta olduğu veya eczanede bulunduğu anlamına gelmez.",
+    "place": {
+      "TR": "Türkiye",
+      "FR": "Fransa",
+      "ES": "İspanya",
+      "DE": "Almanya",
+      "US": "Amerika Birleşik Devletleri"
+    }
   }
 }
