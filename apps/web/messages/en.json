@@ -33,6 +33,8 @@
     "nightHeadline": "Was one medicine prescribed for the side effect of another?",
     "glassHeadline": "A clear look at the medicines in your home.",
     "stepInside": "Step inside",
+    "skip": "Skip",
+    "replay": "Replay the way in",
     "scene3Title": {
       "twoFaces": "Four ghosts in a demo medicine cabinet",
       "glass": "Four patterns in a demo medicine cabinet"
@@ -64,25 +66,8 @@
       "medicines": "Medicines",
       "results": "Results",
       "settings": "Settings",
-      "research": {
-        "twoFaces": "Light face",
-        "glass": "Research"
-      },
+      "research": "Research",
       "passport": "Passport"
-    },
-    "mask": {
-      "label": {
-        "twoFaces": "Mask: choose a face",
-        "glass": "Section"
-      },
-      "patient": {
-        "twoFaces": "Shadow",
-        "glass": "Patient"
-      },
-      "research": {
-        "twoFaces": "Light",
-        "glass": "Research"
-      }
     },
     "privacy": "Privacy",
     "demoCodes": "Demo codes",
@@ -216,7 +201,7 @@
     "appearance": "Appearance",
     "theme": "Theme",
     "themeTwoFaces": "Night Pharmacy",
-    "themeTwoFacesHint": "Night blue with lit windows for the patient side, ivory for the research side.",
+    "themeTwoFacesHint": "Night blue with lit windows and theme symbols.",
     "themeGlass": "Glass Janus",
     "themeGlassHint": "Plain and light, without theme symbols.",
     "largeText": "Large text",
@@ -510,10 +495,7 @@
     "withdrawLink": "Withdraw outcome-loop data"
   },
   "Research": {
-    "title": {
-      "twoFaces": "Light face: for researchers",
-      "glass": "Research"
-    },
+    "title": "Research",
     "intro": "The same side-effect knowledge, turned around for research. This section is not part of the patient flow.",
     "rule7": "Repurposing outputs are candidates worth investigating — not treatments.",
     "coming": "Coming in Phase 4.",
@@ -538,10 +520,7 @@
         "body": "The open dataset for research, with counts only for groups large enough to protect privacy."
       }
     },
-    "back": {
-      "twoFaces": "Back to the shadow face",
-      "glass": "Back to the patient section"
-    },
+    "back": "Back to the patient section",
     "empty": "Nothing to show yet."
   },
   "Doctor": {

@@ -35,7 +35,7 @@ Vision line: *"Billions of people take medicine combinations at home every day �
 - Every finding is linked to evidence (rule, paper, statistic, text). No evidence, no sentence. Retracted evidence is never used for a patient-facing finding.
 - Repurposing outputs are researcher-facing and always labelled **"candidate worth investigating — not a treatment"**.
 - Website first: works in a mobile browser with nothing to install (PWA).
-- Halloween theme is functional, not decoration: ghosts = cascades, two-faced mask = shadow/light switch, séance table = evidence synthesis, zombie stamp = retracted evidence. Tone is mysterious and reassuring, never frightening for patients. Avoid a "flashlight in the dark" motif (SpookBnB, Kiroween 2025).
+- Halloween theme is functional, not decoration: ghosts = cascades, two-faced mask = the Janus mark (no light mode, experience DP48), séance table = evidence synthesis, zombie stamp = retracted evidence. Tone is mysterious and reassuring, never frightening for patients. Avoid a "flashlight in the dark" motif (SpookBnB, Kiroween 2025).
 
 ## Claims we must not make
 - "First AI prescribing-cascade detector", "first repurposing from side effects / patient reports", "first retraction checker", "first data-mining of Islamic or Ottoman medicine", "we mined Ottoman manuscripts", "cure", "diagnosis", "we solve a global problem", "N people like you" (FAERS counts reports).

@@ -270,18 +270,30 @@ storage = "cache"
 [[sources]]
 id = "openiti_canon"
 section = "historical"
-name = "OpenITI — 0428IbnSina.QanunFiTibb (Ibn Sina, al-Qanun fi al-Tibb)"
-publisher = "Open Islamicate Texts Initiative"
+name = "OpenITI — 0428IbnSina.QanunFiTibb (Ibn Sina, al-Qanun fi al-Tibb), version Shamela0010706-ara1, Book 2"
+publisher = "Open Islamicate Texts Initiative (OpenITI release 2025.1.9, doi:10.5281/zenodo.17767721)"
 license = "CC BY-NC-SA 4.0"
-notes = ["Derived data is released under the same license, separately from the Apache-2.0 code."]
+notes = [
+  "Pinned to OpenITI/0450AH commit 81d1d9e0f0af42a822f0136fe4f49776471ef702 (2025-11-27).",
+  "Derived data is released under the same license in the separate data package datasets/canon/, not under the Apache-2.0 code license.",
+  "OpenITI flags this version for many typos, pagination problems and missing parts.",
+]
 storage = "separate_package"
+urls = [
+  "https://github.com/OpenITI/0450AH/tree/81d1d9e0f0af42a822f0136fe4f49776471ef702/data/0428IbnSina/0428IbnSina.QanunFiTibb",
+  "https://doi.org/10.5281/zenodo.17767721",
+]
 
 [[sources]]
 id = "pmc3941892"
 section = "historical"
-name = "PMC3941892 (tables of Canon remedy identifications)"
-license = "CC BY"
-storage = "cache"
+name = "Aliasl J, Khoshzaban F. Traditional Herbal Remedies for Burn Wound Healing in Canon of Avicenna. Jundishapur J Nat Pharm Prod 2013;8(4):192-196. doi:10.17795/jjnpp-11686. PMC3941892, Tables 1 and 2"
+license = "CC BY 3.0"
+notes = ["Only the name columns (name in the Canon, common name, scientific name) are stored, in data/canon_gold_pmc3941892.csv."]
+storage = "commit"
+# A published article: re-check yearly (corrections, retraction) with the evidence data.
+cadence_days = 365
+urls = ["https://pmc.ncbi.nlm.nih.gov/articles/PMC3941892/"]
 
 [[sources]]
 id = "ancientbiotics"
@@ -502,9 +514,17 @@ region = "EU"
 [[sources]]
 id = "hamdard"
 section = "cited"
-name = "Hamdard 1998 translation of the Canon, Book 2"
+name = "Al-Qanun fi'l-Tibb, Book II, English translation of the critical Arabic text. Department of Islamic Studies, Jamia Hamdard, New Delhi, 1998"
 license = "© Jamia Hamdard"
-notes = ["Cited only."]
+notes = ["Cited only: identifications name its entry number; none of its text is reproduced."]
+storage = "cited_only"
+
+[[sources]]
+id = "seance_science"
+section = "cited"
+name = "Séance science witness: published studies listed in data/seance_science.csv (Samadi 2010; Halstead 2015; Nagoba 2013; Jull 2015 Cochrane)"
+license = "Bibliographic metadata only; each article keeps its own licence"
+notes = ["Cited only: DOI, title and a one-line finding in Janus's own words. Every DOI is checked against Crossref / Retraction Watch."]
 storage = "cited_only"
 
 [[sources]]

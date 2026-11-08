@@ -41,13 +41,12 @@ export default async function LocaleLayout({
       lang={locale}
       className={fontVariables}
       data-theme-style="two-faces"
-      data-face="shadow"
       data-large-text="off"
       data-reduce-transparency="off"
       suppressHydrationWarning
     >
       <head>
-        {/* Theme, face, large text and reduced transparency before the first paint (Req 6.7). */}
+        {/* Theme, large text and reduced transparency before the first paint (Req 6.7). */}
         <script dangerouslySetInnerHTML={{ __html: PREPAINT_SOURCE }} />
       </head>
       <body className="antialiased">

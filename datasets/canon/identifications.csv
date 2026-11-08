@@ -1,0 +1,32 @@
+substance_id,entry_id,transliteration,name_en,kind,janus_identification,gold_id,hamdard_ref,hamdard_identification,status,note
+myrtle,canon.b2.h0029,as,myrtle,plant,Myrtus communis L.,pmc3941892.t1.r01,"Hamdard 1998, alif no. 5, PDF p. 56",Myrtus communis,matches_gold,
+acacia,canon.b2.h0030,aqaqiya,acacia (gum arabic tree),plant,Acacia arabica (Lam.) Willd. (now Vachellia nilotica),pmc3941892.t1.r02,"Hamdard 1998, alif no. 50, PDF p. 84",Acacia arabica,matches_gold,Aqaqiya is the dried juice of the pods in the Greek tradition.
+sarcocolla,canon.b2.h0033,anzarut,sarcocolla,plant resin,Astragalus sarcocolla Dymock (gum resin),,"Hamdard 1998, alif no. 65, PDF p. 92",Astragalus sarcocolla,not_in_gold,Botanical source of sarcocolla is disputed (Astragalus vs Penaea).
+isfidaj,canon.b2.h0065,isfidaj,"isfidaj (ceruse, white lead)",mineral,basic lead carbonate (ceruse),,"Hamdard 1998, alif no. 29, PDF p. 71",zinc oxide,uncertain,Sources disagree: Hamdard gives zinc oxide; the Canon itself writes isfidaj al-rasas (white lead) elsewhere. Toxic lead compound.
+oriental_plane,canon.b2.h0200,dulb,oriental plane tree,plant,Platanus orientalis L.,pmc3941892.t1.r03,"Hamdard 1998, dal no. 15, PDF p. 225",Platanus orientalis,matches_gold,
+dragons_blood,canon.b2.h0210,dam al-akhawayn,dragon's blood,plant resin,dragon's blood resin (Calamus draco Willd. per Hamdard),,"Hamdard 1998, dal no. 17, PDF p. 227",Calamus draco,not_in_gold,"Dragon's blood came from several plants (Dracaena cinnabari, Daemonorops); source plant uncertain."
+st_johns_wort,canon.b2.h0219,hayufariqun,St John's wort,plant,Hypericum perforatum L.,pmc3941892.t2.r04,"Hamdard 1998, ha no. 10, PDF p. 481",Hypericum perforatum,matches_gold,
+rose,canon.b2.h0233,ward,rose,plant,Rosa damascena Mill. / Rosa centifolia L.,pmc3941892.t1.r14,"Hamdard 1998, waw no. 3, PDF p. 474",Rosa damascena,matches_gold,Gold names two species; Hamdard one of them.
+pitch,canon.b2.h0254,zift,pitch,plant resin,pitch (Pix nigra),,"Hamdard 1998, za no. 15, PDF p. 256",Pix nigra,not_in_gold,
+verdigris,canon.b2.h0256,zinjar,verdigris,mineral,basic copper acetate,,"Hamdard 1998, za no. 17, PDF p. 258",basic copper acetate,not_in_gold,Caustic copper salt.
+henna,canon.b2.h0271,hinna,henna,plant,Lawsonia inermis L.,pmc3941892.t1.r06,"Hamdard 1998, ha no. 51, PDF p. 189",Lawsonia alba (a synonym of L. inermis),matches_gold,
+fenugreek,canon.b2.h0284,hulba,fenugreek,plant,Trigonella foenum-graecum L.,pmc3941892.t2.r05,"Hamdard 1998, ha no. 42, PDF p. 182",Trigonella foenum-graecum,matches_gold,
+pellitory,canon.b2.h0289,hashishat al-zujaj,pellitory-of-the-wall,plant,Parietaria officinalis L.,pmc3941892.t1.r05,"Hamdard 1998, ha no. 40, PDF p. 181",Parietaria officinalis,matches_gold,
+frankincense,canon.b2.h0367,kundur,frankincense,plant resin,Boswellia sp.,pmc3941892.t2.r06,"Hamdard 1998, kaf no. 37, PDF p. 413",Boswellia glabra,uncertain,"Genus agrees; species differ (gold B. carterii, Hamdard B. glabra)."
+great_plantain,canon.b2.h0418,lisan al-hamal,great plantain,plant,Plantago major L.,pmc3941892.t1.r12,"Hamdard 1998, lam no. 13, PDF p. 431",Plantago major,matches_gold,
+lablab,canon.b2.h0425,lablab,lablab,plant,Lablab purpureus (L.) Sweet (syn. Dolichos lablab),pmc3941892.t2.r07,"Hamdard 1998, lam no. 5, PDF p. 419",Dolichos lablab,matches_gold,Some readings take the Canon's lablab for a climbing plant such as ivy or bindweed; experts to check.
+litharge,canon.b2.h0440,murdasanj,litharge,mineral,lead(II) oxide,,"Hamdard 1998, mim no. 15, PDF p. 447",Plumbi oxidum,not_in_gold,Toxic lead compound.
+salt,canon.b2.h0468,milh,salt,mineral,sodium chloride (with other salts),,"Hamdard 1998, mim no. 33, PDF p. 456",sodium chloride,not_in_gold,"The entry names several salts (borax-like, African)."
+narcissus,canon.b2.h0479,narjis,narcissus,plant,Narcissus tazetta L.,pmc3941892.t2.r08,"Hamdard 1998, nun no. 11, PDF p. 466",Narcissus tazetta,matches_gold,
+iris,canon.b2.h0519,sawsan,iris (lily),plant,Iris sp.,pmc3941892.t2.r11,"Hamdard 1998, sin no. 47, PDF p. 291",Iris florentina,matches_gold,Gold gives the genus only; Hamdard a species of it.
+beet,canon.b2.h0532,silq,beet,plant,Beta vulgaris L.,pmc3941892.t2.r12,Hamdard entry not located in the PDF text layer,,matches_gold,One source only (gold).
+asphodel,canon.b2.h0554,sirish,asphodel,plant,Asphodelaceae (genus uncertain),pmc3941892.t2.r10,"Hamdard 1998, sin no. 14, PDF p. 272",Asphodelus tenuifolius,uncertain,"Sources disagree on the genus (gold Eremurus persicus, Hamdard Asphodelus tenuifolius)."
+lentil,canon.b2.h0573,adas,lentil,plant,Lens culinaris Medik. (syn. Lens esculenta),pmc3941892.t2.r02,"Hamdard 1998, ayn no. 5, PDF p. 332",Lens esculenta,matches_gold,
+honey,canon.b2.h0574,asal,honey,animal product,bee honey,,"Hamdard 1998, ayn no. 13, PDF p. 336",Mel,not_in_gold,The entry also names cane-sugar 'honey'; the wound clause concerns bee honey only by context.
+pine,canon.b2.h0628,sanawbar,pine,plant,Pinus sp.,pmc3941892.t2.r09,Hamdard entry not located in the PDF text layer,,matches_gold,Gold gives the genus only.
+aloe,canon.b2.h0629,sabir,aloe,plant,Aloe sp. (dried leaf juice),,"Hamdard 1998, sad no. 2, PDF p. 310",Aloe littoralis,not_in_gold,Medieval sabir was the dried juice (Socotrine aloe); species uncertain.
+pomegranate,canon.b2.h0702,rumman,pomegranate,plant,Punica granatum L.,,"Hamdard 1998, ra no. 20, PDF p. 242",Punica granatum,not_in_gold,
+tutty,canon.b2.h0753,tutiya,tutty,mineral,impure zinc oxide,,Hamdard entry not located in the PDF text layer,,not_in_gold,Tutty is a furnace product; composition varies.
+mallow,canon.b2.h0798,khubbazi,mallow,plant,Malva sp.,pmc3941892.t1.r08,"Hamdard 1998, kha no. 6, PDF p. 196",Malva rotundifolia,uncertain,"Genus agrees; species differ (gold M. sylvestris / M. neglecta, Hamdard M. rotundifolia, a name also used for M. neglecta)."
+vinegar,canon.b2.h0802,khall,vinegar,preparation,vinegar (dilute acetic acid with other constituents),pmc3941892.t1.r09,"Hamdard 1998, kha no. 26, PDF p. 211",Acetum,matches_gold,Vinegar is not pure acetic acid; any modern link through acetic acid is a component-level bridge.
+galium,canon.b2.h0840,ghaliyun,lady's bedstraw,plant,Galium verum L.,pmc3941892.t2.r03,"Hamdard 1998, ghayn no. 5, PDF p. 351",Galium verum,matches_gold,

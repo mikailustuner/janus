@@ -1,14 +1,15 @@
 /*
- * Home scenes (steering design.md "Home scenes", experience DP46). Night Pharmacy: a pinned,
- * scroll-scrubbed stage (diorama → door transition video → medicine cabinet) with code-made
- * ghosts; Glass Janus: one full-bleed glass mask with a light sweep. Colours of the scenes are
- * fixed (the images are dark in every theme), so they live here and not in the face tokens.
+ * Home scenes (steering design.md "Home scenes", experience DP46, DP47, DP49). Night Pharmacy:
+ * one stage with three scenes switched by "Step inside" (diorama → door video played once in a
+ * fixed full-bleed layer → medicine cabinet), never by scroll; Glass Janus: one full-bleed glass
+ * head with a light sweep. Colours of the scenes are fixed (the images are dark in every theme),
+ * so they live here and not in the theme tokens.
  *
- * Two modes. Cinematic: `.np` is tall, `.np-sticky` is pinned and the scenes are stacked; the
- * motion script (`nightMotion.ts`) sets `--v` (video opacity), `--c` (cabinet opacity), `--g`
- * (hero ghosts) and the pointer `--mx`/`--my`. Still: under prefers-reduced-motion, or
- * `data-still` (Save-Data, slow connection, video error), the three stills follow one another
- * with a simple fade and the ghosts stand still.
+ * Smooth scrolling (DP49): nothing is pinned or sticky, nothing reacts to scroll; every running
+ * animation changes transform or opacity only, and `data-paused` (off-screen, hidden tab)
+ * pauses them. `nightMotion.ts` sets the pointer `--mx`/`--my` and the ghosts' `--lean`.
+ * Under prefers-reduced-motion or `data-still` (Save-Data, slow connection, video error) nothing
+ * moves and "Step inside" goes straight to the cabinet.
  */
 :root {
   --ghost-core: #f6f1e7;
@@ -16,6 +17,7 @@
   --ghost-eye: #141733;
   --ghost-glow: rgb(127 209 199 / 0.55);
   --ghost-glow-soft: rgb(127 209 199 / 0.28);
+  --ghost-glow-hero: rgb(127 209 199 / 0.4);
   --scene-risk: #ff8a80;
   --scene-night: #0b0e26;
   --scene-ink: #f6f1e7;
@@ -31,8 +33,12 @@
   overflow: visible;
   transform: rotate(var(--lean, 0deg));
   transition: transform 600ms ease-out;
+  /* Glowing mist: a soft teal outer glow. */
+  filter: drop-shadow(0 0 4px var(--ghost-glow))
+    drop-shadow(0 0 12px var(--ghost-glow-soft));
 }
-/* Ghost drift: 6 s, 3 px on the findings (Req 14.11); the home scenes float further. */
+/* Ghost drift: 6 s, 3 px on the findings (Req 14.11). The home floats the whole ghost instead
+   (below), so its inner parts stay still and the glow is painted once. */
 .ghost-animated .ghost-body {
   animation: ghost-float 6s ease-in-out infinite;
   transform-origin: 50% 50%;
@@ -63,6 +69,22 @@
   }
   50% {
     transform: skewX(-9deg) scaleY(1.06);
+  }
+}
+.ghost-animated .ghost-shimmer {
+  animation: ghost-shimmer 4.5s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+@keyframes ghost-shimmer {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: translate(18%, 30%) scale(1.15);
   }
 }
 @keyframes ghost-blink {
@@ -106,205 +128,7 @@
   object-fit: cover;
 }
 
-/* ---------- Night Pharmacy ---------- */
-.np {
-  --runway: 240svh;
-  position: relative;
-  overflow-x: clip;
-  background: var(--scene-night);
-  color: var(--scene-ink);
-}
-.np-sticky {
-  position: sticky;
-  top: 0;
-  height: 100svh;
-  overflow: hidden;
-}
-.np-runway {
-  height: var(--runway);
-}
-.np-sky {
-  position: absolute;
-  inset: -40px;
-  background:
-    radial-gradient(1px 1px at 12% 18%, var(--scene-ink) 50%, transparent 51%),
-    radial-gradient(1px 1px at 28% 8%, var(--scene-ink) 50%, transparent 51%),
-    radial-gradient(
-      1.5px 1.5px at 41% 22%,
-      var(--scene-ink) 50%,
-      transparent 51%
-    ),
-    radial-gradient(1px 1px at 8% 42%, var(--scene-muted) 50%, transparent 51%),
-    radial-gradient(
-      1px 1px at 33% 35%,
-      var(--scene-muted) 50%,
-      transparent 51%
-    ),
-    radial-gradient(
-      1.5px 1.5px at 19% 61%,
-      var(--scene-ink) 50%,
-      transparent 51%
-    ),
-    radial-gradient(1px 1px at 47% 12%, var(--scene-muted) 50%, transparent 51%);
-  opacity: 0.7;
-  transform: translate3d(
-    calc(var(--mx, 0) * -22px),
-    calc(var(--my, 0) * -14px),
-    0
-  );
-  pointer-events: none;
-}
-.np-box-night {
-  --fx: 0.72;
-  --depth: -10px;
-}
-.np-box-cabinet {
-  --fx: 0.72;
-  --depth: -10px;
-}
-.np-video {
-  opacity: var(--v, 0);
-}
-/* The diorama leaves once the video has taken over (it would show around the moved cabinet). */
-.np-hero {
-  opacity: calc(1 - var(--v, 0));
-}
-.np-cabinet {
-  opacity: var(--c, 0);
-}
-.np-mist {
-  position: absolute;
-  inset: auto -10% -8% -10%;
-  height: 38%;
-  background:
-    radial-gradient(
-      60% 70% at 30% 80%,
-      rgb(216 214 236 / 0.16),
-      transparent 70%
-    ),
-    radial-gradient(
-      50% 60% at 75% 90%,
-      rgb(216 214 236 / 0.12),
-      transparent 70%
-    );
-  filter: blur(8px);
-  transform: translate3d(calc(var(--mx, 0) * 18px), 0, 0);
-  pointer-events: none;
-  animation: np-mist 18s ease-in-out infinite alternate;
-}
-@keyframes np-mist {
-  to {
-    translate: 4% 0;
-  }
-}
-.np-fireflies {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-.np-ghosts {
-  position: absolute;
-  inset: 0;
-  opacity: var(--g, 1);
-  pointer-events: none;
-}
-.np-ghost {
-  position: absolute;
-  width: 3.4%;
-  translate: -50% -100%;
-  animation: np-rise 1.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-}
-.np-ghost,
-.np-finding {
-  --float: 8px;
-}
-.np-ghost > .ghost {
-  width: 100%;
-  height: auto;
-}
-.np-ghost:nth-child(2) {
-  animation-delay: 0.35s;
-}
-.np-ghost:nth-child(3) {
-  animation-delay: 0.7s;
-}
-.np-ghost:nth-child(4) {
-  animation-delay: 1.05s;
-}
-@keyframes np-rise {
-  from {
-    opacity: 0;
-    transform: translateY(30%) scale(0.55);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(-40%) scale(1);
-  }
-}
-.np-note-glow {
-  position: absolute;
-  left: 56.9%;
-  top: 49.6%;
-  width: 7%;
-  aspect-ratio: 1;
-  translate: -50% -50%;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgb(255 230 170 / 0.55), transparent 65%);
-  animation: np-glow 2.8s ease-in-out infinite;
-  pointer-events: none;
-}
-@keyframes np-glow {
-  50% {
-    opacity: 0.45;
-    scale: 1.15;
-  }
-}
-
-/* Copy over the first screen: real text over a scrim, left third on wide screens. */
-.np-copy {
-  opacity: var(--h, 1);
-}
-.np-copy,
-.gj-copy {
-  position: absolute;
-  inset: 0 0 auto 0;
-  min-height: 100svh;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 1rem 1rem 2.5rem;
-  /* Phones: the scrim holds behind the whole text block (title included), then fades. */
-  background: linear-gradient(
-    to top,
-    rgb(8 10 30 / 0.95) 0%,
-    rgb(8 10 30 / 0.88) 62%,
-    rgb(8 10 30 / 0) 92%
-  );
-  color: var(--scene-ink);
-}
-.np-copy-inner,
-.gj-copy-inner {
-  display: flex;
-  max-width: 34rem;
-  flex-direction: column;
-  gap: 1rem;
-}
-@media (min-width: 768px) {
-  .np-copy,
-  .gj-copy {
-    justify-content: center;
-    padding: 2rem 2rem 2rem max(2rem, calc((100% - 1120px) / 2 + 1rem));
-    background: linear-gradient(
-      to right,
-      rgb(8 10 30 / 0.92) 0%,
-      rgb(8 10 30 / 0.78) 32%,
-      rgb(8 10 30 / 0) 62%
-    );
-  }
-}
+/* ---------- Shared scene text and buttons ---------- */
 .scene-eyebrow {
   color: var(--scene-muted);
   font-size: 0.875rem;
@@ -351,39 +175,392 @@
   outline-offset: 3px;
 }
 
-.np-scene3 {
+/* ---------- Night Pharmacy ---------- */
+.np {
   position: relative;
-  z-index: 2;
-  min-height: 100svh;
-  margin-top: -100svh;
-  display: flex;
-  align-items: flex-end;
-  padding: 1rem 1rem 3rem;
-  background: linear-gradient(
-    to top,
-    rgb(8 10 30 / 0.94) 0%,
-    rgb(8 10 30 / 0.8) 55%,
-    transparent 85%
-  );
+  overflow-x: clip;
+  background: var(--scene-night);
+  color: var(--scene-ink);
 }
-@media (min-width: 768px) {
-  .np-scene3 {
-    align-items: center;
-    padding: 3rem 2rem 3rem max(2rem, calc((100% - 1120px) / 2 + 1rem));
-    background: linear-gradient(
-      to right,
-      rgb(8 10 30 / 0.92) 0%,
-      rgb(8 10 30 / 0.75) 36%,
-      transparent 60%
+.np-stage {
+  position: relative;
+  display: flex;
+  min-height: 100svh;
+}
+/* The scenes fill the first viewport; on phones the text may run on below it. */
+.np .scene {
+  inset: 0 0 auto 0;
+  height: 100svh;
+  transition: opacity 700ms ease;
+}
+.np-cabinet {
+  opacity: 0;
+  pointer-events: none;
+}
+.np[data-scene="room"] .np-cabinet {
+  opacity: 1;
+}
+.np[data-scene="room"] .np-hero {
+  opacity: 0;
+}
+.np-sky {
+  position: absolute;
+  inset: -40px;
+  background:
+    radial-gradient(1px 1px at 12% 18%, var(--scene-ink) 50%, transparent 51%),
+    radial-gradient(1px 1px at 28% 8%, var(--scene-ink) 50%, transparent 51%),
+    radial-gradient(
+      1.5px 1.5px at 41% 22%,
+      var(--scene-ink) 50%,
+      transparent 51%
+    ),
+    radial-gradient(1px 1px at 8% 42%, var(--scene-muted) 50%, transparent 51%),
+    radial-gradient(
+      1px 1px at 33% 35%,
+      var(--scene-muted) 50%,
+      transparent 51%
+    ),
+    radial-gradient(
+      1.5px 1.5px at 19% 61%,
+      var(--scene-ink) 50%,
+      transparent 51%
+    ),
+    radial-gradient(1px 1px at 47% 12%, var(--scene-muted) 50%, transparent 51%);
+  opacity: 0.7;
+  transform: translate3d(
+    calc(var(--mx, 0) * -22px),
+    calc(var(--my, 0) * -14px),
+    0
+  );
+  pointer-events: none;
+}
+.np-box-night,
+.np-box-cabinet {
+  --fx: 0.72;
+  --depth: -10px;
+}
+.np-mist {
+  position: absolute;
+  inset: auto -10% -8% -10%;
+  height: 38%;
+  background:
+    radial-gradient(
+      60% 70% at 30% 80%,
+      rgb(216 214 236 / 0.16),
+      transparent 70%
+    ),
+    radial-gradient(
+      50% 60% at 75% 90%,
+      rgb(216 214 236 / 0.12),
+      transparent 70%
     );
+  filter: blur(8px);
+  transform: translate3d(calc(var(--mx, 0) * 18px), 0, 0);
+  pointer-events: none;
+  animation: np-mist 18s ease-in-out infinite alternate;
+  will-change: translate;
+}
+@keyframes np-mist {
+  to {
+    translate: 4% 0;
   }
 }
+
+/* Fireflies: small glowing dots drifting up; transform and opacity only. */
+.np-fireflies {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.np-fly {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--scene-firefly);
+  box-shadow: 0 0 8px 2px rgb(255 210 122 / 0.5);
+  opacity: 0;
+  animation: np-fly 8s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+.np-fly:nth-child(3n + 1) {
+  width: 2px;
+  height: 2px;
+  box-shadow: 0 0 4px 1px rgb(255 210 122 / 0.4);
+}
+@keyframes np-fly {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+  }
+  20% {
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 0.35;
+    transform: translate3d(14px, -42px, 0);
+  }
+  80% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(-6px, -84px, 0);
+  }
+}
+
+/* Ghosts. The home floats the whole ghost (one composited layer, glow painted once). */
+.np-ghosts {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.np-ghost {
+  position: absolute;
+  width: 2.8%;
+  translate: -50% -100%;
+  animation: np-rise 1.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.np-ghost,
+.np-finding {
+  --float: 8px;
+}
+.np-ghost > .ghost {
+  width: 100%;
+  height: auto;
+}
+.np .ghost-animated .ghost-body,
+.np .ghost-animated .ghost-tail,
+.np .ghost-animated .ghost-eyes,
+.np .ghost-animated .ghost-shimmer {
+  animation: none;
+}
+.np .ghost-animated {
+  animation: np-float 6s ease-in-out infinite;
+  will-change: translate;
+}
+@keyframes np-float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 calc(-1 * var(--float, 3px));
+  }
+}
+.np-ghost:nth-child(2) {
+  animation-delay: 0.35s;
+}
+.np-ghost:nth-child(3) {
+  animation-delay: 0.7s;
+}
+.np-ghost:nth-child(4) {
+  animation-delay: 1.05s;
+}
+@keyframes np-rise {
+  from {
+    opacity: 0;
+    transform: translateY(30%) scale(0.55);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-40%) scale(1);
+  }
+}
+/* Desktop hero ghosts: a little larger and brighter than in the room, still subtle. */
+@media (min-width: 768px) {
+  .np-box-night .np-ghost {
+    width: 3.5%;
+  }
+  .np-box-night .ghost {
+    filter: drop-shadow(0 0 5px var(--ghost-glow))
+      drop-shadow(0 0 18px var(--ghost-glow-hero));
+  }
+}
+.np-note-glow {
+  position: absolute;
+  left: 56.9%;
+  top: 49.6%;
+  width: 7%;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(255 230 170 / 0.55), transparent 65%);
+  animation: np-glow 2.8s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes np-glow {
+  50% {
+    opacity: 0.45;
+    scale: 1.15;
+  }
+}
+
+/* The cabinet room: ghosts over the shelves (pointer shortcuts) and the glowing note. */
+.np-cabinet-ghosts .np-ghost {
+  min-width: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  animation: none;
+}
+.np[data-scene="room"] .np-cabinet-ghosts .np-ghost {
+  pointer-events: auto;
+  animation: np-rise 1.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.np[data-scene="room"] .np-cabinet-ghosts .np-ghost:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.np[data-scene="room"] .np-cabinet-ghosts .np-ghost:nth-child(3) {
+  animation-delay: 0.4s;
+}
+.np[data-scene="room"] .np-cabinet-ghosts .np-ghost:nth-child(4) {
+  animation-delay: 0.6s;
+}
+.np-ghost .ghost {
+  transition:
+    transform 300ms ease,
+    filter 300ms ease;
+}
+.np-ghost[data-hot] .ghost {
+  transform: scale(1.3);
+  filter: brightness(1.2) drop-shadow(0 0 6px var(--ghost-glow))
+    drop-shadow(0 0 22px var(--ghost-glow));
+}
+.np-note-hotspot {
+  position: absolute;
+  left: 56.9%;
+  top: 49.6%;
+  width: 7%;
+  min-width: 44px;
+  min-height: 44px;
+  aspect-ratio: 1.3;
+  translate: -50% -50%;
+  border: 0;
+  border-radius: 40%;
+  background: transparent;
+  cursor: pointer;
+}
+.np[data-scene="room"] .np-note-hotspot {
+  pointer-events: auto;
+}
+.np-note-hotspot:hover {
+  box-shadow: 0 0 36px 10px rgb(255 230 170 / 0.45);
+}
+
+/* Copy: real text over a scrim, the left column on wide screens. */
+.np-copy {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1rem 1rem 2.5rem;
+  background: linear-gradient(
+    to top,
+    rgb(8 10 30 / 0.95) 0%,
+    rgb(8 10 30 / 0.88) 62%,
+    rgb(8 10 30 / 0) 92%
+  );
+}
+.np-copy-inner,
+.gj-copy-inner,
 .np-scene3-inner {
   display: flex;
   max-width: 34rem;
   flex-direction: column;
   gap: 1rem;
 }
+@media (min-width: 768px) {
+  .np-copy {
+    justify-content: center;
+    padding: 6rem 2rem 2rem max(2rem, calc((100% - 1120px) / 2 + 1rem));
+    background: linear-gradient(
+      to right,
+      rgb(8 10 30 / 0.92) 0%,
+      rgb(8 10 30 / 0.78) 32%,
+      rgb(8 10 30 / 0) 62%
+    );
+  }
+  .np[data-scene="room"] .np-copy {
+    background: linear-gradient(
+      to right,
+      rgb(8 10 30 / 0.55) 0%,
+      transparent 42%
+    );
+  }
+}
+.np[data-scene="room"] .np-copy {
+  pointer-events: none;
+}
+.np-scene3-inner {
+  pointer-events: auto;
+}
+
+/* "Step inside": a clear play button and, under it, a small scroll-down cue (same action). */
+.np-enter {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: flex-start;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+}
+.np-enter-btn {
+  min-height: 3.25rem;
+  padding-inline: 0.5rem 1.5rem;
+  font-size: 1.0625rem;
+  background: rgb(127 209 199 / 0.14);
+  box-shadow: 0 0 24px rgb(127 209 199 / 0.25);
+}
+.np-enter-btn:hover {
+  background: rgb(127 209 199 / 0.24);
+}
+.np-enter-play {
+  display: inline-flex;
+  width: 2.25rem;
+  height: 2.25rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--scene-accent);
+  color: var(--scene-on-accent);
+}
+.np-enter-play svg {
+  fill: currentColor;
+  translate: 1px 0;
+}
+.np-cue {
+  display: inline-flex;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: none;
+  color: var(--scene-muted);
+  cursor: pointer;
+}
+.np-cue svg {
+  rotate: 90deg;
+  animation: np-cue 1.8s ease-in-out infinite;
+}
+@keyframes np-cue {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translate3d(6px, 0, 0);
+    opacity: 1;
+  }
+}
+
+/* Scene 3 findings: they arrive from the shelves, one after another. */
 .np-finding {
   display: flex;
   width: 100%;
@@ -397,125 +574,85 @@
   color: var(--scene-ink);
   text-align: start;
   font-weight: 700;
+  transition: background-color 200ms ease;
+  animation: np-finding-in 900ms cubic-bezier(0.2, 0.7, 0.2, 1) 400ms both;
+}
+li:nth-child(2) > .np-finding {
+  animation-delay: 520ms;
+}
+li:nth-child(3) > .np-finding {
+  animation-delay: 640ms;
+}
+li:nth-child(4) > .np-finding {
+  animation-delay: 760ms;
+}
+@keyframes np-finding-in {
+  from {
+    opacity: 0;
+    transform: translate3d(24vw, -12px, 0) scale(0.92);
+  }
+}
+.np-finding:hover,
+.np-finding[data-hot] {
+  background: rgb(30 42 80 / 0.9);
+}
+.np-finding[data-hot] {
+  border-color: var(--scene-accent);
+}
+
+/* The door transition: fixed, full-bleed, under the header and the emergency bar. */
+.np-door {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  background: var(--scene-night);
   opacity: 0;
-  transform: translate3d(40vw, -12px, 0) scale(0.9);
+  visibility: hidden;
   transition:
     opacity 700ms ease,
-    transform 1100ms cubic-bezier(0.2, 0.7, 0.2, 1),
-    background-color 200ms ease;
+    visibility 0s linear 700ms;
 }
-.np-finding:hover {
-  background: rgb(30 42 80 / 0.85);
-}
-.np-scene3[data-in] .np-finding {
+.np[data-scene="door"] .np-door {
   opacity: 1;
-  transform: none;
-  transition-delay: 500ms;
+  visibility: visible;
+  transition: opacity 400ms ease;
 }
-.np-scene3[data-in] li:nth-child(2) .np-finding {
-  transition-delay: 620ms;
+.np-door video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 62% 50%;
 }
-.np-scene3[data-in] li:nth-child(3) .np-finding {
-  transition-delay: 740ms;
+.np-skip {
+  position: absolute;
+  right: 1rem;
+  bottom: calc(5rem + env(safe-area-inset-bottom));
 }
-.np-scene3[data-in] li:nth-child(4) .np-finding {
-  transition-delay: 860ms;
-}
-/* Focus brings a finding into view even before the entry (keyboard order hero → findings). */
-.np-finding:focus-visible {
-  opacity: 1;
-  transform: none;
-}
-
-/* Phones: two ghosts in the hero, the 640 video (chosen in script). */
-@media (max-width: 767px) {
-  .np {
-    --runway: 220svh;
-  }
-  .np-ghost:nth-child(n + 3) {
-    display: none;
-  }
-  .np-ghost {
-    width: 6%;
+@media (min-width: 768px) {
+  .np-skip {
+    right: 2rem;
+    bottom: 2rem;
   }
 }
 
-/* Still mode: the three stills one after another, a simple fade, no motion. */
-.np-still-img {
-  display: none;
+/* Off-screen, a hidden tab, a scene that is not shown, or the video on top: nothing animates. */
+.np[data-paused] *,
+.gj[data-paused] *,
+.gj[data-paused] *::before,
+.np[data-scene="room"] .np-hero *,
+.np[data-scene="door"] .np-stage * {
+  animation-play-state: paused !important;
 }
-@media (prefers-reduced-motion: reduce) {
-  .np .np-sticky,
-  .np[data-still] .np-sticky {
-    position: relative;
-    height: auto;
-    overflow: visible;
-  }
-}
-.np[data-still] .np-sticky {
-  position: relative;
-  height: auto;
-  overflow: visible;
-}
-@media (prefers-reduced-motion: reduce) {
-  .np .scene {
-    position: relative;
-    height: 100svh;
-  }
-  .np .np-runway,
-  .np .np-fireflies,
-  .np video {
-    display: none;
-  }
-  .np .np-still-img {
-    display: block;
-  }
-  .np .np-video,
-  .np .np-cabinet,
-  .np .np-ghosts {
-    opacity: 1;
-  }
-  .np .np-ghost,
-  .np .np-finding,
-  .np .np-mist,
-  .np .np-note-glow,
-  .ghost-animated .ghost-body,
-  .ghost-animated .ghost-tail,
-  .ghost-animated .ghost-eyes {
-    animation: none;
-    transition: opacity 400ms ease;
-    transform: none;
-  }
-  .np .np-ghost {
-    opacity: 1;
-  }
-  .np .np-finding {
-    opacity: 1;
-  }
-  .scene-box {
-    transform: translate3d(0, -50%, 0);
-  }
+
+/* Save-Data, slow connection or video error: no motion at all, as under reduced motion. */
+.np[data-still] *,
+.gj[data-still] *,
+.gj[data-still] *::before {
+  animation: none !important;
 }
 .np[data-still] .scene {
-  position: relative;
-  height: 100svh;
-}
-.np[data-still] .np-runway,
-.np[data-still] .np-fireflies,
-.np[data-still] video {
-  display: none;
-}
-.np[data-still] .np-still-img {
-  display: block;
-}
-.np[data-still] .np-video,
-.np[data-still] .np-cabinet,
-.np[data-still] .np-ghosts {
-  opacity: 1;
-}
-.np[data-still] .np-finding {
-  opacity: 1;
-  transform: none;
+  transition: opacity 400ms ease;
 }
 
 /* ---------- Glass Janus ---------- */
@@ -543,29 +680,38 @@
     left: calc(68cqw - 0.5 * var(--bw));
   }
 }
+/* The light sweep: a band that moves by transform only (compositor), masked to the head. */
 .gj-sweep {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    105deg,
-    transparent 35%,
-    rgb(255 255 255 / 0.22) 48%,
-    rgb(190 230 255 / 0.12) 52%,
-    transparent 65%
-  );
-  background-size: 260% 100%;
+  overflow: hidden;
   mix-blend-mode: screen;
   mask-image: radial-gradient(28% 46% at 50% 47%, black 60%, transparent 100%);
-  animation: gj-sweep 9s ease-in-out infinite;
   pointer-events: none;
+}
+.gj-sweep::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 40%;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgb(255 255 255 / 0.22) 42%,
+    rgb(190 230 255 / 0.12) 58%,
+    transparent 100%
+  );
+  transform: translate3d(-100%, 0, 0);
+  animation: gj-sweep 9s ease-in-out infinite;
+  will-change: transform;
 }
 @keyframes gj-sweep {
   0% {
-    background-position: 120% 0;
+    transform: translate3d(-100%, 0, 0);
   }
   60%,
   100% {
-    background-position: -40% 0;
+    transform: translate3d(250%, 0, 0);
   }
 }
 .gj-capsule {
@@ -586,12 +732,40 @@
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .gj-sweep,
+  .gj-sweep::before,
   .gj-capsule {
     animation: none;
   }
   .gj-box {
     transform: translate3d(0, -50%, 0);
+  }
+}
+.gj-copy {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  min-height: 100svh;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1rem 1rem 2.5rem;
+  background: linear-gradient(
+    to top,
+    rgb(8 10 30 / 0.95) 0%,
+    rgb(8 10 30 / 0.88) 62%,
+    rgb(8 10 30 / 0) 92%
+  );
+  color: var(--scene-ink);
+}
+@media (min-width: 768px) {
+  .gj-copy {
+    justify-content: center;
+    padding: 2rem 2rem 2rem max(2rem, calc((100% - 1120px) / 2 + 1rem));
+    background: linear-gradient(
+      to right,
+      rgb(8 10 30 / 0.92) 0%,
+      rgb(8 10 30 / 0.78) 32%,
+      rgb(8 10 30 / 0) 62%
+    );
   }
 }
 
@@ -601,58 +775,82 @@
 :root:not([data-theme-style="glass"]) .gj {
   display: none;
 }
-.gj .gj-copy {
-  position: relative;
-}
-.np-box-cabinet .np-ghosts {
-  opacity: 1;
-  pointer-events: none;
-}
 
-/* Save-Data, slow connection or video error: no motion at all, as under reduced motion. */
-.np[data-still] .np-ghost,
-.np[data-still] .np-mist,
-.np[data-still] .np-note-glow,
-.np[data-still] .ghost-animated .ghost-body,
-.np[data-still] .ghost-animated .ghost-tail,
-.np[data-still] .ghost-animated .ghost-eyes,
-.gj[data-still] .gj-sweep,
-.gj[data-still] .gj-capsule {
-  animation: none;
+/* Desktop framing: the whole house (and the cabinet room) with its base, right of the text. */
+.np-box-night,
+.np-box-cabinet {
+  mask-image:
+    linear-gradient(
+      to bottom,
+      transparent 0,
+      black 7%,
+      black 92%,
+      transparent 100%
+    ),
+    linear-gradient(
+      to right,
+      transparent 0,
+      black 6%,
+      black 94%,
+      transparent 100%
+    );
+  mask-composite: intersect;
 }
-.np[data-still] .np-ghost {
-  opacity: 1;
-  transform: none;
-}
-.np[data-still] .np-finding {
-  transition: opacity 400ms ease;
-}
-
-/* ---------- Review round 2026-11-08 (owner): one scene from the first pixel ---------- */
-
-/* Ghost as glowing mist: soft teal outer glow, slow inner shimmer. */
-.ghost {
-  filter: drop-shadow(0 0 4px var(--ghost-glow))
-    drop-shadow(0 0 12px var(--ghost-glow-soft));
-}
-.ghost-animated .ghost-shimmer {
-  animation: ghost-shimmer 4.5s ease-in-out infinite;
-  transform-box: fill-box;
-  transform-origin: 50% 50%;
-}
-@keyframes ghost-shimmer {
-  0%,
-  100% {
-    opacity: 0.25;
-    transform: translate(0, 0) scale(1);
+@media (min-width: 1024px) {
+  .np-box-night,
+  .np-box-cabinet {
+    --bw: min(calc(84cqh * 1.7917), 150cqw);
+    top: 55%;
+    left: calc(70cqw - 0.72 * var(--bw));
   }
-  50% {
-    opacity: 0.6;
-    transform: translate(18%, 30%) scale(1.15);
+  .np-copy-inner,
+  .gj-copy-inner,
+  .np-scene3-inner {
+    max-width: min(34rem, 40vw);
   }
 }
-.np-ghost {
-  width: 2.8%;
+
+/* Phones: the whole house (or room) in the upper part, the text below on a scrim. */
+@media (max-width: 767px) {
+  .np-box-night,
+  .np-box-cabinet {
+    --bw: calc(100cqw * 2.1);
+    left: calc(50cqw - 0.725 * var(--bw));
+    top: calc(15cqh + var(--bw) * 0.279);
+  }
+  .gj-box {
+    --bw: calc(100cqw * 2.2);
+    left: calc(50cqw - 0.5 * var(--bw));
+    top: calc(14cqh + var(--bw) * 0.279);
+  }
+  .np-copy,
+  .gj-copy {
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding-top: calc(15svh + 117vw - 2.5rem);
+    background: linear-gradient(
+      to bottom,
+      rgb(8 10 30 / 0) 0,
+      rgb(8 10 30 / 0) calc(15svh + 117vw - 9rem),
+      rgb(8 10 30 / 0.9) calc(15svh + 117vw - 2.5rem),
+      rgb(8 10 30 / 0.96) 100%
+    );
+  }
+  .gj-copy {
+    padding-top: calc(14svh + 123vw - 2.5rem);
+  }
+  .np-ghost {
+    width: 5%;
+  }
+  .np-ghost:nth-child(n + 3) {
+    display: none;
+  }
+  .np-cabinet-ghosts .np-ghost:nth-child(n + 3) {
+    display: block;
+  }
+  .np-fly:nth-child(n + 9) {
+    display: none;
+  }
 }
 
 /* Home header over the hero; glass once scrolled. Scene colours inside it in both themes. */
@@ -725,177 +923,9 @@
 .emergency-slim p {
   padding: 0 1rem 0.75rem 2.6rem;
 }
-
-/* Desktop framing: the whole house (and the cabinet room) with its base, right of the text. */
-.np-box-night,
-.np-box-cabinet {
-  mask-image:
-    linear-gradient(
-      to bottom,
-      transparent 0,
-      black 7%,
-      black 92%,
-      transparent 100%
-    ),
-    linear-gradient(
-      to right,
-      transparent 0,
-      black 6%,
-      black 94%,
-      transparent 100%
-    );
-  mask-composite: intersect;
-}
-@media (min-width: 1024px) {
-  .np-box-night,
-  .np-box-cabinet {
-    --bw: min(calc(84cqh * 1.7917), 150cqw);
-    top: 55%;
-    left: calc(70cqw - 0.72 * var(--bw));
-  }
-  .np-copy-inner,
-  .gj-copy-inner,
-  .np-scene3-inner {
-    max-width: min(34rem, 40vw);
-  }
-}
-
-/* Phones: the whole house (or room) in the upper part, the text below on a scrim. */
-@media (max-width: 767px) {
-  .np-box-night,
-  .np-box-cabinet {
-    --bw: calc(100cqw * 2.1);
-    left: calc(50cqw - 0.725 * var(--bw));
-    top: calc(15cqh + var(--bw) * 0.279);
-  }
-  .gj-box {
-    --bw: calc(100cqw * 2.2);
-    left: calc(50cqw - 0.5 * var(--bw));
-    top: calc(14cqh + var(--bw) * 0.279);
-  }
-  .np-copy,
-  .gj-copy,
-  .np-scene3 {
-    justify-content: flex-start;
-    align-items: flex-start;
-    padding-top: calc(15svh + 117vw - 2.5rem);
-    background: linear-gradient(
-      to bottom,
-      rgb(8 10 30 / 0) 0%,
-      rgb(8 10 30 / 0) 48%,
-      rgb(8 10 30 / 0.9) 60%,
-      rgb(8 10 30 / 0.96) 100%
-    );
-  }
-  .gj-copy {
-    padding-top: calc(14svh + 123vw - 2.5rem);
-  }
-  .np-ghost {
-    width: 5%;
-  }
-}
-
-/* Scene 3: text and findings in the left column only; the ghosts hover over the shelves and the
-   glowing note on the table is the "Prepare the doctor note" hotspot. */
-.np-scene3 {
-  pointer-events: none;
-}
-@media (min-width: 768px) {
-  .np-scene3 {
-    background: linear-gradient(
-      to right,
-      rgb(8 10 30 / 0.55) 0%,
-      transparent 42%
-    );
-  }
-}
-.np-scene3-inner {
-  pointer-events: auto;
-}
-.np-cabinet {
-  pointer-events: none;
-}
-.np-cabinet-ghosts .np-ghost {
-  opacity: 0;
-  animation: none;
-  padding: 0;
-  border: 0;
-  background: none;
-  cursor: pointer;
-}
-.np[data-in] .np-cabinet-ghosts .np-ghost {
-  pointer-events: auto;
-  animation: np-rise 1.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-}
-.np[data-in] .np-cabinet-ghosts .np-ghost:nth-child(2) {
-  animation-delay: 0.2s;
-}
-.np[data-in] .np-cabinet-ghosts .np-ghost:nth-child(3) {
-  animation-delay: 0.4s;
-}
-.np[data-in] .np-cabinet-ghosts .np-ghost:nth-child(4) {
-  animation-delay: 0.6s;
-}
-.np-ghost .ghost {
-  transition:
-    transform 300ms ease,
-    filter 300ms ease;
-}
-.np-ghost[data-hot] .ghost {
-  transform: scale(1.3);
-  filter: brightness(1.2) drop-shadow(0 0 6px var(--ghost-glow))
-    drop-shadow(0 0 22px var(--ghost-glow));
-}
-.np-finding[data-hot] {
-  background: rgb(30 42 80 / 0.9);
-  border-color: var(--scene-accent);
-}
-.np-note-hotspot {
-  position: absolute;
-  left: 56.9%;
-  top: 49.6%;
-  width: 7%;
-  aspect-ratio: 1.3;
-  translate: -50% -50%;
-  border: 0;
-  border-radius: 40%;
-  background: transparent;
-  cursor: pointer;
-}
-.np[data-in] .np-note-hotspot {
-  pointer-events: auto;
-}
-.np-note-hotspot:hover {
-  box-shadow: 0 0 36px 10px rgb(255 230 170 / 0.45);
-}
-@media (prefers-reduced-motion: reduce) {
-  .np .np-cabinet-ghosts .np-ghost {
-    opacity: 1;
-    pointer-events: auto;
-  }
-  .np .np-note-hotspot {
-    pointer-events: auto;
-  }
-}
-.np[data-still] .np-cabinet-ghosts .np-ghost,
-.np[data-still] .np-note-hotspot {
-  opacity: 1;
-  pointer-events: auto;
-}
-.np[data-still] .ghost-animated .ghost-shimmer {
-  animation: none;
-}
 .emergency-chevron {
   transition: transform 200ms ease;
 }
 .emergency-slim details[open] .emergency-chevron {
   transform: rotate(180deg);
-}
-/* Pointer shortcuts keep a 44 px target. */
-.np-cabinet-ghosts .np-ghost {
-  min-width: 44px;
-}
-.np-note-hotspot {
-  min-width: 44px;
-  min-height: 44px;
 }

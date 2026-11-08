@@ -19,14 +19,13 @@ import {
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { localeNames, routing } from "@/i18n/routing";
 import { deleteEverything, updateSettings, useSettings } from "@/store/hooks";
-import { useT, useThemeWord } from "@/theme/words";
+import { useT } from "@/theme/words";
 
 const USER: UserRegion[] = ["TR", "EU", "US", "OTHER", "UNKNOWN"];
 
 /** Settings (Req 9.1): languages, regions, Appearance, read aloud, delete everything. */
 export function Settings() {
   const t = useT();
-  const w = useThemeWord();
   const locale = useLocale() as Locale;
   const router = useRouter();
   const pathname = usePathname();
@@ -160,7 +159,7 @@ export function Settings() {
               variant="secondary"
               className="self-start"
             >
-              {w("Shell.nav.research")}
+              {t("Shell.nav.research")}
             </ButtonLink>
           </Card>
 

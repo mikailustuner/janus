@@ -1,0 +1,44 @@
+span_id,verdict,conditions,machine_translation_en,note
+canon.b2.h0029.l10003.fc2067,accept,,,
+canon.b2.h0029.l10007.dec2ab,accept,,,
+canon.b2.h0029.l10011.30a407,accept,,,
+canon.b2.h0030.l10037.2e80d6,accept,,,
+canon.b2.h0033.l10118.d89ad7,accept,,,
+canon.b2.h0065.l10551.21ef30,accept,,,"Lead compound (and red lead): historical record only, never usable today."
+canon.b2.h0200.l12000.49572d,accept,,,
+canon.b2.h0210.l12097.d6e147,accept,,,
+canon.b2.h0219.l12231.59572a,accept,,,
+canon.b2.h0233.l12355.e4630d,accept,,,
+canon.b2.h0254.l12615.02ea95,correct,,"It removes tetters and grows flesh [the text has 'blood' (al-dam), probably a copying error for 'flesh' (al-lahm)] in deep ulcers, especially with powdered frankincense. [Next section, joints:] it helps swellings of the muscles.","Arabic reads 'yunbitu al-dam' (grows blood), probably a copying error for al-lahm (flesh); the translation silently emended it. Flag the emendation."
+canon.b2.h0256.l12659.cdca39,correct,,"It stops creeping ulcers, closes them with a cerate and cleans foul ulcers; with Nabataean gum and natron the text calls it a remedy ('ilaj) for ulcerated scabies, baras and bahaq (white and dark skin patches).","'is a remedy for' ('ilaj) attributed to the text so it cannot read as a present-day claim. Verdigris is a caustic, toxic copper salt: historical record only, never usable today."
+canon.b2.h0271.l12911.31bd26,accept,,,
+canon.b2.h0284.l13189.4e7215,accept,,,
+canon.b2.h0289.l13227.44d2e6,accept,,,"The span itself writes isfidaj al-rasas (white lead), supporting the lead reading of isfidaj; toxic ingredient."
+canon.b2.h0367.l13957.b95d58,accept,,,
+canon.b2.h0367.l13961.bc6391,accept,,,
+canon.b2.h0418.l14620.7dc4f2,accept,,,
+canon.b2.h0418.l14621.82b671,correct,,"Good for malignant ulcers, 'Persian fire', chronic ulcers and deep wounds, and it is among the foremost (with a group of other drugs) in these chapters; with Cimolian earth and white lead it helps when put on erysipelas.","'wa huwa mutaqaddim ma'a jumla fi hadhihi al-abwab' says it is foremost together with a group of drugs, not that it ranks first; the superlative overstates efficacy."
+canon.b2.h0425.l14707.4fe6c7,accept,,,"Corrupt fragment; note it names 'habl al-masakin' (written jabal al-miskin), a climbing plant, which supports doubt over the lablab identification."
+canon.b2.h0425.l14709.7b4c96,accept,,,
+canon.b2.h0440.l15102.03dea9,accept,,,"Lead(II) oxide: historical record only, never usable today."
+canon.b2.h0468.l15389.5f278e,accept,,,
+canon.b2.h0468.l15400.7d4bb1,accept,,,
+canon.b2.h0479.l15490.5e3c4d,accept,,,Narcissus bulb is poisonous if eaten and its sap irritates skin: historical record only.
+canon.b2.h0519.l15904.33dad5,correct,wound|burn|ulcer,,'wa yudmilu' (it closes/scars over wounds) is in the span and in the translation; add wound.
+canon.b2.h0519.l15907.ef489b,accept,,,
+canon.b2.h0532.l16097.76989b,accept,,,
+canon.b2.h0554.l16405.e9c915,accept,,,
+canon.b2.h0573.l16661.5a4a0b,accept,,,
+canon.b2.h0574.l16691.4d9c8c,accept,,,
+canon.b2.h0574.l16695.916815,accept,,,
+canon.b2.h0628.l17254.d25111,accept,,,
+canon.b2.h0629.l17274.7032c7,accept,,,
+canon.b2.h0629.l17277.0c3c42,correct,ulcer,,"Ulcers slow to close are chronic, not infection-like; fistulas (nawasir) are not in the defined infection list. Mucosal orifice sites kept as ulcer, not internal."
+canon.b2.h0702.l17962.31996c,accept,,,
+canon.b2.h0702.l17962.56b3c6,accept,,,
+canon.b2.h0753.l18505.637038,correct,,"Its washed form helps ulcers, even what the text calls 'cancerous ulcers' (al-quruh al-saratiniyya, a medieval category, not modern cancer).",Mark 'cancerous ulcers' (al-quruh al-saratiniyya) as a medieval term so it cannot read as a present-day cancer claim; tutty may carry heavy-metal impurities.
+canon.b2.h0798.l19214.518bfc,accept,,,
+canon.b2.h0802.l19263.d706fc,accept,,,
+canon.b2.h0802.l19266.68dce9,accept,,,
+canon.b2.h0802.l19279.77957c,accept,,,
+canon.b2.h0840.l19583.c32170,accept,,,

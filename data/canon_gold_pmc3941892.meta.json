@@ -1,0 +1,14 @@
+{
+  "source_id": "pmc3941892",
+  "file": "data/canon_gold_pmc3941892.csv",
+  "source_url": "https://pmc.ncbi.nlm.nih.gov/api/oai/v1/mh/?verb=GetRecord&identifier=oai:pubmedcentral.nih.gov:3941892&metadataPrefix=pmc",
+  "doi": "10.17795/jjnpp-11686",
+  "pmcid": "PMC3941892",
+  "license": "CC BY 3.0",
+  "attribution": "Aliasl J, Khoshzaban F. Traditional Herbal Remedies for Burn Wound Healing in Canon of Avicenna. Jundishapur J Nat Pharm Prod 2013;8(4):192-196. doi:10.17795/jjnpp-11686. PMC3941892, Tables 1 and 2 (name columns only), CC BY 3.0.",
+  "snapshot_date": "2013-11-02",
+  "retrieved_date": "2026-11-08",
+  "content_sha256": "42ed15c07ebb989e175ba81526f12ab7792c567053a3e5bc9cedf1a128d2bb1b",
+  "run_id": "20261108T212407Z-e76764af-cf5f",
+  "note": "Name columns only; cell text as published, whitespace collapsed."
+}

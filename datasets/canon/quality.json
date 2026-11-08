@@ -1,0 +1,48 @@
+{
+  "claims": 76,
+  "claims_by_condition": {
+    "burn": 20,
+    "infection": 21,
+    "ulcer": 23,
+    "wound": 12
+  },
+  "condition_corrections": 3,
+  "expert_reviewed": 0,
+  "historian": {
+    "accept": 27,
+    "correct": 11,
+    "reject": 5
+  },
+  "identifications": {
+    "corrected_by_pharmacologist": 7,
+    "hazard_flags": 4,
+    "status_before_review": {
+      "matches_gold": 17,
+      "not_in_gold": 10,
+      "uncertain": 4
+    },
+    "substances": 31
+  },
+  "passes_agree_on_reject": 38,
+  "passes_same_verdict": 27,
+  "pharmacologist": {
+    "accept": 37,
+    "correct": 6
+  },
+  "reader_out_of_scope": 5,
+  "rule_vs_reader": {
+    "theme": {
+      "no": 4,
+      "partial": 5,
+      "yes": 34
+    },
+    "use": {
+      "no": 3,
+      "partial": 19,
+      "yes": 21
+    }
+  },
+  "sample_spans": 43,
+  "spans_passing_both": 38,
+  "translation_corrections": 12
+}

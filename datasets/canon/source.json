@@ -1,0 +1,20 @@
+{
+  "source_id": "openiti_canon",
+  "title": "Ibn Sina, al-Qanun fi al-Tibb, Book 2 (al-Adwiya al-mufrada)",
+  "version_uri": "0428IbnSina.QanunFiTibb.Shamela0010706-ara1",
+  "repository": "https://github.com/OpenITI/0450AH",
+  "commit": "81d1d9e0f0af42a822f0136fe4f49776471ef702",
+  "commit_date": "2025-11-27",
+  "file": "data/0428IbnSina/0428IbnSina.QanunFiTibb/0428IbnSina.QanunFiTibb.Shamela0010706-ara1.completed",
+  "source_url": "https://raw.githubusercontent.com/OpenITI/0450AH/81d1d9e0f0af42a822f0136fe4f49776471ef702/data/0428IbnSina/0428IbnSina.QanunFiTibb/0428IbnSina.QanunFiTibb.Shamela0010706-ara1.completed",
+  "git_blob_sha1": "de2e584560c19a18c0dca75edb435c673c69fcb9",
+  "source_sha256": "a843a44f24b786911edb6b4993fdec4b8fb6d68403ea84f047d69a7e2f1df15b",
+  "release_doi": "10.5281/zenodo.17767721",
+  "license": "CC BY-NC-SA 4.0",
+  "openiti_issues": "MANY_TYPOS, PAGINATION, MISSING_PARTS, PRIMARY_VERSION, CLEANED_VERSION",
+  "run_id": "20261108T211127Z-a843a44f-98c3",
+  "content_sha256": "2074bdcc3ece4b8c379bb65400b2b524c5801a90555107c64f4ad3fec549b8e3",
+  "code_version": "dda23ba0ea9abebe7327941e1f12aa3125f24a2f-dirty",
+  "headings": 844,
+  "theme_spans": 534
+}

@@ -20,10 +20,11 @@ language, and keeps the person's list in the browser.
 
 ## Glossary
 - **Client:** the Next.js web app in `apps/web` (installable PWA).
-- **Shadow face / light face:** the two faces of the default theme (Two Faces): patient side / researcher side, doctor
-  note PDF and doctor QR page (`design.md` steering).
-- **Theme vocabulary:** the words of the theme devices (ghost, mask, zombie stamp, séance table) in Two Faces and their
-  plain equivalents in Glass ("possible prescribing cascade", "Patient / Research", "Retracted", "evidence summary").
+- **Paper:** the ivory surface of the doctor note preview and of the doctor page form card; the doctor note PDF is
+  printed on white paper. *(Owner decision 2026-11-08, third: the shadow / light faces are gone; every screen of a
+  theme uses that theme's tokens, DP48.)*
+- **Theme vocabulary:** the words of the theme devices (ghost, zombie stamp, séance table) in Two Faces and their
+  plain equivalents in Glass ("possible prescribing cascade", "Retracted", "evidence summary").
 - **List:** the person's medicine list, stored in the browser. **Item:** one confirmed medicine of the list (a product
   candidate or an ingredient found by name) with its start month or "don't know" and the name as on the box.
 - **Source key:** what the client keeps per item to resolve it again: the filtered scan content, the NDC, or the search
@@ -73,7 +74,7 @@ language, and keeps the person's list in the browser.
 1. THE interface SHALL meet WCAG 2.2 AA: keyboard navigation, visible focus, alt text, contrast, reduced-motion support for all ghost animations.
    - *(Refined.)* Contrast SHALL be at least 4.5:1 for text and 3:1 for UI boundaries and focus for every token pair used as text on a surface, in both themes and both colour schemes (`design.md` steering); a test SHALL compute it from the token file.
    - *(Refined.)* Touch targets SHALL be at least 44 × 44 px; THE focus ring SHALL be 3 px `--accent` with 2 px offset; keyboard order SHALL follow reading order.
-   - *(Refined.)* WHEN `prefers-reduced-motion: reduce` is set THE client SHALL stop every non-essential motion (ghost drift) and the mask transition SHALL be instant.
+   - *(Refined; changed 2026-11-08, third, DP48.)* WHEN `prefers-reduced-motion: reduce` is set THE client SHALL stop every non-essential motion (ghost drift).
    - *(Refined.)* An automated check (axe, WCAG 2.2 A and AA rules) SHALL report no violation on every route, in every locale, in both themes.
 2. A large-text mode and text-to-speech reading of findings SHALL be available for older users.
    - *(Refined.)* THE large-text mode SHALL set the base size to 19 px and line height 1.6 (default 16 px), with no loss of content or horizontal scroll at 375 px.
@@ -110,11 +111,11 @@ language, and keeps the person's list in the browser.
 
 ### Requirement 6: Theme with function
 #### Acceptance criteria
-1. Ghosts SHALL represent cascades, the two-faced mask SHALL switch shadow/light views, the zombie stamp SHALL mark retracted evidence, and the séance table SHALL hold the three witnesses; decorative-only spooky elements SHALL NOT be added.
+1. Ghosts SHALL represent cascades, the zombie stamp SHALL mark retracted evidence, and the séance table SHALL hold the three witnesses; decorative-only spooky elements SHALL NOT be added. *(Changed 2026-11-08, third, DP48: the two-faced mask is the Janus mark only; there is no shadow/light switch.)*
 2. The patient-facing tone SHALL be mysterious and reassuring, never frightening; red is used only for real risk.
    - *(Refined.)* `--risk` SHALL be used only for the emergency notice, urgent-care lines and retracted evidence; never for a finding, a ratio or an assessment class.
 3. *(Added in refinement; owner decision.)* THE default theme SHALL be Two Faces; THE user SHALL be able to choose Glass in Settings › Appearance. Both themes SHALL use one component set, the same content, the same safety rules and the same layout; only the theme vocabulary and the tokens differ. THE tokens SHALL be exactly those of `.kiro/steering/design.md`.
-4. *(Added in refinement.)* IN Two Faces THE patient side (scan, list, timeline, findings, evidence, Collective Memory, note preview, donation, settings, privacy) SHALL use the shadow face, and the researcher area, the doctor note PDF and the doctor QR page SHALL use the light face; THE mask switch in the header SHALL move between the patient side and the researcher area with one 400 ms colour transition.
+4. *(Added in refinement; changed by owner decision 2026-11-08, third, DP48.)* THERE SHALL be no light mode and no light face: every screen of Night Pharmacy, the researcher area included, SHALL use the Night Pharmacy tokens, and there SHALL be no mask switch. THE doctor note preview SHALL show the note on paper and THE doctor note PDF SHALL be printed on white paper; THE doctor QR page SHALL show its form on a paper card on the Night Pharmacy page. Glass Janus SHALL keep following the system light / dark preference.
 5. *(Added in refinement.)* IN Glass THE client SHALL use the plain vocabulary of the Glossary and SHALL show no theme-device word (ghost, mask, zombie, séance or their translations) on any screen.
 6. *(Added in refinement.)* Fonts SHALL be Fraunces (display), Atkinson Hyperlegible (all running text, labels, controls) and IBM Plex Mono (ATC codes, DOIs, ratios, ranges, with tabular numerals) in Two Faces; system UI, then Figtree, and IBM Plex Mono in Glass. Fonts SHALL be served from the Janus origin (no third-party font request).
 7. *(Added in refinement.)* THE theme, large text, reduce transparency and read-aloud settings SHALL be applied before first paint (no flash of the wrong theme).
@@ -144,7 +145,7 @@ language, and keeps the person's list in the browser.
 
 #### Acceptance criteria
 1. EVERY screen SHALL carry the disclaimer of `medical-safety.md` rule 9 in the interface language, and THE emergency notice SHALL be reachable from every patient screen in one step.
-2. THE main navigation SHALL offer Scan, Medicines, Results and Settings on the patient side, plus an entry to the researcher area (Two Faces: the mask switch and a navigation entry; Glass: a "Research" entry in Settings and the navigation menu); the researcher area SHALL NOT be a step of the patient flow.
+2. THE main navigation SHALL offer Scan, Medicines, Results and Settings on the patient side, plus an entry to the researcher area ("Research" in the header navigation, the footer and Settings, in both themes; DP48); the researcher area SHALL NOT be a step of the patient flow.
 3. THE header SHALL hold the language switcher (language names in their own language), and, WHILE demo mode is on, the demo label and an "exit demo" control.
 4. Unknown paths SHALL show the localized not-found page with links back to the home screen.
 5. THE shell SHALL host the Passport screens and components of the `medication-passport` spec in the slots of design §15 without changing the shell. **[Passport spec]**
@@ -253,7 +254,7 @@ language, and keeps the person's list in the browser.
 5. An ingredient whose name is not in the reviewed glossary comes with `name_basis` and a `tag` ("name not translated" or "name not reviewed"): THE client SHALL show the tag and the ATC codes next to the name; a `combination_code` label SHALL be shown next to its code.
 6. Sections SHALL be laid out in the API's order: safety lines before the findings; form-unconfirmed findings as a separate section with its own heading; the abrupt-stop line in the medicine row; empty sections keep their heading.
 7. A note may not fit one page: the findings section is ordered, overflow goes to a second page; THE PDF SHALL repeat the disclaimer and the page number on every page.
-8. THE PDF SHALL be rendered in the browser (light face, Fraunces / Atkinson Hyperlegible / IBM Plex Mono embedded), A4 and US Letter, with selectable text; THE medicine list SHALL never need to reach the server to produce it.
+8. THE PDF SHALL be rendered in the browser (white paper, paper tokens, Fraunces / Atkinson Hyperlegible / IBM Plex Mono embedded), A4 and US Letter, with selectable text; THE medicine list SHALL never need to reach the server to produce it.
 9. WHEN the note language differs from the interface language THE client SHALL show the side-by-side view: the note language and the patient's language block by block, paired by id, so the patient understands what the doctor receives.
 10. WHILE demo mode is on THE preview and the PDF SHALL carry "Demo · synthetic patient" on every page.
 11. IF the API answers 422 `note_language_unavailable` THEN THE client SHALL say that the note is not yet available in that language and offer the available ones.
@@ -274,7 +275,7 @@ language, and keeps the person's list in the browser.
 #### Acceptance criteria
 1. THE page at `/o` SHALL require no account, SHALL read the token from `location.hash`, and SHALL post it in a JSON body to `POST /outcomes/form` and `POST /outcomes`; THE token SHALL never be put in a path, a query string, a log, storage or analytics, and the page SHALL send no referrer.
 2. THE form SHALL list the token's findings in the note's language (texts from the API) with two questions per finding: the assessment (`confirmed`, `not_a_cascade`) and an optional action (`dose_changed`, `medicine_changed`, `stopped`, `no_change`) with the medicine it concerns ("First medicine: {name}", "Second medicine: {name}") required for `dose_changed`, `medicine_changed` and `stopped`. A finding MAY be left unanswered; THE send control SHALL be enabled only with at least one answer.
-3. THE page SHALL show the API's texts (`heading`, `intro`, `stored_fields`, `limits`, the questions, the disclaimer) exactly as returned, in the light face.
+3. THE page SHALL show the API's texts (`heading`, `intro`, `stored_fields`, `limits`, the questions, the disclaimer) exactly as returned, on a paper card (DP48).
 4. Errors SHALL be worded in the note's language when known, else the browser's language among the five: `invalid_token` (400) "this link is not valid"; `token_expired` (410); `token_not_usable` (410, withdrawn by the patient); `token_used` (409, "an answer was already sent"); 503 "not available right now, try later"; a network failure offers a retry that sends the same answers.
 5. WHEN the submission is accepted (`{stored: n}`) THE page SHALL confirm and SHALL disable further submission.
 6. THE page SHALL be usable on a phone at 375 px and SHALL become interactive in under 3 seconds on a 4G connection (Requirement 25.1).
@@ -320,7 +321,7 @@ language, and keeps the person's list in the browser.
 
 ### Requirement 24: Researcher area shell *(Added in refinement; owner decision 8)*
 #### Acceptance criteria
-1. THE researcher area SHALL be reachable from the main navigation and the mask switch, SHALL use the light face in Two Faces (Glass: "Research" section), and SHALL NOT be a step of the patient flow.
+1. THE researcher area SHALL be reachable from the main navigation ("Research"), SHALL use the normal theme (DP48), and SHALL NOT be a step of the patient flow.
 2. THE area SHALL have four entries: hypothesis cards, the séance view (Glass: evidence summary), the retrospective-validation report and dataset export; in Phase 3 each SHALL show an honest empty state ("coming in Phase 4") and SHALL show no example result, number or hypothesis. **[Phase 4]** for the content.
 3. THE area SHALL say that repurposing outputs will be researcher-facing "candidates worth investigating — not treatments" (`medical-safety.md` rule 7) and SHALL carry the disclaimer.
 
@@ -340,14 +341,17 @@ language, and keeps the person's list in the browser.
 **User story:** As a visitor on a laptop, I want Janus to be a real website, not a phone column in the middle of the screen.
 
 #### Acceptance criteria
-1. Below 768 px THE client SHALL use the phone layout with the bottom tab bar. From 768 px THE navigation SHALL move into the header (Scan, Medicines, Results, Settings; Research behind the mask switch in Two Faces, a Research link in Glass) with the language and theme controls on the right; from 768 to 1023 px the content stays one column.
+1. Below 768 px THE client SHALL use the phone layout with the bottom tab bar. From 768 px THE navigation SHALL move into the header (Scan, Medicines, Results, Settings and Research in both themes, DP48) with the language and theme controls on the right; from 768 to 1023 px the content stays one column.
 2. From 1024 px THE results screen SHALL use two columns within about 1,120 px: the findings on the left (wider) and a sticky aside with "Medicines checked", "What Janus checked", the timeline summary and the primary actions (doctor note, reports for the whole list). Reading text SHALL stay within 72 characters per line.
 3. From 1024 px THE medicines list SHALL show the timeline beside it; Collective Memory SHALL place panels side by side where it helps; the note preview SHALL show the paper page centred at A4-like proportions with the actions in an aside; Settings SHALL be a two-column page.
 4. THE home page SHALL be a website home: the emergency notice first, a hero with the product sentence (no forbidden or "first" claims), "Try the demo" as the main action, "How it works" in three steps, the three regions and five languages, privacy in one sentence and the disclaimer. The hero is a theme scene (6).
 5. Axe (WCAG 2.2 A/AA) and no horizontal scroll SHALL hold at 1280 px as at 375 px; screenshots at 1280 and 1440 px are reviewed for home, results, memory, note and settings in both themes.
-6. *(Owner decision 2026-11-08, second)* THE themes SHALL be named Night Pharmacy (default, was Two Faces) and Glass Janus (was Glass) in all five languages. THE Night Pharmacy home SHALL be a scroll-driven scene: the night pharmacy diorama with code-made ghosts rising from its windows, a door transition video scrubbed by scroll ("Step inside"), and the medicine cabinet where the ghosts line up as the Istanbul demo's findings (each a keyboard-focusable button with an accessible name that opens the finding in the demo) and the note becomes "Prepare the doctor note". THE Glass Janus home SHALL show the glass head full-bleed with a light sweep, capsule highlights and a gentle tilt, without ghosts. The hero SHALL fill the first viewport, with the emergency notice as a one-line expandable bar on it (Req 1.2 still holds). Headline, sub-headline and actions SHALL be real translated text over a scrim (contrast ≥ 4.5:1); images SHALL have alt text in five languages; the video SHALL be decorative.
-7. WHEN reduced motion is requested, Save-Data is on, the connection is slow or the video fails, THE home SHALL show the three stills with a simple fade and still ghosts, without parallax, scrubbing or drift, and SHALL NOT request the video.
+6. *(Owner decision 2026-11-08, second)* THE themes SHALL be named Night Pharmacy (default, was Two Faces) and Glass Janus (was Glass) in all five languages. THE Night Pharmacy home SHALL be a scene: the night pharmacy diorama with code-made ghosts rising from its windows, a door transition video played on "Step inside" (Req 27.9), and the medicine cabinet where the ghosts line up as the Istanbul demo's findings (each a keyboard-focusable button with an accessible name that opens the finding in the demo) and the note becomes "Prepare the doctor note". THE Glass Janus home SHALL show the glass head full-bleed with a light sweep, capsule highlights and a gentle tilt, without ghosts. The hero SHALL fill the first viewport, with the emergency notice as a one-line expandable bar on it (Req 1.2 still holds). Headline, sub-headline and actions SHALL be real translated text over a scrim (contrast ≥ 4.5:1); images SHALL have alt text in five languages; the video SHALL be decorative.
+7. *(Changed 2026-11-08, third, DP49.)* WHEN reduced motion is requested, Save-Data is on, the connection is slow or the video cannot play, "Step inside" SHALL cross-fade straight to the medicine cabinet (scene 3) with still ghosts, without parallax or drift, and THE home SHALL NOT request the video.
 8. THE hero SHALL not shift the layout; the active theme's first image SHALL be preloaded at the right size and the other theme's never requested; the video SHALL load lazily; the hero motion SHALL be its own chunk; LCP on a throttled desktop SHALL be measured and recorded (target < 2.5 s).
+
+9. *(Owner decision 2026-11-08, third, DP49.)* No part of the home SHALL be driven by scroll: no pinned or sticky section, no scroll listener doing per-frame work. Below the hero copy a "Step inside" button (play icon, with a small animated scroll-down cue under it that does the same) SHALL play the door transition once, full-bleed, at normal speed, with a Skip control; at its end (or on Skip) the home SHALL cross-fade into the medicine cabinet (scene 3) and move focus to the scene 3 heading; scene 3 SHALL offer Replay. THE video SHALL be preloaded only once the page is idle, with a poster while it loads; if it cannot play, the home SHALL go straight to scene 3. Ambient motion (ghosts, fireflies, light sweep) SHALL animate transform and opacity only and SHALL pause while off-screen or while the tab is hidden. Scrolling the home at 1440 px and 375 px SHALL show no long task over 50 ms (measured, design §16).
+10. *(Owner review 2026-11-08, third, DP49.)* THE Glass Janus colour fields SHALL stay fixed to the viewport on pages of any length; THE desktop hero ghosts of Night Pharmacy SHALL be about 25 % larger with a slightly stronger glow than in the first build, still subtle.
 
 ### Requirement 28: Wording decisions of the review *(Owner decision 2026-11-08)*
 **User story:** As a patient or a doctor, I want the wording to say no more than the data support, so that a timing class is not read as a verdict and a consent text does not understate.

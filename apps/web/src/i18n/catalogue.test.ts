@@ -70,7 +70,7 @@ describe.each(routing.locales)("catalogue %s", (locale) => {
 
   it("has no theme-device word in any Glass value", () => {
     const glass = [...messages].filter(([k]) => k.endsWith(".glass"));
-    expect(glass.length).toBeGreaterThan(10);
+    expect(glass.length).toBeGreaterThan(5);
     for (const [key, value] of glass) {
       expect(findForbiddenPhrases(value, themeWords[l]), key).toEqual([]);
     }

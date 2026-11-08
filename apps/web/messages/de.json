@@ -33,6 +33,8 @@
     "nightHeadline": "Wurde ein Arzneimittel wegen der Nebenwirkung eines anderen verschrieben?",
     "glassHeadline": "Ein klarer Blick auf die Medikamente bei Ihnen zu Hause.",
     "stepInside": "Eintreten",
+    "skip": "Überspringen",
+    "replay": "Eingang noch einmal ansehen",
     "scene3Title": {
       "twoFaces": "Vier Geister in einem Demo-Arzneischrank",
       "glass": "Vier Muster in einem Demo-Arzneischrank"
@@ -64,25 +66,8 @@
       "medicines": "Medikamente",
       "results": "Ergebnisse",
       "settings": "Einstellungen",
-      "research": {
-        "twoFaces": "Lichtgesicht",
-        "glass": "Forschung"
-      },
+      "research": "Forschung",
       "passport": "Medikamentenpass"
-    },
-    "mask": {
-      "label": {
-        "twoFaces": "Maske: Gesicht wählen",
-        "glass": "Bereich"
-      },
-      "patient": {
-        "twoFaces": "Schatten",
-        "glass": "Patient"
-      },
-      "research": {
-        "twoFaces": "Licht",
-        "glass": "Forschung"
-      }
     },
     "privacy": "Datenschutz",
     "demoCodes": "Demo-Codes",
@@ -216,7 +201,7 @@
     "appearance": "Darstellung",
     "theme": "Design",
     "themeTwoFaces": "Nachtapotheke",
-    "themeTwoFacesHint": "Nachtblau mit erleuchteten Fenstern für die Patientenseite, Elfenbein für die Forschungsseite.",
+    "themeTwoFacesHint": "Nachtblau mit erleuchteten Fenstern und Themensymbolen.",
     "themeGlass": "Glas-Janus",
     "themeGlassHint": "Schlicht und hell, ohne Themensymbole.",
     "largeText": "Große Schrift",
@@ -510,10 +495,7 @@
     "withdrawLink": "Daten der Ergebnisrückmeldung widerrufen"
   },
   "Research": {
-    "title": {
-      "twoFaces": "Lichtgesicht: für Forschende",
-      "glass": "Forschung"
-    },
+    "title": "Forschung",
     "intro": "Dasselbe Wissen über Nebenwirkungen, für die Forschung umgekehrt. Dieser Bereich ist kein Teil des Patientenablaufs.",
     "rule7": "Ergebnisse zur Wiederverwendung sind untersuchenswerte Kandidaten — keine Behandlungen.",
     "coming": "Kommt in Phase 4.",
@@ -538,10 +520,7 @@
         "body": "Der offene Datensatz für die Forschung, mit Zahlen nur für Gruppen, die groß genug sind, um die Privatsphäre zu schützen."
       }
     },
-    "back": {
-      "twoFaces": "Zurück zum Schattengesicht",
-      "glass": "Zurück zum Patientenbereich"
-    },
+    "back": "Zurück zum Patientenbereich",
     "empty": "Noch nichts anzuzeigen."
   },
   "Doctor": {

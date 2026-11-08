@@ -1,7 +1,7 @@
 "use client";
 /**
- * The demo doctor page (Req 4.7, 19.7): the recorded form of the demo patient, light face, with
- * the demo label; it sends nothing.
+ * The demo doctor page (Req 4.7, 19.7): the recorded form of the demo patient on a paper card,
+ * with the demo label; it sends nothing.
  */
 import { useEffect, useState } from "react";
 
