@@ -2,8 +2,9 @@
 
 `python -m janus.resolution.load [--data-dir PATH] [--activate DATASET]`
 
-Reads the `current` artifact of `titck`, `us_ndc` and `wikidata_ingredients`, refuses any
-artifact whose rows do not hash to its manifest, prepares the dataset (pure, `prepare.py`) and
+Reads the `current` artifact of `titck`, `us_ndc` and `wikidata_ingredients` and, if they exist,
+of `eu_fr_bdpm` and `eu_es_cima` (optional, Req 9.7), refuses any artifact whose rows do not hash
+to its manifest, prepares the dataset (pure, `prepare.py`) and
 writes it in one transaction that also switches `res_current`. A failure before commit leaves
 the served dataset untouched. The previous dataset is kept for `--activate`. Only reference data
 is written; this module and `contributions/repository.py` are the only users of `write_tx`.
@@ -29,6 +30,7 @@ import psycopg
 from janus.db.pool import Database
 from janus.integrity.registry import read_sources
 from janus.observability.logging import LogEvent, configure_logging, log_event
+from janus.regions.base import GS1_PREFIXES
 from janus.resolution import (
     anion_acid,
     atc,
@@ -50,14 +52,27 @@ from janus.resolution.prepare import (
     PreparedDataset,
     prepare_dataset,
 )
+from janus.resolution.prepare_eu import ES_CIMA, FR_BDPM
 from janus.settings import Settings
 
-PIPELINES: dict[str, str] = {TITCK: "titck", OPENFDA: "us_ndc", WIKIDATA: "wikidata_ingredients"}
+PIPELINES: dict[str, str] = {
+    TITCK: "titck",
+    OPENFDA: "us_ndc",
+    WIKIDATA: "wikidata_ingredients",
+    FR_BDPM: "eu_fr_bdpm",
+    ES_CIMA: "eu_es_cima",
+}
+OPTIONAL: tuple[str, ...] = (FR_BDPM, ES_CIMA)  # a dataset without them still loads (Req 9.7)
 SCHEMAS: dict[str, frozenset[str]] = {
     TITCK: frozenset({"titck-2"}),
     OPENFDA: frozenset({"us_ndc-2"}),
     WIKIDATA: frozenset({"wikidata_ingredients-1"}),
+    FR_BDPM: frozenset({"eu_fr_bdpm-1"}),
+    ES_CIMA: frozenset({"eu_es_cima-1"}),
 }
+# The pipelines' manifests and the source registry (pipelines/sources.toml) name the French and
+# Spanish sources `bdpm` and `cima`; the resolution tables use the pipeline names.
+REGISTRY_ID: dict[str, str] = {FR_BDPM: "bdpm", ES_CIMA: "cima"}
 SYNONYMS_FILE = DATA_DIR / "ingredient_synonyms.csv"
 CURATED_FILE = DATA_DIR / "janus_ingredients.csv"
 CURATED_HEADER = [
@@ -85,7 +100,7 @@ class Artifact:
 
     def verify(self) -> None:
         m = self.manifest
-        if m.get("source_id") != self.source_id:
+        if m.get("source_id") != REGISTRY_ID.get(self.source_id, self.source_id):
             raise LoadError(f"{self.source_id}: manifest names another source")
         if m.get("schema_version") not in SCHEMAS[self.source_id]:
             raise LoadError(f"{self.source_id}: unsupported schema version")
@@ -214,6 +229,7 @@ class Inputs:
             "anion_acid": self.acid.version,
             "cadences": dict(sorted(self.cadences.items())),
             "curated_keys": self.curated.sha256,
+            "country_table": hashlib.sha256(repr(GS1_PREFIXES).encode()).hexdigest(),
             "code": self.code,
         }
 
@@ -232,12 +248,19 @@ def gather(
     synonyms: tuple[tuple[str, str], ...] | None = None,
     registry: Path = REGISTRY_FILE,
 ) -> Inputs:
-    artifacts = {s: read_artifact(data_dir, s) for s in PIPELINES}
+    artifacts = {s: read_artifact(data_dir, s) for s in PIPELINES if s not in OPTIONAL}
+    for s in OPTIONAL:
+        # Absent: the dataset loads without it. Present but invalid: read_artifact refuses.
+        if (data_dir / "artifacts" / PIPELINES[s] / "current" / "manifest.json").exists():
+            artifacts[s] = read_artifact(data_dir, s)
     try:
         sources = read_sources(registry)
     except (OSError, ValueError) as exc:
         raise LoadError("source registry (pipelines/sources.toml) cannot be read") from exc
-    cadences = {s: sources[s].cadence_days if s in sources else None for s in PIPELINES}
+    cadences: dict[str, int | None] = {}
+    for s in artifacts:
+        rid = REGISTRY_ID.get(s, s)
+        cadences[s] = sources[rid].cadence_days if rid in sources else None
     return Inputs(
         artifacts,
         rules or CombinationRules.load(),
@@ -267,7 +290,14 @@ def _prepare(inputs: Inputs) -> PreparedDataset:
         inputs.synonyms,
         inputs.curated.rows,
         inputs.acid,
+        fr_rows=inputs.artifacts[FR_BDPM].rows if FR_BDPM in inputs.artifacts else None,
+        es_rows=inputs.artifacts[ES_CIMA].rows if ES_CIMA in inputs.artifacts else None,
     )
+
+
+def missing_sources(inputs: Inputs) -> tuple[str, ...]:
+    """The optional sources this dataset is loaded without (printed and logged by `main`)."""
+    return tuple(s for s in OPTIONAL if s not in inputs.artifacts)
 
 
 def current_dataset(conn: psycopg.Connection) -> str | None:
@@ -348,14 +378,14 @@ def write_dataset(
             "dataset_id", "source_id", "product_id", "region", "product_name", "brand_name",
             "generic_name", "ingredient_text", "published_atc", "product_type", "routes",
             "dosage_form", "marketing_end_date", "suspension_status", "name_only",
-            "product_rxcuis",
+            "product_rxcuis", "status_published",
         ),
         (
             (
                 version, p.source_id, p.product_id, p.region, p.product_name, p.brand_name,
                 p.generic_name, p.ingredient_text, p.published_atc, p.product_type,
                 list(p.routes), p.dosage_form, p.marketing_end_date, p.suspension_status,
-                p.name_only, list(p.product_rxcuis),
+                p.name_only, list(p.product_rxcuis), list(p.status_published),
             )
             for p in ds.products
         ),
@@ -518,7 +548,14 @@ def main(argv: Sequence[str] | None = None) -> int:
         if data_dir is None:
             print("set --data-dir or JANUS_DATA_DIR", file=sys.stderr)
             return 2
-        result = load(db, gather(data_dir), report_dir=data_dir / "resolution")
+        inputs = gather(data_dir)
+        held = sorted(inputs.artifacts)
+        print(f"sources: {', '.join(held)}")
+        absent = missing_sources(inputs)
+        if absent:
+            print(f"loaded without: {', '.join(absent)}", file=sys.stderr)
+        log_event(LogEvent.resolution_sources, count=len(held))
+        result = load(db, inputs, report_dir=data_dir / "resolution")
         log_event(LogEvent.resolution_load, count=result.products)
         state = "loaded" if result.changed else "unchanged"
         print(f"{state} dataset {result.dataset_version} ({result.products} products)")

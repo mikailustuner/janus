@@ -74,6 +74,7 @@ class LogEvent(StrEnum):
     donations_disabled = "donations_disabled"
     purge = "purge"
     resolution_load = "resolution_load"
+    resolution_sources = "resolution_sources"
     integrity_load = "integrity_load"
     cascade_load = "cascade_load"
     faers_build = "faers_build"

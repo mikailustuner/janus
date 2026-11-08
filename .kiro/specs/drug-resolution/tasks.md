@@ -223,7 +223,7 @@
   - Run it on the real artifacts with the candidate lists of design §15.2; keep the file local.
   - _Requirements: 12.2, 12.11_
 
-- [ ] 20. **Review stop: name rules** (pharmacologist agent, then owner)
+- [x] 20. **Review stop: name rules** (pharmacologist agent, then owner)
   - Run the pharmacologist agent (`agent://pharmacologist`, one self-contained prompt with the
     report path and the rules of Req 12). It writes
     `.kiro/specs/drug-resolution/name-rules-review.md` in the layout of
@@ -255,7 +255,7 @@
   - Re-run the comparison of task 18.8 on TİTCK and openFDA; list changed names by kind (counts).
   - _Requirements: 12.1, 13.3_
 
-- [ ] 22. EU preparation and loader (`prepare_eu.py`, `prepare.py`, `load.py`)
+- [x] 22. EU preparation and loader (`prepare_eu.py`, `prepare.py`, `load.py`)
   - `bdpm_products` (links, `FT` before `SA`, status, marketing end date, homeopathic marker) and
     `cima_products` (ingredient order, codes, published ATC, status); `prepare_dataset` takes the
     EU rows, uses `lang` per product, feeds the Nomenclátor's observed combination evidence only
@@ -265,13 +265,13 @@
     Re-create the task 15 FR/ES baseline from `bdpm_products`/`cima_products` with the Phase 1
     ladder and confirm it equals the first baseline.
   - [x] 22.1 Property test P29: `FT` before `SA` per link, every line accounted for. _Requirements: 5.8_
-  - [ ] 22.2 Property test P41: French homeopathic products. _Requirements: 12.10, 5.11, 11.1_
-  - [ ] 22.3 Property test P42: French route selection. _Requirements: 5.9_
-  - [ ] 22.4 Property test P43: Nomenclátor published ATC selection. _Requirements: 5.10, 5.2_
-  - [ ] 22.5 Property test P45: coverage recount, homeopathic excluded, comparison lists changed names, a mapped name never changes key. _Requirements: 13.2, 13.3_
-  - [ ] 22.6 Property test P46: the dataset version follows every Phase 2 input. _Requirements: 9.8, 9.4_
-  - [ ] 22.7 Property test P47 (load part): any subset of sources loads; a present invalid EU artifact refuses the load and the previous dataset keeps serving. _Requirements: 9.7_
-  - [ ] 22.8 Re-run P5, P7, P17, P18 over French-like and Spanish-like sources (P44, pure part). _Requirements: 5.1, 5.2, 5.4_
+  - [x] 22.2 Property test P41: French homeopathic products. _Requirements: 12.10, 5.11, 11.1_
+  - [x] 22.3 Property test P42: French route selection. _Requirements: 5.9_
+  - [x] 22.4 Property test P43: Nomenclátor published ATC selection. _Requirements: 5.10, 5.2_
+  - [x] 22.5 Property test P45: coverage recount, homeopathic excluded, comparison lists changed names, a mapped name never changes key. _Requirements: 13.2, 13.3_
+  - [x] 22.6 Property test P46: the dataset version follows every Phase 2 input. _Requirements: 9.8, 9.4_
+  - [x] 22.7 Property test P47 (load part): any subset of sources loads; a present invalid EU artifact refuses the load and the previous dataset keeps serving. _Requirements: 9.7_
+  - [x] 22.8 Re-run P5, P7, P17, P18 over French-like and Spanish-like sources (P44, pure part). _Requirements: 5.1, 5.2, 5.4_
   - _Requirements: 4.1, 4.2, 5.8–5.11, 9.7–9.9_
 
 - [ ] 23. Adapters, repository, service and routes

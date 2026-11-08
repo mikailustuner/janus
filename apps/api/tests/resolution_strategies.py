@@ -192,7 +192,16 @@ def us_row(
 
 
 RULES = CombinationRules(frozenset({"C09B", "A10BD"}), frozenset({"J01CA51"}), frozenset(), "t")
-ROUTES = RouteMap({"ORAL": ("A", "C", "J", "N"), "TOPICAL": ("D",)}, "t")
+ROUTES = RouteMap(
+    {
+        "ORAL": ("A", "C", "J", "N"),
+        "TOPICAL": ("D",),
+        "orale": ("A", "C", "J", "N"),  # French BDPM route strings (Req 5.9)
+        "cutanée": ("D",),
+        "intraveineuse": ("J",),
+    },
+    "t",
+)
 COMBO_CODES = st.sampled_from(["C09BB03", "A10BD05", "J01CA51", "N01AA20", "C08CA51"])
 
 
@@ -228,3 +237,122 @@ def sources(draw: st.DrawFn) -> tuple[list[Any], list[Any], list[Any]]:
         routes = draw(st.lists(st.sampled_from(["ORAL", "TOPICAL", "NASAL"]), max_size=2))
         us.append(us_row(f"1234{i}-678", [f"1234{i}-678-90"], ings, routes))
     return tr, us, wd
+
+
+# --- BDPM- and Nomenclátor-shaped rows (drug-resolution Phase 2) ----------------------------------
+
+
+def bdpm_row(
+    i: int,
+    denomination: str,
+    names: list[str],
+    *,
+    routes: str | None = "orale",
+    sa: dict[int, str] | None = None,
+    cip13: str | None = None,
+    commercial: str = "Déclaration de commercialisation",
+    declared: str = "16/03/2011",
+) -> dict[str, object]:
+    """A BDPM presentation: one FT line per name (links 1..n); `sa` adds an SA line (the
+    substance as formulated) to link k, which the FT line supersedes."""
+    lines: list[dict[str, object]] = []
+    for k, name in enumerate(names, start=1):
+        lines.append(_line(name, "FT", k))
+        if sa and k in sa:
+            lines.append(_line(sa[k], "SA", k))
+    code = cip13 if cip13 is not None else f"3400{i:09d}"
+    return {
+        "cip13": code,
+        "name_only": False,
+        "cip7": code[6:],
+        "cis": str(60000000 + i),
+        "presentation_label": "plaquette(s) de 30 comprimé(s)",
+        "presentation_status": "Présentation active",
+        "presentation_commercialisation": commercial,
+        "presentation_declaration_date": declared,
+        "specialty_missing": False,
+        "denomination": denomination,
+        "pharmaceutical_form": "comprimé",
+        "routes": routes,
+        "authorisation_status": "Autorisation active",
+        "procedure": "Procédure nationale",
+        "commercialisation_status": "Commercialisée",
+        "authorisation_date": "28/10/2010",
+        "holder": " TITULAIRE",
+        "composition": lines,
+    }
+
+
+def _line(name: str, nature: str, link: int) -> dict[str, object]:
+    return {
+        "form": "comprimé",
+        "substance_code": str(link),
+        "substance_name": name,
+        "dosage": "1,00 mg",
+        "reference": "un comprimé",
+        "nature": nature,
+        "link": str(link),
+    }
+
+
+def cima_row(
+    i: int,
+    name: str,
+    names: list[str],
+    atc: str | None,
+    *,
+    ntins: list[str] | None = None,
+    gtins: list[str] | None = None,
+) -> dict[str, object]:
+    """A Nomenclátor presentation: ingredients in `orden_colacion` order 1..n."""
+    cn = f"{600000 + i}"
+    return {
+        "cn": cn,
+        "name_only": False,
+        "registration_number": str(66000 + i),
+        "name": name,
+        "presentation_name": f"{name}, 30 comprimidos",
+        "atc_code": atc,
+        "ingredients": [
+            {"code": str(k), "name": n, "dose": "500", "dose_unit": "mg", "order": k}
+            for k, n in enumerate(names, start=1)
+        ],
+        "ntins": ntins if ntins is not None else [with_check_digit("0847000" + cn)],
+        "gtins": gtins or [],
+        "route_codes": ["49"],
+        "commercialised": True,
+        "registration_status": "1",
+        "registration_status_date": "2020-08-11",
+        "presentation_status": "1",
+        "presentation_status_date": "2020-08-11",
+        "serialised": True,
+    }
+
+
+HOMEOPATHIC_SUFFIX = " pour préparations homéopathiques"
+
+
+@st.composite
+def eu_rows(draw: st.DrawFn) -> tuple[list[Any], list[Any]]:
+    """BDPM-like and Nomenclátor-like rows over the same words as `sources()`."""
+    name = st.one_of(
+        st.sampled_from(WORDS),
+        st.tuples(st.sampled_from(WORDS), st.sampled_from(SALTS)).map(" ".join),
+        st.just("substance inconnue"),
+        st.tuples(st.sampled_from(WORDS), st.sampled_from(WORDS)).map(" ".join),  # unsplit
+        st.sampled_from(WORDS).map(lambda w: w + HOMEOPATHIC_SUFFIX),
+    )
+    routes = st.one_of(
+        st.none(),
+        st.sampled_from(["orale", "cutanée", "orale;cutanée", "intraveineuse", "voie inconnue"]),
+    )
+    fr: list[Any] = []
+    for i in range(draw(st.integers(0, 8))):
+        names = draw(st.lists(name, min_size=0, max_size=3))
+        fr.append(bdpm_row(i + 1, f"SPECIALITE {i}", names, routes=draw(routes)))
+    published = st.one_of(st.none(), SYN_CODES, COMBO_CODES)
+    es: list[Any] = []
+    for i in range(draw(st.integers(0, 8))):
+        names = draw(st.lists(name, min_size=0, max_size=3))
+        es.append(cima_row(i + 1, f"MEDICAMENTO {i}", names, draw(published)))
+    return fr, es

@@ -774,8 +774,12 @@ the parser still drops serial and lot (Req 1.4).
 ### 14.1 Inputs
 `gather()` also reads `eu_fr_bdpm` and `eu_es_cima` if their `current` artifact exists (manifest,
 hash and schema check as for the other sources; an invalid present artifact refuses the load).
-`Inputs.describe()` records which sources are included, the new rule files' hashes, and
-`RULES_VERSION`. `res_source_version` gets one row per source, with licence text and cadence from
+`Inputs.describe()` records which sources are included, the new rule files' hashes, the country
+table's hash and the name rules' version. The resolution tables name the sources `eu_fr_bdpm` and
+`eu_es_cima` (the pipeline names); the pipelines' manifests and `pipelines/sources.toml` call them
+`bdpm` and `cima`, so the loader maps one to the other (`REGISTRY_ID`) when it checks the manifest and
+reads the cadence. `python -m janus.resolution.load` prints which sources the dataset holds and the
+ones it is loaded without (`LogEvent.resolution_sources` logs their number). `res_source_version` gets one row per source, with licence text and cadence from
 `pipelines/sources.toml`.
 
 ### 14.2 BDPM (`prepare_eu.bdpm_products`)
@@ -1105,6 +1109,12 @@ the `anhydre`/`anhydr*`/`susuz` hydrate words (owner decision 3).
   because `SODIUM ALGINATE`, `MAGNESIUM ALGINATE` and `CALCIUM PIDOLATE` no longer map to the bare
   acid (`alginate` and `pidolate` are NOT_ALONE words, decision 6). FAERS counts did change as
   intended; no cascade result changed.
+
+**Task 22 check (2026-11-08): the new product builders reproduce the first baseline.** The Phase 1
+ladder (all Phase 2 lists and switches off, the 108 Phase 1 synonyms, an empty anion-acid table) run
+over `bdpm_products` and `cima_products` gives the same names, occurrences, statuses, keys and steps
+as the first baseline snapshot: Nomenclátor 2,583 names, 0 differences; BDPM 2,847 names, 1
+difference (the hydrocortisone acetate name, moved by the aceponate correction, decision 2).
 
 **For information, no decision needed now.**
 - Parts of combination strings with no ingredient-level code (`CARBIDOPA` 16,311, `VILANTEROL`

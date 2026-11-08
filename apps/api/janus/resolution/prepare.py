@@ -31,13 +31,22 @@ from janus.resolution.matching import IndexItem, Match, NameIndex, label_keys, m
 from janus.resolution.name_lists import Lang
 from janus.resolution.names import fold
 from janus.resolution.ndc import canonical_package, canonical_product
+from janus.resolution.prepare_eu import (
+    ES_CIMA,
+    FR_BDPM,
+    EuProduct,
+    bdpm_products,
+    cima_products,
+    is_homeopathic_name,
+)
 
 TITCK = "titck"
 OPENFDA = "openfda_ndc"
 WIKIDATA = "wikidata"
 JANUS_CURATED = "janus_curated"  # curated Janus ingredient keys, data/janus_ingredients.csv
 LANGS = ("en", "tr", "de", "fr", "es")
-SEARCH_LANGS = ("en", "tr")  # de, fr, es join with eu_name in Phase 2
+SEARCH_LANGS = ("en", "tr")  # name entries of every region (region "")
+EU_SEARCH_LANGS = ("de", "fr", "es")  # name entries of region EU (DP39)
 FINISHED_TYPES = frozenset(
     {
         "HUMAN PRESCRIPTION DRUG",
@@ -84,7 +93,7 @@ class PreparedIngredient:
 class PreparedProduct:
     source_id: str
     product_id: int
-    region: Literal["TR", "US"]
+    region: Literal["TR", "US", "EU"]
     product_name: str | None
     brand_name: str | None
     generic_name: str | None
@@ -99,6 +108,7 @@ class PreparedProduct:
     product_rxcuis: tuple[str, ...]
     codes: tuple[tuple[str, str, str], ...]  # (kind, code, as published)
     ingredients: tuple[PreparedIngredient, ...]
+    status_published: tuple[str, ...] = ()  # EU: statuses exactly as published (display only)
 
     @property
     def candidate_id(self) -> str:
@@ -117,7 +127,7 @@ class IngredientRecord:
 class NameEntry:
     name_key: str
     kind: Literal["product", "ingredient"]
-    region: str  # "TR", "US" or "" for ingredients (all regions)
+    region: str  # "TR", "US", "EU" or "" for ingredients (all regions)
     ref: str  # candidate id or QID
     display: str
 
@@ -252,6 +262,17 @@ def _openfda_products(rows: Sequence[Row], stats: Counter[str]) -> list[_Raw]:
     return out
 
 
+def _eu_raws(products: Sequence[EuProduct], stats: Counter[str]) -> list[_Raw]:
+    out: list[_Raw] = []
+    for p in products:
+        if p.product["source_id"] == FR_BDPM:
+            stats["bdpm_links"] += p.stats.links
+            stats["bdpm_superseded_sa_lines"] += p.stats.superseded_sa_lines
+            stats["bdpm_multi_ft_links"] += p.stats.multi_ft_links
+        out.append(_Raw(p.product, list(p.names), lang=p.lang))
+    return out
+
+
 def eligible_items(
     wikidata_rows: Sequence[Row],
     rules: CombinationRules,
@@ -298,8 +319,14 @@ def prepare_dataset(
     synonyms: Iterable[tuple[str, str]] = (),
     curated_rows: Sequence[Row] = (),
     acid: AnionAcidTable | None = None,
+    *,
+    fr_rows: Sequence[Row] | None = None,
+    es_rows: Sequence[Row] | None = None,
 ) -> PreparedDataset:
-    """`curated_rows` are Janus ingredient keys (`J<n>`) in the shape of Wikidata rows, for
+    """`fr_rows` and `es_rows` are the BDPM and Nomenclátor artifacts; `None` means the source
+    is not loaded (no section, no products).
+
+    `curated_rows` are Janus ingredient keys (`J<n>`) in the shape of Wikidata rows, for
     substances that no Wikidata item in the extract covers with a code (owner decision,
     2026-11-07: dimenhydrinate). They behave like items; their codes cite `janus_curated`."""
     curated_keys = frozenset(str(r["qid"]) for r in curated_rows)
@@ -312,6 +339,10 @@ def prepare_dataset(
 
     stats: Counter[str] = Counter()
     raws = _titck_products(titck_rows) + _openfda_products(us_rows, stats)
+    if fr_rows is not None:
+        raws += _eu_raws(bdpm_products(fr_rows), stats)
+    if es_rows is not None:
+        raws += _eu_raws(cima_products(es_rows), stats)
 
     # TİTCK ATC bridge (step 6): single-ingredient rows whose valid code belongs to one item.
     bridge: defaultdict[str, set[str]] = defaultdict(set)
@@ -331,11 +362,12 @@ def prepare_dataset(
                 cache[key] = map_name(name, index, lang=raw.lang)
             raw.matches.append(cache[key])
 
-    # Observation rule input: codes of TİTCK products with >= 2 distinct mapped keys.
+    # Observation rule input: codes of TİTCK and Nomenclátor products with >= 2 distinct mapped
+    # keys (DP34: the Nomenclátor feeds only this check, never an ingredient's codes).
     observed: set[str] = set()
     for raw in raws:
         p = raw.product["published_atc"]
-        if raw.lang == "tr" and is_ingredient_level(p):
+        if raw.lang in ("tr", "es") and is_ingredient_level(p):
             keys = {m.keys[0] for m in raw.matches if m.status == "mapped"}
             if len(keys) >= 2:
                 observed.add(p)
@@ -458,17 +490,21 @@ def _name_entries(
             if key:
                 out.add(NameEntry(key, "product", p.region, p.candidate_id, display))
         for ing in p.ingredients:
-            if ing.status == "mapped" and ing.qid and p.region == "TR":
+            if ing.status == "mapped" and ing.qid and p.region in ("TR", "EU"):
                 key = fold(ing.published_name)
                 if key:
-                    out.add(NameEntry(key, "ingredient", "", ing.qid, ing.published_name))
+                    # TİTCK's ingredient names are searchable everywhere (Phase 1); the French
+                    # and Spanish ones only with region EU (DP39).
+                    region = "" if p.region == "TR" else "EU"
+                    out.add(NameEntry(key, "ingredient", region, ing.qid, ing.published_name))
     for qid, r in items.items():
         names = _item_names(r)
-        for lang in SEARCH_LANGS:
-            for display in names.get(lang, ()):
-                key = fold(display)
-                if key:
-                    out.add(NameEntry(key, "ingredient", "", qid, display))
+        for langs, region in ((SEARCH_LANGS, ""), (EU_SEARCH_LANGS, "EU")):
+            for lang in langs:
+                for display in names.get(lang, ()):
+                    key = fold(display)
+                    if key:
+                        out.add(NameEntry(key, "ingredient", region, qid, display))
     return tuple(sorted(out))
 
 
@@ -578,8 +614,23 @@ def _coverage(
             [p for p in us if p.product_type in ("HUMAN PRESCRIPTION DRUG", "HUMAN OTC DRUG")]
         ),
     }
-    return {
+    out: dict[str, Any] = {
         TITCK: tr_cov,
         OPENFDA: {**by_type, "malformed_ndcs": dict(stats)},
         "ingredient_keys": len(records),
     }
+    fr = [p for p in products if p.source_id == FR_BDPM]
+    if fr:
+        # Homeopathic presentations are findable by name but never counted (Req 12.10, 5.11).
+        plain = [
+            p for p in fr if not any(is_homeopathic_name(i.published_name) for i in p.ingredients)
+        ]
+        out[FR_BDPM] = {
+            **_source_coverage(plain),
+            "homeopathic_presentations_left_out": len(fr) - len(plain),
+            "link_lines": {k: v for k, v in sorted(stats.items()) if k.startswith("bdpm_")},
+        }
+    es = [p for p in products if p.source_id == ES_CIMA]
+    if es:
+        out[ES_CIMA] = _source_coverage(es)
+    return out
