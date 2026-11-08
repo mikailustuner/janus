@@ -370,7 +370,7 @@ Used by rows: 58 (index).
 
 | Pattern | Match | Scope | Basis | Note |
 |---|---|---|---|---|
-| `J01DH` | include | pipc | pharmacology | Row 58 index. Meropenem, ertapenem, doripenem and others. Imipenem is marketed only with cilastatin and its only code (J01DH51) is a combination code, so imipenem matches only once resolution gives the imipenem ingredient an ingredient-level code (listed for review). |
+| `J01DH` | include | pipc | pharmacology | Row 58 index. Meropenem, ertapenem, doripenem and others. Imipenem is marketed only with cilastatin and its only WHO code (J01DH51) is a combination code; it reaches this class through the one reviewed pair (key J2, code J01DH51) of drug-resolution `data/component_codes.csv` (owner decision 2026-11-08, built in drug-resolution task 27). Cilastatin gets no carbapenem code. |
 
 ### `ccb`
 
@@ -877,8 +877,11 @@ decision there changed them.
 - **Row 56 (`vestibular_suppressant`).** Betahistine and cinnarizine are included (common for
   dizziness, and ThinkCascades gives betahistine as an example); benzodiazepines are left out.
 - **Row 57.** Saliva substitutes have no ingredient-level code; not matchable.
-- **Row 58 (`carbapenem`).** Imipenem's only code is the combination code J01DH51, so imipenem will
-  not match until resolution gives the imipenem ingredient its own code. PIPC names imipenem.
+- **Row 58 (`carbapenem`).** Imipenem's only code is the combination code J01DH51. *Resolved
+  2026-11-08 (owner decision, option b; `drug-resolution` DP43, task 27):* the reviewed pair (key
+  `J2` imipenem, code `J01DH51`) in `data/component_codes.csv` lets that one code reach the engine
+  for that one key; WHOCC `J01DH` page re-checked 2026-11-08 (index updated 2026-01-20): no code for
+  imipenem alone. Cilastatin gets no carbapenem code. PIPC names imipenem.
 - **Row 65 (`iron_oral`).** B03AB02 is excluded because Wikidata puts it on intravenous iron
   sucrose; the oral form has 0 TİTCK rows.
 - **Codes verified on WHOCC but absent from the local artifacts** (no TİTCK row, no Wikidata item
@@ -912,8 +915,8 @@ The questions of the draft and the owner's answers. All are applied to the files
    cascade. *Decision:* agreed.
 5. **Not-matchable roles.** *Decision:* row 57 (saliva substitute) gets no proxy (pilocarpine as a
    stand-in would be a guess); it stays not matchable and is shown as "cannot be checked". Row 27
-   (bismuth subsalicylate) likewise. Imipenem (row 58): a `drug-resolution` follow-up is
-   recorded so the imipenem ingredient gets an ingredient-level carbapenem code.
+   (bismuth subsalicylate) likewise. Imipenem (row 58): decided on 2026-11-08 as a reviewed
+   component-code pair (`J2`, `J01DH51`) in `drug-resolution`, built in its task 27.
 6. **Broad marker choices.** *Decision:* all confirmed as drafted: sleep agents including
    benzodiazepine anxiolytics, trazodone and OTC antihistamines (rows 12, 25, 59); heart-failure
    agents limited to diuretics and a few others (row 54); antiarrhythmics limited to class I/III

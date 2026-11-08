@@ -163,6 +163,14 @@ def _like_prefix(key: str) -> str:
     return key.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_") + "%"
 
 
+def component_pairs(conn: psycopg.Connection, dataset_id: str) -> frozenset[tuple[str, str]]:
+    """The reviewed (key, combination code) pairs of this dataset (design DP43)."""
+    rows = conn.execute(
+        "SELECT key, code FROM res_component_code WHERE dataset_id = %s", (dataset_id,)
+    ).fetchall()
+    return frozenset((str(r[0]), str(r[1])) for r in rows)
+
+
 def combination_codes(conn: psycopg.Connection, dataset_id: str) -> frozenset[str]:
     """Codes the loader classified as combination codes in this dataset (design §5.4)."""
     rows = conn.execute(

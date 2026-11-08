@@ -94,6 +94,7 @@ class ResolvedIngredient(_Out):
             "anatomical_group",
             "route_group",
             "all_codes",
+            "component_code",
         ]
         | None
     )

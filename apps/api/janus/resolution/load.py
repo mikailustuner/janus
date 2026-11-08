@@ -20,7 +20,7 @@ import json
 import re
 import sys
 from collections.abc import Callable, Iterable, Mapping, Sequence
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any, cast
 
@@ -35,6 +35,7 @@ from janus.resolution import (
     anion_acid,
     atc,
     canonical,
+    component_codes,
     matching,
     name_lists,
     names,
@@ -44,6 +45,7 @@ from janus.resolution import (
 )
 from janus.resolution.anion_acid import AnionAcidTable
 from janus.resolution.atc import DATA_DIR, CombinationRules, RouteMap
+from janus.resolution.component_codes import ComponentCode, parse_component_codes, version_of
 from janus.resolution.prepare import (
     JANUS_CURATED,
     OPENFDA,
@@ -75,6 +77,7 @@ SCHEMAS: dict[str, frozenset[str]] = {
 REGISTRY_ID: dict[str, str] = {FR_BDPM: "bdpm", ES_CIMA: "cima"}
 SYNONYMS_FILE = DATA_DIR / "ingredient_synonyms.csv"
 CURATED_FILE = DATA_DIR / "janus_ingredients.csv"
+COMPONENT_FILE = DATA_DIR / "component_codes.csv"
 CURATED_HEADER = [
     "key", "label_en", "label_tr", "label_de", "label_fr", "label_es", "atc_codes", "added_on",
     "note",
@@ -82,7 +85,18 @@ CURATED_HEADER = [
 CURATED_KEY = re.compile(r"^J[1-9][0-9]{0,5}$")
 CURATED_SCHEMA = "janus_ingredients-1"
 REGISTRY_FILE = DATA_DIR.parent / "pipelines" / "sources.toml"
-_CODE_MODULES = (anion_acid, atc, canonical, matching, name_lists, names, ndc, prepare, prepare_eu)
+_CODE_MODULES = (
+    anion_acid,
+    atc,
+    canonical,
+    component_codes,
+    matching,
+    name_lists,
+    names,
+    ndc,
+    prepare,
+    prepare_eu,
+)
 
 type Hook = Callable[[str], None]
 
@@ -160,8 +174,11 @@ class Curated:
     added_on: str = ""
 
 
-def parse_curated(text: str) -> Curated:
-    """Pure. Refuses a bad header, key, code or date; names the row, never the content."""
+def parse_curated(text: str, codeless: frozenset[str] = frozenset()) -> Curated:
+    """Pure. Refuses a bad header, key, code or date; names the row, never the content.
+
+    A key in `codeless` (a key of `data/component_codes.csv`) may have no `atc_codes`: its one
+    code is the reviewed combination-code pair (DP43)."""
     reader = csv.DictReader(io.StringIO(text))
     if reader.fieldnames != CURATED_HEADER:
         raise LoadError("janus_ingredients.csv: header is not the expected one")
@@ -173,7 +190,9 @@ def parse_curated(text: str) -> Curated:
         codes = [c.strip() for c in (r["atc_codes"] or "").split(";") if c.strip()]
         if not CURATED_KEY.fullmatch(key) or key in seen:
             raise LoadError(f"janus_ingredients.csv row {n}: bad or repeated key")
-        if not codes or not all(atc.is_ingredient_level(c) for c in codes):
+        if (not codes and key not in codeless) or not all(
+            atc.is_ingredient_level(c) for c in codes
+        ):
             raise LoadError(f"janus_ingredients.csv row {n}: codes must be ingredient-level")
         if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", r["added_on"] or "") or not r["label_en"]:
             raise LoadError(f"janus_ingredients.csv row {n}: missing label or date")
@@ -188,8 +207,20 @@ def parse_curated(text: str) -> Curated:
     return Curated(tuple(rows), digest, max(dates) if dates else "")
 
 
-def read_curated(path: Path = CURATED_FILE) -> Curated:
-    return parse_curated(path.read_text(encoding="utf-8")) if path.is_file() else Curated()
+def read_curated(path: Path = CURATED_FILE, codeless: frozenset[str] = frozenset()) -> Curated:
+    return (
+        parse_curated(path.read_text(encoding="utf-8"), codeless) if path.is_file() else Curated()
+    )
+
+
+def read_component_codes(path: Path = COMPONENT_FILE) -> tuple[ComponentCode, ...]:
+    """The reviewed (key, combination code) pairs; an invalid file refuses the load."""
+    if not path.is_file():
+        return ()
+    try:
+        return parse_component_codes(path.read_text(encoding="utf-8"))
+    except atc.RulesFileError as exc:
+        raise LoadError(str(exc)) from exc
 
 
 def code_version() -> str:
@@ -210,6 +241,7 @@ class Inputs:
     cadences: Mapping[str, int | None] = field(default_factory=dict[str, int | None])
     curated: Curated = field(default_factory=Curated)
     acid: AnionAcidTable = field(default_factory=AnionAcidTable)
+    component_codes: tuple[ComponentCode, ...] = ()
 
     def describe(self) -> dict[str, Any]:
         syn = hashlib.sha256(json.dumps(self.synonyms, ensure_ascii=False).encode()).hexdigest()
@@ -229,6 +261,11 @@ class Inputs:
             "anion_acid": self.acid.version,
             "cadences": dict(sorted(self.cadences.items())),
             "curated_keys": self.curated.sha256,
+            "component_codes": version_of(
+                json.dumps([asdict(c) for c in self.component_codes], sort_keys=True)
+                if self.component_codes
+                else ""
+            ),
             "country_table": hashlib.sha256(repr(GS1_PREFIXES).encode()).hexdigest(),
             "code": self.code,
         }
@@ -261,6 +298,11 @@ def gather(
     for s in artifacts:
         rid = REGISTRY_ID.get(s, s)
         cadences[s] = sources[rid].cadence_days if rid in sources else None
+    components = read_component_codes()
+    curated = read_curated(codeless=frozenset(c.key for c in components))
+    unknown = {c.key for c in components} - {str(r["qid"]) for r in curated.rows}
+    if unknown:
+        raise LoadError("component_codes.csv: a key is not a curated Janus key")
     return Inputs(
         artifacts,
         rules or CombinationRules.load(),
@@ -268,8 +310,9 @@ def gather(
         (*read_synonyms(), *read_local_synonyms(data_dir)) if synonyms is None else synonyms,
         code_version(),
         cadences,
-        read_curated(),
+        curated,
         AnionAcidTable.load(),
+        components,
     )
 
 
@@ -277,7 +320,9 @@ def prepare_inputs(inputs: Inputs) -> PreparedDataset:
     try:
         return _prepare(inputs)
     except atc.RulesFileError as exc:
-        raise LoadError(f"data/anion_acid_forms.csv: {exc}") from exc
+        text = str(exc)
+        named = text.startswith("component_codes.csv")  # the message names its own file
+        raise LoadError(text if named else f"data/anion_acid_forms.csv: {text}") from exc
 
 
 def _prepare(inputs: Inputs) -> PreparedDataset:
@@ -290,6 +335,7 @@ def _prepare(inputs: Inputs) -> PreparedDataset:
         inputs.synonyms,
         inputs.curated.rows,
         inputs.acid,
+        component_codes=inputs.component_codes,
         fr_rows=inputs.artifacts[FR_BDPM].rows if FR_BDPM in inputs.artifacts else None,
         es_rows=inputs.artifacts[ES_CIMA].rows if ES_CIMA in inputs.artifacts else None,
     )
@@ -442,6 +488,16 @@ def write_dataset(
         "res_name",
         ("dataset_id", "name_key", "kind", "region", "ref", "display"),
         ((version, n.name_key, n.kind, n.region, n.ref, n.display) for n in ds.names),
+        hook,
+    )
+    _copy(
+        conn,
+        "res_component_code",
+        ("dataset_id", "key", "code", "evidence", "whocc_url", "whocc_date", "note"),
+        (
+            (version, c.key, c.code, c.evidence, c.whocc_url, c.whocc_date, c.note)
+            for c in ds.component_codes
+        ),
         hook,
     )
     _copy(

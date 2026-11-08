@@ -16,12 +16,16 @@
 
 ## 1. Overview
 
+
 Resolution is a lookup over reference data that was prepared ahead of time. All medical decisions
 about identity (which ingredient, which ATC code, is this a combination code) are made by pure
 functions **at load time**, over the whole source, and stored with the dataset version. The
 request path only parses the input, looks up rows in a read-only transaction and assembles the
 result. This makes every mapping measurable (coverage report), reviewable and identical for every
 request against the same dataset version.
+
+*Phase 2 (2026-11-08) adds the French and Spanish sources, the name rules and the imipenem pair on the same footing; its design is §11–§19 and its final measurements are in §19.*
+
 
 ```mermaid
 flowchart LR
@@ -647,6 +651,11 @@ task 24, and Req 13 compares them with these baselines.
 | Imipenem | Wikidata has `imipenem/cilastatin` (J01DH51) and `imipenem/cilastatin/relebactam` (J01DH56), no item for imipenem alone. Products naming imipenem: TİTCK 7, openFDA 13, BDPM 12, Nomenclátor 8. **WHOCC page `J01DH` (fetched 2026-11-08, index last updated 2026-01-20)** lists J01DH51 "imipenem and cilastatin" with the note "Refers to imipenem" and J01DH56; there is no code for imipenem alone | The follow-up's premise fails; options in §19 O1 |
 | Existing structure that Phase 2 builds on | `Region = Literal["TR", "US"]` in `regions/base.py` and `resolution/model.py`; `REGION_SOURCES` maps one source per region (`service.py`); `res_product.region` and `res_source_version.region` already allow `EU` (migration 0002); `res_product_code.kind` allows only `tr_barcode`, `ndc_product9`, `ndc_package11`; `rule_inputs` needs both TR and US sources; `cascades/schemas.py` and `resolution/model.py` hold the candidate-id pattern `^(TR\|US):…`; `cascades/coverage.py` buckets every non-TR product as US; the regions folders `eu_fr`, `eu_es`, `eu_name` exist with an empty `__init__.py` | The change list of §12.1 |
 
+**Final numbers after Phase 2** (tasks 21–27, 2026-11-08) are in §19: the accepted rule data
+(BDPM 82.2 % of occurrences at key level, Nomenclátor 86.1 %, FAERS 86.6 %, TİTCK 84.6 %, openFDA
+Rx 92.4 %), the before/after table of the task 24 checkpoint (all Req 13.4 targets met), the
+FAERS count rebuilds, the residual scan and the imipenem pair.
+
 ## 12. Code layout (additions and changes)
 
 ### 12.1 Changes to existing files (all verified against the repository on 2026-11-08)
@@ -1119,6 +1128,32 @@ the `anhydre`/`anhydr*`/`susuz` hydrate words (owner decision 3).
   because `SODIUM ALGINATE`, `MAGNESIUM ALGINATE` and `CALCIUM PIDOLATE` no longer map to the bare
   acid (`alginate` and `pidolate` are NOT_ALONE words, decision 6). FAERS counts did change as
   intended; no cascade result changed.
+
+**Task 27 (2026-11-08): imipenem, built as decided (option b, DP43).** `data/component_codes.csv`
+holds the one reviewed pair (`J2`, `J01DH51`); the curated key `J2` has no `atc_codes`; migration
+`0010` adds `res_component_code`; `atc_selection` has the value `component_code`; the engine's input
+guard accepts a combination code only as a listed pair. WHOCC `J01DH` page re-checked on 2026-11-08
+(index updated 2026-01-20): `J01DH51` "imipenem and cilastatin" ("Refers to imipenem"), `J01DH56`
+"imipenem, cilastatin and relebactam" ("Refers to imipenem"), no code for imipenem alone.
+On the real dataset (`e9e55772…`): 38 ingredient entries map to `J2` with `component_code`
+(TİTCK 5 products, openFDA 13, BDPM 12, Nomenclátor 8; spellings `imipenem`, `imipenem monohidrat`,
+`IMIPENEM ANHYDROUS`, `IMIPÉNEM ANHYDRE`, `IMIPENEM MONOHIDRATO`); 2 TİTCK products name the
+three-substance combination as one string (`imipenem and enzyme inhibitor`) and stay unmapped
+(Req 12.9: no guess); every cilastatin spelling in the four sources stays unmapped
+(`no_ingredient_key`, 39 entries). `J01DH51` is a combination code by the numbering rule
+everywhere else. FAERS counts rebuilt: the only change is the new key `J2` with 753 reports
+(`IMIPENEM`, `IMIPENEM ANHYDROUS`); no other key moved. Example test: imipenem followed by
+levetiracetam gives a probable `pipc:58` finding with matched code `J01DH51`; cilastatin alone gives
+none. The cascade-engine rule base moved to `8d4881fc…` because the row 58 notes changed.
+
+**Final checkpoint (task 28, 2026-11-08).** All 28 tasks done. Dataset `e9e55772…`, counts build
+`20261108T090051Z-7445632a-e9e55772-bdae`. The coverage numbers of the task 24 table are final; the
+imipenem entries add 38 mapped ingredient entries and no other source number moved. Open items for
+the owner: the pharmacist or physician review of the name rules (decision 10, on
+`docs/pre-launch-checklist.md`); the Spanish final-vowel variant (decision 1, possible later change);
+the cascade-engine follow-up for a curated doxepin key (decision 9); the AI 710–714 confirmation and
+a real French and Spanish box; the 465 BDPM occurrences whose ingredient has no code for the route
+(a list for the pharmacologist, not a defect).
 
 **Task 25 (2026-11-08): the whole-word-part residual on the finished FAERS build.** Re-measured on the Phase 2 build (task 25, `20261108T073432Z-7445632a-26e5d0a0-3706`, scan: an unmapped name that contains a mapped FAERS name of at least five letters as whole words): 268 names, 18,650 occurrences (0.30 % of 6,201,428) for 163 ingredient keys; the same scan on the Phase 1 build finds 385 names, 153,874 occurrences (2.48 %), 212 keys. The earlier estimate (45 ingredients, 8,302 occurrences, 0.13 %) used a narrower scan. Counts rebuilt with the Phase 2 ladder: reports with a mapped ingredient 1,252,900 → 1,281,744 of 1,510,804; occurrences mapped 84.0 % → 86.6 %. `faers_mapping_gap` stays unbuilt (DP36).
 

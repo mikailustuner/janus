@@ -56,7 +56,7 @@ position,index_class,marker_class,unmatchable_role,unmatchable_reason,supporting
 55,opioid,antidepressant,,,,
 56,alpha1_blocker,vestibular_suppressant,,,paper:thinkcascades:drugs_aging_2022,Confirmed in ThinkCascades (same cascade).
 57,urinary_anticholinergic,,marker,no_atc_code,,"Saliva substitutes have no ingredient-level ATC code: they are mixtures (the only code is the catch-all combination code A01AD11) or are sold as devices. Saliva stimulants (pilocarpine N07AX01, cevimeline N07AX03) are a different thing and are not used as a proxy (owner question). Owner decision 2026-11-07: no proxy; the role stays not matchable and is shown as 'cannot be checked'."
-58,carbapenem,anticonvulsant,,,,Imipenem cannot match yet: its only code is the combination code J01DH51. Follow-up recorded for drug-resolution (owner decision 2026-11-07): give the imipenem ingredient an ingredient-level carbapenem code.
+58,carbapenem,anticonvulsant,,,,"Imipenem matches through the reviewed component-code pair (key J2, code J01DH51) of drug-resolution data/component_codes.csv (owner decision 2026-11-08); cilastatin gets no carbapenem code."
 59,corticosteroid_systemic,sleep_agent,,,,"Systemic corticosteroids only; no inhaled, nasal, skin or eye extension (DP8)."
 60,corticosteroid_systemic,antipsychotic,,,,Named in the BMJ 2026 abstract (adjusted sequence ratio).
 61,corticosteroid_systemic,antihypertensive,,,,

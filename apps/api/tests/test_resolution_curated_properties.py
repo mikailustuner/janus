@@ -24,6 +24,7 @@ from janus.resolution.load import (
     LoadError,
     load,
     parse_curated,
+    read_component_codes,
     read_curated,
 )
 from janus.resolution.model import is_homeopathic_product, is_homeopathic_strength
@@ -78,11 +79,16 @@ DIMEN = (
 
 
 def test_p26_real_file_parses() -> None:
-    """Feature: drug-resolution, Property 26. The committed file has dimenhydrinate as J1."""
-    cur = read_curated(CURATED_FILE)
-    (row,) = cur.rows
-    assert (row["qid"], row["atc_codes"], row["label_en"]) == ("J1", ["R06AA11"], "dimenhydrinate")
-    assert cur.added_on == "2026-11-07" and len(cur.sha256) == 64
+    """Feature: drug-resolution, Property 26. The committed file has dimenhydrinate as J1 and, since
+    task 27, imipenem as J2 (no code of its own: its one code is a reviewed component pair)."""
+    pairs = read_component_codes()
+    cur = read_curated(CURATED_FILE, frozenset(c.key for c in pairs))
+    j1, j2 = cur.rows
+    assert (j1["qid"], j1["atc_codes"], j1["label_en"]) == ("J1", ["R06AA11"], "dimenhydrinate")
+    assert (j2["qid"], j2["atc_codes"], j2["label_en"]) == ("J2", [], "imipenem")
+    assert cur.added_on == "2026-11-08" and len(cur.sha256) == 64
+    with pytest.raises(LoadError):  # without the pair file, a key with no code is refused
+        read_curated(CURATED_FILE)
 
 
 @pytest.mark.parametrize(
@@ -160,6 +166,7 @@ def test_p26_curated_key_through_the_database(
         },
     ]
     base = inputs([], us, wd)
+    pairs = read_component_codes()
     load(
         database,
         Inputs(
@@ -169,7 +176,8 @@ def test_p26_curated_key_through_the_database(
             (),
             "t",
             base.cadences,
-            read_curated(),
+            read_curated(codeless=frozenset(c.key for c in pairs)),
+            component_codes=pairs,
         ),
     )
     today = dt.date(2026, 11, 7)

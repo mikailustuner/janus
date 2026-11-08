@@ -400,7 +400,14 @@ def build_report(
     label_tokens = label_tokens_of(items.values())
 
     def build_index(acid: AnionAcidTable | None = None) -> NameIndex:
-        return build_name_index(wikidata, inputs.rules, inputs.synonyms, inputs.curated.rows, acid)
+        return build_name_index(
+            wikidata,
+            inputs.rules,
+            inputs.synonyms,
+            inputs.curated.rows,
+            acid,
+            frozenset(c.key for c in inputs.component_codes),
+        )
 
     sources = load_sources(data_dir)
     report: dict[str, Any] = {

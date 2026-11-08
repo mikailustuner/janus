@@ -52,11 +52,17 @@ class EngineInputError(ValueError):
     """
 
 
-def _validate(items: Sequence[EngineItem], combination_codes: Set[str]) -> None:
+def _validate(
+    items: Sequence[EngineItem],
+    combination_codes: Set[str],
+    component_pairs: Set[tuple[str, str]] = frozenset(),
+) -> None:
+    """A combination code is accepted only as a reviewed (key, code) pair (drug-resolution DP43)."""
     for item in items:
         for ing in item.ingredients:
             for code in ing.codes:
-                if not is_ingredient_code(code) or code in combination_codes:
+                listed = (ing.key, code) in component_pairs
+                if not is_ingredient_code(code) or (code in combination_codes and not listed):
                     raise EngineInputError("non-ingredient or combination code in engine input")
 
 
@@ -116,8 +122,9 @@ def evaluate(
     today: dt.date,
     combination_codes: Set[str] = frozenset(),
     not_checked: Sequence[NotChecked] = (),
+    component_pairs: Set[tuple[str, str]] = frozenset(),
 ) -> EngineResult:
-    _validate(items, combination_codes)
+    _validate(items, combination_codes, component_pairs)
     verdicts = verdict_map(snapshot)
     ext_ids = {i for c in rb.classes.values() for i in c.extension_ids}
     active = frozenset(i for i in ext_ids if verdicts.get(i, NOT_REGISTERED).citable)

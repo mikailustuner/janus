@@ -19,23 +19,41 @@ fetched at runtime and must not be committed; CI fails if one is tracked.
   version** (the index checked was last updated 2026-01-20).
 - `route_atc_groups.csv`: openFDA route of administration → ATC groups a product given by that
   route may carry (`drug-resolution` design §5.5, DP20). Same derivation date and review. Re-review
-  with the combination rules.
+  with the combination rules. Since 2026-11-08 it also holds 24 rows for the French BDPM route
+  strings (exact spelling, lower case, e.g. `orale`, `sous-cutanée`), proposed by the pharmacologist
+  agent in the name-rules review sheet (Appendix C) and accepted by the owner; they select an
+  ingredient's codes for a BDPM product, which has no published ATC code (Req 5.9).
 - `ingredient_synonyms.csv`: published ingredient name → ingredient key, for frequent names the
   matching ladder cannot map (`drug-resolution` DP5). Each row names the evidence it rests on.
   102 rows were added on 2026-11-07 from the PIPC coverage report (cascade-engine task 12),
-  proposed by the pharmacologist agent and approved by the owner.
+  proposed by the pharmacologist agent and approved by the owner; 26 more on 2026-11-08 from the
+  name-rules review (Appendix D of the sheet; 134 rows in total), accepted by the owner. One further
+  row (the Turkish spelling of fenofibric acid) is **not** in the repository: it lives in the optional
+  file `$JANUS_DATA_DIR/resolution/local_synonyms.csv` (same header), which the loader reads and
+  which is part of the dataset version, because a source-derived Turkish string must not be committed.
 - `janus_ingredients.csv`: curated Janus ingredient keys `J<n>` for substances that no
   Wikidata item in the extract covers with an ATC code (`drug-resolution` Req 11.2, DP25).
-  Columns `key,label_en,label_tr,label_de,label_fr,label_es,atc_codes,added_on,note`. First key:
-  J1 dimenhydrinate, `R06AA11` (owner decision 2026-11-07). Codes only, checked by hand on the
-  WHOCC index (URL and date in the note).
+  Columns `key,label_en,label_tr,label_de,label_fr,label_es,atc_codes,added_on,note`. Keys: J1
+  dimenhydrinate, `R06AA11` (owner decision 2026-11-07); J2 imipenem, with **no** `atc_codes` of its
+  own: its one code is the reviewed pair in `component_codes.csv` (owner decision 2026-11-08). Codes
+  only, checked by hand on the WHOCC index (URL and date in the note).
+- `component_codes.csv`: the reviewed (key, combination code) pairs of `drug-resolution` Req 14 and
+  DP43. Columns `key,code,evidence,whocc_url,whocc_date,note`. One row: `J2,J01DH51` (imipenem; the
+  WHOCC `J01DH` page, checked 2026-11-08 and last updated by WHOCC on 2026-01-20, lists only
+  `J01DH51` "imipenem and cilastatin", note "Refers to imipenem"). The code may reach the cascade
+  engine for that key only; for every other ingredient it stays a combination code. The loader refuses
+  a row with a bad key or code, a repeated pair, an empty evidence or note, or a missing WHOCC address
+  or date, and a code that is not a combination code of the dataset. **Re-check the WHOCC page
+  whenever WHOCC publishes a new ATC version.**
 
 - `anion_acid_forms.csv`: reviewed anion-to-acid rows of the `anion_acid` ladder step
   (`drug-resolution` Req 12.7, design §15.4). Columns `lang,anion,acid,note`; `lang` is
-  `tr`, `en`, `fr`, `es` or `any`. **Empty (header only) until the owner has accepted the name-rules
-  review sheet** (`.kiro/specs/drug-resolution/name-rules-review.md`). A row names the evidence it
-  rests on; a code, if discussed, is checked by hand on the WHOCC index (URL and date in the note).
-  There is no generic "-ate → -ic acid" rewrite.
+  `tr`, `en`, `fr`, `es` or `any`. Seven rows, proposed by the pharmacologist agent in the name-rules
+  review sheet (`.kiro/specs/drug-resolution/name-rules-review.md`, Appendix B) and **accepted by the
+  owner on 2026-11-08**; a clinical review has not happened. A row names the evidence it rests on; a
+  code, if discussed, is checked by hand on the WHOCC index (URL and date in the note). There is no
+  generic "-ate → -ic acid" rewrite. The per-language salt and ester word lists of the same review
+  live in code (`apps/api/janus/resolution/name_lists.py`), not here.
 ## Curated evidence files (Janus, Apache-2.0)
 - `evidence_papers.csv`: papers that Janus cites as evidence (`evidence-integrity` design §3.1,
   DP13). Columns: `key` (id part: the evidence id is `paper:<source_id>:<key>`), `doi`,

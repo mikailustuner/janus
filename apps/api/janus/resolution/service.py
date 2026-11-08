@@ -448,6 +448,8 @@ class RuleInputs:
     products: dict[str, ProductCandidate]  # by candidate id; unknown ids are absent
     ingredients: dict[str, IngredientCandidate]  # by QID; unknown QIDs are absent
     combination_codes: frozenset[str]
+    # Reviewed (key, combination code) pairs: the only combination codes the engine may accept.
+    component_pairs: frozenset[tuple[str, str]] = frozenset()
 
 
 def current_dataset_id(conn: psycopg.Connection) -> str | None:
@@ -474,5 +476,9 @@ def rule_inputs(
     wanted = sorted(set(qids))
     ingredients = {c.ingredient_key.qid: c for c in b.ingredient_candidates(wanted, {})}
     return RuleInputs(
-        cur.dataset_id, products, ingredients, repository.combination_codes(conn, cur.dataset_id)
+        cur.dataset_id,
+        products,
+        ingredients,
+        repository.combination_codes(conn, cur.dataset_id),
+        repository.component_pairs(conn, cur.dataset_id),
     )

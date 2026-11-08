@@ -328,3 +328,27 @@ found, what hooks blocked. Three to five lines per day.
 - Pharmacologist agent wrote `name-rules-review.md`. Accepted-set what-if: BDPM 67.6 → 81.9 %, Nomenclátor
   48.1 → 86.1 %, FAERS 84.0 → 86.6 %, TİTCK 84.6 % unchanged. Stopped at task 20 for the owner's review; ten
   decisions listed in the sheet (Section 10). WHOCC has no code for imipenem alone (only J01DH51).
+- Tasks 21–28 (same day, after the owner accepted the sheet): the accepted rule data is enabled (word lists,
+  connectors, the seven anion-acid rows, 24 French route rows, 26 synonym rows, biologic suffix and acid word order on;
+  Spanish final vowel off; aceponate removed from the salt words as its own commit; `anhydre` a hydrate word). Measured
+  after, key level: BDPM 67.6 → 82.2 % of occurrences, Nomenclátor 48.1 → 86.1 %, FAERS 84.0 → 86.6 %, TİTCK 84.6 %
+  unchanged, openFDA Rx 91.7 → 92.4 %; with the ATC requirement of the loader BDPM is 80.5 %. The Istanbul gate and the
+  counts build were re-run: the cascade result is unchanged, FAERS reports with a mapped ingredient grew by 28,844 and
+  three keys lost reports for accepted reasons (hydrocortisone salts moved from the aceponate item to hydrocortisone;
+  `alginate` and `pidolate` salts no longer map to the bare acid).
+- Built: EU product builders and optional BDPM and Nomenclátor artifacts in the loader (213,213 products in the development
+  database); France, Spain and no-open-database adapters with ordered key groups; EU name search; 503 instead of a false
+  "not found" when a needed source is missing; coverage report EU bucket and `member_name_part` hints (hints 343 → 905, of
+  which 271 come from the EU names and 294 from the new kind); imipenem as a reviewed component-code pair (`J2`,
+  `J01DH51`) with migration `0010`, the engine guard and a row 58 example; migration `0009`.
+- Counterexamples and findings: the loader's cleanup of old datasets ran for more than 50 minutes on the development
+  database because deleting a product scanned `res_product_code` without an index (migration `0009`, now about 2 minutes);
+  a French GTIN on a dataset without the BDPM used to give a "region adapter not available" notice and now gives 503
+  (test changed); the route rule keeps the iodine of iodinated contrast agents and intravenous glutamic acid from taking
+  the antiseptic and digestive codes (465 BDPM occurrences stay unmapped on purpose); the whole-word-part residual in FAERS
+  re-measured at 0.30 % (2.48 % with the Phase 1 ladder; the earlier 0.13 % came from a narrower scan); an unquoted comma in
+  a note broke the cascade rule-base loader for one row (refused loudly, fixed by quoting); a Turkish synonym string had
+  reached the sheet and a test and was removed in a follow-up commit (it stays in the history of one commit).
+- Tests: 672 API tests (0 skipped) including property tests for the EU builders (P29, P41–P47), adapters (P27, P30–P33), name rules,
+  FAERS builder suffix counting and the component pair (P48), with the real-data tests run locally against the
+  development database. Decisions and numbers: `.kiro/specs/drug-resolution/design.md` §19.

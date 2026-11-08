@@ -684,7 +684,12 @@ def main(argv: Sequence[str] | None = None) -> int:
             a.verify()
         wikidata = inputs.artifacts[resolution_load.WIKIDATA].rows
         index = build_name_index(
-            wikidata, inputs.rules, inputs.synonyms, inputs.curated.rows, inputs.acid
+            wikidata,
+            inputs.rules,
+            inputs.synonyms,
+            inputs.curated.rows,
+            inputs.acid,
+            frozenset(c.key for c in inputs.component_codes),
         )
         described = inputs.describe()
         result = build_counts(

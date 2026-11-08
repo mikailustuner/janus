@@ -18,8 +18,12 @@ defers a check to launch.
   (`.kiro/specs/drug-resolution/name-rules-review.md`). The owner accepted the sheet; a clinical review has not happened.
   Also: confirm the GS1 company-prefix ranges of the country table (France, Spain, Germany; add other EU countries only
   from the GS1 prefix list); test the French and Spanish adapters with a real box; check that the client shows the BDPM and
-  AEMPS attribution, the update date and the "not endorsed" wording; re-check the WHOCC `J01DH` page for imipenem if the
-  owner chose a component-code exception.
+  AEMPS attribution, the update date and the "not endorsed" wording; re-check the WHOCC `J01DH` page for imipenem (the
+  owner chose a component-code exception, `data/component_codes.csv`; last checked 2026-11-08).
+  The prefix table in `apps/api/janus/regions/base.py` was verified on 2026-11-08 against a secondary copy (the Wikipedia
+  list of GS1 country codes), because gs1.org was not readable from the research environment: confirm it against the
+  GS1 list. AI 710 to 714 are still unconfirmed (see the item above). The Spanish final-vowel name rule is left off
+  (owner decision 1) and stays a possible later change (`drug-resolution` design §19).
 - [ ] **Pharmacist or physician review of the whole event mapping.** The Janus event vocabulary
   (`apps/api/janus/memory/memory_events.csv`: 34 adverse keys with their PT lists, 5 benefit keys) was drafted by the AI
   assistant, reviewed by the pharmacologist agent and accepted by the project owner on 2026-11-08. A pharmacist or

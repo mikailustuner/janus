@@ -83,6 +83,7 @@ RES_TABLES = (
     "res_ingredient",
     "res_name",
     "res_combination_atc",
+    "res_component_code",
     "res_coverage",
 )
 

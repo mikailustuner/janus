@@ -610,6 +610,13 @@ P1–P7 are the seven original properties; P8–P22 were added in the refinement
   item with `N06AA12`), so FAERS `DOXEPIN` is now ambiguous at name level. Planned, not done: a
   curated Janus key for doxepin whose codes make it a member of the tricyclic group `N06AA`
   (row 33-35 index). No change now.
+- **Task 27 of `drug-resolution` (2026-11-08): DP23 built.** `evaluate(..., component_pairs)`
+  and `RuleInputs.component_pairs` carry the reviewed pairs of `res_component_code`; `_validate`
+  accepts a combination code only as a listed (key, code) pair, and the same code on any other
+  key is refused (`EngineInputError`). The carbapenem class, its patterns and the rule rows are
+  unchanged; only the notes of `cascade_classes.csv` and `pipc_rules.csv` for row 58 changed (the
+  rule base version moved with them). Example test: imipenem (key `J2`) followed by levetiracetam
+  is a probable `pipc:58` finding with matched code `J01DH51`; cilastatin alone gives none.
 - **Task 26 of `drug-resolution` (2026-11-08): measured.** Dataset `904d9771…` (TR, US, FR, ES),
   rule base `472f35a9…`. Hints in total: 343 on the previous dataset (TR and US, Phase 1 name
   rules); 340 on the same TR and US rows with the Phase 2 name rules; 611 with the 50,000 EU

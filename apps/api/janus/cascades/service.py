@@ -132,7 +132,9 @@ def evaluate_request(
         unchecked += nc
     if bad:
         raise InvalidItemsError(sorted(set(bad)))
-    result = evaluate(items, rb, snapshot, today, found.combination_codes, unchecked)
+    result = evaluate(
+        items, rb, snapshot, today, found.combination_codes, unchecked, found.component_pairs
+    )
     return _out(
         result, rb.version, current, snapshot.version(), format_month(now), rb.window_months
     )

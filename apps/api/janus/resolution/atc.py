@@ -16,7 +16,7 @@ import csv
 import hashlib
 import io
 import re
-from collections.abc import Iterable, Mapping
+from collections.abc import Collection, Iterable, Mapping
 from dataclasses import dataclass
 from enum import StrEnum
 from pathlib import Path
@@ -143,9 +143,13 @@ class CombinationCodeLeakError(AssertionError):
     """A combination code was about to be emitted as an ingredient code (Req 5.2)."""
 
 
-def assert_no_combination(codes: Iterable[str], check: CombinationCheck) -> None:
+def assert_no_combination(
+    codes: Iterable[str], check: CombinationCheck, allowed: Collection[str] = frozenset()
+) -> None:
+    """`allowed` holds the codes of the reviewed (key, code) pairs of the ingredient being
+    checked (design DP43); any other combination code is a leak."""
     for code in codes:
-        if check.is_combination(code) or not is_ingredient_level(code):
+        if not is_ingredient_level(code) or (check.is_combination(code) and code not in allowed):
             raise CombinationCodeLeakError("combination or non-ingredient code in output")
 
 
@@ -215,7 +219,12 @@ def ingredient_codes(
 
 
 Selection = Literal[
-    "single_ingredient_product", "therapeutic_group", "anatomical_group", "route_group", "all_codes"
+    "single_ingredient_product",
+    "therapeutic_group",
+    "anatomical_group",
+    "route_group",
+    "all_codes",
+    "component_code",  # a reviewed (key, combination code) pair, data/component_codes.csv
 ]
 UnmappedReason = Literal["no_ingredient_atc", "no_ingredient_atc_for_route"]
 

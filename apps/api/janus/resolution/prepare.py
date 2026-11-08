@@ -27,6 +27,7 @@ from janus.resolution.atc import (
     select_codes,
 )
 from janus.resolution.canonical import canonical_line
+from janus.resolution.component_codes import ComponentCode, validate_against_dataset
 from janus.resolution.matching import IndexItem, Match, NameIndex, label_keys, map_name
 from janus.resolution.name_lists import Lang
 from janus.resolution.names import fold
@@ -139,6 +140,7 @@ class PreparedDataset:
     names: tuple[NameEntry, ...]
     combination_audit: Mapping[str, str]
     coverage: Mapping[str, Any]
+    component_codes: tuple[ComponentCode, ...] = ()
 
 
 def _ordered(rows: Iterable[Row]) -> list[Row]:
@@ -277,9 +279,11 @@ def eligible_items(
     wikidata_rows: Sequence[Row],
     rules: CombinationRules,
     curated_rows: Sequence[Row] = (),
+    component_keys: frozenset[str] = frozenset(),
 ) -> tuple[dict[str, Row], frozenset[str], CombinationCheck]:
     """Eligible ingredient keys: items with >= 1 ingredient-level, non-combination code, with
-    the curated Janus keys added. Returns (items by key, all Wikidata codes, base check).
+    the curated Janus keys added (a curated key whose only code is a reviewed component pair is
+    eligible too, DP43). Returns (items by key, all Wikidata codes, base check).
 
     The observation rule only flags codes that no Wikidata item carries, so eligibility is the
     same under the full check computed later in `prepare_dataset`.
@@ -290,7 +294,9 @@ def eligible_items(
     items: dict[str, Row] = {}
     for r in all_rows:
         codes = _strs(r.get("atc_codes"))
-        if any(is_ingredient_level(c) and not base.is_combination(c) for c in codes):
+        if str(r["qid"]) in component_keys or any(
+            is_ingredient_level(c) and not base.is_combination(c) for c in codes
+        ):
             items[str(r["qid"])] = r
     return items, wikidata_codes, base
 
@@ -301,10 +307,11 @@ def build_name_index(
     synonyms: Iterable[tuple[str, str]] = (),
     curated_rows: Sequence[Row] = (),
     acid: AnionAcidTable | None = None,
+    component_keys: frozenset[str] = frozenset(),
 ) -> NameIndex:
     """The name index of `prepare_dataset` without the TİTCK bridge (steps 0-5): what any
     caller that maps non-Turkish names (e.g. the FAERS count builder) needs."""
-    items, _codes, _base = eligible_items(wikidata_rows, rules, curated_rows)
+    items, _codes, _base = eligible_items(wikidata_rows, rules, curated_rows, component_keys)
     index = NameIndex.build((index_item(r) for r in items.values()), synonyms, acid=acid)
     index.acid.check_acids(lambda label: label_keys(index, label))
     return index
@@ -322,6 +329,7 @@ def prepare_dataset(
     *,
     fr_rows: Sequence[Row] | None = None,
     es_rows: Sequence[Row] | None = None,
+    component_codes: Sequence[ComponentCode] = (),
 ) -> PreparedDataset:
     """`fr_rows` and `es_rows` are the BDPM and Nomenclátor artifacts; `None` means the source
     is not loaded (no section, no products).
@@ -330,7 +338,8 @@ def prepare_dataset(
     substances that no Wikidata item in the extract covers with a code (owner decision,
     2026-11-07: dimenhydrinate). They behave like items; their codes cite `janus_curated`."""
     curated_keys = frozenset(str(r["qid"]) for r in curated_rows)
-    items, wikidata_codes, base = eligible_items(wikidata_rows, rules, curated_rows)
+    component_keys = frozenset(c.key for c in component_codes)
+    items, wikidata_codes, base = eligible_items(wikidata_rows, rules, curated_rows, component_keys)
     code2q: defaultdict[str, set[str]] = defaultdict(set)
     for qid, r in items.items():
         for c in _strs(r.get("atc_codes")):
@@ -372,6 +381,10 @@ def prepare_dataset(
             if len(keys) >= 2:
                 observed.add(p)
     check = CombinationCheck(rules, frozenset(observed), wikidata_codes)
+    validate_against_dataset(component_codes, check, curated_keys)
+    components: dict[str, tuple[AtcCode, ...]] = {}
+    for c in sorted(component_codes, key=lambda c: c.pair):
+        components[c.key] = (*components.get(c.key, ()), AtcCode(c.code, JANUS_CURATED))
 
     # Codes observed on TİTCK single-ingredient products, per key (lowest product id as ref).
     single: dict[str, dict[str, int]] = defaultdict(dict)
@@ -390,11 +403,14 @@ def prepare_dataset(
             qid,
             {lang: r.get(f"label_{lang}") for lang in LANGS},
             _one_per_code(
-                ingredient_codes(
-                    _strs(r.get("atc_codes")),
-                    observed_single,
-                    check,
-                    JANUS_CURATED if qid in curated_keys else WIKIDATA,
+                (
+                    *ingredient_codes(
+                        _strs(r.get("atc_codes")),
+                        observed_single,
+                        check,
+                        JANUS_CURATED if qid in curated_keys else WIKIDATA,
+                    ),
+                    *components.get(qid, ()),
                 )
             ),
             _strs(r.get("rxcuis")),
@@ -406,17 +422,19 @@ def prepare_dataset(
             raw.product["published_atc"], len(raw.names), tuple(raw.product["routes"])
         )
         ings = tuple(
-            _ingredient(i, name, strength, match, records, ctx, check, route_map, raw)
+            _ingredient(i, name, strength, match, records, ctx, check, route_map, raw, components)
             for i, ((name, strength), match) in enumerate(zip(raw.names, raw.matches, strict=True))
         )
         for ing in ings:
-            assert_no_combination(ing.rule_input(), check)
+            # A reviewed pair is the only combination code that may leave (DP43).
+            allowed = [a.code for a in components.get(ing.qid or "", ())]
+            assert_no_combination(ing.rule_input(), check, allowed)
         products.append(PreparedProduct(**raw.product, ingredients=ings))
 
     names = _name_entries(products, items)
     audit = _audit(products, wikidata_codes, check)
     coverage = _coverage(products, records, items, stats)
-    return PreparedDataset(tuple(products), records, names, audit, coverage)
+    return PreparedDataset(tuple(products), records, names, audit, coverage, tuple(component_codes))
 
 
 def _one_per_code(codes: Iterable[AtcCode]) -> tuple[AtcCode, ...]:
@@ -440,6 +458,7 @@ def _ingredient(
     check: CombinationCheck,
     route_map: RouteMap,
     raw: _Raw,
+    components: Mapping[str, tuple[AtcCode, ...]] = {},
 ) -> PreparedIngredient:
     def unmapped(
         status: Status, reason: Reason | None, keys: tuple[str, ...] = ()
@@ -456,6 +475,14 @@ def _ingredient(
         return unmapped("unmapped", "no_ingredient_key")
     qid = match.keys[0]
     record = records[qid]
+    if qid in components:
+        # The key's only code is a reviewed (key, combination code) pair: it applies to every
+        # product of the key and is cited to the curated file (DP43).
+        return PreparedIngredient(
+            position, name, strength, "mapped", None, qid, (qid,), match.step,
+            components[qid], "component_code", record.rxcuis,
+            "from_wikidata" if record.rxcuis else "not_in_wikidata",
+        )  # fmt: skip
     chosen = select_codes(record.ingredient_atc, ctx, check, route_map)
     codes = _one_per_code(chosen.codes)
     if chosen.selection == "single_ingredient_product":

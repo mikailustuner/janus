@@ -328,7 +328,7 @@
     after; `lithium carbonate` and the atorvastatin solvate now hinted if still unmapped.
   - _Requirements: cascade-engine 8_
 
-- [ ] 27. Imipenem: component-code exception (owner decision 2026-11-08: option (b), DP43)
+- [x] 27. Imipenem: component-code exception (owner decision 2026-11-08: option (b), DP43)
   - `data/janus_ingredients.csv` row `J2` imipenem (labels in five languages, no WHO code of its own
     in `atc_codes`: the loader's rule "codes must be ingredient-level" gets a documented
     exception for a curated key whose only code comes from `component_codes.csv`);
@@ -337,11 +337,11 @@
     `atc_selection = component_code`; `cascades/inputs.py` and `repository.combination_codes`
     accept exactly the listed pairs; re-check the WHOCC `J01DH` page and put URL and date in the
     note. `cascade-engine` DP23 and requirements record the exception.
-  - [ ] 27.1 Property test P48: the pair reaches `rule_input` only for its key; no other ingredient or combination code gets the treatment; loader refusals. _Requirements: 14_
-  - [ ] 27.2 Re-run P7 and the cascade-engine input-guard properties; example: row 58 fires on imipenem, not on cilastatin. _Requirements: 14, 5.2_
+  - [x] 27.1 Property test P48: the pair reaches `rule_input` only for its key; no other ingredient or combination code gets the treatment; loader refusals. _Requirements: 14_
+  - [x] 27.2 Re-run P7 and the cascade-engine input-guard properties; example: row 58 fires on imipenem, not on cilastatin. _Requirements: 14, 5.2_
   - _Requirements: 14_
 
-- [ ] 28. Final checkpoint
+- [x] 28. Final checkpoint
   - All steps green locally and in CI (ruff, format, pyright, pytest `HYPOTHESIS_PROFILE=ci`, `db`
     tests on PostgreSQL 16); commit, push, confirm CI passes.
   - Update design §1/§11 with the final coverage numbers, §19 with the owner's answers;
