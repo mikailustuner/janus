@@ -1,5 +1,8 @@
 """FROZEN copy of the Phase 1 janus.resolution.names (2026-11-08). Do not edit.
 
+One reviewed correction only: `aceponate` and `aseponat` left the salt list on 2026-11-08
+(name-rules review, owner decision 2).
+
 The oracle of drug-resolution P34: for `tr` and `en` and names without Phase 2 words, the
 language-aware functions must return exactly what these functions return.
 """
@@ -56,7 +59,7 @@ SALT_WORDS: frozenset[str] = frozenset(
     anhidrat anhidrus susuz oktahidrat hemiheptahidrat hemipentahidrat dekahidrat
     octahydrate hemiheptahydrate hemipentahydrate decahydrate hbr trifenatat trifenatate
     ksinofoat diglukonat digluconate dietilamonyum diethylammonium dimeglumin dimeglumine
-    malat malate etabonat etabonate aseponat aceponate hemisuksinat hemisuccinate mezilat
+    malat malate etabonat etabonate hemisuksinat hemisuccinate mezilat
     hidrojen hydrogen
     """.split()
 )

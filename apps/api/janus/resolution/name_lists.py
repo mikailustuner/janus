@@ -46,7 +46,7 @@ BASE_SALT_WORDS: frozenset[str] = frozenset(
     anhidrat anhidrus susuz oktahidrat hemiheptahidrat hemipentahidrat dekahidrat
     octahydrate hemiheptahydrate hemipentahydrate decahydrate hbr trifenatat trifenatate
     ksinofoat diglukonat digluconate dietilamonyum diethylammonium dimeglumin dimeglumine
-    malat malate etabonat etabonate aseponat aceponate hemisuksinat hemisuccinate mezilat
+    malat malate etabonat etabonate hemisuksinat hemisuccinate mezilat
     hidrojen hydrogen
     """.split()
 )

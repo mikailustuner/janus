@@ -513,6 +513,25 @@ cases and why each is acceptable:
 10. **Public claims.** Pharmacist or physician review is still needed before anything is said
     publicly about these rules.
 
+## 10a. The `aceponate` correction, applied 2026-11-08 (owner decision 2, own commit)
+
+`aceponate` and `aseponat` were removed from `BASE_SALT_WORDS` (they have codes of their own on
+WHOCC D07AC: methylprednisolone aceponate D07AC14, hydrocortisone aceponate D07AC16). Snapshot with
+nothing else changed (`coverage-aceponate-5f2a514f.json`, compared with the baseline `f55a79cf`):
+17 names change, none of them to an unmapped or ambiguous state except the one noted.
+
+| Source | Names | Old key | New key | Occurrences |
+|---|---|---|---|---|
+| TİTCK | 3 spellings of hydrocortisone (acetate, sodium succinate, valerate forms; the exact strings are in `.data/resolution/aceponate-changes.txt`, not here) | Q15409432 hydrocortisone aceponate (D07AC16, topical) | Q190875 hydrocortisone (labelled "cortisol"; H02AB09, systemic) | 12 + 2 + 1 |
+| TİTCK | 1 spelling of methylprednisolone aceponate (found while checking; the sheet had said 3 names) | Q417222 methylprednisolone | Q6824052 methylprednisolone aceponate (D07AC14, topical; the right substance) | 11 |
+| openFDA | 4 hydrocortisone salt names; 1 more name becomes mapped | Q15409432 | Q190875 | 36 changed, +143 newly mapped |
+| FAERS | 6 hydrocortisone salt names; 1 ambiguous name becomes mapped (methylprednisolone) | Q15409432 | Q190875 | 5,228 changed, +86 newly mapped |
+| BDPM | 1 name (hydrocortisone aceponate) | Q15409432 | unmapped (1 occurrence; its own item is only reached through the French label) | 1 |
+
+Test: `tests/test_aceponate_correction.py` (synthetic items: hydrocortisone acetate, sodium succinate
+and valerate map to hydrocortisone, not the aceponate item; and, locally with the real extract, the
+mapped item has H02AB09). The frozen Phase 1 oracle of P34 carries the same correction.
+
 ## Appendix A. Word lists (Python style, as for `name_lists.py`)
 
 ```python
