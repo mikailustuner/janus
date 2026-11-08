@@ -690,6 +690,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             inputs.curated.rows,
             inputs.acid,
             frozenset(c.key for c in inputs.component_codes),
+            inputs.code_exclusions,
         )
         described = inputs.describe()
         result = build_counts(

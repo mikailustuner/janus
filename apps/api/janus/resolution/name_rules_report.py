@@ -387,7 +387,9 @@ def build_report(
     data_dir: Path, inputs: Inputs, *, min_occurrences: int = 20, top: int = 120
 ) -> dict[str, Any]:
     wikidata = inputs.artifacts["wikidata"].rows
-    items, _codes, base_check = eligible_items(wikidata, inputs.rules, inputs.curated.rows)
+    items, _codes, base_check = eligible_items(
+        wikidata, inputs.rules, inputs.curated.rows, code_exclusions=inputs.code_exclusions
+    )
     codes_of_key = {
         q: frozenset(
             c
@@ -407,6 +409,7 @@ def build_report(
             inputs.curated.rows,
             acid,
             frozenset(c.key for c in inputs.component_codes),
+            inputs.code_exclusions,
         )
 
     sources = load_sources(data_dir)

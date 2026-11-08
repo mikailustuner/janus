@@ -541,6 +541,11 @@ P1–P3 and the regional, layer and "people" properties repeat the first seed's 
 ## 12. Open items
 Owner decisions of 2026-11-08 are applied: DP12 (dataset-level citation), migration `0007` (DP17), the Evans paper (verified in Crossref; `evans_2001`; criteria named "Evans criteria (Yates-corrected χ²)"), and the owner's review of the PT lists (all 39 keys `active`, DP23; the key path, the finding hook and donations use them).
 
+Rebuild after the ATC code exclusions (`drug-resolution` Req 15, 2026-11-08): the FAERS counts were rebuilt
+(`20261108T130944Z-7445632a-7db3a513-7f67`). Only three keys lost their counts (Q22075864 230 reports, Q419020 80, Q422241
+29); the reports with a mapped ingredient fell by 45 (1,281,798 → 1,281,753); no other ingredient's counts changed. The
+event counts of 127 rows changed through the new denominator. Details: `.kiro/specs/drug-resolution/atc-code-review.md` §5.
+
 Open:
 1. **Pharmacist or physician review of the whole mapping** before any public claim; native-speaker check of labels and messages (both on `docs/pre-launch-checklist.md`).
 2. Decided 2026-11-08: the three further safety lines (DP24 below), regional crisis and emergency numbers in the catalogue, the adrreports.eu link, the MedDRA notice wording, US spelling of English labels, and the deferral of `faers_mapping_gap` to `drug-resolution` (decided there: not built, §8.2). Re-checks before launch (numbers, link, MSSO terms) are on the checklist.

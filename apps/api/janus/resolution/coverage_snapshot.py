@@ -226,6 +226,7 @@ def take_snapshot(data_dir: Path, inputs: Inputs) -> tuple[dict[str, Any], dict[
         inputs.curated.rows,
         inputs.acid,
         frozenset(c.key for c in inputs.component_codes),
+        inputs.code_exclusions,
     )
     summary: dict[str, Any] = {
         "version": SNAPSHOT_VERSION,

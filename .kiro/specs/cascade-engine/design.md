@@ -697,3 +697,15 @@ P1–P7 are the seven original properties; P8–P22 were added in the refinement
   code (J1 and trimethobenzamide, whose Wikidata item carries no `R06AA11`), so those rows are
   `ambiguous` instead of being mapped wrongly to trimethobenzamide as before. The three real
   dimenhydrinate products map to J1. Gate 1 is unchanged: rows 5, 6, 9 and 12.
+
+## 13. Effect of the ATC code exclusions (2026-11-08)
+`drug-resolution` Req 15 / DP45 removes twelve wrong codes from ingredient keys (`data/atc_code_exclusions.csv`,
+`.kiro/specs/drug-resolution/atc-code-review.md`). Effect on this spec, measured on the development database:
+- Gate 1 (rows 5, 6, 9 and 12) is unchanged; the real-data tests pass.
+- Class roles lost: ketoconazole (marker in rows 9 and 40, index in rows 51–54, matched before through ketoprofen's code),
+  mefenamic acid (index in row 55, abrupt-stop warning; tramadol's code), esomeprazole (index in row 31, abrupt-stop
+  warning; the former pregabalin code), JWH-018 (marker in row 9) and the ferric citrate item Q22075864 (marker in row 49,
+  index in row 65). These were false matches; a finding or warning that used them no longer appears.
+- The gabapentin (`N03AX12`) and pregabalin (`N03AX16`) codes stay in the `gabapentinoid` class on purpose; the exclusion
+  of `N03AX16` applies to esomeprazole only.
+- Open: re-run the coverage report after the next dataset change; the class lists above are not edited.

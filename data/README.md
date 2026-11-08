@@ -46,6 +46,16 @@ fetched at runtime and must not be committed; CI fails if one is tracked.
   or date, and a code that is not a combination code of the dataset. **Re-check the WHOCC page
   whenever WHOCC publishes a new ATC version.**
 
+- `atc_code_exclusions.csv`: reviewed (key, ATC code, source) triples to drop from an ingredient key's codes
+  (`drug-resolution` Req 15, DP45; found by the `doctor-loop` glossary review, 2026-11-08). Columns
+  `key,code,source,reason,evidence,whocc_url,whocc_date,note`. `source` is `wikidata` (the item's own code) or
+  `titck` (the code of a TİTCK single-ingredient product, which stays on the product as published but does not
+  become the ingredient's code). `reason` is `wrong_substance` (the code names another substance), `old_code` (no
+  longer in the index) or `not_a_medicine`. Twelve rows, each checked by hand against the WHOCC group page (address and
+  date in the row; no index text is copied) and, where the substance is on the US market, against RxClass. Codes
+  only, no product names. The loader refuses a bad row and a stale one (a code its source no longer gives the key).
+  Review report: `.kiro/specs/drug-resolution/atc-code-review.md`. **Re-check it whenever WHOCC publishes a new ATC
+  version or a source is corrected.**
 - `anion_acid_forms.csv`: reviewed anion-to-acid rows of the `anion_acid` ladder step
   (`drug-resolution` Req 12.7, design §15.4). Columns `lang,anion,acid,note`; `lang` is
   `tr`, `en`, `fr`, `es` or `any`. Seven rows, proposed by the pharmacologist agent in the name-rules

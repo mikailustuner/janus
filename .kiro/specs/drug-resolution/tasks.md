@@ -353,3 +353,13 @@
     `docs/kiro-usage.md` dated entry (what was built, counterexamples found by the property tests and
     how they were fixed, owner decisions, open items).
   - _Requirements: 4, 5.8–5.11, 9.7–9.9, 12, 13, 14_
+
+- [x] 29. Wrong ATC codes on ingredient keys (Req 15, DP45; owner decision 2026-11-08, done before `doctor-loop` task 16)
+  - `data/atc_code_exclusions.csv` and `resolution/code_exclusions.py`; threaded through `eligible_items`, `build_name_index`,
+    `prepare_dataset`, the loader (`Inputs.code_exclusions`, part of the dataset version), the FAERS builder, the coverage
+    snapshot and the name-rule report. Cross-check of every in-scope key (RxClass, shared codes, WHOCC group pages) in
+    `atc-code-review.md`; twelve entries.
+  - [x] 29.1 Property tests P49 and P50 (`tests/test_code_exclusions_properties.py`). _Requirements: 15_
+  - [x] 29.2 Reload the development dataset and rebuild the FAERS counts; re-run the local real-data tests (cascade-engine gate 1
+    on the real dataset); record exactly which product ingredients, findings and counts change in `atc-code-review.md` §5.
+    _Requirements: 15.6_

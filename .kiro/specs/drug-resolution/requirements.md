@@ -257,6 +257,17 @@ Turn what the user scans, photographs or types — in Türkiye, the EU or the US
    - Until the key and file are loaded (before task 27), imipenem products resolve as today: `unmapped`, reason `no_ingredient_key`, shown as "cannot be checked".
 3. Cilastatin SHALL NOT receive a carbapenem code, and a test SHALL show that no combination code other than the listed pairs reaches `rule_input` or the engine, for any ingredient (design P48).
 
+### Requirement 15: Wrong ATC codes on ingredient keys *(Phase 2; found by the `doctor-loop` glossary review, owner decision 2026-11-08)*
+**User story:** As the cascade engine, I want an ingredient key to carry only codes that belong to its substance, so that no medicine is put into the wrong cascade class or abrupt-stop group.
+
+#### Acceptance criteria
+1. THE system SHALL read the curated file `data/atc_code_exclusions.csv` (columns `key, code, source, reason, evidence, whocc_url, whocc_date, note`): reviewed (Wikidata key, ATC code, source) triples that are dropped from the key's codes before any selection. `source` is `wikidata` (the item's own code) or `titck` (the published code of a TİTCK single-ingredient product); `reason` is `wrong_substance`, `old_code` or `not_a_medicine`.
+2. THE loader SHALL refuse a bad header, key (not a Wikidata item), code (not seven characters), source, reason, a repeated entry, an empty evidence or note, and a missing WHOCC address or lookup date; messages SHALL name the row only.
+3. A `wikidata` entry SHALL remove the code from the item before eligibility, the name index and the ATC bridge are computed; a key left without an ingredient-level code SHALL leave the name index. A `titck` entry SHALL keep the code on the product as published and SHALL NOT make it one of the ingredient's codes; the product's ingredient then takes the group or all-code selection of design §5.5.
+4. THE system SHALL refuse the build when an entry names a code its source does not give the key (stale entry).
+5. THE file SHALL be part of the dataset version, so a change builds a new dataset; the FAERS count builder SHALL read the same exclusions.
+6. THE review that produced the file SHALL be recorded (`atc-code-review.md`): the checks and their coverage, every mismatch with its disposition, and the measured effect on the dataset, the cascade-engine gate and the FAERS counts. WHOCC pages are used for manual verification only; no index text is stored.
+
 ## Properties to test (PBT candidates)
 - *(Owner decisions 2026-11-07.)* Homeopathic units are detected exactly and a homeopathic product never contributes to a cascade finding; curated Janus keys keep their own codes and cite their source. (Req 11)
 - Parsing is invariant to separator style: FNC1 form and parenthesised form of the same data yield identical results. (Req 1.1)

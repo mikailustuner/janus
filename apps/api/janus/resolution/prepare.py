@@ -27,6 +27,13 @@ from janus.resolution.atc import (
     select_codes,
 )
 from janus.resolution.canonical import canonical_line
+from janus.resolution.code_exclusions import (
+    CodeExclusion,
+    apply_to_rows,
+    carried,
+    check_not_stale,
+    excluded_pairs,
+)
 from janus.resolution.component_codes import ComponentCode, validate_against_dataset
 from janus.resolution.matching import IndexItem, Match, NameIndex, label_keys, map_name
 from janus.resolution.name_lists import Lang
@@ -280,6 +287,7 @@ def eligible_items(
     rules: CombinationRules,
     curated_rows: Sequence[Row] = (),
     component_keys: frozenset[str] = frozenset(),
+    code_exclusions: Sequence[CodeExclusion] = (),
 ) -> tuple[dict[str, Row], frozenset[str], CombinationCheck]:
     """Eligible ingredient keys: items with >= 1 ingredient-level, non-combination code, with
     the curated Janus keys added (a curated key whose only code is a reviewed component pair is
@@ -292,7 +300,9 @@ def eligible_items(
     wikidata_codes = frozenset(c for r in all_rows for c in _strs(r.get("atc_codes")))
     base = CombinationCheck(rules, frozenset(), wikidata_codes)
     items: dict[str, Row] = {}
-    for r in all_rows:
+    # Reviewed wrong codes are dropped from the items (DP45); `wikidata_codes` stays complete so
+    # the combination check sees every code the extract carries.
+    for r in [*apply_to_rows(wikidata_rows, code_exclusions), *curated_rows]:
         codes = _strs(r.get("atc_codes"))
         if str(r["qid"]) in component_keys or any(
             is_ingredient_level(c) and not base.is_combination(c) for c in codes
@@ -308,10 +318,13 @@ def build_name_index(
     curated_rows: Sequence[Row] = (),
     acid: AnionAcidTable | None = None,
     component_keys: frozenset[str] = frozenset(),
+    code_exclusions: Sequence[CodeExclusion] = (),
 ) -> NameIndex:
     """The name index of `prepare_dataset` without the TİTCK bridge (steps 0-5): what any
     caller that maps non-Turkish names (e.g. the FAERS count builder) needs."""
-    items, _codes, _base = eligible_items(wikidata_rows, rules, curated_rows, component_keys)
+    items, _codes, _base = eligible_items(
+        wikidata_rows, rules, curated_rows, component_keys, code_exclusions
+    )
     index = NameIndex.build((index_item(r) for r in items.values()), synonyms, acid=acid)
     index.acid.check_acids(lambda label: label_keys(index, label))
     return index
@@ -330,6 +343,7 @@ def prepare_dataset(
     fr_rows: Sequence[Row] | None = None,
     es_rows: Sequence[Row] | None = None,
     component_codes: Sequence[ComponentCode] = (),
+    code_exclusions: Sequence[CodeExclusion] = (),
 ) -> PreparedDataset:
     """`fr_rows` and `es_rows` are the BDPM and Nomenclátor artifacts; `None` means the source
     is not loaded (no section, no products).
@@ -339,7 +353,9 @@ def prepare_dataset(
     2026-11-07: dimenhydrinate). They behave like items; their codes cite `janus_curated`."""
     curated_keys = frozenset(str(r["qid"]) for r in curated_rows)
     component_keys = frozenset(c.key for c in component_codes)
-    items, wikidata_codes, base = eligible_items(wikidata_rows, rules, curated_rows, component_keys)
+    items, wikidata_codes, base = eligible_items(
+        wikidata_rows, rules, curated_rows, component_keys, code_exclusions
+    )
     code2q: defaultdict[str, set[str]] = defaultdict(set)
     for qid, r in items.items():
         for c in _strs(r.get("atc_codes")):
@@ -396,9 +412,21 @@ def prepare_dataset(
                 pid = raw.product["product_id"]
                 single[qid][p] = min(single[qid].get(p, pid), pid)
 
+    # Reviewed wrong codes of TİTCK single-ingredient products stay on the product as published
+    # but do not become the ingredient's codes (DP45). A stale entry refuses the build.
+    check_not_stale(
+        code_exclusions,
+        carried(wikidata_rows),
+        frozenset((q, c) for q, by_code in single.items() for c in by_code),
+    )
+    titck_drop = excluded_pairs(code_exclusions, "titck")
     records: dict[str, IngredientRecord] = {}
     for qid, r in items.items():
-        observed_single = [(c, TITCK, f"TR:{TITCK}:{pid}") for c, pid in single[qid].items()]
+        observed_single = [
+            (c, TITCK, f"TR:{TITCK}:{pid}")
+            for c, pid in single[qid].items()
+            if (qid, c) not in titck_drop
+        ]
         records[qid] = IngredientRecord(
             qid,
             {lang: r.get(f"label_{lang}") for lang in LANGS},

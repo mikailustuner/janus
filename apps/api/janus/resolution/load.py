@@ -35,6 +35,7 @@ from janus.resolution import (
     anion_acid,
     atc,
     canonical,
+    code_exclusions,
     component_codes,
     matching,
     name_lists,
@@ -45,6 +46,11 @@ from janus.resolution import (
 )
 from janus.resolution.anion_acid import AnionAcidTable
 from janus.resolution.atc import DATA_DIR, CombinationRules, RouteMap
+from janus.resolution.code_exclusions import (
+    CodeExclusion,
+    parse_code_exclusions,
+)
+from janus.resolution.code_exclusions import version_of as exclusions_version
 from janus.resolution.component_codes import ComponentCode, parse_component_codes, version_of
 from janus.resolution.prepare import (
     JANUS_CURATED,
@@ -78,6 +84,7 @@ REGISTRY_ID: dict[str, str] = {FR_BDPM: "bdpm", ES_CIMA: "cima"}
 SYNONYMS_FILE = DATA_DIR / "ingredient_synonyms.csv"
 CURATED_FILE = DATA_DIR / "janus_ingredients.csv"
 COMPONENT_FILE = DATA_DIR / "component_codes.csv"
+EXCLUSIONS_FILE = DATA_DIR / "atc_code_exclusions.csv"
 CURATED_HEADER = [
     "key", "label_en", "label_tr", "label_de", "label_fr", "label_es", "atc_codes", "added_on",
     "note",
@@ -89,6 +96,7 @@ _CODE_MODULES = (
     anion_acid,
     atc,
     canonical,
+    code_exclusions,
     component_codes,
     matching,
     name_lists,
@@ -213,6 +221,16 @@ def read_curated(path: Path = CURATED_FILE, codeless: frozenset[str] = frozenset
     )
 
 
+def read_code_exclusions(path: Path = EXCLUSIONS_FILE) -> tuple[CodeExclusion, ...]:
+    """The reviewed (Wikidata key, wrong code) pairs; an invalid file refuses the load."""
+    if not path.is_file():
+        return ()
+    try:
+        return parse_code_exclusions(path.read_text(encoding="utf-8"))
+    except atc.RulesFileError as exc:
+        raise LoadError(str(exc)) from exc
+
+
 def read_component_codes(path: Path = COMPONENT_FILE) -> tuple[ComponentCode, ...]:
     """The reviewed (key, combination code) pairs; an invalid file refuses the load."""
     if not path.is_file():
@@ -242,6 +260,7 @@ class Inputs:
     curated: Curated = field(default_factory=Curated)
     acid: AnionAcidTable = field(default_factory=AnionAcidTable)
     component_codes: tuple[ComponentCode, ...] = ()
+    code_exclusions: tuple[CodeExclusion, ...] = ()
 
     def describe(self) -> dict[str, Any]:
         syn = hashlib.sha256(json.dumps(self.synonyms, ensure_ascii=False).encode()).hexdigest()
@@ -266,6 +285,7 @@ class Inputs:
                 if self.component_codes
                 else ""
             ),
+            "code_exclusions": exclusions_version(self.code_exclusions),
             "country_table": hashlib.sha256(repr(GS1_PREFIXES).encode()).hexdigest(),
             "code": self.code,
         }
@@ -298,6 +318,7 @@ def gather(
     for s in artifacts:
         rid = REGISTRY_ID.get(s, s)
         cadences[s] = sources[rid].cadence_days if rid in sources else None
+    exclusions = read_code_exclusions()
     components = read_component_codes()
     curated = read_curated(codeless=frozenset(c.key for c in components))
     unknown = {c.key for c in components} - {str(r["qid"]) for r in curated.rows}
@@ -313,6 +334,7 @@ def gather(
         curated,
         AnionAcidTable.load(),
         components,
+        exclusions,
     )
 
 
@@ -336,6 +358,7 @@ def _prepare(inputs: Inputs) -> PreparedDataset:
         inputs.curated.rows,
         inputs.acid,
         component_codes=inputs.component_codes,
+        code_exclusions=inputs.code_exclusions,
         fr_rows=inputs.artifacts[FR_BDPM].rows if FR_BDPM in inputs.artifacts else None,
         es_rows=inputs.artifacts[ES_CIMA].rows if ES_CIMA in inputs.artifacts else None,
     )
