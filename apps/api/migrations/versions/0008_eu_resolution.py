@@ -27,7 +27,7 @@ def upgrade() -> None:
     op.execute("ALTER TABLE res_product_code DROP CONSTRAINT res_product_code_kind")
     op.execute(
         "ALTER TABLE res_product_code ADD CONSTRAINT res_product_code_kind "
-        f"CHECK (kind IN ({NEW_KINDS}))"  # noqa: S608 (constants above)
+        f"CHECK (kind IN ({NEW_KINDS}))"
     )
     op.execute("ALTER TABLE res_product ADD COLUMN status_published text[] NOT NULL DEFAULT '{}'")
 
@@ -46,5 +46,5 @@ def downgrade() -> None:
     op.execute("ALTER TABLE res_product_code DROP CONSTRAINT res_product_code_kind")
     op.execute(
         "ALTER TABLE res_product_code ADD CONSTRAINT res_product_code_kind "
-        f"CHECK (kind IN ({OLD_KINDS}))"  # noqa: S608 (constants above)
+        f"CHECK (kind IN ({OLD_KINDS}))"
     )
