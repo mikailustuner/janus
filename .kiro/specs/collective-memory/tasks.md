@@ -142,7 +142,7 @@
     (what was built, counterexamples found by property tests and how fixed, the latency numbers,
     open items).
 
-- [ ] 14. Final checkpoint
+- [x] 14. Final checkpoint (2026-11-08: 528 passed, CI green on 5647292)
   - Every lint, format, type-check and test step for `apps/api` (full suite with `HYPOTHESIS_PROFILE=ci`
     and PostgreSQL 16, after `alembic upgrade head` on the test database) and `apps/web` (vitest, lint,
     build); the real-data test and benchmark rerun on the rebuilt counts file; hooks clean; commit, push,
