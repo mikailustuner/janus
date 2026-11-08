@@ -352,3 +352,19 @@ found, what hooks blocked. Three to five lines per day.
 - Tests: 672 API tests (0 skipped) including property tests for the EU builders (P29, P41–P47), adapters (P27, P30–P33), name rules,
   FAERS builder suffix counting and the component pair (P48), with the real-data tests run locally against the
   development database. Decisions and numbers: `.kiro/specs/drug-resolution/design.md` §19.
+
+## 2026-11-08: doctor-loop (doctor note and outcome loop, server side)
+- Spec refined in Kiro (EARS requirements, design with 34 properties and 31 decisions, tasks). Owner decisions applied
+  before building: re-derive findings on the server; the QR token carries the finding codes in a signed payload in the URL
+  fragment, so the server keeps only used note-id hashes and the outcomes (a pending server record was rejected); English
+  INN with "name not translated" where a translation is missing; expiry on the Monday five weeks after the issue week.
+- Built (tasks 1–14): binary token with 128-bit truncated HMAC, key rotation and a QR size rule (version 25, level M;
+  the realistic worst case, 20 medicines and 18 findings, needs version 21); five-language glossary mechanism, builder,
+  auditor and `POST /notes/document`; outcome store (migration `0011`), `/notes/token`, `/outcomes/form`, `/outcomes`,
+  `/notes/withdraw`; the outcomes layer of Collective Memory; one disclaimer constant for all API responses. 785 API tests.
+- Property tests found: a ratio of 0.005 printed as 0.00 and 99.95 as 100,0 (rounding fixed); month numerals split
+  differently per language (the auditor now removes rendered parameters before looking for digits); the dev database had
+  no `dataset:faers` record, so notes had no statistics until the integrity loader was rerun.
+- Stopped at task 15: the pharmacologist and localization-reviewer agents reviewed the glossary drafts; twelve decisions in
+  `.kiro/specs/doctor-loop/glossary-review.md`. The pharmacologist also found wrong Wikidata ATC codes on a few
+  ingredient keys (for example ketoconazole with ketoprofen's code), a `drug-resolution` matter.

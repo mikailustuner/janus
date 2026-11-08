@@ -133,6 +133,8 @@
     only). _Requirements: 7.1, 7.2, 7.5_
 
 - [ ] 15. Glossary review and **review stop (owner)**
+  - 2026-11-08: both reviews written (`glossary-pharmacologist-review.md`, `glossary-localization-review.md`); summary and
+    twelve decisions in `glossary-review.md`. Waiting for the owner; no row is `accepted`.
   - Run `agent://pharmacologist` and the localization reviewer (through `agent://wf-coder`, read-only role, report path)
     with self-contained prompts; write `glossary-pharmacologist-review.md`, `glossary-localization-review.md` and the
     summary `glossary-review.md` (counts, flagged rows, the four disclaimer translations, the formatting table, the
