@@ -24,7 +24,11 @@ export type Route =
   | "contributions"
   | "contributions/deletions"
   | "privacy/storage"
-  | "passport/presence";
+  | "passport/presence"
+  | "light/overview"
+  | "light/cards"
+  | "light/validation"
+  | "light/export";
 
 export const ROUTES: readonly Route[] = [
   "resolve/scan",
@@ -47,6 +51,10 @@ export const ROUTES: readonly Route[] = [
   "contributions/deletions",
   "privacy/storage",
   "passport/presence",
+  "light/overview",
+  "light/cards",
+  "light/validation",
+  "light/export",
 ];
 
 export type ApiError =
@@ -95,6 +103,7 @@ export const MESSAGE_KEYS = [
   "Donate.delete.not_found",
   "Donate.delete.invalid_token",
   "Passport.states.error",
+  "Light.errors.unavailable",
 ] as const;
 
 export type MessageKey = (typeof MESSAGE_KEYS)[number];
@@ -190,5 +199,8 @@ export function messageKeyFor(
   // medication-passport §3.3: no partial answer; the screen offers a retry, never "not found".
   if (route === "passport/presence" && status === 503)
     return "Passport.states.error";
+  // light-face design §9: no build or no integrity snapshot (fail closed).
+  if (route.startsWith("light/") && status === 503 && code === "light_unavailable")
+    return "Light.errors.unavailable";
   return "Errors.generic";
 }

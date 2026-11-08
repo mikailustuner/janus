@@ -985,5 +985,136 @@
       "DE": "Alemania",
       "US": "Estados Unidos"
     }
+  },
+  "Light": {
+    "nav": {
+      "open": "Abrir",
+      "back": "Volver a la sección de investigación",
+      "sections": "Páginas de investigación"
+    },
+    "rule7": "Candidato que merece investigarse: no es un tratamiento.",
+    "status": {
+      "experimental": "Experimental: en la comprobación retrospectiva, ninguna reutilización conocida quedó entre los 10 primeros de su afección entre más de 10 candidatos.",
+      "prototype": "Prototipo de investigación: algunas reutilizaciones conocidas se volvieron a encontrar en la comprobación retrospectiva. No es una prueba de que el método funcione con candidatos nuevos."
+    },
+    "review": "Las afecciones, la correspondencia de efectos secundarios y los casos de validación los ha revisado una IA; falta la revisión de expertos.",
+    "researcherOnly": "Para investigadores. Estos candidatos no aparecen en las páginas para pacientes.",
+    "notChecked": "Janus no comprueba si un candidato ya es un uso autorizado del medicamento.",
+    "ties": "Las posiciones iguales se muestran como un intervalo de puestos.",
+    "snapshot": "Datos: OnSIDES {onsides} (publicado el {onsidesDate}), instantánea de FAERS {faers} (trimestres {window}), prospectos de openFDA obtenidos el {openfda}.",
+    "attribution": "Fuentes y licencias",
+    "codes": {
+      "label_effect_meaning": "Los prospectos indican esto como un efecto no deseado. Un efecto no deseado en una afección puede apuntar a un posible uso en otra; eso tiene que probarse en estudios antes de significar algo.",
+      "label_extraction_limits": "Los efectos secundarios proceden de OnSIDES, que los extrae de los prospectos con un modelo de lenguaje; algunos faltan y algunos son erróneos.",
+      "nonspecific_term": "Este efecto secundario también es un signo frecuente de enfermedad o de la toxicidad de un medicamento; por sí solo es un apoyo débil.",
+      "inverse_meaning": "La afección se notifica menos de lo esperado en las notificaciones de FAERS que nombran este medicamento. No es una prueba de que el medicamento proteja frente a ella.",
+      "inverse_reporting_bias": "Sesgo de notificación: un acontecimiento ya conocido de un medicamento se notifica más (sesgo de notoriedad), y una afección que es el motivo por el que se da un medicamento suele registrarse como indicación y no como acontecimiento (sesgo de indicación). Ambos pueden crear u ocultar un número más bajo de lo esperado.",
+      "patient_reported_meaning": "Notificaciones donadas de una mejoría, contadas solo en grupos de 20 o más y con ruido añadido. Las notificaciones no se comprueban.",
+      "patient_layer_unavailable": "Ahora no se pueden contar las notificaciones donadas.",
+      "mechanism_source_not_connected": "Todavía no hay conectada ninguna fuente para un posible mecanismo.",
+      "faers_includes_later_use": "Las notificaciones de FAERS de este periodo se enviaron cuando ya se conocía el uso posterior; este número no lo excluye.",
+      "validation_not_blind": "La correspondencia de efectos secundarios se escribió conociendo estos casos, así que esta comprobación no es ciega.",
+      "export_aggregated": "Solo recuentos agregados. Las notificaciones donadas son datos seudonimizados y solo aparecen como recuentos con ruido de grupos de 20 o más."
+    },
+    "hypotheses": {
+      "title": "Fichas de hipótesis",
+      "intro": "Elija una afección. Cada ficha es un medicamento cuyos efectos secundarios en los prospectos o cuyas notificaciones apuntan a esa afección.",
+      "goal": "Afección",
+      "goalCount": "{count, plural, =0 {sin candidatos} one {# candidato} other {# candidatos}}",
+      "loading": "Cargando los candidatos…",
+      "empty": "No hay candidatos para esta afección en esta instantánea de los datos.",
+      "total": "{total, plural, one {# ficha} other {# fichas}} para {goal}",
+      "removed": "{count, plural, one {# candidato quedó fuera porque sus únicas fuentes se retractaron.} other {# candidatos quedaron fuera porque sus únicas fuentes se retractaron.}}",
+      "inverseCount": "FAERS: {found} resultados más bajos de lo esperado entre {tested} medicamentos con al menos 3 notificaciones de esta afección; solo por azar se esperarían unos {chance}.",
+      "patientOnly": "Notificaciones donadas de una mejoría, sin ficha",
+      "patientOnlyNote": "Todavía no tienen una fuente citada, así que no son fichas de hipótesis.",
+      "showMore": "Mostrar más fichas",
+      "shown": "Se muestran {shown} de {total}"
+    },
+    "card": {
+      "title": "{ingredient} y {goal}",
+      "rank": "Puesto {best} de {population}",
+      "rankTied": "Puesto {best}–{worst} de {population} (empate)",
+      "signals": "Tipos de señal",
+      "signal": {
+        "label_effect": "Efecto secundario en los prospectos",
+        "inverse_faers": "FAERS: se notifica menos de lo esperado",
+        "patient_reported": "Notificaciones donadas de una mejoría"
+      },
+      "labelCounts": "Aparece en {with} de los {total} prospectos de este medicamento (límite inferior de la proporción: {share})",
+      "labelTerms": "Términos de los prospectos: {terms}",
+      "regions": "Aparece en: {regions}",
+      "region": {
+        "US": "Estados Unidos",
+        "EU": "Unión Europea",
+        "UK": "Reino Unido",
+        "JP": "Japón"
+      },
+      "sections": "Apartados: {sections}",
+      "section": {
+        "AR": "reacciones adversas",
+        "WP": "advertencias y precauciones",
+        "BW": "advertencia en recuadro",
+        "NA": "no indicado"
+      },
+      "inverseReports": "{reports, plural, one {# notificación} other {# notificaciones}} con la afección; se esperaban unas {expected} (razón entre observado y esperado: {oe})",
+      "pts": "Términos MedDRA de la afección: {pts}",
+      "faersSnapshot": "Instantánea de FAERS {date}, trimestres {window}",
+      "patientReleased": "Notificaciones donadas (recuento con ruido): {value}",
+      "patientCell": "{region}: {value}",
+      "patientHidden": "{region}: oculto (menos de 20, o no publicable)",
+      "sources": "Fuentes",
+      "sourceStatus": {
+        "ok": "comprobada, sin aviso",
+        "corrected": "corrección publicada",
+        "expression_of_concern": "expresión de preocupación",
+        "unknown": "aún no comprobada",
+        "no_doi": "conjunto de datos (sin DOI)"
+      },
+      "removedSources": "Fuentes no utilizadas",
+      "mechanism": "Posible mecanismo",
+      "details": "Estadística y advertencias"
+    },
+    "validation": {
+      "title": "Validación retrospectiva",
+      "intro": "El método se comprueba con casos fijos y citados de medicamentos que más tarde se usaron para otra afección. Cada caso muestra el puesto del medicamento entre los candidatos de esa afección, con datos que excluyen el uso posterior cuando es posible.",
+      "loading": "Cargando la validación…",
+      "summary": "Pasada principal: {informative} de {cases} casos entre los {k} primeros con más de {k} candidatos. Se esperarían unos {chance} si cada medicamento fuera un candidato al azar.",
+      "sensitivity": "Pasada de sensibilidad (todos los prospectos): {informative} de {cases} casos entre los {k} primeros; se esperarían unos {chance} por azar.",
+      "case": "{ingredient} y {goal}",
+      "original": "Uso original: {use}",
+      "year": "Uso posterior: {year} (año del primer informe o de la autorización)",
+      "primary": "Pasada principal (uso posterior retirado cuando es posible)",
+      "sensitivityRun": "Pasada de sensibilidad (todos los prospectos)",
+      "variants": "Variante (a), prospectos que nombran el uso posterior retirados: {a}. Variante (b), también los prospectos que openFDA no tiene: {b}. Se publica la peor.",
+      "noRank": "sin puesto",
+      "chance": "Un candidato al azar estaría entre los {k} primeros con probabilidad {p}.",
+      "reason": {
+        "hit": "Entre los {k} primeros",
+        "ranked_below_top": "Por debajo de los {k} primeros",
+        "not_a_candidate": "No está entre los candidatos",
+        "no_label_mapping": "Ningún término de efecto secundario apunta a esta afección",
+        "not_evaluable": "No evaluable: no queda ningún prospecto de este medicamento"
+      },
+      "uninformative": "Poco informativo: solo {population} candidatos.",
+      "labels": "Prospectos usados: {used}. Retirados porque nombran el uso posterior: {indication}. Retirados porque openFDA no los tiene: {missing}.",
+      "faers": "FAERS: {reports, plural, one {# notificación} other {# notificaciones}} con la afección; ROR {ror} ({low}–{high}).",
+      "faersNone": "FAERS: sin razón.",
+      "evidence": "Pruebas",
+      "document": "El mismo informe se publica en el repositorio como docs/light-face-validation.md."
+    },
+    "export": {
+      "title": "Exportar el conjunto de datos",
+      "intro": "Todas las fichas de hipótesis de esta instantánea en una tabla: las mismas fichas, números y filtro de integridad que en pantalla.",
+      "licence": "Licencia: {licence}. Cite OnSIDES (Tanaka et al., Med 2025) y FAERS como se indica abajo.",
+      "rows": "{count, plural, one {# fila} other {# filas}}",
+      "json": "Descargar JSON",
+      "csv": "Descargar CSV",
+      "loading": "Preparando la exportación…",
+      "columns": "Columnas: afección, clave y nombre del medicamento, intervalo de puestos, tipos de señal, regiones y recuentos de los prospectos, número de notificaciones de FAERS y razón con su intervalo, recuento con ruido publicado de las notificaciones donadas e identificadores de las fuentes."
+    },
+    "errors": {
+      "unavailable": "Los datos de investigación no están disponibles ahora. Vuelva a intentarlo más tarde."
+    }
   }
 }

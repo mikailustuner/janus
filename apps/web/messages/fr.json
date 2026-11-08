@@ -985,5 +985,136 @@
       "DE": "Allemagne",
       "US": "États-Unis"
     }
+  },
+  "Light": {
+    "nav": {
+      "open": "Ouvrir",
+      "back": "Retour à la partie recherche",
+      "sections": "Pages de recherche"
+    },
+    "rule7": "Candidat qui mérite d'être étudié — pas un traitement.",
+    "status": {
+      "experimental": "Expérimental : lors de la vérification rétrospective, aucune réaffectation connue ne s'est classée dans les 10 premiers de son état parmi plus de 10 candidats.",
+      "prototype": "Prototype de recherche : quelques réaffectations connues ont été retrouvées lors de la vérification rétrospective. Cela ne prouve pas que la méthode fonctionne pour de nouveaux candidats."
+    },
+    "review": "Les états, la correspondance des effets indésirables et les cas de validation ont été relus par une IA ; la relecture par des experts reste à faire.",
+    "researcherOnly": "Pour les chercheurs. Ces candidats ne sont pas montrés dans les pages destinées aux patients.",
+    "notChecked": "Janus ne vérifie pas si un candidat est déjà une utilisation autorisée du médicament.",
+    "ties": "Les positions égales sont montrées comme une plage de rangs.",
+    "snapshot": "Données : OnSIDES {onsides} (publié le {onsidesDate}), instantané FAERS {faers} (trimestres {window}), notices openFDA récupérées le {openfda}.",
+    "attribution": "Sources et licences",
+    "codes": {
+      "label_effect_meaning": "Les notices indiquent ceci comme un effet indésirable. Un effet indésirable dans un état peut indiquer une utilisation possible dans un autre ; cela doit être testé dans des études avant de signifier quoi que ce soit.",
+      "label_extraction_limits": "Les effets indésirables viennent d'OnSIDES, qui les extrait des notices avec un modèle de langage ; certains manquent et certains sont faux.",
+      "nonspecific_term": "Cet effet indésirable est aussi un signe fréquent de maladie ou de la toxicité d'un médicament ; seul, il apporte un faible soutien.",
+      "inverse_meaning": "L'état est signalé moins souvent que prévu dans les déclarations FAERS qui citent ce médicament. Ce n'est pas une preuve que le médicament en protège.",
+      "inverse_reporting_bias": "Biais de notification : un événement déjà connu pour un médicament est déclaré plus souvent (biais de notoriété), et un état pour lequel un médicament est donné est souvent enregistré comme indication plutôt que comme événement (biais d'indication). Les deux peuvent créer ou masquer un nombre plus bas que prévu.",
+      "patient_reported_meaning": "Déclarations données d'une amélioration, comptées seulement par groupes de 20 ou plus, avec du bruit ajouté. Les déclarations ne sont pas vérifiées.",
+      "patient_layer_unavailable": "Les déclarations données ne peuvent pas être comptées pour le moment.",
+      "mechanism_source_not_connected": "Aucune source pour un mécanisme possible n'est encore connectée.",
+      "faers_includes_later_use": "Les déclarations FAERS de cette période ont été envoyées après que l'utilisation ultérieure était connue ; ce nombre ne l'exclut pas.",
+      "validation_not_blind": "La correspondance des effets indésirables a été écrite en connaissant ces cas ; cette vérification n'est donc pas en aveugle.",
+      "export_aggregated": "Nombres agrégés uniquement. Les déclarations données sont des données pseudonymisées et n'apparaissent que comme nombres bruités de groupes de 20 ou plus."
+    },
+    "hypotheses": {
+      "title": "Fiches d'hypothèses",
+      "intro": "Choisissez un état. Chaque fiche est un médicament dont les effets indésirables dans les notices ou les déclarations renvoient à cet état.",
+      "goal": "État",
+      "goalCount": "{count, plural, =0 {aucun candidat} one {# candidat} other {# candidats}}",
+      "loading": "Chargement des candidats…",
+      "empty": "Aucun candidat pour cet état dans cet instantané des données.",
+      "total": "{total, plural, one {# fiche} other {# fiches}} pour {goal}",
+      "removed": "{count, plural, one {# candidat a été écarté parce que ses seules sources ont été rétractées.} other {# candidats ont été écartés parce que leurs seules sources ont été rétractées.}}",
+      "inverseCount": "FAERS : {found} résultats plus bas que prévu parmi {tested} médicaments ayant au moins 3 déclarations de cet état ; environ {chance} seraient attendus par le seul hasard.",
+      "patientOnly": "Déclarations données d'une amélioration, sans fiche",
+      "patientOnlyNote": "Elles n'ont pas encore de source citée ; ce ne sont donc pas des fiches d'hypothèses.",
+      "showMore": "Afficher plus de fiches",
+      "shown": "{shown} sur {total} affichées"
+    },
+    "card": {
+      "title": "{ingredient} et {goal}",
+      "rank": "Rang {best} sur {population}",
+      "rankTied": "Rang {best}–{worst} sur {population} (ex aequo)",
+      "signals": "Types de signal",
+      "signal": {
+        "label_effect": "Effet indésirable dans les notices",
+        "inverse_faers": "FAERS : signalé moins souvent que prévu",
+        "patient_reported": "Déclarations données d'une amélioration"
+      },
+      "labelCounts": "Indiqué dans {with} des {total} notices de ce médicament (borne basse de la part : {share})",
+      "labelTerms": "Termes des notices : {terms}",
+      "regions": "Indiqué dans : {regions}",
+      "region": {
+        "US": "États-Unis",
+        "EU": "Union européenne",
+        "UK": "Royaume-Uni",
+        "JP": "Japon"
+      },
+      "sections": "Rubriques : {sections}",
+      "section": {
+        "AR": "effets indésirables",
+        "WP": "mises en garde et précautions",
+        "BW": "avertissement encadré",
+        "NA": "non précisé"
+      },
+      "inverseReports": "{reports, plural, one {# déclaration} other {# déclarations}} avec l'état ; environ {expected} attendues (rapport observé sur attendu : {oe})",
+      "pts": "Termes MedDRA de l'état : {pts}",
+      "faersSnapshot": "Instantané FAERS {date}, trimestres {window}",
+      "patientReleased": "Déclarations données (nombre bruité) : {value}",
+      "patientCell": "{region} : {value}",
+      "patientHidden": "{region} : masqué (moins de 20, ou non publiable)",
+      "sources": "Sources",
+      "sourceStatus": {
+        "ok": "vérifiée, aucun avis",
+        "corrected": "correction publiée",
+        "expression_of_concern": "expression de préoccupation",
+        "unknown": "pas encore vérifiée",
+        "no_doi": "jeu de données (pas de DOI)"
+      },
+      "removedSources": "Sources non utilisées",
+      "mechanism": "Mécanisme possible",
+      "details": "Statistiques et mises en garde"
+    },
+    "validation": {
+      "title": "Validation rétrospective",
+      "intro": "La méthode est vérifiée sur des cas fixes et cités de médicaments utilisés plus tard pour un autre état. Chaque cas montre le rang du médicament parmi les candidats de cet état, avec des données qui excluent l'utilisation ultérieure quand c'est possible.",
+      "loading": "Chargement de la validation…",
+      "summary": "Passe principale : {informative} cas sur {cases} dans les {k} premiers parmi plus de {k} candidats. Environ {chance} seraient attendus si chaque médicament était un candidat au hasard.",
+      "sensitivity": "Passe de sensibilité (toutes les notices) : {informative} cas sur {cases} dans les {k} premiers ; environ {chance} attendus par hasard.",
+      "case": "{ingredient} et {goal}",
+      "original": "Utilisation d'origine : {use}",
+      "year": "Utilisation ultérieure : {year} (année du premier rapport ou de l'autorisation)",
+      "primary": "Passe principale (utilisation ultérieure retirée quand c'est possible)",
+      "sensitivityRun": "Passe de sensibilité (toutes les notices)",
+      "variants": "Variante (a), notices citant l'utilisation ultérieure retirées : {a}. Variante (b), aussi les notices absentes d'openFDA : {b}. La moins bonne est publiée.",
+      "noRank": "non classé",
+      "chance": "Un candidat au hasard serait dans les {k} premiers avec une probabilité de {p}.",
+      "reason": {
+        "hit": "Dans les {k} premiers",
+        "ranked_below_top": "Après les {k} premiers",
+        "not_a_candidate": "Pas parmi les candidats",
+        "no_label_mapping": "Aucun terme d'effet indésirable ne renvoie à cet état",
+        "not_evaluable": "Non évaluable : il ne reste aucune notice de ce médicament"
+      },
+      "uninformative": "Peu informatif : seulement {population} candidats.",
+      "labels": "Notices utilisées : {used}. Retirées parce qu'elles citent l'utilisation ultérieure : {indication}. Retirées parce qu'openFDA ne les a pas : {missing}.",
+      "faers": "FAERS : {reports, plural, one {# déclaration} other {# déclarations}} avec l'état ; ROR {ror} ({low}–{high}).",
+      "faersNone": "FAERS : pas de rapport.",
+      "evidence": "Éléments de preuve",
+      "document": "Le même rapport est publié dans le dépôt sous docs/light-face-validation.md."
+    },
+    "export": {
+      "title": "Export du jeu de données",
+      "intro": "Toutes les fiches d'hypothèses de cet instantané en un seul tableau : les mêmes fiches, nombres et filtre d'intégrité qu'à l'écran.",
+      "licence": "Licence : {licence}. Merci de citer OnSIDES (Tanaka et al., Med 2025) et FAERS comme ci-dessous.",
+      "rows": "{count, plural, one {# ligne} other {# lignes}}",
+      "json": "Télécharger le JSON",
+      "csv": "Télécharger le CSV",
+      "loading": "Préparation de l'export…",
+      "columns": "Colonnes : état, clé et nom du médicament, plage de rangs, types de signal, régions et nombres des notices, nombre de déclarations FAERS et rapport avec sa plage, nombre bruité publié des déclarations données et identifiants des sources."
+    },
+    "errors": {
+      "unavailable": "Les données de recherche ne sont pas disponibles pour le moment. Veuillez réessayer plus tard."
+    }
   }
 }

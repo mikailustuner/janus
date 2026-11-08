@@ -985,5 +985,136 @@
       "DE": "Almanya",
       "US": "Amerika Birleşik Devletleri"
     }
+  },
+  "Light": {
+    "nav": {
+      "open": "Aç",
+      "back": "Araştırma bölümüne dön",
+      "sections": "Araştırma sayfaları"
+    },
+    "rule7": "Araştırılmaya değer aday — tedavi değildir.",
+    "status": {
+      "experimental": "Deneysel: geriye dönük kontrolde, bilinen hiçbir yeniden kullanım, 10'dan fazla adayın bulunduğu durumunda ilk 10'a girmedi.",
+      "prototype": "Araştırma prototipi: geriye dönük kontrolde bilinen bazı yeniden kullanımlar yeniden bulundu. Bu, yöntemin yeni adaylar için işe yaradığının kanıtı değildir."
+    },
+    "review": "Durumlar, yan etki eşlemesi ve doğrulama vakaları yapay zekâ tarafından gözden geçirildi; uzman incelemesi bekleniyor.",
+    "researcherOnly": "Araştırmacılar içindir. Bu adaylar hasta sayfalarında gösterilmez.",
+    "notChecked": "Janus, bir adayın ilacın zaten onaylı bir kullanımı olup olmadığını kontrol etmez.",
+    "ties": "Eşit sıralar bir sıra aralığı olarak gösterilir.",
+    "snapshot": "Veri: OnSIDES {onsides} (yayın {onsidesDate}), FAERS anlık görüntüsü {faers} (çeyrekler {window}), openFDA prospektüsleri {openfda} tarihinde alındı.",
+    "attribution": "Kaynaklar ve lisanslar",
+    "codes": {
+      "label_effect_meaning": "Prospektüsler bunu istenmeyen bir etki olarak listeler. Bir durumda istenmeyen bir etki, başka bir durumda olası bir kullanıma işaret edebilir; bunun bir anlam taşıması için önce çalışmalarda sınanması gerekir.",
+      "label_extraction_limits": "Yan etkiler, bunları ilaç prospektüslerinden bir dil modeliyle çıkaran OnSIDES'tan gelir; bazıları atlanır, bazıları yanlıştır.",
+      "nonspecific_term": "Bu yan etki aynı zamanda hastalığın ya da bir ilacın toksisitesinin yaygın bir belirtisidir; tek başına zayıf bir destektir.",
+      "inverse_meaning": "Bu ilacı anan FAERS bildirimlerinde durum beklenenden daha az bildiriliyor. Bu, ilacın o duruma karşı koruduğunun kanıtı değildir.",
+      "inverse_reporting_bias": "Bildirim yanlılığı: bir ilaç için zaten bilinen bir olay daha sık bildirilir (şöhret yanlılığı) ve ilacın verilme nedeni olan bir durum çoğu zaman olay olarak değil endikasyon olarak kaydedilir (endikasyon yanlılığı). İkisi de beklenenden düşük bir sayı yaratabilir ya da gizleyebilir.",
+      "patient_reported_meaning": "Bir iyileşmeye dair bağışlanmış bildirimler; yalnızca 20 veya daha fazla bildirimlik gruplarda, gürültü eklenerek sayılır. Bildirimler denetlenmez.",
+      "patient_layer_unavailable": "Bağışlanmış bildirimler şu anda sayılamıyor.",
+      "mechanism_source_not_connected": "Olası bir mekanizma için henüz bir kaynak bağlı değil.",
+      "faers_includes_later_use": "Bu dönemin FAERS bildirimleri sonraki kullanım bilindikten sonra gönderildi; bu sayı onu dışarıda bırakmaz.",
+      "validation_not_blind": "Yan etki eşlemesi bu vakalar bilinerek yazıldı; bu nedenle bu kontrol kör değildir.",
+      "export_aggregated": "Yalnızca toplu sayılar. Bağışlanmış bildirimler takma adlı verilerdir ve yalnızca 20 veya daha fazla bildirimlik grupların gürültülü sayıları olarak yer alır."
+    },
+    "hypotheses": {
+      "title": "Hipotez kartları",
+      "intro": "Bir durum seçin. Her kart, prospektüsteki yan etkileri ya da bildirimleri o duruma işaret eden bir ilaçtır.",
+      "goal": "Durum",
+      "goalCount": "{count, plural, =0 {aday yok} one {# aday} other {# aday}}",
+      "loading": "Adaylar yükleniyor…",
+      "empty": "Bu veri anlık görüntüsünde bu durum için aday yok.",
+      "total": "{goal} için {total, plural, one {# kart} other {# kart}}",
+      "removed": "{count, plural, one {# aday, tek kaynakları geri çekildiği için dışarıda bırakıldı.} other {# aday, tek kaynakları geri çekildiği için dışarıda bırakıldı.}}",
+      "inverseCount": "FAERS: bu durumun en az 3 bildirimi olan {tested} ilaç arasında beklenenden düşük {found} sonuç; yalnızca rastlantıyla yaklaşık {chance} beklenirdi.",
+      "patientOnly": "Kartı olmayan, iyileşmeye dair bağışlanmış bildirimler",
+      "patientOnlyNote": "Bunların henüz atıflı bir kaynağı yok; bu yüzden hipotez kartı değildirler.",
+      "showMore": "Daha fazla kart göster",
+      "shown": "{total} karttan {shown} gösteriliyor"
+    },
+    "card": {
+      "title": "{ingredient} ve {goal}",
+      "rank": "Sıra {best} / {population}",
+      "rankTied": "Sıra {best}–{worst} / {population} (eşit)",
+      "signals": "Sinyal türleri",
+      "signal": {
+        "label_effect": "İlaç prospektüslerinde yan etki",
+        "inverse_faers": "FAERS: beklenenden az bildiriliyor",
+        "patient_reported": "İyileşmeye dair bağışlanmış bildirimler"
+      },
+      "labelCounts": "Bu ilacın {total} prospektüsünden {with} tanesinde listeleniyor (oranın alt sınırı: {share})",
+      "labelTerms": "Prospektüs terimleri: {terms}",
+      "regions": "Prospektüste yer aldığı bölgeler: {regions}",
+      "region": {
+        "US": "Amerika Birleşik Devletleri",
+        "EU": "Avrupa Birliği",
+        "UK": "Birleşik Krallık",
+        "JP": "Japonya"
+      },
+      "sections": "Prospektüs bölümleri: {sections}",
+      "section": {
+        "AR": "advers reaksiyonlar",
+        "WP": "uyarılar ve önlemler",
+        "BW": "kutulu uyarı",
+        "NA": "belirtilmemiş"
+      },
+      "inverseReports": "Durumla birlikte {reports, plural, one {# bildirim} other {# bildirim}}; yaklaşık {expected} bekleniyordu (gözlenen / beklenen oranı: {oe})",
+      "pts": "Durumun MedDRA terimleri: {pts}",
+      "faersSnapshot": "FAERS anlık görüntüsü {date}, çeyrekler {window}",
+      "patientReleased": "Bağışlanmış bildirimler (gürültülü sayı): {value}",
+      "patientCell": "{region}: {value}",
+      "patientHidden": "{region}: gizli (20'den az ya da yayımlanamaz)",
+      "sources": "Kaynaklar",
+      "sourceStatus": {
+        "ok": "kontrol edildi, bildirim yok",
+        "corrected": "düzeltme yayımlandı",
+        "expression_of_concern": "endişe bildirimi",
+        "unknown": "henüz kontrol edilmedi",
+        "no_doi": "veri kümesi (DOI yok)"
+      },
+      "removedSources": "Kullanılmayan kaynaklar",
+      "mechanism": "Olası mekanizma",
+      "details": "İstatistikler ve uyarılar"
+    },
+    "validation": {
+      "title": "Geriye dönük doğrulama",
+      "intro": "Yöntem, sonradan başka bir durumda kullanılan ilaçların sabit ve atıflı vakaları üzerinde sınanır. Her vaka, ilacın o durumun adayları arasında kaçıncı sırada olduğunu, mümkün olduğunda sonraki kullanımı dışarıda bırakan verilerle gösterir.",
+      "loading": "Doğrulama yükleniyor…",
+      "summary": "Birincil çalıştırma: {cases} vakadan {informative} tanesi, {k}'dan fazla aday arasında ilk {k}'a girdi. Her ilaç rastgele bir aday olsaydı yaklaşık {chance} beklenirdi.",
+      "sensitivity": "Duyarlılık çalıştırması (tüm prospektüsler): {cases} vakadan {informative} tanesi ilk {k}'da; rastlantıyla yaklaşık {chance} beklenirdi.",
+      "case": "{ingredient} ve {goal}",
+      "original": "İlk kullanım: {use}",
+      "year": "Sonraki kullanım: {year} (ilk raporun ya da onayın yılı)",
+      "primary": "Birincil çalıştırma (sonraki kullanım mümkün olduğunda çıkarıldı)",
+      "sensitivityRun": "Duyarlılık çalıştırması (tüm prospektüsler)",
+      "variants": "Seçenek (a), sonraki kullanımı anan prospektüsler çıkarıldı: {a}. Seçenek (b), openFDA'da bulunmayan prospektüsler de çıkarıldı: {b}. Kötü olanı yayımlanır.",
+      "noRank": "sıralanmadı",
+      "chance": "Rastgele bir aday {p} olasılıkla ilk {k}'da olurdu.",
+      "reason": {
+        "hit": "İlk {k}'da",
+        "ranked_below_top": "İlk {k}'nın altında",
+        "not_a_candidate": "Adaylar arasında değil",
+        "no_label_mapping": "Bu duruma işaret eden yan etki terimi yok",
+        "not_evaluable": "Değerlendirilemez: bu ilacın hiçbir prospektüsü kalmadı"
+      },
+      "uninformative": "Bilgi vermez: yalnızca {population} aday.",
+      "labels": "Kullanılan prospektüsler: {used}. Sonraki kullanımı andığı için çıkarılan: {indication}. openFDA'da bulunmadığı için çıkarılan: {missing}.",
+      "faers": "FAERS: durumla birlikte {reports, plural, one {# bildirim} other {# bildirim}}; ROR {ror} ({low}–{high}).",
+      "faersNone": "FAERS: oran yok.",
+      "evidence": "Kanıt",
+      "document": "Aynı rapor depoda docs/light-face-validation.md olarak yayımlanır."
+    },
+    "export": {
+      "title": "Veri kümesini dışa aktar",
+      "intro": "Bu veri anlık görüntüsünün tüm hipotez kartları tek bir tablo olarak: ekranlardaki aynı kartlar, sayılar ve bütünlük süzgeci.",
+      "licence": "Lisans: {licence}. Lütfen OnSIDES (Tanaka ve ark., Med 2025) ve FAERS'e aşağıdaki gibi atıf yapın.",
+      "rows": "{count, plural, one {# satır} other {# satır}}",
+      "json": "JSON indir",
+      "csv": "CSV indir",
+      "loading": "Dışa aktarma hazırlanıyor…",
+      "columns": "Sütunlar: durum, ilaç anahtarı ve adı, sıra aralığı, sinyal türleri, prospektüs bölgeleri ve sayıları, FAERS bildirim sayısı ve aralığıyla birlikte oran, bağışlanmış bildirimlerin yayımlanan gürültülü sayısı ve kaynak kimlikleri."
+    },
+    "errors": {
+      "unavailable": "Araştırma verileri şu anda kullanılamıyor. Lütfen daha sonra yeniden deneyin."
+    }
   }
 }

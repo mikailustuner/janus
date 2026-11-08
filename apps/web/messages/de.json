@@ -985,5 +985,136 @@
       "DE": "Deutschland",
       "US": "Vereinigte Staaten"
     }
+  },
+  "Light": {
+    "nav": {
+      "open": "Öffnen",
+      "back": "Zurück zum Forschungsbereich",
+      "sections": "Forschungsseiten"
+    },
+    "rule7": "Ein Kandidat, der eine Untersuchung wert ist – keine Behandlung.",
+    "status": {
+      "experimental": "Experimentell: In der rückblickenden Prüfung kam keine bekannte Umwidmung unter die ersten 10 ihres Zustands, wenn es mehr als 10 Kandidaten gab.",
+      "prototype": "Forschungsprototyp: Einige bekannte Umwidmungen wurden in der rückblickenden Prüfung wiedergefunden. Das ist kein Beleg dafür, dass die Methode für neue Kandidaten funktioniert."
+    },
+    "review": "Die Zustände, die Zuordnung der Nebenwirkungen und die Validierungsfälle wurden von einer KI geprüft; die Prüfung durch Fachleute steht aus.",
+    "researcherOnly": "Für Forschende. Diese Kandidaten erscheinen nicht auf den Seiten für Patientinnen und Patienten.",
+    "notChecked": "Janus prüft nicht, ob ein Kandidat bereits eine zugelassene Anwendung des Arzneimittels ist.",
+    "ties": "Gleiche Positionen werden als Rangbereich gezeigt.",
+    "snapshot": "Daten: OnSIDES {onsides} (veröffentlicht {onsidesDate}), FAERS-Stand {faers} (Quartale {window}), openFDA-Fachinformationen abgerufen am {openfda}.",
+    "attribution": "Quellen und Lizenzen",
+    "codes": {
+      "label_effect_meaning": "Die Fachinformationen nennen dies als unerwünschte Wirkung. Eine unerwünschte Wirkung bei einem Zustand kann auf eine mögliche Anwendung bei einem anderen hinweisen; das muss in Studien geprüft werden, bevor es etwas bedeutet.",
+      "label_extraction_limits": "Die Nebenwirkungen stammen aus OnSIDES, das sie mit einem Sprachmodell aus Fachinformationen entnimmt; manche fehlen, manche sind falsch.",
+      "nonspecific_term": "Diese Nebenwirkung ist auch ein häufiges Zeichen einer Krankheit oder der Toxizität eines Arzneimittels; allein ist sie eine schwache Stütze.",
+      "inverse_meaning": "Der Zustand wird in den FAERS-Meldungen, die dieses Arzneimittel nennen, seltener gemeldet als erwartet. Das ist kein Beleg dafür, dass das Arzneimittel davor schützt.",
+      "inverse_reporting_bias": "Meldeverzerrung: Ein Ereignis, das für ein Arzneimittel schon bekannt ist, wird häufiger gemeldet (Bekanntheitsverzerrung), und ein Zustand, wegen dem ein Arzneimittel gegeben wird, wird oft als Anwendungsgebiet statt als Ereignis erfasst (Indikationsverzerrung). Beides kann eine niedriger als erwartete Zahl erzeugen oder verdecken.",
+      "patient_reported_meaning": "Gespendete Meldungen über eine Besserung, nur in Gruppen von 20 oder mehr gezählt und mit Rauschen versehen. Die Meldungen werden nicht geprüft.",
+      "patient_layer_unavailable": "Gespendete Meldungen können gerade nicht gezählt werden.",
+      "mechanism_source_not_connected": "Für einen möglichen Mechanismus ist noch keine Quelle angebunden.",
+      "faers_includes_later_use": "Die FAERS-Meldungen dieses Zeitraums wurden gesendet, als die spätere Anwendung schon bekannt war; diese Zahl schließt sie nicht aus.",
+      "validation_not_blind": "Die Zuordnung der Nebenwirkungen wurde in Kenntnis dieser Fälle geschrieben; diese Prüfung ist daher nicht verblindet.",
+      "export_aggregated": "Nur zusammengefasste Zahlen. Gespendete Meldungen sind pseudonyme Daten und erscheinen nur als verrauschte Zahlen von Gruppen ab 20."
+    },
+    "hypotheses": {
+      "title": "Hypothesenkarten",
+      "intro": "Wählen Sie einen Zustand. Jede Karte ist ein Arzneimittel, dessen Nebenwirkungen in den Fachinformationen oder dessen Meldungen auf diesen Zustand hinweisen.",
+      "goal": "Zustand",
+      "goalCount": "{count, plural, =0 {keine Kandidaten} one {# Kandidat} other {# Kandidaten}}",
+      "loading": "Kandidaten werden geladen…",
+      "empty": "Für diesen Zustand gibt es in diesem Datenstand keinen Kandidaten.",
+      "total": "{total, plural, one {# Karte} other {# Karten}} für {goal}",
+      "removed": "{count, plural, one {# Kandidat wurde weggelassen, weil seine einzigen Quellen zurückgezogen wurden.} other {# Kandidaten wurden weggelassen, weil ihre einzigen Quellen zurückgezogen wurden.}}",
+      "inverseCount": "FAERS: {found} niedriger als erwartete Ergebnisse unter {tested} Arzneimitteln mit mindestens 3 Meldungen dieses Zustands; etwa {chance} wären allein durch Zufall zu erwarten.",
+      "patientOnly": "Gespendete Meldungen über eine Besserung, ohne Karte",
+      "patientOnlyNote": "Sie haben noch keine zitierte Quelle und sind deshalb keine Hypothesenkarten.",
+      "showMore": "Weitere Karten zeigen",
+      "shown": "{shown} von {total} angezeigt"
+    },
+    "card": {
+      "title": "{ingredient} und {goal}",
+      "rank": "Rang {best} von {population}",
+      "rankTied": "Rang {best}–{worst} von {population} (gleichauf)",
+      "signals": "Signalarten",
+      "signal": {
+        "label_effect": "Nebenwirkung in Fachinformationen",
+        "inverse_faers": "FAERS: seltener gemeldet als erwartet",
+        "patient_reported": "Gespendete Meldungen über eine Besserung"
+      },
+      "labelCounts": "In {with} von {total} Fachinformationen dieses Arzneimittels genannt (untere Grenze des Anteils: {share})",
+      "labelTerms": "Begriffe in den Fachinformationen: {terms}",
+      "regions": "Genannt in: {regions}",
+      "region": {
+        "US": "Vereinigte Staaten",
+        "EU": "Europäische Union",
+        "UK": "Vereinigtes Königreich",
+        "JP": "Japan"
+      },
+      "sections": "Abschnitte: {sections}",
+      "section": {
+        "AR": "Nebenwirkungen",
+        "WP": "Warnhinweise und Vorsichtsmaßnahmen",
+        "BW": "Warnhinweis im Kasten",
+        "NA": "nicht angegeben"
+      },
+      "inverseReports": "{reports, plural, one {# Meldung} other {# Meldungen}} mit dem Zustand; etwa {expected} erwartet (Verhältnis beobachtet zu erwartet: {oe})",
+      "pts": "MedDRA-Begriffe des Zustands: {pts}",
+      "faersSnapshot": "FAERS-Stand {date}, Quartale {window}",
+      "patientReleased": "Gespendete Meldungen (verrauschte Zahl): {value}",
+      "patientCell": "{region}: {value}",
+      "patientHidden": "{region}: verborgen (weniger als 20 oder nicht freigebbar)",
+      "sources": "Quellen",
+      "sourceStatus": {
+        "ok": "geprüft, kein Hinweis",
+        "corrected": "Korrektur veröffentlicht",
+        "expression_of_concern": "Expression of Concern",
+        "unknown": "noch nicht geprüft",
+        "no_doi": "Datensatz (keine DOI)"
+      },
+      "removedSources": "Nicht verwendete Quellen",
+      "mechanism": "Möglicher Mechanismus",
+      "details": "Statistik und Hinweise"
+    },
+    "validation": {
+      "title": "Rückblickende Validierung",
+      "intro": "Die Methode wird an festen, zitierten Fällen von Arzneimitteln geprüft, die später bei einem anderen Zustand angewendet wurden. Jeder Fall zeigt, auf welchem Rang das Arzneimittel unter den Kandidaten dieses Zustands steht, mit Daten, die die spätere Anwendung nach Möglichkeit ausschließen.",
+      "loading": "Validierung wird geladen…",
+      "summary": "Hauptlauf: {informative} von {cases} Fällen unter den ersten {k} bei mehr als {k} Kandidaten. Etwa {chance} wären zu erwarten, wenn jedes Arzneimittel ein zufälliger Kandidat wäre.",
+      "sensitivity": "Sensitivitätslauf (alle Fachinformationen): {informative} von {cases} Fällen unter den ersten {k}; etwa {chance} durch Zufall erwartet.",
+      "case": "{ingredient} und {goal}",
+      "original": "Ursprüngliche Anwendung: {use}",
+      "year": "Spätere Anwendung: {year} (Jahr des ersten Berichts oder der Zulassung)",
+      "primary": "Hauptlauf (spätere Anwendung nach Möglichkeit entfernt)",
+      "sensitivityRun": "Sensitivitätslauf (alle Fachinformationen)",
+      "variants": "Variante (a), Fachinformationen mit der späteren Anwendung entfernt: {a}. Variante (b), zusätzlich Fachinformationen, die openFDA nicht hat: {b}. Veröffentlicht wird die schlechtere.",
+      "noRank": "kein Rang",
+      "chance": "Ein zufälliger Kandidat wäre mit Wahrscheinlichkeit {p} unter den ersten {k}.",
+      "reason": {
+        "hit": "Unter den ersten {k}",
+        "ranked_below_top": "Unterhalb der ersten {k}",
+        "not_a_candidate": "Nicht unter den Kandidaten",
+        "no_label_mapping": "Kein Nebenwirkungsbegriff weist auf diesen Zustand hin",
+        "not_evaluable": "Nicht auswertbar: keine Fachinformation dieses Arzneimittels übrig"
+      },
+      "uninformative": "Nicht aussagekräftig: nur {population} Kandidaten.",
+      "labels": "Verwendete Fachinformationen: {used}. Entfernt, weil sie die spätere Anwendung nennen: {indication}. Entfernt, weil openFDA sie nicht hat: {missing}.",
+      "faers": "FAERS: {reports, plural, one {# Meldung} other {# Meldungen}} mit dem Zustand; ROR {ror} ({low}–{high}).",
+      "faersNone": "FAERS: kein Verhältnis.",
+      "evidence": "Belege",
+      "document": "Derselbe Bericht ist im Repository als docs/light-face-validation.md veröffentlicht."
+    },
+    "export": {
+      "title": "Datensatz exportieren",
+      "intro": "Alle Hypothesenkarten dieses Datenstands als eine Tabelle: dieselben Karten, Zahlen und derselbe Integritätsfilter wie auf den Seiten.",
+      "licence": "Lizenz: {licence}. Bitte zitieren Sie OnSIDES (Tanaka et al., Med 2025) und FAERS wie unten angegeben.",
+      "rows": "{count, plural, one {# Zeile} other {# Zeilen}}",
+      "json": "JSON herunterladen",
+      "csv": "CSV herunterladen",
+      "loading": "Export wird vorbereitet…",
+      "columns": "Spalten: Zustand, Schlüssel und Name des Arzneimittels, Rangbereich, Signalarten, Regionen und Zahlen der Fachinformationen, FAERS-Meldungszahl und Verhältnis mit Bereich, die freigegebene verrauschte Zahl gespendeter Meldungen und Quellen-IDs."
+    },
+    "errors": {
+      "unavailable": "Die Forschungsdaten sind gerade nicht verfügbar. Bitte versuchen Sie es später erneut."
+    }
   }
 }
