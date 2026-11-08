@@ -10,7 +10,7 @@ Show how often the same medicines and events appear together in public adverse-e
 - **PRR** = (a/(a+b)) / (c/(c+d)). Signal (Evans): PRR ≥ 2, χ² ≥ 4, a ≥ 3.
 - **ROR** = (a·d)/(b·c); 95% CI = exp(ln ROR ± 1.96·√(1/a+1/b+1/c+1/d)); signal if lower bound > 1.
 - **Layers:** `faers` (public), `contributions` (Janus users), `outcomes` (doctor-confirmed). Never mixed into one number.
-- **Reporter region:** TR, EU or US, derived from the FAERS occurrence/reporter country field where present.
+- **Region (of a FAERS report):** one of TR, EU, US, OTHER, UNKNOWN. *(Owner decision 2026-11-08, `data-pipelines` DP16.)* It is derived from the occurrence country; when that is empty, from the reporter country; a value that is empty or `COUNTRY NOT SPECIFIED` counts as missing. `TR` is TR; `US` and the US territories PR, GU, VI, AS, MP, UM are US (as FDA treats them); the FAERS pseudo-code `EU` and the 27 EU member-state codes are EU, and EU means EU-27 only (GB, CH, NO, IS, LI are OTHER); everything else present is OTHER; missing is UNKNOWN. FAERS cannot tell EU member states apart. Each report records which field was used.
 
 ## Requirements
 
@@ -59,3 +59,19 @@ Show how often the same medicines and events appear together in public adverse-e
 - **FAERS statistics in findings.** A finding's `evidence_ids` has room for `faers_stat:` ids
   (cascade-engine Req 2.7, Phase 2). They must be registered as evidence and pass the same `cite`
   filter. Counts are reports, never people.
+
+## Open items from data-pipelines (2026-11-08)
+Source: `data-pipelines` Phase 2 (Req 13, 15; design §10, §14). The `faers` pipeline and the count
+builder will provide the tables this spec reads: `faers_totals`, `faers_ingredient_counts`,
+`faers_event_counts`, `faers_pair_counts` (all by region TR, EU, US, OTHER, UNKNOWN and ALL, and
+by exposure scope `suspect` or `any`) and the report-level facts for the combination view
+(Req 2.1). Counts are columns named `reports`. To settle when this spec is refined:
+- **Region.** Decided 2026-11-08: see the glossary. Req 3.1's "other" is OTHER and "unknown" is UNKNOWN.
+- **Denominator.** Decided by the owner 2026-11-08 (`data-pipelines` DP32), for review by the statistician agent when this spec is refined: N is the number of deduplicated reports with at least one mapped ingredient, and ingredient, event and pair counts are over those reports (`reports_mapped`). The all-reports total and event counts (`reports_all`) are stored as a sensitivity figure. Check the effect of the 84.0 % mapping coverage on PRR/ROR.
+- **Window.** A FAERS window is "reports received or updated in the four latest quarters" and
+  includes follow-up versions of older cases; say so wherever dates are shown.
+- **Exposure scope.** `suspect` (PS, SS, I) is the usual basis for the statistics; `any` also
+  counts concomitant drugs and suits the combination view.
+- **Staleness.** The counts file records the resolution dataset it was built against; decide how
+  Req 1 results behave when that differs from the dataset now served.
+- **MedDRA.** Event terms are Preferred Terms as published in FAERS, with no MedDRA hierarchy. Wherever PTs are shown the notice "MedDRA® is a registered trademark of ICH" must appear (`data-pipelines` DP33).

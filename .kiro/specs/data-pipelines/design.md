@@ -1,8 +1,12 @@
-# Design: Data Pipelines (ETL), Phase 1
+# Design: Data Pipelines (ETL), Phase 1 and Phase 2
 
-> Scope: the shared pipeline core (Requirements 1–4) and the `pipc`, `titck`,
+> Scope of §1–§9 (Phase 1): the shared pipeline core (Requirements 1–4) and the `pipc`, `titck`,
 > `wikidata_ingredients`, `us_ndc` and `retractions` pipelines (Requirements 5–9).
-> The other pipelines (Requirement 10) reuse the core in later phases.
+> **Scope of §10–§18 (Phase 2, 2026-11-08):** the `eu_fr_bdpm`, `eu_es_cima` and `faers`
+> pipelines (Requirements 11–13), the core changes they need (Requirement 14) and the FAERS
+> count builder (Requirement 15). Phase 2 reuses the Phase 1 core, conventions and decisions
+> (DP1–DP13); property numbers continue at P17, decision numbers at DP14. `onsides` and `canon`
+> reuse the core in later phases.
 
 ## 1. Overview
 
@@ -337,3 +341,369 @@ P1–P3 are the three original properties; P4–P16 were added in the requiremen
 - TİTCK list page: link format and date parsing to confirm against the live page in task 10; `--input` covers offline work.
 - Crossref rate limits and update types confirmed 2026-11-07 (public pool 5/s, 1 concurrent; 12 Crossmark update types).
 - `httpx2` mock-transport API to confirm in task 1.
+
+---
+
+# Phase 2 (refined 2026-11-08)
+
+## 10. Overview and facts checked
+
+Three more pipelines use the Phase 1 core unchanged in shape (fetch → parse → validate → hash →
+stage → promote). FAERS is about ten times larger than anything in Phase 1, so the core gets a
+bounded-memory path (§12). The FAERS artifact keeps ingredient names as published (DP7); a
+separate builder in `apps/api` maps them through the `drug-resolution` name ladder and writes the
+DuckDB count tables (§14).
+
+```mermaid
+flowchart LR
+  subgraph pipelines[pipelines/ : fetch, parse, no medical decisions]
+    FD[FDA quarterly page<br/>4 ASCII archives] --> FJ[faers job<br/>dedupe by case, region]
+    BD[BDPM 3 files] --> BJ[eu_fr_bdpm job]
+    NM[AEMPS Nomenclátor zip] --> CJ[eu_es_cima job]
+    FJ --> FA[(faers artifact<br/>rows + removed.parquet)]
+    BJ --> BA[(eu_fr_bdpm artifact)]
+    CJ --> CA[(eu_es_cima artifact)]
+  end
+  subgraph api[apps/api]
+    FA --> FB[janus.memory.faers_build<br/>verify hash, name ladder,<br/>count tables]
+    WD[(wikidata_ingredients<br/>+ rule files)] --> FB
+    FB --> DK[(faers_counts.duckdb<br/>read-only)]
+  end
+  DK --> CM[collective-memory<br/>PRR, ROR, combination view]
+  BA --> EF[eu_fr adapter, drug-resolution Phase 2]
+  CA --> ES[eu_es adapter, drug-resolution Phase 2]
+```
+
+Facts checked on 2026-11-08 (live sources; downloads kept outside the repository). The GS1
+encoding facts for the two EU adapters are in `.kiro/specs/drug-resolution/eu-code-encodings.md`.
+
+| Source | Observed | Design consequence |
+|---|---|---|
+| FDA quarterly page `fis.fda.gov/extensions/FPD-QDE-FAERS/FPD-QDE-FAERS.html` | FDA now calls the system "AEMS (formerly FAERS)". Lists ASCII and XML archives per quarter with posting dates; newest is July–September 2026, posted 28-Oct-2026. Link names differ in case: `faers_ascii_2025Q4.zip`, `faers_ascii_2026q3.zip`. Archives are 60–67 MB. | Quarter labels matched case-insensitively (P30); snapshot date from the posting date; registry entry renamed "AEMS (formerly FAERS)" |
+| Archive layout (2026 Q3) | `ASCII/{DEMO,DRUG,REAC,OUTC,RPSR,THER,INDI}26Q3.txt` plus PDFs, and `Deleted/DELETE26Q3.txt` (one case id per line, a leading blank line, 4,215 ids). Header line in lower case, `$` separator, no quoting. All seven 2026 Q3 files are strict UTF-8; `DRUG` has CRLF line ends, the rest LF; all 1,582,986 `DRUG` lines have 20 fields. `DEMO` and `DRUG` of the other three quarters load as UTF-8 without error. | Strict UTF-8, line-based split at `$` (§13.3); CRLF and LF accepted (P31); `DELETE` file is part of the input (Req 13.3) |
+| Window 2025 Q4 – 2026 Q3 | `DEMO` rows 385,288 / 397,224 / 422,459 / 421,404 = 1,626,375 reports; 1,514,612 distinct case ids. `primaryid` always equals `caseid` followed by `caseversion`; no two rows share a case id and version. `DELETE` ids: 4,497 + 6,135 + 4,217 + 4,215 (19,064 distinct), of which 3,808 cases occur in the window (3,967 report rows). After removing them: 111,604 superseded versions, **1,510,804 reports kept**. 433,173 kept reports (28.7 %) are follow-up versions. | Dedupe rule of Req 13.3 needs no real tie-break today, but keeps one (P27). A quarter file holds follow-ups of cases first received years earlier, so the window is "reports updated in these quarters", not "events in these quarters" |
+| Countries (kept reports) | `occr_country`: US 897,113; EU 155,803; empty 152,493 (10.1 %); CA 69,597; GB 57,041; JP 51,181; CN 35,345. No EU member-state code (DE, FR, ES, IT, …) occurs in `occr_country` or `reporter_country`: FAERS stores them as the pseudo-code `EU`. `reporter_country` is never empty but holds `COUNTRY NOT SPECIFIED` for 22,895 kept reports. TR: 3,595 by occurrence, 3,984 by reporter. 1,294 reports have both fields set and different (neither being `EU`). Of the 152,493 empty occurrence values, 150,285 have a reporter country (125,442 US). | Region rule of Req 13.6 (DP16). Germany, France and Spain cannot be told apart in FAERS. Result under "occurrence, else reporter": US 1,022,555, OTHER 320,366, EU 161,648, TR 4,027, UNKNOWN 2,208. Reporter only would give UNKNOWN 22,895; occurrence only 152,493 |
+| `DRUG` lines (2026 Q3 and the window) | Roles in Q3: C 626,139, PS 525,592, SS 421,915, I 8,937, **DN 403** (not in the README's role table). `prod_ai` is filled on 97.5 % of lines; in the window 5,880,174 lines of kept reports, 127,674 with empty `prod_ai`. Several ingredients are joined with a backslash: `SULFAMETHOXAZOLE\TRIMETHOPRIM`, `CARBIDOPA\LEVODOPA` (87,059 lines in Q3). | Split `prod_ai` at `\` (Req 13.4); DN and unknown roles excluded and counted (Req 15.3); drug names (`drugname`) are not kept |
+| Name mapping preview (throw-away prototype, not committed): `drug-resolution` ladder in non-Turkish mode, Wikidata artifact of 2026-11-07, rule and synonym files as committed | 6,708 distinct ingredient names, 6,201,428 occurrences in the window. Mapped **84.0 %** of occurrences (80.5 % for suspect roles): `any_label` 4,151,760, `salt_normalised` 999,368, `curated_synonym` 34,616, `spelling_key` 17,668, `spelling_key_salt` 4,596. Not mapped 15.9 % (3,342 distinct names); ambiguous 0.1 % (19); unsplit 0.1 % (26). Largest unmapped: biologics with FDA's four-letter suffix (`INFLIXIMAB-DYYB` 42,351, `RISANKIZUMAB-RZAA` 31,193, `BIMEKIZUMAB-BKZX`), recent substances with no ATC code on Wikidata (`UPADACITINIB`, `ABALOPARATIDE`), non-specific words (`VITAMINS`, `CALCIUM`, `HERBALS`, `DIETARY SUPPLEMENT`), `MYCOPHENOLATE MOFETIL` 21,351, `CARBIDOPA` 16,682 and the second parts of combination strings (`VILANTEROL TRIFENATATE`, `FOSCARBIDOPA`, `PANCRELIPASE LIPASE`). | The builder reuses the ladder unchanged and reports coverage (Req 15.2). A name rule for the biologic suffix and the salt forms is a `drug-resolution` change (open item 3) |
+| `REAC` (2026 Q3) | 12,593 distinct MedDRA Preferred Term strings. | Event = PT string as published; term-version drift between quarters is not corrected (DP20) |
+| BDPM download page (2026-11-08) | Banner "Dernière mise à jour le 03/11/2026". Per-file dates: spécialités 03/11/2026, présentations 07/11/2026, compositions 03/11/2026. Monthly refresh. Licence text: reproduce, redistribute and exploit freely, on condition of not altering the data or distorting its meaning, naming the source and the update date, and not suggesting official status or endorsement; the reuser must check for updates between BDPM refreshes. | Snapshot = oldest file date (Req 11.1); no trimming or correction (Req 11.4) |
+| BDPM files | `CIS_bdpm.txt` 15,845 lines × 12 columns, CRLF, **Windows-1252** (byte 0x92 occurs, so not ISO-8859-1); `CIS_CIP_bdpm.txt` 20,918 × 13, LF, **UTF-8**; `CIS_COMPO_bdpm.txt` 32,297 × 8, CRLF, Windows-1252. No header lines. All 20,918 CIP13 have 13 digits, start with `3400` (5th digit 9), pass the EAN-13 check and are distinct; the same strings with a leading `0` pass the GTIN-14 check. 4 presentations have a CIS missing from `CIS_bdpm`; 2 CIS have no composition. Holder column starts with a space. Composition: 26,782 `SA` and 5,515 `FT` lines; `FT` occurs on 5,053 of 15,843 CIS. Example: metformin/vildagliptin tablet has `FT METFORMINE` (link 1), `SA CHLORHYDRATE DE METFORMINE` (link 1) and `SA VILDAGLIPTINE` (link 2). | Per-file strict encodings (P20); name-only convention for bad CIP13 (P21); orphan and empty-composition handling (P22); SA/FT left to `drug-resolution` (DP23) |
+| AEMPS Nomenclátor de prescripción (`listadomedicamentos.aemps.gob.es/prescripcion.zip`, header date 2026-11-07) | 16 MB archive: 13 dictionary files and `Prescripcion.xml` (194 MB, UTF-8, namespace `http://schemas.aemps.es/prescripcion/aemps_prescripcion`), **30,900 presentations**, `cod_nacion` always 6 digits and unique. `cod_principio_activo` (30,388 presentations) equals `nroprincipioactivo` of `DICCIONARIO_PRINCIPIOS_ACTIVOS.xml` (3,389 names, Spanish, salt forms and word-order inversions such as `CLAVULANICO ACIDO`); ATC in `atc/cod_atc`. **NTIN** on 17,855 presentations (14 digits, `0847000` + CN + check; all check digits valid; 5 embed a CN different from `cod_nacion`; 2 NTINs shared by two presentations; 1 NTIN of 13 digits and 1 of 14 digits without the prefix). **GTIN** on 4,773 values (4,686 of 14 digits, 80 of 13, 7 of 12; all check digits valid; none shared; 174 presentations with several). 8,703 presentations have neither; 210 have both. Advice elements are present: `duplicidades` 11,780, `interacciones_atc` 9,307, `recomendacion_geriatria` 9,627, `teratogenia` 5,646. The host answered 403 to the default `curl` User-Agent and 200 to the pipelines' User-Agent. | Bulk file, not a REST crawl (DP24); GTIN and NTIN lists kept as published, shared codes allowed (Req 12.3, P24); advice elements not ingested (DP25); 403 handling (Req 12.7) |
+| CIMA REST API v1.19 (AEMPS PDF) | Base `https://cima.aemps.es/cima/rest/`, JSON in UTF-8, dates as Unix epoch; `medicamento?cn=` and `presentacion/:cn` return active ingredients and ATC; list endpoints take `pagina`. No rate limit is documented. | Not used by the pipeline (Req 12.6); the adapter's request path may use it under the HTTP policy |
+| Licences | BDPM: Licence Ouverte (terms above). AEMPS legal notice: reproduction allowed when the origin is cited, and the date of the last update must be stated (applies to subdomains). FAERS: FDA publishes the quarterly files as public data; the registry records CC0 as in Phase 1. | NOTICE and manifests carry source, date and no-endorsement wording (registry task 16) |
+
+## 11. Code layout (additions)
+
+```
+pipelines/
+  janus_pipelines/
+    core/
+      canonical.py     + content_hash_stream(), sorted_line_stream()      (pure + temp files)
+      runner.py        + file-backed output (ParseResult.rows_file), side tables
+      store.py         + stage_file(), side tables, manifest.side_tables
+      manifest.py      + SideTable model (optional field)
+    jobs/
+      eu_fr_bdpm.py    fetch, decode_file(), parse_*()                     (parse pure)
+      eu_es_cima.py    fetch, parse_prescription_stream(), gs1 validity     (parse pure)
+      faers.py         fetch, select_quarters(), choose_kept(), derive_region(), split_ai(), parse
+  tests/
+    test_canonical_stream_properties.py  test_eu_fr_bdpm.py  test_eu_es_cima.py  test_faers.py
+    strategies.py      + BDPM file triples, Nomenclátor XML, FAERS archives built in memory
+  sources.toml         faers renamed, urls and attribution for faers, bdpm, cima
+apps/api/
+  janus/memory/
+    faers_build.py     map_names(), aggregate() (pure); write_counts() (DuckDB); CLI
+  janus/resolution/
+    prepare.py         + build_name_index() extracted from prepare_dataset (no behaviour change)
+    canonical.py       + content_hash_stream() with the same golden vector
+  tests/
+    test_faers_build_properties.py
+```
+
+No new runtime dependency: `pipelines/` already has Polars, defusedxml and httpx2, and
+`apps/api` already has DuckDB. Reading the archives uses `zipfile` and Polars (§13.3).
+
+## 12. Core changes (Req 14)
+
+### 12.1 Streamed content hash
+`content_hash_stream(rows: Iterable[Row], schema_version, chunk=100_000, tmp=Path)`:
+1. canonical line per row (`canonical_line`, Phase 1);
+2. fill chunks of `chunk` lines, sort each by UTF-8 bytes, write each to a temp file (lines never
+   contain a raw newline: `json.dumps` escapes it);
+3. `heapq.merge` over the chunk files; feed the digest with `schema_version + "\n"`, then the
+   lines separated by `"\n"` (no trailing newline), exactly as the in-memory function does;
+4. delete the temp files in `finally`.
+Same bytes into the digest, so the hash equals the in-memory `content_hash` for the same rows
+(P17); empty input gives the hash of `schema_version + "\n"` as before. Peak memory is one chunk.
+`apps/api/janus/resolution/canonical.py` gets the same function; the golden vector test of
+`drug-resolution` DP15 is extended with a streamed case.
+
+### 12.2 File-backed output
+A job that cannot hold its rows returns `ParseResult(rows=[], rows_file=Path, output_rows=n, ...)`.
+`rows_file` is a Parquet file the job wrote in the staging scratch directory with the job's
+Polars schema. The runner then:
+- hashes by reading the file in batches (`to_dicts()` per batch) into `content_hash_stream`;
+- moves the file to `staging/<run>/rows.parquet` instead of building a DataFrame;
+- uses `output_rows` for accounting and the review flag.
+Rows read back from Parquet must equal the rows the job meant to write; P17 checks the whole
+path (rows → Parquet → batches → hash) against the in-memory hash. In-memory jobs (Phase 1) are
+unchanged.
+
+### 12.3 Side tables
+`ParseResult.side_tables: dict[str, Path]` (name → Parquet file). The runner moves them into the
+staging directory as `<name>.parquet`, computes the SHA-256 of each file's bytes and records
+`{name, rows, sha256}` in the manifest field `side_tables` (optional, default empty, so manifests
+of Phase 1 runs still validate). Side tables are not in the content hash (their content is derived
+from the same input, and the manifest hash of the file protects them). They are written before the
+run is finished and never again (Req 1.2).
+
+### 12.4 Memory
+The FAERS job works quarter by quarter and column-wise (§13.3); the peak is measured at the task
+22 checkpoint (target 4 GiB, Req 14.4). If the target is missed the first lever is a smaller
+`chunk` and per-quarter spill files, not a change of the hash.
+
+## 13. Pipelines
+
+### 13.1 `eu_fr_bdpm` (Req 11)
+- **Fetch.** `GET https://base-donnees-publique.medicaments.gouv.fr/telechargement`; for each of
+  "Fichier des spécialités", "Fichier des présentations", "Fichier des compositions" read
+  `Date de mise à jour : dd/mm/yyyy` that follows the label; a missing label or date fails the
+  run. Download `…/download/file/CIS_bdpm.txt`, `CIS_CIP_bdpm.txt`, `CIS_COMPO_bdpm.txt` (URL
+  pattern worked on 2026-11-08; the page's own links are confirmed in task 18). `--input DIR`
+  reads local copies and dates from `dates.txt` or flags. Host rate 1 request/s; no contact
+  required. `source_sha256` = SHA-256 of the three file hashes in a fixed order. Raw files go to
+  `raw/` (storage `cache`).
+- **Decode.** `DECODINGS = {"CIS_bdpm": "cp1252", "CIS_CIP_bdpm": "utf-8", "CIS_COMPO_bdpm":
+  "cp1252"}`. `bytes.decode(encoding)` is strict; `UnicodeDecodeError` becomes a schema failure
+  naming the file. Python's `cp1252` rejects the five undefined bytes, which is the behaviour we
+  want. Lines split at `\n`, one trailing `\r` removed; tabs split fields; no stripping.
+- **Rows** (schema `eu_fr_bdpm-1`): `cip13 (null if name_only), name_only, cip7, cis, presentation_label,
+  presentation_status, presentation_commercialisation, presentation_declaration_date,
+  specialty_missing, denomination, pharmaceutical_form, routes, authorisation_status, procedure,
+  commercialisation_status, authorisation_date, holder, composition[{form, substance_code,
+  substance_name, dosage, reference, nature, link}]`. `routes` is the published `;`-separated text
+  kept as one string (splitting is a normalisation, DP7). Dates stay as published (`dd/mm/yyyy`).
+- **Join.** Group `CIS_COMPO` lines by CIS preserving file order; left-join specialties by CIS.
+  Input rows = presentation lines; output = same minus `malformed_row` exclusions.
+- **Metrics.** As Req 11.9, plus `file_dates`, `lines_per_file`, `malformed_lines_per_file`.
+
+### 13.2 `eu_es_cima` (Req 12)
+- **Fetch.** `GET https://listadomedicamentos.aemps.gob.es/prescripcion.zip` with the pipelines'
+  User-Agent (the default `curl` agent got 403); bulk read timeout; the archive goes to `raw/`.
+  `source_sha256` = SHA-256 of the archive bytes. `--input FILE` reads a local archive.
+- **Parse.** `defusedxml.ElementTree.iterparse` over `Prescripcion.xml` from `zipfile.open`, on
+  `end` of `prescription` build the row and `clear()` the element. The ingredient dictionary
+  (3,389 entries) is read first into a dict keyed by `nroprincipioactivo`. `listprescriptiondate`
+  is read from the header element.
+- **Rows** (schema `eu_es_cima-1`): `cn (null if name_only), name_only, registration_number, name,
+  presentation_name, atc_code, ingredients[{code, name, dose, dose_unit, order}], ntins[], gtins[],
+  route_codes[], commercialised, registration_status, registration_status_date,
+  presentation_status, serialised`. NTIN and GTIN are taken from `<ntin><codigo>` and
+  `<gtin><codigo>`; the elements may repeat.
+- **GS1 validity.** `is_valid_gs1(digits)`: length in {8, 12, 13, 14}, digits only, check digit by
+  the GS1 mod-10 rule. Pure; shared by P24.
+- **Not ingested:** `duplicidades`, `interacciones_atc`, `recomendacion_geriatria`,
+  `alerta_geriatria`, `teratogenia`, `notaseguridad`, `excipientes`, `imagenes`, `biomarcadores`,
+  `problemassuministro`, `notas`, `secciones_ft`. The parser reads only the listed elements, so a
+  new element in the file is never copied by accident (an extra element is not a schema failure,
+  Req 2.1; the top-level element names are listed in the manifest as `extra_columns`).
+- **Metrics.** As Req 12.9.
+
+### 13.3 `faers` (Req 13)
+**Fetch.** Read the page; for each `<li>` with a quarter label, take the label, the ASCII link and
+the "posted on" date (absent for 2012–2018). `select_quarters(listing, n=4)` (pure): parse labels
+`(?i)(\d{4})\s*q([1-4])` from the link name, keep those with an ASCII link, sort by (year,
+quarter), take the last `n`, and fail if they are not consecutive. Download the archives to
+`raw/` (read timeout 300 s, host rate 1 request/s). `source_sha256` = SHA-256 over the four
+archive hashes in quarter order. Snapshot date = posting date of the newest quarter.
+
+**Parse, column-wise, per quarter.** A file is read as lines (one string column), split at `$`
+in Polars; a line whose field count differs from the header's is a `malformed_row` exclusion; the
+split never interprets quotes. Strict UTF-8; `\r` before `\n` is dropped.
+1. `DEMO` of all four quarters, only the columns `primaryid, caseid, caseversion, fda_dt,
+   occr_country, reporter_country` → one frame (about 1.6 million rows, ~150 MB).
+2. `DELETE` files → a set of case ids (blank lines ignored, non-digit lines fail the run).
+3. `choose_kept(demo, deleted)` (pure, Polars or plain Python in tests): drop deleted cases
+   (reason `deleted_case`); order by `caseid`, `caseversion` desc (integer compare), `fda_dt`
+   desc, `primaryid` desc (integer compare); the first row per case is kept; the others are
+   `superseded_version`. Returns the kept ids and the removed frame (`primaryid, caseid,
+   caseversion, quarter, reason, kept_primaryid`).
+4. Region: `derive_region(occr, reporter) -> (region, basis)` on the distinct pairs (about 400),
+   joined back.
+5. `DRUG` and `REAC` of each quarter, restricted to kept `primaryid` (a line whose `primaryid` is
+   not in that quarter's `DEMO` is `orphan_line`) and grouped per `primaryid` into lists:
+   `drugs[{drug_seq, role, ingredients[]}]` with `split_ai(prod_ai)` (split at `\`, no other
+   change; empty text gives `[]`) and `events[]` (PT as published, file order).
+6. Rows of each quarter are appended to the spill file (`rows_file`), one Parquet part per
+   quarter concatenated at the end by a streaming scan; the removed frame becomes the side table
+   `removed`.
+
+Row schema `faers-1`: `primaryid, caseid, caseversion (int), quarter, fda_dt, occr_country,
+reporter_country, region, region_basis, drugs[{drug_seq, role, ingredients[]}], events[]`.
+`caseversion` is stored as an integer; every other value is the published text (`drug_seq`
+as text). Not read at all: `OUTC, RPSR, THER, INDI` and the unused `DEMO`/`DRUG` columns (Req 13.4).
+
+**Region rule.**
+```
+present(c) = c not in {None, "", "COUNTRY NOT SPECIFIED"}      # after trimming
+basis, code = ("occr_country", occr) if present(occr)
+              else ("reporter_country", reporter) if present(reporter)
+              else ("none", None)
+region = UNKNOWN if code is None else TR if code == "TR"
+         else US if code == "US" or code in US_TERRITORIES
+         else EU if code == "EU" or code in EU27 else OTHER
+```
+`EU27` is the ISO list (AT BE BG HR CY CZ DK EE FI FR DE GR HU IE IT LV LT LU MT NL PL PT RO SK SI
+ES SE); no member-state code occurs in the data today, the list is a guard against a future FDA
+change. `US_TERRITORIES` = PR GU VI AS MP UM (FDA treats them as US). GB, CH, NO, IS and LI give
+`OTHER`; EU means EU-27 only (owner decision 2026-11-08). The manifest records the rule as
+`metrics.region_rule`. Raw country codes stay in the rows, so a change of this rule needs a
+rebuild but no new download.
+
+**Manifest metrics.** `quarters[{label, posted, demo_rows, kept_rows}]`, `reports_by_region`,
+`removed_by_reason`, `unknown_region_share`, `reports_without_drugs`, `reports_without_events`,
+`follow_up_share`, `blank_prod_ai_lines`, `not_deduplicated_across_cases: true`.
+
+## 14. FAERS count builder (Req 15)
+
+### 14.1 Placement
+`apps/api/janus/memory/faers_build.py`; run as `python -m janus.memory.faers_build [--data-dir
+PATH]`. It sits in the API project because it needs the `drug-resolution` ladder and rule files;
+it is a batch job, not a request path. Pure parts (`map_names`, `aggregate`) have no I/O; DuckDB
+reads the artifact and writes the output file.
+
+### 14.2 Steps
+```
+art   = read current faers artifact; outcome ok; stream rows -> content_hash_stream == manifest   Req 15.1
+inputs= resolution.load.gather(data_dir)      # wikidata artifact, rule files, synonyms, curated
+index = prepare.build_name_index(...)         # same index the resolution loader builds
+names = SELECT DISTINCT unnest(ingredients) FROM drugs                                           (DuckDB)
+mapped= {n: matching.map_name(n, index, turkish=False) for n in names}                           Req 15.2
+facts = DuckDB: unnest drugs/events, join the name->key table, apply scopes, distinct per report  Req 15.3-15.4
+tables= region x scope aggregation, ALL = sum of the five regions                                Req 15.5
+write staging/<build>/faers_counts.duckdb + meta.json; fsync; rename to runs/<build>; swap current  Req 15.8
+```
+The name→key table is registered in DuckDB (about 6,700 rows), so the heavy work (1.5 million
+reports, about 6 million drug lines) stays in SQL; Python only maps distinct names.
+
+### 14.3 Tables (DuckDB)
+```
+faers_meta(key, value)                                         build id, faers run id, snapshot date, quarters,
+                                                               resolution dataset version, rules version,
+                                                               code version, per-table rows and sha256
+faers_report(report_id, primaryid, caseid, quarter, region, region_basis)
+faers_report_ingredient(report_id, ingredient_key, suspect)    one row per (report, key); suspect = some PS/SS/I line
+faers_report_event(report_id, pt)                              distinct per report
+faers_totals(region, reports_mapped, reports_all)               regions TR EU US OTHER UNKNOWN ALL; reports_mapped is the primary N
+faers_ingredient_counts(ingredient_key, region, scope, reports)  scope in suspect, any
+faers_event_counts(pt, region, reports_mapped, reports_all)   primary c uses reports_mapped; reports_all is the sensitivity figure
+faers_pair_counts(ingredient_key, pt, region, scope, reports)    reports >= 1
+faers_unmapped(name, status, reports, suspect_reports)         ambiguous, unsplit, none
+```
+`report_id` is the rank of `primaryid` (as a number), so it does not depend on row order.
+`scope = any` counts a key once if the report has the key in any of PS, SS, I, C; `suspect`
+counts it if some PS/SS/I line has it, so suspect ⊆ any. 2×2: see Req 15.5. The size of
+`faers_pair_counts` (estimated between 5 and 15 million rows) is measured at the task 23
+checkpoint; a minimum count for stored pairs is an owner choice only if the file is unwieldy.
+
+### 14.4 Differential test
+`aggregate(facts)` is a plain-Python reference over small generated reports. The SQL path is
+tested against it on the same facts (P33–P36), so the SQL cannot drift from the definitions.
+
+### 14.5 Read side
+The API opens the file with `duckdb.connect(path, read_only=True)` through the `current` link
+(`$JANUS_DATA_DIR/artifacts/faers_counts/current`). `collective-memory` owns the queries and the
+statistics (PRR, ROR, Haldane, thresholds). `faers_meta.resolution_dataset_version` lets it say
+when the counts were built against a different resolution dataset than the one now served.
+
+## 15. Testing strategy (additions)
+
+- **Property tests (Hypothesis)** for P17–P40 below, tagged `Feature: data-pipelines, Property Pn`.
+  Pure functions are tested directly; archives are built in memory (`zipfile`, `io.BytesIO`), so
+  no network and no committed source data. Stream tests use chunk sizes 1–10 so merges happen.
+- **Strategies.** BDPM: three files rendered from generated rows with chosen encodings, leading
+  spaces, accents, tabs excluded. Nomenclátor: XML rendered from generated presentations with
+  random extra elements. FAERS: reports with versions across quarters, deletions, CRLF or LF,
+  quote characters inside values, malformed lines.
+- **Example tests:** the metformin/vildagliptin composition (FT + SA link numbers); a BDPM orphan
+  presentation; a Nomenclátor presentation with NTIN and GTIN; a FAERS combination string with
+  `\`; role `DN`; a country `COUNTRY NOT SPECIFIED`.
+- **Local integration (not in CI).** With archives or files on disk, run each job once, compare
+  the manifest figures with §10, and measure FAERS peak memory. Skipped when no data is given.
+- **CI.** The `pipelines` job already runs ruff, pyright, pytest and `notice --check`; the `api`
+  job runs the builder tests with DuckDB (no PostgreSQL needed).
+
+## 16. Correctness properties (Phase 2)
+
+| # | Property (for all …) | Validates | Hypothesis approach |
+|---|---|---|---|
+| P17 | **Streamed hash equals in-memory hash.** For any rows and any chunk size ≥ 1, `content_hash_stream` over the rows, and over the rows after a Parquet round trip in batches, equals `content_hash`. | Req 14.1, 14.2, 1.3 | Rows from the existing canonical strategies (nested lists, `None`, Unicode); chunk sizes 1–10; temp dirs. |
+| P18 | **Side tables.** Adding, removing or changing side tables never changes the content hash; the manifest lists each side table with the SHA-256 of its file; a staged run's files are unchanged after the run finishes. | Req 14.3, 1.2 | Rows plus generated side frames; hash before and after; re-read files and recompute SHA-256. |
+| P19 | **BDPM cells are not altered.** For any generated triple of BDPM files (cells with leading and trailing spaces, accents, quotes, apostrophes, no tab or newline inside a cell), rendering the parsed output back to the three file layouts reproduces every cell. | Req 11.4 | Render files first, parse, compare cell by cell, including the holder with a leading space. |
+| P20 | **Strict per-file decoding.** For any text over the French character set, encoding it with a file's declared encoding and parsing returns it; bytes that are not valid in the declared encoding fail the run naming the file and never produce replacement characters. | Req 11.2 | Text strategy over ASCII + `éèêëàâùûôîïçœ’°²µ`; invalid byte injection (0x81, 0x8D, 0x8F, 0x90, 0x9D in cp1252; 0xFF in UTF-8). |
+| P21 | **CIP13 validation.** A string is accepted as a CIP13 exactly when it has 13 digits, starts with `3400` and its check digit is correct; every other value (wrong length, other prefix, one changed digit, letters, empty) gives a name-only row with `cip13 = null` and the bad value nowhere in the output. | Req 11.5 | Valid CIP13 built from 9 free digits + check; single-digit mutations, truncations, other prefixes. |
+| P22 | **BDPM join and accounting.** For any generated CIS, CIP and composition lines (orphans, missing composition, duplicate CIP13, malformed lines), the output has one row per well-formed presentation line, each composition list equals the CIS's lines in file order, orphans have `specialty_missing`, and input = output + excluded with reasons. | Req 11.3, 11.6, 1.5 | Generate the three files from a model; shuffle lines within a file for the composition-order check only where order is defined by the file. |
+| P23 | **BDPM update dates.** For any download page text with the three labels in any order and any surrounding text, the dates are read per file and the snapshot is the oldest; a missing label or an impossible date fails. | Req 11.1 | Page template with random filler and dates. |
+| P24 | **GS1 values in the Nomenclátor.** `is_valid_gs1` accepts exactly the digit strings of length 8, 12, 13 or 14 with a correct check digit; an NTIN built from any 6-digit national code is `0847000` + code + check, valid, and embeds that code; any single-digit change makes it invalid. | Req 12.3 | Digit strings with computed and mutated check digits; NTIN construction. |
+| P25 | **Nomenclátor parse.** For any generated Nomenclátor XML (presentations with and without NTIN, GTIN, ingredients, repeated elements, unknown extra elements, advice elements, ingredient codes missing from the dictionary), the parsed rows equal the generated presentations in any element order; ingredients are in `orden_colacion` order; advice elements never reach the output; a missing header date fails. | Req 12.1, 12.2, 12.5 | Build the presentation list first, render XML, parse, compare; shuffle presentations and ingredient elements. |
+| P26 | **National code and name-only.** For any `cod_nacion` text, a 6-digit value is kept as published and anything else gives a name-only row; shared NTIN/GTIN values are kept on every presentation that publishes them. | Req 12.3, 12.4 | Digit strings of length 0–9, letters; duplicated codes across presentations. |
+| P27 | **Case deduplication.** For any set of reports over any quarters (shared case ids, versions in any order and quarter, equal versions, deletions listed in any quarter), the kept set has exactly one report per non-deleted case with the highest version (ties: latest `fda_dt`, then highest `primaryid`); no deleted case is kept; `removed` explains every other input report with the right reason and `kept_primaryid`; the result is the same for any order of reports and quarters. | Req 13.3, 1.5 | Generate cases with 1–5 versions spread over quarters, delete some, permute. Reference implementation: plain Python `max` per case. |
+| P28 | **FAERS row accounting.** For any archive with malformed lines (too few or too many `$`), orphan `DRUG`/`REAC` lines and blank lines, every input line is in the output or excluded with a reason, and counts add up (`input = output + Σ excluded`) for `DEMO`, `DRUG` and `REAC` lines separately. | Req 13.2, 13.5, 1.5 | Mutate generated files; recount. |
+| P29 | **Region.** For any pair of country texts (upper and lower case, spaces, `EU`, EU-27 codes, `COUNTRY NOT SPECIFIED`, empty, two-letter codes, junk), `derive_region` returns exactly one of the five regions; the occurrence country wins when present; `EU` and every EU-27 code give EU; `TR` and `US` map to themselves, the territories PR GU VI AS MP UM give US, and GB CH NO IS LI give OTHER; missing both gives UNKNOWN with basis `none`; basis agrees with the field used. | Req 13.6 | Pairs from a mixed sampled/random strategy; compare with a small reference table. |
+| P30 | **Quarter window.** For any listing of quarter links (any order, mixed letter case, with and without ASCII links, years 2012–2030), `select_quarters(n=4)` returns the four latest consecutive quarters oldest first; a gap in the four newest, or fewer than four, raises. | Req 13.1 | Generated listings; compare with a sorted reference. |
+| P31 | **Line ends and quotes.** The same generated archive with LF, CRLF or mixed line ends gives identical rows; values containing `"` and `'` are kept character for character. | Req 13.2 | Render the same model with different line ends and quote-heavy values. |
+| P32 | **Data minimisation.** For any archive carrying all `DEMO` and `DRUG` columns with arbitrary values, every output row has exactly the keys of schema `faers-1` and no value from an unused column appears. | Req 13.4 | Sentinel strings in unused columns; key and value search in the output. |
+| P33 | **2×2 consistency.** For any generated reports, ingredient assignments, events and regions, the SQL count tables equal the plain-Python reference; for every stored pair and region, a ≤ min(drug, event) and b, c, d ≥ 0 with a + b + c + d = total. | Req 15.5 | Differential test SQL vs `aggregate`; small ranges to force overlaps and zeros. |
+| P34 | **Regions add up; scopes nest.** For every count table, the five regional counts sum to the `ALL` count; for every key and region the `suspect` count is ≤ the `any` count; a key present only on concomitant lines is counted in `any` only; roles `DN` and unknown codes are counted nowhere. | Req 15.3, 15.5 | Same generator, roles drawn from PS SS I C DN and junk. |
+| P35 | **Counted once per report.** Duplicating any drug line, repeating a PT, or naming the same ingredient in a combination string and on another line of the same report changes no count. | Req 15.4 | Take generated facts, add duplicates, compare tables. |
+| P36 | **Mapping boundary.** Only names with status `mapped` appear in the count tables; ambiguous, unsplit and unmapped names appear only in `faers_unmapped`; mapped + listed occurrences equal all ingredient occurrences; the key used is the ladder's key for that name. | Req 15.2 | Stub index with names designed to hit each status; sums over occurrences. |
+| P37 | **Order independence and determinism.** Shuffling the artifact's reports gives the same tables and the same per-table hashes; building twice from the same inputs gives the same hashes. | Req 15.7 | Permute rows; compare `faers_meta` hashes. |
+| P38 | **Tampering is refused.** Changing, adding or removing any row of the artifact, or altering the manifest's content hash, makes the build refuse and leaves `current` unchanged. | Req 15.1 | Mutate a generated artifact; run the build. |
+| P39 | **Atomic switch.** For any sequence of builds with faults injected at write, rename and link steps, `current` is absent or points to a complete file whose table hashes match its metadata. | Req 15.8, 4.2 | `RuleBasedStateMachine`, same pattern as P10. |
+| P40 | **Log hygiene.** Running the build with sentinel medicine and event names in the artifact writes none of them to any log record. | Req 15.9 | Sentinel names; capture log records. |
+
+P17–P40 are new in the Phase 2 refinement. P23 is example-driven where Hypothesis adds little.
+
+## 17. Decisions (Phase 2)
+
+| # | Decision | Alternatives considered | Why |
+|---|---|---|---|
+| DP14 | FAERS window = the four most recent quarters on the FDA page, chosen by `select_quarters`; `--quarters` overrides it. **Owner request.** | openFDA API (counts only, 240 requests/minute); all quarters since 2012 (about 20 times larger). | Row-level data is needed for ingredient-level 2×2 tables; four quarters is about 1.5 million reports and recent drug names. |
+| DP15 | Deduplicate by case: latest `caseversion`, tie by `fda_dt` then `primaryid`; honour `DELETE` files; no merging across different case ids; removed reports go to a side table. | FDA's cross-case matching by hand-built rules; keep all versions. | Standard practice (**owner request**); different case ids for one event cannot be matched safely, so the "not deduplicated" statement stays on every FAERS result (`medical-safety` rule 6). |
+| DP16 | Region = occurrence country, else reporter country; `EU` pseudo-code and EU-27 → EU; PR, GU, VI, AS, MP, UM → US; GB, CH, NO, IS, LI → OTHER; raw codes kept. **Confirmed by the owner 2026-11-08** (also written into the `collective-memory` glossary). | Reporter country only (`collective-memory` glossary); occurrence only. | Occurrence leaves 152,493 reports (10.1 %) without a region, reporter alone leaves 22,895 `COUNTRY NOT SPECIFIED`; the fallback leaves 2,208. See §10 for the counts.  |
+| DP17 | The FAERS artifact is one row per kept report with nested drugs and events, plus a `removed` side table. | Three relational tables (needs a multi-table core); exploded one row per drug–event pair (tens of millions of rows). | Fits the one-`rows.parquet` contract and keeps the Phase 1 hash rule; the exploding happens in DuckDB at build time. |
+| DP18 | Keep the hash rule; add a bounded-memory implementation of the same rule (external merge sort) and file-backed output. | In-memory (estimated 4–5 GiB peak, fails on small machines); per-row digests combined (changes every existing hash and the golden vector shared with `apps/api`); skip the hash for FAERS (breaks Req 1.3). | Same hash for the same rows is the strongest guarantee already tested (P1, P2); P17 proves the new path equals the old. |
+| DP19 | Ingredient mapping stays out of the pipeline: the `faers` artifact keeps names as published; the builder in `apps/api` maps them with the `drug-resolution` ladder. | Ladder inside `pipelines/` (duplicates code, breaks DP1 and DP7); load FAERS into PostgreSQL (the stack keeps FAERS in DuckDB). | One place per rule (DP7); the same index as the resolution loader, so a name means the same ingredient everywhere. |
+| DP20 | The event is the MedDRA Preferred Term string as published; no correction of term-version drift between quarters. | Map to a fixed MedDRA version (needs the licensed dictionary). | Not available to Janus; drift is small within a year; the string is what FDA publishes. Attribution and term licence: open item 4. |
+| DP21 | Two exposure scopes, `suspect` (PS, SS, I) and `any` (also C); role `DN` and unknown roles excluded and counted. | Suspect only; all roles including DN. | Concomitant drugs matter for the combination view; suspect roles are the usual basis for disproportionality. |
+| DP32 | **Owner decision 2026-11-08, for review by the statistician agent in the `collective-memory` spec.** Primary N of the 2×2 table = deduplicated reports with at least one mapped ingredient; ingredient, event and pair counts are over those reports; the all-reports total and event counts over all reports (`reports_all`) are stored as a sensitivity figure. | N = all deduplicated reports. | Reports whose drugs did not map could contain the drug of interest and would be counted in the "other drugs" cells (misclassification); restricting to mapped reports avoids that. The cost is that N depends on the mapping coverage (84.0 % of occurrences), which the coverage report states. |
+| DP33 | **Owner decision 2026-11-08.** Event terms are shown only as the Preferred Term strings published in FAERS; no MedDRA hierarchy (SOC, HLT, LLT) is stored or shipped; "MedDRA® is a registered trademark of ICH" is carried in the counts metadata and must appear wherever PTs are shown. A Phase 5 pre-launch item checks the MSSO terms for public display (`docs/pre-launch-checklist.md`). | Ship a MedDRA hierarchy. | Not licensed to Janus; the PT string is what FDA publishes. |
+| DP22 | BDPM: per-file strict encodings (Windows-1252, UTF-8, Windows-1252); no trimming or case change; a bad CIP13 gives a name-only row. | Detect the encoding; trim text; drop bad rows. | Two of three files are not UTF-8 and one is; guessing risks mojibake in a medical name. The licence forbids altering data. Same convention as `titck` (DP9 of `drug-resolution`). |
+| DP23 | BDPM: one row per CIP13 with the composition list as published, `SA` and `FT` both kept. `FT` is the therapeutic moiety linked by number to its `SA` salt form, so `drug-resolution` should take the `FT` name where a link has one and the `SA` name otherwise. | Choose in the pipeline. | The choice is an ingredient decision (DP7); recorded here so the later adapter design starts from the observed structure. |
+| DP24 | CIMA: use the Nomenclátor bulk file, not the REST API. | Crawl `medicamentos?pagina=N` and `medicamento?nregistro=` (more than 20,000 requests, no documented limit). | One 16 MB download holds national code, ingredients, ATC, NTIN and GTIN; daily refresh; far fewer requests. REST stays an option for the adapter's request path. |
+| DP25 | CIMA: do not ingest the Nomenclátor's duplicate-therapy, interaction and geriatric advice elements. | Ingest as extra evidence. | Imperative advice text that has not been reviewed against Janus's safety wording, and a second rule base next to the PIPC one. A later spec can take it up. |
+| DP26 | Name-only rows (null key, `name_only` true) are the convention for an invalid CIP13 or national code, as for `titck`. | Exclude the row. | The row stays reachable by name; the invalid value is never repaired or kept. |
+| DP27 | Cadence: `faers` quarterly (the page changes about 4 weeks after a quarter), `eu_fr_bdpm` monthly, `eu_es_cima` weekly (the source refreshes daily). CLI only until deployment (DP11). | Daily CIMA. | Matches the registry (`cadence_days` 91, 30, 7) and the freshness rule of `evidence-integrity`. |
+| DP28 | Review thresholds: `faers` 15 %, others the default 10 %. | 10 % for all. | A new FAERS window replaces one quarter in four, so ±10 % can be normal. |
+| DP29 | The pipelines send their own User-Agent (with `JANUS_CONTACT` when set) to FDA, BDPM and AEMPS; none of them requires the contact. | Browser-like User-Agent. | AEMPS rejected the generic command-line agent and accepted ours on 2026-11-08; a browser disguise would hide who we are. If a host blocks ours, the run fails with a clear message (Req 12.7). |
+| DP30 | Raw downloads stay under `raw/<pipeline>/<run_id>/` (FAERS about 250 MB per run); pruning old runs is a maintainer action. | Delete after parse. | Provenance and re-parsing; disk is the maintainer's to manage. |
+| DP31 | The count file lives in `$JANUS_DATA_DIR/artifacts/faers_counts/` with the same `runs/` + `current` layout and atomic link swap. | A table in PostgreSQL. | `tech.md` keeps FAERS-derived tables in read-only DuckDB files; the layout matches Phase 1, so one habit for maintainers. |
+
+## 18. Open items (Phase 2)
+
+Owner decisions of 2026-11-08 are applied: region basis and territories (DP16), the denominator
+(DP32), name rules as a `drug-resolution` follow-up (item 3), MedDRA handling (DP33), and approval
+of the bounded-memory core change (DP18).
+
+1. ~~Region basis~~ Decided (DP16).
+2. ~~Denominator~~ Decided (DP32); the statistician agent reviews it in the `collective-memory` spec.
+3. **FAERS name rules in `drug-resolution`.** Not now. Recorded as a follow-up in `drug-resolution`
+   design §10 for pharmacologist review (FDA four-letter biologic suffix, `MYCOPHENOLATE MOFETIL`,
+   single parts of combination strings). The count builder's coverage report lists the occurrences
+   each candidate rule would affect (`faers_unmapped`, `coverage.candidates`), so the impact is known
+   before the decision.
+4. ~~MedDRA~~ Decided (DP33); the Phase 5 check is in `docs/pre-launch-checklist.md`.
+5. **Facts only partly verified (see `eu-code-encodings.md`).** Unchanged.
+6. **Registry and NOTICE.** Task 17.
+7. **Size of `faers_pair_counts`.** Measured at the task 25/26 checkpoints.
+8. **Peak memory target (4 GiB).** Measured at the task 23 checkpoint.

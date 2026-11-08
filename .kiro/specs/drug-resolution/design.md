@@ -553,6 +553,21 @@ owner's DP20 decision.
 - `data-pipelines` Req 6.4, 6.6 and 8.3 change with DP9, DP10 and DP20 (updated in task 5).
 - Phase 2: `eu_fr`, `eu_es`, `eu_name` adapters; de/fr/es labels in the name index; CIMA calls
   under the HTTP policy.
+- **Phase 2 inputs recorded 2026-11-08 (from `data-pipelines` Phase 2).**
+  `eu-code-encodings.md` in this folder records how the DataMatrix carries the CIP13 (GTIN-14 =
+  `0` + CIP13) and the Spanish national code (NTIN `0847000` + CN + check digit, or GTIN + AI
+  712), with sources and what is not verified. The pipelines `eu_fr_bdpm` and `eu_es_cima` will
+  supply `cip13`, and `cn`, `ntins`, `gtins` as published (Req 11, 12 there).
+  BDPM compositions have `FT` (therapeutic fraction) and `SA` (salt form) lines linked by number;
+  take the `FT` name where a link has one. French and Spanish substance names are in the
+  languages' own salt and word-order forms (`CHLORHYDRATE DE METFORMINE`, `CLAVULANICO ACIDO`),
+  so Phase 2 salt rules are needed for them.
+- **FAERS name coverage (2026-11-08).** The US ladder maps 84.0 % of FAERS ingredient occurrences
+  (80.5 % in suspect roles). The count builder of `data-pipelines` reuses the ladder through a
+  `build_name_index()` extracted from `prepare_dataset` (that spec's task 24, no behaviour
+  change). **Follow-up item (owner decision 2026-11-08: not now).** Candidate rules for pharmacologist review, whose coverage impact the FAERS coverage report logs: FDA's
+  four-letter biologic suffix (`INFLIXIMAB-DYYB`), `MYCOPHENOLATE MOFETIL`, single parts of
+  combination strings (`CARBIDOPA`).
 - **Follow-up from `cascade-engine` (owner decision 2026-11-07):** imipenem is marketed only with
   cilastatin, and its only code is the combination code `J01DH51`, so the imipenem ingredient has
   no ingredient-level code and cannot match the carbapenem rule (PIPC row 58). Give the imipenem
