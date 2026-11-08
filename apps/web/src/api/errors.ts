@@ -70,6 +70,7 @@ export const MESSAGE_KEYS = [
   "Errors.resolution_unavailable",
   "Errors.cascades_unavailable",
   "Errors.dataset_changed",
+  "Errors.dataset_changed_again",
   "Scan.errors.unreadable",
   "Scan.errors.gtin_check_digit",
   "Scan.errors.ndc_malformed",

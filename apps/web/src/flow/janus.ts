@@ -19,9 +19,21 @@ import {
 } from "@/demo/client";
 import { useDemo, type PatientId } from "@/demo/session";
 import { useList } from "@/store/hooks";
-import type { Item } from "@/store/list";
+import { list as listDoc, type Item } from "@/store/list";
+import { settings } from "@/store/settings";
+
+import { reresolve, resolverFor } from "./reresolve";
 
 const http = new HttpClient();
+
+/** Stable across renders (an effect dependency). */
+async function reresolveStored(): Promise<void> {
+  const next = await reresolve(
+    listDoc.get().items,
+    resolverFor(http, settings.get().scanRegion),
+  );
+  listDoc.set({ v: 1, items: next });
+}
 
 export interface Session {
   ready: boolean;
@@ -32,6 +44,8 @@ export interface Session {
   loop: JanusClient | null;
   items: Item[];
   readOnly: boolean;
+  /** Re-resolves the stored list after `409 dataset_version_mismatch` (DP20); absent in demo. */
+  onDatasetChanged?: () => Promise<void>;
 }
 
 export function useSession(): Session {
@@ -70,6 +84,7 @@ export function useSession(): Session {
     loop: list.ready ? http : null,
     items: list.value.items,
     readOnly: false,
+    onDatasetChanged: reresolveStored,
   };
 }
 

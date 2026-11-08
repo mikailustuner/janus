@@ -19,9 +19,47 @@ import { Button, ButtonLink, Card, Chip, PageTitle } from "@/components/ui";
 import { inputKey, MAX_ITEMS, toEvaluateIn } from "@/flow/evaluate";
 import { resultCache, useSession } from "@/flow/janus";
 import { listActions, type Item } from "@/store/list";
+import { setPending } from "@/flow/pending";
+import { resolverFor } from "@/flow/reresolve";
+import { useRouter } from "@/i18n/navigation";
+import { useSettings } from "@/store/hooks";
 import { useT } from "@/theme/words";
 import { sentence, type Loaded } from "@/vocabulary";
 import { useVocabulary } from "@/vocabulary/use";
+
+/** Confirm an item again after a dataset change: resolve its source key, then the confirm screen. */
+function Reconfirm({ item }: { item: Item }) {
+  const t = useT();
+  const router = useRouter();
+  const session = useSession();
+  const { value } = useSettings();
+  return (
+    <Button
+      variant="secondary"
+      onClick={async () => {
+        if (!session.client) return;
+        const r = await resolverFor(
+          session.client,
+          value.scanRegion,
+        )(item.sourceKey);
+        if (!r.ok) return;
+        const k = item.sourceKey;
+        setPending({
+          resolution: r.data,
+          source:
+            k.kind === "search"
+              ? { kind: "search", query: k.query, region: k.region }
+              : k,
+          typed: k.kind === "search" ? k.query : null,
+          replaces: item.id,
+        });
+        router.push("/confirm");
+      }}
+    >
+      {t("Confirm.title")}
+    </Button>
+  );
+}
 
 function ItemRow({
   item,
@@ -54,6 +92,7 @@ function ItemRow({
         {item.needsConfirmation ? (
           <Chip>{t("Medicines.needsConfirmation")}</Chip>
         ) : null}
+        {item.needsConfirmation && !readOnly ? <Reconfirm item={item} /> : null}
       </div>
       <ul
         className="flex flex-col gap-1"

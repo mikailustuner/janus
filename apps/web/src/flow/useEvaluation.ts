@@ -4,7 +4,7 @@
  * result in memory only (DP29). A list change gives a new input, so an older result is never
  * shown as current (Req 13.5).
  */
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import type { ApiError } from "@/api/errors";
 import type { CascadeResult, EvaluateIn } from "@/api/contracts";
@@ -30,7 +30,9 @@ export function useEvaluation(
     error: ApiError | null;
   } | null>(null);
   const retry = useCallback(() => setAttempt((a) => a + 1), []);
-  const { ready, client, items } = session;
+  const { ready, client, items, onDatasetChanged } = session;
+  // At most one re-resolution follows a 409 (design §5.4 step 4).
+  const reresolved = useRef(false);
   const built = useMemo(
     () => (ready ? toEvaluateIn(items) : null),
     [ready, items],
@@ -47,13 +49,31 @@ export function useEvaluation(
       if (r.ok) {
         resultCache.set(k, r.data);
         resultCache.markEvaluated(k);
+        reresolved.current = false;
+      }
+      if (
+        !r.ok &&
+        r.error.kind === "http" &&
+        r.error.status === 409 &&
+        onDatasetChanged
+      ) {
+        if (!reresolved.current) {
+          reresolved.current = true;
+          void onDatasetChanged(); // the list changes, so the evaluation runs again with a new input
+          return;
+        }
+        setAnswer({
+          key,
+          error: { ...r.error, messageKey: "Errors.dataset_changed_again" },
+        });
+        return;
       }
       setAnswer({ key, error: r.ok ? null : r.error });
     });
     return () => {
       live = false;
     };
-  }, [client, built, key]);
+  }, [client, built, key, onDatasetChanged]);
 
   if (!ready || !client || !built) return { status: "idle", retry };
   if (!built.ok) return { status: "blocked", reason: built.reason, retry };

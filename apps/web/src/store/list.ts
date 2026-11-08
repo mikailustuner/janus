@@ -145,6 +145,13 @@ export const listActions = (doc = list) => ({
       items: l.items.map((i) => (i.id === id ? { ...i, ...patch } : i)),
     }));
   },
+  /** Confirm an item again (after a dataset change): new candidate, same place in the list. */
+  replace(id: string, item: Omit<Item, "id">): void {
+    doc.update((l) => ({
+      ...l,
+      items: l.items.map((i) => (i.id === id ? { ...item, id } : i)),
+    }));
+  },
   remove(id: string): void {
     doc.update((l) => ({ ...l, items: l.items.filter((i) => i.id !== id) }));
   },

@@ -164,28 +164,36 @@
   > demo flow). Counterexample from C4: after a reload the HTTP client fired `GET /memory/snapshot` before demo mode was
   > read; the client is now null until the store is read. Bundle budget script and C5/C7 belong to later tasks.
 
-- [ ] 13. Scanning (`src/scan/gs1.ts`, `zxing.ts`, `camera.ts`, `src/app/[locale]/scan/`, `scripts/vendor-assets.mjs`;
+- [x] 13. Scanning (`src/scan/gs1.ts`, `zxing.ts`, `camera.ts`, `src/app/[locale]/scan/`, `scripts/vendor-assets.mjs`;
   design §6.1–§6.3, DP9)
   - Lazy zxing reader with the wasm from `/vendor/`; camera with permission handling; photo picker; typed input rules;
     demo detection on every path; 422 code messages; scan region from settings.
-  - [ ] 13.1 Property test P1: outbound filter. _Requirements: 10.2, 10.3, 23.1_
-  - [ ] 13.2 Example test (node): zxing-wasm decodes the demo sheet's DataMatrix images, and the filtered content has no
+  > Done 2026-11-08 (Claude Code): zxing-wasm reader (wasm from `/vendor/zxing`), camera every 150 ms, photo picker, typed
+  > input rules, demo detection first on every path; `vendor-assets.mjs` copies the wasm, the tesseract worker and core and
+  > fetches `tessdata_fast` (commit 87416418, SHA-256 pinned) before `next build` / `next dev`.
+  - [x] 13.1 Property test P1: outbound filter. _Requirements: 10.2, 10.3, 23.1_
+  - [x] 13.2 Example test (node): zxing-wasm decodes the demo sheet's DataMatrix images, and the filtered content has no
     `(21)`. _Requirements: 10.1, 10.2_
 
-- [ ] 14. Label text recognition, NDC and name search (`src/scan/ocr.ts`, `ocr-extract.ts`, scan tab "Photo of label";
+- [x] 14. Label text recognition, NDC and name search (`src/scan/ocr.ts`, `ocr-extract.ts`, scan tab "Photo of label";
   design §6.4, DP10)
   - Lazy tesseract worker with self-hosted core and `tessdata_fast` (pinned hashes); tappable words; NDC chips;
     no-open-database path from Confirm leads here.
-  - [ ] 14.1 Property test P22: nothing sent without a choice; only the NDC or the selected words; national codes not
+  > Done 2026-11-08 (Claude Code): checked in Chromium by Playwright on a label photographed in the browser: words become
+  > tap targets, nothing is sent until a choice, the demo NDC chip opens the demo prompt with no request.
+  - [x] 14.1 Property test P22: nothing sent without a choice; only the NDC or the selected words; national codes not
     sent as codes. _Requirements: 11.2, 11.4_
 
-- [ ] 15. Confirm screen, live flow and version changes (`src/flow/confirm.ts`, `reresolve.ts`,
+- [x] 15. Confirm screen, live flow and version changes (`src/flow/confirm.ts`, `reresolve.ts`,
   `src/app/[locale]/confirm/`, list re-resolution prompts; design §5.4, §9, DP20)
   - Candidate cards with attribution, notices, `matched_by` notes, status strings, homeopathic, component code,
     ambiguous choices, box name, since when; `/resolve/products` refresh within one dataset version; 409 re-resolution.
-  - [ ] 15.1 Property test P21: confirm view model. _Requirements: 12.1–12.11_
-  - [ ] 15.2 Property test P5: re-resolution (model-based with fake resolver and engine). _Requirements: 22.3, 14.2_
-  - [ ] 15.3 Playwright: stubbed live flow (scan TR code → confirm → since when → results) and the 409 path. _Requirements: 1.1, 22.3_
+  > Done 2026-11-08 (Claude Code): live flow checked against the real local API (type a name → confirm → list). The 409
+  > path re-resolves every item by its source key once and evaluates once more; a second 409 shows `dataset_changed_again`.
+  > Items left for confirmation get a "Confirm the medicine" control in the list.
+  - [x] 15.1 Property test P21: confirm view model. _Requirements: 12.1–12.11_
+  - [x] 15.2 Property test P5: re-resolution (model-based with fake resolver and engine). _Requirements: 22.3, 14.2_
+  - [x] 15.3 Playwright: stubbed live flow (scan TR code → confirm → since when → results) and the 409 path. _Requirements: 1.1, 22.3_
 
 - [ ] 16. Outcome loop: QR opt-in, reminder, withdrawal (`src/note/qr.ts`, `src/app/[locale]/note/` opt-in card,
   `note/withdraw/`, `src/store/reminders.ts`; design §10.3–§10.4, DP7, DP23)
