@@ -845,7 +845,7 @@
     "homeopathic": "Homeopathic product, not checked.",
     "notCheckable": {
       "no_key": "Cannot be checked: Janus could not recognise the active ingredients of this box.",
-      "partial": "Cannot be checked: Janus could not recognise every active ingredient of this box.",
+      "partial": "Not checked: at least one ingredient of this box was not recognised.",
       "too_many": "Cannot be checked: this box lists more than 10 active ingredients."
     },
     "duplicate": {
@@ -906,10 +906,10 @@
       "not_all_comparable": "only {comparable} of {products} products state it in a way Janus can compare, and none of those is listed with the value of this box."
     },
     "form": {
-      "oral_solid": "Tablet or capsule to swallow",
+      "oral_solid": "Tablet or capsule taken by mouth",
       "oral_solid_delayed_release": "Gastro-resistant tablet or capsule",
-      "oral_solid_prolonged_release": "Prolonged-release tablet or capsule",
-      "oral_liquid": "Liquid to swallow",
+      "oral_solid_prolonged_release": "Prolonged- or modified-release tablet or capsule",
+      "oral_liquid": "Liquid taken by mouth",
       "injection": "Injection or infusion",
       "inhaled": "To inhale",
       "nasal": "For the nose",
@@ -947,7 +947,7 @@
       "formNone": "Not given",
       "save": "Use these values",
       "clear": "Clear the entered values",
-      "invalid": "Please type the amount in digits, for example 40 or 2.5."
+      "invalid": "Please type the amount in digits without thousands separators, for example 40 or 2.5."
     },
     "states": {
       "loading": "Checking the listings…",
@@ -963,7 +963,7 @@
       "unknown_ingredient_keys": "Some active ingredients of this box are not in the current medicine data, so no source could be checked for them."
     },
     "attribution": {
-      "titck": "Source: TİTCK list of licensed medicinal products, data of {date}.",
+      "titck": "Source: TİTCK list of licensed medicinal products for human use (Ruhsatlı Beşeri Tıbbi Ürünler Listesi), data of {date}.",
       "bdpm": "Source: Base de données publique des médicaments (BDPM), data of {date}. Shown as published; the BDPM does not endorse Janus.",
       "cima": "Source: AEMPS, Nomenclátor de prescripción, data of {date}.",
       "openfda": "Source: openFDA NDC directory, data of {date}. Not an FDA endorsement."
@@ -978,6 +978,7 @@
     },
     "demo": {
       "intro": "The Turkish and German boxes of the Cologne demo patient. Product names are invented; the listings come from the real public data."
-    }
+    },
+    "presentNote": "Being listed does not mean the medicine is on sale or available at a pharmacy."
   }
 }

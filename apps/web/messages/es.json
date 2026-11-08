@@ -812,8 +812,8 @@
     "nav": "Pasaporte",
     "title": "Pasaporte de medicamentos",
     "intro": "Todas las cajas en una sola lista, vengan del país que vengan. Para cada caja, Janus indica si los datos públicos de productos de Turquía, Francia, España y Estados Unidos incluyen un producto con los mismos principios activos.",
-    "listingsOnly": "Janus solo muestra registros de datos públicos. Solo su médico o su farmacéutico puede decir qué medicamento es adecuado para usted.",
-    "open": "Ver registros en otros países",
+    "listingsOnly": "Janus solo muestra lo que figura en listados de datos públicos. Solo su médico o su farmacéutico puede decir qué medicamento es adecuado para usted.",
+    "open": "Ver los listados de otros países",
     "fromMedicine": "Ver esta caja en el pasaporte",
     "back": "Volver al pasaporte",
     "boxes": "{count, plural, one {# caja} other {# cajas}}",
@@ -845,7 +845,7 @@
     "homeopathic": "Producto homeopático, no comprobado.",
     "notCheckable": {
       "no_key": "No se puede comprobar: Janus no reconoció los principios activos de esta caja.",
-      "partial": "No se puede comprobar: Janus no reconoció todos los principios activos de esta caja.",
+      "partial": "No comprobado: al menos un principio activo de esta caja no se reconoció.",
       "too_many": "No se puede comprobar: esta caja indica más de 10 principios activos."
     },
     "duplicate": {
@@ -854,22 +854,22 @@
       "summary": "{count, plural, one {# principio activo está} other {# principios activos están}} en más de una caja de esta lista."
     },
     "detail": {
-      "title": "Registros en otros países",
-      "caption": "Registros de los principios activos de esta caja en cada fuente",
+      "title": "En los listados de otros países",
+      "caption": "Los principios activos de esta caja en el listado de cada fuente",
       "sourceColumn": "País y fuente",
       "resultColumn": "Lo que muestran los datos de la fuente",
       "ownSource": "Fuente de esta caja",
       "germany": "Alemania",
       "comparisonTitle": "Comparación con esta caja",
       "withOther": "{count, plural, one {# producto contiene} other {# productos contienen}} {ingredients, plural, one {este principio activo} other {estos principios activos}} junto con otros principios activos.",
-      "keysFound": "Registrados en esta fuente como principios activos de otros productos: {names}.",
+      "keysFound": "Figuran en el listado de esta fuente como principios activos de otros productos: {names}.",
       "boxValues": "Esta caja: {values}",
       "boxValuesNone": "No se conocen la dosis ni la forma de esta caja."
     },
     "status": {
-      "present": "{source} registra {count, plural, one {# producto} other {# productos}} con {ingredients, plural, one {este principio activo y ningún otro} other {exactamente estos principios activos y ningún otro}} (datos del {date}).",
-      "not_present": "{source} no registra ningún producto con {ingredients, plural, one {este principio activo y ningún otro} other {exactamente estos principios activos y ningún otro}} (datos del {date}).",
-      "not_in_source": "{source} no registra ningún producto con {ingredients, plural, one {este principio activo} other {alguno de estos principios activos}} con un nombre que Janus reconozca (datos del {date}). Esto no demuestra que no {ingredients, plural, one {esté disponible} other {estén disponibles}} en {country}.",
+      "present": "En el listado de {source} {count, plural, one {figura # producto} other {figuran # productos}} con {ingredients, plural, one {este principio activo y ningún otro} other {exactamente estos principios activos y ningún otro}} (datos del {date}).",
+      "not_present": "En el listado de {source} no figura ningún producto con {ingredients, plural, one {este principio activo y ningún otro} other {exactamente estos principios activos y ningún otro}} (datos del {date}).",
+      "not_in_source": "En el listado de {source} no figura ningún producto con {ingredients, plural, one {este principio activo} other {alguno de estos principios activos}} con un nombre que Janus reconozca (datos del {date}). Esto no demuestra que no {ingredients, plural, one {esté disponible} other {estén disponibles}} en {country}.",
       "source_unavailable": "No comprobado en esta fuente."
     },
     "reason": {
@@ -906,10 +906,10 @@
       "not_all_comparable": "solo {comparable} de {products} productos lo indican de una manera que Janus pueda comparar, y ninguno de ellos figura con el valor de esta caja."
     },
     "form": {
-      "oral_solid": "Comprimido o cápsula para tragar",
+      "oral_solid": "Comprimido o cápsula por vía oral",
       "oral_solid_delayed_release": "Comprimido o cápsula gastrorresistente",
-      "oral_solid_prolonged_release": "Comprimido o cápsula de liberación prolongada",
-      "oral_liquid": "Líquido para tragar",
+      "oral_solid_prolonged_release": "Comprimido o cápsula de liberación prolongada o modificada",
+      "oral_liquid": "Líquido por vía oral",
       "injection": "Inyección o perfusión",
       "inhaled": "Para inhalar",
       "nasal": "Para la nariz",
@@ -937,7 +937,7 @@
     "entry": {
       "open": "Añadir la dosis y la forma de la caja",
       "title": "Dosis y forma, tal como figuran en la caja",
-      "hint": "Opcional. Janus usa estos valores solo para comparar los registros. Solo se envían los códigos de la dosis y la forma, nunca el nombre de la caja.",
+      "hint": "Opcional. Janus usa estos valores solo para comparar los listados. Solo se envían los códigos de la dosis y la forma, nunca el nombre de la caja.",
       "ingredient": "Dosis de {ingredient}",
       "amount": "Cantidad",
       "amountHint": "Por ejemplo 40 o 2,5, sin separador de miles.",
@@ -947,14 +947,14 @@
       "formNone": "No indicada",
       "save": "Usar estos valores",
       "clear": "Borrar los valores introducidos",
-      "invalid": "Escriba la cantidad en cifras, por ejemplo 40 o 2,5."
+      "invalid": "Escriba la cantidad en cifras, sin separador de miles, por ejemplo 40 o 2,5."
     },
     "states": {
-      "loading": "Comprobando los registros…",
+      "loading": "Comprobando los listados…",
       "loaded": "Resultados cargados para {count, plural, one {# fuente} other {# fuentes}}.",
       "empty": "Su lista está vacía. Añada una caja escaneando su código o escribiendo su nombre.",
       "emptyAction": "Añadir una caja",
-      "error": "Estos registros no se pudieron comprobar ahora.",
+      "error": "Estos listados no se pudieron comprobar ahora.",
       "partial": "Algunas fuentes no se pudieron comprobar ahora. Se muestran las demás filas.",
       "recorded": "Respuesta grabada el {date}."
     },
@@ -963,7 +963,7 @@
       "unknown_ingredient_keys": "Algunos principios activos de esta caja no están en los datos actuales de medicamentos, así que no se pudo comprobar ninguna fuente para ellos."
     },
     "attribution": {
-      "titck": "Fuente: TİTCK, lista de medicamentos de uso humano autorizados, datos del {date}.",
+      "titck": "Fuente: TİTCK, lista de medicamentos de uso humano autorizados (Ruhsatlı Beşeri Tıbbi Ürünler Listesi), datos del {date}.",
       "bdpm": "Fuente: Base de données publique des médicaments (BDPM), datos del {date}. Se muestra tal como se publica; la BDPM no avala a Janus.",
       "cima": "Fuente: AEMPS, Nomenclátor de prescripción, datos del {date}.",
       "openfda": "Fuente: openFDA NDC directory, datos del {date}. No es un aval de la FDA."
@@ -977,7 +977,8 @@
       "open": "Abrir la Memoria colectiva"
     },
     "demo": {
-      "intro": "Las cajas turcas y alemanas del paciente de demostración de Colonia. Los nombres de producto son inventados; los registros proceden de los datos públicos reales."
-    }
+      "intro": "Las cajas turcas y alemanas del paciente de demostración de Colonia. Los nombres de producto son inventados; los listados proceden de los datos públicos reales."
+    },
+    "presentNote": "Figurar en el listado no significa que el medicamento esté a la venta o disponible en una farmacia."
   }
 }

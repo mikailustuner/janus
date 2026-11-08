@@ -809,7 +809,7 @@
     }
   },
   "Passport": {
-    "nav": "Pass",
+    "nav": "Medikamentenpass",
     "title": "Medikamentenpass",
     "intro": "Alle Packungen in einer Liste, aus welchem Land sie auch kommen. Für jede Packung zeigt Janus, ob die öffentlichen Produktdaten der Türkei, Frankreichs, Spaniens und der Vereinigten Staaten ein Produkt mit denselben Wirkstoffen führen.",
     "listingsOnly": "Janus zeigt nur Einträge in öffentlichen Daten. Welches Medikament zu Ihnen passt, kann nur Ihre Ärztin, Ihr Arzt oder Ihre Apotheke sagen.",
@@ -845,7 +845,7 @@
     "homeopathic": "Homöopathisches Produkt, nicht geprüft.",
     "notCheckable": {
       "no_key": "Kann nicht geprüft werden: Janus hat die Wirkstoffe dieser Packung nicht erkannt.",
-      "partial": "Kann nicht geprüft werden: Janus hat nicht jeden Wirkstoff dieser Packung erkannt.",
+      "partial": "Nicht geprüft: Mindestens ein Wirkstoff dieser Packung wurde nicht erkannt.",
       "too_many": "Kann nicht geprüft werden: Diese Packung nennt mehr als 10 Wirkstoffe."
     },
     "duplicate": {
@@ -862,14 +862,14 @@
       "germany": "Deutschland",
       "comparisonTitle": "Verglichen mit dieser Packung",
       "withOther": "{count, plural, one {# Produkt enthält} other {# Produkte enthalten}} {ingredients, plural, one {diesen Wirkstoff} other {diese Wirkstoffe}} zusammen mit weiteren Wirkstoffen.",
-      "keysFound": "In dieser Quelle als Wirkstoff anderer Produkte geführt: {names}.",
+      "keysFound": "In dieser Quelle als Wirkstoff anderer Produkte gelistet: {names}.",
       "boxValues": "Diese Packung: {values}",
       "boxValuesNone": "Wirkstärke und Darreichungsform dieser Packung sind nicht bekannt."
     },
     "status": {
-      "present": "{source} führt {count, plural, one {# Produkt} other {# Produkte}} mit {ingredients, plural, one {diesem Wirkstoff und keinem anderen} other {genau diesen Wirkstoffen und keinem anderen}} (Datenstand {date}).",
-      "not_present": "{source} führt kein Produkt mit {ingredients, plural, one {diesem Wirkstoff und keinem anderen} other {genau diesen Wirkstoffen und keinem anderen}} (Datenstand {date}).",
-      "not_in_source": "{source} führt kein Produkt mit {ingredients, plural, one {diesem Wirkstoff} other {einem dieser Wirkstoffe}} unter einem Namen, den Janus erkennt (Datenstand {date}). Das zeigt nicht, dass es {ingredients, plural, one {diesen Wirkstoff} other {diese Wirkstoffe}} in {country} nicht gibt.",
+      "present": "In {source} {count, plural, one {ist # Produkt} other {sind # Produkte}} mit {ingredients, plural, one {diesem Wirkstoff und keinem anderen} other {genau diesen Wirkstoffen und keinem anderen}} gelistet (Datenstand {date}).",
+      "not_present": "In {source} ist kein Produkt mit {ingredients, plural, one {diesem Wirkstoff und keinem anderen} other {genau diesen Wirkstoffen und keinem anderen}} gelistet (Datenstand {date}).",
+      "not_in_source": "In {source} ist kein Produkt mit {ingredients, plural, one {diesem Wirkstoff} other {einem dieser Wirkstoffe}} unter einem Namen gelistet, den Janus erkennt (Datenstand {date}). Das zeigt nicht, dass es {ingredients, plural, one {diesen Wirkstoff} other {diese Wirkstoffe}} in {country} nicht gibt.",
       "source_unavailable": "In dieser Quelle nicht geprüft."
     },
     "reason": {
@@ -885,30 +885,30 @@
     },
     "compare": {
       "strength": {
-        "matched": "{equal, plural, one {# dieser Produkte wird} other {# dieser Produkte werden}} mit derselben angegebenen Wirkstärke wie diese Packung geführt ({strength}).",
-        "differs": "Keines dieser Produkte wird mit der angegebenen Wirkstärke dieser Packung geführt. Quellen können die Menge eines Salzes oder der Base angeben; das beweist also keine andere Dosis.",
+        "matched": "{equal, plural, one {# dieser Produkte ist} other {# dieser Produkte sind}} mit derselben angegebenen Wirkstärke wie diese Packung gelistet ({strength}).",
+        "differs": "Keines dieser Produkte ist mit der angegebenen Wirkstärke dieser Packung gelistet. Quellen können die Menge eines Salzes oder der Base angeben; das beweist also keine andere Dosis.",
         "could_not_compare": "Wirkstärke nicht verglichen: {reason}"
       },
       "dose_form": {
-        "matched": "{equal, plural, one {# dieser Produkte wird} other {# dieser Produkte werden}} in derselben Formgruppe wie diese Packung geführt ({form}).",
-        "differs": "Keines dieser Produkte wird in der Formgruppe dieser Packung geführt ({form}).",
+        "matched": "{equal, plural, one {# dieser Produkte ist} other {# dieser Produkte sind}} in derselben Formgruppe wie diese Packung gelistet ({form}).",
+        "differs": "Keines dieser Produkte ist in der Formgruppe dieser Packung gelistet ({form}).",
         "could_not_compare": "Darreichungsform nicht verglichen: {reason}"
       },
       "strength_and_dose_form": {
-        "matched": "{equal, plural, one {# dieser Produkte wird} other {# dieser Produkte werden}} sowohl mit der angegebenen Wirkstärke als auch in der Formgruppe dieser Packung geführt.",
-        "differs": "Keines dieser Produkte wird sowohl mit der angegebenen Wirkstärke als auch in der Formgruppe dieser Packung geführt.",
+        "matched": "{equal, plural, one {# dieser Produkte ist} other {# dieser Produkte sind}} sowohl mit der angegebenen Wirkstärke als auch in der Formgruppe dieser Packung gelistet.",
+        "differs": "Keines dieser Produkte ist sowohl mit der angegebenen Wirkstärke als auch in der Formgruppe dieser Packung gelistet.",
         "could_not_compare": "Wirkstärke und Darreichungsform zusammen nicht verglichen: {reason}"
       }
     },
     "compareReason": {
       "not_known_for_item": "Der Wert dieser Packung ist nicht bekannt.",
       "not_known_in_source": "Die Quelle gibt ihn nicht so an, dass Janus vergleichen kann.",
-      "not_all_comparable": "Nur {comparable} von {products} Produkten geben ihn so an, dass Janus vergleichen kann, und keines davon wird mit dem Wert dieser Packung geführt."
+      "not_all_comparable": "Nur {comparable} von {products} Produkten geben ihn so an, dass Janus vergleichen kann, und keines davon ist mit dem Wert dieser Packung gelistet."
     },
     "form": {
-      "oral_solid": "Tablette oder Kapsel zum Schlucken",
+      "oral_solid": "Tablette oder Kapsel zum Einnehmen",
       "oral_solid_delayed_release": "Magensaftresistente Tablette oder Kapsel",
-      "oral_solid_prolonged_release": "Retardtablette oder -kapsel",
+      "oral_solid_prolonged_release": "Tablette oder Kapsel mit verlängerter oder veränderter Freisetzung",
       "oral_liquid": "Flüssigkeit zum Einnehmen",
       "injection": "Injektion oder Infusion",
       "inhaled": "Zum Inhalieren",
@@ -947,7 +947,7 @@
       "formNone": "Nicht angegeben",
       "save": "Diese Werte verwenden",
       "clear": "Eingegebene Werte leeren",
-      "invalid": "Bitte geben Sie die Menge in Ziffern ein, zum Beispiel 40 oder 2,5."
+      "invalid": "Bitte geben Sie die Menge in Ziffern ohne Tausenderpunkte ein, zum Beispiel 40 oder 2,5."
     },
     "states": {
       "loading": "Einträge werden geprüft …",
@@ -963,7 +963,7 @@
       "unknown_ingredient_keys": "Einige Wirkstoffe dieser Packung sind nicht in den aktuellen Arzneimitteldaten; für sie konnte keine Quelle geprüft werden."
     },
     "attribution": {
-      "titck": "Quelle: TİTCK, Liste der zugelassenen Humanarzneimittel, Datenstand {date}.",
+      "titck": "Quelle: TİTCK, Liste der zugelassenen Humanarzneimittel (Ruhsatlı Beşeri Tıbbi Ürünler Listesi), Datenstand {date}.",
       "bdpm": "Quelle: Base de données publique des médicaments (BDPM), Datenstand {date}. Wie veröffentlicht angezeigt; keine Billigung von Janus durch die BDPM.",
       "cima": "Quelle: AEMPS, Nomenclátor de prescripción, Datenstand {date}.",
       "openfda": "Quelle: openFDA NDC directory, Datenstand {date}. Keine Billigung durch die FDA."
@@ -978,6 +978,7 @@
     },
     "demo": {
       "intro": "Die türkischen und deutschen Packungen des Demo-Patienten aus Köln. Die Produktnamen sind erfunden; die Einträge stammen aus den echten öffentlichen Daten."
-    }
+    },
+    "presentNote": "Gelistet heißt nicht, dass das Medikament im Handel oder in einer Apotheke erhältlich ist."
   }
 }

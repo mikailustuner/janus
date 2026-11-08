@@ -236,7 +236,7 @@
     "labelWith": "Demo · sentetik hasta: {patient}",
     "exit": "Demodan çık",
     "title": "Demoyu dene",
-    "intro": "Üç sentetik hasta. Ürün adları uydurmadır; etkin maddeler, bulgular, bildirim istatistikleri ve not metni gerçek kural tabanından ve veri anlık görüntüsünden kaydedildi. Hiçbir şey gönderilmez ve saklanmaz.",
+    "intro": "Üç sentetik hasta. Ürün adları kurgusaldır; etkin maddeler, bulgular, bildirim istatistikleri ve not metni gerçek kural tabanından ve veri anlık görüntüsünden kaydedildi. Hiçbir şey gönderilmez ve saklanmaz.",
     "open": "{patient} hastasını aç",
     "items": "{count, plural, one {# ilaç} other {# ilaç}}",
     "recorded": "{date} tarihinde kaydedildi. Kurallar {rules}, ilaç verisi {dataset}, kanıt {integrity}.",
@@ -812,8 +812,8 @@
     "nav": "Pasaport",
     "title": "İlaç pasaportu",
     "intro": "Hangi ülkeden gelirse gelsin, tüm kutular tek listede. Janus her kutu için Türkiye, Fransa, İspanya ve Amerika Birleşik Devletleri'nin herkese açık ürün verilerinde aynı etkin maddeleri içeren bir ürünün listelenip listelenmediğini gösterir.",
-    "listingsOnly": "Janus yalnızca herkese açık verilerdeki kayıtları gösterir. Size hangi ilacın uygun olduğunu yalnızca doktorunuz veya eczacınız söyleyebilir.",
-    "open": "Diğer ülkelerdeki kayıtları göster",
+    "listingsOnly": "Janus yalnızca herkese açık listelerde yer alanları gösterir. Size hangi ilacın uygun olduğunu yalnızca doktorunuz veya eczacınız söyleyebilir.",
+    "open": "Diğer ülkelerin listelerinde göster",
     "fromMedicine": "Bu kutuyu pasaportta göster",
     "back": "Pasaporta dön",
     "boxes": "{count, plural, one {# kutu} other {# kutu}}",
@@ -823,7 +823,7 @@
       "FR": "Fransa'dan kutu",
       "ES": "İspanya'dan kutu",
       "DE": "Almanya'dan kutu",
-      "US": "ABD'den kutu",
+      "US": "Amerika Birleşik Devletleri'nden kutu",
       "EU": "Avrupa Birliği'nden kutu",
       "OTHER": "Başka bir ülkeden kutu"
     },
@@ -845,7 +845,7 @@
     "homeopathic": "Homeopatik ürün, kontrol edilmedi.",
     "notCheckable": {
       "no_key": "Kontrol edilemiyor: Janus bu kutunun etkin maddelerini tanıyamadı.",
-      "partial": "Kontrol edilemiyor: Janus bu kutunun etkin maddelerinin hepsini tanıyamadı.",
+      "partial": "Kontrol edilmedi: bu kutunun en az bir etkin maddesi tanınamadı.",
       "too_many": "Kontrol edilemiyor: bu kutuda 10'dan fazla etkin madde var."
     },
     "duplicate": {
@@ -854,22 +854,22 @@
       "summary": "{count, plural, one {# etkin madde} other {# etkin madde}} bu listede birden fazla kutuda var."
     },
     "detail": {
-      "title": "Diğer ülkelerdeki kayıtlar",
-      "caption": "Bu kutunun etkin maddelerinin her kaynaktaki kayıtları",
+      "title": "Diğer ülkelerin listelerinde",
+      "caption": "Bu kutunun etkin maddeleri, her kaynağın listesinde",
       "sourceColumn": "Ülke ve kaynak",
       "resultColumn": "Kaynak verileri ne gösteriyor",
       "ownSource": "Bu kutunun kaynağı",
       "germany": "Almanya",
       "comparisonTitle": "Bu kutuyla karşılaştırma",
       "withOther": "{count, plural, one {# ürün} other {# ürün}} {ingredients, plural, one {bu etkin maddeyi} other {bu etkin maddeleri}} başka etkin maddelerle birlikte içeriyor.",
-      "keysFound": "Bu kaynakta başka ürünlerin etkin maddesi olarak listelenenler: {names}.",
+      "keysFound": "Bu kaynağın listesinde başka ürünlerin etkin maddesi olarak yer alanlar: {names}.",
       "boxValues": "Bu kutu: {values}",
       "boxValuesNone": "Bu kutunun etkin madde miktarı ve ürün formu bilinmiyor."
     },
     "status": {
-      "present": "{source}, {ingredients, plural, one {yalnızca bu etkin maddeyi} other {yalnızca tam olarak bu etkin maddeleri}} içeren {count, plural, one {# ürün} other {# ürün}} listeliyor ({date} tarihli veri).",
-      "not_present": "{source}, {ingredients, plural, one {yalnızca bu etkin maddeyi} other {yalnızca tam olarak bu etkin maddeleri}} içeren hiçbir ürün listelemiyor ({date} tarihli veri).",
-      "not_in_source": "{source}, Janus'un tanıyabildiği bir adla {ingredients, plural, one {bu etkin maddeyi} other {bu etkin maddelerden herhangi birini}} içeren hiçbir ürün listelemiyor ({date} tarihli veri). Bu, {ingredients, plural, one {bu etkin maddenin} other {bu etkin maddelerin}} şu ülkede bulunmadığını göstermez: {country}.",
+      "present": "{source} listesinde, {ingredients, plural, one {yalnızca bu etkin maddeyi} other {yalnızca tam olarak bu etkin maddeleri}} içeren {count, plural, one {# ürün} other {# ürün}} yer alıyor ({date} tarihli veri).",
+      "not_present": "{source} listesinde, {ingredients, plural, one {yalnızca bu etkin maddeyi} other {yalnızca tam olarak bu etkin maddeleri}} içeren hiçbir ürün yer almıyor ({date} tarihli veri).",
+      "not_in_source": "{source} listesinde, Janus'un tanıyabildiği bir adla {ingredients, plural, one {bu etkin maddeyi} other {bu etkin maddelerden herhangi birini}} içeren hiçbir ürün yer almıyor ({date} tarihli veri). Bu, {ingredients, plural, one {bu etkin maddenin} other {bu etkin maddelerin}} şu ülkede piyasada olmadığını göstermez: {country}.",
       "source_unavailable": "Bu kaynakta kontrol edilmedi."
     },
     "reason": {
@@ -885,31 +885,31 @@
     },
     "compare": {
       "strength": {
-        "matched": "Bu ürünlerden {equal, plural, one {#} other {#}} tanesi bu kutuyla aynı belirtilen miktarla listeleniyor ({strength}).",
-        "differs": "Bu ürünlerin hiçbiri bu kutunun belirtilen miktarıyla listelenmiyor. Kaynaklar bir tuzun ya da bazın miktarını belirtebilir; bu nedenle bu fark, dozun farklı olduğunu kanıtlamaz.",
+        "matched": "Bu ürünlerden {equal, plural, one {#} other {#}} tanesi, bu kutudakiyle aynı miktar belirtilerek listede yer alıyor ({strength}).",
+        "differs": "Bu ürünlerin hiçbiri listede bu kutunun belirtilen miktarıyla yer almıyor. Kaynaklar bir tuzun ya da bazın miktarını belirtebilir; bu nedenle bu fark, dozun farklı olduğunu kanıtlamaz.",
         "could_not_compare": "Miktar karşılaştırılmadı: {reason}"
       },
       "dose_form": {
-        "matched": "Bu ürünlerden {equal, plural, one {#} other {#}} tanesi bu kutuyla aynı form grubunda listeleniyor ({form}).",
-        "differs": "Bu ürünlerin hiçbiri bu kutunun form grubunda listelenmiyor ({form}).",
+        "matched": "Bu ürünlerden {equal, plural, one {#} other {#}} tanesi, bu kutuyla aynı form grubunda listede yer alıyor ({form}).",
+        "differs": "Bu ürünlerin hiçbiri listede bu kutunun form grubunda yer almıyor ({form}).",
         "could_not_compare": "Form karşılaştırılmadı: {reason}"
       },
       "strength_and_dose_form": {
-        "matched": "Bu ürünlerden {equal, plural, one {#} other {#}} tanesi hem bu kutunun belirtilen miktarıyla hem de form grubuyla listeleniyor.",
-        "differs": "Bu ürünlerin hiçbiri hem bu kutunun belirtilen miktarıyla hem de form grubuyla listelenmiyor.",
+        "matched": "Bu ürünlerden {equal, plural, one {#} other {#}} tanesi, hem bu kutunun belirtilen miktarıyla hem de form grubuyla listede yer alıyor.",
+        "differs": "Bu ürünlerin hiçbiri listede hem bu kutunun belirtilen miktarıyla hem de form grubuyla yer almıyor.",
         "could_not_compare": "Miktar ve form birlikte karşılaştırılmadı: {reason}"
       }
     },
     "compareReason": {
       "not_known_for_item": "bu kutunun değeri bilinmiyor.",
       "not_known_in_source": "kaynak bunu Janus'un karşılaştırabileceği biçimde belirtmiyor.",
-      "not_all_comparable": "{products} üründen yalnızca {comparable} tanesi bunu Janus'un karşılaştırabileceği biçimde belirtiyor ve bunların hiçbiri bu kutunun değeriyle listelenmiyor."
+      "not_all_comparable": "{products} üründen yalnızca {comparable} tanesi bunu Janus'un karşılaştırabileceği biçimde belirtiyor ve bunların hiçbiri listede bu kutunun değeriyle yer almıyor."
     },
     "form": {
-      "oral_solid": "Yutulan tablet veya kapsül",
+      "oral_solid": "Ağızdan alınan tablet veya kapsül",
       "oral_solid_delayed_release": "Mide asidine dayanıklı (enterik kaplı) tablet veya kapsül",
-      "oral_solid_prolonged_release": "Uzatılmış salımlı tablet veya kapsül",
-      "oral_liquid": "Yutulan sıvı",
+      "oral_solid_prolonged_release": "Uzatılmış veya modifiye salımlı tablet veya kapsül",
+      "oral_liquid": "Ağızdan alınan sıvı",
       "injection": "Enjeksiyon veya infüzyon",
       "inhaled": "Solunarak alınan",
       "nasal": "Buruna uygulanan",
@@ -937,7 +937,7 @@
     "entry": {
       "open": "Kutudaki miktarı ve formu ekle",
       "title": "Kutuda yazan miktar ve form",
-      "hint": "İsteğe bağlı. Janus bu değerleri yalnızca kayıtları karşılaştırmak için kullanır. Yalnızca miktar ve form kodları gönderilir, kutunun adı asla gönderilmez.",
+      "hint": "İsteğe bağlı. Janus bu değerleri yalnızca listeleri karşılaştırmak için kullanır. Yalnızca miktar ve form kodları gönderilir, kutunun adı asla gönderilmez.",
       "ingredient": "Miktar: {ingredient}",
       "amount": "Miktar",
       "amountHint": "Örneğin 40 veya 2,5; binlik ayırıcı kullanmadan.",
@@ -947,14 +947,14 @@
       "formNone": "Belirtilmedi",
       "save": "Bu değerleri kullan",
       "clear": "Girilen değerleri temizle",
-      "invalid": "Lütfen miktarı rakamla yazın, örneğin 40 veya 2,5."
+      "invalid": "Lütfen miktarı binlik ayırıcı kullanmadan rakamla yazın, örneğin 40 veya 2,5."
     },
     "states": {
-      "loading": "Kayıtlar kontrol ediliyor…",
+      "loading": "Listeler kontrol ediliyor…",
       "loaded": "{count, plural, one {# kaynağın} other {# kaynağın}} sonuçları yüklendi.",
       "empty": "Listeniz boş. Kodunu tarayarak veya adını yazarak bir kutu ekleyin.",
       "emptyAction": "Kutu ekle",
-      "error": "Bu kayıtlar şu anda kontrol edilemedi.",
+      "error": "Bu listeler şu anda kontrol edilemedi.",
       "partial": "Bazı kaynaklar şu anda kontrol edilemedi. Diğer satırlar gösteriliyor.",
       "recorded": "{date} tarihinde kaydedilmiş yanıt."
     },
@@ -977,7 +977,8 @@
       "open": "Kolektif Belleği aç"
     },
     "demo": {
-      "intro": "Köln demo hastasının Türk ve Alman kutuları. Ürün adları uydurmadır; kayıtlar gerçek herkese açık verilerden gelir."
-    }
+      "intro": "Köln demo hastasının Türk ve Alman kutuları. Ürün adları kurgusaldır; listedeki bilgiler gerçek herkese açık verilerden gelir."
+    },
+    "presentNote": "Listede yer alması, ilacın satışta olduğu veya eczanede bulunduğu anlamına gelmez."
   }
 }

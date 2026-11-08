@@ -812,8 +812,8 @@
     "nav": "Passeport",
     "title": "Passeport médicaments",
     "intro": "Toutes les boîtes dans une seule liste, quel que soit leur pays d'origine. Pour chaque boîte, Janus indique si les données publiques sur les produits de la Turquie, de la France, de l'Espagne et des États-Unis listent un produit avec les mêmes substances actives.",
-    "listingsOnly": "Janus montre uniquement des inscriptions dans des données publiques. Seul votre médecin ou votre pharmacien peut dire quel médicament vous convient.",
-    "open": "Voir les inscriptions dans d'autres pays",
+    "listingsOnly": "Janus montre uniquement ce qui est répertorié dans des données publiques. Seul votre médecin ou votre pharmacien peut dire quel médicament vous convient.",
+    "open": "Voir les listes d'autres pays",
     "fromMedicine": "Voir cette boîte dans le passeport",
     "back": "Retour au passeport",
     "boxes": "{count, plural, one {# boîte} other {# boîtes}}",
@@ -845,7 +845,7 @@
     "homeopathic": "Produit homéopathique, non vérifié.",
     "notCheckable": {
       "no_key": "Vérification impossible : Janus n'a pas reconnu les substances actives de cette boîte.",
-      "partial": "Vérification impossible : Janus n'a pas reconnu toutes les substances actives de cette boîte.",
+      "partial": "Non vérifié : au moins une substance active de cette boîte n'a pas été reconnue.",
       "too_many": "Vérification impossible : cette boîte indique plus de 10 substances actives."
     },
     "duplicate": {
@@ -854,22 +854,22 @@
       "summary": "{count, plural, one {# substance active se trouve} other {# substances actives se trouvent}} dans plus d'une boîte de cette liste."
     },
     "detail": {
-      "title": "Inscriptions dans d'autres pays",
-      "caption": "Inscriptions des substances actives de cette boîte dans chaque source",
+      "title": "Dans les listes d'autres pays",
+      "caption": "Les substances actives de cette boîte dans la liste de chaque source",
       "sourceColumn": "Pays et source",
       "resultColumn": "Ce que montrent les données de la source",
       "ownSource": "Source de cette boîte",
       "germany": "Allemagne",
       "comparisonTitle": "Comparaison avec cette boîte",
       "withOther": "{count, plural, one {# produit contient} other {# produits contiennent}} {ingredients, plural, one {cette substance active} other {ces substances actives}} avec d'autres substances actives.",
-      "keysFound": "Inscrites dans cette source comme substances actives d'autres produits : {names}.",
+      "keysFound": "Répertoriées dans cette source comme substances actives d'autres produits : {names}.",
       "boxValues": "Cette boîte : {values}",
       "boxValuesNone": "Le dosage et la forme de cette boîte ne sont pas connus."
     },
     "status": {
-      "present": "{source} liste {count, plural, one {# produit} other {# produits}} avec {ingredients, plural, one {cette substance active et aucune autre} other {exactement ces substances actives et aucune autre}} (données du {date}).",
-      "not_present": "{source} ne liste aucun produit avec {ingredients, plural, one {cette substance active et aucune autre} other {exactement ces substances actives et aucune autre}} (données du {date}).",
-      "not_in_source": "{source} ne liste aucun produit avec {ingredients, plural, one {cette substance active} other {l'une de ces substances actives}} sous un nom que Janus reconnaît (données du {date}). Cela ne montre pas {ingredients, plural, one {qu'elle n'est pas disponible} other {qu'elles ne sont pas disponibles}} {country}.",
+      "present": "{source} répertorie {count, plural, one {# produit} other {# produits}} avec {ingredients, plural, one {cette substance active et aucune autre} other {exactement ces substances actives et aucune autre}} (données du {date}).",
+      "not_present": "{source} ne répertorie aucun produit avec {ingredients, plural, one {cette substance active et aucune autre} other {exactement ces substances actives et aucune autre}} (données du {date}).",
+      "not_in_source": "{source} ne répertorie aucun produit avec {ingredients, plural, one {cette substance active} other {l'une de ces substances actives}} sous un nom que Janus reconnaît (données du {date}). Cela ne montre pas {ingredients, plural, one {qu'elle n'est pas disponible} other {qu'elles ne sont pas disponibles}} {country}.",
       "source_unavailable": "Non vérifié dans cette source."
     },
     "reason": {
@@ -885,31 +885,31 @@
     },
     "compare": {
       "strength": {
-        "matched": "{equal, plural, one {# de ces produits est inscrit} other {# de ces produits sont inscrits}} avec le même dosage indiqué que cette boîte ({strength}).",
-        "differs": "Aucun de ces produits n'est inscrit avec le dosage indiqué de cette boîte. Les sources peuvent indiquer la quantité d'un sel ou de la base : cela ne prouve donc pas une dose différente.",
+        "matched": "{equal, plural, one {# de ces produits est répertorié} other {# de ces produits sont répertoriés}} avec le même dosage indiqué que cette boîte ({strength}).",
+        "differs": "Aucun de ces produits n'est répertorié avec le dosage indiqué de cette boîte. Les sources peuvent indiquer la quantité d'un sel ou de la base : cela ne prouve donc pas une dose différente.",
         "could_not_compare": "Dosage non comparé : {reason}"
       },
       "dose_form": {
-        "matched": "{equal, plural, one {# de ces produits est inscrit} other {# de ces produits sont inscrits}} dans le même groupe de formes que cette boîte ({form}).",
-        "differs": "Aucun de ces produits n'est inscrit dans le groupe de formes de cette boîte ({form}).",
+        "matched": "{equal, plural, one {# de ces produits est répertorié} other {# de ces produits sont répertoriés}} dans le même groupe de formes que cette boîte ({form}).",
+        "differs": "Aucun de ces produits n'est répertorié dans le groupe de formes de cette boîte ({form}).",
         "could_not_compare": "Forme non comparée : {reason}"
       },
       "strength_and_dose_form": {
-        "matched": "{equal, plural, one {# de ces produits est inscrit} other {# de ces produits sont inscrits}} à la fois avec le dosage indiqué et dans le groupe de formes de cette boîte.",
-        "differs": "Aucun de ces produits n'est inscrit à la fois avec le dosage indiqué et dans le groupe de formes de cette boîte.",
+        "matched": "{equal, plural, one {# de ces produits est répertorié} other {# de ces produits sont répertoriés}} à la fois avec le dosage indiqué et dans le groupe de formes de cette boîte.",
+        "differs": "Aucun de ces produits n'est répertorié à la fois avec le dosage indiqué et dans le groupe de formes de cette boîte.",
         "could_not_compare": "Dosage et forme ensemble non comparés : {reason}"
       }
     },
     "compareReason": {
       "not_known_for_item": "la valeur de cette boîte n'est pas connue.",
       "not_known_in_source": "la source ne l'indique pas d'une manière que Janus puisse comparer.",
-      "not_all_comparable": "seuls {comparable} produits sur {products} l'indiquent d'une manière que Janus puisse comparer, et aucun d'eux n'est inscrit avec la valeur de cette boîte."
+      "not_all_comparable": "seuls {comparable} produits sur {products} l'indiquent d'une manière que Janus puisse comparer, et aucun d'eux n'est répertorié avec la valeur de cette boîte."
     },
     "form": {
-      "oral_solid": "Comprimé ou gélule à avaler",
+      "oral_solid": "Comprimé ou gélule par voie orale",
       "oral_solid_delayed_release": "Comprimé ou gélule gastrorésistant",
-      "oral_solid_prolonged_release": "Comprimé ou gélule à libération prolongée",
-      "oral_liquid": "Liquide à avaler",
+      "oral_solid_prolonged_release": "Comprimé ou gélule à libération prolongée ou modifiée",
+      "oral_liquid": "Liquide par voie orale",
       "injection": "Injection ou perfusion",
       "inhaled": "À inhaler",
       "nasal": "Pour le nez",
@@ -937,7 +937,7 @@
     "entry": {
       "open": "Ajouter le dosage et la forme indiqués sur la boîte",
       "title": "Dosage et forme, tels qu'imprimés sur la boîte",
-      "hint": "Facultatif. Janus utilise ces valeurs uniquement pour comparer les inscriptions. Seuls les codes du dosage et de la forme sont envoyés, jamais le nom de la boîte.",
+      "hint": "Facultatif. Janus utilise ces valeurs uniquement pour comparer les listes. Seuls les codes du dosage et de la forme sont envoyés, jamais le nom de la boîte.",
       "ingredient": "Dosage de {ingredient}",
       "amount": "Quantité",
       "amountHint": "Par exemple 40 ou 2,5, sans séparateur de milliers.",
@@ -947,14 +947,14 @@
       "formNone": "Non indiquée",
       "save": "Utiliser ces valeurs",
       "clear": "Effacer les valeurs saisies",
-      "invalid": "Veuillez saisir la quantité en chiffres, par exemple 40 ou 2,5."
+      "invalid": "Veuillez saisir la quantité en chiffres, sans séparateur de milliers, par exemple 40 ou 2,5."
     },
     "states": {
-      "loading": "Vérification des inscriptions…",
+      "loading": "Vérification des listes…",
       "loaded": "Résultats chargés pour {count, plural, one {# source} other {# sources}}.",
       "empty": "Votre liste est vide. Ajoutez une boîte en scannant son code ou en saisissant son nom.",
       "emptyAction": "Ajouter une boîte",
-      "error": "Ces inscriptions n'ont pas pu être vérifiées pour le moment.",
+      "error": "Ces listes n'ont pas pu être vérifiées pour le moment.",
       "partial": "Certaines sources n'ont pas pu être vérifiées pour le moment. Les autres lignes sont affichées.",
       "recorded": "Réponse enregistrée le {date}."
     },
@@ -963,7 +963,7 @@
       "unknown_ingredient_keys": "Certaines substances actives de cette boîte ne figurent pas dans les données actuelles sur les médicaments ; aucune source n'a donc pu être vérifiée pour elles."
     },
     "attribution": {
-      "titck": "Source : TİTCK, liste des médicaments à usage humain autorisés, données du {date}.",
+      "titck": "Source : TİTCK, liste des médicaments à usage humain autorisés (Ruhsatlı Beşeri Tıbbi Ürünler Listesi), données du {date}.",
       "bdpm": "Source : Base de données publique des médicaments (BDPM), données du {date}. Affiché tel que publié, sans approbation de Janus par la BDPM.",
       "cima": "Source : AEMPS, Nomenclátor de prescripción, données du {date}.",
       "openfda": "Source : openFDA NDC directory, données du {date}. Sans approbation de la FDA."
@@ -977,7 +977,8 @@
       "open": "Ouvrir la Mémoire collective"
     },
     "demo": {
-      "intro": "Les boîtes turques et allemandes du patient de démonstration de Cologne. Les noms de produits sont inventés ; les inscriptions proviennent des vraies données publiques."
-    }
+      "intro": "Les boîtes turques et allemandes du patient de démonstration de Cologne. Les noms de produits sont inventés ; les listes proviennent des vraies données publiques."
+    },
+    "presentNote": "Être répertorié ne signifie pas que le médicament est en vente ou disponible en pharmacie."
   }
 }

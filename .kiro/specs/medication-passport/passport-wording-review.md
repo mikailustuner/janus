@@ -73,3 +73,39 @@ L1 (ES caveat), S1 (FR BDPM line), S2 (TR openFDA line); S6 and S7 in task 9 (DP
    (EN same, TR aynı, DE gleich/dieselbe/denselben/derselben/dasselbe, FR même, ES mismo/misma): accept?
 10. **Duplicate wording:** "Same active ingredient under different names" with "Both / All of them stay on your list"
     instead of "under two names … Both stay". Accept?
+
+## Pass 3: pharmacologist (added 2026-11-08 at the owner's request, decision 3)
+
+Run by Claude Code in the `.kiro/agents/pharmacologist.md` role on the Passport texts and on how the presence,
+strength and form logic is worded (design §5, §6; `data/dose_form_groups.csv`).
+
+| # | Where | Issue | Fix | Severity |
+|---|---|---|---|---|
+| F1 | `form.oral_solid` | "Tablet or capsule to swallow": the group also holds effervescent, dispersible and orodispersible tablets (BDPM rows `comprimé effervescent(e)`, `comprimé orodispersible`), which are not swallowed whole. | "Tablet or capsule taken by mouth" (five languages) | blocking — **fixed** |
+| F2 | `form.oral_solid_prolonged_release` | The group holds extended-, prolonged- and modified-release and osmotic forms (design §5.2); "prolonged-release" alone is narrower than the group. | "Prolonged- or modified-release tablet or capsule" (TR "modifiye salımlı": "değiştirilmiş" hit the substitution list) | blocking — **fixed** |
+| F3 | `form.oral_liquid` | "to swallow" for drops and syrups measured by spoon or dropper reads oddly. | "Liquid taken by mouth" | advisory — **fixed** |
+| F4 | `compare.strength.differs` | Salt/base caveat is right; per-unit vs per-mL never compared (different basis is "could not compare", not "differs"): wording consistent with §5.1. | none | checked |
+| F5 | `status.present` | "exactly these active ingredients and no other" is correct for DP2 (combination items are matched as sets). Products with an unrecognised component are not counted: the lower-bound notice says so. | none | checked |
+| F6 | `duplicate.*` | One key can stand for different salts (e.g. two salts of the same base) with different strengths; "same active ingredient" is still correct at ingredient level and the text claims nothing about dose. | none | checked |
+| F7 | strength display (task 12) | Codes are in micrograms; the screen must show mg when the amount is a whole multiple of 1000 µg (40 000 µg → 40 mg) and µg otherwise, IU unchanged, so the box value is recognisable. | task 12 (`format.ts`) | advisory |
+| F8 | `homeopathic`, `homeopathicLeftOut` | Homeopathic products left out on both sides (DP9); wording neutral, no efficacy claim. | none | checked |
+
+## Owner decisions (2026-11-08) and how they were applied
+
+1. **DP24 accepted.** `notCheckable.partial`: "Not checked: at least one ingredient of this box was not recognised."
+   ("at least" added: a box can have two unrecognised lines).
+2. **DP25 accepted.** `entry.invalid` asks for the amount "in digits without thousands separators" in all five.
+3. **Pharmacologist pass run** (Pass 3 above); F1–F3 applied.
+4. **DE "Medikamentenpass"** for `nav` and `title`; other titles kept.
+5. **Neutral "listed":** FR "répertorie / répertorié" (nouns "listes"), TR "listede yer alıyor" (nouns "liste"), DE
+   "gelistet", ES "figura en el listado" (nouns "listados"); "inscription", "registro", "führt" removed.
+6. **TİTCK:** translated description with the Turkish title once in parentheses on the attribution line (EN, DE, FR,
+   ES); TR keeps the Turkish title.
+7. **Small batch accepted:** L4 (TR matched wording), L5 (TR "piyasada olmadığını"), L6 (TR "Amerika Birleşik
+   Devletleri'nden kutu"), L11 (TR "kurgusaldır", also in `Demo.intro`).
+8. **`Passport.presentNote`** added in five languages ("Being listed does not mean the medicine is on sale or available
+   at a pharmacy."), shown once per screen.
+9. **Word lists accepted** as implemented.
+10. **Duplicate wording accepted** ("under different names" / "All of them stay on your list").
+- **Blocking S3 accepted:** "as entered from the box" next to every strength or form comparison that used typed values
+  (task 12, render test).
