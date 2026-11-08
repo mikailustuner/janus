@@ -11,24 +11,30 @@
 > `janus_test`, vitest (`npm test`), web lint and typecheck (`npm run lint`, `npm run typecheck`); then commit, push and
 > confirm GitHub CI is green. The full API suite takes 15 minutes or more: run it with `nohup`, one suite at a time.
 
-- [ ] 1. Index migration (`migrations/versions/0012_passport_presence_index.py`, design §4.1)
+- [x] 1. Index migration (`migrations/versions/0012_passport_presence_index.py`, design §4.1)
+  - *Done 2026-11-08 (Claude Code): partial index; loader write of the 317,055 ingredient rows +1.0 s, recorded in §13.*
   - Partial index `res_product_ingredient_key`; downgrade drops it. Measure the loader time on the dev dataset before
     and after and record it in design §13.
-  - [ ] 1.1 Migration upgrade → downgrade → upgrade on `janus_test`; the index exists only after upgrade; the plan of
+  - [x] 1.1 *(`tests/test_passport_index.py`: reversible; index scan on a 40,000-product synthetic dataset.)* Migration upgrade → downgrade → upgrade on `janus_test`; the index exists only after upgrade; the plan of
     the §4.2 statement uses it (EXPLAIN check on a synthetic dataset). _Requirements: 13.1_
 
-- [ ] 2. Strength codes (`passport/strength.py`, design §5.1)
+- [x] 2. Strength codes (`passport/strength.py`, design §5.1)
+  - *Done 2026-11-08: coded share openFDA 59.7 %, BDPM 48.8 % (countable forms), CIMA and TİTCK 0 (review sheet A.3).*
   - Per-source grammars, exact `Decimal` conversion, canonical amount, cache; a report command printing the parsed share
     per source on the dev dataset (counts only).
-  - [ ] 2.1 Property test P5: equal quantities equal codes; `None` cases; never raises; pattern of §3.1. _Requirements: 6.3, 6.4_
+  - [x] 2.1 *(`tests/test_passport_strength_properties.py`, Decimal reference.)* Property test P5: equal quantities equal codes; `None` cases; never raises; pattern of §3.1. _Requirements: 6.3, 6.4_
 
-- [ ] 3. Dose-form table (`passport/forms.py`, `passport/forms_draft.py`, `data/dose_form_groups.csv`, design §5.2)
+- [x] 3. Dose-form table (`passport/forms.py`, `passport/forms_draft.py`, `data/dose_form_groups.csv`, design §5.2)
+  - *Done 2026-11-08: 927 rows, all `proposed`; 13 groups (owner decision 6 + Req 6.5); route column added (design §5.2,
+    owner to accept); coverage openFDA 84.1 %, BDPM 97.2 %.*
   - Loader, closed group set, `COUNTABLE_GROUPS`, version hash; the draft command writes every distinct
     `(source_id, dosage_form)` of the current dataset (openFDA 142, BDPM 358) with product counts and a proposed group;
     commit the draft with every row marked `proposed` in `note`. `data/README.md` gains the licence and source line.
-  - [ ] 3.1 Property test P6: committed table loads; each injected defect named; `group()` total. _Requirements: 6.5_
+  - [x] 3.1 *(`tests/test_passport_forms_properties.py`, incl. the Req 6.5 check on the committed table.)* Property test P6: committed table loads; each injected defect named; `group()` total. _Requirements: 6.5_
 
 - [ ] 4. Dose-form and strength review **(review stop)**
+  - *2026-11-08: `dose-form-review.md` written with the pharmacologist pass (verdict: accept with changes R1–R3);
+    committed on the worktree branch, not pushed. **Waiting for the owner.** Tasks 5–8 not started.*
   - Run `agent://pharmacologist` (self-contained prompt: the draft table, the grammar table of §5.1, OD4) and write
     `dose-form-review.md` (flagged rows, granularity questions, EDQM terms question). Commit, push, CI green, then
     **stop and wait for the owner**. Apply the answers in one commit (rows accepted, groups final, OD4 closed in design).

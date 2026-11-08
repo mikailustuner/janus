@@ -212,22 +212,32 @@ groups (§5.2). Unit-amount equivalence is exact: `1 g/1` and `1000 mg/1` give t
 
 ### 5.2 Dose-form groups (`forms.py`, `data/dose_form_groups.csv`)
 ```
-source_id,published_form,group,note
-openfda_ndc,"TABLET, FILM COATED",tablet,
-openfda_ndc,"TABLET, EXTENDED RELEASE",tablet_modified_release,
-eu_fr_bdpm,comprimé pelliculé,tablet,
-eu_fr_bdpm,comprimé à libération prolongée,tablet_modified_release,
-eu_fr_bdpm,poudre et  solvant pour solution injectable,injection,"two spaces as published"
+source_id,published_form,route,group,note
+openfda_ndc,"TABLET, FILM COATED",ORAL,oral_solid,proposed; …
+openfda_ndc,"TABLET, EXTENDED RELEASE",ORAL,oral_solid_modified_release,proposed; …
+openfda_ndc,SOLUTION,OPHTHALMIC,ophthalmic,proposed; …
+eu_fr_bdpm,comprimé pelliculé,*,oral_solid,proposed; …
+eu_fr_bdpm,poudre et  solvant pour solution injectable,*,injection,proposed; … (two spaces as published)
 ```
 - Key: the exact published string of the source (no folding: the BDPM data are matched as published). A string not in
   the table, or with an empty group, is unknown.
-- Draft groups (granularity decided in the review, OD4): `tablet`, `tablet_modified_release`, `tablet_gastro_resistant`,
-  `tablet_orodispersible`, `capsule`, `capsule_modified_release`, `capsule_gastro_resistant`, `oral_solution`,
-  `oral_suspension`, `oral_powder_granules`, `injection`, `infusion`, `inhalation`, `nasal`, `eye`, `ear`,
-  `cutaneous_semisolid`, `cutaneous_liquid`, `transdermal_patch`, `rectal`, `vaginal`, `oromucosal`.
-  `COUNTABLE_GROUPS` = the seven tablet and capsule groups.
-- Where it comes from: drafted by `forms_draft.py` from the distinct `(source_id, dosage_form)` values of the current
-  dataset (openFDA 142, BDPM 358) with keyword rules, then reviewed row by row by `agent://pharmacologist` and accepted
+- ~~Draft groups (22 fine groups)~~ superseded by owner decision 6: a coarse Janus grouping. *(Implemented 2026-11-08,
+  task 3; pending the task 4 review, `dose-form-review.md`.)* Thirteen groups: `oral_solid`,
+  `oral_solid_modified_release`, `oral_liquid`, `injection`, `inhaled`, `nasal`, `ophthalmic`, `otic`, `cutaneous`,
+  `transdermal`, `rectal`, `vaginal`, `other`. The owner's twelve plus `oral_solid_modified_release`, which Req 6.5
+  requires (modified-release forms never share a group with immediate-release ones); a modified-release form outside
+  the oral solids (depot injection, prolonged-release eye drops, vaginal ring) has no group and stays unknown.
+  `COUNTABLE_GROUPS` = `oral_solid`, `oral_solid_modified_release`. `other` (sublingual, buccal and dental forms,
+  lozenges, kits, devices) is shown but **never compared** (`NOT_COMPARED_GROUPS`): two products in `other` need not
+  share a form.
+- *(Added in task 3.)* **Route column.** openFDA and the BDPM publish forms that do not name the route (`SOLUTION`
+  1,729 oral / 1,042 topical / 323 ophthalmic products; `TABLET` 17,971 oral / 242 sublingual; `crème`, `gel`,
+  `solution`), so the key is `(source_id, published_form, route)`: `route` is `*` (any route set), an empty string (no
+  route published) or the product's `res_product.routes` sorted and joined with `|` as published. A product takes the
+  row of its own route set first, then the `*` row. `group(source_id, published_form, routes)` gains the routes
+  argument; the presence statement (§4.2) must also select `r.routes`, and task 5 passes `ProductCandidate.routes`.
+- Where it comes from: drafted by `forms_draft.py` from the distinct `(source_id, dosage_form, routes)` values of the
+  current dataset (openFDA 142 forms, BDPM 358; 927 rows) with keyword rules, then reviewed row by row by `agent://pharmacologist` and accepted
   by the owner (task 4). EDQM Standard Terms are not used (registration and reuse terms not checked; OD4). Licence of
   the table: Apache-2.0 (Janus curated); the published strings it contains are cited with their source.
 - Startup loads and validates it (unique keys, group in the closed set, source id known); a defect stops startup, a
@@ -450,6 +460,11 @@ The seed's four properties are P1–P4.
 
 ## 13. Performance
 Measured 2026-11-08 (§1): 273–428 ms for 14 common keys with the partial index, 1.07 s for the 50 most frequent keys.
+**Loader cost of the index (task 1, 2026-11-08):** writing the 317,055 `res_product_ingredient` rows of the dev dataset
+into a copy of the table, three runs each in a rolled-back transaction: 1.45–1.48 s with the primary key only,
+2.45–2.50 s with the partial index added, so about +1.0 s per dataset load (the full load, preparation included, takes
+minutes). Task 1.1 checks on a synthetic dataset of 40,000 products that the §4.2 key lookup is an index scan of
+`res_product_ingredient_key`.
 Targets (Req 13): p95 ≤ 500 ms for 15 items, ≤ 2 s worst case, 3 s statement limit. `bench.py` records p50/p95 in this
 section (task 7). If the 15-item p95 misses the target: first a two-step fetch (hits, then rows by primary key), then the
 loader-built signature table (DP12 fallback). The pure evaluation is linear in signatures × items (≤ 7,611 × 50).
