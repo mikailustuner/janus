@@ -104,7 +104,7 @@ package differs from the builder's output.
   observed in the TİTCK list.
 - **ATC codes** were checked by hand on the WHOCC ATC/DDD index; no index text is copied. The WHO index is not
   open data.
-- **Status:** reviewed by the project owner with AI assistance; not yet reviewed by a pharmacist or physician
+- **Status:** expert review has not yet been done (pharmacist or physician)
   (`docs/pre-launch-checklist.md`).
 
 ## 3. The weekly data-quality report
@@ -122,7 +122,7 @@ CC BY 4.0; the attribution names each input with its update date. Spec: `.kiro/s
 
 **A finding** (`id` = `check:source:key:code`, stable across weeks) has a `check`
 (`exclusion_status`, `item_group`, `regulator_group`, `substance_code_keys`), a `class`
-(`confirmed_error` = a row of `data/atc_code_exclusions.csv`, reviewed by the project owner with AI assistance;
+(`confirmed_error` = a row of `data/atc_code_exclusions.csv`; expert review has not yet been done;
 `needs_pharmacist` = no rule explains it; `benign_difference` = a deterministic rule explains it, e.g. both
 regulators publish the code and the Wikidata item is outdated), a `status` against the previous run (`new`,
 `persisting`, `resolved`), the `code`, the `compared_codes`, the number of `products` that showed it, machine

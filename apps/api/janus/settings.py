@@ -55,6 +55,10 @@ class Settings:
     commit: str | None = None  # deployed git commit, shown at /health (deploy DP10)
     # Origins allowed to call /cds-services from a browser (CDS Hooks sandbox); empty = no CORS.
     cds_cors_origins: frozenset[str] = frozenset()
+    # Queued model runs (simulation-service design §7); off unless JANUS_SIMULATION=on.
+    simulation_enabled: bool = False
+    # Count rate limits by Cloudflare's CF-Connecting-IP (only behind the tunnel; deploy compose).
+    trust_cf_connecting_ip: bool = False
 
     @classmethod
     def from_env(cls, env: Mapping[str, str] | None = None) -> Settings:
@@ -81,7 +85,20 @@ class Settings:
             public_base_url=parse_public_base_url(e.get("JANUS_PUBLIC_BASE_URL", "")),
             commit=parse_commit(e.get("JANUS_COMMIT", "")),
             cds_cors_origins=parse_cds_cors_origins(e.get("JANUS_CDS_CORS_ORIGINS", "")),
+            simulation_enabled=parse_switch(e.get("JANUS_SIMULATION", ""), "JANUS_SIMULATION"),
+            trust_cf_connecting_ip=parse_switch(
+                e.get("JANUS_BEHIND_CLOUDFLARE", ""), "JANUS_BEHIND_CLOUDFLARE"
+            ),
         )
+
+
+def parse_switch(raw: str, name: str) -> bool:
+    value = raw.strip().lower()
+    if value in {"", "off"}:
+        return False
+    if value == "on":
+        return True
+    raise SettingsError(f"{name} must be on or off")
 
 
 def _path_or_none(value: str | None) -> Path | None:

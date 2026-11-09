@@ -101,10 +101,10 @@ fetched at runtime and must not be committed; CI fails if one is tracked.
 ## Curated cascade-engine files (Janus, Apache-2.0)
 
 The PIPC-to-ATC class mapping of the cascade engine (`cascade-engine` design §3.1-3.3, DP2,
-DP8, DP13; `data-pipelines` DP8). Curated by Janus, Apache-2.0. Drafted by the pharmacologist
-agent on 2026-11-07 and **reviewed on 2026-11-07 by the project owner with AI assistance**
-(review sheet and decisions: `.kiro/specs/cascade-engine/mapping-review.md`). It still needs a
-review by a pharmacist or physician before any public claim. The files hold ATC codes and Janus's own
+DP8, DP13; `data-pipelines` DP8). Curated by Janus, Apache-2.0. Drafted in automated pharmacology
+review passes on 2026-11-07, with the project owner's decisions recorded in
+`.kiro/specs/cascade-engine/mapping-review.md`. **Expert review has not yet been done:** a pharmacist
+or physician must review it before any public claim. The files hold ATC codes and Janus's own
 notes only; no WHO index text, TİTCK product name or TİTCK ingredient string is copied. Codes
 come from the ATC structure (`basis = pharmacology`), the Wikidata extract (CC0), the TİTCK
 list (codes and row counts only) or a hand check of one WHOCC ATC/DDD Index page per prefix

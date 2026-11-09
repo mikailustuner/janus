@@ -40,7 +40,7 @@ Judges must reach a working Janus at a public URL from submission until the end 
 
 ## Requirement 2: Isolation from the other services
 **User story:** As the server owner, I want a fault in Janus to stay inside Janus, so that my private services stay private.
-1. THE `api` and `postgres` containers SHALL be attached only to the Internal network.
+1. THE `api`, `simulator` and `postgres` containers SHALL be attached only to the Internal network (simulator added 2026-11-09, simulation-service Req 4).
 2. THE `web` container SHALL be attached to the Internal and Edge networks; `cloudflared` only to the Edge network.
 3. WHILE the Stack runs, a container of the Stack SHALL NOT reach: any port of the Host, any other
    Docker network, the private ranges (RFC 1918 and RFC 6598) outside its own networks, or
@@ -78,7 +78,11 @@ Judges must reach a working Janus at a public URL from submission until the end 
 1. All Stack services SHALL restart automatically after a crash or a Host reboot.
 2. An uptime check run by the owner (outside the Stack) SHALL request `/health` and the demo page every 5 minutes and alert the owner.
 3. The domain SHALL auto-renew and the Stack SHALL stay up until at least 2027-01-31.
-4. THE Stack SHALL stay within 4 GB of memory and 2 CPUs in total, so the Other services keep their resources.
+4. THE long-running services of the Stack SHALL together be capped at no more than 4.5 CPUs and 6 GB of memory,
+   and the `simulator` at no more than 2.0 CPUs and 1.5 GB; caps are ceilings, not reservations, on a 4-core
+   Host, so the Other services keep their resources. *(Amended by owner decision 2026-11-09 for the simulation
+   service, `.kiro/specs/simulation-service/`; was "within 4 GB of memory and 2 CPUs in total". Measured on a
+   development PC: httk single run 3.5 s, 1000-person population 4.5 s, R about 400 MB.)*
 
 ## Requirement 8: Verification
 1. After a deploy, a smoke test SHALL pass from the public internet: home, demo, results, passport, time machine, open data, privacy page in `en` and `tr`; `/api/health`; security headers (CSP, no-referrer) present.

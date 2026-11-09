@@ -78,7 +78,7 @@ PIPC_SOURCE: Final = {
     "path": "https://doi.org/10.1007/s41999-025-01215-x",
 }
 JANUS_SOURCE: Final = {
-    "title": "Janus (curated, reviewed by the project owner with AI assistance)",
+    "title": "Janus (curated; expert review has not yet been done)",
     "path": "https://github.com/mikailustuner/janus",
 }
 WHOCC_NOTE: Final = {
@@ -309,8 +309,8 @@ def readme(resources: Sequence[Mapping[str, object]], left_out: int) -> str:
         "",
         "## Status",
         "",
-        "Reviewed by the project owner with AI assistance; not yet reviewed by a pharmacist or a",
-        "physician. Not medical advice. Report errors as described in",
+        "Expert review has not yet been done (pharmacist or physician). Not medical advice.",
+        "Report errors as described in",
         "`docs/contributing-corrections.md`.",
         "",
     ]

@@ -19,12 +19,14 @@ check() {  # check <path> <expected status>
   else printf '  FAIL %s %s (want %s)\n' "$code" "$1" "$2"; fail=1; fi
 }
 for lang in en tr; do
-  for page in "" /demo /results /passport /research /research/time-machine /open-data /privacy; do
+  for page in "" /demo /results /passport /research /research/time-machine /open-data /privacy \
+    /research/data-quality /research/faers-onset /research/developers /research/model-explorer \
+    /research/simulate; do
     check "/$lang$page" 200
   done
 done
 for route in /health /privacy/storage /memory/snapshot /seance/catalogue /light/overview \
-  /timemachine/catalogue /open/outcomes; do
+  /timemachine/catalogue /open/outcomes /simulate/compounds; do
   check "/api$route" 200
 done
 # Static files outside the build output (public/): home media, fonts, service worker, scanner.
@@ -33,6 +35,23 @@ for asset in /home/door-1280.mp4 /home/door-poster.webp /home/night-cabinet-1600
   /vendor/zxing/zxing_reader.wasm /vendor/tesseract/worker.min.js /vendor/tesseract/lang/tur.traineddata; do
   check "$asset" 200
 done
+# One small simulation (simulation-service Req 4.3): queued, run by the simulator, then cached.
+sim='{"kind":"compartmental","compound":"amlodipine","population":"adult","dose_mg":10,"interval_h":null,"doses":1,"samples":100}'
+post_sim() { get -s -m 20 -X POST -H 'content-type: application/json' --data "$sim" "$base/api/simulate"; }
+id="$(post_sim | sed -n 's/.*"job_id":"\([0-9a-f-]*\)".*/\1/p')"
+if [ -z "$id" ]; then
+  echo "  FAIL simulate: no job"; fail=1
+else
+  state=""
+  for _ in $(seq 1 45); do
+    state="$(get -s -m 10 "$base/api/simulate/jobs/$id" | sed -n 's/.*"state":"\([a-z]*\)".*/\1/p')"
+    if [ "$state" = "done" ] || [ "$state" = "failed" ]; then break; fi
+    sleep 1
+  done
+  if [ "$state" = "done" ]; then echo "  ok   simulate job done"; else echo "  FAIL simulate job: $state"; fail=1; fi
+  if post_sim | grep -q '"cached":true'; then echo "  ok   simulate cached"
+  else echo "  FAIL simulate result not cached"; fail=1; fi
+fi
 headers="$(get -sI -m 20 "$base/en")"
 for h in content-security-policy referrer-policy x-content-type-options; do
   if grep -qi "^$h:" <<<"$headers"; then echo "  ok   header $h"; else echo "  FAIL header $h"; fail=1; fi

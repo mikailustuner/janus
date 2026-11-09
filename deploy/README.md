@@ -6,11 +6,14 @@ repository; the scripts read them on the server.
 
 ## Shape
 ```
-browser ─HTTPS─▶ Cloudflare ─tunnel (outbound only)─▶ cloudflared ─▶ web ─/api/*─▶ api ─▶ postgres
+browser ─HTTPS─▶ Cloudflare ─tunnel (outbound only)─▶ cloudflared ─▶ web ─/api/*─▶ api ─▶ postgres ◀─ simulator
                                                       [edge]          [edge+internal]  [internal, no route out]
 ```
 - No port is published on the server; the tunnel connects outwards.
-- `api` and `postgres` sit on a Docker network with `internal: true`.
+- `api`, `postgres` and `simulator` sit on a Docker network with `internal: true`.
+- `simulator` (`.kiro/specs/simulation-service/`) runs queued model runs: its own image with pinned
+  R 4.6.1 + httk 2.7.4 (`apps/api/simulator.Dockerfile`), two worker slots, 30 s per job, no route out;
+  it reads and writes only the `simulation_jobs` queue in Postgres.
 - Host firewall rules (`firewall.sh`, run by the owner) stop every Janus container from opening
   connections to the server itself, to private address ranges and to the cloud metadata service.
 - Every container: non-root, read-only root file system, no capabilities, `no-new-privileges`,
@@ -39,3 +42,30 @@ POSTGRES_PASSWORD=x JANUS_NOISE_KEY=x JANUS_UID=1000 JANUS_GID=1000 JANUS_TAG=te
   docker compose -f deploy/compose.yml --profile migrate config --format json \
   | python3 deploy/check_compose.py
 ```
+
+## Simulation service (the release that adds it)
+Owner decision 2026-11-09: resource caps raised (deploy Req 7.4): long-running services at most 4.5 CPU and
+6 GB in total, the simulator at most 2.0 CPU and 1.5 GB; `check_compose.py` enforces both.
+
+1. `deploy.sh <commit>` also builds `janus-simulator:<tag>` natively on the server. The first build installs
+   the R packages from the dated CRAN snapshot (compiled from source where no arm64 binary exists; allow
+   10-30 minutes); later builds are cached. Nothing is installed on the host itself.
+2. The `migrate` step applies Alembic revision `0014_simulation_jobs` (forward-only; its downgrade drops the
+   table).
+3. No firewall or subnet change: the simulator joins the existing internal network, which `firewall.sh`
+   already covers. `verify-isolation.sh` also probes from inside the running simulator (internet, R package
+   mirrors, metadata service and host ports closed; only postgres open).
+4. `smoke.sh` runs one small compartmental job and checks that the repeat is answered from the cache.
+5. Cloudflare (owner, dashboard → Security → WAF → Rate limiting rules): expression
+   `(http.request.uri.path wildcard "/api/simulate*" and http.request.method eq "POST")`, counted per IP,
+   5 requests per 10 seconds, action Block for 10 seconds. The Free plan has one rule: keep the `/api/*` rule
+   and rely on the in-app limits, or replace it with this one; with more rules, add both.
+8. Before the first deploy of this release, add `SIMULATOR_DB_PASSWORD` to `STACK_DIR/.env` (see
+   `env.example`). `deploy.sh` gives the worker's own database role (`janus_simulator`: read, update and delete
+   on the queue table only) its login after the migrations, with `python -m janus.simulation.dbrole`.
+9. The api has `JANUS_BEHIND_CLOUDFLARE: "on"`: rate limits count Cloudflare's `CF-Connecting-IP` (IPv6 per /64).
+6. Rolling back across this release: the older release has no simulator, so restore its compose file first
+   (`git -C src show <old-commit>:deploy/compose.yml > compose.yml`), then run `rollback.sh <old-tag>`; it
+   refuses while an image of the tag is missing.
+7. `JANUS_SIMULATION: "on"` of the api in `compose.yml` switches server runs on; `off` stops accepting
+   them (the in-browser explorer keeps working).

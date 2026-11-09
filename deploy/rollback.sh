@@ -5,7 +5,8 @@
 source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
 tag="${1:-$(previous_tag)}"
 [[ "$tag" =~ ^[0-9a-f]{12}$ ]] || die "no earlier release to roll back to"
-docker image inspect "janus-api:$tag" "janus-web:$tag" >/dev/null 2>&1 || die "images of $tag are gone"
+docker image inspect "janus-api:$tag" "janus-web:$tag" "janus-simulator:$tag" >/dev/null 2>&1 \
+  || die "images of $tag are gone (a release before the simulator needs its own compose.yml, see README)"
 export JANUS_TAG="$tag"
 compose up -d --wait --remove-orphans
 set_tag "$tag"

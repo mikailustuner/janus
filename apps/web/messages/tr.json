@@ -546,7 +546,29 @@
       }
     },
     "back": "Hasta bölümüne dön",
-    "empty": "Henüz gösterilecek bir şey yok."
+    "empty": "Henüz gösterilecek bir şey yok.",
+    "tools": {
+      "dataQuality": {
+        "title": "Veri kalitesi raporu",
+        "body": "Beş ilaç kaynağının bir etkin maddenin ATC koduna ilişkin anlaşmazlıkları; her hafta denetlenir, kanıt bağlantılarıyla."
+      },
+      "onset": {
+        "title": "FAERS başlama süresi",
+        "body": "65 PIPC örüntüsünün tümü için, FAERS'e bildirenlere göre olayın A ilacına başladıktan ne kadar sonra başladığı. Tanımlayıcıdır, nedensel değildir."
+      },
+      "developers": {
+        "title": "Geliştiriciler ve klinisyenler için",
+        "body": "MCP sunucusu, CDS Hooks, açık API ve açık veri paketleri; kopyalamaya hazır ayarlarla."
+      },
+      "modelExplorer": {
+        "title": "Model gezgini",
+        "body": "Zaman makinesinin kompartman modeli tarayıcınızda: sanal popülasyonlar, sabit sınırlar içinde doz ve şema. Hiçbir şey gönderilmez."
+      },
+      "simulate": {
+        "title": "Sıraya alınan model çalıştırmaları",
+        "body": "Kompartman modelini veya bir httk sanal popülasyon çalıştırmasını Janus sunucusunda, küçük bir sırada çalıştırın."
+      }
+    }
   },
   "Doctor": {
     "errors": {
@@ -1887,7 +1909,8 @@
       "none": "Bu ilaç için molekül seçilmedi.",
       "withheldUnverified": "Değer gösterilmiyor: lisansı doğrulanamadı.",
       "outOfRange": "olası aralığın dışında bir öngörü; kullanılamaz",
-      "evidence": "Kanıt: {citation}"
+      "evidence": "Kanıt: {citation}",
+      "invalidValue": "model geçersiz bir değer döndürdü"
     },
     "references": "Kaynaklar",
     "verified": "Denetlendi: {how}",
@@ -1977,5 +2000,473 @@
       "unavailable": "Açık veri kümesi şu anda bu sunucuda kullanılamıyor."
     },
     "loading": "Açık veri kümesi yükleniyor…"
+  },
+  "DataQuality": {
+    "title": "Veri kalitesi raporu",
+    "summary": "{count, plural, one {# bulgu} other {# bulgu}} · {date} çalıştırması",
+    "intro": "Janus etkin madde kimlik alanlarını beş kaynaktan okur: TİTCK (Türkiye), AEMPS CIMA (İspanya), BDPM (Fransa), openFDA NDC (ABD) ve Wikidata. Her hafta aynı etkin madde için verdikleri ATC kodlarını karşılaştırır; her farkı ve önceki çalıştırmaya göre neyin yeni olduğunu, neyin sürdüğünü ve neyin çözüldüğünü listeler.",
+    "codesOnly": "Yalnızca kodlar ve sayılar: bu raporda hiçbir TİTCK liste satırı, ürün adı veya barkod ve hiçbir WHOCC dizin metni yoktur.",
+    "review": "Deterministik kurallarla üretilmiştir. Uzman incelemesi henüz yapılmadı: kaynağa bildirilmeden önce her bulguyu bir eczacı kontrol etmelidir.",
+    "demo": "Demo: rapor {date} tarihinde gerçek yerel Janus API'sinden kaydedildi; istek gönderilmez.",
+    "loading": "Veri kalitesi raporu yükleniyor…",
+    "errors": {
+      "unavailable": "Veri kalitesi raporu şu anda kullanılamıyor. Lütfen daha sonra yeniden deneyin."
+    },
+    "run": {
+      "title": "Son çalıştırma",
+      "previous": "Önceki çalıştırmayla karşılaştırıldı.",
+      "first": "İlk çalıştırma: her bulgu yenidir.",
+      "tile": "{count, plural, one {# bulgu} other {# bulgu}}: {klass}",
+      "tableLabel": "Sınıfa ve duruma göre bulgular",
+      "upstream": "Kaynağının hâlâ yayımladığı doğrulanmış hatalar: {still}. Kaynakta düzeltilenler: {resolved}."
+    },
+    "classMeaning": "Sınıf bir ilacı değil, veriyi tanımlar. Doğrulanmış hata: Janus'un dışlama dosyasında yer alır. Eczacı gerekli: hiçbir kuralın açıklamadığı bir fark. Açıklanan fark: sabit bir kural farkı açıklar (örneğin iki düzenleyici de kodu yayımlar ve Wikidata kaydı eskidir); bu bir eczacı değerlendirmesi değildir.",
+    "class": {
+      "confirmed_error": "Doğrulanmış hata",
+      "needs_pharmacist": "Eczacı incelemesi gerekli",
+      "benign_difference": "Açıklanan fark"
+    },
+    "status": {
+      "new": "Yeni",
+      "persisting": "Süren",
+      "resolved": "Çözülen"
+    },
+    "filter": {
+      "class": "Sınıf",
+      "status": "Durum",
+      "all": "Tümü",
+      "search": "Etkin madde (İngilizce adı), anahtar veya koda göre ara"
+    },
+    "findings": {
+      "title": "Bulgular",
+      "count": "{count} bulgudan {shown} tanesi gösteriliyor",
+      "empty": "Bu filtreye uyan bulgu yok.",
+      "more": "{count} tane daha göster"
+    },
+    "finding": {
+      "check": "Denetim",
+      "key": "Janus etkin madde anahtarı",
+      "compared": "Karşılaştırılan kodlar",
+      "products": "Ürünler",
+      "productsValue": "{count, plural, one {# tek etkin maddeli ürün} other {# tek etkin maddeli ürün}} bu kodu taşıyor",
+      "reasons": "Neden",
+      "otherKeys": "Bu kodu taşıyan diğer etkin madde anahtarları",
+      "upstream": "Kaynakta",
+      "changedFrom": "Önceki çalıştırmadaki sınıf",
+      "reportTo": "Bildirilecek yer",
+      "evidence": "Kanıt",
+      "wikidata": "Wikidata kaydı {key}",
+      "whocc": "WHOCC grubu {group}",
+      "howToFind": "Kaynakta nasıl bulunur"
+    },
+    "check": {
+      "exclusion_status": "İncelenmiş dışlama",
+      "item_group": "Düzenleyici kodu, kaydın gruplarının dışında",
+      "regulator_group": "TİTCK ve CIMA kodları uyuşmuyor",
+      "substance_code_keys": "Tek madde kodu, iki etkin madde"
+    },
+    "reason": {
+      "both_regulators_publish_it": "İki düzenleyici de bu kodu bu etkin madde için yayımlıyor.",
+      "code_of_other_substance": "Bu kodu başka bir etkin madde taşıyor.",
+      "combination_code_on_single_ingredient_product": "Tek etkin maddeli üründe kombinasyon kodu.",
+      "group_differs": "Kod, kaydın kodlarından farklı bir ATC grubunda.",
+      "item_agrees_with_cima": "Wikidata kaydı CIMA ile uyuşuyor.",
+      "item_agrees_with_titck": "Wikidata kaydı TİTCK ile uyuşuyor.",
+      "no_longer_published": "Kaynak bu kodu artık yayımlamıyor.",
+      "not_a_medicine": "Kayıt bir ilaç değil.",
+      "old_code": "Kod artık ATC dizininde yok.",
+      "one_substance_code_two_keys": "Bir madde kodu iki etkin maddeye eşleniyor.",
+      "regulators_differ": "İki düzenleyici farklı gruplardan kodlar yayımlıyor.",
+      "same_level2_group": "Aynı terapötik alt grup (2. düzey): yalnızca bir ipucu, açıklama değil.",
+      "still_published": "Kaynak bu kodu hâlâ yayımlıyor.",
+      "wrong_substance": "Kod başka bir maddeye ait."
+    },
+    "upstreamStatus": {
+      "persisting": "Hâlâ yayımlanıyor",
+      "resolved_upstream": "Artık yayımlanmıyor"
+    },
+    "upstream": {
+      "title": "Bir bulgu kaynağa nasıl bildirilir",
+      "pharmacist": "Önce bulguyu bir eczacı kontrol eder. Yalnızca kontrol edilmiş bir fark bildirilir.",
+      "steps": {
+        "wikidata": "Wikidata: oturum açın, kaydı açın ve yanlış ATC ifadesini WHOCC grup sayfasına kaynak vererek kullanımdan kaldırın (deprecated) ya da kaydın tartışma sayfasında açıklayın. Yalnızca kodu ve grubu yazın, WHOCC metnini asla kopyalamayın.",
+        "titck": "TİTCK: resmî iletişim kanalları veya CİMER aracılığıyla. Listeyi ve tarihini, ürünü güncel listede göründüğü biçimiyle, kodu ve WHOCC grup sayfasını belirtin. Ruhsat sahibi de kendi kaydını düzeltebilir.",
+        "cima": "AEMPS CIMA: kurumun resmî iletişim kanalları aracılığıyla; CIMA'daki ruhsat numarası, kod ve WHOCC grup sayfasıyla.",
+        "janus": "Janus'un kendi dosyaları: depoda satırı ve kanıtı içeren bir issue veya pull request açın."
+      },
+      "nothingSent": "Janus kendisi hiçbir bildirim göndermez, yayımlamaz veya iletmez.",
+      "guide": "Kılavuz: düzeltmelere katkı",
+      "target": {
+        "wikidata": "Wikidata",
+        "titck": "TİTCK",
+        "cima": "AEMPS CIMA",
+        "titck_cima": "TİTCK ve AEMPS CIMA",
+        "bdpm": "BDPM"
+      }
+    },
+    "files": {
+      "title": "İndir",
+      "version": "Sürüm {version}",
+      "licence": "Lisans: CC BY 4.0, aşağıdaki atıfla.",
+      "csv": "Bulgular (CSV)",
+      "json": "Rapor (JSON)",
+      "md": "Özet (Markdown)",
+      "dictionary": "Veri sözlüğü (docs/open-data.md)"
+    },
+    "sources": {
+      "title": "Bu çalıştırmanın kaynakları",
+      "footer": "openFDA NDC ATC kodu vermez; yalnızca varlık sayıları ekler.",
+      "line": "Anlık görüntü {date}"
+    },
+    "source": {
+      "titck": "TİTCK (Türkiye)",
+      "eu_es_cima": "AEMPS CIMA (İspanya)",
+      "eu_fr_bdpm": "BDPM (Fransa)",
+      "wikidata": "Wikidata",
+      "openfda_ndc": "openFDA NDC (ABD)",
+      "titck_eu_es_cima": "TİTCK ve AEMPS CIMA"
+    }
+  },
+  "Onset": {
+    "title": "FAERS başlama süresi",
+    "summary": "{rows} PIPC örüntüsü · {medians} tanesinde ortanca",
+    "intro": "PIPC listesindeki her örüntü için (A ilacı → olay → B ilacı): FAERS'e bildirenlere göre olay, A ilacının sınıfından bir ilaca başladıktan ne kadar sonra başladı? Zaman makinesinin yöntemine dayanan, daha sıkı kurallı bir yöntem; 65 satırın tümü için, her sayının arkasındaki bildirim sayısıyla.",
+    "framing": "Yalnızca tanımlayıcıdır: nedensel değildir, insidans değildir. FAERS kendiliğinden bildirimdir; sayılar kişi değil, bildirimdir. Bir aralık, bildirenin yazdığıdır; kişilerde ölçülmüş başlangıç değildir.",
+    "review": "Yöntemler otomatik istatistik ve farmakoloji inceleme geçişlerinden geçti. Uzman incelemesi henüz yapılmadı.",
+    "demo": "Demo: tablo {date} tarihinde gerçek yerel Janus API'sinden kaydedildi; istek gönderilmez.",
+    "loading": "Başlama süresi tablosu yükleniyor…",
+    "errors": {
+      "unavailable": "Başlama süresi tablosu şu anda kullanılamıyor. Lütfen daha sonra yeniden deneyin.",
+      "unknown": "Bu numarada bir PIPC satırı yok."
+    },
+    "pattern": "{drugA} → {event} → {drugB}",
+    "caveats": {
+      "title": "Önce bunları okuyun",
+      "english": "Veri kümesindeki tüm uyarılar (İngilizce)",
+      "descriptive": "Yalnızca tanımlayıcıdır. Bir ilacın olaya yol açtığını göstermez.",
+      "not_incidence": "İnsidans değildir: ilacı kullanan kişi sayısı yoktur. Bir hasta birkaç bildirimde yer alabilir.",
+      "selection": "Yalnızca tam tedavi başlangıç tarihi ve tam olay tarihi olan bildirimlerin aralığı vardır. Bunlar tüm bildirimleri temsil etmeyebilir; uzun süreli kullanımın tarihi daha seyrek yazılır, bu da aralıkları kısaltabilir.",
+      "zero_day": "0 günlük bir aralık çoğu kez iki alana aynı tarihin yazıldığı anlamına gelir; sıfırdaki yığılma ortancayı aşağı çeker.",
+      "day_one": "Ayın 1'ine (ve 1 Ocak'a) düşen tarihler rastlantıdan çok daha sıktır; çoğu kez doldurulmuş bir gündür. Bunlar olmadan bir kontrol verilir; bu bir düzeltme değildir.",
+      "clusters": "Aynı tarih çifti bir satırın bildirimlerinin dörtte birinden fazlasını tutuyorsa satır yalnızca sayıları gösterir.",
+      "small_sample": "Aralığı olan bildirim 10'dan azsa: yalnızca sayılar. 10 ile 29 arası: küçük örneklem; tahminler istikrarsızdır ve aralıklar belirsizliği olduğundan az gösterebilir.",
+      "shared_rows": "A ilacının sınıfı ve olayı aynı olan satırlar (B ilacında ayrılırlar) aynı sayılara sahiptir.",
+      "receipt_window": "Alınış tarihine göre dört çeyreklik bildirim; olay tarihleri yıllar öncesine ait olabilir.",
+      "event_date_report_level": "FAERS her bildirim için tek bir olay tarihi verir: birden fazla olaylı bir bildirimde tarih bu satırınkinden başka bir olaya ait olabilir.",
+      "median_interval": "Ortancanın kesin aralığını kullanın; indirmelerdeki bootstrap aralığı, eşit değerli veya küçük verilerde belirsizliği olduğundan az gösterebilir.",
+      "shortest_interval": "Her bildirimde aralık, sınıftan en son başlanan ilaçtan başlar; sınıf içinde bir geçişten sonra bu, sınıfa ilk başlanmasından bu yana geçen süreden kısadır (başka bir okuma da verilir).",
+      "class_membership": "A ilacının sınıfı etkin maddelerin ATC kodlarına göre eşlenir; çoğu lokal uygulama yolu (cilt, göz, solunum yolları…) sayılmaz ve her sınıfta bazı etkin maddeler, nedenleri veri kümesinde olmak üzere dışarıda bırakılır.",
+      "weibull": "Weibull şekli, zamanlama kadar bildirim yapaylıklarını da yansıtır; bir mekanizma değildir ve yalnızca en az 30 bildirimle yayımlanır."
+    },
+    "statusLegend": {
+      "title": "Durum ne anlama gelir",
+      "described": "Aralığı olan en az 30 bildirim: ortanca, çeyrekler ve ortancanın kesin %95 aralığı.",
+      "small_sample": "Aralığı olan 10-29 bildirim: ortanca ve aralıklar küçük örneklem olarak gösterilir; istikrarsızdır.",
+      "cluster_dominated": "Aynı tarih çifti bildirimlerin dörtte birinden fazlasını tutuyor (olası yinelenen bildirimler veya bir vaka serisi): yalnızca sayılar.",
+      "count_only": "Aralığı olan bildirim 10'dan az: yalnızca sayılar, ortanca yok.",
+      "no_interval": "Bildirim var, ancak hiçbirinin kullanılabilir aralığı yok (nedenler satırda). Zamanlama tanımlanamaz; bu, etki olmadığının kanıtı değildir.",
+      "no_candidate_reports": "Dönemdeki hiçbir bildirim bu sınıftan bir ilacı bu olayla birlikte şüpheli olarak anmıyor. Bu, etki olmadığının kanıtı değildir."
+    },
+    "status": {
+      "described": "Tanımlandı",
+      "small_sample": "Küçük örneklem",
+      "cluster_dominated": "Yalnızca sayılar (tarih kümesi)",
+      "count_only": "Yalnızca sayılar",
+      "no_interval": "Aralık yok",
+      "no_candidate_reports": "Dönemde eşleşen bildirim yok"
+    },
+    "files": {
+      "title": "İndir",
+      "version": "Sürüm {version}",
+      "window": "FAERS çeyrekleri {quarters} · anlık görüntü {date}",
+      "licence": "Lisans: CC BY 4.0, aşağıdaki atıfla.",
+      "csv": "Tablo (CSV)",
+      "json": "Tablo ve yöntem (JSON)",
+      "dictionary": "Veri sözlüğü (docs/open-data.md)"
+    },
+    "cols": {
+      "row": "Satır",
+      "pattern": "Örüntü",
+      "reports": "Bildirim",
+      "interval": "Aralığı olan",
+      "median": "Ortanca (kesin %95 aralık)",
+      "status": "Durum"
+    },
+    "tableTitle": "65 satırın tümü",
+    "tableHint": "Sıralamak için bir sütun başlığı seçin. Ayrıntı için bir örüntüyü açın. \"Aynı gün yığılması\" işaretli bir ortanca zamanlamayı değil, iki kez yazılmış tek bir tarihi gösterir; ortancası olmayan satırlarla birlikte sıralanır.",
+    "caption": "PIPC satırları, {key} sütununa göre {dir} sıralı",
+    "sort": {
+      "ascending": "artan",
+      "descending": "azalan"
+    },
+    "days": "{n} g",
+    "ci": "{low}–{high} g",
+    "noMedian": "ortanca yayımlanmadı",
+    "rowEyebrow": "PIPC satırı {row}",
+    "reportsNotPeople": "Sayılar kişi değil, bildirimdir.",
+    "detail": {
+      "counts": "Bildirimler",
+      "reportsSentence": "{count, plural, one {# bildirim} other {# bildirim}} sınıftan bir ilacı olayla birlikte şüpheli olarak anıyor.",
+      "intervalSentence": "{count, plural, one {# bildirimin} other {# bildirimin}} kullanılabilir aralığı var.",
+      "usable": "Kullanılabilir pay",
+      "usableSentence": "Bildirimlerin {share} kadarının ({total} bildirimden {n} tanesinin) kullanılabilir aralığı var.",
+      "definition": "Satır nasıl tanımlanır",
+      "class": "A ilacının sınıfı (Janus sınıf kodu)",
+      "event": "Olay",
+      "terms": "MedDRA terimleri",
+      "routes": "Sayılan uygulama yolları",
+      "shared": "{rows} satırlarıyla aynı sınıf ve olay: sayılar aynıdır.",
+      "pipc": "Yayımlandığı haliyle PIPC metni",
+      "notes": "Bu satıra ilişkin notlar",
+      "notesFooter": "Veri kümesinin incelemelerinde İngilizce yazılmıştır.",
+      "timing": "Bildirilen zamanlama",
+      "medianLine": "Ortanca {median} gün (kesin %95 aralık {low}–{high} gün, kapsama {coverage})",
+      "smallSample": "Küçük örneklem: aralığı olan {count} bildirim. Tahminler istikrarsızdır.",
+      "heaping": "Aralıkların yarısından fazlası 0 gün: ortanca zamanlamayı değil, aynı gün yığılmasını gösterir.",
+      "iqrLine": "Bildirimlerin yarısı {q25} ile {q75} gün arasındadır.",
+      "chartTitle": "Tedavi başlangıç tarihinden olay tarihine kadar bildirilen gün",
+      "unit": "gün",
+      "chartLegend": "Her çubuk başlangıçtan bitişe uzanır; nokta ortancadır. Üst çubuk: bildirimlerin yayılımı (ortadaki yarı). Alt çubuk: ortancanın belirsizliği (kesin %95 aralık). İkisi farklı şeyleri ölçer.",
+      "colLow": "Başlangıç",
+      "colMedian": "Ortanca",
+      "colHigh": "Bitiş",
+      "iqr": "Bildirimlerin ortadaki yarısı",
+      "exactCi": "Ortancanın kesin %95 aralığı",
+      "withoutDayOne": "Ayın 1'ine düşen tarihler olmadan: ortanca {median} gün ({n} bildirim). Bu, gerçek tarihleri de dışarıda bırakır; bir düzeltme değildir.",
+      "withoutDayOneOmitted": "Ayın 1'ine düşen tarihler olmadan: verilmez, 10'dan az bildirim kalıyor.",
+      "shape": "Weibull şekli {shape} (%95 aralık {low}–{high}): {klass}.",
+      "shapeCaveat": "Şekil, zamanlama kadar bildirim yapaylıklarını da yansıtır; bir mekanizma değildir.",
+      "noShape": "Weibull şekli yok: yalnızca en az 30 bildirim, en fazla yarısı aynı gün aralık ve en az 5 farklı aralık olduğunda yayımlanır.",
+      "quality": "Tarih kalitesi",
+      "zeroDay": "{total} aralıktan {n} tanesi 0 gün.",
+      "dayOne": "{total} aralıktan {n} tanesi ayın 1'ine düşen bir tarihe (başlangıç veya olay) dayanıyor.",
+      "cluster": "Aynı tarih çiftine sahip en büyük bildirim grubu: {n}.",
+      "years": "Olay yılları {from} ile {to} arası.",
+      "withoutInterval": "Aralığı olmayan bildirimler, onları dışarıda bırakan kontrole göre:",
+      "usableLine": "{total} bildirimden {n} tanesinin kullanılabilir aralığı var.",
+      "otherReadings": "Aynı bildirimlerin başka okumaları",
+      "distinctPairs": "Aynı tarih çiftlerini bir kez sayarak: ortanca {median} gün.",
+      "earliestStart": "Sınıftan herhangi bir ilaca en erken başlanmasından itibaren: ortanca {median} gün.",
+      "qualityOnly": "Bu satır için zamanlama yayımlanmaz; bu sayılar yalnızca tarih kalitesini anlatır."
+    },
+    "route": {
+      "systemic_or_unknown": "sistemik veya belirtilmemiş",
+      "eye": "göz",
+      "rectal": "rektal",
+      "nasal_inhaled": "burun veya inhalasyon",
+      "joint_lesion": "eklem veya lezyon içi enjeksiyon",
+      "local": "lokal",
+      "not_patient": "hasta değil (plasenta, anne sütü)"
+    },
+    "shapeClass": {
+      "early": "erken (aralık 1'in altında)",
+      "random": "belirgin eğilim yok (aralık 1'i içeriyor)",
+      "wear_out": "geç (aralık 1'in üstünde)"
+    },
+    "reason": {
+      "no_therapy_start": "tedavi başlangıç tarihi yok",
+      "start_date_partial": "başlangıç tarihi eksik",
+      "event_date_missing": "olay tarihi yok",
+      "negative_interval": "olay başlangıç tarihinden önce",
+      "interval_over_max": "aralık on yıldan uzun"
+    },
+    "heapingShort": "aynı gün yığılması"
+  },
+  "Developers": {
+    "title": "Geliştiriciler ve klinisyenler için",
+    "summary": "Janus'u başka araçlardan kullanın",
+    "intro": "Janus'un denetimleri ve açık veri kümeleri başka yazılımlara açıktır: yapay zekâ asistanları için bir MCP sunucusu, EHR test ortamları için bir CDS Hooks hizmeti, herkese açık salt okunur bir API ve açık veri paketleri. Hepsi açık kaynaktır.",
+    "notClinical": "Araştırma prototipidir; tıbbi cihaz değildir ve klinik kullanım için değildir. Janus'u canlı bir EHR'ye bağlamayın.",
+    "copy": "Kopyala",
+    "copied": "Kopyalandı.",
+    "copyFailed": "Burada kopyalama kullanılamıyor; metni seçin.",
+    "mcp": {
+      "title": "Yapay zekâ asistanları için MCP sunucusu",
+      "summary": "Janus API'si üzerinde yedi salt okunur araç",
+      "body": "janus-mcp; Claude, Kiro veya herhangi bir MCP istemcisinin bir ilacı çözümlemesini, bir listeyi olası reçete kaskadları için denetlemesini ve PIPC satırlarını ve zaman makinesini okumasını sağlar. İnce bir istemcidir: her araç API'ye tek istek gönderir ve yanıtını değiştirmeden döndürür. JANUS_API_URL'yi yerel bir API'ye veya bu kurulumun /api adresine ayarlayın.",
+      "safety": "Her sonuç, asistan için Janus'un kurallarını taşır: bir bulgu olası bir örüntüdür, asla bir hüküm değildir ve bir ilaca başlama, onu değiştirme veya bırakma önerisi yoktur.",
+      "claudeCode": "Claude Code (deponun kökünden)",
+      "claudeDesktop": "Claude Desktop (claude_desktop_config.json)",
+      "kiro": "Kiro (.kiro/settings/mcp.json, depoda hazır)",
+      "privacy": "Sunucu bir çağrıdan hiçbir şey kaydetmez ve çağrılar arasında hiçbir şey tutmaz. Asistanın gönderdiği ilaçları asistanın sağlayıcısı görür.",
+      "doc": "Belgeler: docs/mcp.md"
+    },
+    "cds": {
+      "title": "CDS Hooks hizmeti",
+      "summary": "order-select ve order-sign, CDS Hooks 2.0",
+      "sandboxOnly": "Yalnızca test ortamları ve değerlendirme için.",
+      "body": "Hizmet taslak istemleri ve önceden getirilen ilaçları FHIR R4 olarak okur, NDC, RxNorm ve ATC kodlarını Janus çözümleme katmanıyla eşler ve PIPC listesindeki olası reçete kaskadları için bilgi kartlarıyla yanıt verir. Hiçbir şey saklanmaz.",
+      "discovery": "Keşif ve hizmet",
+      "prefetch": "Önceden getirme şablonları",
+      "cards": "Kartlar her zaman \"info\" düzeyindedir; PIPC satırını, kanıtı ve uyarı metnini içerir; öneri ve eylem yoktur. Kart olmaması, ilaçlarda hiçbir sorun olmadığı anlamına gelmez.",
+      "doc": "Belgeler: docs/cds-hooks.md"
+    },
+    "api": {
+      "title": "Herkese açık salt okunur API",
+      "summary": "OpenAPI 3.1, giren veya çıkan kişisel veri yok",
+      "body": "Açık yollar istek gövdesi almaz ve yalnızca önceden hesaplanmış veya yayımlanmış verileri okur: başlama süresi tablosu, veri kalitesi raporu, kaskad paketi, açık sonuç veri kümesi, zaman makinesi ve CDS Hooks keşfi.",
+      "examples": "Örnekler",
+      "rules": "Hatalar koddur. Tıbbi yollar önbelleğe alınmaz ve yalnızca yol, durum ve süreyi kaydeder. Sayılar her zaman bildirimdir, kişi değildir.",
+      "openapi": "OpenAPI belgesi: docs/openapi-public.json",
+      "doc": "Yol listesi ve kurallar: docs/open-api.md"
+    },
+    "data": {
+      "title": "Açık veri paketleri",
+      "summary": "Depodaki Frictionless veri paketleri",
+      "cascade-package": "Janus'un sınıf eşlemesi, ad kuralları ve ATC dışlamalarıyla 65 PIPC satırı. Dosyaya göre CC BY 4.0 ve Apache-2.0.",
+      "data-quality": "Haftalık veri kalitesi raporu: bulgular CSV, JSON ve özet olarak. CC BY 4.0.",
+      "faers-onset": "65 PIPC satırı için FAERS başlama süresi tablosu, CSV ve JSON. CC BY 4.0.",
+      "frictionless": "Her paketin lisansı, kaynakları ve dosya başına bir özeti (hash) içeren bir datapackage.json dosyası vardır.",
+      "doc": "Nasıl okunur ve atıf yapılır: docs/open-data.md"
+    }
+  },
+  "Simulation": {
+    "virtualPopulation": "Sanal popülasyon, araştırma içindir. Hiçbir kişiyle ilgili değildir ve bir doz önerisi değildir.",
+    "inSilico": "In silico ve keşif amaçlı: öğretim ve araştırma için bir model çıktısı. Simüle edilmiş bir grubu anlatır, hiçbir zaman birinin kendi bedenini değil; kimsenin ne alması gerektiği hakkında bir şey söylemez.",
+    "demo": "Demo: sonuçlar {date} tarihinde gerçek yerel Janus API'sinden kaydedildi; istek gönderilmez.",
+    "explorer": {
+      "title": "Model gezgini",
+      "summary": "Bu cihazda çalışır · hiçbir şey gönderilmez",
+      "intro": "Zaman makinesinin kaynaklı fizyolojik parametrelerle minimal kompartman modeli, tarayıcıda çalışacak biçimde aktarıldı. Bir madde, önceden tanımlı bir sanal popülasyon ve modelin sabit sınırları içinde bir doz ve şema seçin; sonuç, yüzlerce sanal bireydeki plazma konsantrasyonlarının yayılımıdır."
+    },
+    "server": {
+      "title": "Sıraya alınan model çalıştırmaları",
+      "summary": "Aynı anda iki çalıştırma · sırada en fazla on",
+      "intro": "Kompartman modelini veya HTTK-Pop sanal bireyleriyle bir httk çalıştırmasını Janus sunucusunda çalıştırır. Yalnızca listedeki maddeler ve sanal popülasyonlar seçilebilir, her sayının kesin sınırları vardır ve aynı çalıştırmalar önbellekten yanıtlanır.",
+      "loading": "Madde listesi yükleniyor…",
+      "off": "Bu kurulumda sunucu çalıştırmaları kapalı. Model gezgini kompartman modelini tarayıcınızda çalıştırır.",
+      "toExplorer": "Model gezginini aç",
+      "limits": "Aynı anda en fazla {slots} çalıştırma ve {queue} bekleyen; her çalıştırma {timeout} saniye sonra durdurulur; sonuçlar {ttl} saat saklanır.",
+      "idle": "Girdileri seçin ve bir çalıştırma başlatın. Sonuç burada görünür.",
+      "sending": "Çalıştırma gönderiliyor…",
+      "queued": "Sırada bekliyor ({position}. sırada).",
+      "running": "Çalışıyor…",
+      "stoppedPolling": "Henüz bitmedi. Sayfa sormayı bıraktı; daha sonra yeniden deneyin."
+    },
+    "form": {
+      "title": "Girdiler",
+      "model": "Model",
+      "compound": "Madde",
+      "population": "Sanal popülasyon",
+      "dose": "Uygulama başına doz, {unit} ({low}–{high})",
+      "doseHelp": "Bu modelin sabit sınırları içinde; bir model girdisidir, kimse için bir doz değildir.",
+      "outOfBounds": "Bu değer izin verilen sınırların dışında. Sınırların içine girene kadar hiçbir şey çalıştırılmaz.",
+      "scenarios": "Kaynaklı senaryolar",
+      "doses": "Doz sayısı (1–{max})",
+      "interval": "Dozlar arası saat",
+      "horizon": "Simüle edilen süre: {hours} saat.",
+      "noPerson": "Vücut ağırlığı, yaş, böbrek işlevi veya başka bir kişisel bilgi için alan yoktur: model yalnızca bir sanal popülasyonu anlatır.",
+      "fix": "Sonucu görmek için işaretli girdiyi düzeltin.",
+      "httkDose": "httk çalıştırmaları, zaman makinesinde olduğu gibi günde kg başına 1 mg kullanır; bu, bu ilaçların olağan dozlarının çok üzerindedir: yalnızca iki sanal popülasyon arasındaki oran anlamlıdır.",
+      "samples": "Sanal birey sayısı",
+      "run": "Çalıştırmayı başlat",
+      "everyHours": "{hours} saatte bir",
+      "httkComparison": "Çalıştırma, önceden tanımlı iki HTTK-Pop sanal popülasyonunu karşılaştırır: 20–50 yaş ve 65–79 yaş yetişkinler."
+    },
+    "kind": {
+      "compartmental": "Kompartman",
+      "httk_population": "httk popülasyonu"
+    },
+    "compound": {
+      "amlodipine": "amlodipin",
+      "rhein": "rein",
+      "risperidone": "risperidon",
+      "metoclopramide": "metoklopramid",
+      "haloperidol": "haloperidol"
+    },
+    "population": {
+      "amlodipine_adult": "Genç sağlıklı yetişkinler (Faulkner 1986)",
+      "amlodipine_adult_65plus": "Yaşlı yetişkinler (Abernethy 1990: hipertansif, yaş ortalaması 68)",
+      "rhein_adult": "Sağlıklı yetişkinler (Magnard 1993)"
+    },
+    "httkPopulation": {
+      "adult": "20–50 yaş yetişkinler (HTTK-Pop)",
+      "adult_65plus": "65–79 yaş yetişkinler (HTTK-Pop)"
+    },
+    "populationBasis": {
+      "amlodipine_adult": "12 genç sağlıklı gönüllüden kaynaklı parametreler (Faulkner 1986) ve kaynaklı yayılımlar; klirens yayılımı, yaşlı ile genç arasındaki farkı zaten kapsayan bir yargıdır.",
+      "amlodipine_adult_65plus": "Klirens 19/25 ile ölçeklendi; bu, Abernethy 1990'ın (hipertansif hastalar, yaş ortalaması 68) yaşlı ve genç amlodipin klirensi oranıdır; aynı yayılımların üzerine uygulanır, diğer parametreler değişmez. 80 yaş ve üzeri kapsanmaz.",
+      "rhein_adult": "Kaynaklı görünür parametreler (Magnard 1993, sağlıklı gönüllüler); parametreler zaten görünür olduğu için biyoyararlanım 1'de sabit. Yaşlı yetişkinlere ilişkin doğrulanmış veri yok; bu nedenle yaşlı yetişkin popülasyonu sunulmaz."
+    },
+    "scenario": {
+      "validation": "Doğrulama çalışması: {dose} {unit}",
+      "historical": "Kanun senaryosu: {dose} {unit}"
+    },
+    "validation": {
+      "title": "Modelin {compound} için yayımlanmış verilere uyumu",
+      "folds": "Modelin tepe değeri yayımlanandan {cmax} kat {cdir}; eğri altındaki alan {auc} kat {adir}.",
+      "meaning": {
+        "credible": "Denetlenen senaryo için yayımlanmış değerlerin 2 katı içinde; yine de bir sanal popülasyon modelidir.",
+        "borderline": "2 ile 3 kat arası: mutlak sayıları değil, şekli ve yayılımı okuyun.",
+        "failed": "3 kattan fazla fark: mutlak sayılar doğrulanmamıştır; araştırma için yalnızca göreli karşılaştırmalar gösterilir."
+      },
+      "aucNotIndependent": "Yayımlanmış AUC bir model parametresiyle aynı kaynağı paylaşır; bu yüzden yalnızca tepe değer karşılaştırması bağımsız bir denetimdir.",
+      "direction": {
+        "model_lower": "düşük",
+        "model_higher": "yüksek"
+      },
+      "scope": {
+        "amlodipine": "Sağlıklı gönüllülerde tek bir 10 mg doza karşı denetlendi (Soria-Chacartegui 2023); diğer dozlar ve şemalar denetlenmedi.",
+        "rhein": "Sağlıklı gönüllülerde tek bir 38,58 mg doza (rein eşdeğeri, 50 mg diaserein olarak) karşı denetlendi; diğer dozlar ve şemalar denetlenmedi.",
+        "httk": "Sağlıklı yetişkinlerde ilaç başına tek bir ağızdan doza karşı denetlendi (zaman makinesi)."
+      }
+    },
+    "chart": {
+      "title": "Sanal popülasyonda zaman içinde plazma konsantrasyonu (ng/mL)",
+      "alt": "{hours} saat boyunca konsantrasyon. En yüksek medyan {at}. saatte {p50} ng/mL; o anda sanal bireylerin %90'ı {p5} ile {p95} ng/mL arasında.",
+      "axes": "İlk dozdan sonraki saat · ng/mL",
+      "legend": "Çizgi: sanal bireylerin medyanı. Gölgeli bant: 5. ile 95. persentil arası. Tek bir kişi için eğri yoktur.",
+      "table": "Sayıları tablo olarak göster",
+      "hour": "Saat",
+      "median": "Medyan"
+    },
+    "bands": {
+      "peak": "Simüle edilen sürede en yüksek konsantrasyon: medyan {p50} ng/mL, sanal bireylerin %90'ı {p5} ile {p95} ng/mL arasında.",
+      "auc": "Tek dozun eğri altındaki alanı: medyan {p50} ng·sa/mL, sanal bireylerin %90'ı {p5} ile {p95} ng·sa/mL arasında."
+    },
+    "result": {
+      "title": "Sonuç",
+      "summary": "{compound}, {population}: {samples} sanal birey.",
+      "cached": "Önbellekten yanıtlandı: aynı çalıştırma yakın zamanda yapıldı.",
+      "fresh": "Az önce sunucuda çalıştırıldı.",
+      "httkSummary": "{compound}: her yaş aralığında {samples} sanal birey, günde 1 mg/kg.",
+      "css": "{population}: medyan {p50} mg/L, sanal bireylerin %90'ı {p5} ile {p95} mg/L arasında.",
+      "httkRelative": "httk bu ilaçlar için doğrulanmadı (zaman makinesi): sonuç, iki sanal popülasyon arasındaki orandır, herhangi bir düzey değil.",
+      "extrapolation": "Doğrulanmış senaryonun (doğrulama çalışmasının tek dozu) ötesinde bir dışdeğerleme: daha dikkatli okuyun.",
+      "ratio": "Kararlı durum konsantrasyonu medyanlarının yaşlı/genç oranı: {ratio}.",
+      "httkAbsolute": "Mutlak konsantrasyonlar (doğrulanmadı, kimsenin sahip olduğu bir düzey değil)"
+    },
+    "failed": {
+      "timeout": "Çalıştırma 30 saniyeden uzun sürdü ve durduruldu.",
+      "model_failed": "Model bu çalıştırmayı tamamlayamadı.",
+      "expired": "Çalıştırma sırada çok uzun bekledi ve düşürüldü. Lütfen yeniden deneyin.",
+      "worker_lost": "Çalıştırma sunucuda kesildi. Lütfen yeniden deneyin."
+    },
+    "errors": {
+      "unavailable": "Sunucu çalıştırmaları şu anda kullanılamıyor. Model gezgini tarayıcınızda çalışır.",
+      "queueFull": "Sıra dolu. Lütfen bir dakika sonra yeniden deneyin.",
+      "rateLimited": "Kısa sürede çok fazla çalıştırma. Lütfen biraz bekleyip yeniden deneyin.",
+      "unknownJob": "Bu çalıştırma artık yok; sonuçlar sınırlı bir süre saklanır.",
+      "demoOnly": "Demo modunda yalnızca kaydedilmiş örnek çalıştırmalar vardır: her modelin varsayılan girdileri."
+    },
+    "doseUnit": {
+      "amlodipine": "mg",
+      "rhein": "mg rein eşdeğeri"
+    },
+    "scenarioNote": {
+      "canon_rhubarb_480mg": "Kanun senaryosu: hidroksiantrasen içeriğinin tamamı serbest rein sayılır, bu bir üst tahmindir (çoğu glikozittir; modelde bağırsakta etkinleşme yoktur); tek bir tarihsel doz, el-Huzi'ye atfedilir; makine çevirisi."
+    },
+    "olderAdults": {
+      "note": "HTTK-Pop'un yaş etkisi her ilaç için neredeyse aynıdır (oranlar {low}–{high}); FDA prospektüsleri yaşlı yetişkinlerde maruziyette yaklaşık %{percent} medyan artış bildirir ({drugs} ilaç, Janus araştırma notu).",
+      "link": "Araştırma notu: HTTK-Pop ve yaşlı yetişkinlerde maruziyet"
+    },
+    "modelError": {
+      "title": "Ölçülmüş model hatası",
+      "halfLife": "İlacın model yarılanma ömrü: {hours} sa (kalibre %80 aralık {low}–{high} sa).",
+      "interval": "Obach 2008 üzerinde kalibre edildi, n = {n}; ayrılmış ilaçlarda gerçek değeri yaklaşık %{nominal} oranında kapsar.",
+      "bias": "Obach 2008 insan verilerine karşı ölçüldü ({n} ilaç, erişim {date}): httk yarılanma ömürleri geometrik ortalamada {bias} kat {direction}; %{within} 2 kat içinde; geometrik ortalama kat hatası {gmfe}.",
+      "notValidated": "Kararlı durum konsantrasyonları ölçülmüş verilere karşı doğrulanmadı; bunlar için kalibre aralık yoktur.",
+      "compartmental": "Kalibre aralık yok: bantlar modelin hatasını değil, sanal popülasyonun yayılımını gösterir. Konsantrasyonlar, tepe değerler ve alanlar yukarıdaki tek çalışmanın ötesinde ölçülmüş verilere karşı doğrulanmadı."
+    }
   }
 }

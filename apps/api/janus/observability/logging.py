@@ -79,6 +79,11 @@ class LogEvent(StrEnum):
     cascade_load = "cascade_load"
     faers_build = "faers_build"
     note_purge = "note_purge"
+    # Simulation worker (simulation-service design §8): states, counts and durations only.
+    simulation_start = "simulation_start"
+    simulation_done = "simulation_done"
+    simulation_failed = "simulation_failed"
+    simulation_reap = "simulation_reap"
 
 
 def register_route_templates(templates: Iterable[str]) -> None:

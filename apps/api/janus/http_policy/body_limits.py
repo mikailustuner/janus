@@ -16,8 +16,12 @@ from starlette.types import ASGIApp, Message, Receive, Scope, Send
 from janus.http_policy.routes import OPERATIONAL_ALLOWLIST
 
 MAX_BODY_BYTES: Final = 64 * 1024
-# Larger limits for named paths only.
-PATH_LIMITS: Final = {"/cds-services/janus-cascade": 256 * 1024}
+# Other limits for named paths only.
+PATH_LIMITS: Final = {
+    "/cds-services/janus-cascade": 256 * 1024,
+    # The simulation request is a few bounded numbers (simulation-service DP-S2).
+    "/simulate": 1024,
+}
 _BODY_METHODS: Final = frozenset({"POST", "PUT", "PATCH"})
 
 
@@ -73,7 +77,9 @@ class BodyPolicyMiddleware:
         if not is_json_content_type(_header(scope, b"content-type")):
             await _reject(send, 415, "unsupported_media_type")
             return
-        limit = PATH_LIMITS.get(scope.get("path", ""), self.max_bytes)
+        path = str(scope.get("path", ""))
+        # A trailing slash is the same route for the limit (safety review F12).
+        limit = PATH_LIMITS.get(path.rstrip("/") or path, self.max_bytes)
         if declared is not None and declared > limit:
             await _reject(send, 413, "payload_too_large")
             return

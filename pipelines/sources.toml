@@ -66,6 +66,11 @@ id = "mcp"
 title = "MCP SERVER — LIBRARIES (apps/mcp)"
 banner = true
 
+[[sections]]
+id = "simulator"
+title = "SIMULATION WORKER IMAGE — R AND PACKAGES (apps/api/simulator.Dockerfile)"
+banner = true
+
 # --- Product identification -------------------------------------------------
 
 [[sources]]
@@ -775,3 +780,23 @@ license = "MIT"
 notes = ["PyPI package, pinned in apps/mcp/pyproject.toml; installed by uv, not committed."]
 storage = "separate_package"
 urls = ["https://github.com/modelcontextprotocol/python-sdk"]
+
+[[sources]]
+id = "lib_r_rocker"
+section = "simulator"
+name = "R 4.6.1 (rocker/r-ver:4.6.1 base image, Ubuntu 24.04)"
+publisher = "The R Foundation; Rocker Project"
+license = "GPL-2 | GPL-3 (R); GPL-2+ (rocker images)"
+notes = ["Base image of the simulation worker, pinned by digest; CRAN pinned to the Posit Package Manager snapshot of 2026-10-28. Run as a separate program (Rscript); not linked into Janus code; not committed."]
+storage = "separate_package"
+urls = ["https://hub.docker.com/r/rocker/r-ver", "https://www.r-project.org/Licenses/"]
+
+[[sources]]
+id = "lib_r_httk_worker"
+section = "simulator"
+name = "httk 2.7.4 and its CRAN dependencies (deSolve 1.42, data.table, survey, truncnorm, msm, Rcpp and others)"
+publisher = "U.S. Environmental Protection Agency (httk); the respective CRAN authors"
+license = "httk: MIT; dependencies: GPL-2+, GPL-2, MIT, MPL-2.0, LGPL-2.1+, Apache-2.0 (as listed by installed.packages() in the image)"
+notes = ["Installed from the dated CRAN snapshot when the worker image is built (the httk version is checked at build time); called as a separate program; not committed. Pearce et al. 2017, J Stat Softw 79(4), doi:10.18637/jss.v079.i04."]
+storage = "separate_package"
+urls = ["https://cran.r-project.org/package=httk"]

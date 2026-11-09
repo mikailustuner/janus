@@ -546,7 +546,29 @@
       }
     },
     "back": "Retour à la section patient",
-    "empty": "Rien à afficher pour l'instant."
+    "empty": "Rien à afficher pour l'instant.",
+    "tools": {
+      "dataQuality": {
+        "title": "Rapport de qualité des données",
+        "body": "Là où cinq registres de médicaments divergent sur le code ATC d'une substance, vérifié chaque semaine, avec les preuves."
+      },
+      "onset": {
+        "title": "FAERS : délai d'apparition",
+        "body": "Combien de temps après le début du médicament A l'événement est apparu selon les signalements FAERS, pour les 65 schémas PIPC. Descriptif, non causal."
+      },
+      "developers": {
+        "title": "Pour les développeurs et les cliniciens",
+        "body": "Serveur MCP, CDS Hooks, l'API publique et les paquets de données ouvertes, avec des réglages prêts à copier."
+      },
+      "modelExplorer": {
+        "title": "Explorateur de modèle",
+        "body": "Le modèle compartimental de la machine à remonter le temps dans votre navigateur : populations virtuelles, dose et schéma dans des bornes fixes. Rien n'est envoyé."
+      },
+      "simulate": {
+        "title": "Calculs de modèle en file d'attente",
+        "body": "Lancer le modèle compartimental ou un calcul httk sur population virtuelle sur le serveur Janus, dans une petite file d'attente."
+      }
+    }
   },
   "Doctor": {
     "errors": {
@@ -1887,7 +1909,8 @@
       "none": "Aucune molécule n'a été retenue pour ce remède.",
       "withheldUnverified": "Valeur non montrée : sa licence n'a pas pu être vérifiée.",
       "outOfRange": "prédiction hors de la plage possible ; inutilisable",
-      "evidence": "Preuve : {citation}"
+      "evidence": "Preuve : {citation}",
+      "invalidValue": "le modèle a renvoyé une valeur invalide"
     },
     "references": "Références",
     "verified": "Vérifié : {how}",
@@ -1977,5 +2000,473 @@
       "unavailable": "Le jeu de données ouvert n'est pas disponible sur ce serveur pour le moment."
     },
     "loading": "Chargement du jeu de données ouvert…"
+  },
+  "DataQuality": {
+    "title": "Rapport de qualité des données",
+    "summary": "{count, plural, one {# constat} other {# constats}} · exécution du {date}",
+    "intro": "Janus lit les champs d'identité des substances dans cinq sources : TİTCK (Turquie), AEMPS CIMA (Espagne), BDPM (France), openFDA NDC (États-Unis) et Wikidata. Chaque semaine, il compare les codes ATC qu'elles donnent pour une même substance et liste chaque différence : ce qui est nouveau, ce qui persiste et ce qui a été corrigé depuis l'exécution précédente.",
+    "codesOnly": "Codes et nombres uniquement : ce rapport ne contient aucune ligne de la liste TİTCK, aucun nom de produit, aucun code-barres et aucun texte de l'index WHOCC.",
+    "review": "Produit par des règles fixes. La relecture par des experts n'a pas encore été faite : un pharmacien doit vérifier chaque constat avant tout signalement à la source.",
+    "demo": "Démo : le rapport a été enregistré le {date} depuis la vraie API Janus locale ; aucune requête n'est envoyée.",
+    "loading": "Chargement du rapport de qualité des données…",
+    "errors": {
+      "unavailable": "Le rapport de qualité des données n'est pas disponible pour le moment. Veuillez réessayer plus tard."
+    },
+    "run": {
+      "title": "Dernière exécution",
+      "previous": "Comparée à l'exécution précédente.",
+      "first": "Première exécution : chaque constat est nouveau.",
+      "tile": "{count, plural, one {# constat} other {# constats}} : {klass}",
+      "tableLabel": "Constats par classe et par statut",
+      "upstream": "Erreurs confirmées encore publiées par leur source : {still}. Corrigées à la source : {resolved}."
+    },
+    "classMeaning": "Une classe décrit les données, jamais un médicament. Erreur confirmée : inscrite dans le fichier d'exclusions de Janus. Avis de pharmacien requis : une différence qu'aucune règle n'explique. Différence expliquée : une règle fixe l'explique (par exemple, les deux autorités publient le code et l'élément Wikidata est dépassé) ; ce n'est pas un jugement de pharmacien.",
+    "class": {
+      "confirmed_error": "Erreur confirmée",
+      "needs_pharmacist": "Avis de pharmacien requis",
+      "benign_difference": "Différence expliquée"
+    },
+    "status": {
+      "new": "Nouveau",
+      "persisting": "Persistant",
+      "resolved": "Corrigé"
+    },
+    "filter": {
+      "class": "Classe",
+      "status": "Statut",
+      "all": "Tous",
+      "search": "Rechercher par substance (nom anglais), clé ou code"
+    },
+    "findings": {
+      "title": "Constats",
+      "count": "{shown} sur {count} affichés",
+      "empty": "Aucun constat ne correspond à ce filtre.",
+      "more": "Afficher {count} de plus"
+    },
+    "finding": {
+      "check": "Contrôle",
+      "key": "Clé de substance Janus",
+      "compared": "Comparé à",
+      "products": "Produits",
+      "productsValue": "{count, plural, one {# produit à substance unique porte} other {# produits à substance unique portent}} ce code",
+      "reasons": "Pourquoi",
+      "otherKeys": "Autres clés de substance avec ce code",
+      "upstream": "À la source",
+      "changedFrom": "Classe lors de l'exécution précédente",
+      "reportTo": "À signaler à",
+      "evidence": "Preuves",
+      "wikidata": "Élément Wikidata {key}",
+      "whocc": "Groupe WHOCC {group}",
+      "howToFind": "Comment le retrouver à la source"
+    },
+    "check": {
+      "exclusion_status": "Exclusion examinée",
+      "item_group": "Code d'autorité hors des groupes de l'élément",
+      "regulator_group": "Les codes TİTCK et CIMA divergent",
+      "substance_code_keys": "Un code de substance, deux substances"
+    },
+    "reason": {
+      "both_regulators_publish_it": "Les deux autorités publient ce code pour la substance.",
+      "code_of_other_substance": "Une autre substance porte ce code.",
+      "combination_code_on_single_ingredient_product": "Un code d'association sur un produit à substance unique.",
+      "group_differs": "Le code est dans un autre groupe ATC que les codes de l'élément.",
+      "item_agrees_with_cima": "L'élément Wikidata concorde avec CIMA.",
+      "item_agrees_with_titck": "L'élément Wikidata concorde avec TİTCK.",
+      "no_longer_published": "La source ne publie plus ce code.",
+      "not_a_medicine": "L'élément n'est pas un médicament.",
+      "old_code": "Le code ne figure plus dans l'index ATC.",
+      "one_substance_code_two_keys": "Un code de substance correspond à deux substances.",
+      "regulators_differ": "Les deux autorités publient des codes de groupes différents.",
+      "same_level2_group": "Même sous-groupe thérapeutique (niveau 2) : un indice seulement, pas une explication.",
+      "still_published": "La source publie toujours ce code.",
+      "wrong_substance": "Le code appartient à une autre substance."
+    },
+    "upstreamStatus": {
+      "persisting": "Toujours publié",
+      "resolved_upstream": "N'est plus publié"
+    },
+    "upstream": {
+      "title": "Signaler un constat à la source",
+      "pharmacist": "D'abord, un pharmacien vérifie le constat. Seule une différence vérifiée est signalée.",
+      "steps": {
+        "wikidata": "Wikidata : se connecter, ouvrir l'élément et marquer la déclaration ATC erronée comme obsolète (deprecated) avec une référence à la page du groupe WHOCC, ou l'expliquer sur la page de discussion. Citer seulement le code et le groupe, jamais le texte du WHOCC.",
+        "titck": "TİTCK : par ses canaux de contact officiels ou par CİMER. Indiquer la liste et sa date, le produit tel qu'il figure dans la liste actuelle, le code et la page du groupe WHOCC. Le titulaire de l'autorisation peut aussi corriger son entrée.",
+        "cima": "AEMPS CIMA : par les canaux de contact officiels de l'agence, avec le numéro d'autorisation du médicament dans CIMA, le code et la page du groupe WHOCC.",
+        "janus": "Fichiers propres à Janus : ouvrir une issue ou une pull request sur le dépôt avec la ligne et la preuve."
+      },
+      "nothingSent": "Janus n'envoie, ne publie et ne soumet lui-même aucun signalement.",
+      "guide": "Guide : contribuer aux corrections",
+      "target": {
+        "wikidata": "Wikidata",
+        "titck": "TİTCK",
+        "cima": "AEMPS CIMA",
+        "titck_cima": "TİTCK et AEMPS CIMA",
+        "bdpm": "BDPM"
+      }
+    },
+    "files": {
+      "title": "Télécharger",
+      "version": "Version {version}",
+      "licence": "Licence : CC BY 4.0, avec l'attribution ci-dessous.",
+      "csv": "Constats (CSV)",
+      "json": "Rapport (JSON)",
+      "md": "Résumé (Markdown)",
+      "dictionary": "Dictionnaire des données (docs/open-data.md)"
+    },
+    "sources": {
+      "title": "Sources de cette exécution",
+      "footer": "openFDA NDC ne donne aucun code ATC ; il n'ajoute que des comptes de présence.",
+      "line": "Instantané du {date}"
+    },
+    "source": {
+      "titck": "TİTCK (Turquie)",
+      "eu_es_cima": "AEMPS CIMA (Espagne)",
+      "eu_fr_bdpm": "BDPM (France)",
+      "wikidata": "Wikidata",
+      "openfda_ndc": "openFDA NDC (États-Unis)",
+      "titck_eu_es_cima": "TİTCK et AEMPS CIMA"
+    }
+  },
+  "Onset": {
+    "title": "FAERS : délai d'apparition",
+    "summary": "{rows} schémas PIPC · {medians} avec une médiane",
+    "intro": "Pour chaque schéma de la liste PIPC (médicament A → événement → médicament B) : combien de temps après le début d'un médicament de la classe de A l'événement a-t-il commencé selon les signalements FAERS ? Une méthode fondée sur celle de la machine à remonter le temps, avec des règles plus strictes, pour les 65 lignes, avec le nombre de signalements derrière chaque chiffre.",
+    "framing": "Descriptif uniquement : non causal, pas une incidence. FAERS repose sur la notification spontanée ; les nombres sont des signalements, pas des personnes. Un délai est ce qu'un notificateur a écrit, pas un début mesuré chez des personnes.",
+    "review": "Les méthodes ont passé des relectures automatisées statistique et pharmacologique. La relecture par des experts n'a pas encore été faite.",
+    "demo": "Démo : le tableau a été enregistré le {date} depuis la vraie API Janus locale ; aucune requête n'est envoyée.",
+    "loading": "Chargement du tableau…",
+    "errors": {
+      "unavailable": "Le tableau n'est pas disponible pour le moment. Veuillez réessayer plus tard.",
+      "unknown": "Il n'existe pas de ligne PIPC avec ce numéro."
+    },
+    "pattern": "{drugA} → {event} → {drugB}",
+    "caveats": {
+      "title": "À lire d'abord",
+      "english": "Toutes les mises en garde du jeu de données (anglais)",
+      "descriptive": "Descriptif uniquement. Cela ne montre pas qu'un médicament a causé l'événement.",
+      "not_incidence": "Pas une incidence : le nombre de personnes ayant pris le médicament est inconnu. Un même patient peut figurer dans plusieurs signalements.",
+      "selection": "Seuls les signalements avec une date de début de traitement et une date d'événement complètes ont un délai. Ils peuvent ne pas représenter tous les signalements ; un usage ancien est moins souvent daté, ce qui peut raccourcir les délais.",
+      "zero_day": "Un délai de 0 jour signifie souvent qu'une même date a été écrite dans les deux champs ; le regroupement à zéro tire la médiane vers le bas.",
+      "day_one": "Les dates au 1er du mois (et au 1er janvier) sont bien plus fréquentes que le hasard, souvent un jour complété. Un contrôle sans elles est donné ; ce n'est pas une correction.",
+      "clusters": "Quand une même paire de dates réunit plus d'un quart des signalements d'une ligne, la ligne n'affiche que des comptes.",
+      "small_sample": "Moins de 10 signalements avec un délai : comptes seulement. De 10 à 29 : petit échantillon ; les estimations sont instables et les intervalles peuvent sous-estimer l'incertitude.",
+      "shared_rows": "Les lignes de même classe A et même événement (elles diffèrent par B) ont les mêmes chiffres.",
+      "receipt_window": "Quatre trimestres de signalements par date de réception ; les dates d'événement peuvent être antérieures de plusieurs années.",
+      "event_date_report_level": "FAERS donne une seule date d'événement par signalement : dans un signalement à plusieurs événements, la date peut appartenir à un autre événement que celui de cette ligne.",
+      "median_interval": "Utiliser l'intervalle exact de la médiane ; l'intervalle bootstrap des téléchargements peut sous-estimer l'incertitude sur des données ex aequo ou peu nombreuses.",
+      "shortest_interval": "Pour chaque signalement, le délai part du médicament de la classe commencé le plus récemment ; après un changement au sein de la classe, il est plus court que le temps écoulé depuis le premier début de la classe (une autre lecture est donnée).",
+      "class_membership": "La classe de A est rattachée par les codes ATC des substances ; la plupart des voies locales (peau, œil, voies respiratoires…) ne sont pas comptées et certaines substances sont exclues par classe, avec les raisons dans le jeu de données.",
+      "weibull": "La forme de Weibull reflète autant les artefacts de notification que le délai ; ce n'est pas un mécanisme, et elle n'est publiée qu'avec au moins 30 signalements."
+    },
+    "statusLegend": {
+      "title": "Ce que signifie le statut",
+      "described": "Au moins 30 signalements avec un délai : médiane, quartiles et intervalle exact à 95 % de la médiane.",
+      "small_sample": "De 10 à 29 signalements avec un délai : médiane et intervalles en tant que petit échantillon ; ils sont instables.",
+      "cluster_dominated": "Une même paire de dates réunit plus d'un quart des signalements (doublons possibles ou série de cas) : comptes seulement.",
+      "count_only": "Moins de 10 signalements avec un délai : comptes seulement, pas de médiane.",
+      "no_interval": "Des signalements existent, mais aucun n'a de délai exploitable (les raisons figurent sur la ligne). Aucun délai ne peut être décrit ; ce n'est pas la preuve d'une absence d'effet.",
+      "no_candidate_reports": "Aucun signalement de la période ne cite un médicament de cette classe comme suspect avec cet événement. Ce n'est pas la preuve d'une absence d'effet."
+    },
+    "status": {
+      "described": "Décrit",
+      "small_sample": "Petit échantillon",
+      "cluster_dominated": "Comptes seulement (groupe de dates)",
+      "count_only": "Comptes seulement",
+      "no_interval": "Pas de délai",
+      "no_candidate_reports": "Aucun signalement correspondant dans la période"
+    },
+    "files": {
+      "title": "Télécharger",
+      "version": "Version {version}",
+      "window": "Trimestres FAERS {quarters} · instantané du {date}",
+      "licence": "Licence : CC BY 4.0, avec l'attribution ci-dessous.",
+      "csv": "Tableau (CSV)",
+      "json": "Tableau et méthode (JSON)",
+      "dictionary": "Dictionnaire des données (docs/open-data.md)"
+    },
+    "cols": {
+      "row": "Ligne",
+      "pattern": "Schéma",
+      "reports": "Signalements",
+      "interval": "Avec un délai",
+      "median": "Médiane (intervalle exact à 95 %)",
+      "status": "Statut"
+    },
+    "tableTitle": "Les 65 lignes",
+    "tableHint": "Choisir un en-tête de colonne pour trier. Ouvrir un schéma pour le détail. Une médiane marquée « regroupement le jour même » montre une même date écrite deux fois, pas un délai ; elle est triée avec les lignes sans médiane.",
+    "caption": "Lignes PIPC, triées par {key}, ordre {dir}",
+    "sort": {
+      "ascending": "croissant",
+      "descending": "décroissant"
+    },
+    "days": "{n} j",
+    "ci": "{low}–{high} j",
+    "noMedian": "aucune médiane publiée",
+    "rowEyebrow": "Ligne PIPC {row}",
+    "reportsNotPeople": "Les nombres sont des signalements, pas des personnes.",
+    "detail": {
+      "counts": "Signalements",
+      "reportsSentence": "{count, plural, one {# signalement cite} other {# signalements citent}} un médicament de la classe comme suspect avec l'événement.",
+      "intervalSentence": "{count, plural, one {# signalement a} other {# signalements ont}} un délai exploitable.",
+      "usable": "Part exploitable",
+      "usableSentence": "{share} des signalements ({n} sur {total}) ont un délai exploitable.",
+      "definition": "Définition de la ligne",
+      "class": "Classe du médicament A (code de classe Janus)",
+      "event": "Événement",
+      "terms": "Termes MedDRA",
+      "routes": "Voies comptées",
+      "shared": "Même classe et même événement que les lignes {rows} : les chiffres sont les mêmes.",
+      "pipc": "Texte PIPC tel que publié",
+      "notes": "Notes sur cette ligne",
+      "notesFooter": "Rédigées en anglais lors des examens du jeu de données.",
+      "timing": "Délai déclaré",
+      "medianLine": "Médiane {median} jours (intervalle exact à 95 % {low}–{high} jours, couverture {coverage})",
+      "smallSample": "Petit échantillon : {count} signalements avec un délai. Les estimations sont instables.",
+      "heaping": "Plus de la moitié des délais valent 0 jour : la médiane montre un regroupement le jour même, pas un délai.",
+      "iqrLine": "La moitié des signalements se situe entre {q25} et {q75} jours.",
+      "chartTitle": "Jours déclarés entre la date de début du traitement et la date de l'événement",
+      "unit": "jours",
+      "chartLegend": "Chaque barre va de… à… ; le point est la médiane. Barre du haut : la dispersion des signalements (moitié centrale). Barre du bas : l'incertitude de la médiane (intervalle exact à 95 %). Elles mesurent des choses différentes.",
+      "colLow": "De",
+      "colMedian": "Médiane",
+      "colHigh": "À",
+      "iqr": "Moitié centrale des signalements",
+      "exactCi": "Intervalle exact à 95 % de la médiane",
+      "withoutDayOne": "Sans les dates au 1er du mois : médiane {median} jours ({n} signalements). Cela retire aussi des dates réelles ; ce n'est pas une correction.",
+      "withoutDayOneOmitted": "Sans les dates au 1er du mois : non donné, il reste moins de 10 signalements.",
+      "shape": "Forme de Weibull {shape} (intervalle à 95 % {low}–{high}) : {klass}.",
+      "shapeCaveat": "La forme reflète autant les artefacts de notification que le délai ; ce n'est pas un mécanisme.",
+      "noShape": "Pas de forme de Weibull : elle n'est publiée qu'avec au moins 30 signalements, au plus la moitié de délais le jour même et au moins 5 délais différents.",
+      "quality": "Qualité des dates",
+      "zeroDay": "{n} délais sur {total} valent 0 jour.",
+      "dayOne": "{n} délais sur {total} reposent sur une date (début ou événement) au 1er du mois.",
+      "cluster": "Plus grand groupe de signalements avec la même paire de dates : {n}.",
+      "years": "Années d'événement de {from} à {to}.",
+      "withoutInterval": "Signalements sans délai, selon le contrôle qui les a exclus :",
+      "usableLine": "{n} signalements sur {total} ont un délai exploitable.",
+      "otherReadings": "Autres lectures des mêmes signalements",
+      "distinctPairs": "En comptant une seule fois chaque paire de dates identique : médiane {median} jours.",
+      "earliestStart": "Depuis le début le plus précoce d'un médicament de la classe : médiane {median} jours.",
+      "qualityOnly": "Aucun délai n'est publié pour cette ligne ; ces comptes décrivent seulement la qualité des dates."
+    },
+    "route": {
+      "systemic_or_unknown": "systémique ou non précisée",
+      "eye": "œil",
+      "rectal": "rectale",
+      "nasal_inhaled": "nasale ou inhalée",
+      "joint_lesion": "injection articulaire ou intralésionnelle",
+      "local": "locale",
+      "not_patient": "pas le patient lui-même (placenta, lait maternel)"
+    },
+    "shapeClass": {
+      "early": "précoce (l'intervalle est sous 1)",
+      "random": "pas de tendance nette (l'intervalle contient 1)",
+      "wear_out": "tardive (l'intervalle est au-dessus de 1)"
+    },
+    "reason": {
+      "no_therapy_start": "pas de date de début",
+      "start_date_partial": "date de début incomplète",
+      "event_date_missing": "pas de date d'événement",
+      "negative_interval": "événement avant le début",
+      "interval_over_max": "délai de plus de dix ans"
+    },
+    "heapingShort": "regroupement le jour même"
+  },
+  "Developers": {
+    "title": "Pour les développeurs et les cliniciens",
+    "summary": "Utiliser Janus depuis d'autres outils",
+    "intro": "Les contrôles et les jeux de données ouverts de Janus sont accessibles à d'autres logiciels : un serveur MCP pour les assistants d'IA, un service CDS Hooks pour les environnements de test de DPI, une API publique en lecture seule et des paquets de données ouvertes. Tout est open source.",
+    "notClinical": "Prototype de recherche, pas un dispositif médical et pas pour un usage clinique. Ne connectez pas Janus à un DPI en production.",
+    "copy": "Copier",
+    "copied": "Copié.",
+    "copyFailed": "La copie n'est pas disponible ici ; sélectionnez le texte.",
+    "mcp": {
+      "title": "Serveur MCP pour assistants d'IA",
+      "summary": "Sept outils en lecture seule sur l'API Janus",
+      "body": "janus-mcp permet à Claude, Kiro ou tout client MCP d'identifier un médicament, de vérifier une liste pour d'éventuelles cascades de prescription et de lire les lignes PIPC et la machine à remonter le temps. C'est un client léger : chaque outil envoie une requête à l'API et renvoie sa réponse telle quelle. Réglez JANUS_API_URL sur une API locale ou sur /api de ce déploiement.",
+      "safety": "Chaque résultat porte les règles de Janus pour l'assistant : un constat est un schéma possible, jamais un verdict, et aucun conseil de commencer, modifier ou arrêter un médicament.",
+      "claudeCode": "Claude Code (depuis la racine du dépôt)",
+      "claudeDesktop": "Claude Desktop (claude_desktop_config.json)",
+      "kiro": "Kiro (.kiro/settings/mcp.json, déjà dans le dépôt)",
+      "privacy": "Le serveur ne journalise rien d'un appel et ne conserve rien entre les appels. Les médicaments qu'un assistant envoie sont vus par le fournisseur de l'assistant.",
+      "doc": "Documentation : docs/mcp.md"
+    },
+    "cds": {
+      "title": "Service CDS Hooks",
+      "summary": "order-select et order-sign, CDS Hooks 2.0",
+      "sandboxOnly": "Pour les environnements de test et l'évaluation uniquement.",
+      "body": "Le service lit les prescriptions en brouillon et les médicaments préchargés au format FHIR R4, rattache les codes NDC, RxNorm et ATC via la couche d'identification de Janus et répond par des cartes d'information sur d'éventuelles cascades de prescription de la liste PIPC. Rien n'est conservé.",
+      "discovery": "Découverte et service",
+      "prefetch": "Modèles de préchargement",
+      "cards": "Les cartes sont toujours « info », avec la ligne PIPC, les preuves et l'avertissement ; ni suggestions ni actions. L'absence de carte ne signifie pas que les médicaments sont exempts de problèmes.",
+      "doc": "Documentation : docs/cds-hooks.md"
+    },
+    "api": {
+      "title": "API publique en lecture seule",
+      "summary": "OpenAPI 3.1, aucune donnée personnelle en entrée ni en sortie",
+      "body": "Les routes publiques ne prennent aucun corps de requête et ne lisent que des données précalculées ou publiées : le tableau des délais, le rapport de qualité des données, le paquet des cascades, le jeu de données ouvert des résultats, la machine à remonter le temps et la découverte CDS Hooks.",
+      "examples": "Exemples",
+      "rules": "Les erreurs sont des codes. Les routes médicales ne sont pas mises en cache et ne journalisent que la route, le statut et la durée. Les nombres sont des signalements, jamais des personnes.",
+      "openapi": "Document OpenAPI : docs/openapi-public.json",
+      "doc": "Liste des routes et règles : docs/open-api.md"
+    },
+    "data": {
+      "title": "Paquets de données ouvertes",
+      "summary": "Paquets de données Frictionless dans le dépôt",
+      "cascade-package": "Les 65 lignes PIPC avec la correspondance de classes de Janus, les règles de noms et les exclusions ATC. CC BY 4.0 et Apache-2.0 selon le fichier.",
+      "data-quality": "Le rapport hebdomadaire de qualité des données : constats en CSV, JSON et résumé. CC BY 4.0.",
+      "faers-onset": "Le tableau FAERS des délais d'apparition pour les 65 lignes PIPC en CSV et JSON. CC BY 4.0.",
+      "frictionless": "Chaque paquet a un datapackage.json avec la licence, les sources et une empreinte par fichier.",
+      "doc": "Lire et citer : docs/open-data.md"
+    }
+  },
+  "Simulation": {
+    "virtualPopulation": "Population virtuelle, pour la recherche. Ne concerne aucune personne et n'est pas une recommandation de dose.",
+    "inSilico": "In silico et exploratoire : un résultat de modèle pour l'enseignement et la recherche. Il décrit un groupe simulé, jamais le corps de quelqu'un, et ne dit rien de ce que quiconque devrait prendre.",
+    "demo": "Démo : les résultats ont été enregistrés le {date} depuis la vraie API Janus locale ; aucune requête n'est envoyée.",
+    "explorer": {
+      "title": "Explorateur de modèle",
+      "summary": "Fonctionne sur cet appareil · rien n'est envoyé",
+      "intro": "Le modèle compartimental minimal de la machine à remonter le temps, avec des paramètres physiologiques cités, porté pour fonctionner dans le navigateur. Choisissez une substance, une population virtuelle prédéfinie, une dose et un schéma dans les bornes fixes du modèle ; le résultat est la dispersion des concentrations plasmatiques sur des centaines d'individus virtuels."
+    },
+    "server": {
+      "title": "Calculs de modèle en file d'attente",
+      "summary": "Deux calculs à la fois · une file de dix",
+      "intro": "Lance le modèle compartimental ou un calcul httk avec des individus virtuels HTTK-Pop sur le serveur Janus. Seules les substances et populations virtuelles de la liste peuvent être choisies, chaque nombre a des bornes strictes et les calculs identiques sont servis depuis le cache.",
+      "loading": "Chargement de la liste des substances…",
+      "off": "Les calculs sur le serveur sont désactivés sur cette installation. L'explorateur de modèle calcule le modèle compartimental dans votre navigateur.",
+      "toExplorer": "Ouvrir l'explorateur de modèle",
+      "limits": "Au plus {slots} calculs à la fois et {queue} en attente ; chaque calcul s'arrête après {timeout} secondes ; les résultats sont conservés {ttl} heures.",
+      "idle": "Choisissez les paramètres et lancez un calcul. Le résultat apparaît ici.",
+      "sending": "Envoi du calcul…",
+      "queued": "En attente dans la file (position {position}).",
+      "running": "Calcul en cours…",
+      "stoppedPolling": "Toujours pas terminé. La page a cessé de demander ; réessayez plus tard."
+    },
+    "form": {
+      "title": "Paramètres",
+      "model": "Modèle",
+      "compound": "Substance",
+      "population": "Population virtuelle",
+      "dose": "Dose par administration, {unit} ({low}–{high})",
+      "doseHelp": "Dans les bornes fixes de ce modèle ; une entrée du modèle, pas une dose pour qui que ce soit.",
+      "outOfBounds": "Cette valeur est hors des bornes autorisées. Rien n'est calculé tant qu'elle n'y est pas.",
+      "scenarios": "Scénarios cités",
+      "doses": "Nombre de doses (1–{max})",
+      "interval": "Heures entre les doses",
+      "horizon": "Durée simulée : {hours} heures.",
+      "noPerson": "Il n'y a aucun champ pour le poids, l'âge, la fonction rénale ou toute autre donnée personnelle : le modèle décrit seulement une population virtuelle.",
+      "fix": "Corrigez le paramètre signalé pour voir le résultat.",
+      "httkDose": "Les calculs httk utilisent 1 mg par kg et par jour, comme la machine à remonter le temps, bien au-delà des doses habituelles de ces médicaments : seul le rapport entre les deux populations virtuelles a un sens.",
+      "samples": "Individus virtuels",
+      "run": "Lancer le calcul",
+      "everyHours": "toutes les {hours} h",
+      "httkComparison": "Le calcul compare les deux populations virtuelles prédéfinies de HTTK-Pop : adultes de 20 à 50 ans et de 65 à 79 ans."
+    },
+    "kind": {
+      "compartmental": "Compartimental",
+      "httk_population": "Population httk"
+    },
+    "compound": {
+      "amlodipine": "amlodipine",
+      "rhein": "rhéine",
+      "risperidone": "rispéridone",
+      "metoclopramide": "métoclopramide",
+      "haloperidol": "halopéridol"
+    },
+    "population": {
+      "amlodipine_adult": "Jeunes adultes en bonne santé (Faulkner 1986)",
+      "amlodipine_adult_65plus": "Adultes âgés (Abernethy 1990 : hypertendus, âge moyen 68 ans)",
+      "rhein_adult": "Adultes en bonne santé (Magnard 1993)"
+    },
+    "httkPopulation": {
+      "adult": "Adultes de 20 à 50 ans (HTTK-Pop)",
+      "adult_65plus": "Adultes de 65 à 79 ans (HTTK-Pop)"
+    },
+    "populationBasis": {
+      "amlodipine_adult": "Les paramètres cités de 12 jeunes volontaires en bonne santé (Faulkner 1986) avec les dispersions citées ; la dispersion de la clairance est une appréciation qui couvre déjà l'écart entre personnes âgées et jeunes.",
+      "amlodipine_adult_65plus": "Clairance multipliée par 19/25, le rapport de clairance de l'amlodipine entre personnes âgées et jeunes d'Abernethy 1990 (patients hypertendus, âge moyen 68 ans), en plus des mêmes dispersions ; les autres paramètres sont inchangés. Les 80 ans et plus ne sont pas couverts.",
+      "rhein_adult": "Les paramètres apparents cités (Magnard 1993, volontaires sains) ; biodisponibilité fixée à 1 car les paramètres sont déjà apparents. Aucune donnée sur les adultes âgés n'a été vérifiée, donc aucune population âgée n'est proposée."
+    },
+    "scenario": {
+      "validation": "Étude de validation : {dose} {unit}",
+      "historical": "Scénario du Canon : {dose} {unit}"
+    },
+    "validation": {
+      "title": "Accord du modèle avec les données publiées pour {compound}",
+      "folds": "Pic du modèle {cmax} fois {cdir} que publié ; aire sous la courbe {auc} fois {adir}.",
+      "meaning": {
+        "credible": "À moins d'un facteur 2 des valeurs publiées pour le scénario vérifié ; cela reste un modèle de population virtuelle.",
+        "borderline": "Entre un facteur 2 et 3 : lisez la forme et la dispersion, pas les nombres absolus.",
+        "failed": "Écart de plus d'un facteur 3 : les nombres absolus ne sont pas validés ; seules des comparaisons relatives sont montrées pour la recherche."
+      },
+      "aucNotIndependent": "L'ASC publiée partage une source avec un paramètre du modèle ; seule la comparaison des pics est un contrôle indépendant.",
+      "direction": {
+        "model_lower": "plus bas",
+        "model_higher": "plus haut"
+      },
+      "scope": {
+        "amlodipine": "Vérifié sur une dose unique de 10 mg chez des volontaires sains (Soria-Chacartegui 2023) ; les autres doses et schémas ne sont pas vérifiés.",
+        "rhein": "Vérifié sur une dose unique de 38,58 mg (équivalent rhéine, donnée sous forme de 50 mg de diacerhéine) chez des volontaires sains ; les autres doses et schémas ne sont pas vérifiés.",
+        "httk": "Vérifié sur une dose orale unique par médicament chez des adultes en bonne santé (machine à remonter le temps)."
+      }
+    },
+    "chart": {
+      "title": "Concentration plasmatique au cours du temps dans la population virtuelle (ng/mL)",
+      "alt": "Concentration sur {hours} heures. Médiane la plus haute {p50} ng/mL à l'heure {at}, avec 90 % des individus virtuels entre {p5} et {p95} ng/mL à ce moment.",
+      "axes": "Heures après la première dose · ng/mL",
+      "legend": "Ligne : médiane des individus virtuels. Bande ombrée : du 5e au 95e centile. Il n'y a aucune courbe pour une personne en particulier.",
+      "table": "Afficher les nombres sous forme de tableau",
+      "hour": "Heure",
+      "median": "Médiane"
+    },
+    "bands": {
+      "peak": "Concentration la plus élevée sur la durée simulée : médiane {p50} ng/mL, 90 % des individus virtuels entre {p5} et {p95} ng/mL.",
+      "auc": "Aire sous la courbe d'une dose : médiane {p50} ng·h/mL, 90 % des individus virtuels entre {p5} et {p95} ng·h/mL."
+    },
+    "result": {
+      "title": "Résultat",
+      "summary": "{compound}, {population} : {samples} individus virtuels.",
+      "cached": "Servi depuis le cache : le même calcul a été fait récemment.",
+      "fresh": "Calculé sur le serveur à l'instant.",
+      "httkSummary": "{compound} : {samples} individus virtuels par tranche d'âge, 1 mg/kg/jour.",
+      "css": "{population} : médiane {p50} mg/L, 90 % des individus virtuels entre {p5} et {p95} mg/L.",
+      "httkRelative": "httk n'a pas été validé pour ces médicaments (machine à remonter le temps) : le résultat est le rapport entre les deux populations virtuelles, pas un taux.",
+      "extrapolation": "Extrapolation au-delà du scénario validé (une dose de l'étude de validation) : à lire avec plus de prudence.",
+      "ratio": "Rapport âgés/jeunes des médianes des concentrations à l'équilibre : {ratio}.",
+      "httkAbsolute": "Concentrations absolues (non validées, pas un taux que quiconque a)"
+    },
+    "failed": {
+      "timeout": "Le calcul a duré plus de 30 secondes et a été arrêté.",
+      "model_failed": "Le modèle n'a pas pu terminer ce calcul.",
+      "expired": "Le calcul a attendu trop longtemps dans la file et a été abandonné. Veuillez réessayer.",
+      "worker_lost": "Le calcul a été interrompu sur le serveur. Veuillez réessayer."
+    },
+    "errors": {
+      "unavailable": "Les calculs sur le serveur ne sont pas disponibles pour le moment. L'explorateur de modèle fonctionne dans votre navigateur.",
+      "queueFull": "La file d'attente est pleine. Veuillez réessayer dans une minute.",
+      "rateLimited": "Trop de calculs en peu de temps. Veuillez patienter un peu et réessayer.",
+      "unknownJob": "Ce calcul n'est plus disponible ; les résultats sont conservés pendant une durée limitée.",
+      "demoOnly": "En mode démo, seuls les calculs d'exemple enregistrés sont disponibles : les paramètres par défaut de chaque modèle."
+    },
+    "doseUnit": {
+      "amlodipine": "mg",
+      "rhein": "mg équivalent rhéine"
+    },
+    "scenarioNote": {
+      "canon_rhubarb_480mg": "Scénario du Canon : toute la teneur en hydroxyanthracènes comptée comme rhéine libre, une estimation haute (surtout des glycosides ; le modèle n'a pas d'activation intestinale) ; une dose historique, attribuée à al-Khuzi ; traduction automatique."
+    },
+    "olderAdults": {
+      "note": "L'effet de l'âge dans HTTK-Pop est presque le même pour tous les médicaments (rapports {low}–{high}) ; les notices de la FDA rapportent une augmentation médiane de l'exposition d'environ {percent} % chez les adultes âgés ({drugs} médicaments, note de recherche Janus).",
+      "link": "Note de recherche : HTTK-Pop et exposition chez les adultes âgés"
+    },
+    "modelError": {
+      "title": "Erreur du modèle mesurée",
+      "halfLife": "Demi-vie du médicament selon le modèle : {hours} h (intervalle calibré à 80 % {low}–{high} h).",
+      "interval": "Calibré sur Obach 2008, n = {n} ; couvre la vraie valeur environ {nominal} % du temps pour des médicaments mis de côté.",
+      "bias": "Mesuré sur les données humaines d'Obach 2008 ({n} médicaments, consulté le {date}) : les demi-vies httk sont en moyenne géométrique {bias} fois {direction} ; {within} % à moins d'un facteur 2 ; erreur géométrique moyenne d'un facteur {gmfe}.",
+      "notValidated": "Les concentrations à l'équilibre ne sont pas validées sur des données mesurées ; aucun intervalle calibré n'existe pour elles.",
+      "compartmental": "Aucun intervalle calibré : les bandes montrent la dispersion de la population virtuelle, pas l'erreur du modèle. Concentrations, pics et aires ne sont pas validés sur des données mesurées au-delà de l'étude ci-dessus."
+    }
   }
 }

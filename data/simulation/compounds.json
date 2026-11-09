@@ -1,0 +1,184 @@
+{
+  "version": "simulation-allowlist-3",
+  "about": "Allow-list of the simulation service (.kiro/specs/simulation-service). Owner decision 2026-11-09: no individualised simulation; every run is over a predefined virtual population and every result is a distribution (median and band), never one person's value. Only these compound and population ids are accepted; the httk chemical name and every model parameter come from this file and from data/time_machine/compartmental_pk.csv, never from a request. Validation figures are the time machine's (.kiro/specs/time-machine/design.md section 8.1). Virtual population, for research. Not about any person and not a dose recommendation.",
+  "compartmental": [
+    {
+      "id": "amlodipine",
+      "dose_mg": {
+        "low": 2.5,
+        "default": 10,
+        "high": 10
+      },
+      "scenarios": [
+        {
+          "id": "validation_10mg",
+          "dose_mg": 10,
+          "kind": "validation",
+          "reference_keys": [
+            "soria_2023"
+          ]
+        }
+      ],
+      "populations": [
+        {
+          "id": "adult",
+          "cl_factor": 1.0,
+          "reference_keys": [
+            "faulkner_1986"
+          ],
+          "basis": "the cited parameters (Faulkner 1986, 12 young healthy volunteers) with the cited spreads; the clearance spread is a judgement that already covers the older-versus-younger difference"
+        },
+        {
+          "id": "adult_65plus",
+          "cl_factor": 0.76,
+          "reference_keys": [
+            "abernethy_1990"
+          ],
+          "basis": "clearance scaled by 19/25, the older-versus-younger amlodipine clearance of Abernethy 1990 (hypertensive patients, mean age 68), applied on top of the same spreads; other parameters unchanged (Abernethy's half-lives 58 vs 42 h imply an almost unchanged volume); ages 80 and over are not covered"
+        }
+      ],
+      "validation": {
+        "credibility": "borderline",
+        "cmax_fold": 2.37,
+        "auc_fold": 1.39,
+        "auc_independent": true,
+        "reference_key": "soria_2023",
+        "cmax_direction": "model_lower",
+        "auc_direction": "model_lower"
+      },
+      "intervals_h": [
+        24
+      ],
+      "f_fixed": false,
+      "dose_basis": "amlodipine base; fixed bounds of this model, from a quarter of the validation dose to the validation dose",
+      "validated_scope": "one 10 mg oral dose in healthy volunteers (Soria-Chacartegui 2023)"
+    },
+    {
+      "id": "rhein",
+      "dose_mg": {
+        "low": 9.645,
+        "default": 38.58,
+        "high": 480
+      },
+      "scenarios": [
+        {
+          "id": "validation_38_58mg",
+          "dose_mg": 38.58,
+          "kind": "validation",
+          "reference_keys": [
+            "debord_1993",
+            "nicolas_1998"
+          ]
+        },
+        {
+          "id": "canon_rhubarb_480mg",
+          "dose_mg": 480,
+          "kind": "historical",
+          "reference_keys": [
+            "ema_rheum_2019",
+            "bates_1995_dirham"
+          ],
+          "note": "the whole hydroxyanthracene content counted as free rhein (an upper estimate: mostly glycosides, no colonic activation in the model); one historical dose attributed to al-Khuzi; machine translation"
+        }
+      ],
+      "populations": [
+        {
+          "id": "adult",
+          "cl_factor": 1.0,
+          "reference_keys": [
+            "magnard_1993"
+          ],
+          "basis": "the cited apparent parameters (Magnard 1993, healthy volunteers) with the cited spreads; bioavailability fixed at 1 because the parameters are already apparent; no data on older adults was verified, so no older-adult population is offered"
+        }
+      ],
+      "validation": {
+        "credibility": "credible",
+        "cmax_fold": 1.08,
+        "auc_fold": 1.13,
+        "auc_independent": false,
+        "reference_key": "debord_1993",
+        "cmax_direction": "model_lower",
+        "auc_direction": "model_higher"
+      },
+      "intervals_h": [
+        12,
+        24
+      ],
+      "f_fixed": true,
+      "dose_basis": "mg rhein equivalent; fixed bounds of this model, from a quarter of the validation dose to the Canon scenario's midpoint",
+      "validated_scope": "one 38.58 mg (rhein equivalent, as 50 mg diacerein) oral dose in healthy volunteers; only the peak is an independent check"
+    }
+  ],
+  "httk": [
+    {
+      "id": "risperidone",
+      "chem": "Risperidone",
+      "validation": {
+        "credibility": "failed",
+        "cmax_fold": 3.27,
+        "auc_fold": 1.04,
+        "auc_independent": true,
+        "reference_key": "liu_2012_risperidone",
+        "cmax_direction": "model_lower",
+        "auc_direction": "model_lower"
+      }
+    },
+    {
+      "id": "metoclopramide",
+      "chem": "Metoclopramide",
+      "validation": {
+        "credibility": "borderline",
+        "cmax_fold": 1.43,
+        "auc_fold": 2.36,
+        "auc_independent": true,
+        "reference_key": "leucuta_2004_metoclopramide",
+        "cmax_direction": "model_lower",
+        "auc_direction": "model_higher"
+      }
+    },
+    {
+      "id": "haloperidol",
+      "chem": "Haloperidol",
+      "validation": {
+        "credibility": "failed",
+        "cmax_fold": 7.79,
+        "auc_fold": 32.01,
+        "auc_independent": true,
+        "reference_key": "yun_2005_haloperidol",
+        "cmax_direction": "model_higher",
+        "auc_direction": "model_higher"
+      }
+    }
+  ],
+  "httk_populations": [
+    {
+      "id": "adult",
+      "age_years": [
+        20,
+        50
+      ],
+      "basis": "HTTK-Pop virtual individuals resampled from NHANES 2013-2018, ages 20-50 (Ring et al. 2017)"
+    },
+    {
+      "id": "adult_65plus",
+      "age_years": [
+        65,
+        79
+      ],
+      "basis": "HTTK-Pop virtual individuals resampled from NHANES 2013-2018, ages 65-79; HTTK-Pop has no record above 79, so 80+ is never simulated (Ring et al. 2017; time-machine DP-T10)"
+    }
+  ],
+  "limits": {
+    "doses_max": 14,
+    "horizon_after_last_dose_h": 48,
+    "horizon_max_h": 360,
+    "population_samples_min": 100,
+    "population_samples_max": 1000,
+    "compartmental_samples_min": 100,
+    "compartmental_samples_max": 2000
+  },
+  "httk_comparison": {
+    "daily_dose_mg_per_kg": 1,
+    "basis": "both HTTK-Pop age ranges in one run; the older-to-younger ratio of medians is the result (time-machine design section 7.4); absolute concentrations failed validation and are not a level anyone has (1 mg/kg/day is far above usual doses of these drugs)"
+  }
+}

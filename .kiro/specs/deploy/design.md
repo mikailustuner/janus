@@ -30,7 +30,7 @@ The repository gets `deploy/` with `compose.yml`, `cloudflared.config.yml.exampl
 | DP2 | No `ports:` anywhere | Req 1.2: nothing listens on the Host |
 | DP3 | `cloudflared` image pinned by version, `tunnel --no-autoupdate run janus`, config and credentials mounted read-only | Locally managed tunnel (owner decision), no dashboard |
 | DP4 | Every service: `user` non-root, `read_only: true`, `tmpfs` for `/tmp` (web also `/app/apps/web/.next/cache`), `security_opt: [no-new-privileges:true]`, `cap_drop: [ALL]`, `mem_limit`, `cpus`, `restart: unless-stopped`, `pids_limit` | Req 2.5, 7.1 |
-| DP5 | Limits: postgres 768 MB / 0.5, api 1.5 GB / 1.0, web 768 MB / 0.5, cloudflared 128 MB / 0.25 (total ≈ 3.2 GB / 2.25) | Req 7.4; leaves the Host's other services their resources |
+| DP5 | Limits: postgres 768 MB / 0.5, api 1.5 GB / 1.0, web 768 MB / 0.5, cloudflared 128 MB / 0.25, simulator 1.5 GB / 2.0 (total ≈ 4.6 GB / 4.25; owner decision 2026-11-09, Req 7.4 amended); checked by `check_compose.py` | Req 7.4; caps are ceilings on a 4-core host; leaves the Host's other services their resources |
 | DP6 | Postgres keeps the dev compose's terse logging flags; data in a named volume | privacy.md |
 | DP7 | Images built on the Host with `docker compose build` from `src/` at a commit; tag `janus-api:<commit>`, `janus-web:<commit>` | Native arm64, no registry, no cross-build; Req 6.1 |
 | DP8 | `JANUS_PUBLIC_BASE_URL=https://janusmeds.org` (24 bytes ≤ 40) | QR size rule (doctor-loop §6.6) |

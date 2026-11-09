@@ -12,6 +12,16 @@ const LIVE: Record<(typeof ENTRIES)[number], string> = {
   export: "/research/export",
 };
 
+/** Research tools (research-tools Req 4; simulation-service Req 5): data quality, the onset
+ * table, developers, the model explorer and queued simulations. */
+const TOOLS = [
+  { key: "dataQuality", href: "/research/data-quality" },
+  { key: "onset", href: "/research/faers-onset" },
+  { key: "developers", href: "/research/developers" },
+  { key: "modelExplorer", href: "/research/model-explorer" },
+  { key: "simulate", href: "/research/simulate" },
+] as const;
+
 /**
  * Researcher area (design §14, Req 24, DP12, Req 29): the normal theme (DP48), the rule-7
  * sentence, the Phase 4 review status (expert review has not yet been done) and the four entries as
@@ -57,6 +67,19 @@ export function Research() {
             </span>
           </span>
         </RowLink>
+        {TOOLS.map((e) => (
+          <RowLink key={e.href} href={e.href}>
+            <span className="sr-only">{t("Light.nav.open")}: </span>
+            <span className="flex flex-col gap-0.5">
+              <span className="text-lg">
+                {t(`Research.tools.${e.key}.title`)}
+              </span>
+              <span className="font-normal text-muted">
+                {t(`Research.tools.${e.key}.body`)}
+              </span>
+            </span>
+          </RowLink>
+        ))}
         <RowLink href="/open-data">
           <span className="sr-only">{t("Light.nav.open")}: </span>
           <span className="flex flex-col gap-0.5">

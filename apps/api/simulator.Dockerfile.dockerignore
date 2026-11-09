@@ -1,0 +1,9 @@
+# Used by BuildKit for apps/api/simulator.Dockerfile (context: repository root). Allow-list only.
+**
+!apps/api/pyproject.toml
+!apps/api/uv.lock
+!apps/api/.python-version
+!apps/api/janus/**
+!data/simulation/**
+!data/time_machine/compartmental_pk.csv
+**/__pycache__

@@ -71,6 +71,14 @@ jobs:
           " || { docker logs api-ci | tail -20; exit 1; }
           docker rm -f api-ci
 
+      - name: Simulator image builds (amd64) and runs its self-test hardened (simulation-service Req 4)
+        run: |
+          docker build -q -t janus-simulator:ci -f apps/api/simulator.Dockerfile .
+          docker run --rm --read-only --tmpfs /tmp:size=256m,noexec,nosuid,nodev --user 10002 \
+            --cap-drop ALL \
+            --security-opt no-new-privileges:true --network none --cpus 2 --memory 1536m \
+            janus-simulator:ci python -m janus.simulation.worker --selftest
+
       - name: Pipelines image keeps the repository layout (deploy task 8)
         run: |
           docker build -q -t janus-pipelines:ci -f deploy/pipelines.Dockerfile pipelines

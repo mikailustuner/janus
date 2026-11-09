@@ -33,6 +33,6 @@ The rule base Janus uses to find prescribing cascades, as open data. Generated b
 
 ## Status
 
-Reviewed by the project owner with AI assistance; not yet reviewed by a pharmacist or a
-physician. Not medical advice. Report errors as described in
+Expert review has not yet been done (pharmacist or physician). Not medical advice.
+Report errors as described in
 `docs/contributing-corrections.md`.

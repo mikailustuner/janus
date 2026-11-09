@@ -136,6 +136,8 @@ def create_app(
     from janus.quality.router import router as data_quality_router
     from janus.resolution.router import router as resolution_router
     from janus.seance.router import router as seance_router
+    from janus.simulation.router import SimulationLimits
+    from janus.simulation.router import router as simulation_router
     from janus.timemachine.router import router as timemachine_router
 
     routers = [
@@ -157,10 +159,13 @@ def create_app(
         data_quality_router,
         onset_table_router,
         cds_router,
+        simulation_router,
         *extra_routers,
     ]
     for router in routers:
         app.include_router(router)
+    # Simulation service (simulation-service design §7): in-memory rate limits of this process.
+    app.state.simulation_limits = SimulationLimits()
     kinds = classify(app, routers)  # fails on an unclassified route (DP2)
     register_route_templates(kinds)
     # CORS for the CDS Hooks routes only, when origins are configured (cds-hooks DP10).

@@ -56,6 +56,8 @@ services:
     command: ["alembic", "upgrade", "head"]
     environment:
       DATABASE_URL: postgresql://janus:${POSTGRES_PASSWORD}@postgres:5432/janus
+      # Read only by `python -m janus.simulation.dbrole` (deploy.sh, after the migrations).
+      SIMULATOR_DB_PASSWORD: ${SIMULATOR_DB_PASSWORD:?Set SIMULATOR_DB_PASSWORD in .env}
     tmpfs: [/tmp]
     networks: [internal]
     mem_limit: 256m
@@ -80,6 +82,11 @@ services:
       JANUS_CONSENT_VERSIONS: ""
       JANUS_NOTE_KEYS: ""
       JANUS_OUTCOME_CONSENT_VERSIONS: ""
+      # Queued model runs (simulation-service): the api queues, the simulator runs them.
+      JANUS_SIMULATION: "on"
+      # Rate limits count Cloudflare's CF-Connecting-IP: the api is reachable only through the
+      # tunnel and the web app (simulation-service DP-S7).
+      JANUS_BEHIND_CLOUDFLARE: "on"
     volumes:
       - ./data:/data:ro
     tmpfs: [/tmp]
@@ -100,6 +107,35 @@ services:
       timeout: 3s
       retries: 5
       start_period: 30s
+
+  simulator:
+    # Queued model runs (simulation-service design §8): internal network only (no route out,
+    # no host port), its own image with pinned R + httk, two worker slots, 30 s per job.
+    <<: *hardening
+    image: janus-simulator:${JANUS_TAG}
+    user: "10002"  # the image's `simulator` user (apps/api/simulator.Dockerfile)
+    environment:
+      # Its own role: read, update and delete queue rows, nothing else (migration 0014).
+      DATABASE_URL: postgresql://janus_simulator:${SIMULATOR_DB_PASSWORD}@postgres:5432/janus
+    tmpfs: ["/tmp:size=256m,noexec,nosuid,nodev"]
+    networks: [internal]
+    mem_limit: 1536m
+    cpus: 2.0
+    pids_limit: 128
+    depends_on:
+      postgres: { condition: service_healthy }
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import os, sys, time; sys.exit(time.time() - os.path.getmtime('/tmp/simulator-heartbeat') > 90)",
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
 
   web:
     <<: *hardening
