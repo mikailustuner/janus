@@ -629,3 +629,13 @@ publisher = "Generated for Janus"
 license = "AI-generated (Google Gemini) for Janus, 2026; project asset, no third-party artwork"
 notes = ["Committed under apps/web/public/home (AVIF, WebP, JPEG, H.264 MP4, VP9 WebM; audio removed); provenance in apps/web/public/home/README.md."]
 storage = "commit"
+
+[[sources]]
+id = "fhir_r4_schema"
+section = "web"
+name = "FHIR R4 (4.0.1) JSON schema (test fixture of the FHIR export)"
+publisher = "HL7 International"
+license = "CC0 1.0 (HL7 FHIR licence); HL7 and FHIR are trademarks of Health Level Seven International"
+notes = ["Committed gzipped under apps/web/src/fhir/schema, used by the tests only; source, date and hash in apps/web/src/fhir/schema/README.md."]
+storage = "commit"
+urls = ["http://hl7.org/fhir/R4/fhir.schema.json", "http://hl7.org/fhir/R4/license.html"]
