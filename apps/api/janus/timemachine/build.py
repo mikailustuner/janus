@@ -387,8 +387,14 @@ def exposure_cards(credible: Mapping[str, bool]) -> list[dict[str, Any]]:
                     mg_per_l_to_um(peaks[1].p50, float(mw)),
                     mg_per_l_to_um(peaks[1].p95, float(mw)),
                 )
+                # PPBR_AZ is a *predicted* percent bound and is not constrained to 0-100: it
+                # comes out above 100 for several constituents. An out-of-range prediction
+                # gives no usable unbound fraction, so the comparison falls back to the total
+                # concentration (an upper bound on exposure) instead of a negative fraction.
                 fu = admet.get(s.constituent, {}).get("PPBR_AZ")
-                unbound = (1 - float(fu) / 100) if fu is not None else None
+                unbound: float | None = None
+                if fu is not None and 0.0 <= float(fu) < 100.0:
+                    unbound = 1 - float(fu) / 100
                 cmp_ = compare(peak_um, float(best["value_um"]), unbound)
                 card["comparison"] = {
                     "verdict": cmp_.verdict.value,
@@ -399,7 +405,10 @@ def exposure_cards(credible: Mapping[str, bool]) -> list[dict[str, Any]]:
                     "potency_measure": best["activity_name"],
                     "potency_assay": best["assay_name"],
                     "potency_aid": best["aid"],
-                    "unbound_fraction_source": "ADMET-AI PPBR_AZ prediction, not a measurement",
+                    "unbound_fraction_source": "ADMET-AI PPBR_AZ prediction, not a measurement"
+                    if unbound is not None
+                    else "no usable unbound fraction (the predicted percent bound is outside "
+                    "0-100); compared on the total concentration",
                 }
         out.append(card)
     return out
@@ -484,6 +493,10 @@ def twin_cards() -> list[dict[str, Any]]:
                 "median_ci_low": s.median_low,
                 "median_ci_high": s.median_high,
                 "small_sample": s.n < SMALL_SAMPLE,
+                "zero_day_reports": sum(1 for d in days if d == 0),
+                "zero_day_caveat": "a same-day interval often means the reporter gave one date "
+                "for both fields rather than a genuine same-day onset; heaping at zero pulls "
+                "the Weibull shape down",
                 "weibull": None
                 if s.fit is None
                 else {
@@ -502,7 +515,11 @@ def twin_cards() -> list[dict[str, Any]]:
                 "start_days": w.start_days,
                 "end_days": w.end_days,
                 "basis": w.basis,
+                "coverage": "central 80 percent of the reported intervals; for a decreasing "
+                "hazard (shape below 1) the upper end is far beyond the median, so the "
+                "research area shows this band and the patient sentence uses the middle half",
             }
+            card["middle_half_days"] = {"start_days": s.q25_days, "end_days": s.q75_days}
             if s.fit is not None:
                 card["onset_curve"] = {
                     "days": ONSET_GRID,
@@ -569,6 +586,11 @@ def build() -> Path:
         "disclaimer": "In-silico hypotheses from open data. Not a treatment, not a dose, not "
         "medical advice. Research prototype, not a medical device.",
         "review_status": "AI-reviewed, pending expert review",
+        "onset_subset_caveat": "Time to onset is available only for reports whose reporter gave "
+        "both a complete therapy start date and a complete event date. That subset is not "
+        "representative of all reports: completeness is associated with reporter type and with "
+        "event seriousness. FAERS is spontaneous reporting, not incidence, and is not "
+        "deduplicated across cases; counts are reports, never people.",
         "validation": {
             "rule": "credible when predicted Cmax and AUC are both within 2-fold of the "
             "published observed value; borderline within 3-fold; otherwise failed. A drug that "

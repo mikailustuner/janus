@@ -135,3 +135,88 @@ remove the matching notice (and, for the Canon claims, set `expert_review = revi
   connected"; if ChEMBL data enters the export, the export licence must change (share-alike).
 - [ ] **OnSIDES refresh:** the pipeline pins the v3.1.1 asset by SHA-256; a new data release is a reviewed code change, after which
   the light build and `docs/light-face-validation.md` are regenerated.
+
+## Time machine (owner-approved feature, 2026-11-09)
+All items below come from the three labelled AI review passes
+(`.kiro/specs/time-machine/review-{pharmacologist,statistician,historian}.md`). Nothing in this
+feature is expert-reviewed; every screen says "AI-reviewed, pending expert review".
+
+### Models and validation (pharmacologist, clinical pharmacologist or PK modeller)
+- [ ] **No simulation model is credible enough to carry an exposure statement.** httk PBPK scored
+  0 of 4 credible against published human PK (metoclopramide borderline at 2.36x on AUC;
+  risperidone 3.27x on Cmax; midazolam 11.9x and haloperidol **32x** on AUC, both AUC
+  over-predictions, i.e. under-predicted clearance). Janus's compartmental model: rhein credible
+  (1.08x / 1.13x), amlodipine borderline (2.37x on Cmax). Decide whether the PBPK layer should be
+  published at all, even as the relative older-versus-younger comparison it is limited to now,
+  and whether httk should be reparameterised for pharmaceuticals or dropped for this purpose.
+- [ ] **Rhein's AUC check is not independent** (CL/F from Magnard 1993, observed AUC from Debord
+  1993, possibly the same control group). Only its Cmax agreement is a real test. Confirm or
+  replace with an independent study.
+- [ ] **Risperidone was validated on parent drug only**, with no metabolite compartment and no
+  CYP2D6 genotyping in the observed study. Confirm whether the active moiety should be used.
+- [ ] **The rhubarb model has no colonic activation step.** 60-80 % of rhubarb's
+  hydroxyanthracenes are glycosides cleaved by gut bacteria hours after ingestion; a
+  one-compartment oral model gives the wrong Tmax for a glycoside prodrug.
+- [ ] **Measured protein binding must replace the predicted one.** The unbound fraction comes
+  from an ADMET-AI `PPBR_AZ` prediction, which exceeds 100 % for hyperforin (112.6 %),
+  chrysophanol (101.9 %) and emodin (101.6 %). Out-of-range values are now rejected (DP-T15) and
+  the comparison falls back to total concentration, but a measured value (rhein ~99 %, Nicolas
+  1998) should be used before any verdict is published.
+- [ ] **Induction versus inhibition must not be conflated** in any write-up: hyperforin's PXR
+  binding causes CYP3A4 *induction*, while the CYP3A4 record carried beside it is an *inhibition*
+  IC50.
+- [ ] **ADMET-AI training-set licence:** FreeSolv in the TDC ADME set is CC BY-NC-SA 4.0. Confirm
+  this does not constrain how predictions may be used or published.
+
+### Statistics (statistician or pharmacoepidemiologist)
+- [ ] **Every onset result rests on 17-35 reports** and four of five cascades are flagged small
+  samples; one (metoclopramide) has no usable report at all. Confirm whether a Weibull shape
+  class should be shown at all below 30 reports.
+- [ ] **The usable subset is selected, not random.** Only 8.9 % of (report, drug) pairs have both
+  a complete therapy start and a complete event date; completeness is associated with reporter
+  type and event seriousness. The caveat is now in the artifact; confirm the wording.
+- [ ] **Zero-day heaping drives the "early hazard" conclusion** (10 of 29 antipsychotic reports,
+  4 of 35 amlodipine). A same-day interval is often one date entered twice. Counts are now
+  published per cascade; confirm whether such reports should be excluded instead.
+- [ ] **`agreement` is close to unfalsifiable at these interval widths** (our amlodipine IQR is
+  7-104 days). Confirm that the research screen shows both intervals side by side and that
+  "agrees" is read as "not inconsistent with".
+- [ ] **Monte Carlo parameter spreads are a judgement, not published variances.** Confirm the
+  log-normal geometric standard deviations in `data/time_machine/compartmental_pk.csv`.
+
+### History and identification (historian or philologist of Arabic medicine)
+- [ ] **Rhubarb and anise have had no identification review.** Both were added by this build
+  because their entries state a dose, so they were never in the séance's reviewed set.
+  `data/time_machine/identifications_added.csv` marks both `uncertain`; medieval `rawand` may be
+  *Rheum palmatum*, *R. officinale* or *R. ribes*, and the Canon's `anisun` entry may cover more
+  than one umbellifer. No gold row exists for either in PMC3941892.
+- [ ] **Unit conversion.** Confirm the dirham range 2.80-3.30 g and the mithqal 4.00-4.464 g for
+  an 11th-century *medical* context. Two caveats stand: Hinz's values (3.125 g, 4.464 g) were
+  verified only from indexed footnote snippets of Bos 1996, not the article itself; and Bates
+  1995 states the weight-dirham was often not the coin-dirham, so coin evidence does not pin the
+  medical dirham down.
+- [ ] **Condition bridges.** The anise bridge is matched on symptom (gut spasm and wind), not on
+  a diagnosis: irritable bowel syndrome has no Canon counterpart. Confirm this and the sciatica
+  and musculoskeletal bridges. Note the Canon claims a cure for sciatica with St John's wort; the
+  build must never repeat that, and currently gives St John's wort no dose scenario and no
+  verdict.
+- [ ] **The rhubarb dose is attributed by the Canon to al-Khuzi**, not asserted by Ibn Sina. The
+  note now says so; confirm the reading and the transliteration.
+
+### Product, safety and data
+- [ ] **The one patient-facing sentence** (design §10.5) in all five languages, past the
+  safety-auditor and localization-reviewer passes. It uses the interquartile range, not the
+  central-80 % band (DP-T14), and appears only when the cascade is not a small sample and agrees
+  with the literature — today only `amlodipine_oedema_diuretic` qualifies.
+- [ ] **No target overlap was found** between the Canon constituents and today's drugs in open
+  interaction data (Wikidata P129 has interactions for ibuprofen, naproxen and dicyclomine, none
+  for the constituents). Confirm this negative result is presented as a negative result and not
+  as a gap to be filled from a share-alike source.
+- [ ] **PubChem's data-use policy** was read from a Wayback capture (2025-01-02) because the live
+  page is behind reCAPTCHA. Re-verify on the live page before launch.
+- [ ] **ChEMBL stays out.** The hyperforin-PXR Ki and all other ChEMBL-deposited values are
+  withheld by licence and kept only as pointers. If a share-alike data package is ever added,
+  the export licence must change.
+- [ ] **`.data/tools` is never committed** (user R library with httk, the ADMET-AI environment).
+  Confirm the deployment builds its artifacts offline and ships only
+  `.data/timemachine/current/time_machine.json`; the API image needs neither R nor torch.
