@@ -392,6 +392,21 @@ language, and keeps the person's list in the browser.
 8. THE word PBPK SHALL NOT appear next to a compartmental model (owner rule); English source strings of the API SHALL be shown verbatim with `lang="en"` only where they do not break this rule or the forbidden-phrase list.
 9. THE `TimeMachine` namespace SHALL exist in five languages and pass the key-parity, placeholder and forbidden-phrase tests; every time-machine screen SHALL pass axe, no horizontal scroll and 44 px targets at 375 px and 1280 px in both themes and in five languages.
 
+### Requirement 31: Clinical White look of Glass Janus *(Owner decision 2026-11-09)*
+**User story:** As a patient who chose the plain theme, I want Janus to look like a calm, clinical white health app (white cards, one teal accent, a clear glass head on the home), so that it feels trustworthy and easy to read, while every safety sentence stays where it was.
+
+#### Acceptance criteria
+1. THE Glass Janus theme (id `glass`, names "Glass Janus" / "Cam Janus" unchanged) SHALL use the Clinical White tokens of the steering file (`.kiro/steering/design.md`, Theme 2) on every screen, and SHALL be light only: no dark variant and no `prefers-color-scheme` rule (owner decision 2026-11-09). THE Night Pharmacy theme SHALL NOT change.
+2. Glass Janus cards, groups and tiles SHALL be solid surfaces with a hairline and soft layered shadows; frosted glass (blur) SHALL be limited to navigation and floating controls (header, home header navigation, the floating pill tab bar, the floating hero cards); WHEN transparency is reduced (setting, media query or no `backdrop-filter`) those SHALL be solid with no blur.
+3. EVERY token pair marked as text or boundary SHALL keep passing the contrast test (≥ 4.5:1 text, ≥ 3:1 boundary) for Glass Janus with reduced transparency on and off; `--risk` SHALL stay limited to real risk (emergency notice, urgent-care lines, retracted evidence).
+4. THE Glass Janus home hero SHALL show the clinical hero image full-bleed at its own aspect ratio (2752 × 1536) without cropping; no text, card, capsule or scrim stronger than a light left-edge scrim SHALL cover the two faces; the copy (eyebrow, `h1`, `Home.intro`, "Try the demo" first, "How it works", the demo hint) SHALL be dark text on the light left area; from 1,100 px two frosted, perspective-tilted floating cards SHALL sit right of the head and CSS-drawn 3D capsules SHALL float outside the faces; a slow light sweep SHALL cross the image.
+5. THE floating cards and the "At a glance" grid SHALL use only real data and existing wording: the Istanbul demo's amlodipine → furosemide finding with its recorded months between the medicines and its recorded source count, the number of rule-base patterns (`PATTERNS`), the three regions with their product sources, the five languages, the photo-privacy sentence; WHERE the canvas had a placeholder or an unverified figure (e.g. "26 sources current"), THE client SHALL drop the figure; the cards SHALL carry the demo label.
+6. THE home SHALL keep Req 27.4 in Glass Janus: the emergency notice first (the one-line bar under the header, outside the faces), the hero, "At a glance", "How it works" in three steps with 3D icon chips, the regions and five languages, privacy in one sentence, the disclaimer in the footer.
+7. Below 1,100 px THE hero image SHALL sit full width under the header and the emergency bar (nothing over it), the copy below it on white; floating cards and capsules SHALL be hidden; below 960 px the grid SHALL be one column. THE layout SHALL have no horizontal scroll at 375 and 1280 px.
+8. Home motion SHALL animate transform and opacity only, SHALL pause off-screen and in a hidden tab, SHALL stop under `prefers-reduced-motion: reduce`, Save-Data or a slow connection, and SHALL keep DP49 (nothing driven by scroll, no long task over 50 ms while scrolling); only the active theme's hero image SHALL be preloaded, at the right size.
+9. ALL new text SHALL be in the message catalogues in five languages and pass the key-parity, placeholder, forbidden-phrase and theme-word tests; decorative art SHALL be `aria-hidden`, the hero image SHALL have an alt text in five languages.
+10. EVERY screen SHALL pass axe (WCAG 2.2 A/AA), 44 px targets and no horizontal scroll at 375 and 1280 px in both themes.
+
 ## Properties to test (PBT candidates)
 - For every supported locale, every user-facing string key has a translation (no fallback keys rendered).
 - For every supported locale, rendered findings contain the mandatory disclaimer and none of the forbidden phrases.
@@ -408,6 +423,7 @@ language, and keeps the person's list in the browser.
 - *(Added.)* The doctor page sends the token only in a JSON body; answers satisfy the action rule. (Req 19)
 - *(Added.)* Every QR address fits version 25 at level M and decodes back to itself. (Req 18.2)
 - *(Added.)* Glass shows no theme-device word in any language. (Req 6.5)
+- *(Added 2026-11-09, Req 31.)* Glass Janus has no dark-scheme token rule and every marked pair passes with reduced transparency on and off; the home's demo figures equal the recorded Istanbul fixture and the rule-base count. (Req 31)
 - *(Added 2026-11-09.)* The passport summary never claims more listings than the sources show; card primitives keep every required sentence in the markup and outside any fold where Req 28.5 asks; every stat tile carries its sentence; the Collective Memory filter shows every panel by default. (Req 29)
 
 ## Resolved open items *(from the seed's four sections, 2026-11-07 and 2026-11-08)*

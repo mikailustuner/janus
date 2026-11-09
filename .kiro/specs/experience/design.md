@@ -340,7 +340,7 @@ recognised text is dropped when the screen closes.
 ## 7. Theming (DP1, DP2, DP18, DP21, Req 6)
 
 - `theme/tokens.css` declares the steering tokens exactly under `:root[data-theme-style="two-faces"]`, `.paper` (the
-  note preview and the doctor page card, in every theme), `:root[data-theme-style="glass"]` (light) and `@media (prefers-color-scheme: dark)` (dark);
+  note preview and the doctor page card, in every theme), `:root[data-theme-style="glass"]` (light only since DP66; its dark block was removed);
   reduce transparency under `:root[data-theme-style="glass"][data-reduce-transparency="on"]`,
   `@media (prefers-reduced-transparency: reduce)` and `@supports not (backdrop-filter: blur(1px))`.
   `globals.css` maps them with `@theme inline` (`--color-bg: var(--bg)` …) so components use `bg-bg text-fg` utilities;
@@ -699,6 +699,13 @@ The seed's properties are P12 (keys), P8 (disclaimer and phrases), P14 (demo) an
 | DP55 | **Layout tokens** in `tokens.css`, exposed to Tailwind in `globals.css` `@theme`: spacing `--space-row-x` 16 px, `--space-row-y` 12 px, `--space-stack` 12 px, `--space-group` 24 px, `--space-section` 32 px; radii `--radius-group` (16 / 22 px), `--radius-tile` (14 / 20 px), `--radius-segment` (12 px / 999 px), `--radius-card` and `--radius-button` unchanged; motion `--dur-fast` 150 ms, `--dur-base` 220 ms, `--dur-page` 240 ms, `--ease-out` `cubic-bezier(.22,1,.36,1)`; large title `--large-title` (2.125 rem, 2.5 rem from 1024 px, both themes). No new colour: rows, hairlines, tiles and segments use `--surface`, `--line`, `--chip`, `--fg`, `--muted`, `--accent`, all already in the contrast test (P18). | Raw Tailwind values per component. | One scale for both themes; the theme changes values, not markup. |
 | DP56 | **Titles and summaries:** the results `h1` is the page name ("Ghosts" / "Results") and the count sentence moves to the one-line summary with `data-testid="finding-count"`; the finding detail's `h1` is the finding's title, the route joins the wide routes and from 1024 px the finding sits beside its evidence and reports. Collective Memory filter: All (default) / Medicines together / By region / Reported through Janus (donated reports and doctor-note outcomes); the emergency notice stays first whatever the filter, the chosen event's safety line moves with the donated and outcome panels. Passport item: "Countries" / "Comparison" when any row has a comparison; the 640 px table becomes an inset grouped list (one row per source, country and source as the row head). | Count as `h1`; detail at 720 px; keep the table. | A large title names the place (Apple HIG); the count is the summary. The table's two columns squeezed the long status sentences; one row per country reads the same at every width. |
 | DP57 | **Owner decision 2026-11-09: "n medicines checked" is split.** The results summary reads "8 medicines: 6 fully checked, 2 partly" (`Cards.results.medicinesChecked` with `total`, `full`, `partly`; `data-testid="medicines-checked"`); "partly" = an item with at least one `not_checked` entry, computed by `checkedSplit` in `src/flow/summary.ts`, the same function as the Summary (janus-report DP14) and the same rule as the note (doctor-loop DP42). | One number "medicines checked". | A box with an unrecognised ingredient is not fully checked; one number overstated the check (cards safety review F6). |
+| DP66 | **Owner decision 2026-11-09: Glass Janus becomes Clinical White, light only.** Tokens of steering Theme 2 (`--bg #F4F7F8`, solid `--surface #FFFFFF`, `--fg #0E1A1F`, `--muted #5A686E`, `--line #E3E8EA`, `--accent #0B6C62`, `--chip #E6F2F0`); the `prefers-color-scheme: dark` block of Glass and its reduced-transparency dark values are removed; `color-scheme: light`. Name and id unchanged, so stored settings stay valid. | Keep a dark variant of Glass; a third theme. | The owner asked for a clinical *white* theme and confirmed light only; Night Pharmacy already is the dark theme. |
+| DP67 | **Glass only on navigation and floating controls.** New tokens `--nav-surface` (white 88 %) and `--nav-blur` (`blur(20px) saturate(1.6)`) used by the header bar (`.app-header`), the floating tab bar and the hero cards; `--blur: none` for cards; the three background colour fields are dropped (plain ground). Reduce transparency (three triggers) sets `--nav-surface #FFFFFF`, `--nav-blur none`. Radii: card 22, group 18, tile 16, button 14, segment 12, tab bar 26 / items 20 px. Shadows: `0 1px 2px` hairline shadow plus a soft `-16px` spread shadow. | Frosted cards as before (72 %). | The canvas uses solid white cards; frosted cards over a plain ground looked grey and cost blur on every card. |
+| DP68 | **Hero image at its own ratio.** The section is a grid; the picture box has `aspect-ratio: 2752 / 1536` at 100 % width (never `cover`-cropped), the copy column sits from `max(24px, 4%)` to 29 % of the width (the left face's profile starts at about 31 %), the cards from 75.5 % (the right face ends at about 70 %); when the copy is taller than the image the section grows and the copy continues on the light floor and page ground. The desktop composition starts at 1,100 px; below it the image is in flow under the header and the emergency bar. | The canvas's `min-height: 620px` with `cover`; desktop from 960 px. | `cover` with a minimum height cropped the sides and pushed the faces under the copy between 960 and 1,100 px; the copy column is too narrow below 1,100 px in German and French. |
+| DP69 | **Floating cards and capsules.** Cards: an outer float (translateY keyframes) and an inner tilt (`rotateY(-12deg)` with `perspective`), so the animation never replaces the tilt; frosted with `--nav-surface`. Capsules: CSS only (two-tone halves by a hard-stop gradient, a `::before` specular gradient, an `::after` highlight, an outer and inset shadow), four in the hero in the free bands (above the head, between head and cards, on the floor) and two in the grid; static `filter: blur()` on two for depth (never animated). A light band crosses the image by `translate3d` every 12 s. Pointer parallax (fine pointers) moves cards and capsules by a few px through `--mx/--my`; the image itself never moves. | Tilt the image (as before); SVG capsules; a canvas/WebGL scene. | No cropping or edge gaps from moving the image; pure CSS stays compositor-only and under the motion rules. |
+| DP70 | **Real figures only.** `src/components/home/clinicalFacts.ts` holds the figures the Glass home shows (finding PIPC row 5, months between = 5, sources = 4, `PATTERNS` = 65); a unit test reads `src/demo/fixtures/istanbul.json` and the vocabulary and fails when a figure differs. The canvas's "3 sources" (the fixture says 4 in total, 3 checked by DOI) is corrected, and "26 sources current" is dropped (no source-wide figure exists in the client); the badge says what is true: "Checked against Crossref, including Retraction Watch data". | Import the 360 kB fixture into the home bundle; keep the canvas numbers. | Never an invented number (medical-safety rule 6); the home stays small. |
+| DP71 | **Glass home sections.** In Glass Janus the shared home sections ("How it works", regions, privacy) are replaced by the Clinical White ones: "At a glance" bento (6 columns from 960 px: results phone 4, note 2, "65" 2, regions 2, sources 2), "How it works" (three cards with 3D icon chips: titles `Home.glass.how1Title…`, texts `Home.how1…3`), privacy (`Home.privacy`, `Home.privacyLine`). Both sets are server-rendered and the inactive one is hidden by `data-theme-style` before hydration and dropped after it (as HomeHero, DP46), with distinct ids. Night Pharmacy's sections are unchanged. Decorative mock-ups (phone screen, note paper, QR, fanned cards) are `aria-hidden`; each tile's heading and sentence carry the meaning. | One set restyled by tokens. | The canvas's sections differ in structure; Night Pharmacy must not change. |
+| DP72 | **Home emergency bar in Glass Janus:** light (white `--nav-surface`, `--risk` border and icon, ink text), aligned to the copy column from 1,100 px so it never lies over the faces, and in flow above the image below 1,100 px. The home header in Glass uses the Glass tokens (ink on the light image; frosted white once scrolled) instead of the scene colours. | The dark scene bar of DP47 in both themes. | Dark bars on a white image; the bar must not cover the faces. |
 
 ## 21. Card design (Req 29, DP50–DP56)
 
@@ -749,6 +756,32 @@ routes `research/time-machine{,/substance,/cascade}`, e2e `e2e/time-machine.spec
 | DP65 | **Patient sentence wording (review B1/S6):** the sentence names the event (vocabulary lay label of the row's event key) and the index drug, and says "half of the reports … the other half were earlier or later"; time-machine design §10.5 amended. Research-side fixes of the same reviews: steady-state days only for a credible model, a verdict line per population drug, no fitted curve for a small sample, out-of-range ADMET values not shown as numbers, the AUC note corrected, column heads of the comparison table | The §10.5 sentence as first written | "This combination" described the wrong interval; "most often between" overstated the middle half |
 | DP64 | Validation block wherever a simulated concentration is shown (substance exposure, cascade populations, index), with every verdict including failures, open by default where a concentration is shown | A summary only | §10.4 and "verdicts shown honestly" |
 
+## 23. Clinical White (Req 31, DP66–DP72)
+
+### 23.1 Tokens and material
+- `tokens.css`: one `:root[data-theme-style="glass"]` block (light), the three reduce-transparency triggers set
+  `--nav-surface: #ffffff` and `--nav-blur: none`; no `prefers-color-scheme` rule. `globals.css`: the Glass root
+  background is the plain `--bg`; `.app-header` (non-home header) gets `--nav-surface`, a hairline and `--nav-blur`
+  in Glass only. `Shell.tsx`: the Glass tab bar uses `--nav-surface`, `--nav-blur`, `--nav-shadow`, 26 / 20 px radii.
+- Contrast test (P18, P40): contexts Night Pharmacy, note paper, Glass light, Glass light with reduced transparency;
+  Glass grounds = `--bg` only.
+
+### 23.2 Home
+| Part | Markup | Notes |
+|---|---|---|
+| `GlassJanusHero` | `section.gj` > `div.gj-media` (`ScenePicture name="clinical-hero"`, `.gj-sweep`) + `.gj-scrim` + `.gj-pills` (aria-hidden) + `.gj-copy` (h1 `gj-title`) + `aside.gj-cards` | DP68, DP69; motion chunk `glassMotion.ts` (pointer parallax, pause off-screen) |
+| `GlassHomeSections` | `section` "At a glance" (`h2 gj-glance`, `.gj-bento`), `section#gj-how` "How it works", privacy card | DP71; motion observer pauses the grid capsules off-screen |
+| `clinicalFacts.ts` | constants + P41 test | DP70 |
+
+Assets: `public/home/clinical-hero-{2752,1600,960}.{avif,webp}`, `-{1600,960}.jpg` (README there; the old
+`glass-hero-*` files are removed). `scenePreloadScript` preloads `clinical-hero` AVIF for Glass only.
+
+### 23.3 Properties
+| # | Property | Req | Test |
+|---|---|---|---|
+| P40 | **Clinical White tokens.** The Glass rule set has no `prefers-color-scheme` condition; every marked text pair ≥ 4.5:1 and boundary pair ≥ 3:1 with reduced transparency on and off; with reduced transparency `--nav-surface` is `#ffffff` and `--nav-blur` is `none`. | Req 31.1–31.3 | `src/theme/contrast.test.ts` |
+| P41 | **Real home figures.** The months between, the source count and the medicines of the home's demo finding equal PIPC row 5 of the recorded Istanbul fixture; the pattern count equals `PATTERNS`; no catalogue text of the Glass home contains a digit that is not one of these figures. | Req 31.5 | `src/components/home/clinicalFacts.test.ts` |
+
 ## 20. Open items (for the owner)
 1. **Brand names in the demo.** The gate-1 box is AMLIPIN (a real Turkish product; TİTCK strings are not committed and
    the name is a trademark). Recommendation: invented names ("Amlodis Plus 10/10 — demo") with the real ingredients;
@@ -794,3 +827,8 @@ doctor-loop DP41), "then" only when the order is known (DP43), consent texts v2 
 `privacy.md`), one word for "report" per language (TR "bildirim", ES "notificación"; doctor-loop DP40, collective-memory
 DP25), Memory caveats outside the fold, the smaller wording batch, the Ohio fixture with oral products, the measured
 budgets (DP38; OCR loaded only when label reading opens), and the home page wording; the hero is isolated (DP45).
+
+## Owner decisions (2026-11-09, Clinical White)
+- Glass Janus is restyled as **Clinical White** from the owner-approved design canvas (home, results and finding detail,
+  phone medicines list); the name "Glass Janus" / "Cam Janus" and the id `glass` stay (Req 31, DP66–DP72).
+- **Glass Janus is light only** (confirmed by the owner 2026-11-09): its dark variant is removed (DP66).

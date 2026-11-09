@@ -378,3 +378,38 @@
   - 34.6 e2e `e2e/time-machine.spec.ts`: five locales × two themes, axe, 375 / 1280, rendering rules, states, demo
     without requests, patient sentence only for amlodipine, links; screenshots.
   - **Checkpoint:** lint, typecheck, vitest, build, e2e green; commit.
+
+- [x] 35. *(Owner decision 2026-11-09)* Clinical White: spec and steering
+  - Requirement 31, DP66–DP72, P40–P41, design §23; steering `design.md` Theme 2 (Clinical White, light only) and the
+    Glass Janus home-scenes paragraph. _Requirements: 31_
+  - **Checkpoint:** commit the spec.
+
+- [ ] 36. Hero image (`public/home/clinical-hero-*`, `README.md`, `NOTICE`, `pipelines/sources.toml`)
+  - AVIF / WebP at 2752, 1600, 960 and JPEG at 1600, 960 from the owner's Gemini image (2752 × 1536), with the same
+    ffmpeg commands as the other scenes; remove `glass-hero-*` once nothing references it; provenance updated.
+    _Requirements: 31.4, 31.8_
+  - **Checkpoint:** commit.
+
+- [ ] 37. Tokens, material and navigation (`src/theme/tokens.css`, `src/app/globals.css`, `components/Shell.tsx`,
+  `src/theme/contrast.test.ts`)
+  - Clinical White tokens, light only (DP66); `--nav-surface` / `--nav-blur` for header and tab bar (DP67); no colour
+    fields; `Settings.reduceTransparencyHint` in five languages.
+  - 37.1 P40 in `contrast.test.ts`. _Requirements: 31.1–31.3, 31.10_
+  - **Checkpoint:** lint, typecheck, vitest green; commit.
+
+- [ ] 38. Glass home (`components/home/GlassJanusHero.tsx`, `GlassHomeSections.tsx`, `clinicalFacts.ts`, `Home.tsx`,
+  `ScenePicture.tsx`, `glassMotion.ts`, `src/theme/home-scenes.css`, `messages/*.json`)
+  - Hero at its own ratio, frosted tilted cards, CSS capsules, light sweep (DP68, DP69); "At a glance" bento, "How it
+    works" with icon chips, privacy (DP71); emergency bar and header in Glass (DP72); `Home.glass.*` in five languages.
+  - 38.1 P41 (`clinicalFacts.test.ts`); `e2e/home-scenes.spec.ts` Glass test: image not cropped, nothing over the faces,
+    only `clinical-hero` requested. _Requirements: 31.4–31.9_
+  - **Checkpoint:** vitest, home-scenes and home-scroll e2e green; commit.
+
+- [ ] 39. Reviews, rendered checks and final checkpoint
+  - localization-reviewer and safety-auditor passes on the new and changed texts and the Glass home
+    (`clinical-white-localization-reviewer-review.md`, `clinical-white-safety-auditor-review.md`); fixes applied.
+  - Playwright smoke, routes, home-scenes, home-scroll, states at 375 and 1280 px in both themes; screenshots of the
+    Glass home (1440 × 900, 390 × 844), results, finding detail, medicines, settings, and the Night Pharmacy home
+    (unchanged), reviewed. _Requirements: 31.7, 31.10_
+  - **Checkpoint:** lint, typecheck, vitest, build, e2e, CI green; commit.
+
