@@ -42,6 +42,9 @@ JOBS: dict[str, tuple[str, str]] = {
     "eu_es_cima": ("janus_pipelines.jobs.eu_es_cima", "EuEsCimaJob"),
     "faers": ("janus_pipelines.jobs.faers", "FaersJob"),
     "faers_onset": ("janus_pipelines.jobs.faers_onset", "FaersOnsetJob"),
+    "tm_molecules": ("janus_pipelines.jobs.time_machine", "TmMoleculesJob"),
+    "tm_bioactivity": ("janus_pipelines.jobs.time_machine", "TmBioactivityJob"),
+    "tm_labels": ("janus_pipelines.jobs.time_machine", "TmLabelsJob"),
     "onsides": ("janus_pipelines.jobs.onsides", "OnsidesJob"),
     "openfda_label": ("janus_pipelines.jobs.openfda_label", "OpenfdaLabelJob"),
 }

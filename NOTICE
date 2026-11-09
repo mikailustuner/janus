@@ -106,6 +106,29 @@ ATC classification
   Janus does not copy the WHOCC index; ATC codes are taken from TİTCK, CIMA,
   RxClass and Wikidata.
 
+PubChem BioAssay activity summaries and compound properties (Time machine)
+  Publisher: U.S. National Center for Biotechnology Information (NLM/NIH)
+  License: Public domain (NCBI-created data); deposited records keep the
+  depositor's licence
+  Only activity values deposited by U.S.-government sources (e.g. NCGC/Tox21)
+  are stored. ChEMBL-deposited records (CC BY-SA 3.0) and records from
+  depositors with unverified terms are counted, not stored.
+
+httk: R package for high-throughput toxicokinetics, incl. HTTK-Pop (Time machine PBPK)
+  Publisher: U.S. Environmental Protection Agency
+  License: MIT
+  Pearce et al. 2017, J Stat Softw 79(4), doi:10.18637/jss.v079.i04. Installed
+  into a user R library under .data/tools (not committed); the version is
+  recorded in each run manifest.
+
+ADMET-AI 2.0.1 structure-based ADMET predictions (Time machine)
+  Publisher: Swanson et al., Bioinformatics 2024,
+  doi:10.1093/bioinformatics/btae416
+  License: MIT (code and bundled models); training datasets from TDC carry their
+  own licences (mostly CC BY 4.0; FreeSolv CC BY-NC-SA 4.0)
+  Run offline in a pinned CPU environment under .data/tools (not committed).
+  Predictions are hypotheses, not measurements.
+
 Adverse events
 --------------
 
