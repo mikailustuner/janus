@@ -29,23 +29,23 @@
 - [x] 5. Checkpoint 1: builder verified
   - lint, typecheck, vitest green; commit.
 
-- [ ] 6. Card (`src/components/medicines/FhirExport.tsx`) on the medicines screen
+- [x] 6. Card (`src/components/medicines/FhirExport.tsx`) on the medicines screen
   - Design §4; Blob download; checkbox not stored; demo line; live confirmation.
   - _Requirements: 1.2, 1.3, 1.5, 5.1–5.6_
 
-- [ ] 7. Texts: namespace `Fhir` in `messages/{en,tr,de,fr,es}.json`
+- [x] 7. Texts: namespace `Fhir` in `messages/{en,tr,de,fr,es}.json`
   - Added as one block; `pnpm exec vitest --run src/i18n` (forbidden phrases, parity, no empty strings).
   - _Requirements: 5.2, 5.5, 5.6_
 
-- [ ] 8. Reviews
+- [x] 8. Reviews
   - `fhir-export-localization-reviewer-review.md`, `fhir-export-safety-auditor-review.md`; fixes applied.
   - _Requirements: 5.6_
 
-- [ ] 9. Playwright (`e2e/fhir-export.spec.ts`)
+- [x] 9. Playwright (`e2e/fhir-export.spec.ts`)
   - Demo session: download, parse, Bundle / collection, entry count, no box names, box names when
     ticked, no request; axe, scroll, targets at 375 and 1280, both themes, five locales (`E2E_LOCALES`).
   - _Requirements: 6.3_
 
-- [ ] 10. Checkpoint 2: everything built
+- [x] 10. Checkpoint 2: everything built
   - All checkpoint steps green; screenshots at 375 and 1440, both themes, looked at; pre-launch item
     for full HL7 validation (design §7); commit.

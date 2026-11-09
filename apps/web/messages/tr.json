@@ -1265,5 +1265,18 @@
       "component": "Bu FAERS etkin maddesi Kanun'daki bir maddenin bileşenidir, aynı maruziyet değildir:"
     },
     "notListed": "Seçtiğiniz eşleşme burada yok; bunun yerine ilk kullanılabilir eşleşme gösteriliyor."
+  },
+  "Fhir": {
+    "title": "FHIR olarak dışa aktar",
+    "what": "FHIR, birçok sağlık yazılımının okuyabildiği standart bir biçimdir. Buradan ilaç listenizi bu cihaza bir FHIR dosyası olarak kaydedebilirsiniz.",
+    "demo": "Demo: dosya, test verisi olarak işaretlenmiş sentetik demo listesini içerir.",
+    "preview": "{medicines, plural, one {# ilaç} other {# ilaç}} · standart kodu olan etkin madde: {coded} / {ingredients} (ATC, RxNorm)",
+    "contents": "Dosyada etkin madde adları ve kodları, başlangıç ayları ve dışa aktarma tarihi bulunur. Doz bilgisi yoktur. Dosyaya sahip olan herkes onu okuyabilir.",
+    "includeNames": "Kutulardaki adları ekle",
+    "includeNamesHint": "Varsayılan olarak kapalı: kutudaki ad, dosyanın sizinle ilişkilendirilmesini kolaylaştırabilir.",
+    "download": "FHIR dosyasını indir",
+    "notSent": "Janus bu dosyayı hiçbir yere göndermez. Dosyayı alan taraf, kendi sisteminde onunla ne yapılacağına karar verir.",
+    "notChecked": "Dosya, listeyi girildiği hâliyle içerir. Bir tıbbi kayıt değildir ve hiçbir sağlık çalışanı tarafından kontrol edilmemiştir.",
+    "saved": "İndirme başladı: {file}."
   }
 }

@@ -1265,5 +1265,18 @@
       "component": "Este principio activo de FAERS es un componente de una sustancia del Canon, no la misma exposición:"
     },
     "notListed": "El par elegido no está disponible aquí; se muestra en su lugar el primer par disponible."
+  },
+  "Fhir": {
+    "title": "Exportar en formato FHIR",
+    "what": "FHIR es un formato estándar que muchos programas sanitarios pueden leer. Aquí puede guardar su lista de medicamentos como archivo FHIR en este dispositivo.",
+    "demo": "Demo: el archivo contiene la lista de demostración sintética, marcada como datos de prueba.",
+    "preview": "{medicines, plural, one {# medicamento} other {# medicamentos}}, principios activos con código estándar: {coded} de {ingredients} (ATC, RxNorm)",
+    "contents": "El archivo contiene los nombres y códigos de los principios activos, los meses de inicio y la fecha de exportación. No contiene dosis. Cualquier persona que tenga el archivo puede leerlo.",
+    "includeNames": "Incluir los nombres de las cajas",
+    "includeNamesHint": "Desactivado por defecto: el nombre de la caja puede hacer más fácil vincular el archivo con usted.",
+    "download": "Descargar el archivo FHIR",
+    "notSent": "Janus no envía este archivo a ningún sitio. Quien lo reciba decide qué hace con él el sistema que utilice.",
+    "notChecked": "El archivo contiene la lista tal como se introdujo. No es una historia clínica y ningún profesional sanitario lo ha revisado.",
+    "saved": "Descarga iniciada: {file}."
   }
 }

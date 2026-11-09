@@ -4,11 +4,16 @@
  * the app.
  */
 import { readFileSync } from "node:fs";
+import { createRequire } from "node:module";
 import { join } from "node:path";
 import { gunzipSync } from "node:zlib";
 
 import Ajv, { type ErrorObject, type ValidateFunction } from "ajv";
-import draft6 from "ajv/dist/refs/json-schema-draft-06.json";
+
+// Loaded with require: Playwright's loader needs an import attribute for JSON, vitest does not.
+const draft6 = createRequire(import.meta.url)(
+  "ajv/dist/refs/json-schema-draft-06.json",
+) as object;
 
 export const SCHEMA_SHA256 =
   "2230406893b4cf002a4ee1e5e2bbeca22ac5d2d4931b3e9ef7b9594bbc376a01";

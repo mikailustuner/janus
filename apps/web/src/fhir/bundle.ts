@@ -16,6 +16,10 @@ export const JANUS_TAG_SYSTEM = "https://github.com/mikailustuner/janus";
 export const TEST_DATA_SYSTEM =
   "http://terminology.hl7.org/CodeSystem/v3-ActReason";
 export const FHIR_MIME = "application/fhir+json";
+export const CATEGORY_SYSTEM =
+  "http://terminology.hl7.org/CodeSystem/medication-statement-category";
+export const NOT_RECONFIRMED =
+  "Not confirmed again after a Janus data update; the codes may be out of date.";
 
 /** The file says what it is in English: it is read by systems and their staff (DP7). */
 export const DISCLAIMER =
@@ -180,14 +184,42 @@ function statement(item: Item, id: string, opts: ExportOptions): Resource {
   return {
     resourceType: "MedicationStatement",
     id,
-    meta: { tag: tags(opts) },
+    meta: meta(opts),
     contained,
     status: "active",
+    // Provided by the patient or their representative (R4 category `patientspecified`; DP1).
+    category: {
+      coding: [{ system: CATEGORY_SYSTEM, code: "patientspecified" }],
+    },
     ...medication,
     subject: { reference: "#patient", display: SUBJECT_DISPLAY },
+    // Patient-reported: the person is the source of the statement (DP1).
+    informationSource: { reference: "#patient" },
     ...(started ? { effectivePeriod: { start: started } } : {}),
-    dateAsserted: opts.now.toISOString(),
-    note: [{ text: DISCLAIMER }],
+    // The day only: the exact instant adds nothing for the reader (minimisation).
+    dateAsserted: opts.now.toISOString().slice(0, 10),
+    note: [
+      { text: DISCLAIMER },
+      ...(item.needsConfirmation ? [{ text: NOT_RECONFIRMED }] : []),
+    ],
+  };
+}
+
+/** Tags, and HL7 `HTEST` on demo data, on the Bundle and on every Statement (DP6, DP8). */
+function meta(opts: ExportOptions): { tag: Coding[]; security?: Coding[] } {
+  return {
+    tag: tags(opts),
+    ...(opts.demo
+      ? {
+          security: [
+            {
+              system: TEST_DATA_SYSTEM,
+              code: "HTEST",
+              display: "test health data",
+            },
+          ],
+        }
+      : {}),
   };
 }
 
@@ -218,21 +250,7 @@ export function buildBundle(
   return {
     resourceType: "Bundle",
     id: bundleId,
-    meta: {
-      tag: tags(opts),
-      // Demo data is marked with HL7's own code for test data (DP8).
-      ...(opts.demo
-        ? {
-            security: [
-              {
-                system: TEST_DATA_SYSTEM,
-                code: "HTEST",
-                display: "test health data",
-              },
-            ],
-          }
-        : {}),
-    },
+    meta: meta(opts),
     type: "collection",
     timestamp: opts.now.toISOString(),
     ...(items.length

@@ -15,6 +15,7 @@ import { check, fc } from "@/test/fc";
 import {
   ATC_SYSTEM,
   buildBundle,
+  CATEGORY_SYSTEM,
   type Bundle,
   DISCLAIMER,
   exportSummary,
@@ -108,7 +109,7 @@ function codingsOf(b: Bundle): { system: string; code: string }[] {
       const o = v as Record<string, unknown>;
       if (Array.isArray(o.coding))
         out.push(...(o.coding as { system: string; code: string }[]));
-      Object.values(o).forEach(visit);
+      for (const [k, x] of Object.entries(o)) if (k !== "category") visit(x);
     }
   };
   visit(b.entry ?? []);
@@ -121,6 +122,7 @@ const itemArb = fc
     base: fc.constantFrom(...ALL),
     boxName: sentinelBoxName,
     started: fc.option(month, { nil: null }),
+    needsConfirmation: fc.boolean(),
     atc: fc.array(fc.oneof(atcLike, fc.constant("not a code")), {
       maxLength: 3,
     }),
@@ -128,7 +130,7 @@ const itemArb = fc
       maxLength: 2,
     }),
   })
-  .map(({ base, boxName, started, atc, rxcui }): Item => {
+  .map(({ base, boxName, started, needsConfirmation, atc, rxcui }): Item => {
     const c = structuredClone(base.candidate);
     const src = c.kind === "ingredient" ? c.source : c.source;
     if (c.kind === "ingredient") {
@@ -138,7 +140,7 @@ const itemArb = fc
       c.ingredients[0].atc_codes = atc.map((code) => ({ code, source: src }));
       c.ingredients[0].rxcuis = rxcui;
     }
-    return { ...base, candidate: c, boxName, started };
+    return { ...base, candidate: c, boxName, started, needsConfirmation };
   });
 const listArb = fc
   .array(itemArb, { maxLength: 12 })
@@ -280,8 +282,19 @@ describe("properties", () => {
           const b = buildBundle(items, options({ includeProductNames, demo }));
           expectValid(b);
           expect(b.meta.tag[0]?.code).toBe("generated-by-janus");
-          for (const s of statements(b))
-            expect(s.note).toEqual([{ text: DISCLAIMER }]);
+          statements(b).forEach((s, i) => {
+            expect((s.note as { text: string }[])[0]).toEqual({
+              text: DISCLAIMER,
+            });
+            expect((s.note as unknown[]).length).toBe(
+              items[i]!.needsConfirmation ? 2 : 1,
+            );
+            const security = (s.meta as { security?: { code: string }[] })
+              .security;
+            expect(security?.map((c) => c.code)).toEqual(
+              demo ? ["HTEST"] : undefined,
+            );
+          });
         },
       ),
       { numRuns: 25 },
@@ -308,6 +321,10 @@ describe("properties", () => {
             "display",
             "reference",
           ]);
+          expect(s.informationSource).toEqual({ reference: "#patient" });
+          expect(s.category).toEqual({
+            coding: [{ system: CATEGORY_SYSTEM, code: "patientspecified" }],
+          });
         }
       }),
     ));
