@@ -27,6 +27,12 @@ for route in /health /privacy/storage /memory/snapshot /seance/catalogue /light/
   /timemachine/catalogue /open/outcomes; do
   check "/api$route" 200
 done
+# Static files outside the build output (public/): home media, fonts, service worker, scanner.
+for asset in /home/door-1280.mp4 /home/door-poster.webp /home/night-cabinet-1600.avif \
+  /home/glass-hero-1600.avif /fonts/Fraunces-SemiBold.ttf /sw.js /manifest.webmanifest \
+  /vendor/zxing/zxing_reader.wasm /vendor/tesseract/worker.min.js /vendor/tesseract/lang/tur.traineddata; do
+  check "$asset" 200
+done
 headers="$(get -sI -m 20 "$base/en")"
 for h in content-security-policy referrer-policy x-content-type-options; do
   if grep -qi "^$h:" <<<"$headers"; then echo "  ok   header $h"; else echo "  FAIL header $h"; fail=1; fi

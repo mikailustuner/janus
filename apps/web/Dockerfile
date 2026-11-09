@@ -20,6 +20,8 @@ ENV JANUS_API_ORIGIN=$JANUS_API_ORIGIN
 ARG JANUS_COMMIT=""
 ENV JANUS_BUILD_ID=$JANUS_COMMIT
 COPY apps/web ./apps/web
+# Scanner wasm, OCR worker and pinned OCR models into public/vendor/ (DP9; not committed).
+RUN node apps/web/scripts/vendor-assets.mjs
 RUN pnpm --filter @janus/web build
 
 FROM node:24-alpine AS runner
@@ -30,6 +32,8 @@ ENV NODE_ENV=production \
 WORKDIR /app
 COPY --from=build --chown=node:node /app/apps/web/.next/standalone ./
 COPY --from=build --chown=node:node /app/apps/web/.next/static ./apps/web/.next/static
+# Standalone output leaves out public/ (home images and video, fonts, service worker, scanner files).
+COPY --from=build --chown=node:node /app/apps/web/public ./apps/web/public
 USER node
 EXPOSE 3000
 CMD ["node", "apps/web/server.js"]
