@@ -1,7 +1,9 @@
 # Janus public deploy (deploy spec, design §3). Run from STACK_DIR with `deploy.sh`, never by hand
 # with other files. No `ports:` anywhere: the only way in is the Cloudflare Tunnel (DP2).
 # Values come from STACK_DIR/.env (mode 600, never committed); see env.example.
-name: janus
+# Own project name: never shares containers, volumes or networks with the local development
+# compose project `janus` (found in the local rehearsal of task 2).
+name: janus-public
 
 x-hardening: &hardening
   read_only: true
@@ -139,9 +141,11 @@ services:
 networks:
   # Fixed subnets: the host firewall rules match them exactly (DP1, design §4).
   internal:
+    name: janus-public-internal
     internal: true
     ipam: { config: [{ subnet: 172.31.251.0/24 }] }
   edge:
+    name: janus-public-edge
     ipam: { config: [{ subnet: 172.31.250.0/24 }] }
 
 volumes:

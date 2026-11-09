@@ -1,0 +1,10 @@
+# User unit: weekly TİTCK refresh (deploy Req 5.2). Install (deploy user, no sudo):
+#   install -D -m 644 deploy/janus-titck.{service,timer} -t ~/.config/systemd/user/
+#   edit ExecStart to the absolute path, then: systemctl --user enable --now janus-titck.timer
+#   (and `loginctl enable-linger` once, by the owner, so user timers run without a login)
+[Unit]
+Description=Janus TİTCK list refresh
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash STACK_DIR/src/deploy/titck-refresh.sh

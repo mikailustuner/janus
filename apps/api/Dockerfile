@@ -24,6 +24,8 @@ COPY apps/api/migrations ./migrations
 # Committed reference data read at run time (resolution tables, séance package, evidence papers).
 COPY data ./data
 COPY datasets ./datasets
+# Source registry (licences, cadences) read by the data loaders (resolution, integrity).
+COPY pipelines/sources.toml ./pipelines/sources.toml
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen --no-dev
 

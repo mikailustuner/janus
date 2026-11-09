@@ -24,6 +24,14 @@ browser ─HTTPS─▶ Cloudflare ─tunnel (outbound only)─▶ cloudflared �
 | `env.example` | Template of `STACK_DIR/.env` (mode 600, secrets generated on the server) |
 | `cloudflared.config.yml.example` | Tunnel ingress: `janusmeds.org → web:3000`, everything else 404 |
 | `check_compose.py` | CI check of the hardening rules on the resolved compose file |
+| `deploy.sh <commit>` / `rollback.sh [tag]` | Build on the server, migrate, swap, check; roll back on failure |
+| `verify-isolation.sh` | Probes from each Janus network: server ports, other networks, metadata must be closed |
+| `smoke.sh internal\|<url> [tag]` | Pages in two languages, public API routes, security headers, deployed commit |
+| `firewall.sh` + `janus-firewall.service` | Host rules (owner, sudo), re-applied at boot |
+| `sync-data.sh` | Developer machine → server copy of the built data runs (never TİTCK) |
+| `titck-refresh.sh` + `janus-titck.{service,timer}` | Weekly TİTCK fetch on the server, then `load-data.sh` |
+| `load-data.sh` | Evidence, cascade and resolution loaders into the database |
+| `pipelines.Dockerfile` | Image for pipeline jobs that must run on the server |
 
 ## Check locally
 ```bash

@@ -1,0 +1,15 @@
+# Re-applies deploy/firewall.sh after every boot, once Docker has created its chains.
+# Install (owner): sudo install -m 644 deploy/janus-firewall.service /etc/systemd/system/
+#   then edit ExecStart to the absolute path of firewall.sh, and: sudo systemctl enable --now janus-firewall
+[Unit]
+Description=Janus container isolation rules
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/bin/bash STACK_DIR/src/deploy/firewall.sh
+
+[Install]
+WantedBy=multi-user.target

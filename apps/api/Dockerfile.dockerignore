@@ -8,4 +8,5 @@
 !apps/api/migrations/**
 !data/**
 !datasets/**
+!pipelines/sources.toml
 **/__pycache__

@@ -53,16 +53,23 @@ jobs:
             docker compose -f deploy/compose.yml --profile migrate config --format json \
             | python3 deploy/check_compose.py
 
+      - name: Deploy scripts pass shellcheck
+        run: shellcheck -x -P deploy deploy/*.sh
+
       - name: API image starts outside the repository layout (deploy task 1)
         run: |
           docker build -q -t janus-api:ci -f apps/api/Dockerfile .
-          docker run --rm --read-only --user 10001 janus-api:ci python -c "
-          from fastapi.testclient import TestClient
-          from janus.main import app
-          c = TestClient(app)
-          assert c.get('/health').status_code == 200
-          assert c.get('/seance/catalogue').status_code == 200, 'séance package missing from the image'
-          "
+          docker run -d --name api-ci --read-only --tmpfs /tmp --user 10001 janus-api:ci
+          for i in $(seq 1 30); do
+            docker exec api-ci python -c "import urllib.request as u; u.urlopen('http://127.0.0.1:8000/health', timeout=2)" 2>/dev/null && break
+            sleep 1
+          done
+          docker exec api-ci python -c "
+          import urllib.request as u
+          for path in ('/health', '/seance/catalogue'):
+              assert u.urlopen('http://127.0.0.1:8000' + path, timeout=5).status == 200, path
+          " || { docker logs api-ci | tail -20; exit 1; }
+          docker rm -f api-ci
 
   web:
     name: Web (lint, types, tests)

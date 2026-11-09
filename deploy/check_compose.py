@@ -22,6 +22,8 @@ READ_ONLY_MOUNTS = {"api": {"/data"}, "cloudflared": {"/etc/cloudflared"}}
 
 def problems(config: dict[str, object]) -> list[str]:
     out: list[str] = []
+    if config.get("name") != "janus-public":
+        out.append("project name must be janus-public (never the development project `janus`)")
     services = config.get("services")
     assert isinstance(services, dict)
     if set(services) != set(NETWORKS):

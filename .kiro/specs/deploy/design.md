@@ -5,7 +5,9 @@
 browser ──HTTPS──▶ Cloudflare edge ──(outbound tunnel)──▶ cloudflared ──▶ web:3000 ──/api/*──▶ api:8000 ──▶ postgres:5432
                                                      [ janus-edge ]      [ janus-edge + janus-internal ]  [ janus-internal (internal: true) ]
 ```
-Everything lives in one directory on the Host (`STACK_DIR`), as one Compose project named `janus`.
+Everything lives in one directory on the Host (`STACK_DIR`), as one Compose project named
+`janus-public` (never `janus`, the local development project: the task 2 rehearsal showed that a
+shared name lets one stack replace the other's containers; `check_compose.py` enforces it).
 
 ## 2. Layout on the Host
 ```
@@ -68,8 +70,13 @@ fail; `web → api:8000` and `api → postgres:5432` must succeed; `cloudflared 
   `retractions`, `canon`, `canon_gold`, `tm_*`, `faers_onset`, light face, time machine and cascades
   with `rsync` over the owner's private network into `data/<job>/runs/<run-id>/`, then flips `current` with
   `ln -sfn` + `mv -T` (atomic rename). Never `titck` (Req 5.2). ≈ 200 MB.
-- The TİTCK list is fetched on the Host by a one-off `pipelines` container on a third network
-  `janus-jobs` (egress allowed, same DOCKER-USER drops), writing to `data/titck/`. Weekly refresh by a
+- The TİTCK list is fetched on the Host by a one-off container of `deploy/pipelines.Dockerfile` on a
+  third network `janus-public-jobs` (`172.31.252.0/24`, egress allowed, same firewall rules),
+  writing to `data/artifacts/titck/` (`titck-refresh.sh`).
+- Resolution, cascade and evidence data live in Postgres, not in files: `load-data.sh` runs the
+  loaders (`janus.integrity.load` → `janus.cascades.load` → `janus.resolution.load`, the order of
+  cascade-engine §5) in one-off API containers. The API image carries the committed `data/`,
+  `datasets/` and `pipelines/sources.toml` these loaders and the séance routes read. Weekly refresh by a
   user systemd timer. The API image never fetches.
 
 ## 6. Release flow (`deploy.sh <commit>`)
@@ -77,7 +84,7 @@ fail; `web → api:8000` and `api → postgres:5432` must succeed; `cloudflared 
 2. Build `janus-api:<commit>` and `janus-web:<commit>` (`JANUS_COMMIT` build arg). On failure: stop, nothing changed.
 3. `docker compose run --rm migrate` with the new API image.
 4. `JANUS_TAG=<commit> docker compose up -d --wait` (healthchecks gate the swap).
-5. `verify-isolation.sh` and `smoke.sh http://web:3000` from inside the edge network; on failure,
+5. `verify-isolation.sh` and `smoke.sh internal <tag>` from inside the edge network; on failure,
    `rollback.sh` (re-up with the previous tag from `releases.log`). Migrations are forward-only and
    backward-compatible within one release (existing rule), so rollback needs no downgrade.
 6. Append the commit to `releases.log`; keep the last 3 image tags, prune older ones.
@@ -104,6 +111,17 @@ failures in a row. No health data in the check.
 | C6 | `nmap -Pn` of the public IP before and after: same open ports | 8.3 |
 | C7 | API logs after the smoke test contain no route parameters or bodies (log-guard regex) | 4.3 |
 
-## 10. Open items
+## 10. Rehearsal findings (task 2, 2026-11-09)
+- The API image could not start (repository-root paths at import) and lacked `data/`, `datasets/`;
+  fixed in task 1, now checked in CI.
+- The isolation probe passed with nothing blocked: `docker run` without `-i` gave Python an empty
+  program. Fixed; every probe now reports how many targets it checked, and a positive control
+  (a host listener on all interfaces) must show as open before the firewall and closed after.
+- `firewall.sh` was tested in an isolated Docker-in-Docker host: before, containers of both Janus
+  networks reached a host listener; after, the host, other networks and metadata were closed while
+  the edge network kept its own peers and the internet. Idempotent; `--remove` clears all 21 rules.
+- A failed check after `up` rolled back to the previous release automatically.
+
+## 11. Open items
 - Host hardening outside Janus is tracked in the owner's private notes, not here.
 - Privacy page: add a sentence on Cloudflare as the network provider (Req 4.4), five languages.
