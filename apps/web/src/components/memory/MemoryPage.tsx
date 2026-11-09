@@ -1,8 +1,9 @@
 "use client";
 /**
- * List-level Collective Memory (design §9, Req 16.2, 16.8–16.12): four separate panels — FAERS for
- * the medicines together, FAERS by region, donated reports, doctor-confirmed outcomes. Numbers are
- * never summed or compared across layers. Assessments stay out of the lists.
+ * List-level Collective Memory (design §9, §21, Req 16.2, 16.8–16.12, 29): four separate panels —
+ * FAERS for the medicines together, FAERS by region, donated reports, doctor-confirmed outcomes —
+ * with a filter that shows all of them by default. Numbers are never summed or compared across
+ * layers. Assessments stay out of the lists.
  */
 import { useLocale } from "next-intl";
 import { useMemo, useState } from "react";
@@ -14,16 +15,25 @@ import type {
   SharedOut,
   SnapshotOut,
 } from "@/api/contracts";
+import {
+  Disclosure,
+  LargeTitle,
+  SegmentedControl,
+  StatGrid,
+  StatTile,
+  SummaryCard,
+} from "@/components/cards";
 import { formatCount, formatDate, formatShare } from "@/components/format";
 import { keyName } from "@/components/names";
 import { EmergencyNotice } from "@/components/EmergencyNotice";
 import { SafetyLine } from "@/components/SafetyLine";
 import { StateView } from "@/components/StateView";
-import { Card, PageTitle, SectionTitle } from "@/components/ui";
+import { Card } from "@/components/ui";
 import { inputKey, toEvaluateIn } from "@/flow/evaluate";
 import { resultCache, useSession } from "@/flow/janus";
 import { eventKeyOf } from "@/flow/locator";
 import { noticeKey, ratioOf, sharedPanel, splitCaveats } from "@/flow/memory";
+import { memoryPanels, type MemoryFilter } from "@/flow/memory-filter";
 import { useCall, type CallState } from "@/flow/useCall";
 import { listIngredientKeys } from "@/store/list";
 import { useT } from "@/theme/words";
@@ -70,26 +80,37 @@ function Notices({
   const caveats = splitCaveats(codes.map(noticeKey));
   return (
     <>
+      {/* Req 28.5: these caveats stay outside the fold wherever counts are shown. */}
       {caveats.visible.length ? (
-        <ul className="flex flex-col gap-2 text-sm">
+        <ul className="flex flex-col gap-2 border-s-2 border-line ps-3 text-sm">
           {caveats.visible.map((k) => (
             <li key={k}>{say(k, window)}</li>
           ))}
         </ul>
       ) : null}
       {caveats.folded.length ? (
-        <details>
-          <summary className="flex min-h-11 cursor-pointer items-center font-bold">
-            {t("MemoryView.detailsHeading")}
-          </summary>
-          <ul className="flex flex-col gap-2 pt-2 text-sm">
+        <Disclosure
+          summary={t("MemoryView.detailsHeading")}
+          className="border-t border-line"
+        >
+          <ul className="flex flex-col gap-2 text-sm">
             {caveats.folded.map((k) => (
               <li key={k}>{say(k, window)}</li>
             ))}
           </ul>
-        </details>
+        </Disclosure>
       ) : null}
     </>
+  );
+}
+
+/** A region and its value as one row: the label leading, the value trailing (Settings style). */
+function ValueRow({ label, value }: { label: string; value: string }) {
+  return (
+    <li className="flex flex-row flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5">
+      <span>{label}</span>
+      <span className="font-bold">{value}</span>
+    </li>
   );
 }
 
@@ -122,33 +143,46 @@ function Combination({
             reports: s.reports,
             events: s.events,
           }));
+  const total = c.combination.reports;
   return (
-    <Card aria-labelledby="combination" data-testid="memory-combination">
-      <p className="text-sm text-muted">{t("MemoryView.pairTitle")}</p>
-      <SectionTitle id="combination">
-        {t("MemoryView.combinationTitle")}
-      </SectionTitle>
-      <p>
-        {t("MemoryView.combinationReports", { count: c.combination.reports })}
-      </p>
-      <p className="text-sm">
+    <SummaryCard
+      title={t("MemoryView.combinationTitle")}
+      id="combination"
+      eyebrow={t("MemoryView.pairTitle")}
+      data-testid="memory-combination"
+    >
+      {/* A big number only when reports name all the medicines; a large zero next to the pairs'
+          counts would read as "no reports at all" (Req 29.4). */}
+      {total > 0 ? (
+        <StatGrid>
+          <StatTile
+            value={formatCount(total, locale)}
+            label={t("Cards.label.reports", { count: total })}
+            sentence={t("MemoryView.combinationReports", { count: total })}
+          />
+        </StatGrid>
+      ) : (
+        <p className="font-bold">
+          {t("MemoryView.combinationReports", { count: total })}
+        </p>
+      )}
+      <p className="text-sm text-muted">
         {t(
           `Memory.codes.${c.level === "combination" ? "reported_together_only" : c.level === "pairwise" ? "pairwise_shown" : "single_shown"}`,
         )}
       </p>
-      <ul className="flex flex-col gap-2">
+      <ul className="grouped-plain border-y border-line">
         {groups.map((g) => (
-          <li
-            key={g.keys.join()}
-            className="flex flex-col gap-1 border-t border-line pt-2"
-          >
-            <span className="font-bold">{g.keys.map(name).join(" + ")}</span>
-            <span>{t("MemoryView.reports", { count: g.reports })}</span>
+          <li key={g.keys.join()} className="flex flex-col gap-1">
+            <span className="flex flex-wrap items-baseline justify-between gap-x-4">
+              <span className="font-bold">{g.keys.map(name).join(" + ")}</span>
+              <span>{t("MemoryView.reports", { count: g.reports })}</span>
+            </span>
             {g.events.length ? (
-              <details>
-                <summary className="flex min-h-11 cursor-pointer items-center text-sm font-bold">
-                  {t("MemoryView.eventsHeading")}
-                </summary>
+              <Disclosure
+                summary={t("MemoryView.eventsHeading")}
+                summaryClassName="text-sm"
+              >
                 <ul className="flex flex-col gap-1 text-sm">
                   {g.events.slice(0, 10).map((e) => {
                     const r = ratioOf(e.stats);
@@ -174,7 +208,7 @@ function Combination({
                   })}
                 </ul>
                 <p className="text-sm text-muted">{t("Memory.meddra")}</p>
-              </details>
+              </Disclosure>
             ) : null}
           </li>
         ))}
@@ -189,7 +223,7 @@ function Combination({
           date: formatDate(c.snapshot.snapshot_date, locale),
         })}
       </p>
-    </Card>
+    </SummaryCard>
   );
 }
 
@@ -203,16 +237,19 @@ function Regions({
   const t = useT();
   const locale = useLocale();
   return (
-    <Card aria-labelledby="regions" data-testid="memory-regions">
-      <SectionTitle id="regions">{t("MemoryView.regionsTitle")}</SectionTitle>
-      <ul className="flex flex-col gap-1">
+    <SummaryCard
+      title={t("MemoryView.regionsTitle")}
+      id="regions"
+      eyebrow={t("MemoryView.pairTitle")}
+      data-testid="memory-regions"
+    >
+      <ul className="grouped-plain border-y border-line">
         {r.rows.map((row) => (
-          <li key={row.region}>
-            {t("MemoryView.cell", {
-              region: t(`Common.region.${row.region}`),
-              value: t("MemoryView.reports", { count: row.reports }),
-            })}
-          </li>
+          <ValueRow
+            key={row.region}
+            label={t(`Common.region.${row.region}`)}
+            value={t("MemoryView.reports", { count: row.reports })}
+          />
         ))}
       </ul>
       <p>
@@ -248,7 +285,7 @@ function Regions({
         window={r.snapshot.window}
         snapshot={snapshot}
       />
-    </Card>
+    </SummaryCard>
   );
 }
 
@@ -257,22 +294,26 @@ function Shared({ s, title }: { s: SharedOut; title: string }) {
   const locale = useLocale();
   const p = sharedPanel(s);
   return (
-    <Card aria-label={title} data-testid={`memory-${s.layer}`}>
-      <SectionTitle>{title}</SectionTitle>
+    <Card
+      aria-label={title}
+      data-testid={`memory-${s.layer}`}
+      className="sm:p-5"
+    >
+      <h2 className="font-body text-lg leading-snug font-bold">{title}</h2>
       {p.status !== "ok" ? (
         <p>{t(`Memory.codes.${p.status}`)}</p>
       ) : (
-        <ul className="flex flex-col gap-1">
+        <ul className="grouped-plain border-t border-line">
           {p.cells.map((c) => (
-            <li key={c.region}>
-              {t("MemoryView.cell", {
-                region: t(`Common.region.${c.region}`),
-                value:
-                  c.hidden || c.value === null
-                    ? t("Memory.codes.hidden_under_20_noise_added")
-                    : formatCount(c.value, locale),
-              })}
-            </li>
+            <ValueRow
+              key={c.region}
+              label={t(`Common.region.${c.region}`)}
+              value={
+                c.hidden || c.value === null
+                  ? t("Memory.codes.hidden_under_20_noise_added")
+                  : formatCount(c.value, locale)
+              }
+            />
           ))}
         </ul>
       )}
@@ -290,6 +331,7 @@ export function MemoryPage() {
     [session.items],
   );
   const [chosen, setChosen] = useState<string[]>([]);
+  const [filter, setFilter] = useState<MemoryFilter>("all");
   const keys = allKeys.length <= 20 ? allKeys : chosen;
   const built = session.ready ? toEvaluateIn(session.items) : null;
   const result = built?.ok
@@ -345,7 +387,8 @@ export function MemoryPage() {
   if (!session.ready || !vocab) return <StateView state="loading" />;
   const snap = snapshot.status === "ok" ? snapshot.data : null;
   // Rule 10, Req 7.8: when an event with a safety line can be shown here (the findings' events, or
-  // the events of the combination panel), the emergency notice comes first on the screen.
+  // the events of the combination panel), the emergency notice comes first on the screen,
+  // whatever the filter.
   const combinationLines =
     combination.status === "ok"
       ? [
@@ -361,10 +404,18 @@ export function MemoryPage() {
     : null;
   const emergencyFirst =
     combinationLines || events.some((e) => vocab.vocab.events[e]?.safety_line);
+  const show = memoryPanels(filter);
   return (
     <>
       {emergencyFirst ? <EmergencyNotice /> : null}
-      <PageTitle>{t("MemoryView.title")}</PageTitle>
+      <LargeTitle
+        title={t("MemoryView.title")}
+        summary={
+          keys.length
+            ? t("Cards.memory.summary", { count: keys.length })
+            : undefined
+        }
+      />
       <p className="max-w-[72ch]">{t("MemoryView.intro")}</p>
       {snap ? (
         <p className="text-sm text-muted">
@@ -383,7 +434,7 @@ export function MemoryPage() {
             n === "counts_built_against_other_dataset",
         )
         .map((n) => (
-          <p key={n} role="status" className="card p-3 text-sm">
+          <p key={n} role="status" className="card p-4 text-sm">
             {t(`Memory.codes.${n}`)}
           </p>
         ))}
@@ -412,45 +463,76 @@ export function MemoryPage() {
           </ul>
         </Card>
       ) : null}
+      {keys.length ? (
+        <SegmentedControl
+          legend={t("Cards.show")}
+          name="memory-filter"
+          value={filter}
+          onChange={setFilter}
+          className="max-w-[720px]"
+          options={[
+            { value: "all", label: t("Cards.memory.all") },
+            { value: "together", label: t("Cards.memory.together") },
+            { value: "regions", label: t("MemoryView.regionsTitle") },
+            { value: "janus", label: t("Cards.memory.janus") },
+          ]}
+        />
+      ) : null}
       {/* Desktop (Req 27): the combination panel beside the regional and shared panels. */}
-      <div className="grid gap-5 lg:grid-cols-2 lg:items-start">
-        <div className="flex min-w-0 flex-col gap-5">
-          {keys.length < 2 ? (
-            <StateView state="empty" message={t("MemoryView.fewKeys")} />
-          ) : (
-            <Panel call={combination}>
-              {(c) => <Combination c={c} vocab={vocab} snapshot={snap} />}
-            </Panel>
-          )}
-        </div>
-        <div className="flex min-w-0 flex-col gap-5">
-          <Panel call={regions}>
-            {(r) => <Regions r={r} snapshot={snap} />}
-          </Panel>
-          {events.length ? (
-            <label className="flex flex-col gap-1">
-              <span className="font-bold">{t("MemoryView.eventPicker")}</span>
-              <select
-                value={event ?? ""}
-                onChange={(e) => setEventPick(e.target.value)}
-                className="min-h-11 rounded-[var(--radius-button)] border-2 border-muted bg-surface px-3 text-fg"
-              >
-                {events.map((e) => (
-                  <option key={e} value={e} className="bg-bg text-fg">
-                    {vocab.vocab.events[e]?.label ?? e}
-                  </option>
-                ))}
-              </select>
-            </label>
-          ) : null}
-          {chosenLine ? <SafetyLine code={chosenLine} /> : null}
-          <Panel call={contributions}>
-            {(s) => <Shared s={s} title={t("MemoryView.donatedTitle")} />}
-          </Panel>
-          <Panel call={outcomes}>
-            {(s) => <Shared s={s} title={t("MemoryView.outcomesTitle")} />}
-          </Panel>
-        </div>
+      <div
+        className={`grid gap-group lg:items-start ${filter === "all" ? "lg:grid-cols-2" : ""}`}
+      >
+        {show.combination ? (
+          <div className="flex min-w-0 flex-col gap-group">
+            {keys.length < 2 ? (
+              <StateView state="empty" message={t("MemoryView.fewKeys")} />
+            ) : (
+              <Panel call={combination}>
+                {(c) => <Combination c={c} vocab={vocab} snapshot={snap} />}
+              </Panel>
+            )}
+          </div>
+        ) : null}
+        {show.regions || show.janus ? (
+          <div className="flex min-w-0 flex-col gap-group">
+            {show.regions ? (
+              <Panel call={regions}>
+                {(r) => <Regions r={r} snapshot={snap} />}
+              </Panel>
+            ) : null}
+            {show.janus ? (
+              <>
+                {events.length ? (
+                  <label className="flex flex-col gap-1">
+                    <span className="group-header">
+                      {t("MemoryView.eventPicker")}
+                    </span>
+                    <select
+                      value={event ?? ""}
+                      onChange={(e) => setEventPick(e.target.value)}
+                      className="min-h-11 rounded-[var(--radius-button)] border-2 border-muted bg-surface px-3 text-fg"
+                    >
+                      {events.map((e) => (
+                        <option key={e} value={e} className="bg-bg text-fg">
+                          {vocab.vocab.events[e]?.label ?? e}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                ) : null}
+                {chosenLine ? <SafetyLine code={chosenLine} /> : null}
+                <Panel call={contributions}>
+                  {(s) => <Shared s={s} title={t("MemoryView.donatedTitle")} />}
+                </Panel>
+                <Panel call={outcomes}>
+                  {(s) => (
+                    <Shared s={s} title={t("MemoryView.outcomesTitle")} />
+                  )}
+                </Panel>
+              </>
+            ) : null}
+          </div>
+        ) : null}
       </div>
     </>
   );

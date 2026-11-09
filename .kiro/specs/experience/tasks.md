@@ -339,7 +339,7 @@
   - 29.1 P31 (`src/passport/summary.test.ts`). _Requirements: 29.2, 29.3, 29.7_
   - **Checkpoint:** vitest and passport e2e green; commit.
 
-- [ ] 30. Collective Memory (`components/memory/MemoryPage.tsx`, `src/flow/memory-filter.ts`)
+- [x] 30. Collective Memory (`components/memory/MemoryPage.tsx`, `src/flow/memory-filter.ts`)
   - Large title and summary, segmented filter (All default), panels as summary cards with report tiles.
   - 30.1 P35 (`src/flow/memory-filter.test.ts`). _Requirements: 29.2, 29.4, 29.7, 7_
   - **Checkpoint:** demo-flow e2e green; commit.
