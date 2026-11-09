@@ -277,10 +277,11 @@ describe("states (task 12.3)", () => {
     expect(t).toContain(
       "Germany has no open product database that Janus can check.",
     );
-    expect(m).toContain('<th scope="row"');
+    // One grouped description list at every width (experience Req 29.3, DP56).
+    expect(m).toContain("<dt");
     expect(m).toContain("<dl");
     // own source of a German box typed by name is the Germany row, shown last
-    const rows = [...m.matchAll(/<th scope="row"[^>]*>(.*?)<\/th>/g)].map((x) =>
+    const rows = [...m.matchAll(/<dt[^>]*>(.*?)<\/dt>/g)].map((x) =>
       text(x[1]!),
     );
     expect(rows.at(-1)).toContain("Germany");

@@ -1,20 +1,30 @@
 "use client";
 /**
- * Results (experience design §9, Req 1.3, 14, 7): the emergency notice first when a safety line
- * is shown, then the groups (form confirmed, then product form not confirmed), chains, the
- * medicines with their abrupt-stop lines and not-checked entries, and the scope. Words come from
- * the catalogues and the generated vocabulary; the English canonical sentences are not shown.
+ * Results (experience design §9, §21, Req 1.3, 14, 7, 29): the emergency notice first when a
+ * safety line is shown, the large title with the one-line summary, then the groups (form
+ * confirmed, then product form not confirmed), chains, the medicines with their abrupt-stop lines
+ * and not-checked entries, and the scope. Words come from the catalogues and the generated
+ * vocabulary; the English canonical sentences are not shown.
  */
+import { useLocale } from "next-intl";
 import type { ReactNode } from "react";
 
 import type { CascadeResult } from "@/api/contracts";
 import { AbruptStopLine } from "@/components/AbruptStopLine";
+import {
+  GroupedList,
+  LargeTitle,
+  Row,
+  StatGrid,
+  StatTile,
+} from "@/components/cards";
 import { EmergencyNotice } from "@/components/EmergencyNotice";
+import { formatCount } from "@/components/format";
 import { TimelineSummary } from "@/components/medicines/Timeline";
 import { keyName } from "@/components/names";
 import { SafetyLine } from "@/components/SafetyLine";
 import { StateView } from "@/components/StateView";
-import { ButtonLink, Card, PageTitle, SectionTitle } from "@/components/ui";
+import { ButtonLink, Card, SectionTitle } from "@/components/ui";
 import { resultsView } from "@/flow/findings";
 import { useSession } from "@/flow/janus";
 import { useEvaluation } from "@/flow/useEvaluation";
@@ -39,6 +49,7 @@ export function ResultsBody({
 }) {
   const t = useT();
   const w = useThemeWord();
+  const locale = useLocale();
   const view = resultsView(result, vocab);
   if (view.kind === "unavailable")
     return <StateView state="error" messageKey="Findings.unavailable" />;
@@ -66,19 +77,21 @@ export function ResultsBody({
   return (
     <>
       {view.emergencyFirst ? <EmergencyNotice /> : null}
-      <PageTitle
-        eyebrow={t("Findings.checkedOf", {
-          items: boxNames.length,
-          total: view.rules.checked, // patterns actually checked (pharmacologist review A2)
-        })}
-      >
-        <span data-testid="finding-count">
-          {w("Findings.count", { count })}
-        </span>
-      </PageTitle>
+      <LargeTitle
+        title={w("Findings.title")}
+        summary={
+          <>
+            <span data-testid="finding-count">
+              {w("Findings.count", { count })}
+            </span>
+            {" · "}
+            {t("Cards.results.medicinesChecked", { count: boxNames.length })}
+          </>
+        }
+      />
       {/* Desktop (Req 27): findings on the left at reading width, a sticky aside on the right. */}
-      <div className="grid gap-5 lg:grid-cols-[minmax(0,72ch)_minmax(300px,1fr)] lg:items-start">
-        <div className="flex min-w-0 flex-col gap-5">
+      <div className="grid gap-group lg:grid-cols-[minmax(0,72ch)_minmax(300px,1fr)] lg:items-start">
+        <div className="flex min-w-0 flex-col gap-group">
           {view.safetyLines.length ? (
             <Card aria-labelledby="safety">
               <SectionTitle id="safety">
@@ -90,7 +103,7 @@ export function ResultsBody({
             </Card>
           ) : null}
           {view.noPattern ? (
-            <p className="card p-4 text-lg" data-testid="no-pattern">
+            <p className="card p-5 text-lg" data-testid="no-pattern">
               {t("Findings.noPattern")}
             </p>
           ) : null}
@@ -101,13 +114,13 @@ export function ResultsBody({
               }
               className="flex flex-col gap-3"
             >
-              {/* A group heading only when both groups are shown (the page title names the findings). */}
+              {/* A group heading only when both groups are shown (the summary names the findings). */}
               {view.unconfirmed.length ? (
-                <SectionTitle id="group-confirmed">
+                <h2 id="group-confirmed" className="group-header">
                   {w("Findings.groupConfirmed")}
-                </SectionTitle>
+                </h2>
               ) : null}
-              <ul className="flex flex-col gap-3">
+              <ul className="flex flex-col gap-4">
                 {view.confirmed.map(card)}
               </ul>
             </section>
@@ -117,81 +130,98 @@ export function ResultsBody({
               aria-labelledby="group-unconfirmed"
               className="flex flex-col gap-3"
             >
-              <SectionTitle id="group-unconfirmed">
+              <h2 id="group-unconfirmed" className="group-header">
                 {t("Findings.groupUnconfirmed")}
-              </SectionTitle>
-              <p>
+              </h2>
+              <p className="px-row-x text-muted">
                 {t("Findings.groupUnconfirmedIntro", {
                   codes: view.unconfirmedCodes.join(", "),
                 })}
               </p>
-              <ul className="flex flex-col gap-3">
+              <ul className="flex flex-col gap-4">
                 {view.unconfirmed.map(card)}
               </ul>
             </section>
           ) : null}
           {view.chains.length ? (
-            <Card aria-labelledby="chains">
-              <SectionTitle id="chains">{t("Findings.chains")}</SectionTitle>
-              <p>{t("Findings.chainsIntro")}</p>
-              <ul className="list-disc pl-5">
-                {view.chains.map((c) => (
-                  <li key={c.chainId}>
+            <GroupedList
+              header={t("Findings.chains")}
+              headingId="chains"
+              footer={
+                view.chainsTruncated ? (
+                  <p>{t("Findings.chainsTruncated")}</p>
+                ) : undefined
+              }
+            >
+              <Row>
+                <p>{t("Findings.chainsIntro")}</p>
+              </Row>
+              {view.chains.map((c) => (
+                <Row key={c.chainId}>
+                  <p className="font-bold">
                     {c.keys.map((k) => keyName(vocab, k, null)).join(" → ")}
-                  </li>
-                ))}
-              </ul>
-              {view.chainsTruncated ? (
-                <p className="text-sm">{t("Findings.chainsTruncated")}</p>
-              ) : null}
-            </Card>
+                  </p>
+                </Row>
+              ))}
+            </GroupedList>
           ) : null}
         </div>
-        <aside className="flex min-w-0 flex-col gap-5 lg:sticky lg:top-4">
-          <Card aria-labelledby="checked-medicines">
-            <SectionTitle id="checked-medicines">
-              {t("Findings.medicinesHeading")}
-            </SectionTitle>
-            <ul className="flex flex-col gap-2">
-              {boxNames.map((name, i) => {
-                const nc = view.notChecked.filter((n) => n.item === i);
-                return (
-                  <li
-                    key={i}
-                    className="flex flex-col gap-1 border-t border-line pt-2 first:border-0 first:pt-0"
-                  >
-                    <span className="font-bold">{name}</span>
-                    {view.warnedItems.includes(i) ? (
-                      <AbruptStopLine vocab={vocab} />
-                    ) : null}
-                    {nc.map((n) => (
-                      <span key={n.position} className="text-sm">
-                        {t("Findings.notChecked")}:{" "}
-                        {sentence(vocab, `not_checked.${n.reason}`)}
-                      </span>
-                    ))}
-                  </li>
-                );
-              })}
-            </ul>
-          </Card>
-          <Card aria-labelledby="scope">
-            <SectionTitle id="scope">{t("Findings.scope")}</SectionTitle>
-            <p>{t("Findings.scopeChecked", view.rules)}</p>
-            <ul className="flex flex-col gap-1 text-sm">
-              {view.cannotCheck.map((r) => (
-                <li key={r.ruleId}>
-                  {t("Findings.scopeRule", {
-                    row: r.row,
-                    cascade: cascadeText(r.ruleId),
-                    reason: t(
-                      `Findings.${r.kind === "disabled" ? "disabled" : "notMatchable"}.${r.reason}`,
-                    ),
+        <aside className="flex min-w-0 flex-col gap-group lg:sticky lg:top-4">
+          <GroupedList
+            header={t("Findings.medicinesHeading")}
+            headingId="checked-medicines"
+          >
+            {boxNames.map((name, i) => {
+              const nc = view.notChecked.filter((n) => n.item === i);
+              return (
+                <Row key={i}>
+                  <span className="font-bold">{name}</span>
+                  {view.warnedItems.includes(i) ? (
+                    <AbruptStopLine vocab={vocab} />
+                  ) : null}
+                  {nc.map((n) => (
+                    <span key={n.position} className="text-sm text-muted">
+                      {t("Findings.notChecked")}:{" "}
+                      {sentence(vocab, `not_checked.${n.reason}`)}
+                    </span>
+                  ))}
+                </Row>
+              );
+            })}
+          </GroupedList>
+          <GroupedList
+            header={t("Findings.scope")}
+            headingId="scope"
+            footer={
+              view.cannotCheck.length ? (
+                <ul className="flex flex-col gap-1">
+                  {view.cannotCheck.map((r) => (
+                    <li key={r.ruleId}>
+                      {t("Findings.scopeRule", {
+                        row: r.row,
+                        cascade: cascadeText(r.ruleId),
+                        reason: t(
+                          `Findings.${r.kind === "disabled" ? "disabled" : "notMatchable"}.${r.reason}`,
+                        ),
+                      })}
+                    </li>
+                  ))}
+                </ul>
+              ) : undefined
+            }
+          >
+            <Row className="gap-3">
+              <StatGrid>
+                <StatTile
+                  value={formatCount(view.rules.checked, locale)}
+                  label={t("Cards.label.patternsChecked", {
+                    count: view.rules.checked,
                   })}
-                </li>
-              ))}
-            </ul>
-          </Card>
+                />
+              </StatGrid>
+              <p>{t("Findings.scopeChecked", view.rules)}</p>
+            </Row>
+          </GroupedList>
           {aside}
         </aside>
       </div>
@@ -256,7 +286,7 @@ export function Results() {
           <div className="hidden lg:block">
             <TimelineSummary items={session.items} result={evaluation.result} />
           </div>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap lg:flex-col">
             {evaluation.result.findings.length ? (
               <ButtonLink href="/note">{t("Findings.makeNote")}</ButtonLink>
             ) : null}

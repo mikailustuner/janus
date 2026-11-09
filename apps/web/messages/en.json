@@ -1278,5 +1278,32 @@
     "notSent": "Janus does not send this file anywhere. Whoever receives it decides what their system does with it.",
     "notChecked": "The file contains the list as it was entered. It is not a medical record, and no health professional has checked it.",
     "saved": "Download started: {file}."
+  },
+  "Cards": {
+    "show": "Show",
+    "label": {
+      "reports": "{count, plural, one {report in FAERS} other {reports in FAERS}}",
+      "reportsAll": "{count, plural, one {report names all of them} other {reports name all of them}}",
+      "sources": "{count, plural, one {source in total} other {sources in total}}",
+      "checkedByDoi": "{count, plural, other {checked by DOI}}",
+      "patternsChecked": "{count, plural, one {pattern checked} other {patterns checked}}",
+      "cards": "{count, plural, one {card for this condition} other {cards for this condition}}",
+      "witnesses": "{count, plural, other {of 3 witnesses}}"
+    },
+    "results": {
+      "medicinesChecked": "{count, plural, one {# medicine checked} other {# medicines checked}}"
+    },
+    "passport": {
+      "summary": "{items, plural, one {# medicine} other {# medicines}} · {boxes, plural, one {# box} other {# boxes}}",
+      "listed": "Listed in {listed} of {checked, plural, one {# country} other {# countries}}",
+      "countries": "Countries",
+      "comparison": "Comparison"
+    },
+    "memory": {
+      "summary": "{count, plural, one {# active ingredient from your list} other {# active ingredients from your list}}",
+      "all": "All",
+      "together": "Medicines together",
+      "janus": "Reported through Janus"
+    }
   }
 }

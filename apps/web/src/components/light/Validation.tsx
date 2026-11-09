@@ -166,6 +166,8 @@ export function Validation() {
         <>
           <Card as="section" data-testid="validation-summary">
             <SectionTitle>{t("Light.validation.title")}</SectionTitle>
+            {/* No big number here: the hit count is only honest next to its chance baseline,
+                so the sentence carries both (safety audit F4). */}
             <p className="font-bold">
               {t(
                 "Light.validation.summary",

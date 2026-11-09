@@ -1278,5 +1278,32 @@
     "notSent": "Janus sendet diese Datei nirgendwohin. Wer sie erhält, entscheidet, was das eigene System damit macht.",
     "notChecked": "Die Datei enthält die Liste so, wie sie eingegeben wurde. Sie ist keine Patientenakte, und keine medizinische Fachperson hat sie geprüft.",
     "saved": "Download gestartet: {file}."
+  },
+  "Cards": {
+    "show": "Anzeigen",
+    "label": {
+      "reports": "{count, plural, one {Meldung in FAERS} other {Meldungen in FAERS}}",
+      "reportsAll": "{count, plural, one {Meldung nennt alle} other {Meldungen nennen alle}}",
+      "sources": "{count, plural, one {Quelle insgesamt} other {Quellen insgesamt}}",
+      "checkedByDoi": "{count, plural, other {per DOI abgeglichen}}",
+      "patternsChecked": "{count, plural, one {Muster geprüft} other {Muster geprüft}}",
+      "cards": "{count, plural, one {Karte für diesen Zustand} other {Karten für diesen Zustand}}",
+      "witnesses": "{count, plural, other {von 3 Zeugen}}"
+    },
+    "results": {
+      "medicinesChecked": "{count, plural, one {# Medikament geprüft} other {# Medikamente geprüft}}"
+    },
+    "passport": {
+      "summary": "{items, plural, one {# Medikament} other {# Medikamente}} · {boxes, plural, one {# Packung} other {# Packungen}}",
+      "listed": "In {listed} von {checked, plural, one {# Land} other {# Ländern}} gelistet",
+      "countries": "Länder",
+      "comparison": "Vergleich"
+    },
+    "memory": {
+      "summary": "{count, plural, one {# Wirkstoff aus Ihrer Liste} other {# Wirkstoffe aus Ihrer Liste}}",
+      "all": "Alle",
+      "together": "Medikamente zusammen",
+      "janus": "Über Janus gemeldet"
+    }
   }
 }

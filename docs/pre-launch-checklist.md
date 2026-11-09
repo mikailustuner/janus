@@ -150,3 +150,7 @@ remove the matching notice (and, for the Canon claims, set `expert_review = revi
   `status: active`, `category: patientspecified`); check EU EHDS rules on interoperability claims ("many health software
   systems can read"); say on the privacy page that the downloaded file is unencrypted and the receiver is responsible for
   it (`fhir-export` safety review A4, pre-launch notes).
+
+## Card design (experience Req 29, 2026-11-09)
+- [ ] **Native review of the `Cards` namespace:** TR stat-tile labels under a large figure (`label.sources`, `label.checkedByDoi`, `label.casesTop`, `passport.listed`), FR "Tout" vs "Tous" and ES "Todo" vs "Todos" for the Collective Memory filter, and every segment label at 375 px (see `.kiro/specs/experience/cards-localization-reviewer-review.md`).
+- [ ] **"Listed in n of m countries":** confirm with a pharmacist reviewer that the passport summary is not read as availability (the "being listed does not mean on sale" note stays on the same screen).

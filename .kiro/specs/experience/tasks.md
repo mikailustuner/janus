@@ -315,3 +315,53 @@
   > Skip, Replay; reduced motion and Save-Data request no video) and `e2e/home-scroll.spec.ts` (no long task while
   > scrolling, numbers in design §16); `prepaint.test.ts` (no face attribute) and `contrast.test.ts` (note paper
   > instead of the light face) updated. The door-mid stills and the JPEG poster were deleted.
+
+- [x] 26. *(Owner request 2026-11-09, enhancement item 1)* Card design: spec and steering
+  - Requirement 29 (EARS), design DP50–DP56, P31–P35 and §21; `.kiro/steering/design.md` section "Cards and layout
+    system" (spacing scale, radius tokens, grouped-list rules, summary-line rule, big-number rule, motion rule).
+    _Requirements: 29_
+  - **Checkpoint:** commit the spec.
+
+- [x] 27. Tokens and card primitives (`src/theme/tokens.css`, `src/app/globals.css`, `src/components/cards/*.tsx`)
+  - Layout tokens per theme (DP55) exposed through Tailwind; `LargeTitle`, `GroupedList` + `Row`, `SummaryCard`,
+    `StatTile` + `StatGrid`, `Disclosure` (DP51), `SegmentedControl` (DP52); `Cards` namespace in five languages.
+  - 27.1 Render tests (`src/components/cards/cards.test.tsx`): P32, P33. _Requirements: 29.1, 29.3, 29.4, 29.6, 29.7, 29.9_
+  - **Checkpoint:** lint, typecheck, vitest green; commit.
+
+- [x] 28. Results, finding detail, evidence and FAERS pair (`components/results/*`, `components/evidence/EvidenceView.tsx`,
+  `components/memory/PairPanel.tsx`, `CiBar.tsx`, `Shell.tsx` wide routes)
+  - Large title and summary (DP56), finding summary cards, grouped aside, stat tiles, improved CI bar, two-column detail.
+  - 28.1 P34 in `src/components/render.test.tsx`. _Requirements: 29.2–29.5, 29.10, 29.11_
+  - **Checkpoint:** vitest, demo-flow and states e2e green; commit.
+
+- [x] 29. Passport list and item (`src/passport/screens/*`, `src/passport/summary.ts`)
+  - Summary cards, "Listed in n of m countries", Countries / Comparison control, grouped source rows.
+  - 29.1 P31 (`src/passport/summary.test.ts`). _Requirements: 29.2, 29.3, 29.7_
+  - **Checkpoint:** vitest and passport e2e green; commit.
+
+- [x] 30. Collective Memory (`components/memory/MemoryPage.tsx`, `src/flow/memory-filter.ts`)
+  - Large title and summary, segmented filter (All default), panels as summary cards with report tiles.
+  - 30.1 P35 (`src/flow/memory-filter.test.ts`). _Requirements: 29.2, 29.4, 29.7, 7_
+  - **Checkpoint:** demo-flow e2e green; commit.
+
+- [x] 31. Research, light face, séance and page transitions (`components/research/Research.tsx`, `components/light/*`,
+  `components/seance/Seance.tsx`, `components/Shell.tsx`, `globals.css`)
+  - Large titles, row links, pills for conditions, tiles for totals and witnesses, grouped footers; `<main>` enter
+    animation after the first navigation (DP54). _Requirements: 29.1, 29.2, 29.4, 29.7, 29.8_
+  - **Checkpoint:** light and séance e2e green; commit.
+
+- [x] 32. Reviews, rendered checks and final checkpoint
+  - localization-reviewer and safety-auditor passes on the `Cards` namespace and on every moved sentence
+    (`cards-localization-reviewer-review.md`, `cards-safety-auditor-review.md`); fixes applied.
+  - Playwright smoke, routes (en, tr), demo-flow, passport, light, séance, states; screenshots of results, finding
+    detail, passport list and item, memory, research hypotheses and séance at 375 and 1440 in both themes, reviewed.
+    _Requirements: 29.10, 29.11_
+  - **Checkpoint:** lint, typecheck, vitest, build, e2e green; commit.
+  > Done 2026-11-09 (Claude Code): tasks 26–32 built as specified. Vitest 423 tests (P31–P35 new; `FC_PROFILE=ci`
+  > green); Playwright smoke, routes (en, tr), demo-flow, passport, light, séance, states: 77 passed at 375 and 1280 px.
+  > Reviews: `cards-localization-reviewer-review.md` (1 blocking: the 4-segment filter at 375 px, fixed with a
+  > responsive segment grid; 11 advisory, 6 applied) and `cards-safety-auditor-review.md` (1 blocking: a large "0
+  > reports" tile, fixed; 6 advisory, 4 applied: integrity-line order restored, the "listed ≠ on sale" note under the
+  > passport summary, no validation tile without its chance baseline, "reports name all of them" label). The passport
+  > screen test now checks the grouped description list instead of the table (DP56). Screenshots of the seven screens at
+  > 375 and 1440 px in both themes reviewed; pre-launch items added (native review of `Cards`, "listed" wording).

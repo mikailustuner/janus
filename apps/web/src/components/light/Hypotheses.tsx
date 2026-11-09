@@ -7,6 +7,7 @@
 import { useLocale } from "next-intl";
 import { useState } from "react";
 
+import { SegmentedControl, StatTile } from "@/components/cards";
 import { StateView } from "@/components/StateView";
 import { Button, Card, SectionTitle } from "@/components/ui";
 import { formatCount, formatRatio } from "@/components/format";
@@ -34,35 +35,27 @@ function GoalPicker({
 }) {
   const t = useT();
   const locale = useLocale();
+  // Many conditions with long names: the pills variant of the segmented control (DP52).
   return (
-    <fieldset className="flex min-w-0 flex-col gap-2">
-      <legend className="mb-2 font-semibold">
-        {t("Light.hypotheses.goal")}
-      </legend>
-      <div className="flex flex-wrap gap-2">
-        {goals.map((g) => (
-          <label
-            key={g.key}
-            className={`chip flex min-h-11 cursor-pointer items-center gap-2 rounded-2xl px-3 whitespace-normal ${value === g.key ? "outline outline-2 outline-accent" : ""}`}
-          >
-            <input
-              type="radio"
-              name="goal"
-              value={g.key}
-              checked={value === g.key}
-              onChange={() => onChange(g.key)}
-              className="size-4 accent-[var(--accent)]"
-            />
-            <span>
-              {nameIn(g.labels, locale, g.key)}{" "}
-              <span className="text-sm">
-                ({t("Light.hypotheses.goalCount", { count: g.candidates })})
-              </span>
+    <SegmentedControl
+      legend={t("Light.hypotheses.goal")}
+      legendVisible
+      name="goal"
+      variant="pills"
+      value={value}
+      onChange={onChange}
+      options={goals.map((g) => ({
+        value: g.key,
+        label: (
+          <>
+            {nameIn(g.labels, locale, g.key)}{" "}
+            <span className="text-sm font-normal">
+              ({t("Light.hypotheses.goalCount", { count: g.candidates })})
             </span>
-          </label>
-        ))}
-      </div>
-    </fieldset>
+          </>
+        ),
+      }))}
+    />
   );
 }
 
@@ -110,9 +103,20 @@ function CardsPanel({
   };
   return (
     <section className="flex flex-col gap-3" aria-live="polite">
-      <SectionTitle>
-        {t("Light.hypotheses.total", { total: d.total, goal: goalName })}
-      </SectionTitle>
+      <div className="flex flex-wrap items-center gap-4">
+        <StatTile
+          value={formatCount(d.total, locale)}
+          label={t("Cards.label.cards", { count: d.total })}
+          className="min-w-[9rem]"
+        />
+        <SectionTitle>
+          {/* The tile shows the total; the heading keeps the sentence for screen readers. */}
+          <span className="sr-only">
+            {t("Light.hypotheses.total", { total: d.total, goal: goalName })}
+          </span>
+          <span aria-hidden>{goalName}</span>
+        </SectionTitle>
+      </div>
       <p className="text-sm">{t("Light.ties")}</p>
       {summary.inverse_tested ? (
         <p className="text-sm">

@@ -158,6 +158,96 @@ describe("rendered screens", () => {
   });
 });
 
+// Feature: experience, Property P34: the card design keeps every required sentence where it was
+// required (Req 29.10, 28.5): the discuss sentence on every finding card, the visible caveats of
+// the FAERS pair outside every fold, the integrity line's sentences.
+function raw(
+  locale: Locale,
+  theme: "two-faces" | "glass",
+  node: React.ReactNode,
+): string {
+  return renderToStaticMarkup(
+    <NextIntlClientProvider
+      locale={locale}
+      messages={messages[locale]}
+      timeZone="UTC"
+    >
+      <ThemeOverride.Provider value={theme}>{node}</ThemeOverride.Provider>
+    </NextIntlClientProvider>,
+  ).replace(/&#x27;/g, "'");
+}
+
+/** The markup outside every `<details>` element. */
+const unfolded = (html: string) =>
+  html.replace(/<details[\s\S]*?<\/details>/g, "");
+
+describe("required sentences survive the cards (P34)", () => {
+  it("every finding card says it may be worth discussing with the doctor", () => {
+    check(
+      fc.property(
+        cascadeResultArb,
+        target,
+        ({ result, n }, { locale, theme }) => {
+          const boxes = Array.from({ length: n }, (_, i) => `Box ${i}`);
+          const html = raw(
+            locale,
+            theme,
+            <ResultsBody
+              result={result}
+              boxNames={boxes}
+              vocab={vocabs[locale]}
+            />,
+          );
+          const cards = html.split('data-testid="finding"').length - 1;
+          const discuss = messages[locale].Findings.discuss as string;
+          expect(html.split(discuss).length - 1).toBe(cards);
+        },
+      ),
+      { numRuns: 40 },
+    );
+  });
+  it("pair caveats stay outside the fold; the integrity line keeps its sentences", () => {
+    check(
+      fc.property(
+        fc.constantFrom(...EVIDENCE),
+        fc.constantFrom(...PAIRS),
+        target,
+        (ev, pair, { locale, theme }) => {
+          const m = messages[locale];
+          const panel = unfolded(
+            raw(
+              locale,
+              theme,
+              <PairPanel
+                pair={pair}
+                ingredient="x"
+                event="y"
+                snapshot={null}
+              />,
+            ),
+          );
+          const codes = [
+            ...pair.notices,
+            ...(pair.status === "ok" ? (pair.stats?.codes ?? []) : []),
+            ...(pair.status === "ok" && pair.stats?.assessment
+              ? [pair.stats.assessment]
+              : []),
+          ];
+          for (const c of ["spontaneous_reporting", "not_incidence", "weak"])
+            if (codes.includes(c)) {
+              const sentence = (m.Memory.codes[c] as string).split("{")[0]!;
+              expect(panel).toContain(sentence);
+            }
+          const ev2 = raw(locale, theme, <EvidenceBody resolution={ev} />);
+          expect(ev2).toContain('data-testid="integrity-line"');
+          expect(ev2).toContain(m.Evidence.line.about);
+        },
+      ),
+      { numRuns: 60 },
+    );
+  });
+});
+
 describe("home (Req 27)", () => {
   it("the pattern count is the rule base's", () => {
     for (const l of routing.locales) {

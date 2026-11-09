@@ -12,13 +12,14 @@ import { EvidenceBody } from "@/components/evidence/EvidenceView";
 import { PairPanel } from "@/components/memory/PairPanel";
 import { keyName } from "@/components/names";
 import { StateView } from "@/components/StateView";
+import { BackLink } from "@/components/cards";
 import { ButtonLink } from "@/components/ui";
 import { resultsView } from "@/flow/findings";
 import { useSession } from "@/flow/janus";
 import { parseLocator } from "@/flow/locator";
 import { useCall } from "@/flow/useCall";
 import { useEvaluation } from "@/flow/useEvaluation";
-import { useT } from "@/theme/words";
+import { useT, useThemeWord } from "@/theme/words";
 import { useVocabulary } from "@/vocabulary/use";
 
 import { FindingCard } from "./FindingCard";
@@ -39,6 +40,7 @@ function useHashIndex(): number | null | undefined {
 
 export function FindingDetail() {
   const t = useT();
+  const w = useThemeWord();
   const session = useSession();
   const vocab = useVocabulary();
   const evaluation = useEvaluation(session);
@@ -116,61 +118,66 @@ export function FindingDetail() {
   return (
     <>
       {fv.safetyLine ? <EmergencyNotice /> : null}
-      <ButtonLink href="/results" variant="quiet" className="self-start">
-        {t("Common.back")}
-      </ButtonLink>
-      <FindingCard
-        view={fv}
-        result={result}
-        boxNames={session.items.map((i) => i.boxName)}
-        vocab={vocab}
-        detail={false}
-      />
-      {evidence.status === "loading" ? (
-        <StateView state="loading" label={t("Evidence.loading")} />
-      ) : evidence.status === "error" ? (
-        <div className="flex flex-col gap-2">
-          <StateView
-            state="error"
-            messageKey={evidence.error.messageKey}
-            retry={evidence.retry}
+      <BackLink href="/results">{w("Findings.title")}</BackLink>
+      {/* From 1024 px the finding sits beside its evidence and reports (Req 29.11, DP56). */}
+      <div className="grid gap-group lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-start">
+        <div className="flex min-w-0 flex-col gap-group">
+          <FindingCard
+            view={fv}
+            result={result}
+            boxNames={session.items.map((i) => i.boxName)}
+            vocab={vocab}
+            detail={false}
           />
-          <ul className="mono text-sm">
-            {finding.evidence_ids.map((id) => (
-              <li key={id}>{id}</li>
-            ))}
-          </ul>
+          <div className="flex flex-wrap gap-3">
+            <ButtonLink href="/note">{t("Findings.makeNote")}</ButtonLink>
+            <ButtonLink href="/memory" variant="secondary">
+              {t("Findings.memory")}
+            </ButtonLink>
+          </div>
         </div>
-      ) : evidence.status === "ok" ? (
-        <EvidenceBody resolution={evidence.data} />
-      ) : null}
-      {locator ? (
-        pair.status === "loading" ? (
-          <StateView state="loading" label={t("MemoryView.loading")} />
-        ) : pair.status === "error" ? (
-          <StateView
-            state="error"
-            messageKey={pair.error.messageKey}
-            retry={pair.retry}
-          />
-        ) : pair.status === "ok" ? (
-          <PairPanel
-            pair={pair.data}
-            ingredient={keyName(
-              vocab,
-              finding.index.ingredient_key,
-              finding.index.label_en,
-            )}
-            event={eventLabel}
-            snapshot={snapshot.status === "ok" ? snapshot.data : null}
-          />
-        ) : null
-      ) : null}
-      <div className="flex flex-wrap gap-3">
-        <ButtonLink href="/note">{t("Findings.makeNote")}</ButtonLink>
-        <ButtonLink href="/memory" variant="secondary">
-          {t("Findings.memory")}
-        </ButtonLink>
+        <div className="flex min-w-0 flex-col gap-group">
+          {evidence.status === "loading" ? (
+            <StateView state="loading" label={t("Evidence.loading")} />
+          ) : evidence.status === "error" ? (
+            <div className="flex flex-col gap-2">
+              <StateView
+                state="error"
+                messageKey={evidence.error.messageKey}
+                retry={evidence.retry}
+              />
+              <ul className="mono text-sm">
+                {finding.evidence_ids.map((id) => (
+                  <li key={id}>{id}</li>
+                ))}
+              </ul>
+            </div>
+          ) : evidence.status === "ok" ? (
+            <EvidenceBody resolution={evidence.data} />
+          ) : null}
+          {locator ? (
+            pair.status === "loading" ? (
+              <StateView state="loading" label={t("MemoryView.loading")} />
+            ) : pair.status === "error" ? (
+              <StateView
+                state="error"
+                messageKey={pair.error.messageKey}
+                retry={pair.retry}
+              />
+            ) : pair.status === "ok" ? (
+              <PairPanel
+                pair={pair.data}
+                ingredient={keyName(
+                  vocab,
+                  finding.index.ingredient_key,
+                  finding.index.label_en,
+                )}
+                event={eventLabel}
+                snapshot={snapshot.status === "ok" ? snapshot.data : null}
+              />
+            ) : null
+          ) : null}
+        </div>
       </div>
     </>
   );

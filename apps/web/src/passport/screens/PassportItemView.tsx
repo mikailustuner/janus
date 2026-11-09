@@ -9,18 +9,27 @@ import { useLocale } from "next-intl";
 import { useEffect, useState } from "react";
 
 import { StateView } from "@/components/StateView";
-import { Button, ButtonLink, PageTitle } from "@/components/ui";
+import {
+  BackLink,
+  GroupedList,
+  LargeTitle,
+  Row,
+  SegmentedControl,
+} from "@/components/cards";
+import { Button, ButtonLink } from "@/components/ui";
 import { useT, type Translate } from "@/theme/words";
 
 import type { PresenceView } from "./usePassport";
 import { usePassport, usePresence } from "./usePassport";
 import type { PassportItem } from "../model";
 import { notSentReason } from "../request";
+import { presenceSummary } from "../summary";
 import { EntryForm, canEnter } from "./EntryForm";
 import {
   enteredForm,
   enteredStrength,
   PresenceRows,
+  type RowsView,
   strengthText,
 } from "./PresenceRows";
 
@@ -71,6 +80,7 @@ export function PassportItemBody({
   const t = useT();
   const locale = useLocale();
   const [editing, setEditing] = useState(false);
+  const [view, setView] = useState<RowsView>("countries");
   const reason = notSentReason(item);
   const answer =
     presence.status === "ok" ? presence.answers.get(item.id) : undefined;
@@ -80,47 +90,66 @@ export function PassportItemBody({
           count: answer.sources.filter((s) => s.status === "loaded").length,
         })
       : "";
+  const summary = answer && !reason ? presenceSummary(answer.item) : null;
+  const comparable = !!answer?.item.answers.some((a) => a.comparison);
+  const notices =
+    presence.status === "ok" && answer && !reason
+      ? answer.notices.filter(
+          (n) =>
+            n !== "unknown_ingredient_keys" ||
+            answer.item.unknown_keys.length > 0,
+        )
+      : [];
   return (
     <>
-      <ButtonLink href="/passport" variant="quiet" className="w-fit">
-        {t("Passport.back")}
-      </ButtonLink>
-      <PageTitle
+      <BackLink href="/passport">{t("Passport.title")}</BackLink>
+      <LargeTitle
         eyebrow={t(
           `Passport.origin.${item.origin.country ?? item.origin.region}`,
         )}
-      >
-        <span className="[overflow-wrap:anywhere]">{item.boxName}</span>
-      </PageTitle>
-      <h2 className="text-xl font-semibold">{t("Passport.detail.title")}</h2>
-      <p>{boxValues(t, item, locale)}</p>
-      {editable && canEnter(item) ? (
-        editing ? (
-          <EntryForm item={item} />
-        ) : (
-          <Button
-            variant="secondary"
-            className="w-fit"
-            onClick={() => setEditing(true)}
-          >
-            {t("Passport.entry.open")}
-          </Button>
-        )
+        title={<span className="[overflow-wrap:anywhere]">{item.boxName}</span>}
+        summary={
+          summary ? t("Cards.passport.listed", { ...summary }) : undefined
+        }
+      />
+      {/* "Listed" is not "on sale": the note sits right under the summary (safety audit F3). */}
+      {summary && answer?.item.answers.some((a) => a.status === "present") ? (
+        <p className="-mt-2 text-sm text-muted">{t("Passport.presentNote")}</p>
       ) : null}
       <p role="status" aria-live="polite" className="sr-only">
         {announce}
       </p>
-      {/* Desktop (Req 27): the rows beside an aside with the notes. */}
-      <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(260px,320px)] lg:items-start">
-        <div className="flex min-w-0 flex-col gap-4">
+      {/* Desktop (Req 27): the rows beside an aside with the box and the notes. */}
+      <div className="grid gap-group lg:grid-cols-[minmax(0,1fr)_minmax(280px,340px)] lg:items-start">
+        <div className="flex min-w-0 flex-col gap-group">
+          {/* This box's own values come first: what the comparisons are made with. */}
+          <GroupedList>
+            <Row>
+              <p>{boxValues(t, item, locale)}</p>
+              {editable && canEnter(item) ? (
+                editing ? (
+                  <EntryForm item={item} />
+                ) : (
+                  <Button
+                    variant="secondary"
+                    className="mt-2 w-fit"
+                    onClick={() => setEditing(true)}
+                  >
+                    {t("Passport.entry.open")}
+                  </Button>
+                )
+              ) : null}
+            </Row>
+          </GroupedList>
+          <h2 className="sr-only">{t("Passport.detail.title")}</h2>
           {reason === "homeopathic" ? (
-            <p className="card p-4 font-bold">{t("Passport.homeopathic")}</p>
+            <p className="card p-5 font-bold">{t("Passport.homeopathic")}</p>
           ) : reason ? (
-            <p className="card p-4 font-bold">
+            <p className="card p-5 font-bold">
               {t(`Passport.notCheckable.${reason}`)}
             </p>
           ) : presence.status === "loading" ? (
-            <div aria-busy="true" className="card flex flex-col gap-3 p-4">
+            <div aria-busy="true" className="card flex flex-col gap-3 p-5">
               <p>{t("Passport.states.loading")}</p>
               {[0, 1, 2].map((i) => (
                 <div
@@ -137,40 +166,50 @@ export function PassportItemBody({
             />
           ) : (
             <>
-              {presence.recordedOn ? (
-                <p className="text-sm text-muted">
-                  {t("Passport.states.recorded", { date: presence.recordedOn })}
-                </p>
+              {comparable ? (
+                <SegmentedControl
+                  legend={t("Cards.show")}
+                  name="presence-view"
+                  value={view}
+                  onChange={setView}
+                  options={[
+                    {
+                      value: "countries",
+                      label: t("Cards.passport.countries"),
+                    },
+                    {
+                      value: "comparison",
+                      label: t("Cards.passport.comparison"),
+                    },
+                  ]}
+                />
               ) : null}
               {answer.sources.some((s) => s.reason === "not_loaded") ? (
-                <p className="card p-3">{t("Passport.states.partial")}</p>
+                <p className="card p-4">{t("Passport.states.partial")}</p>
               ) : null}
               <PresenceRows
                 item={item}
                 out={answer.item}
                 sources={answer.sources}
+                view={view}
               />
+              {presence.recordedOn ? (
+                <p className="group-footer">
+                  {t("Passport.states.recorded", { date: presence.recordedOn })}
+                </p>
+              ) : null}
             </>
           )}
         </div>
-        <aside className="flex min-w-0 flex-col gap-4 lg:sticky lg:top-4">
-          {presence.status === "ok" && answer && !reason ? (
-            <ul className="card flex flex-col gap-2 p-4 text-sm">
-              {answer.notices
-                .filter(
-                  (n) =>
-                    n !== "unknown_ingredient_keys" ||
-                    answer.item.unknown_keys.length > 0,
-                )
-                .map((n) => (
-                  <li key={n}>{t(`Passport.notice.${n}`)}</li>
-                ))}
-              {answer.item.answers.some((a) => a.status === "present") ? (
-                <li>{t("Passport.presentNote")}</li>
-              ) : null}
+        <aside className="flex min-w-0 flex-col gap-group lg:sticky lg:top-4">
+          {notices.length ? (
+            <ul className="grouped text-sm">
+              {notices.map((n) => (
+                <li key={n}>{t(`Passport.notice.${n}`)}</li>
+              ))}
             </ul>
           ) : null}
-          <p className="card p-4 font-bold">{t("Passport.listingsOnly")}</p>
+          <p className="card p-5 font-bold">{t("Passport.listingsOnly")}</p>
         </aside>
       </div>
     </>
