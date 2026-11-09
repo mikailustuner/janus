@@ -89,7 +89,7 @@ inner finding rows are separate links), so every tile is reachable with the keyb
 |---|---|---|---|
 | P1 | Every finding is in exactly one timing group, its group is `orderGroup(timing)`, and the group sizes add up to the number of findings | Req 2.2, 4.4 | fast-check over `cascadeResultArb` (`src/flow/summary.test.ts`) |
 | P2 | The abrupt-stop count equals the number of distinct warned items, and the rendered Summary shows the abrupt-stop line once per warned item | Req 2.4 | fast-check over results; render test counts `data-testid="abrupt-stop"` |
-| P3 | Fully checked + not fully checked = medicines; region counts add up to medicines; source rows cover every item | Req 2.1, 2.5, 2.6 | fast-check with generated item lists |
+| P3 | Fully checked + not fully checked = medicines (and `checkedSplit`, P10: partly = items with a `not_checked` entry, Req 2.8); region counts add up to medicines; source rows cover every item | Req 2.1, 2.5, 2.6 | fast-check with generated item lists |
 | P4 | Zero state: no finding + `no_pattern_found` ⇒ the no-pattern sentence is rendered and no reassurance word or forbidden phrase appears, in every locale and theme | Req 4.1, 4.3 | render test, all locales × themes |
 | P5 | Integrity summary: `noRetracted` ⇔ every line says so; `sources` = distinct used ids | Req 2.6 | fast-check over the recorded evidence resolutions with flipped flags |
 | P6 | The share model contains no box name, and no ingredient or event name unless that option is on (then all of them) | Req 5.2, 5.3 | fast-check with sentinel names (`ZZSENTINEL-…`) |
@@ -113,6 +113,7 @@ inner finding rows are separate links), so every tile is reachable with the keyb
 | DP11 | Share model pure, translator passed in; counts by default; opt-in event names and ingredient names; box names never | Medicine box names as an option | Box names identify products and the person; ingredient names are what a doctor reads |
 | DP12 | Confirmation in a native `<dialog>` showing the same Blob as the share | An inline step; a preview re-rendered in HTML | "Exact image" means the same bytes; `<dialog>` gives focus handling and Escape for free |
 | DP13 | No statistician pass | — | The Summary shows counts only (no ratio, interval or rate); the FAERS figures stay in the finding detail |
+| DP14 | **Owner decision 2026-11-09:** the summary line and the share-image headline read "8 medicines: 6 fully checked, 2 partly" (`Report.summaryLine`, `Report.image.headline` with `full` and `partly`); the image tile counts "medicines in the list". Partly = DP5. Same split on the results screen (experience DP57) and in the note (doctor-loop DP42) | Keep "n medicines checked" (safety advisory A4 left to the owner) | "Checked" for a box with an unrecognised ingredient overstates the check; the owner closed A4 |
 
 ## 8. Open items
 - Whether "Check" on the medicines screen should land on the Summary (owner, after seeing it).

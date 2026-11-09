@@ -48,3 +48,9 @@
 
 - [x] 12. Checkpoint 2: lint, typecheck, vitest, build, e2e green; screenshots (draft TR and US,
       doctor entry; 375 and 1440; both themes) looked at; commit
+
+- [x] 8. Owner decision 2026-11-09: 3500B E10 / E11 split (Req 4.2a, DP13)
+  - `othersOtc` draft key and the E10 mapping, `otherType`, `typeUnknown`; `ReportAssistant.labels.usE10`,
+    `janus.othersOtc`, `draft.typeUnknown` in five languages; P11 in `src/report/draft.test.ts`; e2e for a live US
+    list with an OTC, a prescription and an unknown medicine.
+  - **Checkpoint:** vitest, report-assistant e2e green; commit.

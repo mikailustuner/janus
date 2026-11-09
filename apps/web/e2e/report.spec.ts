@@ -190,7 +190,9 @@ test("share flow: counts only by default, opt-ins, confirmation, a 1080 x 1350 P
   await expect(dialog).toContainText(m.Report.share.confirmText);
   const preview = page.getByTestId("share-preview");
   const alt = (await preview.getAttribute("alt")) ?? "";
-  expect(alt).toContain("9 medicines checked · 4 patterns to discuss");
+  expect(alt).toContain(
+    "9 medicines: 9 fully checked, 0 partly · 4 patterns to discuss",
+  );
   expect(alt).toContain("checked against 63 of 65 patterns");
   expect(alt).toContain(m.Disclaimer.text);
   expect(alt).toContain(m.Demo.label);

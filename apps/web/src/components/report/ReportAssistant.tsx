@@ -40,9 +40,11 @@ import {
   buildDraft,
   copyAll,
   mappingFor,
+  otherType,
   outcomeOptions,
   requiredParts,
   type DraftRow,
+  type OtherType,
 } from "@/report/draft";
 import { parsePrefill, type Prefill } from "@/report/fragment";
 import type { DraftKey } from "@/report/mapping";
@@ -99,6 +101,7 @@ function useVocab(locale: Locale) {
 interface Other {
   id: string;
   label: string;
+  type: OtherType;
 }
 
 interface Init {
@@ -137,7 +140,12 @@ function initFrom(
       box: "",
       ingredient: keyName(v, p.ingredient, null),
       eventKey: eventKeyForRule(v, p.rule),
-      others: p.others.map((k) => ({ id: k, label: keyName(v, k, null) })),
+      // Ingredient keys only: the product type is not known (3500B E11, DP13).
+      others: p.others.map((k) => ({
+        id: k,
+        label: keyName(v, k, null),
+        type: "unknown",
+      })),
     };
   const event =
     p?.src === "finding" && p.event && v.vocab.events[p.event] ? p.event : null;
@@ -251,7 +259,19 @@ function Assistant({
   const others: Other[] =
     init.others ??
     items.flatMap((item, i) =>
-      i === suspect ? [] : [{ id: item.id, label: itemLabel(v, item) }],
+      i === suspect
+        ? []
+        : [
+            {
+              id: item.id,
+              label: itemLabel(v, item),
+              type: otherType(
+                item.candidate.kind === "product"
+                  ? item.candidate.product_type
+                  : null,
+              ),
+            },
+          ],
     );
   const options = channel ? outcomeOptions(channel, hcp) : [];
   const optionSet = channel
@@ -269,6 +289,7 @@ function Assistant({
         others: others.map((o) => ({
           label: o.label,
           ticked: !unticked.has(o.id),
+          type: o.type,
         })),
       })
     : null;
@@ -648,9 +669,20 @@ function Assistant({
                       >
                         {r.value}
                       </p>
-                      {r.key === "others" ? (
+                      {r.key === "others" || r.key === "othersOtc" ? (
                         <p className="text-sm text-muted">
                           {t(`${NS}.draft.othersEach`)}
+                        </p>
+                      ) : null}
+                      {r.key === "others" && draft.typeUnknown.length ? (
+                        <p
+                          className="text-sm text-muted"
+                          data-testid="report-type-unknown"
+                        >
+                          {t(`${NS}.draft.typeUnknown`, {
+                            count: draft.typeUnknown.length,
+                            names: draft.typeUnknown.join("; "),
+                          })}
                         </p>
                       ) : null}
                     </li>

@@ -191,7 +191,15 @@ class _B:
                     ),
                 )
             )
-        return Section(id="medicines", heading=self.text("medicines.heading"), blocks=list(rows))
+        partly = len({r.item for r in rows if r.not_checked})
+        count = self.sentence(
+            "medicines:count",
+            "medicines.count",
+            {"total": len(rows), "full": len(rows) - partly, "partly": partly},
+        )
+        return Section(
+            id="medicines", heading=self.text("medicines.heading"), blocks=[count, *rows]
+        )
 
     def finding_blocks(self, f: FindingOut) -> list[Sentence]:
         r = self.i.roles

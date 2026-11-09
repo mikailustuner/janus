@@ -3,12 +3,12 @@
  "userRegion": "TR",
  "noteLanguage": "tr",
  "recorded": {
-  "date": "2026-11-08",
+  "date": "2026-11-09",
   "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
   "rule_base_version": "8d4881fc6418ee6437d4c2052283f89e6c21ea32405bcd6061f89e9637e32f8f",
-  "integrity_version": "8a5b888f0a9f8791e7091da918e6904817211b90f5a573d2418a7432c728b84e",
+  "integrity_version": "dd1585092cbb19c0ddbcee9f35704f73152e10ce296be984725411b8b06c3fc2",
   "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-  "glossary_version": "3b810442089acdbc8b44fb4070cc73a1a44bdc456674e8dd77199953e0a6f332"
+  "glossary_version": "8005d067e98c17e6d99b18d602802c0fd98857bb1ce9d3c4f32beb15dd8879f1"
  },
  "items": [
   {
@@ -1103,7 +1103,7 @@
  "evaluation": {
   "rule_base_version": "8d4881fc6418ee6437d4c2052283f89e6c21ea32405bcd6061f89e9637e32f8f",
   "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-  "integrity_version": "8a5b888f0a9f8791e7091da918e6904817211b90f5a573d2418a7432c728b84e",
+  "integrity_version": "dd1585092cbb19c0ddbcee9f35704f73152e10ce296be984725411b8b06c3fc2",
   "as_of_month": "2026-11",
   "window_months": 12,
   "findings": [
@@ -1400,8 +1400,8 @@
  },
  "evidence": {
   "pipc:9:Q668093:Q57055": {
-   "integrity_version": "8a5b888f0a9f8791e7091da918e6904817211b90f5a573d2418a7432c728b84e",
-   "as_of": "2026-11-08",
+   "integrity_version": "dd1585092cbb19c0ddbcee9f35704f73152e10ce296be984725411b8b06c3fc2",
+   "as_of": "2026-11-09",
    "items": [
     {
      "id": "dataset:faers",
@@ -1421,7 +1421,7 @@
      },
      "freshness": {
       "state": "current",
-      "age_days": 11,
+      "age_days": 12,
       "limit_days": 182
      },
      "doi_check": "not_applicable",
@@ -1449,7 +1449,7 @@
      },
      "freshness": {
       "state": "current",
-      "age_days": 465,
+      "age_days": 466,
       "limit_days": 730
      },
      "doi_check": "checked",
@@ -1457,7 +1457,7 @@
       "status": "corrected",
       "check_status": "corrected",
       "reason": null,
-      "checked_at": "2026-11-07",
+      "checked_at": "2026-11-08",
       "check_age_days": 1,
       "check_stale": false,
       "notices": [
@@ -1495,7 +1495,7 @@
      },
      "freshness": {
       "state": "not_applicable",
-      "age_days": 1,
+      "age_days": 2,
       "limit_days": null
      },
      "doi_check": "checked",
@@ -1503,7 +1503,7 @@
       "status": "ok",
       "check_status": "ok",
       "reason": null,
-      "checked_at": "2026-11-07",
+      "checked_at": "2026-11-08",
       "check_age_days": 1,
       "check_stale": false,
       "notices": []
@@ -1531,7 +1531,7 @@
      },
      "freshness": {
       "state": "not_applicable",
-      "age_days": 1,
+      "age_days": 2,
       "limit_days": null
      },
      "doi_check": "checked",
@@ -1539,7 +1539,7 @@
       "status": "ok",
       "check_status": "ok",
       "reason": null,
-      "checked_at": "2026-11-07",
+      "checked_at": "2026-11-08",
       "check_age_days": 1,
       "check_stale": false,
       "notices": []
@@ -1567,7 +1567,7 @@
      },
      "freshness": {
       "state": "current",
-      "age_days": 465,
+      "age_days": 466,
       "limit_days": 730
      },
      "doi_check": "not_applicable",
@@ -1582,7 +1582,7 @@
         "status": "corrected",
         "check_status": "corrected",
         "reason": null,
-        "checked_at": "2026-11-07",
+        "checked_at": "2026-11-08",
         "check_age_days": 1,
         "check_stale": false,
         "notices": [
@@ -1597,7 +1597,7 @@
        },
        "freshness": {
         "state": "current",
-        "age_days": 465,
+        "age_days": 466,
         "limit_days": 730
        }
       }
@@ -1627,8 +1627,8 @@
      "expression_of_concern": 0,
      "unknown": 0
     },
-    "oldest_check": "2026-11-07",
-    "newest_check": "2026-11-07",
+    "oldest_check": "2026-11-08",
+    "newest_check": "2026-11-08",
     "stale_sources": [],
     "integrity_check_stale": false,
     "excluded": [],
@@ -1637,8 +1637,8 @@
    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
   },
   "pipc:5:Q411347:Q388801": {
-   "integrity_version": "8a5b888f0a9f8791e7091da918e6904817211b90f5a573d2418a7432c728b84e",
-   "as_of": "2026-11-08",
+   "integrity_version": "dd1585092cbb19c0ddbcee9f35704f73152e10ce296be984725411b8b06c3fc2",
+   "as_of": "2026-11-09",
    "items": [
     {
      "id": "dataset:faers",
@@ -1658,7 +1658,7 @@
      },
      "freshness": {
       "state": "current",
-      "age_days": 11,
+      "age_days": 12,
       "limit_days": 182
      },
      "doi_check": "not_applicable",
@@ -1686,7 +1686,7 @@
      },
      "freshness": {
       "state": "current",
-      "age_days": 465,
+      "age_days": 466,
       "limit_days": 730
      },
      "doi_check": "checked",
@@ -1694,7 +1694,7 @@
       "status": "corrected",
       "check_status": "corrected",
       "reason": null,
-      "checked_at": "2026-11-07",
+      "checked_at": "2026-11-08",
       "check_age_days": 1,
       "check_stale": false,
       "notices": [
@@ -1732,7 +1732,7 @@
      },
      "freshness": {
       "state": "not_applicable",
-      "age_days": 1,
+      "age_days": 2,
       "limit_days": null
      },
      "doi_check": "checked",
@@ -1740,7 +1740,7 @@
       "status": "ok",
       "check_status": "ok",
       "reason": null,
-      "checked_at": "2026-11-07",
+      "checked_at": "2026-11-08",
       "check_age_days": 1,
       "check_stale": false,
       "notices": []
@@ -1768,7 +1768,7 @@
      },
      "freshness": {
       "state": "not_applicable",
-      "age_days": 1,
+      "age_days": 2,
       "limit_days": null
      },
      "doi_check": "checked",
@@ -1776,7 +1776,7 @@
       "status": "ok",
       "check_status": "ok",
       "reason": null,
-      "checked_at": "2026-11-07",
+      "checked_at": "2026-11-08",
       "check_age_days": 1,
       "check_stale": false,
       "notices": []
@@ -1804,7 +1804,7 @@
      },
      "freshness": {
       "state": "current",
-      "age_days": 465,
+      "age_days": 466,
       "limit_days": 730
      },
      "doi_check": "not_applicable",
@@ -1819,7 +1819,7 @@
         "status": "corrected",
         "check_status": "corrected",
         "reason": null,
-        "checked_at": "2026-11-07",
+        "checked_at": "2026-11-08",
         "check_age_days": 1,
         "check_stale": false,
         "notices": [
@@ -1834,7 +1834,7 @@
        },
        "freshness": {
         "state": "current",
-        "age_days": 465,
+        "age_days": 466,
         "limit_days": 730
        }
       }
@@ -1864,8 +1864,8 @@
      "expression_of_concern": 0,
      "unknown": 0
     },
-    "oldest_check": "2026-11-07",
-    "newest_check": "2026-11-07",
+    "oldest_check": "2026-11-08",
+    "newest_check": "2026-11-08",
     "stale_sources": [],
     "integrity_check_stale": false,
     "excluded": [],
@@ -1874,8 +1874,8 @@
    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
   },
   "pipc:6:Q411347:Q422689": {
-   "integrity_version": "8a5b888f0a9f8791e7091da918e6904817211b90f5a573d2418a7432c728b84e",
-   "as_of": "2026-11-08",
+   "integrity_version": "dd1585092cbb19c0ddbcee9f35704f73152e10ce296be984725411b8b06c3fc2",
+   "as_of": "2026-11-09",
    "items": [
     {
      "id": "dataset:faers",
@@ -1895,7 +1895,7 @@
      },
      "freshness": {
       "state": "current",
-      "age_days": 11,
+      "age_days": 12,
       "limit_days": 182
      },
      "doi_check": "not_applicable",
@@ -1923,7 +1923,7 @@
      },
      "freshness": {
       "state": "current",
-      "age_days": 465,
+      "age_days": 466,
       "limit_days": 730
      },
      "doi_check": "checked",
@@ -1931,7 +1931,7 @@
       "status": "corrected",
       "check_status": "corrected",
       "reason": null,
-      "checked_at": "2026-11-07",
+      "checked_at": "2026-11-08",
       "check_age_days": 1,
       "check_stale": false,
       "notices": [
@@ -1969,7 +1969,7 @@
      },
      "freshness": {
       "state": "not_applicable",
-      "age_days": 1,
+      "age_days": 2,
       "limit_days": null
      },
      "doi_check": "checked",
@@ -1977,7 +1977,7 @@
       "status": "ok",
       "check_status": "ok",
       "reason": null,
-      "checked_at": "2026-11-07",
+      "checked_at": "2026-11-08",
       "check_age_days": 1,
       "check_stale": false,
       "notices": []
@@ -2005,7 +2005,7 @@
      },
      "freshness": {
       "state": "current",
-      "age_days": 465,
+      "age_days": 466,
       "limit_days": 730
      },
      "doi_check": "not_applicable",
@@ -2020,7 +2020,7 @@
         "status": "corrected",
         "check_status": "corrected",
         "reason": null,
-        "checked_at": "2026-11-07",
+        "checked_at": "2026-11-08",
         "check_age_days": 1,
         "check_stale": false,
         "notices": [
@@ -2035,7 +2035,7 @@
        },
        "freshness": {
         "state": "current",
-        "age_days": 465,
+        "age_days": 466,
         "limit_days": 730
        }
       }
@@ -2064,8 +2064,8 @@
      "expression_of_concern": 0,
      "unknown": 0
     },
-    "oldest_check": "2026-11-07",
-    "newest_check": "2026-11-07",
+    "oldest_check": "2026-11-08",
+    "newest_check": "2026-11-08",
     "stale_sources": [],
     "integrity_check_stale": false,
     "excluded": [],
@@ -2074,8 +2074,8 @@
    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
   },
   "pipc:12:Q668093:Q319877": {
-   "integrity_version": "8a5b888f0a9f8791e7091da918e6904817211b90f5a573d2418a7432c728b84e",
-   "as_of": "2026-11-08",
+   "integrity_version": "dd1585092cbb19c0ddbcee9f35704f73152e10ce296be984725411b8b06c3fc2",
+   "as_of": "2026-11-09",
    "items": [
     {
      "id": "dataset:faers",
@@ -2095,7 +2095,7 @@
      },
      "freshness": {
       "state": "current",
-      "age_days": 11,
+      "age_days": 12,
       "limit_days": 182
      },
      "doi_check": "not_applicable",
@@ -2123,7 +2123,7 @@
      },
      "freshness": {
       "state": "current",
-      "age_days": 465,
+      "age_days": 466,
       "limit_days": 730
      },
      "doi_check": "checked",
@@ -2131,7 +2131,7 @@
       "status": "corrected",
       "check_status": "corrected",
       "reason": null,
-      "checked_at": "2026-11-07",
+      "checked_at": "2026-11-08",
       "check_age_days": 1,
       "check_stale": false,
       "notices": [
@@ -2169,7 +2169,7 @@
      },
      "freshness": {
       "state": "current",
-      "age_days": 465,
+      "age_days": 466,
       "limit_days": 730
      },
      "doi_check": "not_applicable",
@@ -2184,7 +2184,7 @@
         "status": "corrected",
         "check_status": "corrected",
         "reason": null,
-        "checked_at": "2026-11-07",
+        "checked_at": "2026-11-08",
         "check_age_days": 1,
         "check_stale": false,
         "notices": [
@@ -2199,7 +2199,7 @@
        },
        "freshness": {
         "state": "current",
-        "age_days": 465,
+        "age_days": 466,
         "limit_days": 730
        }
       }
@@ -2227,8 +2227,8 @@
      "expression_of_concern": 0,
      "unknown": 0
     },
-    "oldest_check": "2026-11-07",
-    "newest_check": "2026-11-07",
+    "oldest_check": "2026-11-08",
+    "newest_check": "2026-11-08",
     "stale_sources": [],
     "integrity_check_stale": false,
     "excluded": [],
@@ -2250,7 +2250,7 @@
    "faers_run_id": "20261108T004801Z-b4dfb36a-b253",
    "resolution_dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
    "stale": false,
-   "age_days": 11,
+   "age_days": 12,
    "totals": [
     {
      "region": "TR",
@@ -2317,7 +2317,7 @@
      "served_resolution_dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
      "counts_match_served": true,
      "stale": false,
-     "age_days": 11
+     "age_days": 12
     },
     "notices": [
      "spontaneous_reporting",
@@ -2416,7 +2416,7 @@
      "served_resolution_dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
      "counts_match_served": true,
      "stale": false,
-     "age_days": 11
+     "age_days": 12
     },
     "notices": [
      "spontaneous_reporting",
@@ -2515,7 +2515,7 @@
      "served_resolution_dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
      "counts_match_served": true,
      "stale": false,
-     "age_days": 11
+     "age_days": 12
     },
     "notices": [
      "spontaneous_reporting",
@@ -2615,7 +2615,7 @@
      "served_resolution_dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
      "counts_match_served": true,
      "stale": false,
-     "age_days": 11
+     "age_days": 12
     },
     "notices": [
      "spontaneous_reporting",
@@ -2720,7 +2720,7 @@
     "served_resolution_dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
     "counts_match_served": true,
     "stale": false,
-    "age_days": 11
+    "age_days": 12
    },
    "notices": [
     "spontaneous_reporting",
@@ -6634,7 +6634,7 @@
     "served_resolution_dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
     "counts_match_served": true,
     "stale": false,
-    "age_days": 11
+    "age_days": 12
    },
    "notices": [
     "spontaneous_reporting",
@@ -7019,9 +7019,9 @@
    "versions": {
     "rule_base_version": "8d4881fc6418ee6437d4c2052283f89e6c21ea32405bcd6061f89e9637e32f8f",
     "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-    "integrity_version": "8a5b888f0a9f8791e7091da918e6904817211b90f5a573d2418a7432c728b84e",
+    "integrity_version": "dd1585092cbb19c0ddbcee9f35704f73152e10ce296be984725411b8b06c3fc2",
     "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-    "glossary_version": "3b810442089acdbc8b44fb4070cc73a1a44bdc456674e8dd77199953e0a6f332"
+    "glossary_version": "8005d067e98c17e6d99b18d602802c0fd98857bb1ce9d3c4f32beb15dd8879f1"
    },
    "as_of_month": "2026-11",
    "removals": [],
@@ -7074,6 +7074,19 @@
         "text": "Medicines"
        },
        "blocks": [
+        {
+         "type": "sentence",
+         "id": "medicines:count",
+         "template": "medicines.count",
+         "kind": "fixed",
+         "text": "Medicines in the list: 9. Fully checked: 9; partly checked (at least one ingredient could not be checked): 0.",
+         "evidence_ids": [],
+         "numbers": [
+          "9",
+          "9",
+          "0"
+         ]
+        },
         {
          "type": "medicine",
          "item": 0,
@@ -8070,7 +8083,7 @@
          "id": "integrity:checks_between",
          "template": "integrity.checks_between",
          "kind": "claim",
-         "text": "Retraction checks were made between 2026-11-07 and 2026-11-07.",
+         "text": "Retraction checks were made between 2026-11-08 and 2026-11-08.",
          "evidence_ids": [
           "dataset:faers",
           "dataset:pipc",
@@ -8083,8 +8096,8 @@
           "rule:pipc:9"
          ],
          "numbers": [
-          "2026-11-07",
-          "2026-11-07"
+          "2026-11-08",
+          "2026-11-08"
          ]
         },
         {
@@ -8120,14 +8133,14 @@
          "id": "about:versions",
          "template": "about.versions",
          "kind": "fixed",
-         "text": "Versions: rules 8d4881fc, medicine data 7db3a513, evidence 8a5b888f, report counts 20261108, glossary 3b810442.",
+         "text": "Versions: rules 8d4881fc, medicine data 7db3a513, evidence dd158509, report counts 20261108, glossary 8005d067.",
          "evidence_ids": [],
          "numbers": [
           "8d4881fc",
           "7db3a513",
-          "8a5b888f",
+          "dd158509",
           "20261108",
-          "3b810442"
+          "8005d067"
          ]
         },
         {
@@ -8168,9 +8181,9 @@
    "versions": {
     "rule_base_version": "8d4881fc6418ee6437d4c2052283f89e6c21ea32405bcd6061f89e9637e32f8f",
     "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-    "integrity_version": "8a5b888f0a9f8791e7091da918e6904817211b90f5a573d2418a7432c728b84e",
+    "integrity_version": "dd1585092cbb19c0ddbcee9f35704f73152e10ce296be984725411b8b06c3fc2",
     "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-    "glossary_version": "3b810442089acdbc8b44fb4070cc73a1a44bdc456674e8dd77199953e0a6f332"
+    "glossary_version": "8005d067e98c17e6d99b18d602802c0fd98857bb1ce9d3c4f32beb15dd8879f1"
    },
    "as_of_month": "2026-11",
    "removals": [],
@@ -8223,6 +8236,19 @@
         "text": "İlaçlar"
        },
        "blocks": [
+        {
+         "type": "sentence",
+         "id": "medicines:count",
+         "template": "medicines.count",
+         "kind": "fixed",
+         "text": "Listedeki ilaçlar: 9. Tamamen kontrol edilen: 9; kısmen kontrol edilen (en az bir etkin maddesi kontrol edilemeyen): 0.",
+         "evidence_ids": [],
+         "numbers": [
+          "9",
+          "9",
+          "0"
+         ]
+        },
         {
          "type": "medicine",
          "item": 0,
@@ -9219,7 +9245,7 @@
          "id": "integrity:checks_between",
          "template": "integrity.checks_between",
          "kind": "claim",
-         "text": "Geri çekme kontrolleri 07.11.2026 ile 07.11.2026 arasında yapıldı.",
+         "text": "Geri çekme kontrolleri 08.11.2026 ile 08.11.2026 arasında yapıldı.",
          "evidence_ids": [
           "dataset:faers",
           "dataset:pipc",
@@ -9232,8 +9258,8 @@
           "rule:pipc:9"
          ],
          "numbers": [
-          "07.11.2026",
-          "07.11.2026"
+          "08.11.2026",
+          "08.11.2026"
          ]
         },
         {
@@ -9269,14 +9295,14 @@
          "id": "about:versions",
          "template": "about.versions",
          "kind": "fixed",
-         "text": "Sürümler: kurallar 8d4881fc, ilaç verileri 7db3a513, kanıtlar 8a5b888f, bildirim sayıları 20261108, sözlük 3b810442.",
+         "text": "Sürümler: kurallar 8d4881fc, ilaç verileri 7db3a513, kanıtlar dd158509, bildirim sayıları 20261108, sözlük 8005d067.",
          "evidence_ids": [],
          "numbers": [
           "8d4881fc",
           "7db3a513",
-          "8a5b888f",
+          "dd158509",
           "20261108",
-          "3b810442"
+          "8005d067"
          ]
         },
         {
@@ -9317,9 +9343,9 @@
    "versions": {
     "rule_base_version": "8d4881fc6418ee6437d4c2052283f89e6c21ea32405bcd6061f89e9637e32f8f",
     "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-    "integrity_version": "8a5b888f0a9f8791e7091da918e6904817211b90f5a573d2418a7432c728b84e",
+    "integrity_version": "dd1585092cbb19c0ddbcee9f35704f73152e10ce296be984725411b8b06c3fc2",
     "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-    "glossary_version": "3b810442089acdbc8b44fb4070cc73a1a44bdc456674e8dd77199953e0a6f332"
+    "glossary_version": "8005d067e98c17e6d99b18d602802c0fd98857bb1ce9d3c4f32beb15dd8879f1"
    },
    "as_of_month": "2026-11",
    "removals": [],
@@ -9372,6 +9398,19 @@
         "text": "Arzneimittel"
        },
        "blocks": [
+        {
+         "type": "sentence",
+         "id": "medicines:count",
+         "template": "medicines.count",
+         "kind": "fixed",
+         "text": "Arzneimittel in der Liste: 9. Vollständig geprüft: 9; teilweise geprüft (mindestens ein Wirkstoff konnte nicht geprüft werden): 0.",
+         "evidence_ids": [],
+         "numbers": [
+          "9",
+          "9",
+          "0"
+         ]
+        },
         {
          "type": "medicine",
          "item": 0,
@@ -10368,7 +10407,7 @@
          "id": "integrity:checks_between",
          "template": "integrity.checks_between",
          "kind": "claim",
-         "text": "Die Rücknahmeprüfungen erfolgten zwischen 07.11.2026 und 07.11.2026.",
+         "text": "Die Rücknahmeprüfungen erfolgten zwischen 08.11.2026 und 08.11.2026.",
          "evidence_ids": [
           "dataset:faers",
           "dataset:pipc",
@@ -10381,8 +10420,8 @@
           "rule:pipc:9"
          ],
          "numbers": [
-          "07.11.2026",
-          "07.11.2026"
+          "08.11.2026",
+          "08.11.2026"
          ]
         },
         {
@@ -10418,14 +10457,14 @@
          "id": "about:versions",
          "template": "about.versions",
          "kind": "fixed",
-         "text": "Versionen: Regeln 8d4881fc, Arzneimitteldaten 7db3a513, Evidenz 8a5b888f, Meldezahlen 20261108, Glossar 3b810442.",
+         "text": "Versionen: Regeln 8d4881fc, Arzneimitteldaten 7db3a513, Evidenz dd158509, Meldezahlen 20261108, Glossar 8005d067.",
          "evidence_ids": [],
          "numbers": [
           "8d4881fc",
           "7db3a513",
-          "8a5b888f",
+          "dd158509",
           "20261108",
-          "3b810442"
+          "8005d067"
          ]
         },
         {
@@ -10466,9 +10505,9 @@
    "versions": {
     "rule_base_version": "8d4881fc6418ee6437d4c2052283f89e6c21ea32405bcd6061f89e9637e32f8f",
     "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-    "integrity_version": "8a5b888f0a9f8791e7091da918e6904817211b90f5a573d2418a7432c728b84e",
+    "integrity_version": "dd1585092cbb19c0ddbcee9f35704f73152e10ce296be984725411b8b06c3fc2",
     "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-    "glossary_version": "3b810442089acdbc8b44fb4070cc73a1a44bdc456674e8dd77199953e0a6f332"
+    "glossary_version": "8005d067e98c17e6d99b18d602802c0fd98857bb1ce9d3c4f32beb15dd8879f1"
    },
    "as_of_month": "2026-11",
    "removals": [],
@@ -10521,6 +10560,19 @@
         "text": "Médicaments"
        },
        "blocks": [
+        {
+         "type": "sentence",
+         "id": "medicines:count",
+         "template": "medicines.count",
+         "kind": "fixed",
+         "text": "Médicaments de la liste : 9. Entièrement vérifiés : 9 ; partiellement vérifiés (au moins une substance active n'a pas pu être vérifiée) : 0.",
+         "evidence_ids": [],
+         "numbers": [
+          "9",
+          "9",
+          "0"
+         ]
+        },
         {
          "type": "medicine",
          "item": 0,
@@ -11517,7 +11569,7 @@
          "id": "integrity:checks_between",
          "template": "integrity.checks_between",
          "kind": "claim",
-         "text": "Les vérifications de rétractation ont été faites entre le 07/11/2026 et le 07/11/2026.",
+         "text": "Les vérifications de rétractation ont été faites entre le 08/11/2026 et le 08/11/2026.",
          "evidence_ids": [
           "dataset:faers",
           "dataset:pipc",
@@ -11530,8 +11582,8 @@
           "rule:pipc:9"
          ],
          "numbers": [
-          "07/11/2026",
-          "07/11/2026"
+          "08/11/2026",
+          "08/11/2026"
          ]
         },
         {
@@ -11567,14 +11619,14 @@
          "id": "about:versions",
          "template": "about.versions",
          "kind": "fixed",
-         "text": "Versions : règles 8d4881fc, données médicaments 7db3a513, sources 8a5b888f, comptes de signalements 20261108, glossaire 3b810442.",
+         "text": "Versions : règles 8d4881fc, données médicaments 7db3a513, sources dd158509, comptes de signalements 20261108, glossaire 8005d067.",
          "evidence_ids": [],
          "numbers": [
           "8d4881fc",
           "7db3a513",
-          "8a5b888f",
+          "dd158509",
           "20261108",
-          "3b810442"
+          "8005d067"
          ]
         },
         {
@@ -11615,9 +11667,9 @@
    "versions": {
     "rule_base_version": "8d4881fc6418ee6437d4c2052283f89e6c21ea32405bcd6061f89e9637e32f8f",
     "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-    "integrity_version": "8a5b888f0a9f8791e7091da918e6904817211b90f5a573d2418a7432c728b84e",
+    "integrity_version": "dd1585092cbb19c0ddbcee9f35704f73152e10ce296be984725411b8b06c3fc2",
     "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-    "glossary_version": "3b810442089acdbc8b44fb4070cc73a1a44bdc456674e8dd77199953e0a6f332"
+    "glossary_version": "8005d067e98c17e6d99b18d602802c0fd98857bb1ce9d3c4f32beb15dd8879f1"
    },
    "as_of_month": "2026-11",
    "removals": [],
@@ -11670,6 +11722,19 @@
         "text": "Medicamentos"
        },
        "blocks": [
+        {
+         "type": "sentence",
+         "id": "medicines:count",
+         "template": "medicines.count",
+         "kind": "fixed",
+         "text": "Medicamentos de la lista: 9. Comprobados por completo: 9; comprobados en parte (no se pudo comprobar al menos un principio activo): 0.",
+         "evidence_ids": [],
+         "numbers": [
+          "9",
+          "9",
+          "0"
+         ]
+        },
         {
          "type": "medicine",
          "item": 0,
@@ -12666,7 +12731,7 @@
          "id": "integrity:checks_between",
          "template": "integrity.checks_between",
          "kind": "claim",
-         "text": "Las comprobaciones de retractaciones se hicieron entre el 07/11/2026 y el 07/11/2026.",
+         "text": "Las comprobaciones de retractaciones se hicieron entre el 08/11/2026 y el 08/11/2026.",
          "evidence_ids": [
           "dataset:faers",
           "dataset:pipc",
@@ -12679,8 +12744,8 @@
           "rule:pipc:9"
          ],
          "numbers": [
-          "07/11/2026",
-          "07/11/2026"
+          "08/11/2026",
+          "08/11/2026"
          ]
         },
         {
@@ -12716,14 +12781,14 @@
          "id": "about:versions",
          "template": "about.versions",
          "kind": "fixed",
-         "text": "Versiones: reglas 8d4881fc, datos de medicamentos 7db3a513, evidencia 8a5b888f, recuentos de notificaciones 20261108, glosario 3b810442.",
+         "text": "Versiones: reglas 8d4881fc, datos de medicamentos 7db3a513, evidencia dd158509, recuentos de notificaciones 20261108, glosario 8005d067.",
          "evidence_ids": [],
          "numbers": [
           "8d4881fc",
           "7db3a513",
-          "8a5b888f",
+          "dd158509",
           "20261108",
-          "3b810442"
+          "8005d067"
          ]
         },
         {
@@ -12762,7 +12827,7 @@
  },
  "doctorForm": {
   "language": "tr",
-  "expires_on": "2026-12-07",
+  "expires_on": "2026-12-14",
   "findings": [
    {
     "ref": 0,

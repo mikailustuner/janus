@@ -9,7 +9,12 @@ import { EVIDENCE, VOCAB_EN } from "@/test/results";
 import { summaryInputArb } from "@/test/summary";
 
 import { ORDER_GROUPS, orderGroup, resultsView } from "./findings";
-import { BOX_REGIONS, integritySummary, summaryView } from "./summary";
+import {
+  BOX_REGIONS,
+  checkedSplit,
+  integritySummary,
+  summaryView,
+} from "./summary";
 
 describe("summaryView", () => {
   it("P1: every finding is in exactly one timing group, the group of its timing", () => {
@@ -71,6 +76,23 @@ describe("summaryView", () => {
         for (const s of v.sources)
           expect(s.date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
         expect(v.month).toBe(r.as_of_month);
+      }),
+    );
+  });
+
+  it("P10: fully and partly checked add up to the list; partly = items with a not-checked entry (DP57)", () => {
+    check(
+      fc.property(summaryInputArb, ({ r, items }) => {
+        const s = checkedSplit(r, items.length);
+        expect(s.total).toBe(items.length);
+        expect(s.full + s.partly).toBe(s.total);
+        expect(s.full).toBeGreaterThanOrEqual(0);
+        const partly = new Set(
+          r.not_checked.map((n) => n.item).filter((i) => i < items.length),
+        );
+        expect(s.partly).toBe(partly.size);
+        const v = summaryView(r, items, VOCAB_EN);
+        if (v.kind === "ok") expect(v.medicines.notFully.length).toBe(s.partly);
       }),
     );
   });

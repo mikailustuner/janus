@@ -1292,7 +1292,7 @@
       "witnesses": "{count, plural, other {of 3 witnesses}}"
     },
     "results": {
-      "medicinesChecked": "{count, plural, one {# medicine checked} other {# medicines checked}}"
+      "medicinesChecked": "{total, plural, one {# medicine} other {# medicines}}: {full} fully checked, {partly} partly"
     },
     "passport": {
       "summary": "{items, plural, one {# medicine} other {# medicines}} · {boxes, plural, one {# box} other {# boxes}}",
@@ -1417,7 +1417,7 @@
     "open": "See the summary",
     "openHint": "The key numbers of this check at a glance",
     "checkedIn": "Checked in {month}",
-    "summaryLine": "{medicines, plural, one {# medicine checked} other {# medicines checked}} · {patterns, plural, =0 {no pattern from the rule list} one {# pattern to discuss} other {# patterns to discuss}}",
+    "summaryLine": "{medicines, plural, one {# medicine} other {# medicines}}: {full} fully checked, {partly} partly · {patterns, plural, =0 {no pattern from the rule list} one {# pattern to discuss} other {# patterns to discuss}}",
     "patterns": {
       "title": {
         "twoFaces": "Ghosts to discuss",
@@ -1479,8 +1479,8 @@
     },
     "image": {
       "title": "Janus summary",
-      "headline": "{medicines, plural, one {# medicine checked} other {# medicines checked}} · {patterns, plural, =0 {no pattern from the rule list} one {# pattern to discuss} other {# patterns to discuss}} · checked against {checked} of {total} patterns",
-      "medicines": "{count, plural, one {medicine checked} other {medicines checked}}",
+      "headline": "{medicines, plural, one {# medicine} other {# medicines}}: {full} fully checked, {partly} partly · {patterns, plural, =0 {no pattern from the rule list} one {# pattern to discuss} other {# patterns to discuss}} · checked against {checked} of {total} patterns",
+      "medicines": "{count, plural, one {medicine in the list} other {medicines in the list}}",
       "patterns": "{count, plural, one {pattern to discuss} other {patterns to discuss}}",
       "rulesOf": "{checked} of {total}",
       "rules": "patterns checked",
@@ -1586,14 +1586,16 @@
       "missingTitle": "Questions of the form that Janus does not fill",
       "missingHint": "Add these yourself on the official form, as far as you want to answer them.",
       "oneOf": "At least one of: {fields}",
-      "openGuidance": "Open the EMA guidance"
+      "openGuidance": "Open the EMA guidance",
+      "typeUnknown": "Janus does not know whether {count, plural, one {this medicine needs} other {these medicines need}} a prescription: {names}. {count, plural, one {It is} other {They are}} listed under E11. A medicine bought without a prescription belongs under E10."
     },
     "janus": {
       "medicine": "Medicine (as on the box)",
       "event": "What happened",
       "onset": "Started",
       "outcome": "How it is now",
-      "others": "Other medicines"
+      "others": "Other medicines",
+      "othersOtc": "Other medicines bought without a prescription"
     },
     "hcp": {
       "title": "For health professionals",
@@ -1639,7 +1641,8 @@
       "esOtherDrug": "Name of the medicine (other medicines)",
       "esSymptoms": "Symptoms of the adverse reaction",
       "esOnset": "When did these symptoms start?",
-      "esState": "What is the current state of the affected person?"
+      "esState": "What is the current state of the affected person?",
+      "usE10": "List all over-the-counter medications and any vitamins, minerals, supplements, and herbal remedies being used"
     },
     "options": {
       "trEform": {
@@ -1659,5 +1662,207 @@
         "5": "Other"
       }
     }
+  },
+  "TimeMachine": {
+    "title": "Time machine",
+    "summary": "{substances, plural, one {# remedy of the Canon} other {# remedies of the Canon}} · {cascades, plural, one {# prescribing cascade} other {# prescribing cascades}}",
+    "intro": "The time machine follows remedies of Ibn Sina's Canon and some prescribing cascades through today's open data: the molecules they contain, activity measured in laboratories, simple body models and the time to onset written in public adverse-event reports.",
+    "inSilico": "In silico and exploratory: computed from open data, not evidence about any person. A molecule or a concentration shown here is a candidate worth investigating — not a treatment and never a dose to take.",
+    "review": "AI-reviewed, pending expert review.",
+    "demo": "Demo: every answer was recorded from the real local Janus API on {date}; no request is sent.",
+    "entry": {
+      "title": "Time machine",
+      "body": "Canon remedies and prescribing cascades through molecules, body models and reported time to onset."
+    },
+    "open": "Open in the time machine",
+    "openCascade": "Timing and body model in the time machine",
+    "back": "Time machine",
+    "sections": {
+      "substances": "Remedies of the Canon",
+      "substancesFooter": "Molecules from Wikidata and LOTUS (CC0), activity from PubChem (public domain), modern indications from openFDA labels (CC0).",
+      "cascades": "Prescribing cascades",
+      "cascadesFooter": "Rows of the PIPC list (Rochon et al., Eur Geriatr Med 2025, CC BY 4.0). Time to onset from FDA FAERS reports.",
+      "how": "How it was made",
+      "validation": "Validation of the body models"
+    },
+    "substances": {
+      "anise": "Anise",
+      "rhubarb": "Rhubarb",
+      "st_johns_wort": "St John's wort",
+      "vinegar": "Vinegar"
+    },
+    "rowSubstance": "{constituents, plural, =0 {no molecule selected} one {# molecule} other {# molecules}} · {drugs, plural, =0 {no modern medicine} one {# modern medicine} other {# modern medicines}}",
+    "cascadeTitle": "{drugA} → {event} → {drugB}",
+    "cascadeRow": "PIPC row {row} · {method}",
+    "english": "Source text in English",
+    "method": {
+      "pbpk": "PBPK model (httk, US EPA)",
+      "compartmental": "Minimal one-compartment model with cited parameters",
+      "onset_only": "Reported time to onset only, no body model"
+    },
+    "methodWhy": {
+      "compartmental": "The httk package has no human parameters for this drug, so Janus uses a minimal one-compartment model whose parameters come from cited publications.",
+      "onset_only": "No body model is used: there are no suitable human parameters. Only the reported time to onset is shown."
+    },
+    "onset": {
+      "heading": "Reported time to onset",
+      "tile": "{count, plural, one {report with a usable interval} other {reports with a usable interval}}",
+      "sentence": "{count, plural, one {# report} other {# reports}} gave a complete start date of the first medicine and a complete date of the event.",
+      "median": "Median {median} days (95% interval {low} to {high} days).",
+      "medianNoCi": "Median {median} days.",
+      "iqr": "Middle half of the reports: {q25} to {q75} days.",
+      "zeroDay": "{count, plural, one {# report gives} other {# reports give}} the same day for both dates. A same-day interval often means one date was written for both fields rather than a same-day onset; such reports pull the shape towards “early”.",
+      "smallSample": "Few reports: the count and the interval are shown, but no shape is described.",
+      "shape": "Shape of the reported times: {class} (Weibull shape {shape}, 95% interval {low} to {high}).",
+      "shapeClass": {
+        "early": "most reports early, fewer later",
+        "random": "about the same over time",
+        "wear_out": "more reports later"
+      },
+      "none": "No reported time to onset for this cascade.",
+      "subsetCaveat": "Time to onset is available only for reports that give both a complete start date and a complete event date. That subset is not representative of all reports: completeness is linked with the type of reporter and the seriousness of the event. FAERS is spontaneous reporting, not incidence, and is not deduplicated across cases; counts are reports, never people.",
+      "quality": "In the FAERS window {window}: {share} of report-medicine pairs had a usable interval ({pairs} pairs).",
+      "riskWindow": "Central 80% of the reported intervals ({basis}): {start} to {end} days.",
+      "basis": {
+        "weibull": "from the fitted curve",
+        "reports": "from the reports"
+      },
+      "coverage": "When the reports thin out over time, the upper end lies far beyond the median; the sentence for patients therefore uses the middle half."
+    },
+    "reasons": {
+      "no_pk": "No published human pharmacokinetic parameters for this molecule: no concentration is modelled.",
+      "failed_credibility": "The model failed the validation rule for this drug, so no comparison with a measured potency is made.",
+      "no_potency": "No measured potency on a curated target relevant to the condition from a public-domain depositor. This is a recorded gap; no value is substituted.",
+      "few_reports": "No shape fitted: fewer than {n} reports with a usable interval."
+    },
+    "published": {
+      "heading": "Published timing",
+      "median_iqr": "Published: median {median} days, interquartile range {low} to {high} days.",
+      "window": "Published window: day {low} to day {high}.",
+      "qualitative": "The published timing is descriptive only and cannot be compared as numbers.",
+      "none": "No published timing for this cascade."
+    },
+    "agreement": {
+      "agrees": "Not inconsistent with the published timing: the intervals overlap. With intervals this wide this is not a confirmation.",
+      "disagrees": "The intervals do not overlap: the reported timing differs from the published timing.",
+      "not_comparable": "Not comparable: the published timing is not given as numbers.",
+      "none": "Nothing to compare."
+    },
+    "compare": {
+      "title": "Reported and published timing (days)",
+      "janus": "FAERS reports: middle half, median",
+      "published": "Published",
+      "legend": "Bar: interval; dot: median."
+    },
+    "curve": {
+      "title": "Share of reports by day since the first medicine was started",
+      "note": "Cumulative share from the curve fitted to the reports; not a prediction for a person.",
+      "alt": "Line rising from {first} on day {firstDay} to {last} on day {lastDay}. The shaded band marks the middle half of the reports, {q25} to {q75} days.",
+      "day": "Day",
+      "share": "Share of reports up to this day",
+      "band": "Middle half of the reports"
+    },
+    "population": {
+      "heading": "Older and younger virtual populations",
+      "intro": "{older} versus {younger} years. Ages of 80 and over cannot be simulated. A relative comparison of the two groups only.",
+      "title": "Steady-state concentration (mg/L): 5th to 95th percentile, median",
+      "older": "{drug}, {ages} years",
+      "younger": "{drug}, {ages} years",
+      "ratio": "{drug}: older-to-younger ratio of the medians {ratio}.",
+      "steady": "{drug}: about {days} days to 90% of steady state.",
+      "doseBasis": "Model dose basis (for the comparison only, not a dose)"
+    },
+    "gate": {
+      "heading": "Sentence for patients",
+      "shown": "Shown in the finding detail: the middle half of the reports, {start} to {end} days.",
+      "small": "Not shown to patients: too few reports.",
+      "agreement": "Not shown to patients: the reported timing does not agree with the published timing.",
+      "none": "Not shown to patients: no reported time to onset."
+    },
+    "validation": {
+      "rule": "Credible when the predicted Cmax and AUC are both within 2-fold of the published observed values; borderline within 3-fold; otherwise failed. A drug that is not credible carries no comparison with a potency.",
+      "pbpk": "PBPK (httk)",
+      "compartmental": "Minimal compartmental models",
+      "summary": "{credible} credible, {borderline} borderline, {failed} failed",
+      "drug": "Drug",
+      "cmax": "Cmax observed / predicted (ng/mL)",
+      "auc": "AUC observed / predicted (ng·h/mL)",
+      "fold": "Fold error",
+      "verdict": "Validation",
+      "credibility": {
+        "credible": "Credible",
+        "borderline": "Borderline",
+        "failed": "Failed"
+      },
+      "aucNote": "For these models the AUC follows from the cited parameters by construction; only Cmax is an independent check.",
+      "notShownReason": "Shown with every simulated concentration."
+    },
+    "sources": {
+      "run": "Run {run}",
+      "snapshot": "Data of {date}",
+      "licence": "Licence: {licence}",
+      "tools": "Tools: {tools}",
+      "built": "Built on {date} · seed {seed} · {simulations} simulations"
+    },
+    "substance": {
+      "constituents": "Molecules selected",
+      "why": "Why selected",
+      "mw": "Molecular weight {mw} g/mol",
+      "admet": "ADMET-AI predictions (model outputs, not measurements)",
+      "admetNames": {
+        "PPBR_AZ": "Plasma protein binding, predicted (%)",
+        "Half_Life_Obach": "Half-life, predicted (hours)",
+        "VDss_Lombardo": "Volume of distribution, predicted (L/kg)",
+        "probability": "{name}, predicted probability (0 to 1)"
+      },
+      "activities": "Activity measured in PubChem (public-domain depositors)",
+      "activitiesCount": "{shown} of {total} records shown.",
+      "screening": "A potency on a target that is not curated for the condition is a screening result, not an effect.",
+      "assay": "Assay",
+      "target": "Target",
+      "measure": "Measure",
+      "value": "Value (µmol/L)",
+      "outcome": "Outcome",
+      "depositor": "Depositor",
+      "flags": "Interaction pointers",
+      "established": "Established, with cited evidence",
+      "screeningFlag": "Screening record: a signal to check, not an established interaction",
+      "withheld": "Value not shown: its licence ({licence}) does not allow reuse here.",
+      "todays": "Today's medicines for a related condition",
+      "label": "US label (DailyMed)",
+      "bridge": "Bridge from the Canon",
+      "exposure": "From the historical amount to a modelled concentration",
+      "historical": "Amount named in the source: {amount} {unit}, about {low} to {high} g by the cited unit ranges. A historical amount, not a dose to take.",
+      "constituentDose": "Modelled amount of {compound}: {low} to {high} mg ({contentLow} to {contentHigh}% content). A model input, not a dose.",
+      "peak": "Modelled peak concentration of {compound} (mg/L): 5th to 95th percentile, median",
+      "tmax": "Time to the peak: about {hours} hours.",
+      "verdict": {
+        "reaches": "Even the 5th percentile of the modelled peak reaches the measured potency.",
+        "overlaps": "The modelled peak range overlaps the measured potency.",
+        "stays_below": "Even the 95th percentile of the modelled peak stays below the measured potency."
+      },
+      "basis": {
+        "unbound": "Compared as the unbound concentration.",
+        "total_only": "Compared as the total concentration (an upper bound): no usable unbound fraction."
+      },
+      "margin": "Margin {low} to {high} against {measure} {potency} µmol/L ({assay}).",
+      "noExposure": "No historical amount was modelled for this remedy.",
+      "none": "No molecule was selected for this remedy."
+    },
+    "references": "References",
+    "verified": "Checked: {how}",
+    "table": "Show the numbers as a table",
+    "legend": "Band: 5th to 95th percentile; dot: median.",
+    "patient": {
+      "heading": "When this was reported",
+      "sentence": "In reports others have filed, this combination was most often reported between {start} and {end} days after the first medicine was started. This is information from reports, not a prediction about you — it may be worth discussing with your doctor.",
+      "review": "AI-reviewed, pending expert review."
+    },
+    "errors": {
+      "unavailable": "The time machine is not available on this server.",
+      "unknown": "This entry is not in the time machine."
+    },
+    "empty": "Nothing to show yet.",
+    "loading": "Loading the time machine…"
   }
 }

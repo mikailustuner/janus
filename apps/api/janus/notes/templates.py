@@ -107,6 +107,8 @@ SPECS: Final[tuple[Spec, ...]] = (
     *(_s(f"crisis.{r}", "label", shared=f"Memory.crisis.{r}") for r in USER_REGIONS),
     # medicines
     _s("medicines.heading", "heading"),
+    # Owner decision 2026-11-09 (doctor-loop DP42): fully and partly checked, counted separately.
+    _s("medicines.count", "fixed", params="total:int;full:int;partly:int"),
     _s("medicine.started", "label", params="month:month"),
     _s("medicine.start_unknown", "label"),
     _s("medicine.codes", "label", params="codes:code"),

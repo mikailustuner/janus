@@ -48,3 +48,9 @@
   > on the image only with event names (Req 5.3). Clean: no large zero, no assessment, red only for safety lines,
   > abrupt-stop once per warned item, disclaimer and demo label on screen and image, counts-only default, exact
   > preview, no request.
+
+- [x] 9. Owner decision 2026-11-09: fully and partly checked shown separately (Req 2.8, DP14)
+  - `checkedSplit` / `notFullyChecked` in `src/flow/summary.ts` (one definition for results, Summary and image);
+    `Report.summaryLine`, `Report.image.headline`, `Report.image.medicines` in five languages; P10 in
+    `src/flow/summary.test.ts`; `e2e/report.spec.ts` alt text.
+  - **Checkpoint:** vitest, report e2e green; commit.

@@ -312,3 +312,37 @@ for (const theme of THEMES)
       await expectNoHorizontalScroll(page);
       expectNothingSent(page, requests);
     });
+
+test("3500B E10 / E11: known prescription types go to E11, unknown types are named (DP13)", async ({
+  page,
+}) => {
+  const e11 =
+    "E11 List all current prescription medications and medical devices being used";
+  const requests = recordRequests(page);
+  // Ohio: four US products, all "HUMAN PRESCRIPTION DRUG" in the recorded openFDA data.
+  await page.addInitScript(() =>
+    sessionStorage.setItem("janus.v1.demo", "ohio"),
+  );
+  await page.goto("/en/report#src=list");
+  await expect(page.getByTestId("report-draft")).toBeVisible();
+  await page.getByRole("radio", { name: "United States" }).check();
+  await page.getByRole("radio", { name: en.where.kind.pdf }).check();
+  await expect(page.getByTestId("report-label")).toContainText([e11]);
+  await expect(page.getByTestId("report-type-unknown")).toHaveCount(0);
+  expectNothingSent(page, requests);
+});
+
+test("3500B E10 / E11: products without a US type stay under E11 and the draft says so (DP13)", async ({
+  page,
+}) => {
+  await demo(page);
+  await page.goto("/en/report#src=list");
+  await expect(page.getByTestId("report-draft")).toBeVisible();
+  await page.getByRole("radio", { name: "United States" }).check();
+  await page.getByRole("radio", { name: en.where.kind.pdf }).check();
+  const note = page.getByTestId("report-type-unknown");
+  await expect(note).toBeVisible();
+  await expect(note).toContainText("E11");
+  await expect(note).toContainText("E10");
+  await expect(page.getByTestId("report-label")).not.toContainText([/^E10 /]);
+});

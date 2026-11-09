@@ -64,7 +64,7 @@ Keyed by the field-list channel. Order = form order (index in `fields`, non-decr
 |---|---|---|---|---|---|
 | tr-tufam-eform | Reaksiyonlar/belirtiler > Reaksiyon/belirti | … > Başlangıç tarihi | … > Sonuç (6 options) | İlaçlar > İlaç adı | İlaçlar > İlaç adı |
 | tr-tufam-docx | 2 … > Yaşanan yan etkiyi ve nasıl meydana geldiğini tanımlayın | 2 … > Ne zaman başladı? | 2 … > Yan etkiyi yaşayan kişinin şimdiki durumu nasıl? (6 options) | 3 … > İlacın Adı | 3 … > Diğer ilacın adı |
-| us-fda-3500b-pdf | A4 Tell us what happened, … | A3 Date the problem occurred | — (Janus label) | C1 Name(s) of the product as it appears on the box, … | E11 List all current prescription medications … |
+| us-fda-3500b-pdf | A4 Tell us what happened, … | A3 Date the problem occurred | — (Janus label) | C1 Name(s) of the product as it appears on the box, … | E10 List all over-the-counter medications … (`othersOtc`, DP13); E11 List all current prescription medications … |
 | eu-ema-guidance | — (Janus label) | Onset of side effect | Is it ongoing? | Medicine | Other medicines |
 | de-bfarm-pdf | Beschreibung > Beschreibung des Arzneimittelrisikos / der Nebenwirkung | Beschreibung > Startdatum der Nebenwirkung | Beschreibung > Ausgang der Nebenwirkung | Verdächtigte(s) Arzneimittel > Bezeichnung o. PZN | Weitere(s) Arzneimittel |
 | fr-ansm-cerfa-10011 | Effet > Nature et description de l'effet | Effet > Date de survenue | Evolution | Médicament | Médicament |
@@ -124,6 +124,7 @@ long content (long box names and labels wrap; the draft never scrolls sideways).
 | P7 | An outcome option index yields exactly that option of the channel's recorded options; a channel without recorded options never shows an option | 4.3 |
 | P8 | Fragments: for any string the parser never throws and returns only well-formed codes; build → parse round-trips; the built fragment holds no box name or free text | 2.4, 2.5, 8.1 |
 | P9 | In the doctor view a channel whose audience lacks `hcp` yields no native label | 8.3 |
+| P11 | 3500B: a ticked other medicine is under E10 iff its type is `otc`, otherwise under E11; `typeUnknown` lists exactly the ticked `unknown` ones; a form without the split has no `othersOtc` row and an empty `typeUnknown` | 4.2a |
 | P10 | Missing required fields: every listed field is a recorded required field of the field list and is not one the draft fills; none for an UNVERIFIED list | 5.5 |
 
 Also unit-tested: the CSV (every row has `source_url`, `checked_on`, an allowed URL scheme; the JSON
@@ -151,6 +152,8 @@ labels are scanned by `channels.test.ts` instead.
 | DP11 | Health-professional routes are named only where the research shows them; the field mapping is used in the doctor view only when the channel's audience includes `hcp` (TÜFAM e-form, BfArM PDF and online, ANSM Cerfa, EMA); otherwise Janus labels, with a note | map the 3500B for doctors | Form 3500 (professionals) differs from 3500B and its fields were not read; the TÜFAM professional form's address was not verified, so it is named, not linked |
 | DP12 | The under-reporting sentence is fixed text with its citation (Hazell & Shakir 2006, DOI), the median, the number of studies and the IQR, shown once in the intro card; no "you should report" | a headline figure "94 % are never reported" | Statistician review: a median across heterogeneous studies is not a rate for this person or country; the IQR shows the spread; the line informs without pressure (product.md, medical-safety rule 1) |
 
+| DP13 | **Owner decision 2026-11-09 (closes pharmacologist F1): 3500B E10 / E11 split** by the resolver's product type: openFDA `product_type` "HUMAN OTC DRUG" → E10 (`othersOtc`), "HUMAN PRESCRIPTION DRUG" → E11; any other or no type (TR and EU products, an ingredient chosen by name, the doctor view) → E11, and the draft names those medicines with the sentence `ReportAssistant.draft.typeUnknown` under the E11 row. `otherType` in `draft.ts`; the demo recorder keeps the openFDA type of US products (a CC0 category, not product text). | All under E11 with a general note; ask the person per medicine | The type is known for US products; where it is not, saying so is honest and keeps the person in charge of the official form |
+
 ## 7. Reviews and result (2026-11-09)
 
 - Reviews: `report-assistant-safety-auditor-review.md` (A1–A9, no blocking; A1–A5, A7, A8 fixed, A6 declined with
@@ -163,5 +166,5 @@ labels are scanned by `channels.test.ts` instead.
 
 ## 8. Open items
 
-- 3500B E10/E11 split of other medicines (pharmacologist F1); the UNVERIFIED items listed on the pre-launch checklist.
+- ~~3500B E10/E11 split of other medicines (pharmacologist F1)~~ closed by DP13 (2026-11-09); the UNVERIFIED items listed on the pre-launch checklist.
 - The region is not stored (DP7): a doctor opening the link on a device without a user region chooses it each time.

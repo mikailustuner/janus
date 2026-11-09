@@ -166,6 +166,8 @@ export function SummaryBody({
         eyebrow={t("Report.checkedIn", { month })}
         summary={t("Report.summaryLine", {
           medicines: v.medicines.total,
+          full,
+          partly: v.medicines.notFully.length,
           patterns: total,
         })}
         summaryTestId="summary-line"

@@ -189,6 +189,12 @@ remove the matching notice (and, for the Canon claims, set `expert_review = revi
   and that the confirmation sentence is enough notice that the image may contain health information
   (`janus-report` Req 5, DP11, `report-safety-auditor-review.md`).
 
+- [ ] **"Fully / partly checked" wording** (owner decision 2026-11-09; experience DP57, janus-report DP14, doctor-loop
+  DP42): native review of `Cards.results.medicinesChecked`, `Report.summaryLine`, `Report.image.headline` and the note
+  sentence `medicines.count` in five languages (TR word order "{total} ilaç: {full} tamamen, {partly} kısmen kontrol
+  edildi"; FR/ES plural agreement of "vérifiés"/"comprobados"), and a clinician's view that "partly" (at least one
+  ingredient not recognised) is clear to a doctor reading the note.
+
 ## Report Assistant (enhancement, 2026-11-09)
 - [ ] **Legal review per region** of the assistant (TR: KVKK and TİTCK/TÜFAM rules on intermediaries in
   pharmacovigilance; EU: whether a draft helper is a medical device under MDR Rule 11 and national rules for
@@ -211,8 +217,11 @@ remove the matching notice (and, for the Canon claims, set `expert_review = revi
 - [ ] **Statistics wording:** check the full text of Hazell & Shakir 2006 for the study mix (reporters, settings) and
   look for a newer systematic review; never shorten the sentence to "94 % are never reported" in README, video or
   Devpost copy (`report-assistant-statistician-review.md` S2–S4).
-- [ ] **3500B E10/E11:** all other medicines go under E11 (prescription); decide whether to split OTC products into
-  E10 from the resolver's product type (`report-assistant-pharmacologist-review.md` F1).
+- [x] **3500B E10/E11:** decided by the owner on 2026-11-09 (`report-assistant` DP13): OTC products go under E10 by the
+  resolver's openFDA product type; unknown types stay under E11 and the draft says so.
+- [ ] **3500B E10/E11 check by a pharmacist:** confirm that the openFDA `product_type` ("HUMAN OTC DRUG" / "HUMAN
+  PRESCRIPTION DRUG") is the right test for E10 vs E11, and that dietary supplements and herbal products (which the
+  resolver does not know) are acceptable under E11 with the "type unknown" sentence.
 - [ ] **Native clinical review of the `ReportAssistant` texts:** TR "advers reaksiyon" vs "yan etki"; DE outcome terms
   and "Interquartilsbereich"; FR "intervalle interquartile" and ANSM's "Évolution"; ES "Desenlace"; and whether the
   TÜFAM outcome options match the live form (`report-assistant-localization-reviewer-review.md`).

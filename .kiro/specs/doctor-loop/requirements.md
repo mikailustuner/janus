@@ -134,6 +134,10 @@ creating an account, turning patient reports into doctor-confirmed outcomes.
 1. FOR every list item that has an `item_warnings` entry, THE note SHALL show the abrupt-stop line ("Do not stop this medicine suddenly." in the note language) in that item's medicine row, once per item, whether or not the item is in a finding.
 2. THE note SHALL show findings with `form_confirmed = false` in a separate section with its own heading that says the product form was not confirmed and the pattern depends on the form (design DP12); confirmed findings SHALL stay in the main findings section. A finding SHALL appear in exactly one of the two sections.
 3. THE abrupt-stop line SHALL be fixed text, never removed by the auditor.
+4. *(Owner decision 2026-11-09, DP42.)* THE medicines section SHALL open with one fixed sentence that states the
+   number of medicines in the list, the number fully checked and the number partly checked (at least one ingredient
+   could not be checked), in the note language; the numbers SHALL equal the medicine rows and their not-checked
+   entries.
 
 ### Requirement 9: FAERS statistics in the note *(Added in refinement; from the collective-memory open items)*
 1. FOR every finding whose `faers_locator` is set, THE note SHALL print the statistic of `POST /memory/pair` for (index ingredient, the rule's Janus event key, region `ALL`, scope `suspect`), and, when a statistics region is requested, the same for that region: report count, the ratio with its 95 % range, the assessment, the snapshot date and window, and the `citation` (`dataset:faers` and the locator).

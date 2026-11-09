@@ -396,7 +396,8 @@ def test_p37_a_reviewed_combination_code_is_labelled(
     doc = build_document(dataclasses.replace(inputs, component_pairs=chosen), GLOSSARY, "de")
     meds = next(s for s in doc.sections if s.id == "medicines")
     for row in meds.blocks:
-        assert isinstance(row, MedicineRow)
+        if not isinstance(row, MedicineRow):
+            continue
         for ing in row.ingredients:
             labelled = any((ing.key, c) in chosen for c in ing.atc)
             assert (ing.combination_code is not None) == labelled
@@ -410,6 +411,23 @@ def test_p37_a_reviewed_combination_code_is_labelled(
         if isinstance(row, MedicineRow)
         for ing in row.ingredients
     )
+
+
+@given(inputs=note_inputs())
+def test_p39_medicines_count_splits_fully_and_partly_checked(inputs: NoteInputs) -> None:
+    """Feature: doctor-loop, Property P39 (DP42, owner decision 2026-11-09): the medicines
+    section opens with one count sentence; its numbers are the rows, the rows without a
+    not-checked entry and the rows with one."""
+    for doc in docs(inputs):
+        meds = next(s for s in doc.sections if s.id == "medicines")
+        first = meds.blocks[0]
+        assert isinstance(first, Sentence)
+        assert first.id == "medicines:count" and first.kind == "fixed"
+        rows = [b for b in meds.blocks if isinstance(b, MedicineRow)]
+        partly = sum(1 for r in rows if r.not_checked)
+        want = [len(rows), len(rows) - partly, partly]
+        assert [int(n) for n in first.numbers] == want
+        assert sum(1 for b in meds.blocks if isinstance(b, Sentence)) == 1
 
 
 def test_p38_the_note_only_texts_are_not_the_shared_patient_texts() -> None:

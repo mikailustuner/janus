@@ -1,4 +1,4 @@
-// Feature: report-assistant, Properties P1, P3–P7, P9, P10 (design §5).
+// Feature: report-assistant, Properties P1, P3–P7, P9–P11 (design §5).
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { check, fc } from "@/test/fc";
@@ -9,6 +9,7 @@ import {
   copyAll,
   mappingFor,
   medicineValue,
+  otherType,
   outcomeOptions,
   type DraftInput,
 } from "./draft";
@@ -37,9 +38,14 @@ const inputArb: fc.Arbitrary<DraftInput> = fc.record({
     option: fc.option(fc.integer({ min: 0, max: 7 }), { nil: null }),
     text,
   }),
-  others: fc.array(fc.record({ label: text, ticked: fc.boolean() }), {
-    maxLength: 6,
-  }),
+  others: fc.array(
+    fc.record({
+      label: text,
+      ticked: fc.boolean(),
+      type: fc.constantFrom("otc" as const, "rx" as const, "unknown" as const),
+    }),
+    { maxLength: 6 },
+  ),
 });
 const janus = (k: string) => `[${k}]`;
 const DEMO = "Demo · synthetic patient — do not submit";
@@ -95,14 +101,71 @@ describe("report draft", () => {
   it("P5: other medicines are exactly the ticked ones, in list order", () => {
     check(
       fc.property(inputArb, (input) => {
-        const row = buildDraft(input).rows.find((r) => r.key === "others");
+        const d = buildDraft(input);
+        const split = !!mappingFor(input.channel, input.hcp)?.map.some(
+          (f) => f.key === "othersOtc",
+        );
+        const row = d.rows.find((r) => r.key === "others");
         const ticked = input.others
           .filter((o) => o.ticked && o.label.trim())
+          .filter((o) => !split || o.type !== "otc")
           .map((o) => o.label.trim());
         if (ticked.length === 0) expect(row).toBeUndefined();
         else expect(row!.value).toBe(ticked.join("; "));
       }),
     );
+  });
+
+  it("P11: 3500B puts over-the-counter medicines under E10, the rest (unknown included) under E11, and names the unknown ones (DP13)", () => {
+    const us = CHANNELS.find((c) => c.id === "us-fda-3500b-pdf")!;
+    check(
+      fc.property(inputArb, (raw) => {
+        const input = { ...raw, channel: us, hcp: false };
+        const d = buildDraft(input);
+        const ticked = input.others
+          .filter((o) => o.ticked && o.label.trim())
+          .map((o) => ({ ...o, label: o.label.trim() }));
+        const of = (k: string) => d.rows.find((r) => r.key === k)?.value ?? "";
+        expect(of("othersOtc")).toBe(
+          ticked
+            .filter((o) => o.type === "otc")
+            .map((o) => o.label)
+            .join("; "),
+        );
+        expect(of("others")).toBe(
+          ticked
+            .filter((o) => o.type !== "otc")
+            .map((o) => o.label)
+            .join("; "),
+        );
+        expect(d.typeUnknown).toEqual(
+          ticked.filter((o) => o.type === "unknown").map((o) => o.label),
+        );
+        const e10 = d.rows.find((r) => r.key === "othersOtc");
+        if (e10) expect(e10.label).toMatch(/^E10 /);
+        const e11 = d.rows.find((r) => r.key === "others");
+        if (e11) expect(e11.label).toMatch(/^E11 /);
+      }),
+    );
+  });
+
+  it("P11: forms that do not split keep every ticked medicine in one row and name none as unknown", () => {
+    check(
+      fc.property(inputArb, (input) => {
+        const d = buildDraft(input);
+        const m = mappingFor(input.channel, input.hcp);
+        if (m?.map.some((f) => f.key === "othersOtc")) return;
+        expect(d.rows.some((r) => r.key === "othersOtc")).toBe(false);
+        expect(d.typeUnknown).toEqual([]);
+      }),
+    );
+  });
+
+  it("otherType reads the openFDA product type and nothing else", () => {
+    expect(otherType("HUMAN OTC DRUG")).toBe("otc");
+    expect(otherType("HUMAN PRESCRIPTION DRUG")).toBe("rx");
+    expect(otherType(null)).toBe("unknown");
+    expect(otherType("PLASMA DERIVATIVE")).toBe("unknown");
   });
 
   it("P6: copy-all is the rows in form order", () => {

@@ -156,3 +156,9 @@
     web lint, typecheck and 78 web tests all pass locally; CI result in the report.
   - Every step green (API, web, CI); report what was built, counterexamples the property tests found and how they were
     fixed, and the open items.
+
+- [x] 18. Owner decision 2026-11-09: medicines fully and partly checked (Req 8.4, DP42)
+  - `medicines.count` in `templates.py` and `glossary/sentences.csv` (five languages), first block of the medicines
+    section in `build.py`; P39 in `tests/test_notes_build_properties.py`; API property tests read medicine rows by
+    type. Demo note fixtures re-recorded from the real local API.
+  - **Checkpoint:** ruff, pyright, pytest (janus_test) green; commit.

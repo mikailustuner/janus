@@ -66,7 +66,8 @@ def test_synthetic_patient_note(env: Env) -> None:
     assert section_ids(en)[:3] == ["header", "safety", "medicines"]  # depression has a safety line
     cascades = [b["id"] for b in blocks(en, "findings") if b.get("template") == "finding.cascade"]
     assert {c.split(":")[1] for c in cascades} == {"3", "5"}
-    meds = blocks(en, "medicines")
+    meds = [b for b in blocks(en, "medicines") if b["type"] == "medicine"]
+    assert blocks(en, "medicines")[0]["id"] == "medicines:count"
     assert [m["item"] for m in meds] == [0, 1, 2, 3, 4]
     assert [m["abrupt_stop"] is not None for m in meds] == [False, False, True, True, False]
     assert all(m["product_name_slot"] is True for m in meds)
@@ -160,7 +161,9 @@ def test_p22_findings_equal_the_engine(env: Env, data: st.DataObject) -> None:
     }
     assert found == expected
     warned = {w["item"] for w in engine["item_warnings"]}
-    assert {m["item"] for m in blocks(doc, "medicines") if m["abrupt_stop"]} == warned
+    assert {
+        m["item"] for m in blocks(doc, "medicines") if m["type"] == "medicine" and m["abrupt_stop"]
+    } == warned
     assert note["versions"]["rule_base_version"] == engine["rule_base_version"]
     assert note["versions"]["integrity_version"] == engine["integrity_version"]
     again = post(env.client, note_body(env, items=items, languages=["fr"]))

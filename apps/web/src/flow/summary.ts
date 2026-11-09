@@ -45,6 +45,28 @@ export function boxRegion(item: Pick<Item, "candidate">): BoxRegion {
   return item.candidate.kind === "product" ? item.candidate.region : "name";
 }
 
+/**
+ * Items with at least one ingredient that could not be checked ("partly checked"), in list order
+ * (owner decision 2026-11-09, experience DP57, janus-report DP12).
+ */
+export function notFullyChecked(
+  r: Pick<CascadeResult, "not_checked">,
+  items: number,
+): number[] {
+  return [
+    ...new Set(r.not_checked.map((n) => n.item).filter((i) => i < items)),
+  ].sort((a, b) => a - b);
+}
+
+/** "8 medicines: 6 fully checked, 2 partly" (owner decision 2026-11-09). */
+export function checkedSplit(
+  r: Pick<CascadeResult, "not_checked">,
+  items: number,
+): { total: number; full: number; partly: number } {
+  const partly = notFullyChecked(r, items).length;
+  return { total: items, full: items - partly, partly };
+}
+
 export function summaryView(
   r: CascadeResult,
   items: readonly Pick<Item, "candidate">[],
@@ -61,11 +83,7 @@ export function summaryView(
       findings.filter((f) => orderGroup(f.finding.timing) === g),
     ]),
   ) as Record<OrderGroup, FindingView[]>;
-  const notFully = [
-    ...new Set(
-      r.not_checked.map((n) => n.item).filter((i) => i < items.length),
-    ),
-  ].sort((a, b) => a - b);
+  const notFully = notFullyChecked(r, items.length);
   const regions = Object.fromEntries(BOX_REGIONS.map((k) => [k, 0])) as Record<
     BoxRegion,
     number

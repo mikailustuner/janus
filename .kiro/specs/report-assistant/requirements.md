@@ -92,6 +92,12 @@ form and submits it themselves. Janus never submits anything.
 2. THE other medicines SHALL be the other items of the list (in doctor view, the other ingredients of
    the note), each with a checkbox, ticked by default; the draft SHALL contain exactly the ticked ones,
    in list order.
+2a. *(Owner decision 2026-11-09, DP13.)* WHEN the form asks for prescription and over-the-counter medicines in
+   separate fields (FDA 3500B E11 and E10), THE draft SHALL put an other medicine under E10 WHEN the resolver's
+   product type says it is sold over the counter, under E11 WHEN it says prescription, and under E11 WHEN the type is
+   unknown; THE draft SHALL then name the medicines of unknown type and say that they were put under E11 and that a
+   medicine bought without a prescription belongs under E10. Forms without the split SHALL keep all other medicines
+   in one field.
 3. WHERE the channel's outcome options were read THE assistant SHALL offer exactly those options
    (native label with a translation); otherwise a free-text outcome.
 4. THE event SHALL be in plain words: the Janus lay label or the person's text. No MedDRA term SHALL

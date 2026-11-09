@@ -1292,7 +1292,7 @@
       "witnesses": "{count, plural, other {3 tanıktan}}"
     },
     "results": {
-      "medicinesChecked": "{count, plural, one {# ilaç kontrol edildi} other {# ilaç kontrol edildi}}"
+      "medicinesChecked": "{total} ilaç: {full} tamamen, {partly} kısmen kontrol edildi"
     },
     "passport": {
       "summary": "{items, plural, one {# ilaç} other {# ilaç}} · {boxes, plural, one {# kutu} other {# kutu}}",
@@ -1417,7 +1417,7 @@
     "open": "Özeti gör",
     "openHint": "Bu kontrolün temel sayıları bir bakışta",
     "checkedIn": "Kontrol tarihi: {month}",
-    "summaryLine": "{medicines, plural, one {# ilaç kontrol edildi} other {# ilaç kontrol edildi}} · {patterns, plural, =0 {kural listesinden örüntü yok} one {konuşmaya değer # örüntü} other {konuşmaya değer # örüntü}}",
+    "summaryLine": "{medicines} ilaç: {full} tamamen, {partly} kısmen kontrol edildi · {patterns, plural, =0 {kural listesinden örüntü yok} one {konuşmaya değer # örüntü} other {konuşmaya değer # örüntü}}",
     "patterns": {
       "title": {
         "twoFaces": "Konuşmaya değer hayaletler",
@@ -1479,8 +1479,8 @@
     },
     "image": {
       "title": "Janus özeti",
-      "headline": "{medicines, plural, one {# ilaç kontrol edildi} other {# ilaç kontrol edildi}} · {patterns, plural, =0 {kural listesinden örüntü yok} one {konuşmaya değer # örüntü} other {konuşmaya değer # örüntü}} · {total} örüntüden {checked} tanesine göre kontrol edildi",
-      "medicines": "{count, plural, one {ilaç kontrol edildi} other {ilaç kontrol edildi}}",
+      "headline": "{medicines} ilaç: {full} tamamen, {partly} kısmen kontrol edildi · {patterns, plural, =0 {kural listesinden örüntü yok} one {konuşmaya değer # örüntü} other {konuşmaya değer # örüntü}} · {total} örüntüden {checked} tanesine göre kontrol edildi",
+      "medicines": "{count, plural, one {listedeki ilaç} other {listedeki ilaç}}",
       "patterns": "{count, plural, one {konuşmaya değer örüntü} other {konuşmaya değer örüntü}}",
       "rulesOf": "{total} örüntüden {checked}",
       "rules": "örüntü kontrol edildi",
@@ -1586,14 +1586,16 @@
       "missingTitle": "Formun Janus'un doldurmadığı soruları",
       "missingHint": "Cevaplamak istediğiniz kadarını resmî formda kendiniz ekleyin.",
       "oneOf": "Şunlardan en az biri: {fields}",
-      "openGuidance": "EMA rehberini aç"
+      "openGuidance": "EMA rehberini aç",
+      "typeUnknown": "Janus {count, plural, one {bu ilacın} other {bu ilaçların}} reçeteli olup olmadığını bilmiyor: {names}. {count, plural, one {Bu ilaç E11 altında listelendi} other {Bu ilaçlar E11 altında listelendi}}. Reçetesiz alınan bir ilaç E10 altına yazılır."
     },
     "janus": {
       "medicine": "İlaç (kutudaki adıyla)",
       "event": "Ne oldu",
       "onset": "Başlangıç",
       "outcome": "Şimdiki durum",
-      "others": "Diğer ilaçlar"
+      "others": "Diğer ilaçlar",
+      "othersOtc": "Reçetesiz alınan diğer ilaçlar"
     },
     "hcp": {
       "title": "Sağlık mesleği mensupları için",
@@ -1639,7 +1641,8 @@
       "esOtherDrug": "İlacın adı (diğer ilaçlar)",
       "esSymptoms": "Advers reaksiyonun (yan etkinin) belirtileri",
       "esOnset": "Bu belirtiler ne zaman başladı?",
-      "esState": "Etkilenen kişinin şimdiki durumu nedir?"
+      "esState": "Etkilenen kişinin şimdiki durumu nedir?",
+      "usE10": "Şu anda kullanılan tüm reçetesiz ilaçlar ile vitaminler, mineraller, takviyeler ve bitkisel ürünler"
     },
     "options": {
       "trEform": {
@@ -1659,5 +1662,207 @@
         "5": "Diğer"
       }
     }
+  },
+  "TimeMachine": {
+    "title": "Zaman makinesi",
+    "summary": "{substances, plural, one {Kanun'dan # ilaç} other {Kanun'dan # ilaç}} · {cascades, plural, one {# reçeteleme kaskadı} other {# reçeteleme kaskadı}}",
+    "intro": "Zaman makinesi, İbn Sina'nın Kanun'undaki bazı ilaçları ve bazı reçeteleme kaskadlarını bugünün açık verileriyle izler: içerdikleri moleküller, laboratuvarlarda ölçülen etkinlik, basit vücut modelleri ve kamuya açık advers olay bildirimlerinde yazılan başlama süresi.",
+    "inSilico": "In silico ve keşif amaçlı: açık verilerden hesaplanmıştır, herhangi bir kişi hakkında kanıt değildir. Burada gösterilen bir molekül ya da konsantrasyon araştırılmaya değer bir adaydır — bir tedavi değildir ve asla alınacak bir doz değildir.",
+    "review": "Yapay zekâ tarafından incelendi, uzman incelemesi bekleniyor.",
+    "demo": "Demo: tüm yanıtlar {date} tarihinde gerçek yerel Janus API'sinden kaydedildi; hiçbir istek gönderilmez.",
+    "entry": {
+      "title": "Zaman makinesi",
+      "body": "Kanun'daki ilaçlar ve reçeteleme kaskadları: moleküller, vücut modelleri ve bildirilen başlama süresi."
+    },
+    "open": "Zaman makinesinde aç",
+    "openCascade": "Zaman makinesinde zamanlama ve vücut modeli",
+    "back": "Zaman makinesi",
+    "sections": {
+      "substances": "Kanun'daki ilaçlar",
+      "substancesFooter": "Moleküller Wikidata ve LOTUS'tan (CC0), etkinlik PubChem'den (kamu malı), modern endikasyonlar openFDA prospektüslerinden (CC0).",
+      "cascades": "Reçeteleme kaskadları",
+      "cascadesFooter": "PIPC listesinin satırları (Rochon ve ark., Eur Geriatr Med 2025, CC BY 4.0). Başlama süresi FDA FAERS bildirimlerinden.",
+      "how": "Nasıl yapıldı",
+      "validation": "Vücut modellerinin doğrulanması"
+    },
+    "substances": {
+      "anise": "Anason",
+      "rhubarb": "Ravent",
+      "st_johns_wort": "Sarı kantaron",
+      "vinegar": "Sirke"
+    },
+    "rowSubstance": "{constituents, plural, =0 {seçilmiş molekül yok} one {# molekül} other {# molekül}} · {drugs, plural, =0 {modern ilaç yok} one {# modern ilaç} other {# modern ilaç}}",
+    "cascadeTitle": "{drugA} → {event} → {drugB}",
+    "cascadeRow": "PIPC satırı {row} · {method}",
+    "english": "İngilizce kaynak metin",
+    "method": {
+      "pbpk": "PBPK modeli (httk, ABD EPA)",
+      "compartmental": "Kaynaklı parametrelerle en basit tek kompartmanlı model",
+      "onset_only": "Yalnızca bildirilen başlama süresi, vücut modeli yok"
+    },
+    "methodWhy": {
+      "compartmental": "httk paketinde bu ilaç için insan parametreleri yok; bu nedenle Janus, parametreleri kaynak gösterilen yayınlardan alınan en basit tek kompartmanlı bir model kullanır.",
+      "onset_only": "Vücut modeli kullanılmaz: uygun insan parametreleri yok. Yalnızca bildirilen başlama süresi gösterilir."
+    },
+    "onset": {
+      "heading": "Bildirilen başlama süresi",
+      "tile": "{count, plural, one {kullanılabilir aralığı olan bildirim} other {kullanılabilir aralığı olan bildirim}}",
+      "sentence": "{count, plural, one {# bildirim} other {# bildirim}}, ilk ilacın başlangıç tarihini ve olayın tarihini eksiksiz verdi.",
+      "median": "Medyan {median} gün (%95 aralık {low}–{high} gün).",
+      "medianNoCi": "Medyan {median} gün.",
+      "iqr": "Bildirimlerin ortadaki yarısı: {q25}–{q75} gün.",
+      "zeroDay": "{count, plural, one {# bildirim} other {# bildirim}} iki tarih için aynı günü veriyor. Aynı gün aralığı çoğu zaman aynı gün başlamayı değil, iki alana tek bir tarih yazıldığını gösterir; bu bildirimler şekli “erken” yönüne çeker.",
+      "smallSample": "Az bildirim: sayı ve aralık gösterilir, ancak bir şekil tarif edilmez.",
+      "shape": "Bildirilen sürelerin şekli: {class} (Weibull şekli {shape}, %95 aralık {low}–{high}).",
+      "shapeClass": {
+        "early": "bildirimlerin çoğu erken, sonra daha az",
+        "random": "zaman içinde yaklaşık aynı",
+        "wear_out": "daha sonra daha çok bildirim"
+      },
+      "none": "Bu kaskad için bildirilmiş başlama süresi yok.",
+      "subsetCaveat": "Başlama süresi yalnızca hem başlangıç tarihini hem de olay tarihini eksiksiz veren bildirimlerde vardır. Bu alt küme tüm bildirimleri temsil etmez: eksiksizlik, bildirenin türü ve olayın ciddiyetiyle ilişkilidir. FAERS kendiliğinden bildirimdir; insidans değildir ve vakalar arasında tekilleştirilmemiştir. Sayılar bildirimdir, asla kişi değildir.",
+      "quality": "FAERS penceresinde ({window}): bildirim-ilaç çiftlerinin {share} kadarında kullanılabilir bir aralık vardı ({pairs} çift).",
+      "riskWindow": "Bildirilen aralıkların ortadaki %80'i ({basis}): {start}–{end} gün.",
+      "basis": {
+        "weibull": "uydurulan eğriden",
+        "reports": "bildirimlerden"
+      },
+      "coverage": "Bildirimler zamanla seyreldiğinde üst uç medyanın çok ötesindedir; bu yüzden hastalara yönelik cümle ortadaki yarıyı kullanır."
+    },
+    "reasons": {
+      "no_pk": "Bu molekül için yayımlanmış insan farmakokinetik parametresi yok: hiçbir konsantrasyon modellenmedi.",
+      "failed_credibility": "Model bu ilaç için doğrulama kuralını geçemedi; bu nedenle ölçülmüş bir potensle karşılaştırma yapılmaz.",
+      "no_potency": "Kamu malı veri sağlayan bir kaynaktan, duruma uygun seçilmiş bir hedefte ölçülmüş potens yok. Bu kayıtlı bir boşluktur; yerine değer konmaz.",
+      "few_reports": "Şekil uydurulmadı: kullanılabilir aralığı olan bildirim sayısı {n}'den az."
+    },
+    "published": {
+      "heading": "Yayımlanmış zamanlama",
+      "median_iqr": "Yayımlanmış: medyan {median} gün, çeyrekler arası aralık {low}–{high} gün.",
+      "window": "Yayımlanmış pencere: {low}. günden {high}. güne.",
+      "qualitative": "Yayımlanmış zamanlama yalnızca sözel olarak verilmiştir ve sayı olarak karşılaştırılamaz.",
+      "none": "Bu kaskad için yayımlanmış zamanlama yok."
+    },
+    "agreement": {
+      "agrees": "Yayımlanmış zamanlamayla çelişmiyor: aralıklar örtüşüyor. Aralıklar bu kadar genişken bu bir doğrulama değildir.",
+      "disagrees": "Aralıklar örtüşmüyor: bildirilen zamanlama yayımlanmış zamanlamadan farklı.",
+      "not_comparable": "Karşılaştırılamaz: yayımlanmış zamanlama sayı olarak verilmemiş.",
+      "none": "Karşılaştırılacak bir şey yok."
+    },
+    "compare": {
+      "title": "Bildirilen ve yayımlanmış zamanlama (gün)",
+      "janus": "FAERS bildirimleri: ortadaki yarı, medyan",
+      "published": "Yayımlanmış",
+      "legend": "Çubuk: aralık; nokta: medyan."
+    },
+    "curve": {
+      "title": "İlk ilacın başlamasından bu yana güne göre bildirim payı",
+      "note": "Bildirimlere uydurulan eğriden birikimli pay; bir kişi için tahmin değildir.",
+      "alt": "{firstDay}. günde {first} değerinden {lastDay}. günde {last} değerine yükselen çizgi. Gölgeli bant, bildirimlerin ortadaki yarısını gösterir: {q25}–{q75} gün.",
+      "day": "Gün",
+      "share": "Bu güne kadarki bildirim payı",
+      "band": "Bildirimlerin ortadaki yarısı"
+    },
+    "population": {
+      "heading": "Yaşlı ve genç sanal popülasyonlar",
+      "intro": "{older} yaşa karşı {younger} yaş. 80 yaş ve üzeri simüle edilemez. Yalnızca iki grubun göreli karşılaştırması.",
+      "title": "Kararlı durum konsantrasyonu (mg/L): 5. ile 95. persentil, medyan",
+      "older": "{drug}, {ages} yaş",
+      "younger": "{drug}, {ages} yaş",
+      "ratio": "{drug}: medyanların yaşlı/genç oranı {ratio}.",
+      "steady": "{drug}: kararlı durumun %90'ına yaklaşık {days} gün.",
+      "doseBasis": "Modelin doz temeli (yalnızca karşılaştırma için, bir doz değildir)"
+    },
+    "gate": {
+      "heading": "Hastalara yönelik cümle",
+      "shown": "Bulgu ayrıntısında gösterilir: bildirimlerin ortadaki yarısı, {start}–{end} gün.",
+      "small": "Hastalara gösterilmez: bildirim sayısı az.",
+      "agreement": "Hastalara gösterilmez: bildirilen zamanlama yayımlanmış zamanlamayla uyuşmuyor.",
+      "none": "Hastalara gösterilmez: bildirilmiş başlama süresi yok."
+    },
+    "validation": {
+      "rule": "Öngörülen Cmax ve AUC'nin ikisi de yayımlanmış gözlenen değerlerin 2 katı içindeyse güvenilir; 3 katı içindeyse sınırda; aksi halde başarısız. Güvenilir olmayan bir ilaç için potensle karşılaştırma yapılmaz.",
+      "pbpk": "PBPK (httk)",
+      "compartmental": "En basit kompartman modelleri",
+      "summary": "{credible} güvenilir, {borderline} sınırda, {failed} başarısız",
+      "drug": "İlaç",
+      "cmax": "Cmax gözlenen / öngörülen (ng/mL)",
+      "auc": "AUC gözlenen / öngörülen (ng·sa/mL)",
+      "fold": "Kat hatası",
+      "verdict": "Doğrulama",
+      "credibility": {
+        "credible": "Güvenilir",
+        "borderline": "Sınırda",
+        "failed": "Başarısız"
+      },
+      "aucNote": "Bu modellerde AUC, yapısı gereği kaynak gösterilen parametrelerden çıkar; yalnızca Cmax bağımsız bir denetimdir.",
+      "notShownReason": "Simüle edilen her konsantrasyonla birlikte gösterilir."
+    },
+    "sources": {
+      "run": "Çalıştırma {run}",
+      "snapshot": "{date} tarihli veri",
+      "licence": "Lisans: {licence}",
+      "tools": "Araçlar: {tools}",
+      "built": "{date} tarihinde oluşturuldu · tohum {seed} · {simulations} simülasyon"
+    },
+    "substance": {
+      "constituents": "Seçilen moleküller",
+      "why": "Neden seçildi",
+      "mw": "Molekül ağırlığı {mw} g/mol",
+      "admet": "ADMET-AI öngörüleri (model çıktısı, ölçüm değil)",
+      "admetNames": {
+        "PPBR_AZ": "Plazma proteinlerine bağlanma, öngörülen (%)",
+        "Half_Life_Obach": "Yarılanma ömrü, öngörülen (saat)",
+        "VDss_Lombardo": "Dağılım hacmi, öngörülen (L/kg)",
+        "probability": "{name}, öngörülen olasılık (0–1)"
+      },
+      "activities": "PubChem'de ölçülen etkinlik (kamu malı veri sağlayanlar)",
+      "activitiesCount": "{total} kayıttan {shown} tanesi gösteriliyor.",
+      "screening": "Duruma göre seçilmemiş bir hedefteki potens bir tarama sonucudur, bir etki değildir.",
+      "assay": "Test",
+      "target": "Hedef",
+      "measure": "Ölçü",
+      "value": "Değer (µmol/L)",
+      "outcome": "Sonuç",
+      "depositor": "Veri sağlayan",
+      "flags": "Etkileşim işaretleri",
+      "established": "Kaynakla kanıtlanmış, bilinen",
+      "screeningFlag": "Tarama kaydı: kontrol edilecek bir sinyal, bilinen bir etkileşim değil",
+      "withheld": "Değer gösterilmiyor: lisansı ({licence}) burada yeniden kullanıma izin vermiyor.",
+      "todays": "İlişkili bir durum için bugünün ilaçları",
+      "label": "ABD prospektüsü (DailyMed)",
+      "bridge": "Kanun'dan köprü",
+      "exposure": "Tarihsel miktardan modellenmiş konsantrasyona",
+      "historical": "Kaynakta geçen miktar: {amount} {unit}; kaynak gösterilen birim aralıklarına göre yaklaşık {low}–{high} g. Tarihsel bir miktardır, alınacak bir doz değildir.",
+      "constituentDose": "{compound} için modellenen miktar: {low}–{high} mg (%{contentLow}–{contentHigh} içerik). Bir model girdisidir, doz değildir.",
+      "peak": "{compound} için modellenen tepe konsantrasyonu (mg/L): 5. ile 95. persentil, medyan",
+      "tmax": "Tepeye ulaşma süresi: yaklaşık {hours} saat.",
+      "verdict": {
+        "reaches": "Modellenen tepenin 5. persentili bile ölçülen potense ulaşıyor.",
+        "overlaps": "Modellenen tepe aralığı ölçülen potensle örtüşüyor.",
+        "stays_below": "Modellenen tepenin 95. persentili bile ölçülen potensin altında kalıyor."
+      },
+      "basis": {
+        "unbound": "Bağlanmamış konsantrasyon olarak karşılaştırıldı.",
+        "total_only": "Toplam konsantrasyon olarak karşılaştırıldı (bir üst sınır): kullanılabilir bağlanmamış oran yok."
+      },
+      "margin": "{measure} {potency} µmol/L'ye karşı pay {low}–{high} ({assay}).",
+      "noExposure": "Bu ilaç için tarihsel bir miktar modellenmedi.",
+      "none": "Bu ilaç için molekül seçilmedi."
+    },
+    "references": "Kaynaklar",
+    "verified": "Denetlendi: {how}",
+    "table": "Sayıları tablo olarak göster",
+    "legend": "Bant: 5. ile 95. persentil; nokta: medyan.",
+    "patient": {
+      "heading": "Bu ne zaman bildirildi",
+      "sentence": "Başkalarının yaptığı bildirimlerde bu kombinasyon en sık, ilk ilaca başlandıktan {start} ile {end} gün sonra bildirildi. Bu, bildirimlerden gelen bir bilgidir, sizin hakkınızda bir tahmin değildir — doktorunuzla konuşmaya değer olabilir.",
+      "review": "Yapay zekâ tarafından incelendi, uzman incelemesi bekleniyor."
+    },
+    "errors": {
+      "unavailable": "Zaman makinesi bu sunucuda kullanılamıyor.",
+      "unknown": "Bu kayıt zaman makinesinde yok."
+    },
+    "empty": "Henüz gösterilecek bir şey yok.",
+    "loading": "Zaman makinesi yükleniyor…"
   }
 }

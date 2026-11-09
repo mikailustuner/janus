@@ -1292,7 +1292,7 @@
       "witnesses": "{count, plural, other {von 3 Zeugen}}"
     },
     "results": {
-      "medicinesChecked": "{count, plural, one {# Medikament geprüft} other {# Medikamente geprüft}}"
+      "medicinesChecked": "{total, plural, one {# Medikament} other {# Medikamente}}: {full} vollständig geprüft, {partly} teilweise"
     },
     "passport": {
       "summary": "{items, plural, one {# Medikament} other {# Medikamente}} · {boxes, plural, one {# Packung} other {# Packungen}}",
@@ -1417,7 +1417,7 @@
     "open": "Zur Übersicht",
     "openHint": "Die wichtigsten Zahlen dieser Prüfung auf einen Blick",
     "checkedIn": "Geprüft im {month}",
-    "summaryLine": "{medicines, plural, one {# Medikament geprüft} other {# Medikamente geprüft}} · {patterns, plural, =0 {kein Muster aus der Regelliste} one {# Muster zum Besprechen} other {# Muster zum Besprechen}}",
+    "summaryLine": "{medicines, plural, one {# Medikament} other {# Medikamente}}: {full} vollständig geprüft, {partly} teilweise · {patterns, plural, =0 {kein Muster aus der Regelliste} one {# Muster zum Besprechen} other {# Muster zum Besprechen}}",
     "patterns": {
       "title": {
         "twoFaces": "Geister zum Besprechen",
@@ -1479,8 +1479,8 @@
     },
     "image": {
       "title": "Janus-Übersicht",
-      "headline": "{medicines, plural, one {# Medikament geprüft} other {# Medikamente geprüft}} · {patterns, plural, =0 {kein Muster aus der Regelliste} one {# Muster zum Besprechen} other {# Muster zum Besprechen}} · geprüft mit {checked} von {total} Mustern",
-      "medicines": "{count, plural, one {Medikament geprüft} other {Medikamente geprüft}}",
+      "headline": "{medicines, plural, one {# Medikament} other {# Medikamente}}: {full} vollständig geprüft, {partly} teilweise · {patterns, plural, =0 {kein Muster aus der Regelliste} one {# Muster zum Besprechen} other {# Muster zum Besprechen}} · geprüft mit {checked} von {total} Mustern",
+      "medicines": "{count, plural, one {Medikament in der Liste} other {Medikamente in der Liste}}",
       "patterns": "{count, plural, one {Muster zum Besprechen} other {Muster zum Besprechen}}",
       "rulesOf": "{checked} von {total}",
       "rules": "Muster geprüft",
@@ -1586,14 +1586,16 @@
       "missingTitle": "Fragen des Formulars, die Janus nicht ausfüllt",
       "missingHint": "Ergänzen Sie diese selbst im offiziellen Formular, soweit Sie sie beantworten möchten.",
       "oneOf": "Mindestens eines von: {fields}",
-      "openGuidance": "EMA-Hinweise öffnen"
+      "openGuidance": "EMA-Hinweise öffnen",
+      "typeUnknown": "Janus weiß nicht, ob {count, plural, one {dieses Arzneimittel verschreibungspflichtig ist} other {diese Arzneimittel verschreibungspflichtig sind}}: {names}. {count, plural, one {Es steht unter E11} other {Sie stehen unter E11}}. Ein Arzneimittel, das ohne Rezept gekauft wurde, gehört unter E10."
     },
     "janus": {
       "medicine": "Arzneimittel (wie auf der Packung)",
       "event": "Was ist passiert",
       "onset": "Beginn",
       "outcome": "Wie es jetzt ist",
-      "others": "Weitere Arzneimittel"
+      "others": "Weitere Arzneimittel",
+      "othersOtc": "Weitere Arzneimittel ohne Rezept"
     },
     "hcp": {
       "title": "Für Fachkreise",
@@ -1639,7 +1641,8 @@
       "esOtherDrug": "Name des Arzneimittels (weitere Arzneimittel)",
       "esSymptoms": "Symptome der Nebenwirkung",
       "esOnset": "Wann haben diese Symptome begonnen?",
-      "esState": "Wie ist der aktuelle Zustand der betroffenen Person?"
+      "esState": "Wie ist der aktuelle Zustand der betroffenen Person?",
+      "usE10": "Alle derzeit verwendeten rezeptfreien Arzneimittel sowie Vitamine, Mineralstoffe, Nahrungsergänzungsmittel und pflanzlichen Mittel"
     },
     "options": {
       "trEform": {
@@ -1659,5 +1662,207 @@
         "5": "Anderes"
       }
     }
+  },
+  "TimeMachine": {
+    "title": "Zeitmaschine",
+    "summary": "{substances, plural, one {# Heilmittel des Kanons} other {# Heilmittel des Kanons}} · {cascades, plural, one {# Verschreibungskaskade} other {# Verschreibungskaskaden}}",
+    "intro": "Die Zeitmaschine verfolgt Heilmittel aus Ibn Sinas Kanon und einige Verschreibungskaskaden durch die offenen Daten von heute: die enthaltenen Moleküle, im Labor gemessene Aktivität, einfache Körpermodelle und die Zeit bis zum Auftreten, wie sie in öffentlichen Meldungen unerwünschter Ereignisse steht.",
+    "inSilico": "In silico und explorativ: aus offenen Daten berechnet, kein Beleg für irgendeine Person. Ein hier gezeigtes Molekül oder eine Konzentration ist ein untersuchenswerter Kandidat — keine Behandlung und niemals eine einzunehmende Dosis.",
+    "review": "Von einer KI geprüft, Prüfung durch Fachleute steht aus.",
+    "demo": "Demo: alle Antworten wurden am {date} von der echten lokalen Janus-API aufgezeichnet; es wird keine Anfrage gesendet.",
+    "entry": {
+      "title": "Zeitmaschine",
+      "body": "Heilmittel des Kanons und Verschreibungskaskaden: Moleküle, Körpermodelle und gemeldete Zeit bis zum Auftreten."
+    },
+    "open": "In der Zeitmaschine öffnen",
+    "openCascade": "Zeitverlauf und Körpermodell in der Zeitmaschine",
+    "back": "Zeitmaschine",
+    "sections": {
+      "substances": "Heilmittel des Kanons",
+      "substancesFooter": "Moleküle aus Wikidata und LOTUS (CC0), Aktivität aus PubChem (gemeinfrei), heutige Anwendungsgebiete aus openFDA-Fachinformationen (CC0).",
+      "cascades": "Verschreibungskaskaden",
+      "cascadesFooter": "Zeilen der PIPC-Liste (Rochon et al., Eur Geriatr Med 2025, CC BY 4.0). Zeit bis zum Auftreten aus Meldungen der FDA FAERS.",
+      "how": "Wie es entstanden ist",
+      "validation": "Validierung der Körpermodelle"
+    },
+    "substances": {
+      "anise": "Anis",
+      "rhubarb": "Rhabarber",
+      "st_johns_wort": "Johanniskraut",
+      "vinegar": "Essig"
+    },
+    "rowSubstance": "{constituents, plural, =0 {kein Molekül ausgewählt} one {# Molekül} other {# Moleküle}} · {drugs, plural, =0 {kein heutiges Arzneimittel} one {# heutiges Arzneimittel} other {# heutige Arzneimittel}}",
+    "cascadeTitle": "{drugA} → {event} → {drugB}",
+    "cascadeRow": "PIPC-Zeile {row} · {method}",
+    "english": "Quelltext auf Englisch",
+    "method": {
+      "pbpk": "PBPK-Modell (httk, US EPA)",
+      "compartmental": "Minimales Ein-Kompartiment-Modell mit belegten Parametern",
+      "onset_only": "Nur gemeldete Zeit bis zum Auftreten, kein Körpermodell"
+    },
+    "methodWhy": {
+      "compartmental": "Das Paket httk hat für dieses Arzneimittel keine Parameter beim Menschen; Janus verwendet daher ein minimales Ein-Kompartiment-Modell, dessen Parameter aus zitierten Veröffentlichungen stammen.",
+      "onset_only": "Es wird kein Körpermodell verwendet: Es gibt keine geeigneten Parameter beim Menschen. Gezeigt wird nur die gemeldete Zeit bis zum Auftreten."
+    },
+    "onset": {
+      "heading": "Gemeldete Zeit bis zum Auftreten",
+      "tile": "{count, plural, one {Meldung mit verwertbarem Intervall} other {Meldungen mit verwertbarem Intervall}}",
+      "sentence": "{count, plural, one {# Meldung nennt} other {# Meldungen nennen}} ein vollständiges Startdatum des ersten Arzneimittels und ein vollständiges Datum des Ereignisses.",
+      "median": "Median {median} Tage (95-%-Intervall {low} bis {high} Tage).",
+      "medianNoCi": "Median {median} Tage.",
+      "iqr": "Mittlere Hälfte der Meldungen: {q25} bis {q75} Tage.",
+      "zeroDay": "{count, plural, one {# Meldung nennt} other {# Meldungen nennen}} für beide Daten denselben Tag. Ein Intervall von null Tagen bedeutet oft, dass ein Datum in beide Felder geschrieben wurde, und nicht ein Auftreten am selben Tag; solche Meldungen ziehen die Form in Richtung „früh“.",
+      "smallSample": "Wenige Meldungen: Anzahl und Intervall werden gezeigt, aber keine Form beschrieben.",
+      "shape": "Form der gemeldeten Zeiten: {class} (Weibull-Form {shape}, 95-%-Intervall {low} bis {high}).",
+      "shapeClass": {
+        "early": "die meisten Meldungen früh, später weniger",
+        "random": "über die Zeit etwa gleich",
+        "wear_out": "später mehr Meldungen"
+      },
+      "none": "Für diese Kaskade gibt es keine gemeldete Zeit bis zum Auftreten.",
+      "subsetCaveat": "Die Zeit bis zum Auftreten gibt es nur für Meldungen, die sowohl ein vollständiges Startdatum als auch ein vollständiges Ereignisdatum nennen. Diese Teilmenge ist nicht repräsentativ für alle Meldungen: Vollständigkeit hängt mit der Art der meldenden Person und der Schwere des Ereignisses zusammen. FAERS beruht auf Spontanmeldungen, zeigt keine Inzidenz und ist nicht über Fälle hinweg bereinigt; gezählt werden Meldungen, niemals Personen.",
+      "quality": "Im FAERS-Zeitraum {window}: {share} der Paare aus Meldung und Arzneimittel hatten ein verwertbares Intervall ({pairs} Paare).",
+      "riskWindow": "Mittlere 80 % der gemeldeten Intervalle ({basis}): {start} bis {end} Tage.",
+      "basis": {
+        "weibull": "aus der angepassten Kurve",
+        "reports": "aus den Meldungen"
+      },
+      "coverage": "Wenn die Meldungen mit der Zeit seltener werden, liegt das obere Ende weit hinter dem Median; der Satz für Patientinnen und Patienten verwendet daher die mittlere Hälfte."
+    },
+    "reasons": {
+      "no_pk": "Keine veröffentlichten pharmakokinetischen Parameter beim Menschen für dieses Molekül: Es wird keine Konzentration modelliert.",
+      "failed_credibility": "Das Modell hat die Validierungsregel für dieses Arzneimittel nicht bestanden; es wird daher nicht mit einer gemessenen Wirkstärke verglichen.",
+      "no_potency": "Keine gemessene Wirkstärke an einem für die Erkrankung ausgewählten Zielprotein aus einer gemeinfreien Quelle. Das ist eine dokumentierte Lücke; es wird kein Wert ersetzt.",
+      "few_reports": "Keine Form angepasst: weniger als {n} Meldungen mit verwertbarem Intervall."
+    },
+    "published": {
+      "heading": "Veröffentlichter Zeitverlauf",
+      "median_iqr": "Veröffentlicht: Median {median} Tage, Interquartilsabstand {low} bis {high} Tage.",
+      "window": "Veröffentlichtes Zeitfenster: Tag {low} bis Tag {high}.",
+      "qualitative": "Der veröffentlichte Zeitverlauf ist nur beschreibend und kann nicht als Zahl verglichen werden.",
+      "none": "Für diese Kaskade gibt es keinen veröffentlichten Zeitverlauf."
+    },
+    "agreement": {
+      "agrees": "Kein Widerspruch zum veröffentlichten Zeitverlauf: Die Intervalle überlappen sich. Bei so breiten Intervallen ist das keine Bestätigung.",
+      "disagrees": "Die Intervalle überlappen sich nicht: Der gemeldete Zeitverlauf unterscheidet sich vom veröffentlichten.",
+      "not_comparable": "Nicht vergleichbar: Der veröffentlichte Zeitverlauf ist nicht als Zahl angegeben.",
+      "none": "Nichts zu vergleichen."
+    },
+    "compare": {
+      "title": "Gemeldeter und veröffentlichter Zeitverlauf (Tage)",
+      "janus": "FAERS-Meldungen: mittlere Hälfte, Median",
+      "published": "Veröffentlicht",
+      "legend": "Balken: Intervall; Punkt: Median."
+    },
+    "curve": {
+      "title": "Anteil der Meldungen nach Tagen seit Beginn des ersten Arzneimittels",
+      "note": "Kumulierter Anteil aus der an die Meldungen angepassten Kurve; keine Vorhersage für eine Person.",
+      "alt": "Linie, die von {first} an Tag {firstDay} auf {last} an Tag {lastDay} ansteigt. Das schattierte Band markiert die mittlere Hälfte der Meldungen, {q25} bis {q75} Tage.",
+      "day": "Tag",
+      "share": "Anteil der Meldungen bis zu diesem Tag",
+      "band": "Mittlere Hälfte der Meldungen"
+    },
+    "population": {
+      "heading": "Ältere und jüngere virtuelle Populationen",
+      "intro": "{older} gegenüber {younger} Jahren. Ein Alter von 80 Jahren und mehr kann nicht simuliert werden. Nur ein relativer Vergleich der beiden Gruppen.",
+      "title": "Konzentration im Steady State (mg/L): 5. bis 95. Perzentil, Median",
+      "older": "{drug}, {ages} Jahre",
+      "younger": "{drug}, {ages} Jahre",
+      "ratio": "{drug}: Verhältnis der Mediane ältere zu jüngere {ratio}.",
+      "steady": "{drug}: etwa {days} Tage bis 90 % des Steady State.",
+      "doseBasis": "Dosisgrundlage des Modells (nur für den Vergleich, keine Dosis)"
+    },
+    "gate": {
+      "heading": "Satz für Patientinnen und Patienten",
+      "shown": "Wird in der Detailansicht des Befunds gezeigt: die mittlere Hälfte der Meldungen, {start} bis {end} Tage.",
+      "small": "Wird Patientinnen und Patienten nicht gezeigt: zu wenige Meldungen.",
+      "agreement": "Wird Patientinnen und Patienten nicht gezeigt: Der gemeldete Zeitverlauf stimmt nicht mit dem veröffentlichten überein.",
+      "none": "Wird Patientinnen und Patienten nicht gezeigt: keine gemeldete Zeit bis zum Auftreten."
+    },
+    "validation": {
+      "rule": "Glaubwürdig, wenn vorhergesagte Cmax und AUC beide innerhalb des 2-Fachen der veröffentlichten beobachteten Werte liegen; grenzwertig innerhalb des 3-Fachen; sonst nicht bestanden. Ein nicht glaubwürdiges Arzneimittel wird nicht mit einer Wirkstärke verglichen.",
+      "pbpk": "PBPK (httk)",
+      "compartmental": "Minimale Kompartiment-Modelle",
+      "summary": "{credible} glaubwürdig, {borderline} grenzwertig, {failed} nicht bestanden",
+      "drug": "Arzneimittel",
+      "cmax": "Cmax beobachtet / vorhergesagt (ng/ml)",
+      "auc": "AUC beobachtet / vorhergesagt (ng·h/ml)",
+      "fold": "Faktorfehler",
+      "verdict": "Validierung",
+      "credibility": {
+        "credible": "Glaubwürdig",
+        "borderline": "Grenzwertig",
+        "failed": "Nicht bestanden"
+      },
+      "aucNote": "Bei diesen Modellen ergibt sich die AUC konstruktionsbedingt aus den zitierten Parametern; nur Cmax ist eine unabhängige Prüfung.",
+      "notShownReason": "Wird bei jeder simulierten Konzentration gezeigt."
+    },
+    "sources": {
+      "run": "Lauf {run}",
+      "snapshot": "Daten vom {date}",
+      "licence": "Lizenz: {licence}",
+      "tools": "Werkzeuge: {tools}",
+      "built": "Erstellt am {date} · Seed {seed} · {simulations} Simulationen"
+    },
+    "substance": {
+      "constituents": "Ausgewählte Moleküle",
+      "why": "Warum ausgewählt",
+      "mw": "Molekülmasse {mw} g/mol",
+      "admet": "Vorhersagen von ADMET-AI (Modellausgaben, keine Messungen)",
+      "admetNames": {
+        "PPBR_AZ": "Plasmaproteinbindung, vorhergesagt (%)",
+        "Half_Life_Obach": "Halbwertszeit, vorhergesagt (Stunden)",
+        "VDss_Lombardo": "Verteilungsvolumen, vorhergesagt (l/kg)",
+        "probability": "{name}, vorhergesagte Wahrscheinlichkeit (0 bis 1)"
+      },
+      "activities": "In PubChem gemessene Aktivität (gemeinfreie Quellen)",
+      "activitiesCount": "{shown} von {total} Einträgen gezeigt.",
+      "screening": "Eine Wirkstärke an einem Zielprotein, das nicht für die Erkrankung ausgewählt wurde, ist ein Screening-Ergebnis, keine Wirkung.",
+      "assay": "Test",
+      "target": "Zielprotein",
+      "measure": "Messgröße",
+      "value": "Wert (µmol/l)",
+      "outcome": "Ergebnis",
+      "depositor": "Quelle",
+      "flags": "Hinweise auf Wechselwirkungen",
+      "established": "Belegt, mit zitierter Evidenz",
+      "screeningFlag": "Screening-Eintrag: ein zu prüfendes Signal, keine belegte Wechselwirkung",
+      "withheld": "Wert nicht gezeigt: Seine Lizenz ({licence}) erlaubt hier keine Weiterverwendung.",
+      "todays": "Heutige Arzneimittel für eine verwandte Erkrankung",
+      "label": "US-Fachinformation (DailyMed)",
+      "bridge": "Brücke vom Kanon",
+      "exposure": "Von der historischen Menge zur modellierten Konzentration",
+      "historical": "In der Quelle genannte Menge: {amount} {unit}, nach den zitierten Einheitenbereichen etwa {low} bis {high} g. Eine historische Menge, keine einzunehmende Dosis.",
+      "constituentDose": "Modellierte Menge von {compound}: {low} bis {high} mg ({contentLow} bis {contentHigh} % Gehalt). Eine Modelleingabe, keine Dosis.",
+      "peak": "Modellierte Spitzenkonzentration von {compound} (mg/l): 5. bis 95. Perzentil, Median",
+      "tmax": "Zeit bis zur Spitze: etwa {hours} Stunden.",
+      "verdict": {
+        "reaches": "Schon das 5. Perzentil der modellierten Spitze erreicht die gemessene Wirkstärke.",
+        "overlaps": "Der Bereich der modellierten Spitze überlappt die gemessene Wirkstärke.",
+        "stays_below": "Selbst das 95. Perzentil der modellierten Spitze bleibt unter der gemessenen Wirkstärke."
+      },
+      "basis": {
+        "unbound": "Verglichen als ungebundene Konzentration.",
+        "total_only": "Verglichen als Gesamtkonzentration (eine Obergrenze): kein verwertbarer ungebundener Anteil."
+      },
+      "margin": "Spanne {low} bis {high} gegenüber {measure} {potency} µmol/l ({assay}).",
+      "noExposure": "Für dieses Heilmittel wurde keine historische Menge modelliert.",
+      "none": "Für dieses Heilmittel wurde kein Molekül ausgewählt."
+    },
+    "references": "Quellen",
+    "verified": "Geprüft: {how}",
+    "table": "Zahlen als Tabelle zeigen",
+    "legend": "Band: 5. bis 95. Perzentil; Punkt: Median.",
+    "patient": {
+      "heading": "Wann dies gemeldet wurde",
+      "sentence": "In Meldungen anderer Personen wurde diese Kombination am häufigsten zwischen {start} und {end} Tagen nach Beginn des ersten Arzneimittels gemeldet. Das ist eine Information aus Meldungen, keine Vorhersage über Sie — darüber kann ein Gespräch mit Ihrer Ärztin oder Ihrem Arzt sinnvoll sein.",
+      "review": "Von einer KI geprüft, Prüfung durch Fachleute steht aus."
+    },
+    "errors": {
+      "unavailable": "Die Zeitmaschine ist auf diesem Server nicht verfügbar.",
+      "unknown": "Dieser Eintrag ist nicht in der Zeitmaschine."
+    },
+    "empty": "Noch nichts zu zeigen.",
+    "loading": "Die Zeitmaschine wird geladen…"
   }
 }

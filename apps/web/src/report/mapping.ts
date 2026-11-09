@@ -4,13 +4,19 @@
  * checks that every label is in its CSV field list and that the order follows the list.
  * `id` names the translation `ReportAssistant.labels.<id>`.
  */
-export type DraftKey = "event" | "onset" | "outcome" | "medicine" | "others";
+export type DraftKey =
+  "event" | "onset" | "outcome" | "medicine" | "others" | "othersOtc";
 
+/**
+ * `othersOtc` holds the other medicines the resolver knows are sold without a prescription; it
+ * exists only where a form asks for them apart (3500B E10, DP13). Elsewhere they stay in `others`.
+ */
 export const DRAFT_KEYS: readonly DraftKey[] = [
   "medicine",
   "event",
   "onset",
   "outcome",
+  "othersOtc",
   "others",
 ];
 
@@ -60,6 +66,12 @@ export const MAPPINGS: Record<string, readonly FieldMap[]> = {
       label:
         "C1 Name(s) of the product as it appears on the box, bottle, or package",
       id: "usC1",
+    },
+    {
+      key: "othersOtc",
+      label:
+        "E10 List all over-the-counter medications and any vitamins, minerals, supplements, and herbal remedies being used",
+      id: "usE10",
     },
     {
       key: "others",

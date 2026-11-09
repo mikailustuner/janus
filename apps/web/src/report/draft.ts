@@ -17,8 +17,14 @@ export interface DraftInput {
   onset: string | null;
   /** An index into the channel's recorded outcome options, or free text. */
   outcome: { option: number | null; text: string };
-  others: { label: string; ticked: boolean }[];
+  /**
+   * `type` comes from the resolver's product type (openFDA "HUMAN OTC DRUG" → `otc`, "HUMAN
+   * PRESCRIPTION DRUG" → `rx`); anything else is `unknown` (DP13).
+   */
+  others: { label: string; ticked: boolean; type?: OtherType }[];
 }
+
+export type OtherType = "otc" | "rx" | "unknown";
 
 export interface DraftRow {
   key: DraftKey;
@@ -40,6 +46,19 @@ export interface Draft {
   rows: DraftRow[];
   /** Recorded required fields of the field list that the draft does not fill (Req 5.5). */
   missingRequired: string[];
+  /**
+   * Ticked other medicines of unknown type that were put under the prescription field because
+   * the form splits prescription from over-the-counter medicines (3500B E11, DP13); the screen
+   * says so. Empty when the form does not split them.
+   */
+  typeUnknown: string[];
+}
+
+/** The resolver's product type as the 3500B E10/E11 split needs it (DP13). */
+export function otherType(productType: string | null | undefined): OtherType {
+  if (productType === "HUMAN OTC DRUG") return "otc";
+  if (productType === "HUMAN PRESCRIPTION DRUG") return "rx";
+  return "unknown";
 }
 
 /** The mapping that applies to a channel in this view, or null (DP4, DP11). */
@@ -81,22 +100,28 @@ export function monthValue(month: string, lang: string): string {
   }).format(Date.UTC(y!, m! - 1, 1));
 }
 
+const tickedOthers = (input: DraftInput) =>
+  input.others
+    .filter((o) => o.ticked && o.label.trim())
+    .map((o) => ({ label: o.label.trim(), type: o.type ?? "unknown" }));
+
 function values(
   input: DraftInput,
   options: string[],
+  splitOtc: boolean,
 ): Record<DraftKey, string> {
   const lang = input.channel.languages[0] ?? "en";
   const option =
     input.outcome.option !== null ? options[input.outcome.option] : undefined;
+  const others = tickedOthers(input);
+  const join = (xs: typeof others) => xs.map((o) => o.label).join("; ");
   return {
     medicine: medicineValue(input.medicine.box, input.medicine.ingredient),
     event: input.event.trim(),
     onset: input.onset ? monthValue(input.onset, lang) : "",
     outcome: options.length > 0 ? (option ?? "") : input.outcome.text.trim(),
-    others: input.others
-      .filter((o) => o.ticked && o.label.trim())
-      .map((o) => o.label.trim())
-      .join("; "),
+    others: join(splitOtc ? others.filter((o) => o.type !== "otc") : others),
+    othersOtc: splitOtc ? join(others.filter((o) => o.type === "otc")) : "",
   };
 }
 
@@ -109,7 +134,12 @@ const split = (label: string) => {
 
 export function buildDraft(input: DraftInput, list = CHANNELS): Draft {
   const m = mappingFor(input.channel, input.hcp, list);
-  const v = values(input, outcomeOptions(input.channel, input.hcp, list));
+  const splitOtc = !!m?.map.some((f) => f.key === "othersOtc");
+  const v = values(
+    input,
+    outcomeOptions(input.channel, input.hcp, list),
+    splitOtc,
+  );
   const rows: DraftRow[] = [];
   const mapped = new Set<DraftKey>();
   for (const f of m?.map ?? []) {
@@ -141,6 +171,11 @@ export function buildDraft(input: DraftInput, list = CHANNELS): Draft {
     borrowed: m?.borrowed ?? false,
     rows,
     missingRequired: m ? m.source.required.filter((r) => !filled.has(r)) : [],
+    typeUnknown: splitOtc
+      ? tickedOthers(input)
+          .filter((o) => o.type === "unknown")
+          .map((o) => o.label)
+      : [],
   };
 }
 

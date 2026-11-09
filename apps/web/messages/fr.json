@@ -1292,7 +1292,7 @@
       "witnesses": "{count, plural, one {témoin sur 3} other {témoins sur 3}}"
     },
     "results": {
-      "medicinesChecked": "{count, plural, one {# médicament vérifié} other {# médicaments vérifiés}}"
+      "medicinesChecked": "{total, plural, one {# médicament} other {# médicaments}} : {full, plural, one {# entièrement vérifié} other {# entièrement vérifiés}}, {partly, plural, one {# en partie} other {# en partie}}"
     },
     "passport": {
       "summary": "{items, plural, one {# médicament} other {# médicaments}} · {boxes, plural, one {# boîte} other {# boîtes}}",
@@ -1417,7 +1417,7 @@
     "open": "Voir le résumé",
     "openHint": "Les chiffres clés de cette vérification en un coup d'œil",
     "checkedIn": "Vérifié en {month}",
-    "summaryLine": "{medicines, plural, one {# médicament vérifié} other {# médicaments vérifiés}} · {patterns, plural, =0 {aucun schéma de la liste de règles} one {# schéma à évoquer} other {# schémas à évoquer}}",
+    "summaryLine": "{medicines, plural, one {# médicament} other {# médicaments}} : {full, plural, one {# entièrement vérifié} other {# entièrement vérifiés}}, {partly, plural, one {# en partie} other {# en partie}} · {patterns, plural, =0 {aucun schéma de la liste de règles} one {# schéma à évoquer} other {# schémas à évoquer}}",
     "patterns": {
       "title": {
         "twoFaces": "Fantômes à évoquer",
@@ -1479,8 +1479,8 @@
     },
     "image": {
       "title": "Résumé Janus",
-      "headline": "{medicines, plural, one {# médicament vérifié} other {# médicaments vérifiés}} · {patterns, plural, =0 {aucun schéma de la liste de règles} one {# schéma à évoquer} other {# schémas à évoquer}} · vérifié avec {checked} des {total} schémas",
-      "medicines": "{count, plural, one {médicament vérifié} other {médicaments vérifiés}}",
+      "headline": "{medicines, plural, one {# médicament} other {# médicaments}} : {full, plural, one {# entièrement vérifié} other {# entièrement vérifiés}}, {partly, plural, one {# en partie} other {# en partie}} · {patterns, plural, =0 {aucun schéma de la liste de règles} one {# schéma à évoquer} other {# schémas à évoquer}} · vérifié avec {checked} des {total} schémas",
+      "medicines": "{count, plural, one {médicament de la liste} other {médicaments de la liste}}",
       "patterns": "{count, plural, one {schéma à évoquer} other {schémas à évoquer}}",
       "rulesOf": "{checked} sur {total}",
       "rules": "schémas vérifiés",
@@ -1586,14 +1586,16 @@
       "missingTitle": "Questions du formulaire que Janus ne remplit pas",
       "missingHint": "Complétez-les vous-même sur le formulaire officiel, dans la mesure où vous souhaitez y répondre.",
       "oneOf": "Au moins l'un de : {fields}",
-      "openGuidance": "Ouvrir les informations de l'EMA"
+      "openGuidance": "Ouvrir les informations de l'EMA",
+      "typeUnknown": "Janus ne sait pas si {count, plural, one {ce médicament est délivré} other {ces médicaments sont délivrés}} sur ordonnance : {names}. {count, plural, one {Il figure sous E11} other {Ils figurent sous E11}}. Un médicament acheté sans ordonnance se place sous E10."
     },
     "janus": {
       "medicine": "Médicament (comme sur la boîte)",
       "event": "Ce qui s'est passé",
       "onset": "Début",
       "outcome": "État actuel",
-      "others": "Autres médicaments"
+      "others": "Autres médicaments",
+      "othersOtc": "Autres médicaments achetés sans ordonnance"
     },
     "hcp": {
       "title": "Pour les professionnels de santé",
@@ -1639,7 +1641,8 @@
       "esOtherDrug": "Nom du médicament (autres médicaments)",
       "esSymptoms": "Symptômes de l'effet indésirable",
       "esOnset": "Quand ces symptômes ont-ils commencé ?",
-      "esState": "Quel est l'état actuel de la personne concernée ?"
+      "esState": "Quel est l'état actuel de la personne concernée ?",
+      "usE10": "Tous les médicaments sans ordonnance ainsi que les vitamines, minéraux, compléments et remèdes à base de plantes utilisés"
     },
     "options": {
       "trEform": {
@@ -1659,5 +1662,207 @@
         "5": "Autre"
       }
     }
+  },
+  "TimeMachine": {
+    "title": "Machine à remonter le temps",
+    "summary": "{substances, plural, one {# remède du Canon} other {# remèdes du Canon}} · {cascades, plural, one {# cascade de prescription} other {# cascades de prescription}}",
+    "intro": "La machine à remonter le temps suit des remèdes du Canon d'Ibn Sina et quelques cascades de prescription à travers les données ouvertes d'aujourd'hui : les molécules qu'ils contiennent, l'activité mesurée en laboratoire, des modèles simples de l'organisme et le délai d'apparition noté dans les signalements publics d'effets indésirables.",
+    "inSilico": "In silico et exploratoire : calculé à partir de données ouvertes, ce n'est une preuve pour aucune personne. Une molécule ou une concentration montrée ici est un candidat à étudier — pas un traitement, et jamais une dose à prendre.",
+    "review": "Relu par une IA, relecture par des experts en attente.",
+    "demo": "Démo : toutes les réponses ont été enregistrées depuis la véritable API Janus locale le {date} ; aucune requête n'est envoyée.",
+    "entry": {
+      "title": "Machine à remonter le temps",
+      "body": "Remèdes du Canon et cascades de prescription : molécules, modèles de l'organisme et délai d'apparition signalé."
+    },
+    "open": "Ouvrir dans la machine à remonter le temps",
+    "openCascade": "Délai et modèle de l'organisme dans la machine à remonter le temps",
+    "back": "Machine à remonter le temps",
+    "sections": {
+      "substances": "Remèdes du Canon",
+      "substancesFooter": "Molécules issues de Wikidata et de LOTUS (CC0), activité issue de PubChem (domaine public), indications actuelles issues des notices openFDA (CC0).",
+      "cascades": "Cascades de prescription",
+      "cascadesFooter": "Lignes de la liste PIPC (Rochon et al., Eur Geriatr Med 2025, CC BY 4.0). Délai d'apparition issu des signalements de la FDA (FAERS).",
+      "how": "Comment c'est fait",
+      "validation": "Validation des modèles de l'organisme"
+    },
+    "substances": {
+      "anise": "Anis",
+      "rhubarb": "Rhubarbe",
+      "st_johns_wort": "Millepertuis",
+      "vinegar": "Vinaigre"
+    },
+    "rowSubstance": "{constituents, plural, =0 {aucune molécule retenue} one {# molécule} other {# molécules}} · {drugs, plural, =0 {aucun médicament actuel} one {# médicament actuel} other {# médicaments actuels}}",
+    "cascadeTitle": "{drugA} → {event} → {drugB}",
+    "cascadeRow": "Ligne PIPC {row} · {method}",
+    "english": "Texte source en anglais",
+    "method": {
+      "pbpk": "Modèle PBPK (httk, US EPA)",
+      "compartmental": "Modèle minimal à un compartiment, paramètres cités",
+      "onset_only": "Délai d'apparition signalé seulement, sans modèle de l'organisme"
+    },
+    "methodWhy": {
+      "compartmental": "Le paquet httk n'a pas de paramètres humains pour ce médicament ; Janus utilise donc un modèle minimal à un compartiment dont les paramètres proviennent de publications citées.",
+      "onset_only": "Aucun modèle de l'organisme n'est utilisé : il n'existe pas de paramètres humains adaptés. Seul le délai d'apparition signalé est montré."
+    },
+    "onset": {
+      "heading": "Délai d'apparition signalé",
+      "tile": "{count, plural, one {signalement avec un intervalle utilisable} other {signalements avec un intervalle utilisable}}",
+      "sentence": "{count, plural, one {# signalement donne} other {# signalements donnent}} une date de début complète du premier médicament et une date complète de l'événement.",
+      "median": "Médiane {median} jours (intervalle à 95 % de {low} à {high} jours).",
+      "medianNoCi": "Médiane {median} jours.",
+      "iqr": "Moitié centrale des signalements : de {q25} à {q75} jours.",
+      "zeroDay": "{count, plural, one {# signalement donne} other {# signalements donnent}} le même jour pour les deux dates. Un intervalle nul signifie souvent qu'une seule date a été écrite dans les deux champs, plutôt qu'une apparition le jour même ; ces signalements tirent la forme vers « précoce ».",
+      "smallSample": "Peu de signalements : le nombre et l'intervalle sont montrés, mais aucune forme n'est décrite.",
+      "shape": "Forme des délais signalés : {class} (forme de Weibull {shape}, intervalle à 95 % de {low} à {high}).",
+      "shapeClass": {
+        "early": "la plupart des signalements tôt, moins ensuite",
+        "random": "à peu près constant dans le temps",
+        "wear_out": "davantage de signalements plus tard"
+      },
+      "none": "Aucun délai d'apparition signalé pour cette cascade.",
+      "subsetCaveat": "Le délai d'apparition n'existe que pour les signalements qui donnent à la fois une date de début complète et une date d'événement complète. Ce sous-ensemble n'est pas représentatif de tous les signalements : la complétude est liée au type de déclarant et à la gravité de l'événement. FAERS repose sur la notification spontanée, ne mesure pas l'incidence et n'est pas dédoublonné entre les cas ; on compte des signalements, jamais des personnes.",
+      "quality": "Sur la période FAERS {window} : {share} des paires signalement-médicament avaient un intervalle utilisable ({pairs} paires).",
+      "riskWindow": "80 % centraux des intervalles signalés ({basis}) : de {start} à {end} jours.",
+      "basis": {
+        "weibull": "d'après la courbe ajustée",
+        "reports": "d'après les signalements"
+      },
+      "coverage": "Quand les signalements se raréfient avec le temps, la borne haute se situe bien au-delà de la médiane ; la phrase destinée aux patients utilise donc la moitié centrale."
+    },
+    "reasons": {
+      "no_pk": "Aucun paramètre pharmacocinétique humain publié pour cette molécule : aucune concentration n'est modélisée.",
+      "failed_credibility": "Le modèle n'a pas satisfait la règle de validation pour ce médicament ; aucune comparaison avec une puissance mesurée n'est donc faite.",
+      "no_potency": "Aucune puissance mesurée sur une cible retenue pour cette affection, par un déposant du domaine public. C'est une lacune consignée ; aucune valeur n'est substituée.",
+      "few_reports": "Aucune forme ajustée : moins de {n} signalements avec un intervalle utilisable."
+    },
+    "published": {
+      "heading": "Délai publié",
+      "median_iqr": "Publié : médiane {median} jours, écart interquartile de {low} à {high} jours.",
+      "window": "Fenêtre publiée : du jour {low} au jour {high}.",
+      "qualitative": "Le délai publié est seulement descriptif et ne peut pas être comparé en chiffres.",
+      "none": "Aucun délai publié pour cette cascade."
+    },
+    "agreement": {
+      "agrees": "Pas incompatible avec le délai publié : les intervalles se chevauchent. Avec des intervalles aussi larges, ce n'est pas une confirmation.",
+      "disagrees": "Les intervalles ne se chevauchent pas : le délai signalé diffère du délai publié.",
+      "not_comparable": "Non comparable : le délai publié n'est pas donné en chiffres.",
+      "none": "Rien à comparer."
+    },
+    "compare": {
+      "title": "Délai signalé et délai publié (jours)",
+      "janus": "Signalements FAERS : moitié centrale, médiane",
+      "published": "Publié",
+      "legend": "Barre : intervalle ; point : médiane."
+    },
+    "curve": {
+      "title": "Part des signalements selon le nombre de jours depuis le début du premier médicament",
+      "note": "Part cumulée d'après la courbe ajustée aux signalements ; ce n'est pas une prévision pour une personne.",
+      "alt": "Ligne qui monte de {first} au jour {firstDay} à {last} au jour {lastDay}. La bande ombrée marque la moitié centrale des signalements, de {q25} à {q75} jours.",
+      "day": "Jour",
+      "share": "Part des signalements jusqu'à ce jour",
+      "band": "Moitié centrale des signalements"
+    },
+    "population": {
+      "heading": "Populations virtuelles plus âgée et plus jeune",
+      "intro": "{older} ans contre {younger} ans. Les âges de 80 ans et plus ne peuvent pas être simulés. Une comparaison relative des deux groupes seulement.",
+      "title": "Concentration à l'état d'équilibre (mg/L) : du 5e au 95e centile, médiane",
+      "older": "{drug}, {ages} ans",
+      "younger": "{drug}, {ages} ans",
+      "ratio": "{drug} : rapport des médianes plus âgés / plus jeunes {ratio}.",
+      "steady": "{drug} : environ {days} jours pour atteindre 90 % de l'état d'équilibre.",
+      "doseBasis": "Base de dose du modèle (pour la comparaison seulement, pas une dose)"
+    },
+    "gate": {
+      "heading": "Phrase destinée aux patients",
+      "shown": "Montrée dans le détail du résultat : la moitié centrale des signalements, de {start} à {end} jours.",
+      "small": "Non montrée aux patients : trop peu de signalements.",
+      "agreement": "Non montrée aux patients : le délai signalé ne concorde pas avec le délai publié.",
+      "none": "Non montrée aux patients : aucun délai d'apparition signalé."
+    },
+    "validation": {
+      "rule": "Crédible lorsque la Cmax et l'ASC prédites sont toutes deux à moins d'un facteur 2 des valeurs observées publiées ; limite à moins d'un facteur 3 ; sinon échec. Un médicament non crédible n'est comparé à aucune puissance.",
+      "pbpk": "PBPK (httk)",
+      "compartmental": "Modèles compartimentaux minimaux",
+      "summary": "{credible} crédible(s), {borderline} limite(s), {failed} en échec",
+      "drug": "Médicament",
+      "cmax": "Cmax observée / prédite (ng/mL)",
+      "auc": "ASC observée / prédite (ng·h/mL)",
+      "fold": "Erreur (facteur)",
+      "verdict": "Validation",
+      "credibility": {
+        "credible": "Crédible",
+        "borderline": "Limite",
+        "failed": "Échec"
+      },
+      "aucNote": "Pour ces modèles, l'ASC découle par construction des paramètres cités ; seule la Cmax est une vérification indépendante.",
+      "notShownReason": "Montré avec chaque concentration simulée."
+    },
+    "sources": {
+      "run": "Exécution {run}",
+      "snapshot": "Données du {date}",
+      "licence": "Licence : {licence}",
+      "tools": "Outils : {tools}",
+      "built": "Construit le {date} · graine {seed} · {simulations} simulations"
+    },
+    "substance": {
+      "constituents": "Molécules retenues",
+      "why": "Pourquoi retenue",
+      "mw": "Masse molaire {mw} g/mol",
+      "admet": "Prédictions ADMET-AI (sorties de modèle, pas des mesures)",
+      "admetNames": {
+        "PPBR_AZ": "Liaison aux protéines plasmatiques, prédite (%)",
+        "Half_Life_Obach": "Demi-vie, prédite (heures)",
+        "VDss_Lombardo": "Volume de distribution, prédit (L/kg)",
+        "probability": "{name}, probabilité prédite (de 0 à 1)"
+      },
+      "activities": "Activité mesurée dans PubChem (déposants du domaine public)",
+      "activitiesCount": "{shown} enregistrements montrés sur {total}.",
+      "screening": "Une puissance sur une cible qui n'est pas retenue pour l'affection est un résultat de criblage, pas un effet.",
+      "assay": "Essai",
+      "target": "Cible",
+      "measure": "Mesure",
+      "value": "Valeur (µmol/L)",
+      "outcome": "Résultat",
+      "depositor": "Déposant",
+      "flags": "Indices d'interaction",
+      "established": "Établie, avec des preuves citées",
+      "screeningFlag": "Enregistrement de criblage : un signal à vérifier, pas une interaction établie",
+      "withheld": "Valeur non montrée : sa licence ({licence}) n'en permet pas la réutilisation ici.",
+      "todays": "Médicaments actuels pour une affection apparentée",
+      "label": "Notice américaine (DailyMed)",
+      "bridge": "Passerelle depuis le Canon",
+      "exposure": "De la quantité historique à une concentration modélisée",
+      "historical": "Quantité citée dans la source : {amount} {unit}, soit environ {low} à {high} g selon les plages d'unités citées. Une quantité historique, pas une dose à prendre.",
+      "constituentDose": "Quantité modélisée de {compound} : {low} à {high} mg (teneur de {contentLow} à {contentHigh} %). Une entrée du modèle, pas une dose.",
+      "peak": "Pic de concentration modélisé de {compound} (mg/L) : du 5e au 95e centile, médiane",
+      "tmax": "Temps jusqu'au pic : environ {hours} heures.",
+      "verdict": {
+        "reaches": "Même le 5e centile du pic modélisé atteint la puissance mesurée.",
+        "overlaps": "La plage du pic modélisé chevauche la puissance mesurée.",
+        "stays_below": "Même le 95e centile du pic modélisé reste sous la puissance mesurée."
+      },
+      "basis": {
+        "unbound": "Comparé en concentration libre.",
+        "total_only": "Comparé en concentration totale (une borne haute) : pas de fraction libre utilisable."
+      },
+      "margin": "Marge de {low} à {high} par rapport à {measure} {potency} µmol/L ({assay}).",
+      "noExposure": "Aucune quantité historique n'a été modélisée pour ce remède.",
+      "none": "Aucune molécule n'a été retenue pour ce remède."
+    },
+    "references": "Références",
+    "verified": "Vérifié : {how}",
+    "table": "Afficher les chiffres sous forme de tableau",
+    "legend": "Bande : du 5e au 95e centile ; point : médiane.",
+    "patient": {
+      "heading": "Quand cela a été signalé",
+      "sentence": "Dans les signalements faits par d'autres personnes, cette association a été signalée le plus souvent entre {start} et {end} jours après le début du premier médicament. C'est une information issue de signalements, pas une prévision vous concernant — il peut être utile d'en parler avec votre médecin.",
+      "review": "Relu par une IA, relecture par des experts en attente."
+    },
+    "errors": {
+      "unavailable": "La machine à remonter le temps n'est pas disponible sur ce serveur.",
+      "unknown": "Cette entrée n'est pas dans la machine à remonter le temps."
+    },
+    "empty": "Rien à montrer pour l'instant.",
+    "loading": "Chargement de la machine à remonter le temps…"
   }
 }

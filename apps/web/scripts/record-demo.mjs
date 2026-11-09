@@ -231,7 +231,8 @@ function scrub(resolution, pick, invented) {
       generic_name: invented.generic,
       ingredient_text: invented.generic,
       dosage_form: null,
-      product_type: null,
+      // openFDA product type (CC0 category, not product text): the 3500B E10/E11 split (DP13).
+      product_type: c.region === "US" ? c.product_type : null,
       routes: [],
       status_published: [],
       packages: c.packages.map((_, i) => ({

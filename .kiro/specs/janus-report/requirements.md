@@ -64,6 +64,9 @@ the result in seconds and still know exactly what each number means.
    finding says so; otherwise the number of findings with excluded evidence. The evidence part SHALL link to the
    first finding's detail (where the evidence is shown) and SHALL have its own loading and error states.
 7. THE Summary SHALL show the date of the check (the result's `as_of_month`) in the interface language.
+8. *(Owner decision 2026-11-09, DP14.)* WHERE the Summary or the share image states how many medicines were checked,
+   THE text SHALL state the fully checked and the partly checked medicines separately ("8 medicines: 6 fully
+   checked, 2 partly"); a single "n medicines checked" SHALL NOT be shown.
 
 ### Requirement 3: Visual encoding
 **User story:** As a colour-blind or low-vision patient, I want the shapes to carry the meaning with words and

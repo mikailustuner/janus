@@ -94,6 +94,8 @@ export function shareCard(i: ShareInput): ShareCard {
     month: t("Report.checkedIn", { month: i.month }),
     headline: t("Report.image.headline", {
       medicines: v.medicines.total,
+      full: v.medicines.total - v.medicines.notFully.length,
+      partly: v.medicines.notFully.length,
       patterns: n,
       checked: v.rules.checked,
       total: v.rules.total,

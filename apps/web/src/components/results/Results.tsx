@@ -28,6 +28,7 @@ import { StateView } from "@/components/StateView";
 import { ButtonLink, Card, SectionTitle } from "@/components/ui";
 import { ZombieAlertCard } from "@/components/zombie/Zombie";
 import { resultsView } from "@/flow/findings";
+import { checkedSplit } from "@/flow/summary";
 import { useSession } from "@/flow/janus";
 import { useEvaluation } from "@/flow/useEvaluation";
 import { useT, useThemeWord } from "@/theme/words";
@@ -87,7 +88,12 @@ export function ResultsBody({
               {w("Findings.count", { count })}
             </span>
             {" · "}
-            {t("Cards.results.medicinesChecked", { count: boxNames.length })}
+            <span data-testid="medicines-checked">
+              {t(
+                "Cards.results.medicinesChecked",
+                checkedSplit(result, boxNames.length),
+              )}
+            </span>
           </>
         }
       />
