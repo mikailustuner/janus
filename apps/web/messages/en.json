@@ -1305,5 +1305,40 @@
       "together": "Medicines together",
       "janus": "Reported through Janus"
     }
+  },
+  "ZombieAlert": {
+    "title": {
+      "twoFaces": "Zombie evidence: a source of your doctor note was retracted",
+      "glass": "Source update: a source of your doctor note was retracted"
+    },
+    "body": "Janus no longer uses a source that has been retracted. Update the note to see which sentences changed.",
+    "doi": "DOI {doi}",
+    "simulated": "Simulated in the demo: this source has not been retracted.",
+    "noChange": "This alert alone is no reason to change a medicine. Questions about your medicines are for your doctor or pharmacist.",
+    "openNote": "Open the doctor note",
+    "update": "Update the note",
+    "updating": "Updating the note…",
+    "dismiss": "Hide this",
+    "changesTitle": "What changed in the note",
+    "changesIntro": "Janus made the note again without the retracted source.",
+    "removed": "Removed",
+    "changed": "Changed",
+    "before": "Before",
+    "after": "Now",
+    "nothingElse": "No sentence of the note relied on this source alone. The note keeps citing its other sources.",
+    "notice": "Retraction notice: {doi}",
+    "settingsTitle": "Source updates",
+    "settingsBody": "Janus checks whether a source of your last doctor note was retracted when you open Janus, and once a day while it stays open. It does not check while Janus is closed. The check sends only a date: no medicine and no source.",
+    "notify": "Notify me when a source is retracted",
+    "notifyHint": "Your browser asks for permission first. The notification names no medicine.",
+    "notifyUnsupported": "This browser cannot show notifications.",
+    "notifyDenied": "Notifications for Janus are blocked in this browser's settings.",
+    "notification": "A source in your doctor note was retracted. Open Janus to update the note.",
+    "simulate": "Simulate a source retraction (demo)",
+    "simulateHint": "Shows what Janus does when a cited source is retracted. Nothing is sent.",
+    "simulatedTitle": "Simulation: a source of your doctor note was retracted",
+    "simulatedStamp": "Retracted (simulated)",
+    "notificationDemo": "Demo simulation: no source was really retracted. Open Janus to see the demo.",
+    "passOn": "If you already gave the earlier note to your doctor, give them the updated one."
   }
 }

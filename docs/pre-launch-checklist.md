@@ -154,3 +154,18 @@ remove the matching notice (and, for the Canon claims, set `expert_review = revi
 ## Card design (experience Req 29, 2026-11-09)
 - [ ] **Native review of the `Cards` namespace:** TR stat-tile labels under a large figure (`label.sources`, `label.checkedByDoi`, `label.casesTop`, `passport.listed`), FR "Tout" vs "Tous" and ES "Todo" vs "Todos" for the Collective Memory filter, and every segment label at 375 px (see `.kiro/specs/experience/cards-localization-reviewer-review.md`).
 - [ ] **"Listed in n of m countries":** confirm with a pharmacist reviewer that the passport summary is not read as availability (the "being listed does not mean on sale" note stays on the same screen).
+
+## Zombie Alert (enhancement, 2026-11-09)
+- [ ] **Real paper in a labelled simulation:** the demo marks the ThinkCascades paper (Drugs Aging 2022, not retracted)
+  as "Retracted (simulated)", with the simulation label first and a non-resolving 10.5555 notice DOI. Legal and
+  reputational review, including README, video and Devpost material (the label must be in every frame); consider asking
+  the authors or switching to a synthetic source (`zombie-alert` DP9, safety review A1).
+- [ ] **Regulatory status of the source-update notification:** check against FDA Clinical Decision Support guidance and
+  EU MDR Rule 11 whether telling a patient that a cited source was retracted changes the product's classification
+  (`zombie-alert` Req 4).
+- [ ] **Logs and wording:** confirm the API never logs the bodies of `POST /evidence/changes` (a date) and
+  `/evidence/resolve` (ids); review the lock-screen notification text for shared devices; list `janus.v1.zombie` (kept
+  note sentences) on the privacy page; decide whether the doctor QR page should say that an earlier note cited a source
+  retracted later (`zombie-alert` safety review A12, pre-launch notes).
+- [ ] **Native clinical review** of the ZombieAlert texts, in particular TR "uyarı" for the notification and ES
+  "retractarse" (`zombie-alert` localization review).

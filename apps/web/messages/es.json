@@ -1305,5 +1305,40 @@
       "together": "Medicamentos juntos",
       "janus": "Notificado vía Janus"
     }
+  },
+  "ZombieAlert": {
+    "title": {
+      "twoFaces": "Evidencia zombi: se retractó una fuente de su nota para el médico",
+      "glass": "Actualización de fuentes: se retractó una fuente de su nota para el médico"
+    },
+    "body": "Janus ya no usa una fuente que se ha retractado. Actualice la nota para ver qué frases cambiaron.",
+    "doi": "DOI {doi}",
+    "simulated": "Simulado en la demo: esta fuente no se ha retractado.",
+    "noChange": "Esta alerta por sí sola no es motivo para hacer cambios en sus medicamentos. Si tiene preguntas, hable con su médico o farmacéutico.",
+    "openNote": "Abrir la nota para el médico",
+    "update": "Actualizar la nota",
+    "updating": "Actualizando la nota…",
+    "dismiss": "Ocultar",
+    "changesTitle": "Qué cambió en la nota",
+    "changesIntro": "Janus preparó la nota de nuevo sin la fuente retractada.",
+    "removed": "Eliminadas",
+    "changed": "Cambiadas",
+    "before": "Antes",
+    "after": "Ahora",
+    "nothingElse": "Ninguna frase de la nota dependía solo de esta fuente. La nota sigue citando sus otras fuentes.",
+    "notice": "Aviso de retractación: {doi}",
+    "settingsTitle": "Actualizaciones de fuentes",
+    "settingsBody": "Janus comprueba si se retractó una fuente de su última nota para el médico cuando abre Janus, y una vez al día mientras siga abierto. No comprueba nada mientras Janus está cerrado. La comprobación solo envía una fecha: ningún medicamento y ninguna fuente.",
+    "notify": "Recibir una alerta cuando se retracte una fuente",
+    "notifyHint": "Su navegador pide permiso primero. La alerta no nombra ningún medicamento.",
+    "notifyUnsupported": "Este navegador no puede mostrar alertas.",
+    "notifyDenied": "Las alertas de Janus están bloqueadas en los ajustes de este navegador.",
+    "notification": "Se retractó una fuente de su nota para el médico. Abra Janus para actualizar la nota.",
+    "simulate": "Simular la retractación de una fuente (demo)",
+    "simulateHint": "Muestra qué hace Janus cuando se retracta una fuente citada. No se envía nada.",
+    "simulatedTitle": "Simulación: se retractó una fuente de su nota para el médico",
+    "simulatedStamp": "Retractado (simulación)",
+    "notificationDemo": "Simulación de la demo: ninguna fuente se retractó de verdad. Abra Janus para ver la demo.",
+    "passOn": "Si ya entregó la nota anterior a su médico, entréguele la nota actualizada."
   }
 }

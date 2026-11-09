@@ -9,6 +9,8 @@
 import { BuildError } from "./builders";
 import type {
   CascadeResult,
+  ChangesIn,
+  ChangesResult,
   CombinationIn,
   CombinationOut,
   ContributionCreated,
@@ -71,6 +73,11 @@ export interface JanusLoopClient {
   deleteContribution(body: DeletionIn): Promise<Result<DeletionDone>>;
 }
 
+/** The evidence-change check (zombie-alert DP1): live only, never answered in demo mode. */
+export interface JanusChangesClient {
+  evidenceChanges(body: ChangesIn): Promise<Result<ChangesResult>>;
+}
+
 export type JanusClient = JanusReadClient & JanusLoopClient;
 
 type Fetch = (input: string, init: RequestInit) => Promise<Response>;
@@ -90,7 +97,7 @@ function thrown(route: Route, e: unknown): ApiError {
   return { kind: "network", route, messageKey: "Errors.network" };
 }
 
-export class HttpClient implements JanusClient {
+export class HttpClient implements JanusClient, JanusChangesClient {
   constructor(
     private readonly fetchImpl: Fetch = (input, init) => fetch(input, init),
     private readonly base = "/api",
@@ -169,6 +176,8 @@ export class HttpClient implements JanusClient {
     this.call("cascades/evaluate", "POST", b, D.cascadeResult);
   resolveEvidence = (b: EvidenceIn) =>
     this.call("evidence/resolve", "POST", b, D.evidenceResolution);
+  evidenceChanges = (b: ChangesIn) =>
+    this.call("evidence/changes", "POST", b, D.changesResult);
   memoryPair = (b: PairIn) => this.call("memory/pair", "POST", b, D.pairOut);
   memoryCombination = (b: CombinationIn) =>
     this.call("memory/combination", "POST", b, D.combinationOut);

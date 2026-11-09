@@ -25,6 +25,7 @@ import { keyName } from "@/components/names";
 import { SafetyLine } from "@/components/SafetyLine";
 import { StateView } from "@/components/StateView";
 import { ButtonLink, Card, SectionTitle } from "@/components/ui";
+import { ZombieAlertCard } from "@/components/zombie/Zombie";
 import { resultsView } from "@/flow/findings";
 import { useSession } from "@/flow/janus";
 import { useEvaluation } from "@/flow/useEvaluation";
@@ -89,6 +90,7 @@ export function ResultsBody({
           </>
         }
       />
+      <ZombieAlertCard />
       {/* Desktop (Req 27): findings on the left at reading width, a sticky aside on the right. */}
       <div className="grid gap-group lg:grid-cols-[minmax(0,72ch)_minmax(300px,1fr)] lg:items-start">
         <div className="flex min-w-0 flex-col gap-group">

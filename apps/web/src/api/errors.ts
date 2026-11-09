@@ -11,6 +11,7 @@ export type Route =
   | "resolve/products"
   | "cascades/evaluate"
   | "evidence/resolve"
+  | "evidence/changes"
   | "memory/pair"
   | "memory/combination"
   | "memory/regions"
@@ -39,6 +40,7 @@ export const ROUTES: readonly Route[] = [
   "resolve/products",
   "cascades/evaluate",
   "evidence/resolve",
+  "evidence/changes",
   "memory/pair",
   "memory/combination",
   "memory/regions",

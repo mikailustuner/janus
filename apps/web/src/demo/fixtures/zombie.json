@@ -1,0 +1,17 @@
+{
+  "about": "Zombie Alert demo (zombie-alert DP9): one SIMULATED evidence change for the Istanbul, Cologne and Ohio demo notes. The paper has NOT been retracted; the notice DOI uses the Crossref test prefix 10.5555 and does not resolve.",
+  "simulated": true,
+  "change": {
+    "evidence_id": "paper:thinkcascades:drugs_aging_2022",
+    "title": "ThinkCascades: A Tool for Identifying Clinically Important Prescribing Cascades Affecting Older People",
+    "doi": "10.1007/s40266-022-00964-9",
+    "from_status": "ok",
+    "to_status": "retracted",
+    "observed_on": "2026-11-09",
+    "run_id": null
+  },
+  "notice": {
+    "doi": "10.5555/janus.demo.retraction-notice",
+    "url": null
+  }
+}

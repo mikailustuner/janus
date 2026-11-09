@@ -555,6 +555,33 @@ export const evidenceResolution = obj({
   disclaimer: str,
 });
 
+export const evidenceChange = obj({
+  evidence_id: str,
+  title: nullable(str),
+  doi: nullable(str),
+  from_status: integrityStatus,
+  to_status: integrityStatus,
+  observed_on: date,
+  run_id: nullable(str),
+});
+
+/** `POST /evidence/changes` (evidence-integrity Req 7.2; zombie-alert design §3.2). */
+export const changesResult = obj({
+  integrity_version: str,
+  as_of: date,
+  since: nullable(date),
+  observed_dates: arr(date),
+  status_counts: obj({
+    ok: int,
+    corrected: int,
+    expression_of_concern: int,
+    retracted: int,
+    unknown: int,
+  }),
+  changes: arr(evidenceChange),
+  disclaimer: str,
+});
+
 // --- Collective Memory (collective-memory design §5) -------------------------------------------
 
 const region6 = lit("ALL", "TR", "EU", "US", "OTHER", "UNKNOWN");
