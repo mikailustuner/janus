@@ -27,8 +27,8 @@ DISCLAIMER: Final = (
     "Janus provides information, not medical advice. Research prototype — not a medical device."
 )
 CLASS_MEANING: Final = (
-    "Classes: confirmed_error = listed in data/atc_code_exclusions.csv after a review by the "
-    "project owner with AI assistance, not yet by a pharmacist; needs_pharmacist = a difference "
+    "Classes: confirmed_error = listed in data/atc_code_exclusions.csv (expert review has not "
+    "yet been done; a pharmacist must check it); needs_pharmacist = a difference "
     "no rule explains; benign_difference = a deterministic rule explains the difference (for "
     "example both regulators publish the code and the Wikidata item is outdated); it is not a "
     "pharmacist's judgement. No class is a statement about any medicine's safety."
