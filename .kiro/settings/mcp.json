@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "janus": {
+      "command": "uv",
+      "args": ["run", "--directory", "apps/mcp", "janus-mcp"],
+      "env": { "JANUS_API_URL": "http://127.0.0.1:8000" },
+      "disabled": false,
+      "autoApprove": ["janus_cascade_package_rows", "janus_time_machine_catalogue", "janus_time_machine_cascade"]
+    }
+  }
+}

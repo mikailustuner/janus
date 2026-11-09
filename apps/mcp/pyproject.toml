@@ -1,0 +1,51 @@
+[project]
+name = "janus-mcp"
+version = "0.1.0"
+description = "Janus MCP server, a thin client of the Janus API (research prototype, not a medical device)"
+license = "Apache-2.0"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "httpx2>=2.16.0",
+    "mcp==2.3.0",
+]
+
+[project.scripts]
+janus-mcp = "janus_mcp.server:main"
+
+[dependency-groups]
+dev = [
+    "hypothesis>=6.170.15",
+    "pyright>=1.1.414",
+    "pytest>=9.2.0",
+    "ruff>=0.17.4",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["janus_mcp"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "S", "N", "RUF"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101"]
+# The forbidden-phrase list quotes Turkish words (dotless i) on purpose.
+"tests/test_tools_properties.py" = ["S101", "RUF001"]
+
+[tool.pyright]
+pythonVersion = "3.12"
+typeCheckingMode = "strict"
+include = ["janus_mcp", "tests"]
+venvPath = "."
+venv = ".venv"

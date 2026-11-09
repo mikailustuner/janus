@@ -411,3 +411,13 @@ FHIR R4 (4.0.1) JSON schema (test fixture of the FHIR export)
   Level Seven International
   Committed gzipped under apps/web/src/fhir/schema, used by the tests only;
   source, date and hash in apps/web/src/fhir/schema/README.md.
+
+--------------------------------------------------------------------------------
+MCP SERVER — LIBRARIES (apps/mcp)
+--------------------------------------------------------------------------------
+
+MCP Python SDK 2.3.0 (mcp, Model Context Protocol server and client library)
+  Publisher: Anthropic, PBC
+  License: MIT
+  PyPI package, pinned in apps/mcp/pyproject.toml; installed by uv, not
+  committed.
