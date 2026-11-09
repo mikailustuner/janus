@@ -25,6 +25,8 @@ export type CascadeResult = Infer<typeof D.cascadeResult>;
 export type NotCheckedReason = Infer<typeof D.notCheckedReason>;
 export type EvidenceItem = Infer<typeof D.evidenceItem>;
 export type EvidenceResolution = Infer<typeof D.evidenceResolution>;
+export type ChangesResult = Infer<typeof D.changesResult>;
+export type EvidenceChange = ChangesResult["changes"][number];
 export type Assessment = Infer<typeof D.assessment>;
 export type Stats = Infer<typeof D.stats>;
 export type PairOut = Infer<typeof D.pairOut>;
@@ -79,6 +81,10 @@ export interface EvaluateIn {
 }
 export interface EvidenceIn {
   evidence_ids: string[];
+}
+export interface ChangesIn {
+  since?: string;
+  limit?: number;
 }
 export interface EventRefIn {
   key: string;
