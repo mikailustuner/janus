@@ -1265,5 +1265,75 @@
       "component": "Dieser FAERS-Wirkstoff ist ein Bestandteil einer Substanz des Kanons, nicht dieselbe Exposition:"
     },
     "notListed": "Das gewählte Paar ist hier nicht verfügbar; stattdessen wird das erste verfügbare Paar gezeigt."
+  },
+  "CascadeMap": {
+    "eyebrow": "PIPC-Liste der Verschreibungskaskaden",
+    "title": "Die {total} Muster, die Janus prüft",
+    "intro": "Jede Linie ist ein Muster einer Verschreibungskaskade aus der PIPC-Liste: Auf eine Nebenwirkung einer ersten Arzneimittelklasse folgt ein zweites Arzneimittel gegen diese Nebenwirkung. Die Punkte sind die Arzneimittelklassen.",
+    "framing": "In der Literatur beschriebene Muster (PIPC-Liste, Rochon et al., Eur Geriatr Med 2025). Ein Muster ist ein Thema für das Gespräch mit Ihrer Ärztin oder Ihrem Arzt, kein Urteil über Ihre Medikamente.",
+    "views": {
+      "label": "Ansicht",
+      "map": "Karte",
+      "list": "Liste"
+    },
+    "filter": {
+      "label": "Muster filtern",
+      "search": "Suchen",
+      "class": "Arzneimittelklasse",
+      "anyClass": "Alle Klassen",
+      "event": "Nebenwirkung",
+      "anyEvent": "Alle Nebenwirkungen",
+      "clear": "Filter zurücksetzen"
+    },
+    "shown": "{shown} von {total} Mustern angezeigt",
+    "empty": "Kein Muster passt zu diesen Filtern.",
+    "mapLabel": "Karte der {total} Muster",
+    "keys": "Tastatur: Die Pfeiltasten wechseln zwischen den Arzneimittelklassen, Enter öffnet eine, Escape schließt das Feld, + und − zoomen. Die Listenansicht zeigt dieselben Muster als Tabelle.",
+    "zoom": {
+      "in": "Vergrößern",
+      "out": "Verkleinern",
+      "reset": "Ganze Karte zeigen"
+    },
+    "star": "{name}: erstes Arzneimittel in {index, plural, one {# Muster} other {# Mustern}}, zweites Arzneimittel in {marker, plural, one {# Muster} other {# Mustern}}.",
+    "inYourFindings": "Teil eines Ergebnisses für Ihre Liste.",
+    "legend": {
+      "title": "Legende",
+      "star": "Eine Arzneimittelklasse",
+      "line": "Ein Muster, von der ersten Arzneimittelklasse zur zweiten",
+      "matched": "Passt zu einem Ergebnis für Ihre Liste (dicker, gestrichelt)",
+      "cannot": "Janus kann dieses Muster nicht prüfen (gepunktet)"
+    },
+    "matches": {
+      "none": "Fügen Sie Medikamente hinzu, um zu sehen, welche Muster zu Ihrer Liste passen.",
+      "error": "Die Ergebnisse für Ihre Liste können gerade nicht angezeigt werden. Die Karte zeigt trotzdem alle Muster.",
+      "count": "{count, plural, one {# Muster passt zu einem Ergebnis für Ihre Liste. Es ist dicker und gestrichelt gezeichnet.} other {# Muster passen zu Ergebnissen für Ihre Liste. Sie sind dicker und gestrichelt gezeichnet.}}"
+    },
+    "panel": {
+      "row": "Zeile {row}",
+      "classEyebrow": "Arzneimittelklasse",
+      "first": "Erste Arzneimittelklasse",
+      "event": "Nebenwirkung",
+      "second": "Zweites Arzneimittel",
+      "evidence": "Evidenz-IDs",
+      "cannot": "Janus kann dieses Muster nicht prüfen: {reason}.",
+      "yours": "Ihre Liste",
+      "noneYours": "Keines der Ergebnisse für Ihre Liste nutzt dieses Muster.",
+      "asFirst": "Erstes Arzneimittel in {count, plural, one {# Muster} other {# Mustern}}",
+      "asSecond": "Zweites Arzneimittel in {count, plural, one {# Muster} other {# Mustern}}",
+      "onlyThis": "Nur diese Klasse zeigen",
+      "hint": "Wählen Sie eine Arzneimittelklasse oder eine Linie, um ihr Muster, ihre Quelle und ihre Evidenz zu lesen."
+    },
+    "list": {
+      "caption": "{shown} von {total} Mustern, in der Reihenfolge der PIPC-Liste",
+      "row": "Zeile",
+      "pattern": "Erste Arzneimittelklasse → Nebenwirkung → zweites Arzneimittel",
+      "matched": "Passt zu einem Ergebnis für Ihre Liste"
+    },
+    "explore": "Alle {total} Muster erkunden",
+    "entry": {
+      "title": "Kaskadenkarte",
+      "body": "Alle 65 Muster von Verschreibungskaskaden der PIPC-Liste als Karte und als Tabelle."
+    },
+    "footer": "Kaskadenkarte"
   }
 }

@@ -37,7 +37,7 @@ export function nodeId(classId, row, role) {
  * of steps and linear cooling, then a scale to the canvas and a collision pass that enforces the
  * minimum distance. Pure arithmetic in a fixed order: the same input gives the same coordinates.
  */
-export function layout(ids, links, canvas = CANVAS) {
+export function layout(ids, links, canvas = CANVAS, gravity = 2) {
   const n = ids.length;
   const { width: W, height: H, margin: M, minDistance: D } = canvas;
   const at = new Map(ids.map((id, i) => [id, i]));
@@ -83,8 +83,8 @@ export function layout(ids, links, canvas = CANVAS) {
     }
     for (let i = 0; i < n; i++) {
       // Gravity keeps the small components near the centre (the rule base is not connected).
-      disp[i][0] += (W / 2 - pos[i][0]) * 0.06 * (k / 100);
-      disp[i][1] += (H / 2 - pos[i][1]) * 0.06 * (k / 100);
+      disp[i][0] += (W / 2 - pos[i][0]) * gravity * (k / 100);
+      disp[i][1] += (H / 2 - pos[i][1]) * gravity * (k / 100);
       const d = Math.max(Math.hypot(disp[i][0], disp[i][1]), 1e-6);
       const step = Math.min(d, temp);
       pos[i][0] += (disp[i][0] / d) * step;
@@ -132,6 +132,27 @@ export function layout(ids, links, canvas = CANVAS) {
   return new Map(
     ids.map((id, i) => [id, [Math.round(pos[i][0]), Math.round(pos[i][1])]]),
   );
+}
+
+/**
+ * Label side per star: right, unless fewer stars lie in a band to the left (a label is about
+ * 230 units long at the desktop fit zoom). Deterministic; ties go right.
+ */
+export function labelSides(pos) {
+  const out = new Map();
+  for (const [id, [x, y]] of pos) {
+    let left = 0;
+    let right = 0;
+    for (const [other, [ox, oy]] of pos) {
+      if (other === id || Math.abs(oy - y) > 45) continue;
+      if (ox > x && ox - x < 260) right++;
+      if (ox < x && x - ox < 260) left++;
+    }
+    const roomLeft = x > 260;
+    const roomRight = x < CANVAS.width - 260;
+    out.set(id, (right > left && roomLeft) || !roomRight ? "l" : "r");
+  }
+  return out;
 }
 
 /** Returns `{ "graph.json": object }` for src/cascade-map. */
@@ -190,6 +211,7 @@ export function generate(repoRoot) {
     ids,
     edges.map((e) => [e.from, e.to]),
   );
+  const side = labelSides(at);
   return {
     "graph.json": {
       sources: Object.fromEntries(
@@ -200,6 +222,7 @@ export function generate(repoRoot) {
         id,
         x: at.get(id)[0],
         y: at.get(id)[1],
+        side: side.get(id),
         index: roles.get(id).index,
         marker: roles.get(id).marker,
       })),

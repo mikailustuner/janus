@@ -1265,5 +1265,75 @@
       "component": "Este principio activo de FAERS es un componente de una sustancia del Canon, no la misma exposición:"
     },
     "notListed": "El par elegido no está disponible aquí; se muestra en su lugar el primer par disponible."
+  },
+  "CascadeMap": {
+    "eyebrow": "Lista PIPC de cascadas de prescripción",
+    "title": "Los {total} patrones que comprueba Janus",
+    "intro": "Cada línea es un patrón de cascada de prescripción de la lista PIPC: a un efecto adverso de una primera clase de medicamentos le sigue un segundo medicamento para ese efecto. Los puntos son las clases de medicamentos.",
+    "framing": "Patrones descritos en la literatura (lista PIPC, Rochon et al., Eur Geriatr Med 2025). Un patrón es algo para comentar con su médico, no un veredicto sobre sus medicamentos.",
+    "views": {
+      "label": "Vista",
+      "map": "Mapa",
+      "list": "Lista"
+    },
+    "filter": {
+      "label": "Filtrar los patrones",
+      "search": "Buscar",
+      "class": "Clase de medicamentos",
+      "anyClass": "Todas las clases",
+      "event": "Efecto adverso",
+      "anyEvent": "Todos los efectos adversos",
+      "clear": "Borrar filtros"
+    },
+    "shown": "{shown} de {total} patrones mostrados",
+    "empty": "Ningún patrón coincide con estos filtros.",
+    "mapLabel": "Mapa de los {total} patrones",
+    "keys": "Teclado: las flechas pasan de una clase de medicamentos a otra, Intro abre una, Escape cierra el panel, + y − hacen zoom. La vista Lista muestra los mismos patrones como tabla.",
+    "zoom": {
+      "in": "Acercar",
+      "out": "Alejar",
+      "reset": "Mostrar todo el mapa"
+    },
+    "star": "{name}: primer medicamento en {index, plural, one {# patrón} other {# patrones}}, segundo medicamento en {marker, plural, one {# patrón} other {# patrones}}.",
+    "inYourFindings": "Forma parte de un resultado para su lista.",
+    "legend": {
+      "title": "Leyenda",
+      "star": "Una clase de medicamentos",
+      "line": "Un patrón, de la primera clase de medicamentos a la segunda",
+      "matched": "Coincide con un resultado para su lista (más gruesa, discontinua)",
+      "cannot": "Janus no puede comprobar este patrón (punteada)"
+    },
+    "matches": {
+      "none": "Añada medicamentos para ver qué patrones coinciden con su lista.",
+      "error": "Los resultados para su lista no se pueden mostrar ahora. El mapa sigue mostrando todos los patrones.",
+      "count": "{count, plural, one {# patrón coincide con un resultado para su lista. Se dibuja más grueso y discontinuo.} other {# patrones coinciden con resultados para su lista. Se dibujan más gruesos y discontinuos.}}"
+    },
+    "panel": {
+      "row": "Fila {row}",
+      "classEyebrow": "Clase de medicamentos",
+      "first": "Primera clase de medicamentos",
+      "event": "Efecto adverso",
+      "second": "Segundo medicamento",
+      "evidence": "Identificadores de la evidencia",
+      "cannot": "Janus no puede comprobar este patrón: {reason}.",
+      "yours": "Su lista",
+      "noneYours": "Ninguno de los resultados para su lista usa este patrón.",
+      "asFirst": "Primer medicamento en {count, plural, one {# patrón} other {# patrones}}",
+      "asSecond": "Segundo medicamento en {count, plural, one {# patrón} other {# patrones}}",
+      "onlyThis": "Mostrar solo esta clase",
+      "hint": "Elija una clase de medicamentos o una línea para leer su patrón, su fuente y su evidencia."
+    },
+    "list": {
+      "caption": "{shown} de {total} patrones, en el orden de la lista PIPC",
+      "row": "Fila",
+      "pattern": "Primera clase de medicamentos → efecto adverso → segundo medicamento",
+      "matched": "Coincide con un resultado para su lista"
+    },
+    "explore": "Explorar los {total} patrones",
+    "entry": {
+      "title": "Mapa de cascadas",
+      "body": "Los 65 patrones de cascadas de prescripción de la lista PIPC, como mapa y como tabla."
+    },
+    "footer": "Mapa de cascadas"
   }
 }

@@ -196,6 +196,7 @@ const WIDE = [
   "/settings",
   "/passport",
   "/passport/item",
+  "/cascades",
 ];
 
 function StorageNotice() {
@@ -227,6 +228,14 @@ function Footer() {
             className="inline-flex min-h-11 items-center px-1 underline underline-offset-4"
           >
             {t("Shell.nav.research")}
+          </Link>
+        </li>
+        <li>
+          <Link
+            href="/cascades"
+            className="inline-flex min-h-11 items-center px-1 underline underline-offset-4"
+          >
+            {t("CascadeMap.footer")}
           </Link>
         </li>
         <li>

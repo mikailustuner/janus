@@ -191,6 +191,13 @@ export function ResultsBody({
                 </li>
               ))}
             </ul>
+            <ButtonLink
+              href="/cascades"
+              variant="secondary"
+              className="self-start"
+            >
+              {t("CascadeMap.explore", { total: view.rules.total })}
+            </ButtonLink>
           </Card>
           {aside}
         </aside>

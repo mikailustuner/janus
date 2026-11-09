@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "../theme/tokens.css";
 @import "../theme/home-scenes.css";
+@import "../theme/cascade-map.css";
 
 /* Tokens as Tailwind utilities: bg-bg, text-fg, border-line, … (experience design §7). */
 @theme inline {

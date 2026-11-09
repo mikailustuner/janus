@@ -13,6 +13,8 @@ export interface GraphNode {
   id: string;
   x: number;
   y: number;
+  /** The side of its label: right or left (generator, fewer neighbours). */
+  side: "r" | "l";
   /** Rows where this class is the first medicine (index). */
   index: number[];
   /** Rows where this class is the second medicine (marker). */

@@ -50,6 +50,20 @@ export function Research() {
             </ButtonLink>
           </Card>
         ))}
+        <Card as="li">
+          <h2 className="text-lg font-semibold">
+            {t("CascadeMap.entry.title")}
+          </h2>
+          <p>{t("CascadeMap.entry.body")}</p>
+          <ButtonLink
+            href="/cascades"
+            variant="secondary"
+            className="self-start"
+          >
+            {t("Light.nav.open")}
+            <span className="sr-only">: {t("CascadeMap.entry.title")}</span>
+          </ButtonLink>
+        </Card>
       </ul>
       <ButtonLink href="/" variant="secondary" className="self-start">
         {t("Research.back")}
