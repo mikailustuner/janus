@@ -17,10 +17,9 @@ import {
   isDue,
   LIMIT,
   matchChanges,
-  MAX_RESOLVE_IDS,
   MAX_SEEN,
   MAX_SENTENCES,
-  resolveBody,
+  nextSince,
   watchNote,
   withoutEvidence,
   type ChangeLike,
@@ -93,7 +92,7 @@ describe("zombie-alert pure logic", () => {
           }
           expect(Object.keys(body!).sort()).toEqual(["limit", "since"]);
           expect(body!.limit).toBe(LIMIT);
-          expect(body!.since).toBe(since ?? "2026-11-01");
+          expect(body!.since).toBe(since ?? "2026-10-25"); // a week before the note (A6)
           const raw = JSON.stringify(body);
           for (const id of doc.note!.ids) expect(raw).not.toContain(id);
         },
@@ -141,18 +140,20 @@ describe("zombie-alert pure logic", () => {
     );
   });
 
-  it("P5: the fallback resolve body holds distinct cited ids only", () => {
+  it("P5: a truncated answer moves since to its oldest date only", () => {
     check(
-      fc.property(docArb, (doc) => {
-        const b = resolveBody(doc);
-        if (!doc.note!.ids.length) {
-          expect(b).toBeNull();
-          return;
-        }
-        expect(new Set(b!.evidence_ids).size).toBe(b!.evidence_ids.length);
-        expect(b!.evidence_ids.length).toBeLessThanOrEqual(MAX_RESOLVE_IDS);
-        for (const id of b!.evidence_ids) expect(doc.note!.ids).toContain(id);
-      }),
+      fc.property(
+        fc.array(changeArb, { minLength: 1, maxLength: 5 }),
+        fc.boolean(),
+        (cs, full) => {
+          const list = full
+            ? Array.from({ length: LIMIT }, (_, i) => cs[i % cs.length]!)
+            : cs.slice(0, LIMIT - 1);
+          const next = nextSince({ as_of: "2026-11-10", changes: list });
+          if (!full) expect(next).toBe("2026-11-10");
+          else expect(next).toBe(list.map((c) => c.observed_on).sort()[0]);
+        },
+      ),
     );
   });
 

@@ -8,6 +8,7 @@
 import { EmergencyNotice } from "@/components/EmergencyNotice";
 import { ReminderCard } from "@/components/loop/ReminderCard";
 import { ButtonLink, Card, SectionTitle } from "@/components/ui";
+import { ZombieAlertCard } from "@/components/zombie/Zombie";
 import { useDemo } from "@/demo/session";
 import { localeNames, routing } from "@/i18n/routing";
 import { useList } from "@/store/hooks";
@@ -40,6 +41,7 @@ export function Home() {
         <HomeHero />
       </div>
       <div className="mx-auto flex w-full max-w-[720px] flex-col gap-5 px-4 pt-5 lg:max-w-[1120px]">
+        <ZombieAlertCard />
         <ReminderCard />
         {ready && count > 0 && !demo ? (
           <Card>

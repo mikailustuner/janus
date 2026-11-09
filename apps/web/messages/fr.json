@@ -1278,5 +1278,40 @@
     "notSent": "Janus n'envoie ce fichier nulle part. Le destinataire décide de ce que son système en fait.",
     "notChecked": "Le fichier contient la liste telle qu'elle a été saisie. Ce n'est pas un dossier médical, et aucun professionnel de santé ne l'a vérifié.",
     "saved": "Téléchargement lancé : {file}."
+  },
+  "ZombieAlert": {
+    "title": {
+      "twoFaces": "Preuve zombie : une source de votre note pour le médecin a été rétractée",
+      "glass": "Mise à jour : une source de votre note pour le médecin a été rétractée"
+    },
+    "body": "Janus n'utilise plus une source qui a été rétractée. Mettez la note à jour pour voir quelles phrases ont changé.",
+    "doi": "DOI {doi}",
+    "simulated": "Simulation de la démo : cette source n'a pas été rétractée.",
+    "noChange": "Cette alerte, à elle seule, n'est pas une raison de changer quoi que ce soit à vos médicaments. Si vous avez des questions, parlez-en à votre médecin ou à votre pharmacien.",
+    "openNote": "Ouvrir la note pour le médecin",
+    "update": "Mettre la note à jour",
+    "updating": "Mise à jour de la note…",
+    "dismiss": "Masquer",
+    "changesTitle": "Ce qui a changé dans la note",
+    "changesIntro": "Janus a rédigé la note à nouveau, sans la source rétractée.",
+    "removed": "Phrases retirées",
+    "changed": "Phrases modifiées",
+    "before": "Avant",
+    "after": "Maintenant",
+    "nothingElse": "Aucune phrase de la note ne reposait sur cette seule source. La note continue de citer ses autres sources.",
+    "notice": "Avis de rétractation : {doi}",
+    "settingsTitle": "Mises à jour des sources",
+    "settingsBody": "Janus vérifie si une source de votre dernière note pour le médecin a été rétractée quand vous ouvrez Janus, puis une fois par jour tant qu'il reste ouvert. Il ne vérifie rien quand Janus est fermé. La vérification n'envoie qu'une date : aucun médicament, aucune source.",
+    "notify": "M'avertir quand une source est rétractée",
+    "notifyHint": "Votre navigateur demande d'abord votre autorisation. La notification ne nomme aucun médicament.",
+    "notifyUnsupported": "Ce navigateur ne peut pas afficher de notifications.",
+    "notifyDenied": "Les notifications de Janus sont bloquées dans les réglages de ce navigateur.",
+    "notification": "Une source de votre note pour le médecin a été rétractée. Ouvrez Janus pour mettre la note à jour.",
+    "simulate": "Simuler la rétractation d'une source (démo)",
+    "simulateHint": "Montre ce que fait Janus quand une source citée est rétractée. Rien n'est envoyé.",
+    "simulatedTitle": "Simulation : une source de votre note pour le médecin a été rétractée",
+    "simulatedStamp": "Rétracté (simulation)",
+    "notificationDemo": "Simulation de la démo : aucune source n'a vraiment été rétractée. Ouvrez Janus pour voir la démo.",
+    "passOn": "Si vous avez déjà remis l'ancienne note à votre médecin, remettez-lui la note mise à jour."
   }
 }

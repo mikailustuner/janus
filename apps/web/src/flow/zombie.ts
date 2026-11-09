@@ -11,11 +11,11 @@ import type {
   NoteOut,
   Sentence,
 } from "@/api/contracts";
+import { addDays } from "@/store/reminders";
 
 export const LIMIT = 500;
 export const MAX_SENTENCES = 300;
 export const MAX_SEEN = 500;
-export const MAX_RESOLVE_IDS = 200;
 export const HOUR = 3_600_000;
 export const DAY = 24 * HOUR;
 
@@ -112,7 +112,9 @@ export function watchNote(note: NoteOut, madeOn: string): WatchedNote {
 /** The check body: a date and the limit, nothing else (Req 2.3, P1). */
 export function checkBody(doc: ZombieDoc): ChangesIn | null {
   if (!doc.note || doc.note.ids.length === 0) return null;
-  return { since: doc.since ?? doc.note.madeOn, limit: LIMIT };
+  // The first check starts a week before the note (safety audit A6: no exact date of a health
+  // action is sent); matching is local and deduplicated, so nothing is lost.
+  return { since: doc.since ?? addDays(doc.note.madeOn, -7), limit: LIMIT };
 }
 
 export const changeKey = (c: {
@@ -158,23 +160,17 @@ export function matchChanges(
   return { alerts, seen: all.slice(Math.max(0, all.length - MAX_SEEN)) };
 }
 
-/** Body of the fallback resolve: the cited ids only (Req 2.5, P5). */
-export function resolveBody(doc: ZombieDoc): { evidence_ids: string[] } | null {
-  const ids = [...new Set(doc.note?.ids ?? [])].slice(0, MAX_RESOLVE_IDS);
-  return ids.length ? { evidence_ids: ids } : null;
-}
-
-/** Retracted cited items of a resolution, as changes observed on its date (Req 2.5). */
-export function changesFromResolution(r: EvidenceResolution): ChangeLike[] {
-  return r.items
-    .filter((i) => i.integrity && NON_CITABLE.has(i.integrity.status))
-    .map((i) => ({
-      evidence_id: i.id,
-      title: i.title,
-      doi: i.doi,
-      to_status: i.integrity!.status,
-      observed_on: i.integrity!.checked_at ?? r.as_of,
-    }));
+/**
+ * The next `since` (Req 2.5): the server date, or, when the answer may be truncated (changes are
+ * newest first), the oldest date in it, so the next check reads on from there. Seen keys keep a
+ * change from alerting twice.
+ */
+export function nextSince(r: {
+  as_of: string;
+  changes: readonly { observed_on: string }[];
+}): string {
+  if (r.changes.length < LIMIT) return r.as_of;
+  return r.changes.map((c) => c.observed_on).sort()[0] ?? r.as_of;
 }
 
 /** The retraction notice of each retracted item (DP2). */

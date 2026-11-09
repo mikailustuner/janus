@@ -59,13 +59,14 @@ without it, showing what changed.
    24 hours old or older; WHILE the page is hidden THE client SHALL NOT check, and WHEN it becomes
    visible again THE client SHALL check if one is due.
 3. THE check request SHALL be `POST /evidence/changes` with a body of exactly `since` (the server
-   date of the last successful check, else the date the note was made) and `limit`; it SHALL
+   date of the last successful check, else the date seven days before the note was made: no
+   exact date of a health action is sent, safety audit A6) and `limit`; it SHALL
    contain no evidence id, medicine, ATC code, event or name.
 4. WHEN the answer is received THE client SHALL compare only the stored cited ids with the
    changes; no other id SHALL be compared or stored.
 5. IF the answer holds as many changes as the limit (possibly truncated) THEN THE client SHALL
-   instead call `POST /evidence/resolve` with the stored cited ids only (at most 200) and treat a
-   cited id whose status is `retracted` as a non-citable change.
+   take the oldest `observed_on` of the answer as the next `since`, so the next check reads on
+   from there; it SHALL NOT send any id to make up for it (safety audit A3).
 6. IF a check fails (network, timeout, 4xx, 5xx, contract) THEN THE client SHALL show nothing,
    keep its state unchanged except the attempt time, and try again at the next due time.
 7. WHEN there are no cited ids or the app is in demo mode THE client SHALL make no request.
@@ -80,8 +81,7 @@ without it, showing what changed.
 3. WHILE an alert is open THE home, results and note screens SHALL show an alert card that names
    the source (title, else the evidence id), its DOI as a link, the plain status "Retracted", and
    a way to update the note. The emergency notice SHALL stay first on every screen.
-4. THE alert card SHALL use the `--risk` colour only for the "Retracted" status, its icon and the
-   card edge (design.md allows red for retracted evidence), never for running text.
+4. THE alert card SHALL use the `--risk` colour only for the "Retracted" status and its icon (design.md allows red for retracted evidence), never for running text.
 5. THE alert card SHALL carry no medicine name, event name or ATC code, and SHALL say that Janus
    no longer uses the source and that the alert alone is no reason to change a medicine without
    the doctor or pharmacist (medical-safety rules 1, 3).
@@ -98,7 +98,7 @@ without it, showing what changed.
    SHALL stay off and say why.
 3. WHEN an alert is raised and the switch is on and permission is granted THE client SHALL show one
    local notification with the localized text "A source in your doctor note was retracted. Open
-   Janus to see the updated note." It SHALL contain no medicine name, PT name, event, ATC code or
+   Janus to update the note." (demo: "Demo simulation: no source was really retracted…") It SHALL contain no medicine name, PT name, event, ATC code or
    source title (medical-safety: no notification text contains a PT name).
 4. THE notification SHALL be shown through the service worker registration when there is one (so
    it works on Android), else through `Notification`; a click SHALL open the note screen.
@@ -115,7 +115,8 @@ without it, showing what changed.
 2. WHEN the new note is received THE client SHALL show "What changed": the source (title, DOI link,
    the retraction notice DOI or link when known), each kept sentence that cited it and is no longer
    in the note ("removed"), and each that is still there with other text or sources ("changed",
-   with the new text).
+   with the new text). It SHALL say that a doctor who already has the earlier note should
+   get the updated one (safety audit A7).
 3. WHEN the note is updated THE alert SHALL close on every screen and the new note's ids SHALL
    replace the stored ones.
 4. THE notice DOI or link SHALL come from `POST /evidence/resolve` with the changed ids only, made
@@ -128,12 +129,14 @@ without it, showing what changed.
 #### Acceptance criteria
 
 1. IN demo mode THE client SHALL make no network request for this feature and SHALL write nothing
-   to local storage (the demo state is in memory and ends with the session).
+   to local storage (the demo state, the notification opt-in included, is in memory and ends with
+   the session).
 2. THE demo note screen SHALL offer "Simulate a source retraction (demo)" once a note is shown;
    WHEN chosen THE client SHALL raise exactly one alert from the fixture
    `src/demo/fixtures/zombie.json` through the same comparison as a live check; choosing it again
    SHALL NOT raise a second alert.
-3. THE simulated change SHALL be labelled as simulated wherever it is shown ("Simulated in the
+3. THE simulated change SHALL be labelled as simulated wherever it is shown, before the source's
+   title, in the heading and in the "Retracted (simulated)" label (safety audit A1, A2) ("Simulated in the
    demo: this source has not been retracted"), and its notice DOI SHALL use the Crossref test
    prefix `10.5555` so it cannot be mistaken for a real notice.
 4. WHEN the demo note is updated THE client SHALL apply the evidence-integrity rule (Req 5.4: keep

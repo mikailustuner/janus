@@ -16,6 +16,7 @@ import {
   PageTitle,
   SectionTitle,
 } from "@/components/ui";
+import { ZombieSettings } from "@/components/zombie/Zombie";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { localeNames, routing } from "@/i18n/routing";
 import { deleteEverything, updateSettings, useSettings } from "@/store/hooks";
@@ -152,6 +153,8 @@ export function Settings() {
               onChange={(readAloud) => updateSettings({ readAloud })}
             />
           </Card>
+
+          <ZombieSettings />
 
           <Card>
             <ButtonLink

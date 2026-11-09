@@ -98,3 +98,26 @@ self.addEventListener("fetch", (event) => {
     ),
   );
 });
+
+// Zombie Alert (zombie-alert Req 4.4, DP5): a click on the local notification opens the note.
+// The page shows the notification; the worker never checks in the background (DP4).
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  const raw = event.notification.data && event.notification.data.url;
+  const url =
+    typeof raw === "string" && /^\/(en|tr|de|fr|es)\/note$/.test(raw)
+      ? raw
+      : "/";
+  event.waitUntil(
+    self.clients
+      .matchAll({ type: "window", includeUncontrolled: true })
+      .then((list) => {
+        const open = list.find(
+          (c) => new URL(c.url).origin === self.location.origin,
+        );
+        return open
+          ? open.navigate(url).then((c) => (c || open).focus())
+          : self.clients.openWindow(url);
+      }),
+  );
+});

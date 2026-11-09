@@ -1278,5 +1278,40 @@
     "notSent": "Janus sendet diese Datei nirgendwohin. Wer sie erhält, entscheidet, was das eigene System damit macht.",
     "notChecked": "Die Datei enthält die Liste so, wie sie eingegeben wurde. Sie ist keine Patientenakte, und keine medizinische Fachperson hat sie geprüft.",
     "saved": "Download gestartet: {file}."
+  },
+  "ZombieAlert": {
+    "title": {
+      "twoFaces": "Zombie-Evidenz: Eine Quelle Ihrer Arztnotiz wurde zurückgezogen",
+      "glass": "Quellen-Update: Eine Quelle Ihrer Arztnotiz wurde zurückgezogen"
+    },
+    "body": "Janus verwendet eine zurückgezogene Quelle nicht mehr. Aktualisieren Sie die Notiz, um zu sehen, welche Sätze sich geändert haben.",
+    "doi": "DOI {doi}",
+    "simulated": "In der Demo simuliert: Diese Quelle wurde nicht zurückgezogen.",
+    "noChange": "Diese Mitteilung allein ist kein Grund, etwas an Ihren Medikamenten zu ändern. Wenn Sie Fragen haben, sprechen Sie mit Ihrer Ärztin, Ihrem Arzt oder Ihrer Apotheke.",
+    "openNote": "Arztnotiz öffnen",
+    "update": "Notiz aktualisieren",
+    "updating": "Notiz wird aktualisiert …",
+    "dismiss": "Ausblenden",
+    "changesTitle": "Was sich in der Notiz geändert hat",
+    "changesIntro": "Janus hat die Notiz ohne die zurückgezogene Quelle neu erstellt.",
+    "removed": "Entfernt",
+    "changed": "Geändert",
+    "before": "Vorher",
+    "after": "Jetzt",
+    "nothingElse": "Kein Satz der Notiz stützte sich allein auf diese Quelle. Die Notiz nennt weiterhin ihre anderen Quellen.",
+    "notice": "Rückzugshinweis: {doi}",
+    "settingsTitle": "Quellen-Updates",
+    "settingsBody": "Janus prüft, ob eine Quelle Ihrer letzten Arztnotiz zurückgezogen wurde, wenn Sie Janus öffnen, und einmal am Tag, solange Janus geöffnet bleibt. Solange Janus geschlossen ist, wird nicht geprüft. Die Prüfung sendet nur ein Datum: kein Medikament und keine Quelle.",
+    "notify": "Benachrichtigen, wenn eine Quelle zurückgezogen wird",
+    "notifyHint": "Ihr Browser fragt zuerst um Erlaubnis. Die Benachrichtigung nennt kein Medikament.",
+    "notifyUnsupported": "Dieser Browser kann keine Benachrichtigungen anzeigen.",
+    "notifyDenied": "Benachrichtigungen von Janus sind in den Einstellungen dieses Browsers blockiert.",
+    "notification": "Eine Quelle in Ihrer Arztnotiz wurde zurückgezogen. Öffnen Sie Janus, um die Notiz zu aktualisieren.",
+    "simulate": "Rückzug einer Quelle simulieren (Demo)",
+    "simulateHint": "Zeigt, was Janus tut, wenn eine zitierte Quelle zurückgezogen wird. Es wird nichts gesendet.",
+    "simulatedTitle": "Simulation: Eine Quelle Ihrer Arztnotiz wurde zurückgezogen",
+    "simulatedStamp": "Zurückgezogen (simuliert)",
+    "notificationDemo": "Demo-Simulation: Keine Quelle wurde wirklich zurückgezogen. Öffnen Sie Janus, um die Demo zu sehen.",
+    "passOn": "Wenn Sie die frühere Notiz schon Ihrer Ärztin oder Ihrem Arzt gegeben haben, geben Sie dort auch die aktualisierte ab."
   }
 }

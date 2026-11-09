@@ -25,28 +25,28 @@
 - [x] 6. Demo fixture `src/demo/fixtures/zombie.json`
   - _Requirements: 6.2, 6.3_
 
-- [ ] 7. Watcher and actions `src/flow/useZombie.ts`
+- [x] 7. Watcher and actions `src/flow/useZombie.ts`
   - Open / 24 h / visibility, single flight, notification via the SW registration; record, update,
     dismiss, simulate.
   - `public/sw.js`: `notificationclick` opens the note.
   - _Requirements: 2.1, 2.2, 2.6, 2.7, 4.3, 4.4, 5.1, 5.3–5.5, 6.2, 6.5_
 
-- [ ] 8. Components `src/components/zombie/` and the additive lines in Shell, Home, Results,
+- [x] 8. Components `src/components/zombie/` and the additive lines in Shell, Home, Results,
       NotePage, Settings
   - _Requirements: 3.3–3.6, 4.1, 4.2, 4.5, 5.2, 6.2, 6.3_
 
-- [ ] 9. Texts: `ZombieAlert` namespace in the five message files
+- [x] 9. Texts: `ZombieAlert` namespace in the five message files
   - _Requirements: 3.5, 3.6, 4.3, 7.1_
 
-- [ ] 10. Reviews: localization-reviewer and safety-auditor → `zombie-alert-*-review.md`; apply
+- [x] 10. Reviews: localization-reviewer and safety-auditor → `zombie-alert-*-review.md`; apply
   - _Requirements: 7.1_
 
-- [ ] 11. Playwright `e2e/zombie-alert.spec.ts`
+- [x] 11. Playwright `e2e/zombie-alert.spec.ts`
   - Demo: simulate → alert → update → what changed, no request; live: stubbed changes →
     alert on home → note update → what changed, request body has no id; notification permission
     with a mocked `Notification`; axe, scroll, targets at both projects, both themes, all locales
     (E2E_LOCALES).
   - _Requirements: 2–7_
 
-- [ ] 12. Checkpoint 2: lint, typecheck, vitest, build, e2e green; screenshots at 375 and 1440 in
+- [x] 12. Checkpoint 2: lint, typecheck, vitest, build, e2e green; screenshots at 375 and 1440 in
       both themes looked at; checklist line; commit

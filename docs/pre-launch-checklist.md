@@ -150,3 +150,18 @@ remove the matching notice (and, for the Canon claims, set `expert_review = revi
   `status: active`, `category: patientspecified`); check EU EHDS rules on interoperability claims ("many health software
   systems can read"); say on the privacy page that the downloaded file is unencrypted and the receiver is responsible for
   it (`fhir-export` safety review A4, pre-launch notes).
+
+## Zombie Alert (enhancement, 2026-11-09)
+- [ ] **Real paper in a labelled simulation:** the demo marks the ThinkCascades paper (Drugs Aging 2022, not retracted)
+  as "Retracted (simulated)", with the simulation label first and a non-resolving 10.5555 notice DOI. Legal and
+  reputational review, including README, video and Devpost material (the label must be in every frame); consider asking
+  the authors or switching to a synthetic source (`zombie-alert` DP9, safety review A1).
+- [ ] **Regulatory status of the source-update notification:** check against FDA Clinical Decision Support guidance and
+  EU MDR Rule 11 whether telling a patient that a cited source was retracted changes the product's classification
+  (`zombie-alert` Req 4).
+- [ ] **Logs and wording:** confirm the API never logs the bodies of `POST /evidence/changes` (a date) and
+  `/evidence/resolve` (ids); review the lock-screen notification text for shared devices; list `janus.v1.zombie` (kept
+  note sentences) on the privacy page; decide whether the doctor QR page should say that an earlier note cited a source
+  retracted later (`zombie-alert` safety review A12, pre-launch notes).
+- [ ] **Native clinical review** of the ZombieAlert texts, in particular TR "uyarı" for the notification and ES
+  "retractarse" (`zombie-alert` localization review).

@@ -5,7 +5,7 @@
  * preview on paper, and a PDF made in the browser. Box names are filled in here only.
  */
 import { useLocale } from "next-intl";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { parseLocator } from "@/flow/locator";
 import { QUIET, type Qr } from "@/note/qr";
@@ -20,6 +20,11 @@ import { SelectField } from "@/components/Field";
 import { DownloadIcon, PrintIcon } from "@/components/icons";
 import { StateView } from "@/components/StateView";
 import {
+  DemoRetraction,
+  ZombieAlertCard,
+  ZombieChanges,
+} from "@/components/zombie/Zombie";
+import {
   Button,
   ButtonLink,
   Card,
@@ -31,6 +36,7 @@ import { useUserRegion } from "@/components/region";
 import { resultCache, useSession } from "@/flow/janus";
 import { useCall } from "@/flow/useCall";
 import { useEvaluation } from "@/flow/useEvaluation";
+import { demoAdjust, fillNotices, recordNote } from "@/flow/useZombie";
 import { localeNames, routing } from "@/i18n/routing";
 import {
   layout as layoutNote,
@@ -90,6 +96,13 @@ function BlockView({ b, t }: { b: LaidBlock; t: ReturnType<typeof useT> }) {
       ) : null}
     </div>
   );
+}
+
+/** Runs `run` once when mounted: the note is made again once the new evaluation is in (zombie-alert Req 5.1). */
+function RunOnce({ run }: { run: () => void }) {
+  const first = useRef(run);
+  useEffect(() => first.current(), []);
+  return null;
 }
 
 function QrImage({ qr, label }: { qr: Qr; label: string }) {
@@ -232,6 +245,10 @@ export function NotePage() {
     session.client ? () => session.client!.memorySnapshot() : null,
     [session.client],
   );
+  // Zombie Alert (Req 5.1): "Update the note" re-evaluates, then makes the note (RunOnce).
+  const [updating, setUpdating] = useState<"no" | "notices" | "evaluating">(
+    "no",
+  );
 
   if (
     !session.ready ||
@@ -292,12 +309,14 @@ export function NotePage() {
       return;
     }
     try {
+      const note = demoAdjust(r.data, !!session.demo);
       setState({
         s: "ok",
-        note: r.data,
-        layout: layoutNote(r.data, boxNames, !!session.demo),
+        note,
+        layout: layoutNote(note, boxNames, !!session.demo),
         qr: null,
       });
+      recordNote(note, !!session.demo);
     } catch {
       setState({
         s: "error",
@@ -308,6 +327,14 @@ export function NotePage() {
         },
       });
     }
+  };
+
+  const update = async () => {
+    setUpdating("notices");
+    await fillNotices(session.client!, !!session.demo);
+    resultCache.clear();
+    evaluation.retry();
+    setUpdating("evaluating");
   };
 
   // Print opens the PDF (safety audit A6, owner decision 2026-11-08): only the PDF repeats the
@@ -369,6 +396,16 @@ export function NotePage() {
       ) : null}
       <PageTitle>{t("Note.title")}</PageTitle>
       <p className="max-w-[72ch]">{t("Note.intro")}</p>
+      {updating === "evaluating" ? (
+        <RunOnce
+          run={() => {
+            setUpdating("no");
+            void make();
+          }}
+        />
+      ) : null}
+      <ZombieAlertCard onUpdate={update} busy={updating !== "no"} />
+      <ZombieChanges />
       {/* Desktop (Req 27): the paper page centred on the left, the actions in a sticky aside. */}
       <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start">
         <aside className="no-print flex min-w-0 flex-col gap-5 lg:sticky lg:top-4 lg:col-start-2 lg:row-start-1">
@@ -460,6 +497,7 @@ export function NotePage() {
                 uiLang={locale}
                 qr={state.qr}
               />
+              <DemoRetraction />
               {state.note.documents[0]?.sections.some(
                 (x) =>
                   x.id === "findings" || x.id === "findings_form_unconfirmed",

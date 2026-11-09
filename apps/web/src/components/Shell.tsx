@@ -30,6 +30,7 @@ import {
   SettingsIcon,
 } from "./icons";
 import { useUserRegion } from "./region";
+import { ZombieWatch } from "./zombie/Zombie";
 
 function LanguageSwitcher() {
   const t = useT();
@@ -356,6 +357,7 @@ export function Shell({ children }: { children: ReactNode }) {
       </main>
       <Footer />
       <Nav />
+      <ZombieWatch />
     </>
   );
 }

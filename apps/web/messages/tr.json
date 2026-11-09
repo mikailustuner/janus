@@ -1278,5 +1278,40 @@
     "notSent": "Janus bu dosyayı hiçbir yere göndermez. Dosyayı alan taraf, kendi sisteminde onunla ne yapılacağına karar verir.",
     "notChecked": "Dosya, listeyi girildiği hâliyle içerir. Bir tıbbi kayıt değildir ve hiçbir sağlık çalışanı tarafından kontrol edilmemiştir.",
     "saved": "İndirme başladı: {file}."
+  },
+  "ZombieAlert": {
+    "title": {
+      "twoFaces": "Zombi kanıt: doktor notunuzun bir kaynağı geri çekildi",
+      "glass": "Kaynak güncellemesi: doktor notunuzun bir kaynağı geri çekildi"
+    },
+    "body": "Janus geri çekilmiş bir kaynağı artık kullanmıyor. Hangi cümlelerin değiştiğini görmek için notu güncelleyin.",
+    "doi": "DOI {doi}",
+    "simulated": "Demoda canlandırma: bu kaynak gerçekte geri çekilmedi.",
+    "noChange": "Bu uyarı tek başına ilaçlarınızda bir değişiklik yapmak için bir neden değildir. Sorularınız varsa doktorunuza veya eczacınıza danışın.",
+    "openNote": "Doktor notunu aç",
+    "update": "Notu güncelle",
+    "updating": "Not güncelleniyor…",
+    "dismiss": "Bunu gizle",
+    "changesTitle": "Notta ne değişti",
+    "changesIntro": "Janus notu geri çekilen kaynak olmadan yeniden hazırladı.",
+    "removed": "Çıkarıldı",
+    "changed": "Değişti",
+    "before": "Önce",
+    "after": "Şimdi",
+    "nothingElse": "Notun hiçbir cümlesi yalnızca bu kaynağa dayanmıyordu. Not diğer kaynaklarını göstermeye devam ediyor.",
+    "notice": "Geri çekme duyurusu: {doi}",
+    "settingsTitle": "Kaynak güncellemeleri",
+    "settingsBody": "Janus, son doktor notunuzun bir kaynağının geri çekilip çekilmediğini Janus'u açtığınızda ve açık kaldığı sürece günde bir kez denetler. Janus kapalıyken denetlemez. Denetim yalnızca bir tarih gönderir: ilaç da kaynak da göndermez.",
+    "notify": "Bir kaynak geri çekildiğinde beni uyar",
+    "notifyHint": "Tarayıcınız önce izin ister. Uyarıda hiçbir ilacın adı geçmez.",
+    "notifyUnsupported": "Bu tarayıcı uyarı gösteremiyor.",
+    "notifyDenied": "Janus'un uyarıları bu tarayıcının ayarlarında engellenmiş.",
+    "notification": "Doktor notunuzdaki bir kaynak geri çekildi. Notu güncellemek için Janus'u açın.",
+    "simulate": "Bir kaynağın geri çekilmesini canlandır (demo)",
+    "simulateHint": "Kullanılan bir kaynak geri çekildiğinde Janus'un ne yaptığını gösterir. Hiçbir şey gönderilmez.",
+    "simulatedTitle": "Canlandırma: doktor notunuzun bir kaynağı geri çekildi",
+    "simulatedStamp": "Geri çekildi (canlandırma)",
+    "notificationDemo": "Demo canlandırması: hiçbir kaynak gerçekte geri çekilmedi. Demoyu görmek için Janus'u açın.",
+    "passOn": "Önceki notu doktorunuza verdiyseniz güncellenmiş notu da verin."
   }
 }
