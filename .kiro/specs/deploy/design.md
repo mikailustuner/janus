@@ -122,6 +122,22 @@ failures in a row. No health data in the check.
   the edge network kept its own peers and the internet. Idempotent; `--remove` clears all 21 rules.
 - A failed check after `up` rolled back to the previous release automatically.
 
+## 10b. Production findings (tasks 8–11, 2026-11-09)
+- **Static files missing from the web image.** Next.js standalone output leaves out `public/`; the first
+  public release served the home images, door video, fonts, service worker and scanner files as 404. The image now
+  copies `public/` and runs `scripts/vendor-assets.mjs` (pinned SHA-256 OCR models) during the build; `smoke.sh`
+  checks ten static files, so a release missing them is rolled back.
+- **Cached 404s at the edge.** Cloudflare kept the 404 of a file requested before the fix (`cf-cache-status: HIT`);
+  a cache purge was needed after the corrected release. When a static file changes or reappears under the same
+  name, purge the edge cache after deploying.
+- **Pipelines image layout.** The CLI finds the repository root two levels above its package and refuses to write a
+  runtime-only source (TİTCK) inside it; in an image at `/app` the root became `/` and `/data` looked like the
+  repository's `data/`. The image now keeps the repository layout (`/repo/pipelines`); CI checks it.
+- **Edge script injection.** Cloudflare injected a Web Analytics beacon into HTML for browsers; the CSP blocks it
+  (no data collected) but it logs a console error. Owner to switch it off in the Cloudflare dashboard (RUM).
+- **Extra DNS names.** Records imported from the registrar (`*`, `www`) answered with 525 errors; removed, so only
+  the apex name resolves.
+
 ## 11. Open items
 - Host hardening outside Janus is tracked in the owner's private notes, not here.
 - Privacy page: add a sentence on Cloudflare as the network provider (Req 4.4), five languages.
