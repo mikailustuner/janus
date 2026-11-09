@@ -217,6 +217,11 @@ feature is expert-reviewed; every screen says "AI-reviewed, pending expert revie
 - [ ] **ChEMBL stays out.** The hyperforin-PXR Ki and all other ChEMBL-deposited values are
   withheld by licence and kept only as pointers. If a share-alike data package is ever added,
   the export licence must change.
+- [ ] **The API image carries no time-machine artifact.** `apps/api/Dockerfile` copies only
+  `janus`, `alembic.ini` and `migrations`, so `/timemachine/*` answers 503 unless
+  `.data/timemachine/current/time_machine.json` is mounted or added at deploy time. Decide which,
+  as for `datasets/canon/` in the séance. (`janus/timemachine/httk_run.R` is copied with the
+  package but is never executed at runtime.)
 - [ ] **`.data/tools` is never committed** (user R library with httk, the ADMET-AI environment).
   Confirm the deployment builds its artifacts offline and ships only
   `.data/timemachine/current/time_machine.json`; the API image needs neither R nor torch.
