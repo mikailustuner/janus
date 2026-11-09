@@ -1479,7 +1479,7 @@
     },
     "image": {
       "title": "Janus-Übersicht",
-      "headline": "{medicines, plural, one {# Medikament} other {# Medikamente}}: {full} vollständig geprüft, {partly} teilweise · {patterns, plural, =0 {kein Muster aus der Regelliste} one {# Muster zum Besprechen} other {# Muster zum Besprechen}} · geprüft mit {checked} von {total} Mustern",
+      "headline": "{medicines, plural, one {# Medikament} other {# Medikamente}}: {full} vollständig geprüft, {partly} teilweise · {patterns, plural, =0 {kein Muster aus der Regelliste} one {# Muster zum Besprechen} other {# Muster zum Besprechen}} · abgeglichen mit {checked} von {total} Mustern",
       "medicines": "{count, plural, one {Medikament in der Liste} other {Medikamente in der Liste}}",
       "patterns": "{count, plural, one {Muster zum Besprechen} other {Muster zum Besprechen}}",
       "rulesOf": "{checked} von {total}",
@@ -1642,7 +1642,7 @@
       "esSymptoms": "Symptome der Nebenwirkung",
       "esOnset": "Wann haben diese Symptome begonnen?",
       "esState": "Wie ist der aktuelle Zustand der betroffenen Person?",
-      "usE10": "Alle derzeit verwendeten rezeptfreien Arzneimittel sowie Vitamine, Mineralstoffe, Nahrungsergänzungsmittel und pflanzlichen Mittel"
+      "usE10": "Alle derzeit verwendeten rezeptfreien Arzneimittel sowie Vitamine, Mineralstoffe, Nahrungsergänzungsmittel und pflanzliche Mittel"
     },
     "options": {
       "trEform": {
@@ -1701,7 +1701,7 @@
       "onset_only": "Nur gemeldete Zeit bis zum Auftreten, kein Körpermodell"
     },
     "methodWhy": {
-      "compartmental": "Das Paket httk hat für dieses Arzneimittel keine Parameter beim Menschen; Janus verwendet daher ein minimales Ein-Kompartiment-Modell, dessen Parameter aus zitierten Veröffentlichungen stammen.",
+      "compartmental": "Das Paket httk hat hier keine Parameter beim Menschen; Janus verwendet daher ein minimales Ein-Kompartiment-Modell, dessen Parameter aus zitierten Veröffentlichungen stammen.",
       "onset_only": "Es wird kein Körpermodell verwendet: Es gibt keine geeigneten Parameter beim Menschen. Gezeigt wird nur die gemeldete Zeit bis zum Auftreten."
     },
     "onset": {
@@ -1740,7 +1740,8 @@
       "median_iqr": "Veröffentlicht: Median {median} Tage, Interquartilsabstand {low} bis {high} Tage.",
       "window": "Veröffentlichtes Zeitfenster: Tag {low} bis Tag {high}.",
       "qualitative": "Der veröffentlichte Zeitverlauf ist nur beschreibend und kann nicht als Zahl verglichen werden.",
-      "none": "Für diese Kaskade gibt es keinen veröffentlichten Zeitverlauf."
+      "none": "Für diese Kaskade gibt es keinen veröffentlichten Zeitverlauf.",
+      "combined": "Aus den Zeitfenstern der zitierten Studien zusammengesetzt."
     },
     "agreement": {
       "agrees": "Kein Widerspruch zum veröffentlichten Zeitverlauf: Die Intervalle überlappen sich. Bei so breiten Intervallen ist das keine Bestätigung.",
@@ -1752,7 +1753,12 @@
       "title": "Gemeldeter und veröffentlichter Zeitverlauf (Tage)",
       "janus": "FAERS-Meldungen: mittlere Hälfte, Median",
       "published": "Veröffentlicht",
-      "legend": "Balken: Intervall; Punkt: Median."
+      "legend": "Balken: Intervall; Punkt: Median.",
+      "cols": {
+        "low": "Untere",
+        "mid": "Median",
+        "high": "Obere"
+      }
     },
     "curve": {
       "title": "Anteil der Meldungen nach Tagen seit Beginn des ersten Arzneimittels",
@@ -1765,19 +1771,21 @@
     "population": {
       "heading": "Ältere und jüngere virtuelle Populationen",
       "intro": "{older} gegenüber {younger} Jahren. Ein Alter von 80 Jahren und mehr kann nicht simuliert werden. Nur ein relativer Vergleich der beiden Gruppen.",
-      "title": "Konzentration im Steady State (mg/L): 5. bis 95. Perzentil, Median",
+      "title": "Konzentration im Steady State (mg/l): 5. bis 95. Perzentil, Median. Die absoluten Werte sind nicht validiert; vergleichen Sie nur die beiden Gruppen",
       "older": "{drug}, {ages} Jahre",
       "younger": "{drug}, {ages} Jahre",
       "ratio": "{drug}: Verhältnis der Mediane ältere zu jüngere {ratio}.",
       "steady": "{drug}: etwa {days} Tage bis 90 % des Steady State.",
-      "doseBasis": "Dosisgrundlage des Modells (nur für den Vergleich, keine Dosis)"
+      "doseBasis": "Dosisgrundlage des Modells (nur für den Vergleich, keine Dosis)",
+      "credibility": "{drug}: Das Modell dieses Arzneimittels hat die Validierung {verdict, select, credible {voll bestanden} borderline {nur knapp bestanden} other {nicht bestanden}}."
     },
     "gate": {
       "heading": "Satz für Patientinnen und Patienten",
       "shown": "Wird in der Detailansicht des Befunds gezeigt: die mittlere Hälfte der Meldungen, {start} bis {end} Tage.",
       "small": "Wird Patientinnen und Patienten nicht gezeigt: zu wenige Meldungen.",
       "agreement": "Wird Patientinnen und Patienten nicht gezeigt: Der gemeldete Zeitverlauf stimmt nicht mit dem veröffentlichten überein.",
-      "none": "Wird Patientinnen und Patienten nicht gezeigt: keine gemeldete Zeit bis zum Auftreten."
+      "none": "Wird Patientinnen und Patienten nicht gezeigt: keine gemeldete Zeit bis zum Auftreten.",
+      "notComparable": "Wird Patientinnen und Patienten nicht gezeigt: Der gemeldete Zeitverlauf ist mit dem veröffentlichten nicht vergleichbar."
     },
     "validation": {
       "rule": "Glaubwürdig, wenn vorhergesagte Cmax und AUC beide innerhalb des 2-Fachen der veröffentlichten beobachteten Werte liegen; grenzwertig innerhalb des 3-Fachen; sonst nicht bestanden. Ein nicht glaubwürdiges Arzneimittel wird nicht mit einer Wirkstärke verglichen.",
@@ -1794,7 +1802,7 @@
         "borderline": "Grenzwertig",
         "failed": "Nicht bestanden"
       },
-      "aucNote": "Bei diesen Modellen ergibt sich die AUC konstruktionsbedingt aus den zitierten Parametern; nur Cmax ist eine unabhängige Prüfung.",
+      "aucNote": "In einem Ein-Kompartiment-Modell hängt die AUC nur von Bioverfügbarkeit, Dosis und Clearance ab; der AUC-Vergleich prüft also die zitierte Clearance. Bei Rhein können Clearance und beobachtete AUC von denselben Personen stammen; nur seine Cmax ist eine unabhängige Prüfung.",
       "notShownReason": "Wird bei jeder simulierten Konzentration gezeigt."
     },
     "sources": {
@@ -1847,7 +1855,10 @@
       },
       "margin": "Spanne {low} bis {high} gegenüber {measure} {potency} µmol/l ({assay}).",
       "noExposure": "Für dieses Heilmittel wurde keine historische Menge modelliert.",
-      "none": "Für dieses Heilmittel wurde kein Molekül ausgewählt."
+      "none": "Für dieses Heilmittel wurde kein Molekül ausgewählt.",
+      "withheldUnverified": "Wert nicht gezeigt: Seine Lizenz konnte nicht geprüft werden.",
+      "outOfRange": "Vorhersage außerhalb des möglichen Bereichs; nicht verwertbar",
+      "evidence": "Beleg: {citation}"
     },
     "references": "Quellen",
     "verified": "Geprüft: {how}",
@@ -1855,7 +1866,7 @@
     "legend": "Band: 5. bis 95. Perzentil; Punkt: Median.",
     "patient": {
       "heading": "Wann dies gemeldet wurde",
-      "sentence": "In Meldungen anderer Personen wurde diese Kombination am häufigsten zwischen {start} und {end} Tagen nach Beginn des ersten Arzneimittels gemeldet. Das ist eine Information aus Meldungen, keine Vorhersage über Sie — darüber kann ein Gespräch mit Ihrer Ärztin oder Ihrem Arzt sinnvoll sein.",
+      "sentence": "In Meldungen anderer Personen lag die Hälfte der Meldungen von „{event}“ zwischen {start} und {end} Tagen nach Beginn von {drug}; die andere Hälfte lag früher oder später. Das ist eine Information aus Meldungen, keine Vorhersage über Sie — darüber kann ein Gespräch mit Ihrer Ärztin oder Ihrem Arzt sinnvoll sein.",
       "review": "Von einer KI geprüft, Prüfung durch Fachleute steht aus."
     },
     "errors": {
@@ -1863,6 +1874,79 @@
       "unknown": "Dieser Eintrag ist nicht in der Zeitmaschine."
     },
     "empty": "Noch nichts zu zeigen.",
-    "loading": "Die Zeitmaschine wird geladen…"
+    "loading": "Die Zeitmaschine wird geladen…",
+    "methodNoOutput": "Auf dieser Seite wird das Modell für keine Konzentration verwendet; seine Validierung steht auf der Startseite der Zeitmaschine.",
+    "extension": "Interpretierende Erweiterung der PIPC-Zeile: Die Zeile nennt eine andere Arzneimittelklasse.",
+    "tableRegion": "Tabelle (seitlich scrollbar)"
+  },
+  "OpenData": {
+    "title": "Offene Daten",
+    "summary": "Veröffentlichte Zahlen und die Regelbasis der Kaskaden, frei wiederverwendbar",
+    "intro": "Janus teilt zwei Arten offener Daten: Zahlen gespendeter Meldungen und ärztlich gemeldeter Behandlungsverläufe, nur in Gruppen von mindestens 20 und mit Rauschen veröffentlicht, sowie die Regelbasis der Verschreibungskaskaden, die Janus verwendet. Beides ist Forschungsmaterial, keine medizinische Beratung.",
+    "entry": {
+      "title": "Offene Daten",
+      "body": "Veröffentlichte Zahlen gespendeter Meldungen und ärztlich gemeldeter Behandlungsverläufe, und die Regelbasis der Kaskaden als Datenpaket."
+    },
+    "demo": "Demo: Der Datensatz wurde am {date} von der echten lokalen Janus-API aufgezeichnet; es wird keine Anfrage gesendet.",
+    "dataset": {
+      "title": "Offener Datensatz der Behandlungsverläufe",
+      "empty": "Noch keine veröffentlichten Zellen. Eine Zahl wird nur veröffentlicht, wenn mindestens 20 Meldungen dieselben Arzneimittel, dasselbe Ereignis, dieselbe Richtung und dieselbe Region betreffen und die Regeln unten erfüllen. Bis dahin gibt es nichts zu zeigen und keine Beispielzahl.",
+      "cellsLine": "{count, plural, one {# veröffentlichte Zelle} other {# veröffentlichte Zellen}}",
+      "layerTile": "{count, plural, one {veröffentlichte Zelle} other {veröffentlichte Zellen}}",
+      "layer": {
+        "contributions": "Gespendete Meldungen",
+        "outcomes": "Ärztlich gemeldete Behandlungsverläufe"
+      },
+      "cols": {
+        "ingredients": "Arzneimittel",
+        "event": "Ereignis",
+        "direction": "Richtung",
+        "region": "Region",
+        "value": "Meldungen (mit Rauschen)"
+      },
+      "direction": {
+        "adverse": "Schaden",
+        "benefit": "Besserung"
+      },
+      "region": {
+        "TR": "Türkei",
+        "EU": "Europäische Union",
+        "US": "Vereinigte Staaten"
+      },
+      "withheld": "Noch nicht veröffentlicht: {layers}. Diese Meldungen wurden mit einer Einwilligung gegeben, die keinen offenen Datensatz umfasst."
+    },
+    "rule": {
+      "title": "Wie eine Zahl veröffentlicht wird",
+      "k": "Nur Gruppen von mindestens {k} Meldungen, entschieden anhand der tatsächlichen Zahl.",
+      "noise": "Jede veröffentlichte Zahl erhält zufälliges Rauschen (diskrete Laplace-Verteilung, ε = {epsilon}). Eine erneute Abfrage zu denselben gespeicherten Meldungen ergibt denselben Wert; das Rauschen wird nur neu gezogen, wenn sich die Meldungen der Gruppe ändern.",
+      "sibling": "Eine Zahl wird auch verborgen, wenn ihr Vergleich mit einer verschachtelten Zahl eine Gruppe kleiner als {k} offenlegen würde.",
+      "hidden": "Verborgene Gruppen werden gar nicht aufgeführt, auch nicht als verborgen.",
+      "notices": "Gezählt werden Meldungen, niemals Personen. Behandlungsverläufe sind Antworten von Ärztinnen und Ärzten; Janus hat sie nicht überprüft. Es gibt keinen Nenner; es sind also keine Raten und keine Inzidenz."
+    },
+    "files": {
+      "title": "Herunterladen",
+      "json": "Datensatz (JSON)",
+      "csv": "Datensatz (CSV)",
+      "version": "Version {version}",
+      "snapshot": "Stand vom {date}",
+      "licence": "Lizenz: CC BY 4.0. Namensnennung: {attribution}",
+      "dictionary": "Datenwörterbuch",
+      "dictionaryBody": "Bedeutung jedes Feldes, Lesen und Zitieren des Datensatzes (docs/open-data.md)"
+    },
+    "package": {
+      "title": "Datenpaket der Kaskaden",
+      "summary": "Version {version} · {date}",
+      "body": "Die PIPC-Liste der Verschreibungskaskaden mit den Zuordnungen von Janus zu Arzneimittelklassen, den Namensregeln für Wirkstoffe, den ATC-Ausschlüssen und den Darreichungsformgruppen. Jede Datei hat ihre eigene Lizenz. Es ist keine Zeile, kein Produktname und kein Barcode der TİTCK-Liste enthalten; einige Notizen nennen Codes oder Zeilenzahlen aus der TİTCK-Liste.",
+      "rows": "{rows, plural, one {# Zeile} other {# Zeilen}}",
+      "open": "Dateien des Pakets und README",
+      "api": "Öffentliche Nur-Lese-API (OpenAPI)",
+      "apiBody": "Alle öffentlichen GET-Routen, mit Beispielen",
+      "corrections": "Korrekturen beitragen",
+      "correctionsBody": "Fehler, die Janus in Quelldaten gefunden hat, und wie man sie an ihre Quellen meldet"
+    },
+    "errors": {
+      "unavailable": "Der offene Datensatz ist auf diesem Server gerade nicht verfügbar."
+    },
+    "loading": "Der offene Datensatz wird geladen…"
   }
 }

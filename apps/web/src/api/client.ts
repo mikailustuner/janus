@@ -110,10 +110,12 @@ export class HttpClient implements JanusClient, JanusChangesClient {
     body: unknown,
     decoder: D.Decoder<T>,
     timeoutMs = READ_TIMEOUT_MS,
+    /** The path when it carries an id after the route (time machine GET routes). */
+    path: string = route,
   ): Promise<Result<T>> {
     let res: Response;
     try {
-      res = await this.fetchImpl(`${this.base}/${route}`, {
+      res = await this.fetchImpl(`${this.base}/${path}`, {
         method,
         headers:
           method === "POST" ? { "content-type": "application/json" } : {},

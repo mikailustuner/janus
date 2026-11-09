@@ -365,3 +365,16 @@
   > passport summary, no validation tile without its chance baseline, "reports name all of them" label). The passport
   > screen test now checks the grouped description list instead of the table (DP56). Screenshots of the seven screens at
   > 375 and 1440 px in both themes reviewed; pre-launch items added (native review of `Cards`, "listed" wording).
+
+- [x] 33. Owner decision 2026-11-09: medicines fully and partly checked on the results summary (DP57)
+  - **Checkpoint:** vitest, report and demo-flow e2e green; commit.
+
+- [x] 34. Time machine screens (Req 30, DP58–DP65)
+  - 34.1 Recorder `scripts/record-timemachine.mjs`, fixture and index from the real local API; decoders and clients.
+  - 34.2 Pure rules `src/timemachine/view.ts` with P36–P39 (`view.test.ts`).
+  - 34.3 Index, substance and cascade screens; charts with table alternatives; validation, sources, references.
+  - 34.4 The patient timing sentence in the finding detail; links from the séance and the cascade map.
+  - 34.5 `TimeMachine` namespace in five languages; localization-reviewer, safety-auditor and pharmacologist passes.
+  - 34.6 e2e `e2e/time-machine.spec.ts`: five locales × two themes, axe, 375 / 1280, rendering rules, states, demo
+    without requests, patient sentence only for amlodipine, links; screenshots.
+  - **Checkpoint:** lint, typecheck, vitest, build, e2e green; commit.

@@ -1665,14 +1665,14 @@
   },
   "TimeMachine": {
     "title": "Zaman makinesi",
-    "summary": "{substances, plural, one {Kanun'dan # ilaç} other {Kanun'dan # ilaç}} · {cascades, plural, one {# reçeteleme kaskadı} other {# reçeteleme kaskadı}}",
-    "intro": "Zaman makinesi, İbn Sina'nın Kanun'undaki bazı ilaçları ve bazı reçeteleme kaskadlarını bugünün açık verileriyle izler: içerdikleri moleküller, laboratuvarlarda ölçülen etkinlik, basit vücut modelleri ve kamuya açık advers olay bildirimlerinde yazılan başlama süresi.",
+    "summary": "{substances, plural, one {Kanun'dan # ilaç} other {Kanun'dan # ilaç}} · {cascades, plural, one {# reçete kaskadı} other {# reçete kaskadı}}",
+    "intro": "Zaman makinesi, İbn Sina'nın Kanun'undaki bazı ilaçları ve bazı reçete kaskadlarını bugünün açık verileriyle izler: içerdikleri moleküller, laboratuvarlarda ölçülen etkinlik, basit vücut modelleri ve kamuya açık advers olay bildirimlerinde yazılan başlama süresi.",
     "inSilico": "In silico ve keşif amaçlı: açık verilerden hesaplanmıştır, herhangi bir kişi hakkında kanıt değildir. Burada gösterilen bir molekül ya da konsantrasyon araştırılmaya değer bir adaydır — bir tedavi değildir ve asla alınacak bir doz değildir.",
     "review": "Yapay zekâ tarafından incelendi, uzman incelemesi bekleniyor.",
     "demo": "Demo: tüm yanıtlar {date} tarihinde gerçek yerel Janus API'sinden kaydedildi; hiçbir istek gönderilmez.",
     "entry": {
       "title": "Zaman makinesi",
-      "body": "Kanun'daki ilaçlar ve reçeteleme kaskadları: moleküller, vücut modelleri ve bildirilen başlama süresi."
+      "body": "Kanun'daki ilaçlar ve reçete kaskadları: moleküller, vücut modelleri ve bildirilen başlama süresi."
     },
     "open": "Zaman makinesinde aç",
     "openCascade": "Zaman makinesinde zamanlama ve vücut modeli",
@@ -1680,7 +1680,7 @@
     "sections": {
       "substances": "Kanun'daki ilaçlar",
       "substancesFooter": "Moleküller Wikidata ve LOTUS'tan (CC0), etkinlik PubChem'den (kamu malı), modern endikasyonlar openFDA prospektüslerinden (CC0).",
-      "cascades": "Reçeteleme kaskadları",
+      "cascades": "Reçete kaskadları",
       "cascadesFooter": "PIPC listesinin satırları (Rochon ve ark., Eur Geriatr Med 2025, CC BY 4.0). Başlama süresi FDA FAERS bildirimlerinden.",
       "how": "Nasıl yapıldı",
       "validation": "Vücut modellerinin doğrulanması"
@@ -1701,7 +1701,7 @@
       "onset_only": "Yalnızca bildirilen başlama süresi, vücut modeli yok"
     },
     "methodWhy": {
-      "compartmental": "httk paketinde bu ilaç için insan parametreleri yok; bu nedenle Janus, parametreleri kaynak gösterilen yayınlardan alınan en basit tek kompartmanlı bir model kullanır.",
+      "compartmental": "httk paketinde burada insan parametreleri yok; bu nedenle Janus, parametreleri kaynak gösterilen yayınlardan alınan en basit tek kompartmanlı bir model kullanır.",
       "onset_only": "Vücut modeli kullanılmaz: uygun insan parametreleri yok. Yalnızca bildirilen başlama süresi gösterilir."
     },
     "onset": {
@@ -1733,14 +1733,15 @@
       "no_pk": "Bu molekül için yayımlanmış insan farmakokinetik parametresi yok: hiçbir konsantrasyon modellenmedi.",
       "failed_credibility": "Model bu ilaç için doğrulama kuralını geçemedi; bu nedenle ölçülmüş bir potensle karşılaştırma yapılmaz.",
       "no_potency": "Kamu malı veri sağlayan bir kaynaktan, duruma uygun seçilmiş bir hedefte ölçülmüş potens yok. Bu kayıtlı bir boşluktur; yerine değer konmaz.",
-      "few_reports": "Şekil uydurulmadı: kullanılabilir aralığı olan bildirim sayısı {n}'den az."
+      "few_reports": "Şekil uydurulmadı: kullanılabilir aralığı olan bildirim sayısı yetersiz (en az {n} gerekir)."
     },
     "published": {
       "heading": "Yayımlanmış zamanlama",
       "median_iqr": "Yayımlanmış: medyan {median} gün, çeyrekler arası aralık {low}–{high} gün.",
       "window": "Yayımlanmış pencere: {low}. günden {high}. güne.",
       "qualitative": "Yayımlanmış zamanlama yalnızca sözel olarak verilmiştir ve sayı olarak karşılaştırılamaz.",
-      "none": "Bu kaskad için yayımlanmış zamanlama yok."
+      "none": "Bu kaskad için yayımlanmış zamanlama yok.",
+      "combined": "Kaynak gösterilen çalışmaların pencerelerinden birleştirildi."
     },
     "agreement": {
       "agrees": "Yayımlanmış zamanlamayla çelişmiyor: aralıklar örtüşüyor. Aralıklar bu kadar genişken bu bir doğrulama değildir.",
@@ -1752,7 +1753,12 @@
       "title": "Bildirilen ve yayımlanmış zamanlama (gün)",
       "janus": "FAERS bildirimleri: ortadaki yarı, medyan",
       "published": "Yayımlanmış",
-      "legend": "Çubuk: aralık; nokta: medyan."
+      "legend": "Çubuk: aralık; nokta: medyan.",
+      "cols": {
+        "low": "Alt",
+        "mid": "Medyan",
+        "high": "Üst"
+      }
     },
     "curve": {
       "title": "İlk ilacın başlamasından bu yana güne göre bildirim payı",
@@ -1765,19 +1771,21 @@
     "population": {
       "heading": "Yaşlı ve genç sanal popülasyonlar",
       "intro": "{older} yaşa karşı {younger} yaş. 80 yaş ve üzeri simüle edilemez. Yalnızca iki grubun göreli karşılaştırması.",
-      "title": "Kararlı durum konsantrasyonu (mg/L): 5. ile 95. persentil, medyan",
+      "title": "Kararlı durum konsantrasyonu (mg/L): 5. ile 95. persentil, medyan. Mutlak değerler doğrulanmamıştır; yalnızca iki grubu karşılaştırın",
       "older": "{drug}, {ages} yaş",
       "younger": "{drug}, {ages} yaş",
       "ratio": "{drug}: medyanların yaşlı/genç oranı {ratio}.",
       "steady": "{drug}: kararlı durumun %90'ına yaklaşık {days} gün.",
-      "doseBasis": "Modelin doz temeli (yalnızca karşılaştırma için, bir doz değildir)"
+      "doseBasis": "Modelin doz temeli (yalnızca karşılaştırma için, bir doz değildir)",
+      "credibility": "{drug}: bu ilacın modeli doğrulamada {verdict, select, credible {başarılı oldu} borderline {sınırda kaldı} other {başarısız oldu}}."
     },
     "gate": {
       "heading": "Hastalara yönelik cümle",
       "shown": "Bulgu ayrıntısında gösterilir: bildirimlerin ortadaki yarısı, {start}–{end} gün.",
       "small": "Hastalara gösterilmez: bildirim sayısı az.",
       "agreement": "Hastalara gösterilmez: bildirilen zamanlama yayımlanmış zamanlamayla uyuşmuyor.",
-      "none": "Hastalara gösterilmez: bildirilmiş başlama süresi yok."
+      "none": "Hastalara gösterilmez: bildirilmiş başlama süresi yok.",
+      "notComparable": "Hastalara gösterilmez: bildirilen zamanlama yayımlanmış zamanlamayla karşılaştırılamıyor."
     },
     "validation": {
       "rule": "Öngörülen Cmax ve AUC'nin ikisi de yayımlanmış gözlenen değerlerin 2 katı içindeyse güvenilir; 3 katı içindeyse sınırda; aksi halde başarısız. Güvenilir olmayan bir ilaç için potensle karşılaştırma yapılmaz.",
@@ -1794,7 +1802,7 @@
         "borderline": "Sınırda",
         "failed": "Başarısız"
       },
-      "aucNote": "Bu modellerde AUC, yapısı gereği kaynak gösterilen parametrelerden çıkar; yalnızca Cmax bağımsız bir denetimdir.",
+      "aucNote": "Tek kompartmanlı bir modelde AUC yalnızca biyoyararlanıma, doza ve klirense bağlıdır; bu yüzden AUC karşılaştırması kaynak gösterilen klirensi sınar. Reinde klirens ile gözlenen AUC aynı kişilerden gelebilir; bu nedenle yalnızca Cmax bağımsız bir denetimdir.",
       "notShownReason": "Simüle edilen her konsantrasyonla birlikte gösterilir."
     },
     "sources": {
@@ -1847,7 +1855,10 @@
       },
       "margin": "{measure} {potency} µmol/L'ye karşı pay {low}–{high} ({assay}).",
       "noExposure": "Bu ilaç için tarihsel bir miktar modellenmedi.",
-      "none": "Bu ilaç için molekül seçilmedi."
+      "none": "Bu ilaç için molekül seçilmedi.",
+      "withheldUnverified": "Değer gösterilmiyor: lisansı doğrulanamadı.",
+      "outOfRange": "olası aralığın dışında bir öngörü; kullanılamaz",
+      "evidence": "Kanıt: {citation}"
     },
     "references": "Kaynaklar",
     "verified": "Denetlendi: {how}",
@@ -1855,7 +1866,7 @@
     "legend": "Bant: 5. ile 95. persentil; nokta: medyan.",
     "patient": {
       "heading": "Bu ne zaman bildirildi",
-      "sentence": "Başkalarının yaptığı bildirimlerde bu kombinasyon en sık, ilk ilaca başlandıktan {start} ile {end} gün sonra bildirildi. Bu, bildirimlerden gelen bir bilgidir, sizin hakkınızda bir tahmin değildir — doktorunuzla konuşmaya değer olabilir.",
+      "sentence": "Başkalarının yaptığı bildirimlerde “{event}” bildirimlerinin yarısı, {drug} başlandıktan {start} ile {end} gün sonrasına düştü; diğer yarısı daha erken ya da daha geçti. Bu, bildirimlerden gelen bir bilgidir, sizin hakkınızda bir tahmin değildir — doktorunuzla konuşmaya değer olabilir.",
       "review": "Yapay zekâ tarafından incelendi, uzman incelemesi bekleniyor."
     },
     "errors": {
@@ -1863,6 +1874,79 @@
       "unknown": "Bu kayıt zaman makinesinde yok."
     },
     "empty": "Henüz gösterilecek bir şey yok.",
-    "loading": "Zaman makinesi yükleniyor…"
+    "loading": "Zaman makinesi yükleniyor…",
+    "methodNoOutput": "Bu sayfada model hiçbir konsantrasyon için kullanılmıyor; doğrulaması zaman makinesinin ana sayfasındadır.",
+    "extension": "PIPC satırının yorumlayıcı bir genişletmesi: satır başka bir ilaç sınıfını adlandırır.",
+    "tableRegion": "Tablo (yana kaydırılabilir)"
+  },
+  "OpenData": {
+    "title": "Açık veri",
+    "summary": "Yayımlanan sayılar ve kaskad kural tabanı, serbestçe yeniden kullanılabilir",
+    "intro": "Janus iki tür açık veri paylaşır: bağışlanan bildirimlerin ve doktorların bildirdiği sonuçların sayıları (yalnızca en az 20'lik gruplarda, gürültü eklenerek yayımlanır) ve kullandığı reçete kaskadı kural tabanı. İkisi de araştırma malzemesidir, tıbbi tavsiye değildir.",
+    "entry": {
+      "title": "Açık veri",
+      "body": "Bağışlanan bildirimlerin ve doktorların bildirdiği sonuçların yayımlanan sayıları ve veri paketi olarak kaskad kural tabanı."
+    },
+    "demo": "Demo: veri kümesi {date} tarihinde gerçek yerel Janus API'sinden kaydedildi; hiçbir istek gönderilmez.",
+    "dataset": {
+      "title": "Açık sonuç veri kümesi",
+      "empty": "Henüz yayımlanan hücre yok. Bir sayı yalnızca en az 20 bildirim aynı ilaçları, olayı, yönü ve bölgeyi paylaştığında ve aşağıdaki kuralları geçtiğinde yayımlanır. O zamana kadar gösterilecek bir şey ve örnek bir sayı yok.",
+      "cellsLine": "{count, plural, one {# yayımlanan hücre} other {# yayımlanan hücre}}",
+      "layerTile": "{count, plural, one {yayımlanan hücre} other {yayımlanan hücre}}",
+      "layer": {
+        "contributions": "Bağışlanan bildirimler",
+        "outcomes": "Doktorların bildirdiği sonuçlar"
+      },
+      "cols": {
+        "ingredients": "İlaçlar",
+        "event": "Olay",
+        "direction": "Yön",
+        "region": "Bölge",
+        "value": "Bildirimler (gürültü eklenmiş)"
+      },
+      "direction": {
+        "adverse": "Zarar",
+        "benefit": "İyileşme"
+      },
+      "region": {
+        "TR": "Türkiye",
+        "EU": "Avrupa Birliği",
+        "US": "Amerika Birleşik Devletleri"
+      },
+      "withheld": "Henüz yayımlanmadı: {layers}. Bu bildirimler açık bir veri kümesini kapsamayan bir onayla verildi."
+    },
+    "rule": {
+      "title": "Bir sayı nasıl yayımlanır",
+      "k": "Yalnızca en az {k} bildirimlik gruplar; karar gerçek sayıya göre verilir.",
+      "noise": "Yayımlanan her sayıya rastgele gürültü eklenir (ayrık Laplace, ε = {epsilon}). Aynı kayıtlı bildirimler için yeniden sorulduğunda aynı değer gelir; gürültü yalnızca gruptaki bildirimler değiştiğinde yeniden çekilir.",
+      "sibling": "Bir sayı, iç içe başka bir sayıyla karşılaştırıldığında {k} bildirimden küçük bir grubu ortaya çıkaracaksa da gizlenir.",
+      "hidden": "Gizlenen gruplar hiç listelenmez; gizli olarak da gösterilmez.",
+      "notices": "Sayılar bildirimdir, asla kişi değildir. Sonuçlar doktorların verdiği yanıtlardır; Janus bunları doğrulamamıştır. Payda yoktur; bu nedenle bunlar oran ya da insidans değildir."
+    },
+    "files": {
+      "title": "İndir",
+      "json": "Veri kümesi (JSON)",
+      "csv": "Veri kümesi (CSV)",
+      "version": "Sürüm {version}",
+      "snapshot": "{date} tarihli anlık görüntü",
+      "licence": "Lisans: CC BY 4.0. Atıf: {attribution}",
+      "dictionary": "Veri sözlüğü",
+      "dictionaryBody": "Her alanın anlamı, veri kümesinin nasıl okunacağı ve atıf yapılacağı (docs/open-data.md)"
+    },
+    "package": {
+      "title": "Kaskad veri paketi",
+      "summary": "Sürüm {version} · {date}",
+      "body": "PIPC reçete kaskadı listesi ile Janus'un ilaç sınıflarına eşlemeleri, etkin madde ad kuralları, ATC dışlamaları ve dozaj formu grupları. Her dosyanın kendi lisansı vardır. TİTCK listesinden satır, ürün adı veya barkod içermez; bazı notlar TİTCK listesinde görülen kodları ya da satır sayılarını belirtir.",
+      "rows": "{rows, plural, one {# satır} other {# satır}}",
+      "open": "Paket dosyaları ve README",
+      "api": "Herkese açık salt okunur API (OpenAPI)",
+      "apiBody": "Örnekleriyle birlikte tüm herkese açık GET yolları",
+      "corrections": "Düzeltmelere katkı",
+      "correctionsBody": "Janus'un kaynak verilerde bulduğu hatalar ve bunların kaynaklarına nasıl bildirileceği"
+    },
+    "errors": {
+      "unavailable": "Açık veri kümesi şu anda bu sunucuda kullanılamıyor."
+    },
+    "loading": "Açık veri kümesi yükleniyor…"
   }
 }

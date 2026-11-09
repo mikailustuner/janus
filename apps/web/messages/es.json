@@ -1479,7 +1479,7 @@
     },
     "image": {
       "title": "Resumen de Janus",
-      "headline": "{medicines, plural, one {# medicamento} other {# medicamentos}}: {full, plural, one {# comprobado por completo} other {# comprobados por completo}}, {partly} en parte · {patterns, plural, =0 {ningún patrón de la lista de reglas} one {# patrón para comentar} other {# patrones para comentar}} · comprobado con {checked} de {total} patrones",
+      "headline": "{medicines, plural, one {# medicamento} other {# medicamentos}}: {full, plural, one {# comprobado por completo} other {# comprobados por completo}}, {partly} en parte · {patterns, plural, =0 {ningún patrón de la lista de reglas} one {# patrón para comentar} other {# patrones para comentar}} · comparación con {checked} de {total} patrones",
       "medicines": "{count, plural, one {medicamento de la lista} other {medicamentos de la lista}}",
       "patterns": "{count, plural, one {patrón para comentar} other {patrones para comentar}}",
       "rulesOf": "{checked} de {total}",
@@ -1666,7 +1666,7 @@
   "TimeMachine": {
     "title": "Máquina del tiempo",
     "summary": "{substances, plural, one {# remedio del Canon} other {# remedios del Canon}} · {cascades, plural, one {# cascada de prescripción} other {# cascadas de prescripción}}",
-    "intro": "La máquina del tiempo sigue remedios del Canon de Ibn Sina y algunas cascadas de prescripción a través de los datos abiertos de hoy: las moléculas que contienen, la actividad medida en laboratorio, modelos sencillos del organismo y el tiempo hasta la aparición anotado en notificaciones públicas de acontecimientos adversos.",
+    "intro": "La máquina del tiempo sigue remedios del Canon de Ibn Sina y algunas cascadas de prescripción a través de los datos abiertos de hoy: las moléculas que contienen, la actividad medida en laboratorio, modelos sencillos del organismo y el tiempo hasta la aparición anotado en notificaciones públicas de eventos adversos.",
     "inSilico": "In silico y exploratorio: calculado a partir de datos abiertos, no es una prueba sobre ninguna persona. Una molécula o una concentración mostrada aquí es un candidato que vale la pena investigar — no un tratamiento y nunca una dosis que tomar.",
     "review": "Revisado por IA, pendiente de revisión de expertos.",
     "demo": "Demo: todas las respuestas se grabaron de la API local real de Janus el {date}; no se envía ninguna solicitud.",
@@ -1701,13 +1701,13 @@
       "onset_only": "Solo el tiempo hasta la aparición notificado, sin modelo del organismo"
     },
     "methodWhy": {
-      "compartmental": "El paquete httk no tiene parámetros humanos para este medicamento, por lo que Janus usa un modelo mínimo de un compartimento cuyos parámetros proceden de publicaciones citadas.",
+      "compartmental": "El paquete httk no tiene parámetros humanos aquí, por lo que Janus usa un modelo mínimo de un compartimento cuyos parámetros proceden de publicaciones citadas.",
       "onset_only": "No se usa ningún modelo del organismo: no hay parámetros humanos adecuados. Solo se muestra el tiempo hasta la aparición notificado."
     },
     "onset": {
       "heading": "Tiempo hasta la aparición notificado",
       "tile": "{count, plural, one {notificación con un intervalo utilizable} other {notificaciones con un intervalo utilizable}}",
-      "sentence": "{count, plural, one {# notificación da} other {# notificaciones dan}} una fecha de inicio completa del primer medicamento y una fecha completa del acontecimiento.",
+      "sentence": "{count, plural, one {# notificación da} other {# notificaciones dan}} una fecha de inicio completa del primer medicamento y una fecha completa del evento.",
       "median": "Mediana {median} días (intervalo del 95 % de {low} a {high} días).",
       "medianNoCi": "Mediana {median} días.",
       "iqr": "Mitad central de las notificaciones: de {q25} a {q75} días.",
@@ -1720,7 +1720,7 @@
         "wear_out": "más notificaciones más tarde"
       },
       "none": "No hay tiempo hasta la aparición notificado para esta cascada.",
-      "subsetCaveat": "El tiempo hasta la aparición solo existe en las notificaciones que dan tanto una fecha de inicio completa como una fecha del acontecimiento completa. Ese subconjunto no representa a todas las notificaciones: que estén completas se relaciona con el tipo de notificador y la gravedad del acontecimiento. FAERS es notificación espontánea, no incidencia, y no está depurado de duplicados entre casos; se cuentan notificaciones, nunca personas.",
+      "subsetCaveat": "El tiempo hasta la aparición solo existe en las notificaciones que dan tanto una fecha de inicio completa como una fecha del evento completa. Ese subconjunto no representa a todas las notificaciones: que estén completas se relaciona con el tipo de notificador y la gravedad del evento. FAERS es notificación espontánea, no incidencia, y no está depurado de duplicados entre casos; se cuentan notificaciones, nunca personas.",
       "quality": "En el periodo de FAERS {window}: {share} de los pares notificación-medicamento tenían un intervalo utilizable ({pairs} pares).",
       "riskWindow": "80 % central de los intervalos notificados ({basis}): de {start} a {end} días.",
       "basis": {
@@ -1740,7 +1740,8 @@
       "median_iqr": "Publicado: mediana {median} días, rango intercuartílico de {low} a {high} días.",
       "window": "Ventana publicada: del día {low} al día {high}.",
       "qualitative": "Los tiempos publicados son solo descriptivos y no se pueden comparar en cifras.",
-      "none": "No hay tiempos publicados para esta cascada."
+      "none": "No hay tiempos publicados para esta cascada.",
+      "combined": "Combinada a partir de las ventanas de los estudios citados."
     },
     "agreement": {
       "agrees": "No es incompatible con los tiempos publicados: los intervalos se solapan. Con intervalos tan amplios no es una confirmación.",
@@ -1752,7 +1753,12 @@
       "title": "Tiempos notificados y publicados (días)",
       "janus": "Notificaciones de FAERS: mitad central, mediana",
       "published": "Publicado",
-      "legend": "Barra: intervalo; punto: mediana."
+      "legend": "Barra: intervalo; punto: mediana.",
+      "cols": {
+        "low": "Inferior",
+        "mid": "Mediana",
+        "high": "Superior"
+      }
     },
     "curve": {
       "title": "Proporción de notificaciones según los días desde el inicio del primer medicamento",
@@ -1765,25 +1771,27 @@
     "population": {
       "heading": "Poblaciones virtuales de mayor y menor edad",
       "intro": "{older} frente a {younger} años. No se pueden simular edades de 80 años o más. Solo una comparación relativa de los dos grupos.",
-      "title": "Concentración en estado estacionario (mg/L): del percentil 5 al 95, mediana",
+      "title": "Concentración en estado estacionario (mg/L): del percentil 5 al 95, mediana. Los valores absolutos no están validados; compare solo los dos grupos",
       "older": "{drug}, {ages} años",
       "younger": "{drug}, {ages} años",
       "ratio": "{drug}: razón de medianas mayores / menores {ratio}.",
       "steady": "{drug}: unos {days} días hasta el 90 % del estado estacionario.",
-      "doseBasis": "Base de dosis del modelo (solo para la comparación, no es una dosis)"
+      "doseBasis": "Base de dosis del modelo (solo para la comparación, no es una dosis)",
+      "credibility": "{drug}: el modelo de este medicamento {verdict, select, credible {superó la validación} borderline {quedó en el límite en la validación} other {no superó la validación}}."
     },
     "gate": {
       "heading": "Frase para pacientes",
       "shown": "Se muestra en el detalle del resultado: la mitad central de las notificaciones, de {start} a {end} días.",
       "small": "No se muestra a pacientes: muy pocas notificaciones.",
       "agreement": "No se muestra a pacientes: los tiempos notificados no concuerdan con los publicados.",
-      "none": "No se muestra a pacientes: no hay tiempo hasta la aparición notificado."
+      "none": "No se muestra a pacientes: no hay tiempo hasta la aparición notificado.",
+      "notComparable": "No se muestra a pacientes: los tiempos notificados no se pueden comparar con los publicados."
     },
     "validation": {
       "rule": "Creíble cuando la Cmax y el AUC previstos están ambos dentro de 2 veces los valores observados publicados; dudoso dentro de 3 veces; si no, fallido. Un medicamento que no es creíble no se compara con ninguna potencia.",
       "pbpk": "PBPK (httk)",
       "compartmental": "Modelos compartimentales mínimos",
-      "summary": "{credible} creíble(s), {borderline} dudoso(s), {failed} fallido(s)",
+      "summary": "{credible, plural, one {# creíble} other {# creíbles}}, {borderline, plural, one {# en el límite} other {# en el límite}}, {failed, plural, one {# fallido} other {# fallidos}}",
       "drug": "Medicamento",
       "cmax": "Cmax observada / prevista (ng/mL)",
       "auc": "AUC observado / previsto (ng·h/mL)",
@@ -1791,10 +1799,10 @@
       "verdict": "Validación",
       "credibility": {
         "credible": "Creíble",
-        "borderline": "Dudoso",
+        "borderline": "En el límite",
         "failed": "Fallido"
       },
-      "aucNote": "En estos modelos el AUC se deriva por construcción de los parámetros citados; solo la Cmax es una comprobación independiente.",
+      "aucNote": "En un modelo de un compartimento el AUC solo depende de la biodisponibilidad, la dosis y el aclaramiento, así que la comparación del AUC pone a prueba el aclaramiento citado. Para la reína, el aclaramiento y el AUC observado pueden proceder de los mismos sujetos; solo su Cmax es una comprobación independiente.",
       "notShownReason": "Se muestra con cada concentración simulada."
     },
     "sources": {
@@ -1847,7 +1855,10 @@
       },
       "margin": "Margen de {low} a {high} frente a {measure} {potency} µmol/L ({assay}).",
       "noExposure": "No se modeló ninguna cantidad histórica para este remedio.",
-      "none": "No se seleccionó ninguna molécula para este remedio."
+      "none": "No se seleccionó ninguna molécula para este remedio.",
+      "withheldUnverified": "Valor no mostrado: no se pudo comprobar su licencia.",
+      "outOfRange": "predicción fuera del rango posible; no utilizable",
+      "evidence": "Prueba: {citation}"
     },
     "references": "Referencias",
     "verified": "Comprobado: {how}",
@@ -1855,7 +1866,7 @@
     "legend": "Banda: del percentil 5 al 95; punto: mediana.",
     "patient": {
       "heading": "Cuándo se notificó",
-      "sentence": "En notificaciones hechas por otras personas, esta combinación se notificó con más frecuencia entre {start} y {end} días después de empezar el primer medicamento. Es información procedente de notificaciones, no una predicción sobre usted — puede valer la pena comentarlo con su médico.",
+      "sentence": "En notificaciones hechas por otras personas, la mitad de las notificaciones de «{event}» se situó entre {start} y {end} días después de empezar {drug}; la otra mitad fue antes o después. Es información procedente de notificaciones, no una predicción sobre usted — puede valer la pena comentarlo con su médico.",
       "review": "Revisado por IA, pendiente de revisión de expertos."
     },
     "errors": {
@@ -1863,6 +1874,79 @@
       "unknown": "Esta entrada no está en la máquina del tiempo."
     },
     "empty": "Todavía no hay nada que mostrar.",
-    "loading": "Cargando la máquina del tiempo…"
+    "loading": "Cargando la máquina del tiempo…",
+    "methodNoOutput": "En esta página el modelo no se usa para ninguna concentración; su validación está en la página principal de la máquina del tiempo.",
+    "extension": "Extensión interpretativa de la fila PIPC: la fila nombra otra clase de medicamentos.",
+    "tableRegion": "Tabla (se desplaza en horizontal)"
+  },
+  "OpenData": {
+    "title": "Datos abiertos",
+    "summary": "Recuentos publicados y la base de reglas de las cascadas, libres para reutilizar",
+    "intro": "Janus comparte dos tipos de datos abiertos: recuentos de notificaciones donadas y de resultados comunicados por médicos, publicados solo en grupos de al menos 20 y con ruido añadido, y la base de reglas de cascadas de prescripción que utiliza. Ambos son material de investigación, no consejo médico.",
+    "entry": {
+      "title": "Datos abiertos",
+      "body": "Recuentos publicados de notificaciones donadas y de resultados comunicados por médicos, y la base de reglas de las cascadas como paquete de datos."
+    },
+    "demo": "Demo: el conjunto de datos se registró a partir de la API local real de Janus el {date}; no se envía ninguna solicitud.",
+    "dataset": {
+      "title": "Conjunto abierto de resultados",
+      "empty": "Todavía no hay celdas publicadas. Un recuento solo se publica cuando al menos 20 notificaciones comparten los mismos medicamentos, el mismo evento, el mismo sentido y la misma región y cumplen las reglas de abajo. Hasta entonces no hay nada que mostrar ni ninguna cifra de ejemplo.",
+      "cellsLine": "{count, plural, one {# celda publicada} other {# celdas publicadas}}",
+      "layerTile": "{count, plural, one {celda publicada} other {celdas publicadas}}",
+      "layer": {
+        "contributions": "Notificaciones donadas",
+        "outcomes": "Resultados comunicados por médicos"
+      },
+      "cols": {
+        "ingredients": "Medicamentos",
+        "event": "Evento",
+        "direction": "Sentido",
+        "region": "Región",
+        "value": "Notificaciones (con ruido)"
+      },
+      "direction": {
+        "adverse": "Daño",
+        "benefit": "Mejora"
+      },
+      "region": {
+        "TR": "Turquía",
+        "EU": "Unión Europea",
+        "US": "Estados Unidos"
+      },
+      "withheld": "Aún no publicado: {layers}. Estas notificaciones se dieron con un consentimiento que no incluye un conjunto de datos abierto."
+    },
+    "rule": {
+      "title": "Cómo se publica un recuento",
+      "k": "Solo grupos de al menos {k} notificaciones, según el recuento real.",
+      "noise": "Cada recuento publicado lleva ruido aleatorio (Laplace discreta, ε = {epsilon}). Si se vuelve a pedir sobre las mismas notificaciones guardadas, da el mismo valor; el ruido solo se vuelve a sortear cuando cambian las notificaciones del grupo.",
+      "sibling": "Un recuento también se oculta si al compararlo con un recuento anidado se revelaría un grupo menor de {k}.",
+      "hidden": "Los grupos ocultos no se listan en absoluto, ni siquiera como ocultos.",
+      "notices": "Se cuentan notificaciones, nunca personas. Los resultados son respuestas de médicos; Janus no los ha verificado. No hay denominador, así que no son tasas ni incidencia."
+    },
+    "files": {
+      "title": "Descargar",
+      "json": "Conjunto de datos (JSON)",
+      "csv": "Conjunto de datos (CSV)",
+      "version": "Versión {version}",
+      "snapshot": "Instantánea del {date}",
+      "licence": "Licencia: CC BY 4.0. Atribución: {attribution}",
+      "dictionary": "Diccionario de datos",
+      "dictionaryBody": "Qué significa cada campo, cómo leer y citar el conjunto de datos (docs/open-data.md)"
+    },
+    "package": {
+      "title": "Paquete de datos de las cascadas",
+      "summary": "Versión {version} · {date}",
+      "body": "La lista PIPC de cascadas de prescripción con las correspondencias de Janus a clases de medicamentos, las reglas de nombres de principios activos, las exclusiones ATC y los grupos de formas farmacéuticas. Cada archivo tiene su propia licencia. No incluye ninguna fila, nombre de producto ni código de barras de la lista de la TİTCK; algunas notas indican códigos o números de filas observados en esa lista.",
+      "rows": "{rows, plural, one {# fila} other {# filas}}",
+      "open": "Archivos del paquete y README",
+      "api": "API pública de solo lectura (OpenAPI)",
+      "apiBody": "Todas las rutas GET públicas, con ejemplos",
+      "corrections": "Aportar correcciones",
+      "correctionsBody": "Errores que Janus encontró en los datos de origen y cómo comunicarlos a sus fuentes"
+    },
+    "errors": {
+      "unavailable": "El conjunto de datos abierto no está disponible en este servidor en este momento."
+    },
+    "loading": "Cargando el conjunto de datos abierto…"
   }
 }

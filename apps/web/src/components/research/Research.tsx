@@ -48,6 +48,24 @@ export function Research() {
             </span>
           </RowLink>
         ))}
+        <RowLink href="/research/time-machine">
+          <span className="sr-only">{t("Light.nav.open")}: </span>
+          <span className="flex flex-col gap-0.5">
+            <span className="text-lg">{t("TimeMachine.entry.title")}</span>
+            <span className="font-normal text-muted">
+              {t("TimeMachine.entry.body")}
+            </span>
+          </span>
+        </RowLink>
+        <RowLink href="/open-data">
+          <span className="sr-only">{t("Light.nav.open")}: </span>
+          <span className="flex flex-col gap-0.5">
+            <span className="text-lg">{t("OpenData.entry.title")}</span>
+            <span className="font-normal text-muted">
+              {t("OpenData.entry.body")}
+            </span>
+          </span>
+        </RowLink>
         <RowLink href="/cascades">
           <span className="sr-only">{t("Light.nav.open")}: </span>
           <span className="flex flex-col gap-0.5">

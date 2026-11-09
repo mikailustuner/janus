@@ -21,6 +21,7 @@ import { findingReportHref } from "@/report/fragment";
 import { useCall } from "@/flow/useCall";
 import { useEvaluation } from "@/flow/useEvaluation";
 import { useT, useThemeWord } from "@/theme/words";
+import { TimingSentence } from "@/components/timemachine/TimingSentence";
 import { useVocabulary } from "@/vocabulary/use";
 
 import { FindingCard } from "./FindingCard";
@@ -129,6 +130,11 @@ export function FindingDetail() {
             boxNames={session.items.map((i) => i.boxName)}
             vocab={vocab}
             detail={false}
+          />
+          {/* The time machine's one patient sentence, behind its gate (experience DP62). */}
+          <TimingSentence
+            ruleId={finding.rule_id}
+            indexKey={finding.index.ingredient_key}
           />
           <div className="flex flex-wrap gap-3">
             <ButtonLink href="/note">{t("Findings.makeNote")}</ButtonLink>

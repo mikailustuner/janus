@@ -1,0 +1,31 @@
+{
+  "built_at": "2026-11-09T09:06:20.217721+00:00",
+  "substances": ["anise", "rhubarb", "st_johns_wort", "vinegar"],
+  "cascades": [
+    {
+      "id": "amlodipine_oedema_diuretic",
+      "pipc_position": 5,
+      "index_keys": ["Q411347"]
+    },
+    {
+      "id": "gabapentinoid_oedema_diuretic",
+      "pipc_position": 31,
+      "index_keys": ["Q410352", "Q412174"]
+    },
+    {
+      "id": "antipsychotic_eps_antiparkinson",
+      "pipc_position": 18,
+      "index_keys": ["Q251347", "Q412443"]
+    },
+    {
+      "id": "acei_cough_antitussive",
+      "pipc_position": 1,
+      "index_keys": ["Q412208", "Q422185", "Q412666", "Q277785"]
+    },
+    {
+      "id": "metoclopramide_eps_antiparkinson",
+      "pipc_position": 18,
+      "index_keys": ["Q421095"]
+    }
+  ]
+}

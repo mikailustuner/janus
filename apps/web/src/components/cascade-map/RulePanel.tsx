@@ -14,6 +14,7 @@ import { CloseIcon } from "@/components/icons";
 import { keyName } from "@/components/names";
 import { SafetyLine } from "@/components/SafetyLine";
 import { Button, ButtonLink } from "@/components/ui";
+import { cascadesForRow } from "@/timemachine/view";
 import type { CannotCheck, Graph } from "@/cascade-map/model";
 import { useT } from "@/theme/words";
 import type { Loaded } from "@/vocabulary";
@@ -213,6 +214,21 @@ export function RulePanel({
             ))}
           </ul>
         </div>
+        {/* The research view of this row in the time machine (experience DP63). */}
+        {cascadesForRow(edge.row).map((e, _, all) => (
+          <ButtonLink
+            key={e.id}
+            href={{ pathname: "/research/time-machine/cascade", hash: e.id }}
+            variant="secondary"
+            className="self-start"
+            data-testid="cm-time-machine"
+          >
+            {t("TimeMachine.openCascade")}
+            {all.length > 1
+              ? `: ${e.index_keys.map((k) => keyName(vocab, k, null)).join(", ")}`
+              : ""}
+          </ButtonLink>
+        ))}
         {result ? (
           <section
             className="flex flex-col gap-2 border-t border-line pt-3"

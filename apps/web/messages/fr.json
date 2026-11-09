@@ -1479,7 +1479,7 @@
     },
     "image": {
       "title": "Résumé Janus",
-      "headline": "{medicines, plural, one {# médicament} other {# médicaments}} : {full, plural, one {# entièrement vérifié} other {# entièrement vérifiés}}, {partly, plural, one {# en partie} other {# en partie}} · {patterns, plural, =0 {aucun schéma de la liste de règles} one {# schéma à évoquer} other {# schémas à évoquer}} · vérifié avec {checked} des {total} schémas",
+      "headline": "{medicines, plural, one {# médicament} other {# médicaments}} : {full, plural, one {# entièrement vérifié} other {# entièrement vérifiés}}, {partly, plural, one {# en partie} other {# en partie}} · {patterns, plural, =0 {aucun schéma de la liste de règles} one {# schéma à évoquer} other {# schémas à évoquer}} · comparaison avec {checked} des {total} schémas",
       "medicines": "{count, plural, one {médicament de la liste} other {médicaments de la liste}}",
       "patterns": "{count, plural, one {schéma à évoquer} other {schémas à évoquer}}",
       "rulesOf": "{checked} sur {total}",
@@ -1682,7 +1682,7 @@
       "substancesFooter": "Molécules issues de Wikidata et de LOTUS (CC0), activité issue de PubChem (domaine public), indications actuelles issues des notices openFDA (CC0).",
       "cascades": "Cascades de prescription",
       "cascadesFooter": "Lignes de la liste PIPC (Rochon et al., Eur Geriatr Med 2025, CC BY 4.0). Délai d'apparition issu des signalements de la FDA (FAERS).",
-      "how": "Comment c'est fait",
+      "how": "Méthode",
       "validation": "Validation des modèles de l'organisme"
     },
     "substances": {
@@ -1701,7 +1701,7 @@
       "onset_only": "Délai d'apparition signalé seulement, sans modèle de l'organisme"
     },
     "methodWhy": {
-      "compartmental": "Le paquet httk n'a pas de paramètres humains pour ce médicament ; Janus utilise donc un modèle minimal à un compartiment dont les paramètres proviennent de publications citées.",
+      "compartmental": "Le paquet httk n'a pas de paramètres humains ici ; Janus utilise donc un modèle minimal à un compartiment dont les paramètres proviennent de publications citées.",
       "onset_only": "Aucun modèle de l'organisme n'est utilisé : il n'existe pas de paramètres humains adaptés. Seul le délai d'apparition signalé est montré."
     },
     "onset": {
@@ -1740,7 +1740,8 @@
       "median_iqr": "Publié : médiane {median} jours, écart interquartile de {low} à {high} jours.",
       "window": "Fenêtre publiée : du jour {low} au jour {high}.",
       "qualitative": "Le délai publié est seulement descriptif et ne peut pas être comparé en chiffres.",
-      "none": "Aucun délai publié pour cette cascade."
+      "none": "Aucun délai publié pour cette cascade.",
+      "combined": "Combinée à partir des fenêtres des études citées."
     },
     "agreement": {
       "agrees": "Pas incompatible avec le délai publié : les intervalles se chevauchent. Avec des intervalles aussi larges, ce n'est pas une confirmation.",
@@ -1752,7 +1753,12 @@
       "title": "Délai signalé et délai publié (jours)",
       "janus": "Signalements FAERS : moitié centrale, médiane",
       "published": "Publié",
-      "legend": "Barre : intervalle ; point : médiane."
+      "legend": "Barre : intervalle ; point : médiane.",
+      "cols": {
+        "low": "Basse",
+        "mid": "Médiane",
+        "high": "Haute"
+      }
     },
     "curve": {
       "title": "Part des signalements selon le nombre de jours depuis le début du premier médicament",
@@ -1765,25 +1771,27 @@
     "population": {
       "heading": "Populations virtuelles plus âgée et plus jeune",
       "intro": "{older} ans contre {younger} ans. Les âges de 80 ans et plus ne peuvent pas être simulés. Une comparaison relative des deux groupes seulement.",
-      "title": "Concentration à l'état d'équilibre (mg/L) : du 5e au 95e centile, médiane",
+      "title": "Concentration à l'état d'équilibre (mg/L) : du 5e au 95e centile, médiane. Les valeurs absolues ne sont pas validées ; comparez seulement les deux groupes",
       "older": "{drug}, {ages} ans",
       "younger": "{drug}, {ages} ans",
       "ratio": "{drug} : rapport des médianes plus âgés / plus jeunes {ratio}.",
       "steady": "{drug} : environ {days} jours pour atteindre 90 % de l'état d'équilibre.",
-      "doseBasis": "Base de dose du modèle (pour la comparaison seulement, pas une dose)"
+      "doseBasis": "Base de dose du modèle (pour la comparaison seulement, pas une dose)",
+      "credibility": "{drug} : le modèle de ce médicament {verdict, select, credible {a satisfait la validation} borderline {est limite à la validation} other {a échoué à la validation}}."
     },
     "gate": {
       "heading": "Phrase destinée aux patients",
       "shown": "Montrée dans le détail du résultat : la moitié centrale des signalements, de {start} à {end} jours.",
       "small": "Non montrée aux patients : trop peu de signalements.",
       "agreement": "Non montrée aux patients : le délai signalé ne concorde pas avec le délai publié.",
-      "none": "Non montrée aux patients : aucun délai d'apparition signalé."
+      "none": "Non montrée aux patients : aucun délai d'apparition signalé.",
+      "notComparable": "Non montrée aux patients : le délai signalé ne peut pas être comparé au délai publié."
     },
     "validation": {
       "rule": "Crédible lorsque la Cmax et l'ASC prédites sont toutes deux à moins d'un facteur 2 des valeurs observées publiées ; limite à moins d'un facteur 3 ; sinon échec. Un médicament non crédible n'est comparé à aucune puissance.",
       "pbpk": "PBPK (httk)",
       "compartmental": "Modèles compartimentaux minimaux",
-      "summary": "{credible} crédible(s), {borderline} limite(s), {failed} en échec",
+      "summary": "{credible, plural, one {# crédible} other {# crédibles}}, {borderline, plural, one {# limite} other {# limites}}, {failed} en échec",
       "drug": "Médicament",
       "cmax": "Cmax observée / prédite (ng/mL)",
       "auc": "ASC observée / prédite (ng·h/mL)",
@@ -1794,7 +1802,7 @@
         "borderline": "Limite",
         "failed": "Échec"
       },
-      "aucNote": "Pour ces modèles, l'ASC découle par construction des paramètres cités ; seule la Cmax est une vérification indépendante.",
+      "aucNote": "Dans un modèle à un compartiment, l'ASC ne dépend que de la biodisponibilité, de la dose et de la clairance ; la comparaison de l'ASC teste donc la clairance citée. Pour la rhéine, la clairance et l'ASC observée peuvent provenir des mêmes sujets ; seule sa Cmax est une vérification indépendante.",
       "notShownReason": "Montré avec chaque concentration simulée."
     },
     "sources": {
@@ -1816,7 +1824,7 @@
         "probability": "{name}, probabilité prédite (de 0 à 1)"
       },
       "activities": "Activité mesurée dans PubChem (déposants du domaine public)",
-      "activitiesCount": "{shown} enregistrements montrés sur {total}.",
+      "activitiesCount": "Enregistrements montrés : {shown} sur {total}.",
       "screening": "Une puissance sur une cible qui n'est pas retenue pour l'affection est un résultat de criblage, pas un effet.",
       "assay": "Essai",
       "target": "Cible",
@@ -1847,7 +1855,10 @@
       },
       "margin": "Marge de {low} à {high} par rapport à {measure} {potency} µmol/L ({assay}).",
       "noExposure": "Aucune quantité historique n'a été modélisée pour ce remède.",
-      "none": "Aucune molécule n'a été retenue pour ce remède."
+      "none": "Aucune molécule n'a été retenue pour ce remède.",
+      "withheldUnverified": "Valeur non montrée : sa licence n'a pas pu être vérifiée.",
+      "outOfRange": "prédiction hors de la plage possible ; inutilisable",
+      "evidence": "Preuve : {citation}"
     },
     "references": "Références",
     "verified": "Vérifié : {how}",
@@ -1855,7 +1866,7 @@
     "legend": "Bande : du 5e au 95e centile ; point : médiane.",
     "patient": {
       "heading": "Quand cela a été signalé",
-      "sentence": "Dans les signalements faits par d'autres personnes, cette association a été signalée le plus souvent entre {start} et {end} jours après le début du premier médicament. C'est une information issue de signalements, pas une prévision vous concernant — il peut être utile d'en parler avec votre médecin.",
+      "sentence": "Dans les signalements faits par d'autres personnes, la moitié des signalements de « {event} » se situait entre {start} et {end} jours après le début de {drug} ; l'autre moitié était plus tôt ou plus tard. C'est une information issue de signalements, pas une prévision vous concernant — il peut être utile d'en parler avec votre médecin.",
       "review": "Relu par une IA, relecture par des experts en attente."
     },
     "errors": {
@@ -1863,6 +1874,79 @@
       "unknown": "Cette entrée n'est pas dans la machine à remonter le temps."
     },
     "empty": "Rien à montrer pour l'instant.",
-    "loading": "Chargement de la machine à remonter le temps…"
+    "loading": "Chargement de la machine à remonter le temps…",
+    "methodNoOutput": "Sur cette page, le modèle ne sert à aucune concentration ; sa validation figure sur la page d'accueil de la machine à remonter le temps.",
+    "extension": "Extension interprétative de la ligne PIPC : la ligne nomme une autre classe de médicaments.",
+    "tableRegion": "Tableau (défile horizontalement)"
+  },
+  "OpenData": {
+    "title": "Données ouvertes",
+    "summary": "Chiffres publiés et base de règles des cascades, librement réutilisables",
+    "intro": "Janus partage deux types de données ouvertes : des chiffres de signalements issus de dons et d'issues signalées par des médecins, publiés seulement par groupes d'au moins 20 avec du bruit ajouté, et la base de règles des cascades de prescription qu'il utilise. Les deux sont du matériel de recherche, pas un avis médical.",
+    "entry": {
+      "title": "Données ouvertes",
+      "body": "Chiffres publiés de signalements issus de dons et d'issues signalées par des médecins, et la base de règles des cascades en paquet de données."
+    },
+    "demo": "Démo : le jeu de données a été enregistré depuis la véritable API Janus locale le {date} ; aucune requête n'est envoyée.",
+    "dataset": {
+      "title": "Jeu de données ouvert des résultats",
+      "empty": "Aucune cellule publiée pour l'instant. Un chiffre n'est publié que lorsqu'au moins 20 signalements partagent les mêmes médicaments, le même événement, le même sens et la même région et respectent les règles ci-dessous. D'ici là, il n'y a rien à montrer et aucun chiffre d'exemple.",
+      "cellsLine": "{count, plural, one {# cellule publiée} other {# cellules publiées}}",
+      "layerTile": "{count, plural, one {cellule publiée} other {cellules publiées}}",
+      "layer": {
+        "contributions": "Signalements issus de dons",
+        "outcomes": "Issues signalées par des médecins"
+      },
+      "cols": {
+        "ingredients": "Médicaments",
+        "event": "Événement",
+        "direction": "Sens",
+        "region": "Région",
+        "value": "Signalements (bruit ajouté)"
+      },
+      "direction": {
+        "adverse": "Effet néfaste",
+        "benefit": "Amélioration"
+      },
+      "region": {
+        "TR": "Turquie",
+        "EU": "Union européenne",
+        "US": "États-Unis"
+      },
+      "withheld": "Pas encore publié : {layers}. Ces signalements ont été donnés avec un consentement qui ne couvre pas un jeu de données ouvert."
+    },
+    "rule": {
+      "title": "Comment un chiffre est publié",
+      "k": "Seulement des groupes d'au moins {k} signalements, décidé sur le chiffre réel.",
+      "noise": "Chaque chiffre publié reçoit un bruit aléatoire (Laplace discrète, ε = {epsilon}). Une nouvelle demande sur les mêmes signalements enregistrés donne la même valeur ; le bruit n'est tiré à nouveau que lorsque les signalements du groupe changent.",
+      "sibling": "Un chiffre est aussi masqué si sa comparaison avec un chiffre imbriqué révélerait un groupe de moins de {k}.",
+      "hidden": "Les groupes masqués ne sont pas listés du tout, même comme masqués.",
+      "notices": "On compte des signalements, jamais des personnes. Les issues sont des réponses de médecins ; Janus ne les a pas vérifiés. Il n'y a pas de dénominateur : ce ne sont ni des taux ni une incidence."
+    },
+    "files": {
+      "title": "Télécharger",
+      "json": "Jeu de données (JSON)",
+      "csv": "Jeu de données (CSV)",
+      "version": "Version {version}",
+      "snapshot": "Instantané du {date}",
+      "licence": "Licence : CC BY 4.0. Attribution : {attribution}",
+      "dictionary": "Dictionnaire des données",
+      "dictionaryBody": "Sens de chaque champ, comment lire et citer le jeu de données (docs/open-data.md)"
+    },
+    "package": {
+      "title": "Paquet de données des cascades",
+      "summary": "Version {version} · {date}",
+      "body": "La liste PIPC des cascades de prescription avec les correspondances de Janus vers les classes de médicaments, les règles de noms de substances, les exclusions ATC et les groupes de formes galéniques. Chaque fichier a sa propre licence. Aucune ligne, aucun nom de produit ni code-barres de la liste de la TİTCK n'est inclus ; certaines notes citent des codes ou des nombres de lignes observés dans cette liste.",
+      "rows": "{rows, plural, one {# ligne} other {# lignes}}",
+      "open": "Fichiers du paquet et README",
+      "api": "API publique en lecture seule (OpenAPI)",
+      "apiBody": "Toutes les routes GET publiques, avec des exemples",
+      "corrections": "Proposer des corrections",
+      "correctionsBody": "Les erreurs que Janus a trouvées dans les données sources, et comment les signaler à leurs sources"
+    },
+    "errors": {
+      "unavailable": "Le jeu de données ouvert n'est pas disponible sur ce serveur pour le moment."
+    },
+    "loading": "Chargement du jeu de données ouvert…"
   }
 }

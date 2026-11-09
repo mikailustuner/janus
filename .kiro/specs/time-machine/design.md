@@ -455,6 +455,14 @@ Built by the web app from codes, only when `onset.small_sample` is false and `ag
 > medicine was started. This is information from reports, not a prediction about you — it may be
 > worth discussing with your doctor.
 
+> **Amended 2026-11-09 (experience DP65, pharmacologist review B1, safety-auditor S6).** The interval runs from the
+> start of the first (index) medicine to the event, not to the second medicine, and half of the reports lie outside
+> the middle half. The shipped sentence names both, from fixed codes (the event's lay label from the vocabulary, the
+> index ingredient's name): *"In reports others have filed, half of the reports of “{event}” fell between {start} and
+> {end} days after {drug} was started; the other half were earlier or later. This is information from reports, not a
+> prediction about you — it may be worth discussing with your doctor."* The safety wording (reports others have filed;
+> not a prediction about you; discuss with your doctor) is unchanged.
+
 The sentence uses `middle_half_days` (the middle half of the reports), **not** `risk_window`.
 With a decreasing hazard (shape below 1) the central-80 % band runs to 475 days for the
 amlodipine cascade while its median is 23 days; "between 0 and 475 days" would be true and

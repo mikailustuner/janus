@@ -69,7 +69,7 @@
     expert-reviewed.
   - _Requirements: 10.2, 10.3_
 
-- [ ] 12. Web screens (owner: `experience`, not this plan)
+- [x] 12. Web screens (owner: `experience`, built 2026-11-09 as experience Req 30, DP58–DP64)
   - Research area: substance card, exposure card with the validation table, cascade card with
     the onset curve and the population comparison. Patient-facing: the single timing sentence of
     design §10.5, in all five languages, behind the small-sample and agreement conditions.

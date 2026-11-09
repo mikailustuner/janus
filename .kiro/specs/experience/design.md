@@ -8,7 +8,7 @@
 > Not here: the Passport screens and logic (`medication-passport`, slots in §15), researcher content (**[Phase 4]**),
 > deployment, proxy rate limits and HTTPS (**[Phase 5]**). **No API change is planned**; if one becomes necessary the
 > API suite runs at that checkpoint.
-> Property numbers P1–P35, check numbers C1–C7 and decision numbers DP1–DP56 are this spec's own; upstream ones are
+> Property numbers P1–P39, check numbers C1–C7 and decision numbers DP1–DP65 are this spec's own; upstream ones are
 > written "doctor-loop DPn" and so on.
 > **Owner decisions 2026-11-08 applied:** DP1–DP14 record them; they are not reopened here.
 
@@ -632,6 +632,10 @@ The seed's properties are P12 (keys), P8 (disclaimer and phrases), P14 (demo) an
 | P32 | **Card primitives.** For any option list, value and labels, the segmented control renders a `fieldset` with a legend and exactly one checked native radio (the value, or the first option when the value is unknown), all with one `name`; the disclosure renders `details` > `summary` with its content in the markup while closed; a grouped list renders one row element per child. | Req 29.3, 29.6, 29.7 | `renderToStaticMarkup` over generated labels and option lists (`src/components/cards/cards.test.tsx`). |
 | P33 | **Stat tiles carry their sentence.** For any count and locale, the tile shows the number formatted with `Intl` and an accessible sentence containing the same formatted number; the large figure and label are `aria-hidden`. | Req 29.4 | Generated counts × five locales. |
 | P34 | **Required sentences survive the cards.** For any result, evidence resolution and FAERS pair, in every locale and theme, every finding card contains "This may be worth discussing with your doctor"; the pair panel caveats `spontaneous_reporting` / `not_incidence` (and the weak-pattern label when present) are outside every `<details>`; the integrity line keeps its sentences. Extends P8. | Req 29.10, 28.5, 16.5 | The P8 generators, with the HTML split at `<details>`/`</details>` (`src/components/render.test.tsx`). |
+| P36 | **Patient timing gate.** For any set of cascade answers and index entries, `patientTiming(row, key)` is non-null iff exactly one cascade has that row and that index key, its onset is not a small sample and its agreement is `agrees`; the result is its middle half, rounded. | Req 30.6; time-machine Req 9 | Generated cascades (`src/timemachine/view.test.ts`), plus the recorded fixture: only amlodipine passes. |
+| P37 | **No shape for a small sample.** `shapeShown` is false for every small-sample onset. | Req 30.4 | Recorded fixture. |
+| P38 | **No PBPK next to a compartmental model.** `englishShownFor("compartmental", text)` never returns a text containing "PBPK"; for other methods it returns the text unchanged. | Req 30.8 | Generated strings. |
+| P39 | **Chart axes.** For any positive values, log and linear axes place every value in [0, 1], keep order and cover the maximum. | Req 30.5 | Generated value lists. |
 | P35 | **Collective Memory filter.** For any filter value, the shown panels are exactly those of the filter, `all` (the default) shows the four panels, and the safety line of the chosen event is shown whenever a donated or outcome panel is shown. | Req 29.7, 7 | All filter values (`src/flow/memory-filter.test.ts`). |
 
 ## 19. Decisions
@@ -726,6 +730,24 @@ The seed's properties are P12 (keys), P8 (disclaimer and phrases), P14 (demo) an
 - **Research, light face, séance:** large title; rule-7 and review lines as note cards; entries as row links;
   hypothesis conditions and séance conditions as pills; a tile for the card total and the witness count; snapshot and
   attribution as a grouped footer.
+
+## 22. Time machine screens (Req 30, DP58–DP64)
+
+Code: `src/timemachine/` (`model.ts` decoders, `client.ts` live/demo clients, `view.ts` pure rules, `index.json` and
+`fixture.recorded.json` from `scripts/record-timemachine.mjs`), `src/components/timemachine/` (`TimeMachine`,
+`SubstanceView`, `CascadeView`, `TimingSentence`, `common` with the charts, validation, sources and references),
+routes `research/time-machine{,/substance,/cascade}`, e2e `e2e/time-machine.spec.ts`.
+
+| # | Decision | Alternatives | Why |
+|---|---|---|---|
+| DP58 | Three routes; the id travels in the fragment (`#rhubarb`), the index lists remedies and cascades as grouped row links; titles of cascades from the vocabulary row names, with the single index drug's name in place of the class when the cascade was built from one drug (amlodipine, metoclopramide) | Dynamic `[id]` segments; the API's English names | Same pattern as the finding detail (static export, nothing in a path); the data are about that drug, and row 18 has two cascades that would otherwise share a title |
+| DP59 | **Owner rule: no "PBPK" next to a compartmental model.** The method is named by Janus's translated text; for a compartmental model the API's English `method_label`, `model.label` and `note` are not shown when they contain the word (they say "not PBPK"); the validation block on a compartmental page shows the compartmental table only; the AUC non-independence note is a translated fixed text | Show the labels verbatim (§10 says so) | The owner's rule wins over §10's "verbatim"; the facts of the hidden strings are in the translated texts |
+| DP60 | The API sends its fixed reasons (`not_validated_reason`, `no_potency_reason`, `weibull_omitted_reason`) as English sentences; `reasonCode` maps each known one to a translated code, any other is shown verbatim | Ask the API for codes | No API change; a new reason is still shown, in English |
+| DP61 | Charts in HTML/SVG with tokens only: interval bars (band = 5th–95th percentile or the stated interval, dot = median, log axis for concentrations, linear for days) and the onset curve (cumulative share with the middle half shaded); each plot is one `role="img"` with the numbers in its accessible name, followed by a `<details>` data table | A chart library; canvas | No dependency, accessible text, both themes from tokens |
+| DP62 | **Patient sentence gate:** `patientTiming` requires exactly one time-machine cascade with the finding's PIPC row and the finding's index ingredient among its index drugs (from `data/time_machine/cascades.csv`, matched to vocabulary keys at record time), onset not a small sample, agreement `agrees`; the sentence uses `middle_half_days`. All cascades of the catalogue are fetched, so the requests do not reveal the person's medicines; any failure shows nothing | Fetch the one matching cascade; match on the row only | A GET path naming the cascade would reveal a medicine; the row alone would show amlodipine's timing for another calcium channel blocker |
+| DP63 | Links: the séance substance card ("Open in the time machine") when the substance id is in the time machine; the cascade-map rule panel, one link per time-machine cascade of the row (row 18 has two, named by their index drugs) | A link from the patient finding | Req 9.4 of time-machine: details stay in the research area; the patient flow gets only the sentence |
+| DP65 | **Patient sentence wording (review B1/S6):** the sentence names the event (vocabulary lay label of the row's event key) and the index drug, and says "half of the reports … the other half were earlier or later"; time-machine design §10.5 amended. Research-side fixes of the same reviews: steady-state days only for a credible model, a verdict line per population drug, no fitted curve for a small sample, out-of-range ADMET values not shown as numbers, the AUC note corrected, column heads of the comparison table | The §10.5 sentence as first written | "This combination" described the wrong interval; "most often between" overstated the middle half |
+| DP64 | Validation block wherever a simulated concentration is shown (substance exposure, cascade populations, index), with every verdict including failures, open by default where a concentration is shown | A summary only | §10.4 and "verdicts shown honestly" |
 
 ## 20. Open items (for the owner)
 1. **Brand names in the demo.** The gate-1 box is AMLIPIN (a real Turkish product; TİTCK strings are not committed and

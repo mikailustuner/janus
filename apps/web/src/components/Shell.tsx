@@ -201,6 +201,10 @@ const WIDE = [
   "/cascades",
   "/results/summary",
   "/report",
+  "/research/time-machine",
+  "/research/time-machine/substance",
+  "/research/time-machine/cascade",
+  "/open-data",
 ];
 
 function StorageNotice() {
@@ -240,6 +244,14 @@ function Footer() {
             className="inline-flex min-h-11 items-center px-1 underline underline-offset-4"
           >
             {t("CascadeMap.footer")}
+          </Link>
+        </li>
+        <li>
+          <Link
+            href="/open-data"
+            className="inline-flex min-h-11 items-center px-1 underline underline-offset-4"
+          >
+            {t("OpenData.title")}
           </Link>
         </li>
         <li>

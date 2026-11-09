@@ -20,7 +20,7 @@ import {
   StatGrid,
   StatTile,
 } from "@/components/cards";
-import { Card, Chip, SectionTitle } from "@/components/ui";
+import { ButtonLink, Card, Chip, SectionTitle } from "@/components/ui";
 import { useDemo } from "@/demo/session";
 import { useCall } from "@/flow/useCall";
 import {
@@ -50,6 +50,7 @@ import {
   type Choice,
   type Seat,
 } from "@/seance/view";
+import { hasSubstance } from "@/timemachine/view";
 import { useT, useThemeWord } from "@/theme/words";
 
 const KINDS = [
@@ -207,6 +208,16 @@ function SubstanceCard({ s }: { s: Substance }) {
         <p className="text-sm break-words">
           {t("Seance.substance.note", { text: s.note })}
         </p>
+      ) : null}
+      {hasSubstance(s.id) ? (
+        <ButtonLink
+          href={{ pathname: "/research/time-machine/substance", hash: s.id }}
+          variant="secondary"
+          className="self-start"
+          data-testid="seance-time-machine"
+        >
+          {t("TimeMachine.open")}
+        </ButtonLink>
       ) : null}
       {s.hazard ? (
         <p className="font-bold text-warn" role="note" data-testid="hazard">

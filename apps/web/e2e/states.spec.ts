@@ -133,9 +133,12 @@ test("research: the four Phase 4 entries open their screens, review status, no n
   page,
 }) => {
   await page.goto("/en/research");
-  // Four Phase 4 entries plus the cascade map (cascade-map DP1), which counts the PIPC
-  // patterns ("All 65 …"): a fact of the rule list, not a research result.
-  await expect(page.getByRole("link", { name: /^Open/ })).toHaveCount(5);
+  // Four Phase 4 entries, the time machine (experience DP58), open data (open-data DP7) and the
+  // cascade map (cascade-map DP1), which counts the PIPC patterns ("All 65 …"): a fact of the
+  // rule list, not a result.
+  await expect(
+    page.locator("main").getByRole("link", { name: /^Open/ }),
+  ).toHaveCount(7);
   await expect(page.getByTestId("research-review")).toContainText(
     "AI-reviewed and pending expert review",
   );

@@ -315,3 +315,41 @@ feature is expert-reviewed; every screen says "AI-reviewed, pending expert revie
 - [ ] **`.data/tools` is never committed** (user R library with httk, the ADMET-AI environment).
   Confirm the deployment builds its artifacts offline and ships only
   `.data/timemachine/current/time_machine.json`; the API image needs neither R nor torch.
+
+### Time machine screens (experience Req 30, 2026-11-09)
+- [ ] **Patient timing sentence** (clinician and pharmacovigilance expert): the final wording of `TimeMachine.patient.sentence`
+  in five languages (DP65), shown today only for amlodipine → peripheral oedema (7–104 days, 35 reports); whether
+  FAERS onset-to-event is the right quantity next to published diuretic-start windows (Savage 2020, Vouri 2019), and
+  Largeau 2022 as an oedema-onset comparator for gabapentinoids.
+- [ ] **httk outputs** (PK modeller): whether anything beyond the older/younger ratio may be shown while every httk drug
+  fails or is borderline (absolute mg/L are labelled "not validated"; days to steady state are hidden); whether to
+  plot the bands relative to the younger median; the direction of each fold error; the design §7.4 ratios vs the data.
+- [ ] **Rhein exposure** (PK modeller): modelled amounts (168–792 mg) are 4–21 times the validated dose; the model has
+  no colonic activation step; the time to peak is no longer shown.
+- [ ] **Hyperforin** (pharmacologist): how PXR-mediated CYP3A4 induction is explained next to a CYP3A4 IC50 screening
+  record (inhibition).
+- [ ] **AUC comparisons:** show the AUC kind (AUC0-72, AUC0-inf, unspecified) per validation row.
+- [ ] **Native review of the `TimeMachine` namespace:** TR "remedy" as "ilaç" (or "deva"), TR/DE PK terms ("potens",
+  "Wirkstärke", "kat hatası", "Faktorfehler"), ES "diana", "en el límite"
+  (`.kiro/specs/experience/time-machine-screens-localization-reviewer-review.md`).
+- [ ] **"Fully checked" on the share image** (owner): the safety auditor suggested "fully checked against the rule list"
+  so "8 fully checked · no pattern" cannot read as a safety check (`time-machine-screens-safety-auditor-review.md` S7).
+
+## Open data (enhancement, 2026-11-09)
+- [ ] **Consent for open publication (legal, owner; blocking before any cell is published):** the consent texts
+  2026-11-v2 name Collective Memory and research, not publication under CC BY. Issue a consent version that names
+  the open dataset and says deletion cannot reach copies already downloaded (wording proposed in
+  `.kiro/specs/open-data/review-safety-auditor.md` O1), then add it to `OPEN_RELEASE_CONSENT_VERSIONS`
+  (`apps/api/janus/open/outcomes.py`). Until then every layer with stored rows is withheld whole.
+- [ ] **GDPR Art. 9 / KVKK review of the aggregate release:** whether k = 20 on the true count, discrete Laplace noise
+  and the one-ingredient sibling rule are enough for publishing donated and outcome counts; consider a noisy
+  threshold or a two-ingredient sibling rule inside `release_cells` (review O4: differencing across snapshots and
+  against `/memory/shared`).
+- [ ] **`data/ingredient_synonyms.csv` and `data-sources.md`:** 107 committed rows cite TİTCK and some names are
+  TİTCK spellings; the open package leaves them out, but decide whether the repository copy itself conflicts with
+  "TİTCK lists are not committed" (review O5).
+- [ ] **Pharmacist review of the cascade data package** before announcing it (`data/open/cascade-package/`), and of the
+  upstream error list in `docs/contributing-corrections.md` before anyone reports it (Wikidata, TİTCK).
+- [ ] **Native review of `OpenData`:** the word for "outcome" in each language (TR "sonuç", DE "Behandlungsverlauf", FR
+  "issue", ES "resultado").
+

@@ -1701,7 +1701,7 @@
       "onset_only": "Reported time to onset only, no body model"
     },
     "methodWhy": {
-      "compartmental": "The httk package has no human parameters for this drug, so Janus uses a minimal one-compartment model whose parameters come from cited publications.",
+      "compartmental": "The httk package has no human parameters here, so Janus uses a minimal one-compartment model whose parameters come from cited publications.",
       "onset_only": "No body model is used: there are no suitable human parameters. Only the reported time to onset is shown."
     },
     "onset": {
@@ -1740,7 +1740,8 @@
       "median_iqr": "Published: median {median} days, interquartile range {low} to {high} days.",
       "window": "Published window: day {low} to day {high}.",
       "qualitative": "The published timing is descriptive only and cannot be compared as numbers.",
-      "none": "No published timing for this cascade."
+      "none": "No published timing for this cascade.",
+      "combined": "Combined from the windows of the cited studies."
     },
     "agreement": {
       "agrees": "Not inconsistent with the published timing: the intervals overlap. With intervals this wide this is not a confirmation.",
@@ -1752,7 +1753,12 @@
       "title": "Reported and published timing (days)",
       "janus": "FAERS reports: middle half, median",
       "published": "Published",
-      "legend": "Bar: interval; dot: median."
+      "legend": "Bar: interval; dot: median.",
+      "cols": {
+        "low": "Low",
+        "mid": "Median",
+        "high": "High"
+      }
     },
     "curve": {
       "title": "Share of reports by day since the first medicine was started",
@@ -1765,19 +1771,21 @@
     "population": {
       "heading": "Older and younger virtual populations",
       "intro": "{older} versus {younger} years. Ages of 80 and over cannot be simulated. A relative comparison of the two groups only.",
-      "title": "Steady-state concentration (mg/L): 5th to 95th percentile, median",
+      "title": "Steady-state concentration (mg/L): 5th to 95th percentile, median. The absolute values are not validated; compare the two groups only",
       "older": "{drug}, {ages} years",
       "younger": "{drug}, {ages} years",
       "ratio": "{drug}: older-to-younger ratio of the medians {ratio}.",
       "steady": "{drug}: about {days} days to 90% of steady state.",
-      "doseBasis": "Model dose basis (for the comparison only, not a dose)"
+      "doseBasis": "Model dose basis (for the comparison only, not a dose)",
+      "credibility": "{drug}: the model of this drug {verdict, select, credible {passed the validation} borderline {is borderline in the validation} other {failed the validation}}."
     },
     "gate": {
       "heading": "Sentence for patients",
       "shown": "Shown in the finding detail: the middle half of the reports, {start} to {end} days.",
       "small": "Not shown to patients: too few reports.",
       "agreement": "Not shown to patients: the reported timing does not agree with the published timing.",
-      "none": "Not shown to patients: no reported time to onset."
+      "none": "Not shown to patients: no reported time to onset.",
+      "notComparable": "Not shown to patients: the reported timing cannot be compared with the published timing."
     },
     "validation": {
       "rule": "Credible when the predicted Cmax and AUC are both within 2-fold of the published observed values; borderline within 3-fold; otherwise failed. A drug that is not credible carries no comparison with a potency.",
@@ -1794,7 +1802,7 @@
         "borderline": "Borderline",
         "failed": "Failed"
       },
-      "aucNote": "For these models the AUC follows from the cited parameters by construction; only Cmax is an independent check.",
+      "aucNote": "In a one-compartment model the AUC depends only on bioavailability, dose and clearance, so the AUC comparison tests the cited clearance. For rhein the clearance and the observed AUC may come from the same subjects, so only its Cmax is an independent check.",
       "notShownReason": "Shown with every simulated concentration."
     },
     "sources": {
@@ -1847,7 +1855,10 @@
       },
       "margin": "Margin {low} to {high} against {measure} {potency} µmol/L ({assay}).",
       "noExposure": "No historical amount was modelled for this remedy.",
-      "none": "No molecule was selected for this remedy."
+      "none": "No molecule was selected for this remedy.",
+      "withheldUnverified": "Value not shown: its licence could not be verified.",
+      "outOfRange": "prediction outside the possible range; not usable",
+      "evidence": "Evidence: {citation}"
     },
     "references": "References",
     "verified": "Checked: {how}",
@@ -1855,7 +1866,7 @@
     "legend": "Band: 5th to 95th percentile; dot: median.",
     "patient": {
       "heading": "When this was reported",
-      "sentence": "In reports others have filed, this combination was most often reported between {start} and {end} days after the first medicine was started. This is information from reports, not a prediction about you — it may be worth discussing with your doctor.",
+      "sentence": "In reports others have filed, half of the reports of “{event}” fell between {start} and {end} days after {drug} was started; the other half were earlier or later. This is information from reports, not a prediction about you — it may be worth discussing with your doctor.",
       "review": "AI-reviewed, pending expert review."
     },
     "errors": {
@@ -1863,6 +1874,79 @@
       "unknown": "This entry is not in the time machine."
     },
     "empty": "Nothing to show yet.",
-    "loading": "Loading the time machine…"
+    "loading": "Loading the time machine…",
+    "methodNoOutput": "On this page the model is not used for any concentration; its validation is in the time machine index.",
+    "extension": "Interpretive extension of the PIPC row: the row names another drug class.",
+    "tableRegion": "Table (scrolls sideways)"
+  },
+  "OpenData": {
+    "title": "Open data",
+    "summary": "Released counts and the cascade rule base, free to reuse",
+    "intro": "Janus shares two kinds of open data: counts of donated reports and of outcomes reported by doctors, released only in groups of at least 20 with noise added, and the prescribing-cascade rule base it uses. Both are research material, not medical advice.",
+    "entry": {
+      "title": "Open data",
+      "body": "Released counts of donated reports and outcomes reported by doctors, and the cascade rule base as a data package."
+    },
+    "demo": "Demo: the dataset was recorded from the real local Janus API on {date}; no request is sent.",
+    "dataset": {
+      "title": "Open outcome dataset",
+      "empty": "No released cells yet. A count is published only when at least 20 reports share the same medicines, event, direction and region and pass the rules below. Until then there is nothing to show and no example number.",
+      "cellsLine": "{count, plural, one {# released cell} other {# released cells}}",
+      "layerTile": "{count, plural, one {released cell} other {released cells}}",
+      "layer": {
+        "contributions": "Donated reports",
+        "outcomes": "Outcomes reported by doctors"
+      },
+      "cols": {
+        "ingredients": "Medicines",
+        "event": "Event",
+        "direction": "Direction",
+        "region": "Region",
+        "value": "Reports (noise added)"
+      },
+      "direction": {
+        "adverse": "Harm",
+        "benefit": "Improvement"
+      },
+      "region": {
+        "TR": "Türkiye",
+        "EU": "European Union",
+        "US": "United States"
+      },
+      "withheld": "Not published yet: {layers}. These reports were given under a consent that does not cover an open dataset."
+    },
+    "rule": {
+      "title": "How a count is released",
+      "k": "Only groups of at least {k} reports, decided on the true count.",
+      "noise": "Every released count has random noise added (discrete Laplace, ε = {epsilon}). Asking again about the same stored reports gives the same value; the noise is drawn again only when the reports in the group change.",
+      "sibling": "A count is also hidden when comparing it with a nested count would reveal a group smaller than {k}.",
+      "hidden": "Hidden groups are not listed at all, not even as hidden.",
+      "notices": "Counts are reports, never people. Outcomes are what doctors answered; Janus has not verified them. There is no denominator, so these are not rates or incidence."
+    },
+    "files": {
+      "title": "Download",
+      "json": "Dataset (JSON)",
+      "csv": "Dataset (CSV)",
+      "version": "Version {version}",
+      "snapshot": "Snapshot of {date}",
+      "licence": "Licence: CC BY 4.0. Attribution: {attribution}",
+      "dictionary": "Data dictionary",
+      "dictionaryBody": "What each field means, how to read and cite the dataset (docs/open-data.md)"
+    },
+    "package": {
+      "title": "Cascade data package",
+      "summary": "Version {version} · {date}",
+      "body": "The PIPC prescribing-cascade list with Janus's mappings to drug classes, the ingredient name rules, the ATC exclusions and the dose-form groups. Each file has its own licence. No TİTCK list row, product name or barcode is included; some notes state codes or row counts observed in the TİTCK list.",
+      "rows": "{rows, plural, one {# row} other {# rows}}",
+      "open": "Package files and README",
+      "api": "Public read-only API (OpenAPI)",
+      "apiBody": "Every public GET route, with examples",
+      "corrections": "Contributing corrections",
+      "correctionsBody": "Errors Janus found in upstream data, and how to report them to their sources"
+    },
+    "errors": {
+      "unavailable": "The open dataset is not available on this server right now."
+    },
+    "loading": "Loading the open dataset…"
   }
 }

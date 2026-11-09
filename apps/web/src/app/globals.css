@@ -209,6 +209,30 @@
   .grouped-plain > * + *::before {
     inset-inline-start: 0;
   }
+  /* Time machine and open data tables (experience Req 30.5, DP61): the data-table alternative of
+     every chart; tabular figures, hairlines, wraps inside its own scroller only. */
+  .tm-table {
+    border-collapse: collapse;
+    font-size: 0.875rem;
+    font-variant-numeric: tabular-nums;
+    min-width: 100%;
+  }
+  .tm-table th,
+  .tm-table td {
+    border-bottom: 1px solid var(--line);
+    padding: 0.5rem 0.625rem;
+    text-align: start;
+    vertical-align: top;
+  }
+  /* Numeric tables scroll inside their own box rather than break words (validation). */
+  .tm-table.nowrap th,
+  .tm-table.nowrap td {
+    white-space: nowrap;
+  }
+  .tm-table thead th {
+    color: var(--muted);
+    font-weight: 700;
+  }
   /* Inside a clipped group the focus ring is drawn inside the row. */
   .grouped :focus-visible {
     outline-offset: -3px;

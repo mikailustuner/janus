@@ -31,7 +31,11 @@ export type Route =
   | "light/validation"
   | "light/export"
   | "seance/catalogue"
-  | "seance/pair";
+  | "seance/pair"
+  | "timemachine/catalogue"
+  | "timemachine/substance"
+  | "timemachine/cascade"
+  | "open/outcomes";
 
 export const ROUTES: readonly Route[] = [
   "resolve/scan",
@@ -61,6 +65,10 @@ export const ROUTES: readonly Route[] = [
   "light/export",
   "seance/catalogue",
   "seance/pair",
+  "timemachine/catalogue",
+  "timemachine/substance",
+  "timemachine/cascade",
+  "open/outcomes",
 ];
 
 export type ApiError =
@@ -111,6 +119,9 @@ export const MESSAGE_KEYS = [
   "Passport.states.error",
   "Light.errors.unavailable",
   "Seance.errors.unavailable",
+  "TimeMachine.errors.unavailable",
+  "TimeMachine.errors.unknown",
+  "OpenData.errors.unavailable",
 ] as const;
 
 export type MessageKey = (typeof MESSAGE_KEYS)[number];
@@ -220,5 +231,22 @@ export function messageKeyFor(
     code === "seance_unavailable"
   )
     return "Seance.errors.unavailable";
+  // time-machine design §10: the artifact is not installed (503) or the id is unknown (404).
+  if (route.startsWith("timemachine/")) {
+    if (status === 503 && code === "time_machine_not_installed")
+      return "TimeMachine.errors.unavailable";
+    if (
+      status === 404 &&
+      (code === "unknown_substance" || code === "unknown_cascade")
+    )
+      return "TimeMachine.errors.unknown";
+  }
+  // open-data design §4: no database or no noise key, the dataset is never served without the rule.
+  if (
+    route === "open/outcomes" &&
+    status === 503 &&
+    code === "open_data_unavailable"
+  )
+    return "OpenData.errors.unavailable";
   return "Errors.generic";
 }
