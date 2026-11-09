@@ -71,6 +71,16 @@ jobs:
           " || { docker logs api-ci | tail -20; exit 1; }
           docker rm -f api-ci
 
+      - name: Pipelines image keeps the repository layout (deploy task 8)
+        run: |
+          docker build -q -t janus-pipelines:ci -f deploy/pipelines.Dockerfile pipelines
+          docker run --rm --read-only --tmpfs /tmp -e HOME=/tmp --entrypoint python janus-pipelines:ci -c "
+          from janus_pipelines.cli import REPO_ROOT, registry_path
+          from janus_pipelines.core.registry import load_registry
+          assert str(REPO_ROOT) == '/repo', REPO_ROOT
+          load_registry(registry_path(REPO_ROOT))
+          "
+
   web:
     name: Web (lint, types, tests)
     runs-on: ubuntu-latest
