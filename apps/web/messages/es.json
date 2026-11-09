@@ -1265,5 +1265,32 @@
       "component": "Este principio activo de FAERS es un componente de una sustancia del Canon, no la misma exposición:"
     },
     "notListed": "El par elegido no está disponible aquí; se muestra en su lugar el primer par disponible."
+  },
+  "Cards": {
+    "show": "Mostrar",
+    "label": {
+      "reports": "{count, plural, one {notificación en FAERS} other {notificaciones en FAERS}}",
+      "sources": "{count, plural, one {fuente en total} other {fuentes en total}}",
+      "checkedByDoi": "{count, plural, one {comprobada por DOI} other {comprobadas por DOI}}",
+      "patternsChecked": "{count, plural, one {patrón comprobado} other {patrones comprobados}}",
+      "cards": "{count, plural, one {ficha para esta afección} other {fichas para esta afección}}",
+      "witnesses": "{count, plural, other {de 3 testigos}}",
+      "casesTop": "de {cases} casos entre los {k} primeros"
+    },
+    "results": {
+      "medicinesChecked": "{count, plural, one {# medicamento comprobado} other {# medicamentos comprobados}}"
+    },
+    "passport": {
+      "summary": "{items, plural, one {# medicamento} other {# medicamentos}} · {boxes, plural, one {# caja} other {# cajas}}",
+      "listed": "Figura en {listed} de {checked, plural, one {# país} other {# países}}",
+      "countries": "Países",
+      "comparison": "Comparación"
+    },
+    "memory": {
+      "summary": "{count, plural, one {# principio activo de su lista} other {# principios activos de su lista}}",
+      "all": "Todo",
+      "together": "Juntos",
+      "janus": "Notificado a través de Janus"
+    }
   }
 }

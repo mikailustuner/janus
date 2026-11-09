@@ -1265,5 +1265,32 @@
       "component": "Bu FAERS etkin maddesi Kanun'daki bir maddenin bileşenidir, aynı maruziyet değildir:"
     },
     "notListed": "Seçtiğiniz eşleşme burada yok; bunun yerine ilk kullanılabilir eşleşme gösteriliyor."
+  },
+  "Cards": {
+    "show": "Göster",
+    "label": {
+      "reports": "{count, plural, one {FAERS'te bildirim} other {FAERS'te bildirim}}",
+      "sources": "{count, plural, one {toplam kaynak} other {toplam kaynak}}",
+      "checkedByDoi": "{count, plural, other {DOI ile kontrol edildi}}",
+      "patternsChecked": "{count, plural, one {örüntü kontrol edildi} other {örüntü kontrol edildi}}",
+      "cards": "{count, plural, one {bu durum için kart} other {bu durum için kart}}",
+      "witnesses": "{count, plural, other {3 tanıktan}}",
+      "casesTop": "{cases} vakadan, ilk {k} içinde"
+    },
+    "results": {
+      "medicinesChecked": "{count, plural, one {# ilaç kontrol edildi} other {# ilaç kontrol edildi}}"
+    },
+    "passport": {
+      "summary": "{items, plural, one {# ilaç} other {# ilaç}} · {boxes, plural, one {# kutu} other {# kutu}}",
+      "listed": "{checked, plural, one {# ülkeden} other {# ülkeden}} {listed} tanesinde listede",
+      "countries": "Ülkeler",
+      "comparison": "Karşılaştırma"
+    },
+    "memory": {
+      "summary": "{count, plural, one {Listenizden # etkin madde} other {Listenizden # etkin madde}}",
+      "all": "Tümü",
+      "together": "Birlikte",
+      "janus": "Janus üzerinden bildirilen"
+    }
   }
 }

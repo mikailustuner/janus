@@ -1265,5 +1265,32 @@
       "component": "Cette substance active FAERS est un composant d'une substance du Canon, pas la même exposition :"
     },
     "notListed": "La paire choisie n'est pas disponible ici ; la première paire disponible est affichée à la place."
+  },
+  "Cards": {
+    "show": "Afficher",
+    "label": {
+      "reports": "{count, plural, one {signalement dans FAERS} other {signalements dans FAERS}}",
+      "sources": "{count, plural, one {source au total} other {sources au total}}",
+      "checkedByDoi": "{count, plural, one {vérifiée par DOI} other {vérifiées par DOI}}",
+      "patternsChecked": "{count, plural, one {schéma vérifié} other {schémas vérifiés}}",
+      "cards": "{count, plural, one {fiche pour cet état} other {fiches pour cet état}}",
+      "witnesses": "{count, plural, one {témoin sur 3} other {témoins sur 3}}",
+      "casesTop": "cas sur {cases} dans les {k} premiers"
+    },
+    "results": {
+      "medicinesChecked": "{count, plural, one {# médicament vérifié} other {# médicaments vérifiés}}"
+    },
+    "passport": {
+      "summary": "{items, plural, one {# médicament} other {# médicaments}} · {boxes, plural, one {# boîte} other {# boîtes}}",
+      "listed": "Répertorié dans {listed} pays sur {checked}",
+      "countries": "Pays",
+      "comparison": "Comparaison"
+    },
+    "memory": {
+      "summary": "{count, plural, one {# substance active de votre liste} other {# substances actives de votre liste}}",
+      "all": "Tout",
+      "together": "Ensemble",
+      "janus": "Signalé via Janus"
+    }
   }
 }

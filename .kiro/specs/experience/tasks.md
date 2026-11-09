@@ -322,7 +322,7 @@
     _Requirements: 29_
   - **Checkpoint:** commit the spec.
 
-- [ ] 27. Tokens and card primitives (`src/theme/tokens.css`, `src/app/globals.css`, `src/components/cards/*.tsx`)
+- [x] 27. Tokens and card primitives (`src/theme/tokens.css`, `src/app/globals.css`, `src/components/cards/*.tsx`)
   - Layout tokens per theme (DP55) exposed through Tailwind; `LargeTitle`, `GroupedList` + `Row`, `SummaryCard`,
     `StatTile` + `StatGrid`, `Disclosure` (DP51), `SegmentedControl` (DP52); `Cards` namespace in five languages.
   - 27.1 Render tests (`src/components/cards/cards.test.tsx`): P32, P33. _Requirements: 29.1, 29.3, 29.4, 29.6, 29.7, 29.9_

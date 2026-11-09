@@ -7,7 +7,8 @@
  *
  * The colour values of --bg … --risk are exactly the steering tokens. Added here (design DP33):
  * Glass --chip/--chip-fg/--ghost (from the Glass mockup, docs/design/glass-options.html), the
- * three Glass background fields, and non-colour tokens (fonts, radii, blur).
+ * three Glass background fields, and non-colour tokens (fonts, radii, blur; spacing, group/tile/segment
+ * radii and motion of the cards and layout system, DP55).
  *
  * Pairs checked by the contrast test (P18; text >= 4.5:1, boundary >= 3:1):
  * @contrast-text fg/bg fg/surface muted/bg muted/surface accent/bg accent/surface on-accent/accent chip-fg/chip warn/bg warn/surface risk/bg risk/surface
@@ -41,6 +42,20 @@
   --radius-card: 16px;
   --radius-button: 14px;
   --title-size: 1.75rem;
+  /* Cards and layout system (experience Req 29, DP55): spacing, radii, motion. */
+  --space-row-x: 16px;
+  --space-row-y: 12px;
+  --space-stack: 12px;
+  --space-group: 24px;
+  --space-section: 32px;
+  --radius-group: 16px;
+  --radius-tile: 14px;
+  --radius-segment: 12px;
+  --large-title: 2.125rem;
+  --dur-fast: 150ms;
+  --dur-base: 220ms;
+  --dur-page: 240ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   color-scheme: dark;
 }
 
@@ -92,6 +107,9 @@
   --radius-card: 26px;
   --radius-button: 26px;
   --title-size: 2rem;
+  --radius-group: 22px;
+  --radius-tile: 20px;
+  --radius-segment: 999px;
   color-scheme: light;
 }
 

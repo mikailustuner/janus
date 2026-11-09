@@ -21,6 +21,15 @@
   --font-mono: var(--font-mono);
   --radius-card: var(--radius-card);
   --radius-button: var(--radius-button);
+  /* Cards and layout system (Req 29, DP55): p-row-x, gap-group, rounded-group, … */
+  --spacing-row-x: var(--space-row-x);
+  --spacing-row-y: var(--space-row-y);
+  --spacing-stack: var(--space-stack);
+  --spacing-group: var(--space-group);
+  --spacing-section: var(--space-section);
+  --radius-group: var(--radius-group);
+  --radius-tile: var(--radius-tile);
+  --radius-segment: var(--radius-segment);
 }
 
 @layer base {
@@ -136,6 +145,225 @@
     padding: 0.2rem 0.6rem;
     width: max-content;
     max-width: 100%;
+  }
+}
+
+/* Cards and layout system (experience Req 29, DP50–DP55; steering design.md "Cards and layout
+   system"). Colours are existing token pairs only (P18). */
+@layer components {
+  .large-title {
+    font-size: var(--large-title);
+    line-height: 1.1;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  @media (min-width: 1024px) {
+    .large-title {
+      font-size: calc(var(--large-title) * 1.18);
+    }
+  }
+  /* Inset grouped list: one rounded surface, rows separated by hairlines inset from the leading
+     edge (never above the first row). `.grouped-plain` is the same list inside a card. */
+  .grouped,
+  .grouped-plain {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .grouped {
+    background: var(--surface);
+    border: 1px solid var(--card-edge);
+    border-radius: var(--radius-group);
+    -webkit-backdrop-filter: var(--blur);
+    backdrop-filter: var(--blur);
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+  }
+  .grouped > li,
+  .grouped-plain > li {
+    position: relative;
+    min-height: 2.75rem;
+  }
+  .grouped > li {
+    padding: var(--space-row-y) var(--space-row-x);
+  }
+  .grouped-plain > li {
+    padding: var(--space-row-y) 0;
+  }
+  .grouped > li.row-link,
+  .grouped-plain > li.row-link {
+    padding: 0;
+  }
+  .grouped > li + li::before,
+  .grouped-plain > li + li::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    inset-inline-start: var(--space-row-x);
+    inset-inline-end: 0;
+    border-top: 1px solid var(--line);
+  }
+  .grouped-plain > li + li::before {
+    inset-inline-start: 0;
+  }
+  /* Inside a clipped group the focus ring is drawn inside the row. */
+  .grouped :focus-visible {
+    outline-offset: -3px;
+  }
+  .row-link > a {
+    display: flex;
+    min-height: 2.75rem;
+    align-items: center;
+    gap: 0.75rem;
+    padding: var(--space-row-y) var(--space-row-x);
+    text-decoration: none;
+    font-weight: 700;
+    transition: background-color var(--dur-fast) var(--ease-out);
+  }
+  .grouped-plain > .row-link > a {
+    padding-inline: 0;
+  }
+  .row-link > a:hover {
+    background: var(--chip);
+  }
+  .group-header {
+    padding-inline: var(--space-row-x);
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--muted);
+    font-family: var(--font-body);
+  }
+  .group-footer {
+    padding-inline: var(--space-row-x);
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+  /* Stat tile: a large tabular figure and a short label on the page colour (fg/bg, muted/bg). */
+  .tile {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 0.125rem;
+    border-radius: var(--radius-tile);
+    background: var(--bg);
+    color: var(--fg);
+    padding: 0.75rem 0.875rem;
+  }
+  .tile-value {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    line-height: 1.1;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums lining-nums;
+    letter-spacing: -0.01em;
+  }
+  .tile-label {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.3;
+  }
+  /* Disclosure on details/summary (DP51): chevron turns, content enters by opacity and transform. */
+  .disclosure > summary {
+    display: flex;
+    min-height: 2.75rem;
+    cursor: pointer;
+    list-style: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    font-weight: 700;
+  }
+  .disclosure > summary::-webkit-details-marker {
+    display: none;
+  }
+  .disclosure > summary .disclosure-chevron {
+    flex: none;
+    color: var(--muted);
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+  .disclosure[open] > summary .disclosure-chevron {
+    transform: rotate(90deg);
+  }
+  .disclosure[open] > .disclosure-body {
+    animation: disclosure-in var(--dur-base) var(--ease-out);
+  }
+  /* Segmented control (DP52): native radios stretched over each segment. */
+  .segmented {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    border-radius: calc(var(--radius-segment) + 4px);
+    background: var(--chip);
+    padding: 0.25rem;
+  }
+  .segmented > .segment {
+    flex: 1 1 0;
+  }
+  .segment {
+    position: relative;
+    display: flex;
+    min-height: 2.75rem;
+    min-width: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-segment);
+    padding: 0.375rem 0.875rem;
+    text-align: center;
+    font-weight: 700;
+    color: var(--chip-fg);
+    transition:
+      background-color var(--dur-fast) var(--ease-out),
+      color var(--dur-fast) var(--ease-out);
+  }
+  .segment > input {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    opacity: 0;
+  }
+  .segment:has(input:checked) {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+  .segment:has(input:focus-visible) {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .pills > .segment {
+    background: var(--chip);
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .pills > .segment:has(input:checked) {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+  /* Page enter after a client navigation (DP54). */
+  .page-enter {
+    animation: page-in var(--dur-page) var(--ease-out);
+  }
+}
+
+@keyframes disclosure-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
   }
 }
 

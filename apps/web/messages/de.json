@@ -1265,5 +1265,32 @@
       "component": "Dieser FAERS-Wirkstoff ist ein Bestandteil einer Substanz des Kanons, nicht dieselbe Exposition:"
     },
     "notListed": "Das gewählte Paar ist hier nicht verfügbar; stattdessen wird das erste verfügbare Paar gezeigt."
+  },
+  "Cards": {
+    "show": "Anzeigen",
+    "label": {
+      "reports": "{count, plural, one {Meldung in FAERS} other {Meldungen in FAERS}}",
+      "sources": "{count, plural, one {Quelle insgesamt} other {Quellen insgesamt}}",
+      "checkedByDoi": "{count, plural, other {per DOI abgeglichen}}",
+      "patternsChecked": "{count, plural, one {Muster geprüft} other {Muster geprüft}}",
+      "cards": "{count, plural, one {Karte für diesen Zustand} other {Karten für diesen Zustand}}",
+      "witnesses": "{count, plural, other {von 3 Zeugen}}",
+      "casesTop": "von {cases} Fällen unter den ersten {k}"
+    },
+    "results": {
+      "medicinesChecked": "{count, plural, one {# Medikament geprüft} other {# Medikamente geprüft}}"
+    },
+    "passport": {
+      "summary": "{items, plural, one {# Medikament} other {# Medikamente}} · {boxes, plural, one {# Packung} other {# Packungen}}",
+      "listed": "In {listed} von {checked, plural, one {# Land} other {# Ländern}} gelistet",
+      "countries": "Länder",
+      "comparison": "Vergleich"
+    },
+    "memory": {
+      "summary": "{count, plural, one {# Wirkstoff aus Ihrer Liste} other {# Wirkstoffe aus Ihrer Liste}}",
+      "all": "Alle",
+      "together": "Zusammen",
+      "janus": "Über Janus gemeldet"
+    }
   }
 }
