@@ -48,6 +48,15 @@ export function Research() {
             </span>
           </RowLink>
         ))}
+        <RowLink href="/cascades">
+          <span className="sr-only">{t("Light.nav.open")}: </span>
+          <span className="flex flex-col gap-0.5">
+            <span className="text-lg">{t("CascadeMap.entry.title")}</span>
+            <span className="font-normal text-muted">
+              {t("CascadeMap.entry.body")}
+            </span>
+          </span>
+        </RowLink>
       </GroupedList>
       <ButtonLink href="/" variant="secondary" className="self-start">
         {t("Research.back")}

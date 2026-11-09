@@ -15,6 +15,7 @@ import {
   GroupedList,
   LargeTitle,
   Row,
+  RowLink,
   StatGrid,
   StatTile,
 } from "@/components/cards";
@@ -223,6 +224,9 @@ export function ResultsBody({
               </StatGrid>
               <p>{t("Findings.scopeChecked", view.rules)}</p>
             </Row>
+            <RowLink href="/cascades">
+              {t("CascadeMap.explore", { total: view.rules.total })}
+            </RowLink>
           </GroupedList>
           {aside}
         </aside>

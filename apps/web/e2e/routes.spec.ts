@@ -61,6 +61,7 @@ const DEMO = [
   "/note",
   "/demo/doctor",
   "/donate",
+  "/cascades",
 ];
 
 async function demoSession(page: Page) {

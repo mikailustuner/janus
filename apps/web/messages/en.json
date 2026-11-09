@@ -1340,5 +1340,75 @@
     "simulatedStamp": "Retracted (simulated)",
     "notificationDemo": "Demo simulation: no source was really retracted. Open Janus to see the demo.",
     "passOn": "If you already gave the earlier note to your doctor, give them the updated one."
+  },
+  "CascadeMap": {
+    "eyebrow": "PIPC list of prescribing cascades",
+    "title": "The {total} patterns Janus checks",
+    "intro": "Each line is one prescribing-cascade pattern of the PIPC list: a side effect of a first medicine class is followed by a second medicine for that side effect. The dots are medicine classes or single medicines.",
+    "framing": "Patterns described in the literature (PIPC list, Rochon et al., Eur Geriatr Med 2025). A pattern is something to discuss with your doctor, not a verdict about your medicines.",
+    "views": {
+      "label": "View",
+      "map": "Map",
+      "list": "List"
+    },
+    "filter": {
+      "label": "Filter the patterns",
+      "search": "Search",
+      "class": "Medicine class",
+      "anyClass": "All classes",
+      "event": "Side effect",
+      "anyEvent": "All side effects",
+      "clear": "Clear filters"
+    },
+    "shown": "{shown} of {total} patterns shown",
+    "empty": "No pattern fits these filters.",
+    "mapLabel": "Map of the {total} patterns",
+    "keys": "Keyboard: the arrow keys move between the medicine classes, Enter opens one, Escape closes the panel, + and − zoom. The List view shows the same patterns as a table.",
+    "zoom": {
+      "in": "Zoom in",
+      "out": "Zoom out",
+      "reset": "Show the whole map"
+    },
+    "star": "{name}: first medicine in {index, plural, one {# pattern} other {# patterns}}, second medicine in {marker, plural, one {# pattern} other {# patterns}}.",
+    "inYourFindings": "Part of a finding for your list.",
+    "legend": {
+      "title": "Legend",
+      "star": "A medicine class or a single medicine",
+      "line": "A pattern, from the first medicine class to the second",
+      "matched": "Matches a finding for your list (thicker, dashed)",
+      "cannot": "Janus cannot check this pattern (dotted)"
+    },
+    "matches": {
+      "none": "Add medicines to see which patterns match your list.",
+      "error": "The findings for your list cannot be shown right now. The map still shows every pattern.",
+      "count": "{count, plural, one {# pattern matches a finding for your list. It is drawn thicker and dashed.} other {# patterns match findings for your list. They are drawn thicker and dashed.}}"
+    },
+    "panel": {
+      "row": "Row {row}",
+      "classEyebrow": "Medicine class",
+      "first": "First medicine class",
+      "event": "Side effect",
+      "second": "Second medicine",
+      "evidence": "Evidence ids",
+      "cannot": "Janus cannot check this pattern: {reason}.",
+      "yours": "Your list",
+      "noneYours": "None of the findings for your list uses this pattern.",
+      "asFirst": "First medicine in {count, plural, one {# pattern} other {# patterns}}",
+      "asSecond": "Second medicine in {count, plural, one {# pattern} other {# patterns}}",
+      "onlyThis": "Show only this class",
+      "hint": "Select a medicine class or a line to read its pattern, its source and its evidence."
+    },
+    "list": {
+      "caption": "{shown} of {total} patterns, in the order of the PIPC list",
+      "row": "Row",
+      "pattern": "First medicine class → side effect → second medicine",
+      "matched": "Matches a finding for your list"
+    },
+    "explore": "Explore all {total} patterns",
+    "entry": {
+      "title": "Cascade map",
+      "body": "All 65 prescribing-cascade patterns of the PIPC list as a map and as a table."
+    },
+    "footer": "Cascade map"
   }
 }

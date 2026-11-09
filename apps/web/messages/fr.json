@@ -1340,5 +1340,75 @@
     "simulatedStamp": "Rétracté (simulation)",
     "notificationDemo": "Simulation de la démo : aucune source n'a vraiment été rétractée. Ouvrez Janus pour voir la démo.",
     "passOn": "Si vous avez déjà remis l'ancienne note à votre médecin, remettez-lui la note mise à jour."
+  },
+  "CascadeMap": {
+    "eyebrow": "Liste PIPC des cascades de prescription",
+    "title": "Les {total} schémas que Janus vérifie",
+    "intro": "Chaque ligne est un schéma de cascade de prescription de la liste PIPC : un effet indésirable d'une première classe de médicaments est suivi d'un deuxième médicament contre cet effet. Les points sont des classes de médicaments ou des médicaments individuels.",
+    "framing": "Schémas décrits dans la littérature (liste PIPC, Rochon et al., Eur Geriatr Med 2025). Un schéma est un point à aborder avec votre médecin, pas un verdict sur vos médicaments.",
+    "views": {
+      "label": "Affichage",
+      "map": "Carte",
+      "list": "Liste"
+    },
+    "filter": {
+      "label": "Filtrer les schémas",
+      "search": "Rechercher",
+      "class": "Classe de médicaments",
+      "anyClass": "Toutes les classes",
+      "event": "Effet indésirable",
+      "anyEvent": "Tous les effets indésirables",
+      "clear": "Effacer les filtres"
+    },
+    "shown": "{shown} schémas affichés sur {total}",
+    "empty": "Aucun schéma ne correspond à ces filtres.",
+    "mapLabel": "Carte des {total} schémas",
+    "keys": "Clavier : les flèches passent d'une classe de médicaments à l'autre, Entrée en ouvre une, Échap ferme le panneau, + et − zooment. L'affichage Liste montre les mêmes schémas sous forme de tableau.",
+    "zoom": {
+      "in": "Zoom avant",
+      "out": "Zoom arrière",
+      "reset": "Afficher toute la carte"
+    },
+    "star": "{name} : premier médicament dans {index, plural, one {# schéma} other {# schémas}}, deuxième médicament dans {marker, plural, one {# schéma} other {# schémas}}.",
+    "inYourFindings": "Fait partie d'un résultat pour votre liste.",
+    "legend": {
+      "title": "Légende",
+      "star": "Une classe de médicaments ou un médicament individuel",
+      "line": "Un schéma, de la première classe de médicaments vers la deuxième",
+      "matched": "Correspond à un résultat pour votre liste (plus épais, en tirets)",
+      "cannot": "Janus ne peut pas vérifier ce schéma (en pointillés)"
+    },
+    "matches": {
+      "none": "Ajoutez des médicaments pour voir quels schémas correspondent à votre liste.",
+      "error": "Les résultats pour votre liste ne peuvent pas être affichés pour le moment. La carte montre quand même tous les schémas.",
+      "count": "{count, plural, one {# schéma correspond à un résultat pour votre liste. Il est tracé plus épais et en tirets.} other {# schémas correspondent à des résultats pour votre liste. Ils sont tracés plus épais et en tirets.}}"
+    },
+    "panel": {
+      "row": "Ligne {row}",
+      "classEyebrow": "Classe de médicaments",
+      "first": "Première classe de médicaments",
+      "event": "Effet indésirable",
+      "second": "Deuxième médicament",
+      "evidence": "Identifiants des preuves",
+      "cannot": "Janus ne peut pas vérifier ce schéma : {reason}.",
+      "yours": "Votre liste",
+      "noneYours": "Aucun des résultats pour votre liste n'utilise ce schéma.",
+      "asFirst": "Premier médicament dans {count, plural, one {# schéma} other {# schémas}}",
+      "asSecond": "Deuxième médicament dans {count, plural, one {# schéma} other {# schémas}}",
+      "onlyThis": "Afficher seulement cette classe",
+      "hint": "Choisissez une classe de médicaments ou une ligne pour lire son schéma, sa source et ses preuves."
+    },
+    "list": {
+      "caption": "{shown} schémas sur {total}, dans l'ordre de la liste PIPC",
+      "row": "Ligne",
+      "pattern": "Première classe de médicaments → effet indésirable → deuxième médicament",
+      "matched": "Correspond à un résultat pour votre liste"
+    },
+    "explore": "Explorer les {total} schémas",
+    "entry": {
+      "title": "Carte des cascades",
+      "body": "Les 65 schémas de cascades de prescription de la liste PIPC, sous forme de carte et de tableau."
+    },
+    "footer": "Carte des cascades"
   }
 }

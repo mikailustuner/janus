@@ -1340,5 +1340,75 @@
     "simulatedStamp": "Geri çekildi (canlandırma)",
     "notificationDemo": "Demo canlandırması: hiçbir kaynak gerçekte geri çekilmedi. Demoyu görmek için Janus'u açın.",
     "passOn": "Önceki notu doktorunuza verdiyseniz güncellenmiş notu da verin."
+  },
+  "CascadeMap": {
+    "eyebrow": "PIPC reçete kaskadı listesi",
+    "title": "Janus'un kontrol ettiği {total} örüntü",
+    "intro": "Her çizgi PIPC listesindeki bir reçete kaskadı örüntüsüdür: birinci ilaç sınıfının bir yan etkisinin ardından o yan etki için ikinci bir ilaç gelir. Noktalar ilaç sınıfları ya da tek tek ilaçlardır.",
+    "framing": "Literatürde tanımlanmış örüntüler (PIPC listesi, Rochon ve ark., Eur Geriatr Med 2025). Bir örüntü, ilaçlarınız hakkında bir hüküm değil, doktorunuzla konuşulabilecek bir konudur.",
+    "views": {
+      "label": "Görünüm",
+      "map": "Harita",
+      "list": "Liste"
+    },
+    "filter": {
+      "label": "Örüntüleri filtrele",
+      "search": "Ara",
+      "class": "İlaç sınıfı",
+      "anyClass": "Tüm sınıflar",
+      "event": "Yan etki",
+      "anyEvent": "Tüm yan etkiler",
+      "clear": "Filtreleri temizle"
+    },
+    "shown": "{total} örüntüden {shown} tanesi gösteriliyor",
+    "empty": "Bu filtrelere uyan bir örüntü yok.",
+    "mapLabel": "{total} örüntünün haritası",
+    "keys": "Klavye: ok tuşları ilaç sınıfları arasında gezinir, Enter birini açar, Esc paneli kapatır, + ve − yakınlaştırır. Liste görünümü aynı örüntüleri tablo olarak gösterir.",
+    "zoom": {
+      "in": "Yakınlaştır",
+      "out": "Uzaklaştır",
+      "reset": "Haritanın tamamını göster"
+    },
+    "star": "{name}: {index, plural, one {# örüntüde} other {# örüntüde}} birinci ilaç, {marker, plural, one {# örüntüde} other {# örüntüde}} ikinci ilaç.",
+    "inYourFindings": "Listenize ait bir bulgunun parçası.",
+    "legend": {
+      "title": "Açıklama",
+      "star": "Bir ilaç sınıfı ya da tek bir ilaç",
+      "line": "Birinci ilaç sınıfından ikinciye giden bir örüntü",
+      "matched": "Listenize ait bir bulguyla eşleşiyor (daha kalın, kesikli)",
+      "cannot": "Janus bu örüntüyü kontrol edemiyor (noktalı)"
+    },
+    "matches": {
+      "none": "Hangi örüntülerin listenizle eşleştiğini görmek için ilaç ekleyin.",
+      "error": "Listenize ait bulgular şu anda gösterilemiyor. Harita yine de tüm örüntüleri gösteriyor.",
+      "count": "{count, plural, one {# örüntü listenize ait bir bulguyla eşleşiyor. Daha kalın ve kesikli çizilmiştir.} other {# örüntü listenize ait bulgularla eşleşiyor. Daha kalın ve kesikli çizilmiştir.}}"
+    },
+    "panel": {
+      "row": "Satır {row}",
+      "classEyebrow": "İlaç sınıfı",
+      "first": "Birinci ilaç sınıfı",
+      "event": "Yan etki",
+      "second": "İkinci ilaç",
+      "evidence": "Kanıt kimlikleri",
+      "cannot": "Janus bu örüntüyü kontrol edemiyor: {reason}.",
+      "yours": "Listeniz",
+      "noneYours": "Listenize ait bulguların hiçbiri bu örüntüyü kullanmıyor.",
+      "asFirst": "{count, plural, one {# örüntüde} other {# örüntüde}} birinci ilaç",
+      "asSecond": "{count, plural, one {# örüntüde} other {# örüntüde}} ikinci ilaç",
+      "onlyThis": "Yalnızca bu sınıfı göster",
+      "hint": "Örüntüsünü, kaynağını ve kanıtını okumak için bir ilaç sınıfı ya da bir çizgi seçin."
+    },
+    "list": {
+      "caption": "{total} örüntüden {shown} tanesi, PIPC listesindeki sırayla",
+      "row": "Satır",
+      "pattern": "Birinci ilaç sınıfı → yan etki → ikinci ilaç",
+      "matched": "Listenize ait bir bulguyla eşleşiyor"
+    },
+    "explore": "{total} örüntünün tamamını keşfet",
+    "entry": {
+      "title": "Kaskad haritası",
+      "body": "PIPC listesindeki 65 reçete kaskadı örüntüsünün tamamı, harita ve tablo olarak."
+    },
+    "footer": "Kaskad haritası"
   }
 }
