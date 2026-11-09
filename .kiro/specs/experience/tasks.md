@@ -397,7 +397,7 @@
   - 37.1 P40 in `contrast.test.ts`. _Requirements: 31.1–31.3, 31.10_
   - **Checkpoint:** lint, typecheck, vitest green; commit.
 
-- [ ] 38. Glass home (`components/home/GlassJanusHero.tsx`, `GlassHomeSections.tsx`, `clinicalFacts.ts`, `Home.tsx`,
+- [x] 38. Glass home (`components/home/GlassJanusHero.tsx`, `GlassHomeSections.tsx`, `clinicalFacts.ts`, `Home.tsx`,
   `ScenePicture.tsx`, `glassMotion.ts`, `src/theme/home-scenes.css`, `messages/*.json`)
   - Hero at its own ratio, frosted tilted cards, CSS capsules, light sweep (DP68, DP69); "At a glance" bento, "How it
     works" with icon chips, privacy (DP71); emergency bar and header in Glass (DP72); `Home.glass.*` in five languages.
@@ -405,11 +405,23 @@
     only `clinical-hero` requested. _Requirements: 31.4–31.9_
   - **Checkpoint:** vitest, home-scenes and home-scroll e2e green; commit.
 
-- [ ] 39. Reviews, rendered checks and final checkpoint
+- [x] 39. Reviews, rendered checks and final checkpoint
   - localization-reviewer and safety-auditor passes on the new and changed texts and the Glass home
     (`clinical-white-localization-reviewer-review.md`, `clinical-white-safety-auditor-review.md`); fixes applied.
   - Playwright smoke, routes, home-scenes, home-scroll, states at 375 and 1280 px in both themes; screenshots of the
     Glass home (1440 × 900, 390 × 844), results, finding detail, medicines, settings, and the Night Pharmacy home
     (unchanged), reviewed. _Requirements: 31.7, 31.10_
   - **Checkpoint:** lint, typecheck, vitest, build, e2e, CI green; commit.
+  > Done 2026-11-09 (Claude Code): tasks 35–39 built as specified. Glass Janus is light only (owner decision); solid
+  > white cards, frosted header and tab bar (DP66, DP67); the Glass home at the image's own ratio with frosted tilted
+  > cards, CSS capsules and a light sweep, "At a glance" bento, "How it works" with icon chips, privacy (DP68–DP72); the
+  > desktop composition starts at 1,100 px (narrower copy columns would push text over the faces in German and French).
+  > Vitest 501 tests (P40, P41 new); Playwright full suite 368 passed at 375 and 1280 px (one load-dependent failure,
+  > zombie-alert notification on phone, passes alone), then home-scenes, home-scroll, routes, smoke, states 76 passed
+  > after the review fixes (states research entry on phone failed once under load, passes 6 / 6 alone).
+  > Reviews: `clinical-white-localization-reviewer-review.md` (0 blocking, 15 advisory, 14 applied, 1 passed to the
+  > safety audit) and `clinical-white-safety-auditor-review.md` (0 blocking, 9 advisory, 8 applied; F6, the demo
+  > finding card without the discuss sentence, left for the owner). The canvas's "26 sources current" and "3 sources"
+  > were not used (no such figure; the fixture says 4 sources, 3 checked by DOI). Screenshots of the Glass home (1440 ×
+  > 900, 390 × 844), results, finding detail, medicines, settings and the Night Pharmacy home reviewed.
 
