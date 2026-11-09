@@ -23,7 +23,14 @@ from janus.cds.fhir import Origin
 from janus.notes.phrases import LANGUAGES, violations
 
 ORIGINS: list[Origin] = ["selected", "draft", "active", "statement"]
-LABELS = st.one_of(st.none(), st.text(min_size=1, max_size=120).filter(lambda t: t.strip() != ""))
+# Generated names stand in for real ingredient names: a name that itself contains a word from
+# the medical-language lists (e.g. "SIN PROBLEMA") is not a wording defect of the card template.
+LABELS = st.one_of(
+    st.none(),
+    st.text(min_size=1, max_size=120).filter(
+        lambda t: t.strip() != "" and all(violations(t, lang) == ([], []) for lang in LANGUAGES)
+    ),
+)
 
 
 def side(items: list[int], label: str | None, index: bool, confirmed: bool = True) -> Any:
