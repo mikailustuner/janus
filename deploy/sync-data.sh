@@ -10,7 +10,7 @@ local_data="${JANUS_DATA_DIR:-.data}"
 # Optional key file for ssh and rsync (JANUS_DEPLOY_SSH_KEY); otherwise ssh's own configuration.
 ssh_cmd=(ssh)
 [ -n "${JANUS_DEPLOY_SSH_KEY:-}" ] && ssh_cmd+=(-i "$JANUS_DEPLOY_SSH_KEY")
-roots=(memory/faers_counts light timemachine)
+roots=(memory/faers_counts light timemachine onset_table quality)
 for job in "$local_data"/artifacts/*/; do
   name="$(basename "$job")"
   [ "$name" = titck ] && continue   # fetched on the server (data-sources.md)
