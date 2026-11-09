@@ -3,7 +3,7 @@
   "info": {
     "title": "Janus public read-only API",
     "version": "1.0.0",
-    "description": "The GET routes of the Janus API that take no body and return no personal data: service status, the FAERS snapshot, the séance catalogue, the light-face overview, validation and export, the time machine, and the open outcome dataset. Medical routes are `no-store`; nothing but an access line (route, status, latency) is logged. Research prototype, not a medical device; not medical advice. Documentation: docs/open-api.md.",
+    "description": "The GET routes of the Janus API that take no body and return no personal data: service status, the FAERS snapshot, the séance catalogue, the light-face overview, validation and export, the time machine, the open outcome dataset, the weekly data-quality report and the FAERS onset table of the PIPC rows. Medical routes are `no-store`; nothing but an access line (route, status, latency) is logged. Research prototype, not a medical device; not medical advice. Documentation: docs/open-api.md.",
     "license": {
       "name": "Apache-2.0",
       "identifier": "Apache-2.0"
@@ -439,6 +439,187 @@
           }
         }
       }
+    },
+    "/open/data-quality": {
+      "get": {
+        "summary": "Data Quality",
+        "description": "The current data-quality report: findings with their class and status against the\nprevious run, the sources and the rules. Codes and counts only.",
+        "operationId": "data_quality_open_data_quality_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DataQualityOut"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicError"
+                },
+                "examples": {
+                  "unavailable": {
+                    "value": {
+                      "error": "data_quality_unavailable"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/open/data-quality.csv": {
+      "get": {
+        "summary": "Data Quality Csv",
+        "operationId": "data_quality_csv_open_data_quality_csv_get",
+        "responses": {
+          "200": {
+            "description": "One row per finding.",
+            "content": {
+              "text/csv": {}
+            }
+          }
+        }
+      }
+    },
+    "/open/data-quality.md": {
+      "get": {
+        "summary": "Data Quality Markdown",
+        "operationId": "data_quality_markdown_open_data_quality_md_get",
+        "responses": {
+          "200": {
+            "description": "Readable summary.",
+            "content": {
+              "text/markdown": {}
+            }
+          }
+        }
+      }
+    },
+    "/open/faers-onset": {
+      "get": {
+        "summary": "Onset Table",
+        "description": "All 65 PIPC rows with their FAERS report counts and reported time to onset.",
+        "operationId": "onset_table_open_faers_onset_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OnsetTableOut"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicError"
+                },
+                "examples": {
+                  "unavailable": {
+                    "value": {
+                      "error": "onset_table_unavailable"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/open/faers-onset.csv": {
+      "get": {
+        "summary": "Onset Table Csv",
+        "operationId": "onset_table_csv_open_faers_onset_csv_get",
+        "responses": {
+          "200": {
+            "description": "One row per PIPC row.",
+            "content": {
+              "text/csv": {}
+            }
+          }
+        }
+      }
+    },
+    "/open/faers-onset/{position}": {
+      "get": {
+        "summary": "Onset Row",
+        "description": "One PIPC row (1-65) with the dataset's caveats.",
+        "operationId": "onset_row_open_faers_onset__position__get",
+        "parameters": [
+          {
+            "name": "position",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Position"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OnsetRowResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicError"
+                },
+                "examples": {
+                  "unknown": {
+                    "value": {
+                      "error": "unknown_position"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicError"
+                },
+                "examples": {
+                  "invalid": {
+                    "value": {
+                      "error": "invalid_request",
+                      "fields": [
+                        "position"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -749,6 +930,149 @@
           "ulcer",
           "infection"
         ]
+      },
+      "DataQualityOut": {
+        "properties": {
+          "dataset": {
+            "type": "string",
+            "const": "janus-data-quality",
+            "title": "Dataset"
+          },
+          "version": {
+            "type": "string",
+            "title": "Version"
+          },
+          "run_id": {
+            "type": "string",
+            "title": "Run Id"
+          },
+          "run_date": {
+            "type": "string",
+            "title": "Run Date"
+          },
+          "previous_run_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Previous Run Id"
+          },
+          "previous_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Previous Version"
+          },
+          "license": {
+            "type": "string",
+            "const": "CC BY 4.0",
+            "title": "License"
+          },
+          "license_url": {
+            "type": "string",
+            "title": "License Url"
+          },
+          "attribution": {
+            "type": "string",
+            "title": "Attribution"
+          },
+          "disclaimer": {
+            "type": "string",
+            "title": "Disclaimer"
+          },
+          "class_meaning": {
+            "type": "string",
+            "title": "Class Meaning"
+          },
+          "dictionary_url": {
+            "type": "string",
+            "title": "Dictionary Url"
+          },
+          "review_status": {
+            "type": "string",
+            "title": "Review Status"
+          },
+          "notices": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Notices"
+          },
+          "resolution_dataset": {
+            "type": "string",
+            "title": "Resolution Dataset"
+          },
+          "code_version": {
+            "type": "string",
+            "title": "Code Version"
+          },
+          "sources": {
+            "additionalProperties": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "object",
+            "title": "Sources"
+          },
+          "rules": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Rules"
+          },
+          "metrics": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Metrics"
+          },
+          "summary": {
+            "$ref": "#/components/schemas/janus__quality__router__SummaryOut"
+          },
+          "findings": {
+            "items": {
+              "$ref": "#/components/schemas/janus__quality__router__FindingOut"
+            },
+            "type": "array",
+            "title": "Findings"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "dataset",
+          "version",
+          "run_id",
+          "run_date",
+          "previous_run_id",
+          "previous_version",
+          "license",
+          "license_url",
+          "attribution",
+          "disclaimer",
+          "class_meaning",
+          "dictionary_url",
+          "review_status",
+          "notices",
+          "resolution_dataset",
+          "code_version",
+          "sources",
+          "rules",
+          "metrics",
+          "summary",
+          "findings"
+        ],
+        "title": "DataQualityOut"
       },
       "EstimatesOut": {
         "properties": {
@@ -1151,6 +1475,30 @@
         ],
         "title": "Health"
       },
+      "MemberCountOut": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "title": "Key"
+          },
+          "candidate_reports": {
+            "type": "integer",
+            "title": "Candidate Reports"
+          },
+          "reports_with_interval": {
+            "type": "integer",
+            "title": "Reports With Interval"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "key",
+          "candidate_reports",
+          "reports_with_interval"
+        ],
+        "title": "MemberCountOut"
+      },
       "Meta": {
         "properties": {
           "built_at": {
@@ -1185,6 +1533,855 @@
           "simulations"
         ],
         "title": "Meta"
+      },
+      "OnsetRowOut": {
+        "properties": {
+          "pipc_position": {
+            "type": "integer",
+            "title": "Pipc Position"
+          },
+          "pipc_system": {
+            "type": "string",
+            "title": "Pipc System"
+          },
+          "pipc_drug_a": {
+            "type": "string",
+            "title": "Pipc Drug A"
+          },
+          "pipc_adverse_event": {
+            "type": "string",
+            "title": "Pipc Adverse Event"
+          },
+          "pipc_drug_b": {
+            "type": "string",
+            "title": "Pipc Drug B"
+          },
+          "pipc_locator": {
+            "type": "string",
+            "title": "Pipc Locator"
+          },
+          "index_class": {
+            "type": "string",
+            "title": "Index Class"
+          },
+          "class_ingredient_keys": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Class Ingredient Keys"
+          },
+          "excluded_class_keys": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Excluded Class Keys"
+          },
+          "route_groups_counted": {
+            "items": {
+              "type": "string",
+              "enum": [
+                "systemic_or_unknown",
+                "eye",
+                "rectal",
+                "nasal_inhaled",
+                "joint_lesion"
+              ]
+            },
+            "type": "array",
+            "title": "Route Groups Counted"
+          },
+          "form_extensions_on": {
+            "type": "boolean",
+            "title": "Form Extensions On"
+          },
+          "event_key": {
+            "type": "string",
+            "title": "Event Key"
+          },
+          "event_pts": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Event Pts"
+          },
+          "shared_with_positions": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array",
+            "title": "Shared With Positions"
+          },
+          "candidate_reports": {
+            "type": "integer",
+            "title": "Candidate Reports"
+          },
+          "reports_with_interval": {
+            "type": "integer",
+            "title": "Reports With Interval"
+          },
+          "usable_share": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Usable Share"
+          },
+          "candidates_without_interval_by_reason": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "propertyNames": {
+              "enum": [
+                "no_therapy_start",
+                "start_date_partial",
+                "event_date_missing",
+                "event_date_partial",
+                "negative_interval",
+                "interval_over_max"
+              ]
+            },
+            "type": "object",
+            "title": "Candidates Without Interval By Reason"
+          },
+          "members_with_reports": {
+            "items": {
+              "$ref": "#/components/schemas/MemberCountOut"
+            },
+            "type": "array",
+            "title": "Members With Reports"
+          },
+          "distinct_intervals": {
+            "type": "integer",
+            "title": "Distinct Intervals"
+          },
+          "multi_line_reports": {
+            "type": "integer",
+            "title": "Multi Line Reports"
+          },
+          "multi_event_reports": {
+            "type": "integer",
+            "title": "Multi Event Reports"
+          },
+          "event_year_min": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Event Year Min"
+          },
+          "event_year_max": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Event Year Max"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "described",
+              "small_sample",
+              "cluster_dominated",
+              "count_only",
+              "no_interval",
+              "no_candidate_reports"
+            ],
+            "title": "Status"
+          },
+          "small_sample": {
+            "type": "boolean",
+            "title": "Small Sample"
+          },
+          "omitted_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Omitted Reason"
+          },
+          "median_days": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Median Days"
+          },
+          "q25_days": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Q25 Days"
+          },
+          "q75_days": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Q75 Days"
+          },
+          "median_ci_low_days": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Median Ci Low Days"
+          },
+          "median_ci_high_days": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Median Ci High Days"
+          },
+          "median_ci_degenerate": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Median Ci Degenerate"
+          },
+          "median_exact_ci_low_days": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Median Exact Ci Low Days"
+          },
+          "median_exact_ci_high_days": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Median Exact Ci High Days"
+          },
+          "median_exact_ci_coverage": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Median Exact Ci Coverage"
+          },
+          "median_reflects_zero_heaping": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Median Reflects Zero Heaping"
+          },
+          "median_days_earliest_class_start": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Median Days Earliest Class Start"
+          },
+          "median_days_distinct_date_pairs": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Median Days Distinct Date Pairs"
+          },
+          "zero_day_reports": {
+            "type": "integer",
+            "title": "Zero Day Reports"
+          },
+          "zero_day_share": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Zero Day Share"
+          },
+          "day_one_reports": {
+            "type": "integer",
+            "title": "Day One Reports"
+          },
+          "jan_one_reports": {
+            "type": "integer",
+            "title": "Jan One Reports"
+          },
+          "day_one_share": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Day One Share"
+          },
+          "reports_without_day_one": {
+            "type": "integer",
+            "title": "Reports Without Day One"
+          },
+          "median_days_without_day_one": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Median Days Without Day One"
+          },
+          "sensitivity_omitted_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sensitivity Omitted Reason"
+          },
+          "largest_date_cluster": {
+            "type": "integer",
+            "title": "Largest Date Cluster"
+          },
+          "reports_in_clusters_ge3": {
+            "type": "integer",
+            "title": "Reports In Clusters Ge3"
+          },
+          "weibull_shape": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Weibull Shape"
+          },
+          "weibull_shape_ci_low": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Weibull Shape Ci Low"
+          },
+          "weibull_shape_ci_high": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Weibull Shape Ci High"
+          },
+          "weibull_scale_days": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Weibull Scale Days"
+          },
+          "weibull_shape_class": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "early",
+                  "random",
+                  "wear_out"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Weibull Shape Class"
+          },
+          "shape_omitted_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Shape Omitted Reason"
+          },
+          "row_notes": {
+            "items": {
+              "$ref": "#/components/schemas/RowNoteOut"
+            },
+            "type": "array",
+            "title": "Row Notes"
+          },
+          "descriptive_only": {
+            "type": "boolean",
+            "const": true,
+            "title": "Descriptive Only"
+          },
+          "causal": {
+            "type": "boolean",
+            "const": false,
+            "title": "Causal"
+          },
+          "incidence": {
+            "type": "boolean",
+            "const": false,
+            "title": "Incidence"
+          },
+          "counts_are": {
+            "type": "string",
+            "const": "reports",
+            "title": "Counts Are"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "pipc_position",
+          "pipc_system",
+          "pipc_drug_a",
+          "pipc_adverse_event",
+          "pipc_drug_b",
+          "pipc_locator",
+          "index_class",
+          "class_ingredient_keys",
+          "excluded_class_keys",
+          "route_groups_counted",
+          "form_extensions_on",
+          "event_key",
+          "event_pts",
+          "shared_with_positions",
+          "candidate_reports",
+          "reports_with_interval",
+          "usable_share",
+          "candidates_without_interval_by_reason",
+          "members_with_reports",
+          "distinct_intervals",
+          "multi_line_reports",
+          "multi_event_reports",
+          "event_year_min",
+          "event_year_max",
+          "status",
+          "small_sample",
+          "omitted_reason",
+          "median_days",
+          "q25_days",
+          "q75_days",
+          "median_ci_low_days",
+          "median_ci_high_days",
+          "median_ci_degenerate",
+          "median_exact_ci_low_days",
+          "median_exact_ci_high_days",
+          "median_exact_ci_coverage",
+          "median_reflects_zero_heaping",
+          "median_days_earliest_class_start",
+          "median_days_distinct_date_pairs",
+          "zero_day_reports",
+          "zero_day_share",
+          "day_one_reports",
+          "jan_one_reports",
+          "day_one_share",
+          "reports_without_day_one",
+          "median_days_without_day_one",
+          "sensitivity_omitted_reason",
+          "largest_date_cluster",
+          "reports_in_clusters_ge3",
+          "weibull_shape",
+          "weibull_shape_ci_low",
+          "weibull_shape_ci_high",
+          "weibull_scale_days",
+          "weibull_shape_class",
+          "shape_omitted_reason",
+          "row_notes",
+          "descriptive_only",
+          "causal",
+          "incidence",
+          "counts_are"
+        ],
+        "title": "OnsetRowOut"
+      },
+      "OnsetRowResponse": {
+        "properties": {
+          "dataset": {
+            "type": "string",
+            "const": "janus-faers-onset-pipc",
+            "title": "Dataset"
+          },
+          "version": {
+            "type": "string",
+            "title": "Version"
+          },
+          "faers_receipt_quarters": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Faers Receipt Quarters"
+          },
+          "license": {
+            "type": "string",
+            "const": "CC BY 4.0",
+            "title": "License"
+          },
+          "attribution": {
+            "type": "string",
+            "title": "Attribution"
+          },
+          "meddra_notice": {
+            "type": "string",
+            "title": "Meddra Notice"
+          },
+          "caveats": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Caveats"
+          },
+          "row": {
+            "$ref": "#/components/schemas/OnsetRowOut"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "dataset",
+          "version",
+          "faers_receipt_quarters",
+          "license",
+          "attribution",
+          "meddra_notice",
+          "caveats",
+          "row"
+        ],
+        "title": "OnsetRowResponse"
+      },
+      "OnsetSummaryOut": {
+        "properties": {
+          "rows": {
+            "type": "integer",
+            "title": "Rows"
+          },
+          "by_status": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "propertyNames": {
+              "enum": [
+                "described",
+                "small_sample",
+                "cluster_dominated",
+                "count_only",
+                "no_interval",
+                "no_candidate_reports"
+              ]
+            },
+            "type": "object",
+            "title": "By Status"
+          },
+          "rows_with_any_interval": {
+            "type": "integer",
+            "title": "Rows With Any Interval"
+          },
+          "rows_with_median": {
+            "type": "integer",
+            "title": "Rows With Median"
+          },
+          "rows_with_weibull_shape": {
+            "type": "integer",
+            "title": "Rows With Weibull Shape"
+          },
+          "weibull_shape_classes": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "propertyNames": {
+              "enum": [
+                "early",
+                "random",
+                "wear_out"
+              ]
+            },
+            "type": "object",
+            "title": "Weibull Shape Classes"
+          },
+          "distinct_class_event_pairs": {
+            "type": "integer",
+            "title": "Distinct Class Event Pairs"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "rows",
+          "by_status",
+          "rows_with_any_interval",
+          "rows_with_median",
+          "rows_with_weibull_shape",
+          "weibull_shape_classes",
+          "distinct_class_event_pairs"
+        ],
+        "title": "OnsetSummaryOut"
+      },
+      "OnsetTableOut": {
+        "properties": {
+          "dataset": {
+            "type": "string",
+            "const": "janus-faers-onset-pipc",
+            "title": "Dataset"
+          },
+          "version": {
+            "type": "string",
+            "title": "Version"
+          },
+          "built_at": {
+            "type": "string",
+            "title": "Built At"
+          },
+          "faers_receipt_quarters": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Faers Receipt Quarters"
+          },
+          "faers_snapshot_date": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Faers Snapshot Date"
+          },
+          "faers_run_id": {
+            "type": "string",
+            "title": "Faers Run Id"
+          },
+          "faers_onset_run_id": {
+            "type": "string",
+            "title": "Faers Onset Run Id"
+          },
+          "faers_counts_build_id": {
+            "type": "string",
+            "title": "Faers Counts Build Id"
+          },
+          "resolution_dataset": {
+            "type": "string",
+            "title": "Resolution Dataset"
+          },
+          "rule_base_version": {
+            "type": "string",
+            "title": "Rule Base Version"
+          },
+          "event_vocabulary_sha256": {
+            "type": "string",
+            "title": "Event Vocabulary Sha256"
+          },
+          "key_exclusions_sha256": {
+            "type": "string",
+            "title": "Key Exclusions Sha256"
+          },
+          "row_notes_sha256": {
+            "type": "string",
+            "title": "Row Notes Sha256"
+          },
+          "faers_onset_quality": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Faers Onset Quality"
+          },
+          "license": {
+            "type": "string",
+            "const": "CC BY 4.0",
+            "title": "License"
+          },
+          "license_url": {
+            "type": "string",
+            "title": "License Url"
+          },
+          "attribution": {
+            "type": "string",
+            "title": "Attribution"
+          },
+          "meddra_notice": {
+            "type": "string",
+            "title": "Meddra Notice"
+          },
+          "dictionary_url": {
+            "type": "string",
+            "title": "Dictionary Url"
+          },
+          "review_status": {
+            "type": "string",
+            "title": "Review Status"
+          },
+          "disclaimer": {
+            "type": "string",
+            "title": "Disclaimer"
+          },
+          "descriptive_only": {
+            "type": "boolean",
+            "const": true,
+            "title": "Descriptive Only"
+          },
+          "causal": {
+            "type": "boolean",
+            "const": false,
+            "title": "Causal"
+          },
+          "incidence": {
+            "type": "boolean",
+            "const": false,
+            "title": "Incidence"
+          },
+          "counts_are": {
+            "type": "string",
+            "const": "reports",
+            "title": "Counts Are"
+          },
+          "caveats": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Caveats"
+          },
+          "method": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Method"
+          },
+          "summary": {
+            "$ref": "#/components/schemas/OnsetSummaryOut"
+          },
+          "rows": {
+            "items": {
+              "$ref": "#/components/schemas/OnsetRowOut"
+            },
+            "type": "array",
+            "title": "Rows"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "dataset",
+          "version",
+          "built_at",
+          "faers_receipt_quarters",
+          "faers_snapshot_date",
+          "faers_run_id",
+          "faers_onset_run_id",
+          "faers_counts_build_id",
+          "resolution_dataset",
+          "rule_base_version",
+          "event_vocabulary_sha256",
+          "key_exclusions_sha256",
+          "row_notes_sha256",
+          "faers_onset_quality",
+          "license",
+          "license_url",
+          "attribution",
+          "meddra_notice",
+          "dictionary_url",
+          "review_status",
+          "disclaimer",
+          "descriptive_only",
+          "causal",
+          "incidence",
+          "counts_are",
+          "caveats",
+          "method",
+          "summary",
+          "rows"
+        ],
+        "title": "OnsetTableOut"
       },
       "OpenCellOut": {
         "properties": {
@@ -1529,6 +2726,25 @@
         ],
         "title": "ReleaseRuleOut"
       },
+      "RowNoteOut": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "note": {
+            "type": "string",
+            "title": "Note"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "code",
+          "note"
+        ],
+        "title": "RowNoteOut"
+      },
       "ScopeName": {
         "type": "string",
         "enum": [
@@ -1672,40 +2888,6 @@
         ],
         "title": "StorageInfo"
       },
-      "SummaryOut": {
-        "properties": {
-          "hits": {
-            "type": "integer",
-            "title": "Hits"
-          },
-          "informative_hits": {
-            "type": "integer",
-            "title": "Informative Hits"
-          },
-          "misses": {
-            "type": "integer",
-            "title": "Misses"
-          },
-          "not_evaluable": {
-            "type": "integer",
-            "title": "Not Evaluable"
-          },
-          "expected_hits_by_chance": {
-            "type": "number",
-            "title": "Expected Hits By Chance"
-          }
-        },
-        "additionalProperties": false,
-        "type": "object",
-        "required": [
-          "hits",
-          "informative_hits",
-          "misses",
-          "not_evaluable",
-          "expected_hits_by_chance"
-        ],
-        "title": "SummaryOut"
-      },
       "TotalsOut": {
         "properties": {
           "region": {
@@ -1784,10 +2966,10 @@
             "title": "Cases"
           },
           "primary": {
-            "$ref": "#/components/schemas/SummaryOut"
+            "$ref": "#/components/schemas/janus__light__schemas__SummaryOut"
           },
           "sensitivity": {
-            "$ref": "#/components/schemas/SummaryOut"
+            "$ref": "#/components/schemas/janus__light__schemas__SummaryOut"
           },
           "goals": {
             "items": {
@@ -1927,6 +3109,40 @@
         ],
         "title": "SourceOut"
       },
+      "janus__light__schemas__SummaryOut": {
+        "properties": {
+          "hits": {
+            "type": "integer",
+            "title": "Hits"
+          },
+          "informative_hits": {
+            "type": "integer",
+            "title": "Informative Hits"
+          },
+          "misses": {
+            "type": "integer",
+            "title": "Misses"
+          },
+          "not_evaluable": {
+            "type": "integer",
+            "title": "Not Evaluable"
+          },
+          "expected_hits_by_chance": {
+            "type": "number",
+            "title": "Expected Hits By Chance"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "hits",
+          "informative_hits",
+          "misses",
+          "not_evaluable",
+          "expected_hits_by_chance"
+        ],
+        "title": "SummaryOut"
+      },
       "janus__memory__schemas__IntervalOut": {
         "properties": {
           "low": {
@@ -2041,6 +3257,261 @@
           "attribution"
         ],
         "title": "SnapshotOut"
+      },
+      "janus__quality__router__FindingOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "new",
+              "persisting",
+              "resolved"
+            ],
+            "title": "Status"
+          },
+          "class": {
+            "type": "string",
+            "enum": [
+              "confirmed_error",
+              "needs_pharmacist",
+              "benign_difference"
+            ],
+            "title": "Class"
+          },
+          "class_changed_from": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "confirmed_error",
+                  "needs_pharmacist",
+                  "benign_difference"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Class Changed From"
+          },
+          "check": {
+            "type": "string",
+            "enum": [
+              "exclusion_status",
+              "item_group",
+              "regulator_group",
+              "substance_code_keys"
+            ],
+            "title": "Check"
+          },
+          "source": {
+            "type": "string",
+            "title": "Source"
+          },
+          "key": {
+            "type": "string",
+            "title": "Key"
+          },
+          "label_en": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Label En"
+          },
+          "wikidata_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Wikidata Url"
+          },
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "compared_codes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Compared Codes"
+          },
+          "products": {
+            "type": "integer",
+            "title": "Products"
+          },
+          "reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Reasons"
+          },
+          "other_keys": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Other Keys"
+          },
+          "upstream": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "persisting",
+                  "resolved_upstream"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Upstream"
+          },
+          "whocc_group_urls": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Whocc Group Urls"
+          },
+          "how_to_find": {
+            "type": "string",
+            "title": "How To Find"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "status",
+          "class",
+          "class_changed_from",
+          "check",
+          "source",
+          "key",
+          "label_en",
+          "wikidata_url",
+          "code",
+          "compared_codes",
+          "products",
+          "reasons",
+          "other_keys",
+          "upstream",
+          "whocc_group_urls",
+          "how_to_find"
+        ],
+        "title": "FindingOut"
+      },
+      "janus__quality__router__SummaryOut": {
+        "properties": {
+          "findings": {
+            "type": "integer",
+            "title": "Findings"
+          },
+          "by_class": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "propertyNames": {
+              "enum": [
+                "confirmed_error",
+                "needs_pharmacist",
+                "benign_difference"
+              ]
+            },
+            "type": "object",
+            "title": "By Class"
+          },
+          "by_check": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "propertyNames": {
+              "enum": [
+                "exclusion_status",
+                "item_group",
+                "regulator_group",
+                "substance_code_keys"
+              ]
+            },
+            "type": "object",
+            "title": "By Check"
+          },
+          "by_check_class": {
+            "additionalProperties": {
+              "additionalProperties": {
+                "type": "integer"
+              },
+              "propertyNames": {
+                "enum": [
+                  "confirmed_error",
+                  "needs_pharmacist",
+                  "benign_difference"
+                ]
+              },
+              "type": "object"
+            },
+            "propertyNames": {
+              "enum": [
+                "exclusion_status",
+                "item_group",
+                "regulator_group",
+                "substance_code_keys"
+              ]
+            },
+            "type": "object",
+            "title": "By Check Class"
+          },
+          "by_status": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "propertyNames": {
+              "enum": [
+                "new",
+                "persisting",
+                "resolved"
+              ]
+            },
+            "type": "object",
+            "title": "By Status"
+          },
+          "confirmed_errors_still_published": {
+            "type": "integer",
+            "title": "Confirmed Errors Still Published"
+          },
+          "confirmed_errors_resolved_upstream": {
+            "type": "integer",
+            "title": "Confirmed Errors Resolved Upstream"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "findings",
+          "by_class",
+          "by_check",
+          "by_check_class",
+          "by_status",
+          "confirmed_errors_still_published",
+          "confirmed_errors_resolved_upstream"
+        ],
+        "title": "SummaryOut"
       },
       "janus__seance__schemas__CatalogueOut": {
         "properties": {

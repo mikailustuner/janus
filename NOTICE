@@ -148,6 +148,9 @@ Time to onset per report and drug, derived from the FAERS quarterly files (Time 
   Derived from the raw archives of the current faers run (THER.start_dt,
   DEMO.event_dt); only complete dates; exclusions counted by reason. Spontaneous
   reports: what reporters wrote down, not measured latency.
+  A side table keeps DRUG.route and DRUG.dose_form as published and the
+  exclusion reason of every report-drug pair (FAERS onset table for the PIPC
+  rows).
 
 FDA Adverse Event Monitoring System (AEMS, formerly FAERS) quarterly data files
   Publisher: U.S. Food and Drug Administration
@@ -179,6 +182,16 @@ Crossref REST API, including Retraction Watch data
 Europe PMC / PubMed
   Publisher: EMBL-EBI / U.S. National Library of Medicine
   License: Open APIs
+
+Janus data-quality report: ingredient identity fields (ATC codes, substance codes) compared across TİTCK, Wikidata, openFDA NDC, BDPM and AEMPS CIMA
+  Publisher: Janus (derived from the sources above)
+  License: CC BY 4.0 (the report); each input keeps its own terms
+  Inputs: the current titck, us_ndc, wikidata_ingredients, eu_fr_bdpm and
+  eu_es_cima artifacts and data/atc_code_exclusions.csv.
+  Weekly, after the TİTCK pipeline: `python -m janus.quality.build --publish`.
+  Codes and counts only: no TİTCK row, product name or barcode, and no WHOCC
+  index text. Published in data/open/data-quality/ and at GET
+  /open/data-quality.
 
 Historical texts (Séance)
 -------------------------

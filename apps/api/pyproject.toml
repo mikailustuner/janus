@@ -57,6 +57,7 @@ select = ["E", "F", "W", "I", "B", "UP", "S", "N", "RUF"]
 "janus/light/report.py" = ["E501", "RUF001"]
 # Time machine: seeded random.Random for reproducible Monte Carlo and bootstrap, not secrets.
 "janus/timemachine/**" = ["S311"]
+"janus/onset_table/**" = ["S311"]
 "tests/test_timemachine_*.py" = ["S101", "S311"]
 
 [tool.pyright]

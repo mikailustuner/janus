@@ -1,0 +1,31 @@
+position,code,note
+2,vertigo_not_included,"The event key has dizziness, postural dizziness and orthostatic hypotension; vertigo, presyncope and hypotension are not among its terms (pharmacologist review O10)."
+3,eye_drops_included,"Row 3 names ophthalmic beta-blockers, so eye-drop lines count here (form extension on): the row mixes eye-drop and systemic use (pharmacologist review O5)."
+5,narrow_oedema_terms,"The event key has only Oedema peripheral and Peripheral swelling; row 43 uses the broader oedema terms (pharmacologist review O10)."
+11,cramp_terms_missing,"Drug B is quinine for cramps, but the shared event key has myalgia and myositis only, not muscle spasms (pharmacologist review O10)."
+21,atrial_fibrillation_not_included,The arrhythmia event key does not include atrial fibrillation (pharmacologist review O10).
+22,diabetes_terms_not_included,The event key has hyperglycaemia and blood glucose increased; diabetes mellitus terms are not included (pharmacologist review O10).
+26,nonspecific_gi_terms,The event key has gastrointestinal disorder, dyspepsia and abdominal discomfort; vomiting and upper abdominal pain are not included (pharmacologist review O10).
+27,nonspecific_gi_terms,The event key has gastrointestinal disorder, dyspepsia and abdominal discomfort; vomiting and upper abdominal pain are not included (pharmacologist review O10).
+30,prolactin_use_included,"Cabergoline and bromocriptine count with all their reports, including treatment of high prolactin, which the class leaves out (pharmacologist review O8)."
+31,narrow_oedema_terms,"The event key has only Oedema peripheral and Peripheral swelling; row 43 uses the broader oedema terms (pharmacologist review O10)."
+44,few_reports_in_window,"The four FAERS receipt quarters hold few or no reports for rosiglitazone with this event (pharmacologist review O16)."
+47,bowel_preparation_same_day,"Bowel-cleansing preparations (macrogol, picosulfate, phosphates, magnesium citrate) cause diarrhoea on the same day as their intended effect, so many zero-day intervals are expected pharmacology, not a cascade signal (pharmacologist review O6)."
+48,no_fracture_terms,"The event key has osteoporosis, osteopenia and bone density terms but no fracture terms such as hip or vertebral fracture (pharmacologist review O10)."
+49,mixed_mechanisms,"The event key mixes vitamin B12, magnesium and iron deficiency, which have different latencies; iron deficiency may reflect the bleeding the PPI was given for. Drug B is shown as published (pharmacologist review O11)."
+50,oesophageal_terms_missing,The event key has gastritis terms; the oesophageal injury typical of bisphosphonates (oesophagitis or oesophageal ulcer) is not included (pharmacologist review O10).
+55,codeine_not_member,"Codeine is not a member: its Wikidata item carries only an antitussive code (R05DA04), so codeine-containing analgesics are not counted (pharmacologist review O15)."
+56,vertigo_not_included,"The event key has dizziness, postural dizziness and orthostatic hypotension; vertigo is not among its terms, although drug B is a vestibular suppressant (pharmacologist review O10)."
+59,replacement_dose_hydrocortisone,Cortisol (hydrocortisone) counts with replacement doses as well as anti-inflammatory doses (pharmacologist review O2).
+60,replacement_dose_hydrocortisone,Cortisol (hydrocortisone) counts with replacement doses as well as anti-inflammatory doses (pharmacologist review O2).
+61,replacement_dose_hydrocortisone,Cortisol (hydrocortisone) counts with replacement doses as well as anti-inflammatory doses (pharmacologist review O2).
+62,few_reports_in_window,The four FAERS receipt quarters hold few or no reports for acitretin with this event (pharmacologist review O16).
+63,atrial_fibrillation_not_included,The arrhythmia event key does not include atrial fibrillation (pharmacologist review O10).
+23,amnesia_term_acute,"The cognitive_impairment event key includes Amnesia, which also captures acute anterograde amnesia right after a dose; that is not the chronic impairment row 23 asks about, and it explains much of the same-day heaping (pharmacologist second pass P4)."
+33,doxepin_name_split,"FAERS reports filed under the plain name DOXEPIN map to an ingredient key that carries only the topical code D04AX01, so they are not counted as a tricyclic antidepressant; DOXEPIN HYDROCHLORIDE is counted (pharmacologist second pass P1; drug-resolution follow-up)."
+34,doxepin_name_split,"FAERS reports filed under the plain name DOXEPIN map to an ingredient key that carries only the topical code D04AX01, so they are not counted as a tricyclic antidepressant; DOXEPIN HYDROCHLORIDE is counted (pharmacologist second pass P1; drug-resolution follow-up)."
+35,doxepin_name_split,"FAERS reports filed under the plain name DOXEPIN map to an ingredient key that carries only the topical code D04AX01, so they are not counted as a tricyclic antidepressant; DOXEPIN HYDROCHLORIDE is counted (pharmacologist second pass P1; drug-resolution follow-up)."
+59,cortisone_no_intervals,"The cortisone key has many candidate reports but no usable interval; in US reports cortisone may be loose shorthand for any steroid injection (unconfirmed; pharmacologist second pass P6)."
+60,cortisone_no_intervals,"The cortisone key has many candidate reports but no usable interval; in US reports cortisone may be loose shorthand for any steroid injection (unconfirmed; pharmacologist second pass P6)."
+61,cortisone_no_intervals,"The cortisone key has many candidate reports but no usable interval; in US reports cortisone may be loose shorthand for any steroid injection (unconfirmed; pharmacologist second pass P6)."
+65,oral_iron_names_unmapped,"Several common oral iron names in FAERS (iron polymaltose, ferrous bisglycinate, polysaccharide-iron complex, heme iron polypeptide, iron protein succinylate, ferrous citrate) are not mapped to an ingredient key, so their reports are missing here (pharmacologist second pass P5; drug-resolution follow-up)."

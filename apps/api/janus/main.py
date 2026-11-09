@@ -28,7 +28,9 @@ from janus.observability.logging import (
     register_route_templates,
 )
 from janus.observability.middleware import AccessLogMiddleware
+from janus.onset_table.router import OnsetTableHolder
 from janus.passport.forms import load as load_dose_forms
+from janus.quality.router import DataQualityHolder
 from janus.seance.catalogue import PACKAGE_DIR as SEANCE_PACKAGE
 from janus.seance.catalogue import load_catalogue as load_seance
 from janus.settings import EVENT_VOCABULARY, Settings
@@ -108,6 +110,9 @@ def create_app(
     app.state.seance = load_seance() if (SEANCE_PACKAGE / "claims.csv").is_file() else None
     # Time machine (design §8.3): a missing artifact makes `/timemachine/*` answer 503.
     app.state.timemachine = TimeMachineHolder(settings.data_dir)
+    # Open research datasets (data-quality, faers-onset-table specs): 503 when not built.
+    app.state.data_quality = DataQualityHolder(settings.data_dir)
+    app.state.onset_table = OnsetTableHolder(settings.data_dir)
     app.state.note_keyring = (
         Keyring(settings.note_keys, settings.note_signing_key_id)
         if settings.note_keys and settings.note_signing_key_id
@@ -122,9 +127,11 @@ def create_app(
     from janus.memory.router import snapshot_router as memory_snapshot_router
     from janus.notes.router import donation as notes_donation_router
     from janus.notes.router import router as notes_router
+    from janus.onset_table.router import router as onset_table_router
     from janus.open.router import router as open_router
     from janus.passport.router import router as passport_router
     from janus.privacy.router import router as privacy_router
+    from janus.quality.router import router as data_quality_router
     from janus.resolution.router import router as resolution_router
     from janus.seance.router import router as seance_router
     from janus.timemachine.router import router as timemachine_router
@@ -145,6 +152,8 @@ def create_app(
         seance_router,
         timemachine_router,
         open_router,
+        data_quality_router,
+        onset_table_router,
         *extra_routers,
     ]
     for router in routers:
