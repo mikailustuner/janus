@@ -1349,8 +1349,8 @@
     "intro": {
       "choice": "Signaler un effet indésirable suspecté est votre propre choix. Un signalement transmet une suspicion ; vous n'avez pas à prouver que le médicament en est la cause.",
       "what": "Janus place ce qu'il sait déjà dans un brouillon sur cet appareil. Vous le vérifiez, le modifiez et recopiez vous-même chaque valeur dans le formulaire officiel.",
-      "fact": "Une revue systématique de 2006 a analysé 37 études qui estimaient la part des effets indésirables médicamenteux non déclarés aux autorités. La médiane des études était de 94 % (écart interquartile 82–98 % : la moitié centrale des études trouvait entre 82 % et 98 %).",
-      "caveat": "Les études diffèrent par le pays, le contexte et la méthode ; ce chiffre ne vaut donc pour aucun pays en particulier aujourd'hui.",
+      "fact": "Une revue systématique de 2006 a analysé 37 études qui estimaient la part des effets indésirables médicamenteux non déclarés aux autorités. La médiane des études était de 94 % (intervalle interquartile 82–98 % : la moitié centrale des études trouvait entre 82 % et 98 %).",
+      "caveat": "Les études diffèrent par le pays, le contexte et la méthode ; ce n'est donc pas un chiffre propre à un pays donné aujourd'hui.",
       "cite": "Hazell L, Shakir SAW. Under-reporting of adverse drug reactions: a systematic review. Drug Saf 2006;29(5):385–396.",
       "doi": "DOI 10.2165/00002018-200629050-00003"
     },
@@ -1387,7 +1387,8 @@
         "partial": "Janus n'a vérifié que la première page de ce formulaire (sur la personne) ; le brouillon utilise donc les libellés de Janus. Recopiez chaque valeur dans la question qui lui correspond.",
         "hcp": "Janus n'a pas vérifié les questions du formulaire destiné aux professionnels de santé ; le brouillon utilise donc les libellés de Janus."
       },
-      "derived": "Questions lues dans le fichier de définition officiel du formulaire ; Janus n'a pas rempli le formulaire en ligne."
+      "derived": "Questions lues dans une description officielle du formulaire (fichier de définition ou manuel) ; Janus n'a pas rempli le formulaire en ligne.",
+      "checkedAddress": "Adresse vérifiée le {date} sur le site de l'autorité."
     },
     "contacts": {
       "title": "Autres façons de faire un signalement",
@@ -1408,7 +1409,7 @@
       "eventText": "Avec vos propres mots",
       "eventHint": "Des mots simples suffisent ; l'autorité code elle-même le signalement.",
       "onset": "Quand cela a-t-il commencé ?",
-      "outcome": "Et maintenant ?",
+      "outcome": "Comment cela va-t-il maintenant ?",
       "outcomeOptions": "Ce sont les réponses du formulaire officiel.",
       "outcomeNone": "Pas de réponse",
       "outcomeFree": "Avec vos propres mots, par exemple si cela dure encore.",
@@ -1433,7 +1434,8 @@
       "othersEach": "Saisissez chaque médicament sur sa propre ligne du formulaire.",
       "missingTitle": "Questions du formulaire que Janus ne remplit pas",
       "missingHint": "Complétez-les vous-même sur le formulaire officiel, dans la mesure où vous souhaitez y répondre.",
-      "oneOf": "Au moins l'un de : {fields}"
+      "oneOf": "Au moins l'un de : {fields}",
+      "openGuidance": "Ouvrir les informations de l'EMA"
     },
     "janus": {
       "medicine": "Médicament (comme sur la boîte)",
@@ -1491,14 +1493,14 @@
     "options": {
       "trEform": {
         "0": "Rétabli/résolu",
-        "1": "En cours de rétablissement",
+        "1": "En cours de rétablissement/de résolution",
         "2": "Non rétabli/non résolu",
         "3": "Rétabli avec des séquelles",
         "4": "Décès",
         "5": "Inconnu"
       },
       "trDocx": {
-        "0": "L'effet indésirable a complètement disparu/rétabli",
+        "0": "L'effet indésirable a complètement disparu / la personne est rétablie",
         "1": "En voie de rétablissement",
         "2": "Les symptômes persistent/non rétabli",
         "3": "La maladie s'est aggravée",

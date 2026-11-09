@@ -1349,7 +1349,7 @@
     "intro": {
       "choice": "Reporting a suspected side effect is your own choice. A report passes on a suspicion; you do not need to prove that the medicine caused it.",
       "what": "Janus puts what it already knows into a draft on this device. You check it, change it, and copy each value into the official form.",
-      "fact": "A 2006 systematic review of 37 studies estimated what share of adverse drug reactions were not reported to the authorities. The median across the studies was 94% (interquartile range 82–98%: the middle half of the studies found between 82% and 98%).",
+      "fact": "A 2006 systematic review analysed 37 studies that estimated what share of adverse drug reactions were not reported to the authorities. The median across the studies was 94% (interquartile range 82–98%: the middle half of the studies found between 82% and 98%).",
       "caveat": "The studies differ in country, setting and method, so this is not a figure for any one country today.",
       "cite": "Hazell L, Shakir SAW. Under-reporting of adverse drug reactions: a systematic review. Drug Saf 2006;29(5):385–396.",
       "doi": "DOI 10.2165/00002018-200629050-00003"
@@ -1387,7 +1387,8 @@
         "partial": "Janus has checked only the first page of this form (about the person), so the draft uses Janus's own labels. Copy each value to the question that matches it.",
         "hcp": "Janus has not checked the questions of the health-professional form, so the draft uses Janus's own labels."
       },
-      "derived": "Questions read from the form's official definition file; Janus has not filled in the live form."
+      "derived": "Questions read from an official description of the form (its definition file or user manual); Janus has not filled in the live form.",
+      "checkedAddress": "Address checked on {date} on the authority's site."
     },
     "contacts": {
       "title": "Other ways to report",
@@ -1433,7 +1434,8 @@
       "othersEach": "Enter each medicine as its own entry on the form.",
       "missingTitle": "Questions of the form that Janus does not fill",
       "missingHint": "Add these yourself on the official form, as far as you want to answer them.",
-      "oneOf": "At least one of: {fields}"
+      "oneOf": "At least one of: {fields}",
+      "openGuidance": "Open the EMA guidance"
     },
     "janus": {
       "medicine": "Medicine (as on the box)",
@@ -1498,7 +1500,7 @@
         "5": "Unknown"
       },
       "trDocx": {
-        "0": "The side effect has gone completely/recovered",
+        "0": "The side effect has completely gone / the person has recovered",
         "1": "Recovering",
         "2": "Symptoms continue/not recovered",
         "3": "The illness got worse",

@@ -1349,8 +1349,8 @@
     "intro": {
       "choice": "Ob Sie eine vermutete Nebenwirkung melden, entscheiden Sie selbst. Eine Meldung gibt einen Verdacht weiter; Sie müssen nicht beweisen, dass das Arzneimittel die Ursache war.",
       "what": "Janus trägt, was es schon weiß, auf diesem Gerät in einen Entwurf ein. Sie prüfen ihn, ändern ihn und übertragen jeden Wert selbst in das offizielle Formular.",
-      "fact": "Eine systematische Übersichtsarbeit von 2006 wertete 37 Studien aus, die schätzten, welcher Anteil der Nebenwirkungen von Arzneimitteln den Behörden nicht gemeldet wurde. Der Median über die Studien lag bei 94 % (Interquartilsabstand 82–98 %: die mittlere Hälfte der Studien fand Werte zwischen 82 % und 98 %).",
-      "caveat": "Die Studien unterscheiden sich in Land, Umfeld und Methode; der Wert gilt daher heute für kein einzelnes Land.",
+      "fact": "Eine systematische Übersichtsarbeit von 2006 wertete 37 Studien aus, die schätzten, welcher Anteil der Nebenwirkungen von Arzneimitteln den Behörden nicht gemeldet wurde. Der Median über die Studien lag bei 94 % (Interquartilsbereich 82–98 %: die mittlere Hälfte der Studien fand Werte zwischen 82 % und 98 %).",
+      "caveat": "Die Studien unterscheiden sich in Land, Umfeld und Methode; der Wert ist daher kein Wert für ein bestimmtes Land heute.",
       "cite": "Hazell L, Shakir SAW. Under-reporting of adverse drug reactions: a systematic review. Drug Saf 2006;29(5):385–396.",
       "doi": "DOI 10.2165/00002018-200629050-00003"
     },
@@ -1387,7 +1387,8 @@
         "partial": "Janus hat nur die erste Seite dieses Formulars (Angaben zur Person) geprüft; der Entwurf verwendet daher Janus' eigene Bezeichnungen. Übertragen Sie jeden Wert in die passende Frage.",
         "hcp": "Janus hat die Fragen des Formulars für Fachkreise nicht geprüft; der Entwurf verwendet daher Janus' eigene Bezeichnungen."
       },
-      "derived": "Fragen aus der offiziellen Definitionsdatei des Formulars gelesen; Janus hat das Live-Formular nicht ausgefüllt."
+      "derived": "Fragen aus einer offiziellen Beschreibung des Formulars gelesen (Definitionsdatei oder Handbuch); Janus hat das Live-Formular nicht ausgefüllt.",
+      "checkedAddress": "Adresse am {date} auf der Website der Behörde geprüft."
     },
     "contacts": {
       "title": "Weitere Wege zur Meldung",
@@ -1419,7 +1420,7 @@
     "draft": {
       "title": "Ihr Entwurf",
       "demo": "Demo · synthetischer Patient — nicht einreichen",
-      "empty": "Geben Sie das Arzneimittel oder das Geschehen ein, um den Entwurf zu sehen.",
+      "empty": "Geben Sie das Arzneimittel ein oder was passiert ist, um den Entwurf zu sehen.",
       "copy": "Kopieren",
       "copyLabel": "{label} kopieren",
       "copied": "Kopiert: {label}",
@@ -1433,7 +1434,8 @@
       "othersEach": "Tragen Sie jedes Arzneimittel einzeln in das Formular ein.",
       "missingTitle": "Fragen des Formulars, die Janus nicht ausfüllt",
       "missingHint": "Ergänzen Sie diese selbst im offiziellen Formular, soweit Sie sie beantworten möchten.",
-      "oneOf": "Mindestens eines von: {fields}"
+      "oneOf": "Mindestens eines von: {fields}",
+      "openGuidance": "EMA-Hinweise öffnen"
     },
     "janus": {
       "medicine": "Arzneimittel (wie auf der Packung)",
@@ -1480,7 +1482,7 @@
       "deOutcome": "Ausgang der Nebenwirkung",
       "frDrug": "Arzneimittel",
       "frOnset": "Datum des Auftretens",
-      "frDescribe": "Art und Beschreibung der Wirkung",
+      "frDescribe": "Art und Beschreibung des Effekts",
       "frOutcome": "Verlauf",
       "esDrug": "Name des Arzneimittels",
       "esOtherDrug": "Name des Arzneimittels (weitere Arzneimittel)",
@@ -1498,7 +1500,7 @@
         "5": "Unbekannt"
       },
       "trDocx": {
-        "0": "Die Nebenwirkung ist ganz abgeklungen/erholt",
+        "0": "Die Nebenwirkung ist ganz abgeklungen / die Person hat sich erholt",
         "1": "In Erholung",
         "2": "Symptome dauern an/nicht erholt",
         "3": "Die Erkrankung hat sich verschlimmert",

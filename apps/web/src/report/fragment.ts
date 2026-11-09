@@ -72,6 +72,22 @@ export function parsePrefill(hash: string): Prefill | null {
   }
 }
 
+/** The assistant's link for a finding (Req 2.1): its first medicine and its event, codes only. */
+export function findingReportHref(f: {
+  index: { ingredient_key: string; items: number[] };
+  eventKey: string | null;
+}) {
+  return {
+    pathname: "/report" as const,
+    hash: buildPrefill({
+      src: "finding",
+      ingredient: f.index.ingredient_key,
+      event: f.eventKey,
+      items: f.index.items,
+    }),
+  };
+}
+
 export function buildPrefill(p: Prefill): string {
   const q = new URLSearchParams({ src: p.src });
   if (p.src === "finding") {

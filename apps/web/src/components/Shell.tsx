@@ -198,6 +198,7 @@ const WIDE = [
   "/passport",
   "/passport/item",
   "/results/finding",
+  "/report",
 ];
 
 function StorageNotice() {

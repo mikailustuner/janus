@@ -1350,7 +1350,7 @@
       "choice": "Notificar una sospecha de efecto adverso es decisión suya. Una notificación transmite una sospecha; no tiene que demostrar que el medicamento lo causó.",
       "what": "Janus pone lo que ya sabe en un borrador en este dispositivo. Usted lo revisa, lo cambia y copia cada valor en el formulario oficial.",
       "fact": "Una revisión sistemática de 2006 analizó 37 estudios que estimaban qué parte de las reacciones adversas a medicamentos no se notificaba a las autoridades. La mediana entre los estudios fue del 94 % (rango intercuartílico 82–98 %: la mitad central de los estudios encontró entre el 82 % y el 98 %).",
-      "caveat": "Los estudios difieren en país, ámbito y método, por lo que no es una cifra válida hoy para ningún país concreto.",
+      "caveat": "Los estudios difieren en país, ámbito y método, por lo que no es una cifra propia de ningún país concreto hoy.",
       "cite": "Hazell L, Shakir SAW. Under-reporting of adverse drug reactions: a systematic review. Drug Saf 2006;29(5):385–396.",
       "doi": "DOI 10.2165/00002018-200629050-00003"
     },
@@ -1387,7 +1387,8 @@
         "partial": "Janus solo ha comprobado la primera página de este formulario (sobre la persona), así que el borrador usa las etiquetas de Janus. Copie cada valor en la pregunta que le corresponda.",
         "hcp": "Janus no ha comprobado las preguntas del formulario para profesionales sanitarios, así que el borrador usa las etiquetas de Janus."
       },
-      "derived": "Preguntas leídas del archivo oficial de definición del formulario; Janus no ha rellenado el formulario en línea."
+      "derived": "Preguntas leídas de una descripción oficial del formulario (archivo de definición o manual); Janus no ha rellenado el formulario en línea.",
+      "checkedAddress": "Dirección comprobada el {date} en el sitio de la autoridad."
     },
     "contacts": {
       "title": "Otras formas de notificar",
@@ -1433,7 +1434,8 @@
       "othersEach": "Introduzca cada medicamento como una entrada propia en el formulario.",
       "missingTitle": "Preguntas del formulario que Janus no rellena",
       "missingHint": "Añádalas usted en el formulario oficial, en la medida en que quiera responderlas.",
-      "oneOf": "Al menos uno de: {fields}"
+      "oneOf": "Al menos uno de: {fields}",
+      "openGuidance": "Abrir la información de la EMA"
     },
     "janus": {
       "medicine": "Medicamento (como en la caja)",
@@ -1498,7 +1500,7 @@
         "5": "Desconocido"
       },
       "trDocx": {
-        "0": "El efecto adverso desapareció por completo/recuperado",
+        "0": "El efecto adverso desapareció por completo / la persona se ha recuperado",
         "1": "En recuperación",
         "2": "Los síntomas continúan/no recuperado",
         "3": "La enfermedad empeoró",

@@ -116,7 +116,7 @@ long content (long box names and labels wrap; the draft never scrolls sideways).
 | # | Property | Req |
 |---|---|---|
 | P1 | For any channel and any input, every native label of the draft is in the channel's verified field list; a channel without a usable list (unverified, none, page-1-only) yields no native label | 1.3, 5.2 |
-| P2 | Every URL the assistant can show (channel URL, source URL, finder) is a URL of the CSV; every CSV URL is `https:`, `mailto:` or `tel:` | 1.2, 5.7 |
+| P2 | Every URL the assistant can show (channel URL, source URL, finder) is a URL of the CSV; every CSV URL is `https:`, `mailto:` or `tel:`. The one exception is the citation link `https://doi.org/10.2165/00002018-200629050-00003` (safety audit A7) | 1.2, 5.7 |
 | P3 | Nothing is sent: building a draft and its copy-all text for any input never calls `fetch`, `XMLHttpRequest`, `sendBeacon` or storage | 6.1, 4.5 |
 | P4 | The demo line is in the copy-all text and `draft.demo` is true iff the input is a demo | 9.2 |
 | P5 | The other-medicines value is exactly the ticked labels in list order (none ticked → no row) | 4.2 |
@@ -141,7 +141,7 @@ labels are scanned by `channels.test.ts` instead.
 | DP1 | Janus prepares a draft on the device; the person copies values into the official form and submits it themselves | submit through an authority API (E2B/ICSR gateway); pre-fill the form by URL parameters | No authority offers a public patient submission API; a gateway would make Janus a reporter and send health data to its server (privacy.md). URL pre-fill is not documented by any of the forms |
 | DP2 | Channel facts live in `data/report_channels.csv`, checked by hand on official sites, with `checked_on` and `source_url`; the client uses a generated JSON and a test keeps them equal | fetch the forms at runtime; hard-code in components | Nothing is fetched (Req 6.1); a cited table can be re-verified and reviewed; one source of truth |
 | DP3 | **No MedDRA term is shipped or suggested.** The event is the Janus lay label of the vocabulary (Janus's own wording, `memory_events.csv` `label_*`, accepted by the owner 2026-11-08) or the person's words; the PT list of `memory_events.csv` is not used by the client | ship PTs for the authority's coding; MedDRA autocomplete | The MSSO statement (20 May 2026) forbids distribution to non-subscribers, including in open-source apps; authorities code the free text themselves (AEMPS manual). The vocabulary JSON shipped to the client has no PT field. Pre-launch checklist line |
-| DP4 | A field mapping only on lists read in the form itself (`verified`) or in the form's official definition file (`derived`, TÜFAM JSON); `partial` lists borrow another edition only where the CSV says so (3500B online ← PDF) | map from the EMA list everywhere; guess the online forms | "Never invent a field": the German online pages 2–4 and the French portal were not read, so their drafts use Janus labels only |
+| DP4 | A field mapping only on lists read in the form itself (`verified`) or in an official description of it (`derived`: the TÜFAM form JSON, the NotificaRAM 2025 manual; the screen says so); `partial` lists borrow another edition only where the CSV says so (3500B online ← PDF) | map from the EMA list everywhere; guess the online forms | "Never invent a field": the German online pages 2–4 and the French portal were not read, so their drafts use Janus labels only |
 | DP5 | Native label + translation in the interface language; the translation comes from `ReportAssistant.labels.<id>`, not machine translation at runtime | native label only; translated label only | The person must find the exact label on the official form, and understand it. When the form's language is the interface language the translation is not repeated |
 | DP6 | Outcome: the channel's own options where they were read (TÜFAM e-form `Sonuç`, TÜFAM patient form current-state question); free text elsewhere; 3500B outcome under the Janus label | map to a Janus outcome scale; map to 3500B "Additional Comments" | Uses the authority's own words; the 3500B has no outcome question for patients and no field is guessed |
 | DP7 | The region, country and channel chosen are not stored; the default is the user region of Settings (the demo patient's in demo) | a new setting | The assistant stores nothing (Req 4.5); one less key on the privacy page; the default already comes from Settings |
@@ -151,7 +151,17 @@ labels are scanned by `channels.test.ts` instead.
 | DP11 | Health-professional routes are named only where the research shows them; the field mapping is used in the doctor view only when the channel's audience includes `hcp` (TÜFAM e-form, BfArM PDF and online, ANSM Cerfa, EMA); otherwise Janus labels, with a note | map the 3500B for doctors | Form 3500 (professionals) differs from 3500B and its fields were not read; the TÜFAM professional form's address was not verified, so it is named, not linked |
 | DP12 | The under-reporting sentence is fixed text with its citation (Hazell & Shakir 2006, DOI), the median, the number of studies and the IQR, shown once in the intro card; no "you should report" | a headline figure "94 % are never reported" | Statistician review: a median across heterogeneous studies is not a rate for this person or country; the IQR shows the spread; the line informs without pressure (product.md, medical-safety rule 1) |
 
-## 7. Reviews
+## 7. Reviews and result (2026-11-09)
 
-`report-assistant-safety-auditor-review.md`, `report-assistant-pharmacologist-review.md`,
-`report-assistant-statistician-review.md`, `report-assistant-localization-reviewer-review.md`.
+- Reviews: `report-assistant-safety-auditor-review.md` (A1–A9, no blocking; A1–A5, A7, A8 fixed, A6 declined with
+  the statistician), `report-assistant-localization-reviewer-review.md` (L1–L13, no blocking; all applied except L6
+  kept and L13 out of scope), `report-assistant-statistician-review.md` (pass), `report-assistant-pharmacologist-review.md`
+  (pass; F1 open on the checklist).
+- Tests: vitest `src/report/*.test.ts` (CSV checks, P1–P10); Playwright `e2e/report-assistant.spec.ts`, 30 tests
+  (2 projects × finding → draft → copy, region switch, doctor demo, live, print, and 10 theme × locale checks);
+  `/report` added to `e2e/routes.spec.ts`.
+
+## 8. Open items
+
+- 3500B E10/E11 split of other medicines (pharmacologist F1); the UNVERIFIED items listed on the pre-launch checklist.
+- The region is not stored (DP7): a doctor opening the link on a device without a user region chooses it each time.

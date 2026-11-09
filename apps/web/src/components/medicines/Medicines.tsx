@@ -264,6 +264,12 @@ export function Medicines() {
             <ButtonLink href="/timeline" variant="secondary">
               {t("Medicines.timeline")}
             </ButtonLink>
+            <ButtonLink
+              href={{ pathname: "/report", hash: "src=list" }}
+              variant="secondary"
+            >
+              {t("ReportAssistant.link")}
+            </ButtonLink>
           </div>
           {/* Desktop (Req 27): the list as rows, the timeline beside it. */}
           <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(280px,340px)] lg:items-start">

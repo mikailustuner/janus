@@ -124,8 +124,9 @@ form and submits it themselves. Janus never submits anything.
 
 #### Acceptance criteria
 
-1. THE assistant SHALL make no network request: no request to `/api` and none to any other origin
-   while it is open, in live and in demo mode.
+1. THE assistant SHALL send nothing: no request to `/api` and none to any other origin while it is
+   open, in live and in demo mode (the app's own static files, such as the vocabulary chunk, excepted;
+   safety audit A8).
 2. THE assistant SHALL say plainly: "Janus does not send this report. You submit it yourself on the
    official form."
 3. THE assistant SHALL NOT count its use (no tally, no analytics, nothing stored) (DP8).

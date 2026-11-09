@@ -17,6 +17,7 @@ import { ButtonLink } from "@/components/ui";
 import { resultsView } from "@/flow/findings";
 import { useSession } from "@/flow/janus";
 import { parseLocator } from "@/flow/locator";
+import { findingReportHref } from "@/report/fragment";
 import { useCall } from "@/flow/useCall";
 import { useEvaluation } from "@/flow/useEvaluation";
 import { useT, useThemeWord } from "@/theme/words";
@@ -133,6 +134,15 @@ export function FindingDetail() {
             <ButtonLink href="/note">{t("Findings.makeNote")}</ButtonLink>
             <ButtonLink href="/memory" variant="secondary">
               {t("Findings.memory")}
+            </ButtonLink>
+            <ButtonLink
+              href={findingReportHref({
+                index: finding.index,
+                eventKey: fv.eventKey,
+              })}
+              variant="secondary"
+            >
+              {t("ReportAssistant.link")}
             </ButtonLink>
           </div>
         </div>

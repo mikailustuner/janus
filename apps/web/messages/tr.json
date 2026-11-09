@@ -1349,8 +1349,8 @@
     "intro": {
       "choice": "Şüphelendiğiniz bir yan etkiyi bildirmek sizin kararınızdır. Bildirim bir şüpheyi iletir; ilacın buna yol açtığını kanıtlamanız gerekmez.",
       "what": "Janus, bildiklerini bu cihazda bir taslağa koyar. Taslağı kontrol eder, değiştirir ve her değeri resmî forma kendiniz kopyalarsınız.",
-      "fact": "2006 tarihli sistematik bir derleme, ilaç advers reaksiyonlarının ne kadarının yetkili kurumlara bildirilmediğini tahmin eden 37 çalışmayı inceledi. Çalışmalar arasında ortanca değer %94'tü (çeyrekler arası aralık %82–98: çalışmaların ortadaki yarısı %82 ile %98 arasında bir değer buldu).",
-      "caveat": "Çalışmaların yapıldığı ülke, ortam ve yöntem farklıdır; bu oran bugün herhangi bir ülke için geçerli bir değer değildir.",
+      "fact": "2006 tarihli sistematik bir derleme, ilaç yan etkilerinin (advers reaksiyonların) ne kadarının yetkili kurumlara bildirilmediğini tahmin eden 37 çalışmayı inceledi. Çalışmalar arasında ortanca değer %94'tü (çeyrekler arası aralık %82–98: çalışmaların ortadaki yarısı %82 ile %98 arasında bir değer buldu).",
+      "caveat": "Çalışmaların yapıldığı ülke, ortam ve yöntem farklıdır; bu nedenle bu oran bugün belirli bir ülkeye ait bir değer değildir.",
       "cite": "Hazell L, Shakir SAW. Under-reporting of adverse drug reactions: a systematic review. Drug Saf 2006;29(5):385–396.",
       "doi": "DOI 10.2165/00002018-200629050-00003"
     },
@@ -1387,10 +1387,11 @@
         "partial": "Janus bu formun yalnızca ilk sayfasını (kişiyle ilgili) kontrol etti; taslak Janus'un kendi etiketlerini kullanır. Her değeri ona uyan soruya kopyalayın.",
         "hcp": "Janus sağlık mesleği mensuplarına yönelik formun sorularını kontrol etmedi; taslak Janus'un kendi etiketlerini kullanır."
       },
-      "derived": "Sorular formun resmî tanım dosyasından okundu; Janus canlı formu doldurmadı."
+      "derived": "Sorular formun resmî bir tanımından (tanım dosyası veya kullanım kılavuzu) okundu; Janus canlı formu doldurmadı.",
+      "checkedAddress": "Adres {date} tarihinde kurumun sitesinde kontrol edildi."
     },
     "contacts": {
-      "title": "Bildirimin diğer yolları",
+      "title": "Diğer bildirim yolları",
       "email": "Doldurulmuş hasta formunu {address} adresine e-postayla gönderin",
       "phone": "Ücretsiz hat {number}, hafta içi 09:00–18:00, yalnızca sabit hatlardan"
     },
@@ -1433,7 +1434,8 @@
       "othersEach": "Her ilacı formda ayrı bir kayıt olarak girin.",
       "missingTitle": "Formun Janus'un doldurmadığı soruları",
       "missingHint": "Cevaplamak istediğiniz kadarını resmî formda kendiniz ekleyin.",
-      "oneOf": "Şunlardan en az biri: {fields}"
+      "oneOf": "Şunlardan en az biri: {fields}",
+      "openGuidance": "EMA rehberini aç"
     },
     "janus": {
       "medicine": "İlaç (kutudaki adıyla)",
@@ -1484,7 +1486,7 @@
       "frOutcome": "Seyir (nasıl gelişti)",
       "esDrug": "İlacın adı",
       "esOtherDrug": "İlacın adı (diğer ilaçlar)",
-      "esSymptoms": "Advers reaksiyonun belirtileri",
+      "esSymptoms": "Advers reaksiyonun (yan etkinin) belirtileri",
       "esOnset": "Bu belirtiler ne zaman başladı?",
       "esState": "Etkilenen kişinin şimdiki durumu nedir?"
     },

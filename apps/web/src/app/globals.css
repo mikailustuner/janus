@@ -383,3 +383,19 @@
     display: none !important;
   }
 }
+
+/* Report assistant (report-assistant Req 5.6): only the draft is printed (paper tokens). */
+@media print {
+  body:has(.report-print) * {
+    visibility: hidden;
+  }
+  body:has(.report-print) .report-print,
+  body:has(.report-print) .report-print * {
+    visibility: visible;
+  }
+  body:has(.report-print) .report-print {
+    position: absolute;
+    inset: 0 0 auto 0;
+    border: 0;
+  }
+}

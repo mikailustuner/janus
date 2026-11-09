@@ -17,7 +17,7 @@
   ],
   "fields_status": {
     "verified": "read in the official form or page",
-    "derived": "read from an official machine-readable file (form JSON); the rendered form was not filled in",
+    "derived": "read from an official description of the form (its machine-readable definition file or the authority's user manual); the live form was not filled in",
     "partial": "only part of the form was read, or the labels come from another edition (field_source)",
     "unverified": "not confirmed; Janus shows no field mapping for it",
     "none": "a contact channel (e-mail, phone, directory) with no form"

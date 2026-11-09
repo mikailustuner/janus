@@ -584,7 +584,7 @@
    "val"
   ],
   "patientMayReport": true,
-  "fieldsStatus": "verified",
+  "fieldsStatus": "derived",
   "fieldSource": "es-notificaram-ciudadano",
   "fields": [
    "1 Datos paciente > Nombre",
@@ -636,13 +636,12 @@
    "5 Datos notificador > Correo electrónico",
    "5 Datos notificador > Confirmación correo electrónico",
    "5 Datos notificador > Dirección",
-   "5 Datos notificador > Provincia",
-   "one-of(4 Datos reacción(es) > Cree que las reacciones que comunica…)"
+   "5 Datos notificador > Provincia"
   ],
   "outcomeField": "4 Datos reacción(es) > ¿Cuál es el estado actual de la persona afectada?",
   "outcomeOptions": [],
   "sourceUrl": "https://www.aemps.gob.es/investigacionClinica/medicamentos/docs/Manual-NotificaRAM-2025.pdf",
   "checkedOn": "2026-11-09",
-  "notes": "Fields from the official manual, not from the live form; choose the region (CCAA) first, then 'Notificación de ciudadano', then 'Nueva notificación'; required flags on tabs 1-4 beyond the listed ones UNVERIFIED; options of the current-state question not recorded (UNVERIFIED); symptoms are coded by the authority (MedDRA autocomplete or free text); an e-mail gives the case number and a follow-up password"
+  "notes": "Fields from the official manual, not from the live form; choose the region (CCAA) first, then 'Notificación de ciudadano', then 'Nueva notificación'; required flags on tabs 1-4 UNVERIFIED (the manual says at least one option of the seriousness question on tab 4 is required; its full label is not recorded); options of the current-state question not recorded (UNVERIFIED); symptoms are coded by the authority (MedDRA autocomplete or free text); an e-mail gives the case number and a follow-up password"
  }
 ]
