@@ -1,14 +1,20 @@
 "use client";
 /**
- * The FAERS pair panel of a finding detail (Req 16.1, 16.3–16.7): report count, ratio with range
- * and CI bar; the assessment only here, with the screening sentence; limits, window, attribution
- * and the MedDRA notice when Preferred Terms are shown (PT names only in this detail view).
+ * The FAERS pair panel of a finding detail (Req 16.1, 16.3–16.7, 29): the report count as a stat
+ * tile (its sentence for screen readers), ratio with range and CI bar; the visible caveats right
+ * under the numbers; the assessment only here, folded, with the screening sentence; limits, window,
+ * attribution and the MedDRA notice when Preferred Terms are shown (PT names only in this view).
  */
 import { useLocale } from "next-intl";
 
 import type { PairOut, SnapshotOut } from "@/api/contracts";
+import {
+  Disclosure,
+  StatGrid,
+  StatTile,
+  SummaryCard,
+} from "@/components/cards";
 import { formatCount, formatDate, formatShare } from "@/components/format";
-import { Card, SectionTitle } from "@/components/ui";
 import { pairPanel, splitCaveats } from "@/flow/memory";
 import { useT } from "@/theme/words";
 
@@ -44,37 +50,43 @@ export function PairPanel({
   const say = useMemorySentence(snapshot);
   const p = pairPanel(pair);
   const caveats = splitCaveats(p.sentences);
+  const reports = p.reports ?? 0;
   return (
-    <Card aria-labelledby="pair" data-testid="pair-panel">
-      <p className="text-sm text-muted">{t("MemoryView.pairTitle")}</p>
-      <SectionTitle id="pair">
-        {t("MemoryView.pairHeading", { ingredient, event })}
-      </SectionTitle>
+    <SummaryCard
+      title={t("MemoryView.pairHeading", { ingredient, event })}
+      id="pair"
+      eyebrow={t("MemoryView.pairTitle")}
+      data-testid="pair-panel"
+    >
       {p.status === "not_available" ? (
         <p>{t("Memory.codes.not_available")}</p>
       ) : (
         <>
-          <p className="text-lg font-bold">
-            {t("MemoryView.reports", { count: p.reports ?? 0 })}
-            <span className="sr-only">
-              {" "}
-              ({formatCount(p.reports ?? 0, locale)})
-            </span>
-          </p>
+          <StatGrid>
+            <StatTile
+              value={formatCount(reports, locale)}
+              label={t("Cards.label.reports", { count: reports })}
+              sentence={t("MemoryView.reports", { count: reports })}
+            />
+          </StatGrid>
           <p className="text-sm text-muted">{t("MemoryView.scopeSuspect")}</p>
           {p.ratio ? <CiBar ratio={p.ratio} /> : null}
+          {/* Req 28.5: these caveats stay outside the fold wherever counts are shown. */}
           {caveats.visible.length ? (
-            <ul className="flex flex-col gap-2" data-testid="visible-caveats">
+            <ul
+              className="flex flex-col gap-2 border-s-2 border-line ps-3"
+              data-testid="visible-caveats"
+            >
               {caveats.visible.map((k) => (
                 <li key={k}>{say(k, p.window)}</li>
               ))}
             </ul>
           ) : null}
-          <details className="flex flex-col gap-2">
-            <summary className="flex min-h-11 cursor-pointer items-center font-bold">
-              {t("MemoryView.assessmentHeading")}
-            </summary>
-            <ul className="flex flex-col gap-2 pt-2">
+          <Disclosure
+            summary={t("MemoryView.assessmentHeading")}
+            className="border-t border-line"
+          >
+            <ul className="flex flex-col gap-2">
               {caveats.folded.map((k) => (
                 <li key={k}>{say(k, p.window)}</li>
               ))}
@@ -84,7 +96,7 @@ export function PairPanel({
                 {t("MemoryView.pts", { pts: p.pts.join(", ") })}
               </p>
             ) : null}
-          </details>
+          </Disclosure>
         </>
       )}
       <p className="text-sm text-muted">
@@ -93,6 +105,6 @@ export function PairPanel({
       {p.meddra ? (
         <p className="text-sm text-muted">{t("Memory.meddra")}</p>
       ) : null}
-    </Card>
+    </SummaryCard>
   );
 }

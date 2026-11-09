@@ -8,6 +8,7 @@ import type { ComponentProps, ReactNode } from "react";
 import { ChevronIcon } from "@/components/icons";
 import { Card } from "@/components/ui";
 import { Link } from "@/i18n/navigation";
+import { useT } from "@/theme/words";
 
 /** The page's one `h1`, with an optional eyebrow above and a one-line summary under it. */
 export function LargeTitle({
@@ -66,7 +67,10 @@ export function GroupedList({
       {...rest}
     >
       {header ? (
-        <H id={headingId} className={plain ? "font-bold" : "group-header"}>
+        <H
+          id={headingId}
+          className={plain ? "font-body font-bold" : "group-header"}
+        >
           {header}
         </H>
       ) : null}
@@ -115,6 +119,27 @@ export function RowLink({
         <ChevronIcon size={18} className="shrink-0 text-muted" />
       </Link>
     </li>
+  );
+}
+
+/** Back to the parent screen, named by it ("‹ Results"); screen readers hear "Back: Results". */
+export function BackLink({
+  href,
+  children,
+}: {
+  href: ComponentProps<typeof Link>["href"];
+  children: ReactNode;
+}) {
+  const t = useT();
+  return (
+    <Link
+      href={href}
+      className="-ms-2 inline-flex min-h-11 w-fit items-center gap-1 rounded-full pe-3 ps-1 font-bold text-accent no-underline transition-colors duration-150 hover:bg-chip"
+    >
+      <ChevronIcon size={22} className="shrink-0 rotate-180" />
+      <span className="sr-only">{t("Common.back")}: </span>
+      {children}
+    </Link>
   );
 }
 

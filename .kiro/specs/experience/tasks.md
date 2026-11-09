@@ -328,7 +328,7 @@
   - 27.1 Render tests (`src/components/cards/cards.test.tsx`): P32, P33. _Requirements: 29.1, 29.3, 29.4, 29.6, 29.7, 29.9_
   - **Checkpoint:** lint, typecheck, vitest green; commit.
 
-- [ ] 28. Results, finding detail, evidence and FAERS pair (`components/results/*`, `components/evidence/EvidenceView.tsx`,
+- [x] 28. Results, finding detail, evidence and FAERS pair (`components/results/*`, `components/evidence/EvidenceView.tsx`,
   `components/memory/PairPanel.tsx`, `CiBar.tsx`, `Shell.tsx` wide routes)
   - Large title and summary (DP56), finding summary cards, grouped aside, stat tiles, improved CI bar, two-column detail.
   - 28.1 P34 in `src/components/render.test.tsx`. _Requirements: 29.2–29.5, 29.10, 29.11_

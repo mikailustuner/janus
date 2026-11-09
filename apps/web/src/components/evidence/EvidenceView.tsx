@@ -1,13 +1,20 @@
 "use client";
 /**
- * The evidence of a finding with the integrity line (Req 15, P30). Retracted sources only in the
- * list of sources not used, with the zombie stamp (Two Faces) or a plain "Retracted" label.
+ * The evidence of a finding with the integrity line (Req 15, P30, Req 29): two stat tiles over the
+ * integrity line (its sentences stay visible), then the cited sources and the sources not used as
+ * grouped rows. Retracted sources only in the list of sources not used, with the zombie stamp
+ * (Night Pharmacy) or a plain "Retracted" label.
  */
 import { useLocale } from "next-intl";
 
 import type { EvidenceItem, EvidenceResolution } from "@/api/contracts";
-import { formatDate } from "@/components/format";
-import { Card, SectionTitle } from "@/components/ui";
+import {
+  GroupedList,
+  StatGrid,
+  StatTile,
+  SummaryCard,
+} from "@/components/cards";
+import { formatCount, formatDate } from "@/components/format";
 import { evidenceView } from "@/flow/integrity";
 import { useT, useThemeWord } from "@/theme/words";
 
@@ -16,7 +23,7 @@ function SourceRow({ item }: { item: EvidenceItem }) {
   const locale = useLocale();
   const status = item.integrity?.status;
   return (
-    <li className="flex flex-col gap-1 border-t border-line pt-2 first:border-0 first:pt-0">
+    <li className="flex min-w-0 flex-col gap-1">
       <span className="font-bold">
         {item.title ?? item.source?.name ?? item.id}
       </span>
@@ -24,7 +31,7 @@ function SourceRow({ item }: { item: EvidenceItem }) {
       {item.locator ? (
         <span className="text-sm text-muted">{item.locator}</span>
       ) : null}
-      <span className="text-sm">
+      <span className="text-sm text-muted">
         {status
           ? t(`Evidence.status.${status}`)
           : t("Evidence.notCheckedByDoi")}
@@ -76,12 +83,33 @@ export function EvidenceBody({
   const v = evidenceView(resolution);
   const l = v.line;
   return (
-    <Card aria-labelledby="evidence" data-testid="evidence">
-      <SectionTitle id="evidence">{t("Evidence.title")}</SectionTitle>
+    <SummaryCard
+      title={t("Evidence.title")}
+      id="evidence"
+      data-testid="evidence"
+    >
+      {/* The integrity line's numbers as tiles; the sentences stay visible below (Req 15.2, DP53). */}
+      <StatGrid>
+        <StatTile
+          value={formatCount(l.sources_total, locale)}
+          label={t("Cards.label.sources", { count: l.sources_total })}
+        />
+        <StatTile
+          value={formatCount(l.checked_by_doi, locale)}
+          label={t("Cards.label.checkedByDoi", { count: l.checked_by_doi })}
+        />
+      </StatGrid>
       <div
-        className="rounded-[var(--radius-button)] bg-chip p-3 text-sm text-chip-fg"
+        className="flex flex-col gap-1 rounded-[var(--radius-tile)] bg-chip p-3 text-sm text-chip-fg"
         data-testid="integrity-line"
       >
+        {v.noRetracted ? (
+          <p className="font-bold">{t("Evidence.line.noRetracted")}</p>
+        ) : (
+          <p className="font-bold">
+            {t("Evidence.line.exceptions", { count: v.exceptions.length })}
+          </p>
+        )}
         <p>
           {t("Evidence.line.sources", {
             total: l.sources_total,
@@ -112,46 +140,47 @@ export function EvidenceBody({
             })}
           </p>
         ))}
-        {v.noRetracted ? (
-          <p className="font-bold">{t("Evidence.line.noRetracted")}</p>
-        ) : (
-          <p>{t("Evidence.line.exceptions", { count: v.exceptions.length })}</p>
-        )}
         <p>{t("Evidence.line.about")}</p>
       </div>
-      <h3 className="font-bold">{t("Evidence.cited")}</h3>
-      <ul className="flex flex-col gap-2">
+      <GroupedList
+        plain
+        level={3}
+        header={t("Evidence.cited")}
+        headingId="evidence-cited"
+      >
         {v.used.map((i) => (
           <SourceRow key={i.id} item={i} />
         ))}
-      </ul>
+      </GroupedList>
       {v.excluded.length ? (
-        <>
-          <h3 className="font-bold">{t("Evidence.excluded")}</h3>
-          <ul className="flex flex-col gap-2">
-            {v.excluded.map((e) => (
-              <li
-                key={e.id}
-                className="flex flex-col gap-1"
-                data-testid="excluded-source"
-              >
-                {e.stamp ? (
-                  <span
-                    className="mono w-max -rotate-3 rounded-sm border-2 border-risk px-1.5 py-0.5 text-xs font-bold tracking-wider text-risk uppercase"
-                    data-testid="retracted-stamp"
-                  >
-                    {w("Evidence.stamp")}
-                  </span>
-                ) : null}
-                <span className="line-through">{e.item?.title ?? e.id}</span>
-                <span className="text-sm">
-                  {t("Evidence.notUsed")} ({t(`Evidence.reason.${e.reason}`)})
+        <GroupedList
+          plain
+          level={3}
+          header={t("Evidence.excluded")}
+          headingId="evidence-excluded"
+        >
+          {v.excluded.map((e) => (
+            <li
+              key={e.id}
+              className="flex flex-col gap-1"
+              data-testid="excluded-source"
+            >
+              {e.stamp ? (
+                <span
+                  className="mono w-max -rotate-3 rounded-sm border-2 border-risk px-1.5 py-0.5 text-xs font-bold tracking-wider text-risk uppercase"
+                  data-testid="retracted-stamp"
+                >
+                  {w("Evidence.stamp")}
                 </span>
-              </li>
-            ))}
-          </ul>
-        </>
+              ) : null}
+              <span className="line-through">{e.item?.title ?? e.id}</span>
+              <span className="text-sm">
+                {t("Evidence.notUsed")} ({t(`Evidence.reason.${e.reason}`)})
+              </span>
+            </li>
+          ))}
+        </GroupedList>
       ) : null}
-    </Card>
+    </SummaryCard>
   );
 }

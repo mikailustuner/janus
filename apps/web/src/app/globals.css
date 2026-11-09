@@ -181,23 +181,23 @@
     box-shadow: var(--card-shadow);
     overflow: hidden;
   }
-  .grouped > li,
-  .grouped-plain > li {
+  .grouped > *,
+  .grouped-plain > * {
     position: relative;
     min-height: 2.75rem;
   }
-  .grouped > li {
+  .grouped > * {
     padding: var(--space-row-y) var(--space-row-x);
   }
-  .grouped-plain > li {
+  .grouped-plain > * {
     padding: var(--space-row-y) 0;
   }
-  .grouped > li.row-link,
-  .grouped-plain > li.row-link {
+  .grouped > .row-link,
+  .grouped-plain > .row-link {
     padding: 0;
   }
-  .grouped > li + li::before,
-  .grouped-plain > li + li::before {
+  .grouped > * + *::before,
+  .grouped-plain > * + *::before {
     content: "";
     position: absolute;
     top: 0;
@@ -205,7 +205,7 @@
     inset-inline-end: 0;
     border-top: 1px solid var(--line);
   }
-  .grouped-plain > li + li::before {
+  .grouped-plain > * + *::before {
     inset-inline-start: 0;
   }
   /* Inside a clipped group the focus ring is drawn inside the row. */
@@ -252,10 +252,10 @@
     padding: 0.75rem 0.875rem;
   }
   .tile-value {
-    font-family: var(--font-display);
+    font-family: var(--font-body);
     font-size: 2rem;
     line-height: 1.1;
-    font-weight: 700;
+    font-weight: 800;
     font-variant-numeric: tabular-nums lining-nums;
     letter-spacing: -0.01em;
   }
@@ -341,8 +341,10 @@
   }
   .pills > .segment {
     background: var(--chip);
-    border-radius: 999px;
     font-weight: 600;
+    justify-content: flex-start;
+    text-align: start;
+    border-radius: 1.375rem;
   }
   .pills > .segment:has(input:checked) {
     background: var(--accent);
