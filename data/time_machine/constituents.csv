@@ -1,0 +1,15 @@
+substance_id,taxon_qids,taxon_names,compound,pubchem_cid,inchikey,why
+st_johns_wort,Q158289,Hypericum perforatum,hyperforin,441298,KGSZHKRKHXOAMG-HQKKAZOISA-N,"Main phloroglucinol; PXR ligand behind CYP3A4 induction (Moore et al. 2000, doi:10.1073/pnas.130155097)."
+st_johns_wort,Q158289,Hypericum perforatum,hypericin,3663,YDOIFHVUBCIUHF-UHFFFAOYSA-N,Main naphthodianthrone; pharmacopoeial marker (total hypericins).
+st_johns_wort,Q158289,Hypericum perforatum,pseudohypericin,5281751,YXBUQQDFTYOHQI-UHFFFAOYSA-N,"Naphthodianthrone, 2-4 times the hypericin content (EMA/HMPC/244315/2016)."
+st_johns_wort,Q158289,Hypericum perforatum,quercetin,5280343,REFJWTPEDVJJIY-UHFFFAOYSA-N,Flavonol aglycone of the herb's flavonoid glycosides.
+st_johns_wort,Q158289,Hypericum perforatum,hyperoside,5281643,OVSQVDMCBVZWGM-DTGCRPNFSA-N,Main flavonol glycoside.
+rhubarb,Q1109580|Q312527,Rheum palmatum|Rheum officinale,rhein,10168,FCDLCPWAQCPTKC-UHFFFAOYSA-N,Hydroxyanthracene aglycone; pharmacopoeial expression unit for rhubarb.
+rhubarb,Q1109580|Q312527,Rheum palmatum|Rheum officinale,emodin,3220,RHMXXJGYXNZAPX-UHFFFAOYSA-N,Hydroxyanthracene aglycone.
+rhubarb,Q1109580|Q312527,Rheum palmatum|Rheum officinale,aloe-emodin,10207,YDQWDHRMZQUTBA-UHFFFAOYSA-N,Hydroxyanthracene aglycone.
+rhubarb,Q1109580|Q312527,Rheum palmatum|Rheum officinale,chrysophanol,10208,LQGUBLBATBMXHT-UHFFFAOYSA-N,Hydroxyanthracene aglycone.
+rhubarb,Q1109580|Q312527,Rheum palmatum|Rheum officinale,sennoside A,73111,IPQVTOJGNYVQEO-KGFNBKMBSA-N,Dianthrone glycoside (laxative prodrug).
+anise,Q28692,Pimpinella anisum,trans-anethole,637563,RUVINXPYWBROJD-ONEGZZNKSA-N,Main constituent of the essential oil.
+anise,Q28692,Pimpinella anisum,estragole,8815,ZFMSMUAANRJZFM-UHFFFAOYSA-N,Minor oil constituent; genotoxicity concern in herbal monographs.
+anise,Q28692,Pimpinella anisum,p-anisaldehyde,31244,ZRSNZINYAWTAHE-UHFFFAOYSA-N,Minor oil constituent.
+vinegar,,,acetic acid,176,QTBSBXVTEAMEQO-UHFFFAOYSA-N,"Vinegar is a preparation, not a taxon: acetic acid by definition (no occurrence statement needed)."

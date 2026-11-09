@@ -106,8 +106,48 @@ ATC classification
   Janus does not copy the WHOCC index; ATC codes are taken from TİTCK, CIMA,
   RxClass and Wikidata.
 
+PubChem BioAssay activity summaries and compound properties (Time machine)
+  Publisher: U.S. National Center for Biotechnology Information (NLM/NIH)
+  License: Public domain (NCBI-created data); deposited records keep the
+  depositor's licence
+  Only activity values deposited by U.S.-government sources (e.g. NCGC/Tox21)
+  are stored. ChEMBL-deposited records (CC BY-SA 3.0) and records from
+  depositors with unverified terms are counted, not stored.
+
+httk: R package for high-throughput toxicokinetics, incl. HTTK-Pop (Time machine PBPK)
+  Publisher: U.S. Environmental Protection Agency
+  License: MIT
+  Pearce et al. 2017, J Stat Softw 79(4), doi:10.18637/jss.v079.i04. Installed
+  into a user R library under .data/tools (not committed); the version is
+  recorded in each run manifest.
+
+ADMET-AI 2.0.1 structure-based ADMET predictions (Time machine)
+  Publisher: Swanson et al., Bioinformatics 2024,
+  doi:10.1093/bioinformatics/btae416
+  License: MIT (code and bundled models); training datasets from TDC carry their
+  own licences (mostly CC BY 4.0; FreeSolv CC BY-NC-SA 4.0)
+  Run offline in a pinned CPU environment under .data/tools (not committed).
+  Predictions are hypotheses, not measurements.
+
+Wikidata found-in-taxon statements (LOTUS uploads) and drug-protein interactions (Time machine)
+  Publisher: Wikimedia Foundation and Wikidata contributors; LOTUS initiative
+  License: CC0 1.0
+  Rutz et al. 2022, eLife 11:e70780, doi:10.7554/eLife.70780 (LOTUS, CC0).
+  Provenance is the cited article of each statement.
+
+openFDA drug label indications for the Time machine comparator drugs
+  Publisher: U.S. Food and Drug Administration
+  License: CC0 1.0
+
 Adverse events
 --------------
+
+Time to onset per report and drug, derived from the FAERS quarterly files (Time machine)
+  Publisher: U.S. Food and Drug Administration (derived by Janus)
+  License: CC0 1.0
+  Derived from the raw archives of the current faers run (THER.start_dt,
+  DEMO.event_dt); only complete dates; exclusions counted by reason. Spontaneous
+  reports: what reporters wrote down, not measured latency.
 
 FDA Adverse Event Monitoring System (AEMS, formerly FAERS) quarterly data files
   Publisher: U.S. Food and Drug Administration

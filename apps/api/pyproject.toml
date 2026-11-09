@@ -55,6 +55,9 @@ select = ["E", "F", "W", "I", "B", "UP", "S", "N", "RUF"]
 "tests/test_faers_build_properties.py" = ["S608"]
 # Generated Markdown report: long table rows and typographic dashes are content.
 "janus/light/report.py" = ["E501", "RUF001"]
+# Time machine: seeded random.Random for reproducible Monte Carlo and bootstrap, not secrets.
+"janus/timemachine/**" = ["S311"]
+"tests/test_timemachine_*.py" = ["S101", "S311"]
 
 [tool.pyright]
 pythonVersion = "3.12"

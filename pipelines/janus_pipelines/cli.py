@@ -18,7 +18,14 @@ from janus_pipelines.core.licensing import LicenceViolationError
 from janus_pipelines.core.manifest import Outcome
 from janus_pipelines.core.notice import render_notice
 from janus_pipelines.core.registry import Registry, UnknownSourceError, load_registry
-from janus_pipelines.core.runner import Job, PromotionError, RunContext, promote_run, run_job
+from janus_pipelines.core.runner import (
+    Job,
+    PromotionError,
+    RunContext,
+    ToolUnavailableError,
+    promote_run,
+    run_job,
+)
 from janus_pipelines.core.store import Store
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -41,6 +48,12 @@ JOBS: dict[str, tuple[str, str]] = {
     "eu_fr_bdpm": ("janus_pipelines.jobs.eu_fr_bdpm", "EuFrBdpmJob"),
     "eu_es_cima": ("janus_pipelines.jobs.eu_es_cima", "EuEsCimaJob"),
     "faers": ("janus_pipelines.jobs.faers", "FaersJob"),
+    "faers_onset": ("janus_pipelines.jobs.faers_onset", "FaersOnsetJob"),
+    "tm_molecules": ("janus_pipelines.jobs.time_machine", "TmMoleculesJob"),
+    "tm_bioactivity": ("janus_pipelines.jobs.time_machine", "TmBioactivityJob"),
+    "tm_labels": ("janus_pipelines.jobs.time_machine", "TmLabelsJob"),
+    "tm_pbpk": ("janus_pipelines.jobs.tm_models", "TmPbpkJob"),
+    "tm_admet": ("janus_pipelines.jobs.tm_models", "TmAdmetJob"),
     "onsides": ("janus_pipelines.jobs.onsides", "OnsidesJob"),
     "openfda_label": ("janus_pipelines.jobs.openfda_label", "OpenfdaLabelJob"),
 }
@@ -130,7 +143,7 @@ def cmd_run(args: argparse.Namespace, repo_root: Path) -> int:
         options["quarters"] = args.quarters
     try:
         result = run_job(job, make_context(repo_root, options))
-    except (UnknownSourceError, LicenceViolationError) as exc:
+    except (UnknownSourceError, LicenceViolationError, ToolUnavailableError) as exc:
         print(f"refused: {exc}", file=sys.stderr)
         return EXIT_REFUSED
     m = result.manifest
