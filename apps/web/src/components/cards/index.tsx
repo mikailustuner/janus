@@ -321,7 +321,7 @@ export function SegmentedControl<T extends string>({
               checked={current === o.value}
               onChange={() => onChange(o.value)}
             />
-            <span className="min-w-0 [overflow-wrap:anywhere]">{o.label}</span>
+            <span className="min-w-0">{o.label}</span>
           </label>
         ))}
       </div>

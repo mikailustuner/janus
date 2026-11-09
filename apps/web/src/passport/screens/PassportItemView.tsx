@@ -92,6 +92,14 @@ export function PassportItemBody({
       : "";
   const summary = answer && !reason ? presenceSummary(answer.item) : null;
   const comparable = !!answer?.item.answers.some((a) => a.comparison);
+  const notices =
+    presence.status === "ok" && answer && !reason
+      ? answer.notices.filter(
+          (n) =>
+            n !== "unknown_ingredient_keys" ||
+            answer.item.unknown_keys.length > 0,
+        )
+      : [];
   return (
     <>
       <BackLink href="/passport">{t("Passport.title")}</BackLink>
@@ -104,6 +112,10 @@ export function PassportItemBody({
           summary ? t("Cards.passport.listed", { ...summary }) : undefined
         }
       />
+      {/* "Listed" is not "on sale": the note sits right under the summary (safety audit F3). */}
+      {summary && answer?.item.answers.some((a) => a.status === "present") ? (
+        <p className="-mt-2 text-sm text-muted">{t("Passport.presentNote")}</p>
+      ) : null}
       <p role="status" aria-live="polite" className="sr-only">
         {announce}
       </p>
@@ -190,20 +202,11 @@ export function PassportItemBody({
           )}
         </div>
         <aside className="flex min-w-0 flex-col gap-group lg:sticky lg:top-4">
-          {presence.status === "ok" && answer && !reason ? (
+          {notices.length ? (
             <ul className="grouped text-sm">
-              {answer.notices
-                .filter(
-                  (n) =>
-                    n !== "unknown_ingredient_keys" ||
-                    answer.item.unknown_keys.length > 0,
-                )
-                .map((n) => (
-                  <li key={n}>{t(`Passport.notice.${n}`)}</li>
-                ))}
-              {answer.item.answers.some((a) => a.status === "present") ? (
-                <li>{t("Passport.presentNote")}</li>
-              ) : null}
+              {notices.map((n) => (
+                <li key={n}>{t(`Passport.notice.${n}`)}</li>
+              ))}
             </ul>
           ) : null}
           <p className="card p-5 font-bold">{t("Passport.listingsOnly")}</p>

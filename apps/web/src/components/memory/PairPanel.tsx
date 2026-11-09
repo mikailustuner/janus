@@ -62,13 +62,21 @@ export function PairPanel({
         <p>{t("Memory.codes.not_available")}</p>
       ) : (
         <>
-          <StatGrid>
-            <StatTile
-              value={formatCount(reports, locale)}
-              label={t("Cards.label.reports", { count: reports })}
-              sentence={t("MemoryView.reports", { count: reports })}
-            />
-          </StatGrid>
+          {/* A big number only for reports that exist: a large zero reads as reassurance
+              (safety audit F1, rule 3); the sentence says "No reports" instead. */}
+          {reports > 0 ? (
+            <StatGrid>
+              <StatTile
+                value={formatCount(reports, locale)}
+                label={t("Cards.label.reports", { count: reports })}
+                sentence={t("MemoryView.reports", { count: reports })}
+              />
+            </StatGrid>
+          ) : (
+            <p className="text-lg font-bold">
+              {t("MemoryView.reports", { count: reports })}
+            </p>
+          )}
           <p className="text-sm text-muted">{t("MemoryView.scopeSuspect")}</p>
           {p.ratio ? <CiBar ratio={p.ratio} /> : null}
           {/* Req 28.5: these caveats stay outside the fold wherever counts are shown. */}

@@ -1270,12 +1270,12 @@
     "show": "Afficher",
     "label": {
       "reports": "{count, plural, one {signalement dans FAERS} other {signalements dans FAERS}}",
+      "reportsAll": "{count, plural, one {signalement les cite tous} other {signalements les citent tous}}",
       "sources": "{count, plural, one {source au total} other {sources au total}}",
       "checkedByDoi": "{count, plural, one {vérifiée par DOI} other {vérifiées par DOI}}",
       "patternsChecked": "{count, plural, one {schéma vérifié} other {schémas vérifiés}}",
       "cards": "{count, plural, one {fiche pour cet état} other {fiches pour cet état}}",
-      "witnesses": "{count, plural, one {témoin sur 3} other {témoins sur 3}}",
-      "casesTop": "cas sur {cases} dans les {k} premiers"
+      "witnesses": "{count, plural, one {témoin sur 3} other {témoins sur 3}}"
     },
     "results": {
       "medicinesChecked": "{count, plural, one {# médicament vérifié} other {# médicaments vérifiés}}"
@@ -1289,7 +1289,7 @@
     "memory": {
       "summary": "{count, plural, one {# substance active de votre liste} other {# substances actives de votre liste}}",
       "all": "Tout",
-      "together": "Ensemble",
+      "together": "Médicaments ensemble",
       "janus": "Signalé via Janus"
     }
   }

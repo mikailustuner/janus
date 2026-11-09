@@ -350,10 +350,18 @@
     animation after the first navigation (DP54). _Requirements: 29.1, 29.2, 29.4, 29.7, 29.8_
   - **Checkpoint:** light and séance e2e green; commit.
 
-- [ ] 32. Reviews, rendered checks and final checkpoint
+- [x] 32. Reviews, rendered checks and final checkpoint
   - localization-reviewer and safety-auditor passes on the `Cards` namespace and on every moved sentence
     (`cards-localization-reviewer-review.md`, `cards-safety-auditor-review.md`); fixes applied.
   - Playwright smoke, routes (en, tr), demo-flow, passport, light, séance, states; screenshots of results, finding
     detail, passport list and item, memory, research hypotheses and séance at 375 and 1440 in both themes, reviewed.
     _Requirements: 29.10, 29.11_
   - **Checkpoint:** lint, typecheck, vitest, build, e2e green; commit.
+  > Done 2026-11-09 (Claude Code): tasks 26–32 built as specified. Vitest 423 tests (P31–P35 new; `FC_PROFILE=ci`
+  > green); Playwright smoke, routes (en, tr), demo-flow, passport, light, séance, states: 77 passed at 375 and 1280 px.
+  > Reviews: `cards-localization-reviewer-review.md` (1 blocking: the 4-segment filter at 375 px, fixed with a
+  > responsive segment grid; 11 advisory, 6 applied) and `cards-safety-auditor-review.md` (1 blocking: a large "0
+  > reports" tile, fixed; 6 advisory, 4 applied: integrity-line order restored, the "listed ≠ on sale" note under the
+  > passport summary, no validation tile without its chance baseline, "reports name all of them" label). The passport
+  > screen test now checks the grouped description list instead of the table (DP56). Screenshots of the seven screens at
+  > 375 and 1440 px in both themes reviewed; pre-launch items added (native review of `Cards`, "listed" wording).

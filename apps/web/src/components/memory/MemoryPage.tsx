@@ -157,7 +157,7 @@ function Combination({
         <StatGrid>
           <StatTile
             value={formatCount(total, locale)}
-            label={t("Cards.label.reports", { count: total })}
+            label={t("Cards.label.reportsAll", { count: total })}
             sentence={t("MemoryView.combinationReports", { count: total })}
           />
         </StatGrid>

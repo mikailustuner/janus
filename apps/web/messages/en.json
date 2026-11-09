@@ -1270,12 +1270,12 @@
     "show": "Show",
     "label": {
       "reports": "{count, plural, one {report in FAERS} other {reports in FAERS}}",
+      "reportsAll": "{count, plural, one {report names all of them} other {reports name all of them}}",
       "sources": "{count, plural, one {source in total} other {sources in total}}",
       "checkedByDoi": "{count, plural, other {checked by DOI}}",
       "patternsChecked": "{count, plural, one {pattern checked} other {patterns checked}}",
       "cards": "{count, plural, one {card for this condition} other {cards for this condition}}",
-      "witnesses": "{count, plural, other {of 3 witnesses}}",
-      "casesTop": "of {cases} cases in the top {k}"
+      "witnesses": "{count, plural, other {of 3 witnesses}}"
     },
     "results": {
       "medicinesChecked": "{count, plural, one {# medicine checked} other {# medicines checked}}"
@@ -1289,7 +1289,7 @@
     "memory": {
       "summary": "{count, plural, one {# active ingredient from your list} other {# active ingredients from your list}}",
       "all": "All",
-      "together": "Together",
+      "together": "Medicines together",
       "janus": "Reported through Janus"
     }
   }

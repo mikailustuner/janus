@@ -103,13 +103,8 @@ export function EvidenceBody({
         className="flex flex-col gap-1 rounded-[var(--radius-tile)] bg-chip p-3 text-sm text-chip-fg"
         data-testid="integrity-line"
       >
-        {v.noRetracted ? (
-          <p className="font-bold">{t("Evidence.line.noRetracted")}</p>
-        ) : (
-          <p className="font-bold">
-            {t("Evidence.line.exceptions", { count: v.exceptions.length })}
-          </p>
-        )}
+        {/* The sources sentence first: "no retracted source" never leads without its scope
+            (safety audit F2, Req 15.2). */}
         <p>
           {t("Evidence.line.sources", {
             total: l.sources_total,
@@ -140,6 +135,11 @@ export function EvidenceBody({
             })}
           </p>
         ))}
+        {v.noRetracted ? (
+          <p className="font-bold">{t("Evidence.line.noRetracted")}</p>
+        ) : (
+          <p>{t("Evidence.line.exceptions", { count: v.exceptions.length })}</p>
+        )}
         <p>{t("Evidence.line.about")}</p>
       </div>
       <GroupedList

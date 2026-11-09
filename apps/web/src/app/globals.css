@@ -291,17 +291,16 @@
   }
   /* Segmented control (DP52): native radios stretched over each segment. */
   .segmented {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr));
     gap: 0.25rem;
-    border-radius: calc(var(--radius-segment) + 4px);
+    border-radius: min(calc(var(--radius-segment) + 4px), 1.625rem);
     background: var(--chip);
     padding: 0.25rem;
   }
-  .segmented > .segment {
-    flex: 1 1 0;
-  }
   .segment {
+    overflow-wrap: break-word;
+    hyphens: auto;
     position: relative;
     display: flex;
     min-height: 2.75rem;

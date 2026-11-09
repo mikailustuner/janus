@@ -110,7 +110,11 @@ function CardsPanel({
           className="min-w-[9rem]"
         />
         <SectionTitle>
-          {t("Light.hypotheses.total", { total: d.total, goal: goalName })}
+          {/* The tile shows the total; the heading keeps the sentence for screen readers. */}
+          <span className="sr-only">
+            {t("Light.hypotheses.total", { total: d.total, goal: goalName })}
+          </span>
+          <span aria-hidden>{goalName}</span>
         </SectionTitle>
       </div>
       <p className="text-sm">{t("Light.ties")}</p>

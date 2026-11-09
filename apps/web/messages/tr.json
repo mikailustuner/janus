@@ -1270,27 +1270,27 @@
     "show": "Göster",
     "label": {
       "reports": "{count, plural, one {FAERS'te bildirim} other {FAERS'te bildirim}}",
+      "reportsAll": "{count, plural, one {bildirimde hepsi geçiyor} other {bildirimde hepsi geçiyor}}",
       "sources": "{count, plural, one {toplam kaynak} other {toplam kaynak}}",
-      "checkedByDoi": "{count, plural, other {DOI ile kontrol edildi}}",
+      "checkedByDoi": "{count, plural, other {tanesi DOI ile kontrol edildi}}",
       "patternsChecked": "{count, plural, one {örüntü kontrol edildi} other {örüntü kontrol edildi}}",
       "cards": "{count, plural, one {bu durum için kart} other {bu durum için kart}}",
-      "witnesses": "{count, plural, other {3 tanıktan}}",
-      "casesTop": "{cases} vakadan, ilk {k} içinde"
+      "witnesses": "{count, plural, other {3 tanıktan}}"
     },
     "results": {
       "medicinesChecked": "{count, plural, one {# ilaç kontrol edildi} other {# ilaç kontrol edildi}}"
     },
     "passport": {
       "summary": "{items, plural, one {# ilaç} other {# ilaç}} · {boxes, plural, one {# kutu} other {# kutu}}",
-      "listed": "{checked, plural, one {# ülkeden} other {# ülkeden}} {listed} tanesinde listede",
+      "listed": "{checked, plural, one {# ülkeden} other {# ülkeden}} {listed} tanesinde listede yer alıyor",
       "countries": "Ülkeler",
       "comparison": "Karşılaştırma"
     },
     "memory": {
       "summary": "{count, plural, one {Listenizden # etkin madde} other {Listenizden # etkin madde}}",
       "all": "Tümü",
-      "together": "Birlikte",
-      "janus": "Janus üzerinden bildirilen"
+      "together": "İlaçlar birlikte",
+      "janus": "Janus üzerinden bildirilenler"
     }
   }
 }
