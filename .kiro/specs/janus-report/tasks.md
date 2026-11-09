@@ -11,14 +11,14 @@
   - _Requirements: 2.1–2.7, 4.4, 5.2–5.4_
   - **Checkpoint:** lint, typecheck, vitest green; commit.
 
-- [ ] 3. Summary screen (`src/components/report/{rings,Summary}.tsx`, route, `Report` namespace in five languages,
+- [x] 3. Summary screen (`src/components/report/{rings,Summary}.tsx`, route, `Report` namespace in five languages,
   results link, `Shell.tsx` wide route)
   - Rings and bars (DP8), tiles linking into the detail, zero state (DP9), emergency first, states.
   - 3.1 Render tests P2, P4, P8 (`src/components/report/summary.test.tsx`).
   - _Requirements: 1.1–1.4, 2.1–2.7, 3.1–3.4, 4.1–4.3, 6.1_
   - **Checkpoint:** lint, typecheck, vitest green; commit.
 
-- [ ] 4. Share image (`src/components/report/{ShareImage.tsx,draw.ts}`)
+- [x] 4. Share image (`src/components/report/{ShareImage.tsx,draw.ts}`)
   - Options, canvas drawing (DP10), confirmation dialog with the exact preview (DP12), Web Share with file, else
     download.
   - _Requirements: 5.1–5.7_

@@ -42,6 +42,8 @@ export interface ShareCard {
   stats: { value: string; label: string }[];
   /** The ring of the patterns checked: checked of total. */
   rules: { checked: number; total: number };
+  /** The ring's label under the number: "of 65". */
+  ringLabel: string;
   noPattern: string | null;
   discuss: string | null;
   abruptStop: { count: string; line: string } | null;
@@ -107,6 +109,7 @@ export function shareCard(i: ShareInput): ShareCard {
         : []),
     ],
     rules: v.rules,
+    ringLabel: t("Report.rules.of", { total: i.formatNumber(v.rules.total) }),
     noPattern: n === 0 ? t("Findings.noPattern") : null,
     discuss: n > 0 ? t("Findings.discuss") : null,
     abruptStop: v.warnedItems.length
@@ -134,6 +137,7 @@ export function shareCardText(c: ShareCard): string {
     c.emergency,
     ...c.safety,
     ...c.stats.map((s) => `${s.value} ${s.label}`),
+    `${c.rules.checked} ${c.ringLabel}`,
     c.headline,
     c.noPattern,
     c.discuss,
