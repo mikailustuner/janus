@@ -177,3 +177,38 @@ def combination_codes(conn: psycopg.Connection, dataset_id: str) -> frozenset[st
         "SELECT code FROM res_combination_atc WHERE dataset_id = %s", (dataset_id,)
     ).fetchall()
     return frozenset(str(r[0]) for r in rows)
+
+
+# --- Code lookups for the CDS Hooks service (cds-hooks design §5) --------------------------------
+
+
+def refs_by_product_rxcui(conn: psycopg.Connection, dataset: str, rxcui: str) -> list[ProductRef]:
+    """Products whose published product RxCUIs contain `rxcui` (GIN index, migration 0013)."""
+    rows = conn.execute(
+        "SELECT source_id, product_id FROM res_product "
+        "WHERE dataset_id = %s AND product_rxcuis @> ARRAY[%s]::text[] "
+        "ORDER BY source_id, product_id",
+        (dataset, rxcui),
+    ).fetchall()
+    return [(str(r[0]), int(r[1])) for r in rows]
+
+
+def qids_by_rxcui(conn: psycopg.Connection, dataset: str, rxcui: str) -> list[str]:
+    """Ingredient keys whose Wikidata RxCUIs contain `rxcui`."""
+    rows = conn.execute(
+        "SELECT qid FROM res_ingredient WHERE dataset_id = %s AND rxcuis @> ARRAY[%s]::text[] "
+        "ORDER BY qid",
+        (dataset, rxcui),
+    ).fetchall()
+    return [str(r[0]) for r in rows]
+
+
+def qids_by_atc(conn: psycopg.Connection, dataset: str, code: str) -> list[str]:
+    """Ingredient keys whose ingredient-level ATC codes contain `code`."""
+    rows = conn.execute(
+        "SELECT qid FROM res_ingredient WHERE dataset_id = %s "
+        "AND ingredient_atc @> jsonb_build_array(jsonb_build_object('code', %s::text)) "
+        "ORDER BY qid",
+        (dataset, code),
+    ).fetchall()
+    return [str(r[0]) for r in rows]

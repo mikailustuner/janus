@@ -9,6 +9,7 @@ from typing import Literal
 from fastapi import APIRouter, FastAPI, Request
 from pydantic import BaseModel
 
+from janus.cds.cors import CdsCorsMiddleware
 from janus.contributions.vocabulary import load_vocabulary
 from janus.db.pool import Database
 from janus.http_policy.body_limits import BodyPolicyMiddleware
@@ -120,6 +121,7 @@ def create_app(
     )
     # Imported here to avoid an import cycle (the routers read settings from app.state).
     from janus.cascades.router import router as cascades_router
+    from janus.cds.router import router as cds_router
     from janus.contributions.router import router as contributions_router
     from janus.integrity.router import router as integrity_router
     from janus.light.router import router as light_router
@@ -154,12 +156,16 @@ def create_app(
         open_router,
         data_quality_router,
         onset_table_router,
+        cds_router,
         *extra_routers,
     ]
     for router in routers:
         app.include_router(router)
     kinds = classify(app, routers)  # fails on an unclassified route (DP2)
     register_route_templates(kinds)
+    # CORS for the CDS Hooks routes only, when origins are configured (cds-hooks DP10).
+    if settings.cds_cors_origins:
+        app.add_middleware(CdsCorsMiddleware, origins=settings.cds_cors_origins)
     # Added last = outermost: the access log also sees body-policy rejections.
     app.add_middleware(BodyPolicyMiddleware)
     app.add_middleware(AccessLogMiddleware)

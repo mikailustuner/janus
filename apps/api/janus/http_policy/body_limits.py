@@ -1,8 +1,9 @@
 """Body policy for medical routes (privacy design §4.3, Req 1.4, 2.1).
 
-Requests with a body must be `application/json` and at most 64 KiB. The body is buffered in
-memory up to the limit and replayed to the app; multipart is never parsed, so nothing is
-spooled to disk. Operational paths are exempt.
+Requests with a body must be `application/json` and at most 64 KiB (256 KiB for the CDS Hooks
+service, whose FHIR bundles are verbose: cds-hooks design DP5). The body is buffered in memory up
+to the limit and replayed to the app; multipart is never parsed, so nothing is spooled to disk.
+Operational paths are exempt.
 """
 
 from __future__ import annotations
@@ -15,6 +16,8 @@ from starlette.types import ASGIApp, Message, Receive, Scope, Send
 from janus.http_policy.routes import OPERATIONAL_ALLOWLIST
 
 MAX_BODY_BYTES: Final = 64 * 1024
+# Larger limits for named paths only.
+PATH_LIMITS: Final = {"/cds-services/janus-cascade": 256 * 1024}
 _BODY_METHODS: Final = frozenset({"POST", "PUT", "PATCH"})
 
 
@@ -70,7 +73,8 @@ class BodyPolicyMiddleware:
         if not is_json_content_type(_header(scope, b"content-type")):
             await _reject(send, 415, "unsupported_media_type")
             return
-        if declared is not None and declared > self.max_bytes:
+        limit = PATH_LIMITS.get(scope.get("path", ""), self.max_bytes)
+        if declared is not None and declared > limit:
             await _reject(send, 413, "payload_too_large")
             return
         chunks: list[bytes] = []
@@ -82,7 +86,7 @@ class BodyPolicyMiddleware:
                 return
             chunk = message.get("body", b"")
             size += len(chunk)
-            if size > self.max_bytes:
+            if size > limit:
                 await _reject(send, 413, "payload_too_large")
                 return
             chunks.append(chunk)
