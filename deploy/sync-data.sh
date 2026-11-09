@@ -7,6 +7,9 @@ set -euo pipefail
 dest="${JANUS_DEPLOY_SSH:?set JANUS_DEPLOY_SSH (ssh destination of the server)}"
 stack="${JANUS_DEPLOY_STACK:?set JANUS_DEPLOY_STACK (STACK_DIR on the server)}"
 local_data="${JANUS_DATA_DIR:-.data}"
+# Optional key file for ssh and rsync (JANUS_DEPLOY_SSH_KEY); otherwise ssh's own configuration.
+ssh_cmd=(ssh)
+[ -n "${JANUS_DEPLOY_SSH_KEY:-}" ] && ssh_cmd+=(-i "$JANUS_DEPLOY_SSH_KEY")
 roots=(memory/faers_counts light timemachine)
 for job in "$local_data"/artifacts/*/; do
   name="$(basename "$job")"
@@ -19,8 +22,8 @@ for root in "${roots[@]}"; do
   target="$(readlink "$link")"
   [[ "$target" == runs/* ]] || { echo "error: $link is not a relative runs/ link" >&2; exit 1; }
   run="${target#runs/}"
-  rsync -a --mkpath --delete "$local_data/$root/runs/$run/" "$dest:$stack/data/$root/runs/$run/"
+  rsync -a --mkpath --delete -e "${ssh_cmd[*]}" "$local_data/$root/runs/$run/" "$dest:$stack/data/$root/runs/$run/"
   # shellcheck disable=SC2029  # expanded here on purpose: paths of this machine's run ids
-  ssh "$dest" "cd '$stack/data/$root' && ln -sfn 'runs/$run' current.tmp && mv -T current.tmp current"
+  "${ssh_cmd[@]}" "$dest" "cd '$stack/data/$root' && ln -sfn 'runs/$run' current.tmp && mv -T current.tmp current"
   echo "synced $root -> $run"
 done
