@@ -192,6 +192,12 @@ numbers are recorded either way (annotation `performance`).
 | busy host (not asserted) | 12.9–15.2 | 2–4 (50–80 ms, zoom or wheel) | 201–211 | 16.7 ms | 50.0 ms |
 | saturated host (not asserted) | 19.8–20.5 | 25–30 (50–225 ms) | 305–319 | 16.7 ms | 66.7 ms |
 
+After merging into main (coordinator, 2026-11-09) the zoom buttons still gave 5 long tasks of 50–66 ms at load
+4.6: `placeLabels` ran on every 8 % zoom step of the tween and read `getComputedTextLength()` between attribute
+writes (a forced layout per label). Fix (DP14): text widths are read once, all before any write (they do not depend
+on the zoom because labels are counter-scaled) and read again after `document.fonts.ready`; labels are placed only
+when the zoom settles. Two runs at host load 6.0 and 8.8: **0** long tasks, median 16.7 ms, p95 33.2–33.3 ms.
+
 Before the fixes (per-frame `--inv`, labels inside the star buttons, no deferred filter) the same
 test at load 6–11 gave 10–19 long tasks of 50–110 ms, all in the zoom and wheel phases. A check on
 a real mid-range phone is on the pre-launch checklist.
@@ -226,3 +232,4 @@ a real mid-range phone is on the pre-launch checklist.
 | DP11 | Labels are placed greedily by priority with a side fallback (§6) instead of a zoom threshold. | Show minor labels only above 1.7 × the fit zoom (first draft). | The threshold version overlapped hub labels in the dense core and cut labels at the map edge (looked at in the 375 and 1440 screenshots). |
 | DP12 | The performance budget is asserted only when the host is not saturated (load / cores ≤ 0.75); the numbers are always recorded. | Always assert; never assert. | CPU throttling multiplies the host's own load; on a saturated shared host the test measured the other agents, not the map (§7.1). |
 | DP13 | `/cascades` is in the DEMO list of `e2e/routes.spec.ts` only; its plain (no list) state runs the same checks in `cascade-map.spec.ts`. | Also in PLAIN. | The plain-routes test has a 30 s budget for all its routes; one more route with 65 buttons pushed it over on a busy host. |
+| DP14 | Label text widths cached (read in one pass before writes, refreshed after web fonts load); labels re-placed only when a zoom settles, not per tween step. | Re-measure per step; hide labels during zoom. | The per-step measuring forced a layout per label (50–66 ms at 4× CPU); widths are zoom-independent. Measured in §7.1. |

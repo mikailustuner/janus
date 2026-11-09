@@ -111,6 +111,7 @@ export const MapView = memo(function MapView({
 
   const invK = useRef(0);
   const labelEls = useRef(new Map<string, SVGTextElement>());
+  const textWidth = useRef(new Map<string, number>());
   const placeLabels = useRef(() => {});
   /**
    * Writes the transform. `--inv` restyles every star, label and arrowhead, so during a gesture it
@@ -127,7 +128,8 @@ export const MapView = memo(function MapView({
     if (exact === true || Math.abs(k / invK.current - 1) > 0.08) {
       invK.current = k;
       svg.current?.style.setProperty("--inv", (1 / k).toFixed(4));
-      placeLabels.current();
+      // Labels are placed once the zoom settles: placing them per step cost 50-66 ms at 4x CPU.
+      if (exact === true) placeLabels.current();
     }
   }, []);
   const schedule = useCallback(() => {
@@ -491,11 +493,18 @@ export const MapView = memo(function MapView({
         const n = nodes.get(id)!;
         boxes.push([n.x * k - 7, n.y * k - 7, n.x * k + 7, n.y * k + 7]);
       }
+      // Text widths do not depend on the zoom (labels are counter-scaled): read them once, all
+      // before the first write, so placing never forces a layout per label.
+      for (const id of labelOrder) {
+        const el = labelEls.current.get(id);
+        if (el && !textWidth.current.has(id))
+          textWidth.current.set(id, el.getComputedTextLength());
+      }
       labelOrder.forEach((id) => {
         const el = labelEls.current.get(id);
         const n = nodes.get(id);
         if (!el || !n) return;
-        const w = el.getComputedTextLength();
+        const w = textWidth.current.get(id) ?? 0;
         const off = (degree.get(id) ?? 0) >= 4 ? 12 : 10;
         const sx = n.x * k;
         const sy = n.y * k;
@@ -528,6 +537,18 @@ export const MapView = memo(function MapView({
     };
     placeLabels.current();
   }, [labelOrder, always, visible, nodes, degree]);
+  // Widths measured before the web fonts arrived are measured again once they have.
+  useEffect(() => {
+    let live = true;
+    void document.fonts?.ready.then(() => {
+      if (!live) return;
+      textWidth.current.clear();
+      placeLabels.current();
+    });
+    return () => {
+      live = false;
+    };
+  }, []);
 
   const drawn = useMemo(() => {
     const rank = (e: GraphEdge) =>
