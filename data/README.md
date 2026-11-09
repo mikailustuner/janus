@@ -159,3 +159,20 @@ CC BY-NC-SA 4.0 data package `datasets/canon/`.
   mapping and the fixed retrospective-validation cases. Terms are OnSIDES MedDRA names (no MedDRA hierarchy is copied); every
   active row and case cites a paper of `evidence_papers.csv` (Crossref checked 2026-11-08). Drafted by Claude Code, reviewed by the
   pharmacologist and statistician agents: **AI-reviewed, pending expert review** (pre-launch checklist).
+
+## Reporting channels (Janus, Apache-2.0; `report-assistant` spec)
+- `report_channels.csv` (+ `report_channels.meta.json`): official channels for reporting a suspected side effect
+  of a medicine in Türkiye (TİTCK/TÜFAM), the US (FDA MedWatch Form 3500B), the EU (EMA guidance and national
+  authority finder) and Germany (BfArM/PEI), France (ANSM) and Spain (AEMPS). One row per channel: `channel_id`,
+  `region`, `country`, `authority`, `channel_name`, `audience` (`patient`, `relative`, `carer`, `citizen`, `consumer`,
+  `representative`, `hcp`), `kind` (`online`, `pdf`, `document`, `email`, `phone`, `guidance`, `directory`), `url`,
+  `form_id`, `form_version`, `language`, `patient_may_report`, `fields_status` (`verified`, `derived`, `partial`,
+  `unverified`, `none`; meanings in the meta file), `field_source` (the channel whose field list applies),
+  `fields` and `required_fields` (labels as published, `;`-separated, the form section before ` > `; `one-of(a|b)`
+  means at least one of them), `outcome_field` and `outcome_options` (the form's own outcome choices, only where
+  they were read), `source_url`, `checked_on`, `notes`. Checked by hand on official sites only, on 2026-11-09;
+  anything not confirmed is written UNVERIFIED and the app builds no field mapping on it. No MedDRA term is stored
+  (`report-assistant` DP3). **Re-check every row at least every three months** (next: 2027-02-09) and whenever
+  an authority republishes a form; the TÜFAM e-form's published-version id changes on every republication. The web
+  app ships `apps/web/src/report/channels.json`, generated from this file by
+  `node apps/web/scripts/gen-report-channels.mjs`; a test fails when the two differ.

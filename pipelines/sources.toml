@@ -245,6 +245,23 @@ region = "US"
 cadence_days = 91
 urls = ["https://fis.fda.gov/extensions/FPD-QDE-FAERS/FPD-QDE-FAERS.html"]
 
+[[sources]]
+id = "report_channels"
+section = "adverse"
+name = "Official channels for reporting a suspected side effect (TİTCK/TÜFAM, FDA MedWatch, EMA, BfArM/PEI, ANSM, AEMPS)"
+license = "Janus curation (Apache-2.0); field labels quoted as published in public official forms"
+notes = [
+  "Addresses, form ids and short field labels of public reporting forms, checked by hand on official sites on 2026-11-09, in data/report_channels.csv. Janus links to the forms and never submits anything; use does not imply endorsement by any authority.",
+  "No MedDRA term is stored or shown by the report assistant.",
+]
+storage = "commit"
+cadence_days = 90
+urls = [
+  "https://www.titck.gov.tr/faaliyetalanlari/ilac/18",
+  "https://www.fda.gov/safety/medical-product-safety-information/medwatch-forms-fda-safety-reporting",
+  "https://www.ema.europa.eu/en/about-us/what-we-do/safety-medicines/reporting-suspected-side-effects",
+]
+
 # --- Evidence integrity -----------------------------------------------------
 
 [[sources]]
@@ -340,6 +357,14 @@ section = "cited"
 name = "Evans SJW, Waller PC, Davis S, Pharmacoepidemiol Drug Saf 2001;10(6):483-486"
 license = "Subscription"
 notes = ["Cited only, for the proportional reporting ratio screening criteria (PRR >= 2, chi-squared >= 4, at least 3 reports)."]
+storage = "cited_only"
+
+[[sources]]
+id = "hazell_2006"
+section = "cited"
+name = "Hazell L, Shakir SAW, Drug Saf 2006;29(5):385-396, doi:10.2165/00002018-200629050-00003"
+license = "Subscription"
+notes = ["Cited only, for the median under-reporting rate of adverse drug reactions across 37 studies (report assistant)."]
 storage = "cited_only"
 
 [[sources]]

@@ -8,6 +8,7 @@ src/doctor/messages.json
 src/demo/fixtures/*.json
 src/demo/passport-*.recorded.json
 src/demo/codes.svg.json
+src/report/channels.json
 # Written by apps/api/tests/test_passport_web_fixtures.py
 src/passport/fixtures/*.json
 test-results/

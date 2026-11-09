@@ -1,5 +1,6 @@
 {
  "en": {
+  "report": "Prepare a report to the authority",
   "errors": {
    "invalid_token": "This link is not valid.",
    "token_expired": "This link has expired.",
@@ -24,6 +25,7 @@
   "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
  },
  "tr": {
+  "report": "Yetkili kuruma bildirim hazırla",
   "errors": {
    "invalid_token": "Bu bağlantı geçerli değil.",
    "token_expired": "Bu bağlantının süresi doldu.",
@@ -48,6 +50,7 @@
   "disclaimer": "Janus bilgi sağlar, tıbbi tavsiye vermez. Araştırma prototipi — tıbbi cihaz değildir."
  },
  "de": {
+  "report": "Meldung an die Behörde vorbereiten",
   "errors": {
    "invalid_token": "Dieser Link ist nicht gültig.",
    "token_expired": "Dieser Link ist abgelaufen.",
@@ -72,6 +75,7 @@
   "disclaimer": "Janus bietet Informationen, keine medizinische Beratung. Forschungsprototyp – kein Medizinprodukt."
  },
  "fr": {
+  "report": "Préparer un signalement à l'autorité",
   "errors": {
    "invalid_token": "Ce lien n'est pas valide.",
    "token_expired": "Ce lien a expiré.",
@@ -96,6 +100,7 @@
   "disclaimer": "Janus fournit des informations, pas des conseils médicaux. Prototype de recherche — pas un dispositif médical."
  },
  "es": {
+  "report": "Preparar una notificación a la autoridad",
   "errors": {
    "invalid_token": "Este enlace no es válido.",
    "token_expired": "Este enlace ha caducado.",

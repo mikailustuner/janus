@@ -524,6 +524,7 @@
     "empty": "Todavía no hay nada que mostrar."
   },
   "Doctor": {
+    "report": "Preparar una notificación a la autoridad",
     "errors": {
       "invalid_token": "Este enlace no es válido.",
       "token_expired": "Este enlace ha caducado.",
@@ -1340,5 +1341,170 @@
     "simulatedStamp": "Retractado (simulación)",
     "notificationDemo": "Simulación de la demo: ninguna fuente se retractó de verdad. Abra Janus para ver la demo.",
     "passOn": "Si ya entregó la nota anterior a su médico, entréguele la nota actualizada."
+  },
+  "ReportAssistant": {
+    "title": "Preparar una notificación a la autoridad",
+    "link": "Preparar una notificación a la autoridad",
+    "summary": "Janus no envía esta notificación. Usted la presenta en el formulario oficial.",
+    "intro": {
+      "choice": "Notificar una sospecha de efecto adverso es decisión suya. Una notificación transmite una sospecha; no tiene que demostrar que el medicamento lo causó.",
+      "what": "Janus pone lo que ya sabe en un borrador en este dispositivo. Usted lo revisa, lo cambia y copia cada valor en el formulario oficial.",
+      "fact": "Una revisión sistemática de 2006 analizó 37 estudios que estimaban qué parte de las reacciones adversas a medicamentos no se notificaba a las autoridades. La mediana entre los estudios fue del 94 % (rango intercuartílico 82–98 %: la mitad central de los estudios encontró entre el 82 % y el 98 %).",
+      "caveat": "Los estudios difieren en país, ámbito y método, por lo que no es una cifra válida hoy para ningún país concreto.",
+      "cite": "Hazell L, Shakir SAW. Under-reporting of adverse drug reactions: a systematic review. Drug Saf 2006;29(5):385–396.",
+      "doi": "DOI 10.2165/00002018-200629050-00003"
+    },
+    "where": {
+      "title": "Dónde notificar",
+      "region": "Región",
+      "noRegion": "Elija una región para ver su formulario oficial.",
+      "country": "País",
+      "form": "Formulario",
+      "countries": {
+        "DE": "Alemania",
+        "FR": "Francia",
+        "ES": "España",
+        "EU": "Otro país de la UE"
+      },
+      "kind": {
+        "online": "Formulario en línea",
+        "pdf": "Formulario PDF",
+        "document": "Formulario Word",
+        "guidance": "Información de la EMA"
+      },
+      "otherEu": "Cada país de la UE tiene su propia herramienta de notificación. La Agencia Europea de Medicamentos indica la autoridad de cada país; el borrador de abajo sigue la lista de la EMA sobre qué notificar.",
+      "finder": "Encontrar su autoridad nacional (lista de la EMA)"
+    },
+    "channel": {
+      "version": "Formulario {id} · versión {version}",
+      "versionOnly": "Versión: {version}",
+      "unverified": "no confirmada por Janus",
+      "checked": "Dirección y preguntas comprobadas el {date} en el sitio de la autoridad.",
+      "source": "Página de origen",
+      "borrowed": "Las etiquetas proceden de la edición en PDF de este formulario; el formulario en línea puede redactarlas u ordenarlas de otro modo.",
+      "noFields": {
+        "unverified": "Janus no ha comprobado las preguntas de este formulario, así que el borrador usa las etiquetas de Janus. Copie cada valor en la pregunta que le corresponda.",
+        "partial": "Janus solo ha comprobado la primera página de este formulario (sobre la persona), así que el borrador usa las etiquetas de Janus. Copie cada valor en la pregunta que le corresponda.",
+        "hcp": "Janus no ha comprobado las preguntas del formulario para profesionales sanitarios, así que el borrador usa las etiquetas de Janus."
+      },
+      "derived": "Preguntas leídas del archivo oficial de definición del formulario; Janus no ha rellenado el formulario en línea."
+    },
+    "contacts": {
+      "title": "Otras formas de notificar",
+      "email": "Enviar el formulario del paciente rellenado por correo electrónico a {address}",
+      "phone": "Línea gratuita {number}, días laborables de 09:00 a 18:00, solo desde teléfonos fijos"
+    },
+    "what": {
+      "title": "Qué entra en el borrador",
+      "medicine": "El medicamento que sospecha",
+      "choose": "Medicamento de su lista",
+      "box": "Nombre como en la caja",
+      "boxHint": "Puede cambiarlo para que coincida exactamente con la caja.",
+      "ingredient": "Principio activo: {name}",
+      "noList": "Su lista no tiene medicamentos. Escriba el nombre como en la caja.",
+      "event": "Qué ocurrió",
+      "eventPick": "Elegir una descripción",
+      "eventOwn": "Lo describiré yo",
+      "eventText": "Con sus propias palabras",
+      "eventHint": "Basta con palabras sencillas; la autoridad codifica la notificación.",
+      "onset": "¿Cuándo empezó?",
+      "outcome": "¿Cómo está ahora?",
+      "outcomeOptions": "Estas son las respuestas del formulario oficial.",
+      "outcomeNone": "Sin respuesta",
+      "outcomeFree": "Con sus propias palabras, por ejemplo si continúa todavía.",
+      "others": "Otros medicamentos tomados en ese momento",
+      "othersHint": "Desmarque un medicamento para dejarlo fuera del borrador.",
+      "othersNone": "No hay otros medicamentos en la lista."
+    },
+    "draft": {
+      "title": "Su borrador",
+      "demo": "Demo · paciente sintético — no presentar",
+      "empty": "Añada el medicamento o qué ocurrió para ver el borrador.",
+      "copy": "Copiar",
+      "copyLabel": "Copiar: {label}",
+      "copied": "Copiado: {label}",
+      "copyAll": "Copiar todo",
+      "copiedAll": "Se han copiado todos los valores.",
+      "copyFailed": "Aquí no se puede copiar. Seleccione el texto y cópielo a mano.",
+      "print": "Imprimir",
+      "open": "Abrir el formulario oficial",
+      "opens": "Abre el sitio de la autoridad en una pestaña nueva.",
+      "noField": "No hay un campo correspondiente registrado para este formulario",
+      "othersEach": "Introduzca cada medicamento como una entrada propia en el formulario.",
+      "missingTitle": "Preguntas del formulario que Janus no rellena",
+      "missingHint": "Añádalas usted en el formulario oficial, en la medida en que quiera responderlas.",
+      "oneOf": "Al menos uno de: {fields}"
+    },
+    "janus": {
+      "medicine": "Medicamento (como en la caja)",
+      "event": "Qué ocurrió",
+      "onset": "Inicio",
+      "outcome": "Cómo está ahora",
+      "others": "Otros medicamentos"
+    },
+    "hcp": {
+      "title": "Para profesionales sanitarios",
+      "prefilled": "Rellenado a partir de los códigos de la nota: los nombres de los principios activos y el acontecimiento proceden del vocabulario de Janus. Con el enlace no llegó ningún dato personal.",
+      "TR": "El formulario en línea de TÜFAM también recibe notificaciones de profesionales sanitarios (profesión de quien notifica: Doktor, Eczacı, Diğer sağlık çalışanı). La TİTCK menciona además un formulario propio para profesionales, el «Advers Reaksiyon Bildirim Formu»; Janus no ha comprobado su dirección. Figura en la página de TÜFAM.",
+      "US": "El formulario FDA 3500B es para consumidores y pacientes. Los profesionales sanitarios usan el formulario FDA 3500; Janus no ha comprobado sus preguntas, así que el borrador usa las etiquetas de Janus. La página de formularios de MedWatch muestra ambos.",
+      "DE": "El formulario en línea y el formulario PDF del BfArM son para pacientes y profesionales sanitarios.",
+      "FR": "El formulario Cerfa 10011*07 está pensado para profesionales sanitarios; la ANSM también lo ofrece a los pacientes.",
+      "ES": "Esta es la vía ciudadana de NotificaRAM. Janus solo ha comprobado esta vía, así que el borrador usa las etiquetas de Janus.",
+      "EU": "Un médico, enfermero o farmacéutico también puede notificar a través de la autoridad nacional (EMA)."
+    },
+    "states": {
+      "vocabulary": "No se pudieron cargar los nombres."
+    },
+    "labels": {
+      "trReaction": "Reacción/síntoma",
+      "trReactionStart": "Fecha de inicio",
+      "trOutcome": "Desenlace",
+      "trDrugName": "Nombre del medicamento (nombre completo, como en la caja)",
+      "trDocxDescribe": "Describa el efecto adverso y cómo se produjo",
+      "trDocxWhen": "¿Cuándo empezó?",
+      "trDocxState": "¿Cómo está ahora la persona que tuvo el efecto adverso?",
+      "trDocxDrug": "Nombre del medicamento",
+      "trDocxOther": "Nombre del otro medicamento",
+      "usA3": "Fecha en que ocurrió el problema",
+      "usA4": "Cuéntenos qué ocurrió, cómo o por qué",
+      "usC1": "Nombre(s) del producto tal como aparece en la caja, el frasco o el envase",
+      "usE11": "Todos los medicamentos con receta y productos sanitarios que se usan ahora",
+      "emaMedicine": "Medicamento",
+      "emaOnset": "Inicio del efecto adverso",
+      "emaOngoing": "¿Continúa?",
+      "emaOthers": "Otros medicamentos",
+      "deDrug": "Nombre o código de farmacia (PZN) del medicamento sospechoso",
+      "deOthers": "Otro(s) medicamento(s)",
+      "deOnset": "Fecha de inicio del efecto adverso",
+      "deDescribe": "Descripción del riesgo del medicamento o del efecto adverso",
+      "deOutcome": "Desenlace del efecto adverso",
+      "frDrug": "Medicamento",
+      "frOnset": "Fecha de aparición",
+      "frDescribe": "Naturaleza y descripción del efecto",
+      "frOutcome": "Evolución",
+      "esDrug": "Nombre del medicamento",
+      "esOtherDrug": "Nombre del medicamento (otros medicamentos)",
+      "esSymptoms": "Síntomas de la reacción adversa",
+      "esOnset": "¿Cuándo han empezado esos síntomas?",
+      "esState": "¿Cuál es el estado actual de la persona afectada?"
+    },
+    "options": {
+      "trEform": {
+        "0": "Recuperado/resuelto",
+        "1": "En recuperación/resolviéndose",
+        "2": "No recuperado/no resuelto",
+        "3": "Recuperado con secuelas",
+        "4": "Muerte",
+        "5": "Desconocido"
+      },
+      "trDocx": {
+        "0": "El efecto adverso desapareció por completo/recuperado",
+        "1": "En recuperación",
+        "2": "Los síntomas continúan/no recuperado",
+        "3": "La enfermedad empeoró",
+        "4": "Falleció",
+        "5": "Otro"
+      }
+    }
   }
 }

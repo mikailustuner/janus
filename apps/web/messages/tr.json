@@ -524,6 +524,7 @@
     "empty": "Henüz gösterilecek bir şey yok."
   },
   "Doctor": {
+    "report": "Yetkili kuruma bildirim hazırla",
     "errors": {
       "invalid_token": "Bu bağlantı geçerli değil.",
       "token_expired": "Bu bağlantının süresi doldu.",
@@ -1340,5 +1341,170 @@
     "simulatedStamp": "Geri çekildi (canlandırma)",
     "notificationDemo": "Demo canlandırması: hiçbir kaynak gerçekte geri çekilmedi. Demoyu görmek için Janus'u açın.",
     "passOn": "Önceki notu doktorunuza verdiyseniz güncellenmiş notu da verin."
+  },
+  "ReportAssistant": {
+    "title": "Yetkili kuruma bildirim hazırla",
+    "link": "Yetkili kuruma bildirim hazırla",
+    "summary": "Janus bu bildirimi göndermez. Bildirimi resmî formda kendiniz yaparsınız.",
+    "intro": {
+      "choice": "Şüphelendiğiniz bir yan etkiyi bildirmek sizin kararınızdır. Bildirim bir şüpheyi iletir; ilacın buna yol açtığını kanıtlamanız gerekmez.",
+      "what": "Janus, bildiklerini bu cihazda bir taslağa koyar. Taslağı kontrol eder, değiştirir ve her değeri resmî forma kendiniz kopyalarsınız.",
+      "fact": "2006 tarihli sistematik bir derleme, ilaç advers reaksiyonlarının ne kadarının yetkili kurumlara bildirilmediğini tahmin eden 37 çalışmayı inceledi. Çalışmalar arasında ortanca değer %94'tü (çeyrekler arası aralık %82–98: çalışmaların ortadaki yarısı %82 ile %98 arasında bir değer buldu).",
+      "caveat": "Çalışmaların yapıldığı ülke, ortam ve yöntem farklıdır; bu oran bugün herhangi bir ülke için geçerli bir değer değildir.",
+      "cite": "Hazell L, Shakir SAW. Under-reporting of adverse drug reactions: a systematic review. Drug Saf 2006;29(5):385–396.",
+      "doi": "DOI 10.2165/00002018-200629050-00003"
+    },
+    "where": {
+      "title": "Nereye bildirilir",
+      "region": "Bölge",
+      "noRegion": "Resmî formu görmek için bir bölge seçin.",
+      "country": "Ülke",
+      "form": "Form",
+      "countries": {
+        "DE": "Almanya",
+        "FR": "Fransa",
+        "ES": "İspanya",
+        "EU": "Başka bir AB ülkesi"
+      },
+      "kind": {
+        "online": "Çevrim içi form",
+        "pdf": "PDF form",
+        "document": "Word formu",
+        "guidance": "EMA rehberi"
+      },
+      "otherEu": "Her AB ülkesinin kendi bildirim aracı vardır. Avrupa İlaç Ajansı her ülkenin yetkili kurumunu listeler; aşağıdaki taslak EMA'nın neyin bildirileceğine dair listesini izler.",
+      "finder": "Ülkenizin yetkili kurumunu bulun (EMA listesi)"
+    },
+    "channel": {
+      "version": "Form {id} · sürüm {version}",
+      "versionOnly": "Sürüm: {version}",
+      "unverified": "Janus tarafından doğrulanmadı",
+      "checked": "Adres ve sorular {date} tarihinde kurumun sitesinde kontrol edildi.",
+      "source": "Kaynak sayfa",
+      "borrowed": "Etiketler bu formun PDF sürümünden alındı; çevrim içi formda ifade veya sıra farklı olabilir.",
+      "noFields": {
+        "unverified": "Janus bu formun sorularını kontrol etmedi; taslak Janus'un kendi etiketlerini kullanır. Her değeri ona uyan soruya kopyalayın.",
+        "partial": "Janus bu formun yalnızca ilk sayfasını (kişiyle ilgili) kontrol etti; taslak Janus'un kendi etiketlerini kullanır. Her değeri ona uyan soruya kopyalayın.",
+        "hcp": "Janus sağlık mesleği mensuplarına yönelik formun sorularını kontrol etmedi; taslak Janus'un kendi etiketlerini kullanır."
+      },
+      "derived": "Sorular formun resmî tanım dosyasından okundu; Janus canlı formu doldurmadı."
+    },
+    "contacts": {
+      "title": "Bildirimin diğer yolları",
+      "email": "Doldurulmuş hasta formunu {address} adresine e-postayla gönderin",
+      "phone": "Ücretsiz hat {number}, hafta içi 09:00–18:00, yalnızca sabit hatlardan"
+    },
+    "what": {
+      "title": "Taslağa neler girer",
+      "medicine": "Şüphelendiğiniz ilaç",
+      "choose": "Listenizden ilaç",
+      "box": "Kutudaki adı",
+      "boxHint": "Kutudakiyle aynı olacak şekilde değiştirebilirsiniz.",
+      "ingredient": "Etkin madde: {name}",
+      "noList": "Listenizde ilaç yok. Adını kutudaki gibi yazın.",
+      "event": "Ne oldu",
+      "eventPick": "Bir açıklama seçin",
+      "eventOwn": "Kendim anlatacağım",
+      "eventText": "Kendi sözlerinizle",
+      "eventHint": "Sade bir dil yeterlidir; kurum bildirimi kendisi kodlar.",
+      "onset": "Ne zaman başladı?",
+      "outcome": "Şimdi durum nasıl?",
+      "outcomeOptions": "Bunlar resmî formun cevap seçenekleridir.",
+      "outcomeNone": "Cevaplanmadı",
+      "outcomeFree": "Kendi sözlerinizle, örneğin hâlâ devam edip etmediği.",
+      "others": "O sırada kullanılan diğer ilaçlar",
+      "othersHint": "Taslağa girmesini istemediğiniz ilacın işaretini kaldırın.",
+      "othersNone": "Listede başka ilaç yok."
+    },
+    "draft": {
+      "title": "Taslağınız",
+      "demo": "Demo · sentetik hasta — göndermeyin",
+      "empty": "Taslağı görmek için ilacı veya ne olduğunu ekleyin.",
+      "copy": "Kopyala",
+      "copyLabel": "Kopyala: {label}",
+      "copied": "Kopyalandı: {label}",
+      "copyAll": "Tümünü kopyala",
+      "copiedAll": "Tüm değerler kopyalandı.",
+      "copyFailed": "Burada kopyalama yapılamıyor. Metni seçip elle kopyalayın.",
+      "print": "Yazdır",
+      "open": "Resmî formu aç",
+      "opens": "Kurumun sitesini yeni bir sekmede açar.",
+      "noField": "Bu form için eşleşen bir alan kayıtlı değil",
+      "othersEach": "Her ilacı formda ayrı bir kayıt olarak girin.",
+      "missingTitle": "Formun Janus'un doldurmadığı soruları",
+      "missingHint": "Cevaplamak istediğiniz kadarını resmî formda kendiniz ekleyin.",
+      "oneOf": "Şunlardan en az biri: {fields}"
+    },
+    "janus": {
+      "medicine": "İlaç (kutudaki adıyla)",
+      "event": "Ne oldu",
+      "onset": "Başlangıç",
+      "outcome": "Şimdiki durum",
+      "others": "Diğer ilaçlar"
+    },
+    "hcp": {
+      "title": "Sağlık mesleği mensupları için",
+      "prefilled": "Notun kodlarından dolduruldu: etkin madde adları ve olay Janus sözlüğünden gelir. Bağlantıyla hiçbir kişisel veri gelmedi.",
+      "TR": "TÜFAM e-formu sağlık mesleği mensuplarından da bildirim alır (bildirim sahibinin mesleği: Doktor, Eczacı, Diğer sağlık çalışanı). TİTCK ayrıca sağlık mesleği mensuplarına yönelik ayrı bir form olarak “Advers Reaksiyon Bildirim Formu”nu belirtir; Janus bu formun adresini kontrol etmedi. Form TÜFAM sayfasında yer alır.",
+      "US": "FDA Form 3500B tüketiciler ve hastalar içindir. Sağlık mesleği mensupları FDA Form 3500'ü kullanır; Janus bu formun sorularını kontrol etmedi, bu yüzden taslak Janus'un etiketlerini kullanır. MedWatch form sayfası ikisini de listeler.",
+      "DE": "BfArM'ın çevrim içi formu ve PDF formu hastalar ve sağlık mesleği mensupları içindir.",
+      "FR": "Cerfa 10011*07 formu sağlık mesleği mensuplarına göre düzenlenmiştir; ANSM bu formu hastalar için de listeler.",
+      "ES": "Bu, NotificaRAM'in vatandaş yoludur. Janus yalnızca bu yolu kontrol etti, bu yüzden taslak Janus'un etiketlerini kullanır.",
+      "EU": "Doktor, hemşire veya eczacı da ulusal yetkili kurum aracılığıyla bildirim yapabilir (EMA)."
+    },
+    "states": {
+      "vocabulary": "Adlar yüklenemedi."
+    },
+    "labels": {
+      "trReaction": "Reaksiyon/belirti",
+      "trReactionStart": "Başlangıç tarihi",
+      "trOutcome": "Sonuç",
+      "trDrugName": "İlaç adı (kutuda belirtildiği gibi tam adı)",
+      "trDocxDescribe": "Yaşanan yan etkiyi ve nasıl meydana geldiğini anlatın",
+      "trDocxWhen": "Ne zaman başladı?",
+      "trDocxState": "Yan etkiyi yaşayan kişinin şimdiki durumu nasıl?",
+      "trDocxDrug": "İlacın adı",
+      "trDocxOther": "Diğer ilacın adı",
+      "usA3": "Sorunun ortaya çıktığı tarih",
+      "usA4": "Ne olduğunu, nasıl ya da neden olduğunu anlatın",
+      "usC1": "Ürünün kutuda, şişede veya ambalajda yazan adı",
+      "usE11": "Şu anda kullanılan tüm reçeteli ilaçlar ve tıbbi cihazlar",
+      "emaMedicine": "İlaç",
+      "emaOnset": "Yan etkinin başlangıcı",
+      "emaOngoing": "Devam ediyor mu?",
+      "emaOthers": "Diğer ilaçlar",
+      "deDrug": "Şüphelenilen ilacın adı veya eczane numarası (PZN)",
+      "deOthers": "Diğer ilaç(lar)",
+      "deOnset": "Yan etkinin başlangıç tarihi",
+      "deDescribe": "İlaç riskinin veya yan etkinin açıklaması",
+      "deOutcome": "Yan etkinin sonucu",
+      "frDrug": "İlaç",
+      "frOnset": "Ortaya çıktığı tarih",
+      "frDescribe": "Etkinin niteliği ve açıklaması",
+      "frOutcome": "Seyir (nasıl gelişti)",
+      "esDrug": "İlacın adı",
+      "esOtherDrug": "İlacın adı (diğer ilaçlar)",
+      "esSymptoms": "Advers reaksiyonun belirtileri",
+      "esOnset": "Bu belirtiler ne zaman başladı?",
+      "esState": "Etkilenen kişinin şimdiki durumu nedir?"
+    },
+    "options": {
+      "trEform": {
+        "0": "İyileşti/düzeldi",
+        "1": "İyileşiyor/düzeliyor",
+        "2": "İyileşmedi/düzelmedi",
+        "3": "Bazı kalıcı etkiler bırakarak iyileşti",
+        "4": "Ölüm",
+        "5": "Bilinmiyor"
+      },
+      "trDocx": {
+        "0": "Yan etki tamamen düzeldi/iyileşti",
+        "1": "İyileşiyor",
+        "2": "Belirtiler devam ediyor/iyileşmedi",
+        "3": "Hastalığı şiddetlendi",
+        "4": "Öldü",
+        "5": "Diğer"
+      }
+    }
   }
 }

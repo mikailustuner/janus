@@ -119,6 +119,16 @@ FDA Adverse Event Monitoring System (AEMS, formerly FAERS) quarterly data files
   medical terminology developed under the auspices of ICH. MedDRA® trademark is
   registered by IFPMA on behalf of ICH. Not an FDA endorsement.
 
+Official channels for reporting a suspected side effect (TİTCK/TÜFAM, FDA MedWatch, EMA, BfArM/PEI, ANSM, AEMPS)
+  License: Janus curation (Apache-2.0); field labels quoted as published in
+  public official forms
+  Addresses, form ids and short field labels of public reporting forms, checked
+  by hand on official sites on 2026-11-09, in data/report_channels.csv. Janus
+  links to the forms and never submits anything; use does not imply endorsement
+  by any authority.
+  No MedDRA term is stored or shown by the report assistant.
+  Snapshot: retrieved 2026-11-09 (data/report_channels.csv)
+
 Evidence integrity
 ------------------
 
@@ -175,6 +185,11 @@ Evans SJW, Waller PC, Davis S, Pharmacoepidemiol Drug Saf 2001;10(6):483-486
   License: Subscription
   Cited only, for the proportional reporting ratio screening criteria (PRR >= 2,
   chi-squared >= 4, at least 3 reports).
+
+Hazell L, Shakir SAW, Drug Saf 2006;29(5):385-396, doi:10.2165/00002018-200629050-00003
+  License: Subscription
+  Cited only, for the median under-reporting rate of adverse drug reactions
+  across 37 studies (report assistant).
 
 Ashburn TT, Thor KB, Nat Rev Drug Discov 2004;3(8):673-683
   License: Subscription
