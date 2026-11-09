@@ -154,6 +154,9 @@ def summarize(days: Sequence[float], rng: random.Random, boot: int = 1000) -> On
     the median, and the Weibull fit when there are at least `MIN_REPORTS` reports."""
     if not days:
         raise FitError("no onset data")
+    # The bootstrap draws by index: sort first so the result does not depend on the order the
+    # query returned the rows in (DuckDB's GROUP BY order is not stable between runs).
+    days = sorted(days)
     med = _empirical(days, 0.5)
     meds = sorted(
         _empirical([days[rng.randrange(len(days))] for _ in days], 0.5) for _ in range(boot)

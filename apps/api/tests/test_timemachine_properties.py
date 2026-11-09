@@ -173,6 +173,24 @@ def test_summary_quartiles_are_ordered_and_small_samples_flagged(
     assert (s.fit is None) or len(days) >= 10
 
 
+@given(
+    st.lists(st.integers(0, 365), min_size=1, max_size=60),
+    st.integers(0, 100),
+    st.randoms(use_true_random=False),
+)
+def test_summary_does_not_depend_on_row_order(
+    days: list[int], seed: int, shuffler: random.Random
+) -> None:
+    """The bootstrap interval is the same for any order of the same reports (the query's GROUP BY
+    order is not stable; found 2026-11-09 when two builds gave 9 and 19 days)."""
+    a = [float(d) for d in days]
+    b = list(a)
+    shuffler.shuffle(b)
+    sa = summarize(a, random.Random(seed), boot=100)
+    sb = summarize(b, random.Random(seed), boot=100)
+    assert (sa.median_low, sa.median_high) == (sb.median_low, sb.median_high)
+
+
 # --- exposure (P12) and agreement (P13) ------------------------------------------------------
 
 

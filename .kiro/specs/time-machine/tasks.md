@@ -78,3 +78,13 @@
 - [ ] 13. Expert review (owner: the experts)
   - The items of `docs/pre-launch-checklist.md`; only an expert may set a result to reviewed.
   - _Requirements: 10.3_
+
+- [x] 14. Fixes found while building the web screens (2026-11-09)
+  - **Non-deterministic bootstrap:** two builds of the same data gave a median interval of 9 and 19 days for
+    `antipsychotic_eps_antiparkinson`; the onset query's `GROUP BY` returns rows in no stable order and the seeded
+    bootstrap draws by index. `summarize` now sorts the intervals first; new property
+    `test_summary_does_not_depend_on_row_order`. Two rebuilds are now identical apart from `built_at`.
+  - **Forbidden word in a curated note:** the medical-language hook flagged "diagnosis"/"diagnostic" in the anise
+    comparator note of `data/time_machine/comparators.csv` (shown verbatim in the research area); reworded to
+    "disease label"/"disease category". Artifact rebuilt.
+  - _Requirements: 6.4, 9.1_
