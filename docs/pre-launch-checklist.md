@@ -135,3 +135,18 @@ remove the matching notice (and, for the Canon claims, set `expert_review = revi
   connected"; if ChEMBL data enters the export, the export licence must change (share-alike).
 - [ ] **OnSIDES refresh:** the pipeline pins the v3.1.1 asset by SHA-256; a new data release is a reviewed code change, after which
   the light build and `docs/light-face-validation.md` are regenerated.
+
+## FHIR export (enhancement, 2026-11-09)
+- [ ] **FHIR conformance beyond the JSON schema:** run the generated Bundles (three demo patients, with and without product
+  names) through the HL7 FHIR Validator (R4 4.0.1: invariants, value sets, terminology for ATC and RxNorm codes) and record
+  the result in `.kiro/specs/fhir-export/design.md` §7. The tests check only the official JSON schema plus the R4 rules it
+  lacks (`fhir-export` DP13).
+- [ ] **Status and receiving systems:** a clinician or health-informatics reviewer confirms that `status: active` with the
+  "entered by the person, not checked by a clinician" note is read correctly by a typical receiving system (patient-reported
+  statement, not a reconciled list) (`fhir-export` DP1, DP6).
+- [ ] **Codes and claims in the FHIR file:** check the WHOCC terms for redistributing ATC codes in a user's export and the
+  NLM/UMLS terms for RxNorm codes taken from Wikidata; confirm whether several ATC codes on one ingredient should stay
+  (they can suggest an indication); test the import in at least one real EHR or PHR sandbox (contained data-less Patient,
+  `status: active`, `category: patientspecified`); check EU EHDS rules on interoperability claims ("many health software
+  systems can read"); say on the privacy page that the downloaded file is unencrypted and the receiver is responsible for
+  it (`fhir-export` safety review A4, pre-launch notes).

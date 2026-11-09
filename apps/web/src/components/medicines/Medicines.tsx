@@ -14,6 +14,7 @@ import { MonthPicker } from "@/components/MonthPicker";
 import { candidateIngredients } from "@/components/names";
 import { ItemBadges, ListSummaryExtra } from "@/components/passport/slots";
 import { SourceAttribution } from "@/components/SourceAttribution";
+import { FhirExport } from "@/components/medicines/FhirExport";
 import { TimelineSummary } from "@/components/medicines/Timeline";
 import { StateView } from "@/components/StateView";
 import { Button, ButtonLink, Card, Chip, PageTitle } from "@/components/ui";
@@ -266,18 +267,25 @@ export function Medicines() {
           </div>
           {/* Desktop (Req 27): the list as rows, the timeline beside it. */}
           <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(280px,340px)] lg:items-start">
-            <ul className="flex min-w-0 flex-col gap-3">
-              {items.map((item, i) => (
-                <ItemRow
-                  key={item.id}
-                  item={item}
-                  index={i}
-                  vocab={vocab}
-                  warned={warned.has(i)}
-                  readOnly={readOnly}
-                />
-              ))}
-            </ul>
+            <div className="flex min-w-0 flex-col gap-5">
+              <ul className="flex min-w-0 flex-col gap-3">
+                {items.map((item, i) => (
+                  <ItemRow
+                    key={item.id}
+                    item={item}
+                    index={i}
+                    vocab={vocab}
+                    warned={warned.has(i)}
+                    readOnly={readOnly}
+                  />
+                ))}
+              </ul>
+              <FhirExport
+                items={items}
+                vocab={vocab}
+                demo={session.demo !== null}
+              />
+            </div>
             {/* Desktop only: the phone keeps the timeline on its own screen, as before. */}
             <aside className="hidden min-w-0 flex-col gap-5 lg:sticky lg:top-4 lg:flex">
               <TimelineSummary items={items} result={result ?? null} />

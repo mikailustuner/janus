@@ -1265,5 +1265,18 @@
       "component": "This FAERS ingredient is a component of a substance in the Canon, not the same exposure:"
     },
     "notListed": "The pair you chose is not available here; the first available pair is shown instead."
+  },
+  "Fhir": {
+    "title": "Export as FHIR",
+    "what": "FHIR is a standard format that many health software systems can read. Here you can save your medicine list as a FHIR file on this device.",
+    "demo": "Demo: the file holds the synthetic demo list, marked as test data.",
+    "preview": "{medicines, plural, one {# medicine} other {# medicines}}, {coded} of {ingredients, plural, one {# ingredient} other {# ingredients}} with a standard code (ATC, RxNorm)",
+    "contents": "The file holds ingredient names and codes, start months and the export date. It has no doses. Anyone with the file can read it.",
+    "includeNames": "Include the names on the boxes",
+    "includeNamesHint": "Off by default: the name on a box can make the file easier to link to you.",
+    "download": "Download FHIR file",
+    "notSent": "Janus does not send this file anywhere. Whoever receives it decides what their system does with it.",
+    "notChecked": "The file contains the list as it was entered. It is not a medical record, and no health professional has checked it.",
+    "saved": "Download started: {file}."
   }
 }

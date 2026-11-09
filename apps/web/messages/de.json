@@ -1265,5 +1265,18 @@
       "component": "Dieser FAERS-Wirkstoff ist ein Bestandteil einer Substanz des Kanons, nicht dieselbe Exposition:"
     },
     "notListed": "Das gewählte Paar ist hier nicht verfügbar; stattdessen wird das erste verfügbare Paar gezeigt."
+  },
+  "Fhir": {
+    "title": "Als FHIR exportieren",
+    "what": "FHIR ist ein Standardformat, das viele Programme im Gesundheitswesen lesen können. Hier speichern Sie Ihre Medikamentenliste als FHIR-Datei auf diesem Gerät.",
+    "demo": "Demo: Die Datei enthält die synthetische Demo-Liste und ist als Testdaten gekennzeichnet.",
+    "preview": "{medicines, plural, one {# Medikament} other {# Medikamente}}, {coded} von {ingredients, plural, one {# Wirkstoff} other {# Wirkstoffen}} mit Standardcode (ATC, RxNorm)",
+    "contents": "Die Datei enthält Wirkstoffnamen und Codes, Startmonate und das Exportdatum. Dosierungen enthält sie nicht. Wer die Datei hat, kann sie lesen.",
+    "includeNames": "Namen auf den Packungen einschließen",
+    "includeNamesHint": "Standardmäßig aus: Mit dem Namen auf der Packung lässt sich die Datei leichter Ihnen zuordnen.",
+    "download": "FHIR-Datei herunterladen",
+    "notSent": "Janus sendet diese Datei nirgendwohin. Wer sie erhält, entscheidet, was das eigene System damit macht.",
+    "notChecked": "Die Datei enthält die Liste so, wie sie eingegeben wurde. Sie ist keine Patientenakte, und keine medizinische Fachperson hat sie geprüft.",
+    "saved": "Download gestartet: {file}."
   }
 }
