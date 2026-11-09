@@ -33,6 +33,12 @@ PUBLIC: Final = (
     "/timemachine/cascade/{cascade_id}",
     "/open/outcomes",
     "/open/outcomes.csv",
+    "/open/data-quality",
+    "/open/data-quality.csv",
+    "/open/data-quality.md",
+    "/open/faers-onset",
+    "/open/faers-onset.csv",
+    "/open/faers-onset/{position}",
 )
 
 ERR = "#/components/schemas/PublicError"
@@ -101,6 +107,16 @@ EXAMPLES: Final[Mapping[str, Mapping[str, Any]]] = {
     "/timemachine/cascade/{cascade_id}": {
         "404": {"unknown": {"value": {"error": "unknown_cascade"}}},
     },
+    "/open/data-quality": {
+        "503": {"unavailable": {"value": {"error": "data_quality_unavailable"}}},
+    },
+    "/open/faers-onset": {
+        "503": {"unavailable": {"value": {"error": "onset_table_unavailable"}}},
+    },
+    "/open/faers-onset/{position}": {
+        "404": {"unknown": {"value": {"error": "unknown_position"}}},
+        "422": {"invalid": {"value": {"error": "invalid_request", "fields": ["position"]}}},
+    },
     "/seance/catalogue": {"503": {"unavailable": {"value": {"error": "seance_unavailable"}}}},
     "/light/overview": {"503": {"unavailable": {"value": {"error": "light_unavailable"}}}},
     "/memory/snapshot": {"503": {"unavailable": {"value": {"error": "memory_unavailable"}}}},
@@ -167,7 +183,8 @@ def document() -> dict[str, Any]:
             "description": (
                 "The GET routes of the Janus API that take no body and return no personal data: "
                 "service status, the FAERS snapshot, the séance catalogue, the light-face "
-                "overview, validation and export, the time machine, and the open outcome dataset. "
+                "overview, validation and export, the time machine, the open outcome dataset, the "
+                "weekly data-quality report and the FAERS onset table of the PIPC rows. "
                 "Medical routes are `no-store`; nothing but an access line (route, status, "
                 "latency) is logged. Research prototype, not a medical device; not medical "
                 "advice. Documentation: docs/open-api.md."

@@ -56,6 +56,13 @@ fetched at runtime and must not be committed; CI fails if one is tracked.
   only, no product names. The loader refuses a bad row and a stale one (a code its source no longer gives the key).
   Review report: `.kiro/specs/drug-resolution/atc-code-review.md`. **Re-check it whenever WHOCC publishes a new ATC
   version or a source is corrected.**
+- `onset_key_exclusions.csv`: ingredient keys left out of one drug class for the FAERS onset table only
+  (`faers-onset-table` DP-O5; pharmacologist review). Columns `class_id,key,label_en,reason,note`; `reason` is
+  `other_use_dominates` or `not_used_for_the_indication`. Never used by the cascade engine.
+- `onset_row_notes.csv`: known limits of single PIPC rows in the FAERS onset table (event-term gaps, mixed uses,
+  name-mapping gaps). Columns `position,code,note`.
+- `open/data-quality/`, `open/faers-onset/`: the published weekly data-quality report and the FAERS onset table
+  (CC BY 4.0, generated; `docs/open-data.md` §3-§4). No TİTCK row, product name or barcode.
 - `anion_acid_forms.csv`: reviewed anion-to-acid rows of the `anion_acid` ladder step
   (`drug-resolution` Req 12.7, design §15.4). Columns `lang,anion,acid,note`; `lang` is
   `tr`, `en`, `fr`, `es` or `any`. Seven rows, proposed by the pharmacologist agent in the name-rules

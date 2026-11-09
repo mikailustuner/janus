@@ -1,0 +1,77 @@
+{
+  "name": "janus-faers-onset-pipc",
+  "title": "FAERS time to onset for the 65 PIPC prescribing cascades (descriptive)",
+  "version": "faers-onset-pipc-1+b1df201877b1",
+  "created": "2026-11-09",
+  "homepage": "https://github.com/mikailustuner/janus",
+  "description": "For every PIPC row (drug A class -> adverse event): FAERS reports with a class member as suspect and the event, how many carry a usable interval and why the others do not, and the reported time to onset (median, quartiles, intervals, Weibull shape) where the data allow it. Descriptive, not causal, not incidence; counts are reports, not people. Janus provides information, not medical advice. Research prototype — not a medical device.",
+  "licenses": [
+    {
+      "name": "CC-BY-4.0",
+      "path": "https://creativecommons.org/licenses/by/4.0/",
+      "title": "Creative Commons Attribution 4.0"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Rochon PA et al. PIPC list. Eur Geriatr Med 2025;16(5):1573-1584, Table 1 (CC BY 4.0)",
+      "path": "https://doi.org/10.1007/s41999-025-01215-x"
+    },
+    {
+      "title": "FDA Adverse Event Reporting System quarterly data files (CC0 1.0); not an FDA endorsement",
+      "path": "https://fis.fda.gov/extensions/FPD-QDE-FAERS/FPD-QDE-FAERS.html"
+    },
+    {
+      "title": "Janus curation (Apache-2.0): data/onset_key_exclusions.csv, data/onset_row_notes.csv, data/cascade_classes.csv, data/pipc_rules.csv",
+      "path": "https://github.com/mikailustuner/janus"
+    }
+  ],
+  "x_janus": {
+    "faers_receipt_quarters": [
+      "2025Q4",
+      "2026Q1",
+      "2026Q2",
+      "2026Q3"
+    ],
+    "summary": {
+      "rows": 65,
+      "by_status": {
+        "described": 21,
+        "small_sample": 11,
+        "cluster_dominated": 3,
+        "count_only": 19,
+        "no_interval": 9,
+        "no_candidate_reports": 2
+      },
+      "rows_with_any_interval": 54,
+      "rows_with_median": 32,
+      "rows_with_weibull_shape": 18,
+      "weibull_shape_classes": {
+        "early": 18,
+        "random": 0,
+        "wear_out": 0
+      },
+      "distinct_class_event_pairs": 60
+    },
+    "meddra_notice": "Event terms are MedDRA Preferred Terms as published in FAERS. MedDRA® the Medical Dictionary for Regulatory Activities terminology is the international medical terminology developed under the auspices of ICH. MedDRA® trademark is registered by IFPMA on behalf of ICH.",
+    "review_status": "Methods reviewed by the statistician agent and class and event mappings by the pharmacologist agent (AI reviews, findings applied or listed as open items in .kiro/specs/faers-onset-table/); pending review by a pharmacist and a statistician."
+  },
+  "resources": [
+    {
+      "name": "faers_onset_pipc_json",
+      "path": "faers_onset_pipc.json",
+      "format": "json",
+      "mediatype": "application/json",
+      "encoding": "utf-8",
+      "hash": "sha256:e1cfec0570dcf087da013835b4006c7296166823e5080210ceaa1541d5f86bed"
+    },
+    {
+      "name": "faers_onset_pipc_csv",
+      "path": "faers_onset_pipc.csv",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "hash": "sha256:0865cdeccd5a175e81855cbd06166f559a750c32a0b3d4c12c62864faeddebcf"
+    }
+  ]
+}

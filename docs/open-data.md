@@ -7,6 +7,10 @@ research prototype, not a medical device.
    through the same rule as Collective Memory (groups of at least 20, noise added, sibling rule).
 2. **The open cascade data package**: the prescribing-cascade rule base Janus uses, with Janus's
    mappings, as versioned files with a licence per file.
+3. **The weekly data-quality report** (`data/open/data-quality/`): ingredient identity fields compared
+   across TİTCK, Wikidata, openFDA NDC, BDPM and AEMPS CIMA, with what changed since the previous week.
+4. **The FAERS onset table for the 65 PIPC cascades** (`data/open/faers-onset/`): descriptive time to onset
+   from FAERS reports for every PIPC row.
 
 The read-only API that serves the dataset (and the other public routes) is described in
 [`open-api.md`](open-api.md) and [`openapi-public.json`](openapi-public.json).
@@ -102,3 +106,56 @@ package differs from the builder's output.
   open data.
 - **Status:** reviewed by the project owner with AI assistance; not yet reviewed by a pharmacist or physician
   (`docs/pre-launch-checklist.md`).
+
+## 3. The weekly data-quality report
+
+Built by `python -m janus.quality.build --publish` after the weekly TİTCK pipeline (registry entry
+`data_quality`, `cadence_days = 7`); served at `GET /open/data-quality` (JSON), `.csv` and `.md`. Licence
+CC BY 4.0; the attribution names each input with its update date. Spec: `.kiro/specs/data-quality/`.
+
+| File | Content |
+|---|---|
+| `report.json` | version, run and previous run, sources (run, snapshot, licence), rules, summary, findings |
+| `findings.csv` | one row per finding, resolved ones included, the version in every row |
+| `summary.md` | the counts and lists in readable form |
+| `datapackage.json` | Frictionless descriptor with a hash per file |
+
+**A finding** (`id` = `check:source:key:code`, stable across weeks) has a `check`
+(`exclusion_status`, `item_group`, `regulator_group`, `substance_code_keys`), a `class`
+(`confirmed_error` = a row of `data/atc_code_exclusions.csv`, reviewed by the project owner with AI assistance;
+`needs_pharmacist` = no rule explains it; `benign_difference` = a deterministic rule explains it, e.g. both
+regulators publish the code and the Wikidata item is outdated), a `status` against the previous run (`new`,
+`persisting`, `resolved`), the `code`, the `compared_codes`, the number of `products` that showed it, machine
+`reasons`, `other_keys` that carry the code, `upstream` (for confirmed errors: still published or resolved
+upstream), WHOCC group page addresses and `how_to_find` it at the source. An ATC level-4 group is the first five
+characters of a code.
+
+- **No TİTCK row, product name or barcode**: for TİTCK the report gives the ingredient key, the code, the product
+  count and how to search the current list. Labels are English Wikidata labels (CC0).
+- **No class is a statement about a medicine's safety.** Report a finding upstream only after a pharmacist has
+  checked it (`contributing-corrections.md`).
+
+## 4. The FAERS onset table for the PIPC cascades
+
+Built by `python -m janus.onset_table.build --publish` (after a new FAERS quarter); served at
+`GET /open/faers-onset`, `.csv` and `/open/faers-onset/{position}`. Licence CC BY 4.0 (PIPC text: Rochon et al.
+2025, CC BY 4.0; FAERS-derived counts: CC0 source, not an FDA endorsement; MedDRA notice included). Spec:
+`.kiro/specs/faers-onset-table/`.
+
+One row per PIPC row 1-65: drug A's class and its member ingredient keys, the event key and its Preferred Terms,
+`candidate_reports` (a class member is primary or secondary suspect and an event term is reported),
+`reports_with_interval` (complete therapy start and event dates), `usable_share`, why the others have no interval,
+the members that drive the row, and, when the data allow it, the median time to onset with an exact
+order-statistic interval (primary) and a bootstrap interval, quartiles, sensitivity medians (without day-01 dates,
+distinct date pairs, earliest class start) and a Weibull shape class. `status` says what is published:
+`described`, `small_sample` (10-29 reports), `cluster_dominated` and `count_only` (counts only), `no_interval`,
+`no_candidate_reports`.
+
+- **Descriptive, not causal, not incidence**: every row carries `descriptive_only = true`, `causal = false`,
+  `incidence = false`, `counts_are = "reports"`. The `caveats` object explains the dated-subset selection,
+  zero-day and day-01 heaping, identical-date clusters, the report-level event date, the receipt window and the
+  route rule.
+- **Curation**: `data/onset_key_exclusions.csv` (keys left out per class for this table, with reasons) and
+  `data/onset_row_notes.csv` (known limits per row), Apache-2.0.
+- **Status:** methods and mappings reviewed by AI agents (statistician, pharmacologist); pending review by a
+  pharmacist and a statistician.

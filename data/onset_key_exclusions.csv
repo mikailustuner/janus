@@ -1,0 +1,14 @@
+class_id,key,label_en,reason,note
+nsaid,Q18216,aspirin,other_use_dominates,"Pharmacologist review O3 (faers-onset-table): FAERS reports for aspirin are dominated by low-dose antiplatelet use (B01AC06), which the nsaid class note leaves out; row 51 (gastrointestinal bleeding) would be driven by it. The cascade engine keeps aspirin in the class through N02BA01; this exclusion is for the onset table only."
+nsaid,Q2203957,carbaspirin calcium,other_use_dominates,Pharmacologist review O3: as for aspirin (B01AC08 antiplatelet use). Onset table only.
+antihypertensive,Q206844,theobromine,not_used_for_the_indication,"Pharmacologist review O4: a cocoa alkaloid with a historical diuretic code (C03BD01), not a medicine used for blood pressure. Onset table only."
+diuretic,Q206844,theobromine,not_used_for_the_indication,Pharmacologist review O4: as for the antihypertensive class. Onset table only.
+antihypertensive,Q420009,diazoxide,other_use_dominates,"Pharmacologist review O4: current use is oral treatment of hypoglycaemia (V03AH01), mostly in infants. Onset table only."
+laxative,Q282902,naloxone,other_use_dominates,"Pharmacologist review O6: enters through A06AH04 but FAERS reports are dominated by opioid reversal and buprenorphine/naloxone, where withdrawal gives same-day diarrhoea. Onset table only."
+laxative,Q407646,D-(-)-mannitol,other_use_dominates,"Pharmacologist review O6: mostly intravenous osmotherapy and inhaled use. Onset table only."
+laxative,Q245280,D-sorbitol,other_use_dominates,"Pharmacologist review O6: mostly irrigation solutions and an excipient-like active. Onset table only."
+laxative,Q132501,glycerol,other_use_dominates,"Pharmacologist review O6: mostly artificial tears, irrigation and excipient-like use. Onset table only."
+laxative,Q288266,magnesium sulfate,other_use_dominates,"Pharmacologist review O6: mostly intravenous use (eclampsia, replacement). Onset table only."
+iron_oral,Q15628111,iron(III) citrate,other_use_dominates,"Pharmacologist review O7: mostly the phosphate binder used in dialysis (V03AE08). Onset table only."
+benzodiazepine,Q423071,midazolam,other_use_dominates,"Pharmacologist review O9: mostly procedural sedation, where acute anterograde amnesia on day 0 is the expected effect, not the cognitive impairment of row 23. Onset table only."
+opioid,Q60168,heroin,not_used_for_the_indication,"Pharmacologist review O15: FAERS reports are mostly illicit use. Onset table only."

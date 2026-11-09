@@ -19,6 +19,11 @@ Base URL: `/api` on a Janus deployment (same origin as the web app). Nothing is 
 | `GET /timemachine/cascade/{id}` | one cascade: FAERS time to onset, published timing, populations | 404 `unknown_cascade` |
 | `GET /open/outcomes` | the open outcome dataset as JSON ([`open-data.md`](open-data.md)) | 503 `open_data_unavailable` |
 | `GET /open/outcomes.csv` | the same cells as CSV | 503 `open_data_unavailable` |
+| `GET /open/data-quality` | the weekly data-quality report: findings with class and status against the previous run ([`open-data.md`](open-data.md) §3) | 503 `data_quality_unavailable` |
+| `GET /open/data-quality.csv`, `/open/data-quality.md` | the same findings as CSV; the readable summary | 503 `data_quality_unavailable` |
+| `GET /open/faers-onset` | the FAERS onset table for the 65 PIPC rows ([`open-data.md`](open-data.md) §4) | 503 `onset_table_unavailable` |
+| `GET /open/faers-onset.csv` | the same rows as CSV | 503 `onset_table_unavailable` |
+| `GET /open/faers-onset/{position}` | one PIPC row (1-65) with the caveats | 404 `unknown_position`, 422 `invalid_request` |
 
 ## Rules every route follows
 
@@ -28,6 +33,8 @@ Base URL: `/api` on a Janus deployment (same origin as the web app). Nothing is 
   codes or events (`privacy.md`).
 - **Counts are reports, never people.** FAERS is spontaneous reporting: not incidence, not deduplicated across
   cases. Donated and outcome counts are released only as described in [`open-data.md`](open-data.md).
+- **Onset table** rows are descriptive, not causal and not incidence; a row with too few reports or dominated by
+  one identical date pair publishes counts only (`status`).
 - **Time machine** answers are in silico and exploratory, "AI-reviewed, pending expert review"
   (`meta.review_status`); a concentration or dose in them is never a dose a person could take.
 

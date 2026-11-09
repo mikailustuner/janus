@@ -9,7 +9,10 @@ on `dsg_drug_seq`) and the event date (`DEMO.event_dt`, one per report) and comp
 in days. Only complete dates (YYYYMMDD) are used; partial dates, missing dates, negative and
 implausibly long intervals are excluded and counted by reason (data-quality report).
 
-The `faers` artifact and its contract are not changed. FAERS is spontaneous reporting: a time to
+A side table `pairs` keeps every (report, drug) pair with the DRUG file's `route` and `dose_form`
+as published and its exclusion reason (null when usable), so a consumer can restrict lines by
+route and count exclusions per subset (faers-onset-table). The `faers` artifact and its contract
+are not changed. FAERS is spontaneous reporting: a time to
 onset here is the interval a reporter wrote down, not a measured one.
 """
 
@@ -102,6 +105,16 @@ ROW_SCHEMA: Mapping[str, pl.DataType] = {
 }
 
 
+PAIRS_SCHEMA: Mapping[str, pl.DataType] = {
+    "primaryid": pl.String(),
+    "drug_seq": pl.String(),
+    "role": pl.String(),
+    "route": pl.String(),
+    "dose_form": pl.String(),
+    "reason": pl.String(),
+}
+
+
 @dataclass(frozen=True)
 class Payload:
     rows_parquet: Path
@@ -138,12 +151,14 @@ def extract(p: Payload) -> ParseResult:
     kept = pairs.select("primaryid").unique()
     ther_parts: list[pl.DataFrame] = []
     demo_parts: list[pl.DataFrame] = []
+    drug_parts: list[pl.DataFrame] = []
     malformed = 0
     for q in p.quarters:
         with zipfile.ZipFile(p.archives[q.label]) as zf:
             for kind, cols, sink in (
                 ("THER", ("primaryid", "dsg_drug_seq", "start_dt"), ther_parts),
                 ("DEMO", ("primaryid", "event_dt"), demo_parts),
+                ("DRUG", ("primaryid", "drug_seq", "route", "dose_form"), drug_parts),
             ):
                 member = _member(zf, kind, q)
                 if member is None:
@@ -170,8 +185,15 @@ def extract(p: Payload) -> ParseResult:
         .with_columns(pl.col("event_dt").str.strip_chars())
         .with_columns(_date_expr("event_dt").alias("event"))
     )
-    joined = pairs.join(ther, on=["primaryid", "drug_seq"], how="left").join(
-        demo, on="primaryid", how="left"
+    drug = (
+        pl.concat(drug_parts)
+        .with_columns(pl.col("route").str.strip_chars(), pl.col("dose_form").str.strip_chars())
+        .unique(["primaryid", "drug_seq"], keep="first")
+    )
+    joined = (
+        pairs.join(ther, on=["primaryid", "drug_seq"], how="left")
+        .join(demo, on="primaryid", how="left")
+        .join(drug, on=["primaryid", "drug_seq"], how="left")
     )
     days = (pl.col("event") - pl.col("start")).dt.total_days()
     reason = (
@@ -200,6 +222,17 @@ def extract(p: Payload) -> ParseResult:
     p.scratch.mkdir(parents=True, exist_ok=True)
     rows_file = p.scratch / "onset.parquet"
     out.sort("primaryid", "drug_seq").write_parquet(rows_file)
+    # Every (report, drug) pair with its route and dose form as published and its exclusion
+    # reason (null when usable): lets a consumer restrict by route and break exclusions down
+    # per subset (faers-onset-table DP-O3, DP-O5). Not part of the content hash.
+    pairs_file = p.scratch / "pairs.parquet"
+    (
+        joined.select(list(PAIRS_SCHEMA))
+        .cast(pl.Schema(dict(PAIRS_SCHEMA)))
+        .sort("primaryid", "drug_seq")
+        .write_parquet(pairs_file)
+    )
+    routes = joined.group_by("route").len().sort(["len", "route"], descending=[True, False])
 
     reports = kept.height
     reports_with_event = int(demo.filter(pl.col("event").is_not_null()).height)
@@ -219,6 +252,9 @@ def extract(p: Payload) -> ParseResult:
             str(r): int(n) for r, n in zip(by_role["role"], by_role["len"], strict=True)
         },
         "malformed_lines": malformed,
+        "pair_routes_top": {
+            str(r): int(n) for r, n in zip(routes["route"][:25], routes["len"][:25], strict=True)
+        },
         "max_days": MAX_DAYS,
         "rule": "earliest complete THER.start_dt of the drug; DEMO.event_dt; 0 <= days <= max",
         "spontaneous_reporting": True,
@@ -231,6 +267,7 @@ def extract(p: Payload) -> ParseResult:
         excluded=excluded,
         schema=SchemaReport(),
         metrics=json.loads(json.dumps(metrics)),
+        side_tables={"pairs": pairs_file},
     )
 
 

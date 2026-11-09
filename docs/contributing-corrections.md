@@ -60,6 +60,10 @@ own entry. Check the current list first: TİTCK may already have corrected it.
 - **TİTCK/Wikidata disagreements.** 93 ingredient-code pairs share no level-4 ATC group between TİTCK and Wikidata
   (`atc-code-review.md`); only the twelve above were confirmed as errors. The others need a pharmacist before any
   report.
+- **The weekly data-quality report** (`data/open/data-quality/`, `GET /open/data-quality`) repeats these checks
+  every week across TİTCK, Wikidata, CIMA, BDPM and openFDA NDC, shows whether each confirmed error above is still
+  published upstream, and lists new differences classed `needs_pharmacist`. Nothing in it is a confirmed error until
+  a pharmacist has checked it and it is added to `data/atc_code_exclusions.csv`.
 - **WHOCC.** Janus found no error in the WHOCC index itself. Questions about a code go to the WHO Collaborating
   Centre for Drug Statistics Methodology ([atcddd.fhi.no](https://atcddd.fhi.no/)).
 - **PIPC list.** Janus uses Table 1 as published (Rochon et al., Eur Geriatr Med 2025). Questions about a row go to

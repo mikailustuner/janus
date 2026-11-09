@@ -79,6 +79,12 @@ def _archive(path: Path, ther: list[tuple[str, str, str]], demo: list[tuple[str,
             "primaryid$caseid$dsg_drug_seq$start_dt$end_dt$dur$dur_cod\n"
             + "".join(f"{p}$c{p}${s}${d}$$$\n" for p, s, d in ther),
         )
+        pids = sorted({p for p, _, _ in ther} | {p for p, _ in demo})
+        zf.writestr(
+            "ASCII/DRUG26Q3.txt",
+            "primaryid$caseid$drug_seq$role_cod$prod_ai$route$dose_form\n"
+            + "".join(f"{p}$c{p}$1$PS$X$ORAL$TABLET\n" for p in pids),
+        )
         zf.writestr(
             "ASCII/DEMO26Q3.txt",
             "primaryid$caseid$event_dt$fda_dt\n"
@@ -122,10 +128,17 @@ def test_extract_matches_classify_and_accounts_for_every_pair(
         assert result.output_rows + sum(result.excluded.values()) == result.input_rows
         assert result.rows_file is not None
         got = dict(pl.read_parquet(result.rows_file).select("primaryid", "onset_days").iter_rows())
+        side = pl.read_parquet(result.side_tables["pairs"])
+        assert side.height == result.input_rows
+        reasons = dict(side.select("primaryid", "reason").iter_rows())
         for i, (starts, event) in enumerate(reports):
             want = classify(starts, event)
             pid = f"{i + 1}1"
             if isinstance(want, int):
                 assert got[pid] == want
+                assert reasons[pid] is None
             else:
                 assert pid not in got
+                assert reasons[pid] == want.value
+        routes = dict(side.select("primaryid", "route").iter_rows())
+        assert all(r in ("ORAL", None) for r in routes.values())
