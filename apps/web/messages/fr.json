@@ -206,7 +206,7 @@
     "themeGlassHint": "Sobre et clair, sans symboles du thème.",
     "largeText": "Grand texte",
     "reduceTransparency": "Réduire la transparence",
-    "reduceTransparencyHint": "Cartes pleines au lieu du verre dépoli (thème Verre).",
+    "reduceTransparencyHint": "En-tête et barre d'onglets pleins au lieu du verre dépoli (thème Verre).",
     "readAloud": "Lire les résultats à voix haute",
     "readAloudHint": "Utilise la voix de ce navigateur. Rien n'est envoyé à un serveur.",
     "research": "Section recherche",

@@ -206,7 +206,7 @@
     "themeGlassHint": "Plain and light, without theme symbols.",
     "largeText": "Large text",
     "reduceTransparency": "Reduce transparency",
-    "reduceTransparencyHint": "Solid cards instead of frosted glass (Glass theme).",
+    "reduceTransparencyHint": "Solid header and tab bar instead of frosted glass (Glass theme).",
     "readAloud": "Read findings aloud",
     "readAloudHint": "Uses the voice of this browser. Nothing is sent to a server.",
     "research": "Research section",

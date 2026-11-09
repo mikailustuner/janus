@@ -6,8 +6,8 @@
  * is reduced. Components use these tokens only, never a raw colour (src/theme/no-hex.test.ts).
  *
  * The colour values of --bg … --risk are exactly the steering tokens. Added here (design DP33):
- * Glass --chip/--chip-fg/--ghost (from the Glass mockup, docs/design/glass-options.html), the
- * three Glass background fields, and non-colour tokens (fonts, radii, blur; spacing, group/tile/segment
+ * Glass --ghost and the navigation material --nav-surface/--nav-blur/--nav-shadow (DP67), and
+ * non-colour tokens (fonts, radii, blur; spacing, group/tile/segment
  * radii and motion of the cards and layout system, DP55).
  *
  * Pairs checked by the contrast test (P18; text >= 4.5:1, boundary >= 3:1):
@@ -30,9 +30,9 @@
   --warn: #f6d08a;
   --risk: #ff8a80;
   --ghost: #f6f1e7;
-  --field-1: transparent;
-  --field-2: transparent;
-  --field-3: transparent;
+  --nav-surface: var(--surface);
+  --nav-blur: none;
+  --nav-shadow: none;
   --blur: none;
   --card-edge: var(--line);
   --card-shadow: none;
@@ -77,98 +77,61 @@
   color-scheme: light;
 }
 
-/* Glass, light. */
+/* Glass Janus, Clinical White (owner decision 2026-11-09, experience Req 31, DP66, DP67): light
+   only, solid white cards with a hairline and soft layered shadows on a plain ground; frosted glass
+   only for navigation and floating controls (--nav-surface, --nav-blur). */
 :root[data-theme-style="glass"] {
-  --bg: #eef1f0;
-  --surface: rgba(255, 255, 255, 0.72);
-  --fg: #0e1514;
-  --muted: #4f5b59;
-  --line: rgba(14, 21, 20, 0.12);
+  --bg: #f4f7f8;
+  --surface: #ffffff;
+  --fg: #0e1a1f;
+  --muted: #5a686e;
+  --line: #e3e8ea;
   --accent: #0b6c62;
   --on-accent: #ffffff;
-  --chip: rgba(11, 108, 98, 0.12);
+  --chip: #e6f2f0;
   --chip-fg: #0b5a52;
   --warn: #8a4b00;
   --risk: #b3261e;
-  --ghost: #0e1514;
-  --field-1: #cfe9e3;
-  --field-2: #f3e3cc;
-  --field-3: #dce6f2;
-  --blur: blur(22px) saturate(1.6);
-  --card-edge: rgba(255, 255, 255, 0.85);
+  --ghost: #0e1a1f;
+  --blur: none;
+  --nav-surface: rgba(255, 255, 255, 0.88);
+  --nav-blur: blur(20px) saturate(1.6);
+  --nav-shadow: 0 16px 32px -12px rgba(14, 26, 31, 0.25);
+  --card-edge: #e3e8ea;
   --card-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.9) inset, 0 8px 24px rgba(14, 21, 20, 0.08);
+    0 1px 2px rgba(14, 26, 31, 0.04), 0 12px 28px -16px rgba(14, 26, 31, 0.18);
   --font-display:
-    -apple-system, BlinkMacSystemFont, "SF Pro Display", var(--font-figtree),
+    var(--font-figtree), -apple-system, BlinkMacSystemFont, "SF Pro Display",
     sans-serif;
   --font-body:
-    -apple-system, BlinkMacSystemFont, "SF Pro Text", var(--font-figtree),
+    var(--font-figtree), -apple-system, BlinkMacSystemFont, "SF Pro Text",
     sans-serif;
-  --radius-card: 26px;
-  --radius-button: 26px;
+  --radius-card: 22px;
+  --radius-button: 14px;
   --title-size: 2rem;
-  --radius-group: 22px;
-  --radius-tile: 20px;
-  --radius-segment: 999px;
+  --radius-group: 18px;
+  --radius-tile: 16px;
+  --radius-segment: 12px;
   color-scheme: light;
 }
 
-/* Glass, dark. */
-@media (prefers-color-scheme: dark) {
-  :root[data-theme-style="glass"] {
-    --bg: #0e1514;
-    --surface: rgba(28, 31, 34, 0.78);
-    --fg: #eef3f2;
-    --muted: #a9b6b3;
-    --line: rgba(255, 255, 255, 0.12);
-    --accent: #6fd3c4;
-    --on-accent: #062b27;
-    --chip: rgba(111, 211, 196, 0.16);
-    --chip-fg: #9de6da;
-    --warn: #ffc266;
-    --risk: #ff7b72;
-    --ghost: #eef3f2;
-    --field-1: #12302b;
-    --field-2: #2e2619;
-    --field-3: #1a2433;
-    --card-edge: rgba(255, 255, 255, 0.1);
-    --card-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 8px 24px rgba(0, 0, 0, 0.3);
-    color-scheme: dark;
-  }
-}
-
-/* Glass with reduced transparency: solid cards, no blur (Req 3.4). Three triggers. */
+/* Glass with reduced transparency: solid navigation and controls, no blur (Req 3.4, 31.2).
+   Three triggers. */
 :root[data-theme-style="glass"][data-reduce-transparency="on"] {
-  --surface: #ffffff;
-  --blur: none;
-}
-@media (prefers-color-scheme: dark) {
-  :root[data-theme-style="glass"][data-reduce-transparency="on"] {
-    --surface: #1c1f22;
-  }
+  --nav-surface: #ffffff;
+  --nav-blur: none;
 }
 @media (prefers-reduced-transparency: reduce) {
   :root[data-theme-style="glass"] {
-    --surface: #ffffff;
-    --blur: none;
-  }
-}
-@media (prefers-reduced-transparency: reduce) and (prefers-color-scheme: dark) {
-  :root[data-theme-style="glass"] {
-    --surface: #1c1f22;
+    --nav-surface: #ffffff;
+    --nav-blur: none;
   }
 }
 @supports not (
   (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
 ) {
   :root[data-theme-style="glass"] {
-    --surface: #ffffff;
-    --blur: none;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root[data-theme-style="glass"] {
-      --surface: #1c1f22;
-    }
+    --nav-surface: #ffffff;
+    --nav-blur: none;
   }
 }

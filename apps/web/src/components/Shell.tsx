@@ -3,7 +3,7 @@
  * The app shell (experience design §3, §7, Req 8): header (brand, navigation with Research, demo
  * label and exit, theme and language switchers), main content (max 720 px), footer with the
  * disclaimer, the emergency number and the secondary links, and the navigation (Night Pharmacy:
- * bottom bar; Glass Janus: floating pill). One component set; the theme changes tokens and a few variant classes.
+ * bottom bar; Glass Janus: floating pill on frosted glass, DP67). One component set; the theme changes tokens and a few variant classes.
  */
 import { useLocale } from "next-intl";
 import {
@@ -107,7 +107,7 @@ function Nav() {
       aria-label={t("Shell.navLabel")}
       className={
         glass
-          ? "fixed inset-x-3.5 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-20 mx-auto max-w-[720px] rounded-full border border-[var(--card-edge)] bg-surface shadow-[var(--card-shadow)] [backdrop-filter:var(--blur)] no-print md:hidden"
+          ? "fixed inset-x-4 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-20 mx-auto max-w-[720px] rounded-[26px] border border-line bg-[var(--nav-surface)] p-1.5 shadow-[var(--nav-shadow)] [-webkit-backdrop-filter:var(--nav-blur)] [backdrop-filter:var(--nav-blur)] no-print md:hidden"
           : "fixed inset-x-0 bottom-0 z-20 border-t border-line bg-surface pb-[env(safe-area-inset-bottom)] no-print md:hidden"
       }
     >
@@ -122,7 +122,7 @@ function Nav() {
                 className={`flex min-h-14 flex-col items-center justify-center gap-0.5 px-1 py-1.5 text-xs font-bold no-underline ${
                   active
                     ? glass
-                      ? "m-1 rounded-full bg-chip text-chip-fg"
+                      ? "rounded-[20px] bg-chip text-chip-fg"
                       : "text-accent"
                     : "text-muted"
                 }`}
@@ -353,7 +353,7 @@ export function Shell({ children }: { children: ReactNode }) {
         className={
           home
             ? `home-header no-print ${scrolled ? "home-header-scrolled" : ""}`
-            : undefined
+            : "app-header no-print"
         }
       >
         <div

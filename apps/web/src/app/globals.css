@@ -55,36 +55,6 @@
   html:lang(de) body {
     hyphens: auto;
   }
-  /* Glass: three soft colour fields behind the frosted cards, fixed to the viewport (DP49). They
-     are the root background, which covers the whole canvas however long the page is (iOS,
-     which ignores `fixed`, stretches them over the page instead of cutting them off); the body
-     is transparent. */
-  :root[data-theme-style="glass"] {
-    background:
-      radial-gradient(
-        70% 45% at 12% 6%,
-        var(--field-1) 0%,
-        var(--field-1) 22%,
-        transparent 72%
-      ),
-      radial-gradient(
-        65% 42% at 96% 34%,
-        var(--field-2) 0%,
-        var(--field-2) 20%,
-        transparent 72%
-      ),
-      radial-gradient(
-        80% 45% at 38% 100%,
-        var(--field-3) 0%,
-        var(--field-3) 22%,
-        transparent 74%
-      ),
-      var(--bg);
-    background-attachment: fixed;
-  }
-  :root[data-theme-style="glass"] body {
-    background: transparent;
-  }
   h1,
   h2,
   h3 {
@@ -125,7 +95,8 @@
   .paper h3 {
     font-family: var(--font-fraunces), Georgia, serif;
   }
-  /* Cards: 16 px in Two Faces, frosted glass at 26 px in Glass (solid when transparency is reduced). */
+  /* Cards: 16 px in Night Pharmacy; solid white at 22 px with a hairline and soft shadows in Glass
+     Janus (Clinical White, DP67). */
   .card {
     background: var(--surface);
     border: 1px solid var(--card-edge);
@@ -133,6 +104,15 @@
     -webkit-backdrop-filter: var(--blur);
     backdrop-filter: var(--blur);
     box-shadow: var(--card-shadow);
+  }
+  /* Glass Janus (Clinical White, DP67): the header bar of every screen but the home is frosted
+     white with a hairline; Night Pharmacy keeps its plain header. */
+  :root[data-theme-style="glass"] .app-header {
+    background: var(--nav-surface);
+    border-bottom: 1px solid var(--line);
+    -webkit-backdrop-filter: var(--nav-blur);
+    backdrop-filter: var(--nav-blur);
+    padding-bottom: 0.5rem;
   }
   .chip {
     display: inline-flex;

@@ -384,13 +384,13 @@
     Glass Janus home-scenes paragraph. _Requirements: 31_
   - **Checkpoint:** commit the spec.
 
-- [ ] 36. Hero image (`public/home/clinical-hero-*`, `README.md`, `NOTICE`, `pipelines/sources.toml`)
+- [x] 36. Hero image (`public/home/clinical-hero-*`, `README.md`, `NOTICE`, `pipelines/sources.toml`)
   - AVIF / WebP at 2752, 1600, 960 and JPEG at 1600, 960 from the owner's Gemini image (2752 × 1536), with the same
     ffmpeg commands as the other scenes; remove `glass-hero-*` once nothing references it; provenance updated.
     _Requirements: 31.4, 31.8_
   - **Checkpoint:** commit.
 
-- [ ] 37. Tokens, material and navigation (`src/theme/tokens.css`, `src/app/globals.css`, `components/Shell.tsx`,
+- [x] 37. Tokens, material and navigation (`src/theme/tokens.css`, `src/app/globals.css`, `components/Shell.tsx`,
   `src/theme/contrast.test.ts`)
   - Clinical White tokens, light only (DP66); `--nav-surface` / `--nav-blur` for header and tab bar (DP67); no colour
     fields; `Settings.reduceTransparencyHint` in five languages.

@@ -1,7 +1,8 @@
-// Feature: experience, Property P18: every token pair marked as text or boundary in tokens.css
-// passes WCAG contrast (text >= 4.5:1, boundary >= 3:1) in both themes, both colour schemes,
-// with reduced transparency on and off, and on the note paper (DP48); Glass surfaces are
-// composited over each background field (Req 3.1). Example-based and exhaustive over the marked pairs.
+// Feature: experience, Properties P18 and P40: every token pair marked as text or boundary in
+// tokens.css passes WCAG contrast (text >= 4.5:1, boundary >= 3:1) in both themes (Night Pharmacy
+// dark, Glass Janus light only since DP66), with reduced transparency on and off, and on the note
+// paper (DP48); translucent tokens are composited over the ground (Req 3.1, 31.3). Example-based
+// and exhaustive over the marked pairs.
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
@@ -146,32 +147,18 @@ const contexts: Context[] = [
   { name: "Night Pharmacy", theme: "two-faces" },
   { name: "Note paper", theme: "two-faces", paper: true },
   { name: "Glass light", theme: "glass" },
-  { name: "Glass dark", theme: "glass", dark: true },
   { name: "Glass light, reduce transparency", theme: "glass", reduce: true },
-  {
-    name: "Glass dark, reduce transparency",
-    theme: "glass",
-    dark: true,
-    reduce: true,
-  },
 ];
 
-/** Every background a token can sit on in this context (Glass: the bg and each colour field). */
-function grounds(t: Record<string, string>, theme: Context["theme"]): RGBA[] {
-  const bg = parseColor(t["--bg"]!);
-  if (theme !== "glass") return [bg];
-  return [
-    bg,
-    ...["--field-1", "--field-2", "--field-3"].map((f) =>
-      over(parseColor(t[f]!), bg),
-    ),
-  ];
+/** Every background a token can sit on in this context (one plain ground in both themes, DP67). */
+function grounds(t: Record<string, string>): RGBA[] {
+  return [parseColor(t["--bg"]!)];
 }
 
 describe.each(contexts)("$name", (ctx) => {
   const t = tokensFor(ctx);
   const resolve = (name: string): RGBA[] => {
-    const ground = grounds(t, ctx.theme);
+    const ground = grounds(t);
     if (name === "bg") return ground;
     const surface = ground.map((g) => over(parseColor(t["--surface"]!), g));
     if (name === "surface") return surface;
@@ -201,9 +188,25 @@ describe.each(contexts)("$name", (ctx) => {
   it("uses at least 72% opaque cards and the steering values", () => {
     const s = parseColor(t["--surface"]!);
     expect(s[3]).toBeGreaterThanOrEqual(0.72);
-    if (ctx.reduce && ctx.theme === "glass")
-      expect(t["--surface"]).toBe(ctx.dark ? "#1c1f22" : "#ffffff");
+    if (ctx.theme === "glass") {
+      // Clinical White (DP66, DP67): solid cards; navigation frosted unless transparency is reduced.
+      expect(t["--surface"]).toBe("#ffffff");
+      expect(parseColor(t["--nav-surface"]!)[3]).toBeGreaterThanOrEqual(0.86);
+      if (ctx.reduce) {
+        expect(t["--nav-surface"]).toBe("#ffffff");
+        expect(t["--nav-blur"]).toBe("none");
+      }
+    }
   });
+});
+
+it("Glass Janus is light only: no colour-scheme rule in the token file (DP66)", () => {
+  expect(
+    rules.some((r) => r.conditions.some((c) => /prefers-color-scheme/.test(c))),
+  ).toBe(false);
+  expect(tokensFor({ name: "", theme: "glass", dark: true })).toEqual(
+    tokensFor({ name: "", theme: "glass" }),
+  );
 });
 
 it("annotates text and boundary pairs", () => {

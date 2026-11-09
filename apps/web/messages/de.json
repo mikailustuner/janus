@@ -206,7 +206,7 @@
     "themeGlassHint": "Schlicht und hell, ohne Themensymbole.",
     "largeText": "Große Schrift",
     "reduceTransparency": "Transparenz reduzieren",
-    "reduceTransparencyHint": "Einfarbige Karten statt Milchglas (Design Glas).",
+    "reduceTransparencyHint": "Einfarbige Kopfzeile und Tab-Leiste statt Milchglas (Design Glas).",
     "readAloud": "Ergebnisse vorlesen",
     "readAloudHint": "Nutzt die Stimme dieses Browsers. Es wird nichts an einen Server gesendet.",
     "research": "Forschungsbereich",
