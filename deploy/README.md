@@ -38,7 +38,7 @@ browser ─HTTPS─▶ Cloudflare ─tunnel (outbound only)─▶ cloudflared �
 
 ## Check locally
 ```bash
-POSTGRES_PASSWORD=x JANUS_NOISE_KEY=x JANUS_UID=1000 JANUS_GID=1000 JANUS_TAG=test \
+POSTGRES_PASSWORD=x JANUS_NOISE_KEY=x SIMULATOR_DB_PASSWORD=x JANUS_UID=1000 JANUS_GID=1000 JANUS_TAG=test \
   docker compose -f deploy/compose.yml --profile migrate config --format json \
   | python3 deploy/check_compose.py
 ```

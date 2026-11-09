@@ -49,7 +49,7 @@ jobs:
 
       - name: Deploy compose file keeps its hardening (deploy C1)
         run: |
-          POSTGRES_PASSWORD=x JANUS_NOISE_KEY=x JANUS_UID=1000 JANUS_GID=1000 JANUS_TAG=ci \
+          POSTGRES_PASSWORD=x JANUS_NOISE_KEY=x SIMULATOR_DB_PASSWORD=x JANUS_UID=1000 JANUS_GID=1000 JANUS_TAG=ci \
             docker compose -f deploy/compose.yml --profile migrate config --format json \
             | python3 deploy/check_compose.py
 
