@@ -21,6 +21,7 @@ import { SafetyLine } from "@/components/SafetyLine";
 import { Card, Chip } from "@/components/ui";
 import { orderGroup, type FindingView } from "@/flow/findings";
 import { Link } from "@/i18n/navigation";
+import { findingReportHref } from "@/report/fragment";
 import { useT, useTheme, useThemeWord } from "@/theme/words";
 import { cascadeName, type Loaded } from "@/vocabulary";
 
@@ -211,6 +212,17 @@ export function FindingCard({
         ))}
         {view.safetyLine ? <SafetyLine code={view.safetyLine} /> : null}
         <p className="font-bold">{t("Findings.discuss")}</p>
+        {detail ? (
+          <Link
+            href={findingReportHref({
+              index: f.index,
+              eventKey: view.eventKey,
+            })}
+            className="inline-flex min-h-11 w-fit items-center font-bold text-accent underline underline-offset-4"
+          >
+            {t("ReportAssistant.link")}
+          </Link>
+        ) : null}
       </div>
       <ReadAloud text={() => ref.current?.innerText ?? ""} />
       {detail ? (

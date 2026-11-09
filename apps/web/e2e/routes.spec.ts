@@ -48,6 +48,7 @@ const PLAIN = [
   "/donate",
   "/donate/delete",
   "/note/withdraw",
+  "/report",
   "/no-such-page",
 ];
 const DEMO = [
@@ -63,6 +64,7 @@ const DEMO = [
   "/demo/doctor",
   "/donate",
   "/cascades",
+  "/report#src=list",
 ];
 
 async function demoSession(page: Page) {

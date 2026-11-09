@@ -200,6 +200,7 @@ const WIDE = [
   "/results/finding",
   "/cascades",
   "/results/summary",
+  "/report",
 ];
 
 function StorageNotice() {

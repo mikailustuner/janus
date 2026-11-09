@@ -1,0 +1,26 @@
+{
+  "source_id": "report_channels",
+  "file": "data/report_channels.csv",
+  "license": "Janus curation, Apache-2.0; field labels quoted from official public forms (see notes)",
+  "retrieved_date": "2026-11-09",
+  "checked_on": "2026-11-09",
+  "recheck_by": "2027-02-09",
+  "sources": [
+    "https://www.titck.gov.tr/faaliyetalanlari/ilac/18",
+    "https://vigiflow-eforms.who-umc.org/formdata/form/67700cd9-c641-48b4-8f5f-2f433bcb936c",
+    "https://www.fda.gov/safety/medical-product-safety-information/medwatch-forms-fda-safety-reporting",
+    "https://www.ema.europa.eu/en/about-us/what-we-do/safety-medicines/reporting-suspected-side-effects",
+    "https://nebenwirkungen.bund.de/",
+    "https://www.bfarm.de/SharedDocs/Formulare/DE/Arzneimittel/Pharmakovigilanz/aa-uaw-melde-bogen.html",
+    "https://ansm.sante.fr/documents/reference/declarer-un-effet-indesirable/comment-declarer-si-vous-etes-patient-ou-usager",
+    "https://www.aemps.gob.es/investigacionClinica/medicamentos/docs/Manual-NotificaRAM-2025.pdf"
+  ],
+  "fields_status": {
+    "verified": "read in the official form or page",
+    "derived": "read from an official description of the form (its machine-readable definition file or the authority's user manual); the live form was not filled in",
+    "partial": "only part of the form was read, or the labels come from another edition (field_source)",
+    "unverified": "not confirmed; Janus shows no field mapping for it",
+    "none": "a contact channel (e-mail, phone, directory) with no form"
+  },
+  "note": "Official channels for reporting a suspected side effect of a medicine (report-assistant spec). Only official sites were used. Field labels are the short labels as published, with the section of the form before ' > '. No MedDRA term is stored (report-assistant DP3). Nothing is fetched at runtime; the app ships apps/web/src/report/channels.json generated from this file."
+}

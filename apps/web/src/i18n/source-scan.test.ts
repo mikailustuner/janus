@@ -40,6 +40,10 @@ const EXCLUDE = [
   /\.test\.tsx?$/, // tests may quote phrases on purpose
   /(^|\/)test_[^/]*\.py$/,
   /(^|\/)(package|tsconfig)\.json$/,
+  // Generated copy of data/report_channels.csv: official form labels quoted as published (e.g. FDA
+  // 3500B "B2 Do you have a picture of the product?"). The labels the assistant shows are checked
+  // by src/report/channels.test.ts (report-assistant).
+  /(^|\/)src\/report\/channels\.json$/,
 ];
 const PRAGMA = "medical-language-guard: ignore";
 

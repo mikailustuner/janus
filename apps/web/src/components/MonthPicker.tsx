@@ -12,9 +12,12 @@ import { useT } from "@/theme/words";
 export function MonthPicker({
   value,
   onChange,
+  legend,
 }: {
   value: string | null;
   onChange: (started: string | null) => void;
+  /** Another question than "Since when?" (report-assistant: "When did it start?"). */
+  legend?: string;
 }) {
   const t = useT();
   const locale = useLocale();
@@ -53,7 +56,7 @@ export function MonthPicker({
 
   return (
     <fieldset className="flex flex-col gap-2">
-      <legend className="mb-1 font-bold">{t("Month.label")}</legend>
+      <legend className="mb-1 font-bold">{legend ?? t("Month.label")}</legend>
       <div className="flex flex-wrap gap-2">
         <label className="flex flex-col text-sm" htmlFor={`${id}-m`}>
           {t("Month.month")}

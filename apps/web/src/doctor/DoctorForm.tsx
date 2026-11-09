@@ -10,6 +10,7 @@
 import { useState } from "react";
 
 import type { OutcomeFormOut } from "@/api/contracts";
+import { buildPrefill } from "@/report/fragment";
 
 import { buildAnswers, canSend, NEEDS_MEDICINE, type Answer } from "./doctor";
 import type { DoctorMessages } from "./messages";
@@ -178,6 +179,27 @@ export function DoctorForm({
                 ))}
               </div>
             ) : null}
+            {/* Report assistant (report-assistant Req 2.3, 8.1, DP10): codes only, in the
+                fragment; a new tab keeps this page (and its token) as it is. */}
+            <a
+              href={`/${form.language}/report#${buildPrefill({
+                src: "doctor",
+                rule: f.rule_id,
+                ingredient: f.index.key,
+                others: [
+                  ...new Set(
+                    form.findings.flatMap((x) => [x.index.key, x.marker.key]),
+                  ),
+                ].filter((k) => k !== f.index.key),
+                demo,
+              })}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-testid="doctor-report-link"
+              className="inline-flex min-h-11 w-fit items-center font-bold text-accent underline underline-offset-4"
+            >
+              {m.report}
+            </a>
           </fieldset>
         );
       })}

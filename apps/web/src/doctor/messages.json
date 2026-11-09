@@ -21,6 +21,7 @@
   "medicineQuestion": "Which medicine?",
   "notConfirmed": "Product form not confirmed",
   "expires": "This link works until {date}.",
+  "report": "Prepare a report to the authority",
   "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
  },
  "tr": {
@@ -45,6 +46,7 @@
   "medicineQuestion": "Hangi ilaç?",
   "notConfirmed": "Ürün formu doğrulanmadı",
   "expires": "Bu bağlantı {date} tarihine kadar çalışır.",
+  "report": "Yetkili kuruma bildirim hazırla",
   "disclaimer": "Janus bilgi sağlar, tıbbi tavsiye vermez. Araştırma prototipi — tıbbi cihaz değildir."
  },
  "de": {
@@ -69,6 +71,7 @@
   "medicineQuestion": "Welches Medikament?",
   "notConfirmed": "Darreichungsform nicht bestätigt",
   "expires": "Dieser Link funktioniert bis {date}.",
+  "report": "Meldung an die Behörde vorbereiten",
   "disclaimer": "Janus bietet Informationen, keine medizinische Beratung. Forschungsprototyp – kein Medizinprodukt."
  },
  "fr": {
@@ -93,6 +96,7 @@
   "medicineQuestion": "Quel médicament ?",
   "notConfirmed": "Forme du produit non confirmée",
   "expires": "Ce lien fonctionne jusqu'au {date}.",
+  "report": "Préparer un signalement à l'autorité",
   "disclaimer": "Janus fournit des informations, pas des conseils médicaux. Prototype de recherche — pas un dispositif médical."
  },
  "es": {
@@ -117,6 +121,7 @@
   "medicineQuestion": "¿Qué medicamento?",
   "notConfirmed": "Forma del producto no confirmada",
   "expires": "Este enlace funciona hasta el {date}.",
+  "report": "Preparar una notificación a la autoridad",
   "disclaimer": "Janus ofrece información, no consejo médico. Prototipo de investigación: no es un producto sanitario."
  }
 }

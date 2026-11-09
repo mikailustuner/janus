@@ -544,7 +544,8 @@
     "retry": "Erneut senden",
     "medicineQuestion": "Welches Medikament?",
     "notConfirmed": "Darreichungsform nicht bestätigt",
-    "expires": "Dieser Link funktioniert bis {date}."
+    "expires": "Dieser Link funktioniert bis {date}.",
+    "report": "Meldung an die Behörde vorbereiten"
   },
   "Withdraw": {
     "errors": {
@@ -1490,6 +1491,173 @@
       "abruptNames": "Betroffene Wirkstoffe: {names}",
       "ingredientsHeading": "Wirkstoffe der Liste",
       "footer": "Auf diesem Gerät mit Janus erstellt"
+    }
+  },
+  "ReportAssistant": {
+    "title": "Meldung an die Behörde vorbereiten",
+    "link": "Meldung an die Behörde vorbereiten",
+    "summary": "Janus sendet diese Meldung nicht. Sie reichen sie selbst über das offizielle Formular ein.",
+    "intro": {
+      "choice": "Ob Sie eine vermutete Nebenwirkung melden, entscheiden Sie selbst. Eine Meldung gibt einen Verdacht weiter; Sie müssen nicht beweisen, dass das Arzneimittel die Ursache war.",
+      "what": "Janus trägt, was es schon weiß, auf diesem Gerät in einen Entwurf ein. Sie prüfen ihn, ändern ihn und übertragen jeden Wert selbst in das offizielle Formular.",
+      "fact": "Eine systematische Übersichtsarbeit von 2006 wertete 37 Studien aus, die schätzten, welcher Anteil der Nebenwirkungen von Arzneimitteln den Behörden nicht gemeldet wurde. Der Median über die Studien lag bei 94 % (Interquartilsbereich 82–98 %: die mittlere Hälfte der Studien fand Werte zwischen 82 % und 98 %).",
+      "caveat": "Die Studien unterscheiden sich in Land, Umfeld und Methode; der Wert ist daher kein Wert für ein bestimmtes Land heute.",
+      "cite": "Hazell L, Shakir SAW. Under-reporting of adverse drug reactions: a systematic review. Drug Saf 2006;29(5):385–396.",
+      "doi": "DOI 10.2165/00002018-200629050-00003"
+    },
+    "where": {
+      "title": "Wo melden",
+      "region": "Region",
+      "noRegion": "Wählen Sie eine Region, um ihr offizielles Formular zu sehen.",
+      "country": "Land",
+      "form": "Formular",
+      "countries": {
+        "DE": "Deutschland",
+        "FR": "Frankreich",
+        "ES": "Spanien",
+        "EU": "Anderes EU-Land"
+      },
+      "kind": {
+        "online": "Online-Formular",
+        "pdf": "PDF-Formular",
+        "document": "Word-Formular",
+        "guidance": "EMA-Hinweise"
+      },
+      "otherEu": "Jedes EU-Land hat sein eigenes Meldeverfahren. Die Europäische Arzneimittel-Agentur nennt die Behörde jedes Landes; der Entwurf unten folgt der EMA-Liste, was gemeldet werden sollte.",
+      "finder": "Ihre nationale Behörde finden (EMA-Liste)"
+    },
+    "channel": {
+      "version": "Formular {id} · Version {version}",
+      "versionOnly": "Version: {version}",
+      "unverified": "von Janus nicht bestätigt",
+      "checked": "Adresse und Fragen am {date} auf der Website der Behörde geprüft.",
+      "source": "Quellseite",
+      "borrowed": "Die Bezeichnungen stammen aus der PDF-Ausgabe dieses Formulars; das Online-Formular kann sie anders formulieren oder ordnen.",
+      "noFields": {
+        "unverified": "Janus hat die Fragen dieses Formulars nicht geprüft; der Entwurf verwendet daher Janus' eigene Bezeichnungen. Übertragen Sie jeden Wert in die passende Frage.",
+        "partial": "Janus hat nur die erste Seite dieses Formulars (Angaben zur Person) geprüft; der Entwurf verwendet daher Janus' eigene Bezeichnungen. Übertragen Sie jeden Wert in die passende Frage.",
+        "hcp": "Janus hat die Fragen des Formulars für Fachkreise nicht geprüft; der Entwurf verwendet daher Janus' eigene Bezeichnungen."
+      },
+      "derived": "Fragen aus einer offiziellen Beschreibung des Formulars gelesen (Definitionsdatei oder Handbuch); Janus hat das Live-Formular nicht ausgefüllt.",
+      "checkedAddress": "Adresse am {date} auf der Website der Behörde geprüft."
+    },
+    "contacts": {
+      "title": "Weitere Wege zur Meldung",
+      "email": "Das ausgefüllte Patientenformular per E-Mail an {address} senden",
+      "phone": "Kostenlose Telefonnummer {number}, werktags 09:00–18:00, nur aus dem Festnetz"
+    },
+    "what": {
+      "title": "Was in den Entwurf kommt",
+      "medicine": "Das Arzneimittel, das Sie verdächtigen",
+      "choose": "Arzneimittel aus Ihrer Liste",
+      "box": "Name wie auf der Packung",
+      "boxHint": "Sie können ihn so ändern, dass er genau der Packung entspricht.",
+      "ingredient": "Wirkstoff: {name}",
+      "noList": "Ihre Liste enthält keine Arzneimittel. Geben Sie den Namen wie auf der Packung ein.",
+      "event": "Was ist passiert",
+      "eventPick": "Beschreibung wählen",
+      "eventOwn": "Ich beschreibe es selbst",
+      "eventText": "In Ihren eigenen Worten",
+      "eventHint": "Einfache Worte genügen; die Behörde kodiert die Meldung selbst.",
+      "onset": "Wann hat es begonnen?",
+      "outcome": "Wie ist es jetzt?",
+      "outcomeOptions": "Das sind die Antworten des offiziellen Formulars.",
+      "outcomeNone": "Nicht beantwortet",
+      "outcomeFree": "In Ihren eigenen Worten, zum Beispiel ob es noch andauert.",
+      "others": "Weitere Arzneimittel zu dieser Zeit",
+      "othersHint": "Entfernen Sie das Häkchen, um ein Arzneimittel aus dem Entwurf zu lassen.",
+      "othersNone": "Keine weiteren Arzneimittel in der Liste."
+    },
+    "draft": {
+      "title": "Ihr Entwurf",
+      "demo": "Demo · synthetischer Patient — nicht einreichen",
+      "empty": "Geben Sie das Arzneimittel ein oder was passiert ist, um den Entwurf zu sehen.",
+      "copy": "Kopieren",
+      "copyLabel": "{label} kopieren",
+      "copied": "Kopiert: {label}",
+      "copyAll": "Alles kopieren",
+      "copiedAll": "Alle Werte kopiert.",
+      "copyFailed": "Kopieren ist hier nicht möglich. Markieren Sie den Text und kopieren Sie ihn von Hand.",
+      "print": "Drucken",
+      "open": "Offizielles Formular öffnen",
+      "opens": "Öffnet die Website der Behörde in einem neuen Tab.",
+      "noField": "Für dieses Formular ist kein passendes Feld erfasst",
+      "othersEach": "Tragen Sie jedes Arzneimittel einzeln in das Formular ein.",
+      "missingTitle": "Fragen des Formulars, die Janus nicht ausfüllt",
+      "missingHint": "Ergänzen Sie diese selbst im offiziellen Formular, soweit Sie sie beantworten möchten.",
+      "oneOf": "Mindestens eines von: {fields}",
+      "openGuidance": "EMA-Hinweise öffnen"
+    },
+    "janus": {
+      "medicine": "Arzneimittel (wie auf der Packung)",
+      "event": "Was ist passiert",
+      "onset": "Beginn",
+      "outcome": "Wie es jetzt ist",
+      "others": "Weitere Arzneimittel"
+    },
+    "hcp": {
+      "title": "Für Fachkreise",
+      "prefilled": "Aus den Codes der Notiz vorausgefüllt: Wirkstoffnamen und Ereignis stammen aus dem Janus-Vokabular. Mit dem Link kamen keine persönlichen Daten.",
+      "TR": "Das TÜFAM-E-Formular nimmt auch Meldungen von Fachkreisen an (Beruf der meldenden Person: Doktor, Eczacı, Diğer sağlık çalışanı). TİTCK nennt außerdem ein eigenes Formular für Fachkreise, das „Advers Reaksiyon Bildirim Formu“; Janus hat seine Adresse nicht geprüft. Es steht auf der TÜFAM-Seite.",
+      "US": "Das Formular FDA 3500B ist für Verbraucher und Patienten. Fachkreise verwenden das Formular FDA 3500; Janus hat seine Fragen nicht geprüft, daher verwendet der Entwurf Janus' Bezeichnungen. Die MedWatch-Formularseite nennt beide.",
+      "DE": "Das Online-Formular und das PDF-Formular des BfArM sind für Patienten und Fachkreise.",
+      "FR": "Das Cerfa-Formular 10011*07 ist für Fachkreise gestaltet; die ANSM führt es auch für Patienten.",
+      "ES": "Dies ist der Bürgerweg von NotificaRAM. Janus hat nur diesen Weg geprüft, daher verwendet der Entwurf Janus' Bezeichnungen.",
+      "EU": "Auch Ärztinnen und Ärzte, Pflegekräfte oder Apotheker können über die nationale Behörde melden (EMA)."
+    },
+    "states": {
+      "vocabulary": "Die Namen konnten nicht geladen werden."
+    },
+    "labels": {
+      "trReaction": "Reaktion/Symptom",
+      "trReactionStart": "Beginn (Datum)",
+      "trOutcome": "Ausgang",
+      "trDrugName": "Name des Arzneimittels (vollständig, wie auf der Packung)",
+      "trDocxDescribe": "Beschreiben Sie die Nebenwirkung und wie sie auftrat",
+      "trDocxWhen": "Wann hat sie begonnen?",
+      "trDocxState": "Wie geht es der betroffenen Person jetzt?",
+      "trDocxDrug": "Name des Arzneimittels",
+      "trDocxOther": "Name des anderen Arzneimittels",
+      "usA3": "Datum, an dem das Problem auftrat",
+      "usA4": "Beschreiben Sie, was passiert ist, wie oder warum",
+      "usC1": "Name(n) des Produkts wie auf Packung, Flasche oder Verpackung",
+      "usE11": "Alle derzeit verwendeten verschreibungspflichtigen Arzneimittel und Medizinprodukte",
+      "emaMedicine": "Arzneimittel",
+      "emaOnset": "Beginn der Nebenwirkung",
+      "emaOngoing": "Dauert sie an?",
+      "emaOthers": "Weitere Arzneimittel",
+      "deDrug": "Bezeichnung oder PZN des verdächtigten Arzneimittels",
+      "deOthers": "Weitere(s) Arzneimittel",
+      "deOnset": "Startdatum der Nebenwirkung",
+      "deDescribe": "Beschreibung des Arzneimittelrisikos oder der Nebenwirkung",
+      "deOutcome": "Ausgang der Nebenwirkung",
+      "frDrug": "Arzneimittel",
+      "frOnset": "Datum des Auftretens",
+      "frDescribe": "Art und Beschreibung des Effekts",
+      "frOutcome": "Verlauf",
+      "esDrug": "Name des Arzneimittels",
+      "esOtherDrug": "Name des Arzneimittels (weitere Arzneimittel)",
+      "esSymptoms": "Symptome der Nebenwirkung",
+      "esOnset": "Wann haben diese Symptome begonnen?",
+      "esState": "Wie ist der aktuelle Zustand der betroffenen Person?"
+    },
+    "options": {
+      "trEform": {
+        "0": "Erholt/abgeklungen",
+        "1": "In Erholung/klingt ab",
+        "2": "Nicht erholt/nicht abgeklungen",
+        "3": "Erholt mit bleibenden Folgen",
+        "4": "Tod",
+        "5": "Unbekannt"
+      },
+      "trDocx": {
+        "0": "Die Nebenwirkung ist ganz abgeklungen / die Person hat sich erholt",
+        "1": "In Erholung",
+        "2": "Symptome dauern an/nicht erholt",
+        "3": "Die Erkrankung hat sich verschlimmert",
+        "4": "Verstorben",
+        "5": "Anderes"
+      }
     }
   }
 }

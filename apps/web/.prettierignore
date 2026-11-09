@@ -10,6 +10,7 @@ src/demo/passport-*.recorded.json
 src/demo/codes.svg.json
 # scripts/gen-cascade-map.mjs
 src/cascade-map/graph.json
+src/report/channels.json
 # Written by apps/api/tests/test_passport_web_fixtures.py
 src/passport/fixtures/*.json
 test-results/

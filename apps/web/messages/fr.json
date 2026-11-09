@@ -544,7 +544,8 @@
     "retry": "Renvoyer",
     "medicineQuestion": "Quel médicament ?",
     "notConfirmed": "Forme du produit non confirmée",
-    "expires": "Ce lien fonctionne jusqu'au {date}."
+    "expires": "Ce lien fonctionne jusqu'au {date}.",
+    "report": "Préparer un signalement à l'autorité"
   },
   "Withdraw": {
     "errors": {
@@ -1490,6 +1491,173 @@
       "abruptNames": "Principes actifs concernés : {names}",
       "ingredientsHeading": "Principes actifs de la liste",
       "footer": "Créé sur cet appareil avec Janus"
+    }
+  },
+  "ReportAssistant": {
+    "title": "Préparer un signalement à l'autorité",
+    "link": "Préparer un signalement à l'autorité",
+    "summary": "Janus n'envoie pas ce signalement. Vous le faites vous-même sur le formulaire officiel.",
+    "intro": {
+      "choice": "Signaler un effet indésirable suspecté est votre propre choix. Un signalement transmet une suspicion ; vous n'avez pas à prouver que le médicament en est la cause.",
+      "what": "Janus place ce qu'il sait déjà dans un brouillon sur cet appareil. Vous le vérifiez, le modifiez et recopiez vous-même chaque valeur dans le formulaire officiel.",
+      "fact": "Une revue systématique de 2006 a analysé 37 études qui estimaient la part des effets indésirables médicamenteux non déclarés aux autorités. La médiane des études était de 94 % (intervalle interquartile 82–98 % : la moitié centrale des études trouvait entre 82 % et 98 %).",
+      "caveat": "Les études diffèrent par le pays, le contexte et la méthode ; ce n'est donc pas un chiffre propre à un pays donné aujourd'hui.",
+      "cite": "Hazell L, Shakir SAW. Under-reporting of adverse drug reactions: a systematic review. Drug Saf 2006;29(5):385–396.",
+      "doi": "DOI 10.2165/00002018-200629050-00003"
+    },
+    "where": {
+      "title": "Où faire le signalement",
+      "region": "Région",
+      "noRegion": "Choisissez une région pour voir son formulaire officiel.",
+      "country": "Pays",
+      "form": "Formulaire",
+      "countries": {
+        "DE": "Allemagne",
+        "FR": "France",
+        "ES": "Espagne",
+        "EU": "Autre pays de l'UE"
+      },
+      "kind": {
+        "online": "Formulaire en ligne",
+        "pdf": "Formulaire PDF",
+        "document": "Formulaire Word",
+        "guidance": "Informations de l'EMA"
+      },
+      "otherEu": "Chaque pays de l'UE a son propre outil de signalement. L'Agence européenne des médicaments indique l'autorité de chaque pays ; le brouillon ci-dessous suit la liste de l'EMA de ce qu'il faut indiquer.",
+      "finder": "Trouver votre autorité nationale (liste de l'EMA)"
+    },
+    "channel": {
+      "version": "Formulaire {id} · version {version}",
+      "versionOnly": "Version : {version}",
+      "unverified": "non confirmée par Janus",
+      "checked": "Adresse et questions vérifiées le {date} sur le site de l'autorité.",
+      "source": "Page source",
+      "borrowed": "Les libellés viennent de l'édition PDF de ce formulaire ; le formulaire en ligne peut les formuler ou les ordonner autrement.",
+      "noFields": {
+        "unverified": "Janus n'a pas vérifié les questions de ce formulaire ; le brouillon utilise donc les libellés de Janus. Recopiez chaque valeur dans la question qui lui correspond.",
+        "partial": "Janus n'a vérifié que la première page de ce formulaire (sur la personne) ; le brouillon utilise donc les libellés de Janus. Recopiez chaque valeur dans la question qui lui correspond.",
+        "hcp": "Janus n'a pas vérifié les questions du formulaire destiné aux professionnels de santé ; le brouillon utilise donc les libellés de Janus."
+      },
+      "derived": "Questions lues dans une description officielle du formulaire (fichier de définition ou manuel) ; Janus n'a pas rempli le formulaire en ligne.",
+      "checkedAddress": "Adresse vérifiée le {date} sur le site de l'autorité."
+    },
+    "contacts": {
+      "title": "Autres façons de faire un signalement",
+      "email": "Envoyer le formulaire patient rempli par e-mail à {address}",
+      "phone": "Ligne gratuite {number}, en semaine de 09:00 à 18:00, depuis un poste fixe uniquement"
+    },
+    "what": {
+      "title": "Ce que contient le brouillon",
+      "medicine": "Le médicament que vous suspectez",
+      "choose": "Médicament de votre liste",
+      "box": "Nom comme sur la boîte",
+      "boxHint": "Vous pouvez le modifier pour qu'il corresponde exactement à la boîte.",
+      "ingredient": "Substance active : {name}",
+      "noList": "Votre liste ne contient aucun médicament. Saisissez le nom comme sur la boîte.",
+      "event": "Ce qui s'est passé",
+      "eventPick": "Choisir une description",
+      "eventOwn": "Je le décris moi-même",
+      "eventText": "Avec vos propres mots",
+      "eventHint": "Des mots simples suffisent ; l'autorité code elle-même le signalement.",
+      "onset": "Quand cela a-t-il commencé ?",
+      "outcome": "Comment cela va-t-il maintenant ?",
+      "outcomeOptions": "Ce sont les réponses du formulaire officiel.",
+      "outcomeNone": "Pas de réponse",
+      "outcomeFree": "Avec vos propres mots, par exemple si cela dure encore.",
+      "others": "Autres médicaments pris à ce moment-là",
+      "othersHint": "Décochez un médicament pour le laisser hors du brouillon.",
+      "othersNone": "Aucun autre médicament dans la liste."
+    },
+    "draft": {
+      "title": "Votre brouillon",
+      "demo": "Démo · patient synthétique — ne pas envoyer",
+      "empty": "Indiquez le médicament ou ce qui s'est passé pour voir le brouillon.",
+      "copy": "Copier",
+      "copyLabel": "Copier : {label}",
+      "copied": "Copié : {label}",
+      "copyAll": "Tout copier",
+      "copiedAll": "Toutes les valeurs ont été copiées.",
+      "copyFailed": "Impossible de copier ici. Sélectionnez le texte et copiez-le à la main.",
+      "print": "Imprimer",
+      "open": "Ouvrir le formulaire officiel",
+      "opens": "Ouvre le site de l'autorité dans un nouvel onglet.",
+      "noField": "Aucun champ correspondant n'est enregistré pour ce formulaire",
+      "othersEach": "Saisissez chaque médicament sur sa propre ligne du formulaire.",
+      "missingTitle": "Questions du formulaire que Janus ne remplit pas",
+      "missingHint": "Complétez-les vous-même sur le formulaire officiel, dans la mesure où vous souhaitez y répondre.",
+      "oneOf": "Au moins l'un de : {fields}",
+      "openGuidance": "Ouvrir les informations de l'EMA"
+    },
+    "janus": {
+      "medicine": "Médicament (comme sur la boîte)",
+      "event": "Ce qui s'est passé",
+      "onset": "Début",
+      "outcome": "État actuel",
+      "others": "Autres médicaments"
+    },
+    "hcp": {
+      "title": "Pour les professionnels de santé",
+      "prefilled": "Prérempli à partir des codes de la note : les noms des substances et l'événement viennent du vocabulaire de Janus. Aucune donnée personnelle n'est venue avec le lien.",
+      "TR": "Le formulaire en ligne TÜFAM reçoit aussi les signalements des professionnels de santé (profession du déclarant : Doktor, Eczacı, Diğer sağlık çalışanı). La TİTCK mentionne aussi un formulaire distinct pour les professionnels, l'« Advers Reaksiyon Bildirim Formu » ; Janus n'a pas vérifié son adresse. Il figure sur la page TÜFAM.",
+      "US": "Le formulaire FDA 3500B s'adresse aux consommateurs et aux patients. Les professionnels de santé utilisent le formulaire FDA 3500 ; Janus n'a pas vérifié ses questions, le brouillon utilise donc les libellés de Janus. La page des formulaires MedWatch présente les deux.",
+      "DE": "Le formulaire en ligne et le formulaire PDF du BfArM s'adressent aux patients et aux professionnels de santé.",
+      "FR": "Le formulaire Cerfa 10011*07 est conçu pour les professionnels de santé ; l'ANSM le propose aussi aux patients.",
+      "ES": "Il s'agit du parcours citoyen de NotificaRAM. Janus n'a vérifié que ce parcours, le brouillon utilise donc les libellés de Janus.",
+      "EU": "Un médecin, un infirmier ou un pharmacien peut aussi faire un signalement auprès de l'autorité nationale (EMA)."
+    },
+    "states": {
+      "vocabulary": "Les noms n'ont pas pu être chargés."
+    },
+    "labels": {
+      "trReaction": "Réaction/symptôme",
+      "trReactionStart": "Date de début",
+      "trOutcome": "Issue",
+      "trDrugName": "Nom du médicament (nom complet, comme sur la boîte)",
+      "trDocxDescribe": "Décrivez l'effet indésirable et comment il est survenu",
+      "trDocxWhen": "Quand a-t-il commencé ?",
+      "trDocxState": "Comment va maintenant la personne qui a eu l'effet indésirable ?",
+      "trDocxDrug": "Nom du médicament",
+      "trDocxOther": "Nom de l'autre médicament",
+      "usA3": "Date à laquelle le problème est survenu",
+      "usA4": "Décrivez ce qui s'est passé, comment ou pourquoi",
+      "usC1": "Nom(s) du produit comme sur la boîte, le flacon ou l'emballage",
+      "usE11": "Tous les médicaments sur ordonnance et dispositifs médicaux utilisés actuellement",
+      "emaMedicine": "Médicament",
+      "emaOnset": "Début de l'effet indésirable",
+      "emaOngoing": "Est-il toujours présent ?",
+      "emaOthers": "Autres médicaments",
+      "deDrug": "Nom ou code pharmacie (PZN) du médicament suspecté",
+      "deOthers": "Autre(s) médicament(s)",
+      "deOnset": "Date de début de l'effet indésirable",
+      "deDescribe": "Description du risque médicamenteux ou de l'effet indésirable",
+      "deOutcome": "Issue de l'effet indésirable",
+      "frDrug": "Médicament",
+      "frOnset": "Date de survenue",
+      "frDescribe": "Nature et description de l'effet",
+      "frOutcome": "Évolution",
+      "esDrug": "Nom du médicament",
+      "esOtherDrug": "Nom du médicament (autres médicaments)",
+      "esSymptoms": "Symptômes de l'effet indésirable",
+      "esOnset": "Quand ces symptômes ont-ils commencé ?",
+      "esState": "Quel est l'état actuel de la personne concernée ?"
+    },
+    "options": {
+      "trEform": {
+        "0": "Rétabli/résolu",
+        "1": "En cours de rétablissement/de résolution",
+        "2": "Non rétabli/non résolu",
+        "3": "Rétabli avec des séquelles",
+        "4": "Décès",
+        "5": "Inconnu"
+      },
+      "trDocx": {
+        "0": "L'effet indésirable a complètement disparu / la personne est rétablie",
+        "1": "En voie de rétablissement",
+        "2": "Les symptômes persistent/non rétabli",
+        "3": "La maladie s'est aggravée",
+        "4": "Décédé",
+        "5": "Autre"
+      }
     }
   }
 }

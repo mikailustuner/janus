@@ -544,7 +544,8 @@
     "retry": "Send again",
     "medicineQuestion": "Which medicine?",
     "notConfirmed": "Product form not confirmed",
-    "expires": "This link works until {date}."
+    "expires": "This link works until {date}.",
+    "report": "Prepare a report to the authority"
   },
   "Withdraw": {
     "errors": {
@@ -1490,6 +1491,173 @@
       "abruptNames": "Medicines with this warning: {names}",
       "ingredientsHeading": "Active ingredients in the list",
       "footer": "Made on this device with Janus"
+    }
+  },
+  "ReportAssistant": {
+    "title": "Prepare a report to the authority",
+    "link": "Prepare a report to the authority",
+    "summary": "Janus does not send this report. You submit it yourself on the official form.",
+    "intro": {
+      "choice": "Reporting a suspected side effect is your own choice. A report passes on a suspicion; you do not need to prove that the medicine caused it.",
+      "what": "Janus puts what it already knows into a draft on this device. You check it, change it, and copy each value into the official form.",
+      "fact": "A 2006 systematic review analysed 37 studies that estimated what share of adverse drug reactions were not reported to the authorities. The median across the studies was 94% (interquartile range 82–98%: the middle half of the studies found between 82% and 98%).",
+      "caveat": "The studies differ in country, setting and method, so this is not a figure for any one country today.",
+      "cite": "Hazell L, Shakir SAW. Under-reporting of adverse drug reactions: a systematic review. Drug Saf 2006;29(5):385–396.",
+      "doi": "DOI 10.2165/00002018-200629050-00003"
+    },
+    "where": {
+      "title": "Where to report",
+      "region": "Region",
+      "noRegion": "Choose a region to see its official form.",
+      "country": "Country",
+      "form": "Form",
+      "countries": {
+        "DE": "Germany",
+        "FR": "France",
+        "ES": "Spain",
+        "EU": "Another EU country"
+      },
+      "kind": {
+        "online": "Online form",
+        "pdf": "PDF form",
+        "document": "Word form",
+        "guidance": "EMA guidance"
+      },
+      "otherEu": "Each EU country has its own reporting tool. The European Medicines Agency lists the authority of every country; the draft below follows the EMA list of what to report.",
+      "finder": "Find your national authority (EMA list)"
+    },
+    "channel": {
+      "version": "Form {id} · version {version}",
+      "versionOnly": "Version: {version}",
+      "unverified": "not confirmed by Janus",
+      "checked": "Address and questions checked on {date} on the authority's site.",
+      "source": "Source page",
+      "borrowed": "The labels come from the PDF edition of this form; the online form may word or order them differently.",
+      "noFields": {
+        "unverified": "Janus has not checked the questions of this form, so the draft uses Janus's own labels. Copy each value to the question that matches it.",
+        "partial": "Janus has checked only the first page of this form (about the person), so the draft uses Janus's own labels. Copy each value to the question that matches it.",
+        "hcp": "Janus has not checked the questions of the health-professional form, so the draft uses Janus's own labels."
+      },
+      "derived": "Questions read from an official description of the form (its definition file or user manual); Janus has not filled in the live form.",
+      "checkedAddress": "Address checked on {date} on the authority's site."
+    },
+    "contacts": {
+      "title": "Other ways to report",
+      "email": "E-mail the filled-in patient form to {address}",
+      "phone": "Free phone line {number}, weekdays 09:00–18:00, from landlines only"
+    },
+    "what": {
+      "title": "What goes into the draft",
+      "medicine": "The medicine you suspect",
+      "choose": "Medicine from your list",
+      "box": "Name as on the box",
+      "boxHint": "You can change it to match the box exactly.",
+      "ingredient": "Active ingredient: {name}",
+      "noList": "Your list has no medicines. Type the name as on the box.",
+      "event": "What happened",
+      "eventPick": "Choose a description",
+      "eventOwn": "I will describe it myself",
+      "eventText": "In your own words",
+      "eventHint": "Plain words are fine; the authority codes the report itself.",
+      "onset": "When did it start?",
+      "outcome": "How is it now?",
+      "outcomeOptions": "These are the answers of the official form.",
+      "outcomeNone": "Not answered",
+      "outcomeFree": "In your own words, for example whether it is still going on.",
+      "others": "Other medicines taken at the time",
+      "othersHint": "Untick a medicine to leave it out of the draft.",
+      "othersNone": "No other medicines in the list."
+    },
+    "draft": {
+      "title": "Your draft",
+      "demo": "Demo · synthetic patient — do not submit",
+      "empty": "Add the medicine or what happened to see the draft.",
+      "copy": "Copy",
+      "copyLabel": "Copy {label}",
+      "copied": "Copied: {label}",
+      "copyAll": "Copy all",
+      "copiedAll": "All values copied.",
+      "copyFailed": "Copying is not possible here. Select the text and copy it by hand.",
+      "print": "Print",
+      "open": "Open the official form",
+      "opens": "Opens the authority's site in a new tab.",
+      "noField": "No matching field recorded for this form",
+      "othersEach": "Enter each medicine as its own entry on the form.",
+      "missingTitle": "Questions of the form that Janus does not fill",
+      "missingHint": "Add these yourself on the official form, as far as you want to answer them.",
+      "oneOf": "At least one of: {fields}",
+      "openGuidance": "Open the EMA guidance"
+    },
+    "janus": {
+      "medicine": "Medicine (as on the box)",
+      "event": "What happened",
+      "onset": "Started",
+      "outcome": "How it is now",
+      "others": "Other medicines"
+    },
+    "hcp": {
+      "title": "For health professionals",
+      "prefilled": "Prefilled from the note's codes: ingredient names and the event come from the Janus vocabulary. No personal data came with the link.",
+      "TR": "The TÜFAM e-form also takes reports from health professionals (reporter's profession: Doktor, Eczacı, Diğer sağlık çalışanı). TİTCK also names a separate form for health professionals, the “Advers Reaksiyon Bildirim Formu”; Janus has not checked its address. It is listed on the TÜFAM page.",
+      "US": "Form FDA 3500B is for consumers and patients. Health professionals use Form FDA 3500; Janus has not checked its questions, so the draft uses Janus's labels. The MedWatch forms page lists both.",
+      "DE": "The BfArM online form and the PDF form are for patients and health professionals.",
+      "FR": "The Cerfa form 10011*07 is laid out for health professionals; ANSM also lists it for patients.",
+      "ES": "This is the citizen route of NotificaRAM. Janus has checked only this route, so the draft uses Janus's labels.",
+      "EU": "A doctor, nurse or pharmacist can report too, through the national authority (EMA)."
+    },
+    "states": {
+      "vocabulary": "The names could not be loaded."
+    },
+    "labels": {
+      "trReaction": "Reaction/symptom",
+      "trReactionStart": "Start date",
+      "trOutcome": "Outcome",
+      "trDrugName": "Medicine name (full name as on the box)",
+      "trDocxDescribe": "Describe the side effect and how it happened",
+      "trDocxWhen": "When did it start?",
+      "trDocxState": "How is the person who had the side effect now?",
+      "trDocxDrug": "Name of the medicine",
+      "trDocxOther": "Name of the other medicine",
+      "usA3": "Date the problem occurred",
+      "usA4": "Tell us what happened, how it happened or why it happened",
+      "usC1": "Name(s) of the product as it appears on the box, bottle, or package",
+      "usE11": "List all current prescription medications and medical devices being used",
+      "emaMedicine": "Medicine",
+      "emaOnset": "Onset of side effect",
+      "emaOngoing": "Is it ongoing?",
+      "emaOthers": "Other medicines",
+      "deDrug": "Name or pharmacy number (PZN) of the suspected medicine",
+      "deOthers": "Other medicine(s)",
+      "deOnset": "Start date of the side effect",
+      "deDescribe": "Description of the medicine risk or side effect",
+      "deOutcome": "Outcome of the side effect",
+      "frDrug": "Medicine",
+      "frOnset": "Date it occurred",
+      "frDescribe": "Nature and description of the effect",
+      "frOutcome": "Course (how it evolved)",
+      "esDrug": "Name of the medicine",
+      "esOtherDrug": "Name of the medicine (other medicines)",
+      "esSymptoms": "Symptoms of the adverse reaction",
+      "esOnset": "When did these symptoms start?",
+      "esState": "What is the current state of the affected person?"
+    },
+    "options": {
+      "trEform": {
+        "0": "Recovered/resolved",
+        "1": "Recovering/resolving",
+        "2": "Not recovered/not resolved",
+        "3": "Recovered with lasting effects",
+        "4": "Death",
+        "5": "Unknown"
+      },
+      "trDocx": {
+        "0": "The side effect has completely gone / the person has recovered",
+        "1": "Recovering",
+        "2": "Symptoms continue/not recovered",
+        "3": "The illness got worse",
+        "4": "Died",
+        "5": "Other"
+      }
     }
   }
 }

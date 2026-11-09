@@ -188,3 +188,31 @@ remove the matching notice (and, for the Canon claims, set `expert_review = revi
   opt-in event and ingredient names) cannot be read as a verdict or an all-clear by someone who sees only the picture,
   and that the confirmation sentence is enough notice that the image may contain health information
   (`janus-report` Req 5, DP11, `report-safety-auditor-review.md`).
+
+## Report Assistant (enhancement, 2026-11-09)
+- [ ] **Legal review per region** of the assistant (TR: KVKK and TİTCK/TÜFAM rules on intermediaries in
+  pharmacovigilance; EU: whether a draft helper is a medical device under MDR Rule 11 and national rules for
+  BfArM/PEI, ANSM and AEMPS; US: FDA's view of tools that help consumers fill Form 3500B). Includes quoting official
+  form labels in `data/report_channels.csv` (TİTCK form text in particular) and the wording "Janus does not send this
+  report" (`report-assistant` DP1, DP2).
+- [ ] **Re-verify every channel** in `data/report_channels.csv` (all checked 2026-11-09): next by **2027-02-09**,
+  then every three months and whenever an authority republishes a form. Watch the TÜFAM e-form published-version id
+  (`67700cd9-…`), FDA 3500B "09/2025" (OMB 0910-0291, expires **2027-09-30**: a new edition is due by then), Cerfa
+  10011*07, the BfArM PDF (modified 2026-03-31) and the NotificaRAM manual (2025). Regenerate
+  `apps/web/src/report/channels.json` after any change.
+- [ ] **UNVERIFIED items** (no field mapping is built on them): fields the MedWatch online 3500B form enforces; pages
+  2–4 and mandatory fields of the German online form; the French portal questionnaire after "Médicament / Vaccin";
+  NotificaRAM required flags on tabs 1–4 and the options of its current-state question; options of BfArM "Ausgang"
+  and ANSM "Evolution"; the TÜFAM e-form required rules (read from JSON, not tested live); the version of the TÜFAM
+  patient .docx; the address of TÜFAM's separate health-professional form; Form FDA 3500 (professionals) fields.
+- [ ] **MedDRA decision** (`report-assistant` DP3): no MedDRA term is shipped, suggested or stored; the event goes in
+  plain words. Confirm with the MSSO terms (Statement on MedDRA Data Sharing, 20 May 2026) before ever adding coded
+  terms; that would need a subscription and the ICH trademark notice.
+- [ ] **Statistics wording:** check the full text of Hazell & Shakir 2006 for the study mix (reporters, settings) and
+  look for a newer systematic review; never shorten the sentence to "94 % are never reported" in README, video or
+  Devpost copy (`report-assistant-statistician-review.md` S2–S4).
+- [ ] **3500B E10/E11:** all other medicines go under E11 (prescription); decide whether to split OTC products into
+  E10 from the resolver's product type (`report-assistant-pharmacologist-review.md` F1).
+- [ ] **Native clinical review of the `ReportAssistant` texts:** TR "advers reaksiyon" vs "yan etki"; DE outcome terms
+  and "Interquartilsbereich"; FR "intervalle interquartile" and ANSM's "Évolution"; ES "Desenlace"; and whether the
+  TÜFAM outcome options match the live form (`report-assistant-localization-reviewer-review.md`).
