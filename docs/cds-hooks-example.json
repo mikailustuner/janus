@@ -1,0 +1,68 @@
+{
+  "hook": "order-select",
+  "hookInstance": "d1577c69-dfbe-44ad-ba6d-3e05e953b2ea",
+  "context": {
+    "userId": "Practitioner/example",
+    "patientId": "example-patient",
+    "draftOrders": {
+      "resourceType": "Bundle",
+      "type": "searchset",
+      "entry": [
+        {
+          "resource": {
+            "resourceType": "MedicationRequest",
+            "id": "furosemide-new",
+            "status": "draft",
+            "intent": "order",
+            "medicationCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "310429",
+                  "display": "Furosemide 20 MG Oral Tablet"
+                }
+              ],
+              "text": "Furosemide 20 MG Oral Tablet"
+            },
+            "subject": {
+              "reference": "Patient/example-patient"
+            }
+          }
+        }
+      ]
+    },
+    "selections": [
+      "MedicationRequest/furosemide-new"
+    ]
+  },
+  "prefetch": {
+    "medicationRequests": {
+      "resourceType": "Bundle",
+      "type": "searchset",
+      "entry": [
+        {
+          "resource": {
+            "resourceType": "MedicationRequest",
+            "id": "amlodipine-1",
+            "status": "active",
+            "intent": "order",
+            "medicationCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "308135",
+                  "display": "Amlodipine 5 MG Oral Tablet"
+                }
+              ],
+              "text": "Amlodipine 5 MG Oral Tablet"
+            },
+            "subject": {
+              "reference": "Patient/example-patient"
+            }
+          }
+        }
+      ]
+    },
+    "medicationStatements": null
+  }
+}

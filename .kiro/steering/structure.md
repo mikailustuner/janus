@@ -26,8 +26,10 @@ apps/api/           FastAPI service
   janus/db/           PostgreSQL pool; read-only and write transactions
   janus/contributions/ donations: model, report week, deletion tokens, retention purge, repository, router
   janus/privacy/      storage-region guard and endpoint
+  janus/cds/          CDS Hooks 2.0 service (discovery, order-select / order-sign cards)
   migrations/         Alembic migrations (forward-only, each with a downgrade)
   tests/              pytest + Hypothesis (property tests next to the module they test)
+apps/mcp/           MCP server (janus-mcp): a thin client of the API for AI assistants
 pipelines/          ETL jobs: titck, us_ndc, eu_fr_bdpm, eu_es_cima, wikidata_ingredients, onsides, faers, pipc, retractions, canon (OpenITI)
 data/               small, redistributable files only (e.g. PIPC table, CC BY; curated mappings)
 docs/               public English docs: docs/kiro-usage.md now; architecture and data-source docs in Phase 5

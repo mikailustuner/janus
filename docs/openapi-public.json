@@ -3,7 +3,7 @@
   "info": {
     "title": "Janus public read-only API",
     "version": "1.0.0",
-    "description": "The GET routes of the Janus API that take no body and return no personal data: service status, the FAERS snapshot, the séance catalogue, the light-face overview, validation and export, the time machine, the open outcome dataset, the weekly data-quality report and the FAERS onset table of the PIPC rows. Medical routes are `no-store`; nothing but an access line (route, status, latency) is logged. Research prototype, not a medical device; not medical advice. Documentation: docs/open-api.md.",
+    "description": "The GET routes of the Janus API that take no body and return no personal data: service status, the FAERS snapshot, the séance catalogue, the light-face overview, validation and export, the time machine, the open outcome dataset, the weekly data-quality report, the FAERS onset table of the PIPC rows, the PIPC rows of the open cascade package and the CDS Hooks discovery document. Medical routes are `no-store`; nothing but an access line (route, status, latency) is logged. Research prototype, not a medical device; not medical advice. Documentation: docs/open-api.md.",
     "license": {
       "name": "Apache-2.0",
       "identifier": "Apache-2.0"
@@ -620,6 +620,61 @@
           }
         }
       }
+    },
+    "/open/cascade-package/pipc": {
+      "get": {
+        "summary": "Cascade Package Pipc",
+        "description": "The 65 PIPC rows (CC BY 4.0) with Janus's class mapping (Apache-2.0), package version and\ncitation. Published data only; no personal data.",
+        "operationId": "cascade_package_pipc_open_cascade_package_pipc_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CascadePackageOut"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicError"
+                },
+                "examples": {
+                  "unavailable": {
+                    "value": {
+                      "error": "package_unavailable"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cds-services": {
+      "get": {
+        "summary": "Discovery",
+        "description": "CDS Hooks discovery: the `janus-cascade` service for `order-select` and `order-sign`.",
+        "operationId": "discovery_cds_services_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DiscoveryOut"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -672,6 +727,71 @@
           "references"
         ],
         "title": "CascadeOut"
+      },
+      "CascadePackageOut": {
+        "properties": {
+          "package": {
+            "type": "string",
+            "const": "janus-cascade-package",
+            "title": "Package"
+          },
+          "version": {
+            "type": "string",
+            "title": "Version"
+          },
+          "created": {
+            "type": "string",
+            "title": "Created"
+          },
+          "citation": {
+            "type": "string",
+            "title": "Citation"
+          },
+          "citation_url": {
+            "type": "string",
+            "title": "Citation Url"
+          },
+          "licenses": {
+            "additionalProperties": {
+              "items": {
+                "$ref": "#/components/schemas/LicenseOut"
+              },
+              "type": "array"
+            },
+            "propertyNames": {
+              "enum": [
+                "pipc",
+                "pipc_rules"
+              ]
+            },
+            "type": "object",
+            "title": "Licenses"
+          },
+          "rows": {
+            "items": {
+              "$ref": "#/components/schemas/PipcRowOut"
+            },
+            "type": "array",
+            "title": "Rows"
+          },
+          "disclaimer": {
+            "type": "string",
+            "title": "Disclaimer",
+            "default": "Janus provides information, not medical advice. Research prototype — not a medical device."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "package",
+          "version",
+          "created",
+          "citation",
+          "citation_url",
+          "licenses",
+          "rows"
+        ],
+        "title": "CascadePackageOut"
       },
       "CaseOut": {
         "properties": {
@@ -1074,6 +1194,23 @@
         ],
         "title": "DataQualityOut"
       },
+      "DiscoveryOut": {
+        "properties": {
+          "services": {
+            "items": {
+              "$ref": "#/components/schemas/ServiceOut"
+            },
+            "type": "array",
+            "title": "Services"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "services"
+        ],
+        "title": "DiscoveryOut"
+      },
       "EstimatesOut": {
         "properties": {
           "prr": {
@@ -1474,6 +1611,30 @@
           "status"
         ],
         "title": "Health"
+      },
+      "LicenseOut": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "path": {
+            "type": "string",
+            "title": "Path"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name",
+          "path",
+          "title"
+        ],
+        "title": "LicenseOut"
       },
       "MemberCountOut": {
         "properties": {
@@ -2654,6 +2815,118 @@
         ],
         "title": "PairSummaryOut"
       },
+      "PipcRowOut": {
+        "properties": {
+          "position": {
+            "type": "integer",
+            "title": "Position"
+          },
+          "system": {
+            "type": "string",
+            "title": "System"
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind"
+          },
+          "drug_a": {
+            "type": "string",
+            "title": "Drug A"
+          },
+          "adverse_event": {
+            "type": "string",
+            "title": "Adverse Event"
+          },
+          "drug_b": {
+            "type": "string",
+            "title": "Drug B"
+          },
+          "locator": {
+            "type": "string",
+            "title": "Locator"
+          },
+          "index_class": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Index Class"
+          },
+          "marker_class": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Marker Class"
+          },
+          "unmatchable_role": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unmatchable Role"
+          },
+          "unmatchable_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unmatchable Reason"
+          },
+          "supporting": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Supporting"
+          },
+          "note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Note"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "position",
+          "system",
+          "kind",
+          "drug_a",
+          "adverse_event",
+          "drug_b",
+          "locator",
+          "index_class",
+          "marker_class",
+          "unmatchable_role",
+          "unmatchable_reason",
+          "supporting",
+          "note"
+        ],
+        "title": "PipcRowOut"
+      },
       "RankOut": {
         "properties": {
           "best": {
@@ -2789,6 +3062,52 @@
           "differs"
         ],
         "title": "SensitivityOut"
+      },
+      "ServiceOut": {
+        "properties": {
+          "hook": {
+            "type": "string",
+            "enum": [
+              "order-select",
+              "order-sign"
+            ],
+            "title": "Hook"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "prefetch": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Prefetch"
+          },
+          "usageRequirements": {
+            "type": "string",
+            "title": "Usagerequirements"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "hook",
+          "title",
+          "description",
+          "id",
+          "prefetch",
+          "usageRequirements"
+        ],
+        "title": "ServiceOut"
       },
       "StatsOut": {
         "properties": {

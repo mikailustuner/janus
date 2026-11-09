@@ -53,6 +53,8 @@ services:
       JANUS_CONSENT_VERSIONS: ${JANUS_CONSENT_VERSIONS:-}
       JANUS_K: ${JANUS_K:-20}
       JANUS_DP_EPSILON: ${JANUS_DP_EPSILON:-1}
+      # CORS for /cds-services only (CDS Hooks sandbox demo, docs/cds-hooks.md); empty = off.
+      JANUS_CDS_CORS_ORIGINS: ${JANUS_CDS_CORS_ORIGINS:-}
     depends_on:
       postgres:
         condition: service_healthy

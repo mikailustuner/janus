@@ -61,6 +61,11 @@ id = "web"
 title = "WEB APP — BUNDLED FONTS AND LIBRARIES (apps/web)"
 banner = true
 
+[[sections]]
+id = "mcp"
+title = "MCP SERVER — LIBRARIES (apps/mcp)"
+banner = true
+
 # --- Product identification -------------------------------------------------
 
 [[sources]]
@@ -758,3 +763,15 @@ license = "CC0 1.0 (HL7 FHIR licence); HL7 and FHIR are trademarks of Health Lev
 notes = ["Committed gzipped under apps/web/src/fhir/schema, used by the tests only; source, date and hash in apps/web/src/fhir/schema/README.md."]
 storage = "commit"
 urls = ["http://hl7.org/fhir/R4/fhir.schema.json", "http://hl7.org/fhir/R4/license.html"]
+
+# --- MCP server (apps/mcp) ---------------------------------------------------
+
+[[sources]]
+id = "lib_mcp_python_sdk"
+section = "mcp"
+name = "MCP Python SDK 2.3.0 (mcp, Model Context Protocol server and client library)"
+publisher = "Anthropic, PBC"
+license = "MIT"
+notes = ["PyPI package, pinned in apps/mcp/pyproject.toml; installed by uv, not committed."]
+storage = "separate_package"
+urls = ["https://github.com/modelcontextprotocol/python-sdk"]

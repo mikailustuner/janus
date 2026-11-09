@@ -363,3 +363,30 @@ feature is expert-reviewed; every screen says "AI-reviewed, pending expert revie
 - [ ] Rate limiting on `/api/*` (Cloudflare free rule); then update `Privacy.protection.limits`, which
       still says rate limits come in Phase 5.
 - [ ] Donations and the outcome loop stay off until the consent review above is done (deploy Req 4.5).
+
+## CDS Hooks service and MCP server (2026-11-09)
+- [ ] **Regulatory status of the CDS service (legal, owner; blocking before any clinical use):** a CDS Hooks service
+  shown to clinicians in an EHR is clinical decision support. Check it against the FDA Clinical Decision Support
+  guidance (revised 29 Jan 2026: whether it meets all four non-device criteria, in particular that the clinician can
+  independently review the basis; cards cite the PIPC row and evidence) and EU MDR Annex VIII Rule 11 (information
+  used for therapeutic decisions: at least class IIa, CE marking needed); Türkiye follows the MDR approach (to be
+  confirmed). Until then every card, the discovery document and `docs/cds-hooks.md` say "research prototype, not a
+  medical device, not for clinical use", and the service must not be connected to a live EHR.
+- [ ] **Client authentication before any non-sandbox use:** JWT verification per CDS Hooks "Trusting CDS Clients"
+  (ES384/RS384, `iss`/`jku` allow-list, `aud` = service URL, `exp`, `jti` replay check) is not implemented
+  (`.kiro/specs/cds-hooks/design.md` DP11). Decide whether `/api/cds-services*` is exposed on the public deployment
+  at all; without authentication, keep it off the public proxy or limit it to the sandbox origin.
+- [ ] **Clinical review of the card wording and the code mapping** by a pharmacist or physician: the summary and detail
+  texts, the "worth considering in a medication review" line, the not-read start dates (DP4; a clinician may expect
+  timing), the NDC → RxNorm → ATC order and the "do not guess" rule, and whether an order Janus cannot map should
+  get its own "not checked" card instead of no card (pharmacologist review P9; `.kiro/specs/cds-hooks/review-*.md`).
+- [ ] **Data protection of CDS requests:** the request carries identifiable health data (patient id, practitioner id,
+  orders). Nothing is stored or logged, but the proxy (Cloudflare) and the host see it in transit: a processing
+  agreement with any clinic that tries the service (GDPR Art. 28 / KVKK) and a mention on the privacy page are
+  needed before anything but synthetic sandbox data is sent.
+- [ ] **MCP server for remote use:** the streamable-HTTP transport has no authentication and binds to 127.0.0.1;
+  a hosted MCP endpoint needs MCP authorization (OAuth 2.1) and request limits first. Assistants send medicine lists
+  to their own provider as part of the conversation: say so wherever the MCP server is offered.
+- [ ] **Marketing copy:** describing the MCP server or the CDS service in the README, video or Devpost text is part of
+  intended use (`medical-safety.md`): "possible prescribing cascade", "informs, never decides", never "clinical
+  decision support for clinics".

@@ -1,4 +1,5 @@
-"""`/open/outcomes` (open-data design §4): the released outcome dataset as JSON and CSV.
+"""`/open/outcomes` (open-data design §4): the released outcome dataset as JSON and CSV; and
+`/open/cascade-package/pipc` (mcp-server design §2.1): the PIPC rows of the open cascade package.
 
 Read-only and stateless. Medical routes (nothing logged but the access line). 503
 `open_data_unavailable` when there is no database or no noise key: the dataset is never served
@@ -8,7 +9,11 @@ version, so the same stored data give the same file.
 
 from __future__ import annotations
 
+import csv
 import datetime as dt
+import io
+import json
+from pathlib import Path
 from typing import Any, Literal
 
 from fastapi import Request
@@ -19,7 +24,9 @@ from pydantic import BaseModel, ConfigDict
 from janus.db.pool import Database
 from janus.http_policy.routes import medical_router
 from janus.memory.disclosure import keyed_noise_source
+from janus.memory.messages import DISCLAIMER
 from janus.open import outcomes as o
+from janus.open import package as pkg
 from janus.settings import Settings
 
 router = medical_router()
@@ -147,3 +154,103 @@ async def open_outcomes_csv(request: Request) -> Any:
             "x-janus-dataset-version": version,
         },
     )
+
+
+# --- The open cascade package, PIPC rows (mcp-server design §2.1, DP6) ----------------------------
+
+# Read at request time; replaced in tests.
+PACKAGE_DIR: Path = pkg.OUT
+
+
+class LicenseOut(_Out):
+    name: str
+    path: str
+    title: str
+
+
+class PipcRowOut(_Out):
+    position: int
+    system: str
+    kind: str
+    drug_a: str
+    adverse_event: str
+    drug_b: str
+    locator: str
+    index_class: str | None
+    marker_class: str | None
+    unmatchable_role: str | None
+    unmatchable_reason: str | None
+    supporting: list[str]
+    note: str | None
+
+
+class CascadePackageOut(_Out):
+    package: Literal["janus-cascade-package"]
+    version: str
+    created: str
+    citation: str
+    citation_url: str
+    # The PIPC columns keep CC BY 4.0; the Janus mapping columns are Apache-2.0.
+    licenses: dict[Literal["pipc", "pipc_rules"], list[LicenseOut]]
+    rows: list[PipcRowOut]
+    disclaimer: str = DISCLAIMER
+
+
+def _csv_rows(text: str) -> list[dict[str, str]]:
+    return list(csv.DictReader(io.StringIO(text)))
+
+
+def read_pipc_package(folder: Path) -> CascadePackageOut:
+    """The PIPC table joined by position with the Janus mapping. Raises OSError, KeyError or
+    ValueError when the package is missing or malformed."""
+    meta = json.loads((folder / "datapackage.json").read_text(encoding="utf-8"))
+    pipc = _csv_rows((folder / "pipc.csv").read_text(encoding="utf-8"))
+    rules = {r["position"]: r for r in _csv_rows((folder / "pipc_rules.csv").read_text("utf-8"))}
+    resources = {r["name"]: r for r in meta["resources"]}
+
+    def opt(value: str) -> str | None:
+        return value or None
+
+    rows = [
+        PipcRowOut(
+            position=int(r["position"]),
+            system=r["system"],
+            kind=r["kind"],
+            drug_a=r["drug_a"],
+            adverse_event=r["adverse_event"],
+            drug_b=r["drug_b"],
+            locator=r["locator"],
+            index_class=opt(rules[r["position"]]["index_class"]),
+            marker_class=opt(rules[r["position"]]["marker_class"]),
+            unmatchable_role=opt(rules[r["position"]]["unmatchable_role"]),
+            unmatchable_reason=opt(rules[r["position"]]["unmatchable_reason"]),
+            supporting=[x for x in rules[r["position"]]["supporting"].split(";") if x],
+            note=opt(rules[r["position"]]["note"]),
+        )
+        for r in pipc
+    ]
+    return CascadePackageOut(
+        package=meta["name"],
+        version=meta["version"],
+        created=meta["created"],
+        citation=pkg.PIPC_SOURCE["title"],
+        citation_url=pkg.PIPC_SOURCE["path"],
+        licenses={
+            "pipc": [LicenseOut.model_validate(x) for x in resources["pipc"]["licenses"]],
+            "pipc_rules": [
+                LicenseOut.model_validate(x) for x in resources["pipc_rules"]["licenses"]
+            ],
+        },
+        rows=rows,
+    )
+
+
+@router.get("/open/cascade-package/pipc", response_model=CascadePackageOut)
+def cascade_package_pipc() -> Any:
+    """The 65 PIPC rows (CC BY 4.0) with Janus's class mapping (Apache-2.0), package version and
+    citation. Published data only; no personal data."""
+    try:
+        out = read_pipc_package(PACKAGE_DIR)
+    except (OSError, KeyError, ValueError):
+        return JSONResponse({"error": "package_unavailable"}, status_code=503)
+    return JSONResponse(out.model_dump(mode="json"))

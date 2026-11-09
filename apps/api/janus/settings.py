@@ -25,6 +25,10 @@ PUBLIC_BASE_URL_MAX_BYTES = 40  # doctor-loop design §6.6: the QR size rule ass
 _PUBLIC_BASE_URL_RE = re.compile(
     r"^(https://[a-z0-9.-]+(:[0-9]{1,5})?|http://(localhost|127\.0\.0\.1)(:[0-9]{1,5})?)(/[A-Za-z0-9._~-]+)*$"
 )
+# A CORS origin for the CDS Hooks routes (cds-hooks design §7): https, or http on localhost.
+_CDS_ORIGIN_RE = re.compile(
+    r"^(https://[a-z0-9.-]+(:[0-9]{1,5})?|http://(localhost|127\.0\.0\.1)(:[0-9]{1,5})?)$"
+)
 # The Janus event vocabulary ships inside the package (collective-memory DP23).
 EVENT_VOCABULARY = Path(__file__).parent / "memory" / "memory_events.csv"
 
@@ -49,6 +53,8 @@ class Settings:
     outcome_consent_versions: frozenset[str] = frozenset()
     public_base_url: str | None = None
     commit: str | None = None  # deployed git commit, shown at /health (deploy DP10)
+    # Origins allowed to call /cds-services from a browser (CDS Hooks sandbox); empty = no CORS.
+    cds_cors_origins: frozenset[str] = frozenset()
 
     @classmethod
     def from_env(cls, env: Mapping[str, str] | None = None) -> Settings:
@@ -74,6 +80,7 @@ class Settings:
             ),
             public_base_url=parse_public_base_url(e.get("JANUS_PUBLIC_BASE_URL", "")),
             commit=parse_commit(e.get("JANUS_COMMIT", "")),
+            cds_cors_origins=parse_cds_cors_origins(e.get("JANUS_CDS_CORS_ORIGINS", "")),
         )
 
 
@@ -94,6 +101,17 @@ def parse_commit(raw: str) -> str | None:
     if not re.fullmatch(r"[0-9a-f]{7,40}", text):
         raise SettingsError("JANUS_COMMIT must be a git commit id (7 to 40 lower-case hex)")
     return text[:12]
+
+
+def parse_cds_cors_origins(raw: str) -> frozenset[str]:
+    """Comma-separated origins (`https://host[:port]`, or `http://localhost[:port]`)."""
+    parts = [p.strip() for p in raw.split(",") if p.strip()]
+    for part in parts:
+        if not _CDS_ORIGIN_RE.fullmatch(part):
+            raise SettingsError(
+                "JANUS_CDS_CORS_ORIGINS must list https://host[:port] origins (or http://localhost)"
+            )
+    return frozenset(parts)
 
 
 def parse_k(raw: str) -> int:

@@ -39,6 +39,8 @@ PUBLIC: Final = (
     "/open/faers-onset",
     "/open/faers-onset.csv",
     "/open/faers-onset/{position}",
+    "/open/cascade-package/pipc",
+    "/cds-services",
 )
 
 ERR = "#/components/schemas/PublicError"
@@ -120,6 +122,9 @@ EXAMPLES: Final[Mapping[str, Mapping[str, Any]]] = {
     "/seance/catalogue": {"503": {"unavailable": {"value": {"error": "seance_unavailable"}}}},
     "/light/overview": {"503": {"unavailable": {"value": {"error": "light_unavailable"}}}},
     "/memory/snapshot": {"503": {"unavailable": {"value": {"error": "memory_unavailable"}}}},
+    "/open/cascade-package/pipc": {
+        "503": {"unavailable": {"value": {"error": "package_unavailable"}}},
+    },
 }
 
 
@@ -184,7 +189,8 @@ def document() -> dict[str, Any]:
                 "The GET routes of the Janus API that take no body and return no personal data: "
                 "service status, the FAERS snapshot, the séance catalogue, the light-face "
                 "overview, validation and export, the time machine, the open outcome dataset, the "
-                "weekly data-quality report and the FAERS onset table of the PIPC rows. "
+                "weekly data-quality report, the FAERS onset table of the PIPC rows, the PIPC "
+                "rows of the open cascade package and the CDS Hooks discovery document. "
                 "Medical routes are `no-store`; nothing but an access line (route, status, "
                 "latency) is logged. Research prototype, not a medical device; not medical "
                 "advice. Documentation: docs/open-api.md."

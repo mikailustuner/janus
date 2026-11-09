@@ -24,6 +24,8 @@ Base URL: `/api` on a Janus deployment (same origin as the web app). Nothing is 
 | `GET /open/faers-onset` | the FAERS onset table for the 65 PIPC rows ([`open-data.md`](open-data.md) §4) | 503 `onset_table_unavailable` |
 | `GET /open/faers-onset.csv` | the same rows as CSV | 503 `onset_table_unavailable` |
 | `GET /open/faers-onset/{position}` | one PIPC row (1-65) with the caveats | 404 `unknown_position`, 422 `invalid_request` |
+| `GET /open/cascade-package/pipc` | the 65 PIPC rows (CC BY 4.0) with Janus's class mapping (Apache-2.0), package version and citation; also used by the [MCP server](mcp.md) | 503 `package_unavailable` |
+| `GET /cds-services` | the CDS Hooks discovery document ([`cds-hooks.md`](cds-hooks.md)) | — |
 
 ## Rules every route follows
 
@@ -53,5 +55,7 @@ curl -s https://<host>/api/timemachine/cascade/amlodipine_oedema_diuretic | jq '
 # 35
 ```
 
-The POST routes of the API (resolution, cascade check, notes, donations, outcomes) are not public API: they
-carry a person's medicines or answers and are used only by the Janus web app.
+The POST routes of the API (resolution, cascade check, notes, donations, outcomes, the CDS Hooks service) are not
+public API: they carry a person's medicines or answers. The web app uses them; the [MCP server](mcp.md) uses the
+resolution and cascade-check routes; EHR sandboxes use `POST /cds-services/janus-cascade`
+([`cds-hooks.md`](cds-hooks.md)).
