@@ -362,6 +362,22 @@ language, and keeps the person's list in the browser.
 5. THE caveats `spontaneous_reporting`, `not_incidence` and the weak-pattern label SHALL be visible without expanding wherever report counts are shown.
 6. THE note screen SHALL show the emergency notice first when the note has a safety section, and Print SHALL produce the PDF (disclaimer, demo label and page numbers on every page).
 
+### Requirement 29: Card design *(Owner request 2026-11-09, enhancement item 1)*
+**User story:** As a patient on a phone or a laptop, I want the screens to read like a calm, well-made health app (grouped rounded cards, one clear title, the key number large), so that I find what matters without reading every sentence, while every required sentence is still there.
+
+#### Acceptance criteria
+1. THE client SHALL provide shared card primitives in `src/components/cards/` (large title, inset grouped list with rows, summary card, stat tile, disclosure, segmented control) built on the design tokens only, used by the results, finding detail, evidence, FAERS pair, passport list and item, Collective Memory, research, light-face (hypotheses, validation, export) and séance screens; the home scenes and the note paper SHALL NOT change.
+2. EACH of those screens SHALL start with one large title (`h1`); WHERE a screen has a one-line summary of its data (results: the finding count and the number of medicines checked; passport list: medicines and boxes; passport item: "Listed in n of m countries"; Collective Memory: the number of active ingredients), THE summary SHALL be one line of text under the title.
+3. WHEN items of the same kind are listed (medicines checked, sources, countries, regions, cited evidence, rules not checked), THE client SHALL show them as an inset grouped list: one rounded surface per group, rows of at least 44 px separated by hairlines inset from the leading edge, an optional section header above the group and an optional footer under it.
+4. WHERE a number is the main fact of a card (reports of a pair, report count of the combination, sources of the integrity line, patterns checked, hypothesis cards of a condition, witnesses of a séance pair), THE client SHALL show it as a stat tile (large tabular figure with a short label); THE full sentence with the same number SHALL stay in the accessible name of the tile, and SHALL stay visible as secondary text where a requirement names it (the integrity line, Req 15.2; the visible caveats, Req 28.5).
+5. THE ratio confidence-interval bar SHALL keep its axis, the mark at 1, the range and the point estimate with the same numbers as text (Req 16.6) and SHALL use neutral colours only.
+6. WHEN detail is folded, THE client SHALL use one disclosure component built on `<details>`/`<summary>` (keyboard and screen-reader semantics of the platform, content in the document while closed) with a chevron and a short opening animation of opacity and transform only; under `prefers-reduced-motion: reduce` it SHALL open without animation.
+7. WHERE the person chooses one of a few views or filters (Collective Memory panels, passport item countries or comparison, hypothesis conditions, séance conditions), THE client SHALL use a segmented control with radio-group semantics (native radio inputs, arrow keys move the choice, visible focus, 44 px targets); the Collective Memory filter SHALL default to all panels (everything shown before this requirement); a view switch (passport item) SHALL keep the attribution line of every row in each view.
+8. WHEN the person moves to another route inside the app, THE main content SHALL enter with a short animation of opacity and transform only (no layout property); the first page load and `prefers-reduced-motion: reduce` SHALL have no animation.
+9. THE spacing scale, radii (card, group, tile, segment) and motion durations SHALL be tokens in `src/theme/tokens.css` used through Tailwind, with values per theme (Night Pharmacy, Glass Janus light and dark, reduced transparency); no new colour pair SHALL be introduced without the contrast test (Req 3.1).
+10. EVERY required sentence SHALL stay where it was required: the disclaimer, the emergency notice first, safety lines, abrupt-stop lines, "This may be worth discussing with your doctor", the integrity line, the caveats `spontaneous_reporting` and `not_incidence` and the weak-pattern label visible without expanding wherever counts are shown, attribution and source lines, the demo label and the rule-7 labels. No assessment SHALL appear in a list, row header, tile or segment; `--risk` SHALL stay limited to real risk (Req 16.5, 16.7, design.md).
+11. THE desktop layouts of Req 27 SHALL stay; at 1440 px the finding detail SHALL use two columns (the finding beside its evidence and reports), and every screen of this requirement SHALL pass axe, no horizontal scroll and 44 px targets at 375 px and 1280 px in both themes.
+
 ## Properties to test (PBT candidates)
 - For every supported locale, every user-facing string key has a translation (no fallback keys rendered).
 - For every supported locale, rendered findings contain the mandatory disclaimer and none of the forbidden phrases.
@@ -378,6 +394,7 @@ language, and keeps the person's list in the browser.
 - *(Added.)* The doctor page sends the token only in a JSON body; answers satisfy the action rule. (Req 19)
 - *(Added.)* Every QR address fits version 25 at level M and decodes back to itself. (Req 18.2)
 - *(Added.)* Glass shows no theme-device word in any language. (Req 6.5)
+- *(Added 2026-11-09.)* The passport summary never claims more listings than the sources show; card primitives keep every required sentence in the markup and outside any fold where Req 28.5 asks; every stat tile carries its sentence; the Collective Memory filter shows every panel by default. (Req 29)
 
 ## Resolved open items *(from the seed's four sections, 2026-11-07 and 2026-11-08)*
 **cascade-engine (2026-11-07)**
