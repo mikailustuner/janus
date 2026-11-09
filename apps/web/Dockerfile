@@ -16,6 +16,9 @@ FROM deps AS build
 # Address of the API for the /api/* rewrite (read by next.config.ts at build time).
 ARG JANUS_API_ORIGIN=http://api:8000
 ENV JANUS_API_ORIGIN=$JANUS_API_ORIGIN
+# Service-worker cache version (DP22): the deployed commit when given, else the build time.
+ARG JANUS_COMMIT=""
+ENV JANUS_BUILD_ID=$JANUS_COMMIT
 COPY apps/web ./apps/web
 RUN pnpm --filter @janus/web build
 

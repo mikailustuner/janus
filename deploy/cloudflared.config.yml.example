@@ -1,0 +1,11 @@
+# STACK_DIR/cloudflared/config.yml (locally managed tunnel, deploy design DP3).
+# Replace TUNNEL_ID with the id printed by `cloudflared tunnel create janus`.
+tunnel: TUNNEL_ID
+credentials-file: /etc/cloudflared/TUNNEL_ID.json
+no-autoupdate: true
+ingress:
+  # The only public hostname: the web app. The API has none (Req 1.3).
+  - hostname: janusmeds.org
+    service: http://web:3000
+  # Everything else, including www and any other name: 404 (Req 1.1, 1.5).
+  - service: http_status:404

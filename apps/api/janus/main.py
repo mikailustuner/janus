@@ -6,7 +6,7 @@ from collections.abc import AsyncGenerator, Iterable
 from contextlib import asynccontextmanager
 from typing import Literal
 
-from fastapi import APIRouter, FastAPI
+from fastapi import APIRouter, FastAPI, Request
 from pydantic import BaseModel
 
 from janus.contributions.vocabulary import load_vocabulary
@@ -37,14 +37,17 @@ from janus.timemachine.store import Holder as TimeMachineHolder
 
 class Health(BaseModel):
     status: Literal["ok"]
+    # Deployed git commit (deploy DP10); null when the image was built without one.
+    commit: str | None = None
 
 
 health_router = operational_router()
 
 
 @health_router.get("/health")
-def health() -> Health:
-    return Health(status="ok")
+def health(request: Request) -> Health:
+    settings: Settings = request.app.state.settings
+    return Health(status="ok", commit=settings.commit)
 
 
 def create_app(

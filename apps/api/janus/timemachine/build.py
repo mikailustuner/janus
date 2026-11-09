@@ -660,7 +660,8 @@ def build() -> Path:
     )
     link = root / "current"
     tmp = root / "current.tmp"
-    tmp.symlink_to(run.resolve(), target_is_directory=True)
+    # Relative, so the link stays valid where the data directory is mounted elsewhere (deploy).
+    tmp.symlink_to(Path("runs") / run.name, target_is_directory=True)
     os.replace(tmp, link)
     return run
 

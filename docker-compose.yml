@@ -34,7 +34,8 @@ services:
   migrate:
     # One-shot: apply Alembic migrations (forward-only; each has a downgrade).
     build:
-      context: apps/api
+      context: .
+      dockerfile: apps/api/Dockerfile
     command: ["alembic", "upgrade", "head"]
     environment:
       DATABASE_URL: postgresql://janus:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@postgres:5432/janus
@@ -43,7 +44,8 @@ services:
         condition: service_healthy
   api:
     build:
-      context: apps/api
+      context: .
+      dockerfile: apps/api/Dockerfile
     environment:
       DATABASE_URL: postgresql://janus:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@postgres:5432/janus
       # Donations stay disabled unless these are set in .env (`local` for development).

@@ -1,5 +1,6 @@
 # syntax=docker/dockerfile:1
-# Janus API. Base images are multi-arch (linux/amd64, linux/arm64).
+# Janus API. Build context: repository root (the API reads the committed data/ and datasets/).
+# Base images are multi-arch (linux/amd64, linux/arm64).
 FROM python:3.12-slim AS base
 
 COPY --from=ghcr.io/astral-sh/uv:0.12.17 /uv /uvx /bin/
@@ -13,13 +14,16 @@ ENV UV_COMPILE_BYTECODE=1 \
 WORKDIR /app
 
 # Dependencies first, for layer caching.
-COPY pyproject.toml uv.lock .python-version ./
+COPY apps/api/pyproject.toml apps/api/uv.lock apps/api/.python-version ./
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen --no-dev --no-install-project
 
-COPY janus ./janus
-COPY alembic.ini ./
-COPY migrations ./migrations
+COPY apps/api/janus ./janus
+COPY apps/api/alembic.ini ./
+COPY apps/api/migrations ./migrations
+# Committed reference data read at run time (resolution tables, séance package, evidence papers).
+COPY data ./data
+COPY datasets ./datasets
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen --no-dev
 
@@ -27,6 +31,9 @@ RUN useradd --system --uid 10001 --no-create-home janus
 USER janus
 
 ENV PATH="/app/.venv/bin:$PATH"
+# Deployed git commit, shown at /health (deploy DP10). Empty for local builds.
+ARG JANUS_COMMIT=""
+ENV JANUS_COMMIT=$JANUS_COMMIT
 EXPOSE 8000
 
 # Access logs are off: URLs of medical endpoints may carry product codes (privacy.md).

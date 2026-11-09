@@ -1132,6 +1132,17 @@
             "type": "string",
             "const": "ok",
             "title": "Status"
+          },
+          "commit": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Commit"
           }
         },
         "type": "object",

@@ -28,8 +28,9 @@ from janus.light.model import (
     MapStatus,
 )
 from janus.memory.model import INGREDIENT_KEY_PATTERN
+from janus.paths import repo_root
 
-DATA_DIR: Final = Path(__file__).resolve().parents[4] / "data" / "light"
+DATA_DIR: Final = repo_root() / "data" / "light"
 GOALS_FILE: Final = "goals.csv"
 MAPPING_FILE: Final = "effect_goal_map.csv"
 CASES_FILE: Final = "validation_cases.csv"

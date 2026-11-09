@@ -2,7 +2,7 @@
 
 Owner actions are marked **[owner]**; the assistant never runs sudo and never reads secrets.
 
-- [ ] 1. Repository: `deploy/compose.yml` (DP1–DP9), `deploy/README.md`, `JANUS_COMMIT` in both
+- [x] 1. Repository: `deploy/compose.yml` (DP1–DP9), `deploy/README.md`, `JANUS_COMMIT` in both
   Dockerfiles and `/health` (DP10); unit test for C1 on the compose file. _Req 1.2, 2.1–2.5, 6.1_
 - [ ] 2. Scripts: `deploy.sh`, `rollback.sh`, `verify-isolation.sh`, `smoke.sh`, `sync-data.sh`,
   `firewall.sh` + `janus-firewall.service`; shellcheck in CI; C3. _Req 2.3, 2.6, 5.3–5.4, 6.2–6.4_

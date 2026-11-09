@@ -25,7 +25,9 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Final
 
-REPO: Final = Path(__file__).resolve().parents[4]
+from janus.paths import repo_root
+
+REPO: Final = repo_root()
 DATA: Final = REPO / "data"
 OUT: Final = DATA / "open" / "cascade-package"
 # What the web app's Open data page shows about the package (no data rows).

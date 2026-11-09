@@ -1,0 +1,148 @@
+# Janus public deploy (deploy spec, design §3). Run from STACK_DIR with `deploy.sh`, never by hand
+# with other files. No `ports:` anywhere: the only way in is the Cloudflare Tunnel (DP2).
+# Values come from STACK_DIR/.env (mode 600, never committed); see env.example.
+name: janus
+
+x-hardening: &hardening
+  read_only: true
+  security_opt: ["no-new-privileges:true"]
+  cap_drop: [ALL]
+  restart: unless-stopped
+  pids_limit: 256
+  logging:
+    driver: json-file
+    options: { max-size: "10m", max-file: "3" }
+
+services:
+  postgres:
+    <<: *hardening
+    image: postgres:16.15-bookworm
+    user: "999:999"
+    # No statement text, parameters or failing rows in the server log (privacy.md, DP6).
+    command:
+      - postgres
+      - -c
+      - log_error_verbosity=terse
+      - -c
+      - log_min_error_statement=panic
+      - -c
+      - log_statement=none
+      - -c
+      - log_min_duration_statement=-1
+    environment:
+      POSTGRES_DB: janus
+      POSTGRES_USER: janus
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    tmpfs: [/var/run/postgresql, /tmp]
+    networks: [internal]
+    mem_limit: 768m
+    cpus: 0.5
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U janus -d janus"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  migrate:
+    # One-shot (DP: forward-only Alembic). Started by deploy.sh before the new api.
+    <<: *hardening
+    restart: "no"
+    image: janus-api:${JANUS_TAG:?Set JANUS_TAG (the deployed commit)}
+    user: "10001"  # the image's `janus` user (apps/api/Dockerfile)
+    command: ["alembic", "upgrade", "head"]
+    environment:
+      DATABASE_URL: postgresql://janus:${POSTGRES_PASSWORD}@postgres:5432/janus
+    tmpfs: [/tmp]
+    networks: [internal]
+    mem_limit: 256m
+    cpus: 0.5
+    depends_on:
+      postgres: { condition: service_healthy }
+    profiles: [migrate]
+
+  api:
+    <<: *hardening
+    image: janus-api:${JANUS_TAG}
+    user: "10001"
+    environment:
+      DATABASE_URL: postgresql://janus:${POSTGRES_PASSWORD}@postgres:5432/janus
+      JANUS_DATA_DIR: /data
+      JANUS_K: "20"
+      JANUS_DP_EPSILON: "1"
+      JANUS_NOISE_KEY: ${JANUS_NOISE_KEY:?Set JANUS_NOISE_KEY in .env}
+      JANUS_PUBLIC_BASE_URL: https://janusmeds.org
+      # Donations and the outcome loop are off at launch (Req 4.1, DP9): these stay empty.
+      JANUS_DONATION_REGION: ""
+      JANUS_CONSENT_VERSIONS: ""
+      JANUS_NOTE_KEYS: ""
+      JANUS_OUTCOME_CONSENT_VERSIONS: ""
+    volumes:
+      - ./data:/data:ro
+    tmpfs: [/tmp]
+    networks: [internal]
+    mem_limit: 1536m
+    cpus: 1.0
+    depends_on:
+      postgres: { condition: service_healthy }
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2)",
+        ]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 30s
+
+  web:
+    <<: *hardening
+    image: janus-web:${JANUS_TAG}
+    user: "1000:1000"  # the image's `node` user
+    tmpfs: [/tmp, /app/apps/web/.next/cache]
+    networks: [internal, edge]
+    mem_limit: 768m
+    cpus: 0.5
+    depends_on:
+      api: { condition: service_healthy }
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:3000/en').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))",
+        ]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  cloudflared:
+    <<: *hardening
+    image: cloudflare/cloudflared:2026.10.7
+    # The credential files belong to the deploy user (mode 600); the container reads them as that user.
+    user: "${JANUS_UID:?Set JANUS_UID in .env}:${JANUS_GID:?Set JANUS_GID in .env}"
+    command: ["tunnel", "--no-autoupdate", "--config", "/etc/cloudflared/config.yml", "run"]
+    volumes:
+      - ./cloudflared:/etc/cloudflared:ro
+    networks: [edge]
+    mem_limit: 128m
+    cpus: 0.25
+    depends_on:
+      web: { condition: service_healthy }
+
+networks:
+  # Fixed subnets: the host firewall rules match them exactly (DP1, design §4).
+  internal:
+    internal: true
+    ipam: { config: [{ subnet: 172.31.251.0/24 }] }
+  edge:
+    ipam: { config: [{ subnet: 172.31.250.0/24 }] }
+
+volumes:
+  pgdata:

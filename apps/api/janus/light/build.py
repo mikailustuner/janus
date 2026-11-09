@@ -62,11 +62,12 @@ from janus.memory.reader import DUCKDB_SETTINGS, CountsReader, RawCells
 from janus.memory.service import stats_out
 from janus.memory.stats import PARAMS, Sensitivity, Stats
 from janus.memory.vocabulary import load_events
+from janus.paths import repo_root
 from janus.settings import EVENT_VOCABULARY
 
 LIGHT_DIR: Final = "light"
 LIGHT_FILE: Final = "light.json"
-REPO: Final = Path(__file__).resolve().parents[4]
+REPO: Final = repo_root()
 PAPERS: Final = REPO / "data" / "evidence_papers.csv"
 
 

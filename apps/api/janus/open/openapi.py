@@ -11,13 +11,13 @@ import argparse
 import json
 import sys
 from collections.abc import Mapping, Sequence
-from pathlib import Path
 from typing import Any, Final
 
 from janus.main import create_app
+from janus.paths import repo_root
 from janus.settings import Settings
 
-REPO: Final = Path(__file__).resolve().parents[4]
+REPO: Final = repo_root()
 OUT: Final = REPO / "docs" / "openapi-public.json"
 
 PUBLIC: Final = (

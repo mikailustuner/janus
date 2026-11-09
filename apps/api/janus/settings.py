@@ -48,6 +48,7 @@ class Settings:
     note_signing_key_id: str | None = None
     outcome_consent_versions: frozenset[str] = frozenset()
     public_base_url: str | None = None
+    commit: str | None = None  # deployed git commit, shown at /health (deploy DP10)
 
     @classmethod
     def from_env(cls, env: Mapping[str, str] | None = None) -> Settings:
@@ -72,6 +73,7 @@ class Settings:
                 e.get("JANUS_OUTCOME_CONSENT_VERSIONS", ""), "JANUS_OUTCOME_CONSENT_VERSIONS"
             ),
             public_base_url=parse_public_base_url(e.get("JANUS_PUBLIC_BASE_URL", "")),
+            commit=parse_commit(e.get("JANUS_COMMIT", "")),
         )
 
 
@@ -82,6 +84,16 @@ def _path_or_none(value: str | None) -> Path | None:
 def _optional(env: Mapping[str, str], name: str) -> str | None:
     value = env.get(name, "").strip()
     return value or None
+
+
+def parse_commit(raw: str) -> str | None:
+    """A git commit id (7 to 40 lower-case hex), shortened to 12; empty means unknown."""
+    text = raw.strip()
+    if not text:
+        return None
+    if not re.fullmatch(r"[0-9a-f]{7,40}", text):
+        raise SettingsError("JANUS_COMMIT must be a git commit id (7 to 40 lower-case hex)")
+    return text[:12]
 
 
 def parse_k(raw: str) -> int:

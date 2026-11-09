@@ -1,0 +1,11 @@
+# Used by BuildKit for apps/api/Dockerfile (context: repository root). Allow-list only.
+**
+!apps/api/pyproject.toml
+!apps/api/uv.lock
+!apps/api/.python-version
+!apps/api/alembic.ini
+!apps/api/janus/**
+!apps/api/migrations/**
+!data/**
+!datasets/**
+**/__pycache__
