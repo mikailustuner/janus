@@ -389,6 +389,8 @@ Home scene images and door transition video (Night Pharmacy, Glass Janus)
   third-party artwork
   Committed under apps/web/public/home (AVIF, WebP, JPEG, H.264 MP4, VP9 WebM;
   audio removed); provenance in apps/web/public/home/README.md.
+  Glass Janus (Clinical White) hero clinical-hero-*: AI-generated with Google
+  Gemini by the project owner, 2026-11-09.
 
 FHIR R4 (4.0.1) JSON schema (test fixture of the FHIR export)
   Publisher: HL7 International

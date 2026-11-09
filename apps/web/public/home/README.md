@@ -1,14 +1,14 @@
 # Home scenes (experience DP46)
 
-AI-generated with Google Gemini, **generated for Janus** (2026-11-08); no third-party artwork, no real product or brand.
+AI-generated with Google Gemini, **generated for Janus** (2026-11-08; the Clinical White hero by the owner, 2026-11-09); no third-party artwork, no real product or brand.
 Listed in `NOTICE` (`pipelines/sources.toml`, id `art_home_scenes`).
 
-| Files                                                          | Source                                                                                                     | Use                                                                                                            |
-| -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| `night-diorama-{2752,1600,960}.{avif,webp}`, `-{1600,960}.jpg` | `diorama-clean.jpg` (2752×1536)                                                                            | Night Pharmacy scene 1: isometric pharmacy at night, door ajar (ghosts are drawn in code)                      |
-| `night-cabinet-…`                                              | `cabinet-iso.jpg` (2752×1536)                                                                              | Night Pharmacy scene 3: isometric cut-away room of the same house, open glowing cabinet, blank note on a table |
-| `glass-hero-…`                                                 | `glass-janus-hero.jpg` (2752×1536)                                                                         | Glass Janus hero: glass two-faced head with capsules                                                           |
-| `door-{1280,640}.{mp4,webm}`, `door-poster.webp`               | `door-transition-iso.mp4` (1280×720, 24 fps, 10 s; the door opens, walls and roof dissolve into fireflies) | Night Pharmacy scene 2, played once after "Step inside" (DP49); the poster shows while it loads                |
+| Files                                                          | Source                                                                                                     | Use                                                                                                                |
+| -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `night-diorama-{2752,1600,960}.{avif,webp}`, `-{1600,960}.jpg` | `diorama-clean.jpg` (2752×1536)                                                                            | Night Pharmacy scene 1: isometric pharmacy at night, door ajar (ghosts are drawn in code)                          |
+| `night-cabinet-…`                                              | `cabinet-iso.jpg` (2752×1536)                                                                              | Night Pharmacy scene 3: isometric cut-away room of the same house, open glowing cabinet, blank note on a table     |
+| `clinical-hero-…`                                              | `Gemini_Generated_Image_xgsyxtxgsyxtxgsy.jpeg` (2752×1536; made by the owner in Google Gemini, 2026-11-09) | Glass Janus (Clinical White) hero: clear glass two-faced head filled with capsules on a white studio ground (DP68) |
+| `door-{1280,640}.{mp4,webm}`, `door-poster.webp`               | `door-transition-iso.mp4` (1280×720, 24 fps, 10 s; the door opens, walls and roof dissolve into fireflies) | Night Pharmacy scene 2, played once after "Step inside" (DP49); the poster shows while it loads                    |
 
 The sources are kept outside the repository. Conversion (ffmpeg 7 with libaom-av1, libwebp, libx264, libvpx-vp9):
 
