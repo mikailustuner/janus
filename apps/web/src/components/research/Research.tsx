@@ -1,5 +1,6 @@
 "use client";
-import { ButtonLink, Card, PageTitle } from "@/components/ui";
+import { GroupedList, LargeTitle, RowLink } from "@/components/cards";
+import { ButtonLink } from "@/components/ui";
 import { useT, useThemeWord } from "@/theme/words";
 
 const ENTRIES = ["hypotheses", "seance", "validation", "export"] as const;
@@ -12,45 +13,42 @@ const LIVE: Record<(typeof ENTRIES)[number], string> = {
 };
 
 /**
- * Researcher area (design §14, Req 24, DP12): the normal theme (DP48), the rule-7 sentence, the
- * Phase 4 review status (AI-reviewed, pending expert review) and the four entries.
+ * Researcher area (design §14, Req 24, DP12, Req 29): the normal theme (DP48), the rule-7
+ * sentence, the Phase 4 review status (AI-reviewed, pending expert review) and the four entries as
+ * one grouped list of row links.
  */
 export function Research() {
   const t = useT();
   const w = useThemeWord();
+  const title = (e: (typeof ENTRIES)[number]) =>
+    e === "seance"
+      ? w("Research.entries.seance.title")
+      : t(`Research.entries.${e}.title`);
   return (
     <>
-      <PageTitle>{t("Research.title")}</PageTitle>
-      <p>{t("Research.intro")}</p>
-      <p className="card p-4 font-bold">{t("Research.rule7")}</p>
-      <p className="card p-4" role="note" data-testid="research-review">
+      <LargeTitle title={t("Research.title")} />
+      <p className="max-w-[72ch]">{t("Research.intro")}</p>
+      <p className="card p-5 font-bold">{t("Research.rule7")}</p>
+      <p
+        className="card p-5 text-muted"
+        role="note"
+        data-testid="research-review"
+      >
         {t("Research.review")}
       </p>
-      <ul className="grid gap-3 sm:grid-cols-2">
+      <GroupedList>
         {ENTRIES.map((e) => (
-          <Card as="li" key={e}>
-            <h2 className="text-lg font-semibold">
-              {e === "seance"
-                ? w("Research.entries.seance.title")
-                : t(`Research.entries.${e}.title`)}
-            </h2>
-            <p>{t(`Research.entries.${e}.body`)}</p>
-            <ButtonLink
-              href={LIVE[e]}
-              variant="secondary"
-              className="self-start"
-            >
-              {t("Light.nav.open")}
-              <span className="sr-only">
-                :{" "}
-                {e === "seance"
-                  ? w("Research.entries.seance.title")
-                  : t(`Research.entries.${e}.title`)}
+          <RowLink key={e} href={LIVE[e]}>
+            <span className="sr-only">{t("Light.nav.open")}: </span>
+            <span className="flex flex-col gap-0.5">
+              <span className="text-lg">{title(e)}</span>
+              <span className="font-normal text-muted">
+                {t(`Research.entries.${e}.body`)}
               </span>
-            </ButtonLink>
-          </Card>
+            </span>
+          </RowLink>
         ))}
-      </ul>
+      </GroupedList>
       <ButtonLink href="/" variant="secondary" className="self-start">
         {t("Research.back")}
       </ButtonLink>

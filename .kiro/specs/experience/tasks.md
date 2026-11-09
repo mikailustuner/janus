@@ -344,7 +344,7 @@
   - 30.1 P35 (`src/flow/memory-filter.test.ts`). _Requirements: 29.2, 29.4, 29.7, 7_
   - **Checkpoint:** demo-flow e2e green; commit.
 
-- [ ] 31. Research, light face, séance and page transitions (`components/research/Research.tsx`, `components/light/*`,
+- [x] 31. Research, light face, séance and page transitions (`components/research/Research.tsx`, `components/light/*`,
   `components/seance/Seance.tsx`, `components/Shell.tsx`, `globals.css`)
   - Large titles, row links, pills for conditions, tiles for totals and witnesses, grouped footers; `<main>` enter
     animation after the first navigation (DP54). _Requirements: 29.1, 29.2, 29.4, 29.7, 29.8_

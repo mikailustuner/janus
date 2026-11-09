@@ -14,12 +14,13 @@ import { StateView } from "@/components/StateView";
 import { CiBar } from "@/components/memory/CiBar";
 import { formatDate } from "@/components/format";
 import {
-  ButtonLink,
-  Card,
-  Chip,
-  PageTitle,
-  SectionTitle,
-} from "@/components/ui";
+  BackLink,
+  LargeTitle,
+  SegmentedControl,
+  StatGrid,
+  StatTile,
+} from "@/components/cards";
+import { Card, Chip, SectionTitle } from "@/components/ui";
 import { useDemo } from "@/demo/session";
 import { useCall } from "@/flow/useCall";
 import {
@@ -126,44 +127,32 @@ function Picker({
           ))}
         </select>
       </label>
-      <fieldset className="min-w-0">
-        <legend className="mb-2 font-semibold">
-          {t("Seance.pick.condition")}
-        </legend>
-        <div className="flex flex-wrap gap-2">
-          {(current?.pairs ?? []).map((p) => (
-            <label
-              key={p.condition}
-              className={`chip flex min-h-11 cursor-pointer items-center gap-2 rounded-2xl px-3 whitespace-normal ${value.condition === p.condition ? "outline outline-2 outline-accent" : ""}`}
-            >
-              <input
-                type="radio"
-                name="seance-condition"
-                value={p.condition}
-                checked={value.condition === p.condition}
-                onChange={() =>
-                  onChange({
-                    substance: value.substance,
-                    condition: p.condition,
-                  })
-                }
-                className="size-4 accent-[var(--accent)]"
-              />
-              <span>
-                {t(`Seance.condition.${p.condition}`)}{" "}
-                <span className="text-sm">
-                  (
-                  {t("Seance.pick.pairInfo", {
-                    passages: p.past_passages,
-                    studies: p.science_studies,
-                  })}
-                  )
-                </span>
+      <SegmentedControl
+        legend={t("Seance.pick.condition")}
+        legendVisible
+        name="seance-condition"
+        variant="pills"
+        value={value.condition}
+        onChange={(condition) =>
+          onChange({ substance: value.substance, condition })
+        }
+        options={(current?.pairs ?? []).map((p) => ({
+          value: p.condition,
+          label: (
+            <>
+              {t(`Seance.condition.${p.condition}`)}{" "}
+              <span className="text-sm font-normal">
+                (
+                {t("Seance.pick.pairInfo", {
+                  passages: p.past_passages,
+                  studies: p.science_studies,
+                })}
+                )
               </span>
-            </label>
-          ))}
-        </div>
-      </fieldset>
+            </>
+          ),
+        }))}
+      />
     </fieldset>
   );
 }
@@ -448,12 +437,22 @@ function Result({ out }: { out: SeanceOut }) {
   return (
     <section className="flex flex-col gap-4" aria-live="polite">
       <SubstanceCard s={out.substance} />
-      <Card as="section" aria-labelledby="seance-count">
+      <Card as="section" aria-labelledby="seance-count" className="sm:p-5">
+        {/* The witness count large (never a score); the heading says the same (DP53). */}
+        <StatGrid>
+          <StatTile
+            value={String(out.supporting_witnesses)}
+            label={t("Cards.label.witnesses", {
+              count: out.supporting_witnesses,
+            })}
+          />
+        </StatGrid>
         <SectionTitle id="seance-count">
-          <span data-testid="witness-count">
+          {/* The tile above shows the count; the heading keeps the sentence for screen readers. */}
+          <span data-testid="witness-count" className="sr-only">
             {t("Seance.count", { count: out.supporting_witnesses })}
           </span>
-          {" · "}
+          <span className="sr-only"> · </span>
           {t(`Seance.condition.${out.condition}`)}
         </SectionTitle>
         <p className="text-sm">{t("Seance.countNote")}</p>
@@ -565,16 +564,10 @@ export function Seance() {
   return (
     <>
       <nav aria-label={t("Light.nav.sections")}>
-        <ButtonLink
-          href="/research"
-          variant="quiet"
-          className="self-start px-0"
-        >
-          {t("Light.nav.back")}
-        </ButtonLink>
+        <BackLink href="/research">{t("Research.title")}</BackLink>
       </nav>
-      <PageTitle eyebrow={t("Research.title")}>{w("Seance.title")}</PageTitle>
-      <p>{w("Seance.intro")}</p>
+      <LargeTitle title={w("Seance.title")} />
+      <p className="max-w-[72ch]">{w("Seance.intro")}</p>
       <p className="card p-4 font-bold" data-testid="rule7">
         {t("Seance.framing")}
       </p>

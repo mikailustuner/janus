@@ -7,6 +7,7 @@
  */
 import { useLocale } from "next-intl";
 
+import { Disclosure } from "@/components/cards";
 import { CiBar } from "@/components/memory/CiBar";
 import { formatCount, formatDate, formatRatio } from "@/components/format";
 import { ButtonLink, Card, Chip } from "@/components/ui";
@@ -301,10 +302,10 @@ export function CardView({
           <Chip key={s.type}>{t(`Light.card.signal.${s.type}`)}</Chip>
         ))}
       </div>
-      <details>
-        <summary className="min-h-11 cursor-pointer py-2 font-semibold">
-          {t("Light.card.details")}
-        </summary>
+      <Disclosure
+        summary={t("Light.card.details")}
+        className="border-t border-line"
+      >
         <div className="flex flex-col gap-4 pt-2">
           {card.signals.map((s) => (
             <Signal key={s.type} s={s} snapshot={snapshot} />
@@ -318,7 +319,7 @@ export function CardView({
             {t("Light.codes.mechanism_source_not_connected")}
           </p>
         </div>
-      </details>
+      </Disclosure>
     </Card>
   );
 }

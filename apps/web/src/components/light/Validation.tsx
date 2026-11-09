@@ -7,6 +7,7 @@
 import { useLocale } from "next-intl";
 
 import { formatCount, formatRatio } from "@/components/format";
+import { StatGrid, StatTile } from "@/components/cards";
 import { StateView } from "@/components/StateView";
 import { Card, SectionTitle } from "@/components/ui";
 import { useCall } from "@/flow/useCall";
@@ -166,6 +167,16 @@ export function Validation() {
         <>
           <Card as="section" data-testid="validation-summary">
             <SectionTitle>{t("Light.validation.title")}</SectionTitle>
+            {/* The primary run's number large; the sentence below says the same (DP53). */}
+            <StatGrid>
+              <StatTile
+                value={formatCount(data.primary.informative_hits, locale)}
+                label={t("Cards.label.casesTop", {
+                  cases: data.cases.length,
+                  k: data.top_k,
+                })}
+              />
+            </StatGrid>
             <p className="font-bold">
               {t(
                 "Light.validation.summary",

@@ -196,6 +196,7 @@ const WIDE = [
   "/settings",
   "/passport",
   "/passport/item",
+  "/results/finding",
 ];
 
 function StorageNotice() {
@@ -284,6 +285,15 @@ export function Shell({ children }: { children: ReactNode }) {
   const sentinel = useRef<HTMLDivElement>(null);
   const scrolled = useScrolled(sentinel, home);
   const header = useRef<HTMLElement>(null);
+  // Page enter animation only after the first client navigation (Req 29.8, DP54): derived from
+  // the previous pathname during render; `<main>` is keyed by the pathname so it replays.
+  const [shownPath, setShownPath] = useState(pathname);
+  const [navigated, setNavigated] = useState(false);
+  if (shownPath !== pathname) {
+    setShownPath(pathname);
+    setNavigated(true);
+  }
+  const enter = navigated && !home ? " page-enter" : "";
   // The home's emergency bar sits under the header, whatever its height (demo bar, notices).
   useEffect(() => {
     const el = header.current;
@@ -344,12 +354,13 @@ export function Shell({ children }: { children: ReactNode }) {
         </div>
       </header>
       <main
+        key={pathname}
         id="content"
         tabIndex={-1}
         className={
           home
             ? "flex w-full flex-col gap-5 outline-none"
-            : `mx-auto flex w-full max-w-[720px] flex-col gap-5 px-4 pt-4 outline-none ${wide ? "lg:max-w-[1120px]" : ""}`
+            : `mx-auto flex w-full max-w-[720px] flex-col gap-5 px-4 pt-4 outline-none ${wide ? "lg:max-w-[1120px]" : ""}${enter}`
         }
       >
         {children}
