@@ -133,9 +133,16 @@ test("research: the four Phase 4 entries open their screens, review status, no n
   page,
 }) => {
   await page.goto("/en/research");
-  await expect(page.getByRole("link", { name: /^Open/ })).toHaveCount(4);
+  // Four Phase 4 entries plus the cascade map (cascade-map DP1), which counts the PIPC
+  // patterns ("All 65 …"): a fact of the rule list, not a research result.
+  await expect(page.getByRole("link", { name: /^Open/ })).toHaveCount(5);
   await expect(page.getByTestId("research-review")).toContainText(
     "AI-reviewed and pending expert review",
   );
-  await expect(page.locator("main")).not.toContainText(/\d{2,}/);
+  const text = await page.locator("main").evaluate((m) => {
+    const copy = m.cloneNode(true) as HTMLElement;
+    copy.querySelectorAll("a[href$='/cascades']").forEach((a) => a.remove());
+    return copy.textContent ?? "";
+  });
+  expect(text).not.toMatch(/\d{2,}/);
 });
