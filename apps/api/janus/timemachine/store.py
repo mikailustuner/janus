@@ -14,7 +14,16 @@ class ArtifactError(ValueError):
     """The artifact is missing required keys."""
 
 
-REQUIRED = ("built_at", "validation", "substances", "exposure", "cascades", "sources", "references")
+REQUIRED = (
+    "built_at",
+    "validation",
+    "substances",
+    "exposure",
+    "cascades",
+    "sources",
+    "references",
+    "onset_subset_caveat",
+)
 
 
 @dataclass(frozen=True)

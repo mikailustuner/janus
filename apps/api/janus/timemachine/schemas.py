@@ -30,6 +30,7 @@ class CatalogueOut(Base):
     cascade_ids: list[str]
     validation: dict[str, Any]
     sources: dict[str, Any]
+    onset_subset_caveat: str
 
 
 class SubstanceOut(Base):
@@ -43,4 +44,5 @@ class CascadeOut(Base):
     meta: Meta
     cascade: dict[str, Any]
     faers_quality: dict[str, Any]
+    onset_subset_caveat: str
     references: list[dict[str, Any]]

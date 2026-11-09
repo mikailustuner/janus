@@ -34,6 +34,7 @@ def _payload() -> dict[str, Any]:
         "sources": {},
         "references": [],
         "faers_quality": {"usable_pairs": 1},
+        "onset_subset_caveat": "The usable subset is not representative of all reports.",
     }
 
 

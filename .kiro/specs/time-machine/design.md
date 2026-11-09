@@ -400,7 +400,8 @@ could take.
 `cascade`: `cascade_id`, `pipc_position`, `index_class`, `event`, `treating_class`, `method` ∈
 `pbpk|compartmental|onset_only`, `method_label` (render verbatim), `note`, `reference_keys[]`,
 `onset` (`reports`, `median_days`, `q25_days`, `q75_days`, `median_ci_low`, `median_ci_high`,
-`small_sample` boolean, `weibull` {`shape`, `shape_ci_low`, `shape_ci_high`, `scale`,
+`small_sample` boolean, `zero_day_reports`, `zero_day_caveat`,
+`weibull` {`shape`, `shape_ci_low`, `shape_ci_high`, `scale`,
 `shape_class` ∈ `early|random|wear_out`} or null, `weibull_omitted_reason`),
 `risk_window` (`start_days`, `end_days`, `basis` ∈ `weibull|reports`, `coverage`),
 `middle_half_days` (`start_days`, `end_days`: the interquartile range, used by the patient
@@ -412,7 +413,14 @@ sentence),
 `dose_basis`, `drugs[]` with `drug`, `css_older_mg_per_l` {p5,p50,p95},
 `css_younger_mg_per_l`, `older_to_younger_ratio`, `days_to_90pct_steady_state`) or null.
 `faers_quality`: the onset pipeline's metrics, including `usable_pair_share` and
-`complete_event_date_share`.
+`complete_event_date_share`. `onset_subset_caveat` (on this response and on the catalogue) states that the usable subset is selected, not random, and must be shown wherever
+an onset figure is shown.
+
+**Rendering rules for onset.** Show `reports` with the word "reports", never "people". When
+`small_sample` is true, show the count and the interval and do **not** present `shape_class` as
+a finding. Show `zero_day_reports` next to the count with `zero_day_caveat`, because same-day
+reports drive the "early" shape. Show `agreement` with both intervals side by side, never as a
+bare verdict: at these widths "agrees" means "not inconsistent with".
 
 **Codes to translate** (en, tr, de, fr, es): `method` and `agreement` values, `shape_class`,
 `risk_window.basis`, `verdict`, `basis`, the error codes, `small_sample`, and the fixed reason

@@ -60,6 +60,7 @@ def catalogue(request: Request) -> Any:
         cascade_ids=tm.cascade_ids,
         validation=tm.payload["validation"],
         sources=tm.payload["sources"],
+        onset_subset_caveat=tm.payload["onset_subset_caveat"],
     )
 
 
@@ -97,5 +98,6 @@ def cascade(request: Request, cascade_id: str) -> Any:
         meta=_meta(tm),
         cascade=found,
         faers_quality=tm.payload["faers_quality"],
+        onset_subset_caveat=tm.payload["onset_subset_caveat"],
         references=tm.payload["references"],
     )
