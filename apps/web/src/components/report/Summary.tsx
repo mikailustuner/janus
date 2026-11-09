@@ -223,7 +223,7 @@ export function SummaryBody({
                     >
                       <h3
                         id={`group-${g}`}
-                        className="flex items-center gap-2 text-sm font-bold"
+                        className="flex items-center gap-2 font-body text-sm font-bold"
                       >
                         <MarkSwatch {...GROUP_MARK[g]} />
                         <span className="min-w-0 flex-1">
@@ -280,7 +280,7 @@ export function SummaryBody({
           className="half"
           testId="tile-medicines"
         >
-          <div className="flex flex-col items-center gap-3">
+          <div className="flex items-center gap-4">
             <Ring
               total={v.medicines.total}
               segments={[
@@ -296,7 +296,7 @@ export function SummaryBody({
                 {n(v.medicines.total)}
               </span>
             </Ring>
-            <ul aria-hidden className="flex w-full flex-col gap-1">
+            <ul aria-hidden className="flex min-w-0 flex-1 flex-col gap-1">
               <LegendRow
                 swatch={<MarkSwatch mark="solid" tone="accent" />}
                 label={t("Report.medicines.full")}
@@ -326,7 +326,7 @@ export function SummaryBody({
           className="half"
           testId="tile-rules"
         >
-          <div className="flex flex-col items-center gap-3">
+          <div className="flex items-center gap-4">
             <Ring
               total={v.rules.total}
               segments={[
@@ -340,10 +340,10 @@ export function SummaryBody({
                 {t("Report.rules.of", { total: n(v.rules.total) })}
               </span>
             </Ring>
+            <p className="min-w-0 flex-1 text-sm text-muted">
+              {t("Findings.scopeChecked", v.rules)}
+            </p>
           </div>
-          <p className="text-sm text-muted">
-            {t("Findings.scopeChecked", v.rules)}
-          </p>
         </Tile>
 
         {/* Abrupt-stop line: once per warned item (Req 2.4). */}
@@ -419,14 +419,17 @@ export function SummaryBody({
           id="tile-sources"
           title={t("Report.sources.title")}
           href="/passport"
-          className={v.warnedItems.length ? "" : "wide-lg"}
+          className={v.warnedItems.length ? "full" : ""}
           testId="tile-sources"
         >
           <section
             aria-labelledby="sources-data"
             className="flex flex-col gap-1"
           >
-            <h3 id="sources-data" className="text-sm font-bold text-muted">
+            <h3
+              id="sources-data"
+              className="font-body text-sm font-bold text-muted"
+            >
               {t("Report.sources.medicineData")}
             </h3>
             <ul className="grouped-plain">
@@ -457,7 +460,7 @@ export function SummaryBody({
             >
               <h3
                 id="sources-evidence"
-                className="text-sm font-bold text-muted"
+                className="font-body text-sm font-bold text-muted"
               >
                 {t("Report.sources.evidence")}
               </h3>

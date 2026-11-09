@@ -57,6 +57,7 @@ const DEMO = [
   "/timeline",
   "/results",
   "/results/finding#1",
+  "/results/summary",
   "/memory",
   "/note",
   "/demo/doctor",

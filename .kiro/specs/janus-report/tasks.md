@@ -24,7 +24,7 @@
   - _Requirements: 5.1–5.7_
   - **Checkpoint:** lint, typecheck, vitest green; commit.
 
-- [ ] 5. Browser checks (`e2e/report.spec.ts`, `e2e/routes.spec.ts`)
+- [x] 5. Browser checks (`e2e/report.spec.ts`, `e2e/routes.spec.ts`)
   - Summary from the demo, tiles navigate, share flow with confirmation, PNG 1080 × 1350 downloaded (P9), no request,
     axe, touch targets and no horizontal scroll at 375 / 1280, both themes, five locales (`E2E_LOCALES`).
   - Screenshots of the Summary and the confirmation at 375 and 1440 in both themes and of the image; reviewed.

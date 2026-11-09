@@ -53,6 +53,7 @@ export function ShareImage({
   );
   const [ready, setReady] = useState<Ready | null>(null);
   const dialog = useRef<HTMLDialogElement>(null);
+  const opener = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (ready) dialog.current?.showModal();
@@ -98,7 +99,7 @@ export function ShareImage({
 
   const prepare = async () => {
     const card = build();
-    if (!card) return;
+    if (!card || phase === "preparing") return;
     setPhase("preparing");
     try {
       const blob = await drawShareCard(card);
@@ -115,7 +116,11 @@ export function ShareImage({
   const close = () => {
     dialog.current?.close();
   };
-  const onClosed = () => setReady(null);
+  // Focus returns to the button that opened the dialog (Req 5.7).
+  const onClosed = () => {
+    setReady(null);
+    opener.current?.focus();
+  };
 
   const canShareFile =
     !!ready &&
@@ -194,7 +199,8 @@ export function ShareImage({
       <div className="flex flex-wrap items-center gap-3">
         <Button
           onClick={prepare}
-          disabled={phase === "preparing"}
+          ref={opener}
+          aria-disabled={phase === "preparing" || undefined}
           data-testid="share-prepare"
         >
           {phase === "preparing"

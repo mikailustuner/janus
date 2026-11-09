@@ -36,6 +36,16 @@ function arc(cx: number, cy: number, r: number, a0: number, a1: number) {
   return `M ${x0.toFixed(2)} ${y0.toFixed(2)} A ${r} ${r} 0 ${large} 1 ${x1.toFixed(2)} ${y1.toFixed(2)}`;
 }
 
+/** Ring dashes in proportion to the stroke (round caps add half a stroke at each end). */
+function ringDash(mark: Mark, w: number): string | undefined {
+  if (mark === "dotted") return `0.1 ${(w * 1.55).toFixed(1)}`;
+  if (mark === "dashed")
+    return `${(w * 0.9).toFixed(1)} ${(w * 1.5).toFixed(1)}`;
+  if (mark === "hatched")
+    return `${(w * 0.3).toFixed(1)} ${(w * 1.3).toFixed(1)}`;
+  return undefined;
+}
+
 /**
  * A segmented ring. `total` may exceed the sum of the segments (the rest stays as the track).
  * The centre holds the big number and its label.
@@ -75,7 +85,7 @@ export function Ring({
               fill="none"
               strokeWidth={thickness}
               strokeLinecap="round"
-              strokeDasharray={DASH[s.mark]}
+              strokeDasharray={ringDash(s.mark, thickness)}
               className={TONE[s.tone]}
             />
           );
@@ -86,7 +96,7 @@ export function Ring({
             fill="none"
             strokeWidth={thickness}
             strokeLinecap="round"
-            strokeDasharray={DASH[s.mark]}
+            strokeDasharray={ringDash(s.mark, thickness)}
             className={TONE[s.tone]}
           />
         );
@@ -94,7 +104,7 @@ export function Ring({
     : [];
   return (
     <div
-      className="ring relative grid shrink-0 place-items-center"
+      className="ring-wrap relative grid shrink-0 place-items-center"
       style={{ width: size, height: size }}
     >
       <svg

@@ -185,7 +185,7 @@ function layout(
   }
   y = top + blockH;
   gap(18);
-  text(c.headline, 32, p.fg, { weight: 700 });
+  text(c.headline, 28, p.muted);
   gap(22);
   if (c.noPattern) {
     text(c.noPattern, 34, p.fg, { weight: 700 });
@@ -210,10 +210,13 @@ function layout(
     gap(20);
     text(list.heading, 28, p.muted, { weight: 700 });
     gap(6);
-    for (const name of list.names) {
-      text(name, 30, p.fg);
-      gap(4);
-    }
+    // Events one per line (each with its order wording); ingredients as one wrapped line.
+    if (list === c.ingredients) text(list.names.join(" · "), 30, p.fg);
+    else
+      for (const name of list.names) {
+        text(name, 30, p.fg);
+        gap(4);
+      }
     gap(18);
   }
   return y;
@@ -244,11 +247,15 @@ function paintFooter(ctx: Ctx, c: ShareCard, p: Palette, h: number) {
 
 export async function drawShareCard(c: ShareCard): Promise<Blob> {
   const p = palette();
+  // The page's fonts are normally loaded already; never wait more than 1.5 s for them.
   try {
-    await Promise.all([
-      document.fonts.load(`600 64px ${p.display}`),
-      document.fonts.load(`800 64px ${p.body}`),
-      document.fonts.load(`400 32px ${p.body}`),
+    await Promise.race([
+      Promise.all([
+        document.fonts.load(`600 64px ${p.display}`),
+        document.fonts.load(`800 64px ${p.body}`),
+        document.fonts.load(`400 32px ${p.body}`),
+      ]),
+      new Promise((r) => setTimeout(r, 1500)),
     ]);
   } catch {
     /* system fonts then */

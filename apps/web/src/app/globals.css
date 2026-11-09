@@ -366,8 +366,10 @@
   .summary-grid > * {
     grid-column: span 2;
   }
-  .summary-grid > .half {
-    grid-column: span 1;
+  @media (min-width: 640px) {
+    .summary-grid > .half {
+      grid-column: span 1;
+    }
   }
   @media (min-width: 1024px) {
     .summary-grid {
@@ -379,7 +381,6 @@
     }
     .summary-grid > .lead {
       grid-column: span 2;
-      grid-row: span 2;
     }
     .summary-grid > .wide-lg {
       grid-column: span 2;
