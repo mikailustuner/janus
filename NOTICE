@@ -129,8 +129,25 @@ ADMET-AI 2.0.1 structure-based ADMET predictions (Time machine)
   Run offline in a pinned CPU environment under .data/tools (not committed).
   Predictions are hypotheses, not measurements.
 
+Wikidata found-in-taxon statements (LOTUS uploads) and drug-protein interactions (Time machine)
+  Publisher: Wikimedia Foundation and Wikidata contributors; LOTUS initiative
+  License: CC0 1.0
+  Rutz et al. 2022, eLife 11:e70780, doi:10.7554/eLife.70780 (LOTUS, CC0).
+  Provenance is the cited article of each statement.
+
+openFDA drug label indications for the Time machine comparator drugs
+  Publisher: U.S. Food and Drug Administration
+  License: CC0 1.0
+
 Adverse events
 --------------
+
+Time to onset per report and drug, derived from the FAERS quarterly files (Time machine)
+  Publisher: U.S. Food and Drug Administration (derived by Janus)
+  License: CC0 1.0
+  Derived from the raw archives of the current faers run (THER.start_dt,
+  DEMO.event_dt); only complete dates; exclusions counted by reason. Spontaneous
+  reports: what reporters wrote down, not measured latency.
 
 FDA Adverse Event Monitoring System (AEMS, formerly FAERS) quarterly data files
   Publisher: U.S. Food and Drug Administration

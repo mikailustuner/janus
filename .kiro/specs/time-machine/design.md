@@ -4,7 +4,7 @@
 > `tm_admet`; the curated tables in `data/time_machine/`; the pure package
 > `apps/api/janus/timemachine/`; the offline build and the read-only `/timemachine` routes. The
 > web screens are built by `experience` in `apps/web` from the contract in §10.
-> Decisions are DP-T1–DP-T15, properties P1–P20. Every decision was taken by this build and is
+> Decisions are DP-T1–DP-T16, properties P1–P20. Every decision was taken by this build and is
 > listed for the experts in §11.
 
 ## 1. Overview
@@ -68,6 +68,13 @@ pipelines/tests/test_{faers_onset,time_machine}.py
 | httk | 2.7.4 (R 4.6.1) | MIT + file LICENSE | CRAN page | PBPK, HTTK-Pop |
 | ADMET-AI | 2.0.1 (chemprop 2.3.1, torch 2.9.1+cpu, rdkit 2026.3.6) | MIT; TDC training sets carry their own licences (FreeSolv CC BY-NC-SA 4.0) | GitHub LICENSE.txt, PyPI metadata | ADMET predictions |
 | OpenITI Canon (via `datasets/canon`) | pinned commit | CC BY-NC-SA 4.0 | séance design §3.1 | substance identification, dose statements |
+
+**DP-T16. One registry source per pipeline.** Evidence Integrity keeps one `dataset:<source>`
+record per pipeline artifact, and every dataset record needs a review cadence. The first build
+reused `faers`, `wikidata` and `openfda_label` for the new jobs and left the two tool sources
+without a cadence; the real-artifact integrity test failed on `duplicate_id: dataset:faers`, then
+on `no_cadence: dataset:admet_ai`. The new jobs therefore have their own sources (`faers_onset`,
+`wikidata_lotus`, `openfda_label_tm`, `pubchem`, `httk`, `admet_ai`), each with a cadence.
 
 **DP-T1. httk for PBPK, a compartmental model for everything else.** R was installed
 system-wide by the owner; httk is installed into `.data/tools/R-library` with `R_LIBS_USER` and
@@ -466,5 +473,6 @@ DP-T8 (complete dates only; 10-year cap), the unit ranges of §6.2 and the Hinz 
 the content ranges and the anise volume-to-mass gap, DP-T9 (httk defaults, not fitted),
 DP-T10 (65–79), DP-T11 (half-day shift), DP-T12 (agreement rule), DP-T13 (2-fold rule),
 DP-T14 (interquartile range for the patient sentence), DP-T15 (out-of-range predicted binding),
+DP-T16 (one registry source per pipeline),
 the use of an ADMET-AI prediction as the unbound fraction, and the interpretive extension of
 PIPC row 18 to metoclopramide.

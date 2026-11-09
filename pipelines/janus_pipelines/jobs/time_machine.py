@@ -288,7 +288,7 @@ def _sparql(fetcher: Fetcher, query: str) -> bytes:
 
 class TmMoleculesJob(Job[MoleculePayload]):
     name = "tm_molecules"
-    source_id = "wikidata"
+    source_id = "wikidata_lotus"
     schema = MOLECULE_SCHEMA
     polars_schema: ClassVar[Mapping[str, pl.DataType]] = MOLECULE_ROW
 
@@ -556,7 +556,7 @@ class LabelPayload:
 
 class TmLabelsJob(Job[LabelPayload]):
     name = "tm_labels"
-    source_id = "openfda_label"
+    source_id = "openfda_label_tm"
     schema = LABEL_SCHEMA
     polars_schema: ClassVar[Mapping[str, pl.DataType]] = LABEL_ROW
 

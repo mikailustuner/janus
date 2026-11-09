@@ -251,6 +251,8 @@ notes = [
   "Pearce et al. 2017, J Stat Softw 79(4), doi:10.18637/jss.v079.i04. Installed into a user R library under .data/tools (not committed); the version is recorded in each run manifest.",
 ]
 storage = "cache"
+# A tool version: re-check the CRAN release and licence yearly.
+cadence_days = 365
 urls = ["https://cran.r-project.org/package=httk"]
 
 [[sources]]
@@ -263,7 +265,47 @@ notes = [
   "Run offline in a pinned CPU environment under .data/tools (not committed). Predictions are hypotheses, not measurements.",
 ]
 storage = "cache"
+# A tool version: re-check the release and licence yearly.
+cadence_days = 365
 urls = ["https://github.com/swansonk14/admet_ai"]
+
+[[sources]]
+id = "faers_onset"
+section = "adverse"
+name = "Time to onset per report and drug, derived from the FAERS quarterly files (Time machine)"
+publisher = "U.S. Food and Drug Administration (derived by Janus)"
+license = "CC0 1.0"
+notes = [
+  "Derived from the raw archives of the current faers run (THER.start_dt, DEMO.event_dt); only complete dates; exclusions counted by reason. Spontaneous reports: what reporters wrote down, not measured latency.",
+]
+storage = "cache"
+region = "US"
+cadence_days = 91
+urls = ["https://fis.fda.gov/extensions/FPD-QDE-FAERS/FPD-QDE-FAERS.html"]
+
+[[sources]]
+id = "wikidata_lotus"
+section = "clinical"
+name = "Wikidata found-in-taxon statements (LOTUS uploads) and drug-protein interactions (Time machine)"
+publisher = "Wikimedia Foundation and Wikidata contributors; LOTUS initiative"
+license = "CC0 1.0"
+notes = [
+  "Rutz et al. 2022, eLife 11:e70780, doi:10.7554/eLife.70780 (LOTUS, CC0). Provenance is the cited article of each statement.",
+]
+storage = "cache"
+cadence_days = 90
+urls = ["https://query.wikidata.org/sparql"]
+
+[[sources]]
+id = "openfda_label_tm"
+section = "clinical"
+name = "openFDA drug label indications for the Time machine comparator drugs"
+publisher = "U.S. Food and Drug Administration"
+license = "CC0 1.0"
+storage = "cache"
+region = "US"
+cadence_days = 90
+urls = ["https://api.fda.gov/drug/label.json"]
 
 # --- Adverse events ---------------------------------------------------------
 

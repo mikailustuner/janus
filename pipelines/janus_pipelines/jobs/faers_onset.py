@@ -236,7 +236,7 @@ def extract(p: Payload) -> ParseResult:
 
 class FaersOnsetJob(Job[Payload]):
     name = "faers_onset"
-    source_id = "faers"
+    source_id = "faers_onset"
     schema = ONSET_SCHEMA
     polars_schema: ClassVar[Mapping[str, pl.DataType]] = ROW_SCHEMA
 
