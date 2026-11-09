@@ -3,7 +3,7 @@
 **Status:** research log of the Janus project (open-source research prototype, not a medical device), November 2026.
 **Expert review has not yet been done.** Nothing here is guidance for any person.
 
-Janus tested several new ideas for finding or explaining prescribing cascades in open data. Each test was
+Janus tested seven new ideas for finding or explaining prescribing cascades in open data. Each test was
 pre-registered before results were computed (hypothesis, data, metrics, decision rule), compared against standard
 methods on the same data, and checked for leakage and confounding. Most hypotheses were **not supported**. We publish
 them so that others do not repeat the same paths, and because a null result on open data is itself information.
@@ -24,6 +24,7 @@ incidence.
 | 4 | Cascade discovery from label knowledge (v1) and combined with FAERS reported indications (v2) | Partly supported | Combined ranking beat pairwise FAERS disproportionality (AP gain significant even without leaky synonyms); new top candidates were mostly appropriate management of a side effect, not cascades |
 | 5 | Separating inappropriate cascades from appropriate management of an expected side effect | Not supported | Separation AUROC 0.579 (needed lower bound > 0.6) |
 | 6 | Older-adult exposure explains which cascades appear in older patients | Not supported | ρ = 0.09 (95% CI −0.24 to 0.39), p = 0.55 |
+| 7 | Laboratory-detected vs symptom events separate appropriate management from cascades (pre-registered test of a lead from #5) | Not supported | OR 13.7 (95% CI 0.63–903), p = 0.054; rests on two items |
 
 ## 1. Triad signature in spontaneous reports
 
@@ -79,9 +80,13 @@ incidence.
   when E occurs) separate inappropriate cascades from appropriate management.
 - **Result.** AUROC 0.579 (0.450–0.696); none of the decision rules passed. "B is used mostly for E" is as high for
   symptomatic remedies as for antidotes; the FAERS "drug continued" field is rarely filled.
-- **Lead for future testing (post hoc, not evidence).** Laboratory- or test-detected events were common among
-  pairs judged appropriate management and absent among pairs judged cascades. A pre-registered test on independent
-  sets is under way.
+- **Post-hoc lead, then tested (not supported).** Laboratory- or test-detected events were common among pairs judged
+  appropriate management and absent among pairs judged cascades. A pre-registered test on independent sets (55
+  inappropriate cascades from PIPC and ThinkCascades; 8 non-problematic cascades from Mohammad et al. 2024,
+  *J Am Geriatr Soc*, doi:10.1111/jgs.19191, Table S3) pointed the predicted way but missed the threshold: OR 13.7
+  (exact 95% CI 0.63–903), Fisher p = 0.054; the effect rested on two laboratory items. Expert panels also judged
+  several laboratory-detected cascades problematic (e.g. amiodarone → hypothyroidism → levothyroxine), so
+  "detected by a test" is not a safe marker of appropriate management.
 
 ## 6. Older-adult exposure and the age profile of cascade reports
 
