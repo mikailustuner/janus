@@ -9,9 +9,12 @@
 import { useLocale } from "next-intl";
 
 import { StateView } from "@/components/StateView";
-import { ButtonLink, Card, Chip, PageTitle } from "@/components/ui";
+import { LargeTitle, SummaryCard } from "@/components/cards";
+import { ChevronIcon } from "@/components/icons";
+import { ButtonLink, Chip } from "@/components/ui";
 import { formatDate } from "@/components/format";
 import { useT, type Translate } from "@/theme/words";
+import { Link } from "@/i18n/navigation";
 
 import { duplicateGroups, groupsOf, type DuplicateGroup } from "../duplicates";
 import { ATTRIBUTION_OF } from "../format";
@@ -82,46 +85,48 @@ function ItemCard({
   const reason = notSentReason(item);
   const headingId = `passport-${item.id}`;
   return (
-    <Card
+    <SummaryCard
       as="li"
-      aria-labelledby={headingId}
-      className="[overflow-wrap:anywhere]"
-    >
-      <div className="flex flex-wrap items-start justify-between gap-2">
-        <h2 id={headingId} className="min-w-0 text-lg leading-snug font-bold">
-          {item.boxName}
-        </h2>
+      id={headingId}
+      title={item.boxName}
+      eyebrow={
         <Chip>
           {t(`Passport.origin.${item.origin.country ?? item.origin.region}`)}
         </Chip>
-      </div>
-      <p className="text-sm text-muted">{sourceLine(t, item, locale)}</p>
-      <div>
-        <p className="text-sm font-bold">{t("Passport.ingredients")}</p>
-        <ul className="flex flex-col">
-          {item.ingredients.map((g, i) => (
-            <li key={i}>{g.label}</li>
-          ))}
-        </ul>
-      </div>
-      <p className="text-sm">{t("Passport.boxes", { count: item.boxes })}</p>
-      {reason === "homeopathic" ? (
-        <p className="font-bold">{t("Passport.homeopathic")}</p>
-      ) : reason ? (
-        <p className="font-bold">{t(`Passport.notCheckable.${reason}`)}</p>
-      ) : null}
+      }
+      summary={
+        <p className="text-fg">
+          <span className="sr-only">{t("Passport.ingredients")}: </span>
+          {new Intl.ListFormat(locale, { type: "unit" }).format(
+            item.ingredients.map((g) => g.label),
+          )}
+        </p>
+      }
+      className="[overflow-wrap:anywhere]"
+    >
+      <ul className="grouped-plain border-t border-line text-sm">
+        <li className="text-muted">{sourceLine(t, item, locale)}</li>
+        <li>{t("Passport.boxes", { count: item.boxes })}</li>
+        {reason === "homeopathic" ? (
+          <li className="font-bold">{t("Passport.homeopathic")}</li>
+        ) : reason ? (
+          <li className="font-bold">{t(`Passport.notCheckable.${reason}`)}</li>
+        ) : null}
+      </ul>
       {groupsOf(groups, item.id).map((g) => (
         <DuplicateChip key={g.key} group={g} items={items} />
       ))}
-      <ButtonLink
+      <Link
         href={`/passport/item#${encodeURIComponent(item.id)}`}
-        variant="secondary"
-        className="w-fit"
+        className="-mx-4 mt-auto -mb-4 flex min-h-13 items-center justify-between gap-3 rounded-b-[var(--radius-card)] border-t border-line px-4 font-bold text-accent no-underline transition-colors duration-150 hover:bg-chip sm:-mx-5 sm:-mb-5 sm:px-5"
       >
-        {t("Passport.open")}
-        <span className="sr-only">: {item.boxName}</span>
-      </ButtonLink>
-    </Card>
+        <span>
+          {t("Passport.open")}
+          <span className="sr-only">: {item.boxName}</span>
+        </span>
+        <ChevronIcon size={20} className="shrink-0" />
+      </Link>
+    </SummaryCard>
   );
 }
 
@@ -139,9 +144,14 @@ export function PassportListBody({
   const boxes = items.reduce((s, i) => s + i.boxes, 0);
   return (
     <>
-      <PageTitle eyebrow={t("Passport.boxes", { count: boxes })}>
-        {t("Passport.title")}
-      </PageTitle>
+      <LargeTitle
+        title={t("Passport.title")}
+        summary={
+          items.length
+            ? t("Cards.passport.summary", { items: items.length, boxes })
+            : undefined
+        }
+      />
       <p className="max-w-[72ch]">{t("Passport.intro")}</p>
       {demo === "cologne" ? (
         <p className="text-sm text-muted">{t("Passport.demo.intro")}</p>
@@ -157,8 +167,8 @@ export function PassportListBody({
           }
         />
       ) : (
-        <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(280px,340px)] lg:items-start">
-          <ul className="grid min-w-0 gap-3 xl:grid-cols-2">
+        <div className="grid gap-group lg:grid-cols-[minmax(0,1fr)_minmax(280px,340px)] lg:items-start">
+          <ul className="grid min-w-0 gap-4 xl:grid-cols-2">
             {items.map((item) => (
               <ItemCard
                 key={item.id}
@@ -168,20 +178,18 @@ export function PassportListBody({
               />
             ))}
           </ul>
-          <aside className="flex min-w-0 flex-col gap-4 lg:sticky lg:top-4">
+          <aside className="flex min-w-0 flex-col gap-group lg:sticky lg:top-4">
             {groups.length > 0 ? (
-              <Card>
-                <p className="flex items-center gap-2 font-bold">
-                  <CopyIcon />
-                  {t("Passport.duplicate.summary", { count: groups.length })}
-                </p>
-              </Card>
+              <p className="card flex items-center gap-2 p-5 font-bold">
+                <CopyIcon />
+                {t("Passport.duplicate.summary", { count: groups.length })}
+              </p>
             ) : null}
             {memory.kind !== "none" ? (
-              <Card>
-                <h2 className="text-lg font-semibold">
-                  {t("Passport.memory.entry")}
-                </h2>
+              <SummaryCard
+                title={t("Passport.memory.entry")}
+                id="passport-memory"
+              >
                 <p>{t("Passport.memory.intro")}</p>
                 {memory.kind === "needs_selection" ? (
                   <p>{t("Passport.memory.tooMany")}</p>
@@ -193,9 +201,9 @@ export function PassportListBody({
                 >
                   {t("Passport.memory.open")}
                 </ButtonLink>
-              </Card>
+              </SummaryCard>
             ) : null}
-            <p className="card p-4 text-sm">{t("Passport.listingsOnly")}</p>
+            <p className="card p-5 text-sm">{t("Passport.listingsOnly")}</p>
           </aside>
         </div>
       )}

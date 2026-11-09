@@ -334,7 +334,7 @@
   - 28.1 P34 in `src/components/render.test.tsx`. _Requirements: 29.2–29.5, 29.10, 29.11_
   - **Checkpoint:** vitest, demo-flow and states e2e green; commit.
 
-- [ ] 29. Passport list and item (`src/passport/screens/*`, `src/passport/summary.ts`)
+- [x] 29. Passport list and item (`src/passport/screens/*`, `src/passport/summary.ts`)
   - Summary cards, "Listed in n of m countries", Countries / Comparison control, grouped source rows.
   - 29.1 P31 (`src/passport/summary.test.ts`). _Requirements: 29.2, 29.3, 29.7_
   - **Checkpoint:** vitest and passport e2e green; commit.

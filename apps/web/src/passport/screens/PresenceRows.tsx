@@ -2,8 +2,9 @@
 /**
  * The presence rows of one box (design §8, Req 2.1, 2.2, 6, 7, 10.4): one row per source in the
  * order TR, FR, ES, DE, US with the box's own source last. Status, counts, the three comparison
- * results with their reasons, the attribution line and the stale notice. A table with row
- * headers from 640 px, a description list below; statuses carry text and a shape, never colour.
+ * results with their reasons, the attribution line and the stale notice. One inset grouped list (a
+ * description list) at every width, with a Countries / Comparison view (experience Req 29.7);
+ * statuses carry text and a shape, never colour.
  * Comparisons that used values typed from the box say so (owner decision 1).
  */
 import { useLocale } from "next-intl";
@@ -136,14 +137,18 @@ function Comparison({
   );
 }
 
+export type RowsView = "countries" | "comparison";
+
 function RowBody({
   item,
   answer,
   source,
+  view,
 }: {
   item: PassportItem;
   answer: Answer;
   source: SourceOut;
+  view: RowsView;
 }) {
   const t = useT();
   const locale = useLocale();
@@ -204,13 +209,22 @@ function RowBody({
         </p>,
       );
   }
+  // Both views stay in the document; the control shows one (Req 29.7, DP56). A row without a
+  // comparison keeps its listing line in the comparison view.
+  const showStatus = view === "countries" || !answer.comparison;
   return (
     <div className="flex min-w-0 flex-col gap-2 [overflow-wrap:anywhere]">
-      <div className="flex items-start gap-2" data-status={answer.status}>
+      <div
+        className="flex items-start gap-2"
+        data-status={answer.status}
+        hidden={!showStatus}
+      >
         <StatusIcon status={answer.status} />
         <div className="flex flex-col gap-1">{lines}</div>
       </div>
-      <Comparison t={t} item={item} answer={answer} locale={locale} />
+      <div hidden={view !== "comparison"}>
+        <Comparison t={t} item={item} answer={answer} locale={locale} />
+      </div>
       {source.status === "loaded" &&
       source.attribution &&
       source.snapshot_date ? (
@@ -229,10 +243,12 @@ export function PresenceRows({
   item,
   out,
   sources,
+  view = "countries",
 }: {
   item: PassportItem;
   out: ItemOut;
   sources: readonly SourceOut[];
+  view?: RowsView;
 }) {
   const t = useT();
   const own = ownSource(item);
@@ -242,63 +258,38 @@ export function PresenceRows({
     answer: out.answers[i]!,
     head: sourceLabel(t, sources[i]!),
   }));
-  const ownTag = (i: number) =>
-    i === own ? (
-      <span className="chip mt-1 w-fit text-sm">
-        {t("Passport.detail.ownSource")}
-      </span>
-    ) : null;
+  // One inset grouped list at every width (Req 29.3, DP56): the country and source as the row
+  // head, what the source data show under it.
   return (
-    <>
-      <table className="hidden w-full border-collapse text-left sm:table">
-        <caption className="mb-2 text-left font-bold">
-          {t("Passport.detail.caption")}
-        </caption>
-        <thead>
-          <tr className="border-b border-line text-sm text-muted">
-            <th scope="col" className="w-48 py-2 pr-4 font-bold">
-              {t("Passport.detail.sourceColumn")}
-            </th>
-            <th scope="col" className="py-2 font-bold">
-              {t("Passport.detail.resultColumn")}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((r) => (
-            <tr key={r.i} className="border-b border-line align-top">
-              <th
-                scope="row"
-                className="py-3 pr-4 text-left font-bold [overflow-wrap:anywhere]"
-              >
-                <span className="flex flex-col">
-                  {r.head}
-                  {ownTag(r.i)}
+    <section
+      aria-labelledby="presence-caption"
+      className="flex min-w-0 flex-col gap-2"
+    >
+      <h3 id="presence-caption" className="group-header">
+        {t("Passport.detail.caption")}
+      </h3>
+      <dl className="grouped m-0">
+        {rows.map((r) => (
+          <div key={r.i} className="flex flex-col gap-2">
+            <dt className="flex flex-wrap items-center gap-x-2 gap-y-1 font-bold [overflow-wrap:anywhere]">
+              {r.head}
+              {r.i === own ? (
+                <span className="chip text-sm">
+                  {t("Passport.detail.ownSource")}
                 </span>
-              </th>
-              <td className="py-3">
-                <RowBody item={item} answer={r.answer} source={r.source} />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className="sm:hidden">
-        <p className="mb-2 font-bold">{t("Passport.detail.caption")}</p>
-        <dl className="flex flex-col gap-3">
-          {rows.map((r) => (
-            <div key={r.i} className="card flex flex-col gap-2 p-3">
-              <dt className="flex flex-col font-bold [overflow-wrap:anywhere]">
-                {r.head}
-                {ownTag(r.i)}
-              </dt>
-              <dd className="m-0">
-                <RowBody item={item} answer={r.answer} source={r.source} />
-              </dd>
-            </div>
-          ))}
-        </dl>
-      </div>
-    </>
+              ) : null}
+            </dt>
+            <dd className="m-0">
+              <RowBody
+                item={item}
+                answer={r.answer}
+                source={r.source}
+                view={view}
+              />
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </section>
   );
 }
