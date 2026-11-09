@@ -289,6 +289,11 @@ def _cleanup_tmp_links(store: Store) -> None:
                 tmp.unlink()
 
 
+class ToolUnavailableError(RuntimeError):
+    """A local model tool (e.g. Rscript with httk, or a pinned model environment) is not
+    installed. The run is refused: artifacts are precomputed offline and CI never needs them."""
+
+
 class PromotionError(Exception):
     pass
 

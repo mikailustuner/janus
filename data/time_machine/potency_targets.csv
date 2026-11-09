@@ -1,0 +1,6 @@
+constituent,condition_key,entrez_gene,gene_symbol,why
+rhein,muscle_injury,5743,PTGS2,"Rhein's proposed anti-inflammatory action runs through interleukin-1 and prostaglandin synthesis; cyclooxygenase-2 is the target a modern analgesic comparison would use. Curated as the only relevant target: a measured potency on an unrelated screening target must never stand in for it."
+rhein,muscle_injury,3553,IL1B,"Interleukin-1 beta: diacerein and rhein are described as interleukin-1 inhibitors. Relevance curated, not measured here."
+trans-anethole,colic,1128,CHRM1,"Antispasmodic comparators (dicyclomine, hyoscyamine) act on muscarinic receptors; a carminative comparison would need activity on the same receptors."
+trans-anethole,colic,1131,CHRM3,Smooth-muscle muscarinic receptor for gut spasm.
+hyperforin,sciatica,8856,NR1I2,"Pregnane X receptor: hyperforin's PXR binding is the mechanism of St John's wort CYP3A4 induction (Moore et al. 2000). Relevant as an interaction flag, not as an efficacy target."

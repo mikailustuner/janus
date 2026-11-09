@@ -32,6 +32,7 @@ from janus.passport.forms import load as load_dose_forms
 from janus.seance.catalogue import PACKAGE_DIR as SEANCE_PACKAGE
 from janus.seance.catalogue import load_catalogue as load_seance
 from janus.settings import EVENT_VOCABULARY, Settings
+from janus.timemachine.store import Holder as TimeMachineHolder
 
 
 class Health(BaseModel):
@@ -102,6 +103,8 @@ def create_app(
     # Séance catalogue (séance design §5): an inconsistent file stops startup; a missing data
     # package makes `/seance/*` answer 503.
     app.state.seance = load_seance() if (SEANCE_PACKAGE / "claims.csv").is_file() else None
+    # Time machine (design §8.3): a missing artifact makes `/timemachine/*` answer 503.
+    app.state.timemachine = TimeMachineHolder(settings.data_dir)
     app.state.note_keyring = (
         Keyring(settings.note_keys, settings.note_signing_key_id)
         if settings.note_keys and settings.note_signing_key_id
@@ -120,6 +123,7 @@ def create_app(
     from janus.privacy.router import router as privacy_router
     from janus.resolution.router import router as resolution_router
     from janus.seance.router import router as seance_router
+    from janus.timemachine.router import router as timemachine_router
 
     routers = [
         health_router,
@@ -135,6 +139,7 @@ def create_app(
         passport_router,
         light_router,
         seance_router,
+        timemachine_router,
         *extra_routers,
     ]
     for router in routers:
