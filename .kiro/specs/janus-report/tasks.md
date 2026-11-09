@@ -5,7 +5,7 @@
 - [x] 1. Spec (`requirements.md`, `design.md`, `tasks.md`)
   - **Checkpoint:** commit the spec.
 
-- [ ] 2. View models (`src/flow/summary.ts`, `src/flow/share-card.ts`, `src/flow/findings.ts` `orderGroup`)
+- [x] 2. View models (`src/flow/summary.ts`, `src/flow/share-card.ts`, `src/flow/findings.ts` `orderGroup`)
   - `summaryView`, `integritySummary` (DP3–DP7); `shareCard`, `shareCardText` (DP11).
   - 2.1 Properties P1, P3, P5 (`src/flow/summary.test.ts`); P6, P7 (`src/flow/share-card.test.ts`).
   - _Requirements: 2.1–2.7, 4.4, 5.2–5.4_

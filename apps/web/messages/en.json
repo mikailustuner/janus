@@ -1305,5 +1305,83 @@
       "together": "Medicines together",
       "janus": "Reported through Janus"
     }
+  },
+  "Report": {
+    "title": "Summary",
+    "open": "See the summary",
+    "openHint": "The key numbers of this check at a glance",
+    "checkedIn": "Checked in {month}",
+    "summaryLine": "{medicines, plural, one {# medicine checked} other {# medicines checked}} · {patterns, plural, =0 {no pattern from the rule list} one {# pattern to discuss} other {# patterns to discuss}}",
+    "patterns": {
+      "title": {
+        "twoFaces": "Ghosts to discuss",
+        "glass": "Patterns to discuss"
+      },
+      "sentence": "{count, plural, one {# prescribing-cascade pattern matched} other {# prescribing-cascade patterns matched}}. Order fits the pattern: {fits}. Order fits, later than the usual window: {late}. Order not confirmed: {unconfirmed}.",
+      "unconfirmedForm": "{count, plural, one {For # of them the product form still needs to be confirmed.} other {For # of them the product form still needs to be confirmed.}}"
+    },
+    "medicines": {
+      "title": "Medicines",
+      "full": "Fully checked",
+      "partly": "Not fully checked",
+      "sentence": "{total, plural, one {# medicine in the list} other {# medicines in the list}}: {full} fully checked, {partly} with an ingredient that cannot be checked."
+    },
+    "rules": {
+      "title": "Patterns checked",
+      "of": "of {total}"
+    },
+    "abrupt": {
+      "title": "Not to be stopped suddenly",
+      "sentence": "{count, plural, one {# medicine carries this line:} other {# medicines carry this line:}}"
+    },
+    "regions": {
+      "title": "Regions",
+      "name": "Added by name",
+      "count": "{count, plural, one {# medicine} other {# medicines}}",
+      "summary": "Where the data of each medicine come from"
+    },
+    "sources": {
+      "title": "Sources",
+      "medicineData": "Medicine data",
+      "rowItems": "{count, plural, one {used for # medicine} other {used for # medicines}}",
+      "evidence": "Evidence of the patterns",
+      "evidenceLoading": "Loading the evidence…",
+      "evidenceError": "The evidence could not be loaded here. The screen of each pattern shows it.",
+      "evidenceCount": "{count, plural, one {# source cited by the patterns.} other {# sources cited by the patterns.}}",
+      "withExclusions": "{count, plural, one {# pattern has a source that was not used. Its screen says why.} other {# patterns have a source that was not used. Their screens say why.}}",
+      "lastCheck": "Integrity last checked on {date}.",
+      "openEvidence": "See the evidence"
+    },
+    "share": {
+      "title": "Share a summary image",
+      "intro": "Make a picture of this summary to send to someone close to you or to show your doctor. It is made on this device.",
+      "default": "The image shows numbers only. You can add more:",
+      "events": "Add what each pattern is about",
+      "eventsHint": "For example the side effect a pattern names. Anyone who sees the image will see this health information.",
+      "ingredients": "Add the active ingredients of your medicines",
+      "ingredientsHint": "Box names are never added. Anyone who sees the image will see which medicines you take.",
+      "prepare": "Prepare the image",
+      "preparing": "Preparing the image…",
+      "error": "The image could not be made on this device.",
+      "confirmTitle": "Check the image before it leaves Janus",
+      "confirmText": "This image leaves Janus only if you share or save it yourself. It may contain health information.",
+      "share": "Share",
+      "save": "Save image",
+      "saved": "The image was saved to your downloads.",
+      "alt": "The summary image. Its text: {text}"
+    },
+    "image": {
+      "title": "Janus summary",
+      "headline": "{medicines, plural, one {# medicine checked} other {# medicines checked}} · {patterns, plural, =0 {no pattern from the rule list} one {# pattern to discuss} other {# patterns to discuss}} · checked against {checked} of {total} patterns",
+      "medicines": "{count, plural, one {medicine checked} other {medicines checked}}",
+      "patterns": "{count, plural, one {pattern to discuss} other {patterns to discuss}}",
+      "rulesOf": "{checked} of {total}",
+      "rules": "patterns checked",
+      "abrupt": "{count, plural, one {# medicine carries this line:} other {# medicines carry this line:}}",
+      "eventsHeading": "What the patterns are about",
+      "eventLine": "{event} · {order}",
+      "ingredientsHeading": "Active ingredients in the list",
+      "footer": "Made on this device with Janus"
+    }
   }
 }

@@ -45,6 +45,22 @@ export type ResultsView =
 
 const SUPPORTING = /^paper:thinkcascades:/;
 
+/**
+ * The order wording a finding's timing maps to (experience Req 28.1, DP43): one map for the
+ * finding chip, the Summary and the share image (janus-report DP4). Never `probable`/`possible`.
+ */
+export const ORDER_GROUPS = ["fits", "fitsLate", "notConfirmed"] as const;
+export type OrderGroup = (typeof ORDER_GROUPS)[number];
+const ORDER_GROUP: Record<Finding["timing"], OrderGroup> = {
+  within_window: "fits",
+  after_window: "fitsLate",
+  same_month: "notConfirmed",
+  date_unknown: "notConfirmed",
+};
+export function orderGroup(timing: Finding["timing"]): OrderGroup {
+  return ORDER_GROUP[timing];
+}
+
 export function resultsView(r: CascadeResult, v: Loaded): ResultsView {
   if (r.statement?.code === "rule_base_unavailable")
     return { kind: "unavailable" };

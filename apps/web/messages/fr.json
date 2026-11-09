@@ -1305,5 +1305,83 @@
       "together": "Médicaments ensemble",
       "janus": "Signalé via Janus"
     }
+  },
+  "Report": {
+    "title": "Résumé",
+    "open": "Voir le résumé",
+    "openHint": "Les chiffres clés de cette vérification en un coup d'œil",
+    "checkedIn": "Vérifié en {month}",
+    "summaryLine": "{medicines, plural, one {# médicament vérifié} other {# médicaments vérifiés}} · {patterns, plural, =0 {aucun schéma de la liste de règles} one {# schéma à évoquer} other {# schémas à évoquer}}",
+    "patterns": {
+      "title": {
+        "twoFaces": "Fantômes à évoquer",
+        "glass": "Schémas à évoquer"
+      },
+      "sentence": "{count, plural, one {# schéma de cascade de prescription correspond} other {# schémas de cascade de prescription correspondent}}. L'ordre correspond au schéma : {fits}. L'ordre correspond, au-delà de la fenêtre habituelle : {late}. Ordre non confirmé : {unconfirmed}.",
+      "unconfirmedForm": "{count, plural, one {Pour # d'entre eux, la forme du produit doit encore être confirmée.} other {Pour # d'entre eux, la forme du produit doit encore être confirmée.}}"
+    },
+    "medicines": {
+      "title": "Médicaments",
+      "full": "Entièrement vérifiés",
+      "partly": "Pas entièrement vérifiés",
+      "sentence": "{total, plural, one {# médicament dans la liste} other {# médicaments dans la liste}} : {full} entièrement vérifiés, {partly} avec un principe actif qui ne peut pas être vérifié."
+    },
+    "rules": {
+      "title": "Schémas vérifiés",
+      "of": "sur {total}"
+    },
+    "abrupt": {
+      "title": "À ne pas arrêter brusquement",
+      "sentence": "{count, plural, one {# médicament porte cette mention :} other {# médicaments portent cette mention :}}"
+    },
+    "regions": {
+      "title": "Régions",
+      "name": "Ajouté par son nom",
+      "count": "{count, plural, one {# médicament} other {# médicaments}}",
+      "summary": "D'où viennent les données de chaque médicament"
+    },
+    "sources": {
+      "title": "Sources",
+      "medicineData": "Données des médicaments",
+      "rowItems": "{count, plural, one {utilisée pour # médicament} other {utilisée pour # médicaments}}",
+      "evidence": "Preuves des schémas",
+      "evidenceLoading": "Chargement des preuves…",
+      "evidenceError": "Les preuves n'ont pas pu être chargées ici. L'écran de chaque schéma les montre.",
+      "evidenceCount": "{count, plural, one {# source citée par les schémas.} other {# sources citées par les schémas.}}",
+      "withExclusions": "{count, plural, one {# schéma a une source qui n'a pas été utilisée. Son écran explique pourquoi.} other {# schémas ont une source qui n'a pas été utilisée. Leurs écrans expliquent pourquoi.}}",
+      "lastCheck": "Intégrité vérifiée pour la dernière fois le {date}.",
+      "openEvidence": "Voir les preuves"
+    },
+    "share": {
+      "title": "Partager une image du résumé",
+      "intro": "Créez une image de ce résumé pour l'envoyer à un proche ou la montrer à votre médecin. Elle est créée sur cet appareil.",
+      "default": "L'image ne montre que des chiffres. Vous pouvez ajouter :",
+      "events": "Ajouter le sujet de chaque schéma",
+      "eventsHint": "Par exemple l'effet indésirable qu'un schéma nomme. Toute personne qui voit l'image verra ces informations de santé.",
+      "ingredients": "Ajouter les principes actifs de vos médicaments",
+      "ingredientsHint": "Les noms des boîtes ne sont jamais ajoutés. Toute personne qui voit l'image saura quels médicaments vous prenez.",
+      "prepare": "Préparer l'image",
+      "preparing": "Préparation de l'image…",
+      "error": "L'image n'a pas pu être créée sur cet appareil.",
+      "confirmTitle": "Vérifiez l'image avant qu'elle ne quitte Janus",
+      "confirmText": "Cette image ne quitte Janus que si vous la partagez ou l'enregistrez vous-même. Elle peut contenir des informations de santé.",
+      "share": "Partager",
+      "save": "Enregistrer l'image",
+      "saved": "L'image a été enregistrée dans vos téléchargements.",
+      "alt": "L'image du résumé. Son texte : {text}"
+    },
+    "image": {
+      "title": "Résumé Janus",
+      "headline": "{medicines, plural, one {# médicament vérifié} other {# médicaments vérifiés}} · {patterns, plural, =0 {aucun schéma de la liste de règles} one {# schéma à évoquer} other {# schémas à évoquer}} · vérifié avec {checked} des {total} schémas",
+      "medicines": "{count, plural, one {médicament vérifié} other {médicaments vérifiés}}",
+      "patterns": "{count, plural, one {schéma à évoquer} other {schémas à évoquer}}",
+      "rulesOf": "{checked} sur {total}",
+      "rules": "schémas vérifiés",
+      "abrupt": "{count, plural, one {# médicament porte cette mention :} other {# médicaments portent cette mention :}}",
+      "eventsHeading": "Sujet des schémas",
+      "eventLine": "{event} · {order}",
+      "ingredientsHeading": "Principes actifs de la liste",
+      "footer": "Créé sur cet appareil avec Janus"
+    }
   }
 }
