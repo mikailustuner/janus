@@ -22,12 +22,7 @@ done
 extra=""
 [ -f "$STACK_DIR/isolation-probes" ] && extra="$(grep -vE '^\s*(#|$)' "$STACK_DIR/isolation-probes" | tr '\n' ';')"
 
-probe() {  # probe <network> <expect: open|closed> <host:port>...
-  local net="$1" expect="$2"; shift 2
-  # -i is required: the probe program arrives on stdin (without it Python runs an empty script and
-  # every probe "passes"; caught by the positive control in the task 2 rehearsal).
-  docker run -i --rm --network "$net" --user 10001 --read-only --cap-drop ALL \
-    --security-opt no-new-privileges:true --entrypoint python "$image" - "$expect" "$@" <<'PY'
+PROBE="$(cat <<'PY'
 import socket, sys
 from concurrent.futures import ThreadPoolExecutor
 
@@ -54,6 +49,19 @@ for t, got in bad:
     print(f"  UNEXPECTED {got}: {t}")
 sys.exit(1 if bad else 0)
 PY
+)"
+probe() {  # probe <network> <expect: open|closed> <host:port>...
+  local net="$1"; shift
+  # -i is required: the probe program arrives on stdin (without it Python runs an empty script and
+  # every probe "passes"; caught by the positive control in the task 2 rehearsal).
+  docker run -i --rm --network "$net" --user 10001 --read-only --cap-drop ALL \
+    --security-opt no-new-privileges:true --entrypoint python "$image" - "$@" <<<"$PROBE"
+}
+probe_in() {  # probe_in <compose service> <expect> <host:port>...: from inside the running container
+  local svc="$1" id; shift
+  id="$(compose ps -q "$svc")"
+  [ -n "$id" ] || die "$svc is not running"
+  docker exec -i "$id" python - "$@" <<<"$PROBE"
 }
 
 fail=0
@@ -75,4 +83,16 @@ probe janus-public-internal open api:8000 postgres:5432 || fail=1
 probe janus-public-edge open web:3000 region1.v2.argotunnel.com:7844 || fail=1
 probe janus-public-internal closed 1.1.1.1:443 || fail=1
 probe janus-public-edge closed api:8000 postgres:5432 || fail=1
+# The simulator (simulation-service DP-S8): internal network only, no route out. Probed from inside
+# the running container itself: the internet, R package mirrors, the metadata service, the host and
+# the web container are closed; only postgres is open.
+sim_id="$(compose ps -q simulator)"
+sim_net="$(docker inspect -f '{{range $k, $v := .NetworkSettings.Networks}}{{$k}} {{end}}' "$sim_id")"
+[ "$sim_net" = "janus-public-internal " ] || { log "simulator networks: $sim_net"; fail=1; }
+sim_closed=(1.1.1.1:443 8.8.8.8:53 cloud.r-project.org:443 p3m.dev:443 169.254.169.254:80 web:3000)
+for p in $ports; do
+  for ip in $(gw janus-public-internal) $host_ips; do sim_closed+=("$ip:$p"); done
+done
+probe_in simulator closed "${sim_closed[@]}" || fail=1
+probe_in simulator open postgres:5432 || fail=1
 if [ "$fail" = 0 ]; then log "isolation: ok"; else die "isolation: FAILED"; fi

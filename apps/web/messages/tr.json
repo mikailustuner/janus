@@ -559,6 +559,14 @@
       "developers": {
         "title": "Geliştiriciler ve klinisyenler için",
         "body": "MCP sunucusu, CDS Hooks, açık API ve açık veri paketleri; kopyalamaya hazır ayarlarla."
+      },
+      "modelExplorer": {
+        "title": "Model gezgini",
+        "body": "Zaman makinesinin kompartman modeli tarayıcınızda: sanal popülasyonlar, sabit sınırlar içinde doz ve şema. Hiçbir şey gönderilmez."
+      },
+      "simulate": {
+        "title": "Sıraya alınan model çalıştırmaları",
+        "body": "Kompartman modelini veya bir httk sanal popülasyon çalıştırmasını Janus sunucusunda, küçük bir sırada çalıştırın."
       }
     }
   },
@@ -1997,7 +2005,7 @@
     "summary": "{count, plural, one {# bulgu} other {# bulgu}} · {date} çalıştırması",
     "intro": "Janus etkin madde kimlik alanlarını beş kaynaktan okur: TİTCK (Türkiye), AEMPS CIMA (İspanya), BDPM (Fransa), openFDA NDC (ABD) ve Wikidata. Her hafta aynı etkin madde için verdikleri ATC kodlarını karşılaştırır; her farkı ve önceki çalıştırmaya göre neyin yeni olduğunu, neyin sürdüğünü ve neyin çözüldüğünü listeler.",
     "codesOnly": "Yalnızca kodlar ve sayılar: bu raporda hiçbir TİTCK liste satırı, ürün adı veya barkod ve hiçbir WHOCC dizin metni yoktur.",
-    "review": "Deterministik kurallarla üretilmiştir. Doğrulanmış hatalar proje sahibi tarafından yapay zekâ desteğiyle incelenmiştir, henüz bir eczacı tarafından değil. Kaynağa bildirilmeden önce her bulguyu bir eczacı kontrol etmelidir.",
+    "review": "Deterministik kurallarla üretilmiştir. Uzman incelemesi henüz yapılmadı: kaynağa bildirilmeden önce her bulguyu bir eczacı kontrol etmelidir.",
     "demo": "Demo: rapor {date} tarihinde gerçek yerel Janus API'sinden kaydedildi; istek gönderilmez.",
     "loading": "Veri kalitesi raporu yükleniyor…",
     "errors": {
@@ -2011,7 +2019,7 @@
       "tableLabel": "Sınıfa ve duruma göre bulgular",
       "upstream": "Kaynağının hâlâ yayımladığı doğrulanmış hatalar: {still}. Kaynakta düzeltilenler: {resolved}."
     },
-    "classMeaning": "Sınıf bir ilacı değil, veriyi tanımlar. Doğrulanmış hata: Janus'un incelenmiş dışlama dosyasında yer alır. Eczacı gerekli: hiçbir kuralın açıklamadığı bir fark. Açıklanan fark: sabit bir kural farkı açıklar (örneğin iki düzenleyici de kodu yayımlar ve Wikidata kaydı eskidir); bu bir eczacı değerlendirmesi değildir.",
+    "classMeaning": "Sınıf bir ilacı değil, veriyi tanımlar. Doğrulanmış hata: Janus'un dışlama dosyasında yer alır. Eczacı gerekli: hiçbir kuralın açıklamadığı bir fark. Açıklanan fark: sabit bir kural farkı açıklar (örneğin iki düzenleyici de kodu yayımlar ve Wikidata kaydı eskidir); bu bir eczacı değerlendirmesi değildir.",
     "class": {
       "confirmed_error": "Doğrulanmış hata",
       "needs_pharmacist": "Eczacı incelemesi gerekli",
@@ -2123,7 +2131,7 @@
     "summary": "{rows} PIPC örüntüsü · {medians} tanesinde ortanca",
     "intro": "PIPC listesindeki her örüntü için (A ilacı → olay → B ilacı): FAERS'e bildirenlere göre olay, A ilacının sınıfından bir ilaca başladıktan ne kadar sonra başladı? Zaman makinesinin yöntemine dayanan, daha sıkı kurallı bir yöntem; 65 satırın tümü için, her sayının arkasındaki bildirim sayısıyla.",
     "framing": "Yalnızca tanımlayıcıdır: nedensel değildir, insidans değildir. FAERS kendiliğinden bildirimdir; sayılar kişi değil, bildirimdir. Bir aralık, bildirenin yazdığıdır; kişilerde ölçülmüş başlangıç değildir.",
-    "review": "Yöntemler yapay zekâ ajanlarınca (istatistikçi, farmakolog) incelendi; bir eczacı ve bir istatistikçinin incelemesi bekleniyor.",
+    "review": "Yöntemler otomatik istatistik ve farmakoloji inceleme geçişlerinden geçti. Uzman incelemesi henüz yapılmadı.",
     "demo": "Demo: tablo {date} tarihinde gerçek yerel Janus API'sinden kaydedildi; istek gönderilmez.",
     "loading": "Başlama süresi tablosu yükleniyor…",
     "errors": {
@@ -2309,6 +2317,143 @@
       "faers-onset": "65 PIPC satırı için FAERS başlama süresi tablosu, CSV ve JSON. CC BY 4.0.",
       "frictionless": "Her paketin lisansı, kaynakları ve dosya başına bir özeti (hash) içeren bir datapackage.json dosyası vardır.",
       "doc": "Nasıl okunur ve atıf yapılır: docs/open-data.md"
+    }
+  },
+  "Simulation": {
+    "virtualPopulation": "Sanal popülasyon, araştırma içindir. Hiçbir kişiyle ilgili değildir ve bir doz önerisi değildir.",
+    "inSilico": "In silico ve keşif amaçlı: öğretim ve araştırma için bir model çıktısı. Simüle edilmiş bir grubu anlatır, hiçbir zaman birinin kendi bedenini değil; kimsenin ne alması gerektiği hakkında bir şey söylemez.",
+    "demo": "Demo: sonuçlar {date} tarihinde gerçek yerel Janus API'sinden kaydedildi; istek gönderilmez.",
+    "explorer": {
+      "title": "Model gezgini",
+      "summary": "Bu cihazda çalışır · hiçbir şey gönderilmez",
+      "intro": "Zaman makinesinin kaynaklı fizyolojik parametrelerle minimal kompartman modeli, tarayıcıda çalışacak biçimde aktarıldı. Bir madde, önceden tanımlı bir sanal popülasyon ve modelin sabit sınırları içinde bir doz ve şema seçin; sonuç, yüzlerce sanal bireydeki plazma konsantrasyonlarının yayılımıdır."
+    },
+    "server": {
+      "title": "Sıraya alınan model çalıştırmaları",
+      "summary": "Aynı anda iki çalıştırma · sırada en fazla on",
+      "intro": "Kompartman modelini veya HTTK-Pop sanal bireyleriyle bir httk çalıştırmasını Janus sunucusunda çalıştırır. Yalnızca listedeki maddeler ve sanal popülasyonlar seçilebilir, her sayının kesin sınırları vardır ve aynı çalıştırmalar önbellekten yanıtlanır.",
+      "loading": "Madde listesi yükleniyor…",
+      "off": "Bu kurulumda sunucu çalıştırmaları kapalı. Model gezgini kompartman modelini tarayıcınızda çalıştırır.",
+      "toExplorer": "Model gezginini aç",
+      "limits": "Aynı anda en fazla {slots} çalıştırma ve {queue} bekleyen; her çalıştırma {timeout} saniye sonra durdurulur; sonuçlar {ttl} saat saklanır.",
+      "idle": "Girdileri seçin ve bir çalıştırma başlatın. Sonuç burada görünür.",
+      "sending": "Çalıştırma gönderiliyor…",
+      "queued": "Sırada bekliyor ({position}. sırada).",
+      "running": "Çalışıyor…",
+      "stoppedPolling": "Henüz bitmedi. Sayfa sormayı bıraktı; daha sonra yeniden deneyin."
+    },
+    "form": {
+      "title": "Girdiler",
+      "model": "Model",
+      "compound": "Madde",
+      "population": "Sanal popülasyon",
+      "dose": "Uygulama başına doz, {unit} ({low}–{high})",
+      "doseHelp": "Bu modelin sabit sınırları içinde; bir model girdisidir, kimse için bir doz değildir.",
+      "outOfBounds": "Bu değer izin verilen sınırların dışında. Sınırların içine girene kadar hiçbir şey çalıştırılmaz.",
+      "scenarios": "Kaynaklı senaryolar",
+      "doses": "Doz sayısı (1–{max})",
+      "interval": "Dozlar arası saat",
+      "horizon": "Simüle edilen süre: {hours} saat.",
+      "noPerson": "Vücut ağırlığı, yaş, böbrek işlevi veya başka bir kişisel bilgi için alan yoktur: model yalnızca bir sanal popülasyonu anlatır.",
+      "fix": "Sonucu görmek için işaretli girdiyi düzeltin.",
+      "httkDose": "httk çalıştırmaları, zaman makinesinde olduğu gibi günde kg başına 1 mg kullanır; bu, bu ilaçların olağan dozlarının çok üzerindedir: yalnızca iki sanal popülasyon arasındaki oran anlamlıdır.",
+      "samples": "Sanal birey sayısı",
+      "run": "Çalıştırmayı başlat",
+      "everyHours": "{hours} saatte bir",
+      "httkComparison": "Çalıştırma, önceden tanımlı iki HTTK-Pop sanal popülasyonunu karşılaştırır: 20–50 yaş ve 65–79 yaş yetişkinler."
+    },
+    "kind": {
+      "compartmental": "Kompartman",
+      "httk_population": "httk popülasyonu"
+    },
+    "compound": {
+      "amlodipine": "amlodipin",
+      "rhein": "rein",
+      "risperidone": "risperidon",
+      "metoclopramide": "metoklopramid",
+      "haloperidol": "haloperidol"
+    },
+    "population": {
+      "amlodipine_adult": "Genç sağlıklı yetişkinler (Faulkner 1986)",
+      "amlodipine_adult_65plus": "Yaşlı yetişkinler (Abernethy 1990: hipertansif, yaş ortalaması 68)",
+      "rhein_adult": "Sağlıklı yetişkinler (Magnard 1993)"
+    },
+    "httkPopulation": {
+      "adult": "20–50 yaş yetişkinler (HTTK-Pop)",
+      "adult_65plus": "65–79 yaş yetişkinler (HTTK-Pop)"
+    },
+    "populationBasis": {
+      "amlodipine_adult": "12 genç sağlıklı gönüllüden kaynaklı parametreler (Faulkner 1986) ve kaynaklı yayılımlar; klirens yayılımı, yaşlı ile genç arasındaki farkı zaten kapsayan bir yargıdır.",
+      "amlodipine_adult_65plus": "Klirens 19/25 ile ölçeklendi; bu, Abernethy 1990'ın (hipertansif hastalar, yaş ortalaması 68) yaşlı ve genç amlodipin klirensi oranıdır; aynı yayılımların üzerine uygulanır, diğer parametreler değişmez. 80 yaş ve üzeri kapsanmaz.",
+      "rhein_adult": "Kaynaklı görünür parametreler (Magnard 1993, sağlıklı gönüllüler); parametreler zaten görünür olduğu için biyoyararlanım 1'de sabit. Yaşlı yetişkinlere ilişkin doğrulanmış veri yok; bu nedenle yaşlı yetişkin popülasyonu sunulmaz."
+    },
+    "scenario": {
+      "validation": "Doğrulama çalışması: {dose} {unit}",
+      "historical": "Kanun senaryosu: {dose} {unit}"
+    },
+    "validation": {
+      "title": "Modelin {compound} için yayımlanmış verilere uyumu",
+      "folds": "Modelin tepe değeri yayımlanandan {cmax} kat {cdir}; eğri altındaki alan {auc} kat {adir}.",
+      "meaning": {
+        "credible": "Denetlenen senaryo için yayımlanmış değerlerin 2 katı içinde; yine de bir sanal popülasyon modelidir.",
+        "borderline": "2 ile 3 kat arası: mutlak sayıları değil, şekli ve yayılımı okuyun.",
+        "failed": "3 kattan fazla fark: mutlak sayılar doğrulanmamıştır; araştırma için yalnızca göreli karşılaştırmalar gösterilir."
+      },
+      "aucNotIndependent": "Yayımlanmış AUC bir model parametresiyle aynı kaynağı paylaşır; bu yüzden yalnızca tepe değer karşılaştırması bağımsız bir denetimdir.",
+      "direction": {
+        "model_lower": "düşük",
+        "model_higher": "yüksek"
+      },
+      "scope": {
+        "amlodipine": "Sağlıklı gönüllülerde tek bir 10 mg doza karşı denetlendi (Soria-Chacartegui 2023); diğer dozlar ve şemalar denetlenmedi.",
+        "rhein": "Sağlıklı gönüllülerde tek bir 38,58 mg doza (rein eşdeğeri, 50 mg diaserein olarak) karşı denetlendi; diğer dozlar ve şemalar denetlenmedi.",
+        "httk": "Sağlıklı yetişkinlerde ilaç başına tek bir ağızdan doza karşı denetlendi (zaman makinesi)."
+      }
+    },
+    "chart": {
+      "title": "Sanal popülasyonda zaman içinde plazma konsantrasyonu (ng/mL)",
+      "alt": "{hours} saat boyunca konsantrasyon. En yüksek medyan {at}. saatte {p50} ng/mL; o anda sanal bireylerin %90'ı {p5} ile {p95} ng/mL arasında.",
+      "axes": "İlk dozdan sonraki saat · ng/mL",
+      "legend": "Çizgi: sanal bireylerin medyanı. Gölgeli bant: 5. ile 95. persentil arası. Tek bir kişi için eğri yoktur.",
+      "table": "Sayıları tablo olarak göster",
+      "hour": "Saat",
+      "median": "Medyan"
+    },
+    "bands": {
+      "peak": "Simüle edilen sürede en yüksek konsantrasyon: medyan {p50} ng/mL, sanal bireylerin %90'ı {p5} ile {p95} ng/mL arasında.",
+      "auc": "Tek dozun eğri altındaki alanı: medyan {p50} ng·sa/mL, sanal bireylerin %90'ı {p5} ile {p95} ng·sa/mL arasında."
+    },
+    "result": {
+      "title": "Sonuç",
+      "summary": "{compound}, {population}: {samples} sanal birey.",
+      "cached": "Önbellekten yanıtlandı: aynı çalıştırma yakın zamanda yapıldı.",
+      "fresh": "Az önce sunucuda çalıştırıldı.",
+      "httkSummary": "{compound}: her yaş aralığında {samples} sanal birey, günde 1 mg/kg.",
+      "css": "{population}: medyan {p50} mg/L, sanal bireylerin %90'ı {p5} ile {p95} mg/L arasında.",
+      "httkRelative": "httk bu ilaçlar için doğrulanmadı (zaman makinesi): sonuç, iki sanal popülasyon arasındaki orandır, herhangi bir düzey değil.",
+      "extrapolation": "Doğrulanmış senaryonun (doğrulama çalışmasının tek dozu) ötesinde bir dışdeğerleme: daha dikkatli okuyun.",
+      "ratio": "Kararlı durum konsantrasyonu medyanlarının yaşlı/genç oranı: {ratio}.",
+      "httkAbsolute": "Mutlak konsantrasyonlar (doğrulanmadı, kimsenin sahip olduğu bir düzey değil)"
+    },
+    "failed": {
+      "timeout": "Çalıştırma 30 saniyeden uzun sürdü ve durduruldu.",
+      "model_failed": "Model bu çalıştırmayı tamamlayamadı.",
+      "expired": "Çalıştırma sırada çok uzun bekledi ve düşürüldü. Lütfen yeniden deneyin.",
+      "worker_lost": "Çalıştırma sunucuda kesildi. Lütfen yeniden deneyin."
+    },
+    "errors": {
+      "unavailable": "Sunucu çalıştırmaları şu anda kullanılamıyor. Model gezgini tarayıcınızda çalışır.",
+      "queueFull": "Sıra dolu. Lütfen bir dakika sonra yeniden deneyin.",
+      "rateLimited": "Kısa sürede çok fazla çalıştırma. Lütfen biraz bekleyip yeniden deneyin.",
+      "unknownJob": "Bu çalıştırma artık yok; sonuçlar sınırlı bir süre saklanır.",
+      "demoOnly": "Demo modunda yalnızca kaydedilmiş örnek çalıştırmalar vardır: her modelin varsayılan girdileri."
+    },
+    "doseUnit": {
+      "amlodipine": "mg",
+      "rhein": "mg rein eşdeğeri"
+    },
+    "scenarioNote": {
+      "canon_rhubarb_480mg": "Kanun senaryosu: hidroksiantrasen içeriğinin tamamı serbest rein sayılır, bu bir üst tahmindir (çoğu glikozittir; modelde bağırsakta etkinleşme yoktur); tek bir tarihsel doz, el-Huzi'ye atfedilir; makine çevirisi."
     }
   }
 }

@@ -17,3 +17,8 @@ test-results/
 playwright-report/
 public/vendor/
 src/open/package-summary.json
+# Written by python -m janus.simulation.parity (apps/api)
+src/simulation/parity.fixture.json
+src/simulation/explorer.json
+# scripts/record-simulation.mjs
+src/simulation/simulate.recorded.json

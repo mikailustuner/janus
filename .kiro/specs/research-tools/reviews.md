@@ -1,6 +1,7 @@
 # Reviews of the Phase 1 screens (2026-11-09)
 
-Three read-only AI review agents, run separately on the code and the new messages. Not expert reviews.
+Three read-only automated review passes, run separately on the code and the new messages. Expert review has
+not yet been done.
 
 ## Safety auditor (`.kiro/agents/safety-auditor.md`)
 Clean: forbidden phrases in five locales, FAERS framing on every onset screen, disclaimer, no TİTCK product name or

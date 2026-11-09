@@ -19,12 +19,16 @@ tag="${full:0:12}"
 log "building $tag"
 docker build --quiet -t "janus-api:$tag" --build-arg "JANUS_COMMIT=$full" -f apps/api/Dockerfile . >/dev/null
 docker build --quiet -t "janus-web:$tag" --build-arg "JANUS_COMMIT=$full" -f apps/web/Dockerfile . >/dev/null
+# Simulation worker: R + httk (the first build on the server compiles packages; later builds are cached).
+docker build --quiet -t "janus-simulator:$tag" -f apps/api/simulator.Dockerfile . >/dev/null
 
 prev="$(current_tag)"
 install -m 644 deploy/compose.yml "$STACK_DIR/compose.yml"
 export JANUS_TAG="$tag"
 log "migrating"
 compose --profile migrate run --rm migrate >/dev/null
+# The simulation worker's database role gets its login (idempotent; password from .env, never argv).
+compose --profile migrate run --rm migrate python -m janus.simulation.dbrole >/dev/null
 log "starting"
 if ! compose up -d --wait --remove-orphans; then
   log "start failed"; [ -n "$prev" ] && "$DEPLOY_DIR/rollback.sh" "$prev"; exit 1
@@ -36,7 +40,7 @@ set_tag "$tag"
 echo "$tag" >> "$STACK_DIR/releases.log"
 # Keep the images of the last three releases.
 keep="$(tail -n 3 "$STACK_DIR/releases.log")"
-for repo in janus-api janus-web; do
+for repo in janus-api janus-web janus-simulator; do
   docker image ls "$repo" --format '{{.Tag}}' | while read -r t; do
     grep -qx "$t" <<<"$keep" || docker image rm --force "$repo:$t" >/dev/null 2>&1 || true
   done

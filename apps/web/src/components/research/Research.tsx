@@ -12,11 +12,14 @@ const LIVE: Record<(typeof ENTRIES)[number], string> = {
   export: "/research/export",
 };
 
-/** Research tools (research-tools Req 4): data quality, the onset table, developers. */
+/** Research tools (research-tools Req 4; simulation-service Req 5): data quality, the onset
+ * table, developers, the model explorer and queued simulations. */
 const TOOLS = [
   { key: "dataQuality", href: "/research/data-quality" },
   { key: "onset", href: "/research/faers-onset" },
   { key: "developers", href: "/research/developers" },
+  { key: "modelExplorer", href: "/research/model-explorer" },
+  { key: "simulate", href: "/research/simulate" },
 ] as const;
 
 /**

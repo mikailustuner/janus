@@ -59,6 +59,12 @@ select = ["E", "F", "W", "I", "B", "UP", "S", "N", "RUF"]
 "janus/timemachine/**" = ["S311"]
 "janus/onset_table/**" = ["S311"]
 "tests/test_timemachine_*.py" = ["S101", "S311"]
+# Simulation service: seeded random.Random (the explorer's Monte Carlo); /tmp is the container's
+# tmpfs (TMPDIR of the model processes, the worker heartbeat).
+"janus/simulation/**" = ["S311", "S108"]
+# Queue SQL interpolates only the constant column list `_COLS`; every value is a parameter.
+"janus/simulation/queue.py" = ["S311", "S108", "S608"]
+"tests/test_simulation_*.py" = ["S101", "S311"]
 
 [tool.pyright]
 pythonVersion = "3.12"

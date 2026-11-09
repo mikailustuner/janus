@@ -209,6 +209,8 @@ const WIDE = [
   "/research/faers-onset",
   "/research/faers-onset/row",
   "/research/developers",
+  "/research/model-explorer",
+  "/research/simulate",
 ];
 
 function StorageNotice() {

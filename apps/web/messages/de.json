@@ -559,6 +559,14 @@
       "developers": {
         "title": "Für Entwicklung und Klinik",
         "body": "MCP-Server, CDS Hooks, die öffentliche API und die offenen Datenpakete, mit Einstellungen zum Kopieren."
+      },
+      "modelExplorer": {
+        "title": "Modell-Explorer",
+        "body": "Das Kompartimentmodell der Zeitmaschine im Browser: virtuelle Populationen, Dosis und Schema innerhalb fester Grenzen. Nichts wird gesendet."
+      },
+      "simulate": {
+        "title": "Modellläufe in der Warteschlange",
+        "body": "Das Kompartimentmodell oder einen httk-Lauf mit virtueller Population auf dem Janus-Server rechnen, in einer kleinen Warteschlange."
       }
     }
   },
@@ -1997,7 +2005,7 @@
     "summary": "{count, plural, one {# Befund} other {# Befunde}} · Lauf vom {date}",
     "intro": "Janus liest die Identitätsfelder von Wirkstoffen aus fünf Quellen: TİTCK (Türkei), AEMPS CIMA (Spanien), BDPM (Frankreich), openFDA NDC (USA) und Wikidata. Jede Woche vergleicht es die ATC-Codes, die sie für denselben Wirkstoff angeben, und listet jeden Unterschied auf: was neu ist, was bleibt und was seit dem vorigen Lauf behoben wurde.",
     "codesOnly": "Nur Codes und Zahlen: Dieser Bericht enthält keine Zeile der TİTCK-Liste, keinen Produktnamen, keinen Barcode und keinen Text des WHOCC-Index.",
-    "review": "Mit festen Regeln erzeugt. Bestätigte Fehler wurden vom Projektinhaber mit KI-Unterstützung geprüft, noch nicht von einer Apothekerin oder einem Apotheker. Jeder Befund muss pharmazeutisch geprüft werden, bevor er an die Quelle gemeldet wird.",
+    "review": "Mit festen Regeln erzeugt. Eine Prüfung durch Fachleute ist noch nicht erfolgt: Jeder Befund muss pharmazeutisch geprüft werden, bevor er an die Quelle gemeldet wird.",
     "demo": "Demo: Der Bericht wurde am {date} von der echten lokalen Janus-API aufgezeichnet; es wird keine Anfrage gesendet.",
     "loading": "Datenqualitätsbericht wird geladen …",
     "errors": {
@@ -2011,7 +2019,7 @@
       "tableLabel": "Befunde nach Klasse und Status",
       "upstream": "Bestätigte Fehler, die ihre Quelle noch veröffentlicht: {still}. An der Quelle behoben: {resolved}."
     },
-    "classMeaning": "Eine Klasse beschreibt die Daten, nie ein Arzneimittel. Bestätigter Fehler: in Janus' geprüfter Ausschlussdatei. Pharmazeutische Prüfung nötig: ein Unterschied, den keine Regel erklärt. Erklärter Unterschied: eine feste Regel erklärt ihn (zum Beispiel veröffentlichen beide Behörden den Code und der Wikidata-Eintrag ist veraltet); das ist kein pharmazeutisches Urteil.",
+    "classMeaning": "Eine Klasse beschreibt die Daten, nie ein Arzneimittel. Bestätigter Fehler: in Janus' Ausschlussdatei. Pharmazeutische Prüfung nötig: ein Unterschied, den keine Regel erklärt. Erklärter Unterschied: eine feste Regel erklärt ihn (zum Beispiel veröffentlichen beide Behörden den Code und der Wikidata-Eintrag ist veraltet); das ist kein pharmazeutisches Urteil.",
     "class": {
       "confirmed_error": "Bestätigter Fehler",
       "needs_pharmacist": "Pharmazeutische Prüfung nötig",
@@ -2123,7 +2131,7 @@
     "summary": "{rows} PIPC-Muster · {medians} mit Median",
     "intro": "Für jedes Muster der PIPC-Liste (Arzneimittel A → Ereignis → Arzneimittel B): Wie lange nach dem Beginn eines Arzneimittels aus der Klasse von A begann das Ereignis laut den FAERS-Meldungen? Eine Methode auf Grundlage der Zeitmaschine, mit strengeren Regeln, für alle 65 Zeilen, mit der Zahl der Meldungen hinter jeder Angabe.",
     "framing": "Nur beschreibend: nicht kausal, keine Inzidenz. FAERS beruht auf Spontanmeldungen; Zahlen sind Meldungen, keine Personen. Ein Intervall ist, was Meldende eingetragen haben, kein bei Menschen gemessener Beginn.",
-    "review": "Methoden von KI-Agenten geprüft (Statistik, Pharmakologie); Prüfung durch pharmazeutische und statistische Fachleute steht aus.",
+    "review": "Die Methoden haben automatische statistische und pharmakologische Prüfdurchläufe bestanden. Eine Prüfung durch Fachleute ist noch nicht erfolgt.",
     "demo": "Demo: Die Tabelle wurde am {date} von der echten lokalen Janus-API aufgezeichnet; es wird keine Anfrage gesendet.",
     "loading": "Tabelle wird geladen …",
     "errors": {
@@ -2309,6 +2317,143 @@
       "faers-onset": "Die FAERS-Tabelle zur Zeit bis zum Auftreten für die 65 PIPC-Zeilen als CSV und JSON. CC BY 4.0.",
       "frictionless": "Jedes Paket hat eine datapackage.json mit Lizenz, Quellen und einem Hash je Datei.",
       "doc": "Lesen und zitieren: docs/open-data.md"
+    }
+  },
+  "Simulation": {
+    "virtualPopulation": "Virtuelle Population, für die Forschung. Betrifft keine Person und ist keine Dosisempfehlung.",
+    "inSilico": "In silico und explorativ: eine Modellausgabe für Lehre und Forschung. Sie beschreibt eine simulierte Gruppe, nie den Körper eines bestimmten Menschen, und sagt nichts darüber, was jemand einnehmen sollte.",
+    "demo": "Demo: Die Ergebnisse wurden am {date} von der echten lokalen Janus-API aufgezeichnet; es wird keine Anfrage gesendet.",
+    "explorer": {
+      "title": "Modell-Explorer",
+      "summary": "Läuft auf diesem Gerät · nichts wird gesendet",
+      "intro": "Das minimale Kompartimentmodell der Zeitmaschine mit belegten physiologischen Parametern, für den Browser portiert. Wählen Sie einen Stoff, eine vordefinierte virtuelle Population sowie Dosis und Schema innerhalb der festen Grenzen des Modells; das Ergebnis ist die Streuung der Plasmakonzentrationen über Hunderte virtueller Individuen."
+    },
+    "server": {
+      "title": "Modellläufe in der Warteschlange",
+      "summary": "Zwei Läufe gleichzeitig · zehn in der Warteschlange",
+      "intro": "Rechnet das Kompartimentmodell oder einen httk-Lauf mit virtuellen Individuen von HTTK-Pop auf dem Janus-Server. Nur gelistete Stoffe und virtuelle Populationen sind wählbar, jede Zahl hat feste Grenzen, und gleiche Läufe werden aus dem Zwischenspeicher beantwortet.",
+      "loading": "Liste der Stoffe wird geladen …",
+      "off": "Serverläufe sind in dieser Installation ausgeschaltet. Der Modell-Explorer rechnet das Kompartimentmodell im Browser.",
+      "toExplorer": "Modell-Explorer öffnen",
+      "limits": "Höchstens {slots} Läufe gleichzeitig und {queue} wartend; jeder Lauf endet nach {timeout} Sekunden; Ergebnisse bleiben {ttl} Stunden erhalten.",
+      "idle": "Eingaben wählen und einen Lauf starten. Das Ergebnis erscheint hier.",
+      "sending": "Lauf wird gesendet …",
+      "queued": "Wartet in der Warteschlange (Platz {position}).",
+      "running": "Läuft …",
+      "stoppedPolling": "Noch nicht fertig. Die Seite fragt nicht mehr nach; später erneut versuchen."
+    },
+    "form": {
+      "title": "Eingaben",
+      "model": "Modell",
+      "compound": "Stoff",
+      "population": "Virtuelle Population",
+      "dose": "Dosis je Gabe, {unit} ({low}–{high})",
+      "doseHelp": "Innerhalb der festen Grenzen dieses Modells; eine Modelleingabe, keine Dosis für irgendwen.",
+      "outOfBounds": "Dieser Wert liegt außerhalb der erlaubten Grenzen. Gerechnet wird erst, wenn er innerhalb liegt.",
+      "scenarios": "Belegte Szenarien",
+      "doses": "Anzahl der Gaben (1–{max})",
+      "interval": "Stunden zwischen den Gaben",
+      "horizon": "Simulierte Zeit: {hours} Stunden.",
+      "noPerson": "Es gibt kein Feld für Körpergewicht, Alter, Nierenfunktion oder andere persönliche Angaben: Das Modell beschreibt nur eine virtuelle Population.",
+      "fix": "Die markierte Eingabe korrigieren, um das Ergebnis zu sehen.",
+      "httkDose": "httk-Läufe verwenden wie die Zeitmaschine 1 mg je kg und Tag, weit über üblichen Dosen dieser Arzneistoffe: Aussagekräftig ist nur das Verhältnis der beiden virtuellen Populationen.",
+      "samples": "Virtuelle Individuen",
+      "run": "Lauf starten",
+      "everyHours": "alle {hours} h",
+      "httkComparison": "Der Lauf vergleicht die beiden vordefinierten virtuellen Populationen von HTTK-Pop: Erwachsene von 20–50 und von 65–79 Jahren."
+    },
+    "kind": {
+      "compartmental": "Kompartimentmodell",
+      "httk_population": "httk-Population"
+    },
+    "compound": {
+      "amlodipine": "Amlodipin",
+      "rhein": "Rhein",
+      "risperidone": "Risperidon",
+      "metoclopramide": "Metoclopramid",
+      "haloperidol": "Haloperidol"
+    },
+    "population": {
+      "amlodipine_adult": "Junge gesunde Erwachsene (Faulkner 1986)",
+      "amlodipine_adult_65plus": "Ältere Erwachsene (Abernethy 1990: Hypertonie, Durchschnittsalter 68)",
+      "rhein_adult": "Gesunde Erwachsene (Magnard 1993)"
+    },
+    "httkPopulation": {
+      "adult": "Erwachsene von 20–50 Jahren (HTTK-Pop)",
+      "adult_65plus": "Erwachsene von 65–79 Jahren (HTTK-Pop)"
+    },
+    "populationBasis": {
+      "amlodipine_adult": "Die belegten Parameter von 12 jungen gesunden Freiwilligen (Faulkner 1986) mit den belegten Streuungen; die Streuung der Clearance ist eine Einschätzung, die den Unterschied zwischen Älteren und Jüngeren bereits abdeckt.",
+      "amlodipine_adult_65plus": "Clearance mit 19/25 skaliert, dem Verhältnis der Amlodipin-Clearance Älterer zu Jüngeren nach Abernethy 1990 (Patienten mit Hypertonie, Durchschnittsalter 68), zusätzlich zu denselben Streuungen; die übrigen Parameter bleiben gleich. Ab 80 Jahren nicht abgedeckt.",
+      "rhein_adult": "Die belegten scheinbaren Parameter (Magnard 1993, gesunde Freiwillige); Bioverfügbarkeit fest auf 1, da die Parameter bereits scheinbar sind. Zu älteren Erwachsenen wurden keine Daten verifiziert, daher wird keine Population Älterer angeboten."
+    },
+    "scenario": {
+      "validation": "Validierungsstudie: {dose} {unit}",
+      "historical": "Kanon-Szenario: {dose} {unit}"
+    },
+    "validation": {
+      "title": "Wie gut das Modell veröffentlichte Daten zu {compound} traf",
+      "folds": "Spitzenwert des Modells {cmax}-fach {cdir} als veröffentlicht; Fläche unter der Kurve {auc}-fach {adir}.",
+      "meaning": {
+        "credible": "Innerhalb des 2-Fachen der veröffentlichten Werte für das geprüfte Szenario; es bleibt ein Modell einer virtuellen Population.",
+        "borderline": "Zwischen 2- und 3-fach: Form und Streuung lesen, nicht die absoluten Zahlen.",
+        "failed": "Mehr als 3-fach auseinander: Die absoluten Zahlen sind nicht validiert; für die Forschung werden nur relative Vergleiche gezeigt."
+      },
+      "aucNotIndependent": "Die veröffentlichte AUC teilt eine Quelle mit einem Modellparameter; nur der Vergleich der Spitzenwerte ist eine unabhängige Prüfung.",
+      "direction": {
+        "model_lower": "niedriger",
+        "model_higher": "höher"
+      },
+      "scope": {
+        "amlodipine": "Geprüft an einer Einzeldosis von 10 mg bei gesunden Freiwilligen (Soria-Chacartegui 2023); andere Dosen und Schemata sind nicht geprüft.",
+        "rhein": "Geprüft an einer Einzeldosis von 38,58 mg (Rhein-Äquivalent, als 50 mg Diacerein) bei gesunden Freiwilligen; andere Dosen und Schemata sind nicht geprüft.",
+        "httk": "Geprüft an einer oralen Einzeldosis je Arzneistoff bei gesunden Erwachsenen (Zeitmaschine)."
+      }
+    },
+    "chart": {
+      "title": "Plasmakonzentration im Zeitverlauf in der virtuellen Population (ng/mL)",
+      "alt": "Konzentration über {hours} Stunden. Höchster Median {p50} ng/mL in Stunde {at}; 90 % der virtuellen Individuen liegen dann zwischen {p5} und {p95} ng/mL.",
+      "axes": "Stunden nach der ersten Gabe · ng/mL",
+      "legend": "Linie: Median der virtuellen Individuen. Schattiertes Band: 5. bis 95. Perzentil. Es gibt keine Kurve für eine einzelne Person.",
+      "table": "Zahlen als Tabelle zeigen",
+      "hour": "Stunde",
+      "median": "Median"
+    },
+    "bands": {
+      "peak": "Höchste Konzentration in der simulierten Zeit: Median {p50} ng/mL, 90 % der virtuellen Individuen zwischen {p5} und {p95} ng/mL.",
+      "auc": "Fläche unter der Kurve einer Gabe: Median {p50} ng·h/mL, 90 % der virtuellen Individuen zwischen {p5} und {p95} ng·h/mL."
+    },
+    "result": {
+      "title": "Ergebnis",
+      "summary": "{compound}, {population}: {samples} virtuelle Individuen.",
+      "cached": "Aus dem Zwischenspeicher beantwortet: Derselbe Lauf wurde vor Kurzem gerechnet.",
+      "fresh": "Eben auf dem Server gerechnet.",
+      "httkSummary": "{compound}: {samples} virtuelle Individuen je Altersbereich, 1 mg/kg/Tag.",
+      "css": "{population}: Median {p50} mg/l, 90 % der virtuellen Individuen zwischen {p5} und {p95} mg/l.",
+      "httkRelative": "httk wurde für diese Arzneistoffe nicht validiert (Zeitmaschine): Das Ergebnis ist das Verhältnis der beiden virtuellen Populationen, kein Spiegel.",
+      "extrapolation": "Extrapolation über das validierte Szenario (eine Dosis der Validierungsstudie) hinaus: mit mehr Vorsicht lesen.",
+      "ratio": "Verhältnis der Mediane der Steady-State-Konzentration, Ältere zu Jüngeren: {ratio}.",
+      "httkAbsolute": "Absolute Konzentrationen (nicht validiert, kein Spiegel, den jemand hat)"
+    },
+    "failed": {
+      "timeout": "Der Lauf dauerte länger als 30 Sekunden und wurde beendet.",
+      "model_failed": "Das Modell konnte diesen Lauf nicht abschließen.",
+      "expired": "Der Lauf wartete zu lange in der Warteschlange und wurde verworfen. Bitte erneut versuchen.",
+      "worker_lost": "Der Lauf wurde auf dem Server unterbrochen. Bitte erneut versuchen."
+    },
+    "errors": {
+      "unavailable": "Serverläufe sind gerade nicht verfügbar. Der Modell-Explorer rechnet im Browser.",
+      "queueFull": "Die Warteschlange ist voll. Bitte in einer Minute erneut versuchen.",
+      "rateLimited": "Zu viele Läufe in kurzer Zeit. Bitte kurz warten und erneut versuchen.",
+      "unknownJob": "Dieser Lauf ist nicht mehr verfügbar; Ergebnisse bleiben nur begrenzte Zeit erhalten.",
+      "demoOnly": "Im Demo-Modus gibt es nur die aufgezeichneten Beispielläufe: die Standardeingaben jedes Modells."
+    },
+    "doseUnit": {
+      "amlodipine": "mg",
+      "rhein": "mg Rhein-Äquivalent"
+    },
+    "scenarioNote": {
+      "canon_rhubarb_480mg": "Kanon-Szenario: der gesamte Gehalt an Hydroxyanthracenen als freies Rhein gezählt, eine obere Schätzung (überwiegend Glykoside; das Modell kennt keine Aktivierung im Darm); eine historische Dosis, al-Khuzi zugeschrieben; maschinelle Übersetzung."
     }
   }
 }

@@ -38,7 +38,10 @@ export type Route =
   | "open/outcomes"
   | "open/data-quality"
   | "open/faers-onset"
-  | "open/faers-onset/row";
+  | "open/faers-onset/row"
+  | "simulate"
+  | "simulate/compounds"
+  | "simulate/jobs";
 
 export const ROUTES: readonly Route[] = [
   "resolve/scan",
@@ -75,6 +78,9 @@ export const ROUTES: readonly Route[] = [
   "open/data-quality",
   "open/faers-onset",
   "open/faers-onset/row",
+  "simulate",
+  "simulate/compounds",
+  "simulate/jobs",
 ];
 
 export type ApiError =
@@ -131,6 +137,11 @@ export const MESSAGE_KEYS = [
   "DataQuality.errors.unavailable",
   "Onset.errors.unavailable",
   "Onset.errors.unknown",
+  "Simulation.errors.unavailable",
+  "Simulation.errors.queueFull",
+  "Simulation.errors.rateLimited",
+  "Simulation.errors.unknownJob",
+  "Simulation.errors.demoOnly",
 ] as const;
 
 export type MessageKey = (typeof MESSAGE_KEYS)[number];
@@ -270,6 +281,17 @@ export function messageKeyFor(
       return "Onset.errors.unavailable";
     if (status === 404 && code === "unknown_position")
       return "Onset.errors.unknown";
+  }
+  // simulation-service design §2: switched off, queue full, rate limited, expired job.
+  if (route.startsWith("simulate")) {
+    if (status === 503 && code === "simulation_unavailable")
+      return "Simulation.errors.unavailable";
+    if (status === 429 && code === "queue_full")
+      return "Simulation.errors.queueFull";
+    if (status === 429 && code === "rate_limited")
+      return "Simulation.errors.rateLimited";
+    if (status === 404 && code === "unknown_job")
+      return "Simulation.errors.unknownJob";
   }
   return "Errors.generic";
 }

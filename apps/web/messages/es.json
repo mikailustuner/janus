@@ -559,6 +559,14 @@
       "developers": {
         "title": "Para desarrolladores y clínicos",
         "body": "Servidor MCP, CDS Hooks, la API pública y los paquetes de datos abiertos, con ajustes listos para copiar."
+      },
+      "modelExplorer": {
+        "title": "Explorador de modelos",
+        "body": "El modelo compartimental de la máquina del tiempo en su navegador: poblaciones virtuales, dosis y pauta dentro de límites fijos. No se envía nada."
+      },
+      "simulate": {
+        "title": "Cálculos de modelo en cola",
+        "body": "Ejecute el modelo compartimental o un cálculo httk de población virtual en el servidor de Janus, en una cola pequeña."
       }
     }
   },
@@ -1997,7 +2005,7 @@
     "summary": "{count, plural, one {# hallazgo} other {# hallazgos}} · ejecución del {date}",
     "intro": "Janus lee los campos de identidad de los principios activos en cinco fuentes: TİTCK (Turquía), AEMPS CIMA (España), BDPM (Francia), openFDA NDC (EE. UU.) y Wikidata. Cada semana compara los códigos ATC que dan para un mismo principio activo y enumera cada diferencia: qué es nuevo, qué persiste y qué se corrigió desde la ejecución anterior.",
     "codesOnly": "Solo códigos y recuentos: este informe no contiene ninguna fila de la lista de TİTCK, ningún nombre de producto, ningún código de barras ni texto del índice WHOCC.",
-    "review": "Generado con reglas fijas. Los errores confirmados los revisó el responsable del proyecto con ayuda de IA, todavía no un farmacéutico. Un farmacéutico debe revisar cada hallazgo antes de notificarlo a la fuente.",
+    "review": "Generado con reglas fijas. Todavía no se ha hecho la revisión de expertos: un farmacéutico debe revisar cada hallazgo antes de notificarlo a la fuente.",
     "demo": "Demo: el informe se grabó el {date} desde la API local real de Janus; no se envía ninguna solicitud.",
     "loading": "Cargando el informe de calidad de datos…",
     "errors": {
@@ -2011,7 +2019,7 @@
       "tableLabel": "Hallazgos por clase y estado",
       "upstream": "Errores confirmados que su fuente aún publica: {still}. Corregidos en la fuente: {resolved}."
     },
-    "classMeaning": "Una clase describe los datos, nunca un medicamento. Error confirmado: figura en el archivo de exclusiones revisado de Janus. Requiere farmacéutico: una diferencia que ninguna regla explica. Diferencia explicada: una regla fija la explica (por ejemplo, ambas agencias publican el código y el elemento de Wikidata está desactualizado); no es el juicio de un farmacéutico.",
+    "classMeaning": "Una clase describe los datos, nunca un medicamento. Error confirmado: figura en el archivo de exclusiones de Janus. Requiere farmacéutico: una diferencia que ninguna regla explica. Diferencia explicada: una regla fija la explica (por ejemplo, ambas agencias publican el código y el elemento de Wikidata está desactualizado); no es el juicio de un farmacéutico.",
     "class": {
       "confirmed_error": "Error confirmado",
       "needs_pharmacist": "Requiere revisión farmacéutica",
@@ -2123,7 +2131,7 @@
     "summary": "{rows} patrones PIPC · {medians} con mediana",
     "intro": "Para cada patrón de la lista PIPC (fármaco A → evento → fármaco B): ¿cuánto tiempo después de empezar un medicamento de la clase de A comenzó el evento según las notificaciones de FAERS? Un método basado en el de la máquina del tiempo, con reglas más estrictas, para las 65 filas, con el número de notificaciones detrás de cada cifra.",
     "framing": "Solo descriptivo: no causal, no es incidencia. FAERS es notificación espontánea; los recuentos son notificaciones, no personas. Un intervalo es lo que escribió quien notifica, no un inicio medido en personas.",
-    "review": "Métodos revisados por agentes de IA (estadística, farmacología); pendiente de revisión por un farmacéutico y un estadístico.",
+    "review": "Los métodos superaron revisiones automatizadas de estadística y farmacología. Todavía no se ha hecho la revisión de expertos.",
     "demo": "Demo: la tabla se grabó el {date} desde la API local real de Janus; no se envía ninguna solicitud.",
     "loading": "Cargando la tabla…",
     "errors": {
@@ -2309,6 +2317,143 @@
       "faers-onset": "La tabla FAERS de tiempos hasta la aparición para las 65 filas PIPC en CSV y JSON. CC BY 4.0.",
       "frictionless": "Cada paquete tiene un datapackage.json con la licencia, las fuentes y un hash por archivo.",
       "doc": "Cómo leerlos y citarlos: docs/open-data.md"
+    }
+  },
+  "Simulation": {
+    "virtualPopulation": "Población virtual, para investigación. No se refiere a ninguna persona y no es una recomendación de dosis.",
+    "inSilico": "In silico y exploratorio: un resultado de modelo para docencia e investigación. Describe un grupo simulado, nunca el cuerpo de alguien, y no dice nada sobre lo que alguien debería tomar.",
+    "demo": "Demo: los resultados se grabaron el {date} desde la API local real de Janus; no se envía ninguna solicitud.",
+    "explorer": {
+      "title": "Explorador de modelos",
+      "summary": "Funciona en este dispositivo · no se envía nada",
+      "intro": "El modelo compartimental mínimo de la máquina del tiempo, con parámetros fisiológicos citados, adaptado para funcionar en el navegador. Elija una sustancia, una población virtual predefinida y una dosis y pauta dentro de los límites fijos del modelo; el resultado es la dispersión de las concentraciones plasmáticas en cientos de individuos virtuales."
+    },
+    "server": {
+      "title": "Cálculos de modelo en cola",
+      "summary": "Dos cálculos a la vez · una cola de diez",
+      "intro": "Ejecuta el modelo compartimental o un cálculo httk con individuos virtuales de HTTK-Pop en el servidor de Janus. Solo se pueden elegir las sustancias y poblaciones virtuales de la lista, cada número tiene límites fijos y los cálculos idénticos se responden desde la caché.",
+      "loading": "Cargando la lista de sustancias…",
+      "off": "Los cálculos en el servidor están desactivados en esta instalación. El explorador de modelos calcula el modelo compartimental en su navegador.",
+      "toExplorer": "Abrir el explorador de modelos",
+      "limits": "Como máximo {slots} cálculos a la vez y {queue} en espera; cada cálculo se detiene a los {timeout} segundos; los resultados se guardan {ttl} horas.",
+      "idle": "Elija los datos de entrada e inicie un cálculo. El resultado aparece aquí.",
+      "sending": "Enviando el cálculo…",
+      "queued": "Esperando en la cola (posición {position}).",
+      "running": "Calculando…",
+      "stoppedPolling": "Aún no ha terminado. La página dejó de preguntar; inténtelo más tarde."
+    },
+    "form": {
+      "title": "Datos de entrada",
+      "model": "Modelo",
+      "compound": "Sustancia",
+      "population": "Población virtual",
+      "dose": "Dosis por administración, {unit} ({low}–{high})",
+      "doseHelp": "Dentro de los límites fijos de este modelo; una entrada del modelo, no una dosis para nadie.",
+      "outOfBounds": "Este valor está fuera de los límites permitidos. No se calcula nada hasta que esté dentro.",
+      "scenarios": "Escenarios citados",
+      "doses": "Número de dosis (1–{max})",
+      "interval": "Horas entre dosis",
+      "horizon": "Tiempo simulado: {hours} horas.",
+      "noPerson": "No hay ningún campo para peso corporal, edad, función renal ni ningún otro dato personal: el modelo describe solo una población virtual.",
+      "fix": "Corrija el dato señalado para ver el resultado.",
+      "httkDose": "Los cálculos httk usan 1 mg por kg al día, como la máquina del tiempo, muy por encima de las dosis habituales de estos fármacos: solo tiene sentido la relación entre las dos poblaciones virtuales.",
+      "samples": "Individuos virtuales",
+      "run": "Iniciar el cálculo",
+      "everyHours": "cada {hours} h",
+      "httkComparison": "El cálculo compara las dos poblaciones virtuales predefinidas de HTTK-Pop: adultos de 20 a 50 años y de 65 a 79 años."
+    },
+    "kind": {
+      "compartmental": "Compartimental",
+      "httk_population": "Población httk"
+    },
+    "compound": {
+      "amlodipine": "amlodipino",
+      "rhein": "reína",
+      "risperidone": "risperidona",
+      "metoclopramide": "metoclopramida",
+      "haloperidol": "haloperidol"
+    },
+    "population": {
+      "amlodipine_adult": "Adultos jóvenes sanos (Faulkner 1986)",
+      "amlodipine_adult_65plus": "Adultos mayores (Abernethy 1990: hipertensos, edad media 68)",
+      "rhein_adult": "Adultos sanos (Magnard 1993)"
+    },
+    "httkPopulation": {
+      "adult": "Adultos de 20 a 50 años (HTTK-Pop)",
+      "adult_65plus": "Adultos de 65 a 79 años (HTTK-Pop)"
+    },
+    "populationBasis": {
+      "amlodipine_adult": "Los parámetros citados de 12 voluntarios jóvenes sanos (Faulkner 1986) con las dispersiones citadas; la dispersión del aclaramiento es una estimación que ya cubre la diferencia entre mayores y jóvenes.",
+      "amlodipine_adult_65plus": "Aclaramiento multiplicado por 19/25, la relación de aclaramiento de amlodipino entre mayores y jóvenes de Abernethy 1990 (pacientes hipertensos, edad media 68), además de las mismas dispersiones; los demás parámetros no cambian. No cubre a mayores de 80 años.",
+      "rhein_adult": "Los parámetros aparentes citados (Magnard 1993, voluntarios sanos); biodisponibilidad fijada en 1 porque los parámetros ya son aparentes. No se verificaron datos de adultos mayores, por lo que no se ofrece una población de mayores."
+    },
+    "scenario": {
+      "validation": "Estudio de validación: {dose} {unit}",
+      "historical": "Escenario del Canon: {dose} {unit}"
+    },
+    "validation": {
+      "title": "Cómo coincidió el modelo con los datos publicados de {compound}",
+      "folds": "Pico del modelo {cmax} veces {cdir} que el publicado; área bajo la curva {auc} veces {adir}.",
+      "meaning": {
+        "credible": "A menos de 2 veces de los valores publicados para el escenario comprobado; sigue siendo un modelo de una población virtual.",
+        "borderline": "Entre 2 y 3 veces: lea la forma y la dispersión, no los números absolutos.",
+        "failed": "Más de 3 veces de diferencia: los números absolutos no están validados; solo se muestran comparaciones relativas para la investigación."
+      },
+      "aucNotIndependent": "El AUC publicado comparte fuente con un parámetro del modelo; solo la comparación de picos es una comprobación independiente.",
+      "direction": {
+        "model_lower": "más bajo",
+        "model_higher": "más alto"
+      },
+      "scope": {
+        "amlodipine": "Comprobado con una dosis única de 10 mg en voluntarios sanos (Soria-Chacartegui 2023); otras dosis y pautas no están comprobadas.",
+        "rhein": "Comprobado con una dosis única de 38,58 mg (equivalente de reína, administrada como 50 mg de diacereína) en voluntarios sanos; otras dosis y pautas no están comprobadas.",
+        "httk": "Comprobado con una dosis oral única por fármaco en adultos sanos (máquina del tiempo)."
+      }
+    },
+    "chart": {
+      "title": "Concentración plasmática a lo largo del tiempo en la población virtual (ng/mL)",
+      "alt": "Concentración durante {hours} horas. Mediana más alta {p50} ng/mL en la hora {at}, con el 90 % de los individuos virtuales entre {p5} y {p95} ng/mL en ese momento.",
+      "axes": "Horas tras la primera dosis · ng/mL",
+      "legend": "Línea: mediana de los individuos virtuales. Banda sombreada: del percentil 5 al 95. No hay ninguna curva para una persona concreta.",
+      "table": "Mostrar los números como tabla",
+      "hour": "Hora",
+      "median": "Mediana"
+    },
+    "bands": {
+      "peak": "Concentración más alta en el tiempo simulado: mediana {p50} ng/mL, el 90 % de los individuos virtuales entre {p5} y {p95} ng/mL.",
+      "auc": "Área bajo la curva de una dosis: mediana {p50} ng·h/mL, el 90 % de los individuos virtuales entre {p5} y {p95} ng·h/mL."
+    },
+    "result": {
+      "title": "Resultado",
+      "summary": "{compound}, {population}: {samples} individuos virtuales.",
+      "cached": "Respondido desde la caché: el mismo cálculo se hizo hace poco.",
+      "fresh": "Calculado en el servidor ahora mismo.",
+      "httkSummary": "{compound}: {samples} individuos virtuales en cada rango de edad, 1 mg/kg/día.",
+      "css": "{population}: mediana {p50} mg/L, el 90 % de los individuos virtuales entre {p5} y {p95} mg/L.",
+      "httkRelative": "httk no se validó para estos fármacos (máquina del tiempo): el resultado es la relación entre las dos poblaciones virtuales, no un nivel.",
+      "extrapolation": "Extrapolación más allá del escenario validado (una dosis del estudio de validación): léase con más cautela.",
+      "ratio": "Relación mayores/jóvenes de las medianas de concentración en estado estacionario: {ratio}.",
+      "httkAbsolute": "Concentraciones absolutas (no validadas, no son un nivel que alguien tenga)"
+    },
+    "failed": {
+      "timeout": "El cálculo tardó más de 30 segundos y se detuvo.",
+      "model_failed": "El modelo no pudo terminar este cálculo.",
+      "expired": "El cálculo esperó demasiado en la cola y se descartó. Vuelva a intentarlo.",
+      "worker_lost": "El cálculo se interrumpió en el servidor. Vuelva a intentarlo."
+    },
+    "errors": {
+      "unavailable": "Los cálculos en el servidor no están disponibles ahora. El explorador de modelos funciona en su navegador.",
+      "queueFull": "La cola está llena. Vuelva a intentarlo en un minuto.",
+      "rateLimited": "Demasiados cálculos en poco tiempo. Espere un poco y vuelva a intentarlo.",
+      "unknownJob": "Este cálculo ya no está disponible; los resultados se guardan un tiempo limitado.",
+      "demoOnly": "En el modo demo solo están los cálculos de ejemplo grabados: los datos de entrada predeterminados de cada modelo."
+    },
+    "doseUnit": {
+      "amlodipine": "mg",
+      "rhein": "mg equivalentes de reína"
+    },
+    "scenarioNote": {
+      "canon_rhubarb_480mg": "Escenario del Canon: todo el contenido de hidroxiantracenos contado como reína libre, una estimación alta (sobre todo glucósidos; el modelo no tiene activación intestinal); una dosis histórica, atribuida a al-Juzi; traducción automática."
     }
   }
 }
