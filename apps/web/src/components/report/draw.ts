@@ -177,16 +177,24 @@ function layout(
     ctx.fillStyle = p.fg;
     ctx.textAlign = "center";
     font(800, 64, p.body);
-    ctx.fillText(String(c.rules.checked), ringX, cy + 10 * s);
+    ctx.fillText(c.ringValue, ringX, cy + 10 * s);
     ctx.fillStyle = p.muted;
     font(400, 24, p.body);
     ctx.fillText(c.ringLabel, ringX, cy + 46 * s);
+    // The ring's own label under it, so it never reads as a score (safety review A1).
+    ctx.fillStyle = p.fg;
+    font(700, 26, p.body);
+    ctx.fillText(c.ringCaption, ringX, cy + R + 44 * s, 2 * R + 60 * s);
     ctx.textAlign = "start";
   }
-  y = top + blockH;
+  y = top + Math.max(blockH, 2 * R + 64 * s);
   gap(18);
   text(c.headline, 28, p.muted);
-  gap(22);
+  gap(10);
+  if (c.order) {
+    text(c.order, 26, p.muted);
+    gap(22);
+  } else gap(12);
   if (c.noPattern) {
     text(c.noPattern, 34, p.fg, { weight: 700 });
     gap(22);
@@ -199,6 +207,10 @@ function layout(
     text(c.abruptStop.count, 30, p.muted);
     gap(4);
     text(c.abruptStop.line, 32, p.warn, { weight: 700 });
+    if (c.abruptStop.names) {
+      gap(4);
+      text(c.abruptStop.names, 28, p.fg);
+    }
     gap(22);
   }
   for (const list of [c.events, c.ingredients]) {

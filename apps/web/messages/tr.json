@@ -1328,11 +1328,11 @@
     },
     "rules": {
       "title": "Kontrol edilen örüntüler",
-      "of": "toplam {total}"
+      "of": "/ {total}"
     },
     "abrupt": {
-      "title": "Aniden bırakılmaması gerekenler",
-      "sentence": "{count, plural, one {# ilaçta bu satır var:} other {# ilaçta bu satır var:}}"
+      "title": "Aniden kesilmemesi gerekenler",
+      "sentence": "{count, plural, one {# ilaçta şu uyarı var:} other {# ilaçta şu uyarı var:}}"
     },
     "regions": {
       "title": "Bölgeler",
@@ -1350,15 +1350,16 @@
       "evidenceCount": "{count, plural, one {Örüntülerin dayandığı # kaynak.} other {Örüntülerin dayandığı # kaynak.}}",
       "withExclusions": "{count, plural, one {# örüntüde kullanılmayan bir kaynak var. Nedeni o örüntünün ekranında yazıyor.} other {# örüntüde kullanılmayan bir kaynak var. Nedeni bu örüntülerin ekranlarında yazıyor.}}",
       "lastCheck": "Bütünlük en son {date} tarihinde kontrol edildi.",
+      "seeFindings": "Kaynaklarının durumunu görmek için her örüntüyü açın.",
       "openEvidence": "Kanıtları gör"
     },
     "share": {
       "title": "Özet görseli paylaş",
       "intro": "Bu özetin bir görselini yakınınıza gönderebilir ya da doktorunuza gösterebilirsiniz. Görsel bu cihazda hazırlanır.",
       "default": "Görselde yalnızca sayılar yer alır. İsterseniz şunları ekleyebilirsiniz:",
-      "events": "Her örüntünün neyle ilgili olduğunu ekle",
+      "events": "Her örüntünün neyle ilgili olduğunu ekleyin",
       "eventsHint": "Örneğin bir örüntünün adını verdiği yan etki. Görseli gören herkes bu sağlık bilgisini görür.",
-      "ingredients": "İlaçlarınızın etkin maddelerini ekle",
+      "ingredients": "İlaçlarınızın etkin maddelerini ekleyin",
       "ingredientsHint": "Kutu adları hiçbir zaman eklenmez. Görseli gören herkes hangi ilaçları kullandığınızı görür.",
       "prepare": "Görseli hazırla",
       "preparing": "Görsel hazırlanıyor…",
@@ -1377,9 +1378,11 @@
       "patterns": "{count, plural, one {konuşmaya değer örüntü} other {konuşmaya değer örüntü}}",
       "rulesOf": "{total} örüntüden {checked}",
       "rules": "örüntü kontrol edildi",
-      "abrupt": "{count, plural, one {# ilaçta bu satır var:} other {# ilaçta bu satır var:}}",
+      "abrupt": "{count, plural, one {# ilaçta şu uyarı var:} other {# ilaçta şu uyarı var:}}",
       "eventsHeading": "Örüntülerin konusu",
       "eventLine": "{event} · {order}",
+      "order": "Sıra örüntüye uyuyor: {fits} · Sıra uyuyor, olağan pencereden daha geç: {late} · Sıra doğrulanmadı: {unconfirmed}",
+      "abruptNames": "Bu uyarının olduğu ilaçlar: {names}",
       "ingredientsHeading": "Listedeki etkin maddeler",
       "footer": "Bu cihazda Janus ile hazırlandı"
     }

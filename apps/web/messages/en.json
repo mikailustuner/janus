@@ -1332,7 +1332,7 @@
     },
     "abrupt": {
       "title": "Not to be stopped suddenly",
-      "sentence": "{count, plural, one {# medicine carries this line:} other {# medicines carry this line:}}"
+      "sentence": "{count, plural, one {# medicine has this warning:} other {# medicines have this warning:}}"
     },
     "regions": {
       "title": "Regions",
@@ -1350,6 +1350,7 @@
       "evidenceCount": "{count, plural, one {# source cited by the patterns.} other {# sources cited by the patterns.}}",
       "withExclusions": "{count, plural, one {# pattern has a source that was not used. Its screen says why.} other {# patterns have a source that was not used. Their screens say why.}}",
       "lastCheck": "Integrity last checked on {date}.",
+      "seeFindings": "Open each pattern to see the status of its sources.",
       "openEvidence": "See the evidence"
     },
     "share": {
@@ -1377,9 +1378,11 @@
       "patterns": "{count, plural, one {pattern to discuss} other {patterns to discuss}}",
       "rulesOf": "{checked} of {total}",
       "rules": "patterns checked",
-      "abrupt": "{count, plural, one {# medicine carries this line:} other {# medicines carry this line:}}",
+      "abrupt": "{count, plural, one {# medicine has this warning:} other {# medicines have this warning:}}",
       "eventsHeading": "What the patterns are about",
       "eventLine": "{event} · {order}",
+      "order": "Order fits the pattern: {fits} · Order fits, later than the usual window: {late} · Order not confirmed: {unconfirmed}",
+      "abruptNames": "Medicines with this warning: {names}",
       "ingredientsHeading": "Active ingredients in the list",
       "footer": "Made on this device with Janus"
     }

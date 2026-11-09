@@ -10,7 +10,7 @@ import { useEffect, useRef, useState } from "react";
 
 import type { CascadeResult } from "@/api/contracts";
 import { formatCount, formatMonth } from "@/components/format";
-import { candidateIngredients } from "@/components/names";
+import { candidateIngredients, keyName } from "@/components/names";
 import { useUserRegion } from "@/components/region";
 import { useFindingWords } from "@/components/results/FindingCard";
 import { Button } from "@/components/ui";
@@ -91,6 +91,9 @@ export function ShareImage({
       ),
       emergencyText: t("Emergency.text", { emergency }),
       abruptStop: sentence(vocab, "abrupt_stop"),
+      warnedIngredientNames: result.item_warnings.map((w) =>
+        keyName(vocab, w.ingredient_key, null),
+      ),
       month: formatMonth(v.month, locale),
       t,
       formatNumber: (n) => formatCount(n, locale),

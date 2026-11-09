@@ -154,3 +154,12 @@ remove the matching notice (and, for the Canon claims, set `expert_review = revi
 ## Card design (experience Req 29, 2026-11-09)
 - [ ] **Native review of the `Cards` namespace:** TR stat-tile labels under a large figure (`label.sources`, `label.checkedByDoi`, `label.casesTop`, `passport.listed`), FR "Tout" vs "Tous" and ES "Todo" vs "Todos" for the Collective Memory filter, and every segment label at 375 px (see `.kiro/specs/experience/cards-localization-reviewer-review.md`).
 - [ ] **"Listed in n of m countries":** confirm with a pharmacist reviewer that the passport summary is not read as availability (the "being listed does not mean on sale" note stays on the same screen).
+
+## Janus report / Summary (enhancement, 2026-11-09)
+- [ ] **Native review of the `Report` namespace:** the five languages of the Summary and the share image, in particular the
+  titles under large figures and rings (TR "toplam {total}", DE "Geprüft im {month}"), the abrupt-stop tile title and the
+  opt-in explanations (see `.kiro/specs/janus-report/report-localization-reviewer-review.md`).
+- [ ] **Share image out of context:** a clinician and a privacy reviewer confirm that the counts-only image (and the
+  opt-in event and ingredient names) cannot be read as a verdict or an all-clear by someone who sees only the picture,
+  and that the confirmation sentence is enough notice that the image may contain health information
+  (`janus-report` Req 5, DP11, `report-safety-auditor-review.md`).

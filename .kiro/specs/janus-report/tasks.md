@@ -31,8 +31,20 @@
   - _Requirements: 6.2–6.4, 5.5–5.7_
   - **Checkpoint:** build and e2e green; commit.
 
-- [ ] 6. Reviews and final checkpoint
-  - localization-reviewer and safety-auditor passes on the `Report` namespace, the Summary and the share image
-    (`report-localization-reviewer-review.md`, `report-safety-auditor-review.md`); fixes applied. No statistician
-    pass (DP13). Pre-launch checklist line.
+- [x] 6. Reviews and final checkpoint
+  - localization-reviewer and safety-auditor passes on the `Report` namespace, the Summary and the share image; fixes
+    applied. No statistician pass (DP13). Pre-launch checklist lines.
   - **Checkpoint:** lint, typecheck, vitest, e2e green; commit.
+  > Done 2026-11-09 (Claude Code). Vitest 449 (P1–P8); Playwright `report.spec.ts` 26 (P9) plus demo routes (en, tr),
+  > demo-flow, states, smoke green at 375 / 1280.
+  > **localization-reviewer:** 0 blocking, 9 advisory, all applied (TR "kesilmemesi" instead of "bırakılmaması", FR
+  > "brutalement", ES "de forma brusca" to match the abrupt-stop line; "has this warning"; FR/ES plural of `{full}`; TR
+  > ring label "/ 65"; TR polite "ekleyin"; DE "Angeben, worum …"). Clean: no report word (DP2), no forbidden phrase,
+  > order wording identical to `Findings.order`, formal register, plurals and placeholders.
+  > **safety-auditor:** 0 blocking, 6 advisory. Applied: A1 the image ring carries its label "patterns checked" (no
+  > score reading); A2 a counts-only order line on the image; A3 with the ingredients option the warned ingredients are
+  > named under the abrupt-stop line; A6 a neutral "open each pattern" line when the integrity line has neither
+  > sentence. Left to the owner: A4 "n medicines checked" counts boxes not fully checked (as cards F6); A5 safety lines
+  > on the image only with event names (Req 5.3). Clean: no large zero, no assessment, red only for safety lines,
+  > abrupt-stop once per warned item, disclaimer and demo label on screen and image, counts-only default, exact
+  > preview, no request.

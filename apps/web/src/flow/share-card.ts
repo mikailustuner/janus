@@ -30,6 +30,8 @@ export interface ShareInput {
   emergencyText: string;
   /** "Do not stop this medicine suddenly." from the vocabulary. */
   abruptStop: string;
+  /** Ingredient names of the warned items (shown only with the ingredients option). */
+  warnedIngredientNames: readonly string[];
   month: string;
   t: Translate;
   formatNumber: (n: number) => string;
@@ -42,11 +44,15 @@ export interface ShareCard {
   stats: { value: string; label: string }[];
   /** The ring of the patterns checked: checked of total. */
   rules: { checked: number; total: number };
-  /** The ring's label under the number: "of 65". */
+  /** The ring's number and labels: "63", "of 65", "patterns checked" (safety review A1). */
+  ringValue: string;
   ringLabel: string;
+  ringCaption: string;
+  /** Counts per timing group, without names (safety review A2). */
+  order: string | null;
   noPattern: string | null;
   discuss: string | null;
-  abruptStop: { count: string; line: string } | null;
+  abruptStop: { count: string; line: string; names: string | null } | null;
   events: { heading: string; names: string[] } | null;
   ingredients: { heading: string; names: string[] } | null;
   emergency: string | null;
@@ -109,13 +115,29 @@ export function shareCard(i: ShareInput): ShareCard {
         : []),
     ],
     rules: v.rules,
+    ringValue: i.formatNumber(v.rules.checked),
     ringLabel: t("Report.rules.of", { total: i.formatNumber(v.rules.total) }),
+    ringCaption: t("Report.image.rules"),
+    order:
+      n > 0
+        ? t("Report.image.order", {
+            fits: v.patterns.groups.fits.length,
+            late: v.patterns.groups.fitsLate.length,
+            unconfirmed: v.patterns.groups.notConfirmed.length,
+          })
+        : null,
     noPattern: n === 0 ? t("Findings.noPattern") : null,
     discuss: n > 0 ? t("Findings.discuss") : null,
     abruptStop: v.warnedItems.length
       ? {
           count: t("Report.image.abrupt", { count: v.warnedItems.length }),
           line: i.abruptStop,
+          names:
+            i.options.ingredients && i.warnedIngredientNames.length
+              ? t("Report.image.abruptNames", {
+                  names: unique(i.warnedIngredientNames).join(", "),
+                })
+              : null,
         }
       : null,
     events,
@@ -137,11 +159,13 @@ export function shareCardText(c: ShareCard): string {
     c.emergency,
     ...c.safety,
     ...c.stats.map((s) => `${s.value} ${s.label}`),
-    `${c.rules.checked} ${c.ringLabel}`,
+    `${c.ringValue} ${c.ringLabel} ${c.ringCaption}`,
     c.headline,
+    c.order,
     c.noPattern,
     c.discuss,
     c.abruptStop ? `${c.abruptStop.count} ${c.abruptStop.line}` : null,
+    c.abruptStop?.names,
     c.events?.heading,
     ...(c.events?.names ?? []),
     c.ingredients?.heading,

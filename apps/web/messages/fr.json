@@ -1324,14 +1324,14 @@
       "title": "Médicaments",
       "full": "Entièrement vérifiés",
       "partly": "Pas entièrement vérifiés",
-      "sentence": "{total, plural, one {# médicament dans la liste} other {# médicaments dans la liste}} : {full} entièrement vérifiés, {partly} avec un principe actif qui ne peut pas être vérifié."
+      "sentence": "{total, plural, one {# médicament dans la liste} other {# médicaments dans la liste}}  : {full, plural, one {# entièrement vérifié} other {# entièrement vérifiés}}, {partly} avec un principe actif qui ne peut pas être vérifié."
     },
     "rules": {
       "title": "Schémas vérifiés",
       "of": "sur {total}"
     },
     "abrupt": {
-      "title": "À ne pas arrêter brusquement",
+      "title": "À ne pas arrêter brutalement",
       "sentence": "{count, plural, one {# médicament porte cette mention :} other {# médicaments portent cette mention :}}"
     },
     "regions": {
@@ -1350,6 +1350,7 @@
       "evidenceCount": "{count, plural, one {# source citée par les schémas.} other {# sources citées par les schémas.}}",
       "withExclusions": "{count, plural, one {# schéma a une source qui n'a pas été utilisée. Son écran explique pourquoi.} other {# schémas ont une source qui n'a pas été utilisée. Leurs écrans expliquent pourquoi.}}",
       "lastCheck": "Intégrité vérifiée pour la dernière fois le {date}.",
+      "seeFindings": "Ouvrez chaque schéma pour voir l'état de ses sources.",
       "openEvidence": "Voir les preuves"
     },
     "share": {
@@ -1380,6 +1381,8 @@
       "abrupt": "{count, plural, one {# médicament porte cette mention :} other {# médicaments portent cette mention :}}",
       "eventsHeading": "Sujet des schémas",
       "eventLine": "{event} · {order}",
+      "order": "L'ordre correspond au schéma : {fits} · L'ordre correspond, au-delà de la fenêtre habituelle : {late} · Ordre non confirmé : {unconfirmed}",
+      "abruptNames": "Principes actifs concernés : {names}",
       "ingredientsHeading": "Principes actifs de la liste",
       "footer": "Créé sur cet appareil avec Janus"
     }

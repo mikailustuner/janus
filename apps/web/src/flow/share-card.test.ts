@@ -81,6 +81,7 @@ function build(c: {
     safetyTexts: c.safety ? [SAFETY] : [],
     emergencyText: "ZZSENTINEL-EMERGENCY",
     abruptStop: "Do not stop this medicine suddenly.",
+    warnedIngredientNames: ["ZZSENTINEL-WARNED"],
     month: "November 2026",
     t,
     formatNumber: (n) => String(n),
@@ -103,6 +104,10 @@ describe("shareCard", () => {
           expect(text).not.toContain("ZZSENTINEL-EVENT");
         c.input.items.forEach((_, i) =>
           expect(text.includes(INGREDIENT(i))).toBe(c.ingredients),
+        );
+        // The warned items' ingredients only with the ingredients option.
+        expect(text.includes("ZZSENTINEL-WARNED")).toBe(
+          c.ingredients && v.warnedItems.length > 0,
         );
         // Safety lines and the emergency notice only with event names that carry one.
         expect(text.includes(SAFETY)).toBe(c.events && hasEvents && c.safety);

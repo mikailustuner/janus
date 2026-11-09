@@ -1324,14 +1324,14 @@
       "title": "Medicamentos",
       "full": "Comprobados por completo",
       "partly": "No comprobados por completo",
-      "sentence": "{total, plural, one {# medicamento en la lista} other {# medicamentos en la lista}}: {full} comprobados por completo, {partly} con un principio activo que no se puede comprobar."
+      "sentence": "{total, plural, one {# medicamento en la lista} other {# medicamentos en la lista}}: {full, plural, one {# comprobado por completo} other {# comprobados por completo}}, {partly} con un principio activo que no se puede comprobar."
     },
     "rules": {
       "title": "Patrones comprobados",
       "of": "de {total}"
     },
     "abrupt": {
-      "title": "No interrumpir de golpe",
+      "title": "No suspender de forma brusca",
       "sentence": "{count, plural, one {# medicamento lleva esta indicación:} other {# medicamentos llevan esta indicación:}}"
     },
     "regions": {
@@ -1350,6 +1350,7 @@
       "evidenceCount": "{count, plural, one {# fuente citada por los patrones.} other {# fuentes citadas por los patrones.}}",
       "withExclusions": "{count, plural, one {# patrón tiene una fuente que no se usó. Su pantalla explica por qué.} other {# patrones tienen una fuente que no se usó. Sus pantallas explican por qué.}}",
       "lastCheck": "Integridad comprobada por última vez el {date}.",
+      "seeFindings": "Abra cada patrón para ver el estado de sus fuentes.",
       "openEvidence": "Ver las pruebas"
     },
     "share": {
@@ -1380,6 +1381,8 @@
       "abrupt": "{count, plural, one {# medicamento lleva esta indicación:} other {# medicamentos llevan esta indicación:}}",
       "eventsHeading": "De qué tratan los patrones",
       "eventLine": "{event} · {order}",
+      "order": "El orden coincide con el patrón: {fits} · El orden coincide, después de la ventana habitual: {late} · Orden no confirmado: {unconfirmed}",
+      "abruptNames": "Principios activos concernidos: {names}",
       "ingredientsHeading": "Principios activos de la lista",
       "footer": "Creado en este dispositivo con Janus"
     }

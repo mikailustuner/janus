@@ -494,7 +494,10 @@ export function SummaryBody({
                         count: integrity.summary.withExclusions,
                       })}
                     </p>
-                  ) : null}
+                  ) : (
+                    // Never silent (safety review A6): point to each pattern's evidence.
+                    <p>{t("Report.sources.seeFindings")}</p>
+                  )}
                   {integrity.summary.newestCheck ? (
                     <p>
                       {t("Report.sources.lastCheck", {

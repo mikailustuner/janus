@@ -1350,13 +1350,14 @@
       "evidenceCount": "{count, plural, one {# Quelle, auf die sich die Muster stützen.} other {# Quellen, auf die sich die Muster stützen.}}",
       "withExclusions": "{count, plural, one {Bei # Muster wurde eine Quelle nicht verwendet. Seine Seite nennt den Grund.} other {Bei # Mustern wurde eine Quelle nicht verwendet. Ihre Seiten nennen den Grund.}}",
       "lastCheck": "Integrität zuletzt geprüft am {date}.",
+      "seeFindings": "Öffnen Sie jedes Muster, um den Stand seiner Quellen zu sehen.",
       "openEvidence": "Belege ansehen"
     },
     "share": {
       "title": "Bild der Übersicht teilen",
       "intro": "Erstellen Sie ein Bild dieser Übersicht, um es einer vertrauten Person zu schicken oder Ihrer Ärztin oder Ihrem Arzt zu zeigen. Es wird auf diesem Gerät erstellt.",
       "default": "Das Bild zeigt nur Zahlen. Sie können mehr hinzufügen:",
-      "events": "Hinzufügen, worum es bei jedem Muster geht",
+      "events": "Angeben, worum es bei jedem Muster geht",
       "eventsHint": "Zum Beispiel die Nebenwirkung, die ein Muster nennt. Wer das Bild sieht, sieht diese Gesundheitsangaben.",
       "ingredients": "Die Wirkstoffe Ihrer Medikamente hinzufügen",
       "ingredientsHint": "Packungsnamen werden nie hinzugefügt. Wer das Bild sieht, sieht, welche Medikamente Sie nehmen.",
@@ -1380,6 +1381,8 @@
       "abrupt": "{count, plural, one {Bei # Medikament steht dieser Hinweis:} other {Bei # Medikamenten steht dieser Hinweis:}}",
       "eventsHeading": "Worum es bei den Mustern geht",
       "eventLine": "{event} · {order}",
+      "order": "Reihenfolge passt zum Muster: {fits} · Reihenfolge passt, später als das übliche Zeitfenster: {late} · Reihenfolge nicht bestätigt: {unconfirmed}",
+      "abruptNames": "Betroffene Wirkstoffe: {names}",
       "ingredientsHeading": "Wirkstoffe der Liste",
       "footer": "Auf diesem Gerät mit Janus erstellt"
     }
