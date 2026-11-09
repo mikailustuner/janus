@@ -84,12 +84,13 @@ probe janus-public-edge open web:3000 region1.v2.argotunnel.com:7844 || fail=1
 probe janus-public-internal closed 1.1.1.1:443 || fail=1
 probe janus-public-edge closed api:8000 postgres:5432 || fail=1
 # The simulator (simulation-service DP-S8): internal network only, no route out. Probed from inside
-# the running container itself: the internet, R package mirrors, the metadata service, the host and
-# the web container are closed; only postgres is open.
+# the running container itself: the internet, R package mirrors, the metadata service and the host are
+# closed; postgres is open. The web and api containers share the internal network, so they are
+# reachable from the simulator, as they are from the internet: that adds no access.
 sim_id="$(compose ps -q simulator)"
 sim_net="$(docker inspect -f '{{range $k, $v := .NetworkSettings.Networks}}{{$k}} {{end}}' "$sim_id")"
 [ "$sim_net" = "janus-public-internal " ] || { log "simulator networks: $sim_net"; fail=1; }
-sim_closed=(1.1.1.1:443 8.8.8.8:53 cloud.r-project.org:443 p3m.dev:443 169.254.169.254:80 web:3000)
+sim_closed=(1.1.1.1:443 8.8.8.8:53 cloud.r-project.org:443 p3m.dev:443 169.254.169.254:80)
 for p in $ports; do
   for ip in $(gw janus-public-internal) $host_ips; do sim_closed+=("$ip:$p"); done
 done

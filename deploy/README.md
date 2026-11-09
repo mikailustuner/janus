@@ -69,3 +69,8 @@ Owner decision 2026-11-09: resource caps raised (deploy Req 7.4): long-running s
    refuses while an image of the tag is missing.
 7. `JANUS_SIMULATION: "on"` of the api in `compose.yml` switches server runs on; `off` stops accepting
    them (the in-browser explorer keeps working).
+
+## Releases that change the deploy scripts
+`deploy.sh` runs from the `src/` checkout and checks out the new commit while it runs, so a release that
+changes `deploy.sh` itself is executed by the **old** script. Run `deploy.sh <commit>` a second time for such
+a release (the second run uses the new script; builds are cached).
