@@ -1269,7 +1269,7 @@
   "CascadeMap": {
     "eyebrow": "PIPC list of prescribing cascades",
     "title": "The {total} patterns Janus checks",
-    "intro": "Each line is one prescribing-cascade pattern of the PIPC list: a side effect of a first medicine class is followed by a second medicine for that side effect. The dots are the medicine classes.",
+    "intro": "Each line is one prescribing-cascade pattern of the PIPC list: a side effect of a first medicine class is followed by a second medicine for that side effect. The dots are medicine classes or single medicines.",
     "framing": "Patterns described in the literature (PIPC list, Rochon et al., Eur Geriatr Med 2025). A pattern is something to discuss with your doctor, not a verdict about your medicines.",
     "views": {
       "label": "View",
@@ -1298,7 +1298,7 @@
     "inYourFindings": "Part of a finding for your list.",
     "legend": {
       "title": "Legend",
-      "star": "A medicine class",
+      "star": "A medicine class or a single medicine",
       "line": "A pattern, from the first medicine class to the second",
       "matched": "Matches a finding for your list (thicker, dashed)",
       "cannot": "Janus cannot check this pattern (dotted)"

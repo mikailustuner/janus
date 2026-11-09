@@ -250,6 +250,11 @@ export function edgeGeometry(a: GraphNode, b: GraphNode) {
     angle: Math.round(angle * 10) / 10,
     /** The curve's midpoint (t = 0.5), where the selected line shows its side effect. */
     mid: [(a.x + 2 * cx + b.x) / 4, (a.y + 2 * cy + b.y) / 4] as const,
+    /** Unit vector from the chord to the curve: the label moves out on this side. */
+    out: [
+      -dy / (Math.hypot(dx, dy) || 1),
+      dx / (Math.hypot(dx, dy) || 1),
+    ] as const,
   };
 }
 

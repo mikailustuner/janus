@@ -449,7 +449,7 @@ export const MapView = memo(function MapView({
       : undefined;
   const selNode = selected?.kind === "node" ? selected.id : null;
   const selMid = selEdge
-    ? edgeGeometry(nodes.get(selEdge.from)!, nodes.get(selEdge.to)!).mid
+    ? edgeGeometry(nodes.get(selEdge.from)!, nodes.get(selEdge.to)!)
     : null;
   const focusIds = new Set(
     selEdge
@@ -618,13 +618,13 @@ export const MapView = memo(function MapView({
             {selEdge && edges.includes(selEdge) ? (
               <g
                 style={{
-                  transform: `translate(${selMid![0]}px, ${selMid![1]}px) scale(var(--inv, 1))`,
+                  transform: `translate(${selMid!.mid[0]}px, ${selMid!.mid[1]}px) scale(var(--inv, 1)) translate(${(selMid!.out[0] * 18).toFixed(1)}px, ${(selMid!.out[1] * 18).toFixed(1)}px)`,
                 }}
               >
                 <text
                   className="cm-label cm-label-event"
                   textAnchor="middle"
-                  y={-8}
+                  y={4}
                 >
                   {truncate(eventText(selEdge.row))}
                 </text>

@@ -1269,7 +1269,7 @@
   "CascadeMap": {
     "eyebrow": "Lista PIPC de cascadas de prescripción",
     "title": "Los {total} patrones que comprueba Janus",
-    "intro": "Cada línea es un patrón de cascada de prescripción de la lista PIPC: a un efecto adverso de una primera clase de medicamentos le sigue un segundo medicamento para ese efecto. Los puntos son las clases de medicamentos.",
+    "intro": "Cada línea es un patrón de cascada de prescripción de la lista PIPC: a un efecto adverso de una primera clase de medicamentos le sigue un segundo medicamento para ese efecto. Los puntos son clases de medicamentos o medicamentos individuales.",
     "framing": "Patrones descritos en la literatura (lista PIPC, Rochon et al., Eur Geriatr Med 2025). Un patrón es algo para comentar con su médico, no un veredicto sobre sus medicamentos.",
     "views": {
       "label": "Vista",
@@ -1288,7 +1288,7 @@
     "shown": "{shown} de {total} patrones mostrados",
     "empty": "Ningún patrón coincide con estos filtros.",
     "mapLabel": "Mapa de los {total} patrones",
-    "keys": "Teclado: las flechas pasan de una clase de medicamentos a otra, Intro abre una, Escape cierra el panel, + y − hacen zoom. La vista Lista muestra los mismos patrones como tabla.",
+    "keys": "Teclado: las flechas pasan de una clase de medicamentos a otra, Intro abre una, Esc cierra el panel, + y − hacen zoom. La vista Lista muestra los mismos patrones como tabla.",
     "zoom": {
       "in": "Acercar",
       "out": "Alejar",
@@ -1298,7 +1298,7 @@
     "inYourFindings": "Forma parte de un resultado para su lista.",
     "legend": {
       "title": "Leyenda",
-      "star": "Una clase de medicamentos",
+      "star": "Una clase de medicamentos o un medicamento individual",
       "line": "Un patrón, de la primera clase de medicamentos a la segunda",
       "matched": "Coincide con un resultado para su lista (más gruesa, discontinua)",
       "cannot": "Janus no puede comprobar este patrón (punteada)"

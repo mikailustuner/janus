@@ -4,7 +4,7 @@
 > `apps/web/src/cascade-map/graph.json`, the pure view model `src/cascade-map/model.ts`, the screen
 > `/cascades` (`src/components/cascade-map/`), its styles `src/theme/cascade-map.css`, the
 > `CascadeMap` namespace and three entry links (results scope card, Research, footer). No API
-> change. Decisions DP1–DP10 (§9), properties P1–P8 (§8).
+> change. Decisions DP1–DP13 (§9), properties P1–P8 (§8).
 
 ## 1. Overview
 
@@ -69,10 +69,13 @@ apps/web/e2e/cascade-map.spec.ts          map, list, keyboard, panel, axe, theme
 ## 4. Layout (Req 2, DP2)
 
 Fruchterman–Reingold in the generator: start on a golden-angle spiral over the sorted ids,
-700 steps with linear cooling, edge attraction, all-pairs repulsion and a weak gravity (the rule
-base has many small components), then the bounding box is scaled to the canvas and a collision
+700 steps with linear cooling, edge attraction, all-pairs repulsion and a gravity of 2 (the rule
+base has many small components; a weak gravity of 0.06 left a dense core with small components
+flung to the corners, looked at and rejected), then the bounding box is scaled to the canvas and a collision
 pass pushes pairs apart to the minimum distance and clamps to the margin. Coordinates are rounded
-to integers. Same input → same output (P4).
+to integers. Same input → same output (P4). Each star also gets a preferred **label side**
+(left or right: the side with fewer stars in a 260 × 90 unit band), used first by the label
+placement of §6.
 
 Canvas 1000 × 1250 units (4:5, the phone map's aspect), margin 70, **minimum distance 80**. At
 375 px the map is 343 px wide, so the fit zoom is 0.343 px per unit and two stars are at least
@@ -111,10 +114,16 @@ drawn thicker and dashed." The map itself never waits for the evaluation.
 **MapView** (DP4): one `<svg>` whose user units are CSS pixels; a `<g>` carries
 `translate(x y) scale(k)` written from a `requestAnimationFrame`; `--inv = 1/k` on the svg keeps
 stars, labels and arrowheads at screen size (`.cm-glyph { transform: scale(var(--inv)) }`), lines use
-`vector-effect: non-scaling-stroke`. `data-zoom="far|near"` on the box (changed only when it flips)
-hides the labels of minor stars when far out (stars with degree ≥ 4 are always named; the focused,
-selected, matched and selected-neighbour stars too). Labels longer than 26 characters are cut with
-"…" on the map only (full name in the accessible name, the panel and the list).
+`vector-effect: non-scaling-stroke`. During a gesture `--inv` follows the zoom in 8 % steps and is
+set exactly when the gesture ends (it restyles every star, label and arrowhead; §7).
+**Label placement** (greedy, when the zoom settles or a drag ends, never per pan frame): labels are
+taken in priority order — the focused, selected and selected-neighbour stars (always shown), then
+the person's matches, then by number of patterns — and a label is shown on its preferred side, else
+on the other side, only where its box overlaps no star and no label already placed and lies inside
+the map box. Far out the map names the busy and the matched classes; close in, every class. Labels
+longer than 26 characters are cut with "…" on the map only (full name in the accessible name, the
+panel and the list). Labels sit in their own `aria-hidden` layer, outside the star buttons (axe
+`label-content-name-mismatch`).
 - Pointer: drag pans (4 px slop), two pointers pinch, Ctrl/⌘ + wheel zooms (a plain wheel scrolls
   the page), a tap (< 6 px) opens the nearest visible star within 26 px, else the line under the
   finger (an 18 px invisible hit stroke). `touch-action: none` on the map only.
@@ -144,26 +153,48 @@ when a ThinkCascades id exists, the source line `Findings.source`, the evidence 
 page, and — only with a result — "Your list": per matching finding the roles sentence
 `Findings.medicinesRoles` with box names, the abrupt-stop line when an item is warned
 (medical-safety rule 4), `Findings.discuss` and a link "Evidence and reports" to
-`/results/finding#<position>`; else "None of the findings for your list uses this pattern." Class
-panel: its patterns as first and as second medicine (buttons) and "Show only this class".
+`/results/finding#<position>`; else "None of the findings for your list uses this pattern." — or,
+for a pattern Janus cannot check, the cannot-check line again (safety S2). When a matching finding's
+event has a safety line (e.g. Cologne row 51 → `urgent_care_gi`) the panel starts with the
+emergency notice and shows the safety line next to the finding, as the Results screen does (DP10).
+Class panel: its patterns as first and as second medicine (buttons), the row-49 note for the
+"deficiency" star, and "Show only this class".
 The panel is a non-modal `role="dialog"`; its heading receives focus.
 
 ## 7. Performance (Req 7, DP2, DP4)
 
-65 stars and 65 lines are small enough for SVG without culling: every pan or zoom frame changes one
-transform attribute and one custom property. A filter re-renders the SVG once (React, ~130 paths).
+65 stars and 65 lines are small enough for SVG without culling: a pan frame changes one transform
+attribute; a zoom frame also changes `--inv`, in 8 % steps (exact at the end). Filters run as a
+transition (`useDeferredValue`): the urgent render updates the inputs, the map (a `memo` component
+with stable props) re-renders afterwards in React's time slices. Accessible names are computed once
+per filter. Experiments (same build, 375 px, CPU 4×, 60 frames each): panning by the transform alone
+gave no long task and 16.7 ms frames; per-frame `--inv` updates were the only source of long tasks
+when the host was busy, hence the stepping. The focus ring element exists only on the focused or
+selected star.
 
 Measured by `e2e/cascade-map.spec.ts` ("performance"): production build, Chromium, 375 × 812, CPU
 throttling 4× (CDP `Emulation.setCPUThrottlingRate`), long tasks by `PerformanceObserver`
 (`longtask`), frame intervals by `requestAnimationFrame` during: a 40-step pointer drag, six zoom
 button presses, a pinch-free Ctrl + wheel zoom, and three filter changes.
 
-| Run (2026-11-09) | Long tasks > 50 ms | Longest task | Frames | Median frame | p95 frame |
-|---|---|---|---|---|---|
-| see §7.1 | — | — | — | — | — |
-
 ### 7.1 Results
-_Filled in by task 7 (below)._
+
+The test records the host's 1-minute load average with every run. On this 8-core machine, shared
+with two other agents' builds, the load varied from 4 to 20 during the work; CPU throttling
+multiplies whatever else runs, so the budget is asserted only when load / cores ≤ 0.75 and the
+numbers are recorded either way (annotation `performance`).
+
+| Run (2026-11-09, after the fixes) | Host load | Long tasks > 50 ms | Frames | Median frame | p95 frame |
+|---|---|---|---|---|---|
+| 1 | 4.6 | **0** | 224 | 16.7 ms | 33.3 ms |
+| 2 | 4.6 | **0** | 219 | 16.7 ms | 33.3 ms |
+| 3 | 4.0 | **0** | 221 | 16.7 ms | 33.3 ms |
+| busy host (not asserted) | 12.9–15.2 | 2–4 (50–80 ms, zoom or wheel) | 201–211 | 16.7 ms | 50.0 ms |
+| saturated host (not asserted) | 19.8–20.5 | 25–30 (50–225 ms) | 305–319 | 16.7 ms | 66.7 ms |
+
+Before the fixes (per-frame `--inv`, labels inside the star buttons, no deferred filter) the same
+test at load 6–11 gave 10–19 long tasks of 50–110 ms, all in the zoom and wheel phases. A check on
+a real mid-range phone is on the pre-launch checklist.
 
 ## 8. Correctness properties
 
@@ -174,7 +205,7 @@ _Filled in by task 7 (below)._
 | P3 | Matched edges ⊆ edges, and equal the graph edges whose row is in `findings[].rule_id` (rule ids outside the graph ignored); finding positions point back at findings with that rule id. | Req 5.1 | fast-check over `cascadeResultArb` + random extra rule ids |
 | P4 | The layout is deterministic: the same ids and links give the same coordinates. | Req 2.1 | fast-check over random graphs of 2–70 nodes |
 | P5 | Every node is inside the canvas margin and no two nodes are closer than the minimum distance (committed layout and random graphs). | Req 2.2 | as P4 + the committed file |
-| P6 | Keyboard: from any visible star, the arrow moves reach every visible star, for random filters and for every single class or event filter; a move stays on a visible star and goes in the pressed direction. | Req 6.2 | fast-check + exhaustive single filters |
+| P6 | Keyboard: from any visible star, the arrow moves reach every visible star, for random filters and for every single class or event filter; a move stays on a visible star and goes in the pressed direction. | Req 6.2 | fast-check (60 runs) + exhaustive single filters (100 filters) |
 | P7 | Names: every node has a vocabulary name (never its id); the label is the shortest published name; it follows the interface language. | Req 1.3 | examples EN/TR |
 | P8 | "Cannot be checked" = the result's lists, else the static unmatchable rows. | Req 4.2 | examples |
 
@@ -191,4 +222,7 @@ _Filled in by task 7 (below)._
 | DP7 | Arrow keys move to the **nearest star in that direction** (all visible stars), not "graph neighbours first". | Neighbour-first with a 60° cone (first draft). | The neighbour-first rule left stars unreachable by arrows (P6 failed: 63 of 65 reachable). Graph neighbours are listed in the class panel instead. |
 | DP8 | The panel is a **bottom sheet on phones** (fixed, 72 svh, non-modal dialog) and a sticky aside from 1024 px. | Panel below the map in the flow. | In the list view the panel would land below 65 rows; a sheet keeps it next to the tapped item. Non-modal: the map stays usable. |
 | DP9 | The list view is a two-column table (row, pattern as a button with its status), not five columns. | Five columns; card list. | Fits 343 px without horizontal scroll and keeps table semantics (`th scope=row`). |
-| DP10 | No emergency notice or urgent-care line on this screen: events are literature patterns, not the person's symptoms; matched findings link to the finding page, which shows the notice and safety line when its event has one. The abrupt-stop line is shown next to the person's medicines in the panel. | Show `SafetyLine` per event. | Rule 10 is about symptoms shown for the person; showing urgent-care lines for 65 literature events would make every visit alarming. Reviewed by the safety-auditor pass. |
+| DP10 | Literature patterns show no emergency notice or urgent-care line; a pattern **with a finding for the person's list** whose event has a safety line shows the emergency notice first in its panel and the safety line next to the finding, as Results does. The abrupt-stop line is shown next to the person's medicines. | A `SafetyLine` for every event; none at all (first draft). | Rule 10 and experience Req 7 are about what is shown for the person; urgent-care lines for 65 literature events would make every visit alarming. The first draft (none) was changed by the safety-auditor pass (S4). |
+| DP11 | Labels are placed greedily by priority with a side fallback (§6) instead of a zoom threshold. | Show minor labels only above 1.7 × the fit zoom (first draft). | The threshold version overlapped hub labels in the dense core and cut labels at the map edge (looked at in the 375 and 1440 screenshots). |
+| DP12 | The performance budget is asserted only when the host is not saturated (load / cores ≤ 0.75); the numbers are always recorded. | Always assert; never assert. | CPU throttling multiplies the host's own load; on a saturated shared host the test measured the other agents, not the map (§7.1). |
+| DP13 | `/cascades` is in the DEMO list of `e2e/routes.spec.ts` only; its plain (no list) state runs the same checks in `cascade-map.spec.ts`. | Also in PLAIN. | The plain-routes test has a 30 s budget for all its routes; one more route with 65 buttons pushed it over on a busy host. |

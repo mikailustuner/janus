@@ -9,8 +9,10 @@ import { useEffect, useRef } from "react";
 
 import type { CascadeResult } from "@/api/contracts";
 import { AbruptStopLine } from "@/components/AbruptStopLine";
+import { EmergencyNotice } from "@/components/EmergencyNotice";
 import { CloseIcon } from "@/components/icons";
 import { keyName } from "@/components/names";
+import { SafetyLine } from "@/components/SafetyLine";
 import { Button, ButtonLink } from "@/components/ui";
 import type { CannotCheck, Graph } from "@/cascade-map/model";
 import { useT } from "@/theme/words";
@@ -143,6 +145,9 @@ export function RulePanel({
             {list(node.marker)}
           </section>
         ) : null}
+        {node.marker.includes(49) ? (
+          <p className="text-sm">{t("Findings.row49")}</p>
+        ) : null}
         <Button
           variant="secondary"
           className="self-start"
@@ -161,6 +166,9 @@ export function RulePanel({
     const warned = new Set(result?.item_warnings.map((w) => w.item) ?? []);
     const boxes = (items: number[]) =>
       items.map((i) => boxNames[i] ?? "").join(", ");
+    const safety = positions.length
+      ? (vocab.vocab.events[edge.event]?.safety_line ?? null)
+      : null;
     const evidence = [
       `rule:pipc:${edge.row}`,
       "dataset:pipc",
@@ -168,6 +176,7 @@ export function RulePanel({
     ];
     body = (
       <>
+        {safety ? <EmergencyNotice compact /> : null}
         {header(
           t("CascadeMap.panel.row", { row: edge.row }),
           cascade(edge.row),
@@ -240,6 +249,7 @@ export function RulePanel({
                     {items.some((i) => warned.has(i)) ? (
                       <AbruptStopLine vocab={vocab} />
                     ) : null}
+                    {safety ? <SafetyLine code={safety} /> : null}
                     <p>{t("Findings.discuss")}</p>
                     <ButtonLink
                       href={{ pathname: "/results/finding", hash: String(p) }}
@@ -251,6 +261,8 @@ export function RulePanel({
                   </div>
                 );
               })
+            ) : cc ? (
+              <p>{t("CascadeMap.panel.cannot", { reason: reason(cc) })}</p>
             ) : (
               <p>{t("CascadeMap.panel.noneYours")}</p>
             )}

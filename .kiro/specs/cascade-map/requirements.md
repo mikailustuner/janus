@@ -105,8 +105,9 @@ to, without the map deciding anything about my medicines.
 1. THE client SHALL offer a segmented control "Map | List"; the list view SHALL be a table of all
    shown patterns (row, first class, side effect, second class, status) with the same filters.
 2. THE map SHALL use a roving tabindex: one star is in the tab order; arrow keys move to the
-   neighbouring star in that direction (graph neighbours first, then the nearest star in that
-   direction); Home and End go to the first and last star by label; Enter or Space opens the panel.
+   nearest star in that direction (design DP7: every star stays reachable by arrows); Home and End go
+   to the first and last star by label; Enter or Space opens the panel; the class panel lists the
+   star's graph neighbours as its patterns.
 3. Every star SHALL have an accessible name (class, number of patterns as first and as second
    medicine, "in your list" when matched); the map SHALL have a name and keyboard instructions.
 4. Focus SHALL be visible (3 px accent ring) on stars and controls; every control SHALL be at least

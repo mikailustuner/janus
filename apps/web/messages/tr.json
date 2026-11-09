@@ -1269,7 +1269,7 @@
   "CascadeMap": {
     "eyebrow": "PIPC reçete kaskadı listesi",
     "title": "Janus'un kontrol ettiği {total} örüntü",
-    "intro": "Her çizgi PIPC listesindeki bir reçete kaskadı örüntüsüdür: birinci ilaç sınıfının bir yan etkisinin ardından o yan etki için ikinci bir ilaç gelir. Noktalar ilaç sınıflarıdır.",
+    "intro": "Her çizgi PIPC listesindeki bir reçete kaskadı örüntüsüdür: birinci ilaç sınıfının bir yan etkisinin ardından o yan etki için ikinci bir ilaç gelir. Noktalar ilaç sınıfları ya da tek tek ilaçlardır.",
     "framing": "Literatürde tanımlanmış örüntüler (PIPC listesi, Rochon ve ark., Eur Geriatr Med 2025). Bir örüntü, ilaçlarınız hakkında bir hüküm değil, doktorunuzla konuşulabilecek bir konudur.",
     "views": {
       "label": "Görünüm",
@@ -1277,18 +1277,18 @@
       "list": "Liste"
     },
     "filter": {
-      "label": "Örüntüleri süz",
+      "label": "Örüntüleri filtrele",
       "search": "Ara",
       "class": "İlaç sınıfı",
       "anyClass": "Tüm sınıflar",
       "event": "Yan etki",
       "anyEvent": "Tüm yan etkiler",
-      "clear": "Süzgeçleri temizle"
+      "clear": "Filtreleri temizle"
     },
     "shown": "{total} örüntüden {shown} tanesi gösteriliyor",
-    "empty": "Bu süzgeçlere uyan bir örüntü yok.",
+    "empty": "Bu filtrelere uyan bir örüntü yok.",
     "mapLabel": "{total} örüntünün haritası",
-    "keys": "Klavye: ok tuşları ilaç sınıfları arasında gezinir, Enter birini açar, Escape paneli kapatır, + ve − yakınlaştırır. Liste görünümü aynı örüntüleri tablo olarak gösterir.",
+    "keys": "Klavye: ok tuşları ilaç sınıfları arasında gezinir, Enter birini açar, Esc paneli kapatır, + ve − yakınlaştırır. Liste görünümü aynı örüntüleri tablo olarak gösterir.",
     "zoom": {
       "in": "Yakınlaştır",
       "out": "Uzaklaştır",
@@ -1298,7 +1298,7 @@
     "inYourFindings": "Listenize ait bir bulgunun parçası.",
     "legend": {
       "title": "Açıklama",
-      "star": "Bir ilaç sınıfı",
+      "star": "Bir ilaç sınıfı ya da tek bir ilaç",
       "line": "Birinci ilaç sınıfından ikinciye giden bir örüntü",
       "matched": "Listenize ait bir bulguyla eşleşiyor (daha kalın, kesikli)",
       "cannot": "Janus bu örüntüyü kontrol edemiyor (noktalı)"

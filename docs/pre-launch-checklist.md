@@ -135,3 +135,13 @@ remove the matching notice (and, for the Canon claims, set `expert_review = revi
   connected"; if ChEMBL data enters the export, the export licence must change (share-alike).
 - [ ] **OnSIDES refresh:** the pipeline pins the v3.1.1 asset by SHA-256; a new data release is a reviewed code change, after which
   the light build and `docs/light-face-validation.md` are regenerated.
+
+## Cascade map (enhancement, 2026-11-09)
+- [ ] **Pharmacist or physician review of the map's classes** (`.kiro/specs/cascade-map/cascade-map-pharmacologist-review.md`): the
+  merge of role variants into one star (beta-blocker rows 3, 4, 17; NSAID rows 40, 51–54), the star named "Vitamin or Mineral
+  Deficiency" for row 49, "Corticosteroid" for the systemic-only index of rows 59–61, and the choice to show no urgent-care line for
+  literature patterns without a finding for the list (cascade-map DP10).
+- [ ] **Native-speaker review of the `CascadeMap` namespace** in Turkish, German, French and Spanish, with the open points of
+  `cascade-map-localization-reviewer-review.md` (TR "Kaskad haritası", "Açıklama"; DE "Ergebnis" vs "Befund"; ES key name "Intro").
+- [ ] **Map performance on a real mid-range phone** (pan, pinch, zoom buttons, filters): the CI measurement runs at 4× CPU throttling on
+  a desktop (cascade-map design §7.1) and is not asserted on a saturated host.

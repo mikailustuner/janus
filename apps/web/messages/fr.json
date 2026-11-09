@@ -1269,7 +1269,7 @@
   "CascadeMap": {
     "eyebrow": "Liste PIPC des cascades de prescription",
     "title": "Les {total} schémas que Janus vérifie",
-    "intro": "Chaque ligne est un schéma de cascade de prescription de la liste PIPC : un effet indésirable d'une première classe de médicaments est suivi d'un deuxième médicament contre cet effet. Les points sont les classes de médicaments.",
+    "intro": "Chaque ligne est un schéma de cascade de prescription de la liste PIPC : un effet indésirable d'une première classe de médicaments est suivi d'un deuxième médicament contre cet effet. Les points sont des classes de médicaments ou des médicaments individuels.",
     "framing": "Schémas décrits dans la littérature (liste PIPC, Rochon et al., Eur Geriatr Med 2025). Un schéma est un point à aborder avec votre médecin, pas un verdict sur vos médicaments.",
     "views": {
       "label": "Affichage",
@@ -1298,7 +1298,7 @@
     "inYourFindings": "Fait partie d'un résultat pour votre liste.",
     "legend": {
       "title": "Légende",
-      "star": "Une classe de médicaments",
+      "star": "Une classe de médicaments ou un médicament individuel",
       "line": "Un schéma, de la première classe de médicaments vers la deuxième",
       "matched": "Correspond à un résultat pour votre liste (plus épais, en tirets)",
       "cannot": "Janus ne peut pas vérifier ce schéma (en pointillés)"

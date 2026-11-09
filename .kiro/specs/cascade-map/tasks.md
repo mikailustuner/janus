@@ -21,36 +21,38 @@
 
 - [x] **Checkpoint A** — `pnpm typecheck`, `pnpm test` green; commit.
 
-- [ ] 4. Screen (`src/components/cascade-map/*`, `src/theme/cascade-map.css`, `src/app/[locale]/cascades/page.tsx`)
+- [x] 4. Screen (`src/components/cascade-map/*`, `src/theme/cascade-map.css`, `src/app/[locale]/cascades/page.tsx`)
   - Map (pan/zoom engine DP4, roving tabindex, legend), List (DP9), panel (DP8), filters, count,
     matches line states; `/cascades` in `WIDE`.
   - _Requirements: 2.3, 3, 4, 5.2, 5.3, 6, 7.1, 8.1, 8.2_
 
-- [ ] 5. Messages and entries
+- [x] 5. Messages and entries
   - `CascadeMap` namespace in EN, TR, DE, FR, ES; links from the results scope card, Research and
     the footer (DP1).
   - `pnpm exec vitest --run src/i18n` (forbidden phrases, parity, no empty strings).
   - _Requirements: 8.2, 8.3, 8.4_
 
-- [ ] **Checkpoint B** — lint, typecheck, vitest; build; look at the screen; commit.
+- [x] **Checkpoint B** — lint, typecheck, vitest; build; look at the screen; commit.
 
-- [ ] 6. Playwright (`e2e/cascade-map.spec.ts`; `/cascades` added to `e2e/routes.spec.ts`)
+- [x] 6. Playwright (`e2e/cascade-map.spec.ts`; `/cascades` added to `e2e/routes.spec.ts`)
   - Map and list (65 edges / 65 rows), filters, keyboard flow (Tab to a star, arrows, Enter, Escape
     returns focus), panel content (row, source, evidence ids, cannot-check for row 27, the demo's
     matched rows 5, 6, 9, 12 with the finding link), axe, no horizontal scroll, touch targets, both
-    themes, five locales (E2E_LOCALES), no network in demo, reduced motion.
+    themes, five locales (E2E_LOCALES), no network in demo, reduced motion, the Cologne row-51
+    safety line. `/cascades` is in the DEMO list of `routes.spec.ts` only (DP13).
   - _Requirements: 1.2, 3, 4, 5.4, 6, 8_
 
-- [ ] 7. Performance measurement (design §7.1)
-  - 375 px, CPU 4×, drag, zoom buttons, Ctrl + wheel, filters; assert no long task > 50 ms; record
-    the numbers in design §7.1.
+- [x] 7. Performance measurement (design §7.1)
+  - 375 px, CPU 4×, drag, zoom buttons, Ctrl + wheel, filters; assert no long task > 50 ms on a host
+    that is not saturated (DP12); record the numbers in design §7.1. Fixes found by it: `--inv` in
+    8 % steps, labels out of the star buttons, deferred filters, memoised map.
   - _Requirements: 7.2_
 
-- [ ] 8. Review passes (labelled, separate)
+- [x] 8. Review passes (labelled, separate)
   - pharmacologist (class merge, labels, edges vs PIPC), localization-reviewer and safety-auditor
     over the `CascadeMap` texts; files `cascade-map-<role>-review.md`; apply fixes; checklist line
     in `docs/pre-launch-checklist.md` for anything that needs an expert.
   - _Requirements: 8.4_
 
-- [ ] **Checkpoint C** — all tests, screenshots at 375 and 1440 in both themes (map, panel, list),
+- [x] **Checkpoint C** — all tests, screenshots at 375 and 1440 in both themes (map, panel, list),
   looked at and fixed; commit.

@@ -1269,7 +1269,7 @@
   "CascadeMap": {
     "eyebrow": "PIPC-Liste der Verschreibungskaskaden",
     "title": "Die {total} Muster, die Janus prüft",
-    "intro": "Jede Linie ist ein Muster einer Verschreibungskaskade aus der PIPC-Liste: Auf eine Nebenwirkung einer ersten Arzneimittelklasse folgt ein zweites Arzneimittel gegen diese Nebenwirkung. Die Punkte sind die Arzneimittelklassen.",
+    "intro": "Jede Linie ist ein Muster einer Verschreibungskaskade aus der PIPC-Liste: Auf eine Nebenwirkung einer ersten Arzneimittelklasse folgt ein zweites Arzneimittel gegen diese Nebenwirkung. Die Punkte sind Arzneimittelklassen oder einzelne Arzneimittel.",
     "framing": "In der Literatur beschriebene Muster (PIPC-Liste, Rochon et al., Eur Geriatr Med 2025). Ein Muster ist ein Thema für das Gespräch mit Ihrer Ärztin oder Ihrem Arzt, kein Urteil über Ihre Medikamente.",
     "views": {
       "label": "Ansicht",
@@ -1288,7 +1288,7 @@
     "shown": "{shown} von {total} Mustern angezeigt",
     "empty": "Kein Muster passt zu diesen Filtern.",
     "mapLabel": "Karte der {total} Muster",
-    "keys": "Tastatur: Die Pfeiltasten wechseln zwischen den Arzneimittelklassen, Enter öffnet eine, Escape schließt das Feld, + und − zoomen. Die Listenansicht zeigt dieselben Muster als Tabelle.",
+    "keys": "Tastatur: Die Pfeiltasten wechseln zwischen den Arzneimittelklassen, Enter öffnet eine, Esc schließt die Detailansicht, + und − zoomen. Die Listenansicht zeigt dieselben Muster als Tabelle.",
     "zoom": {
       "in": "Vergrößern",
       "out": "Verkleinern",
@@ -1298,7 +1298,7 @@
     "inYourFindings": "Teil eines Ergebnisses für Ihre Liste.",
     "legend": {
       "title": "Legende",
-      "star": "Eine Arzneimittelklasse",
+      "star": "Eine Arzneimittelklasse oder ein einzelnes Arzneimittel",
       "line": "Ein Muster, von der ersten Arzneimittelklasse zur zweiten",
       "matched": "Passt zu einem Ergebnis für Ihre Liste (dicker, gestrichelt)",
       "cannot": "Janus kann dieses Muster nicht prüfen (gepunktet)"

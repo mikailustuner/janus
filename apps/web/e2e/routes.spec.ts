@@ -48,7 +48,6 @@ const PLAIN = [
   "/donate",
   "/donate/delete",
   "/note/withdraw",
-  "/cascades",
   "/no-such-page",
 ];
 const DEMO = [

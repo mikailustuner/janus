@@ -233,6 +233,8 @@ test("without a list: no highlights, an invitation, no request", async ({
   );
   await expect(page.locator(".cm-e-matched")).toHaveCount(0);
   await expect(page.locator(".cm-e-cannot")).toHaveCount(2);
+  // The plain-route checks of routes.spec.ts (the screen is listed there under DEMO only).
+  await common(page, "en", "two-faces");
   expect(seen).toEqual([]);
 });
 
@@ -367,4 +369,31 @@ test("performance: no long task over 50 ms while panning, zooming and filtering 
       description: "host saturated",
     });
   else expect(r.long.filter((d) => d > 50)).toEqual([]);
+});
+
+test("a matched pattern with an urgent-care event shows the emergency notice first (Cologne, row 51)", async ({
+  page,
+}) => {
+  await page.addInitScript(() =>
+    sessionStorage.setItem("janus.v1.demo", "cologne"),
+  );
+  await open(page);
+  await page.getByRole("button", { name: "List", exact: true }).click();
+  await page.getByTestId("row-51").getByRole("button").click();
+  const panel = page.getByTestId("cm-panel");
+  await expect(panel.locator("[data-testid]").first()).toHaveAttribute(
+    "data-testid",
+    "emergency-notice",
+  );
+  await expect(panel.getByTestId("safety-line")).toHaveAttribute(
+    "data-code",
+    "urgent_care_gi",
+  );
+  // A pattern without a finding for the list has neither.
+  await page.keyboard.press("Escape");
+  await page.getByTestId("row-52").getByRole("button").click();
+  await expect(panel.getByTestId("emergency-notice")).toHaveCount(0);
+  await expect(panel.getByTestId("cm-yours")).toContainText(
+    "None of the findings for your list uses this pattern.",
+  );
 });
