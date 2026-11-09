@@ -386,3 +386,89 @@ found, what hooks blocked. Three to five lines per day.
 - A CSV edit by string replacement broke a row (an unquoted comma); the glossary loader refused it loudly, and the edit was
   redone through the `csv` module.
 - Still open: native-speaker and pharmacist or physician review (pre-launch checklist), merging the duplicate product keys.
+
+## Phase 3 (2026-11-08)
+
+Kiro credits ran out halfway through. Phase 3 (experience and medication-passport) was built with Kiro and Claude Opus 5.5 subagents, following the same Kiro specs (requirements → design → tasks, EARS, numbered DPs, property tests), the `.kiro/steering` files and the `.kiro/agents` definitions (localization-reviewer, safety-auditor, pharmacologist as separate review passes). The `.kiro/hooks` PostFileSave hooks ran after every file write through `.kiro/hooks/scripts/claude-dispatch.py`, which reads the same hook files and runs the same scripts. Home-page art (isometric night house, cabinet room, glass Janus mask) and the door transition video were generated with Google Gemini and Veo; ghosts, fireflies and motion are code.
+
+## 2026-11-08 — experience tasks 1–12 (checkpoint 1)
+
+- Built the client of `.kiro/specs/experience` tasks 1–12: same-origin `/api` transport with CSP and no-referrer headers, strict response decoders and request builders, the two themes (Two Faces, Glass) from the steering tokens, self-hosted fonts, the browser store, the shell, the demo (three synthetic patients recorded from the real local API), medicine list, timeline, results, finding detail with evidence and the FAERS pair, Collective Memory panels and the doctor note with a PDF made in the browser.
+- Property tests (fast-check) found: a `record` entry treated as required by the decoder mutation test (P19); `γ`/`Δ` in reviewed ingredient names missing from every PDF font (3.3, fixed with a Noto Sans fallback); the 2020 Atkinson Hyperlegible lacking `İ` (switched to Atkinson Hyperlegible Next).
+- Playwright checks found: an abrupt-stop line shown twice for one item on the results screen (C6) and a `GET /api/memory/snapshot` sent in demo mode after a reload, before demo mode was read (C4). Both fixed; C1–C3 pass with axe on 14 routes × 5 languages × 2 themes × 2 viewports.
+- The `.kiro/hooks` medical-language and translation-completeness hooks ran after every write (through `claude-dispatch.py`); while drafting Turkish they flagged nothing, the catalogue tests caught "tanı" and "olasılık" before commit.
+- All three owner demo cases reproduced on the real engine (Istanbul row 5 probable at 5 months; Cologne rows 1 and 51 form-unconfirmed; Ohio rows 24 and 31).
+
+## 2026-11-08 — experience tasks 13–22, built with Claude Code
+
+- Built scanning (GS1 outbound filter keeping only (01), (17), (712); zxing-wasm reader and camera; demo codes caught before any request), on-device label OCR with tesseract.js (models fetched with pinned SHA-256, never committed), the confirm screen, re-resolution after a dataset change, the outcome loop (QR opt-in, 28-day in-app reminder, withdrawal), the doctor page /o with its own small layout, donation with explicit consent and deletion, the privacy page, a hand-written service worker for the offline demo, and a bundle-budget script.
+- Property tests found: an OCR selection index past the recognised words still sent a shorter query (P22); a decoder mutation test treating optional record entries as required (P19, test fix). Playwright found: a stale preview server serving an old build (test harness), and against the real local API, a donation form whose region default was read before the settings loaded.
+- Checked end to end against the real local API: QR token → doctor page → answer stored → withdrawal; donation stored → deletion by token. Doctor page form ready in a median 2.1 s on a throttled 4G phone profile.
+- Owner review polish applied: unslashed zero in Atkinson Hyperlegible Next, compact result cards, visible Glass colour fields, safe-area padding, and a small `web-e2e` CI job (en + tr) that runs beside the API job without adding wall time.
+- Task 22: localization-reviewer, safety-auditor and pharmacologist passes run as separate agents from their `.kiro/agents` definitions; sheets in `.kiro/specs/experience/`.
+
+## Desktop layout (owner decision 2026-11-08, Req 27 / DP41)
+- Added Requirement 27 and DP41 to the experience spec before building; built before the task 22 stop.
+- Shell: header nav + theme toggle from 768 px, bottom tab bar phone only; wide routes get 1,120 px main.
+- Results grid (72ch findings column + sticky aside), medicines rows + timeline aside (desktop only, phone unchanged), Memory two columns, note paper at A4 proportions with actions aside, settings two columns, website home (mask halves link to both faces in Two Faces; colour fields in Glass).
+- Caught by e2e: privacy link on home under 44 px target (now a button link); duplicate box names from the timeline aside broke a getByText (test uses the heading role; aside hidden on phone).
+- no-hex test forced mask colours into tokens.css (--mask-shadow/--mask-light).
+
+## Task 23 (owner decisions on the wording review)
+- Applied ten decisions across web catalogues, note glossary (API), memory_events.csv, steering privacy/product, specs (Req 28, DP42–45, doctor-loop DP40–41, collective-memory DP25).
+- Ran localization-reviewer and safety-auditor as separate read-only agents on the changed rows: 6 blocking found (lost ES sentence from a truncated dump; TR "bildirim" still meaning notice/answer; ES outcome heading; "Order not confirmed" keyed to status `possible`, which also covers after-window). All fixed; third order label added for the owner.
+- Lessons: printing values truncated at 200 chars and rewriting from that dump silently dropped a sentence; a memory word-list test caught "olasılık"; e2e caught digits in a research empty state.
+- Fixtures re-recorded (Ohio oral products by NDC); real-API e2e green with consent v2; API 861 passed with JANUS_TEST_DATABASE_URL set (earlier run without it skipped 223).
+
+## Task 24 (cinematic homes)
+- Native sticky + rAF scrubbing instead of GSAP (no dependency); video re-encoded with GOP 6, no audio; AVIF via ffmpeg libaom.
+- Mid-task asset swap (isometric cabinet room + new door video) handled by re-encoding and moving the ghost anchors.
+- Flaky e2e found: the layout's Suspense fallback keeps a hidden copy of the page until React reveals the shell (~300 ms throttle); locators scoped to #content.
+- Reviews: localization 5 advisory, safety 8 advisory, all applied.
+- Owner screenshot review: full-viewport hero with header overlay, slim emergency bar (measured header offset), whole-house framing via container-query math, misty ghosts, scene-3 ghosts as linked pointer shortcuts; a reviewer suggestion (ES "su número…") was rejected because the same value is substituted into "llame al {emergency}".
+
+## 2026-11-08 — medication-passport tasks 9–11 (Claude Code)
+- Built the Passport client list logic in `apps/web/src/passport/` (identity, merge, duplicate groups, presence request builder with fan-back, memory keys, typed strength entry) with fast-check properties P1, P2, P18, P20, P21; a Python test exports the server's literal sets and 500 typed-entry cases as fixtures the web tests read.
+- Writing the entry-parity fixture showed that "40,680 mg" was read as 40.68 mg: an amount like "1,000" / "1.000" is a thousands group in one language and a decimal in another, so both implementations now refuse it (DP25). Reviewing the request builder showed that a box with one unrecognised ingredient would have been sent with its other keys only and could read "present"; such items are no longer sent (DP24).
+- Drafted the `Passport` namespace (124 keys) in five languages with substitution and removal word lists; the rendered-message property (every plural branch) and the existing placeholder-parity test caught two branches whose argument lists differed between languages (TR, DE `not_in_source`), rewritten.
+- Wording review stop (task 11): localization and safety passes found the Spanish salt/base caveat contradicting itself ("dosis" for both), the French BDPM line reading as disapproval and the Turkish openFDA line reading as "not FDA approved"; fixed. Ten decisions left for the owner.
+
+## 2026-11-08 — medication-passport tasks 11 (answers) to 14 (Claude Code)
+- Applied the owner's ten wording decisions and ran a pharmacologist pass: the "oral solid" group also holds effervescent and orodispersible tablets, so "to swallow" became "taken by mouth"; the Turkish "değiştirilmiş salımlı" (modified release) tripped the substitution word list and became "modifiye salımlı".
+- Built the Passport screens (`/passport`, `/passport/item#id`), the nav entry, the medicine link and the duplicate notice slot; recorded the three demo patients' presence answers from the real local API (counts and codes only).
+- The experience check C4 ("in demo mode nothing reaches the API") conflicted with the Passport's "demo calls the live endpoint first": the demo now uses only the recorded answers (DP26).
+- Screenshot review showed "Strength: Strength not compared …" and "(as entered from the box)" on rows where the source had nothing to compare; both removed, and a render test now checks that the label appears exactly where a typed value was compared.
+- Notes left in experience, drug-resolution and doctor-loop open items (origin label in the note slot not built yet).
+
+## Phase 4 (2026-11-09) — light face and séance, built with Claude Code (Claude Opus 5.5)
+
+- Same method as Phase 3: refined specs first (`light-face` DP1–DP20, P1–P16; `seance` DP1–DP16, P1–P21 and a web contract), then tasks, then separate review passes from `.kiro/agents`. Each spec was built on its own branch and merged with CI green.
+- Light face: OnSIDES and openFDA label pipelines, curated goals and cases, a retrospective validation against 13 known repurposings. Only 2 of 13 reached the top 10, so the screens call it a **prototype**; the result is shown, not hidden.
+- Séance: Canon Book 2 pipeline, a gold table from PMC3941892 (CC BY 3.0), an AI reader with two AI review passes. The best pairs reach 2 of 3 witnesses, so Gate 4 (three witnesses) was **not met** and the screen says so.
+- The log-guard hook blocked 7 CLI prints of aggregate counts (false positives); they carry `# log-guard: ignore` pragmas now.
+- Owner decisions applied to the experience spec before building: no light mode (DP48), and the home's "Step inside" button plays the door video once instead of scroll-scrubbing (DP49).
+
+## Enhancements (2026-11-09) — built with Claude Code (Claude Opus 5.5)
+
+Each item got its own spec under `.kiro/specs/` (requirements → design with DPs and properties → tasks), checkpoints, and pharmacologist, safety-auditor and localization-reviewer passes with fixes applied.
+- **Card design** (experience Req 29, DP50–DP56): grouped lists, large titles, stat tiles and segmented controls across results, passport, memory, research, light face and séance; steering `design.md` gained the cards and layout system.
+- **fhir-export:** R4 Bundle built in the browser and validated against the official schema fixture.
+- **zombie-alert:** retraction check by date only, in-app alert, opt-in notification, note update, demo simulation.
+- **cascade-map:** explorable map and table of the 65 PIPC patterns; label widths measured once (performance check).
+- **janus-report:** one-glance summary and an opt-in share image made on the device (PNG 1080×1350, no request).
+- **report-assistant:** on-device drafts for TÜFAM, MedWatch 3500B and EU national authorities with a cited channel table; owner decision: 3500B other medicines split into E10 (over the counter) and E11 (prescription) by product type.
+- **time-machine:** Canon molecules (Wikidata/LOTUS CC0, PubChem), ADMET-AI, httk PBPK, a minimal compartmental model, FAERS time to onset and a cascade digital twin. The validation table shows the failures: httk was not credible for any of 4 drugs (haloperidol AUC off by 32×), so no "reaches an active level" sentence exists. Only amlodipine passed the gate for a patient timing sentence (35 reports, median 23 days).
+- **open-data:** released outcome dataset (k = 20, noise, sibling rule), versioned cascade data package, OpenAPI document of public GET routes, and a corrections guide (5 Wikidata and 7 TİTCK errors listed, nothing submitted upstream).
+
+What the checks caught:
+- A property test showed the onset bootstrap interval depended on row order (9 vs 19 days for the same data); it is now order-independent.
+- The medical-language hook flagged "diagnosis" in a curated time-machine note shown verbatim; reworded and rebuilt.
+- The pharmacologist pass showed that the spec's patient timing sentence described the wrong interval; the spec was amended.
+- The safety auditor blocked publishing donated data: the current consent texts do not cover a CC BY release, so stored cells stay withheld until a new consent version exists. The data package also leaves out 108 of 134 synonym rows that came from the TİTCK list.
+- 12 wrong ATC codes stay excluded.
+
+Process lessons:
+- A chained merge command continued past a conflict. It was recovered from MERGE_HEAD and redone step by step; merges now run one step at a time.
+- Subagents left unbounded polling loops; every brief now requires bounded waits.
+
+State at the end: web 528 unit tests, Playwright 367 passed (axe, 375 and 1280 px, both themes, five languages), API 960 tests, CI green on all five jobs. Open items for experts are in `docs/pre-launch-checklist.md`.
