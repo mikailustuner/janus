@@ -523,7 +523,7 @@
     "title": "Araştırma",
     "intro": "Aynı yan etki bilgisi, araştırma için tersine çevrilir. Bu bölüm hasta akışının bir parçası değildir.",
     "rule7": "Yeniden kullanım çıktıları araştırılmaya değer adaylardır — tedavi değildir.",
-    "review": "4. aşama içeriği (hipotez kartları, üç tanık, doğrulama ve dışa aktarma) yapay zekâ tarafından incelendi; uzman incelemesi bekleniyor.",
+    "review": "4. aşama içeriği (hipotez kartları, üç tanık, doğrulama ve dışa aktarma) için uzman incelemesi henüz yapılmadı.",
     "entries": {
       "hypotheses": {
         "title": "Hipotez kartları",
@@ -1006,7 +1006,7 @@
       "experimental": "Deneysel: geriye dönük kontrolde, bilinen hiçbir yeniden kullanım, 10'dan fazla adayın bulunduğu durumunda ilk 10'a girmedi.",
       "prototype": "Araştırma prototipi: geriye dönük kontrolde bilinen bazı yeniden kullanımlar yeniden bulundu. Bu, yöntemin yeni adaylar için işe yaradığının kanıtı değildir."
     },
-    "review": "Durumlar, yan etki eşlemesi ve doğrulama vakaları yapay zekâ tarafından gözden geçirildi; uzman incelemesi bekleniyor.",
+    "review": "Durumlar, yan etki eşlemesi ve doğrulama vakaları için uzman incelemesi henüz yapılmadı.",
     "researcherOnly": "Araştırmacılar içindir. Bu adaylar hasta sayfalarında gösterilmez.",
     "notChecked": "Janus, bir adayın ilacın zaten onaylı bir kullanımı olup olmadığını kontrol etmez.",
     "ties": "Eşit sıralar bir sıra aralığı olarak gösterilir.",
@@ -1140,7 +1140,7 @@
       "glass": "Üç tanık"
     },
     "framing": "Araştırılmaya değer aday — tedavi değildir.",
-    "review": "4. aşama içeriği: Kanun pasajları, makine çevirileri, tanımlamalar ve çıkarılan iddialar iki yapay zekâ incelemesinden (tarihçi ve farmakolog ajanları) geçti; uzman incelemesi bekleniyor.",
+    "review": "4. aşama içeriği: Kanun pasajları, makine çevirileri, tanımlamalar ve çıkarılan iddialar iki otomatik incelemeden (tarihçi ve farmakolog) geçti; uzman incelemesi henüz yapılmadı.",
     "researcherOnly": "Araştırmacılar için. Bu sayfadaki hiçbir şey hasta sayfalarında gösterilmez.",
     "demo": "Demo: katalog ve iki eşleşme {date} tarihinde gerçek verilerden kaydedildi; hiçbir istek gönderilmez.",
     "pick": {
@@ -1168,10 +1168,10 @@
       "science": "bilim"
     },
     "headline": {
-      "eligible": "İki yapay zekâ incelemesinden geçti ve zehirli veya yakıcı olarak işaretlenmedi: demo örneği olarak gösterilebilir.",
+      "eligible": "İki otomatik incelemeden geçti ve zehirli veya yakıcı olarak işaretlenmedi: demo örneği olarak gösterilebilir.",
       "notEligible": "Demo örneği olarak gösterilmez: {reasons}.",
       "reason": {
-        "no_eligible_passage": "hiçbir pasaj iki yapay zekâ incelemesinden geçmedi",
+        "no_eligible_passage": "hiçbir pasaj iki otomatik incelemeden geçmedi",
         "hazardous_substance": "madde zehirli veya yakıcı olarak işaretli"
       }
     },
@@ -1221,7 +1221,7 @@
     },
     "missingReason": {
       "no_canon_passage": "Bu eşleşme için Kanun'da pasaj yok.",
-      "passages_rejected_by_review": "Bu eşleşmenin pasajları bir yapay zekâ incelemesinde reddedildi.",
+      "passages_rejected_by_review": "Bu eşleşmenin pasajları bir otomatik incelemede reddedildi.",
       "no_faers_mapping": "Bu madde için FAERS bağlantısı yok.",
       "exposure_differs": "FAERS'teki etkin madde farklı bir maruziyettir; sayılmaz.",
       "counts_unavailable": "FAERS sayıları şu anda kullanılamıyor.",
@@ -1235,7 +1235,7 @@
     "past": {
       "arabic": "Arapça metin",
       "mt": "Makine çevirisi (İngilizce)",
-      "aiReviewed": "Yapay zekâ tarafından incelendi, uzman incelemesi bekleniyor",
+      "aiReviewed": "Uzman incelemesi henüz yapılmadı",
       "expertReviewed": "Uzman tarafından incelendi",
       "summary": "Janus özeti (makine tarafından yazıldı, İngilizce): {text}",
       "locator": "Kanun, {book}. kitap, madde {entry}, sayfa {page}, satır {start}–{end} (OpenITI)",
@@ -1697,7 +1697,7 @@
     "summary": "{substances, plural, one {Kanun'dan # ilaç} other {Kanun'dan # ilaç}} · {cascades, plural, one {# reçete kaskadı} other {# reçete kaskadı}}",
     "intro": "Zaman makinesi, İbn Sina'nın Kanun'undaki bazı ilaçları ve bazı reçete kaskadlarını bugünün açık verileriyle izler: içerdikleri moleküller, laboratuvarlarda ölçülen etkinlik, basit vücut modelleri ve kamuya açık advers olay bildirimlerinde yazılan başlama süresi.",
     "inSilico": "In silico ve keşif amaçlı: açık verilerden hesaplanmıştır, herhangi bir kişi hakkında kanıt değildir. Burada gösterilen bir molekül ya da konsantrasyon araştırılmaya değer bir adaydır — bir tedavi değildir ve asla alınacak bir doz değildir.",
-    "review": "Yapay zekâ tarafından incelendi, uzman incelemesi bekleniyor.",
+    "review": "Uzman incelemesi henüz yapılmadı.",
     "demo": "Demo: tüm yanıtlar {date} tarihinde gerçek yerel Janus API'sinden kaydedildi; hiçbir istek gönderilmez.",
     "entry": {
       "title": "Zaman makinesi",
@@ -1896,7 +1896,7 @@
     "patient": {
       "heading": "Bu ne zaman bildirildi",
       "sentence": "Başkalarının yaptığı bildirimlerde “{event}” bildirimlerinin yarısı, {drug} başlandıktan {start} ile {end} gün sonrasına düştü; diğer yarısı daha erken ya da daha geçti. Bu, bildirimlerden gelen bir bilgidir, sizin hakkınızda bir tahmin değildir — doktorunuzla konuşmaya değer olabilir.",
-      "review": "Yapay zekâ tarafından incelendi, uzman incelemesi bekleniyor."
+      "review": "Uzman incelemesi henüz yapılmadı."
     },
     "errors": {
       "unavailable": "Zaman makinesi bu sunucuda kullanılamıyor.",

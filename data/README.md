@@ -164,8 +164,8 @@ CC BY-NC-SA 4.0 data package `datasets/canon/`.
 
 - `light/goals.csv`, `light/effect_goal_map.csv`, `light/validation_cases.csv`: curated conditions, side-effect term → condition
   mapping and the fixed retrospective-validation cases. Terms are OnSIDES MedDRA names (no MedDRA hierarchy is copied); every
-  active row and case cites a paper of `evidence_papers.csv` (Crossref checked 2026-11-08). Drafted by Claude Code, reviewed by the
-  pharmacologist and statistician agents: **AI-reviewed, pending expert review** (pre-launch checklist).
+  active row and case cites a paper of `evidence_papers.csv` (Crossref checked 2026-11-08). Drafted and checked in automated pharmacology and
+  statistics review passes; **expert review has not yet been done** (pre-launch checklist).
 
 ## Reporting channels (Janus, Apache-2.0; `report-assistant` spec)
 - `report_channels.csv` (+ `report_channels.meta.json`): official channels for reporting a suspected side effect

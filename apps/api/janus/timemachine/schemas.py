@@ -18,7 +18,7 @@ class Base(BaseModel):
 
 class Meta(Base):
     built_at: str
-    review_status: Literal["AI-reviewed, pending expert review"]
+    review_status: Literal["Expert review has not yet been done"]
     disclaimer: str
     seed: int
     simulations: int

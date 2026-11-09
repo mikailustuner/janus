@@ -3,7 +3,7 @@
 Text in, values out.
 
 `data/light/goals.csv`, `data/light/effect_goal_map.csv` and `data/light/validation_cases.csv` are
-curated by the project and reviewed by agent passes ("AI-reviewed, pending expert review"). A
+curated by the project and reviewed by automated passes (expert review has not yet been done). A
 defect stops the build: the loader names the file, the line and the defect, and repairs nothing.
 """
 

@@ -43,9 +43,9 @@ DISCLAIMER: Final = (
     "Janus provides information, not medical advice. Research prototype — not a medical device."
 )
 REVIEW_STATUS: Final = (
-    "Methods reviewed by the statistician agent and class and event mappings by the "
-    "pharmacologist agent (AI reviews, findings applied or listed as open items in "
-    ".kiro/specs/faers-onset-table/); pending review by a pharmacist and a statistician."
+    "Methods and class and event mappings passed automated statistical and pharmacological "
+    "review passes (findings applied or listed as open items in .kiro/specs/faers-onset-table/). "
+    "Expert review has not yet been done."
 )
 CAVEATS: Final[dict[str, str]] = {
     "descriptive": (

@@ -523,7 +523,7 @@
     "title": "Recherche",
     "intro": "Les mêmes connaissances sur les effets indésirables, retournées pour la recherche. Cette section ne fait pas partie du parcours patient.",
     "rule7": "Les résultats de repositionnement sont des candidats à étudier — pas des traitements.",
-    "review": "Le contenu de la phase 4 (fiches d'hypothèses, les trois témoins, validation et export) a été relu par une IA ; la relecture par des experts reste à faire.",
+    "review": "Contenu de la phase 4 (fiches d'hypothèses, les trois témoins, validation et export) : la relecture par des experts n'a pas encore été faite.",
     "entries": {
       "hypotheses": {
         "title": "Fiches d'hypothèses",
@@ -1006,7 +1006,7 @@
       "experimental": "Expérimental : lors de la vérification rétrospective, aucune réaffectation connue ne s'est classée dans les 10 premiers de son état parmi plus de 10 candidats.",
       "prototype": "Prototype de recherche : quelques réaffectations connues ont été retrouvées lors de la vérification rétrospective. Cela ne prouve pas que la méthode fonctionne pour de nouveaux candidats."
     },
-    "review": "Les états, la correspondance des effets indésirables et les cas de validation ont été relus par une IA ; la relecture par des experts reste à faire.",
+    "review": "États, correspondance des effets indésirables et cas de validation : la relecture par des experts n'a pas encore été faite.",
     "researcherOnly": "Pour les chercheurs. Ces candidats ne sont pas montrés dans les pages destinées aux patients.",
     "notChecked": "Janus ne vérifie pas si un candidat est déjà une utilisation autorisée du médicament.",
     "ties": "Les positions égales sont montrées comme une plage de rangs.",
@@ -1140,7 +1140,7 @@
       "glass": "Les trois témoins"
     },
     "framing": "Candidat qui mérite d'être étudié — pas un traitement.",
-    "review": "Contenu de la phase 4 : les passages du Canon, leurs traductions automatiques, les identifications et les affirmations extraites ont passé deux relectures par IA (agents historien et pharmacologue) ; la relecture par des experts reste à faire.",
+    "review": "Contenu de la phase 4 : les passages du Canon, leurs traductions automatiques, les identifications et les affirmations extraites ont passé deux relectures automatisées (historien et pharmacologue) ; la relecture par des experts n'a pas encore été faite.",
     "researcherOnly": "Pour les chercheurs. Rien sur cette page n'apparaît dans les pages patient.",
     "demo": "Démo : le catalogue et les deux paires ont été enregistrés à partir des données réelles le {date} ; aucune requête n'est envoyée.",
     "pick": {
@@ -1168,10 +1168,10 @@
       "science": "la science"
     },
     "headline": {
-      "eligible": "A passé les deux relectures par IA et n'est pas signalée comme toxique ou caustique : peut servir d'exemple de démo.",
+      "eligible": "A passé les deux relectures automatisées et n'est pas signalée comme toxique ou caustique : peut servir d'exemple de démo.",
       "notEligible": "N'est pas montré comme exemple de démo : {reasons}.",
       "reason": {
-        "no_eligible_passage": "aucun passage n'a passé les deux relectures par IA",
+        "no_eligible_passage": "aucun passage n'a passé les deux relectures automatisées",
         "hazardous_substance": "la substance est signalée comme toxique ou caustique"
       }
     },
@@ -1221,7 +1221,7 @@
     },
     "missingReason": {
       "no_canon_passage": "Aucun passage du Canon pour cette paire.",
-      "passages_rejected_by_review": "Les passages de cette paire ont été rejetés lors d'une relecture par IA.",
+      "passages_rejected_by_review": "Les passages de cette paire ont été rejetés lors d'une relecture automatisée.",
       "no_faers_mapping": "Aucun lien FAERS pour cette substance.",
       "exposure_differs": "La substance active FAERS est une autre exposition ; il n'est pas compté.",
       "counts_unavailable": "Les décomptes FAERS ne sont pas disponibles pour le moment.",
@@ -1235,7 +1235,7 @@
     "past": {
       "arabic": "Texte arabe",
       "mt": "Traduction automatique (anglais)",
-      "aiReviewed": "Relu par une IA, relecture par des experts en attente",
+      "aiReviewed": "La relecture par des experts n'a pas encore été faite",
       "expertReviewed": "Relu par des experts",
       "summary": "Résumé de Janus (rédigé par machine, en anglais) : {text}",
       "locator": "Canon, livre {book}, entrée {entry}, page {page}, lignes {start}–{end} (OpenITI)",
@@ -1697,7 +1697,7 @@
     "summary": "{substances, plural, one {# remède du Canon} other {# remèdes du Canon}} · {cascades, plural, one {# cascade de prescription} other {# cascades de prescription}}",
     "intro": "La machine à remonter le temps suit des remèdes du Canon d'Ibn Sina et quelques cascades de prescription à travers les données ouvertes d'aujourd'hui : les molécules qu'ils contiennent, l'activité mesurée en laboratoire, des modèles simples de l'organisme et le délai d'apparition noté dans les signalements publics d'effets indésirables.",
     "inSilico": "In silico et exploratoire : calculé à partir de données ouvertes, ce n'est une preuve pour aucune personne. Une molécule ou une concentration montrée ici est un candidat à étudier — pas un traitement, et jamais une dose à prendre.",
-    "review": "Relu par une IA, relecture par des experts en attente.",
+    "review": "La relecture par des experts n'a pas encore été faite.",
     "demo": "Démo : toutes les réponses ont été enregistrées depuis la véritable API Janus locale le {date} ; aucune requête n'est envoyée.",
     "entry": {
       "title": "Machine à remonter le temps",
@@ -1896,7 +1896,7 @@
     "patient": {
       "heading": "Quand cela a été signalé",
       "sentence": "Dans les signalements faits par d'autres personnes, la moitié des signalements de « {event} » se situait entre {start} et {end} jours après le début de {drug} ; l'autre moitié était plus tôt ou plus tard. C'est une information issue de signalements, pas une prévision vous concernant — il peut être utile d'en parler avec votre médecin.",
-      "review": "Relu par une IA, relecture par des experts en attente."
+      "review": "La relecture par des experts n'a pas encore été faite."
     },
     "errors": {
       "unavailable": "La machine à remonter le temps n'est pas disponible sur ce serveur.",

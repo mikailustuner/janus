@@ -83,9 +83,9 @@ defers a check to launch.
 
 ## Expert review (Phase 4)
 Every Phase 4 result (light-face hypothesis cards, validation and export; the séance's Canon passages, identifications,
-claims and science findings; their wording) is **AI-reviewed and pending expert review**. The researcher area says so
-(`Research.review`, `Seance.review`, `Light.review`), and every Canon passage is labelled "AI-reviewed, pending expert
-review". Nothing below has been checked by a human expert. When an item is done, record who reviewed it and when, then
+claims and science findings; their wording) has passed automated review passes only: **expert review has not yet been
+done**. The researcher area says so (`Research.review`, `Seance.review`, `Light.review`), and every Canon passage is
+labelled "Expert review has not yet been done". Nothing below has been checked by a human expert. When an item is done, record who reviewed it and when, then
 remove the matching notice (and, for the Canon claims, set `expert_review = reviewed` and re-run `canon_package`).
 
 - [ ] **Light face: mappings** (pharmacist or physician). `data/light/goals.csv` (18 conditions, FAERS PT sets,
@@ -227,9 +227,9 @@ remove the matching notice (and, for the Canon claims, set `expert_review = revi
   TÜFAM outcome options match the live form (`report-assistant-localization-reviewer-review.md`).
 
 ## Time machine (owner-approved feature, 2026-11-09)
-All items below come from the three labelled AI review passes
+All items below come from the three labelled automated review passes
 (`.kiro/specs/time-machine/review-{pharmacologist,statistician,historian}.md`). Nothing in this
-feature is expert-reviewed; every screen says "AI-reviewed, pending expert review".
+feature is expert-reviewed; every screen says "Expert review has not yet been done".
 
 ### Models and validation (pharmacologist, clinical pharmacologist or PK modeller)
 - [ ] **No simulation model is credible enough to carry an exposure statement.** httk PBPK scored

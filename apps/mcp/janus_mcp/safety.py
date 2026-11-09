@@ -45,7 +45,7 @@ CHECK_LINES: Final = (
 TIME_MACHINE_LINES: Final = (
     "Counts are reports, never people. FAERS is spontaneous reporting: not incidence and not "
     "deduplicated across cases.",
-    "The time machine is in silico and exploratory ('AI-reviewed, pending expert review'); a "
+    "The time machine is in silico and exploratory (expert review has not yet been done); a "
     "concentration or dose in it is never a dose a person could take.",
 )
 PACKAGE_LINES: Final = (

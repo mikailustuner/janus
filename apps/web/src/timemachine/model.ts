@@ -8,7 +8,7 @@ const band = D.obj({ p5: D.num, p50: D.num, p95: D.num });
 
 export const meta = D.obj({
   built_at: D.str,
-  review_status: D.lit("AI-reviewed, pending expert review"),
+  review_status: D.lit("Expert review has not yet been done"),
   disclaimer: D.str,
   seed: D.int,
   simulations: D.int,

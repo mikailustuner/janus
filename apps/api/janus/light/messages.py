@@ -55,8 +55,8 @@ SENTENCES: Final[dict[str, str]] = {
         "Janus does not check whether a candidate is already an approved use of the medicine."
     ),
     "review_pending": (
-        "The conditions, the side-effect mapping and the validation cases are AI-reviewed and "
-        "pending expert review."
+        "The conditions, the side-effect mapping and the validation cases: expert review has not "
+        "yet been done."
     ),
     "experimental": (
         "Experimental: in the retrospective check, no known repurposing ranked in the top 10 of "

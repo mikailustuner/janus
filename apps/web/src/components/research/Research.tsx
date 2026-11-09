@@ -14,7 +14,7 @@ const LIVE: Record<(typeof ENTRIES)[number], string> = {
 
 /**
  * Researcher area (design §14, Req 24, DP12, Req 29): the normal theme (DP48), the rule-7
- * sentence, the Phase 4 review status (AI-reviewed, pending expert review) and the four entries as
+ * sentence, the Phase 4 review status (expert review has not yet been done) and the four entries as
  * one grouped list of row links.
  */
 export function Research() {

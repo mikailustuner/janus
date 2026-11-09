@@ -26,7 +26,7 @@ def _payload() -> dict[str, Any]:
         "seed": 1,
         "simulations": 10,
         "disclaimer": "Not medical advice. Research prototype, not a medical device.",
-        "review_status": "AI-reviewed, pending expert review",
+        "review_status": "Expert review has not yet been done",
         "validation": {"rule": "x", "pbpk": [], "compartmental": []},
         "substances": [{"substance_id": "rhubarb", "constituents": [], "todays_drugs": []}],
         "exposure": [{"substance_id": "rhubarb", "constituent": "rhein"}],
@@ -71,7 +71,7 @@ def test_catalogue_and_detail(client: TestClient) -> None:
     assert r.status_code == 200
     body = r.json()
     assert body["substance_ids"] == ["rhubarb"]
-    assert body["meta"]["review_status"] == "AI-reviewed, pending expert review"
+    assert body["meta"]["review_status"] == "Expert review has not yet been done"
     assert "not a medical device" in body["meta"]["disclaimer"]
     assert r.headers["cache-control"] == "no-store"
 

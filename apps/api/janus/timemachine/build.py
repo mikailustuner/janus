@@ -585,7 +585,7 @@ def build() -> Path:
         "simulations": SIM_N,
         "disclaimer": "In-silico hypotheses from open data. Not a treatment, not a dose, not "
         "medical advice. Research prototype, not a medical device.",
-        "review_status": "AI-reviewed, pending expert review",
+        "review_status": "Expert review has not yet been done",
         "onset_subset_caveat": "Time to onset is available only for reports whose reporter gave "
         "both a complete therapy start date and a complete event date. That subset is not "
         "representative of all reports: completeness is associated with reporter type and with "

@@ -47,7 +47,7 @@ describe("recorded fixture", () => {
       [...cat.cascade_ids].sort(),
     );
     for (const s of Object.values(fx.substances)) decodeOk(substanceOut, s);
-    expect(cat.meta.review_status).toBe("AI-reviewed, pending expert review");
+    expect(cat.meta.review_status).toBe("Expert review has not yet been done");
   });
 
   it("the index agrees with data/time_machine/cascades.csv and the vocabulary", () => {

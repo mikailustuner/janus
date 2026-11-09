@@ -3,7 +3,7 @@
   "catalogue": {
     "meta": {
       "built_at": "2026-11-09T09:06:20.217721+00:00",
-      "review_status": "AI-reviewed, pending expert review",
+      "review_status": "Expert review has not yet been done",
       "disclaimer": "In-silico hypotheses from open data. Not a treatment, not a dose, not medical advice. Research prototype, not a medical device.",
       "seed": 20261109,
       "simulations": 2000
@@ -190,7 +190,7 @@
     "anise": {
       "meta": {
         "built_at": "2026-11-09T09:06:20.217721+00:00",
-        "review_status": "AI-reviewed, pending expert review",
+        "review_status": "Expert review has not yet been done",
         "disclaimer": "In-silico hypotheses from open data. Not a treatment, not a dose, not medical advice. Research prototype, not a medical device.",
         "seed": 20261109,
         "simulations": 2000
@@ -813,7 +813,7 @@
     "rhubarb": {
       "meta": {
         "built_at": "2026-11-09T09:06:20.217721+00:00",
-        "review_status": "AI-reviewed, pending expert review",
+        "review_status": "Expert review has not yet been done",
         "disclaimer": "In-silico hypotheses from open data. Not a treatment, not a dose, not medical advice. Research prototype, not a medical device.",
         "seed": 20261109,
         "simulations": 2000
@@ -2001,7 +2001,7 @@
     "st_johns_wort": {
       "meta": {
         "built_at": "2026-11-09T09:06:20.217721+00:00",
-        "review_status": "AI-reviewed, pending expert review",
+        "review_status": "Expert review has not yet been done",
         "disclaimer": "In-silico hypotheses from open data. Not a treatment, not a dose, not medical advice. Research prototype, not a medical device.",
         "seed": 20261109,
         "simulations": 2000
@@ -3127,7 +3127,7 @@
     "vinegar": {
       "meta": {
         "built_at": "2026-11-09T09:06:20.217721+00:00",
-        "review_status": "AI-reviewed, pending expert review",
+        "review_status": "Expert review has not yet been done",
         "disclaimer": "In-silico hypotheses from open data. Not a treatment, not a dose, not medical advice. Research prototype, not a medical device.",
         "seed": 20261109,
         "simulations": 2000
@@ -3478,7 +3478,7 @@
     "amlodipine_oedema_diuretic": {
       "meta": {
         "built_at": "2026-11-09T09:06:20.217721+00:00",
-        "review_status": "AI-reviewed, pending expert review",
+        "review_status": "Expert review has not yet been done",
         "disclaimer": "In-silico hypotheses from open data. Not a treatment, not a dose, not medical advice. Research prototype, not a medical device.",
         "seed": 20261109,
         "simulations": 2000
@@ -3865,7 +3865,7 @@
     "gabapentinoid_oedema_diuretic": {
       "meta": {
         "built_at": "2026-11-09T09:06:20.217721+00:00",
-        "review_status": "AI-reviewed, pending expert review",
+        "review_status": "Expert review has not yet been done",
         "disclaimer": "In-silico hypotheses from open data. Not a treatment, not a dose, not medical advice. Research prototype, not a medical device.",
         "seed": 20261109,
         "simulations": 2000
@@ -4252,7 +4252,7 @@
     "antipsychotic_eps_antiparkinson": {
       "meta": {
         "built_at": "2026-11-09T09:06:20.217721+00:00",
-        "review_status": "AI-reviewed, pending expert review",
+        "review_status": "Expert review has not yet been done",
         "disclaimer": "In-silico hypotheses from open data. Not a treatment, not a dose, not medical advice. Research prototype, not a medical device.",
         "seed": 20261109,
         "simulations": 2000
@@ -4668,7 +4668,7 @@
     "acei_cough_antitussive": {
       "meta": {
         "built_at": "2026-11-09T09:06:20.217721+00:00",
-        "review_status": "AI-reviewed, pending expert review",
+        "review_status": "Expert review has not yet been done",
         "disclaimer": "In-silico hypotheses from open data. Not a treatment, not a dose, not medical advice. Research prototype, not a medical device.",
         "seed": 20261109,
         "simulations": 2000
@@ -5047,7 +5047,7 @@
     "metoclopramide_eps_antiparkinson": {
       "meta": {
         "built_at": "2026-11-09T09:06:20.217721+00:00",
-        "review_status": "AI-reviewed, pending expert review",
+        "review_status": "Expert review has not yet been done",
         "disclaimer": "In-silico hypotheses from open data. Not a treatment, not a dose, not medical advice. Research prototype, not a medical device.",
         "seed": 20261109,
         "simulations": 2000

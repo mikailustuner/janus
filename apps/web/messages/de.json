@@ -523,7 +523,7 @@
     "title": "Forschung",
     "intro": "Dasselbe Wissen über Nebenwirkungen, für die Forschung umgekehrt. Dieser Bereich ist kein Teil des Patientenablaufs.",
     "rule7": "Ergebnisse zur Wiederverwendung sind untersuchenswerte Kandidaten — keine Behandlungen.",
-    "review": "Die Inhalte der Phase 4 (Hypothesenkarten, die drei Zeugen, Validierung und Export) wurden von einer KI geprüft; die Prüfung durch Fachleute steht aus.",
+    "review": "Für die Inhalte der Phase 4 (Hypothesenkarten, die drei Zeugen, Validierung und Export) ist eine Prüfung durch Fachleute noch nicht erfolgt.",
     "entries": {
       "hypotheses": {
         "title": "Hypothesenkarten",
@@ -1006,7 +1006,7 @@
       "experimental": "Experimentell: In der rückblickenden Prüfung kam keine bekannte Umwidmung unter die ersten 10 ihres Zustands, wenn es mehr als 10 Kandidaten gab.",
       "prototype": "Forschungsprototyp: Einige bekannte Umwidmungen wurden in der rückblickenden Prüfung wiedergefunden. Das ist kein Beleg dafür, dass die Methode für neue Kandidaten funktioniert."
     },
-    "review": "Die Zustände, die Zuordnung der Nebenwirkungen und die Validierungsfälle wurden von einer KI geprüft; die Prüfung durch Fachleute steht aus.",
+    "review": "Für die Zustände, die Zuordnung der Nebenwirkungen und die Validierungsfälle ist eine Prüfung durch Fachleute noch nicht erfolgt.",
     "researcherOnly": "Für Forschende. Diese Kandidaten erscheinen nicht auf den Seiten für Patientinnen und Patienten.",
     "notChecked": "Janus prüft nicht, ob ein Kandidat bereits eine zugelassene Anwendung des Arzneimittels ist.",
     "ties": "Gleiche Positionen werden als Rangbereich gezeigt.",
@@ -1140,7 +1140,7 @@
       "glass": "Die drei Zeugen"
     },
     "framing": "Ein Kandidat, der eine Untersuchung wert ist – keine Behandlung.",
-    "review": "Inhalte der Phase 4: Die Kanon-Passagen, ihre maschinellen Übersetzungen, die Bestimmungen und die extrahierten Aussagen haben zwei KI-Prüfungen (Historiker- und Pharmakologen-Agent) durchlaufen; die Prüfung durch Fachleute steht aus.",
+    "review": "Inhalte der Phase 4: Die Kanon-Passagen, ihre maschinellen Übersetzungen, die Bestimmungen und die extrahierten Aussagen haben zwei automatisierte Prüfungen (Historiker und Pharmakologe) durchlaufen; eine Prüfung durch Fachleute ist noch nicht erfolgt.",
     "researcherOnly": "Für Forschende. Nichts auf dieser Seite wird in den Patientenseiten gezeigt.",
     "demo": "Demo: Der Katalog und die zwei Paare wurden am {date} aus den echten Daten aufgezeichnet; es wird keine Anfrage gesendet.",
     "pick": {
@@ -1168,10 +1168,10 @@
       "science": "die Wissenschaft"
     },
     "headline": {
-      "eligible": "Hat beide KI-Prüfungen durchlaufen und ist nicht als giftig oder ätzend markiert: darf als Demo-Beispiel gezeigt werden.",
+      "eligible": "Hat beide automatisierten Prüfungen durchlaufen und ist nicht als giftig oder ätzend markiert: darf als Demo-Beispiel gezeigt werden.",
       "notEligible": "Wird nicht als Demo-Beispiel gezeigt: {reasons}.",
       "reason": {
-        "no_eligible_passage": "keine Passage hat beide KI-Prüfungen durchlaufen",
+        "no_eligible_passage": "keine Passage hat beide automatisierten Prüfungen durchlaufen",
         "hazardous_substance": "die Substanz ist als giftig oder ätzend markiert"
       }
     },
@@ -1221,7 +1221,7 @@
     },
     "missingReason": {
       "no_canon_passage": "Keine Kanon-Passage für dieses Paar.",
-      "passages_rejected_by_review": "Die Passagen für dieses Paar wurden in einer KI-Prüfung abgelehnt.",
+      "passages_rejected_by_review": "Die Passagen für dieses Paar wurden in einer automatisierten Prüfung abgelehnt.",
       "no_faers_mapping": "Keine FAERS-Verknüpfung für diese Substanz.",
       "exposure_differs": "Der FAERS-Wirkstoff ist eine andere Exposition; er wird nicht gezählt.",
       "counts_unavailable": "FAERS-Zahlen sind gerade nicht verfügbar.",
@@ -1235,7 +1235,7 @@
     "past": {
       "arabic": "Arabischer Text",
       "mt": "Maschinelle Übersetzung (Englisch)",
-      "aiReviewed": "Von einer KI geprüft, Prüfung durch Fachleute steht aus",
+      "aiReviewed": "Eine Prüfung durch Fachleute ist noch nicht erfolgt",
       "expertReviewed": "Von Fachleuten geprüft",
       "summary": "Janus-Zusammenfassung (maschinell geschrieben, Englisch): {text}",
       "locator": "Kanon, Buch {book}, Eintrag {entry}, Seite {page}, Zeilen {start}–{end} (OpenITI)",
@@ -1697,7 +1697,7 @@
     "summary": "{substances, plural, one {# Heilmittel des Kanons} other {# Heilmittel des Kanons}} · {cascades, plural, one {# Verschreibungskaskade} other {# Verschreibungskaskaden}}",
     "intro": "Die Zeitmaschine verfolgt Heilmittel aus Ibn Sinas Kanon und einige Verschreibungskaskaden durch die offenen Daten von heute: die enthaltenen Moleküle, im Labor gemessene Aktivität, einfache Körpermodelle und die Zeit bis zum Auftreten, wie sie in öffentlichen Meldungen unerwünschter Ereignisse steht.",
     "inSilico": "In silico und explorativ: aus offenen Daten berechnet, kein Beleg für irgendeine Person. Ein hier gezeigtes Molekül oder eine Konzentration ist ein untersuchenswerter Kandidat — keine Behandlung und niemals eine einzunehmende Dosis.",
-    "review": "Von einer KI geprüft, Prüfung durch Fachleute steht aus.",
+    "review": "Eine Prüfung durch Fachleute ist noch nicht erfolgt.",
     "demo": "Demo: alle Antworten wurden am {date} von der echten lokalen Janus-API aufgezeichnet; es wird keine Anfrage gesendet.",
     "entry": {
       "title": "Zeitmaschine",
@@ -1896,7 +1896,7 @@
     "patient": {
       "heading": "Wann dies gemeldet wurde",
       "sentence": "In Meldungen anderer Personen lag die Hälfte der Meldungen von „{event}“ zwischen {start} und {end} Tagen nach Beginn von {drug}; die andere Hälfte lag früher oder später. Das ist eine Information aus Meldungen, keine Vorhersage über Sie — darüber kann ein Gespräch mit Ihrer Ärztin oder Ihrem Arzt sinnvoll sein.",
-      "review": "Von einer KI geprüft, Prüfung durch Fachleute steht aus."
+      "review": "Eine Prüfung durch Fachleute ist noch nicht erfolgt."
     },
     "errors": {
       "unavailable": "Die Zeitmaschine ist auf diesem Server nicht verfügbar.",

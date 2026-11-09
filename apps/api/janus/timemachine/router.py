@@ -38,7 +38,7 @@ def _loaded(request: Request) -> TimeMachine | JSONResponse:
 def _meta(tm: TimeMachine) -> Meta:
     return Meta(
         built_at=tm.built_at,
-        review_status=tm.payload["review_status"],
+        review_status="Expert review has not yet been done",
         disclaimer=tm.payload["disclaimer"],
         seed=int(tm.payload["seed"]),
         simulations=int(tm.payload["simulations"]),

@@ -523,7 +523,7 @@
     "title": "Research",
     "intro": "The same side-effect knowledge, turned around for research. This section is not part of the patient flow.",
     "rule7": "Repurposing outputs are candidates worth investigating — not treatments.",
-    "review": "Phase 4 content (hypothesis cards, the three witnesses, validation and export) is AI-reviewed and pending expert review.",
+    "review": "Phase 4 content (hypothesis cards, the three witnesses, validation and export): expert review has not yet been done.",
     "entries": {
       "hypotheses": {
         "title": "Hypothesis cards",
@@ -1006,7 +1006,7 @@
       "experimental": "Experimental: in the retrospective check, no known repurposing ranked in the top 10 of its condition among more than 10 candidates.",
       "prototype": "Research prototype: some known repurposings were found again in the retrospective check. That is not proof that the method works for new candidates."
     },
-    "review": "The conditions, the side-effect mapping and the validation cases are AI-reviewed and pending expert review.",
+    "review": "The conditions, the side-effect mapping and the validation cases: expert review has not yet been done.",
     "researcherOnly": "For researchers. These candidates are not shown in the patient pages.",
     "notChecked": "Janus does not check whether a candidate is already an approved use of the medicine.",
     "ties": "Equal positions are shown as a range of ranks.",
@@ -1140,7 +1140,7 @@
       "glass": "The three witnesses"
     },
     "framing": "Candidate worth investigating — not a treatment.",
-    "review": "Phase 4 content: the Canon passages, their machine translations, the identifications and the extracted claims passed two AI review passes (historian and pharmacologist agents) and are pending expert review.",
+    "review": "Phase 4 content: the Canon passages, their machine translations, the identifications and the extracted claims passed two automated review passes (historian and pharmacologist); expert review has not yet been done.",
     "researcherOnly": "For researchers. Nothing on this page is shown in the patient pages.",
     "demo": "Demo: the catalogue and the two pairs recorded from the real data on {date}; no request is sent.",
     "pick": {
@@ -1168,10 +1168,10 @@
       "science": "science"
     },
     "headline": {
-      "eligible": "Passed both AI review passes and is not flagged as toxic or caustic: may be shown as a demo example.",
+      "eligible": "Passed both automated review passes and is not flagged as toxic or caustic: may be shown as a demo example.",
       "notEligible": "Not shown as a demo example: {reasons}.",
       "reason": {
-        "no_eligible_passage": "no passage passed both AI review passes",
+        "no_eligible_passage": "no passage passed both automated review passes",
         "hazardous_substance": "the substance is flagged as toxic or caustic"
       }
     },
@@ -1221,7 +1221,7 @@
     },
     "missingReason": {
       "no_canon_passage": "No Canon passage for this pair.",
-      "passages_rejected_by_review": "The passages for this pair were rejected by an AI review pass.",
+      "passages_rejected_by_review": "The passages for this pair were rejected by an automated review pass.",
       "no_faers_mapping": "No FAERS link for this substance.",
       "exposure_differs": "The FAERS ingredient is a different exposure; it is not counted.",
       "counts_unavailable": "FAERS counts are not available right now.",
@@ -1235,7 +1235,7 @@
     "past": {
       "arabic": "Arabic text",
       "mt": "Machine translation (English)",
-      "aiReviewed": "AI-reviewed, pending expert review",
+      "aiReviewed": "Expert review has not yet been done",
       "expertReviewed": "Expert-reviewed",
       "summary": "Janus summary (machine-written, English): {text}",
       "locator": "Canon, Book {book}, entry {entry}, page {page}, lines {start}–{end} (OpenITI)",
@@ -1697,7 +1697,7 @@
     "summary": "{substances, plural, one {# remedy of the Canon} other {# remedies of the Canon}} · {cascades, plural, one {# prescribing cascade} other {# prescribing cascades}}",
     "intro": "The time machine follows remedies of Ibn Sina's Canon and some prescribing cascades through today's open data: the molecules they contain, activity measured in laboratories, simple body models and the time to onset written in public adverse-event reports.",
     "inSilico": "In silico and exploratory: computed from open data, not evidence about any person. A molecule or a concentration shown here is a candidate worth investigating — not a treatment and never a dose to take.",
-    "review": "AI-reviewed, pending expert review.",
+    "review": "Expert review has not yet been done.",
     "demo": "Demo: every answer was recorded from the real local Janus API on {date}; no request is sent.",
     "entry": {
       "title": "Time machine",
@@ -1896,7 +1896,7 @@
     "patient": {
       "heading": "When this was reported",
       "sentence": "In reports others have filed, half of the reports of “{event}” fell between {start} and {end} days after {drug} was started; the other half were earlier or later. This is information from reports, not a prediction about you — it may be worth discussing with your doctor.",
-      "review": "AI-reviewed, pending expert review."
+      "review": "Expert review has not yet been done."
     },
     "errors": {
       "unavailable": "The time machine is not available on this server.",

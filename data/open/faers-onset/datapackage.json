@@ -54,7 +54,7 @@
       "distinct_class_event_pairs": 60
     },
     "meddra_notice": "Event terms are MedDRA Preferred Terms as published in FAERS. MedDRA® the Medical Dictionary for Regulatory Activities terminology is the international medical terminology developed under the auspices of ICH. MedDRA® trademark is registered by IFPMA on behalf of ICH.",
-    "review_status": "Methods reviewed by the statistician agent and class and event mappings by the pharmacologist agent (AI reviews, findings applied or listed as open items in .kiro/specs/faers-onset-table/); pending review by a pharmacist and a statistician."
+    "review_status": "Methods and class and event mappings passed automated statistical and pharmacological review passes (findings applied or listed as open items in .kiro/specs/faers-onset-table/). Expert review has not yet been done."
   },
   "resources": [
     {
@@ -63,7 +63,7 @@
       "format": "json",
       "mediatype": "application/json",
       "encoding": "utf-8",
-      "hash": "sha256:e1cfec0570dcf087da013835b4006c7296166823e5080210ceaa1541d5f86bed"
+      "hash": "sha256:b67d6aa0e047422b76d5de7d7153e2116a40917df5c641a121680bafcbf7f209"
     },
     {
       "name": "faers_onset_pipc_csv",

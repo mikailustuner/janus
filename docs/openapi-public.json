@@ -1668,7 +1668,7 @@
           },
           "review_status": {
             "type": "string",
-            "const": "AI-reviewed, pending expert review",
+            "const": "Expert review has not yet been done",
             "title": "Review Status"
           },
           "disclaimer": {

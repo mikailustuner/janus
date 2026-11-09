@@ -2,5 +2,5 @@
 prescribing cascade (time-machine spec). Pure modules (units, pk, onset, exposure, twin) do no
 I/O; `build` runs offline and writes the artifacts that `store` and `router` serve.
 
-Every result is an in-silico hypothesis, AI-reviewed and pending expert review; it is never a
+Every result is an in-silico hypothesis, expert review has not yet been done; it is never a
 treatment or a dosing statement (medical-safety rules 7-8)."""

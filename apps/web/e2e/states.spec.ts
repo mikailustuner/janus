@@ -140,7 +140,7 @@ test("research: the four Phase 4 entries open their screens, review status, no n
     page.locator("main").getByRole("link", { name: /^Open/ }),
   ).toHaveCount(7);
   await expect(page.getByTestId("research-review")).toContainText(
-    "AI-reviewed and pending expert review",
+    "expert review has not yet been done",
   );
   const text = await page.locator("main").evaluate((m) => {
     const copy = m.cloneNode(true) as HTMLElement;

@@ -1,6 +1,6 @@
 """The three witnesses (séance design §4.2-4.4). Pure: data in, `Witness` out.
 
-- Past: Canon claims for the pair that passed both AI review passes, each with its locator.
+- Past: Canon claims for the pair that passed both automated review passes, each with its locator.
 - Present: FAERS report counts for (ingredient key, the condition's PT group). Support means a
   possible protective association (upper bound of the ROR interval below 1, light-face Req 1.1)
   on at least `MIN_REPORTS` reports, for an exposure that matches the ancient substance. It is a

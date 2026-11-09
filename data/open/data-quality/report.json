@@ -34,7 +34,7 @@
     "still_published"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": "persisting",
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=A07EA&showdescription=no",
@@ -76,7 +76,7 @@
     "still_published"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": "persisting",
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=C01BB&showdescription=no",
@@ -109,7 +109,7 @@
     "still_published"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": "persisting",
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=M01AG&showdescription=no",
@@ -138,7 +138,7 @@
     "still_published"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": "persisting",
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=D01AC&showdescription=no",
@@ -168,7 +168,7 @@
     "still_published"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": "persisting",
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=D01AC&showdescription=no",
@@ -195,7 +195,7 @@
     "still_published"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": "persisting",
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=R06AB&showdescription=no",
@@ -222,7 +222,7 @@
     "still_published"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": "persisting",
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=A02BC&showdescription=no",
@@ -250,7 +250,7 @@
     "still_published"
    ],
    "source": "wikidata",
-   "status": "new",
+   "status": "persisting",
    "upstream": "persisting",
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=A10AD&showdescription=no",
@@ -277,7 +277,7 @@
     "still_published"
    ],
    "source": "wikidata",
-   "status": "new",
+   "status": "persisting",
    "upstream": "persisting",
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=B03AB&showdescription=no"
@@ -303,7 +303,7 @@
     "still_published"
    ],
    "source": "wikidata",
-   "status": "new",
+   "status": "persisting",
    "upstream": "persisting",
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=N02BG&showdescription=no"
@@ -329,7 +329,7 @@
     "still_published"
    ],
    "source": "wikidata",
-   "status": "new",
+   "status": "persisting",
    "upstream": "persisting",
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=A06AD&showdescription=no"
@@ -356,7 +356,7 @@
     "still_published"
    ],
    "source": "wikidata",
-   "status": "new",
+   "status": "persisting",
    "upstream": "persisting",
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=A06AC&showdescription=no"
@@ -382,7 +382,7 @@
     "group_differs"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=A06AG&showdescription=no",
@@ -414,7 +414,7 @@
     "combination_code_on_single_ingredient_product"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=A01AD&showdescription=no",
@@ -446,7 +446,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01FF&showdescription=no",
@@ -473,7 +473,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01XG&showdescription=no",
@@ -502,7 +502,7 @@
     "both_regulators_publish_it"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=A01AB&showdescription=no",
@@ -529,7 +529,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EA&showdescription=no",
@@ -556,7 +556,7 @@
     "combination_code_on_single_ingredient_product"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=A02AH&showdescription=no",
@@ -585,7 +585,7 @@
     "code_of_other_substance"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=C01EB&showdescription=no",
@@ -612,7 +612,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EA&showdescription=no",
@@ -639,7 +639,7 @@
     "group_differs"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L04AA&showdescription=no",
@@ -666,7 +666,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01FD&showdescription=no",
@@ -693,7 +693,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01XJ&showdescription=no",
@@ -722,7 +722,7 @@
     "both_regulators_publish_it"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=H01AB&showdescription=no",
@@ -749,7 +749,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01ED&showdescription=no",
@@ -776,7 +776,7 @@
     "group_differs"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01FX&showdescription=no",
@@ -803,7 +803,7 @@
     "group_differs"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L04AA&showdescription=no",
@@ -830,7 +830,7 @@
     "group_differs"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01XJ&showdescription=no",
@@ -862,7 +862,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=A12CA&showdescription=no",
@@ -893,7 +893,7 @@
     "group_differs"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=A12CA&showdescription=no",
@@ -923,7 +923,7 @@
     "group_differs"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=A12CA&showdescription=no",
@@ -957,7 +957,7 @@
     "both_regulators_publish_it"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=A12CA&showdescription=no",
@@ -987,7 +987,7 @@
     "both_regulators_publish_it"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=A12CA&showdescription=no",
@@ -1022,7 +1022,7 @@
     "combination_code_on_single_ingredient_product"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=A12CA&showdescription=no",
@@ -1052,7 +1052,7 @@
     "group_differs"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=A12CA&showdescription=no",
@@ -1080,7 +1080,7 @@
     "both_regulators_publish_it"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=N01AX&showdescription=no",
@@ -1107,7 +1107,7 @@
     "group_differs"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01FX&showdescription=no",
@@ -1134,7 +1134,7 @@
     "group_differs"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L04AA&showdescription=no",
@@ -1161,7 +1161,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01XK&showdescription=no",
@@ -1188,7 +1188,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EF&showdescription=no",
@@ -1214,7 +1214,7 @@
     "group_differs"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=R06AX&showdescription=no",
@@ -1242,7 +1242,7 @@
     "group_differs"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=D10AD&showdescription=no",
@@ -1270,7 +1270,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EC&showdescription=no",
@@ -1297,7 +1297,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L04AA&showdescription=no",
@@ -1325,7 +1325,7 @@
     "group_differs"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L04AA&showdescription=no",
@@ -1353,7 +1353,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L04AA&showdescription=no",
@@ -1381,7 +1381,7 @@
     "group_differs"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=D11AH&showdescription=no",
@@ -1414,7 +1414,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=B05BA&showdescription=no",
@@ -1448,7 +1448,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=B05BB&showdescription=no",
@@ -1477,7 +1477,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L04AA&showdescription=no",
@@ -1505,7 +1505,7 @@
     "group_differs"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=A07AA&showdescription=no",
@@ -1534,7 +1534,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EX&showdescription=no",
@@ -1561,7 +1561,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01FA&showdescription=no",
@@ -1588,7 +1588,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01FD&showdescription=no",
@@ -1614,7 +1614,7 @@
     "group_differs"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=C05BA&showdescription=no",
@@ -1641,7 +1641,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01CE&showdescription=no",
@@ -1668,7 +1668,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01FA&showdescription=no",
@@ -1695,7 +1695,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EA&showdescription=no",
@@ -1722,7 +1722,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01FD&showdescription=no",
@@ -1749,7 +1749,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=J06BB&showdescription=no",
@@ -1776,7 +1776,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01FG&showdescription=no",
@@ -1803,7 +1803,7 @@
     "both_regulators_publish_it"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=G02BA&showdescription=no",
@@ -1831,7 +1831,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EX&showdescription=no",
@@ -1858,7 +1858,7 @@
     "group_differs"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01FE&showdescription=no",
@@ -1885,7 +1885,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EB&showdescription=no",
@@ -1912,7 +1912,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01XF&showdescription=no",
@@ -1939,7 +1939,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EB&showdescription=no",
@@ -1965,7 +1965,7 @@
     "both_regulators_publish_it"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=A08AA&showdescription=no",
@@ -1992,7 +1992,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01XG&showdescription=no",
@@ -2019,7 +2019,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EA&showdescription=no",
@@ -2046,7 +2046,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01CE&showdescription=no",
@@ -2072,7 +2072,7 @@
     "group_differs"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=R06AB&showdescription=no",
@@ -2099,7 +2099,7 @@
     "group_differs"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L04AA&showdescription=no",
@@ -2126,7 +2126,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01FE&showdescription=no",
@@ -2153,7 +2153,7 @@
     "group_differs"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EH&showdescription=no",
@@ -2181,7 +2181,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EG&showdescription=no",
@@ -2210,7 +2210,7 @@
     "group_differs"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01XE&showdescription=no",
@@ -2238,7 +2238,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EX&showdescription=no",
@@ -2265,7 +2265,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=J05AJ&showdescription=no",
@@ -2292,7 +2292,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L04AA&showdescription=no",
@@ -2319,7 +2319,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01FX&showdescription=no",
@@ -2351,7 +2351,7 @@
     "combination_code_on_single_ingredient_product"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=A01AD&showdescription=no",
@@ -2381,7 +2381,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EC&showdescription=no",
@@ -2413,7 +2413,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=S01KA&showdescription=no",
@@ -2440,7 +2440,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L04AA&showdescription=no",
@@ -2467,7 +2467,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EB&showdescription=no",
@@ -2494,7 +2494,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EK&showdescription=no",
@@ -2520,7 +2520,7 @@
     "group_differs"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=C03XW&showdescription=no",
@@ -2547,7 +2547,7 @@
     "group_differs"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=J06BB&showdescription=no",
@@ -2574,7 +2574,7 @@
     "group_differs"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01ED&showdescription=no",
@@ -2602,7 +2602,7 @@
     "group_differs"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=D11AX&showdescription=no",
@@ -2630,7 +2630,7 @@
     "group_differs"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EM&showdescription=no",
@@ -2657,7 +2657,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EL&showdescription=no",
@@ -2684,7 +2684,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EX&showdescription=no",
@@ -2711,7 +2711,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EH&showdescription=no",
@@ -2738,7 +2738,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01XK&showdescription=no",
@@ -2765,7 +2765,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EX&showdescription=no",
@@ -2791,7 +2791,7 @@
     "group_differs"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=D11AH&showdescription=no",
@@ -2818,7 +2818,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EJ&showdescription=no",
@@ -2844,7 +2844,7 @@
     "group_differs"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=A01AD&showdescription=no",
@@ -2871,7 +2871,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EG&showdescription=no",
@@ -2898,7 +2898,7 @@
     "group_differs"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EK&showdescription=no",
@@ -2925,7 +2925,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EE&showdescription=no",
@@ -2955,7 +2955,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EX&showdescription=no",
@@ -2982,7 +2982,7 @@
     "group_differs"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L04AA&showdescription=no",
@@ -3009,7 +3009,7 @@
     "group_differs"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EX&showdescription=no",
@@ -3037,7 +3037,7 @@
     "code_of_other_substance"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=A07DA&showdescription=no",
@@ -3064,7 +3064,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EA&showdescription=no",
@@ -3091,7 +3091,7 @@
     "same_level2_group"
    ],
    "source": "eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=J05AJ&showdescription=no",
@@ -3120,7 +3120,7 @@
     "code_of_other_substance"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=D07AC&showdescription=no",
@@ -3148,7 +3148,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01FF&showdescription=no",
@@ -3175,7 +3175,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01XG&showdescription=no",
@@ -3204,7 +3204,7 @@
     "both_regulators_publish_it"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=A01AB&showdescription=no",
@@ -3231,7 +3231,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EA&showdescription=no",
@@ -3258,7 +3258,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EA&showdescription=no",
@@ -3285,7 +3285,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01FD&showdescription=no",
@@ -3312,7 +3312,7 @@
     "group_differs"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L04AA&showdescription=no",
@@ -3339,7 +3339,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01XJ&showdescription=no",
@@ -3368,7 +3368,7 @@
     "both_regulators_publish_it"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=H01AB&showdescription=no",
@@ -3396,7 +3396,7 @@
     "combination_code_on_single_ingredient_product"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=A12AA&showdescription=no",
@@ -3425,7 +3425,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01ED&showdescription=no",
@@ -3451,7 +3451,7 @@
     "group_differs"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=V09FX&showdescription=no",
@@ -3483,7 +3483,7 @@
     "both_regulators_publish_it"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=A12CA&showdescription=no",
@@ -3513,7 +3513,7 @@
     "both_regulators_publish_it"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=A12CA&showdescription=no",
@@ -3541,7 +3541,7 @@
     "both_regulators_publish_it"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=N01AX&showdescription=no",
@@ -3575,7 +3575,7 @@
     "combination_code_on_single_ingredient_product"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=A01AD&showdescription=no",
@@ -3613,7 +3613,7 @@
     "code_of_other_substance"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=D08AG&showdescription=no",
@@ -3652,7 +3652,7 @@
     "combination_code_on_single_ingredient_product"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=D08AG&showdescription=no",
@@ -3684,7 +3684,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01XK&showdescription=no",
@@ -3711,7 +3711,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EF&showdescription=no",
@@ -3737,7 +3737,7 @@
     "combination_code_on_single_ingredient_product"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=D08AJ&showdescription=no",
@@ -3766,7 +3766,7 @@
     "code_of_other_substance"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=D07AC&showdescription=no",
@@ -3796,7 +3796,7 @@
     "code_of_other_substance"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=D07AC&showdescription=no",
@@ -3824,7 +3824,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=B05BB&showdescription=no",
@@ -3851,7 +3851,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EC&showdescription=no",
@@ -3878,7 +3878,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=B03AB&showdescription=no",
@@ -3905,7 +3905,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L04AA&showdescription=no",
@@ -3940,7 +3940,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=D03AX&showdescription=no",
@@ -3970,7 +3970,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L04AA&showdescription=no",
@@ -4002,7 +4002,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=B05BA&showdescription=no",
@@ -4033,7 +4033,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=B05BB&showdescription=no",
@@ -4062,7 +4062,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L04AA&showdescription=no",
@@ -4089,7 +4089,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EX&showdescription=no",
@@ -4116,7 +4116,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01FA&showdescription=no",
@@ -4143,7 +4143,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01FD&showdescription=no",
@@ -4172,7 +4172,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=A06AD&showdescription=no",
@@ -4198,7 +4198,7 @@
     "group_differs"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=N02BF&showdescription=no",
@@ -4226,7 +4226,7 @@
     "group_differs"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01FA&showdescription=no",
@@ -4253,7 +4253,7 @@
     "group_differs"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=N02BF&showdescription=no",
@@ -4280,7 +4280,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01CE&showdescription=no",
@@ -4307,7 +4307,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01FA&showdescription=no",
@@ -4334,7 +4334,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EA&showdescription=no",
@@ -4361,7 +4361,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01FD&showdescription=no",
@@ -4388,7 +4388,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=C09AA&showdescription=no",
@@ -4415,7 +4415,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=J06BB&showdescription=no",
@@ -4442,7 +4442,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01FG&showdescription=no",
@@ -4469,7 +4469,7 @@
     "both_regulators_publish_it"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=G02BA&showdescription=no",
@@ -4501,7 +4501,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=G03AA&showdescription=no",
@@ -4529,7 +4529,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EX&showdescription=no",
@@ -4558,7 +4558,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EX&showdescription=no",
@@ -4585,7 +4585,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EB&showdescription=no",
@@ -4612,7 +4612,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01XF&showdescription=no",
@@ -4639,7 +4639,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EB&showdescription=no",
@@ -4665,7 +4665,7 @@
     "both_regulators_publish_it"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=A08AA&showdescription=no",
@@ -4692,7 +4692,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01XG&showdescription=no",
@@ -4719,7 +4719,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EA&showdescription=no",
@@ -4746,7 +4746,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01CE&showdescription=no",
@@ -4773,7 +4773,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01FE&showdescription=no",
@@ -4801,7 +4801,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EG&showdescription=no",
@@ -4829,7 +4829,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EX&showdescription=no",
@@ -4856,7 +4856,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=J05AJ&showdescription=no",
@@ -4883,7 +4883,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L04AA&showdescription=no",
@@ -4909,7 +4909,7 @@
     "group_differs"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=D03AX&showdescription=no",
@@ -4936,7 +4936,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01FX&showdescription=no",
@@ -4966,7 +4966,7 @@
     "combination_code_on_single_ingredient_product"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=D06AX&showdescription=no",
@@ -4996,7 +4996,7 @@
     "combination_code_on_single_ingredient_product"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=C09DA&showdescription=no",
@@ -5023,7 +5023,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EC&showdescription=no",
@@ -5052,7 +5052,7 @@
     "code_of_other_substance"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=J01MA&showdescription=no",
@@ -5080,7 +5080,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L04AA&showdescription=no",
@@ -5107,7 +5107,7 @@
     "combination_code_on_single_ingredient_product"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=M01AE&showdescription=no",
@@ -5141,7 +5141,7 @@
     "code_of_other_substance"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=B05CA&showdescription=no",
@@ -5173,7 +5173,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EB&showdescription=no",
@@ -5200,7 +5200,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EK&showdescription=no",
@@ -5227,7 +5227,7 @@
     "group_differs"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L04AA&showdescription=no",
@@ -5254,7 +5254,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EL&showdescription=no",
@@ -5284,7 +5284,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=R03AC&showdescription=no",
@@ -5311,7 +5311,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EX&showdescription=no",
@@ -5338,7 +5338,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EH&showdescription=no",
@@ -5365,7 +5365,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01XK&showdescription=no",
@@ -5392,7 +5392,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EX&showdescription=no",
@@ -5419,7 +5419,7 @@
     "group_differs"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=D08AJ&showdescription=no",
@@ -5447,7 +5447,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EJ&showdescription=no",
@@ -5474,7 +5474,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EG&showdescription=no",
@@ -5501,7 +5501,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EE&showdescription=no",
@@ -5531,7 +5531,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EX&showdescription=no",
@@ -5558,7 +5558,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01EA&showdescription=no",
@@ -5586,7 +5586,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=D07AB&showdescription=no",
@@ -5614,7 +5614,7 @@
     "same_level2_group"
    ],
    "source": "titck",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=J05AJ&showdescription=no",
@@ -5641,7 +5641,7 @@
     "item_agrees_with_titck"
    ],
    "source": "titck+eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L04AA&showdescription=no",
@@ -5668,7 +5668,7 @@
     "item_agrees_with_cima"
    ],
    "source": "titck+eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=B02BC&showdescription=no",
@@ -5695,7 +5695,7 @@
     "item_agrees_with_titck"
    ],
    "source": "titck+eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L04AA&showdescription=no",
@@ -5723,7 +5723,7 @@
     "item_agrees_with_cima"
    ],
    "source": "titck+eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=D10AF&showdescription=no",
@@ -5751,7 +5751,7 @@
     "item_agrees_with_titck"
    ],
    "source": "titck+eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01XJ&showdescription=no",
@@ -5778,7 +5778,7 @@
     "item_agrees_with_titck"
    ],
    "source": "titck+eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01FX&showdescription=no",
@@ -5805,7 +5805,7 @@
     "item_agrees_with_cima"
    ],
    "source": "titck+eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=M09AX&showdescription=no",
@@ -5832,7 +5832,7 @@
     "item_agrees_with_titck"
    ],
    "source": "titck+eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L04AA&showdescription=no",
@@ -5859,7 +5859,7 @@
     "item_agrees_with_titck"
    ],
    "source": "titck+eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=A07AA&showdescription=no",
@@ -5888,7 +5888,7 @@
     "item_agrees_with_cima"
    ],
    "source": "titck+eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01FA&showdescription=no",
@@ -5916,7 +5916,7 @@
     "item_agrees_with_titck"
    ],
    "source": "titck+eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01FE&showdescription=no",
@@ -5943,7 +5943,7 @@
     "item_agrees_with_titck"
    ],
    "source": "titck+eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=R06AB&showdescription=no",
@@ -5970,7 +5970,7 @@
     "item_agrees_with_titck"
    ],
    "source": "titck+eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L04AA&showdescription=no",
@@ -5999,7 +5999,7 @@
     "item_agrees_with_cima"
    ],
    "source": "titck+eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=A01AD&showdescription=no",
@@ -6027,7 +6027,7 @@
     "item_agrees_with_titck"
    ],
    "source": "titck+eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=S01KA&showdescription=no",
@@ -6055,7 +6055,7 @@
     "item_agrees_with_cima"
    ],
    "source": "titck+eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=A11CA&showdescription=no",
@@ -6083,7 +6083,7 @@
     "item_agrees_with_titck"
    ],
    "source": "titck+eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=C03XW&showdescription=no",
@@ -6110,7 +6110,7 @@
     "item_agrees_with_cima"
    ],
    "source": "titck+eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L04AA&showdescription=no",
@@ -6137,7 +6137,7 @@
     "item_agrees_with_titck"
    ],
    "source": "titck+eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L01ED&showdescription=no",
@@ -6165,7 +6165,7 @@
     "item_agrees_with_cima"
    ],
    "source": "titck+eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=A16AA&showdescription=no",
@@ -6192,7 +6192,7 @@
     "item_agrees_with_titck"
    ],
    "source": "titck+eu_es_cima",
-   "status": "new",
+   "status": "persisting",
    "upstream": null,
    "whocc_group_urls": [
     "https://atcddd.fhi.no/atc_ddd_index/?code=L04AA&showdescription=no",
@@ -6234,10 +6234,10 @@
   "needs_pharmacist_before_any_upstream_report",
   "not_medical_advice"
  ],
- "previous_run_id": null,
- "previous_version": null,
+ "previous_run_id": "20261109T182100Z-f75ead99",
+ "previous_version": "data-quality-1+f75ead99e56f",
  "resolution_dataset": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
- "review_status": "Generated by deterministic rules; confirmed errors were reviewed by the project owner with AI assistance. A pharmacist must check every finding before it is reported upstream.",
+ "review_status": "Generated by deterministic rules. Expert review has not yet been done: a pharmacist must check every finding before it is reported upstream.",
  "rules": {
   "classes": "confirmed_error: reviewed and listed in data/atc_code_exclusions.csv. needs_pharmacist: a difference no rule explains. benign_difference: a deterministic rule explains it. No class is a statement about any medicine's safety.",
   "exclusion_status": "Each reviewed row of data/atc_code_exclusions.csv, class confirmed_error; upstream persisting when the source still publishes the code for the key, resolved_upstream when it no longer does (the row must then be removed).",
@@ -6247,7 +6247,7 @@
   "substance_code_keys": "One substance code of BDPM or CIMA whose published names map to two or more keys; always needs pharmacist."
  },
  "run_date": "2026-11-09",
- "run_id": "20261109T182100Z-f75ead99",
+ "run_id": "20261109T205133Z-f75ead99",
  "sources": {
   "eu_es_cima": {
    "license": "Reuse with attribution (Ley 37/2007)",
@@ -6315,8 +6315,8 @@
    "needs_pharmacist": 102
   },
   "by_status": {
-   "new": 220,
-   "persisting": 0,
+   "new": 0,
+   "persisting": 220,
    "resolved": 0
   },
   "confirmed_errors_resolved_upstream": 0,

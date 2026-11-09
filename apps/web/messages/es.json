@@ -523,7 +523,7 @@
     "title": "Investigación",
     "intro": "El mismo conocimiento sobre efectos adversos, al revés, para la investigación. Esta sección no forma parte del recorrido del paciente.",
     "rule7": "Los resultados de reposicionamiento son candidatos que vale la pena investigar — no tratamientos.",
-    "review": "El contenido de la fase 4 (fichas de hipótesis, los tres testigos, validación y exportación) lo ha revisado una IA; falta la revisión de expertos.",
+    "review": "Contenido de la fase 4 (fichas de hipótesis, los tres testigos, validación y exportación): todavía no se ha hecho la revisión de expertos.",
     "entries": {
       "hypotheses": {
         "title": "Fichas de hipótesis",
@@ -1006,7 +1006,7 @@
       "experimental": "Experimental: en la comprobación retrospectiva, ninguna reutilización conocida quedó entre los 10 primeros de su afección entre más de 10 candidatos.",
       "prototype": "Prototipo de investigación: algunas reutilizaciones conocidas se volvieron a encontrar en la comprobación retrospectiva. No es una prueba de que el método funcione con candidatos nuevos."
     },
-    "review": "Las afecciones, la correspondencia de efectos secundarios y los casos de validación los ha revisado una IA; falta la revisión de expertos.",
+    "review": "Afecciones, correspondencia de efectos secundarios y casos de validación: todavía no se ha hecho la revisión de expertos.",
     "researcherOnly": "Para investigadores. Estos candidatos no aparecen en las páginas para pacientes.",
     "notChecked": "Janus no comprueba si un candidato ya es un uso autorizado del medicamento.",
     "ties": "Las posiciones iguales se muestran como un intervalo de puestos.",
@@ -1140,7 +1140,7 @@
       "glass": "Los tres testigos"
     },
     "framing": "Candidato que merece investigarse: no es un tratamiento.",
-    "review": "Contenido de la fase 4: los pasajes del Canon, sus traducciones automáticas, las identificaciones y las afirmaciones extraídas han pasado dos revisiones por IA (agentes historiador y farmacólogo); falta la revisión de expertos.",
+    "review": "Contenido de la fase 4: los pasajes del Canon, sus traducciones automáticas, las identificaciones y las afirmaciones extraídas han pasado dos revisiones automatizadas (historiador y farmacólogo); todavía no se ha hecho la revisión de expertos.",
     "researcherOnly": "Para investigadores. Nada de esta página aparece en las páginas del paciente.",
     "demo": "Demo: el catálogo y los dos pares se registraron de los datos reales el {date}; no se envía ninguna solicitud.",
     "pick": {
@@ -1168,10 +1168,10 @@
       "science": "la ciencia"
     },
     "headline": {
-      "eligible": "Ha pasado las dos revisiones por IA y no está marcada como tóxica o cáustica: puede mostrarse como ejemplo de la demo.",
+      "eligible": "Ha pasado las dos revisiones automatizadas y no está marcada como tóxica o cáustica: puede mostrarse como ejemplo de la demo.",
       "notEligible": "No se muestra como ejemplo de la demo: {reasons}.",
       "reason": {
-        "no_eligible_passage": "ningún pasaje ha pasado las dos revisiones por IA",
+        "no_eligible_passage": "ningún pasaje ha pasado las dos revisiones automatizadas",
         "hazardous_substance": "la sustancia está marcada como tóxica o cáustica"
       }
     },
@@ -1221,7 +1221,7 @@
     },
     "missingReason": {
       "no_canon_passage": "No hay pasaje del Canon para este par.",
-      "passages_rejected_by_review": "Los pasajes de este par fueron rechazados en una revisión por IA.",
+      "passages_rejected_by_review": "Los pasajes de este par fueron rechazados en una revisión automatizada.",
       "no_faers_mapping": "No hay enlace de FAERS para esta sustancia.",
       "exposure_differs": "El principio activo de FAERS es una exposición distinta; no se cuenta.",
       "counts_unavailable": "Los recuentos de FAERS no están disponibles ahora.",
@@ -1235,7 +1235,7 @@
     "past": {
       "arabic": "Texto árabe",
       "mt": "Traducción automática (inglés)",
-      "aiReviewed": "Revisado por IA, pendiente de revisión de expertos",
+      "aiReviewed": "Todavía no se ha hecho la revisión de expertos",
       "expertReviewed": "Revisado por expertos",
       "summary": "Resumen de Janus (escrito por máquina, en inglés): {text}",
       "locator": "Canon, libro {book}, entrada {entry}, página {page}, líneas {start}–{end} (OpenITI)",
@@ -1697,7 +1697,7 @@
     "summary": "{substances, plural, one {# remedio del Canon} other {# remedios del Canon}} · {cascades, plural, one {# cascada de prescripción} other {# cascadas de prescripción}}",
     "intro": "La máquina del tiempo sigue remedios del Canon de Ibn Sina y algunas cascadas de prescripción a través de los datos abiertos de hoy: las moléculas que contienen, la actividad medida en laboratorio, modelos sencillos del organismo y el tiempo hasta la aparición anotado en notificaciones públicas de eventos adversos.",
     "inSilico": "In silico y exploratorio: calculado a partir de datos abiertos, no es una prueba sobre ninguna persona. Una molécula o una concentración mostrada aquí es un candidato que vale la pena investigar — no un tratamiento y nunca una dosis que tomar.",
-    "review": "Revisado por IA, pendiente de revisión de expertos.",
+    "review": "Todavía no se ha hecho la revisión de expertos.",
     "demo": "Demo: todas las respuestas se grabaron de la API local real de Janus el {date}; no se envía ninguna solicitud.",
     "entry": {
       "title": "Máquina del tiempo",
@@ -1896,7 +1896,7 @@
     "patient": {
       "heading": "Cuándo se notificó",
       "sentence": "En notificaciones hechas por otras personas, la mitad de las notificaciones de «{event}» se situó entre {start} y {end} días después de empezar {drug}; la otra mitad fue antes o después. Es información procedente de notificaciones, no una predicción sobre usted — puede valer la pena comentarlo con su médico.",
-      "review": "Revisado por IA, pendiente de revisión de expertos."
+      "review": "Todavía no se ha hecho la revisión de expertos."
     },
     "errors": {
       "unavailable": "La máquina del tiempo no está disponible en este servidor.",

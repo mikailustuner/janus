@@ -1,6 +1,6 @@
 {
  "attribution": "Janus FAERS time-to-onset table for the PIPC prescribing cascades, CC BY 4.0. PIPC columns: Rochon PA et al., Potentially inappropriate prescribing cascades (PIPC) list, Eur Geriatr Med 2025;16(5):1573-1584, doi:10.1007/s41999-025-01215-x, Table 1 (CC BY 4.0). Counts and intervals derived from the FDA Adverse Event Reporting System quarterly data files (CC0 1.0); not an FDA endorsement.",
- "built_at": "2026-11-09T18:21:48+00:00",
+ "built_at": "2026-11-09T20:50:36+00:00",
  "causal": false,
  "caveats": {
   "class_membership": "Drug A's class is matched on the ingredient-level ATC codes of each ingredient key with the cascade engine's matcher. This build uses the FAERS route field: suspect lines given by a local route (skin, eye, ear, nose, airways, vagina or uterus, mouth, joints, bladder) are not counted, except eye drops for row 3, rectal laxatives for row 47, nasal and inhaled forms of opioids, antipsychotics, benzodiazepines and dopaminergic medicines, and joint or lesion injections of systemic corticosteroids; lines without a route count. Exposure through the placenta or breast milk is never counted. Some keys are left out per class (excluded_class_keys, with reasons in data/onset_key_exclusions.csv); members_with_reports shows which keys drive a row.",
@@ -77,7 +77,7 @@
   "weibull": "maximum likelihood with a half-day shift (same-day intervals are 0 days); 95 % likelihood-ratio interval of the shape; shape class early (interval below 1), random (contains 1) or wear_out (above 1). Cornelius 2012, Hatahira 2017, Hasegawa 2020"
  },
  "resolution_dataset": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
- "review_status": "Methods reviewed by the statistician agent and class and event mappings by the pharmacologist agent (AI reviews, findings applied or listed as open items in .kiro/specs/faers-onset-table/); pending review by a pharmacist and a statistician.",
+ "review_status": "Methods and class and event mappings passed automated statistical and pharmacological review passes (findings applied or listed as open items in .kiro/specs/faers-onset-table/). Expert review has not yet been done.",
  "row_notes_sha256": "7669a68805d3d0a4069f8295494aa864d04c667531e06a3047bb1e8900fffb7d",
  "rows": [
   {

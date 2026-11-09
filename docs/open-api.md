@@ -37,7 +37,7 @@ Base URL: `/api` on a Janus deployment (same origin as the web app). Nothing is 
   cases. Donated and outcome counts are released only as described in [`open-data.md`](open-data.md).
 - **Onset table** rows are descriptive, not causal and not incidence; a row with too few reports or dominated by
   one identical date pair publishes counts only (`status`).
-- **Time machine** answers are in silico and exploratory, "AI-reviewed, pending expert review"
+- **Time machine** answers are in silico and exploratory, "expert review has not yet been done"
   (`meta.review_status`); a concentration or dose in them is never a dose a person could take.
 
 ## Examples

@@ -144,7 +144,7 @@ test("three seats, labels, locator, count and missing witness", async ({
   await expect(page.getByTestId("mt-label")).toHaveCount(items);
   await expect(page.getByTestId("review-label")).toHaveCount(items);
   await expect(page.getByTestId("review-label").first()).toHaveText(
-    "AI-reviewed, pending expert review",
+    "Expert review has not yet been done",
   );
   await expect(page.getByTestId("locator").first()).toHaveText(
     "Canon, Book 2, entry h0219, page V01P447, lines 12231–12232 (OpenITI)",
