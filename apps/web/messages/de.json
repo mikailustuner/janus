@@ -53,9 +53,34 @@
     "alt": {
       "diorama": "Illustration: eine kleine Apotheke bei Nacht, die Fenster erleuchtet, die Tür angelehnt.",
       "cabinet": "Illustration: das Innere der Apotheke, ein offener, leuchtender Arzneischrank an der Wand und ein leerer Zettel auf einem kleinen Tisch.",
-      "glassHero": "Illustration: ein gläserner Kopf mit zwei Gesichtern, gefüllt mit Kapseln."
+      "glassHero": "Illustration: ein Kopf aus klarem Glas mit zwei Gesichtern, gefüllt mit bunten Kapseln, auf weißem Grund."
     },
-    "prepareDemoNote": "Demo-Notiz für die Ärztin oder den Arzt erstellen"
+    "prepareDemoNote": "Demo-Notiz für die Ärztin oder den Arzt erstellen",
+    "glass": {
+      "cards": "Aus der Istanbul-Demo",
+      "cascadePair": "Amlodipin, danach Furosemid",
+      "monthsApart": "{months, plural, one {# Monat Abstand} other {# Monate Abstand}}",
+      "sources": "{count, plural, one {# Quelle} other {# Quellen}}",
+      "photos": "Fotos der Packungen bleiben auf diesem Gerät",
+      "glanceEyebrow": "Auf einen Blick",
+      "glanceTitle": "Von der Packung zur Notiz für die Ärztin oder den Arzt.",
+      "resultsTitle": "Ergebnisse auf einem Bildschirm, ruhig und klar.",
+      "resultsText": "Jeder Befund mit seinen Quellen; Verhältnisse mit ihrem Bereich, Zahlen als Meldungen, nicht als Personen.",
+      "phoneMonths": "{months, plural, one {# Monat} other {# Monate}}",
+      "phoneMonthsLabel": "zwischen den Medikamenten",
+      "noteTitle": "Eine Notiz in der Sprache Ihrer Ärztin oder Ihres Arztes.",
+      "noteText": "Mit Quellen und, wenn Sie möchten, einem QR-Code, über den die Ärztin oder der Arzt antworten kann.",
+      "patternsTile": "veröffentlichte Muster von Verschreibungs­kaskaden (PIPC-Liste, 2025)",
+      "regionsTitle": "Drei Regionen, fünf Sprachen.",
+      "regionsText": "Öffentliche Arzneimittellisten aus der Türkei, Frankreich und Spanien (EU) und den USA.",
+      "sourcesTitle": "Quellen mit DOI werden auf Rückzüge geprüft.",
+      "sourcesText": "Eine zurückgezogene Studie wird nicht verwendet, und Janus sagt es Ihnen.",
+      "badgeTitle": "DOIs mit Crossref geprüft",
+      "badgeText": "einschließlich der Daten von Retraction Watch",
+      "how1Title": "Packung scannen",
+      "how2Title": "Muster werden verglichen",
+      "how3Title": "Die Arztnotiz"
+    }
   },
   "Shell": {
     "skip": "Zum Inhalt springen",
@@ -206,7 +231,7 @@
     "themeGlassHint": "Schlicht und hell, ohne Themensymbole.",
     "largeText": "Große Schrift",
     "reduceTransparency": "Transparenz reduzieren",
-    "reduceTransparencyHint": "Einfarbige Kopfzeile und Tab-Leiste statt Milchglas (Design Glas).",
+    "reduceTransparencyHint": "Einfarbige Kopfzeile, Tab-Leiste und schwebende Karten statt Milchglas (Design Glas-Janus).",
     "readAloud": "Ergebnisse vorlesen",
     "readAloudHint": "Nutzt die Stimme dieses Browsers. Es wird nichts an einen Server gesendet.",
     "research": "Forschungsbereich",

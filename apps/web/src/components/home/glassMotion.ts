@@ -1,14 +1,17 @@
 /**
- * Motion of the Glass Janus home (own chunk; DP46, DP49): a gentle parallax and a subtle 3D tilt
- * of the head while a fine pointer moves (a requestAnimationFrame loop that stops when the head
- * settles). The light sweep and the capsule highlights are CSS animations of transform and
- * opacity; `data-paused` stops them while the hero is off-screen or the tab is hidden, and
+ * Motion of the Glass Janus home (own chunk; DP46, DP49, DP69): a gentle parallax of the floating
+ * cards and capsules while a fine pointer moves over the hero (a requestAnimationFrame loop that
+ * stops when they settle; the image itself never moves). The light sweep, the floating cards and
+ * the capsules are CSS animations of transform and opacity; `data-paused` stops them while the hero is off-screen or the tab is hidden, and
  * `data-still` (Save-Data, slow connection) stops them for good. Nothing listens to scroll, and
  * nothing runs under reduced motion.
  */
 import { stillReason } from "./still";
 
-export function startGlassMotion(root: HTMLElement): () => void {
+export function startGlassMotion(
+  root: HTMLElement,
+  pointer = true,
+): () => void {
   const reason = stillReason();
   if (reason) {
     if (reason !== "reduce") root.setAttribute("data-still", reason);
@@ -44,7 +47,7 @@ export function startGlassMotion(root: HTMLElement): () => void {
         ? requestAnimationFrame(frame)
         : 0;
   };
-  const fine = matchMedia("(pointer: fine)").matches;
+  const fine = pointer && matchMedia("(pointer: fine)").matches;
   if (fine) root.addEventListener("pointermove", onPointer);
   return () => {
     cancelAnimationFrame(raf);

@@ -53,9 +53,34 @@
     "alt": {
       "diorama": "Çizim: gece, pencereleri aydınlık ve kapısı aralık küçük bir eczane.",
       "cabinet": "Çizim: eczanenin içi; duvarda parlayan açık bir ilaç dolabı ve küçük bir masada boş bir not.",
-      "glassHero": "Çizim: iki yüzü olan, içi kapsüllerle dolu cam bir baş."
+      "glassHero": "Çizim: beyaz zemin üzerinde, içi renkli kapsüllerle dolu, iki yüzü olan şeffaf cam bir baş."
     },
-    "prepareDemoNote": "Demo doktor notunu hazırla"
+    "prepareDemoNote": "Demo doktor notunu hazırla",
+    "glass": {
+      "cards": "İstanbul demosundan",
+      "cascadePair": "Amlodipin, ardından furosemid",
+      "monthsApart": "{months, plural, one {# ay arayla} other {# ay arayla}}",
+      "sources": "{count, plural, one {# kaynak} other {# kaynak}}",
+      "photos": "Kutuların fotoğrafları bu cihazda kalır",
+      "glanceEyebrow": "Bir bakışta",
+      "glanceTitle": "Kutudan doktor notuna.",
+      "resultsTitle": "Sonuçlar tek ekranda, sakin ve anlaşılır.",
+      "resultsText": "Her bulgu kaynaklarıyla gelir; oranlar aralığıyla, sayılar kişi olarak değil bildirim olarak.",
+      "phoneMonths": "{months, plural, one {# ay} other {# ay}}",
+      "phoneMonthsLabel": "ilaçlar arası",
+      "noteTitle": "Doktorunuzun dilinde bir not.",
+      "noteText": "Kaynaklarıyla birlikte ve isterseniz doktorun yanıt verebileceği bir QR koduyla.",
+      "patternsTile": "yayımlanmış reçete kaskadı örüntüsü (PIPC listesi, 2025)",
+      "regionsTitle": "Üç bölge, beş dil.",
+      "regionsText": "Türkiye, Fransa ve İspanya (AB) ile ABD'nin kamuya açık ilaç listeleri.",
+      "sourcesTitle": "DOI'si olan kaynakların geri çekilme durumu kontrol edilir.",
+      "sourcesText": "Geri çekilmiş bir çalışma kullanılmaz ve bu size söylenir.",
+      "badgeTitle": "DOI'ler Crossref ile kontrol edildi",
+      "badgeText": "Retraction Watch verileri dahil",
+      "how1Title": "Kutuyu tarayın",
+      "how2Title": "Örüntüler karşılaştırılır",
+      "how3Title": "Doktor için not"
+    }
   },
   "Shell": {
     "skip": "İçeriğe geç",
@@ -206,7 +231,7 @@
     "themeGlassHint": "Sade ve açık; tema simgeleri yok.",
     "largeText": "Büyük yazı",
     "reduceTransparency": "Saydamlığı azalt",
-    "reduceTransparencyHint": "Buzlu cam yerine düz üst çubuk ve sekme çubuğu (Cam teması).",
+    "reduceTransparencyHint": "Buzlu cam yerine düz üst çubuk, sekme çubuğu ve yüzen kartlar (Cam Janus teması).",
     "readAloud": "Bulguları sesli oku",
     "readAloudHint": "Bu tarayıcının sesini kullanır. Sunucuya hiçbir şey gönderilmez.",
     "research": "Araştırma bölümü",

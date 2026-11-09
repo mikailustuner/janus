@@ -53,9 +53,34 @@
     "alt": {
       "diorama": "Illustration: a small pharmacy at night, its windows lit and the door ajar.",
       "cabinet": "Illustration: inside the pharmacy, an open medicine cabinet glowing on the wall and a blank note on a small table.",
-      "glassHero": "Illustration: a two-faced glass head filled with capsules."
+      "glassHero": "Illustration: a clear glass head with two faces, filled with coloured capsules, on a white background."
     },
-    "prepareDemoNote": "Prepare the demo doctor note"
+    "prepareDemoNote": "Prepare the demo doctor note",
+    "glass": {
+      "cards": "From the Istanbul demo",
+      "cascadePair": "Amlodipine, then furosemide",
+      "monthsApart": "{months, plural, one {# month apart} other {# months apart}}",
+      "sources": "{count, plural, one {# source} other {# sources}}",
+      "photos": "Photos of the boxes stay on this device",
+      "glanceEyebrow": "At a glance",
+      "glanceTitle": "From the box to a note for the doctor.",
+      "resultsTitle": "Results on one screen, calm and clear.",
+      "resultsText": "Every finding comes with its sources; ratios with their range, and counts as reports, not people.",
+      "phoneMonths": "{months, plural, one {# month} other {# months}}",
+      "phoneMonthsLabel": "between the medicines",
+      "noteTitle": "A note in your doctor's language.",
+      "noteText": "With its sources and, if you choose, a QR code the doctor can use to answer.",
+      "patternsTile": "published prescribing-cascade patterns (PIPC list, 2025)",
+      "regionsTitle": "Three regions, five languages.",
+      "regionsText": "Public medicine lists from Türkiye, France and Spain (EU) and the US.",
+      "sourcesTitle": "Sources with a DOI are checked for retractions.",
+      "sourcesText": "A retracted study is not used, and Janus tells you so.",
+      "badgeTitle": "DOIs checked against Crossref",
+      "badgeText": "including Retraction Watch data",
+      "how1Title": "Scan the box",
+      "how2Title": "Patterns are compared",
+      "how3Title": "A note for the doctor"
+    }
   },
   "Shell": {
     "skip": "Skip to content",
@@ -206,7 +231,7 @@
     "themeGlassHint": "Plain and light, without theme symbols.",
     "largeText": "Large text",
     "reduceTransparency": "Reduce transparency",
-    "reduceTransparencyHint": "Solid header and tab bar instead of frosted glass (Glass theme).",
+    "reduceTransparencyHint": "Solid header, tab bar and floating cards instead of frosted glass (Glass Janus theme).",
     "readAloud": "Read findings aloud",
     "readAloudHint": "Uses the voice of this browser. Nothing is sent to a server.",
     "research": "Research section",

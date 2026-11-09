@@ -1,8 +1,8 @@
 /*
  * Home scenes (steering design.md "Home scenes", experience DP46, DP47, DP49). Night Pharmacy:
  * one stage with three scenes switched by "Step inside" (diorama → door video played once in a
- * fixed full-bleed layer → medicine cabinet), never by scroll; Glass Janus: one full-bleed glass
- * head with a light sweep. Colours of the scenes are fixed (the images are dark in every theme),
+ * fixed full-bleed layer → medicine cabinet), never by scroll; Glass Janus (Clinical White, DP68):
+ * the glass head at its own ratio with floating cards, capsules and a light sweep. Colours of the scenes are fixed (the images are dark in every theme),
  * so they live here and not in the theme tokens.
  *
  * Smooth scrolling (DP49): nothing is pinned or sticky, nothing reacts to scroll; every running
@@ -24,7 +24,6 @@
   --scene-muted: #d9d6e6;
   --scene-accent: #7fd1c7;
   --scene-on-accent: #0e2a27;
-  --scene-glass: #0d1220;
   --scene-firefly: #ffd27a;
 }
 
@@ -467,7 +466,6 @@
   );
 }
 .np-copy-inner,
-.gj-copy-inner,
 .np-scene3-inner {
   display: flex;
   max-width: 34rem;
@@ -639,7 +637,7 @@ li:nth-child(4) > .np-finding {
 /* Off-screen, a hidden tab, a scene that is not shown, or the video on top: nothing animates. */
 .np[data-paused] *,
 .gj[data-paused] *,
-.gj[data-paused] *::before,
+.gj-glance[data-paused] *,
 .np[data-scene="room"] .np-hero *,
 .np[data-scene="door"] .np-stage * {
   animation-play-state: paused !important;
@@ -648,131 +646,829 @@ li:nth-child(4) > .np-finding {
 /* Save-Data, slow connection or video error: no motion at all, as under reduced motion. */
 .np[data-still] *,
 .gj[data-still] *,
-.gj[data-still] *::before {
+.gj-glance[data-still] * {
   animation: none !important;
 }
 .np[data-still] .scene {
   transition: opacity 400ms ease;
 }
 
-/* ---------- Glass Janus ---------- */
+/* ---------- Glass Janus, Clinical White (owner decision 2026-11-09; Req 31, DP68–DP72) ----------
+   Light only: the Glass tokens (ink on white) apply here. The image keeps its own ratio and is
+   never cropped; from 1,100 px the copy lies in the light left area (to 29 % of the width, the
+   left face starts at about 31 %) and the floating cards right of the head (from 75.5 %, the
+   right face ends at about 70 %); when the copy is taller than the image the section grows. */
+:root {
+  --gj-scrim: rgb(246 248 249 / 0.8);
+  --gj-scrim-mid: rgb(246 248 249 / 0.45);
+  --gj-sweep: rgb(255 255 255 / 0.3);
+  --gj-ink-2: #3d4b51;
+  --gj-shadow-float:
+    0 1px 0 rgb(14 26 31 / 0.04), 0 28px 56px -18px rgb(14 26 31 / 0.28);
+  --gj-shadow-soft: 0 12px 28px -16px rgb(14 26 31 / 0.18);
+  --gj-shadow-deep: 0 26px 44px -16px rgb(14 26 31 / 0.35);
+  --gj-mint: #eaf4f2;
+  --gj-warm: #fff6ee;
+  --gj-mint-line: #9ed2cb;
+  --gj-paper-line: #d5dde0;
+  --gj-phone: #0e1a1f;
+  --gj-phone-edge: #2a3439;
+}
 .gj {
   position: relative;
-  min-height: 100svh;
+  display: grid;
   overflow: hidden;
-  background:
-    radial-gradient(60% 80% at 70% 40%, rgb(80 96 150 / 0.35), transparent 70%),
-    var(--scene-glass);
-  color: var(--scene-ink);
+  background: var(--bg);
+  color: var(--fg);
 }
-.gj .scene {
-  perspective: 1400px;
+.gj > * {
+  grid-area: 1 / 1;
+  min-width: 0;
 }
-.gj-box {
-  --bw: max(100cqw, 100cqh * 1.7917);
-  left: calc(50cqw - 0.5 * var(--bw));
-  transform: translate3d(0, -50%, 0) rotateY(calc(var(--mx, 0) * 3deg))
-    rotateX(calc(var(--my, 0) * -2deg));
-  mask-image: linear-gradient(to right, transparent 0%, black 18%, black 100%);
+.gj-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2752 / 1536;
+  overflow: hidden;
 }
-@media (min-width: 768px) {
-  .gj-box {
-    left: calc(68cqw - 0.5 * var(--bw));
-  }
+.gj-picture img {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
-/* The light sweep: a band that moves by transform only (compositor), masked to the head. */
+/* The light sweep: a soft band moved by transform only (compositor). */
 .gj-sweep {
   position: absolute;
-  inset: 0;
-  overflow: hidden;
-  mix-blend-mode: screen;
-  mask-image: radial-gradient(28% 46% at 50% 47%, black 60%, transparent 100%);
-  pointer-events: none;
-}
-.gj-sweep::before {
-  content: "";
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 40%;
+  top: -30%;
+  left: 0;
+  width: 12%;
+  height: 160%;
   background: linear-gradient(
-    to right,
+    90deg,
     transparent 0%,
-    rgb(255 255 255 / 0.22) 42%,
-    rgb(190 230 255 / 0.12) 58%,
+    var(--gj-sweep) 50%,
     transparent 100%
   );
-  transform: translate3d(-100%, 0, 0);
-  animation: gj-sweep 9s ease-in-out infinite;
+  transform: translate3d(-250%, 0, 0) rotate(16deg);
+  animation: gj-sweep 12s ease-in-out infinite;
   will-change: transform;
+  pointer-events: none;
 }
 @keyframes gj-sweep {
   0% {
-    transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-250%, 0, 0) rotate(16deg);
   }
-  60%,
+  70%,
   100% {
-    transform: translate3d(250%, 0, 0);
+    transform: translate3d(1100%, 0, 0) rotate(16deg);
   }
 }
-.gj-capsule {
+/* A light left-edge scrim only (the left area of the image is light already) and a soft fade
+   of the floor into the page; nothing over the faces. */
+.gj-scrim {
   position: absolute;
-  width: 0.5%;
-  aspect-ratio: 1 / 2.4;
-  border-radius: 999px;
-  background: linear-gradient(rgb(255 255 255 / 0.9), rgb(127 209 199 / 0.5));
-  filter: blur(0.5px);
-  opacity: 0.7;
-  animation: gj-float 7s ease-in-out infinite;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      var(--gj-scrim) 0%,
+      var(--gj-scrim-mid) 22%,
+      transparent 30%
+    ),
+    linear-gradient(180deg, transparent 84%, var(--bg) 100%);
   pointer-events: none;
 }
-@keyframes gj-float {
+
+/* CSS capsules (DP69): two halves, a specular gradient, a highlight and a soft shadow. */
+.gj-pills,
+.gj-tile-pill {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.gj-pill-wrap {
+  position: absolute;
+  aspect-ratio: 74 / 28;
+  translate: calc(var(--mx, 0) * 10px) calc(var(--my, 0) * 6px);
+}
+.gj-pill {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--pa) 0 50%, var(--pb) 50% 100%);
+  box-shadow:
+    0 18px 30px -12px rgb(14 26 31 / 0.35),
+    inset 0 -6px 10px rgb(0 0 0 / 0.12);
+  transform: rotate(var(--r, 0deg));
+}
+.gj-pill::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgb(255 255 255 / 0.75) 0%,
+    rgb(255 255 255 / 0.15) 32%,
+    transparent 55%,
+    rgb(0 0 0 / 0.1) 100%
+  );
+}
+.gj-pill::after {
+  content: "";
+  position: absolute;
+  left: 14%;
+  right: 14%;
+  top: 14%;
+  height: 16%;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.85);
+}
+.gj-pill-navy {
+  --pa: #24348f;
+  --pb: #f2ebdd;
+}
+.gj-pill-teal {
+  --pa: #2ba39a;
+  --pb: #f2ebdd;
+}
+.gj-pill-amber {
+  --pa: #d9793a;
+  --pb: #f6d9b0;
+}
+.gj-pill-red {
+  --pa: #2b3fa8;
+  --pb: #d8344a;
+}
+.gj-soft .gj-pill {
+  filter: blur(1.5px);
+}
+.gj-softer .gj-pill {
+  filter: blur(2.5px);
+  opacity: 0.9;
+}
+.gj-spin-a .gj-pill {
+  animation: gj-spin 9s ease-in-out infinite;
+}
+.gj-spin-b .gj-pill {
+  animation: gj-spin 11s ease-in-out -4s infinite;
+}
+.gj-spin-c .gj-pill {
+  animation: gj-spin 10s ease-in-out -7s infinite;
+}
+@keyframes gj-spin {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--r, 0deg));
+  }
   50% {
-    transform: translateY(-14px) rotate(18deg);
-    opacity: 0.35;
+    transform: translateY(-14px) rotate(calc(var(--r, 0deg) + 8deg));
   }
 }
+
+/* Copy: ink on the light left area. */
+.gj-copy {
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding: 1.5rem 1rem 0.5rem;
+}
+.gj-eyebrow,
+.gj-kicker {
+  color: var(--accent);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.gj-title {
+  margin: 0;
+  hyphens: manual;
+  font-size: clamp(2.125rem, 3.4vw, 3.5rem);
+  line-height: 1.04;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+}
+.gj-lead {
+  color: var(--gj-ink-2);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+.gj-hint {
+  color: var(--muted);
+  font-size: 0.8125rem;
+}
+.gj-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+  margin-top: 0.5rem;
+}
+.gj-btn {
+  display: inline-flex;
+  min-height: 3.25rem;
+  align-items: center;
+  gap: 0.625rem;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: var(--nav-surface);
+  -webkit-backdrop-filter: var(--nav-blur);
+  backdrop-filter: var(--nav-blur);
+  padding: 0 1.375rem;
+  color: var(--fg);
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+.gj-btn:active {
+  transform: scale(0.98);
+}
+.gj-btn-primary {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 700;
+  box-shadow:
+    0 12px 28px rgb(11 108 98 / 0.3),
+    inset 0 1px 0 rgb(255 255 255 / 0.25);
+}
+
+/* Floating cards: an outer float and an inner tilt, so the animation never replaces the tilt. */
+.gj-cards {
+  z-index: 3;
+  display: none;
+}
+.gj-float-a {
+  animation: gj-float 7s ease-in-out infinite;
+}
+.gj-float-b {
+  animation: gj-float 8s ease-in-out -3s infinite;
+}
+@keyframes gj-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+.gj-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border: 1px solid var(--surface);
+  border-radius: 22px;
+  background: var(--nav-surface);
+  -webkit-backdrop-filter: var(--nav-blur);
+  backdrop-filter: var(--nav-blur);
+  box-shadow: var(--gj-shadow-float);
+  padding: 1.125rem;
+  transform: rotateY(-12deg)
+    translate3d(calc(var(--mx, 0) * -6px), calc(var(--my, 0) * -4px), 0);
+}
+.gj-card-shift {
+  transform: rotateY(-12deg)
+    translate3d(calc(28px + var(--mx, 0) * -9px), calc(var(--my, 0) * -6px), 0);
+}
+.gj-card-eyebrow {
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.gj-card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+.gj-card-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  margin-top: 0.25rem;
+}
+.gj-card-chips li {
+  border-radius: 8px;
+  background: var(--bg);
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  color: var(--gj-ink-2);
+}
+.gj-card-demo,
+.gj-card-foot {
+  border-top: 1px solid var(--line);
+  padding-top: 0.625rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+.gj-card-demo {
+  color: var(--muted);
+}
+.gj-card-foot {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.gj-card-figure {
+  font-size: 0.875rem;
+  color: var(--gj-ink-2);
+  line-height: 1.35;
+}
+.gj-card-big {
+  display: block;
+  color: var(--fg);
+  font-size: 2.125rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+/* Desktop composition from 1,100 px (DP68). */
+@media (min-width: 1100px) {
+  .gj-copy {
+    align-self: center;
+    margin-left: max(24px, 4%);
+    width: calc(29% - max(24px, 4%));
+    padding: calc(
+        var(--home-header-h, 4rem) + var(--home-emergency-h, 3rem) + 2rem
+      )
+      0 2.5rem;
+  }
+  .gj-cards {
+    display: flex;
+    align-self: center;
+    justify-self: end;
+    flex-direction: column;
+    gap: 1rem;
+    width: 21%;
+    margin-right: max(24px, 3.5%);
+    padding-top: calc(var(--home-header-h, 4rem) + 1rem);
+    perspective: 1200px;
+  }
+}
+/* Below 1,100 px: the image on top under the header and the emergency bar, the copy below on
+   white, no floating cards and no capsules (DP68, DP72). */
+@media (max-width: 1099px) {
+  .gj {
+    display: block;
+  }
+  .gj-scrim,
+  .gj-pills {
+    display: none;
+  }
+  .gj-copy {
+    background: var(--surface);
+    padding-bottom: 1.5rem;
+  }
+}
+
+/* ---------- Glass Janus home sections: "At a glance", "How it works", privacy (DP71) ---------- */
+.gj-sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-section);
+  padding-top: 1rem;
+}
+.gj-h2 {
+  margin: 0.5rem 0 1.5rem;
+  font-size: clamp(1.75rem, 3vw, 2.75rem);
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  max-width: 18em;
+}
+.gj-how .gj-h2 {
+  margin-top: 0;
+  font-size: 2rem;
+}
+.gj-h3 {
+  margin: 0;
+  font-size: 1.375rem;
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  max-width: 14em;
+}
+.gj-tile-text {
+  margin-top: 0.5rem;
+  color: var(--gj-ink-2);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  max-width: 24em;
+}
+.gj-tile-meta,
+.gj-tile-langs {
+  color: var(--muted);
+  font-size: 0.8125rem;
+}
+.gj-tile-langs {
+  margin-top: 0.5rem;
+}
+.gj-bento {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+}
+@media (min-width: 960px) {
+  .gj-bento {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .gj-span-4 {
+    grid-column: 1 / -1;
+  }
+}
+@media (min-width: 1024px) {
+  .gj-bento {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .gj-span-4 {
+    grid-column: span 4;
+  }
+  .gj-span-2 {
+    grid-column: span 2;
+  }
+}
+.gj-tile {
+  position: relative;
+  display: flex;
+  min-height: 18.75rem;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background: var(--surface);
+  padding: 1.75rem;
+}
+.gj-tile-mint {
+  min-height: 27.5rem;
+  background: linear-gradient(160deg, var(--surface) 0%, var(--gj-mint) 100%);
+}
+.gj-tile-warm {
+  background: linear-gradient(160deg, var(--surface) 0%, var(--gj-warm) 100%);
+}
+.gj-tile-column {
+  min-height: 27.5rem;
+}
+.gj-tile-dark {
+  justify-content: flex-start;
+  background: var(--fg);
+  color: var(--bg);
+  border-color: var(--fg);
+}
+.gj-dark-figure {
+  max-width: 13em;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.gj-dark-big {
+  display: block;
+  font-size: 4.5rem;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-bottom: 0.625rem;
+}
+.gj-ring {
+  position: absolute;
+  right: -40px;
+  bottom: -40px;
+  width: 200px;
+  height: 200px;
+  border-radius: 999px;
+  border: 18px solid rgb(158 210 203 / 0.18);
+  box-shadow: inset 0 0 0 18px rgb(158 210 203 / 0.1);
+}
+
+/* The tilted phone with a results screen (decorative). */
+.gj-phone-stage {
+  align-self: center;
+  margin-top: 1.5rem;
+  margin-bottom: -4.5rem;
+  perspective: 1400px;
+}
+@media (min-width: 960px) {
+  .gj-phone-stage {
+    position: absolute;
+    right: 2.5rem;
+    bottom: -4.5rem;
+    margin: 0;
+  }
+  .gj-tile-mint .gj-h3,
+  .gj-tile-mint .gj-tile-text {
+    max-width: calc(100% - 300px);
+  }
+}
+.gj-phone {
+  width: 250px;
+  height: 500px;
+  border-radius: 44px;
+  background: linear-gradient(
+    145deg,
+    var(--gj-phone-edge) 0%,
+    var(--gj-phone) 60%
+  );
+  padding: 10px;
+  transform: rotateY(-22deg) rotateX(10deg) rotateZ(3deg);
+  box-shadow:
+    30px 40px 60px -20px rgb(14 26 31 / 0.45),
+    inset 0 0 0 1px rgb(255 255 255 / 0.12);
+}
+.gj-phone-screen {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  gap: 0.5rem;
+  overflow: hidden;
+  border-radius: 34px;
+  background: var(--bg);
+  padding: 1.375rem 0.875rem;
+  color: var(--fg);
+}
+.gj-phone-title {
+  font-size: 1.375rem;
+  font-weight: 800;
+}
+.gj-phone-meta {
+  color: var(--muted);
+  font-size: 0.6875rem;
+  line-height: 1.35;
+}
+.gj-phone-card,
+.gj-phone-tile {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+  padding: 0.75rem;
+}
+.gj-phone-eyebrow {
+  color: var(--accent);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.gj-phone-pair {
+  margin: 0.25rem 0;
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+.gj-phone-tiles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+.gj-phone-tile .mono {
+  font-size: 0.9375rem;
+  white-space: nowrap;
+}
+.gj-phone-button {
+  display: flex;
+  min-height: 2.375rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* The tilted doctor-note paper with a QR mark (decorative). */
+.gj-note-stage {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1.125rem;
+  perspective: 1000px;
+}
+.gj-note {
+  position: relative;
+  width: 190px;
+  height: 240px;
+}
+.gj-note-back,
+.gj-note-paper {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+}
+.gj-note-back {
+  background: var(--bg);
+  transform: rotate(8deg) translate(18px, 6px);
+  box-shadow: 0 14px 30px -14px rgb(14 26 31 / 0.3);
+}
+.gj-note-paper {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  padding: 1rem;
+  transform: rotateX(14deg) rotateZ(-5deg);
+  box-shadow: var(--gj-shadow-deep);
+}
+.gj-note-line {
+  display: block;
+  height: 6px;
+  border-radius: 4px;
+  background: var(--gj-paper-line);
+}
+.gj-note-head {
+  width: 60%;
+  height: 8px;
+  margin-bottom: 5px;
+  background: var(--fg);
+}
+.gj-note-accent {
+  width: 54%;
+  background: var(--gj-mint-line);
+}
+.gj-qr {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+}
+
+/* TR / EU / US cards, staggered and slightly tilted; never over each other (names stay legible). */
+.gj-fan {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  perspective: 900px;
+}
+.gj-fan-card {
+  display: flex;
+  width: 78%;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface);
+  padding: 0.625rem 0.875rem;
+  box-shadow: 0 18px 30px -16px rgb(14 26 31 / 0.3);
+  transform: rotateY(14deg) rotateZ(-1.5deg);
+}
+.gj-fan-card:nth-child(2) {
+  margin-inline-start: 11%;
+  transform: rotateY(14deg);
+}
+.gj-fan-card:nth-child(3) {
+  margin-inline-start: 22%;
+  transform: rotateY(14deg) rotateZ(1.5deg);
+}
+.gj-fan-source {
+  color: var(--muted);
+  font-size: 0.8125rem;
+  white-space: nowrap;
+}
+
+/* The "checked against Crossref" badge. */
+.gj-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  align-self: center;
+  margin-top: auto;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--surface);
+  padding: 0.875rem 1.125rem;
+  box-shadow: var(--gj-shadow-deep);
+}
+
+/* 3D icon chips: soft squircles. */
+.gj-chip3d {
+  display: flex;
+  width: 52px;
+  height: 52px;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  background: linear-gradient(160deg, var(--surface) 0%, var(--chip) 100%);
+  box-shadow:
+    0 10px 20px -10px rgb(11 108 98 / 0.45),
+    inset 0 1px 0 var(--surface),
+    inset 0 -2px 4px rgb(11 108 98 / 0.1);
+}
+.gj-chip3d-sm {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+}
+.gj-how-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 1rem;
+}
+.gj-how-card,
+.gj-privacy {
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: var(--surface);
+  padding: 1.5rem;
+  box-shadow: var(--gj-shadow-soft);
+}
+.gj-how-title {
+  margin: 1rem 0 0;
+  font-size: 1.1875rem;
+  font-weight: 700;
+}
+.gj-privacy {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+.gj-privacy .gj-how-title {
+  margin: 0;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .gj-sweep::before,
-  .gj-capsule {
+  .gj-sweep,
+  .gj-float-a,
+  .gj-float-b,
+  .gj-pill {
     animation: none;
   }
-  .gj-box {
-    transform: translate3d(0, -50%, 0);
-  }
 }
-.gj-copy {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  min-height: 100svh;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 1rem 1rem 2.5rem;
-  background: linear-gradient(
-    to top,
-    rgb(8 10 30 / 0.95) 0%,
-    rgb(8 10 30 / 0.88) 62%,
-    rgb(8 10 30 / 0) 92%
-  );
-  color: var(--scene-ink);
+
+/* The home header and the emergency bar in Glass Janus: the Glass tokens, not the scene colours
+   (DP72); frosted white once scrolled; the bar aligned to the copy column, outside the faces. */
+:root[data-theme-style="glass"] .home-header {
+  --fg: #0e1a1f;
+  --muted: #5a686e;
+  --line: #e3e8ea;
+  --accent: #0b6c62;
+  --on-accent: #ffffff;
+  --chip: #e6f2f0;
+  --chip-fg: #0b5a52;
+  --surface: #ffffff;
+  --bg: #f4f7f8;
+  color: var(--fg);
+}
+:root[data-theme-style="glass"] .home-header-scrolled {
+  background: var(--nav-surface);
+  -webkit-backdrop-filter: var(--nav-blur);
+  backdrop-filter: var(--nav-blur);
+  box-shadow: 0 1px 0 var(--line);
 }
 @media (min-width: 768px) {
-  .gj-copy {
-    justify-content: center;
-    padding: 2rem 2rem 2rem max(2rem, calc((100% - 1120px) / 2 + 1rem));
-    background: linear-gradient(
-      to right,
-      rgb(8 10 30 / 0.92) 0%,
-      rgb(8 10 30 / 0.78) 32%,
-      rgb(8 10 30 / 0) 62%
-    );
+  :root[data-theme-style="glass"] .home-header nav ul {
+    gap: 2px;
+    border: 1px solid var(--surface);
+    border-radius: 16px;
+    background: rgb(255 255 255 / 0.6);
+    -webkit-backdrop-filter: var(--nav-blur);
+    backdrop-filter: var(--nav-blur);
+    padding: 4px;
+  }
+  :root[data-theme-style="glass"] .home-header nav a {
+    border-radius: 12px;
+  }
+}
+:root[data-theme-style="glass"] .emergency-slim details {
+  border-color: var(--risk);
+  background: var(--nav-surface);
+  color: var(--fg);
+  box-shadow: var(--gj-shadow-soft);
+}
+:root[data-theme-style="glass"] .emergency-slim summary .text-risk {
+  color: var(--risk);
+}
+:root[data-theme-style="glass"] .emergency-slim summary:focus-visible {
+  outline-color: var(--accent);
+}
+@media (min-width: 1100px) {
+  :root[data-theme-style="glass"] .home-emergency {
+    max-width: none;
+    margin: 0;
+    padding-inline: max(24px, 4%) 0;
+    width: 29%;
+  }
+}
+@media (max-width: 1099px) {
+  :root[data-theme-style="glass"] .home-emergency {
+    position: relative;
+    inset: auto;
+    padding-top: calc(var(--home-header-h, 4rem) + 0.25rem);
+    padding-bottom: 0.5rem;
   }
 }
 
 /* Only the hero of the active theme is shown (both are server-rendered; the inactive one is
    removed after hydration). */
 :root[data-theme-style="glass"] .np,
-:root:not([data-theme-style="glass"]) .gj {
+:root[data-theme-style="glass"] .np-sections,
+:root:not([data-theme-style="glass"]) .gj,
+:root:not([data-theme-style="glass"]) .gj-sections {
   display: none;
 }
 
@@ -804,7 +1500,6 @@ li:nth-child(4) > .np-finding {
     left: calc(70cqw - 0.72 * var(--bw));
   }
   .np-copy-inner,
-  .gj-copy-inner,
   .np-scene3-inner {
     max-width: min(34rem, 40vw);
   }
@@ -818,13 +1513,7 @@ li:nth-child(4) > .np-finding {
     left: calc(50cqw - 0.725 * var(--bw));
     top: calc(15cqh + var(--bw) * 0.279);
   }
-  .gj-box {
-    --bw: calc(100cqw * 2.2);
-    left: calc(50cqw - 0.5 * var(--bw));
-    top: calc(14cqh + var(--bw) * 0.279);
-  }
-  .np-copy,
-  .gj-copy {
+  .np-copy {
     justify-content: flex-start;
     align-items: flex-start;
     padding-top: calc(15svh + 117vw - 2.5rem);
@@ -835,9 +1524,6 @@ li:nth-child(4) > .np-finding {
       rgb(8 10 30 / 0.9) calc(15svh + 117vw - 2.5rem),
       rgb(8 10 30 / 0.96) 100%
     );
-  }
-  .gj-copy {
-    padding-top: calc(14svh + 123vw - 2.5rem);
   }
   .np-ghost {
     width: 5%;

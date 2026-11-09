@@ -139,7 +139,53 @@ test("Glass Janus: its own hero only, no ghosts, no Night Pharmacy image", async
   );
   await page.waitForLoadState("networkidle");
   expect(requests.filter((r) => /night-|door-/.test(r.url()))).toHaveLength(0);
-  expect(requests.some((r) => /glass-hero-\d+\.avif/.test(r.url()))).toBe(true);
+  expect(requests.some((r) => /clinical-hero-\d+\.avif/.test(r.url()))).toBe(
+    true,
+  );
+});
+
+// Clinical White (Req 31.4, 31.7, DP68): the image keeps its own ratio at the full width, and no
+// text, card, capsule, header or emergency bar lies over the two faces (about 31–70 % of the
+// image's width, 14–80 % of its height).
+test("Glass Janus: the hero image is not cropped and nothing covers the faces", async ({
+  page,
+}) => {
+  await useTheme(page, "glass");
+  await page.goto("/de", { waitUntil: "networkidle" });
+  const img = page.getByTestId("glass-hero-media").locator("img");
+  await expect(img).toBeVisible();
+  const box = (await img.boundingBox())!;
+  const width = page.viewportSize()!.width;
+  expect(Math.abs(box.width - width)).toBeLessThanOrEqual(1);
+  expect(Math.abs(box.width / box.height - 2752 / 1536)).toBeLessThan(0.01);
+  const faces = {
+    left: box.x + box.width * 0.31,
+    right: box.x + box.width * 0.7,
+    top: box.y + box.height * 0.14,
+    bottom: box.y + box.height * 0.8,
+  };
+  const covering = await page.evaluate((f) => {
+    const sel = [
+      ".gj-copy > *",
+      ".gj-cards .gj-card",
+      ".gj-pill-wrap",
+      "#content [data-testid='emergency-notice'] details",
+      "header a, header button, header select",
+    ].join(",");
+    return [...document.querySelectorAll<HTMLElement>(sel)]
+      .filter((e) => e.getClientRects().length > 0)
+      .filter((e) => {
+        const r = e.getBoundingClientRect();
+        return (
+          r.left < f.right &&
+          r.right > f.left &&
+          r.top < f.bottom &&
+          r.bottom > f.top
+        );
+      })
+      .map((e) => e.className || e.tagName);
+  }, faces);
+  expect(covering).toEqual([]);
 });
 
 test("LCP of the home (recorded)", async ({ page }, info) => {

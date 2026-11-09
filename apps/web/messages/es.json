@@ -53,9 +53,34 @@
     "alt": {
       "diorama": "Ilustración: una pequeña farmacia de noche, con las ventanas iluminadas y la puerta entreabierta.",
       "cabinet": "Ilustración: el interior de la farmacia, un botiquín abierto que brilla en la pared y una nota en blanco sobre una mesita.",
-      "glassHero": "Ilustración: una cabeza de cristal de dos caras llena de cápsulas."
+      "glassHero": "Ilustración: una cabeza de cristal transparente con dos caras, llena de cápsulas de colores, sobre un fondo blanco."
     },
-    "prepareDemoNote": "Preparar la nota de demostración para el médico"
+    "prepareDemoNote": "Preparar la nota de demostración para el médico",
+    "glass": {
+      "cards": "De la demo de Estambul",
+      "cascadePair": "Amlodipina, después furosemida",
+      "monthsApart": "{months, plural, one {# mes de diferencia} other {# meses de diferencia}}",
+      "sources": "{count, plural, one {# fuente} other {# fuentes}}",
+      "photos": "Las fotos de las cajas se quedan en este dispositivo",
+      "glanceEyebrow": "De un vistazo",
+      "glanceTitle": "De la caja a una nota para el médico.",
+      "resultsTitle": "Resultados en una sola pantalla, tranquilos y claros.",
+      "resultsText": "Cada hallazgo con sus fuentes; las razones con su intervalo, y las cifras como notificaciones, no como personas.",
+      "phoneMonths": "{months, plural, one {# mes} other {# meses}}",
+      "phoneMonthsLabel": "entre los medicamentos",
+      "noteTitle": "Una nota en el idioma de su médico.",
+      "noteText": "Con sus fuentes y, si lo desea, un código QR con el que el médico puede responder.",
+      "patternsTile": "patrones publicados de cascada de prescripción (lista PIPC, 2025)",
+      "regionsTitle": "Tres regiones, cinco idiomas.",
+      "regionsText": "Listas públicas de medicamentos de Turquía, Francia y España (UE) y EE. UU.",
+      "sourcesTitle": "Las fuentes con DOI se revisan en busca de retractaciones.",
+      "sourcesText": "Un estudio retractado no se usa, y Janus se lo dice.",
+      "badgeTitle": "DOI comprobados con Crossref",
+      "badgeText": "incluidos los datos de Retraction Watch",
+      "how1Title": "Escanee la caja",
+      "how2Title": "Se comparan los patrones",
+      "how3Title": "Una nota para el médico"
+    }
   },
   "Shell": {
     "skip": "Ir al contenido",
@@ -206,7 +231,7 @@
     "themeGlassHint": "Sencillo y claro, sin símbolos del tema.",
     "largeText": "Texto grande",
     "reduceTransparency": "Reducir la transparencia",
-    "reduceTransparencyHint": "Cabecera y barra de pestañas sólidas en lugar de cristal esmerilado (tema Cristal).",
+    "reduceTransparencyHint": "Cabecera, barra de pestañas y tarjetas flotantes sólidas en lugar de cristal esmerilado (tema Janus de cristal).",
     "readAloud": "Leer los resultados en voz alta",
     "readAloudHint": "Usa la voz de este navegador. No se envía nada a ningún servidor.",
     "research": "Sección de investigación",

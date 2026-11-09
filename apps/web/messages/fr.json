@@ -53,9 +53,34 @@
     "alt": {
       "diorama": "Illustration : une petite pharmacie la nuit, fenêtres éclairées et porte entrouverte.",
       "cabinet": "Illustration : l'intérieur de la pharmacie, une armoire à pharmacie ouverte qui brille au mur et une note vierge sur une petite table.",
-      "glassHero": "Illustration : une tête de verre à deux visages, remplie de gélules."
+      "glassHero": "Illustration : une tête de verre transparent à deux visages, remplie de gélules colorées, sur un fond blanc."
     },
-    "prepareDemoNote": "Préparer la note de démo pour le médecin"
+    "prepareDemoNote": "Préparer la note de démo pour le médecin",
+    "glass": {
+      "cards": "Tiré de la démo d'Istanbul",
+      "cascadePair": "Amlodipine, puis furosémide",
+      "monthsApart": "{months, plural, one {# mois d'écart} other {# mois d'écart}}",
+      "sources": "{count, plural, one {# source} other {# sources}}",
+      "photos": "Les photos des boîtes restent sur cet appareil",
+      "glanceEyebrow": "En un coup d'œil",
+      "glanceTitle": "De la boîte à une note pour le médecin.",
+      "resultsTitle": "Les résultats sur un seul écran, calmes et clairs.",
+      "resultsText": "Chaque résultat avec ses sources ; les ratios avec leur intervalle, et les nombres comme signalements, pas comme personnes.",
+      "phoneMonths": "{months, plural, one {# mois} other {# mois}}",
+      "phoneMonthsLabel": "entre les médicaments",
+      "noteTitle": "Une note dans la langue de votre médecin.",
+      "noteText": "Avec ses sources et, si vous le souhaitez, un code QR grâce auquel le médecin peut répondre.",
+      "patternsTile": "schémas publiés de cascade de prescription (liste PIPC, 2025)",
+      "regionsTitle": "Trois régions, cinq langues.",
+      "regionsText": "Les listes publiques de médicaments de Turquie, de France et d'Espagne (UE) et des États-Unis.",
+      "sourcesTitle": "Les sources avec un DOI sont vérifiées au regard des rétractations.",
+      "sourcesText": "Une étude rétractée n'est pas utilisée, et Janus vous le dit.",
+      "badgeTitle": "DOI vérifiés avec Crossref",
+      "badgeText": "y compris les données de Retraction Watch",
+      "how1Title": "Scanner la boîte",
+      "how2Title": "Les schémas sont comparés",
+      "how3Title": "Une note pour le médecin"
+    }
   },
   "Shell": {
     "skip": "Aller au contenu",
@@ -206,7 +231,7 @@
     "themeGlassHint": "Sobre et clair, sans symboles du thème.",
     "largeText": "Grand texte",
     "reduceTransparency": "Réduire la transparence",
-    "reduceTransparencyHint": "En-tête et barre d'onglets pleins au lieu du verre dépoli (thème Verre).",
+    "reduceTransparencyHint": "En-tête, barre d'onglets et cartes flottantes pleins au lieu du verre dépoli (thème Janus de verre).",
     "readAloud": "Lire les résultats à voix haute",
     "readAloudHint": "Utilise la voix de ce navigateur. Rien n'est envoyé à un serveur.",
     "research": "Section recherche",

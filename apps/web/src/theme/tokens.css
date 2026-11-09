@@ -2,8 +2,9 @@
  * Design tokens (.kiro/steering/design.md, owner decision 2026-11-08; experience design §7).
  * Night Pharmacy (id two-faces): one dark set on every screen (no light face, owner decision
  * 2026-11-08, DP48). Paper: the doctor note preview and the doctor page card (the PDF uses the
- * same values). Glass: light and dark by the system colour scheme, solid cards when transparency
- * is reduced. Components use these tokens only, never a raw colour (src/theme/no-hex.test.ts).
+ * same values). Glass Janus (Clinical White, DP66, DP67): light only, solid cards (--surface),
+ * frosted navigation (--nav-surface, --nav-blur) that turns solid when transparency is reduced.
+ * Components use these tokens only, never a raw colour (src/theme/no-hex.test.ts).
  *
  * The colour values of --bg … --risk are exactly the steering tokens. Added here (design DP33):
  * Glass --ghost and the navigation material --nav-surface/--nav-blur/--nav-shadow (DP67), and

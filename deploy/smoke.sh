@@ -29,7 +29,7 @@ for route in /health /privacy/storage /memory/snapshot /seance/catalogue /light/
 done
 # Static files outside the build output (public/): home media, fonts, service worker, scanner.
 for asset in /home/door-1280.mp4 /home/door-poster.webp /home/night-cabinet-1600.avif \
-  /home/glass-hero-1600.avif /fonts/Fraunces-SemiBold.ttf /sw.js /manifest.webmanifest \
+  /home/clinical-hero-1600.avif /fonts/Fraunces-SemiBold.ttf /sw.js /manifest.webmanifest \
   /vendor/zxing/zxing_reader.wasm /vendor/tesseract/worker.min.js /vendor/tesseract/lang/tur.traineddata; do
   check "$asset" 200
 done
