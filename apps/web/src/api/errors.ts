@@ -35,7 +35,10 @@ export type Route =
   | "timemachine/catalogue"
   | "timemachine/substance"
   | "timemachine/cascade"
-  | "open/outcomes";
+  | "open/outcomes"
+  | "open/data-quality"
+  | "open/faers-onset"
+  | "open/faers-onset/row";
 
 export const ROUTES: readonly Route[] = [
   "resolve/scan",
@@ -69,6 +72,9 @@ export const ROUTES: readonly Route[] = [
   "timemachine/substance",
   "timemachine/cascade",
   "open/outcomes",
+  "open/data-quality",
+  "open/faers-onset",
+  "open/faers-onset/row",
 ];
 
 export type ApiError =
@@ -122,6 +128,9 @@ export const MESSAGE_KEYS = [
   "TimeMachine.errors.unavailable",
   "TimeMachine.errors.unknown",
   "OpenData.errors.unavailable",
+  "DataQuality.errors.unavailable",
+  "Onset.errors.unavailable",
+  "Onset.errors.unknown",
 ] as const;
 
 export type MessageKey = (typeof MESSAGE_KEYS)[number];
@@ -248,5 +257,19 @@ export function messageKeyFor(
     code === "open_data_unavailable"
   )
     return "OpenData.errors.unavailable";
+  // research-tools Req 1-2: the data-quality report or the onset table is not installed (503),
+  // or a PIPC position is unknown (404).
+  if (
+    route === "open/data-quality" &&
+    status === 503 &&
+    code === "data_quality_unavailable"
+  )
+    return "DataQuality.errors.unavailable";
+  if (route.startsWith("open/faers-onset")) {
+    if (status === 503 && code === "onset_table_unavailable")
+      return "Onset.errors.unavailable";
+    if (status === 404 && code === "unknown_position")
+      return "Onset.errors.unknown";
+  }
   return "Errors.generic";
 }

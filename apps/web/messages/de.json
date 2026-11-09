@@ -546,7 +546,21 @@
       }
     },
     "back": "Zurück zum Patientenbereich",
-    "empty": "Noch nichts anzuzeigen."
+    "empty": "Noch nichts anzuzeigen.",
+    "tools": {
+      "dataQuality": {
+        "title": "Datenqualitätsbericht",
+        "body": "Wo fünf Arzneimittelregister beim ATC-Code eines Wirkstoffs nicht übereinstimmen – jede Woche geprüft, mit Belegen."
+      },
+      "onset": {
+        "title": "FAERS: Zeit bis zum Auftreten",
+        "body": "Wie lange nach dem Beginn von Arzneimittel A das Ereignis laut FAERS-Meldungen auftrat, für alle 65 PIPC-Muster. Beschreibend, nicht kausal."
+      },
+      "developers": {
+        "title": "Für Entwicklung und Klinik",
+        "body": "MCP-Server, CDS Hooks, die öffentliche API und die offenen Datenpakete, mit Einstellungen zum Kopieren."
+      }
+    }
   },
   "Doctor": {
     "errors": {
@@ -1977,5 +1991,324 @@
       "unavailable": "Der offene Datensatz ist auf diesem Server gerade nicht verfügbar."
     },
     "loading": "Der offene Datensatz wird geladen…"
+  },
+  "DataQuality": {
+    "title": "Datenqualitätsbericht",
+    "summary": "{count, plural, one {# Befund} other {# Befunde}} · Lauf vom {date}",
+    "intro": "Janus liest die Identitätsfelder von Wirkstoffen aus fünf Quellen: TİTCK (Türkei), AEMPS CIMA (Spanien), BDPM (Frankreich), openFDA NDC (USA) und Wikidata. Jede Woche vergleicht es die ATC-Codes, die sie für denselben Wirkstoff angeben, und listet jeden Unterschied auf: was neu ist, was bleibt und was seit dem vorigen Lauf behoben wurde.",
+    "codesOnly": "Nur Codes und Zahlen: Dieser Bericht enthält keine Zeile der TİTCK-Liste, keinen Produktnamen, keinen Barcode und keinen Text des WHOCC-Index.",
+    "review": "Mit festen Regeln erzeugt. Bestätigte Fehler wurden vom Projektinhaber mit KI-Unterstützung geprüft, noch nicht von einer Apothekerin oder einem Apotheker. Jeder Befund muss pharmazeutisch geprüft werden, bevor er an die Quelle gemeldet wird.",
+    "demo": "Demo: Der Bericht wurde am {date} von der echten lokalen Janus-API aufgezeichnet; es wird keine Anfrage gesendet.",
+    "loading": "Datenqualitätsbericht wird geladen …",
+    "errors": {
+      "unavailable": "Der Datenqualitätsbericht ist gerade nicht verfügbar. Bitte später erneut versuchen."
+    },
+    "run": {
+      "title": "Letzter Lauf",
+      "previous": "Mit dem vorigen Lauf verglichen.",
+      "first": "Erster Lauf: Jeder Befund ist neu.",
+      "tile": "{count, plural, one {# Befund} other {# Befunde}}: {klass}",
+      "tableLabel": "Befunde nach Klasse und Status",
+      "upstream": "Bestätigte Fehler, die ihre Quelle noch veröffentlicht: {still}. An der Quelle behoben: {resolved}."
+    },
+    "classMeaning": "Eine Klasse beschreibt die Daten, nie ein Arzneimittel. Bestätigter Fehler: in Janus' geprüfter Ausschlussdatei. Pharmazeutische Prüfung nötig: ein Unterschied, den keine Regel erklärt. Erklärter Unterschied: eine feste Regel erklärt ihn (zum Beispiel veröffentlichen beide Behörden den Code und der Wikidata-Eintrag ist veraltet); das ist kein pharmazeutisches Urteil.",
+    "class": {
+      "confirmed_error": "Bestätigter Fehler",
+      "needs_pharmacist": "Pharmazeutische Prüfung nötig",
+      "benign_difference": "Erklärter Unterschied"
+    },
+    "status": {
+      "new": "Neu",
+      "persisting": "Bestehend",
+      "resolved": "Behoben"
+    },
+    "filter": {
+      "class": "Klasse",
+      "status": "Status",
+      "all": "Alle",
+      "search": "Nach Wirkstoff (englischer Name), Schlüssel oder Code suchen"
+    },
+    "findings": {
+      "title": "Befunde",
+      "count": "{shown} von {count} angezeigt",
+      "empty": "Kein Befund passt zu diesem Filter.",
+      "more": "{count} weitere anzeigen"
+    },
+    "finding": {
+      "check": "Prüfung",
+      "key": "Janus-Wirkstoffschlüssel",
+      "compared": "Verglichen mit",
+      "products": "Produkte",
+      "productsValue": "{count, plural, one {# Monopräparat trägt} other {# Monopräparate tragen}} diesen Code",
+      "reasons": "Warum",
+      "otherKeys": "Andere Wirkstoffschlüssel mit diesem Code",
+      "upstream": "An der Quelle",
+      "changedFrom": "Klasse im vorigen Lauf",
+      "reportTo": "Melden an",
+      "evidence": "Belege",
+      "wikidata": "Wikidata-Eintrag {key}",
+      "whocc": "WHOCC-Gruppe {group}",
+      "howToFind": "So findet man es an der Quelle"
+    },
+    "check": {
+      "exclusion_status": "Geprüfter Ausschluss",
+      "item_group": "Behördencode außerhalb der Gruppen des Eintrags",
+      "regulator_group": "TİTCK- und CIMA-Codes weichen ab",
+      "substance_code_keys": "Ein Stoffcode, zwei Wirkstoffe"
+    },
+    "reason": {
+      "both_regulators_publish_it": "Beide Behörden veröffentlichen diesen Code für den Wirkstoff.",
+      "code_of_other_substance": "Ein anderer Wirkstoff trägt diesen Code.",
+      "combination_code_on_single_ingredient_product": "Ein Kombinationscode auf einem Monopräparat.",
+      "group_differs": "Der Code liegt in einer anderen ATC-Gruppe als die Codes des Eintrags.",
+      "item_agrees_with_cima": "Der Wikidata-Eintrag stimmt mit CIMA überein.",
+      "item_agrees_with_titck": "Der Wikidata-Eintrag stimmt mit TİTCK überein.",
+      "no_longer_published": "Die Quelle veröffentlicht diesen Code nicht mehr.",
+      "not_a_medicine": "Der Eintrag ist kein Arzneimittel.",
+      "old_code": "Der Code steht nicht mehr im ATC-Index.",
+      "one_substance_code_two_keys": "Ein Stoffcode gehört zu zwei Wirkstoffen.",
+      "regulators_differ": "Die beiden Behörden veröffentlichen Codes aus verschiedenen Gruppen.",
+      "same_level2_group": "Gleiche therapeutische Untergruppe (Ebene 2): nur ein Hinweis, keine Erklärung.",
+      "still_published": "Die Quelle veröffentlicht diesen Code weiterhin.",
+      "wrong_substance": "Der Code gehört zu einem anderen Stoff."
+    },
+    "upstreamStatus": {
+      "persisting": "Weiterhin veröffentlicht",
+      "resolved_upstream": "Nicht mehr veröffentlicht"
+    },
+    "upstream": {
+      "title": "Einen Befund an die Quelle melden",
+      "pharmacist": "Zuerst prüft eine Apothekerin oder ein Apotheker den Befund. Gemeldet wird nur ein geprüfter Unterschied.",
+      "steps": {
+        "wikidata": "Wikidata: anmelden, den Eintrag öffnen und die falsche ATC-Aussage mit einem Verweis auf die WHOCC-Gruppenseite als veraltet markieren (deprecated) oder auf der Diskussionsseite erklären. Nur Code und Gruppe nennen, nie den WHOCC-Text.",
+        "titck": "TİTCK: über die offiziellen Kontaktwege oder CİMER. Liste und Datum, das Produkt wie in der aktuellen Liste, den Code und die WHOCC-Gruppenseite nennen. Auch der Zulassungsinhaber kann seinen Eintrag korrigieren.",
+        "cima": "AEMPS CIMA: über die offiziellen Kontaktwege der Behörde, mit der Zulassungsnummer aus CIMA, dem Code und der WHOCC-Gruppenseite.",
+        "janus": "Janus' eigene Dateien: im Repository ein Issue oder einen Pull Request mit der Zeile und dem Beleg öffnen."
+      },
+      "nothingSent": "Janus selbst sendet, veröffentlicht oder übermittelt keine Meldung.",
+      "guide": "Anleitung: Korrekturen beitragen",
+      "target": {
+        "wikidata": "Wikidata",
+        "titck": "TİTCK",
+        "cima": "AEMPS CIMA",
+        "titck_cima": "TİTCK und AEMPS CIMA",
+        "bdpm": "BDPM"
+      }
+    },
+    "files": {
+      "title": "Herunterladen",
+      "version": "Version {version}",
+      "licence": "Lizenz: CC BY 4.0, mit der Namensnennung unten.",
+      "csv": "Befunde (CSV)",
+      "json": "Bericht (JSON)",
+      "md": "Zusammenfassung (Markdown)",
+      "dictionary": "Datenwörterbuch (docs/open-data.md)"
+    },
+    "sources": {
+      "title": "Quellen dieses Laufs",
+      "footer": "openFDA NDC liefert keinen ATC-Code; es trägt nur Vorkommenszahlen bei.",
+      "line": "Stand {date}"
+    },
+    "source": {
+      "titck": "TİTCK (Türkei)",
+      "eu_es_cima": "AEMPS CIMA (Spanien)",
+      "eu_fr_bdpm": "BDPM (Frankreich)",
+      "wikidata": "Wikidata",
+      "openfda_ndc": "openFDA NDC (USA)",
+      "titck_eu_es_cima": "TİTCK und AEMPS CIMA"
+    }
+  },
+  "Onset": {
+    "title": "FAERS: Zeit bis zum Auftreten",
+    "summary": "{rows} PIPC-Muster · {medians} mit Median",
+    "intro": "Für jedes Muster der PIPC-Liste (Arzneimittel A → Ereignis → Arzneimittel B): Wie lange nach dem Beginn eines Arzneimittels aus der Klasse von A begann das Ereignis laut den FAERS-Meldungen? Eine Methode auf Grundlage der Zeitmaschine, mit strengeren Regeln, für alle 65 Zeilen, mit der Zahl der Meldungen hinter jeder Angabe.",
+    "framing": "Nur beschreibend: nicht kausal, keine Inzidenz. FAERS beruht auf Spontanmeldungen; Zahlen sind Meldungen, keine Personen. Ein Intervall ist, was Meldende eingetragen haben, kein bei Menschen gemessener Beginn.",
+    "review": "Methoden von KI-Agenten geprüft (Statistik, Pharmakologie); Prüfung durch pharmazeutische und statistische Fachleute steht aus.",
+    "demo": "Demo: Die Tabelle wurde am {date} von der echten lokalen Janus-API aufgezeichnet; es wird keine Anfrage gesendet.",
+    "loading": "Tabelle wird geladen …",
+    "errors": {
+      "unavailable": "Die Tabelle ist gerade nicht verfügbar. Bitte später erneut versuchen.",
+      "unknown": "Es gibt keine PIPC-Zeile mit dieser Nummer."
+    },
+    "pattern": "{drugA} → {event} → {drugB}",
+    "caveats": {
+      "title": "Zuerst lesen",
+      "english": "Alle Hinweise aus dem Datensatz (Englisch)",
+      "descriptive": "Nur beschreibend. Es zeigt nicht, dass ein Arzneimittel das Ereignis verursacht hat.",
+      "not_incidence": "Keine Inzidenz: Es gibt keine Zahl der Personen, die das Arzneimittel genommen haben. Eine Person kann in mehreren Meldungen vorkommen.",
+      "selection": "Nur Meldungen mit vollständigem Therapiebeginn und vollständigem Ereignisdatum haben ein Intervall. Sie stehen möglicherweise nicht für alle Meldungen; lange Anwendung wird seltener datiert, was Intervalle verkürzen kann.",
+      "zero_day": "Ein Intervall von 0 Tagen bedeutet oft, dass ein Datum in beide Felder eingetragen wurde; die Häufung bei null senkt den Median.",
+      "day_one": "Datumsangaben am 1. eines Monats (und am 1. Januar) sind viel häufiger als zufällig zu erwarten, oft ein ergänzter Tag. Eine Prüfung ohne sie wird angegeben; sie ist keine Korrektur.",
+      "clusters": "Hält ein identisches Datumspaar mehr als ein Viertel der Meldungen einer Zeile, zeigt die Zeile nur Zahlen.",
+      "small_sample": "Unter 10 Meldungen mit Intervall: nur Zahlen. 10 bis 29: kleine Stichprobe; die Schätzungen sind instabil und die Intervalle können die Unsicherheit unterschätzen.",
+      "shared_rows": "Zeilen mit gleicher Klasse von A und gleichem Ereignis (sie unterscheiden sich in B) haben dieselben Zahlen.",
+      "receipt_window": "Vier Quartale Meldungen nach Eingangsdatum; Ereignisdaten können Jahre früher liegen.",
+      "event_date_report_level": "FAERS gibt ein Ereignisdatum je Meldung an: In einer Meldung mit mehreren Ereignissen kann das Datum zu einem anderen Ereignis als dem dieser Zeile gehören.",
+      "median_interval": "Das exakte Intervall des Medians verwenden; das Bootstrap-Intervall in den Downloads kann die Unsicherheit bei Bindungen oder wenigen Daten unterschätzen.",
+      "shortest_interval": "Je Meldung beginnt das Intervall beim zuletzt begonnenen Arzneimittel der Klasse; nach einem Wechsel innerhalb der Klasse ist es kürzer als die Zeit seit dem ersten Beginn der Klasse (eine andere Lesart wird angegeben).",
+      "class_membership": "Die Klasse von A wird über die ATC-Codes der Wirkstoffe zugeordnet; die meisten lokalen Anwendungswege (Haut, Auge, Atemwege …) werden nicht gezählt, und je Klasse sind einige Wirkstoffe ausgenommen, mit Gründen im Datensatz.",
+      "weibull": "Die Weibull-Form spiegelt Meldeartefakte ebenso wie den zeitlichen Verlauf; sie ist kein Mechanismus und wird nur bei mindestens 30 Meldungen veröffentlicht."
+    },
+    "statusLegend": {
+      "title": "Was der Status bedeutet",
+      "described": "Mindestens 30 Meldungen mit Intervall: Median, Quartile und das exakte 95-%-Intervall des Medians.",
+      "small_sample": "10 bis 29 Meldungen mit Intervall: Median und Intervalle als kleine Stichprobe; sie sind instabil.",
+      "cluster_dominated": "Ein identisches Datumspaar hält mehr als ein Viertel der Meldungen (mögliche Duplikate oder eine Fallserie): nur Zahlen.",
+      "count_only": "Weniger als 10 Meldungen mit Intervall: nur Zahlen, kein Median.",
+      "no_interval": "Es gibt Meldungen, aber keine hat ein verwertbares Intervall (die Gründe stehen bei der Zeile). Kein zeitlicher Verlauf beschreibbar; das ist kein Beleg dafür, dass es keine Wirkung gibt.",
+      "no_candidate_reports": "Keine Meldung im Zeitraum nennt ein Arzneimittel dieser Klasse als Verdacht zusammen mit diesem Ereignis. Das ist kein Beleg dafür, dass es keine Wirkung gibt."
+    },
+    "status": {
+      "described": "Beschrieben",
+      "small_sample": "Kleine Stichprobe",
+      "cluster_dominated": "Nur Zahlen (Datums-Cluster)",
+      "count_only": "Nur Zahlen",
+      "no_interval": "Kein Intervall",
+      "no_candidate_reports": "Keine passenden Meldungen im Zeitraum"
+    },
+    "files": {
+      "title": "Herunterladen",
+      "version": "Version {version}",
+      "window": "FAERS-Quartale {quarters} · Stand {date}",
+      "licence": "Lizenz: CC BY 4.0, mit der Namensnennung unten.",
+      "csv": "Tabelle (CSV)",
+      "json": "Tabelle und Methode (JSON)",
+      "dictionary": "Datenwörterbuch (docs/open-data.md)"
+    },
+    "cols": {
+      "row": "Zeile",
+      "pattern": "Muster",
+      "reports": "Meldungen",
+      "interval": "Mit Intervall",
+      "median": "Median (exaktes 95-%-Intervall)",
+      "status": "Status"
+    },
+    "tableTitle": "Alle 65 Zeilen",
+    "tableHint": "Zum Sortieren eine Spaltenüberschrift wählen. Ein Muster öffnen für die Details. Ein mit „Häufung am selben Tag“ markierter Median zeigt ein doppelt eingetragenes Datum, keinen zeitlichen Verlauf; er wird mit den Zeilen ohne Median sortiert.",
+    "caption": "PIPC-Zeilen, sortiert nach {key}, {dir}",
+    "sort": {
+      "ascending": "aufsteigend",
+      "descending": "absteigend"
+    },
+    "days": "{n} T",
+    "ci": "{low}–{high} T",
+    "noMedian": "kein Median veröffentlicht",
+    "rowEyebrow": "PIPC-Zeile {row}",
+    "reportsNotPeople": "Zahlen sind Meldungen, keine Personen.",
+    "detail": {
+      "counts": "Meldungen",
+      "reportsSentence": "{count, plural, one {# Meldung nennt} other {# Meldungen nennen}} ein Arzneimittel der Klasse als Verdacht zusammen mit dem Ereignis.",
+      "intervalSentence": "{count, plural, one {# Meldung hat} other {# Meldungen haben}} ein verwertbares Intervall.",
+      "usable": "Verwertbarer Anteil",
+      "usableSentence": "{share} der Meldungen ({n} von {total}) haben ein verwertbares Intervall.",
+      "definition": "Wie die Zeile definiert ist",
+      "class": "Klasse von Arzneimittel A (Janus-Klassencode)",
+      "event": "Ereignis",
+      "terms": "MedDRA-Begriffe",
+      "routes": "Gezählte Anwendungswege",
+      "shared": "Gleiche Klasse und gleiches Ereignis wie Zeilen {rows}: Die Zahlen sind dieselben.",
+      "pipc": "PIPC-Text wie veröffentlicht",
+      "notes": "Anmerkungen zu dieser Zeile",
+      "notesFooter": "Auf Englisch in den Prüfungen des Datensatzes verfasst.",
+      "timing": "Gemeldeter zeitlicher Verlauf",
+      "medianLine": "Median {median} Tage (exaktes 95-%-Intervall {low}–{high} Tage, Überdeckung {coverage})",
+      "smallSample": "Kleine Stichprobe: {count} Meldungen mit Intervall. Die Schätzungen sind instabil.",
+      "heaping": "Mehr als die Hälfte der Intervalle ist 0 Tage: Der Median zeigt eine Häufung am selben Tag, keinen zeitlichen Verlauf.",
+      "iqrLine": "Die Hälfte der Meldungen liegt zwischen {q25} und {q75} Tagen.",
+      "chartTitle": "Gemeldete Tage vom Datum des Therapiebeginns bis zum Ereignisdatum",
+      "unit": "Tage",
+      "chartLegend": "Jeder Balken reicht von–bis; der Punkt ist der Median. Oberer Balken: die Streuung der Meldungen (mittlere Hälfte). Unterer Balken: die Unsicherheit des Medians (exaktes 95-%-Intervall). Beide messen Verschiedenes.",
+      "colLow": "Von",
+      "colMedian": "Median",
+      "colHigh": "Bis",
+      "iqr": "Mittlere Hälfte der Meldungen",
+      "exactCi": "Exaktes 95-%-Intervall des Medians",
+      "withoutDayOne": "Ohne Datumsangaben am 1. eines Monats: Median {median} Tage ({n} Meldungen). Dabei fallen auch echte Datumsangaben weg; es ist keine Korrektur.",
+      "withoutDayOneOmitted": "Ohne Datumsangaben am 1. eines Monats: nicht angegeben, es bleiben weniger als 10 Meldungen.",
+      "shape": "Weibull-Form {shape} (95-%-Intervall {low}–{high}): {klass}.",
+      "shapeCaveat": "Die Form spiegelt Meldeartefakte ebenso wie den zeitlichen Verlauf; sie ist kein Mechanismus.",
+      "noShape": "Keine Weibull-Form: Sie wird nur bei mindestens 30 Meldungen, höchstens der Hälfte Intervallen am selben Tag und mindestens 5 verschiedenen Intervallen veröffentlicht.",
+      "quality": "Qualität der Datumsangaben",
+      "zeroDay": "{n} von {total} Intervallen sind 0 Tage.",
+      "dayOne": "{n} von {total} Intervallen beruhen auf einem Datum (Beginn oder Ereignis) am 1. eines Monats.",
+      "cluster": "Größte Gruppe von Meldungen mit demselben Datumspaar: {n}.",
+      "years": "Ereignisjahre von {from} bis {to}.",
+      "withoutInterval": "Meldungen ohne Intervall, nach der Prüfung, die sie ausschloss:",
+      "usableLine": "{n} von {total} Meldungen haben ein verwertbares Intervall.",
+      "otherReadings": "Andere Lesarten derselben Meldungen",
+      "distinctPairs": "Jedes identische Datumspaar nur einmal gezählt: Median {median} Tage.",
+      "earliestStart": "Ab dem frühesten Beginn eines Arzneimittels der Klasse: Median {median} Tage.",
+      "qualityOnly": "Für diese Zeile wird kein zeitlicher Verlauf veröffentlicht; diese Zahlen beschreiben nur die Qualität der Datumsangaben."
+    },
+    "route": {
+      "systemic_or_unknown": "systemisch oder nicht angegeben",
+      "eye": "Auge",
+      "rectal": "rektal",
+      "nasal_inhaled": "nasal oder inhalativ",
+      "joint_lesion": "Injektion in Gelenk oder Läsion",
+      "local": "lokal",
+      "not_patient": "nicht die Person selbst (Plazenta, Muttermilch)"
+    },
+    "shapeClass": {
+      "early": "früh (Intervall unter 1)",
+      "random": "kein klarer Trend (Intervall enthält 1)",
+      "wear_out": "spät (Intervall über 1)"
+    },
+    "reason": {
+      "no_therapy_start": "kein Therapiebeginn",
+      "start_date_partial": "Beginn unvollständig",
+      "event_date_missing": "kein Ereignisdatum",
+      "negative_interval": "Ereignis vor dem Beginn",
+      "interval_over_max": "Intervall über zehn Jahre"
+    },
+    "heapingShort": "Häufung am selben Tag"
+  },
+  "Developers": {
+    "title": "Für Entwicklung und Klinik",
+    "summary": "Janus aus anderen Werkzeugen nutzen",
+    "intro": "Die Prüfungen und offenen Datensätze von Janus stehen anderer Software offen: ein MCP-Server für KI-Assistenten, ein CDS-Hooks-Dienst für EHR-Testumgebungen, eine öffentliche Nur-Lese-API und offene Datenpakete. Alles ist Open Source.",
+    "notClinical": "Forschungsprototyp, kein Medizinprodukt und nicht für den klinischen Einsatz. Janus nicht mit einer produktiven EHR verbinden.",
+    "copy": "Kopieren",
+    "copied": "Kopiert.",
+    "copyFailed": "Kopieren ist hier nicht möglich; den Text bitte markieren.",
+    "mcp": {
+      "title": "MCP-Server für KI-Assistenten",
+      "summary": "Sieben Nur-Lese-Werkzeuge über die Janus-API",
+      "body": "Mit janus-mcp können Claude, Kiro oder jeder MCP-Client ein Arzneimittel auflösen, eine Liste auf mögliche Verschreibungskaskaden prüfen und die PIPC-Zeilen und die Zeitmaschine lesen. Es ist ein schlanker Client: Jedes Werkzeug sendet eine Anfrage an die API und gibt deren Antwort unverändert zurück. JANUS_API_URL auf eine lokale API oder auf /api dieser Installation setzen.",
+      "safety": "Jedes Ergebnis enthält Janus' Regeln für den Assistenten: Ein Befund ist ein mögliches Muster, nie ein Urteil, und es gibt keinen Rat, mit einem Arzneimittel zu beginnen, es zu ändern oder zu beenden.",
+      "claudeCode": "Claude Code (aus dem Wurzelverzeichnis des Repositorys)",
+      "claudeDesktop": "Claude Desktop (claude_desktop_config.json)",
+      "kiro": "Kiro (.kiro/settings/mcp.json, bereits im Repository)",
+      "privacy": "Der Server protokolliert nichts von einem Aufruf und behält nichts zwischen Aufrufen. Die Arzneimittel, die ein Assistent sendet, sieht der Anbieter des Assistenten.",
+      "doc": "Dokumentation: docs/mcp.md"
+    },
+    "cds": {
+      "title": "CDS-Hooks-Dienst",
+      "summary": "order-select und order-sign, CDS Hooks 2.0",
+      "sandboxOnly": "Nur für Testumgebungen und Evaluation.",
+      "body": "Der Dienst liest Verordnungsentwürfe und vorab geladene Arzneimittel als FHIR R4, ordnet NDC-, RxNorm- und ATC-Codes über die Janus-Auflösung zu und antwortet mit Informationskarten zu möglichen Verschreibungskaskaden aus der PIPC-Liste. Nichts wird gespeichert.",
+      "discovery": "Discovery und Dienst",
+      "prefetch": "Prefetch-Vorlagen",
+      "cards": "Karten sind immer \"info\", mit der PIPC-Zeile, den Belegen und dem Hinweistext; keine Vorschläge und keine Aktionen. Keine Karte heißt nicht, dass die Arzneimittel frei von Problemen sind.",
+      "doc": "Dokumentation: docs/cds-hooks.md"
+    },
+    "api": {
+      "title": "Öffentliche Nur-Lese-API",
+      "summary": "OpenAPI 3.1, keine personenbezogenen Daten hinein oder hinaus",
+      "body": "Die öffentlichen Routen nehmen keinen Anfragekörper an und lesen nur vorberechnete oder freigegebene Daten: die Tabelle zur Zeit bis zum Auftreten, den Datenqualitätsbericht, das Kaskadenpaket, den offenen Ergebnisdatensatz, die Zeitmaschine und die CDS-Hooks-Discovery.",
+      "examples": "Beispiele",
+      "rules": "Fehler sind Codes. Medizinische Routen werden nicht zwischengespeichert und protokollieren nur Route, Status und Dauer. Zahlen sind Meldungen, nie Personen.",
+      "openapi": "OpenAPI-Dokument: docs/openapi-public.json",
+      "doc": "Routenliste und Regeln: docs/open-api.md"
+    },
+    "data": {
+      "title": "Offene Datenpakete",
+      "summary": "Frictionless-Datenpakete im Repository",
+      "cascade-package": "Die 65 PIPC-Zeilen mit Janus' Klassenzuordnung, Namensregeln und ATC-Ausschlüssen. CC BY 4.0 und Apache-2.0 je Datei.",
+      "data-quality": "Der wöchentliche Datenqualitätsbericht: Befunde als CSV, JSON und Zusammenfassung. CC BY 4.0.",
+      "faers-onset": "Die FAERS-Tabelle zur Zeit bis zum Auftreten für die 65 PIPC-Zeilen als CSV und JSON. CC BY 4.0.",
+      "frictionless": "Jedes Paket hat eine datapackage.json mit Lizenz, Quellen und einem Hash je Datei.",
+      "doc": "Lesen und zitieren: docs/open-data.md"
+    }
   }
 }

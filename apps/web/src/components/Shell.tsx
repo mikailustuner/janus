@@ -205,6 +205,10 @@ const WIDE = [
   "/research/time-machine/substance",
   "/research/time-machine/cascade",
   "/open-data",
+  "/research/data-quality",
+  "/research/faers-onset",
+  "/research/faers-onset/row",
+  "/research/developers",
 ];
 
 function StorageNotice() {

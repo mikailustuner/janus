@@ -546,7 +546,21 @@
       }
     },
     "back": "Volver a la sección del paciente",
-    "empty": "Todavía no hay nada que mostrar."
+    "empty": "Todavía no hay nada que mostrar.",
+    "tools": {
+      "dataQuality": {
+        "title": "Informe de calidad de datos",
+        "body": "Discrepancias entre cinco registros de medicamentos sobre el código ATC de un principio activo, revisadas cada semana, con enlaces a las pruebas."
+      },
+      "onset": {
+        "title": "FAERS: tiempo hasta la aparición",
+        "body": "Cuánto tiempo después de empezar el fármaco A apareció el evento según las notificaciones de FAERS, para los 65 patrones PIPC. Descriptivo, no causal."
+      },
+      "developers": {
+        "title": "Para desarrolladores y clínicos",
+        "body": "Servidor MCP, CDS Hooks, la API pública y los paquetes de datos abiertos, con ajustes listos para copiar."
+      }
+    }
   },
   "Doctor": {
     "errors": {
@@ -1977,5 +1991,324 @@
       "unavailable": "El conjunto de datos abierto no está disponible en este servidor en este momento."
     },
     "loading": "Cargando el conjunto de datos abierto…"
+  },
+  "DataQuality": {
+    "title": "Informe de calidad de datos",
+    "summary": "{count, plural, one {# hallazgo} other {# hallazgos}} · ejecución del {date}",
+    "intro": "Janus lee los campos de identidad de los principios activos en cinco fuentes: TİTCK (Turquía), AEMPS CIMA (España), BDPM (Francia), openFDA NDC (EE. UU.) y Wikidata. Cada semana compara los códigos ATC que dan para un mismo principio activo y enumera cada diferencia: qué es nuevo, qué persiste y qué se corrigió desde la ejecución anterior.",
+    "codesOnly": "Solo códigos y recuentos: este informe no contiene ninguna fila de la lista de TİTCK, ningún nombre de producto, ningún código de barras ni texto del índice WHOCC.",
+    "review": "Generado con reglas fijas. Los errores confirmados los revisó el responsable del proyecto con ayuda de IA, todavía no un farmacéutico. Un farmacéutico debe revisar cada hallazgo antes de notificarlo a la fuente.",
+    "demo": "Demo: el informe se grabó el {date} desde la API local real de Janus; no se envía ninguna solicitud.",
+    "loading": "Cargando el informe de calidad de datos…",
+    "errors": {
+      "unavailable": "El informe de calidad de datos no está disponible ahora. Vuelva a intentarlo más tarde."
+    },
+    "run": {
+      "title": "Última ejecución",
+      "previous": "Comparada con la ejecución anterior.",
+      "first": "Primera ejecución: todos los hallazgos son nuevos.",
+      "tile": "{count, plural, one {# hallazgo} other {# hallazgos}}: {klass}",
+      "tableLabel": "Hallazgos por clase y estado",
+      "upstream": "Errores confirmados que su fuente aún publica: {still}. Corregidos en la fuente: {resolved}."
+    },
+    "classMeaning": "Una clase describe los datos, nunca un medicamento. Error confirmado: figura en el archivo de exclusiones revisado de Janus. Requiere farmacéutico: una diferencia que ninguna regla explica. Diferencia explicada: una regla fija la explica (por ejemplo, ambas agencias publican el código y el elemento de Wikidata está desactualizado); no es el juicio de un farmacéutico.",
+    "class": {
+      "confirmed_error": "Error confirmado",
+      "needs_pharmacist": "Requiere revisión farmacéutica",
+      "benign_difference": "Diferencia explicada"
+    },
+    "status": {
+      "new": "Nuevo",
+      "persisting": "Persistente",
+      "resolved": "Corregido"
+    },
+    "filter": {
+      "class": "Clase",
+      "status": "Estado",
+      "all": "Todos",
+      "search": "Buscar por principio activo (nombre en inglés), clave o código"
+    },
+    "findings": {
+      "title": "Hallazgos",
+      "count": "Se muestran {shown} de {count}",
+      "empty": "Ningún hallazgo coincide con este filtro.",
+      "more": "Mostrar {count} más"
+    },
+    "finding": {
+      "check": "Comprobación",
+      "key": "Clave de principio activo de Janus",
+      "compared": "Comparado con",
+      "products": "Productos",
+      "productsValue": "{count, plural, one {# producto monofármaco lleva} other {# productos monofármaco llevan}} este código",
+      "reasons": "Por qué",
+      "otherKeys": "Otras claves de principio activo con este código",
+      "upstream": "En la fuente",
+      "changedFrom": "Clase en la ejecución anterior",
+      "reportTo": "Notificar a",
+      "evidence": "Pruebas",
+      "wikidata": "Elemento de Wikidata {key}",
+      "whocc": "Grupo WHOCC {group}",
+      "howToFind": "Cómo encontrarlo en la fuente"
+    },
+    "check": {
+      "exclusion_status": "Exclusión revisada",
+      "item_group": "Código de la agencia fuera de los grupos del elemento",
+      "regulator_group": "Los códigos de TİTCK y CIMA discrepan",
+      "substance_code_keys": "Un código de sustancia, dos principios activos"
+    },
+    "reason": {
+      "both_regulators_publish_it": "Ambas agencias publican este código para el principio activo.",
+      "code_of_other_substance": "Otro principio activo lleva este código.",
+      "combination_code_on_single_ingredient_product": "Un código de combinación en un producto monofármaco.",
+      "group_differs": "El código está en otro grupo ATC que los códigos del elemento.",
+      "item_agrees_with_cima": "El elemento de Wikidata coincide con CIMA.",
+      "item_agrees_with_titck": "El elemento de Wikidata coincide con TİTCK.",
+      "no_longer_published": "La fuente ya no publica este código.",
+      "not_a_medicine": "El elemento no es un medicamento.",
+      "old_code": "El código ya no figura en el índice ATC.",
+      "one_substance_code_two_keys": "Un código de sustancia corresponde a dos principios activos.",
+      "regulators_differ": "Las dos agencias publican códigos de grupos distintos.",
+      "same_level2_group": "Mismo subgrupo terapéutico (nivel 2): solo un indicio, no una explicación.",
+      "still_published": "La fuente sigue publicando este código.",
+      "wrong_substance": "El código pertenece a otra sustancia."
+    },
+    "upstreamStatus": {
+      "persisting": "Sigue publicado",
+      "resolved_upstream": "Ya no se publica"
+    },
+    "upstream": {
+      "title": "Cómo notificar un hallazgo a la fuente",
+      "pharmacist": "Primero, un farmacéutico revisa el hallazgo. Solo se notifica una diferencia revisada.",
+      "steps": {
+        "wikidata": "Wikidata: inicie sesión, abra el elemento y marque la declaración ATC errónea como obsoleta (deprecated) con una referencia a la página del grupo WHOCC, o explíquelo en la página de discusión. Cite solo el código y el grupo, nunca el texto del WHOCC.",
+        "titck": "TİTCK: por sus canales de contacto oficiales o por CİMER. Indique la lista y su fecha, el producto tal como aparece en la lista actual, el código y la página del grupo WHOCC. El titular de la autorización también puede corregir su entrada.",
+        "cima": "AEMPS CIMA: por los canales de contacto oficiales de la agencia, con el número de registro del medicamento en CIMA, el código y la página del grupo WHOCC.",
+        "janus": "Archivos propios de Janus: abra una issue o una pull request en el repositorio con la fila y la prueba."
+      },
+      "nothingSent": "Janus no envía, publica ni presenta ninguna notificación por sí mismo.",
+      "guide": "Guía: contribuir con correcciones",
+      "target": {
+        "wikidata": "Wikidata",
+        "titck": "TİTCK",
+        "cima": "AEMPS CIMA",
+        "titck_cima": "TİTCK y AEMPS CIMA",
+        "bdpm": "BDPM"
+      }
+    },
+    "files": {
+      "title": "Descargar",
+      "version": "Versión {version}",
+      "licence": "Licencia: CC BY 4.0, con la atribución de abajo.",
+      "csv": "Hallazgos (CSV)",
+      "json": "Informe (JSON)",
+      "md": "Resumen (Markdown)",
+      "dictionary": "Diccionario de datos (docs/open-data.md)"
+    },
+    "sources": {
+      "title": "Fuentes de esta ejecución",
+      "footer": "openFDA NDC no da ningún código ATC; solo aporta recuentos de presencia.",
+      "line": "Instantánea del {date}"
+    },
+    "source": {
+      "titck": "TİTCK (Turquía)",
+      "eu_es_cima": "AEMPS CIMA (España)",
+      "eu_fr_bdpm": "BDPM (Francia)",
+      "wikidata": "Wikidata",
+      "openfda_ndc": "openFDA NDC (EE. UU.)",
+      "titck_eu_es_cima": "TİTCK y AEMPS CIMA"
+    }
+  },
+  "Onset": {
+    "title": "FAERS: tiempo hasta la aparición",
+    "summary": "{rows} patrones PIPC · {medians} con mediana",
+    "intro": "Para cada patrón de la lista PIPC (fármaco A → evento → fármaco B): ¿cuánto tiempo después de empezar un medicamento de la clase de A comenzó el evento según las notificaciones de FAERS? Un método basado en el de la máquina del tiempo, con reglas más estrictas, para las 65 filas, con el número de notificaciones detrás de cada cifra.",
+    "framing": "Solo descriptivo: no causal, no es incidencia. FAERS es notificación espontánea; los recuentos son notificaciones, no personas. Un intervalo es lo que escribió quien notifica, no un inicio medido en personas.",
+    "review": "Métodos revisados por agentes de IA (estadística, farmacología); pendiente de revisión por un farmacéutico y un estadístico.",
+    "demo": "Demo: la tabla se grabó el {date} desde la API local real de Janus; no se envía ninguna solicitud.",
+    "loading": "Cargando la tabla…",
+    "errors": {
+      "unavailable": "La tabla no está disponible ahora. Vuelva a intentarlo más tarde.",
+      "unknown": "No hay ninguna fila PIPC con este número."
+    },
+    "pattern": "{drugA} → {event} → {drugB}",
+    "caveats": {
+      "title": "Lea esto primero",
+      "english": "Todas las advertencias del conjunto de datos (inglés)",
+      "descriptive": "Solo descriptivo. No muestra que un medicamento haya causado el evento.",
+      "not_incidence": "No es incidencia: no se conoce el número de personas que tomaron el medicamento. Un mismo paciente puede aparecer en varias notificaciones.",
+      "selection": "Solo las notificaciones con fecha de inicio del tratamiento y fecha del evento completas tienen intervalo. Pueden no representar a todas; el uso prolongado se fecha con menos frecuencia, lo que puede acortar los intervalos.",
+      "zero_day": "Un intervalo de 0 días suele significar que se escribió una misma fecha en ambos campos; la acumulación en cero baja la mediana.",
+      "day_one": "Las fechas en día 1 del mes (y el 1 de enero) son mucho más frecuentes que por azar, a menudo un día completado. Se da una comprobación sin ellas; no es una corrección.",
+      "clusters": "Cuando un mismo par de fechas reúne más de una cuarta parte de las notificaciones de una fila, la fila muestra solo recuentos.",
+      "small_sample": "Menos de 10 notificaciones con intervalo: solo recuentos. De 10 a 29: muestra pequeña; las estimaciones son inestables y los intervalos pueden subestimar la incertidumbre.",
+      "shared_rows": "Las filas con la misma clase de A y el mismo evento (difieren en B) tienen las mismas cifras.",
+      "receipt_window": "Cuatro trimestres de notificaciones por fecha de recepción; las fechas del evento pueden ser años anteriores.",
+      "event_date_report_level": "FAERS da una sola fecha del evento por notificación: en una notificación con varios eventos, la fecha puede corresponder a otro evento distinto del de esta fila.",
+      "median_interval": "Use el intervalo exacto de la mediana; el intervalo bootstrap de las descargas puede subestimar la incertidumbre con datos empatados o escasos.",
+      "shortest_interval": "En cada notificación, el intervalo empieza en el medicamento de la clase iniciado más recientemente; tras un cambio dentro de la clase es más corto que el tiempo desde el primer inicio de la clase (se da otra lectura).",
+      "class_membership": "La clase de A se asigna por los códigos ATC de los principios activos; la mayoría de las vías locales (piel, ojo, vías respiratorias…) no se cuentan y en cada clase se excluyen algunos principios activos, con los motivos en el conjunto de datos.",
+      "weibull": "La forma de Weibull refleja artefactos de notificación tanto como el tiempo; no es un mecanismo y solo se publica con al menos 30 notificaciones."
+    },
+    "statusLegend": {
+      "title": "Qué significa el estado",
+      "described": "Al menos 30 notificaciones con intervalo: mediana, cuartiles e intervalo exacto al 95 % de la mediana.",
+      "small_sample": "De 10 a 29 notificaciones con intervalo: mediana e intervalos como muestra pequeña; son inestables.",
+      "cluster_dominated": "Un mismo par de fechas reúne más de una cuarta parte de las notificaciones (posibles duplicados o una serie de casos): solo recuentos.",
+      "count_only": "Menos de 10 notificaciones con intervalo: solo recuentos, sin mediana.",
+      "no_interval": "Hay notificaciones, pero ninguna tiene un intervalo utilizable (los motivos están en la fila). No se puede describir un tiempo; esto no es prueba de ausencia de efecto.",
+      "no_candidate_reports": "Ninguna notificación del periodo cita un medicamento de esta clase como sospechoso junto con este evento. Esto no es prueba de ausencia de efecto."
+    },
+    "status": {
+      "described": "Descrito",
+      "small_sample": "Muestra pequeña",
+      "cluster_dominated": "Solo recuentos (grupo de fechas)",
+      "count_only": "Solo recuentos",
+      "no_interval": "Sin intervalo",
+      "no_candidate_reports": "Sin notificaciones coincidentes en el periodo"
+    },
+    "files": {
+      "title": "Descargar",
+      "version": "Versión {version}",
+      "window": "Trimestres de FAERS {quarters} · instantánea del {date}",
+      "licence": "Licencia: CC BY 4.0, con la atribución de abajo.",
+      "csv": "Tabla (CSV)",
+      "json": "Tabla y método (JSON)",
+      "dictionary": "Diccionario de datos (docs/open-data.md)"
+    },
+    "cols": {
+      "row": "Fila",
+      "pattern": "Patrón",
+      "reports": "Notificaciones",
+      "interval": "Con intervalo",
+      "median": "Mediana (intervalo exacto al 95 %)",
+      "status": "Estado"
+    },
+    "tableTitle": "Las 65 filas",
+    "tableHint": "Elija un encabezado de columna para ordenar. Abra un patrón para ver el detalle. Una mediana marcada como \"acumulación en el mismo día\" muestra una fecha escrita dos veces, no un tiempo; se ordena con las filas sin mediana.",
+    "caption": "Filas PIPC, ordenadas por {key}, orden {dir}",
+    "sort": {
+      "ascending": "ascendente",
+      "descending": "descendente"
+    },
+    "days": "{n} d",
+    "ci": "{low}–{high} d",
+    "noMedian": "sin mediana publicada",
+    "rowEyebrow": "Fila PIPC {row}",
+    "reportsNotPeople": "Los recuentos son notificaciones, no personas.",
+    "detail": {
+      "counts": "Notificaciones",
+      "reportsSentence": "{count, plural, one {# notificación cita} other {# notificaciones citan}} un medicamento de la clase como sospechoso junto con el evento.",
+      "intervalSentence": "{count, plural, one {# notificación tiene} other {# notificaciones tienen}} un intervalo utilizable.",
+      "usable": "Proporción utilizable",
+      "usableSentence": "El {share} de las notificaciones ({n} de {total}) tiene un intervalo utilizable.",
+      "definition": "Cómo se define la fila",
+      "class": "Clase del fármaco A (código de clase de Janus)",
+      "event": "Evento",
+      "terms": "Términos MedDRA",
+      "routes": "Vías contadas",
+      "shared": "Misma clase y mismo evento que las filas {rows}: las cifras son las mismas.",
+      "pipc": "Texto PIPC tal como se publicó",
+      "notes": "Notas sobre esta fila",
+      "notesFooter": "Escritas en inglés en las revisiones del conjunto de datos.",
+      "timing": "Tiempo notificado",
+      "medianLine": "Mediana {median} días (intervalo exacto al 95 % {low}–{high} días, cobertura {coverage})",
+      "smallSample": "Muestra pequeña: {count} notificaciones con intervalo. Las estimaciones son inestables.",
+      "heaping": "Más de la mitad de los intervalos son de 0 días: la mediana muestra una acumulación en el mismo día, no un tiempo.",
+      "iqrLine": "La mitad de las notificaciones está entre {q25} y {q75} días.",
+      "chartTitle": "Días notificados desde la fecha de inicio del tratamiento hasta la fecha del evento",
+      "unit": "días",
+      "chartLegend": "Cada barra va desde–hasta; el punto es la mediana. Barra superior: la dispersión de las notificaciones (mitad central). Barra inferior: la incertidumbre de la mediana (intervalo exacto al 95 %). Miden cosas distintas.",
+      "colLow": "Desde",
+      "colMedian": "Mediana",
+      "colHigh": "Hasta",
+      "iqr": "Mitad central de las notificaciones",
+      "exactCi": "Intervalo exacto al 95 % de la mediana",
+      "withoutDayOne": "Sin las fechas en día 1 del mes: mediana {median} días ({n} notificaciones). También elimina fechas reales; no es una corrección.",
+      "withoutDayOneOmitted": "Sin las fechas en día 1 del mes: no se da, quedan menos de 10 notificaciones.",
+      "shape": "Forma de Weibull {shape} (intervalo al 95 % {low}–{high}): {klass}.",
+      "shapeCaveat": "La forma refleja artefactos de notificación tanto como el tiempo; no es un mecanismo.",
+      "noShape": "Sin forma de Weibull: solo se publica con al menos 30 notificaciones, como mucho la mitad de intervalos del mismo día y al menos 5 intervalos distintos.",
+      "quality": "Calidad de las fechas",
+      "zeroDay": "{n} de {total} intervalos son de 0 días.",
+      "dayOne": "{n} de {total} intervalos se basan en una fecha (inicio o evento) en día 1 del mes.",
+      "cluster": "Mayor grupo de notificaciones con el mismo par de fechas: {n}.",
+      "years": "Años del evento de {from} a {to}.",
+      "withoutInterval": "Notificaciones sin intervalo, según la comprobación que las excluyó:",
+      "usableLine": "{n} de {total} notificaciones tienen un intervalo utilizable.",
+      "otherReadings": "Otras lecturas de las mismas notificaciones",
+      "distinctPairs": "Contando una sola vez cada par idéntico de fechas: mediana {median} días.",
+      "earliestStart": "Desde el inicio más temprano de cualquier medicamento de la clase: mediana {median} días.",
+      "qualityOnly": "No se publica ningún tiempo para esta fila; estos recuentos solo describen la calidad de las fechas."
+    },
+    "route": {
+      "systemic_or_unknown": "sistémica o no indicada",
+      "eye": "ocular",
+      "rectal": "rectal",
+      "nasal_inhaled": "nasal o inhalada",
+      "joint_lesion": "inyección articular o intralesional",
+      "local": "local",
+      "not_patient": "no el propio paciente (placenta, leche materna)"
+    },
+    "shapeClass": {
+      "early": "temprana (el intervalo está por debajo de 1)",
+      "random": "sin tendencia clara (el intervalo contiene 1)",
+      "wear_out": "tardía (el intervalo está por encima de 1)"
+    },
+    "reason": {
+      "no_therapy_start": "sin fecha de inicio",
+      "start_date_partial": "fecha de inicio incompleta",
+      "event_date_missing": "sin fecha del evento",
+      "negative_interval": "evento antes del inicio",
+      "interval_over_max": "intervalo de más de diez años"
+    },
+    "heapingShort": "acumulación en el mismo día"
+  },
+  "Developers": {
+    "title": "Para desarrolladores y clínicos",
+    "summary": "Usar Janus desde otras herramientas",
+    "intro": "Las comprobaciones y los conjuntos de datos abiertos de Janus están disponibles para otro software: un servidor MCP para asistentes de IA, un servicio CDS Hooks para entornos de prueba de historia clínica electrónica, una API pública de solo lectura y paquetes de datos abiertos. Todo es de código abierto.",
+    "notClinical": "Prototipo de investigación, no es un producto sanitario ni para uso clínico. No conecte Janus a una historia clínica electrónica en producción.",
+    "copy": "Copiar",
+    "copied": "Copiado.",
+    "copyFailed": "Aquí no se puede copiar; seleccione el texto.",
+    "mcp": {
+      "title": "Servidor MCP para asistentes de IA",
+      "summary": "Siete herramientas de solo lectura sobre la API de Janus",
+      "body": "janus-mcp permite que Claude, Kiro o cualquier cliente MCP identifique un medicamento, compruebe una lista en busca de posibles cascadas de prescripción y lea las filas PIPC y la máquina del tiempo. Es un cliente ligero: cada herramienta envía una solicitud a la API y devuelve su respuesta sin cambios. Configure JANUS_API_URL con una API local o con /api de esta instalación.",
+      "safety": "Cada resultado lleva las reglas de Janus para el asistente: un hallazgo es un patrón posible, nunca un veredicto, y no hay consejo de empezar, cambiar o terminar un medicamento.",
+      "claudeCode": "Claude Code (desde la raíz del repositorio)",
+      "claudeDesktop": "Claude Desktop (claude_desktop_config.json)",
+      "kiro": "Kiro (.kiro/settings/mcp.json, ya en el repositorio)",
+      "privacy": "El servidor no registra nada de una llamada ni guarda nada entre llamadas. Los medicamentos que envía un asistente los ve el proveedor del asistente.",
+      "doc": "Documentación: docs/mcp.md"
+    },
+    "cds": {
+      "title": "Servicio CDS Hooks",
+      "summary": "order-select y order-sign, CDS Hooks 2.0",
+      "sandboxOnly": "Solo para entornos de prueba y evaluación.",
+      "body": "El servicio lee órdenes en borrador y medicamentos precargados como FHIR R4, asigna los códigos NDC, RxNorm y ATC mediante la capa de identificación de Janus y responde con tarjetas informativas sobre posibles cascadas de prescripción de la lista PIPC. No se guarda nada.",
+      "discovery": "Descubrimiento y servicio",
+      "prefetch": "Plantillas de precarga",
+      "cards": "Las tarjetas son siempre \"info\", con la fila PIPC, las pruebas y el aviso; sin sugerencias ni acciones. Que no haya tarjeta no significa que los medicamentos estén libres de problemas.",
+      "doc": "Documentación: docs/cds-hooks.md"
+    },
+    "api": {
+      "title": "API pública de solo lectura",
+      "summary": "OpenAPI 3.1, sin datos personales de entrada ni de salida",
+      "body": "Las rutas públicas no aceptan cuerpo de solicitud y solo leen datos precalculados o publicados: la tabla de tiempos hasta la aparición, el informe de calidad de datos, el paquete de cascadas, el conjunto de datos abierto de resultados, la máquina del tiempo y el descubrimiento de CDS Hooks.",
+      "examples": "Ejemplos",
+      "rules": "Los errores son códigos. Las rutas médicas no se almacenan en caché y solo registran la ruta, el estado y la duración. Los recuentos son notificaciones, nunca personas.",
+      "openapi": "Documento OpenAPI: docs/openapi-public.json",
+      "doc": "Lista de rutas y reglas: docs/open-api.md"
+    },
+    "data": {
+      "title": "Paquetes de datos abiertos",
+      "summary": "Paquetes de datos Frictionless en el repositorio",
+      "cascade-package": "Las 65 filas PIPC con la asignación de clases de Janus, las reglas de nombres y las exclusiones ATC. CC BY 4.0 y Apache-2.0 según el archivo.",
+      "data-quality": "El informe semanal de calidad de datos: hallazgos en CSV, JSON y un resumen. CC BY 4.0.",
+      "faers-onset": "La tabla FAERS de tiempos hasta la aparición para las 65 filas PIPC en CSV y JSON. CC BY 4.0.",
+      "frictionless": "Cada paquete tiene un datapackage.json con la licencia, las fuentes y un hash por archivo.",
+      "doc": "Cómo leerlos y citarlos: docs/open-data.md"
+    }
   }
 }
