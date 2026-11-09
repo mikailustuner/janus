@@ -51,6 +51,23 @@ export const httkResult = D.obj({
   daily_dose_mg_per_kg: D.num,
   older_to_younger_median_ratio: D.num,
   groups: D.arr(httkGroup, 2, 2),
+  half_life_h: D.num,
+  half_life_interval_h: D.arr(D.num, 2, 2),
+  model_error: D.obj({
+    calibration_version: D.str,
+    half_life: D.obj({
+      dataset: D.str,
+      retrieved: D.str,
+      n_drugs: D.int,
+      geometric_bias_fold: D.num,
+      bias_direction: D.lit("model_lower", "model_higher"),
+      gmfe: D.num,
+      within_2_fold: D.num,
+      interval_nominal_coverage: D.num,
+      interval_held_out_coverage: D.num,
+    }),
+    concentrations_validated: D.lit(false),
+  }),
   tool_versions: D.obj({ r: D.str, httk: D.str }),
 });
 

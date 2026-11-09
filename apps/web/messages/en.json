@@ -1909,7 +1909,8 @@
       "none": "No molecule was selected for this remedy.",
       "withheldUnverified": "Value not shown: its licence could not be verified.",
       "outOfRange": "prediction outside the possible range; not usable",
-      "evidence": "Evidence: {citation}"
+      "evidence": "Evidence: {citation}",
+      "invalidValue": "the model returned an invalid value"
     },
     "references": "References",
     "verified": "Checked: {how}",
@@ -2454,6 +2455,18 @@
     },
     "scenarioNote": {
       "canon_rhubarb_480mg": "Canon scenario: the whole hydroxyanthracene content counted as free rhein, an upper estimate (mostly glycosides; the model has no activation in the gut); one historical dose, attributed to al-Khuzi; machine translation."
+    },
+    "olderAdults": {
+      "note": "HTTK-Pop's age effect is nearly the same for every drug (ratios {low}–{high}); FDA labels report a median exposure increase of about {percent}% in older adults ({drugs} drugs, Janus research note).",
+      "link": "Research note: HTTK-Pop and exposure in older adults"
+    },
+    "modelError": {
+      "title": "Measured model error",
+      "halfLife": "Model half-life of the drug: {hours} h (calibrated 80% interval {low}–{high} h).",
+      "interval": "Calibrated on Obach 2008, n = {n}; covers the true value about {nominal}% of the time in held-out drugs.",
+      "bias": "Measured against Obach 2008 human data ({n} drugs, retrieved {date}): httk half-lives are {bias}-fold {direction} on geometric average; {within}% within 2-fold; geometric mean fold error {gmfe}.",
+      "notValidated": "The steady-state concentrations are not validated against measured data; no calibrated interval exists for them.",
+      "compartmental": "No calibrated interval: the bands show the spread of the virtual population, not the model's error. Concentrations, peaks and areas are not validated against measured data beyond the one study above."
     }
   }
 }

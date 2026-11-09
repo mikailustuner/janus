@@ -23,6 +23,7 @@ from typing import Any, cast
 
 from janus.simulation import compartmental
 from janus.simulation.allowlist import AllowList, allowlist
+from janus.simulation.calibration import half_life_interval, httk_model_error
 from janus.simulation.queue import JOB_TIMEOUT_S
 from janus.simulation.schemas import CompartmentalIn, HttkPopulationIn, parse
 
@@ -80,6 +81,7 @@ def parse_httk(out: str) -> dict[str, Any]:
     range."""
     versions: dict[str, str] = {}
     quant: list[list[float]] = []
+    half_life: float | None = None
     for line in out.splitlines():
         if not line:
             continue
@@ -92,9 +94,13 @@ def parse_httk(out: str) -> dict[str, Any]:
             if not (0 <= q[0] <= q[1] <= q[2]):
                 raise ModelError("unexpected model output")
             quant.append(q)
+        elif tag == "H":
+            half_life = _floats([rest], 1)[0]
+            if half_life <= 0:
+                raise ModelError("unexpected model output")
         else:
             raise ModelError("unexpected model output")
-    return {"versions": versions, "quantiles": quant}
+    return {"versions": versions, "quantiles": quant, "half_life_h": half_life}
 
 
 def run_httk_population(req: HttkPopulationIn, allow: AllowList, timeout: float) -> dict[str, Any]:
@@ -116,7 +122,8 @@ def run_httk_population(req: HttkPopulationIn, allow: AllowList, timeout: float)
     ]
     out = parse_httk(_run(argv, "", timeout))
     q = out["quantiles"]
-    if len(q) != 2 or q[0][1] <= 0:
+    t_half = out["half_life_h"]
+    if len(q) != 2 or q[0][1] <= 0 or t_half is None:
         raise ModelError("unexpected model output")
     return {
         "model": "httk",
@@ -137,6 +144,10 @@ def run_httk_population(req: HttkPopulationIn, allow: AllowList, timeout: float)
                 "css_band_mg_l": q[1],
             },
         ],
+        # The only calibrated interval: half-life (owner decision 2026-11-09).
+        "half_life_h": t_half,
+        "half_life_interval_h": list(half_life_interval(t_half)),
+        "model_error": httk_model_error(),
         "tool_versions": out["versions"],
     }
 

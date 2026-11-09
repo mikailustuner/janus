@@ -59,6 +59,24 @@ form (floats at 6 significant digits) plus the allow-list version is hashed (SHA
   child's environment is reduced to PATH, HOME, TMPDIR, R_LIBS_USER, LANG; stderr is discarded (no free text
   reaches a log). The R script re-checks every argument.
 
+### 5.1 Measured model error (owner decision 2026-11-09)
+`data/simulation/calibration.json` (`simulation-calibration-1`): numbers and provenance only, from the PK-1
+calibration analysis (2026-11-09) and the research note `docs/research/httk-pop-older-adult-exposure.md`.
+- httk half-life (`calc_half_life`, package defaults) vs Obach, Lombardo & Waters 2008 (doi:10.1124/dmd.108.020479;
+  TDC `Half_Life_Obach`, Harvard Dataverse datafile 4266799, retrieved 2026-11-09): n = 205 drugs, geometric
+  bias 2.1× too high, 30.7 % within 2-fold [24.9-37.1], GMFE 3.83 [3.31-4.43], Spearman ρ 0.305.
+- Split-conformal on absolute log10 residuals, finite-sample corrected quantile, one global quantile, Bemis-Murcko
+  scaffold split 60/20/20 (seed 0): nominal 80 %, held-out coverage 84.0 %, interval width 87.4-fold, i.e. the
+  prediction ÷/× √87.4 ≈ 9.35 (`calibration.half_life_interval`). The only calibrated interval.
+- httk concentrations: `validated: false`; compartmental bands: the population spread, no calibrated interval,
+  validated only against the one study of the time machine (shown).
+- ADMET-AI: 286 of 1383 half-life and 490 of 1383 VDss predictions were ≤ 0 in PK-1; the time-machine screens show
+  such values as "the model returned an invalid value" (`admetUsable`: strictly positive).
+- Older adults: label atlas median exposure ratio 1.35 (134 drugs) vs HTTK-Pop ratios 1.38-1.76 nearly constant
+  across drugs (ρ 0.21, CI −0.13 to 0.53); every older-population result shows this and links the note.
+The httk job also returns `calc_half_life` (one value per drug, a model parameter, not a person) with the interval
+and the `model_error` block.
+
 ## 6. Queue (DP-S4)
 Table `simulation_jobs` (id uuid, input_hash, kind, canonical input ≤ 1 KiB, state, timestamps, expiry, attempts,
 result ≤ 256 KiB, error code). No address or request metadata. `submit` and `claim` take one transaction-scoped
@@ -109,6 +127,7 @@ arm64 image is built natively on the host by `deploy.sh`.
 | S5 | rate limits never exceeded; honest Retry-After; no address kept; bounded; expiring | `test_s5_*` |
 | S6 | verdicts = time machine's (compartmental recomputed); populations cited | `test_s6_*` |
 | S7 | httk output reader strict | `test_s7_*` |
+| S9 | interval only for half-life; bias block on every httk result; no interval on compartmental results; invalid ADMET values never rendered | `test_s9_*`, `components/simulation/model-error.test.tsx` |
 | Q1-Q4 | queue ≤ 10, running ≤ 2 (two claimers), cache and reuse, expiry and reaper | `test_simulation_queue.py` (Postgres) |
 | R1 | routes: 503, 413/415, 422, 202/200, 429 + Retry-After, 404 | `test_simulation_queue.py` |
 | C | compose: simulator internal only, hardened, caps | `deploy/check_compose.py` |

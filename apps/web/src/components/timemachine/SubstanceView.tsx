@@ -41,7 +41,9 @@ const ACTIVITIES_SHOWN = 8;
  */
 export function admetUsable(name: string, v: number): boolean {
   if (name === "PPBR_AZ") return v >= 0 && v <= 100;
-  if (name === "Half_Life_Obach" || name === "VDss_Lombardo") return v >= 0;
+  // A half-life or a volume of zero or below is physically impossible; ADMET-AI returns one for
+  // 20.7 % / 35.4 % of predictions (PK-1 calibration): never shown (owner decision 2026-11-09).
+  if (name === "Half_Life_Obach" || name === "VDss_Lombardo") return v > 0;
   return v >= 0 && v <= 1;
 }
 
@@ -251,7 +253,13 @@ function ConstituentRow({
                         <span>
                           —{" "}
                           <span className="text-muted">
-                            ({t("TimeMachine.substance.outOfRange")})
+                            (
+                            {t(
+                              k === "Half_Life_Obach" || k === "VDss_Lombardo"
+                                ? "TimeMachine.substance.invalidValue"
+                                : "TimeMachine.substance.outOfRange",
+                            )}
+                            )
                           </span>
                         </span>
                       )}

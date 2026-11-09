@@ -30,6 +30,7 @@ from hypothesis import strategies as st
 from janus.paths import repo_root
 from janus.simulation import parity
 from janus.simulation.allowlist import allowlist
+from janus.simulation.calibration import calibration, half_life_interval
 from janus.simulation.compartmental import explore, params_for
 from janus.simulation.execute import ModelError, parse_httk
 from janus.simulation.ratelimit import Limiter, Window, client_address
@@ -48,6 +49,7 @@ from janus.timemachine.pk import auc_inf, cmax
 from janus.timemachine.validation import DrugValidation
 
 ALLOW = allowlist()
+CAL = calibration()
 LIM = ALLOW.limits
 NAMES = {
     "kind",
@@ -453,21 +455,89 @@ def test_s1_browser_fixture_is_current() -> None:
 # --- S7 -------------------------------------------------------------------------------------------
 
 
-@given(st.lists(st.text(alphabet="VQX,0123456789.e-n", max_size=20), max_size=6))
+@given(st.lists(st.text(alphabet="VQHX,0123456789.e-n", max_size=20), max_size=6))
 def test_s7_httk_reader_is_strict(lines: list[str]) -> None:
     try:
         out = parse_httk("\n".join(lines))
     except ModelError:
         return
+    if out["half_life_h"] is not None:
+        assert out["half_life_h"] > 0
     for q in out["quantiles"]:
         assert len(q) == 3 and q[0] <= q[1] <= q[2]
         assert all(math.isfinite(x) for x in q)
 
 
 def test_s7_httk_reader_reads_its_format() -> None:
-    out = parse_httk("V,R version 4.6.1 (2026-06-24),2.7.4\nQ,0.1,0.2,0.3\nQ,0.2,0.3,0.4\n")
+    out = parse_httk("V,R version 4.6.1 (2026-06-24),2.7.4\nQ,0.1,0.2,0.3\nQ,0.2,0.3,0.4\nH,12.5\n")
     assert out["versions"] == {"r": "R version 4.6.1 (2026-06-24)", "httk": "2.7.4"}
     assert out["quantiles"] == [[0.1, 0.2, 0.3], [0.2, 0.3, 0.4]]
-    for bad in ("Z,1", "T,1,2", "B,70", "Q,1,2", "Q,1,inf,2", "Q,a,b,c", "Q,3,2,1"):
+    assert out["half_life_h"] == 12.5
+    for bad in ("Z,1", "T,1,2", "B,70", "Q,1,2", "Q,1,inf,2", "Q,a,b,c", "Q,3,2,1", "H,0", "H,-2"):
         with pytest.raises(ModelError):
             parse_httk(bad)
+
+
+# --- S9: measured model error (owner decision 2026-11-09) ----------------------------------------
+
+
+@given(
+    st.floats(0.1, 2000, allow_nan=False),
+    st.lists(st.floats(0.001, 50, allow_nan=False), min_size=6, max_size=6),
+)
+def test_s9_httk_results_carry_the_measured_error_and_one_interval(
+    t_half: float, qs: list[float]
+) -> None:
+    from janus.simulation import execute
+    from janus.simulation.schemas import HttkPopulationIn
+
+    a, b = sorted(qs[:3]), sorted(qs[3:])
+    text = f"V,R version 4.6.1,2.7.4\nQ,{a[0]},{a[1]},{a[2]}\nQ,{b[0]},{b[1]},{b[2]}\nH,{t_half}\n"
+    original = execute._run  # pyright: ignore[reportPrivateUsage]
+    execute._run = lambda argv, stdin, timeout: text  # pyright: ignore[reportPrivateUsage]
+    try:
+        out = execute.run_httk_population(
+            HttkPopulationIn(kind="httk_population", compound="haloperidol", samples=100),
+            ALLOW,
+            30,
+        )
+    finally:
+        execute._run = original  # pyright: ignore[reportPrivateUsage]
+    # The only interval is the calibrated half-life interval.
+    assert [k for k in out if "interval" in k] == ["half_life_interval_h"]
+    lo, hi = out["half_life_interval_h"]
+    assert lo < float(f"{t_half:.6g}") < hi
+    assert math.isclose(hi / lo, CAL["httk_half_life"]["conformal"]["interval_width_fold"])
+    err = out["model_error"]
+    assert err["concentrations_validated"] is False
+    h = err["half_life"]
+    assert h["n_drugs"] > 0 and h["gmfe"] > 1 and 0 < h["within_2_fold"] < 1
+    assert h["geometric_bias_fold"] > 1 and h["bias_direction"] in {"model_higher", "model_lower"}
+
+
+@settings(max_examples=10)
+@given(valid_requests().filter(lambda b: b["kind"] == "compartmental"))
+def test_s9_compartmental_results_have_no_calibrated_interval(body: dict[str, Any]) -> None:
+    req = parse(body, ALLOW)
+    assert isinstance(req, CompartmentalIn)
+    c = ALLOW.compartmental[req.compound]
+    out = explore(params_for(c, c.populations[req.population]), req.dose_mg, 48, 100)
+    assert not [
+        k for k in out if k != "interval_h" and ("interval" in k or "calibrat" in k or "error" in k)
+    ]
+
+
+def test_s9_calibration_file_is_consistent() -> None:
+    h = CAL["httk_half_life"]
+    assert h["gmfe_ci95"][0] <= h["gmfe"] <= h["gmfe_ci95"][1]
+    assert h["within_2_fold_ci95"][0] <= h["within_2_fold"] <= h["within_2_fold_ci95"][1]
+    assert h["conformal"]["nominal_coverage"] == 0.8
+    assert CAL["httk_concentrations"]["validated"] is False
+    for v in CAL["admet_ai_invalid_outputs"].values():
+        assert 0 < v["non_positive"] < v["predictions"]
+    assert half_life_interval(10.0) == pytest.approx(
+        (
+            10 / math.sqrt(h["conformal"]["interval_width_fold"]),
+            10 * math.sqrt(h["conformal"]["interval_width_fold"]),
+        )
+    )

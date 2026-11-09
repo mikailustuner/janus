@@ -1909,7 +1909,8 @@
       "none": "Bu ilaç için molekül seçilmedi.",
       "withheldUnverified": "Değer gösterilmiyor: lisansı doğrulanamadı.",
       "outOfRange": "olası aralığın dışında bir öngörü; kullanılamaz",
-      "evidence": "Kanıt: {citation}"
+      "evidence": "Kanıt: {citation}",
+      "invalidValue": "model geçersiz bir değer döndürdü"
     },
     "references": "Kaynaklar",
     "verified": "Denetlendi: {how}",
@@ -2454,6 +2455,18 @@
     },
     "scenarioNote": {
       "canon_rhubarb_480mg": "Kanun senaryosu: hidroksiantrasen içeriğinin tamamı serbest rein sayılır, bu bir üst tahmindir (çoğu glikozittir; modelde bağırsakta etkinleşme yoktur); tek bir tarihsel doz, el-Huzi'ye atfedilir; makine çevirisi."
+    },
+    "olderAdults": {
+      "note": "HTTK-Pop'un yaş etkisi her ilaç için neredeyse aynıdır (oranlar {low}–{high}); FDA prospektüsleri yaşlı yetişkinlerde maruziyette yaklaşık %{percent} medyan artış bildirir ({drugs} ilaç, Janus araştırma notu).",
+      "link": "Araştırma notu: HTTK-Pop ve yaşlı yetişkinlerde maruziyet"
+    },
+    "modelError": {
+      "title": "Ölçülmüş model hatası",
+      "halfLife": "İlacın model yarılanma ömrü: {hours} sa (kalibre %80 aralık {low}–{high} sa).",
+      "interval": "Obach 2008 üzerinde kalibre edildi, n = {n}; ayrılmış ilaçlarda gerçek değeri yaklaşık %{nominal} oranında kapsar.",
+      "bias": "Obach 2008 insan verilerine karşı ölçüldü ({n} ilaç, erişim {date}): httk yarılanma ömürleri geometrik ortalamada {bias} kat {direction}; %{within} 2 kat içinde; geometrik ortalama kat hatası {gmfe}.",
+      "notValidated": "Kararlı durum konsantrasyonları ölçülmüş verilere karşı doğrulanmadı; bunlar için kalibre aralık yoktur.",
+      "compartmental": "Kalibre aralık yok: bantlar modelin hatasını değil, sanal popülasyonun yayılımını gösterir. Konsantrasyonlar, tepe değerler ve alanlar yukarıdaki tek çalışmanın ötesinde ölçülmüş verilere karşı doğrulanmadı."
     }
   }
 }

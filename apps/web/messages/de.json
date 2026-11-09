@@ -1909,7 +1909,8 @@
       "none": "Für dieses Heilmittel wurde kein Molekül ausgewählt.",
       "withheldUnverified": "Wert nicht gezeigt: Seine Lizenz konnte nicht geprüft werden.",
       "outOfRange": "Vorhersage außerhalb des möglichen Bereichs; nicht verwertbar",
-      "evidence": "Beleg: {citation}"
+      "evidence": "Beleg: {citation}",
+      "invalidValue": "das Modell lieferte einen ungültigen Wert"
     },
     "references": "Quellen",
     "verified": "Geprüft: {how}",
@@ -2454,6 +2455,18 @@
     },
     "scenarioNote": {
       "canon_rhubarb_480mg": "Kanon-Szenario: der gesamte Gehalt an Hydroxyanthracenen als freies Rhein gezählt, eine obere Schätzung (überwiegend Glykoside; das Modell kennt keine Aktivierung im Darm); eine historische Dosis, al-Khuzi zugeschrieben; maschinelle Übersetzung."
+    },
+    "olderAdults": {
+      "note": "Der Alterseffekt von HTTK-Pop ist für jeden Arzneistoff fast gleich (Verhältnisse {low}–{high}); FDA-Fachinformationen berichten bei Älteren einen medianen Anstieg der Exposition um etwa {percent} % ({drugs} Arzneistoffe, Janus-Forschungsnotiz).",
+      "link": "Forschungsnotiz: HTTK-Pop und Exposition bei Älteren"
+    },
+    "modelError": {
+      "title": "Gemessener Modellfehler",
+      "halfLife": "Halbwertszeit des Arzneistoffs im Modell: {hours} h (kalibriertes 80-%-Intervall {low}–{high} h).",
+      "interval": "Kalibriert an Obach 2008, n = {n}; überdeckt den wahren Wert bei zurückgehaltenen Arzneistoffen in etwa {nominal} % der Fälle.",
+      "bias": "Gemessen an Humandaten von Obach 2008 ({n} Arzneistoffe, abgerufen {date}): httk-Halbwertszeiten sind im geometrischen Mittel {bias}-fach {direction}; {within} % innerhalb des 2-Fachen; geometrischer mittlerer Faktorfehler {gmfe}.",
+      "notValidated": "Die Steady-State-Konzentrationen sind nicht an Messdaten validiert; für sie gibt es kein kalibriertes Intervall.",
+      "compartmental": "Kein kalibriertes Intervall: Die Bänder zeigen die Streuung der virtuellen Population, nicht den Fehler des Modells. Konzentrationen, Spitzenwerte und Flächen sind über die eine Studie oben hinaus nicht an Messdaten validiert."
     }
   }
 }

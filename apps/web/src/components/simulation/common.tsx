@@ -10,7 +10,8 @@ import { useLocale } from "next-intl";
 import { useMemo } from "react";
 
 import { Disclosure } from "@/components/cards";
-import { tableRows } from "@/simulation/explorer";
+import type { HttkResult } from "@/simulation/client";
+import { EXPLORER, tableRows } from "@/simulation/explorer";
 import { useT } from "@/theme/words";
 
 /** The fixed sentence of the owner decision 2026-11-09, then the in-silico label. */
@@ -269,5 +270,134 @@ export function Bands({
         })}
       </li>
     </ul>
+  );
+}
+
+const REPO = "https://github.com/mikailustuner/janus/blob/main";
+
+/**
+ * Results for the older virtual population carry the measured context (owner decision
+ * 2026-11-09): HTTK-Pop's age effect is nearly the same for every drug; FDA labels report a median
+ * exposure increase of about 35 % in older adults (Janus research note).
+ */
+export function OlderAdultsNote() {
+  const t = useT();
+  const n = useNumbers();
+  const o = EXPLORER.calibration.older_adults;
+  return (
+    <p className="text-sm" data-testid="sim-older-note">
+      {t("Simulation.olderAdults.note", {
+        low: n.sig(o.httk_pop_ratio_range[0]),
+        high: n.sig(o.httk_pop_ratio_range[1]),
+        percent: Math.round((o.label_median_exposure_ratio - 1) * 100),
+        drugs: o.label_atlas_drugs_numeric,
+      })}{" "}
+      <a
+        className="inline-flex min-h-11 items-center font-bold"
+        href={`${REPO}/${o.source}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {t("Simulation.olderAdults.link")}
+      </a>
+    </p>
+  );
+}
+
+/** Compartmental bands: population spread, no calibrated interval, model error as validated. */
+export function CompartmentalModelNote() {
+  const t = useT();
+  return (
+    <p className="text-sm" data-testid="sim-model-note">
+      {t("Simulation.modelError.compartmental")}
+    </p>
+  );
+}
+
+/**
+ * The httk result (owner decision 2026-11-09): the older-to-younger ratio, the model's half-life
+ * of the drug with its measured error against Obach 2008 and its calibrated 80 % interval (the only
+ * calibrated interval), and the concentrations marked not validated against measured data.
+ */
+export function HttkResultView({
+  r,
+  compound,
+}: {
+  r: HttkResult;
+  compound: string;
+}) {
+  const t = useT();
+  const n = useNumbers();
+  const h = r.model_error.half_life;
+  const pct = (x: number) => Math.round(x * 100);
+  return (
+    <div className="flex flex-col gap-3" data-testid="sim-httk">
+      <p className="text-sm">
+        {t("Simulation.result.httkSummary", {
+          compound: t(`Simulation.compound.${compound}`),
+          samples: r.samples,
+        })}
+      </p>
+      <p className="text-lg font-bold" data-testid="sim-ratio">
+        {t("Simulation.result.ratio", {
+          ratio: n.sig(r.older_to_younger_median_ratio),
+        })}
+      </p>
+      <OlderAdultsNote />
+      <section
+        className="tile m-0 flex flex-col gap-2"
+        aria-label={t("Simulation.modelError.title")}
+        data-testid="sim-model-error"
+      >
+        <p className="font-bold">
+          {t("Simulation.modelError.halfLife", {
+            hours: n.sig(r.half_life_h),
+            low: n.sig(r.half_life_interval_h[0]!),
+            high: n.sig(r.half_life_interval_h[1]!),
+          })}
+        </p>
+        <p className="text-sm" data-testid="sim-interval-label">
+          {t("Simulation.modelError.interval", {
+            n: h.n_drugs,
+            nominal: pct(h.interval_nominal_coverage),
+          })}
+        </p>
+        <p className="text-sm" data-testid="sim-bias">
+          {t("Simulation.modelError.bias", {
+            n: h.n_drugs,
+            date: h.retrieved,
+            bias: n.sig(h.geometric_bias_fold),
+            direction: t(`Simulation.validation.direction.${h.bias_direction}`),
+            within: pct(h.within_2_fold),
+            gmfe: n.sig(h.gmfe),
+          })}
+        </p>
+        <p className="text-sm text-muted" lang="en">
+          {h.dataset}
+        </p>
+      </section>
+      <p className="text-sm font-bold" data-testid="sim-not-validated">
+        {t("Simulation.modelError.notValidated")}
+      </p>
+      <p className="text-sm">{t("Simulation.result.httkRelative")}</p>
+      <Disclosure summary={t("Simulation.result.httkAbsolute")}>
+        <ul className="flex flex-col gap-1 text-sm" data-testid="sim-css">
+          {r.groups.map((g) => (
+            <li key={g.population}>
+              {t("Simulation.result.css", {
+                population: t(`Simulation.httkPopulation.${g.population}`),
+                p5: n.sig(g.css_band_mg_l[0]!),
+                p50: n.sig(g.css_band_mg_l[1]!),
+                p95: n.sig(g.css_band_mg_l[2]!),
+              })}
+            </li>
+          ))}
+        </ul>
+      </Disclosure>
+      <p className="mono text-xs text-muted">
+        R {r.tool_versions.r.replace(/^R version /, "")} · httk{" "}
+        {r.tool_versions.httk}
+      </p>
+    </div>
   );
 }

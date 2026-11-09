@@ -134,6 +134,64 @@
       ]
     }
   ],
+  "calibration": {
+    "version": "simulation-calibration-1",
+    "about": "Measured model error shown with every simulation result (owner decision 2026-11-09). Numbers only, from the Janus PK-1 calibration analysis of 2026-11-09 and the Janus research note docs/research/httk-pop-older-adult-exposure.md; no label text. Expert review has not yet been done.",
+    "httk_half_life": {
+      "compared": "httk calc_half_life (package defaults) against measured human half-life",
+      "dataset": "Obach, Lombardo & Waters 2008, human intravenous pharmacokinetics (doi:10.1124/dmd.108.020479), as TDC Half_Life_Obach, Harvard Dataverse datafile 4266799",
+      "retrieved": "2026-11-09",
+      "httk_version": "2.7.4",
+      "n_drugs": 205,
+      "geometric_bias_fold": 2.1,
+      "bias_direction": "model_higher",
+      "gmfe": 3.83,
+      "gmfe_ci95": [
+        3.31,
+        4.43
+      ],
+      "within_2_fold": 0.307,
+      "within_2_fold_ci95": [
+        0.249,
+        0.371
+      ],
+      "spearman_rho": 0.305,
+      "conformal": {
+        "method": "split conformal on absolute log10 residuals, finite-sample corrected quantile, one global quantile; Bemis-Murcko scaffold split 60/20/20, seed 0",
+        "nominal_coverage": 0.8,
+        "held_out_coverage": 0.84,
+        "interval_width_fold": 87.4
+      }
+    },
+    "httk_concentrations": {
+      "validated": false,
+      "note": "steady-state concentrations and their population bands are not validated against measured data"
+    },
+    "older_adults": {
+      "source": "docs/research/httk-pop-older-adult-exposure.md",
+      "label_atlas_drugs_numeric": 134,
+      "label_median_exposure_ratio": 1.35,
+      "httk_pop_ratio_range": [
+        1.38,
+        1.76
+      ],
+      "httk_pop_vs_label_spearman_rho": 0.21,
+      "httk_pop_vs_label_spearman_ci95": [
+        -0.13,
+        0.53
+      ]
+    },
+    "admet_ai_invalid_outputs": {
+      "Half_Life_Obach": {
+        "predictions": 1383,
+        "non_positive": 286
+      },
+      "VDss_Lombardo": {
+        "predictions": 1383,
+        "non_positive": 490
+      }
+    }
+  },
   "limits": {
     "doses_max": 14,
     "horizon_after_last_dose_h": 48,

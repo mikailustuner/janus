@@ -1909,7 +1909,8 @@
       "none": "Aucune molécule n'a été retenue pour ce remède.",
       "withheldUnverified": "Valeur non montrée : sa licence n'a pas pu être vérifiée.",
       "outOfRange": "prédiction hors de la plage possible ; inutilisable",
-      "evidence": "Preuve : {citation}"
+      "evidence": "Preuve : {citation}",
+      "invalidValue": "le modèle a renvoyé une valeur invalide"
     },
     "references": "Références",
     "verified": "Vérifié : {how}",
@@ -2454,6 +2455,18 @@
     },
     "scenarioNote": {
       "canon_rhubarb_480mg": "Scénario du Canon : toute la teneur en hydroxyanthracènes comptée comme rhéine libre, une estimation haute (surtout des glycosides ; le modèle n'a pas d'activation intestinale) ; une dose historique, attribuée à al-Khuzi ; traduction automatique."
+    },
+    "olderAdults": {
+      "note": "L'effet de l'âge dans HTTK-Pop est presque le même pour tous les médicaments (rapports {low}–{high}) ; les notices de la FDA rapportent une augmentation médiane de l'exposition d'environ {percent} % chez les adultes âgés ({drugs} médicaments, note de recherche Janus).",
+      "link": "Note de recherche : HTTK-Pop et exposition chez les adultes âgés"
+    },
+    "modelError": {
+      "title": "Erreur du modèle mesurée",
+      "halfLife": "Demi-vie du médicament selon le modèle : {hours} h (intervalle calibré à 80 % {low}–{high} h).",
+      "interval": "Calibré sur Obach 2008, n = {n} ; couvre la vraie valeur environ {nominal} % du temps pour des médicaments mis de côté.",
+      "bias": "Mesuré sur les données humaines d'Obach 2008 ({n} médicaments, consulté le {date}) : les demi-vies httk sont en moyenne géométrique {bias} fois {direction} ; {within} % à moins d'un facteur 2 ; erreur géométrique moyenne d'un facteur {gmfe}.",
+      "notValidated": "Les concentrations à l'équilibre ne sont pas validées sur des données mesurées ; aucun intervalle calibré n'existe pour elles.",
+      "compartmental": "Aucun intervalle calibré : les bandes montrent la dispersion de la population virtuelle, pas l'erreur du modèle. Concentrations, pics et aires ne sont pas validés sur des données mesurées au-delà de l'étude ci-dessus."
     }
   }
 }

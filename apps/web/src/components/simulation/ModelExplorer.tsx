@@ -33,6 +33,8 @@ import { useT } from "@/theme/words";
 import {
   BandChart,
   Bands,
+  CompartmentalModelNote,
+  OlderAdultsNote,
   ValidationStatus,
   VirtualPopulationNote,
   useNumbers,
@@ -228,6 +230,10 @@ export function ModelExplorer() {
                 peak={result.peak_band_ng_ml}
                 auc={result.auc_single_dose_band_ng_h_ml}
               />
+              <CompartmentalModelNote />
+              {deferred.population === "adult_65plus" ? (
+                <OlderAdultsNote />
+              ) : null}
               <VirtualPopulationNote testId="explorer-result-disclaimer" />
             </SummaryCard>
           )}

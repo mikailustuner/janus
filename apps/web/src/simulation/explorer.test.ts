@@ -81,9 +81,9 @@ describe("S2: no individualised simulation", () => {
           9,
         );
       }
-      expect(
-        Object.keys(res).some((k) => /^(point|cmax|tmax|half)/.test(k)),
-      ).toBe(false);
+      expect(Object.keys(res).some((k) => /^(point|cmax|tmax)/.test(k))).toBe(
+        false,
+      );
     }
   });
 

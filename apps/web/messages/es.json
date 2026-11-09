@@ -1909,7 +1909,8 @@
       "none": "No se seleccionó ninguna molécula para este remedio.",
       "withheldUnverified": "Valor no mostrado: no se pudo comprobar su licencia.",
       "outOfRange": "predicción fuera del rango posible; no utilizable",
-      "evidence": "Prueba: {citation}"
+      "evidence": "Prueba: {citation}",
+      "invalidValue": "el modelo devolvió un valor no válido"
     },
     "references": "Referencias",
     "verified": "Comprobado: {how}",
@@ -2454,6 +2455,18 @@
     },
     "scenarioNote": {
       "canon_rhubarb_480mg": "Escenario del Canon: todo el contenido de hidroxiantracenos contado como reína libre, una estimación alta (sobre todo glucósidos; el modelo no tiene activación intestinal); una dosis histórica, atribuida a al-Juzi; traducción automática."
+    },
+    "olderAdults": {
+      "note": "El efecto de la edad en HTTK-Pop es casi el mismo para todos los fármacos (relaciones {low}–{high}); las fichas técnicas de la FDA informan de un aumento mediano de la exposición de alrededor del {percent} % en adultos mayores ({drugs} fármacos, nota de investigación de Janus).",
+      "link": "Nota de investigación: HTTK-Pop y exposición en adultos mayores"
+    },
+    "modelError": {
+      "title": "Error del modelo medido",
+      "halfLife": "Semivida del fármaco según el modelo: {hours} h (intervalo calibrado del 80 % {low}–{high} h).",
+      "interval": "Calibrado con Obach 2008, n = {n}; cubre el valor real alrededor del {nominal} % de las veces en fármacos reservados.",
+      "bias": "Medido frente a datos humanos de Obach 2008 ({n} fármacos, consultados el {date}): las semividas de httk son, en media geométrica, {bias} veces {direction}; el {within} % dentro de un factor 2; error geométrico medio de un factor {gmfe}.",
+      "notValidated": "Las concentraciones en estado estacionario no están validadas con datos medidos; no hay intervalo calibrado para ellas.",
+      "compartmental": "Sin intervalo calibrado: las bandas muestran la dispersión de la población virtual, no el error del modelo. Concentraciones, picos y áreas no están validados con datos medidos más allá del estudio de arriba."
     }
   }
 }

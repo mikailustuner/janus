@@ -36,9 +36,20 @@ export interface Compound {
   reference_keys: string[];
 }
 
+export interface Calibration {
+  version: string;
+  older_adults: {
+    source: string;
+    label_atlas_drugs_numeric: number;
+    label_median_exposure_ratio: number;
+    httk_pop_ratio_range: [number, number];
+  };
+}
+
 export const EXPLORER = data as unknown as {
   version: string;
   compounds: Compound[];
+  calibration: Calibration;
   limits: {
     doses_max: number;
     horizon_after_last_dose_h: number;

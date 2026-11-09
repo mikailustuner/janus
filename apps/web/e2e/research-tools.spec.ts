@@ -315,11 +315,11 @@ test("developers: copy a snippet", async ({ page, context }) => {
   await context.grantPermissions(["clipboard-read", "clipboard-write"]);
   await stubApi(page, {});
   await page.goto("/en/research/developers");
-  await page.getByTestId("dev-copy-claude-code").click();
+  await page.getByRole("main").getByTestId("dev-copy-claude-code").click();
   await expect(page.getByText("Copied.")).toBeVisible();
   const copied = await page.evaluate(() => navigator.clipboard.readText());
   expect(copied).toContain("claude mcp add janus");
-  await expect(page.getByTestId("dev-curl")).toContainText(
+  await expect(page.getByRole("main").getByTestId("dev-curl")).toContainText(
     "/api/open/faers-onset/5",
   );
 });

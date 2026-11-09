@@ -188,7 +188,7 @@
     "samples": 1000
    },
    "job": {
-    "job_id": "7ac4abe9-c51d-448e-8013-de869fdb645b",
+    "job_id": "eb4ca3bb-fccb-4cc9-8452-9f6008d92ad3",
     "state": "done",
     "cached": false,
     "queue_position": null,
@@ -1782,7 +1782,7 @@
      "validated_scope": "one 10 mg oral dose in healthy volunteers (Soria-Chacartegui 2023)"
     },
     "disclaimer": "Virtual population, for research. Not about any person and not a dose recommendation. In silico and exploratory. Janus provides information, not medical advice. Research prototype — not a medical device.",
-    "expires_at": "2026-11-10T21:12:48.047912+00:00",
+    "expires_at": "2026-11-10T21:45:35.582142+00:00",
     "poll_after_s": 2
    }
   },
@@ -1793,7 +1793,7 @@
     "samples": 1000
    },
    "job": {
-    "job_id": "e2c98ecc-eec6-48ce-90f1-85040492d3e5",
+    "job_id": "4a031522-16c6-4f33-8da5-156e1a76dadf",
     "state": "done",
     "cached": false,
     "queue_position": null,
@@ -1834,11 +1834,31 @@
       }
      ],
      "samples": 1000,
+     "half_life_h": 91.77,
+     "model_error": {
+      "half_life": {
+       "gmfe": 3.83,
+       "dataset": "Obach, Lombardo & Waters 2008, human intravenous pharmacokinetics (doi:10.1124/dmd.108.020479), as TDC Half_Life_Obach, Harvard Dataverse datafile 4266799",
+       "n_drugs": 205,
+       "retrieved": "2026-11-09",
+       "within_2_fold": 0.307,
+       "bias_direction": "model_higher",
+       "geometric_bias_fold": 2.1,
+       "interval_nominal_coverage": 0.8,
+       "interval_held_out_coverage": 0.84
+      },
+      "calibration_version": "simulation-calibration-1",
+      "concentrations_validated": false
+     },
      "tool_versions": {
       "r": "R version 4.6.1 (2026-06-24)",
       "httk": "2.7.4"
      },
      "daily_dose_mg_per_kg": 1,
+     "half_life_interval_h": [
+      9.816236549717003,
+      857.9390744452662
+     ],
      "older_to_younger_median_ratio": 1.5820806667658875
     },
     "validation": {
@@ -1853,7 +1873,7 @@
      "validated_scope": "one oral dose per drug in healthy adults (time-machine validation table)"
     },
     "disclaimer": "Virtual population, for research. Not about any person and not a dose recommendation. In silico and exploratory. Janus provides information, not medical advice. Research prototype — not a medical device.",
-    "expires_at": "2026-11-10T21:13:46.825624+00:00",
+    "expires_at": "2026-11-10T21:45:51.538798+00:00",
     "poll_after_s": 2
    }
   }

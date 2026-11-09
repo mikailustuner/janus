@@ -12,7 +12,6 @@ import { useEffect, useRef, useState } from "react";
 
 import {
   BackLink,
-  Disclosure,
   LargeTitle,
   SegmentedControl,
   SummaryCard,
@@ -37,6 +36,9 @@ import { useT } from "@/theme/words";
 import {
   BandChart,
   Bands,
+  CompartmentalModelNote,
+  HttkResultView,
+  OlderAdultsNote,
   ValidationStatus,
   VirtualPopulationNote,
   useNumbers,
@@ -390,7 +392,6 @@ function Runner({
 
 function RunView({ run }: { run: Run }) {
   const t = useT();
-  const n = useNumbers();
   if (run.s === "idle")
     return (
       <p className="card p-4 text-muted" data-testid="sim-idle">
@@ -463,40 +464,11 @@ function RunView({ run }: { run: Run }) {
             peak={r.peak_band_ng_ml}
             auc={r.auc_single_dose_band_ng_h_ml}
           />
+          <CompartmentalModelNote />
+          {r.population === "adult_65plus" ? <OlderAdultsNote /> : null}
         </>
       ) : r.model === "httk" ? (
-        <>
-          <p className="text-sm">
-            {t("Simulation.result.httkSummary", {
-              compound: t(`Simulation.compound.${request.compound}`),
-              samples: r.samples,
-            })}
-          </p>
-          <p className="text-lg font-bold" data-testid="sim-ratio">
-            {t("Simulation.result.ratio", {
-              ratio: n.sig(r.older_to_younger_median_ratio),
-            })}
-          </p>
-          <p className="text-sm">{t("Simulation.result.httkRelative")}</p>
-          <Disclosure summary={t("Simulation.result.httkAbsolute")}>
-            <ul className="flex flex-col gap-1 text-sm" data-testid="sim-css">
-              {r.groups.map((g) => (
-                <li key={g.population}>
-                  {t("Simulation.result.css", {
-                    population: t(`Simulation.httkPopulation.${g.population}`),
-                    p5: n.sig(g.css_band_mg_l[0]!),
-                    p50: n.sig(g.css_band_mg_l[1]!),
-                    p95: n.sig(g.css_band_mg_l[2]!),
-                  })}
-                </li>
-              ))}
-            </ul>
-          </Disclosure>
-          <p className="mono text-xs text-muted">
-            R {r.tool_versions.r.replace(/^R version /, "")} · httk{" "}
-            {r.tool_versions.httk}
-          </p>
-        </>
+        <HttkResultView r={r} compound={request.compound} />
       ) : null}
       <ValidationStatus
         compound={request.compound}

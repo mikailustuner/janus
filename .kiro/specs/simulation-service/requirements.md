@@ -97,8 +97,25 @@
 3. BOTH SHALL work in both themes, five languages, at 375 and 1280 px, axe-clean, with loading, empty, error and
    long-content states; demo mode SHALL answer from a recorded result with no request.
 
-## Requirement 6: Quality
-1. Property tests: no person-specific field; every answer carries the disclaimer; validation (bounds, strict
+## Requirement 6: Measured model error (owner decision 2026-11-09)
+1. EVERY httk result SHALL state its measured error against Obach 2008 human data: the number of drugs, the
+   retrieval date, the geometric bias and its direction, the share within 2-fold and the geometric mean fold
+   error (httk half-life: n = 205, 2.1-fold too high, 30.7 % within 2-fold, GMFE 3.83).
+2. FOR half-life only, THE result SHALL carry a split-conformal 80 % interval from that calibration, labelled
+   "calibrated on Obach 2008, n = 205; covers the true value about 80 % of the time in held-out drugs".
+3. Cmax, AUC and concentration outputs SHALL get no calibrated interval and SHALL say they are not validated
+   against measured data (the compartmental model: beyond its one validation study).
+4. ADMET-AI half-life and VDss values of zero or below SHALL never be shown as numbers; they are marked "the model
+   returned an invalid value".
+5. EVERY result for the older virtual population SHALL carry: HTTK-Pop's age effect is nearly the same for every
+   drug; FDA labels report a median exposure increase of about 35 % in older adults (Janus research note,
+   `docs/research/httk-pop-older-adult-exposure.md`, linked).
+6. THE calibration constants SHALL be a versioned data file with provenance and no label text
+   (`data/simulation/calibration.json`).
+
+## Requirement 7: Quality
+1. Property tests: no person-specific field; every answer carries the disclaimer; the calibrated interval only
+   for half-life; the bias text on every httk result; invalid ADMET values never rendered; validation (bounds, strict
    types, unknown fields); cache key; queue limit and slots; rate limits; parity of the TypeScript port; expiry.
 2. Reviews: safety auditor (wording; security and abuse of the endpoint), pharmacologist (inputs, bounds,
    populations, wording), localization reviewer (new texts).

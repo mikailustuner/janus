@@ -22,3 +22,5 @@ src/simulation/parity.fixture.json
 src/simulation/explorer.json
 # scripts/record-simulation.mjs
 src/simulation/simulate.recorded.json
+# scripts/record-research.mjs
+src/research/*.recorded.json
