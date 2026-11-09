@@ -1,0 +1,58 @@
+{
+  "name": "janus-cascade-package",
+  "version": "1.0.0",
+  "created": "2026-11-09",
+  "resources": [
+    {
+      "path": "pipc.csv",
+      "rows": 65,
+      "licenses": [
+        "CC-BY-4.0"
+      ]
+    },
+    {
+      "path": "pipc_rules.csv",
+      "rows": 65,
+      "licenses": [
+        "Apache-2.0"
+      ]
+    },
+    {
+      "path": "cascade_classes.csv",
+      "rows": 203,
+      "licenses": [
+        "Apache-2.0"
+      ]
+    },
+    {
+      "path": "atc_code_exclusions.csv",
+      "rows": 12,
+      "licenses": [
+        "Apache-2.0"
+      ]
+    },
+    {
+      "path": "ingredient_synonyms.csv",
+      "rows": 26,
+      "licenses": [
+        "Apache-2.0"
+      ]
+    },
+    {
+      "path": "anion_acid_forms.csv",
+      "rows": 7,
+      "licenses": [
+        "Apache-2.0"
+      ]
+    },
+    {
+      "path": "dose_form_groups.csv",
+      "rows": 931,
+      "licenses": [
+        "Apache-2.0",
+        "CC0-1.0",
+        "etalab-2.0"
+      ]
+    }
+  ]
+}

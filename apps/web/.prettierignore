@@ -16,3 +16,4 @@ src/passport/fixtures/*.json
 test-results/
 playwright-report/
 public/vendor/
+src/open/package-summary.json

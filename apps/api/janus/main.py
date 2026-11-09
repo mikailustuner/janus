@@ -119,6 +119,7 @@ def create_app(
     from janus.memory.router import snapshot_router as memory_snapshot_router
     from janus.notes.router import donation as notes_donation_router
     from janus.notes.router import router as notes_router
+    from janus.open.router import router as open_router
     from janus.passport.router import router as passport_router
     from janus.privacy.router import router as privacy_router
     from janus.resolution.router import router as resolution_router
@@ -140,6 +141,7 @@ def create_app(
         light_router,
         seance_router,
         timemachine_router,
+        open_router,
         *extra_routers,
     ]
     for router in routers:

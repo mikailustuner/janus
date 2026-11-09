@@ -1,0 +1,29 @@
+{
+  "recorded": "2026-11-09",
+  "outcomes": {
+    "dataset": "janus-open-outcomes",
+    "version": "open-outcomes-1+c23ea16e12d9",
+    "snapshot_date": "2026-11-09",
+    "license": "CC BY 4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "attribution": "Janus open outcome dataset (released cells of donated reports and doctor-confirmed outcomes), CC BY 4.0.",
+    "dictionary_url": "https://github.com/mikailustuner/janus/blob/main/docs/open-data.md",
+    "release_rule": {
+      "k": 20,
+      "epsilon": "1",
+      "noise": "discrete Laplace, scale 1/epsilon, deterministic per cell version",
+      "sibling_rule": true,
+      "hidden_cells_listed": false
+    },
+    "layers": ["contributions", "outcomes"],
+    "withheld_layers": [],
+    "cells": [],
+    "notices": [
+      "counts_are_reports_not_people",
+      "not_verified",
+      "not_incidence",
+      "noise_added"
+    ]
+  },
+  "csv": "dataset_version,snapshot_date,layer,ingredients,event,direction,region,value\n"
+}

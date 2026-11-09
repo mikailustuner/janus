@@ -1,0 +1,2307 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Janus public read-only API",
+    "version": "1.0.0",
+    "description": "The GET routes of the Janus API that take no body and return no personal data: service status, the FAERS snapshot, the séance catalogue, the light-face overview, validation and export, the time machine, and the open outcome dataset. Medical routes are `no-store`; nothing but an access line (route, status, latency) is logged. Research prototype, not a medical device; not medical advice. Documentation: docs/open-api.md.",
+    "license": {
+      "name": "Apache-2.0",
+      "identifier": "Apache-2.0"
+    }
+  },
+  "servers": [
+    {
+      "url": "/api",
+      "description": "Same-origin API of a Janus deployment"
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Health",
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Health"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/privacy/storage": {
+      "get": {
+        "summary": "Storage",
+        "operationId": "storage_privacy_storage_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorageInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/memory/snapshot": {
+      "get": {
+        "summary": "Memory Snapshot",
+        "operationId": "memory_snapshot_memory_snapshot_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/janus__memory__schemas__SnapshotOut"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicError"
+                },
+                "examples": {
+                  "unavailable": {
+                    "value": {
+                      "error": "memory_unavailable"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/seance/catalogue": {
+      "get": {
+        "summary": "Seance Catalogue",
+        "operationId": "seance_catalogue_seance_catalogue_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/janus__seance__schemas__CatalogueOut"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicError"
+                },
+                "examples": {
+                  "unavailable": {
+                    "value": {
+                      "error": "seance_unavailable"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/light/overview": {
+      "get": {
+        "summary": "Light Overview",
+        "operationId": "light_overview_light_overview_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OverviewOut"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicError"
+                },
+                "examples": {
+                  "unavailable": {
+                    "value": {
+                      "error": "light_unavailable"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/light/validation": {
+      "get": {
+        "summary": "Light Validation",
+        "operationId": "light_validation_light_validation_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/light/export": {
+      "get": {
+        "summary": "Light Export",
+        "operationId": "light_export_light_export_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExportOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/timemachine/catalogue": {
+      "get": {
+        "summary": "Catalogue",
+        "operationId": "catalogue_timemachine_catalogue_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/janus__timemachine__schemas__CatalogueOut"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicError"
+                },
+                "examples": {
+                  "not_installed": {
+                    "value": {
+                      "error": "time_machine_not_installed"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/timemachine/substance/{substance_id}": {
+      "get": {
+        "summary": "Substance",
+        "operationId": "substance_timemachine_substance__substance_id__get",
+        "parameters": [
+          {
+            "name": "substance_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Substance Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/janus__timemachine__schemas__SubstanceOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicError"
+                },
+                "examples": {
+                  "unknown": {
+                    "value": {
+                      "error": "unknown_substance"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicError"
+                },
+                "examples": {
+                  "invalid": {
+                    "value": {
+                      "error": "invalid_request",
+                      "fields": [
+                        "substance_id"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/timemachine/cascade/{cascade_id}": {
+      "get": {
+        "summary": "Cascade",
+        "operationId": "cascade_timemachine_cascade__cascade_id__get",
+        "parameters": [
+          {
+            "name": "cascade_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Cascade Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CascadeOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicError"
+                },
+                "examples": {
+                  "unknown": {
+                    "value": {
+                      "error": "unknown_cascade"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/open/outcomes": {
+      "get": {
+        "summary": "Open Outcomes",
+        "description": "Released cells of donated reports and doctor-confirmed outcomes (k = 20, noise, sibling\nrule). An empty `cells` list means that no cell is released yet.",
+        "operationId": "open_outcomes_open_outcomes_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OpenOutcomesOut"
+                },
+                "examples": {
+                  "empty": {
+                    "summary": "No released cell yet (the honest empty state)",
+                    "value": {
+                      "dataset": "janus-open-outcomes",
+                      "version": "open-outcomes-1+1f3c0a9b2d4e",
+                      "snapshot_date": "2026-11-09",
+                      "license": "CC BY 4.0",
+                      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+                      "attribution": "Janus open outcome dataset (released cells of donated reports and doctor-confirmed outcomes), CC BY 4.0.",
+                      "dictionary_url": "https://github.com/mikailustuner/janus/blob/main/docs/open-data.md",
+                      "release_rule": {
+                        "k": 20,
+                        "epsilon": "1",
+                        "noise": "discrete Laplace, scale 1/epsilon, deterministic per cell version",
+                        "sibling_rule": true,
+                        "hidden_cells_listed": false
+                      },
+                      "layers": [
+                        "contributions",
+                        "outcomes"
+                      ],
+                      "cells": [],
+                      "notices": [
+                        "counts_are_reports_not_people",
+                        "not_verified",
+                        "not_incidence",
+                        "noise_added"
+                      ]
+                    }
+                  },
+                  "one_cell": {
+                    "summary": "A released cell (illustrative values, not real data)",
+                    "value": {
+                      "cells": [
+                        {
+                          "layer": "contributions",
+                          "ingredients": [
+                            "Q411347"
+                          ],
+                          "event": "peripheral_oedema",
+                          "direction": "adverse",
+                          "region": "EU",
+                          "value": 23
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicError"
+                },
+                "examples": {
+                  "unavailable": {
+                    "value": {
+                      "error": "open_data_unavailable"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/open/outcomes.csv": {
+      "get": {
+        "summary": "Open Outcomes Csv",
+        "description": "The released cells as CSV (header only when nothing is released yet).",
+        "operationId": "open_outcomes_csv_open_outcomes_csv_get",
+        "responses": {
+          "200": {
+            "description": "The same cells as CSV.",
+            "content": {
+              "text/csv": {}
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Assessment": {
+        "type": "string",
+        "enum": [
+          "no_reports",
+          "insufficient_data",
+          "not_disproportionate",
+          "weak",
+          "disproportionate"
+        ]
+      },
+      "CascadeOut": {
+        "properties": {
+          "meta": {
+            "$ref": "#/components/schemas/Meta"
+          },
+          "cascade": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Cascade"
+          },
+          "faers_quality": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Faers Quality"
+          },
+          "onset_subset_caveat": {
+            "type": "string",
+            "title": "Onset Subset Caveat"
+          },
+          "references": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "References"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "meta",
+          "cascade",
+          "faers_quality",
+          "onset_subset_caveat",
+          "references"
+        ],
+        "title": "CascadeOut"
+      },
+      "CaseOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "ingredient_name": {
+            "type": "string",
+            "title": "Ingredient Name"
+          },
+          "ingredient_key": {
+            "type": "string",
+            "title": "Ingredient Key"
+          },
+          "goal": {
+            "type": "string",
+            "title": "Goal"
+          },
+          "original_use": {
+            "type": "string",
+            "title": "Original Use"
+          },
+          "later_year": {
+            "type": "integer",
+            "title": "Later Year"
+          },
+          "indication_terms": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Indication Terms"
+          },
+          "evidence_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Evidence Ids"
+          },
+          "note": {
+            "type": "string",
+            "title": "Note"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "ingredient_name",
+          "ingredient_key",
+          "goal",
+          "original_use",
+          "later_year",
+          "indication_terms",
+          "evidence_ids",
+          "note"
+        ],
+        "title": "CaseOut"
+      },
+      "CaseResultOut": {
+        "properties": {
+          "case": {
+            "$ref": "#/components/schemas/CaseOut"
+          },
+          "primary": {
+            "$ref": "#/components/schemas/CaseRunOut"
+          },
+          "primary_indication": {
+            "$ref": "#/components/schemas/CaseRunOut"
+          },
+          "primary_strict": {
+            "$ref": "#/components/schemas/CaseRunOut"
+          },
+          "sensitivity": {
+            "$ref": "#/components/schemas/CaseRunOut"
+          },
+          "faers": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StatsOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "faers_inverse": {
+            "type": "boolean",
+            "title": "Faers Inverse"
+          },
+          "faers_includes_later_use": {
+            "type": "boolean",
+            "title": "Faers Includes Later Use"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "case",
+          "primary",
+          "primary_indication",
+          "primary_strict",
+          "sensitivity",
+          "faers",
+          "faers_inverse",
+          "faers_includes_later_use"
+        ],
+        "title": "CaseResultOut"
+      },
+      "CaseRunOut": {
+        "properties": {
+          "run": {
+            "type": "string",
+            "enum": [
+              "primary",
+              "primary_indication",
+              "primary_strict",
+              "sensitivity"
+            ],
+            "title": "Run"
+          },
+          "rank": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RankOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "population": {
+            "type": "integer",
+            "title": "Population"
+          },
+          "hit": {
+            "type": "boolean",
+            "title": "Hit"
+          },
+          "informative": {
+            "type": "boolean",
+            "title": "Informative"
+          },
+          "labels_used": {
+            "type": "integer",
+            "title": "Labels Used"
+          },
+          "labels_removed_indication": {
+            "type": "integer",
+            "title": "Labels Removed Indication"
+          },
+          "labels_removed_not_in_openfda": {
+            "type": "integer",
+            "title": "Labels Removed Not In Openfda"
+          },
+          "signal_types": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Signal Types"
+          },
+          "reason": {
+            "type": "string",
+            "enum": [
+              "hit",
+              "ranked_below_top",
+              "not_a_candidate",
+              "no_label_mapping",
+              "not_evaluable"
+            ],
+            "title": "Reason"
+          },
+          "chance_hit": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Chance Hit"
+          },
+          "percentile": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Percentile"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "run",
+          "rank",
+          "population",
+          "hit",
+          "informative",
+          "labels_used",
+          "labels_removed_indication",
+          "labels_removed_not_in_openfda",
+          "signal_types",
+          "reason",
+          "chance_hit",
+          "percentile"
+        ],
+        "title": "CaseRunOut"
+      },
+      "CellsOut": {
+        "properties": {
+          "a": {
+            "type": "integer",
+            "title": "A"
+          },
+          "b": {
+            "type": "integer",
+            "title": "B"
+          },
+          "c": {
+            "type": "integer",
+            "title": "C"
+          },
+          "d": {
+            "type": "integer",
+            "title": "D"
+          },
+          "n": {
+            "type": "integer",
+            "title": "N"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "a",
+          "b",
+          "c",
+          "d",
+          "n"
+        ],
+        "title": "CellsOut"
+      },
+      "ConditionName": {
+        "type": "string",
+        "enum": [
+          "wound",
+          "burn",
+          "ulcer",
+          "infection"
+        ]
+      },
+      "EstimatesOut": {
+        "properties": {
+          "prr": {
+            "type": "number",
+            "title": "Prr"
+          },
+          "ror": {
+            "type": "number",
+            "title": "Ror"
+          },
+          "ror_ci": {
+            "$ref": "#/components/schemas/janus__memory__schemas__IntervalOut"
+          },
+          "chi2": {
+            "type": "number",
+            "title": "Chi2"
+          },
+          "chi2_form": {
+            "type": "string",
+            "title": "Chi2 Form"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "prr",
+          "ror",
+          "ror_ci",
+          "chi2",
+          "chi2_form"
+        ],
+        "title": "EstimatesOut"
+      },
+      "ExportOut": {
+        "properties": {
+          "schema_version": {
+            "type": "string",
+            "const": "light-1",
+            "title": "Schema Version",
+            "default": "light-1"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "experimental",
+              "prototype"
+            ],
+            "title": "Status"
+          },
+          "review_status": {
+            "type": "string",
+            "const": "ai_reviewed_pending_expert",
+            "title": "Review Status",
+            "default": "ai_reviewed_pending_expert"
+          },
+          "snapshot": {
+            "$ref": "#/components/schemas/janus__light__schemas__SnapshotOut"
+          },
+          "codes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Codes"
+          },
+          "disclaimer": {
+            "type": "string",
+            "title": "Disclaimer"
+          },
+          "attribution": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Attribution"
+          },
+          "licence": {
+            "type": "string",
+            "title": "Licence"
+          },
+          "rows": {
+            "items": {
+              "$ref": "#/components/schemas/ExportRowOut"
+            },
+            "type": "array",
+            "title": "Rows"
+          },
+          "goals": {
+            "items": {
+              "$ref": "#/components/schemas/GoalSummaryOut"
+            },
+            "type": "array",
+            "title": "Goals"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "status",
+          "snapshot",
+          "codes",
+          "disclaimer",
+          "attribution",
+          "licence",
+          "rows",
+          "goals"
+        ],
+        "title": "ExportOut"
+      },
+      "ExportRowOut": {
+        "properties": {
+          "goal": {
+            "type": "string",
+            "title": "Goal"
+          },
+          "ingredient": {
+            "type": "string",
+            "title": "Ingredient"
+          },
+          "ingredient_name_en": {
+            "type": "string",
+            "title": "Ingredient Name En"
+          },
+          "rank_best": {
+            "type": "integer",
+            "title": "Rank Best"
+          },
+          "rank_worst": {
+            "type": "integer",
+            "title": "Rank Worst"
+          },
+          "population": {
+            "type": "integer",
+            "title": "Population"
+          },
+          "signal_types": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Signal Types"
+          },
+          "label_regions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Label Regions"
+          },
+          "labels_with_effect": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Labels With Effect"
+          },
+          "labels_total": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Labels Total"
+          },
+          "label_terms": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Label Terms"
+          },
+          "faers_reports": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Faers Reports"
+          },
+          "faers_ror": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Faers Ror"
+          },
+          "faers_ror_low": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Faers Ror Low"
+          },
+          "faers_ror_high": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Faers Ror High"
+          },
+          "patient_reported_released": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Patient Reported Released"
+          },
+          "source_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Source Ids"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "goal",
+          "ingredient",
+          "ingredient_name_en",
+          "rank_best",
+          "rank_worst",
+          "population",
+          "signal_types",
+          "label_regions",
+          "labels_with_effect",
+          "labels_total",
+          "label_terms",
+          "faers_reports",
+          "faers_ror",
+          "faers_ror_low",
+          "faers_ror_high",
+          "patient_reported_released",
+          "source_ids"
+        ],
+        "title": "ExportRowOut"
+      },
+      "GoalRef": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "title": "Key"
+          },
+          "labels": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Labels"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "key",
+          "labels"
+        ],
+        "title": "GoalRef"
+      },
+      "GoalSummaryOut": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "title": "Key"
+          },
+          "labels": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Labels"
+          },
+          "candidates": {
+            "type": "integer",
+            "title": "Candidates"
+          },
+          "label_terms": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Label Terms"
+          },
+          "faers_pts": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Faers Pts"
+          },
+          "benefit_keys": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Benefit Keys"
+          },
+          "inverse_tested": {
+            "type": "integer",
+            "title": "Inverse Tested"
+          },
+          "inverse_found": {
+            "type": "integer",
+            "title": "Inverse Found"
+          },
+          "inverse_expected_by_chance": {
+            "type": "number",
+            "title": "Inverse Expected By Chance"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "key",
+          "labels",
+          "candidates",
+          "label_terms",
+          "faers_pts",
+          "benefit_keys",
+          "inverse_tested",
+          "inverse_found",
+          "inverse_expected_by_chance"
+        ],
+        "title": "GoalSummaryOut"
+      },
+      "GoldOut": {
+        "properties": {
+          "gold_id": {
+            "type": "string",
+            "title": "Gold Id"
+          },
+          "scientific_name": {
+            "type": "string",
+            "title": "Scientific Name"
+          },
+          "citation": {
+            "type": "string",
+            "title": "Citation"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "gold_id",
+          "scientific_name",
+          "citation"
+        ],
+        "title": "GoldOut"
+      },
+      "Health": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "const": "ok",
+            "title": "Status"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "title": "Health"
+      },
+      "Meta": {
+        "properties": {
+          "built_at": {
+            "type": "string",
+            "title": "Built At"
+          },
+          "review_status": {
+            "type": "string",
+            "const": "AI-reviewed, pending expert review",
+            "title": "Review Status"
+          },
+          "disclaimer": {
+            "type": "string",
+            "title": "Disclaimer"
+          },
+          "seed": {
+            "type": "integer",
+            "title": "Seed"
+          },
+          "simulations": {
+            "type": "integer",
+            "title": "Simulations"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "built_at",
+          "review_status",
+          "disclaimer",
+          "seed",
+          "simulations"
+        ],
+        "title": "Meta"
+      },
+      "OpenCellOut": {
+        "properties": {
+          "layer": {
+            "type": "string",
+            "enum": [
+              "contributions",
+              "outcomes"
+            ],
+            "title": "Layer"
+          },
+          "ingredients": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Ingredients"
+          },
+          "event": {
+            "type": "string",
+            "title": "Event"
+          },
+          "direction": {
+            "type": "string",
+            "enum": [
+              "adverse",
+              "benefit"
+            ],
+            "title": "Direction"
+          },
+          "region": {
+            "type": "string",
+            "enum": [
+              "TR",
+              "EU",
+              "US"
+            ],
+            "title": "Region"
+          },
+          "value": {
+            "type": "integer",
+            "title": "Value"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "layer",
+          "ingredients",
+          "event",
+          "direction",
+          "region",
+          "value"
+        ],
+        "title": "OpenCellOut"
+      },
+      "OpenOutcomesOut": {
+        "properties": {
+          "dataset": {
+            "type": "string",
+            "const": "janus-open-outcomes",
+            "title": "Dataset"
+          },
+          "version": {
+            "type": "string",
+            "title": "Version"
+          },
+          "snapshot_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Snapshot Date"
+          },
+          "license": {
+            "type": "string",
+            "const": "CC BY 4.0",
+            "title": "License"
+          },
+          "license_url": {
+            "type": "string",
+            "title": "License Url"
+          },
+          "attribution": {
+            "type": "string",
+            "title": "Attribution"
+          },
+          "dictionary_url": {
+            "type": "string",
+            "title": "Dictionary Url"
+          },
+          "release_rule": {
+            "$ref": "#/components/schemas/ReleaseRuleOut"
+          },
+          "layers": {
+            "items": {
+              "type": "string",
+              "enum": [
+                "contributions",
+                "outcomes"
+              ]
+            },
+            "type": "array",
+            "title": "Layers"
+          },
+          "withheld_layers": {
+            "items": {
+              "type": "string",
+              "enum": [
+                "contributions",
+                "outcomes"
+              ]
+            },
+            "type": "array",
+            "title": "Withheld Layers"
+          },
+          "cells": {
+            "items": {
+              "$ref": "#/components/schemas/OpenCellOut"
+            },
+            "type": "array",
+            "title": "Cells"
+          },
+          "notices": {
+            "items": {
+              "type": "string",
+              "enum": [
+                "counts_are_reports_not_people",
+                "not_verified",
+                "not_incidence",
+                "noise_added"
+              ]
+            },
+            "type": "array",
+            "title": "Notices"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "dataset",
+          "version",
+          "snapshot_date",
+          "license",
+          "license_url",
+          "attribution",
+          "dictionary_url",
+          "release_rule",
+          "layers",
+          "withheld_layers",
+          "cells",
+          "notices"
+        ],
+        "title": "OpenOutcomesOut"
+      },
+      "OverviewOut": {
+        "properties": {
+          "schema_version": {
+            "type": "string",
+            "const": "light-1",
+            "title": "Schema Version",
+            "default": "light-1"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "experimental",
+              "prototype"
+            ],
+            "title": "Status"
+          },
+          "review_status": {
+            "type": "string",
+            "const": "ai_reviewed_pending_expert",
+            "title": "Review Status",
+            "default": "ai_reviewed_pending_expert"
+          },
+          "snapshot": {
+            "$ref": "#/components/schemas/janus__light__schemas__SnapshotOut"
+          },
+          "codes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Codes"
+          },
+          "disclaimer": {
+            "type": "string",
+            "title": "Disclaimer"
+          },
+          "attribution": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Attribution"
+          },
+          "goals": {
+            "items": {
+              "$ref": "#/components/schemas/GoalSummaryOut"
+            },
+            "type": "array",
+            "title": "Goals"
+          },
+          "top_k": {
+            "type": "integer",
+            "title": "Top K"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "status",
+          "snapshot",
+          "codes",
+          "disclaimer",
+          "attribution",
+          "goals",
+          "top_k"
+        ],
+        "title": "OverviewOut"
+      },
+      "PairSummaryOut": {
+        "properties": {
+          "substance": {
+            "type": "string",
+            "title": "Substance"
+          },
+          "condition": {
+            "$ref": "#/components/schemas/ConditionName"
+          },
+          "past_passages": {
+            "type": "integer",
+            "title": "Past Passages"
+          },
+          "science_studies": {
+            "type": "integer",
+            "title": "Science Studies"
+          },
+          "present_link": {
+            "type": "string",
+            "enum": [
+              "same",
+              "component",
+              "different",
+              "none"
+            ],
+            "title": "Present Link"
+          },
+          "present_ingredient_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Present Ingredient Key"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "substance",
+          "condition",
+          "past_passages",
+          "science_studies",
+          "present_link",
+          "present_ingredient_key"
+        ],
+        "title": "PairSummaryOut"
+      },
+      "RankOut": {
+        "properties": {
+          "best": {
+            "type": "integer",
+            "title": "Best"
+          },
+          "worst": {
+            "type": "integer",
+            "title": "Worst"
+          },
+          "population": {
+            "type": "integer",
+            "title": "Population"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "best",
+          "worst",
+          "population"
+        ],
+        "title": "RankOut"
+      },
+      "RegionName": {
+        "type": "string",
+        "enum": [
+          "ALL",
+          "TR",
+          "EU",
+          "US",
+          "OTHER",
+          "UNKNOWN"
+        ]
+      },
+      "ReleaseRuleOut": {
+        "properties": {
+          "k": {
+            "type": "integer",
+            "title": "K"
+          },
+          "epsilon": {
+            "type": "string",
+            "title": "Epsilon"
+          },
+          "noise": {
+            "type": "string",
+            "const": "discrete Laplace, scale 1/epsilon, deterministic per cell version",
+            "title": "Noise"
+          },
+          "sibling_rule": {
+            "type": "boolean",
+            "const": true,
+            "title": "Sibling Rule"
+          },
+          "hidden_cells_listed": {
+            "type": "boolean",
+            "const": false,
+            "title": "Hidden Cells Listed"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "k",
+          "epsilon",
+          "noise",
+          "sibling_rule",
+          "hidden_cells_listed"
+        ],
+        "title": "ReleaseRuleOut"
+      },
+      "ScopeName": {
+        "type": "string",
+        "enum": [
+          "suspect",
+          "any"
+        ]
+      },
+      "SensitivityOut": {
+        "properties": {
+          "cells": {
+            "$ref": "#/components/schemas/CellsOut"
+          },
+          "haldane_applied": {
+            "type": "boolean",
+            "title": "Haldane Applied"
+          },
+          "estimates": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/EstimatesOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "assessment": {
+            "$ref": "#/components/schemas/Assessment"
+          },
+          "differs": {
+            "type": "boolean",
+            "title": "Differs"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "cells",
+          "haldane_applied",
+          "estimates",
+          "assessment",
+          "differs"
+        ],
+        "title": "SensitivityOut"
+      },
+      "StatsOut": {
+        "properties": {
+          "region": {
+            "$ref": "#/components/schemas/RegionName"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/ScopeName"
+          },
+          "cells": {
+            "$ref": "#/components/schemas/CellsOut"
+          },
+          "haldane_applied": {
+            "type": "boolean",
+            "title": "Haldane Applied"
+          },
+          "estimates": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/EstimatesOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "evans_met": {
+            "type": "boolean",
+            "title": "Evans Met"
+          },
+          "ror_signal": {
+            "type": "boolean",
+            "title": "Ror Signal"
+          },
+          "assessment": {
+            "$ref": "#/components/schemas/Assessment"
+          },
+          "sensitivity": {
+            "$ref": "#/components/schemas/SensitivityOut"
+          },
+          "denominator_sensitive": {
+            "type": "boolean",
+            "title": "Denominator Sensitive"
+          },
+          "codes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Codes"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "region",
+          "scope",
+          "cells",
+          "haldane_applied",
+          "estimates",
+          "evans_met",
+          "ror_signal",
+          "assessment",
+          "sensitivity",
+          "denominator_sensitive",
+          "codes"
+        ],
+        "title": "StatsOut"
+      },
+      "StorageInfo": {
+        "properties": {
+          "donation_storage_region": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Donation Storage Region"
+          },
+          "in_eu": {
+            "type": "boolean",
+            "title": "In Eu"
+          },
+          "donations_enabled": {
+            "type": "boolean",
+            "title": "Donations Enabled"
+          }
+        },
+        "type": "object",
+        "required": [
+          "donation_storage_region",
+          "in_eu",
+          "donations_enabled"
+        ],
+        "title": "StorageInfo"
+      },
+      "SummaryOut": {
+        "properties": {
+          "hits": {
+            "type": "integer",
+            "title": "Hits"
+          },
+          "informative_hits": {
+            "type": "integer",
+            "title": "Informative Hits"
+          },
+          "misses": {
+            "type": "integer",
+            "title": "Misses"
+          },
+          "not_evaluable": {
+            "type": "integer",
+            "title": "Not Evaluable"
+          },
+          "expected_hits_by_chance": {
+            "type": "number",
+            "title": "Expected Hits By Chance"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "hits",
+          "informative_hits",
+          "misses",
+          "not_evaluable",
+          "expected_hits_by_chance"
+        ],
+        "title": "SummaryOut"
+      },
+      "TotalsOut": {
+        "properties": {
+          "region": {
+            "$ref": "#/components/schemas/RegionName"
+          },
+          "reports_mapped": {
+            "type": "integer",
+            "title": "Reports Mapped"
+          },
+          "reports_all": {
+            "type": "integer",
+            "title": "Reports All"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "region",
+          "reports_mapped",
+          "reports_all"
+        ],
+        "title": "TotalsOut"
+      },
+      "ValidationOut": {
+        "properties": {
+          "schema_version": {
+            "type": "string",
+            "const": "light-1",
+            "title": "Schema Version",
+            "default": "light-1"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "experimental",
+              "prototype"
+            ],
+            "title": "Status"
+          },
+          "review_status": {
+            "type": "string",
+            "const": "ai_reviewed_pending_expert",
+            "title": "Review Status",
+            "default": "ai_reviewed_pending_expert"
+          },
+          "snapshot": {
+            "$ref": "#/components/schemas/janus__light__schemas__SnapshotOut"
+          },
+          "codes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Codes"
+          },
+          "disclaimer": {
+            "type": "string",
+            "title": "Disclaimer"
+          },
+          "attribution": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Attribution"
+          },
+          "top_k": {
+            "type": "integer",
+            "title": "Top K"
+          },
+          "cases": {
+            "items": {
+              "$ref": "#/components/schemas/CaseResultOut"
+            },
+            "type": "array",
+            "title": "Cases"
+          },
+          "primary": {
+            "$ref": "#/components/schemas/SummaryOut"
+          },
+          "sensitivity": {
+            "$ref": "#/components/schemas/SummaryOut"
+          },
+          "goals": {
+            "items": {
+              "$ref": "#/components/schemas/GoalRef"
+            },
+            "type": "array",
+            "title": "Goals"
+          },
+          "ingredients": {
+            "additionalProperties": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            "type": "object",
+            "title": "Ingredients"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/janus__light__schemas__SourceOut"
+            },
+            "type": "array",
+            "title": "Sources"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "status",
+          "snapshot",
+          "codes",
+          "disclaimer",
+          "attribution",
+          "top_k",
+          "cases",
+          "primary",
+          "sensitivity",
+          "goals",
+          "ingredients",
+          "sources"
+        ],
+        "title": "ValidationOut"
+      },
+      "janus__light__schemas__SnapshotOut": {
+        "properties": {
+          "build_id": {
+            "type": "string",
+            "title": "Build Id"
+          },
+          "onsides_release": {
+            "type": "string",
+            "title": "Onsides Release"
+          },
+          "onsides_date": {
+            "type": "string",
+            "title": "Onsides Date"
+          },
+          "faers_snapshot_date": {
+            "type": "string",
+            "title": "Faers Snapshot Date"
+          },
+          "faers_window": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Faers Window"
+          },
+          "openfda_date": {
+            "type": "string",
+            "title": "Openfda Date"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "build_id",
+          "onsides_release",
+          "onsides_date",
+          "faers_snapshot_date",
+          "faers_window",
+          "openfda_date"
+        ],
+        "title": "SnapshotOut"
+      },
+      "janus__light__schemas__SourceOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "doi": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Doi"
+          },
+          "url": {
+            "type": "string",
+            "title": "Url"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "snapshot_date": {
+            "type": "string",
+            "title": "Snapshot Date"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "doi",
+          "url",
+          "status",
+          "snapshot_date"
+        ],
+        "title": "SourceOut"
+      },
+      "janus__memory__schemas__IntervalOut": {
+        "properties": {
+          "low": {
+            "type": "number",
+            "title": "Low"
+          },
+          "high": {
+            "type": "number",
+            "title": "High"
+          },
+          "level": {
+            "type": "number",
+            "title": "Level"
+          },
+          "method": {
+            "type": "string",
+            "title": "Method"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "low",
+          "high",
+          "level",
+          "method"
+        ],
+        "title": "IntervalOut"
+      },
+      "janus__memory__schemas__SnapshotOut": {
+        "properties": {
+          "build_id": {
+            "type": "string",
+            "title": "Build Id"
+          },
+          "snapshot_date": {
+            "type": "string",
+            "title": "Snapshot Date"
+          },
+          "window": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Window"
+          },
+          "faers_run_id": {
+            "type": "string",
+            "title": "Faers Run Id"
+          },
+          "resolution_dataset_version": {
+            "type": "string",
+            "title": "Resolution Dataset Version"
+          },
+          "stale": {
+            "type": "boolean",
+            "title": "Stale"
+          },
+          "age_days": {
+            "type": "integer",
+            "title": "Age Days"
+          },
+          "totals": {
+            "items": {
+              "$ref": "#/components/schemas/TotalsOut"
+            },
+            "type": "array",
+            "title": "Totals"
+          },
+          "unknown_share": {
+            "type": "number",
+            "title": "Unknown Share"
+          },
+          "layers": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Layers"
+          },
+          "notices": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Notices"
+          },
+          "meddra_notice": {
+            "type": "string",
+            "title": "Meddra Notice"
+          },
+          "attribution": {
+            "type": "string",
+            "title": "Attribution"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "build_id",
+          "snapshot_date",
+          "window",
+          "faers_run_id",
+          "resolution_dataset_version",
+          "stale",
+          "age_days",
+          "totals",
+          "unknown_share",
+          "layers",
+          "notices",
+          "meddra_notice",
+          "attribution"
+        ],
+        "title": "SnapshotOut"
+      },
+      "janus__seance__schemas__CatalogueOut": {
+        "properties": {
+          "schema_version": {
+            "type": "string",
+            "const": "seance-1",
+            "title": "Schema Version",
+            "default": "seance-1"
+          },
+          "substances": {
+            "items": {
+              "$ref": "#/components/schemas/janus__seance__schemas__SubstanceOut"
+            },
+            "type": "array",
+            "title": "Substances"
+          },
+          "pairs": {
+            "items": {
+              "$ref": "#/components/schemas/PairSummaryOut"
+            },
+            "type": "array",
+            "title": "Pairs"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/janus__seance__schemas__SourceOut"
+            },
+            "type": "array",
+            "title": "Sources"
+          },
+          "disclaimer": {
+            "type": "string",
+            "title": "Disclaimer",
+            "default": "Janus provides information, not medical advice. Research prototype — not a medical device."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "substances",
+          "pairs",
+          "sources"
+        ],
+        "title": "CatalogueOut"
+      },
+      "janus__seance__schemas__SourceOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "citation": {
+            "type": "string",
+            "title": "Citation"
+          },
+          "license": {
+            "type": "string",
+            "title": "License"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "citation",
+          "license"
+        ],
+        "title": "SourceOut"
+      },
+      "janus__seance__schemas__SubstanceOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name_en": {
+            "type": "string",
+            "title": "Name En"
+          },
+          "transliteration": {
+            "type": "string",
+            "title": "Transliteration"
+          },
+          "heading_ar": {
+            "type": "string",
+            "title": "Heading Ar"
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind"
+          },
+          "identification": {
+            "type": "string",
+            "title": "Identification"
+          },
+          "identification_status": {
+            "type": "string",
+            "enum": [
+              "matches_gold",
+              "uncertain",
+              "not_in_gold"
+            ],
+            "title": "Identification Status"
+          },
+          "identification_label": {
+            "type": "string",
+            "enum": [
+              "identified",
+              "uncertain"
+            ],
+            "title": "Identification Label"
+          },
+          "gold": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GoldOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "hamdard_ref": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hamdard Ref"
+          },
+          "hazard": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "toxic",
+                  "caustic"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hazard"
+          },
+          "note": {
+            "type": "string",
+            "title": "Note"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "name_en",
+          "transliteration",
+          "heading_ar",
+          "kind",
+          "identification",
+          "identification_status",
+          "identification_label",
+          "gold",
+          "hamdard_ref",
+          "hazard",
+          "note"
+        ],
+        "title": "SubstanceOut"
+      },
+      "janus__timemachine__schemas__CatalogueOut": {
+        "properties": {
+          "meta": {
+            "$ref": "#/components/schemas/Meta"
+          },
+          "substance_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Substance Ids"
+          },
+          "cascade_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Cascade Ids"
+          },
+          "validation": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Validation"
+          },
+          "sources": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Sources"
+          },
+          "onset_subset_caveat": {
+            "type": "string",
+            "title": "Onset Subset Caveat"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "meta",
+          "substance_ids",
+          "cascade_ids",
+          "validation",
+          "sources",
+          "onset_subset_caveat"
+        ],
+        "title": "CatalogueOut"
+      },
+      "janus__timemachine__schemas__SubstanceOut": {
+        "properties": {
+          "meta": {
+            "$ref": "#/components/schemas/Meta"
+          },
+          "substance": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Substance"
+          },
+          "exposure": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Exposure"
+          },
+          "references": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "References"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "meta",
+          "substance",
+          "exposure",
+          "references"
+        ],
+        "title": "SubstanceOut"
+      },
+      "PublicError": {
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "A fixed code; never a sentence."
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

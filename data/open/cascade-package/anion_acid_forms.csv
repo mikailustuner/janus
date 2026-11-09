@@ -1,0 +1,8 @@
+lang,anion,acid,note
+any,mycophenolate,mycophenolic acid,"WHOCC https://atcddd.fhi.no/atc_ddd_index/?code=L04AA&showdescription=no checked 2026-11-08 (index updated 2026-01-20): L04AA06 mycophenolic acid is the only code; mofetil forms are DDD notes under it. Demand: FAERS 22,821 (mofetil, sodium), BDPM 21, openFDA 135"
+es,micofenolato,mycophenolic acid,Spanish spelling of the row above; same code L04AA06 (WHOCC https://atcddd.fhi.no/atc_ddd_index/?code=L04AA&showdescription=no checked 2026-11-08). Needs the word mofetilo. Demand: Nomenclátor 49
+any,folate,folic acid,WHOCC https://atcddd.fhi.no/atc_ddd_index/?code=B03BB&showdescription=no checked 2026-11-08: B03BB01 folic acid is the only single-substance code; salts have none. Demand: FAERS 664 (folate sodium). Levomefolate is a different substance and is not touched
+any,valproate,valproic acid,"WHOCC https://atcddd.fhi.no/atc_ddd_index/?code=N03AG&showdescription=no checked 2026-11-08: N03AG01 valproic acid; valpromide N03AG02 is a different substance and is not touched. Demand: FAERS 49, BDPM 23"
+es,valproato,valproic acid,Spanish spelling of the row above; same code N03AG01 (WHOCC https://atcddd.fhi.no/atc_ddd_index/?code=N03AG&showdescription=no checked 2026-11-08). Demand: Nomenclátor 17
+any,alendronate,alendronic acid,WHOCC https://atcddd.fhi.no/atc_ddd_index/?code=M05BA&showdescription=no checked 2026-11-08: M05BA04 alendronic acid; salts have no code. Demand: FAERS 24 (calcium and other salts)
+es,risedronato,risedronic acid,WHOCC https://atcddd.fhi.no/atc_ddd_index/?code=M05BA&showdescription=no checked 2026-11-08: M05BA07 risedronic acid; salts have no code. Demand: Nomenclátor 51 (the French spelling already maps through the item alias once monosodique is a salt word)

@@ -1,0 +1,66 @@
+position,index_class,marker_class,unmatchable_role,unmatchable_reason,supporting,note
+1,ace_inhibitor,cough_remedy,,,,ACE inhibitor cough treated with a cough or cold remedy.
+2,antihypertensive,antiemetic,,,,"Index 'Antihypertensive' is a class by indication (C02, C03, C07, C08, C09); no eye-drop extension (DP8)."
+3,beta_blocker_index_eye,antidepressant,,,,Index includes ophthalmic beta-blockers as a form extension (Vander Zanden 2001).
+4,beta_blocker_index,pde5_inhibitor_alprostadil,,,,"Index without the eye-drop extension (owner decision 2026-11-07: the only source found is a letter, not a reviewed article)."
+5,ccb,diuretic,,,paper:thinkcascades:drugs_aging_2022,Confirmed in ThinkCascades (same cascade).
+6,ccb,laxative,,,,
+7,diuretic,antigout,,,,Potassium-sparing diuretics kept in the index (judgement call).
+8,diuretic,oab_medication,,,paper:thinkcascades:drugs_aging_2022,Confirmed in ThinkCascades (same cascade).
+9,statin,pain_reliever,,,,Named in the BMJ 2026 abstract (incidence).
+10,statin,mineral_supplement,,,,"'Mineral supplement' read as calcium, magnesium, zinc, selenium (judgement call)."
+11,statin,quinine,,,,
+12,statin,sleep_agent,,,,
+13,digoxin,antiemetic,,,,
+14,midodrine,antihypertensive,,,,
+15,anticonvulsant,topical_corticosteroid,,,,
+16,anticonvulsant,antiemetic,,,,
+17,antipsychotic,beta_blocker_marker,,,,Marker is systemic beta-blockers only.
+18,antipsychotic,antiparkinsonian,,,paper:thinkcascades:drugs_aging_2022,Confirmed in ThinkCascades (same cascade).
+19,antipsychotic,antimuscarinic_antiparkinsonian,,,,
+20,antipsychotic,sedative,,,,
+21,antipsychotic,antiarrhythmic,,,,
+22,antipsychotic,antihyperglycemic,,,,
+23,benzodiazepine,cholinesterase_inhibitor,,,paper:thinkcascades:drugs_aging_2022,"Confirmed in ThinkCascades (same cascade; ThinkCascades also accepts memantine as marker, PIPC does not)."
+24,cholinesterase_inhibitor,oab_medication,,,,
+25,cholinesterase_inhibitor,sleep_agent,,,,Named in the BMJ 2026 abstract (incidence).
+26,cholinesterase_inhibitor,antiemetic,,,,Named in the BMJ 2026 abstract (adjusted sequence ratio).
+27,cholinesterase_inhibitor,,marker,no_atc_code,,Bismuth subsalicylate has no ingredient-level ATC code: the bismuth group (A07BB) has no substance codes on the WHOCC page (checked 2026-11-07) and no Wikidata item in the local extract carries one. TİTCK publishes 4 products with the group code only. Not matchable until a code exists. Owner decision 2026-11-07: no proxy; the role stays not matchable and is shown as 'cannot be checked'.
+28,cholinesterase_inhibitor,antidiarrheal,,,,
+29,cholinesterase_inhibitor,antihistamine,,,,
+30,dopaminergic_antiparkinsonian,antipsychotic,,,,
+31,gabapentinoid,diuretic,,,,Gabapentinoid class carries both current (N02BF) and old TİTCK codes.
+32,ssri_snri,oab_medication,,,,Named in the BMJ 2026 abstract only for a sex difference; no priority data (DP6).
+33,tricyclic_antidepressant,cholinesterase_inhibitor,,,,
+34,tricyclic_antidepressant,laxative,,,,
+35,tricyclic_antidepressant,oab_medication,,,,
+36,flunarizine,antidepressant,,,,
+37,lithium,antiparkinsonian,,,,
+38,venlafaxine,antihypertensive,,,,
+39,venlafaxine,benzodiazepine,,,,
+40,dpp4_inhibitor,nsaid_marker,,,,Marker includes topical NSAIDs (joint pain).
+41,sglt2_inhibitor,antifungal_genital,,,,
+42,metformin,antidiarrheal,,,,
+43,pioglitazone_rosiglitazone,diuretic,,,,
+44,rosiglitazone,diuretic,,,,
+45,anticholinergic_antiemetic,alpha1_blocker,,,,
+46,antidopaminergic_antiemetic,antiparkinsonian,,,,
+47,laxative,antidiarrheal,,,,Named in the BMJ 2026 abstract (adjusted sequence ratio).
+48,ppi,vitamin_supplement,,,,'Vitamin supplement' read as vitamin D; calcium left out (owner question).
+49,ppi,ppi_deficiency_supplement,,,,"Drug B is published as 'Vitamin or Mineral Deficiency' (same as the adverse event); kept as published. Owner decision 2026-11-07: vitamin B12, magnesium and oral iron supplements only."
+50,bisphosphonate,gastroprotective,,,,Infusion-only bisphosphonates excluded from the index.
+51,nsaid,gastroprotective,,,,No topical or eye-drop NSAID extension (DP8).
+52,nsaid,antiemetic,,,,
+53,nsaid,antihypertensive,,,paper:thinkcascades:drugs_aging_2022,Confirmed in ThinkCascades (same cascade).
+54,nsaid,heart_failure_agent,,,,"Marker limited to loop diuretics, MRAs, digoxin, ivabradine, vericiguat (judgement call)."
+55,opioid,antidepressant,,,,
+56,alpha1_blocker,vestibular_suppressant,,,paper:thinkcascades:drugs_aging_2022,Confirmed in ThinkCascades (same cascade).
+57,urinary_anticholinergic,,marker,no_atc_code,,"Saliva substitutes have no ingredient-level ATC code: they are mixtures (the only code is the catch-all combination code A01AD11) or are sold as devices. Saliva stimulants (pilocarpine N07AX01, cevimeline N07AX03) are a different thing and are not used as a proxy (owner question). Owner decision 2026-11-07: no proxy; the role stays not matchable and is shown as 'cannot be checked'."
+58,carbapenem,anticonvulsant,,,,"Imipenem matches through the reviewed component-code pair (key J2, code J01DH51) of drug-resolution data/component_codes.csv (owner decision 2026-11-08); cilastatin gets no carbapenem code."
+59,corticosteroid_systemic,sleep_agent,,,,"Systemic corticosteroids only; no inhaled, nasal, skin or eye extension (DP8)."
+60,corticosteroid_systemic,antipsychotic,,,,Named in the BMJ 2026 abstract (adjusted sequence ratio).
+61,corticosteroid_systemic,antihypertensive,,,,
+62,acitretin,antifungal_genital,,,,
+63,erythromycin,antiarrhythmic,,,,Systemic erythromycin only; no skin or eye extension (DP8).
+64,fludrocortisone,antihypertensive,,,,
+65,iron_oral,laxative,,,,Oral iron only. Named in the BMJ 2026 abstract (incidence).

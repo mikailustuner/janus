@@ -1,0 +1,440 @@
+{
+  "name": "janus-cascade-package",
+  "title": "Janus prescribing-cascade data package",
+  "version": "1.0.0",
+  "created": "2026-11-09",
+  "homepage": "https://github.com/mikailustuner/janus",
+  "description": "The PIPC prescribing-cascade rule base with Janus's mappings to ATC classes, the ingredient name rules, the ATC exclusions and the dose-form groups that Janus uses. Each resource carries its own licence. Not medical advice.",
+  "licenses": [
+    {
+      "name": "CC-BY-4.0",
+      "path": "https://creativecommons.org/licenses/by/4.0/",
+      "title": "Creative Commons Attribution 4.0"
+    },
+    {
+      "name": "Apache-2.0",
+      "path": "https://www.apache.org/licenses/LICENSE-2.0",
+      "title": "Apache License 2.0 (Janus curated mappings)"
+    },
+    {
+      "name": "CC0-1.0",
+      "path": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "title": "CC0 1.0 (openFDA dose-form names)"
+    },
+    {
+      "name": "etalab-2.0",
+      "path": "https://www.etalab.gouv.fr/licence-ouverte-open-licence/",
+      "title": "Licence Ouverte 2.0 (BDPM dose-form names, shown as published)"
+    }
+  ],
+  "contributors": [
+    {
+      "title": "Janus contributors",
+      "role": "author"
+    }
+  ],
+  "x_janus": {
+    "synonym_rows_left_out_for_titck": 108,
+    "titck_content": "no TİTCK list row, product name or barcode; some notes state codes or row counts observed in the TİTCK list"
+  },
+  "resources": [
+    {
+      "name": "pipc",
+      "path": "pipc.csv",
+      "title": "PIPC list, Table 1 (65 prescribing cascades)",
+      "description": "Cell text as published; only whitespace changed.",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "hash": "sha256:2030ae28388507ac361656586e12f241b06da31c701ba6839fc127be002f7a64",
+      "rows": 65,
+      "licenses": [
+        {
+          "name": "CC-BY-4.0",
+          "path": "https://creativecommons.org/licenses/by/4.0/",
+          "title": "Creative Commons Attribution 4.0"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Rochon PA et al. Potentially inappropriate prescribing cascades (PIPC) list. Eur Geriatr Med 2025;16(5):1573-1584. doi:10.1007/s41999-025-01215-x, Table 1",
+          "path": "https://doi.org/10.1007/s41999-025-01215-x"
+        }
+      ],
+      "schema": {
+        "fields": [
+          {
+            "name": "position",
+            "type": "string"
+          },
+          {
+            "name": "system",
+            "type": "string"
+          },
+          {
+            "name": "kind",
+            "type": "string"
+          },
+          {
+            "name": "drug_a",
+            "type": "string"
+          },
+          {
+            "name": "adverse_event",
+            "type": "string"
+          },
+          {
+            "name": "drug_b",
+            "type": "string"
+          },
+          {
+            "name": "locator",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "pipc_rules",
+      "path": "pipc_rules.csv",
+      "title": "Janus mapping of each PIPC row to its index and marker drug classes",
+      "description": "One row per PIPC row 1-65: index class, marker class, or why the row cannot be matched.",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "hash": "sha256:f034081215b4f6a3d12e303fd4c7a820cfb79c141e8a34a37de85c0ddc2fa8e7",
+      "rows": 65,
+      "licenses": [
+        {
+          "name": "Apache-2.0",
+          "path": "https://www.apache.org/licenses/LICENSE-2.0",
+          "title": "Apache License 2.0 (Janus curated mappings)"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Janus (curated, reviewed by the project owner with AI assistance)",
+          "path": "https://github.com/mikailustuner/janus"
+        },
+        {
+          "title": "Rochon PA et al. Potentially inappropriate prescribing cascades (PIPC) list. Eur Geriatr Med 2025;16(5):1573-1584. doi:10.1007/s41999-025-01215-x, Table 1",
+          "path": "https://doi.org/10.1007/s41999-025-01215-x"
+        }
+      ],
+      "schema": {
+        "fields": [
+          {
+            "name": "position",
+            "type": "string"
+          },
+          {
+            "name": "index_class",
+            "type": "string"
+          },
+          {
+            "name": "marker_class",
+            "type": "string"
+          },
+          {
+            "name": "unmatchable_role",
+            "type": "string"
+          },
+          {
+            "name": "unmatchable_reason",
+            "type": "string"
+          },
+          {
+            "name": "supporting",
+            "type": "string"
+          },
+          {
+            "name": "note",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "cascade_classes",
+      "path": "cascade_classes.csv",
+      "title": "Drug classes as ATC prefix patterns",
+      "description": "class_id -> ATC pattern (include/exclude), scope and basis of each row.",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "hash": "sha256:dbccf32b4779245c7c9c30120b732893fa52cb1cafb2ea275e3fae8b85dfbf4e",
+      "rows": 203,
+      "licenses": [
+        {
+          "name": "Apache-2.0",
+          "path": "https://www.apache.org/licenses/LICENSE-2.0",
+          "title": "Apache License 2.0 (Janus curated mappings)"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Janus (curated, reviewed by the project owner with AI assistance)",
+          "path": "https://github.com/mikailustuner/janus"
+        },
+        {
+          "title": "ATC codes checked by hand on the WHOCC ATC/DDD index pages named in the rows; codes only, no WHO index text is copied",
+          "path": "https://atcddd.fhi.no/atc_ddd_index/"
+        }
+      ],
+      "schema": {
+        "fields": [
+          {
+            "name": "class_id",
+            "type": "string"
+          },
+          {
+            "name": "pattern",
+            "type": "string"
+          },
+          {
+            "name": "match",
+            "type": "string"
+          },
+          {
+            "name": "scope",
+            "type": "string"
+          },
+          {
+            "name": "basis",
+            "type": "string"
+          },
+          {
+            "name": "evidence_id",
+            "type": "string"
+          },
+          {
+            "name": "note",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "atc_code_exclusions",
+      "path": "atc_code_exclusions.csv",
+      "title": "ATC codes dropped from an ingredient key",
+      "description": "Reviewed (key, code, source) triples that a source gives wrongly (wrong substance, old code, not a medicine).",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "hash": "sha256:01b9a5f58915b11c9e229d752505586bf6b7d4efdce685cf1de2bb4c4bc02b5f",
+      "rows": 12,
+      "licenses": [
+        {
+          "name": "Apache-2.0",
+          "path": "https://www.apache.org/licenses/LICENSE-2.0",
+          "title": "Apache License 2.0 (Janus curated mappings)"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Janus (curated, reviewed by the project owner with AI assistance)",
+          "path": "https://github.com/mikailustuner/janus"
+        },
+        {
+          "title": "ATC codes checked by hand on the WHOCC ATC/DDD index pages named in the rows; codes only, no WHO index text is copied",
+          "path": "https://atcddd.fhi.no/atc_ddd_index/"
+        }
+      ],
+      "schema": {
+        "fields": [
+          {
+            "name": "key",
+            "type": "string"
+          },
+          {
+            "name": "code",
+            "type": "string"
+          },
+          {
+            "name": "source",
+            "type": "string"
+          },
+          {
+            "name": "reason",
+            "type": "string"
+          },
+          {
+            "name": "evidence",
+            "type": "string"
+          },
+          {
+            "name": "whocc_url",
+            "type": "string"
+          },
+          {
+            "name": "whocc_date",
+            "type": "string"
+          },
+          {
+            "name": "note",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ingredient_synonyms",
+      "path": "ingredient_synonyms.csv",
+      "title": "Ingredient name -> Wikidata item (name rules)",
+      "description": "Published ingredient names the matching ladder cannot map, with the evidence for each. Rows citing or matching the TİTCK list are left out of this package.",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "hash": "sha256:a0addfa2be58c700ff5f17edf50aad09f0e891f465923b24d0a7404f593c69e2",
+      "rows": 26,
+      "licenses": [
+        {
+          "name": "Apache-2.0",
+          "path": "https://www.apache.org/licenses/LICENSE-2.0",
+          "title": "Apache License 2.0 (Janus curated mappings)"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Janus (curated, reviewed by the project owner with AI assistance)",
+          "path": "https://github.com/mikailustuner/janus"
+        }
+      ],
+      "schema": {
+        "fields": [
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "qid",
+            "type": "string"
+          },
+          {
+            "name": "note",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "anion_acid_forms",
+      "path": "anion_acid_forms.csv",
+      "title": "Anion -> acid ingredient forms (name rules)",
+      "description": "Reviewed rows of the anion_acid step of the matching ladder.",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "hash": "sha256:b4ac5e1adaf15bcde1aabf9b8fd11e6ea5602bff973664b0c9683137f458c0e6",
+      "rows": 7,
+      "licenses": [
+        {
+          "name": "Apache-2.0",
+          "path": "https://www.apache.org/licenses/LICENSE-2.0",
+          "title": "Apache License 2.0 (Janus curated mappings)"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Janus (curated, reviewed by the project owner with AI assistance)",
+          "path": "https://github.com/mikailustuner/janus"
+        },
+        {
+          "title": "ATC codes checked by hand on the WHOCC ATC/DDD index pages named in the rows; codes only, no WHO index text is copied",
+          "path": "https://atcddd.fhi.no/atc_ddd_index/"
+        }
+      ],
+      "schema": {
+        "fields": [
+          {
+            "name": "lang",
+            "type": "string"
+          },
+          {
+            "name": "anion",
+            "type": "string"
+          },
+          {
+            "name": "acid",
+            "type": "string"
+          },
+          {
+            "name": "note",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "dose_form_groups",
+      "path": "dose_form_groups.csv",
+      "title": "Published dose form -> Janus dose-form group",
+      "description": "openFDA SPL dosage form names and BDPM pharmaceutical forms as published, each mapped to one of fourteen Janus groups.",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "hash": "sha256:6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
+      "rows": 931,
+      "licenses": [
+        {
+          "name": "Apache-2.0",
+          "path": "https://www.apache.org/licenses/LICENSE-2.0",
+          "title": "Apache License 2.0 (Janus curated mappings)"
+        },
+        {
+          "name": "CC0-1.0",
+          "path": "https://creativecommons.org/publicdomain/zero/1.0/",
+          "title": "CC0 1.0 (openFDA dose-form names)"
+        },
+        {
+          "name": "etalab-2.0",
+          "path": "https://www.etalab.gouv.fr/licence-ouverte-open-licence/",
+          "title": "Licence Ouverte 2.0 (BDPM dose-form names, shown as published)"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Janus (curated, reviewed by the project owner with AI assistance)",
+          "path": "https://github.com/mikailustuner/janus"
+        },
+        {
+          "title": "openFDA NDC directory (CC0 1.0)",
+          "path": "https://open.fda.gov/"
+        },
+        {
+          "title": "Base de données publique des médicaments (BDPM); the BDPM does not endorse Janus",
+          "path": "https://base-donnees-publique.medicaments.gouv.fr/"
+        }
+      ],
+      "schema": {
+        "fields": [
+          {
+            "name": "source_id",
+            "type": "string"
+          },
+          {
+            "name": "published_form",
+            "type": "string"
+          },
+          {
+            "name": "route",
+            "type": "string"
+          },
+          {
+            "name": "group",
+            "type": "string"
+          },
+          {
+            "name": "route_from_form",
+            "type": "string"
+          },
+          {
+            "name": "note",
+            "type": "string"
+          }
+        ]
+      }
+    }
+  ]
+}
