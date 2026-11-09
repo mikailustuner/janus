@@ -1410,5 +1410,86 @@
       "body": "Alle 65 Muster von Verschreibungskaskaden der PIPC-Liste als Karte und als Tabelle."
     },
     "footer": "Kaskadenkarte"
+  },
+  "Report": {
+    "title": "Übersicht",
+    "open": "Zur Übersicht",
+    "openHint": "Die wichtigsten Zahlen dieser Prüfung auf einen Blick",
+    "checkedIn": "Geprüft im {month}",
+    "summaryLine": "{medicines, plural, one {# Medikament geprüft} other {# Medikamente geprüft}} · {patterns, plural, =0 {kein Muster aus der Regelliste} one {# Muster zum Besprechen} other {# Muster zum Besprechen}}",
+    "patterns": {
+      "title": {
+        "twoFaces": "Geister zum Besprechen",
+        "glass": "Muster zum Besprechen"
+      },
+      "sentence": "{count, plural, one {# Muster einer Verschreibungskaskade passt} other {# Muster einer Verschreibungskaskade passen}}. Reihenfolge passt zum Muster: {fits}. Reihenfolge passt, später als das übliche Zeitfenster: {late}. Reihenfolge nicht bestätigt: {unconfirmed}.",
+      "unconfirmedForm": "{count, plural, one {Bei # davon muss die Darreichungsform noch bestätigt werden.} other {Bei # davon muss die Darreichungsform noch bestätigt werden.}}"
+    },
+    "medicines": {
+      "title": "Medikamente",
+      "full": "Vollständig geprüft",
+      "partly": "Nicht vollständig geprüft",
+      "sentence": "{total, plural, one {# Medikament in der Liste} other {# Medikamente in der Liste}}: {full} vollständig geprüft, {partly} mit einem Wirkstoff, der nicht geprüft werden kann."
+    },
+    "rules": {
+      "title": "Geprüfte Muster",
+      "of": "von {total}"
+    },
+    "abrupt": {
+      "title": "Nicht plötzlich absetzen",
+      "sentence": "{count, plural, one {Bei # Medikament steht dieser Hinweis:} other {Bei # Medikamenten steht dieser Hinweis:}}"
+    },
+    "regions": {
+      "title": "Regionen",
+      "name": "Mit Namen hinzugefügt",
+      "count": "{count, plural, one {# Medikament} other {# Medikamente}}",
+      "summary": "Woher die Daten der Medikamente stammen"
+    },
+    "sources": {
+      "title": "Quellen",
+      "medicineData": "Medikamentendaten",
+      "rowItems": "{count, plural, one {für # Medikament verwendet} other {für # Medikamente verwendet}}",
+      "evidence": "Belege der Muster",
+      "evidenceLoading": "Belege werden geladen…",
+      "evidenceError": "Die Belege konnten hier nicht geladen werden. Die Seite jedes Musters zeigt sie.",
+      "evidenceCount": "{count, plural, one {# Quelle, auf die sich die Muster stützen.} other {# Quellen, auf die sich die Muster stützen.}}",
+      "withExclusions": "{count, plural, one {Bei # Muster wurde eine Quelle nicht verwendet. Seine Seite nennt den Grund.} other {Bei # Mustern wurde eine Quelle nicht verwendet. Ihre Seiten nennen den Grund.}}",
+      "lastCheck": "Integrität zuletzt geprüft am {date}.",
+      "seeFindings": "Öffnen Sie jedes Muster, um den Stand seiner Quellen zu sehen.",
+      "openEvidence": "Belege ansehen"
+    },
+    "share": {
+      "title": "Bild der Übersicht teilen",
+      "intro": "Erstellen Sie ein Bild dieser Übersicht, um es einer vertrauten Person zu schicken oder Ihrer Ärztin oder Ihrem Arzt zu zeigen. Es wird auf diesem Gerät erstellt.",
+      "default": "Das Bild zeigt nur Zahlen. Sie können mehr hinzufügen:",
+      "events": "Angeben, worum es bei jedem Muster geht",
+      "eventsHint": "Zum Beispiel die Nebenwirkung, die ein Muster nennt. Wer das Bild sieht, sieht diese Gesundheitsangaben.",
+      "ingredients": "Die Wirkstoffe Ihrer Medikamente hinzufügen",
+      "ingredientsHint": "Packungsnamen werden nie hinzugefügt. Wer das Bild sieht, sieht, welche Medikamente Sie nehmen.",
+      "prepare": "Bild erstellen",
+      "preparing": "Das Bild wird erstellt…",
+      "error": "Das Bild konnte auf diesem Gerät nicht erstellt werden.",
+      "confirmTitle": "Bild prüfen, bevor es Janus verlässt",
+      "confirmText": "Dieses Bild verlässt Janus nur, wenn Sie es selbst teilen oder speichern. Es kann Gesundheitsangaben enthalten.",
+      "share": "Teilen",
+      "save": "Bild speichern",
+      "saved": "Das Bild wurde in Ihren Downloads gespeichert.",
+      "alt": "Das Bild der Übersicht. Sein Text: {text}"
+    },
+    "image": {
+      "title": "Janus-Übersicht",
+      "headline": "{medicines, plural, one {# Medikament geprüft} other {# Medikamente geprüft}} · {patterns, plural, =0 {kein Muster aus der Regelliste} one {# Muster zum Besprechen} other {# Muster zum Besprechen}} · geprüft mit {checked} von {total} Mustern",
+      "medicines": "{count, plural, one {Medikament geprüft} other {Medikamente geprüft}}",
+      "patterns": "{count, plural, one {Muster zum Besprechen} other {Muster zum Besprechen}}",
+      "rulesOf": "{checked} von {total}",
+      "rules": "Muster geprüft",
+      "abrupt": "{count, plural, one {Bei # Medikament steht dieser Hinweis:} other {Bei # Medikamenten steht dieser Hinweis:}}",
+      "eventsHeading": "Worum es bei den Mustern geht",
+      "eventLine": "{event} · {order}",
+      "order": "Reihenfolge passt zum Muster: {fits} · Reihenfolge passt, später als das übliche Zeitfenster: {late} · Reihenfolge nicht bestätigt: {unconfirmed}",
+      "abruptNames": "Betroffene Wirkstoffe: {names}",
+      "ingredientsHeading": "Wirkstoffe der Liste",
+      "footer": "Auf diesem Gerät mit Janus erstellt"
+    }
   }
 }

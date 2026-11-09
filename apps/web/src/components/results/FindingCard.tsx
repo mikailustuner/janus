@@ -19,17 +19,10 @@ import { keyName } from "@/components/names";
 import { ReadAloud } from "@/components/ReadAloud";
 import { SafetyLine } from "@/components/SafetyLine";
 import { Card, Chip } from "@/components/ui";
-import type { FindingView } from "@/flow/findings";
+import { orderGroup, type FindingView } from "@/flow/findings";
 import { Link } from "@/i18n/navigation";
 import { useT, useTheme, useThemeWord } from "@/theme/words";
 import { cascadeName, type Loaded } from "@/vocabulary";
-
-const ORDER_LABEL = {
-  within_window: "fits",
-  after_window: "fitsLate",
-  same_month: "notConfirmed",
-  date_unknown: "notConfirmed",
-} as const;
 
 export function useFindingWords(vocab: Loaded) {
   return (fv: FindingView) => {
@@ -79,7 +72,7 @@ export function FindingCard({
       .join(", ");
   // The chip describes the order from the timing, never "probable"/"possible" (DP43): the engine
   // status `possible` also covers a known order after the window.
-  const status = t(`Findings.order.${ORDER_LABEL[f.timing]}`);
+  const status = t(`Findings.order.${orderGroup(f.timing)}`);
   const orderKnown =
     f.timing === "within_window" || f.timing === "after_window";
   const row = f.rule_id.split(":")[1] ?? "";

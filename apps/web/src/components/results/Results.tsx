@@ -92,6 +92,17 @@ export function ResultsBody({
         }
       />
       <ZombieAlertCard />
+      {/* The Summary of this check (janus-report Req 1.2, DP1). */}
+      <ul className="grouped lg:max-w-[72ch]" data-testid="summary-link">
+        <RowLink href="/results/summary">
+          <span className="flex flex-col gap-0.5">
+            <span>{t("Report.open")}</span>
+            <span className="text-sm font-normal text-muted">
+              {t("Report.openHint")}
+            </span>
+          </span>
+        </RowLink>
+      </ul>
       {/* Desktop (Req 27): findings on the left at reading width, a sticky aside on the right. */}
       <div className="grid gap-group lg:grid-cols-[minmax(0,72ch)_minmax(300px,1fr)] lg:items-start">
         <div className="flex min-w-0 flex-col gap-group">

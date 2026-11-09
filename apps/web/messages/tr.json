@@ -1410,5 +1410,86 @@
       "body": "PIPC listesindeki 65 reçete kaskadı örüntüsünün tamamı, harita ve tablo olarak."
     },
     "footer": "Kaskad haritası"
+  },
+  "Report": {
+    "title": "Özet",
+    "open": "Özeti gör",
+    "openHint": "Bu kontrolün temel sayıları bir bakışta",
+    "checkedIn": "Kontrol tarihi: {month}",
+    "summaryLine": "{medicines, plural, one {# ilaç kontrol edildi} other {# ilaç kontrol edildi}} · {patterns, plural, =0 {kural listesinden örüntü yok} one {konuşmaya değer # örüntü} other {konuşmaya değer # örüntü}}",
+    "patterns": {
+      "title": {
+        "twoFaces": "Konuşmaya değer hayaletler",
+        "glass": "Konuşmaya değer örüntüler"
+      },
+      "sentence": "{count, plural, one {# reçete kaskadı örüntüsü eşleşti} other {# reçete kaskadı örüntüsü eşleşti}}. Sıra örüntüye uyuyor: {fits}. Sıra uyuyor, olağan pencereden daha geç: {late}. Sıra doğrulanmadı: {unconfirmed}.",
+      "unconfirmedForm": "{count, plural, one {Bunlardan # tanesinde ürün formunun hâlâ doğrulanması gerekiyor.} other {Bunlardan # tanesinde ürün formunun hâlâ doğrulanması gerekiyor.}}"
+    },
+    "medicines": {
+      "title": "İlaçlar",
+      "full": "Tamamen kontrol edildi",
+      "partly": "Tamamen kontrol edilemedi",
+      "sentence": "{total, plural, one {Listede # ilaç var} other {Listede # ilaç var}}: {full} tanesi tamamen kontrol edildi, {partly} tanesinde kontrol edilemeyen bir etkin madde var."
+    },
+    "rules": {
+      "title": "Kontrol edilen örüntüler",
+      "of": "/ {total}"
+    },
+    "abrupt": {
+      "title": "Aniden kesilmemesi gerekenler",
+      "sentence": "{count, plural, one {# ilaçta şu uyarı var:} other {# ilaçta şu uyarı var:}}"
+    },
+    "regions": {
+      "title": "Bölgeler",
+      "name": "Adıyla eklendi",
+      "count": "{count, plural, one {# ilaç} other {# ilaç}}",
+      "summary": "Her ilacın verisinin geldiği yer"
+    },
+    "sources": {
+      "title": "Kaynaklar",
+      "medicineData": "İlaç verileri",
+      "rowItems": "{count, plural, one {# ilaç için kullanıldı} other {# ilaç için kullanıldı}}",
+      "evidence": "Örüntülerin kanıtları",
+      "evidenceLoading": "Kanıtlar yükleniyor…",
+      "evidenceError": "Kanıtlar burada yüklenemedi. Her örüntünün kendi ekranında görebilirsiniz.",
+      "evidenceCount": "{count, plural, one {Örüntülerin dayandığı # kaynak.} other {Örüntülerin dayandığı # kaynak.}}",
+      "withExclusions": "{count, plural, one {# örüntüde kullanılmayan bir kaynak var. Nedeni o örüntünün ekranında yazıyor.} other {# örüntüde kullanılmayan bir kaynak var. Nedeni bu örüntülerin ekranlarında yazıyor.}}",
+      "lastCheck": "Bütünlük en son {date} tarihinde kontrol edildi.",
+      "seeFindings": "Kaynaklarının durumunu görmek için her örüntüyü açın.",
+      "openEvidence": "Kanıtları gör"
+    },
+    "share": {
+      "title": "Özet görseli paylaş",
+      "intro": "Bu özetin bir görselini yakınınıza gönderebilir ya da doktorunuza gösterebilirsiniz. Görsel bu cihazda hazırlanır.",
+      "default": "Görselde yalnızca sayılar yer alır. İsterseniz şunları ekleyebilirsiniz:",
+      "events": "Her örüntünün neyle ilgili olduğunu ekleyin",
+      "eventsHint": "Örneğin bir örüntünün adını verdiği yan etki. Görseli gören herkes bu sağlık bilgisini görür.",
+      "ingredients": "İlaçlarınızın etkin maddelerini ekleyin",
+      "ingredientsHint": "Kutu adları hiçbir zaman eklenmez. Görseli gören herkes hangi ilaçları kullandığınızı görür.",
+      "prepare": "Görseli hazırla",
+      "preparing": "Görsel hazırlanıyor…",
+      "error": "Görsel bu cihazda hazırlanamadı.",
+      "confirmTitle": "Görsel Janus'tan çıkmadan önce kontrol edin",
+      "confirmText": "Bu görsel Janus'tan yalnızca siz paylaşır ya da kaydederseniz çıkar. Sağlık bilgisi içerebilir.",
+      "share": "Paylaş",
+      "save": "Görseli kaydet",
+      "saved": "Görsel indirilenlere kaydedildi.",
+      "alt": "Özet görseli. Metni: {text}"
+    },
+    "image": {
+      "title": "Janus özeti",
+      "headline": "{medicines, plural, one {# ilaç kontrol edildi} other {# ilaç kontrol edildi}} · {patterns, plural, =0 {kural listesinden örüntü yok} one {konuşmaya değer # örüntü} other {konuşmaya değer # örüntü}} · {total} örüntüden {checked} tanesine göre kontrol edildi",
+      "medicines": "{count, plural, one {ilaç kontrol edildi} other {ilaç kontrol edildi}}",
+      "patterns": "{count, plural, one {konuşmaya değer örüntü} other {konuşmaya değer örüntü}}",
+      "rulesOf": "{total} örüntüden {checked}",
+      "rules": "örüntü kontrol edildi",
+      "abrupt": "{count, plural, one {# ilaçta şu uyarı var:} other {# ilaçta şu uyarı var:}}",
+      "eventsHeading": "Örüntülerin konusu",
+      "eventLine": "{event} · {order}",
+      "order": "Sıra örüntüye uyuyor: {fits} · Sıra uyuyor, olağan pencereden daha geç: {late} · Sıra doğrulanmadı: {unconfirmed}",
+      "abruptNames": "Bu uyarının olduğu ilaçlar: {names}",
+      "ingredientsHeading": "Listedeki etkin maddeler",
+      "footer": "Bu cihazda Janus ile hazırlandı"
+    }
   }
 }

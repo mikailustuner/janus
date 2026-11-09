@@ -1410,5 +1410,86 @@
       "body": "Los 65 patrones de cascadas de prescripción de la lista PIPC, como mapa y como tabla."
     },
     "footer": "Mapa de cascadas"
+  },
+  "Report": {
+    "title": "Resumen",
+    "open": "Ver el resumen",
+    "openHint": "Las cifras clave de esta comprobación de un vistazo",
+    "checkedIn": "Comprobado en {month}",
+    "summaryLine": "{medicines, plural, one {# medicamento comprobado} other {# medicamentos comprobados}} · {patterns, plural, =0 {ningún patrón de la lista de reglas} one {# patrón para comentar} other {# patrones para comentar}}",
+    "patterns": {
+      "title": {
+        "twoFaces": "Fantasmas para comentar",
+        "glass": "Patrones para comentar"
+      },
+      "sentence": "{count, plural, one {# patrón de cascada de prescripción coincide} other {# patrones de cascada de prescripción coinciden}}. El orden coincide con el patrón: {fits}. El orden coincide, después de la ventana habitual: {late}. Orden no confirmado: {unconfirmed}.",
+      "unconfirmedForm": "{count, plural, one {En # de ellos aún hay que confirmar la forma del producto.} other {En # de ellos aún hay que confirmar la forma del producto.}}"
+    },
+    "medicines": {
+      "title": "Medicamentos",
+      "full": "Comprobados por completo",
+      "partly": "No comprobados por completo",
+      "sentence": "{total, plural, one {# medicamento en la lista} other {# medicamentos en la lista}}: {full, plural, one {# comprobado por completo} other {# comprobados por completo}}, {partly} con un principio activo que no se puede comprobar."
+    },
+    "rules": {
+      "title": "Patrones comprobados",
+      "of": "de {total}"
+    },
+    "abrupt": {
+      "title": "No suspender de forma brusca",
+      "sentence": "{count, plural, one {# medicamento lleva esta indicación:} other {# medicamentos llevan esta indicación:}}"
+    },
+    "regions": {
+      "title": "Regiones",
+      "name": "Añadido por nombre",
+      "count": "{count, plural, one {# medicamento} other {# medicamentos}}",
+      "summary": "De dónde proceden los datos de cada medicamento"
+    },
+    "sources": {
+      "title": "Fuentes",
+      "medicineData": "Datos de los medicamentos",
+      "rowItems": "{count, plural, one {usada para # medicamento} other {usada para # medicamentos}}",
+      "evidence": "Pruebas de los patrones",
+      "evidenceLoading": "Cargando las pruebas…",
+      "evidenceError": "No se pudieron cargar las pruebas aquí. La pantalla de cada patrón las muestra.",
+      "evidenceCount": "{count, plural, one {# fuente citada por los patrones.} other {# fuentes citadas por los patrones.}}",
+      "withExclusions": "{count, plural, one {# patrón tiene una fuente que no se usó. Su pantalla explica por qué.} other {# patrones tienen una fuente que no se usó. Sus pantallas explican por qué.}}",
+      "lastCheck": "Integridad comprobada por última vez el {date}.",
+      "seeFindings": "Abra cada patrón para ver el estado de sus fuentes.",
+      "openEvidence": "Ver las pruebas"
+    },
+    "share": {
+      "title": "Compartir una imagen del resumen",
+      "intro": "Cree una imagen de este resumen para enviarla a una persona cercana o enseñarla a su médico. Se crea en este dispositivo.",
+      "default": "La imagen solo muestra cifras. Puede añadir más:",
+      "events": "Añadir de qué trata cada patrón",
+      "eventsHint": "Por ejemplo, el efecto adverso que nombra un patrón. Quien vea la imagen verá esta información de salud.",
+      "ingredients": "Añadir los principios activos de sus medicamentos",
+      "ingredientsHint": "Los nombres de las cajas nunca se añaden. Quien vea la imagen sabrá qué medicamentos toma.",
+      "prepare": "Preparar la imagen",
+      "preparing": "Preparando la imagen…",
+      "error": "No se pudo crear la imagen en este dispositivo.",
+      "confirmTitle": "Revise la imagen antes de que salga de Janus",
+      "confirmText": "Esta imagen solo sale de Janus si usted la comparte o la guarda. Puede contener información de salud.",
+      "share": "Compartir",
+      "save": "Guardar imagen",
+      "saved": "La imagen se guardó en sus descargas.",
+      "alt": "La imagen del resumen. Su texto: {text}"
+    },
+    "image": {
+      "title": "Resumen de Janus",
+      "headline": "{medicines, plural, one {# medicamento comprobado} other {# medicamentos comprobados}} · {patterns, plural, =0 {ningún patrón de la lista de reglas} one {# patrón para comentar} other {# patrones para comentar}} · comprobado con {checked} de {total} patrones",
+      "medicines": "{count, plural, one {medicamento comprobado} other {medicamentos comprobados}}",
+      "patterns": "{count, plural, one {patrón para comentar} other {patrones para comentar}}",
+      "rulesOf": "{checked} de {total}",
+      "rules": "patrones comprobados",
+      "abrupt": "{count, plural, one {# medicamento lleva esta indicación:} other {# medicamentos llevan esta indicación:}}",
+      "eventsHeading": "De qué tratan los patrones",
+      "eventLine": "{event} · {order}",
+      "order": "El orden coincide con el patrón: {fits} · El orden coincide, después de la ventana habitual: {late} · Orden no confirmado: {unconfirmed}",
+      "abruptNames": "Principios activos concernidos: {names}",
+      "ingredientsHeading": "Principios activos de la lista",
+      "footer": "Creado en este dispositivo con Janus"
+    }
   }
 }

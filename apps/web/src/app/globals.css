@@ -356,6 +356,145 @@
   }
 }
 
+/* The Summary (janus-report Req 3, DP8): a bento grid of tiles, rings that draw in (opacity and
+   transform only), bar segments told apart by fill pattern as well as tone. Tokens only. */
+@layer components {
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-stack);
+  }
+  .summary-grid > * {
+    grid-column: span 2;
+  }
+  @media (min-width: 640px) {
+    .summary-grid > .half {
+      grid-column: span 1;
+    }
+  }
+  @media (min-width: 1024px) {
+    .summary-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-group);
+    }
+    .summary-grid > * {
+      grid-column: span 1;
+    }
+    .summary-grid > .lead {
+      grid-column: span 2;
+    }
+    .summary-grid > .wide-lg {
+      grid-column: span 2;
+    }
+    .summary-grid > .full {
+      grid-column: 1 / -1;
+    }
+  }
+  .summary-tile {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: var(--space-stack);
+    padding: 1rem;
+  }
+  @media (min-width: 640px) {
+    .summary-tile {
+      padding: 1.25rem;
+    }
+  }
+  .tile-head {
+    display: flex;
+    min-height: 2.75rem;
+    align-items: center;
+    gap: 0.5rem;
+    margin: -0.5rem -0.5rem 0;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-segment);
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--fg);
+    text-decoration: none;
+    transition: background-color var(--dur-fast) var(--ease-out);
+  }
+  .tile-head:hover {
+    background: var(--chip);
+  }
+  .big-number {
+    font-family: var(--font-body);
+    font-weight: 800;
+    font-variant-numeric: tabular-nums lining-nums;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .ring-svg {
+    transform-origin: 50% 50%;
+    animation: ring-in 640ms var(--ease-out) both;
+  }
+  .bar-seg {
+    min-width: 0.5rem;
+    border: 2px solid var(--tone);
+    border-radius: 6px;
+  }
+  .tone-accent {
+    --tone: var(--accent);
+  }
+  .tone-chip {
+    --tone: var(--chip-fg);
+  }
+  .tone-muted {
+    --tone: var(--muted);
+  }
+  .tone-fg {
+    --tone: var(--fg);
+  }
+  .bar-solid {
+    background: var(--tone);
+  }
+  .bar-dashed {
+    background: repeating-linear-gradient(
+      135deg,
+      var(--tone) 0 3px,
+      transparent 3px 7px
+    );
+  }
+  .bar-dotted {
+    background: radial-gradient(circle, var(--tone) 1.5px, transparent 1.75px) 0
+      0 / 6px 6px;
+  }
+  .bar-hatched {
+    background: repeating-linear-gradient(
+      90deg,
+      var(--tone) 0 2px,
+      transparent 2px 6px
+    );
+  }
+}
+
+@layer components {
+  .share-dialog {
+    width: min(560px, calc(100vw - 32px));
+    max-height: calc(100dvh - 32px);
+    margin: auto;
+    overflow: auto;
+    padding: 1.25rem;
+    color: var(--fg);
+    background: var(--bg);
+  }
+  .share-dialog::backdrop {
+    background: color-mix(in srgb, var(--bg) 72%, transparent);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+  }
+}
+
+@keyframes ring-in {
+  from {
+    opacity: 0;
+    transform: rotate(-40deg) scale(0.9);
+  }
+}
+
 @keyframes disclosure-in {
   from {
     opacity: 0;

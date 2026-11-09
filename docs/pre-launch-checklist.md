@@ -179,3 +179,12 @@ remove the matching notice (and, for the Canon claims, set `expert_review = revi
   `cascade-map-localization-reviewer-review.md` (TR "Kaskad haritası", "Açıklama"; DE "Ergebnis" vs "Befund"; ES key name "Intro").
 - [ ] **Map performance on a real mid-range phone** (pan, pinch, zoom buttons, filters): the CI measurement runs at 4× CPU throttling on
   a desktop (cascade-map design §7.1) and is not asserted on a saturated host.
+
+## Janus report / Summary (enhancement, 2026-11-09)
+- [ ] **Native review of the `Report` namespace:** the five languages of the Summary and the share image, in particular the
+  titles under large figures and rings (TR "toplam {total}", DE "Geprüft im {month}"), the abrupt-stop tile title and the
+  opt-in explanations (see `.kiro/specs/janus-report/report-localization-reviewer-review.md`).
+- [ ] **Share image out of context:** a clinician and a privacy reviewer confirm that the counts-only image (and the
+  opt-in event and ingredient names) cannot be read as a verdict or an all-clear by someone who sees only the picture,
+  and that the confirmation sentence is enough notice that the image may contain health information
+  (`janus-report` Req 5, DP11, `report-safety-auditor-review.md`).
