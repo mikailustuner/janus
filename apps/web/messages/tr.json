@@ -723,6 +723,10 @@
       "title": "Hukuki çerçeve",
       "body": "AB'de bağışlar GDPR kapsamında açık rızaya, Türkiye'de KVKK kapsamında açık rızaya dayanır. ABD'de Janus, HIPAA kapsamındaki bir kuruluş (covered entity) değildir ve bu kural setlerinin en katısını uygular. Janus'u hiçbir dış kuruluş denetlemedi ve Janus tıbbi cihaz değildir."
     },
+    "network": {
+      "title": "Ağ sağlayıcısı",
+      "body": "Janus, Cloudflare üzerinden sunulur. Cloudflare, tarayıcınız ile Janus sunucusu arasındaki şifreli bağlantıyı taşır ve saldırıları engeller. Bunun için her isteğin IP adresi, tarayıcı türü ve zamanı gibi teknik verilerini işler; insanları otomatik trafikten ayırmak için kısa ömürlü teknik bir çerez de bırakabilir. Janus analiz, reklam ya da izleme çerezi eklemez; kendi sunucusu IP adreslerini kaydetmez."
+    },
     "sources": {
       "title": "Veri kaynakları",
       "body": "openFDA (NDC Directory ve FAERS / FDA AEMS), TİTCK (Türkiye), BDPM (Fransa), AEMPS'nin CIMA'sı (İspanya), Wikidata, PIPC reçete kaskadları listesi, geri çekme kontrolleri için Crossref ve Retraction Watch ve bildirim istatistiklerinde MedDRA terimleri (MedDRA® ticari markası ICH adına IFPMA tarafından tescil edilmiştir). Her sonuç kaynağını ve tarihini gösterir; bu yayıncıların hiçbiri Janus'u desteklemez."

@@ -353,3 +353,13 @@ feature is expert-reviewed; every screen says "AI-reviewed, pending expert revie
 - [ ] **Native review of `OpenData`:** the word for "outcome" in each language (TR "sonuç", DE "Behandlungsverlauf", FR
   "issue", ES "resultado").
 
+
+## Deploy (Phase 5, 2026-11-09)
+- [ ] Native review (TR, DE, FR, ES) of the privacy page's new "Network provider" section (Cloudflare).
+- [ ] Legal review: Cloudflare as processor of request data (IP address, browser, time) for a health
+      app; whether a data processing agreement and a mention in the consent texts are needed before
+      donations or the outcome loop are switched on.
+- [ ] If Bot Fight Mode stays on, confirm the cookie it sets is the only one and is described correctly.
+- [ ] Rate limiting on `/api/*` (Cloudflare free rule); then update `Privacy.protection.limits`, which
+      still says rate limits come in Phase 5.
+- [ ] Donations and the outcome loop stay off until the consent review above is done (deploy Req 4.5).

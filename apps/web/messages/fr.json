@@ -723,6 +723,10 @@
       "title": "Cadre juridique",
       "body": "Dans l'UE, les dons reposent sur un consentement explicite au titre du RGPD ; en Turquie, sur un consentement explicite au titre de la KVKK. Aux États-Unis, Janus n'est pas une entité couverte par la HIPAA et suit le plus strict de ces ensembles de règles. Aucun organisme extérieur n'a audité Janus, et Janus n'est pas un dispositif médical."
     },
+    "network": {
+      "title": "Fournisseur réseau",
+      "body": "Janus est diffusé par l'intermédiaire de Cloudflare, qui achemine la connexion chiffrée entre votre navigateur et le serveur de Janus et bloque les attaques. Pour cela, Cloudflare traite des données techniques de chaque requête, comme votre adresse IP, le type de navigateur et l'heure, et peut déposer un cookie technique de courte durée pour distinguer les personnes du trafic automatisé. Janus n'ajoute ni mesure d'audience, ni publicité, ni cookie de suivi ; son propre serveur n'enregistre pas les adresses IP."
+    },
     "sources": {
       "title": "Sources des données",
       "body": "openFDA (NDC Directory et FAERS / FDA AEMS), TİTCK (Turquie), BDPM (France), CIMA de l'AEMPS (Espagne), Wikidata, la liste PIPC des cascades de prescription, Crossref et Retraction Watch pour la vérification des rétractations, et les termes MedDRA dans les statistiques de signalements (la marque MedDRA® est déposée par l'IFPMA au nom de l'ICH). Chaque résultat indique sa source et sa date ; aucun de ces éditeurs ne cautionne Janus."

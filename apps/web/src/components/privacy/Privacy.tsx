@@ -21,6 +21,7 @@ const SECTIONS = [
   "delete",
   "protection",
   "legal",
+  "network",
   "sources",
 ] as const;
 
