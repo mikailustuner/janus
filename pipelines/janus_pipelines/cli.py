@@ -48,6 +48,8 @@ JOBS: dict[str, tuple[str, str]] = {
     "retractions": ("janus_pipelines.jobs.retractions", "RetractionsJob"),
     "eu_fr_bdpm": ("janus_pipelines.jobs.eu_fr_bdpm", "EuFrBdpmJob"),
     "eu_es_cima": ("janus_pipelines.jobs.eu_es_cima", "EuEsCimaJob"),
+    "ca_dpd": ("janus_pipelines.jobs.ca_dpd", "CaDpdJob"),
+    "eu_it_aifa": ("janus_pipelines.jobs.eu_it_aifa", "EuItAifaJob"),
     "faers": ("janus_pipelines.jobs.faers", "FaersJob"),
     "faers_onset": ("janus_pipelines.jobs.faers_onset", "FaersOnsetJob"),
     "tm_molecules": ("janus_pipelines.jobs.time_machine", "TmMoleculesJob"),

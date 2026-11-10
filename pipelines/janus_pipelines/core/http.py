@@ -32,6 +32,8 @@ DEFAULT_RATES: dict[str, float] = {
     "www.titck.gov.tr": 1.0,
     "base-donnees-publique.medicaments.gouv.fr": 1.0,
     "listadomedicamentos.aemps.gob.es": 1.0,
+    "www.canada.ca": 1.0,
+    "drive.aifa.gov.it": 1.0,
     "fis.fda.gov": 1.0,
 }
 

@@ -5,6 +5,7 @@ dependencies stay out of the API image. Research prototype, not a medical device
 
 Phase 1 jobs: `pipc`, `titck`, `wikidata_ingredients`, `us_ndc`, `retractions`.
 Phase 2 jobs: `eu_fr_bdpm`, `eu_es_cima`, `faers`.
+National product lists (spec `.kiro/specs/national-products/`): `ca_dpd`, `eu_it_aifa`.
 Later phases: `onsides`, `canon`.
 
 ## Commands
@@ -22,6 +23,10 @@ uv run janus-pipelines run retractions          # run after pipc
 uv run janus-pipelines run eu_fr_bdpm           # France: BDPM files (Licence Ouverte)
 uv run janus-pipelines run eu_fr_bdpm --input DIR --snapshot-date YYYY-MM-DD   # local copies
 uv run janus-pipelines run eu_es_cima           # Spain: AEMPS Nomenclátor de prescripción
+uv run janus-pipelines run ca_dpd               # Canada: Health Canada DPD marketed extract (OGL – Canada)
+uv run janus-pipelines run ca_dpd --input allfiles.zip --snapshot-date YYYY-MM-DD   # local copy
+uv run janus-pipelines run eu_it_aifa           # Italy: AIFA open data, packs and ingredients (CC BY 4.0), ~49 MB
+uv run janus-pipelines run eu_it_aifa --input DIR --snapshot-date YYYY-MM-DD        # local copies
 uv run janus-pipelines run faers                # FDA AEMS (FAERS) latest four quarters, ~250 MB
 uv run janus-pipelines run faers --quarters 2026Q3,2026Q2   # named quarters (back-fill)
 uv run janus-pipelines status                   # current artifact per pipeline
@@ -48,6 +53,12 @@ unknown source).
   The snapshot date is the oldest of the three file dates.
 - `eu_es_cima`: one 16 MB archive, XML read as a stream. The AEMPS host refused a generic
   command-line User-Agent on 2026-11-08; the pipelines send their own.
+- `ca_dpd`: the marketed extract (`allfiles.zip`), eight UTF-8 tables joined on `DRUG_CODE`; the
+  snapshot date is the archive's `Last-Modified` date. The `UPC` column is kept and counted
+  (empty in every packaging line on 2026-11-10); nothing depends on it.
+- `eu_it_aifa`: `confezioni.csv` and `PA_confezioni.csv` (semicolon-separated, no quoting); the
+  snapshot date is the older `Last-Modified` date. Homeopathic registrations stay in the artifact
+  and are left out by the resolution loader. The files carry no GTIN.
 - `faers`: one row per deduplicated report (latest version per case, DELETE files applied);
   removed reports are in `removed.parquet` next to `rows.parquet`. Ingredient names stay as
   published; `python -m janus.memory.faers_build` (in `apps/api`) maps them and writes the
