@@ -2683,5 +2683,80 @@
       "advice": "Bir puanın sizin için ne anlama geldiği dozlarınıza ve sağlığınıza bağlıdır. Janus bundan bir sonuç çıkarmaz. Bir eczacı veya doktor bunu sizinle birlikte inceleyebilir.",
       "method": "Listenizdeki etkin maddelerin, antikolinerjik ilaçların yayımlanmış üç ölçeğinde otomatik olarak aranması. Her ölçek kendi puanlarını verir; Janus puanları yalnızca tek bir ölçeğin içinde toplar; farklı ölçeklerin puanları toplanmaz veya karşılaştırılmaz ve Janus bir sınır belirlemez. Bir ölçek yalnızca bazı ilaçları sayar; bu nedenle burada bulunmayan bir ilaç yine de böyle bir etki gösterebilir."
     }
+  },
+  "PlainInfo": {
+    "link": "Bu ne tür bir ilaç?",
+    "eyebrow": "İlaç bilgisi",
+    "summary": "Sade bir dille: bu ilacın ne tür bir ilaç olduğu. Sağlığınızla ilgili bir tavsiye değildir.",
+    "back": "İlaçlara dön",
+    "notFound": "Bu ilaç, bu cihazda tutulan listede yok.",
+    "loading": "Bu ilaç için Janus'taki bilgiler aranıyor…",
+    "contains": {
+      "heading": "İçinde ne var",
+      "one": "Bu ilacın etkin maddesi: {name}.",
+      "unnamed": "Bu ilaçta Janus'un adını bilmediği bir etkin madde var."
+    },
+    "group": {
+      "label": "İlaç grubu",
+      "code": "ATC kodu",
+      "mixed": "Bu etkin maddeyi içeren ilaçlar birden fazla gruba girer. Janus, bu ilacın hangi grupta olduğunu koddan anlayamaz.",
+      "otherUses": "Aynı etkin madde, Janus'un açıklamadığı başka tür ilaçlarda da bulunur.",
+      "none": "Janus'ta bu etkin maddenin grubu için sade dille bir açıklama yok. Bu, etkin madde hakkında bir şey söylemez."
+    },
+    "review": "Uzman incelemesi henüz yapılmadı.",
+    "method": "Gruplarla ilgili cümleler Janus için yazılmış sabit metinlerdir. Etkin maddenin ATC koduna göre otomatik olarak seçilir.",
+    "limits": {
+      "heading": "Bu sayfanın size söyleyemedikleri",
+      "group": "Bir grupla ilgili cümle grubu anlatır, sizi değil. Bir ilaç burada adı geçmeyen bir nedenle de verilmiş olabilir.",
+      "dose": "Janus bir ilacın ne kadar ve nasıl kullanılacağını söylemez.",
+      "ask": "Bu ilacın neden verildiğini ve nasıl kullanılacağını bir eczacı veya doktor söyleyebilir. Ona kutuyu gösterin."
+    },
+    "official": {
+      "heading": "Resmî kaynak ne diyor",
+      "us": {
+        "title": "Amerika Birleşik Devletleri'ndeki etiket metni (FDA etiket veritabanı)",
+        "language": "İngilizce, yayımlandığı gibi. Çevrilmemiştir.",
+        "section": "Bu ürünün etiketindeki “Indications and Usage” bölümü",
+        "cut": "Bölüm burada gösterilenden daha uzundur. Devamı etiketin tamamındadır.",
+        "open": "Etiketin tamamını DailyMed'de aç (İngilizce)",
+        "version": "Etiket sürümü {version}",
+        "dated": "{date} tarihli",
+        "data": "openFDA verisi, {date}",
+        "company": "Bu metni ürünü pazarlayan şirket yazmış ve FDA'ya sunmuştur. openFDA'ya göre FDA metni doğrulamamıştır.",
+        "differ": "Kutunuzdaki prospektüsten farklı olabilir. Sağlık çalışanları için yazılmıştır.",
+        "notForYou": "Bu, etiketten bir alıntıdır. Janus bunun sizin için geçerli olup olmadığını söylemez.",
+        "outdated": "Janus'taki etiket verisi iki haftadan eskidir."
+      },
+      "page": {
+        "title": {
+          "FR": "Fransa ilaç veritabanındaki (BDPM) ürün sayfası",
+          "ES": "İspanya ilaç veritabanındaki (CIMA, AEMPS) ürün sayfası"
+        },
+        "language": {
+          "fr": "Sayfa Fransızcadır. Çevrilmemiştir.",
+          "es": "Sayfa İspanyolcadır. Çevrilmemiştir."
+        },
+        "found": "Janus bu sayfayı ürünün adına göre otomatik olarak buldu ({date} tarihli veri). Lütfen sayfadaki adın kutunuzdaki adla aynı olup olmadığını kontrol edin.",
+        "open": "Ürün sayfasını aç"
+      },
+      "none": {
+        "not_found_us": "Janus'ta bu ürün kodu için etiket metni yok. Janus yalnızca FDA başvuru numarası olan ürünlerin etiketini tutar.",
+        "several_labels": "Bu ürün kodunu birden fazla etiket belirtiyor. Janus bunlar arasında seçim yapmaz.",
+        "not_found_page": "Janus bu ürünün sayfasını adına göre bulamadı.",
+        "source_unavailable": "Resmî metinler şu anda Janus'ta kullanılamıyor.",
+        "demo": "Demo ürünleri kurgusaldır; bu yüzden onlar için resmî metin yoktur.",
+        "homeopathic": "Janus homeopatik ürünler için resmî metin göstermez.",
+        "by_name": "Bu ilaç ürün olarak değil, etkin maddesinin adıyla eklendi. Bunun için ürün metni yoktur.",
+        "country": "Janus'ta yalnızca Amerika Birleşik Devletleri'ndeki ürünler için resmî metin, Fransa ve İspanya'daki ürünler için de resmî sayfaya bağlantı vardır.",
+        "no_code": "Janus bu kutunun resmî veride hangi ürün olduğunu belirleyemiyor; bu yüzden resmî metin göstermiyor."
+      }
+    },
+    "nothing": {
+      "title": "Janus'ta bu ilaç için bilgi yok",
+      "body": "Bu, ilaç hakkında bir değerlendirme değildir: Janus yalnızca kısa bir grup listesini anlatır. İlacın ne için olduğunu bir eczacı veya doktor söyleyebilir."
+    },
+    "errors": {
+      "unavailable": "İlaç bilgisi şu anda kullanılamıyor. Lütfen daha sonra yeniden deneyin."
+    }
   }
 }

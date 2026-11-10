@@ -44,7 +44,8 @@ export type Route =
   | "simulate/compounds"
   | "simulate/jobs"
   | "recalls/check"
-  | "safety/check";
+  | "safety/check"
+  | "medicine-info";
 
 export const ROUTES: readonly Route[] = [
   "resolve/scan",
@@ -87,6 +88,7 @@ export const ROUTES: readonly Route[] = [
   "simulate/jobs",
   "recalls/check",
   "safety/check",
+  "medicine-info",
 ];
 
 export type ApiError =
@@ -151,6 +153,7 @@ export const MESSAGE_KEYS = [
   "Simulation.errors.demoOnly",
   "Recall.errors.unavailable",
   "SafetyCheck.errors.unavailable",
+  "PlainInfo.errors.unavailable",
 ] as const;
 
 export type MessageKey = (typeof MESSAGE_KEYS)[number];
@@ -317,5 +320,12 @@ export function messageKeyFor(
     if (status === 503 && code === "safety_unavailable")
       return "SafetyCheck.errors.unavailable";
   }
+  // plain-medicine-info Req 4.4: the group table or the abrupt-stop list is not loaded.
+  if (
+    route === "medicine-info" &&
+    status === 503 &&
+    code === "medicine_info_unavailable"
+  )
+    return "PlainInfo.errors.unavailable";
   return "Errors.generic";
 }

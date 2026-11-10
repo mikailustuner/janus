@@ -1,0 +1,196 @@
+{
+  "us": {
+    "language": "tr",
+    "groups_version": "5a483d19b0ae68b2316e1cfa7344ebb86a55662739e399ee83fdf7b7ca6c469c",
+    "ingredients": [
+      {
+        "status": "single",
+        "groups": [
+          {
+            "id": "beta_blocker",
+            "name": "Beta blokerler",
+            "text": "Bu gruptaki ilaçlar yüksek tansiyonda ve kalpten kaynaklanan göğüs ağrısı (anjina) veya düzensiz kalp atışı gibi bazı kalp hastalıklarında kullanılır. Bazıları migren gibi başka durumlarda da kullanılır.",
+            "codes": [
+              "C07AB02"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": true
+      },
+      {
+        "status": "single",
+        "groups": [
+          {
+            "id": "diuretic",
+            "name": "Diüretikler (idrar söktürücüler)",
+            "text": "Bu gruptaki ilaçlar vücudun idrarla daha fazla su atmasına yardımcı olur. Yüksek tansiyonda ve vücutta fazla sıvı birikmesine bağlı şişlikte (ödem) kullanılır.",
+            "codes": [
+              "C03AA03"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      }
+    ],
+    "official": {
+      "kind": "label_text",
+      "country": "US",
+      "language": "en",
+      "section": "indications_and_usage",
+      "paragraphs": [
+        "1 INDICATIONS AND USAGE  Exampletine tablets (invented) are indicated for the  treatment of hypertension, to lower blood pressure. ",
+        "Limitations of Use: not for a hypertensive crisis."
+      ],
+      "truncated": false,
+      "set_id": "0a000000-0000-4000-8000-00000000000a",
+      "version": "7",
+      "effective_date": "2026-01-29",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=0a000000-0000-4000-8000-00000000000a",
+      "source": {
+        "source_id": "openfda_label_indications",
+        "run_id": "run-1",
+        "snapshot_date": "2026-11-09",
+        "license": "CC0 1.0 (public domain)",
+        "url": "https://open.fda.gov/apis/drug/label/"
+      }
+    },
+    "official_status": "text",
+    "notices": [
+      "no_dose_information",
+      "group_level_only",
+      "expert_review_not_done",
+      "official_text_not_translated",
+      "label_not_verified_by_fda",
+      "label_may_differ_from_box"
+    ],
+    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+  },
+  "fr": {
+    "language": "de",
+    "groups_version": "5a483d19b0ae68b2316e1cfa7344ebb86a55662739e399ee83fdf7b7ca6c469c",
+    "ingredients": [
+      {
+        "status": "mixed",
+        "groups": [
+          {
+            "id": "antiplatelet",
+            "name": "Thrombozytenaggregationshemmer (Plättchenhemmer)",
+            "text": "Medikamente dieser Gruppe sorgen dafür, dass die Blutplättchen weniger leicht verklumpen. Sie werden angewendet, damit schädliche Blutgerinnsel seltener entstehen, zum Beispiel nach einem Herzinfarkt oder Schlaganfall.",
+            "codes": [
+              "B01AC06"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": true,
+        "abrupt_stop": false
+      }
+    ],
+    "official": {
+      "kind": "product_page",
+      "country": "FR",
+      "language": "fr",
+      "url": "https://base-donnees-publique.medicaments.gouv.fr/medicament/69999991/extrait",
+      "source": {
+        "source_id": "bdpm",
+        "run_id": "run-fr",
+        "snapshot_date": "2026-11-03",
+        "license": "Licence Ouverte (Etalab)",
+        "url": "https://base-donnees-publique.medicaments.gouv.fr/"
+      }
+    },
+    "official_status": "page",
+    "notices": [
+      "no_dose_information",
+      "group_level_only",
+      "expert_review_not_done",
+      "official_text_not_translated",
+      "page_found_by_name"
+    ],
+    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+  },
+  "long": {
+    "language": "en",
+    "groups_version": "5a483d19b0ae68b2316e1cfa7344ebb86a55662739e399ee83fdf7b7ca6c469c",
+    "ingredients": [
+      {
+        "status": "mixed",
+        "groups": [
+          {
+            "id": "nasal_corticosteroid",
+            "name": "Corticosteroids for the nose",
+            "text": "Medicines in this group reduce swelling and irritation (inflammation) inside the nose. They are used for hay fever and other allergies that affect the nose.",
+            "codes": [
+              "R01AD05"
+            ],
+            "review_status": "not_reviewed"
+          },
+          {
+            "id": "inhaled_corticosteroid",
+            "name": "Inhaled corticosteroids",
+            "text": "Medicines in this group reduce swelling and irritation (inflammation) in the airways. They are used for asthma and for some other lung conditions.",
+            "codes": [
+              "R03BA02"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      }
+    ],
+    "official": {
+      "kind": "label_text",
+      "country": "US",
+      "language": "en",
+      "section": "indications_and_usage",
+      "paragraphs": [
+        "1 INDICATIONS AND USAGE Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invented) is indicated. Exampletine (invent"
+      ],
+      "truncated": true,
+      "set_id": "0e000000-0000-4000-8000-00000000000e",
+      "version": "3",
+      "effective_date": "2026-02-02",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=0e000000-0000-4000-8000-00000000000e",
+      "source": {
+        "source_id": "openfda_label_indications",
+        "run_id": "run-1",
+        "snapshot_date": "2026-11-09",
+        "license": "CC0 1.0 (public domain)",
+        "url": "https://open.fda.gov/apis/drug/label/"
+      }
+    },
+    "official_status": "text",
+    "notices": [
+      "no_dose_information",
+      "group_level_only",
+      "expert_review_not_done",
+      "official_text_not_translated",
+      "label_not_verified_by_fda",
+      "label_may_differ_from_box"
+    ],
+    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+  },
+  "none": {
+    "language": "es",
+    "groups_version": "5a483d19b0ae68b2316e1cfa7344ebb86a55662739e399ee83fdf7b7ca6c469c",
+    "ingredients": [
+      {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": true
+      }
+    ],
+    "official": null,
+    "official_status": "not_asked",
+    "notices": [
+      "no_dose_information"
+    ],
+    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+  }
+}

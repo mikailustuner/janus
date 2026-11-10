@@ -135,6 +135,23 @@ cadence_days = 7
 urls = ["https://open.fda.gov/apis/drug/enforcement/", "https://open.fda.gov/terms/"]
 
 [[sources]]
+id = "openfda_label_indications"
+section = "product"
+name = "openFDA Drug Label, \"Indications and Usage\" section (United States)"
+publisher = "U.S. Food and Drug Administration"
+license = "CC0 1.0 (public domain)"
+notes = [
+  "Data provided by the U.S. Food and Drug Administration (https://open.fda.gov). Not an FDA endorsement.",
+  "Janus shows the section as published, in English, marked as a quotation and not translated, and only for labels of products with an NDA, ANDA or BLA application number.",
+  "openFDA states that the labeling is the most recent listing information the company submitted to FDA, that its content has neither been altered nor verified by FDA, and that it may not be the labeling on currently distributed products or identical to the labeling that is approved.",
+  "Do not rely on openFDA to make decisions regarding medical care.",
+]
+storage = "cache"
+region = "US"
+cadence_days = 7
+urls = ["https://open.fda.gov/apis/drug/label/", "https://open.fda.gov/terms/"]
+
+[[sources]]
 id = "dscsa_datamatrix"
 section = "product"
 name = "DSCSA product identifier, GS1 DataMatrix (United States)"

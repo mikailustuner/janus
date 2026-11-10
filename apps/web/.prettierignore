@@ -29,3 +29,6 @@ src/research/*.recorded.json
 src/scan/eval/*.json
 # Written by apps/api/tests/test_safety_properties.py (JANUS_WRITE_FIXTURES=1)
 src/safety/fixtures/*.json
+# Written by apps/api/tests/test_plaininfo_properties.py
+src/plaininfo/fixtures/*.json
+src/demo/plain-info.recorded.json

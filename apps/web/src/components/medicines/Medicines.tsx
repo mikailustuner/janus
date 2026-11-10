@@ -100,6 +100,15 @@ function ItemRow({
           {item.boxName}
         </h2>
         <ItemBadges item={item} />
+        {/* plain-medicine-info Req 5.1: the id is in the fragment and reaches no server. */}
+        <ButtonLink
+          href={`/medicines/info#${encodeURIComponent(item.id)}`}
+          variant="quiet"
+          className="w-fit px-2 text-sm"
+        >
+          {t("PlainInfo.link")}
+          <span className="sr-only">: {item.boxName}</span>
+        </ButtonLink>
         {item.needsConfirmation ? (
           <Chip>{t("Medicines.needsConfirmation")}</Chip>
         ) : null}
