@@ -76,7 +76,7 @@ Generated on 2026-11-08 from the committed glossary, the development database (d
 - Versions: rules 8d4881fc, medicine data 7db3a513, evidence 8a5b888f, report counts 20261108, glossary 226aaf2e.
 - Prescribing-cascade patterns: PIPC list (Rochon et al., European Geriatric Medicine 2025), licensed CC BY 4.0.
 - Report counts come from the public quarterly data of FDA AEMS (formerly FAERS).
-- The translations of clinical terms were reviewed by the project owner with AI assistance; they still need review by a pharmacist or physician and by native speakers.
+- Expert review of the translations of clinical terms has not yet been done; they still need review by a pharmacist or physician and by native speakers.
 
 ---
 
@@ -151,7 +151,7 @@ Generated on 2026-11-08 from the committed glossary, the development database (d
 - Sürümler: kurallar 8d4881fc, ilaç verileri 7db3a513, kanıtlar 8a5b888f, bildirim sayıları 20261108, sözlük 226aaf2e.
 - Reçeteleme kaskadı örüntüleri: PIPC listesi (Rochon ve ark., European Geriatric Medicine 2025), CC BY 4.0 lisanslı.
 - Bildirim sayıları FDA AEMS'nin (eski adıyla FAERS) herkese açık üç aylık verilerinden alınmıştır.
-- Klinik terimlerin çevirileri proje sahibi tarafından yapay zekâ desteğiyle gözden geçirilmiştir; bir eczacı veya hekim ve anadili bu dil olan kişiler tarafından da gözden geçirilmeleri gerekmektedir.
+- Klinik terimlerin çevirileri için uzman incelemesi henüz yapılmadı; bir eczacı veya hekim ve anadili bu dil olan kişiler tarafından gözden geçirilmeleri gerekmektedir.
 
 ---
 
@@ -226,7 +226,7 @@ Generated on 2026-11-08 from the committed glossary, the development database (d
 - Versionen: Regeln 8d4881fc, Arzneimitteldaten 7db3a513, Evidenz 8a5b888f, Meldezahlen 20261108, Glossar 226aaf2e.
 - Muster von Verschreibungskaskaden: PIPC-Liste (Rochon et al., European Geriatric Medicine 2025), Lizenz CC BY 4.0.
 - Die Meldezahlen stammen aus den öffentlichen Quartalsdaten von FDA AEMS (früher FAERS).
-- Die Übersetzungen der klinischen Begriffe wurden vom Projektverantwortlichen mit KI-Unterstützung geprüft; sie müssen noch von einer Apothekerin, einem Apotheker, einer Ärztin oder einem Arzt und von Muttersprachlern geprüft werden.
+- Eine Prüfung der Übersetzungen der klinischen Begriffe durch Fachleute ist noch nicht erfolgt; sie müssen noch von einer Apothekerin, einem Apotheker, einer Ärztin oder einem Arzt und von Muttersprachlern geprüft werden.
 
 ---
 
@@ -301,7 +301,7 @@ Generated on 2026-11-08 from the committed glossary, the development database (d
 - Versions : règles 8d4881fc, données médicaments 7db3a513, sources 8a5b888f, comptes de signalements 20261108, glossaire 226aaf2e.
 - Schémas de cascade de prescription : liste PIPC (Rochon et al., European Geriatric Medicine 2025), sous licence CC BY 4.0.
 - Les comptes de signalements proviennent des données trimestrielles publiques de la FDA AEMS (anciennement FAERS).
-- Les traductions des termes cliniques ont été revues par le responsable du projet avec l'aide de l'IA ; elles doivent encore être revues par un pharmacien ou un médecin et par des locuteurs natifs.
+- La relecture des traductions des termes cliniques par des experts n'a pas encore été faite ; elles doivent encore être revues par un pharmacien ou un médecin et par des locuteurs natifs.
 
 ---
 
@@ -376,4 +376,4 @@ Generated on 2026-11-08 from the committed glossary, the development database (d
 - Versiones: reglas 8d4881fc, datos de medicamentos 7db3a513, evidencia 8a5b888f, recuentos de informes 20261108, glosario 226aaf2e.
 - Patrones de cascada de prescripción: lista PIPC (Rochon et al., European Geriatric Medicine 2025), con licencia CC BY 4.0.
 - Los recuentos de informes proceden de los datos trimestrales públicos de FDA AEMS (antes FAERS).
-- Las traducciones de los términos clínicos fueron revisadas por el responsable del proyecto con ayuda de IA; aún deben revisarlas un farmacéutico o un médico y hablantes nativos.
+- Todavía no se ha hecho la revisión de expertos de las traducciones de los términos clínicos; aún deben revisarlas un farmacéutico o un médico y hablantes nativos.

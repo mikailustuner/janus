@@ -5,7 +5,7 @@ All rows were `proposed` when the sheet went to the owner. Full reviews: `glossa
 `glossary-localization-review.md` (both 2026-11-08). The owner's answers of 2026-11-08 are in section 4; task 16 applies
 them, after the wrong-ATC-code fix in `drug-resolution` (decision 5), which comes first.
 
-Status line (kept): reviewed by the project owner with AI assistance; needs review by a pharmacist or physician and by
+Status line (kept): expert review has not yet been done; needs review by a pharmacist or physician and by
 native speakers before any public claim (`docs/pre-launch-checklist.md`).
 
 ## 1. Verdicts

@@ -14,5 +14,5 @@ Event names and safety lines come from `janus/memory/memory_events.csv` (already
 When a name is missing in a language, the note prints the accepted English INN with "name not translated" and the ATC
 code (owner decision 2026-11-08). Clinical terms are never machine-translated at run time.
 
-Status: reviewed by the project owner with AI assistance; needs review by a pharmacist or physician and by native
+Status: expert review has not yet been done; needs review by a pharmacist or physician and by native
 speakers before any public claim (`docs/pre-launch-checklist.md`).

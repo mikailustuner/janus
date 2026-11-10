@@ -5695,7 +5695,7 @@
          "id": "about:glossary_status",
          "template": "about.glossary_status",
          "kind": "fixed",
-         "text": "The translations of clinical terms were reviewed by the project owner with AI assistance; they still need review by a pharmacist or physician and by native speakers.",
+         "text": "Expert review of the translations of clinical terms has not yet been done; they still need review by a pharmacist or physician and by native speakers.",
          "evidence_ids": [],
          "numbers": []
         }
@@ -6399,7 +6399,7 @@
          "id": "about:glossary_status",
          "template": "about.glossary_status",
          "kind": "fixed",
-         "text": "Klinik terimlerin çevirileri proje sahibi tarafından yapay zekâ desteğiyle gözden geçirilmiştir; bir eczacı veya hekim ve anadili bu dil olan kişiler tarafından da gözden geçirilmeleri gerekmektedir.",
+         "text": "Klinik terimlerin çevirileri için uzman incelemesi henüz yapılmadı; bir eczacı veya hekim ve anadili bu dil olan kişiler tarafından gözden geçirilmeleri gerekmektedir.",
          "evidence_ids": [],
          "numbers": []
         }
@@ -7103,7 +7103,7 @@
          "id": "about:glossary_status",
          "template": "about.glossary_status",
          "kind": "fixed",
-         "text": "Die Übersetzungen der klinischen Begriffe wurden vom Projektverantwortlichen mit KI-Unterstützung geprüft; sie müssen noch von einer Apothekerin, einem Apotheker, einer Ärztin oder einem Arzt und von Muttersprachlern geprüft werden.",
+         "text": "Eine Prüfung der Übersetzungen der klinischen Begriffe durch Fachleute ist noch nicht erfolgt; sie müssen noch von einer Apothekerin, einem Apotheker, einer Ärztin oder einem Arzt und von Muttersprachlern geprüft werden.",
          "evidence_ids": [],
          "numbers": []
         }
@@ -7807,7 +7807,7 @@
          "id": "about:glossary_status",
          "template": "about.glossary_status",
          "kind": "fixed",
-         "text": "Les traductions des termes cliniques ont été revues par le responsable du projet avec l'aide de l'IA ; elles doivent encore être revues par un pharmacien ou un médecin et par des locuteurs natifs.",
+         "text": "La relecture des traductions des termes cliniques par des experts n'a pas encore été faite ; elles doivent encore être revues par un pharmacien ou un médecin et par des locuteurs natifs.",
          "evidence_ids": [],
          "numbers": []
         }
@@ -8514,7 +8514,7 @@
          "id": "about:glossary_status",
          "template": "about.glossary_status",
          "kind": "fixed",
-         "text": "Las traducciones de los términos clínicos fueron revisadas por el responsable del proyecto con ayuda de IA; aún deben revisarlas un farmacéutico o un médico y hablantes nativos.",
+         "text": "Todavía no se ha hecho la revisión de expertos de las traducciones de los términos clínicos; aún deben revisarlas un farmacéutico o un médico y hablantes nativos.",
          "evidence_ids": [],
          "numbers": []
         }
