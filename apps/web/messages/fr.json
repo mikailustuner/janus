@@ -1015,6 +1015,62 @@
       "ES": "Espagne",
       "DE": "Allemagne",
       "US": "États-Unis"
+    },
+    "products": {
+      "open": "Produits contenant la même substance active dans un autre pays",
+      "title": "La même substance active dans un autre pays",
+      "summary": "Produits qui contiennent {ingredients, plural, one {la même substance active} other {exactement les mêmes substances actives}} : {names}.",
+      "caution": {
+        "title": "Avant de prendre un produit de cette liste",
+        "notSame": "Chaque produit de cette liste contient {ingredients, plural, one {la même substance active} other {les mêmes substances actives}} que cette boîte. Cela n'en fait pas le même médicament : le dosage, la forme, le mode de libération et les autres composants peuvent différer.",
+        "confirm": "Demandez confirmation à un pharmacien ou à un médecin avant de prendre un autre produit.",
+        "noDosing": "Janus ne donne aucun conseil de posologie et ne convertit aucune dose."
+      },
+      "country": "Pays où chercher",
+      "notListed": "Les noms de produits de Turquie ne sont pas affichés, car les conditions d'utilisation de la liste TİTCK ne l'autorisent pas clairement. L'Allemagne n'a pas de base de données ouverte sur les produits.",
+      "counts": {
+        "strength": "Dosage répertorié comparé à cette boîte : {same} avec le même dosage, {different} avec un dosage différent, {unknown} non comparés.",
+        "dose_form": "Groupe de formes comparé à cette boîte : {same} dans le même groupe, {different} dans un autre groupe, {unknown} non comparés."
+      },
+      "listCaption": "Produits répertoriés : {country}",
+      "strength": {
+        "same": "Même dosage répertorié :",
+        "different": "Dosage répertorié différent :",
+        "unknown": "Dosage non comparé : {reason} Répertorié :"
+      },
+      "dose_form": {
+        "same": "Même groupe de formes ({group}). Forme répertoriée :",
+        "different": "Autre groupe de formes ({group}). Forme répertoriée :",
+        "unknown": "Forme non comparée : {reason} Forme répertoriée :"
+      },
+      "flag": "Différent",
+      "notStated": "non indiqué",
+      "ingredientValue": "{name} {value}",
+      "marketed": {
+        "listed_as_marketed": "Répertorié comme commercialisé dans les données de la source.",
+        "listed_as_not_marketed": "Répertorié comme non commercialisé dans les données de la source.",
+        "not_stated": "Sans mention, la source n'indique pas si le produit est commercialisé."
+      },
+      "listings": "{count, plural, one {# entrée} other {# entrées}} dans la source avec ce nom, ce dosage et cette forme.",
+      "showing": "{shown} sur {total, plural, one {# ligne} other {# lignes}} affichées. Les entrées de même nom, même dosage et même forme apparaissent une seule fois.",
+      "more": "Afficher plus",
+      "moreError": "Les produits suivants n'ont pas pu être chargés pour le moment.",
+      "notFinished": "{count, plural, one {# entrée n'est pas affichée} other {# entrées ne sont pas affichées}} : substances en vrac, pas des médicaments finis.",
+      "loading": "Recherche des produits…",
+      "loaded": "{count, plural, one {# ligne de produit chargée} other {# lignes de produits chargées}}.",
+      "error": "Les produits n'ont pas pu être recherchés pour le moment.",
+      "notInDemo": "La liste de produits ne fait pas partie de ce patient de démonstration. Le patient de démonstration de Cologne la montre.",
+      "demoFirstPage": "La démonstration contient les {shown} premières lignes sur {total}.",
+      "notes": {
+        "title": "Comment lire cette liste",
+        "automated": "La comparaison est automatisée : Janus compare le dosage et la forme tels que les sources les publient. La relecture par des experts n'a pas encore été faite.",
+        "salt": "Les sources peuvent indiquer la quantité d'un sel ou de la base. Un dosage répertorié différent ne prouve pas une dose différente, et le même nombre répertorié ne prouve pas la même dose.",
+        "group": "Un groupe de formes est large : un comprimé et une gélule par voie orale sont dans le même groupe."
+      },
+      "notice": {
+        "listing_is_lower_bound": "Les produits dont Janus n'a pas pu reconnaître les substances ne sont pas affichés.",
+        "unknown_ingredient_keys": "Certaines substances actives de cette boîte ne figurent pas dans les données actuelles sur les médicaments ; aucune source n'a donc pu être vérifiée pour elles."
+      }
     }
   },
   "Light": {

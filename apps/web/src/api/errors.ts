@@ -26,6 +26,7 @@ export type Route =
   | "contributions/deletions"
   | "privacy/storage"
   | "passport/presence"
+  | "passport/products"
   | "light/overview"
   | "light/cards"
   | "light/validation"
@@ -65,6 +66,7 @@ export const ROUTES: readonly Route[] = [
   "contributions/deletions",
   "privacy/storage",
   "passport/presence",
+  "passport/products",
   "light/overview",
   "light/cards",
   "light/validation",
@@ -129,6 +131,7 @@ export const MESSAGE_KEYS = [
   "Donate.delete.not_found",
   "Donate.delete.invalid_token",
   "Passport.states.error",
+  "Passport.products.error",
   "Light.errors.unavailable",
   "Seance.errors.unavailable",
   "TimeMachine.errors.unavailable",
@@ -237,6 +240,8 @@ export function messageKeyFor(
   // medication-passport §3.3: no partial answer; the screen offers a retry, never "not found".
   if (route === "passport/presence" && status === 503)
     return "Passport.states.error";
+  if (route === "passport/products" && status === 503)
+    return "Passport.products.error";
   // light-face design §9: no build or no integrity snapshot (fail closed).
   if (
     route.startsWith("light/") &&

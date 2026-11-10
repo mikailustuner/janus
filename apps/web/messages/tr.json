@@ -1015,6 +1015,62 @@
       "ES": "İspanya",
       "DE": "Almanya",
       "US": "Amerika Birleşik Devletleri"
+    },
+    "products": {
+      "open": "Başka bir ülkede aynı etkin maddeyi içeren ürünler",
+      "title": "Başka bir ülkede aynı etkin madde",
+      "summary": "{ingredients, plural, one {Aynı etkin maddeyi} other {Tam olarak aynı etkin maddeleri}} içeren ürünler: {names}.",
+      "caution": {
+        "title": "Bu listedeki bir ürünü kullanmadan önce",
+        "notSame": "Bu listedeki her ürün, bu kutuyla {ingredients, plural, one {aynı etkin maddeyi} other {aynı etkin maddeleri}} içerir. Bu, onu aynı ilaç yapmaz: miktarı, formu, etkin maddeyi salma biçimi ve diğer içerikleri farklı olabilir.",
+        "confirm": "Farklı bir ürünü kullanmadan önce bir eczacıya veya doktora danışın.",
+        "noDosing": "Janus doz önerisi vermez ve dozları birbirine çevirmez."
+      },
+      "country": "Bakılacak ülke",
+      "notListed": "Türkiye'deki ürün adları gösterilmez, çünkü TİTCK listesinin kullanım koşulları buna açıkça izin vermiyor. Almanya'nın açık bir ürün veritabanı yok.",
+      "counts": {
+        "strength": "Bu kutuyla karşılaştırıldığında listedeki miktar: {same} aynı, {different} farklı, {unknown} karşılaştırılmadı.",
+        "dose_form": "Bu kutuyla karşılaştırıldığında form grubu: {same} aynı, {different} farklı, {unknown} karşılaştırılmadı."
+      },
+      "listCaption": "Listede yer alan ürünler: {country}",
+      "strength": {
+        "same": "Listede aynı miktar:",
+        "different": "Listede farklı miktar:",
+        "unknown": "Miktar karşılaştırılmadı: {reason} Listede:"
+      },
+      "dose_form": {
+        "same": "Aynı form grubu ({group}). Listedeki form:",
+        "different": "Farklı form grubu ({group}). Listedeki form:",
+        "unknown": "Form karşılaştırılmadı: {reason} Listedeki form:"
+      },
+      "flag": "Farklı",
+      "notStated": "belirtilmemiş",
+      "ingredientValue": "{name} {value}",
+      "marketed": {
+        "listed_as_marketed": "Kaynak verisinde piyasada olduğu belirtilmiş.",
+        "listed_as_not_marketed": "Kaynak verisinde piyasada olmadığı belirtilmiş.",
+        "not_stated": "Bir şey yazmıyorsa kaynak, ürünün piyasada olup olmadığını belirtmiyor."
+      },
+      "listings": "Kaynakta bu ad, miktar ve formla {count, plural, one {# kayıt} other {# kayıt}} var.",
+      "showing": "{total, plural, one {# satırdan} other {# satırdan}} {shown} tanesi gösteriliyor. Adı, miktarı ve formu aynı olan kayıtlar bir kez gösterilir.",
+      "more": "Daha fazla göster",
+      "moreError": "Diğer ürünler şu anda yüklenemedi.",
+      "notFinished": "{count, plural, one {# kayıt} other {# kayıt}} gösterilmiyor: bunlar bitmiş ilaç değil, dökme etkin madde.",
+      "loading": "Ürünlere bakılıyor…",
+      "loaded": "{count, plural, one {# ürün satırı} other {# ürün satırı}} yüklendi.",
+      "error": "Ürünlere şu anda bakılamadı.",
+      "notInDemo": "Ürün listesi bu demo hastasında yer almıyor. Köln demo hastasında görülebilir.",
+      "demoFirstPage": "Demoda {total} satırın ilk {shown} tanesi yer alıyor.",
+      "notes": {
+        "title": "Bu liste nasıl okunur",
+        "automated": "Karşılaştırma otomatiktir: Janus, miktarı ve formu kaynakların yayımladığı biçimiyle karşılaştırır. Uzman incelemesi henüz yapılmadı.",
+        "salt": "Kaynaklar bir tuzun ya da bazın miktarını belirtebilir. Listede farklı bir miktar olması dozun farklı olduğunu, aynı sayının olması da dozun aynı olduğunu kanıtlamaz.",
+        "group": "Form grubu geniştir: ağızdan alınan tablet ile kapsül aynı gruptadır."
+      },
+      "notice": {
+        "listing_is_lower_bound": "Janus'un etkin maddelerini tanıyamadığı ürünler listelenmedi.",
+        "unknown_ingredient_keys": "Bu kutunun bazı etkin maddeleri güncel ilaç verisinde yok; bu yüzden onlar için hiçbir kaynak kontrol edilemedi."
+      }
     }
   },
   "Light": {

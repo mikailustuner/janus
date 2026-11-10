@@ -55,6 +55,7 @@ const DEMO = [
   "/medicines",
   "/passport",
   "/passport/item#demo-istanbul-0",
+  "/passport/products#demo-istanbul-0",
   "/timeline",
   "/results",
   "/results/finding#1",

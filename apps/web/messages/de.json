@@ -1015,6 +1015,62 @@
       "ES": "Spanien",
       "DE": "Deutschland",
       "US": "Vereinigte Staaten"
+    },
+    "products": {
+      "open": "Produkte mit demselben Wirkstoff in einem anderen Land",
+      "title": "Derselbe Wirkstoff in einem anderen Land",
+      "summary": "Produkte, die {ingredients, plural, one {denselben Wirkstoff} other {genau dieselben Wirkstoffe}} enthalten: {names}.",
+      "caution": {
+        "title": "Bevor Sie ein Produkt aus dieser Liste einnehmen",
+        "notSame": "Jedes Produkt in dieser Liste enthält {ingredients, plural, one {denselben Wirkstoff} other {dieselben Wirkstoffe}} wie diese Packung. Es ist deshalb nicht dasselbe Medikament: Wirkstärke, Darreichungsform, Wirkstofffreisetzung und sonstige Bestandteile können abweichen.",
+        "confirm": "Fragen Sie in einer Apotheke, Ihre Ärztin oder Ihren Arzt, bevor Sie ein anderes Produkt einnehmen.",
+        "noDosing": "Janus gibt keine Dosierungsempfehlung und rechnet keine Dosis um."
+      },
+      "country": "Land, in dem gesucht wird",
+      "notListed": "Produktnamen aus der Türkei werden nicht angezeigt, weil die Nutzungsbedingungen der TİTCK-Liste das nicht eindeutig erlauben. Für Deutschland gibt es keine offene Produktdatenbank.",
+      "counts": {
+        "strength": "Gelistete Wirkstärke im Vergleich mit dieser Packung: {same} gleich, {different} abweichend, {unknown} nicht verglichen.",
+        "dose_form": "Formgruppe im Vergleich mit dieser Packung: {same} gleich, {different} abweichend, {unknown} nicht verglichen."
+      },
+      "listCaption": "Gelistete Produkte: {country}",
+      "strength": {
+        "same": "Gleiche gelistete Wirkstärke:",
+        "different": "Abweichende gelistete Wirkstärke:",
+        "unknown": "Wirkstärke nicht verglichen: {reason} Gelistet:"
+      },
+      "dose_form": {
+        "same": "Gleiche Formgruppe ({group}). Gelistete Form:",
+        "different": "Andere Formgruppe ({group}). Gelistete Form:",
+        "unknown": "Form nicht verglichen: {reason} Gelistete Form:"
+      },
+      "flag": "Abweichend",
+      "notStated": "nicht angegeben",
+      "ingredientValue": "{name} {value}",
+      "marketed": {
+        "listed_as_marketed": "In den Quelldaten als im Handel gelistet.",
+        "listed_as_not_marketed": "In den Quelldaten als nicht im Handel gelistet.",
+        "not_stated": "Steht nichts dabei, gibt die Quelle nicht an, ob das Produkt im Handel ist."
+      },
+      "listings": "{count, plural, one {# Eintrag} other {# Einträge}} in der Quelle mit diesem Namen, dieser Wirkstärke und dieser Form.",
+      "showing": "{shown} von {total, plural, one {# Zeile} other {# Zeilen}} angezeigt. Einträge mit gleichem Namen, gleicher Wirkstärke und gleicher Form erscheinen einmal.",
+      "more": "Mehr anzeigen",
+      "moreError": "Weitere Produkte konnten gerade nicht geladen werden.",
+      "notFinished": "{count, plural, one {# Eintrag wird} other {# Einträge werden}} nicht angezeigt: Wirkstoffe als Bulkware, keine fertigen Medikamente.",
+      "loading": "Produkte werden nachgeschlagen …",
+      "loaded": "{count, plural, one {# Produktzeile} other {# Produktzeilen}} geladen.",
+      "error": "Die Produkte konnten gerade nicht nachgeschlagen werden.",
+      "notInDemo": "Die Produktliste gehört nicht zu diesem Demo-Patienten. Der Demo-Patient aus Köln zeigt sie.",
+      "demoFirstPage": "Die Demo enthält die ersten {shown} von {total} Zeilen.",
+      "notes": {
+        "title": "So lesen Sie diese Liste",
+        "automated": "Der Vergleich erfolgt automatisch: Janus vergleicht Wirkstärke und Form so, wie die Quellen sie veröffentlichen. Eine Prüfung durch Fachleute ist noch nicht erfolgt.",
+        "salt": "Quellen können die Menge eines Salzes oder der Base angeben. Eine abweichende gelistete Wirkstärke beweist keine andere Dosis, und dieselbe gelistete Zahl beweist nicht dieselbe Dosis.",
+        "group": "Eine Formgruppe ist weit gefasst: Tablette und Kapsel zum Einnehmen gehören zur selben Gruppe."
+      },
+      "notice": {
+        "listing_is_lower_bound": "Produkte, deren Wirkstoffe Janus nicht erkennen konnte, werden nicht aufgeführt.",
+        "unknown_ingredient_keys": "Einige Wirkstoffe dieser Packung sind nicht in den aktuellen Arzneimitteldaten; für sie konnte keine Quelle geprüft werden."
+      }
     }
   },
   "Light": {

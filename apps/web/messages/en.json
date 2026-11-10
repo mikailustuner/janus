@@ -1015,6 +1015,62 @@
       "ES": "Spain",
       "DE": "Germany",
       "US": "United States"
+    },
+    "products": {
+      "open": "Products with the same active ingredient in another country",
+      "title": "Same active ingredient in another country",
+      "summary": "Products that contain {ingredients, plural, one {the same active ingredient} other {exactly the same active ingredients}}: {names}.",
+      "caution": {
+        "title": "Before you take a product from this list",
+        "notSame": "Each product in this list contains {ingredients, plural, one {the same active ingredient} other {the same active ingredients}} as this box. That does not make it the same medicine: the strength, the form, the way the ingredient is released and the other ingredients can differ.",
+        "confirm": "Confirm with a pharmacist or doctor before you take a different product.",
+        "noDosing": "Janus gives no dosing advice and does not convert doses."
+      },
+      "country": "Country to look in",
+      "notListed": "Product names from Türkiye are not shown, because the terms of the TİTCK list do not clearly allow it. Germany has no open product database.",
+      "counts": {
+        "strength": "Listed strength compared with this box: {same} same, {different} different, {unknown} not compared.",
+        "dose_form": "Form group compared with this box: {same} same, {different} different, {unknown} not compared."
+      },
+      "listCaption": "Listed products: {country}",
+      "strength": {
+        "same": "Same listed strength:",
+        "different": "Different listed strength:",
+        "unknown": "Strength not compared: {reason} Listed:"
+      },
+      "dose_form": {
+        "same": "Same form group ({group}). Listed form:",
+        "different": "Different form group ({group}). Listed form:",
+        "unknown": "Form not compared: {reason} Listed form:"
+      },
+      "flag": "Different",
+      "notStated": "not stated",
+      "ingredientValue": "{name} {value}",
+      "marketed": {
+        "listed_as_marketed": "Listed as marketed in the source data.",
+        "listed_as_not_marketed": "Listed as not marketed in the source data.",
+        "not_stated": "Where nothing is shown, the source does not state whether the product is marketed."
+      },
+      "listings": "{count, plural, one {# entry} other {# entries}} in the source with this name, strength and form.",
+      "showing": "Showing {shown} of {total, plural, one {# row} other {# rows}}. Entries with the same name, strength and form are shown once.",
+      "more": "Show more",
+      "moreError": "More products could not be loaded now.",
+      "notFinished": "{count, plural, one {# entry is} other {# entries are}} not shown: bulk ingredients, not finished medicines.",
+      "loading": "Looking up the products…",
+      "loaded": "{count, plural, one {# product row} other {# product rows}} loaded.",
+      "error": "The products could not be looked up now.",
+      "notInDemo": "The product list is not part of this demo patient. The Cologne demo patient shows it.",
+      "demoFirstPage": "The demo holds the first {shown} of {total} rows.",
+      "notes": {
+        "title": "How to read this list",
+        "automated": "The comparison is automated: Janus compares the strength and the form as the sources publish them. Expert review has not yet been done.",
+        "salt": "Sources may state the amount of a salt or of the base. A different listed strength does not prove a different dose, and the same listed number does not prove the same dose.",
+        "group": "A form group is broad: a tablet and a capsule taken by mouth are in the same group."
+      },
+      "notice": {
+        "listing_is_lower_bound": "Products whose ingredients Janus could not recognise are not listed.",
+        "unknown_ingredient_keys": "Some active ingredients of this box are not in the current medicine data, so no source could be checked for them."
+      }
     }
   },
   "Light": {

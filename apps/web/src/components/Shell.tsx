@@ -197,6 +197,7 @@ const WIDE = [
   "/settings",
   "/passport",
   "/passport/item",
+  "/passport/products",
   "/results/finding",
   "/cascades",
   "/results/summary",
