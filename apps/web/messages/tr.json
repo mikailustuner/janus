@@ -590,6 +590,10 @@
       "simulate": {
         "title": "Sıraya alınan model çalıştırmaları",
         "body": "Kompartman modelini veya bir httk sanal popülasyon çalıştırmasını Janus sunucusunda, küçük bir sırada çalıştırın."
+      },
+      "forResearchers": {
+        "title": "Araştırmacılar için Janus",
+        "body": "Tek sayfa: açık veri, API, MCP sunucusu, CDS Hooks, işlem hatları, çalışan bir örnek ve nasıl atıf yapılır."
       }
     }
   },
@@ -2757,6 +2761,110 @@
     },
     "errors": {
       "unavailable": "İlaç bilgisi şu anda kullanılamıyor. Lütfen daha sonra yeniden deneyin."
+    }
+  },
+  "ForResearchers": {
+    "title": "Araştırmacılar için Janus",
+    "summary": "Açık veri, API, MCP sunucusu, CDS Hooks, işlem hatları ve çalışan bir örnek tek yerde.",
+    "intro": "Bu sayfadaki her şey bugün depoda bulunuyor. Bir kaynak seçin, tek bir istek çalıştırın, örneği çalıştırın, sınırlamaları okuyun. Sayılar rapor sayısıdır, kişi sayısı değildir.",
+    "status": "Araştırma prototipi, tıbbi cihaz değildir. Uzman incelemesi henüz yapılmadı.",
+    "path": {
+      "title": "On dakikada başlayın",
+      "summary": "Dört adım, hesap gerekmez.",
+      "s1": "Bir kaynak seçin: FAERS başlangıç süresi tablosu iyi bir ilk adımdır.",
+      "s2": "curl ile tek bir istek çalıştırın (API kartına bakın).",
+      "s3": "Çalışan örneği çalıştırın: tek dosya, yalnızca standart kütüphane.",
+      "s4": "Bir sayıyı kullanmadan önce sınırlamaları okuyun."
+    },
+    "data": {
+      "title": "Açık veri",
+      "summary": "data/open/ altındaki sürümlü dosyalar, her dosyanın kendi lisansı var.",
+      "cascade": "Janus'un sınıf eşlemesiyle 65 PIPC satırı ve destekleyici eşlemeler. Sürüm 1.0.0. Lisanslar: CC BY 4.0 (PIPC satırları), Apache-2.0 (eşlemeler).",
+      "onset": "65 PIPC satırı için FAERS'ta ilaç başlangıcından olaya geçen süre, yalnızca betimleyici. CC BY 4.0. Sürüm dizesi dosyada ve API yanıtında bulunur.",
+      "quality": "Haftalık etkin madde veri kalitesi bulguları. CC BY 4.0.",
+      "outcomes": "Açık sonuç veri kümesi (yalnızca API, CC BY 4.0). Henüz yayımlanmış hücre yok: dosya geçerli ve boştur.",
+      "licences": "Bir veri kümesini sürüm dizesi ve anlık görüntü tarihiyle anın. Her dosya kendi lisansını ve kaynak atfını korur.",
+      "doc": "Açık veri rehberi"
+    },
+    "api": {
+      "title": "Herkese açık, salt okunur API",
+      "summary": "İstek gövdesi olmayan ve yayımlanmış veriyi döndüren yollar.",
+      "body": "Temel adres {base}. Bu yollar kişisel veri taşımaz. Hatalar, error alanında kısa kodlardır.",
+      "routes": {
+        "cascade": "Janus'un sınıf eşlemesiyle 65 PIPC satırı",
+        "onset": "FAERS başlangıç süresi tablosu, JSON veya CSV",
+        "onsetRow": "uyarılarıyla tek satır (1-65)",
+        "quality": "haftalık veri kalitesi bulguları; JSON, CSV veya Markdown",
+        "outcomes": "açık sonuç veri kümesi, JSON veya CSV (yalnızca yayımlanmış hücreler)",
+        "memory": "FAERS sayım anlık görüntüsü: yapı, tarih, çeyrekler",
+        "timemachine": "in silico zaman makinesi verisi (keşif amaçlı)",
+        "compounds": "keşif amaçlı simülasyonların izin listesi",
+        "cds": "CDS Hooks keşif belgesi"
+      },
+      "examples": "Örnek istekler (2026-11-10 çıktıları; her sürümde değişir)",
+      "rate": "Hız sınırları: depo bunları yalnızca sıraya alınan simülasyonlar için belirtir (istemci başına 30 sn'de 3 ve 10 dk'da 5 gönderim, dakikada 120 sorgulama; yanıt Retry-After ile 429). Salt okunur yollar için sınır belirtilmemiştir: ölçülü kullanın, toplu kullanım için data/open/ dosyalarını indirin. Herkese açık site varsayılan Python kullanıcı aracısını reddeder (HTTP 403): kendi kullanıcı aracınızı gönderin.",
+      "noPost": "POST yolları (ilaç çözümleme, kaskad kontrolü, notlar, bağışlar) bir kişinin ilaçlarını taşır ve herkese açık API değildir.",
+      "openapi": "OpenAPI tanımı",
+      "doc": "Yol tablosu ve kurallar"
+    },
+    "example": {
+      "title": "Çalışan örnek",
+      "summary": "20 satırda FAERS başlangıç süresi tablosu",
+      "body": "Başlangıç süresi tablosunu çeker, medyan başlangıç süresi olan satırları sayar ve en çok rapora sahip üç satırı listeler. Tek istek, yalnızca standart kütüphane. Yerel bir API için JANUS_API_URL değerini ayarlayın.",
+      "code": "Python (onset_summary.py)",
+      "output": "2026-11-10 tarihli çıktı",
+      "caveat": "Yalnızca betimleme: medyan, yeterli rapor ve tam tarih olan satırlar için yayımlanır; sıfırıncı gün ve ayın 1'i tarihleri yığılır; sayılar ne nedensellik ne de görülme sıklığıdır.",
+      "file": "Dosyayı aç"
+    },
+    "mcp": {
+      "title": "MCP sunucusu",
+      "summary": "MCP istemcileri için yedi araç",
+      "body": "apps/mcp, Claude veya Kiro gibi MCP istemcileri için API'nin ince bir istemcisidir. Araçlar: janus_resolve_code, janus_resolve_ndc, janus_search_medicines, janus_check_cascades, janus_cascade_package_rows, janus_time_machine_catalogue, janus_time_machine_cascade. Her sonuç bir güvenlik bloğu taşır; çağrılar arasında hiçbir şey günlüğe yazılmaz veya saklanmaz.",
+      "run": "Çalıştırın (stdio)",
+      "kiro": "Kiro: .kiro/settings/mcp.json",
+      "doc": "MCP rehberi"
+    },
+    "cds": {
+      "title": "CDS Hooks hizmeti",
+      "summary": "order-select ve order-sign kancaları",
+      "sandbox": "Yalnızca sandbox için, klinik kullanım için değildir. Canlı bir EHR'ye bağlamayın.",
+      "body": "janus-cascade hizmeti, taslak ilaç siparişlerini PIPC listesiyle karşılaştırır. Başlangıç tarihleri okunmaz. Kart çıkmaması, ilaçlarda sorun olmadığı anlamına gelmez.",
+      "discovery": "Keşif ve hizmet",
+      "noAuth": "İstemci kimlik doğrulaması (imzalı JWT) henüz yok.",
+      "doc": "CDS Hooks rehberi ve sandbox adımları"
+    },
+    "pipelines": {
+      "title": "Yeniden üretilebilir işlem hatları",
+      "summary": "Kaynak başına bir iş",
+      "body": "pipelines/, her kaynak için bir iş içeren ayrı bir uv projesidir. Kaynak kaydı sources.toml'dur; NOTICE dosyası ondan üretilir.",
+      "run": "Bir işi yerelde çalıştırın",
+      "notes": "Çıkış kodları: 0 başarılı, 1 başarısız, 3 inceleme gerekiyor, 4 reddedildi. Çıktılar JANUS_DATA_DIR içine yazılır. Bazı kaynaklar büyüktür (FAERS yaklaşık 250 MB). Yeniden dağıtım koşulları belirsiz listeler çalışma anında indirilir ve asla depoya eklenmez.",
+      "doc": "İşlem hatları rehberi"
+    },
+    "notes": {
+      "title": "Araştırma notları",
+      "summary": "İki taslak not",
+      "status": "Taslak notlar, hakem değerlendirmesinden geçmedi. Uzman incelemesi henüz yapılmadı.",
+      "httk": "HTTK-Pop ile yaşlı erişkin maruziyeti, FDA etiket oranlarıyla karşılaştırma",
+      "negative": "Olumsuz ve boş sonuçlar: önceden kaydedilmiş yedi hipotez"
+    },
+    "limits": {
+      "title": "Sınırlamalar ve hata nasıl bildirilir",
+      "summary": "Bir sayıyı kullanmadan önce bunları okuyun.",
+      "l1": "Sayılar rapor sayısıdır, kişi sayısı değildir. FAERS kendiliğinden bildirimdir: görülme sıklığı değildir, vakalar arasında tekilleştirilmemiştir.",
+      "l2": "Başlangıç süresi tablosu betimleyicidir, nedensellik göstermez. Zaman makinesi in silico ve keşif amaçlıdır.",
+      "l3": "Eşlemeler otomatik kurallar ve testlerle yapılır. Uzman incelemesi henüz yapılmadı.",
+      "l4": "CDS Hooks hizmetinde henüz istemci kimlik doğrulaması yoktur ve yalnızca sandbox içindir.",
+      "report": "Bir dosyada, bir sayıda veya bu sayfada hata mı buldunuz? GitHub'da bir issue açın. Issue'ya kişisel veya hasta verisi yazmayın. Kaynak veri tabanındaki bir hatayı kaynağa bildirmeden önce bir eczacıya kontrol ettirin.",
+      "issues": "GitHub issue'ları",
+      "corrections": "Düzeltme nasıl önerilir"
+    },
+    "cite": {
+      "title": "Nasıl atıf yapılır",
+      "summary": "Kullandığınız sürüme atıf yapın.",
+      "body": "Henüz CITATION.cff yok: proje atıf bilgilerini yayımlamadı. O zamana kadar veri kümesine sürüm dizesi ve anlık görüntü tarihiyle atıf yapın:",
+      "example": "Atıf metni",
+      "pipc": "PIPC listesinin kendisi:"
     }
   }
 }

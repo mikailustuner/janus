@@ -42,6 +42,7 @@ const PLAIN = [
   "/demo",
   "/demo/codes",
   "/research",
+  "/research/for-researchers",
   "/scan",
   "/confirm",
   "/privacy",

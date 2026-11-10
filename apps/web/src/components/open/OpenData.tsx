@@ -13,6 +13,7 @@ import {
   GroupedList,
   LargeTitle,
   Row,
+  RowLink,
   StatGrid,
   StatTile,
   SummaryCard,
@@ -304,6 +305,14 @@ function Package() {
         </ul>
       </SummaryCard>
       <GroupedList data-testid="open-links">
+        <RowLink href="/research/for-researchers">
+          <span className="flex flex-col gap-0.5">
+            <span>{t("ForResearchers.title")}</span>
+            <span className="text-sm font-normal text-muted">
+              {t("ForResearchers.summary")}
+            </span>
+          </span>
+        </RowLink>
         <li className="row-link">
           <a href={`${REPO}/data/open/cascade-package`} {...EXTERNAL}>
             <span className="min-w-0 flex-1">{t("OpenData.package.open")}</span>

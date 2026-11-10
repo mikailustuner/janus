@@ -27,7 +27,7 @@ const CLAUDE_DESKTOP = `{
   }
 }`;
 
-const KIRO = `{
+export const KIRO = `{
   "mcpServers": {
     "janus": {
       "command": "uv",
@@ -54,7 +54,7 @@ function useApiBase(): string {
 }
 
 /** A code block with a copy button; the block scrolls inside its own box (no page scroll). */
-function Snippet({
+export function Snippet({
   label,
   code,
   id,
