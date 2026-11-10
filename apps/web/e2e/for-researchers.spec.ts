@@ -47,9 +47,9 @@ for (const theme of THEMES)
       await expect(page.getByRole("main").getByTestId("fr-status")).toHaveText(
         m.ForResearchers.status,
       );
-      await expect(page.getByTestId("fr-notes-status")).toHaveText(
-        m.ForResearchers.notes.status,
-      );
+      await expect(
+        page.getByRole("main").getByTestId("fr-notes-status"),
+      ).toHaveText(m.ForResearchers.notes.status);
       await expect(page.getByTestId("disclaimer")).toHaveText(
         m.Disclaimer.text,
       );
