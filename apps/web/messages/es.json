@@ -736,7 +736,7 @@
     "intro": "Janus es un prototipo de investigación, no un producto sanitario. Esta página explica qué se queda en su dispositivo, qué se envía, qué se guarda, durante cuánto tiempo y cómo borrarlo.",
     "device": {
       "title": "Qué se queda en este dispositivo",
-      "body": "Las fotos de cajas y etiquetas, el texto reconocido, su lista de medicamentos con los nombres de las cajas, sus ajustes, los tokens del circuito de resultados y de las donaciones, y los recordatorios. Solo están en este navegador; Janus no usa cuentas."
+      "body": "Las fotos de cajas y etiquetas, el texto reconocido, su lista de medicamentos con los nombres de las cajas y, en una caja escaneada, su número de lote, sus ajustes, los tokens del circuito de resultados y de las donaciones, y los recordatorios. Solo están en este navegador; Janus no usa cuentas."
     },
     "sent": {
       "title": "Qué se envía a Janus",
@@ -2481,6 +2481,56 @@
       "bias": "Medido frente a datos humanos de Obach 2008 ({n} fármacos, consultados el {date}): las semividas de httk son, en media geométrica, {bias} veces {direction}; el {within} % dentro de un factor 2; error geométrico medio de un factor {gmfe}.",
       "notValidated": "Las concentraciones en estado estacionario no están validadas con datos medidos; no hay intervalo calibrado para ellas.",
       "compartmental": "Sin intervalo calibrado: las bandas muestran la dispersión de la población virtual, no el error del modelo. Concentraciones, picos y áreas no están validados con datos medidos más allá del estudio de arriba."
+    }
+  },
+  "Recall": {
+    "checking": "Comprobando los registros de retirada de la FDA…",
+    "listLabel": "Registros de retirada de la FDA que mencionan este código de producto",
+    "title": {
+      "product": "Este producto figura en un registro de retirada de la FDA",
+      "lot": "Este producto y este lote figuran en un registro de retirada de la FDA"
+    },
+    "number": "Número de retirada",
+    "reportDate": "Fecha del informe",
+    "classification": "Clasificación (tal como la publica la FDA)",
+    "status": "Estado (tal como se publicó)",
+    "statusValue": {
+      "Ongoing": "En curso (Ongoing)",
+      "Completed": "Completada (Completed)",
+      "Terminated": "Finalizada (Terminated)",
+      "other": "{status}"
+    },
+    "terminatedOn": "Finalizada el {date} (Terminated)",
+    "statusNote": "La FDA no actualiza el estado en estos informes después de clasificar una retirada; el estado puede haber cambiado desde entonces.",
+    "reason": "Motivo, citado del registro (en inglés)",
+    "firm": "Empresa que retira el producto",
+    "notGiven": "No indicado en el registro",
+    "ndc": {
+      "package": "El registro menciona el código de envase de este producto.",
+      "product": "El registro menciona el código de este producto. Puede referirse a otro tamaño de envase."
+    },
+    "lot": {
+      "listed": "La lectura automatizada encontró el lote de su caja ({lot}) en el texto de lotes del registro.",
+      "not_listed": "La lectura automatizada no encontró el lote de su caja ({lot}) en el texto de lotes del registro. Ese texto está escrito libremente y puede describir los lotes de otras maneras. Compárelo con su caja.",
+      "not_given": "Janus no conoce el lote de su caja. El lote está impreso en la caja; compárelo con el texto de lotes del registro."
+    },
+    "details": "Texto de lotes y descripción del producto en el registro",
+    "lotText": "Texto de lotes, citado del registro (en inglés)",
+    "lotTextCut": "El texto de lotes es más largo de lo que se muestra aquí. El texto completo está en el registro.",
+    "productText": "Descripción del producto, citada del registro (en inglés)",
+    "advice": "Janus no puede decir si su caja forma parte de esta retirada. Un farmacéutico puede comprobarlo: muéstrele la caja y este número de retirada.",
+    "openRecord": "Abrir el registro en openFDA (formato de datos)",
+    "search": "Buscar en los informes de retirada de la FDA",
+    "more": "{count, plural, one {# registro más menciona este código de producto.} other {# registros más mencionan este código de producto.}} La búsqueda de retiradas de la FDA los muestra todos.",
+    "none": "Se comprobaron los registros de retirada de la FDA hasta el {date} (solo Estados Unidos): ningún registro menciona este código de producto. Esto no significa que este medicamento esté libre de problemas.",
+    "about": "Acerca de esta comprobación",
+    "coverage": "{without} de {records} registros no indican ningún código de producto en su texto y no pueden encontrarse de esta manera.",
+    "outdated": "Los datos de retiradas que tiene Janus tienen más de dos semanas.",
+    "method": "Búsqueda automatizada en los informes de cumplimiento («Enforcement Reports») de la FDA (openFDA, datos del {date}), solo Estados Unidos. La FDA no publica estos informes como un servicio de alertas. Todavía no se ha hecho la revisión de expertos.",
+    "demo": "La comprobación de retiradas no funciona en la demo: los productos de la demo son inventados.",
+    "failed": "Janus no pudo comprobar los registros de retirada de la FDA.",
+    "errors": {
+      "unavailable": "Los registros de retirada no están disponibles ahora. Inténtelo más tarde."
     }
   }
 }

@@ -736,7 +736,7 @@
     "intro": "Janus bir araştırma prototipidir, tıbbi cihaz değildir. Bu sayfa neyin cihazınızda kaldığını, neyin gönderildiğini, neyin saklandığını, ne kadar süre saklandığını ve nasıl silineceğini açıklar.",
     "device": {
       "title": "Bu cihazda kalanlar",
-      "body": "Kutuların ve etiketlerin fotoğrafları, okunan metin, kutulardaki adlarla birlikte ilaç listeniz, ayarlarınız, sonuç döngüsünün ve bağışların belirteçleri ve hatırlatmalar. Bunlar yalnızca bu tarayıcıda bulunur; Janus'ta hesap yoktur."
+      "body": "Kutuların ve etiketlerin fotoğrafları, okunan metin, kutulardaki adlarla ve taranan kutunun parti numarasıyla birlikte ilaç listeniz, ayarlarınız, sonuç döngüsünün ve bağışların belirteçleri ve hatırlatmalar. Bunlar yalnızca bu tarayıcıda bulunur; Janus'ta hesap yoktur."
     },
     "sent": {
       "title": "Janus'a gönderilenler",
@@ -2481,6 +2481,56 @@
       "bias": "Obach 2008 insan verilerine karşı ölçüldü ({n} ilaç, erişim {date}): httk yarılanma ömürleri geometrik ortalamada {bias} kat {direction}; %{within} 2 kat içinde; geometrik ortalama kat hatası {gmfe}.",
       "notValidated": "Kararlı durum konsantrasyonları ölçülmüş verilere karşı doğrulanmadı; bunlar için kalibre aralık yoktur.",
       "compartmental": "Kalibre aralık yok: bantlar modelin hatasını değil, sanal popülasyonun yayılımını gösterir. Konsantrasyonlar, tepe değerler ve alanlar yukarıdaki tek çalışmanın ötesinde ölçülmüş verilere karşı doğrulanmadı."
+    }
+  },
+  "Recall": {
+    "checking": "FDA geri çağırma kayıtları kontrol ediliyor…",
+    "listLabel": "Bu ürün kodunu belirten FDA geri çağırma kayıtları",
+    "title": {
+      "product": "Bu ürün bir FDA geri çağırma kaydında yer alıyor",
+      "lot": "Bu ürün ve parti bir FDA geri çağırma kaydında yer alıyor"
+    },
+    "number": "Geri çağırma numarası",
+    "reportDate": "Rapor tarihi",
+    "classification": "Sınıflandırma (FDA'nın yayımladığı haliyle)",
+    "status": "Durum (yayımlandığı haliyle)",
+    "statusValue": {
+      "Ongoing": "Sürüyor (Ongoing)",
+      "Completed": "Tamamlandı (Completed)",
+      "Terminated": "Sonlandırıldı (Terminated)",
+      "other": "{status}"
+    },
+    "terminatedOn": "{date} tarihinde sonlandırıldı (Terminated)",
+    "statusNote": "FDA, bir geri çağırma sınıflandırıldıktan sonra bu raporlardaki durumu güncellemez; durum o zamandan beri değişmiş olabilir.",
+    "reason": "Gerekçe, kayıttan alıntı (İngilizce)",
+    "firm": "Geri çağıran firma",
+    "notGiven": "Kayıtta belirtilmemiş",
+    "ndc": {
+      "package": "Kayıt, bu ürünün ambalaj kodunu belirtiyor.",
+      "product": "Kayıt, bu ürünün kodunu belirtiyor. Başka bir ambalaj boyutuyla ilgili olabilir."
+    },
+    "lot": {
+      "listed": "Otomatik okuma, kutunuzdaki parti numarasını ({lot}) kaydın parti metninde buldu.",
+      "not_listed": "Otomatik okuma, kutunuzdaki parti numarasını ({lot}) kaydın parti metninde bulamadı. Bu metin serbest biçimde yazılır ve partileri başka şekillerde tarif edebilir. Lütfen metni kutunuzla karşılaştırın.",
+      "not_given": "Janus kutunuzun parti numarasını bilmiyor. Parti numarası kutunun üzerinde yazar; lütfen bunu kaydın parti metniyle karşılaştırın."
+    },
+    "details": "Kayıttaki parti metni ve ürün açıklaması",
+    "lotText": "Parti metni, kayıttan alıntı (İngilizce)",
+    "lotTextCut": "Parti metni burada gösterilenden uzundur. Metnin tamamı kayıttadır.",
+    "productText": "Ürün açıklaması, kayıttan alıntı (İngilizce)",
+    "advice": "Janus, kutunuzun bu geri çağırmanın kapsamında olup olmadığını söyleyemez. Bir eczacı bunu kontrol edebilir: ona kutuyu ve bu geri çağırma numarasını gösterin.",
+    "openRecord": "Kaydı openFDA'da aç (veri biçimi)",
+    "search": "FDA geri çağırma raporlarında ara",
+    "more": "{count, plural, one {# kayıt daha bu ürün kodunu belirtiyor.} other {# kayıt daha bu ürün kodunu belirtiyor.}} FDA geri çağırma araması hepsini gösterir.",
+    "none": "{date} tarihine kadarki FDA geri çağırma kayıtları (yalnızca Amerika Birleşik Devletleri) kontrol edildi: hiçbir kayıt bu ürün kodunu belirtmiyor. Bu, bu ilaçta hiçbir sorun olmadığı anlamına gelmez.",
+    "about": "Bu kontrol hakkında",
+    "coverage": "{records} kaydın {without} tanesi metninde ürün kodu belirtmiyor ve bu yolla bulunamaz.",
+    "outdated": "Janus'taki geri çağırma verisi iki haftadan eski.",
+    "method": "FDA'nın “Enforcement Reports” adlı raporlarında otomatik arama (openFDA, {date} tarihli veri), yalnızca Amerika Birleşik Devletleri. FDA bu raporları bir uyarı hizmeti olarak yayımlamaz. Uzman incelemesi henüz yapılmadı.",
+    "demo": "Geri çağırma kontrolü demoda çalışmaz: demo ürünleri uydurmadır.",
+    "failed": "Janus FDA geri çağırma kayıtlarını kontrol edemedi.",
+    "errors": {
+      "unavailable": "Geri çağırma kayıtları şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin."
     }
   }
 }

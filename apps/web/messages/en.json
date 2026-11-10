@@ -736,7 +736,7 @@
     "intro": "Janus is a research prototype, not a medical device. This page says what stays on your device, what is sent, what is stored, for how long, and how to delete it.",
     "device": {
       "title": "What stays on this device",
-      "body": "Photos of boxes and labels, the recognised text, your medicine list with the names on the boxes, your settings, the tokens of the outcome loop and of donations, and reminders. They live only in this browser; Janus has no account."
+      "body": "Photos of boxes and labels, the recognised text, your medicine list with the names on the boxes and, for a scanned box, its lot number, your settings, the tokens of the outcome loop and of donations, and reminders. They live only in this browser; Janus has no account."
     },
     "sent": {
       "title": "What is sent to Janus",
@@ -2481,6 +2481,56 @@
       "bias": "Measured against Obach 2008 human data ({n} drugs, retrieved {date}): httk half-lives are {bias}-fold {direction} on geometric average; {within}% within 2-fold; geometric mean fold error {gmfe}.",
       "notValidated": "The steady-state concentrations are not validated against measured data; no calibrated interval exists for them.",
       "compartmental": "No calibrated interval: the bands show the spread of the virtual population, not the model's error. Concentrations, peaks and areas are not validated against measured data beyond the one study above."
+    }
+  },
+  "Recall": {
+    "checking": "Checking the FDA recall records…",
+    "listLabel": "FDA recall records that name this product code",
+    "title": {
+      "product": "This product appears in an FDA recall record",
+      "lot": "This product and lot appear in an FDA recall record"
+    },
+    "number": "Recall number",
+    "reportDate": "Report date",
+    "classification": "Classification (as published by FDA)",
+    "status": "Status (as published)",
+    "statusValue": {
+      "Ongoing": "Ongoing",
+      "Completed": "Completed",
+      "Terminated": "Terminated",
+      "other": "{status}"
+    },
+    "terminatedOn": "Terminated on {date}",
+    "statusNote": "FDA does not update the status in these reports after a recall is classified, so it may have changed since.",
+    "reason": "Reason, quoted from the record (in English)",
+    "firm": "Recalling firm",
+    "notGiven": "Not given in the record",
+    "ndc": {
+      "package": "The record names the package code of this product.",
+      "product": "The record names the code of this product. It may be about another package size."
+    },
+    "lot": {
+      "listed": "The automated reading found the lot on your box ({lot}) in the lot text of the record.",
+      "not_listed": "The automated reading did not find the lot on your box ({lot}) in the lot text of the record. That text is written freely and can describe lots in other ways. Please compare it with your box.",
+      "not_given": "Janus does not know the lot of your box. The lot is printed on the box; please compare it with the lot text of the record."
+    },
+    "details": "Lot text and product description from the record",
+    "lotText": "Lot text, quoted from the record (in English)",
+    "lotTextCut": "The lot text is longer than shown here. The full text is in the record.",
+    "productText": "Product description, quoted from the record (in English)",
+    "advice": "Janus cannot tell whether your box is part of this recall. A pharmacist can check it: show them the box and this recall number.",
+    "openRecord": "Open the record at openFDA (data format)",
+    "search": "Search the FDA recall reports",
+    "more": "{count, plural, one {# more record names this product code.} other {# more records name this product code.}} The FDA recall search shows all of them.",
+    "none": "FDA recall records up to {date} (United States only) were checked: no record names this product code. This does not mean this medicine is free of problems.",
+    "about": "About this check",
+    "coverage": "{without} of {records} records state no product code in their text and cannot be found this way.",
+    "outdated": "The recall data Janus holds is more than two weeks old.",
+    "method": "Automated lookup in the FDA enforcement reports (openFDA, data of {date}), United States only. FDA does not publish these reports as an alert service. Expert review has not yet been done.",
+    "demo": "The recall check does not run in the demo: the demo products are invented.",
+    "failed": "Janus could not check the FDA recall records.",
+    "errors": {
+      "unavailable": "The recall records are not available right now. Please try again later."
     }
   }
 }

@@ -41,7 +41,8 @@ export type Route =
   | "open/faers-onset/row"
   | "simulate"
   | "simulate/compounds"
-  | "simulate/jobs";
+  | "simulate/jobs"
+  | "recalls/check";
 
 export const ROUTES: readonly Route[] = [
   "resolve/scan",
@@ -81,6 +82,7 @@ export const ROUTES: readonly Route[] = [
   "simulate",
   "simulate/compounds",
   "simulate/jobs",
+  "recalls/check",
 ];
 
 export type ApiError =
@@ -142,6 +144,7 @@ export const MESSAGE_KEYS = [
   "Simulation.errors.rateLimited",
   "Simulation.errors.unknownJob",
   "Simulation.errors.demoOnly",
+  "Recall.errors.unavailable",
 ] as const;
 
 export type MessageKey = (typeof MESSAGE_KEYS)[number];
@@ -293,5 +296,12 @@ export function messageKeyFor(
     if (status === 404 && code === "unknown_job")
       return "Simulation.errors.unknownJob";
   }
+  // recall-check Req 4.6: no `us_recalls` run is installed.
+  if (
+    route === "recalls/check" &&
+    status === 503 &&
+    code === "recalls_unavailable"
+  )
+    return "Recall.errors.unavailable";
   return "Errors.generic";
 }

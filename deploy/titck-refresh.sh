@@ -11,6 +11,12 @@ docker run --rm --network janus-public-jobs --user "$(id -u):$(id -g)" --read-on
   --cap-drop ALL --security-opt no-new-privileges:true \
   -e HOME=/tmp -e JANUS_DATA_DIR=/data -v "$STACK_DIR/data:/data" janus-pipelines:local run titck
 "$DEPLOY_DIR/load-data.sh"
+# Weekly FDA recall records (recall-check Req 7.2): the running API reads the new run by itself.
+# A failed or held refresh keeps the previous run and does not stop the rest of this job.
+docker run --rm --network janus-public-jobs --user "$(id -u):$(id -g)" --read-only --tmpfs /tmp \
+  --cap-drop ALL --security-opt no-new-privileges:true \
+  -e HOME=/tmp -e JANUS_DATA_DIR=/data -v "$STACK_DIR/data:/data" janus-pipelines:local run us_recalls \
+  || log "recall records not refreshed; the previous run stays current"
 # Weekly data-quality report (data-quality spec): compares the fresh TİTCK run with the other
 # sources and moves `quality/current`; the running API picks it up. No --publish on the server:
 # the committed open copy is updated from the repository, not from here.

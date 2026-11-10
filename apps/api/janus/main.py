@@ -32,6 +32,7 @@ from janus.observability.middleware import AccessLogMiddleware
 from janus.onset_table.router import OnsetTableHolder
 from janus.passport.forms import load as load_dose_forms
 from janus.quality.router import DataQualityHolder
+from janus.recalls.store import RecallsHolder
 from janus.seance.catalogue import PACKAGE_DIR as SEANCE_PACKAGE
 from janus.seance.catalogue import load_catalogue as load_seance
 from janus.settings import EVENT_VOCABULARY, Settings
@@ -114,6 +115,8 @@ def create_app(
     # Open research datasets (data-quality, faers-onset-table specs): 503 when not built.
     app.state.data_quality = DataQualityHolder(settings.data_dir)
     app.state.onset_table = OnsetTableHolder(settings.data_dir)
+    # Recall check (recall-check design §6): 503 when no `us_recalls` run is installed.
+    app.state.recalls = RecallsHolder(settings.data_dir)
     app.state.note_keyring = (
         Keyring(settings.note_keys, settings.note_signing_key_id)
         if settings.note_keys and settings.note_signing_key_id
@@ -134,6 +137,7 @@ def create_app(
     from janus.passport.router import router as passport_router
     from janus.privacy.router import router as privacy_router
     from janus.quality.router import router as data_quality_router
+    from janus.recalls.router import router as recalls_router
     from janus.resolution.router import router as resolution_router
     from janus.seance.router import router as seance_router
     from janus.simulation.router import SimulationLimits
@@ -158,6 +162,7 @@ def create_app(
         open_router,
         data_quality_router,
         onset_table_router,
+        recalls_router,
         cds_router,
         simulation_router,
         *extra_routers,

@@ -119,6 +119,22 @@ cadence_days = 7
 urls = ["https://open.fda.gov/apis/drug/ndc/"]
 
 [[sources]]
+id = "openfda_enforcement"
+section = "product"
+name = "openFDA Drug Recall Enforcement Reports (United States)"
+publisher = "U.S. Food and Drug Administration"
+license = "CC0 1.0 (public domain)"
+notes = [
+  "Data provided by the U.S. Food and Drug Administration (https://open.fda.gov). Not an FDA endorsement.",
+  "FDA states that this data should not be used as a method to collect data to issue alerts to the public or to track the lifecycle of a recall, and that the status of a recall is not updated after the recall is classified. Janus shows a record as published, with its data date, and links to it.",
+  "Do not rely on openFDA to make decisions regarding medical care.",
+]
+storage = "cache"
+region = "US"
+cadence_days = 7
+urls = ["https://open.fda.gov/apis/drug/enforcement/", "https://open.fda.gov/terms/"]
+
+[[sources]]
 id = "dscsa_datamatrix"
 section = "product"
 name = "DSCSA product identifier, GS1 DataMatrix (United States)"

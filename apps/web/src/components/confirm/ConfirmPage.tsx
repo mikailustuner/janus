@@ -13,6 +13,7 @@ import type { Candidate } from "@/api/contracts";
 import { formatDate } from "@/components/format";
 import { MonthPicker } from "@/components/MonthPicker";
 import { candidateIngredients, keyName } from "@/components/names";
+import { RecallCheck } from "@/components/recall/RecallCheck";
 import { SourceAttribution } from "@/components/SourceAttribution";
 import { StateView } from "@/components/StateView";
 import { Button, ButtonLink, Card, PageTitle } from "@/components/ui";
@@ -20,6 +21,7 @@ import { confirmView, readyToAdd, type CardView } from "@/flow/confirm";
 import { useSession } from "@/flow/janus";
 import { setPending, usePending, type Pending } from "@/flow/pending";
 import { useRouter } from "@/i18n/navigation";
+import { recallQuery } from "@/recall/query";
 import { listActions, type Item, type SourceKey } from "@/store/list";
 import { useT } from "@/theme/words";
 import { sentence, type Loaded } from "@/vocabulary";
@@ -258,6 +260,9 @@ export function ConfirmPage() {
   const card = chosen !== null ? view.cards[chosen] : undefined;
   const c = card?.candidate;
   const name = boxName ?? (c ? defaultBoxName(c, pending.typed, vocab) : "");
+  // Recall check of the chosen US product (recall-check Req 6.1); never in demo mode.
+  const recall =
+    c && !session.demo ? recallQuery(c, sourceKeyFor(pending, c)) : null;
 
   const add = () => {
     if (!card || !c) return setWarning(t("Confirm.nothingChosen"));
@@ -277,6 +282,7 @@ export function ConfirmPage() {
       started,
       boxName: name.trim() || defaultBoxName(c, pending.typed, vocab),
       needsConfirmation: false,
+      ...(pending.lot ? { lot: pending.lot } : {}),
     };
     if (pending.replaces) listActions().replace(pending.replaces, item);
     else listActions().add(item);
@@ -332,6 +338,11 @@ export function ConfirmPage() {
         >
           {t("Confirm.showMore")}
         </Button>
+      ) : null}
+      {recall ? (
+        <Card as="aside" aria-label={t("Recall.listLabel")}>
+          <RecallCheck query={recall} lot={pending.lot} />
+        </Card>
       ) : null}
       {card && c ? (
         <Card>

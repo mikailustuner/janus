@@ -42,6 +42,17 @@ openFDA NDC Directory (United States)
   License: CC0 1.0 (public domain)
   Not an FDA endorsement.
 
+openFDA Drug Recall Enforcement Reports (United States)
+  Publisher: U.S. Food and Drug Administration
+  License: CC0 1.0 (public domain)
+  Data provided by the U.S. Food and Drug Administration (https://open.fda.gov).
+  Not an FDA endorsement.
+  FDA states that this data should not be used as a method to collect data to
+  issue alerts to the public or to track the lifecycle of a recall, and that the
+  status of a recall is not updated after the recall is classified. Janus shows
+  a record as published, with its data date, and links to it.
+  Do not rely on openFDA to make decisions regarding medical care.
+
 DSCSA product identifier, GS1 DataMatrix (United States)
   License: Format specification only
   No data redistributed.

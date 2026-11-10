@@ -736,7 +736,7 @@
     "intro": "Janus ist ein Forschungsprototyp, kein Medizinprodukt. Diese Seite erklärt, was auf Ihrem Gerät bleibt, was gesendet wird, was gespeichert wird, wie lange und wie Sie es löschen können.",
     "device": {
       "title": "Was auf diesem Gerät bleibt",
-      "body": "Fotos von Packungen und Etiketten, der erkannte Text, Ihre Medikamentenliste mit den Namen auf den Packungen, Ihre Einstellungen, die Token der Ergebnisrückmeldung und der Spenden sowie Erinnerungen. Sie liegen nur in diesem Browser; Janus verwendet keine Konten."
+      "body": "Fotos von Packungen und Etiketten, der erkannte Text, Ihre Medikamentenliste mit den Namen auf den Packungen und bei gescannten Packungen der Chargennummer, Ihre Einstellungen, die Token der Ergebnisrückmeldung und der Spenden sowie Erinnerungen. Sie liegen nur in diesem Browser; Janus verwendet keine Konten."
     },
     "sent": {
       "title": "Was an Janus gesendet wird",
@@ -2481,6 +2481,56 @@
       "bias": "Gemessen an Humandaten von Obach 2008 ({n} Arzneistoffe, abgerufen {date}): httk-Halbwertszeiten sind im geometrischen Mittel {bias}-fach {direction}; {within} % innerhalb des 2-Fachen; geometrischer mittlerer Faktorfehler {gmfe}.",
       "notValidated": "Die Steady-State-Konzentrationen sind nicht an Messdaten validiert; für sie gibt es kein kalibriertes Intervall.",
       "compartmental": "Kein kalibriertes Intervall: Die Bänder zeigen die Streuung der virtuellen Population, nicht den Fehler des Modells. Konzentrationen, Spitzenwerte und Flächen sind über die eine Studie oben hinaus nicht an Messdaten validiert."
+    }
+  },
+  "Recall": {
+    "checking": "Die FDA-Rückrufeinträge werden geprüft…",
+    "listLabel": "FDA-Rückrufeinträge, die diesen Produktcode nennen",
+    "title": {
+      "product": "Dieses Produkt steht in einem FDA-Rückrufeintrag",
+      "lot": "Dieses Produkt und diese Charge stehen in einem FDA-Rückrufeintrag"
+    },
+    "number": "Rückrufnummer",
+    "reportDate": "Berichtsdatum",
+    "classification": "Einstufung (wie von der FDA veröffentlicht)",
+    "status": "Status (wie veröffentlicht)",
+    "statusValue": {
+      "Ongoing": "Laufend (Ongoing)",
+      "Completed": "Abgeschlossen (Completed)",
+      "Terminated": "Beendet (Terminated)",
+      "other": "{status}"
+    },
+    "terminatedOn": "Beendet am {date} (Terminated)",
+    "statusNote": "Die FDA aktualisiert den Status in diesen Berichten nicht mehr, nachdem ein Rückruf eingestuft wurde; der Status kann sich seither geändert haben.",
+    "reason": "Grund, zitiert aus dem Eintrag (auf Englisch)",
+    "firm": "Rückrufendes Unternehmen",
+    "notGiven": "Im Eintrag nicht angegeben",
+    "ndc": {
+      "package": "Der Eintrag nennt den Packungscode dieses Produkts.",
+      "product": "Der Eintrag nennt den Code dieses Produkts. Er kann eine andere Packungsgröße betreffen."
+    },
+    "lot": {
+      "listed": "Beim automatischen Lesen wurde die Charge auf Ihrer Packung ({lot}) im Chargentext des Eintrags gefunden.",
+      "not_listed": "Beim automatischen Lesen wurde die Charge auf Ihrer Packung ({lot}) im Chargentext des Eintrags nicht gefunden. Dieser Text ist frei formuliert und kann Chargen anders beschreiben. Bitte vergleichen Sie ihn mit Ihrer Packung.",
+      "not_given": "Janus kennt die Charge Ihrer Packung nicht. Die Charge ist auf der Packung aufgedruckt; bitte vergleichen Sie sie mit dem Chargentext des Eintrags."
+    },
+    "details": "Chargentext und Produktbeschreibung aus dem Eintrag",
+    "lotText": "Chargentext, zitiert aus dem Eintrag (auf Englisch)",
+    "lotTextCut": "Der Chargentext ist länger als hier gezeigt. Der vollständige Text steht im Eintrag.",
+    "productText": "Produktbeschreibung, zitiert aus dem Eintrag (auf Englisch)",
+    "advice": "Janus kann nicht sagen, ob Ihre Packung zu diesem Rückruf gehört. In der Apotheke kann das geprüft werden: Zeigen Sie dort die Packung und diese Rückrufnummer.",
+    "openRecord": "Eintrag bei openFDA öffnen (Datenformat)",
+    "search": "In den FDA-Rückrufberichten suchen",
+    "more": "{count, plural, one {# weiterer Eintrag nennt diesen Produktcode.} other {# weitere Einträge nennen diesen Produktcode.}} Die FDA-Rückrufsuche zeigt alle.",
+    "none": "Die FDA-Rückrufeinträge bis {date} (nur Vereinigte Staaten) wurden geprüft: Kein Eintrag nennt diesen Produktcode. Das bedeutet nicht, dass dieses Medikament frei von Problemen ist.",
+    "about": "Über diese Prüfung",
+    "coverage": "{without} von {records} Einträgen nennen in ihrem Text keinen Produktcode und sind auf diesem Weg nicht auffindbar.",
+    "outdated": "Die Rückrufdaten in Janus sind älter als zwei Wochen.",
+    "method": "Automatische Suche in den „Enforcement Reports“ der FDA (openFDA, Datenstand {date}), nur Vereinigte Staaten. Die FDA veröffentlicht diese Berichte nicht als Warndienst. Eine Prüfung durch Fachleute ist noch nicht erfolgt.",
+    "demo": "Die Rückrufprüfung läuft in der Demo nicht: Die Demo-Produkte sind erfunden.",
+    "failed": "Janus konnte die FDA-Rückrufeinträge nicht prüfen.",
+    "errors": {
+      "unavailable": "Die Rückrufeinträge sind gerade nicht verfügbar. Bitte versuchen Sie es später erneut."
     }
   }
 }

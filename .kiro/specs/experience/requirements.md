@@ -167,6 +167,7 @@ language, and keeps the person's list in the browser.
 #### Acceptance criteria
 1. THE client SHALL decode DataMatrix (GS1), EAN-13, EAN-8, UPC-A and Code 128 with `zxing-wasm` in the browser, from the camera or from a photo the user picks; THE image SHALL never leave the device and SHALL not be stored.
 2. FROM a decoded GS1 code THE client SHALL send `POST /resolve/scan` only the Application Identifiers (01) GTIN, (17) expiry and, if the code carries it, (712) national product reimbursement number; never serial (21), never lot (10), never any other AI. *(`privacy` Req 1.1, `drug-resolution` Req 1.4, DP19 extended, DP42.)*
+   - *(Amended 2026-11-10, `recall-check` Req 5.)* The lot (10) is no longer dropped on the device: it is kept in memory until the medicine is confirmed and then with the list item in the browser's storage, for the recall check. It is still never sent to any server.
 3. A bare GTIN-8/12/13/14 (a linear barcode) SHALL be sent as digits; a printed CIP13 or EAN-13 typed by the user SHALL be sent as bare digits to the scan route (`drug-resolution` Phase 2 notes).
 4. IF the API answers 422 `gs1_serial_not_accepted` THEN THE client SHALL treat it as a client defect: it SHALL show a generic "something went wrong on our side" message, SHALL NOT ask the user to change anything, and SHALL NOT retry.
 5. WHEN the camera is not available or permission is refused THE client SHALL offer the photo picker, label recognition and typing, without blocking the flow.

@@ -63,6 +63,7 @@ export function ScanPage() {
     call: () => Promise<Result<ResolutionResult>>,
     source: Pending["source"],
     typed: string | null,
+    lot: string | null = null,
   ) => {
     setStatus({ kind: "busy", label: t("Scan.looking") });
     let r: Result<ResolutionResult>;
@@ -80,12 +81,13 @@ export function ScanPage() {
       return;
     }
     if (!r.ok) return setStatus({ kind: "error", error: r.error });
-    setPending({ resolution: r.data, source, typed, replaces: null });
+    setPending({ resolution: r.data, source, typed, lot, replaces: null });
     router.push("/confirm");
   };
 
-  /** Every path: a demo code first (no request), then the outbound filter. */
-  const handleCode = (text: string) => {
+  /** Every path: a demo code first (no request), then the outbound filter. The lot is kept
+   *  beside the request, never in it. */
+  const handleCode = (text: string, typedLot: string | null = null) => {
     const demo = detectDemo(text);
     if (demo) return setStatus({ kind: "demo", ref: demo });
     const out = outbound(text);
@@ -97,6 +99,7 @@ export function ScanPage() {
       () => client.resolveScan(scanBody(out.content, region)),
       { kind: "scan", content: out.content },
       null,
+      out.lot ?? typedLot,
     );
   };
 
@@ -176,7 +179,7 @@ export function ScanPage() {
               const demo = detectDemo(text);
               if (demo) return setStatus({ kind: "demo", ref: demo });
               const c = classifyTyped(text);
-              if (c.kind === "scan") return handleCode(c.content);
+              if (c.kind === "scan") return handleCode(c.content, c.lot);
               if (c.kind === "ndc") return handleNdc(c.ndc);
               if (c.kind === "national_code")
                 return setStatus({ kind: "message", key: "Scan.nationalCode" });

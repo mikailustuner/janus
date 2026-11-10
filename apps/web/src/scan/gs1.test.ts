@@ -95,6 +95,8 @@ describe("P1 outbound filter", () => {
             if (sentinel && !expected.includes(sentinel))
               expect(out.content).not.toContain(sentinel);
           expect(out.content).not.toMatch(/\((21|10|240|71[0-1346])\)/);
+          // recall-check Req 5: the lot is returned beside the content, for the device only.
+          expect(out.lot).toBe(r.lot ?? null);
         },
       ),
     );
@@ -104,7 +106,12 @@ describe("P1 outbound filter", () => {
       fc.property(fc.constantFrom(7, 11, 12, 13), fc.nat(), (len, seed) => {
         const body = String(seed).padStart(len, "1").slice(0, len);
         const g = body + checkDigit(body);
-        expect(outbound(g)).toEqual({ kind: "send", content: g, gtin: g });
+        expect(outbound(g)).toEqual({
+          kind: "send",
+          content: g,
+          gtin: g,
+          lot: null,
+        });
         const wrong = body + String((Number(checkDigit(body)) + 1) % 10);
         expect(outbound(wrong)).toEqual({ kind: "unreadable" });
       }),
@@ -117,6 +124,7 @@ describe("P1 outbound filter", () => {
           kind: "send",
           content: `(01)${g}`,
           gtin: g,
+          lot: null,
         });
         expect(outbound(`(21)${s}`)).toEqual({ kind: "unreadable" });
         expect(outbound(`garbage ${s}`)).toEqual({ kind: "unreadable" });
@@ -146,7 +154,11 @@ describe("typed input (Req 11.4)", () => {
     });
     expect(classifyTyped("x").kind).toBe("invalid");
     const cip13 = "340093643210" + checkDigit("340093643210");
-    expect(classifyTyped(cip13)).toEqual({ kind: "scan", content: cip13 });
+    expect(classifyTyped(cip13)).toEqual({
+      kind: "scan",
+      content: cip13,
+      lot: null,
+    });
   });
 });
 
