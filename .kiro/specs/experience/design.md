@@ -337,6 +337,12 @@ and lines over the photo. Extraction: NDC shapes are offered as "look up NDC …
 (one or more adjacent words, ≤ 100 characters) and confirms before `POST /resolve/search`. Nothing else is sent; the
 recognised text is dropped when the screen closes.
 
+*(Amended 2026-11-10, `ocr-first` spec.)* The recognised text is first compared on the device with the accepted
+ingredient names; the ingredients found are offered as candidates and a chosen candidate sends that ingredient's
+English name to `POST /resolve/search`. The tappable words stay, behind a disclosure. The recognised words and the
+candidates are kept in memory until the next photo, until the user removes them or until the tab closes (so a label
+with several ingredients can be added one by one); the photo is dropped when it has been read.
+
 ## 7. Theming (DP1, DP2, DP18, DP21, Req 6)
 
 - `theme/tokens.css` declares the steering tokens exactly under `:root[data-theme-style="two-faces"]`, `.paper` (the
