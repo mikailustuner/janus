@@ -45,6 +45,7 @@ JOBS: dict[str, tuple[str, str]] = {
     ),
     "us_ndc": ("janus_pipelines.jobs.us_ndc", "UsNdcJob"),
     "us_recalls": ("janus_pipelines.jobs.us_recalls", "UsRecallsJob"),
+    "us_labels": ("janus_pipelines.jobs.us_labels", "UsLabelsJob"),
     "retractions": ("janus_pipelines.jobs.retractions", "RetractionsJob"),
     "eu_fr_bdpm": ("janus_pipelines.jobs.eu_fr_bdpm", "EuFrBdpmJob"),
     "eu_es_cima": ("janus_pipelines.jobs.eu_es_cima", "EuEsCimaJob"),

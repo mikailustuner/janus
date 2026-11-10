@@ -17,6 +17,7 @@ uv run janus-pipelines run titck                # newest TİTCK list, fetched at
 uv run janus-pipelines run titck --input FILE.xlsx [--snapshot-date YYYY-MM-DD]
 uv run janus-pipelines run us_ndc               # openFDA NDC bulk download
 uv run janus-pipelines run us_recalls           # openFDA drug enforcement reports (recalls), bulk download
+uv run janus-pipelines run us_labels            # openFDA drug labels, "Indications and Usage" only (1.8 GB download)
 uv run janus-pipelines run wikidata_ingredients # needs JANUS_CONTACT
 uv run janus-pipelines run retractions          # run after pipc
 uv run janus-pipelines run eu_fr_bdpm           # France: BDPM files (Licence Ouverte)
