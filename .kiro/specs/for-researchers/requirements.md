@@ -34,7 +34,7 @@
 
 ## Requirement 4: Wording and safety
 1. THE page SHALL say "automated", never "AI", and SHALL NOT imply review by a person.
-2. THE page SHALL NOT name server details, `docs/internal`, private benchmarks or any TİTCK product row; the only
+2. THE page SHALL NOT name server details, unpublished material or any TİTCK product row; the only
    host is `https://janusmeds.org`.
 3. THE page SHALL pass the forbidden-phrase lists of all five languages.
 
