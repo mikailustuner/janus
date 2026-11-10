@@ -277,7 +277,7 @@ Many families live across borders (for example Turkish families in Germany), and
 > only") for one new screen and one new route; `POST /passport/presence` and its screens are unchanged. The risk
 > DP3 guarded against (a list that reads as a list of substitutes) is handled by Requirements 14.8, 16 and 17 instead
 > of by hiding the names. Expert review has not yet been done; the wording and the comparison rules were checked by
-> automated review passes only (`medication-passport-products-review.md`).
+> automated review passes only (`products-review.md`).
 > Data facts were measured on the dev dataset `7db3a513…` (TİTCK 2026-11-06, openFDA NDC 2026-11-06, BDPM
 > 2026-11-03, Nomenclátor 2026-11-07); see `design.md` §15.1.
 
@@ -322,7 +322,7 @@ doctor there.
    `not_stated`) as a statement about the source data, never about availability at a pharmacy.
 8. THE system SHALL NOT convert a dose, compute a number of tablets, rank products as better, or mark any product
    as the one to take. THE order SHALL be fixed: marketing statement, strength level (`same`, `unknown`,
-   `different`), form level, name.
+   `different`), form level, name. THE screen SHALL say that the order is not a recommendation.
 9. WHEN the item cannot be checked (Requirement 1.5, 1.6, DP24) THE screen SHALL say why and SHALL NOT call the
    route.
 

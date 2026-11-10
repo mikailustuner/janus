@@ -132,8 +132,8 @@ function ProductRow({
       className="gap-2 [overflow-wrap:anywhere]"
       data-testid="listed-product"
     >
-      <p className="font-bold" lang={lang}>
-        {product.name}
+      <p className="font-bold" lang={product.name ? lang : undefined}>
+        {product.name || t("Passport.products.notStated")}
       </p>
       <LevelLine
         t={t}
@@ -229,6 +229,11 @@ function Listed({
               })}
             </p>
           </>
+        ) : null}
+        {out.status === "present" ? (
+          <p className="text-sm text-muted" data-testid="salt-note">
+            {t("Passport.products.notes.salt")}
+          </p>
         ) : null}
         {out.with_other_ingredients > 0 ? (
           <p className="text-muted">
@@ -463,7 +468,10 @@ export function ProductsBody({
             </h2>
             <ul className="grouped text-sm">
               <li>{t("Passport.products.notes.automated")}</li>
-              <li>{t("Passport.products.notes.salt")}</li>
+              {ok?.out.status === "present" ? null : (
+                <li>{t("Passport.products.notes.salt")}</li>
+              )}
+              <li>{t("Passport.products.notes.order")}</li>
               <li>{t("Passport.products.notes.group")}</li>
               <li>{t("Passport.presentNote")}</li>
               {ok?.products.some((p) => p.marketed === "not_stated") ? (

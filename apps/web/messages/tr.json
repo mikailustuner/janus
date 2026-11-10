@@ -1021,10 +1021,10 @@
       "title": "Başka bir ülkede aynı etkin madde",
       "summary": "{ingredients, plural, one {Aynı etkin maddeyi} other {Tam olarak aynı etkin maddeleri}} içeren ürünler: {names}.",
       "caution": {
-        "title": "Bu listedeki bir ürünü kullanmadan önce",
-        "notSame": "Bu listedeki her ürün, bu kutuyla {ingredients, plural, one {aynı etkin maddeyi} other {aynı etkin maddeleri}} içerir. Bu, onu aynı ilaç yapmaz: miktarı, formu, etkin maddeyi salma biçimi ve diğer içerikleri farklı olabilir.",
+        "title": "Bu listeyi kullanmadan önce",
+        "notSame": "Bu listedeki her ürün, bu kutuyla {ingredients, plural, one {aynı etkin maddeyi} other {aynı etkin maddeleri}} içerir. Bu, onu aynı ilaç yapmaz: miktarı, formu, etkin maddeyi salma biçimi ve diğer bileşenleri farklı olabilir.",
         "confirm": "Farklı bir ürünü kullanmadan önce bir eczacıya veya doktora danışın.",
-        "noDosing": "Janus doz önerisi vermez ve dozları birbirine çevirmez."
+        "noDosing": "Janus doz önerisi vermez ve doz dönüşümü yapmaz."
       },
       "country": "Bakılacak ülke",
       "notListed": "Türkiye'deki ürün adları gösterilmez, çünkü TİTCK listesinin kullanım koşulları buna açıkça izin vermiyor. Almanya'nın açık bir ürün veritabanı yok.",
@@ -1065,10 +1065,11 @@
         "title": "Bu liste nasıl okunur",
         "automated": "Karşılaştırma otomatiktir: Janus, miktarı ve formu kaynakların yayımladığı biçimiyle karşılaştırır. Uzman incelemesi henüz yapılmadı.",
         "salt": "Kaynaklar bir tuzun ya da bazın miktarını belirtebilir. Listede farklı bir miktar olması dozun farklı olduğunu, aynı sayının olması da dozun aynı olduğunu kanıtlamaz.",
-        "group": "Form grubu geniştir: ağızdan alınan tablet ile kapsül aynı gruptadır."
+        "group": "Form grubu geniştir: ağızdan alınan tablet ile kapsül aynı gruptadır.",
+        "order": "Liste, kaynak verisinde belirtilenlere ve sonra ada göre sıralanır. Sıralama bir öneri değildir."
       },
       "notice": {
-        "listing_is_lower_bound": "Janus'un etkin maddelerini tanıyamadığı ürünler listelenmedi.",
+        "listing_is_lower_bound": "Janus'un etkin maddelerini tanıyamadığı ürünler listede gösterilmez.",
         "unknown_ingredient_keys": "Bu kutunun bazı etkin maddeleri güncel ilaç verisinde yok; bu yüzden onlar için hiçbir kaynak kontrol edilemedi."
       }
     }

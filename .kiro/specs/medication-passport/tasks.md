@@ -165,5 +165,5 @@
     locales. _Requirements: 14.5, 17.1–17.4_
 - [x] 20. Automated review passes and checkpoint
   - Safety and localization passes with the `.kiro/agents` reviewer prompts over the new strings and screen;
-    findings and fixes in `medication-passport-products-review.md`. CI-equivalent checks green locally.
+    findings and fixes in `products-review.md`. CI-equivalent checks green locally.
     Expert review has not yet been done.

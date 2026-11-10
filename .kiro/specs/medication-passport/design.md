@@ -624,9 +624,10 @@ named by the URL fragment, as on the detail screen. Top to bottom: back link; ti
 ingredient names; the caution card (Req 16.2), always shown, before any product; the box's own strength and form
 (`boxValues`); the country choice (`SegmentedControl`: France, Spain, United States; the box's own source is
 included, since a traveller may want another pack size at home) with the note on Türkiye and Germany (Req 15.1);
-the summary line (rows, entries, counts per level); the rows (`GroupedList`): published name with its `lang`,
+the summary (entries, counts per level, the salt and base note of Req 16.3); the rows (`GroupedList`): published name with its `lang`,
 strength line and form line each with a level icon and text, marketing statement, number of entries; "Show more";
-attribution with the data date, stale notice, notices, the "listings only" sentence. Level icons are the existing
+attribution with the data date, stale notice, notices, the "listings only" sentence. The notes say that the comparison is automated, that expert review has not
+yet been done and that the order of the list is not a recommendation. Level icons are the existing
 `ResultIcon` shapes (`matched` → same, `differs` → different, `could_not_compare` → unknown); `different` also
 carries a text chip. States per Req 17.2. The request is built by `itemQuery` (§6.4) plus `target` and `offset`; the
 answer is kept in memory only.

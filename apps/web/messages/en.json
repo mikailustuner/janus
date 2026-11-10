@@ -1021,7 +1021,7 @@
       "title": "Same active ingredient in another country",
       "summary": "Products that contain {ingredients, plural, one {the same active ingredient} other {exactly the same active ingredients}}: {names}.",
       "caution": {
-        "title": "Before you take a product from this list",
+        "title": "Before you use this list",
         "notSame": "Each product in this list contains {ingredients, plural, one {the same active ingredient} other {the same active ingredients}} as this box. That does not make it the same medicine: the strength, the form, the way the ingredient is released and the other ingredients can differ.",
         "confirm": "Confirm with a pharmacist or doctor before you take a different product.",
         "noDosing": "Janus gives no dosing advice and does not convert doses."
@@ -1065,7 +1065,8 @@
         "title": "How to read this list",
         "automated": "The comparison is automated: Janus compares the strength and the form as the sources publish them. Expert review has not yet been done.",
         "salt": "Sources may state the amount of a salt or of the base. A different listed strength does not prove a different dose, and the same listed number does not prove the same dose.",
-        "group": "A form group is broad: a tablet and a capsule taken by mouth are in the same group."
+        "group": "A form group is broad: a tablet and a capsule taken by mouth are in the same group.",
+        "order": "The list is ordered by what the source data state and then by name. The order is not a recommendation."
       },
       "notice": {
         "listing_is_lower_bound": "Products whose ingredients Janus could not recognise are not listed.",

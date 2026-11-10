@@ -295,6 +295,7 @@ describe.each(routing.locales)("P28 wording, %s", (locale) => {
       "caution.noDosing",
       "notes.automated",
       "notes.salt",
+      "notes.order",
       "notes.group",
       "notListed",
       "flag",
@@ -346,6 +347,9 @@ describe.each(routing.locales)("P28 wording, %s", (locale) => {
         expect(m).toContain('data-testid="products-caution"');
         expect(text(m)).toContain(tree.caution.confirm);
         expect(text(m)).toContain(tree.caution.noDosing);
+        // Req 16.3: the salt and base note sits with the counts, above the rows, once.
+        expect(text(m).split(tree.notes.salt).length - 1).toBe(1);
+        expect(m.includes('data-testid="salt-note"')).toBe(products.length > 0);
         expect(m).not.toMatch(/text-risk|bg-risk|border-risk/);
       }),
       { numRuns: 60 },

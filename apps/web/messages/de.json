@@ -1021,9 +1021,9 @@
       "title": "Derselbe Wirkstoff in einem anderen Land",
       "summary": "Produkte, die {ingredients, plural, one {denselben Wirkstoff} other {genau dieselben Wirkstoffe}} enthalten: {names}.",
       "caution": {
-        "title": "Bevor Sie ein Produkt aus dieser Liste einnehmen",
-        "notSame": "Jedes Produkt in dieser Liste enthält {ingredients, plural, one {denselben Wirkstoff} other {dieselben Wirkstoffe}} wie diese Packung. Es ist deshalb nicht dasselbe Medikament: Wirkstärke, Darreichungsform, Wirkstofffreisetzung und sonstige Bestandteile können abweichen.",
-        "confirm": "Fragen Sie in einer Apotheke, Ihre Ärztin oder Ihren Arzt, bevor Sie ein anderes Produkt einnehmen.",
+        "title": "Bevor Sie diese Liste verwenden",
+        "notSame": "Jedes Produkt in dieser Liste enthält {ingredients, plural, one {denselben Wirkstoff} other {dieselben Wirkstoffe}} wie diese Packung. Das macht es noch nicht zum selben Medikament: Wirkstärke, Darreichungsform, Wirkstofffreisetzung und sonstige Bestandteile können abweichen.",
+        "confirm": "Fragen Sie in einer Apotheke oder bei Ihrer Ärztin oder Ihrem Arzt nach, bevor Sie ein anderes Produkt anwenden.",
         "noDosing": "Janus gibt keine Dosierungsempfehlung und rechnet keine Dosis um."
       },
       "country": "Land, in dem gesucht wird",
@@ -1040,8 +1040,8 @@
       },
       "dose_form": {
         "same": "Gleiche Formgruppe ({group}). Gelistete Form:",
-        "different": "Andere Formgruppe ({group}). Gelistete Form:",
-        "unknown": "Form nicht verglichen: {reason} Gelistete Form:"
+        "different": "Abweichende Formgruppe ({group}). Gelistete Form:",
+        "unknown": "Darreichungsform nicht verglichen: {reason} Gelistete Form:"
       },
       "flag": "Abweichend",
       "notStated": "nicht angegeben",
@@ -1055,7 +1055,7 @@
       "showing": "{shown} von {total, plural, one {# Zeile} other {# Zeilen}} angezeigt. Einträge mit gleichem Namen, gleicher Wirkstärke und gleicher Form erscheinen einmal.",
       "more": "Mehr anzeigen",
       "moreError": "Weitere Produkte konnten gerade nicht geladen werden.",
-      "notFinished": "{count, plural, one {# Eintrag wird} other {# Einträge werden}} nicht angezeigt: Wirkstoffe als Bulkware, keine fertigen Medikamente.",
+      "notFinished": "{count, plural, one {# Eintrag wird} other {# Einträge werden}} nicht angezeigt: Wirkstoffe als Rohware, keine fertigen Medikamente.",
       "loading": "Produkte werden nachgeschlagen …",
       "loaded": "{count, plural, one {# Produktzeile} other {# Produktzeilen}} geladen.",
       "error": "Die Produkte konnten gerade nicht nachgeschlagen werden.",
@@ -1063,9 +1063,10 @@
       "demoFirstPage": "Die Demo enthält die ersten {shown} von {total} Zeilen.",
       "notes": {
         "title": "So lesen Sie diese Liste",
-        "automated": "Der Vergleich erfolgt automatisch: Janus vergleicht Wirkstärke und Form so, wie die Quellen sie veröffentlichen. Eine Prüfung durch Fachleute ist noch nicht erfolgt.",
+        "automated": "Der Vergleich erfolgt automatisiert: Janus vergleicht Wirkstärke und Form so, wie die Quellen sie veröffentlichen. Eine Prüfung durch Fachleute ist noch nicht erfolgt.",
         "salt": "Quellen können die Menge eines Salzes oder der Base angeben. Eine abweichende gelistete Wirkstärke beweist keine andere Dosis, und dieselbe gelistete Zahl beweist nicht dieselbe Dosis.",
-        "group": "Eine Formgruppe ist weit gefasst: Tablette und Kapsel zum Einnehmen gehören zur selben Gruppe."
+        "group": "Eine Formgruppe ist weit gefasst: Tablette und Kapsel zum Einnehmen gehören zur selben Gruppe.",
+        "order": "Die Liste ist nach den Angaben der Quelldaten und dann nach dem Namen geordnet. Die Reihenfolge ist keine Empfehlung."
       },
       "notice": {
         "listing_is_lower_bound": "Produkte, deren Wirkstoffe Janus nicht erkennen konnte, werden nicht aufgeführt.",
