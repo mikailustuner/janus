@@ -87,5 +87,30 @@
  "max_items": 50,
  "max_ingredients": 10,
  "max_keys": 50,
+ "listable_source_id": [
+  "eu_fr_bdpm",
+  "eu_es_cima",
+  "openfda_ndc"
+ ],
+ "level": [
+  "same",
+  "different",
+  "unknown"
+ ],
+ "level_reason": [
+  "not_known_for_item",
+  "not_known_in_source"
+ ],
+ "marketed": [
+  "listed_as_marketed",
+  "listed_as_not_marketed",
+  "not_stated"
+ ],
+ "listing_notice": [
+  "listing_is_lower_bound",
+  "unknown_ingredient_keys"
+ ],
+ "max_page": 100,
+ "max_offset": 100000,
  "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
 }

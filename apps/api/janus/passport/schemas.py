@@ -43,6 +43,14 @@ Status = Literal["present", "not_present", "not_in_source", "source_unavailable"
 Result = Literal["matched", "differs", "could_not_compare"]
 CmpReason = Literal["not_known_for_item", "not_known_in_source", "not_all_comparable"]
 Notice = Literal["presence_is_lower_bound", "unknown_ingredient_keys"]
+# `POST /passport/products` (design §15). Sources whose licence allows showing product names.
+ListableSourceId = Literal["eu_fr_bdpm", "eu_es_cima", "openfda_ndc"]
+Level = Literal["same", "different", "unknown"]
+LevelReason = Literal["not_known_for_item", "not_known_in_source"]
+Marketed = Literal["listed_as_marketed", "listed_as_not_marketed", "not_stated"]
+ListingNotice = Literal["listing_is_lower_bound", "unknown_ingredient_keys"]
+MAX_PAGE = 100
+MAX_OFFSET = 100_000
 
 
 class _In(BaseModel):
@@ -87,6 +95,23 @@ class PresenceIn(_In):
     def _keys(cls, v: list[ItemIn]) -> list[ItemIn]:
         if len({i.key for item in v for i in item.ingredients}) > MAX_KEYS:
             raise ValueError("at most 50 distinct keys")
+        return v
+
+
+class ProductsIn(_In):
+    """One medicine (keys and codes only, as an item of `PresenceIn`) and one target source."""
+
+    ingredients: Annotated[list[IngredientIn], Field(min_length=1, max_length=MAX_INGREDIENTS)]
+    dose_form: FormGroup | None = None
+    target: ListableSourceId
+    offset: Annotated[int, Field(ge=0, le=MAX_OFFSET)] = 0
+    limit: Annotated[int, Field(ge=1, le=MAX_PAGE)] = 50
+
+    @field_validator("ingredients")
+    @classmethod
+    def _distinct(cls, v: list[IngredientIn]) -> list[IngredientIn]:
+        if len({i.key for i in v}) != len(v):
+            raise ValueError("ingredient keys must be distinct")
         return v
 
 
@@ -149,4 +174,54 @@ class PresenceOut(_Out):
     sources: list[SourceOut]
     items: list[ItemOut]
     notices: list[Notice]
+    disclaimer: str = messages.DISCLAIMER
+
+
+class ListedIngredient(_Out):
+    key: str
+    strength_published: str | None  # exactly as the source publishes it
+
+
+class ListedProduct(_Out):
+    name: str  # exactly as the source publishes it
+    ingredients: list[ListedIngredient]
+    dose_form_published: str | None
+    dose_form_group: FormGroup | None  # Janus's grouping, not source data
+    strength: Level
+    strength_reason: LevelReason | None  # only for `unknown`
+    dose_form: Level
+    dose_form_reason: LevelReason | None
+    marketed: Marketed
+    listings: int  # source entries that share every field shown here
+
+
+class LevelCounts(_Out):
+    same: int
+    different: int
+    unknown: int
+
+
+class ListingCounts(_Out):
+    strength: LevelCounts
+    dose_form: LevelCounts
+
+
+class ProductsOut(_Out):
+    dataset_version: str
+    form_table_version: str
+    source: SourceOut
+    keys: list[str]
+    unknown_keys: list[str]
+    status: Status
+    total: int  # listed rows (distinct published entries), before paging
+    listings: int  # source entries behind them
+    counts: ListingCounts  # over `listings`
+    with_other_ingredients: int
+    keys_found: list[str]
+    homeopathic_left_out: int
+    not_finished_left_out: int
+    offset: int
+    limit: int
+    products: list[ListedProduct]
+    notices: list[ListingNotice]
     disclaimer: str = messages.DISCLAIMER

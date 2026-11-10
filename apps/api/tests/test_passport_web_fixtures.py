@@ -65,6 +65,13 @@ def schema_literals() -> dict[str, Any]:
         "max_items": schemas.MAX_ITEMS,
         "max_ingredients": schemas.MAX_INGREDIENTS,
         "max_keys": schemas.MAX_KEYS,
+        "listable_source_id": literals(schemas.ListableSourceId),
+        "level": literals(schemas.Level),
+        "level_reason": literals(schemas.LevelReason),
+        "marketed": literals(schemas.Marketed),
+        "listing_notice": literals(schemas.ListingNotice),
+        "max_page": schemas.MAX_PAGE,
+        "max_offset": schemas.MAX_OFFSET,
         "disclaimer": messages.DISCLAIMER,
     }
 
