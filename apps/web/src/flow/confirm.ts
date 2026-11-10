@@ -58,7 +58,15 @@ function statusLines(c: Candidate): CardView["status"] {
   return c.status_published.map((text) => ({ kind: "fr" as const, text }));
 }
 
-export function confirmView(r: ResolutionResult): ConfirmView {
+/**
+ * `prefer`: an ingredient key the user chose on the label; its ingredient candidate is listed
+ * first (ocr-first Req 2.6). The order is the only effect: `index` stays the position in the
+ * resolution and nothing is preselected.
+ */
+export function confirmView(
+  r: ResolutionResult,
+  prefer: string | null = null,
+): ConfirmView {
   const noDb = r.notices.find((n) => n.code === "no_open_product_database");
   if (r.candidates.length === 0) {
     if (noDb)
@@ -103,9 +111,13 @@ export function confirmView(r: ResolutionResult): ConfirmView {
       (c.kind === "product" &&
         c.ingredients.some((g) => g.rxcui_status === "not_in_wikidata")),
   }));
+  const preferred = (v: CardView) =>
+    prefer !== null &&
+    v.candidate.kind === "ingredient" &&
+    v.candidate.ingredient_key.qid === prefer;
   return {
     kind: "candidates",
-    cards,
+    cards: [...cards.filter(preferred), ...cards.filter((v) => !preferred(v))],
     notices: r.notices
       .map((n) => n.code)
       .filter((c) => c !== "no_open_product_database"),

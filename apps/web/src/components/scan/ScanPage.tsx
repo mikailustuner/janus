@@ -1,9 +1,11 @@
 "use client";
 /**
- * Scan (design §3, §6, §9, Req 10, 11): three ways in — the camera or a photo of the code, a photo
- * of the label read on the device, or typing. A demo code is recognised before any request on
- * every path. Images and recognised text never leave the device; only the filtered code, an NDC
- * or the words the user chose are sent.
+ * Scan (design §3, §6, §9, Req 10, 11; ocr-first Req 1): three ways in, shown side by side — the
+ * camera or a photo of the code, a photo of the label read on the device, or typing. The label
+ * and the name work with a box from any country; the code works where Janus holds the product
+ * list. Wherever a code cannot be used, the other two ways are offered. A demo code is
+ * recognised before any request on every path. Images and recognised text never leave the
+ * device; only the filtered code, an NDC or the name or words the user chose are sent.
  */
 import { useLocale } from "next-intl";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
@@ -12,6 +14,7 @@ import { ndcBody, scanBody, searchBody } from "@/api/builders";
 import type { Result } from "@/api/client";
 import type { Locale, ResolutionResult } from "@/api/contracts";
 import type { ApiError } from "@/api/errors";
+import { CameraIcon, KeyboardIcon, ScanIcon } from "@/components/icons";
 import { StateView } from "@/components/StateView";
 import { Button, Card, PageTitle } from "@/components/ui";
 import { detectDemo, type DemoRef } from "@/demo/codes";
@@ -26,16 +29,19 @@ import {
   type CameraError,
 } from "@/scan/camera";
 import { classifyTyped, outbound } from "@/scan/gs1";
-import type { Recognised } from "@/scan/ocr";
-import { ndcCandidates, selectionQuery } from "@/scan/ocr-extract";
+import { useLabelState } from "@/scan/label-session";
 import { useSettings } from "@/store/hooks";
 import { useT } from "@/theme/words";
 
+import { LabelPanel } from "./LabelPanel";
+
 type Tab = "code" | "label" | "type";
+const TAB_ICON = { code: ScanIcon, label: CameraIcon, type: KeyboardIcon };
 type Status =
   | { kind: "idle" }
   | { kind: "busy"; label: string }
-  | { kind: "message"; key: string }
+  /** `ways`: the label photo and the name are offered under the message. */
+  | { kind: "message"; key: string; ways?: boolean }
   | { kind: "error"; error: ApiError }
   | { kind: "demo"; ref: DemoRef };
 
@@ -54,8 +60,15 @@ export function ScanPage() {
     () => "",
   );
   const [chosenTab, setTab] = useState<Tab | null>(null);
+  // A label result still in memory (a label with several ingredients) opens the label tab.
+  const labelKept = useLabelState().kind === "done";
   const tab: Tab =
-    chosenTab ?? (hashTab === "label" || hashTab === "type" ? hashTab : "code");
+    chosenTab ??
+    (hashTab === "label" || hashTab === "type"
+      ? hashTab
+      : labelKept
+        ? "label"
+        : "code");
   const [status, setStatus] = useState<Status>({ kind: "idle" });
   const region = session.demo ? null : settings.scanRegion;
 
@@ -64,6 +77,7 @@ export function ScanPage() {
     source: Pending["source"],
     typed: string | null,
     lot: string | null = null,
+    prefer: string | null = null,
   ) => {
     setStatus({ kind: "busy", label: t("Scan.looking") });
     let r: Result<ResolutionResult>;
@@ -81,7 +95,14 @@ export function ScanPage() {
       return;
     }
     if (!r.ok) return setStatus({ kind: "error", error: r.error });
-    setPending({ resolution: r.data, source, typed, lot, replaces: null });
+    setPending({
+      resolution: r.data,
+      source,
+      typed,
+      lot,
+      replaces: null,
+      prefer,
+    });
     router.push("/confirm");
   };
 
@@ -92,7 +113,11 @@ export function ScanPage() {
     if (demo) return setStatus({ kind: "demo", ref: demo });
     const out = outbound(text);
     if (out.kind === "unreadable")
-      return setStatus({ kind: "message", key: "Scan.errors.unreadable" });
+      return setStatus({
+        kind: "message",
+        key: "Scan.errors.unreadable",
+        ways: true,
+      });
     const client = session.client;
     if (!client) return;
     void go(
@@ -115,14 +140,24 @@ export function ScanPage() {
       );
   };
 
-  const handleSearch = (query: string) => {
+  /** `key`: the ingredient the user chose from the label candidates, shown first on confirm. */
+  const handleSearch = (query: string, key: string | null = null) => {
     const client = session.client;
     if (client)
       void go(
-        () => client.resolveSearch(searchBody(query, region)),
+        () =>
+          client.resolveSearch(
+            key ? searchBody(query, region, 20) : searchBody(query, region),
+          ),
         { kind: "search", query: query.trim(), region },
         query.trim(),
+        null,
+        key,
       );
+  };
+  const open = (k: Tab) => {
+    setTab(k);
+    setStatus({ kind: "idle" });
   };
 
   const regionName = region
@@ -134,6 +169,7 @@ export function ScanPage() {
     <>
       <PageTitle>{t("Scan.title")}</PageTitle>
       <p>{t("Scan.intro")}</p>
+      <p data-testid="any-country">{t("Scan.anyCountry")}</p>
       <p className="text-sm text-muted">
         {t("Scan.regionNote", { region: regionName })}
       </p>
@@ -142,22 +178,25 @@ export function ScanPage() {
         aria-label={t("Scan.title")}
         className="grid grid-cols-3 gap-1 rounded-[var(--radius-button)] bg-chip p-1"
       >
-        {tabs.map((k) => (
-          <button
-            key={k}
-            role="tab"
-            id={`tab-${k}`}
-            aria-selected={tab === k}
-            aria-controls={`panel-${k}`}
-            onClick={() => {
-              setTab(k);
-              setStatus({ kind: "idle" });
-            }}
-            className={`min-h-11 rounded-[var(--radius-button)] px-2 text-sm font-bold ${tab === k ? "bg-surface text-fg" : "text-chip-fg"}`}
-          >
-            {t(`Scan.tabs.${k}`)}
-          </button>
-        ))}
+        {tabs.map((k) => {
+          const Icon = TAB_ICON[k];
+          return (
+            <button
+              key={k}
+              role="tab"
+              id={`tab-${k}`}
+              aria-selected={tab === k}
+              aria-controls={`panel-${k}`}
+              onClick={() => open(k)}
+              className={`flex min-h-16 flex-col items-center justify-center gap-1 rounded-[var(--radius-button)] px-1 py-2 text-center text-sm leading-tight font-bold ${tab === k ? "bg-surface text-fg" : "text-chip-fg"}`}
+            >
+              <Icon size={22} />
+              <span className="break-words hyphens-auto">
+                {t(`Scan.tabs.${k}`)}
+              </span>
+            </button>
+          );
+        })}
       </div>
       <div
         role="tabpanel"
@@ -165,12 +204,13 @@ export function ScanPage() {
         aria-labelledby={`tab-${tab}`}
         className="flex flex-col gap-4"
       >
-        {tab === "code" ? <CodePanel onCode={handleCode} /> : null}
+        {tab === "code" ? <CodePanel onCode={handleCode} onWay={open} /> : null}
         {tab === "label" ? (
           <LabelPanel
             locale={locale}
             onNdc={handleNdc}
             onQuery={handleSearch}
+            onType={() => open("type")}
           />
         ) : null}
         {tab === "type" ? (
@@ -182,7 +222,11 @@ export function ScanPage() {
               if (c.kind === "scan") return handleCode(c.content, c.lot);
               if (c.kind === "ndc") return handleNdc(c.ndc);
               if (c.kind === "national_code")
-                return setStatus({ kind: "message", key: "Scan.nationalCode" });
+                return setStatus({
+                  kind: "message",
+                  key: "Scan.nationalCode",
+                  ways: true,
+                });
               if (c.kind === "invalid")
                 return setStatus({ kind: "message", key: "Scan.tooShort" });
               handleSearch(c.query);
@@ -194,9 +238,10 @@ export function ScanPage() {
         <StateView state="loading" label={status.label} />
       ) : null}
       {status.kind === "message" ? (
-        <p role="alert" className="card p-3 font-bold">
-          {t(status.key)}
-        </p>
+        <div role="alert" className="card flex flex-col gap-3 p-3">
+          <p className="font-bold">{t(status.key)}</p>
+          {status.ways ? <Ways onWay={open} except={tab} /> : null}
+        </div>
       ) : null}
       {status.kind === "error" ? (
         <StateView state="error" messageKey={status.error.messageKey} />
@@ -225,7 +270,34 @@ export function ScanPage() {
   );
 }
 
-function CodePanel({ onCode }: { onCode: (text: string) => void }) {
+/** The ways that work with any box: the label photo and the name. */
+function Ways({ onWay, except }: { onWay: (k: Tab) => void; except?: Tab }) {
+  const t = useT();
+  return (
+    <div className="flex flex-wrap gap-3" data-testid="other-ways">
+      {except !== "label" ? (
+        <Button variant="secondary" onClick={() => onWay("label")}>
+          <CameraIcon size={20} />
+          {t("Scan.wayLabel")}
+        </Button>
+      ) : null}
+      {except !== "type" ? (
+        <Button variant="secondary" onClick={() => onWay("type")}>
+          <KeyboardIcon size={20} />
+          {t("Scan.wayType")}
+        </Button>
+      ) : null}
+    </div>
+  );
+}
+
+function CodePanel({
+  onCode,
+  onWay,
+}: {
+  onCode: (text: string) => void;
+  onWay: (k: Tab) => void;
+}) {
   const t = useT();
   const video = useRef<HTMLVideoElement>(null);
   const [cam, setCam] = useState<"off" | "starting" | "on" | CameraError>(
@@ -264,6 +336,7 @@ function CodePanel({ onCode }: { onCode: (text: string) => void }) {
 
   return (
     <Card>
+      <p>{t("Scan.codeLead")}</p>
       <video
         ref={video}
         playsInline
@@ -308,110 +381,8 @@ function CodePanel({ onCode }: { onCode: (text: string) => void }) {
       </div>
       {photo === "busy" ? <p role="status">{t("Scan.decoding")}</p> : null}
       {photo === "none" ? <p role="alert">{t("Scan.noCodeInPhoto")}</p> : null}
-    </Card>
-  );
-}
-
-function LabelPanel({
-  locale,
-  onNdc,
-  onQuery,
-}: {
-  locale: Locale;
-  onNdc: (ndc: string) => void;
-  onQuery: (q: string) => void;
-}) {
-  const t = useT();
-  const [state, setState] = useState<
-    | { kind: "idle" }
-    | { kind: "busy"; p: number }
-    | { kind: "none" | "failed" }
-    | { kind: "done"; text: Recognised }
-  >({ kind: "idle" });
-  const [selected, setSelected] = useState<number[]>([]);
-  const words =
-    state.kind === "done" ? state.text.lines.flatMap((l) => l.words) : [];
-  const ndcs =
-    state.kind === "done"
-      ? ndcCandidates(state.text.lines.map((l) => l.text).join("\n"))
-      : [];
-  const query = selectionQuery(words, selected);
-  return (
-    <Card>
-      <label className="inline-flex min-h-11 cursor-pointer items-center self-start rounded-[var(--radius-button)] bg-accent px-4 font-bold text-on-accent">
-        {t("Scan.ocr.pick")}
-        <input
-          type="file"
-          accept="image/*"
-          className="sr-only"
-          onChange={async (e) => {
-            const file = e.target.files?.[0];
-            e.target.value = "";
-            if (!file) return;
-            setSelected([]);
-            setState({ kind: "busy", p: 0 });
-            try {
-              const { recognise } = await import("@/scan/ocr");
-              const text = await recognise(file, locale, (p) =>
-                setState({ kind: "busy", p }),
-              );
-              setState(
-                text.lines.length ? { kind: "done", text } : { kind: "none" },
-              );
-            } catch {
-              setState({ kind: "failed" });
-            }
-          }}
-        />
-      </label>
-      {state.kind === "busy" ? (
-        <p role="status" aria-busy="true">
-          {t("Scan.ocr.loading", { percent: `${Math.round(state.p * 100)} %` })}
-        </p>
-      ) : null}
-      {state.kind === "none" ? <p role="alert">{t("Scan.ocr.none")}</p> : null}
-      {state.kind === "failed" ? (
-        <p role="alert">{t("Scan.ocr.failed")}</p>
-      ) : null}
-      {state.kind === "done" ? (
-        <>
-          <p className="text-sm">{t("Scan.ocr.instructions")}</p>
-          {ndcs.length ? (
-            <div className="flex flex-wrap gap-2">
-              {ndcs.map((n) => (
-                <Button key={n} variant="secondary" onClick={() => onNdc(n)}>
-                  {t("Scan.ocr.ndcChip", { ndc: n })}
-                </Button>
-              ))}
-            </div>
-          ) : null}
-          <div className="flex max-h-72 flex-wrap gap-1 overflow-y-auto">
-            {words.map((w, i) => (
-              <button
-                key={i}
-                aria-pressed={selected.includes(i)}
-                onClick={() =>
-                  setSelected((s) =>
-                    s.includes(i) ? s.filter((x) => x !== i) : [...s, i],
-                  )
-                }
-                className={`min-h-11 min-w-11 rounded-full border-2 px-3 text-sm ${selected.includes(i) ? "border-accent bg-accent text-on-accent" : "border-muted"}`}
-              >
-                {w}
-              </button>
-            ))}
-          </div>
-          <div className="flex flex-wrap gap-3">
-            <Button disabled={!query} onClick={() => query && onQuery(query)}>
-              {query ? t("Scan.ocr.lookupWords", { query }) : t("Scan.submit")}
-            </Button>
-            {selected.length ? (
-              <Button variant="quiet" onClick={() => setSelected([])}>
-                {t("Scan.ocr.clear")}
-              </Button>
-            ) : null}
-          </div>
-        </>
+      {slow || photo === "none" || cam === "denied" || cam === "unavailable" ? (
+        <Ways onWay={onWay} />
       ) : null}
     </Card>
   );
@@ -422,6 +393,7 @@ function TypePanel({ onTyped }: { onTyped: (text: string) => void }) {
   const [text, setText] = useState("");
   return (
     <Card>
+      <p>{t("Scan.typeLead")}</p>
       <form
         className="flex flex-col gap-3"
         onSubmit={(e) => {

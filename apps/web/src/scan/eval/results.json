@@ -1,0 +1,338 @@
+{
+ "all labels that name a held ingredient": {
+  "before": {
+   "cases": 342,
+   "hit": 173,
+   "first": 174,
+   "withWrong": 0
+  },
+  "after": {
+   "cases": 342,
+   "hit": 342,
+   "first": 342,
+   "withWrong": 0
+  }
+ },
+ "held languages (en, tr, de, fr, es), one ingredient": {
+  "before": {
+   "cases": 247,
+   "hit": 141,
+   "first": 141,
+   "withWrong": 0
+  },
+  "after": {
+   "cases": 247,
+   "hit": 247,
+   "first": 247,
+   "withWrong": 0
+  }
+ },
+ "  label in en": {
+  "before": {
+   "cases": 50,
+   "hit": 31,
+   "first": 31,
+   "withWrong": 0
+  },
+  "after": {
+   "cases": 50,
+   "hit": 50,
+   "first": 50,
+   "withWrong": 0
+  }
+ },
+ "  label in tr": {
+  "before": {
+   "cases": 49,
+   "hit": 27,
+   "first": 27,
+   "withWrong": 0
+  },
+  "after": {
+   "cases": 49,
+   "hit": 49,
+   "first": 49,
+   "withWrong": 0
+  }
+ },
+ "  label in de": {
+  "before": {
+   "cases": 50,
+   "hit": 19,
+   "first": 19,
+   "withWrong": 0
+  },
+  "after": {
+   "cases": 50,
+   "hit": 50,
+   "first": 50,
+   "withWrong": 0
+  }
+ },
+ "  label in fr": {
+  "before": {
+   "cases": 49,
+   "hit": 30,
+   "first": 30,
+   "withWrong": 0
+  },
+  "after": {
+   "cases": 49,
+   "hit": 49,
+   "first": 49,
+   "withWrong": 0
+  }
+ },
+ "  label in es": {
+  "before": {
+   "cases": 49,
+   "hit": 34,
+   "first": 34,
+   "withWrong": 0
+  },
+  "after": {
+   "cases": 49,
+   "hit": 49,
+   "first": 49,
+   "withWrong": 0
+  }
+ },
+ "other languages (it, pt, nl, pl, Latin), one ingredient": {
+  "before": {
+   "cases": 75,
+   "hit": 24,
+   "first": 24,
+   "withWrong": 0
+  },
+  "after": {
+   "cases": 75,
+   "hit": 75,
+   "first": 75,
+   "withWrong": 0
+  }
+ },
+ "combination labels (every ingredient found)": {
+  "before": {
+   "cases": 20,
+   "hit": 8,
+   "first": 9,
+   "withWrong": 0
+  },
+  "after": {
+   "cases": 20,
+   "hit": 20,
+   "first": 20,
+   "withWrong": 0
+  }
+ },
+ "upright or slightly tilted (0°, 2°, −4°, 7°)": {
+  "before": {
+   "cases": 210,
+   "hit": 173,
+   "first": 174,
+   "withWrong": 0
+  },
+  "after": {
+   "cases": 210,
+   "hit": 210,
+   "first": 210,
+   "withWrong": 0
+  }
+ },
+ "on its side or upside down (90°, 270°, 180°)": {
+  "before": {
+   "cases": 132,
+   "hit": 0,
+   "first": 0,
+   "withWrong": 0
+  },
+  "after": {
+   "cases": 132,
+   "hit": 132,
+   "first": 132,
+   "withWrong": 0
+  }
+ },
+ "ingredient text 13 px (image at 2×)": {
+  "before": {
+   "cases": 107,
+   "hit": 62,
+   "first": 63,
+   "withWrong": 0
+  },
+  "after": {
+   "cases": 107,
+   "hit": 107,
+   "first": 107,
+   "withWrong": 0
+  }
+ },
+ "ingredient text 18 px (image at 2×)": {
+  "before": {
+   "cases": 129,
+   "hit": 59,
+   "first": 59,
+   "withWrong": 0
+  },
+  "after": {
+   "cases": 129,
+   "hit": 129,
+   "first": 129,
+   "withWrong": 0
+  }
+ },
+ "ingredient text 26 px (image at 2×)": {
+  "before": {
+   "cases": 106,
+   "hit": 52,
+   "first": 52,
+   "withWrong": 0
+  },
+  "after": {
+   "cases": 106,
+   "hit": 106,
+   "first": 106,
+   "withWrong": 0
+  }
+ },
+ "look: plain": {
+  "before": {
+   "cases": 71,
+   "hit": 40,
+   "first": 40,
+   "withWrong": 0
+  },
+  "after": {
+   "cases": 71,
+   "hit": 71,
+   "first": 71,
+   "withWrong": 0
+  }
+ },
+ "look: inverse": {
+  "before": {
+   "cases": 32,
+   "hit": 13,
+   "first": 13,
+   "withWrong": 0
+  },
+  "after": {
+   "cases": 32,
+   "hit": 32,
+   "first": 32,
+   "withWrong": 0
+  }
+ },
+ "look: band": {
+  "before": {
+   "cases": 33,
+   "hit": 18,
+   "first": 18,
+   "withWrong": 0
+  },
+  "after": {
+   "cases": 33,
+   "hit": 33,
+   "first": 33,
+   "withWrong": 0
+  }
+ },
+ "look: grey": {
+  "before": {
+   "cases": 34,
+   "hit": 17,
+   "first": 17,
+   "withWrong": 0
+  },
+  "after": {
+   "cases": 34,
+   "hit": 34,
+   "first": 34,
+   "withWrong": 0
+  }
+ },
+ "look: blur": {
+  "before": {
+   "cases": 30,
+   "hit": 11,
+   "first": 11,
+   "withWrong": 0
+  },
+  "after": {
+   "cases": 30,
+   "hit": 30,
+   "first": 30,
+   "withWrong": 0
+  }
+ },
+ "look: perspective": {
+  "before": {
+   "cases": 38,
+   "hit": 19,
+   "first": 19,
+   "withWrong": 0
+  },
+  "after": {
+   "cases": 38,
+   "hit": 38,
+   "first": 38,
+   "withWrong": 0
+  }
+ },
+ "look: noise": {
+  "before": {
+   "cases": 38,
+   "hit": 25,
+   "first": 25,
+   "withWrong": 0
+  },
+  "after": {
+   "cases": 38,
+   "hit": 38,
+   "first": 38,
+   "withWrong": 0
+  }
+ },
+ "look: jpeg": {
+  "before": {
+   "cases": 35,
+   "hit": 15,
+   "first": 16,
+   "withWrong": 0
+  },
+  "after": {
+   "cases": 35,
+   "hit": 35,
+   "first": 35,
+   "withWrong": 0
+  }
+ },
+ "look: lowres": {
+  "before": {
+   "cases": 31,
+   "hit": 15,
+   "first": 15,
+   "withWrong": 0
+  },
+  "after": {
+   "cases": 31,
+   "hit": 31,
+   "first": 31,
+   "withWrong": 0
+  }
+ },
+ "no held ingredient on the label (a candidate here is wrong)": {
+  "before": {
+   "cases": 24,
+   "hit": 24,
+   "first": 0,
+   "withWrong": 0
+  },
+  "after": {
+   "cases": 24,
+   "hit": 24,
+   "first": 0,
+   "withWrong": 0
+  }
+ }
+}

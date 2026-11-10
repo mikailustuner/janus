@@ -19,6 +19,11 @@ export interface Pending {
   lot: string | null;
   /** Set when a list item is confirmed again after a dataset change. */
   replaces: string | null;
+  /**
+   * The ingredient the user chose from the label candidates (ocr-first Req 2.6): its candidate
+   * is shown first on the confirm screen. It is not preselected.
+   */
+  prefer?: string | null;
 }
 
 let current: Pending | null = null;

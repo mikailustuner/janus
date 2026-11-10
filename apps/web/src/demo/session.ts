@@ -6,6 +6,8 @@
  */
 import { useSyncExternalStore } from "react";
 
+import { dispatchLabel } from "@/scan/label-session";
+
 export const PATIENTS = ["istanbul", "cologne", "ohio"] as const;
 export type PatientId = (typeof PATIENTS)[number];
 
@@ -32,6 +34,8 @@ export function demoPatient(): PatientId | null {
 
 export function startDemo(patient: PatientId): void {
   current = patient;
+  // A label of the user's own box is not shown inside the demo.
+  dispatchLabel({ type: "clear" });
   try {
     sessionStorage.setItem(KEY, patient);
   } catch {

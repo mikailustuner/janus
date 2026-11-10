@@ -142,6 +142,18 @@ export function generate(repoRoot) {
     ),
     english_names: Object.fromEntries(ingredients.map((r) => [r.key, r.en])),
   };
+  // Every accepted name of an ingredient in any of the five languages, for finding ingredient
+  // names in label text on the device (ocr-first design §3). Loaded only by the label panel.
+  out["ingredient-names.json"] = Object.fromEntries(
+    ingredients.map((r) => [
+      r.key,
+      [
+        ...new Set(
+          [r.en, r.en_alt, ...LOCALES.map((l) => r[l])].filter(Boolean),
+        ),
+      ],
+    ]),
+  );
   // The doctor page's small message map: the `Doctor` namespace and the disclaimer (design §11).
   out["../doctor/messages.json"] = Object.fromEntries(
     LOCALES.map((lang) => {

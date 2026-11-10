@@ -6,7 +6,9 @@
  */
 import { useCallback, useSyncExternalStore } from "react";
 
+import { setPending } from "@/flow/pending";
 import { entriesDoc } from "@/passport/entries";
+import { dispatchLabel } from "@/scan/label-session";
 
 import { list, type ListDoc } from "./list";
 import { DEFAULT_SETTINGS, settings, type Settings } from "./settings";
@@ -88,6 +90,9 @@ export async function deleteEverything(): Promise<void> {
     zombie,
   ] as Doc<unknown>[])
     doc.reset();
+  // What is only in memory: the label result and the resolution waiting for confirmation.
+  dispatchLabel({ type: "clear" });
+  setPending(null);
   updateSettings({});
 }
 

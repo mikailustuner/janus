@@ -23,7 +23,7 @@
     "resumeCount": "{count, plural, one {# medicine on this device} other {# medicines on this device}}",
     "privacy": "What stays on this device",
     "howTitle": "How it works",
-    "how1": "Scan the code on the box, or type the name.",
+    "how1": "Scan the code on the box, photograph the label, or type the ingredient name. The label and the name work with a box from any country that prints the name in Latin letters.",
     "how2": "Janus compares your medicines with {patterns} published prescribing-cascade patterns and public reports of side effects.",
     "how3": "You get a note with sources for your doctor, in the doctor's language.",
     "coverageTitle": "Regions and languages",
@@ -158,7 +158,7 @@
   },
   "Start": {
     "title": "Where are the medicines from?",
-    "intro": "Janus reads boxes and labels from Türkiye, the European Union and the United States, also mixed in one list.",
+    "intro": "Janus reads boxes and labels from Türkiye, the European Union and the United States, also mixed in one list. A box from another country can be tried with a photo of its label or with its ingredient name, if the name is printed in Latin letters.",
     "scanRegion": "Boxes and labels from",
     "scanRegionAuto": "Recognise automatically",
     "userRegion": "Where do you live?",
@@ -174,7 +174,7 @@
       "gtin_check_digit": "The digits of this code do not add up. Please check them or type the name.",
       "ndc_malformed": "This does not look like an NDC. Please check it or type the name."
     },
-    "intro": "Point the camera at the code on the box or the label, choose a photo, or type the name. Images stay on this device.",
+    "intro": "There are three ways to add a medicine: scan the code on the box, photograph the label, or type the name. Images stay on this device.",
     "regionNote": "Boxes and labels from: {region}",
     "regionAuto": "recognised automatically",
     "tabs": {
@@ -208,8 +208,30 @@
       "instructions": "Tap the words of the medicine name, then look it up. Nothing is sent until you choose.",
       "ndcChip": "Look up NDC {ndc}",
       "lookupWords": "Look up “{query}”",
-      "clear": "Clear the selection"
-    }
+      "clear": "Clear the selection",
+      "camera": "Use the camera",
+      "capture": "Take the photo",
+      "cameraHint": "Hold the ingredient name inside the picture, then take the photo.",
+      "cameraDenied": "The camera is not available, or permission was not given. You can choose a photo instead or type the name.",
+      "turning": "Reading the label again with the photo turned… {percent}",
+      "privacy": "The photo and its text stay on this device. Only the name, words or NDC you choose are sent.",
+      "candidatesTitle": "Ingredient names recognised on the label",
+      "candidatesIntro": "Choose the ingredient printed on your box. Janus does not choose for you, and nothing is sent until you choose.",
+      "several": "This label names more than one ingredient. Add them one after the other; this list stays here until you take another photo.",
+      "asWritten": "On the label: {text}",
+      "similar": "Similar spelling. Please compare it with the box.",
+      "inList": "Already in your list",
+      "showAll": "Show all {count} names",
+      "noIngredient": "Janus recognised no ingredient name from its list in this photo. You can tap the words of the name below, take another photo, or type the name.",
+      "wordsTitle": "Choose the words yourself",
+      "remove": "Remove this photo result"
+    },
+    "anyCountry": "A photo of the label or the ingredient name works with a box from any country, as long as the name is printed in Latin letters. The code works for the countries whose product lists Janus holds.",
+    "codeLead": "Janus looks the code up in the product lists it holds. If the code is not found, you can still use the label photo or the ingredient name.",
+    "labelLead": "Photograph the side of the box that names the ingredient. Janus reads the text on this device and shows the ingredient names it recognises. Janus reads Latin letters only and can misread a word.",
+    "typeLead": "Type the ingredient name as printed on the box, or the product name.",
+    "wayLabel": "Photograph the label",
+    "wayType": "Type the ingredient name"
   },
   "Settings": {
     "title": "Settings",
@@ -714,7 +736,8 @@
     "chooseAmbiguous": "Please answer which ingredient it is, or choose \"don't know\".",
     "showMore": "Show more results",
     "demoNoAdd": "Demo medicines are not added to your own list.",
-    "back": "Back to scanning"
+    "back": "Back to scanning",
+    "tryOther": "There are other ways to try: photograph the label or type the ingredient name. These two ways do not depend on the country of the box."
   },
   "OutcomeConsent": {
     "2026-11-v2": {

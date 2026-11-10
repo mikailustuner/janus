@@ -54,3 +54,14 @@ export async function scanFrames(
   }
   return null;
 }
+
+/** The current frame of the camera as a PNG, for the label photo. Not stored, not sent. */
+export function captureFrame(video: HTMLVideoElement): Promise<Blob | null> {
+  const canvas = document.createElement("canvas");
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+  const ctx = canvas.getContext("2d");
+  if (!ctx || canvas.width === 0) return Promise.resolve(null);
+  ctx.drawImage(video, 0, 0);
+  return new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
+}

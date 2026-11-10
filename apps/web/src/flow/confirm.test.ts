@@ -58,6 +58,44 @@ const resolutionArb = fc
     }),
   );
 
+describe("ocr-first P7: an ingredient chosen on the label", () => {
+  it("is listed first and changes nothing else: same cards, same indexes, none chosen", () => {
+    check(
+      fc.property(
+        resolutionArb,
+        fc.option(
+          fc.constantFrom(
+            "Q0",
+            ...CANDIDATES.flatMap((c) =>
+              c.kind === "ingredient" ? [c.ingredient_key.qid] : [],
+            ),
+          ),
+          { nil: null },
+        ),
+        (r, prefer) => {
+          const plain = confirmView(r);
+          const v = confirmView(r, prefer);
+          expect(v.kind).toBe(plain.kind);
+          if (v.kind !== "candidates" || plain.kind !== "candidates") return;
+          const byIndex = (a: { index: number }, b: { index: number }) =>
+            a.index - b.index;
+          expect([...v.cards].sort(byIndex)).toEqual(plain.cards);
+          for (const c of v.cards)
+            expect(c.candidate).toBe(r.candidates[c.index]);
+          expect(JSON.stringify(v)).not.toMatch(/chosen|selected|confirmed/);
+          const preferred = (i: number) => {
+            const c = v.cards[i]!.candidate;
+            return c.kind === "ingredient" && c.ingredient_key.qid === prefer;
+          };
+          const n = v.cards.filter((_, i) => preferred(i)).length;
+          for (let i = 0; i < v.cards.length; i++)
+            expect(preferred(i)).toBe(i < n);
+        },
+      ),
+    );
+  });
+});
+
 describe("P21 confirm view model", () => {
   it("never preselects, keeps not-found apart from no-open-database, labels digits matches", () => {
     check(

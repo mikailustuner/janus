@@ -23,7 +23,7 @@
     "resumeCount": "{count, plural, one {# medicamento en este dispositivo} other {# medicamentos en este dispositivo}}",
     "privacy": "Qué se queda en este dispositivo",
     "howTitle": "Cómo funciona",
-    "how1": "Escanee el código de la caja o escriba el nombre.",
+    "how1": "Escanee el código de la caja, fotografíe la etiqueta o escriba el nombre del principio activo. La etiqueta y el nombre funcionan con una caja de cualquier país que lleve el nombre en letras latinas.",
     "how2": "Janus compara sus medicamentos con {patterns} patrones publicados de cascada de prescripción y con notificaciones públicas de efectos adversos.",
     "how3": "Recibe una nota con fuentes para su médico, en el idioma del médico.",
     "coverageTitle": "Regiones e idiomas",
@@ -158,7 +158,7 @@
   },
   "Start": {
     "title": "¿De dónde son los medicamentos?",
-    "intro": "Janus lee cajas y etiquetas de Turquía, la Unión Europea y Estados Unidos, también mezcladas en una sola lista.",
+    "intro": "Janus lee cajas y etiquetas de Turquía, la Unión Europea y Estados Unidos, también mezcladas en una sola lista. Con una caja de otro país puede intentarlo con una foto de su etiqueta o con el nombre de su principio activo, si el nombre está impreso en letras latinas.",
     "scanRegion": "Cajas y etiquetas de",
     "scanRegionAuto": "Reconocer automáticamente",
     "userRegion": "¿Dónde vive?",
@@ -174,7 +174,7 @@
       "gtin_check_digit": "Los dígitos de este código no cuadran. Compruébelos o escriba el nombre.",
       "ndc_malformed": "Esto no parece un NDC. Compruébelo o escriba el nombre."
     },
-    "intro": "Apunte la cámara al código de la caja o de la etiqueta, elija una foto o escriba el nombre. Las imágenes se quedan en este dispositivo.",
+    "intro": "Hay tres formas de añadir un medicamento: escanear el código de la caja, fotografiar la etiqueta o escribir el nombre. Las imágenes se quedan en este dispositivo.",
     "regionNote": "Cajas y etiquetas de: {region}",
     "regionAuto": "reconocimiento automático",
     "tabs": {
@@ -208,8 +208,30 @@
       "instructions": "Toque las palabras del nombre del medicamento y luego busque. No se envía nada hasta que usted elija.",
       "ndcChip": "Buscar el NDC {ndc}",
       "lookupWords": "Buscar «{query}»",
-      "clear": "Borrar la selección"
-    }
+      "clear": "Borrar la selección",
+      "camera": "Usar la cámara",
+      "capture": "Hacer la foto",
+      "cameraHint": "Mantenga el nombre del principio activo dentro de la imagen y luego haga la foto.",
+      "cameraDenied": "La cámara no está disponible o no se dio el permiso. Puede elegir una foto en su lugar o escribir el nombre.",
+      "turning": "Leyendo de nuevo la etiqueta con la foto girada… {percent}",
+      "privacy": "La foto y su texto se quedan en este dispositivo. Solo se envían el nombre, las palabras o el NDC que usted elija.",
+      "candidatesTitle": "Nombres de principios activos reconocidos en la etiqueta",
+      "candidatesIntro": "Elija el principio activo impreso en su caja. Janus no elige por usted, y no se envía nada hasta que usted elija.",
+      "several": "Esta etiqueta nombra más de un principio activo. Añádalos uno tras otro; esta lista se queda aquí hasta que haga otra foto.",
+      "asWritten": "En la etiqueta: {text}",
+      "similar": "Grafía parecida. Compárela con la caja.",
+      "inList": "Ya está en su lista",
+      "showAll": "Mostrar los {count} nombres",
+      "noIngredient": "Janus no reconoció en esta foto ningún nombre de principio activo de su lista. Puede tocar abajo las palabras del nombre, hacer otra foto o escribir el nombre.",
+      "wordsTitle": "Elegir las palabras por su cuenta",
+      "remove": "Quitar el resultado de esta foto"
+    },
+    "anyCountry": "Una foto de la etiqueta o el nombre del principio activo funciona con una caja de cualquier país, siempre que el nombre esté impreso en letras latinas. El código funciona para los países cuyas listas de productos tiene Janus.",
+    "codeLead": "Janus busca el código en las listas de productos que tiene. Si el código no se encuentra, puede usar igualmente la foto de la etiqueta o el nombre del principio activo.",
+    "labelLead": "Fotografíe el lado de la caja donde figura el principio activo. Janus lee el texto en este dispositivo y muestra los nombres de principios activos que reconoce. Janus solo lee letras latinas y puede leer mal una palabra.",
+    "typeLead": "Escriba el nombre del principio activo tal como está impreso en la caja, o el nombre del producto.",
+    "wayLabel": "Fotografiar la etiqueta",
+    "wayType": "Escribir el principio activo"
   },
   "Settings": {
     "title": "Ajustes",
@@ -714,7 +736,8 @@
     "chooseAmbiguous": "Indique qué principio activo es o elija «no lo sé».",
     "showMore": "Mostrar más resultados",
     "demoNoAdd": "Los medicamentos de la demo no se añaden a su propia lista.",
-    "back": "Volver a escanear"
+    "back": "Volver a escanear",
+    "tryOther": "Hay otras formas de intentarlo: fotografíe la etiqueta o escriba el nombre del principio activo. Estas dos formas no dependen del país de la caja."
   },
   "OutcomeConsent": {
     "2026-11-v2": {

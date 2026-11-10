@@ -23,7 +23,7 @@
     "resumeCount": "{count, plural, one {# médicament sur cet appareil} other {# médicaments sur cet appareil}}",
     "privacy": "Ce qui reste sur cet appareil",
     "howTitle": "Comment ça marche",
-    "how1": "Scannez le code de la boîte, ou saisissez le nom.",
+    "how1": "Scannez le code de la boîte, photographiez l'étiquette ou saisissez le nom de la substance active. L'étiquette et le nom fonctionnent avec une boîte de n'importe quel pays où le nom est imprimé en lettres latines.",
     "how2": "Janus compare vos médicaments à {patterns} schémas publiés de cascade de prescription et à des signalements publics d'effets indésirables.",
     "how3": "Vous obtenez une note avec sources pour votre médecin, dans la langue du médecin.",
     "coverageTitle": "Régions et langues",
@@ -158,7 +158,7 @@
   },
   "Start": {
     "title": "D'où viennent les médicaments ?",
-    "intro": "Janus lit les boîtes et étiquettes de Turquie, de l'Union européenne et des États-Unis, même mélangées dans une seule liste.",
+    "intro": "Janus lit les boîtes et étiquettes de Turquie, de l'Union européenne et des États-Unis, même mélangées dans une seule liste. Pour une boîte d'un autre pays, vous pouvez essayer avec une photo de son étiquette ou avec le nom de sa substance active, si le nom est imprimé en lettres latines.",
     "scanRegion": "Boîtes et étiquettes de",
     "scanRegionAuto": "Reconnaître automatiquement",
     "userRegion": "Où habitez-vous ?",
@@ -174,7 +174,7 @@
       "gtin_check_digit": "Les chiffres de ce code ne concordent pas. Veuillez les vérifier ou saisir le nom.",
       "ndc_malformed": "Cela ne ressemble pas à un NDC. Veuillez le vérifier ou saisir le nom."
     },
-    "intro": "Dirigez l'appareil photo vers le code de la boîte ou de l'étiquette, choisissez une photo ou saisissez le nom. Les images restent sur cet appareil.",
+    "intro": "Il y a trois façons d'ajouter un médicament : scanner le code de la boîte, photographier l'étiquette ou saisir le nom. Les images restent sur cet appareil.",
     "regionNote": "Boîtes et étiquettes de : {region}",
     "regionAuto": "reconnaissance automatique",
     "tabs": {
@@ -208,8 +208,30 @@
       "instructions": "Touchez les mots du nom du médicament, puis lancez la recherche. Rien n'est envoyé avant votre choix.",
       "ndcChip": "Rechercher le NDC {ndc}",
       "lookupWords": "Rechercher « {query} »",
-      "clear": "Effacer la sélection"
-    }
+      "clear": "Effacer la sélection",
+      "camera": "Utiliser l'appareil photo",
+      "capture": "Prendre la photo",
+      "cameraHint": "Gardez le nom de la substance active dans l'image, puis prenez la photo.",
+      "cameraDenied": "L'appareil photo n'est pas disponible, ou l'autorisation n'a pas été donnée. Vous pouvez choisir une photo à la place ou saisir le nom.",
+      "turning": "Nouvelle lecture de l'étiquette avec la photo pivotée… {percent}",
+      "privacy": "La photo et son texte restent sur cet appareil. Seuls le nom, les mots ou le NDC que vous choisissez sont envoyés.",
+      "candidatesTitle": "Noms de substances actives reconnus sur l'étiquette",
+      "candidatesIntro": "Choisissez la substance active imprimée sur votre boîte. Janus ne choisit pas à votre place, et rien n'est envoyé avant votre choix.",
+      "several": "Cette étiquette mentionne plus d'une substance active. Ajoutez-les l'une après l'autre ; cette liste reste ici jusqu'à ce que vous preniez une autre photo.",
+      "asWritten": "Sur l'étiquette : {text}",
+      "similar": "Orthographe proche. Veuillez comparer avec la boîte.",
+      "inList": "Déjà dans votre liste",
+      "showAll": "Afficher les {count} noms",
+      "noIngredient": "Janus n'a reconnu sur cette photo aucun nom de substance active de sa liste. Vous pouvez toucher les mots du nom ci-dessous, prendre une autre photo ou saisir le nom.",
+      "wordsTitle": "Choisir les mots vous-même",
+      "remove": "Retirer le résultat de cette photo"
+    },
+    "anyCountry": "Une photo de l'étiquette ou le nom de la substance active fonctionne avec une boîte de n'importe quel pays, à condition que le nom soit imprimé en lettres latines. Le code fonctionne pour les pays dont Janus détient la liste de produits.",
+    "codeLead": "Janus cherche le code dans les listes de produits qu'il détient. Si le code n'est pas trouvé, vous pouvez quand même utiliser la photo de l'étiquette ou le nom de la substance active.",
+    "labelLead": "Photographiez le côté de la boîte où figure la substance active. Janus lit le texte sur cet appareil et affiche les noms de substances actives qu'il reconnaît. Janus ne lit que les lettres latines et peut mal lire un mot.",
+    "typeLead": "Saisissez le nom de la substance active tel qu'il est imprimé sur la boîte, ou le nom du produit.",
+    "wayLabel": "Photographier l'étiquette",
+    "wayType": "Saisir la substance active"
   },
   "Settings": {
     "title": "Réglages",
@@ -714,7 +736,8 @@
     "chooseAmbiguous": "Veuillez indiquer de quelle substance il s'agit ou choisir « je ne sais pas ».",
     "showMore": "Afficher plus de résultats",
     "demoNoAdd": "Les médicaments de démo ne sont pas ajoutés à votre propre liste.",
-    "back": "Retour au scan"
+    "back": "Retour au scan",
+    "tryOther": "Il existe d'autres façons d'essayer : photographiez l'étiquette ou saisissez le nom de la substance active. Ces deux façons ne dépendent pas du pays de la boîte."
   },
   "OutcomeConsent": {
     "2026-11-v2": {

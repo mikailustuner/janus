@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Synthetic label images of scripts/ocr-eval-fixtures.mjs (regenerated on request)
+/.ocr-eval/

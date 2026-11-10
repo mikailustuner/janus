@@ -23,7 +23,7 @@
     "resumeCount": "{count, plural, one {# Medikament auf diesem Gerät} other {# Medikamente auf diesem Gerät}}",
     "privacy": "Was auf diesem Gerät bleibt",
     "howTitle": "So funktioniert es",
-    "how1": "Scannen Sie den Code auf der Packung oder tippen Sie den Namen ein.",
+    "how1": "Scannen Sie den Code auf der Packung, fotografieren Sie das Etikett oder tippen Sie den Wirkstoffnamen ein. Etikett und Name funktionieren mit einer Packung aus jedem Land, auf der der Name in lateinischen Buchstaben steht.",
     "how2": "Janus vergleicht Ihre Medikamente mit {patterns} veröffentlichten Mustern von Verschreibungskaskaden und mit öffentlichen Meldungen zu Nebenwirkungen.",
     "how3": "Sie erhalten eine Notiz mit Quellen für Ihre Ärztin oder Ihren Arzt, in ihrer oder seiner Sprache.",
     "coverageTitle": "Regionen und Sprachen",
@@ -158,7 +158,7 @@
   },
   "Start": {
     "title": "Woher stammen die Medikamente?",
-    "intro": "Janus liest Packungen und Etiketten aus der Türkei, der Europäischen Union und den Vereinigten Staaten, auch gemischt in einer Liste.",
+    "intro": "Janus liest Packungen und Etiketten aus der Türkei, der Europäischen Union und den Vereinigten Staaten, auch gemischt in einer Liste. Eine Packung aus einem anderen Land können Sie mit einem Foto ihres Etiketts oder mit dem Wirkstoffnamen versuchen, wenn der Name in lateinischen Buchstaben aufgedruckt ist.",
     "scanRegion": "Packungen und Etiketten aus",
     "scanRegionAuto": "Automatisch erkennen",
     "userRegion": "Wo wohnen Sie?",
@@ -174,7 +174,7 @@
       "gtin_check_digit": "Die Ziffern dieses Codes passen nicht zusammen. Bitte prüfen Sie sie oder tippen Sie den Namen ein.",
       "ndc_malformed": "Das sieht nicht wie eine NDC aus. Bitte prüfen Sie sie oder tippen Sie den Namen ein."
     },
-    "intro": "Halten Sie die Kamera auf den Code der Packung oder des Etiketts, wählen Sie ein Foto oder tippen Sie den Namen ein. Bilder bleiben auf diesem Gerät.",
+    "intro": "Es gibt drei Wege, ein Medikament hinzuzufügen: den Code auf der Packung scannen, das Etikett fotografieren oder den Namen eintippen. Bilder bleiben auf diesem Gerät.",
     "regionNote": "Packungen und Etiketten aus: {region}",
     "regionAuto": "automatisch erkannt",
     "tabs": {
@@ -208,8 +208,30 @@
       "instructions": "Tippen Sie auf die Wörter des Medikamentennamens und suchen Sie dann. Es wird nichts gesendet, bevor Sie wählen.",
       "ndcChip": "NDC {ndc} suchen",
       "lookupWords": "„{query}“ suchen",
-      "clear": "Auswahl löschen"
-    }
+      "clear": "Auswahl löschen",
+      "camera": "Kamera verwenden",
+      "capture": "Foto aufnehmen",
+      "cameraHint": "Halten Sie den Wirkstoffnamen ins Bild und nehmen Sie dann das Foto auf.",
+      "cameraDenied": "Die Kamera ist nicht verfügbar oder die Erlaubnis wurde nicht erteilt. Sie können stattdessen ein Foto wählen oder den Namen eintippen.",
+      "turning": "Das Etikett wird mit gedrehtem Foto erneut gelesen … {percent}",
+      "privacy": "Das Foto und sein Text bleiben auf diesem Gerät. Gesendet werden nur der Name, die Wörter oder die NDC, die Sie wählen.",
+      "candidatesTitle": "Auf dem Etikett erkannte Wirkstoffnamen",
+      "candidatesIntro": "Wählen Sie den Wirkstoff, der auf Ihrer Packung steht. Janus wählt nicht für Sie, und es wird nichts gesendet, bevor Sie wählen.",
+      "several": "Auf diesem Etikett steht mehr als ein Wirkstoff. Fügen Sie sie nacheinander hinzu; diese Liste bleibt hier, bis Sie ein neues Foto aufnehmen.",
+      "asWritten": "Auf dem Etikett: {text}",
+      "similar": "Ähnliche Schreibweise. Bitte vergleichen Sie sie mit der Packung.",
+      "inList": "Bereits in Ihrer Liste",
+      "showAll": "Alle {count} Namen anzeigen",
+      "noIngredient": "Janus hat auf diesem Foto keinen Wirkstoffnamen aus seiner Liste erkannt. Sie können unten auf die Wörter des Namens tippen, ein anderes Foto aufnehmen oder den Namen eingeben.",
+      "wordsTitle": "Wörter selbst auswählen",
+      "remove": "Ergebnis dieses Fotos entfernen"
+    },
+    "anyCountry": "Ein Foto des Etiketts oder der Wirkstoffname funktioniert mit einer Packung aus jedem Land, sofern der Name in lateinischen Buchstaben aufgedruckt ist. Der Code funktioniert für die Länder, deren Produktlisten Janus vorliegen.",
+    "codeLead": "Janus sucht den Code in den Produktlisten, die ihm vorliegen. Wird der Code nicht gefunden, können Sie trotzdem das Etikettenfoto oder den Wirkstoffnamen nutzen.",
+    "labelLead": "Fotografieren Sie die Seite der Packung, auf der der Wirkstoff steht. Janus liest den Text auf diesem Gerät und zeigt die Wirkstoffnamen, die es erkennt. Janus liest nur lateinische Buchstaben und kann ein Wort falsch lesen.",
+    "typeLead": "Tippen Sie den Wirkstoffnamen ein, wie er auf der Packung steht, oder den Produktnamen.",
+    "wayLabel": "Etikett fotografieren",
+    "wayType": "Wirkstoffnamen eintippen"
   },
   "Settings": {
     "title": "Einstellungen",
@@ -714,7 +736,8 @@
     "chooseAmbiguous": "Bitte geben Sie an, welcher Wirkstoff es ist, oder wählen Sie „weiß nicht“.",
     "showMore": "Mehr Ergebnisse anzeigen",
     "demoNoAdd": "Demo-Medikamente werden nicht zu Ihrer eigenen Liste hinzugefügt.",
-    "back": "Zurück zum Scannen"
+    "back": "Zurück zum Scannen",
+    "tryOther": "Es gibt weitere Wege: Fotografieren Sie das Etikett oder tippen Sie den Wirkstoffnamen ein. Diese beiden Wege hängen nicht vom Land der Packung ab."
   },
   "OutcomeConsent": {
     "2026-11-v2": {

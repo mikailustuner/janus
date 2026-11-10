@@ -97,9 +97,13 @@ test("label photo: recognised on the device, nothing sent until a choice, the ND
   await page
     .getByLabel("Choose a photo of the label")
     .setInputFiles({ name: "label.png", mimeType: "image/png", buffer: png });
-  await expect(page.getByRole("button", { name: "DONEPEZIL" })).toBeVisible({
-    timeout: 60_000,
-  });
+  // The ingredient is offered as a candidate (ocr-first Req 2); the words stay available.
+  await expect(page.getByTestId("label-candidate")).toContainText(
+    ["donepezil"],
+    { timeout: 60_000 },
+  );
+  await page.getByText("Choose the words yourself").click();
+  await expect(page.getByRole("button", { name: "DONEPEZIL" })).toBeVisible();
   expect(seen).toHaveLength(0); // recognised text is never sent as a whole
   // The demo NDC is recognised before any request (it opens the demo prompt).
   await page.getByRole("button", { name: /Look up NDC 0295-2680-01/ }).click();

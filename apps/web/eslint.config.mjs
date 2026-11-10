@@ -14,6 +14,7 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     "public/vendor/**",
     "test-results/**",
+    ".ocr-eval/**",
   ]),
 ]);
 

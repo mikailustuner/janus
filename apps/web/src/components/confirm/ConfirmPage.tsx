@@ -196,11 +196,29 @@ export function ConfirmPage() {
         action={<ButtonLink href="/scan">{t("Confirm.back")}</ButtonLink>}
       />
     );
-  const view = confirmView(pending.resolution);
+  const view = confirmView(pending.resolution, pending.prefer ?? null);
   const back = (
     <ButtonLink href="/scan" variant="secondary" className="self-start">
       {t("Confirm.back")}
     </ButtonLink>
+  );
+  // No candidate is never a dead end (ocr-first Req 1.3–1.5): the label photo and the name work
+  // with a box from any country.
+  const otherWays = (
+    <div className="card flex flex-col gap-3 p-4" data-testid="other-ways">
+      <p>{t("Confirm.tryOther")}</p>
+      <div className="flex flex-wrap gap-3">
+        <ButtonLink href={{ pathname: "/scan", hash: "label" }}>
+          {t("Scan.wayLabel")}
+        </ButtonLink>
+        <ButtonLink
+          href={{ pathname: "/scan", hash: "type" }}
+          variant="secondary"
+        >
+          {t("Scan.wayType")}
+        </ButtonLink>
+      </div>
+    </div>
   );
   if (view.kind === "no_open_database")
     return (
@@ -209,17 +227,7 @@ export function ConfirmPage() {
         <p className="card p-4" data-testid="no-open-database">
           {t("Confirm.noOpenDatabase")}
         </p>
-        <div className="flex flex-wrap gap-3">
-          <ButtonLink href={{ pathname: "/scan", hash: "label" }}>
-            {t("Scan.tabs.label")}
-          </ButtonLink>
-          <ButtonLink
-            href={{ pathname: "/scan", hash: "type" }}
-            variant="secondary"
-          >
-            {t("Scan.tabs.type")}
-          </ButtonLink>
-        </div>
+        {otherWays}
       </>
     );
   if (view.kind === "not_supported")
@@ -227,6 +235,7 @@ export function ConfirmPage() {
       <>
         <PageTitle>{t("Confirm.title")}</PageTitle>
         <p className="card p-4">{t("Confirm.regionNotSupported")}</p>
+        {otherWays}
         {back}
       </>
     );
@@ -253,11 +262,14 @@ export function ConfirmPage() {
             })}
           </p>
         </div>
+        {otherWays}
         {back}
       </>
     );
 
-  const card = chosen !== null ? view.cards[chosen] : undefined;
+  // `chosen` is the candidate's index in the resolution; the cards may be in another order.
+  const card =
+    chosen !== null ? view.cards.find((v) => v.index === chosen) : undefined;
   const c = card?.candidate;
   const name = boxName ?? (c ? defaultBoxName(c, pending.typed, vocab) : "");
   // Recall check of the chosen US product (recall-check Req 6.1); never in demo mode.

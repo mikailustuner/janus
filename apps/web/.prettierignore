@@ -24,3 +24,6 @@ src/simulation/explorer.json
 src/simulation/simulate.recorded.json
 # scripts/record-research.mjs
 src/research/*.recorded.json
+# scripts/ocr-eval-fixtures.mjs and src/scan/eval/ocr-run.test.ts (ocr-first Req 5)
+.ocr-eval/
+src/scan/eval/*.json

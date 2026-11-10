@@ -23,7 +23,7 @@
     "resumeCount": "{count, plural, one {Bu cihazda # ilaç} other {Bu cihazda # ilaç}}",
     "privacy": "Bu cihazda neler kalır",
     "howTitle": "Nasıl çalışır",
-    "how1": "Kutudaki kodu tarayın ya da adını yazın.",
+    "how1": "Kutudaki kodu tarayın, etiketin fotoğrafını çekin ya da etkin madde adını yazın. Etiket ve ad, adın Latin harfleriyle basıldığı, herhangi bir ülkeden gelen kutuda işe yarar.",
     "how2": "Janus ilaçlarınızı yayımlanmış {patterns} reçete kaskadı örüntüsüyle ve yan etkilerle ilgili kamuya açık bildirimlerle karşılaştırır.",
     "how3": "Doktorunuz için, doktorun dilinde, kaynaklı bir not alırsınız.",
     "coverageTitle": "Bölgeler ve diller",
@@ -158,7 +158,7 @@
   },
   "Start": {
     "title": "İlaçlar nereden?",
-    "intro": "Janus Türkiye, Avrupa Birliği ve Amerika Birleşik Devletleri'nden kutu ve etiketleri okur; aynı listede karışık da olabilir.",
+    "intro": "Janus Türkiye, Avrupa Birliği ve Amerika Birleşik Devletleri'nden kutu ve etiketleri okur; aynı listede karışık da olabilir. Başka bir ülkeden gelen kutuyu, adı Latin harfleriyle basılmışsa etiketinin fotoğrafıyla ya da etkin madde adıyla eklemeyi deneyebilirsiniz.",
     "scanRegion": "Kutu ve etiketlerin geldiği yer",
     "scanRegionAuto": "Otomatik algıla",
     "userRegion": "Nerede yaşıyorsunuz?",
@@ -174,7 +174,7 @@
       "gtin_check_digit": "Bu kodun rakamları tutmuyor. Lütfen kontrol edin veya adını yazın.",
       "ndc_malformed": "Bu bir NDC'ye benzemiyor. Lütfen kontrol edin veya adını yazın."
     },
-    "intro": "Kameranızı kutudaki veya etiketteki koda tutun, bir fotoğraf seçin ya da adını yazın. Görüntüler bu cihazda kalır.",
+    "intro": "İlaç eklemenin üç yolu var: kutudaki kodu tarayın, etiketin fotoğrafını çekin ya da adını yazın. Görüntüler bu cihazda kalır.",
     "regionNote": "Kutu ve etiketlerin geldiği yer: {region}",
     "regionAuto": "otomatik algılanır",
     "tabs": {
@@ -208,8 +208,30 @@
       "instructions": "İlacın adını oluşturan kelimelere dokunun, sonra arayın. Siz seçmeden hiçbir şey gönderilmez.",
       "ndcChip": "NDC {ndc} ara",
       "lookupWords": "“{query}” ara",
-      "clear": "Seçimi temizle"
-    }
+      "clear": "Seçimi temizle",
+      "camera": "Kamerayı kullan",
+      "capture": "Fotoğrafı çek",
+      "cameraHint": "Etkin madde adını görüntünün içinde tutun, sonra fotoğrafı çekin.",
+      "cameraDenied": "Kamera kullanılamıyor ya da izin verilmedi. Bunun yerine bir fotoğraf seçebilir veya adını yazabilirsiniz.",
+      "turning": "Etiket, fotoğraf döndürülerek yeniden okunuyor… {percent}",
+      "privacy": "Fotoğraf ve içindeki metin bu cihazda kalır. Yalnızca seçtiğiniz ad, kelimeler veya NDC gönderilir.",
+      "candidatesTitle": "Etikette tanınan etkin madde adları",
+      "candidatesIntro": "Kutunuzda yazan etkin maddeyi seçin. Janus sizin yerinize seçmez ve siz seçmeden hiçbir şey gönderilmez.",
+      "several": "Bu etikette birden fazla etkin madde yazıyor. Bunları sırayla ekleyin; yeni bir fotoğraf çekene kadar bu liste burada kalır.",
+      "asWritten": "Etikette: {text}",
+      "similar": "Benzer yazılış. Lütfen kutuyla karşılaştırın.",
+      "inList": "Listenizde zaten var",
+      "showAll": "{count} adın tümünü göster",
+      "noIngredient": "Janus bu fotoğrafta listesindeki etkin madde adlarından hiçbirini tanımadı. Aşağıda adı oluşturan kelimelere dokunabilir, başka bir fotoğraf çekebilir ya da adını yazabilirsiniz.",
+      "wordsTitle": "Kelimeleri kendiniz seçin",
+      "remove": "Bu fotoğraf sonucunu kaldır"
+    },
+    "anyCountry": "Etiket fotoğrafı veya etkin madde adı, ad Latin harfleriyle basılmışsa herhangi bir ülkeden gelen kutuda işe yarar. Kod ise Janus'un elinde ürün listesi bulunan ülkeler için işe yarar.",
+    "codeLead": "Janus kodu elindeki ürün listelerinde arar. Kod bulunamazsa etiket fotoğrafını veya etkin madde adını yine de kullanabilirsiniz.",
+    "labelLead": "Kutunun, etkin maddenin yazılı olduğu yüzünün fotoğrafını çekin. Janus metni bu cihazda okur ve tanıdığı etkin madde adlarını gösterir. Janus yalnızca Latin harflerini okur ve bir kelimeyi yanlış okuyabilir.",
+    "typeLead": "Kutuda yazan etkin madde adını ya da ürün adını yazın.",
+    "wayLabel": "Etiketin fotoğrafını çek",
+    "wayType": "Etkin madde adını yaz"
   },
   "Settings": {
     "title": "Ayarlar",
@@ -714,7 +736,8 @@
     "chooseAmbiguous": "Lütfen hangi etkin madde olduğunu belirtin veya \"bilmiyorum\" seçin.",
     "showMore": "Daha fazla sonuç göster",
     "demoNoAdd": "Demo ilaçları kendi listenize eklenmez.",
-    "back": "Taramaya dön"
+    "back": "Taramaya dön",
+    "tryOther": "Deneyebileceğiniz başka yollar var: Etiketin fotoğrafını çekin ya da etkin madde adını yazın. Bu iki yol kutunun ülkesine bağlı değildir."
   },
   "OutcomeConsent": {
     "2026-11-v2": {
