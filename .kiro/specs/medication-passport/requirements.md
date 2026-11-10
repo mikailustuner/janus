@@ -267,3 +267,124 @@ Many families live across borders (for example Turkish families in Germany), and
   the medicines. It never says the medicines interact or recommends a change. Ingredient order and duplicates in the list
   change nothing.
   - *(Taken into Requirement 11.)*
+
+---
+
+# Extension 2026-11-10: products with the same active ingredient in another country
+
+> Requirements 14 to 17 extend the Passport for migrants and travellers: "which products in country X contain the
+> active ingredient of this box". They **supersede design decision DP3 and owner decision 5 of 2026-11-08** ("counts
+> only") for one new screen and one new route; `POST /passport/presence` and its screens are unchanged. The risk
+> DP3 guarded against (a list that reads as a list of substitutes) is handled by Requirements 14.8, 16 and 17 instead
+> of by hiding the names. Expert review has not yet been done; the wording and the comparison rules were checked by
+> automated review passes only (`medication-passport-products-review.md`).
+> Data facts were measured on the dev dataset `7db3a513…` (TİTCK 2026-11-06, openFDA NDC 2026-11-06, BDPM
+> 2026-11-03, Nomenclátor 2026-11-07); see `design.md` §15.1.
+
+## Glossary (additions)
+- **Target source:** one listable product database chosen by the user through its country: France (`eu_fr_bdpm`),
+  Spain (`eu_es_cima`) or the United States (`openfda_ndc`).
+- **Listable source:** a source whose licence allows showing its product names with attribution and data date
+  (`data-sources.md`): BDPM (Licence Ouverte), Nomenclátor (reuse with attribution), openFDA NDC (CC0). The TİTCK
+  list is **not** listable (redistribution terms unclear); Germany has no source.
+- **Listed product:** a product of the target source that is not homeopathic, is a finished medicine, has every
+  ingredient `mapped`, and whose set of ingredient keys **equals** the set of the box's keys.
+- **Level:** the per-product result of comparing the box with a listed product: `same`, `different` or `unknown`,
+  separately for strength and for dose form.
+
+### Requirement 14: Products with the same active ingredients
+**User story:** As someone who moved or travels with a medicine, I want to see which products in another country
+contain the same active ingredient, with their strength and form, so that I can show the list to a pharmacist or
+doctor there.
+
+#### Acceptance criteria
+1. WHEN the user opens "Products with the same active ingredient" for a checked item and chooses a target country
+   THE system SHALL list the listed products of that country's source: every product shown SHALL have exactly the
+   item's ingredient keys, no fewer and no more (set equality; a combination box is matched only by products with
+   the same combination).
+2. Products with other or unrecognised ingredients, homeopathic products and products that are not finished
+   medicines (openFDA types `BULK INGREDIENT`, `DRUG FOR FURTHER PROCESSING`, `ANIMAL DRUG FOR FURTHER PROCESSING`,
+   `LICENSED VACCINE BULK INTERMEDIATE`) SHALL NOT be listed; THE answer SHALL give their numbers
+   (`with_other_ingredients`, `homeopathic_left_out`, `not_finished_left_out`).
+3. FOR every listed product THE system SHALL show the product name, each ingredient's strength and the dose form
+   exactly as the source publishes them, and the strength level and the dose-form level.
+4. THE strength level SHALL be `same` only WHEN every ingredient of the item and of the product has a strength code
+   (Requirement 6.3: exact unit conversion, same basis, no tolerance) and all codes are equal; `different` only WHEN
+   every code is known on both sides and at least one differs; otherwise `unknown` with the reason
+   (`not_known_for_item`, `not_known_in_source`). THE dose-form level SHALL follow the same rule on the dose-form
+   groups (Requirement 6.5; the group `other` is never compared).
+5. A product with level `different` for strength or form SHALL be flagged visibly: a "different" label in text with
+   its own icon shape next to the published value, never by colour alone.
+6. THE answer SHALL give the number of listed rows, the number of source entries behind them and, for strength and
+   for form, how many entries are `same`, `different` and `unknown`. Source entries that show the same name,
+   strengths, form and marketing statement SHALL be one row with their number.
+7. THE system SHALL show what the source states about marketing (`listed_as_marketed`, `listed_as_not_marketed`,
+   `not_stated`) as a statement about the source data, never about availability at a pharmacy.
+8. THE system SHALL NOT convert a dose, compute a number of tablets, rank products as better, or mark any product
+   as the one to take. THE order SHALL be fixed: marketing statement, strength level (`same`, `unknown`,
+   `different`), form level, name.
+9. WHEN the item cannot be checked (Requirement 1.5, 1.6, DP24) THE screen SHALL say why and SHALL NOT call the
+   route.
+
+### Requirement 15: Target sources, licences and the products route
+#### Acceptance criteria
+1. THE target SHALL be one of the listable sources. THE TİTCK list SHALL never be a target and no TİTCK product name
+   SHALL be returned by the route; THE screen SHALL say that product names from Türkiye are not shown because the
+   terms of the source do not clearly allow it, and that Germany has no open product database. A Turkish box can
+   still be the item whose ingredients are looked up.
+2. No TİTCK file or extract SHALL be committed; the route reads the resolution dataset loaded by the existing
+   loader (`drug-resolution`), and tests use sentinel keys and invented names.
+3. THE API SHALL offer `POST /passport/products` as a `medical` route (Requirement 4.1) running one read-only
+   transaction with a constant number of parameterised statements and the 3 s statement limit.
+4. THE request SHALL hold the item's ingredient keys with optional strength codes, an optional dose-form group
+   (exactly an item of Requirement 4.3), the `target`, an `offset` (0 to 100,000) and a `limit` (1 to 100, default
+   50); no product name, code, free text, date or `demo` field (strict model, `extra="forbid"`).
+5. IF the body is not JSON or violates 15.4 THEN THE API SHALL answer 422 `{"error": "invalid_request", "fields":
+   [...]}` naming field paths only. IF there is no database, no current dataset, no accepted dose-form table or the
+   statement exceeds its limit THEN THE API SHALL answer 503 `{"error": "passport_unavailable"}`.
+6. WHEN the target source is not in the current dataset THE API SHALL answer 200 with status `source_unavailable`,
+   reason `not_loaded` and no product.
+7. THE answer SHALL carry the source block of Requirement 7.1 (source, country, snapshot date, `stale`,
+   attribution); THE screen SHALL show the attribution sentence of Requirement 7.2 with the data date and the stale
+   notice of Requirement 7.4 wherever products are listed.
+8. THE route SHALL log nothing but the access line (Requirement 9.2); THE list stays in the browser (Requirement 9.1).
+
+### Requirement 16: Wording of the product list
+#### Acceptance criteria
+1. No text SHALL say or imply that a listed product is the same medicine as the box, or equivalent to it, or
+   interchangeable with it. The allowed statement is "contains the same active ingredient" (plural for
+   combinations). The word lists of Requirement 8.2 apply to every new string in all five languages.
+2. THE screen SHALL always show, above the list: that containing the same active ingredient does not make two
+   products the same medicine (strength, form, release and other ingredients can differ); that the user should
+   confirm with a pharmacist or doctor before taking a different product; and that Janus gives no dosing advice and
+   converts no dose.
+3. `same` strength SHALL be worded as "same listed strength"; `different` SHALL add that sources may state the
+   amount of a salt or of the base, so a different listed number is not proof of a different dose (Requirement
+   6.3); `unknown` SHALL say that it could not be compared and why, and SHALL still show the published value.
+4. "No product listed" SHALL be worded as a statement about the source data (Requirement 2.5), never as "not
+   available in <country>".
+5. THE screen SHALL carry the rule-9 disclaimer and the sentence of Requirement 8.3. Texts SHALL say "automated"
+   where they describe how the comparison was made; THE screen SHALL NOT imply that a person reviewed the list.
+
+### Requirement 17: Product-list screen, states and accessibility
+#### Acceptance criteria
+1. THE screen SHALL exist in EN, TR, DE, FR and ES, in both themes, at 375 px and on desktop without horizontal
+   scroll, built from the existing components and tokens; published names keep the language of their source
+   (`lang` attribute).
+2. THE screen SHALL handle: loading (skeleton, `aria-busy`, polite announcement when done), empty (no listed
+   product: Requirement 16.4, with the `with_other_ingredients` number), error (retry; never "not found"), source
+   unavailable, item not checkable, and long lists (50 rows per page with "Show more", the shown and total numbers,
+   long names wrapped).
+3. THE country choice SHALL be a labelled radio group operable by keyboard; touch targets SHALL be at least
+   44 × 44 px; `--risk` SHALL NOT be used; contrast SHALL meet WCAG AA (axe in the Playwright suite).
+4. In demo mode THE screen SHALL make no API call: it SHALL show the recorded answer of the Cologne demo list
+   labelled "Recorded answer of <date>" (first page only), or say that the product list is not part of the demo.
+
+## Properties to test (additions)
+- Every listed product's ingredient key set equals the item's key set, and no product that qualifies is missing
+  (database model). (Req 14.1, 14.2) → design P22
+- No product is labelled `same` strength unless both sides have codes and the codes are equal; `different` only
+  when both sides are known. Same for form. (Req 14.4) → design P23
+- Counts add up, pages tile the list, the order does not depend on row order. (Req 14.6, 14.8) → design P24
+- TİTCK is never a target and no TİTCK name leaves the route. (Req 15.1) → design P25
+- Marketing statement, route behaviour, wording, request content. → design P26–P30

@@ -136,3 +136,34 @@
     items read as present (DP24). Open: OD1 (drug-resolution follow-up), origin label in the note slot.*
   - Every step of the header green (API, web, CI); report what was built, the benchmark numbers, counterexamples the
     property tests found and how they were fixed, and the remaining open decisions (OD1–OD3).
+
+---
+
+# Extension 2026-11-10: products with the same active ingredient in another country
+
+> Requirements 14–17, design §15, properties P22–P30, decisions DP27–DP33. Same checkpoints as above. Tests use
+> sentinel keys and invented names; no TİTCK string in any file. Automated review passes only; expert review has
+> not yet been done.
+
+- [x] 15. Listing logic (`passport/listing.py`, design §15.4)
+  - `LISTABLE_SOURCES`, `NOT_FINISHED_TYPES`, `marketed`, `compare_strength`, `compare_form`, `listing` (merge of
+    identical entries, total order). `presence.comparable_form` made public for reuse.
+  - [x] 15.1 Property tests P22–P24 (pure), P26 and the P23 examples. _Requirements: 14.1–14.8_
+- [x] 16. Statement, schemas, service and route (`repository.py`, `schemas.py`, `service.py`, `router.py`)
+  - `LISTING_SQL` (one source, grouped, parameterised, index `0012`), `ProductsIn` / `ProductsOut`,
+    `service.products`, `POST /passport/products` sharing the body handling of the presence route.
+  - [x] 16.1 Database and HTTP properties P22 (model, all pages), P25, P27. _Requirements: 15.1–15.8_
+- [x] 17. Web contract and client (`apps/web/src/passport/products.ts`, `api/errors.ts`, `schema-literals.json`)
+  - Decoder, request builder, loader with paging and the recorded lookup for demo mode.
+  - [x] 17.1 fast-check P29 and the literal parity with the server models. _Requirements: 14.9, 15.4, 17.4_
+- [x] 18. Messages (`apps/web/messages/*.json`, keys under `Passport.products` only)
+  - [x] 18.1 P28: word lists and key parity in five locales. _Requirements: 16.1–16.5_
+- [x] 19. Screen (`passport/screens/ProductsView.tsx`, route `passport/products`, entry on the item detail)
+  - States of Req 17.2; `different` flag; attribution, data date, stale notice; demo recorded answer for Cologne
+    (`scripts/record-passport-products.mjs`).
+  - [x] 19.1 Render properties P30 and the state tests; Playwright with axe, 375 px and desktop, both themes, five
+    locales. _Requirements: 14.5, 17.1–17.4_
+- [x] 20. Automated review passes and checkpoint
+  - Safety and localization passes with the `.kiro/agents` reviewer prompts over the new strings and screen;
+    findings and fixes in `medication-passport-products-review.md`. CI-equivalent checks green locally.
+    Expert review has not yet been done.
