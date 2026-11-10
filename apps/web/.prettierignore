@@ -24,3 +24,6 @@ src/simulation/explorer.json
 src/simulation/simulate.recorded.json
 # scripts/record-research.mjs
 src/research/*.recorded.json
+# Written by apps/api/tests/test_plaininfo_properties.py
+src/plaininfo/fixtures/*.json
+src/demo/plain-info.recorded.json

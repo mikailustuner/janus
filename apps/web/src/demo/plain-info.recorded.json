@@ -1,0 +1,1105 @@
+{
+  "groups_version": "d03996d1624fc7d40ff5eea25742b14cd48351a8ece749857290fa145c8dbd28",
+  "ingredients": {
+    "en": {
+      "": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "A02BC01": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "ppi",
+            "name": "Proton pump inhibitors (medicines that reduce stomach acid)",
+            "text": "Medicines in this group lower the amount of acid the stomach makes. They are used for heartburn, acid reflux and stomach ulcers.",
+            "codes": [
+              "A02BC01"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "A02BC02": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "ppi",
+            "name": "Proton pump inhibitors (medicines that reduce stomach acid)",
+            "text": "Medicines in this group lower the amount of acid the stomach makes. They are used for heartburn, acid reflux and stomach ulcers.",
+            "codes": [
+              "A02BC02"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "A06AD11": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "laxative",
+            "name": "Laxatives",
+            "text": "Medicines in this group help to empty the bowel. They are used for constipation.",
+            "codes": [
+              "A06AD11"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "A10BA02": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "diabetes_non_insulin",
+            "name": "Blood sugar lowering medicines other than insulin",
+            "text": "Medicines in this group lower blood sugar. They are used for diabetes.",
+            "codes": [
+              "A10BA02"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "C01EB16 G02CC01 M01AE01 M02AA13 R02AX02": {
+        "status": "mixed",
+        "groups": [
+          {
+            "id": "nsaid",
+            "name": "Non-steroidal anti-inflammatory medicines (NSAIDs)",
+            "text": "Medicines in this group are used for pain and for swelling and soreness (inflammation). Some are also used for fever.",
+            "codes": [
+              "M01AE01"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": true,
+        "abrupt_stop": false
+      },
+      "C03CA01": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "diuretic",
+            "name": "Diuretics (water tablets)",
+            "text": "Medicines in this group help the body pass more water in the urine. They are used for high blood pressure and for swelling caused by too much fluid in the body.",
+            "codes": [
+              "C03CA01"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "C08CA01": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "calcium_channel_blocker",
+            "name": "Calcium channel blockers (dihydropyridines)",
+            "text": "Medicines in this group are used for high blood pressure and for chest pain that comes from the heart (angina).",
+            "codes": [
+              "C08CA01"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "C09AA03": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "ace_inhibitor",
+            "name": "ACE inhibitors",
+            "text": "Medicines in this group are used for high blood pressure and for some heart and kidney conditions.",
+            "codes": [
+              "C09AA03"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "C09AA05": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "ace_inhibitor",
+            "name": "ACE inhibitors",
+            "text": "Medicines in this group are used for high blood pressure and for some heart and kidney conditions.",
+            "codes": [
+              "C09AA05"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "C10AA05": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "statin",
+            "name": "Statins (cholesterol-lowering medicines)",
+            "text": "Medicines in this group lower cholesterol in the blood.",
+            "codes": [
+              "C10AA05"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "G04BD04": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "N02BE01": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "paracetamol",
+            "name": "Paracetamol (acetaminophen) and related pain medicines",
+            "text": "Medicines in this group are used for pain and fever.",
+            "codes": [
+              "N02BE01"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "N02BF01 N03AX12": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": true
+      },
+      "N05BA12": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": true
+      },
+      "N06AB06": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": true
+      },
+      "N06DA02": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "R05CB06": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": false
+      }
+    },
+    "tr": {
+      "": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "A02BC01": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "ppi",
+            "name": "Proton pompası inhibitörleri (mide asidini azaltan ilaçlar)",
+            "text": "Bu gruptaki ilaçlar midenin ürettiği asit miktarını azaltır. Mide yanması, reflü ve mide ülserinde kullanılır.",
+            "codes": [
+              "A02BC01"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "A02BC02": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "ppi",
+            "name": "Proton pompası inhibitörleri (mide asidini azaltan ilaçlar)",
+            "text": "Bu gruptaki ilaçlar midenin ürettiği asit miktarını azaltır. Mide yanması, reflü ve mide ülserinde kullanılır.",
+            "codes": [
+              "A02BC02"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "A06AD11": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "laxative",
+            "name": "Laksatifler (kabızlık ilaçları)",
+            "text": "Bu gruptaki ilaçlar bağırsakların boşalmasına yardımcı olur. Kabızlıkta kullanılır.",
+            "codes": [
+              "A06AD11"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "A10BA02": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "diabetes_non_insulin",
+            "name": "İnsülin dışındaki kan şekeri düşürücü ilaçlar",
+            "text": "Bu gruptaki ilaçlar kan şekerini düşürür. Diyabette (şeker hastalığında) kullanılır.",
+            "codes": [
+              "A10BA02"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "C01EB16 G02CC01 M01AE01 M02AA13 R02AX02": {
+        "status": "mixed",
+        "groups": [
+          {
+            "id": "nsaid",
+            "name": "Steroid olmayan antiinflamatuar ilaçlar (NSAİİ)",
+            "text": "Bu gruptaki ilaçlar ağrı ve iltihap (şişlik ve hassasiyet) için kullanılır. Bazıları ateş için de kullanılır.",
+            "codes": [
+              "M01AE01"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": true,
+        "abrupt_stop": false
+      },
+      "C03CA01": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "diuretic",
+            "name": "Diüretikler (idrar söktürücüler)",
+            "text": "Bu gruptaki ilaçlar vücudun idrarla daha fazla su atmasına yardımcı olur. Yüksek tansiyonda ve vücutta fazla sıvı birikmesine bağlı şişlikte (ödem) kullanılır.",
+            "codes": [
+              "C03CA01"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "C08CA01": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "calcium_channel_blocker",
+            "name": "Kalsiyum kanal blokerleri (dihidropiridinler)",
+            "text": "Bu gruptaki ilaçlar yüksek tansiyonda ve kalpten kaynaklanan göğüs ağrısında (anjina) kullanılır.",
+            "codes": [
+              "C08CA01"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "C09AA03": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "ace_inhibitor",
+            "name": "Anjiyotensin dönüştürücü enzim (ACE) inhibitörleri",
+            "text": "Bu gruptaki ilaçlar yüksek tansiyonda ve bazı kalp ve böbrek hastalıklarında kullanılır.",
+            "codes": [
+              "C09AA03"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "C09AA05": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "ace_inhibitor",
+            "name": "Anjiyotensin dönüştürücü enzim (ACE) inhibitörleri",
+            "text": "Bu gruptaki ilaçlar yüksek tansiyonda ve bazı kalp ve böbrek hastalıklarında kullanılır.",
+            "codes": [
+              "C09AA05"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "C10AA05": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "statin",
+            "name": "Statinler (kolesterol düşürücü ilaçlar)",
+            "text": "Bu gruptaki ilaçlar kandaki kolesterolü düşürür.",
+            "codes": [
+              "C10AA05"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "G04BD04": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "N02BE01": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "paracetamol",
+            "name": "Parasetamol ve benzeri ağrı kesiciler",
+            "text": "Bu gruptaki ilaçlar ağrı ve ateş için kullanılır.",
+            "codes": [
+              "N02BE01"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "N02BF01 N03AX12": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": true
+      },
+      "N05BA12": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": true
+      },
+      "N06AB06": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": true
+      },
+      "N06DA02": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "R05CB06": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": false
+      }
+    },
+    "de": {
+      "": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "A02BC01": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "ppi",
+            "name": "Protonenpumpenhemmer (Magensäurehemmer)",
+            "text": "Medikamente dieser Gruppe verringern die Menge an Säure, die der Magen bildet. Sie werden bei Sodbrennen, Rückfluss von Magensäure (Reflux) und Magengeschwüren angewendet.",
+            "codes": [
+              "A02BC01"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "A02BC02": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "ppi",
+            "name": "Protonenpumpenhemmer (Magensäurehemmer)",
+            "text": "Medikamente dieser Gruppe verringern die Menge an Säure, die der Magen bildet. Sie werden bei Sodbrennen, Rückfluss von Magensäure (Reflux) und Magengeschwüren angewendet.",
+            "codes": [
+              "A02BC02"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "A06AD11": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "laxative",
+            "name": "Abführmittel",
+            "text": "Medikamente dieser Gruppe helfen, den Darm zu entleeren. Sie werden bei Verstopfung angewendet.",
+            "codes": [
+              "A06AD11"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "A10BA02": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "diabetes_non_insulin",
+            "name": "Blutzuckersenkende Medikamente außer Insulin",
+            "text": "Medikamente dieser Gruppe senken den Blutzucker. Sie werden bei Diabetes (Zuckerkrankheit) angewendet.",
+            "codes": [
+              "A10BA02"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "C01EB16 G02CC01 M01AE01 M02AA13 R02AX02": {
+        "status": "mixed",
+        "groups": [
+          {
+            "id": "nsaid",
+            "name": "Nichtsteroidale Antirheumatika (NSAR)",
+            "text": "Medikamente dieser Gruppe werden bei Schmerzen und Entzündungen (Schwellung und Reizung) angewendet. Einige werden auch bei Fieber angewendet.",
+            "codes": [
+              "M01AE01"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": true,
+        "abrupt_stop": false
+      },
+      "C03CA01": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "diuretic",
+            "name": "Diuretika (Wassertabletten)",
+            "text": "Medikamente dieser Gruppe helfen dem Körper, mehr Wasser über den Urin auszuscheiden. Sie werden bei Bluthochdruck und bei Schwellungen durch zu viel Flüssigkeit im Körper (Ödeme) angewendet.",
+            "codes": [
+              "C03CA01"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "C08CA01": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "calcium_channel_blocker",
+            "name": "Kalziumkanalblocker (Dihydropyridine)",
+            "text": "Medikamente dieser Gruppe werden bei Bluthochdruck und bei Brustschmerzen, die vom Herzen ausgehen (Angina pectoris), angewendet.",
+            "codes": [
+              "C08CA01"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "C09AA03": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "ace_inhibitor",
+            "name": "ACE-Hemmer",
+            "text": "Medikamente dieser Gruppe werden bei Bluthochdruck und bei einigen Herz- und Nierenerkrankungen angewendet.",
+            "codes": [
+              "C09AA03"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "C09AA05": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "ace_inhibitor",
+            "name": "ACE-Hemmer",
+            "text": "Medikamente dieser Gruppe werden bei Bluthochdruck und bei einigen Herz- und Nierenerkrankungen angewendet.",
+            "codes": [
+              "C09AA05"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "C10AA05": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "statin",
+            "name": "Statine (Cholesterinsenker)",
+            "text": "Medikamente dieser Gruppe senken das Cholesterin im Blut.",
+            "codes": [
+              "C10AA05"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "G04BD04": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "N02BE01": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "paracetamol",
+            "name": "Paracetamol und verwandte Schmerzmittel",
+            "text": "Medikamente dieser Gruppe werden bei Schmerzen und Fieber angewendet.",
+            "codes": [
+              "N02BE01"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "N02BF01 N03AX12": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": true
+      },
+      "N05BA12": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": true
+      },
+      "N06AB06": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": true
+      },
+      "N06DA02": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "R05CB06": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": false
+      }
+    },
+    "fr": {
+      "": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "A02BC01": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "ppi",
+            "name": "Inhibiteurs de la pompe à protons (médicaments qui réduisent l'acidité de l'estomac)",
+            "text": "Les médicaments de ce groupe réduisent la quantité d'acide produite par l'estomac. Ils sont utilisés en cas de brûlures d'estomac, de reflux acide et d'ulcère de l'estomac.",
+            "codes": [
+              "A02BC01"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "A02BC02": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "ppi",
+            "name": "Inhibiteurs de la pompe à protons (médicaments qui réduisent l'acidité de l'estomac)",
+            "text": "Les médicaments de ce groupe réduisent la quantité d'acide produite par l'estomac. Ils sont utilisés en cas de brûlures d'estomac, de reflux acide et d'ulcère de l'estomac.",
+            "codes": [
+              "A02BC02"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "A06AD11": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "laxative",
+            "name": "Laxatifs",
+            "text": "Les médicaments de ce groupe aident à vider l'intestin. Ils sont utilisés en cas de constipation.",
+            "codes": [
+              "A06AD11"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "A10BA02": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "diabetes_non_insulin",
+            "name": "Médicaments qui font baisser le sucre dans le sang, autres que l'insuline",
+            "text": "Les médicaments de ce groupe font baisser le sucre dans le sang (glycémie). Ils sont utilisés en cas de diabète.",
+            "codes": [
+              "A10BA02"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "C01EB16 G02CC01 M01AE01 M02AA13 R02AX02": {
+        "status": "mixed",
+        "groups": [
+          {
+            "id": "nsaid",
+            "name": "Anti-inflammatoires non stéroïdiens (AINS)",
+            "text": "Les médicaments de ce groupe sont utilisés contre la douleur et l'inflammation (gonflement et irritation). Certains sont aussi utilisés contre la fièvre.",
+            "codes": [
+              "M01AE01"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": true,
+        "abrupt_stop": false
+      },
+      "C03CA01": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "diuretic",
+            "name": "Diurétiques",
+            "text": "Les médicaments de ce groupe aident le corps à éliminer plus d'eau dans les urines. Ils sont utilisés en cas d'hypertension artérielle (tension élevée) et de gonflements dus à un excès de liquide dans le corps (œdèmes).",
+            "codes": [
+              "C03CA01"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "C08CA01": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "calcium_channel_blocker",
+            "name": "Inhibiteurs calciques (dihydropyridines)",
+            "text": "Les médicaments de ce groupe sont utilisés en cas d'hypertension artérielle (tension élevée) et de douleurs dans la poitrine venant du cœur (angine de poitrine).",
+            "codes": [
+              "C08CA01"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "C09AA03": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "ace_inhibitor",
+            "name": "Inhibiteurs de l'enzyme de conversion de l'angiotensine (IEC)",
+            "text": "Les médicaments de ce groupe sont utilisés en cas d'hypertension artérielle (tension élevée) et pour certaines maladies du cœur et des reins.",
+            "codes": [
+              "C09AA03"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "C09AA05": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "ace_inhibitor",
+            "name": "Inhibiteurs de l'enzyme de conversion de l'angiotensine (IEC)",
+            "text": "Les médicaments de ce groupe sont utilisés en cas d'hypertension artérielle (tension élevée) et pour certaines maladies du cœur et des reins.",
+            "codes": [
+              "C09AA05"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "C10AA05": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "statin",
+            "name": "Statines (médicaments qui font baisser le cholestérol)",
+            "text": "Les médicaments de ce groupe font baisser le cholestérol dans le sang.",
+            "codes": [
+              "C10AA05"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "G04BD04": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "N02BE01": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "paracetamol",
+            "name": "Paracétamol et antalgiques apparentés",
+            "text": "Les médicaments de ce groupe sont utilisés contre la douleur et la fièvre.",
+            "codes": [
+              "N02BE01"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "N02BF01 N03AX12": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": true
+      },
+      "N05BA12": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": true
+      },
+      "N06AB06": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": true
+      },
+      "N06DA02": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "R05CB06": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": false
+      }
+    },
+    "es": {
+      "": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "A02BC01": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "ppi",
+            "name": "Inhibidores de la bomba de protones (medicamentos que reducen el ácido del estómago)",
+            "text": "Los medicamentos de este grupo reducen la cantidad de ácido que produce el estómago. Se usan para el ardor de estómago, el reflujo ácido y las úlceras de estómago.",
+            "codes": [
+              "A02BC01"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "A02BC02": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "ppi",
+            "name": "Inhibidores de la bomba de protones (medicamentos que reducen el ácido del estómago)",
+            "text": "Los medicamentos de este grupo reducen la cantidad de ácido que produce el estómago. Se usan para el ardor de estómago, el reflujo ácido y las úlceras de estómago.",
+            "codes": [
+              "A02BC02"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "A06AD11": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "laxative",
+            "name": "Laxantes",
+            "text": "Los medicamentos de este grupo ayudan a vaciar el intestino. Se usan para el estreñimiento.",
+            "codes": [
+              "A06AD11"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "A10BA02": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "diabetes_non_insulin",
+            "name": "Medicamentos que bajan el azúcar en la sangre, distintos de la insulina",
+            "text": "Los medicamentos de este grupo bajan el azúcar en la sangre. Se usan para la diabetes.",
+            "codes": [
+              "A10BA02"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "C01EB16 G02CC01 M01AE01 M02AA13 R02AX02": {
+        "status": "mixed",
+        "groups": [
+          {
+            "id": "nsaid",
+            "name": "Antiinflamatorios no esteroideos (AINE)",
+            "text": "Los medicamentos de este grupo se usan para el dolor y la inflamación (hinchazón e irritación). Algunos se usan también para la fiebre.",
+            "codes": [
+              "M01AE01"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": true,
+        "abrupt_stop": false
+      },
+      "C03CA01": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "diuretic",
+            "name": "Diuréticos",
+            "text": "Los medicamentos de este grupo ayudan al cuerpo a eliminar más agua por la orina. Se usan para la presión arterial alta (hipertensión) y para la hinchazón causada por un exceso de líquido en el cuerpo (edema).",
+            "codes": [
+              "C03CA01"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "C08CA01": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "calcium_channel_blocker",
+            "name": "Antagonistas del calcio (dihidropiridinas)",
+            "text": "Los medicamentos de este grupo se usan para la presión arterial alta (hipertensión) y para el dolor en el pecho que viene del corazón (angina de pecho).",
+            "codes": [
+              "C08CA01"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "C09AA03": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "ace_inhibitor",
+            "name": "Inhibidores de la enzima convertidora de angiotensina (IECA)",
+            "text": "Los medicamentos de este grupo se usan para la presión arterial alta (hipertensión) y para algunas enfermedades del corazón y del riñón.",
+            "codes": [
+              "C09AA03"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "C09AA05": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "ace_inhibitor",
+            "name": "Inhibidores de la enzima convertidora de angiotensina (IECA)",
+            "text": "Los medicamentos de este grupo se usan para la presión arterial alta (hipertensión) y para algunas enfermedades del corazón y del riñón.",
+            "codes": [
+              "C09AA05"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "C10AA05": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "statin",
+            "name": "Estatinas (medicamentos que bajan el colesterol)",
+            "text": "Los medicamentos de este grupo bajan el colesterol en la sangre.",
+            "codes": [
+              "C10AA05"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "G04BD04": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "N02BE01": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "paracetamol",
+            "name": "Paracetamol y analgésicos relacionados",
+            "text": "Los medicamentos de este grupo se usan para el dolor y la fiebre.",
+            "codes": [
+              "N02BE01"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "N02BF01 N03AX12": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": true
+      },
+      "N05BA12": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": true
+      },
+      "N06AB06": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": true
+      },
+      "N06DA02": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "R05CB06": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": false
+      }
+    }
+  }
+}

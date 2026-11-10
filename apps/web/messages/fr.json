@@ -2589,5 +2589,79 @@
     "errors": {
       "unavailable": "Les fiches de rappel ne sont pas disponibles pour le moment. Veuillez réessayer plus tard."
     }
+  },
+  "PlainInfo": {
+    "link": "À quoi sert ce médicament ?",
+    "eyebrow": "Information sur le médicament",
+    "summary": "En mots simples : de quel type de médicament il s'agit. Ce n'est pas un conseil pour votre propre prise en charge.",
+    "back": "Retour aux médicaments",
+    "notFound": "Ce médicament n'est pas dans la liste conservée sur cet appareil.",
+    "loading": "Janus cherche ce qu'il détient pour ce médicament…",
+    "contains": {
+      "heading": "Ce qu'il contient",
+      "one": "Ce médicament contient : {name}.",
+      "unnamed": "Ce médicament contient une substance active pour laquelle Janus n'a pas de nom."
+    },
+    "group": {
+      "label": "Groupe de médicaments",
+      "code": "Code ATC",
+      "mixed": "Les médicaments qui contiennent cette substance active appartiennent à plusieurs groupes. Janus ne peut pas savoir, d'après le code, à quel groupe appartient ce médicament.",
+      "otherUses": "La même substance active se trouve aussi dans d'autres types de médicaments que Janus ne décrit pas.",
+      "none": "Janus n'a pas de description en mots simples pour le groupe de cette substance active. Cela ne dit rien de la substance active."
+    },
+    "review": "La relecture par des experts n'a pas encore été faite.",
+    "method": "Les phrases sur les groupes sont des textes fixes écrits pour Janus. Elles sont choisies automatiquement d'après le code ATC de la substance active.",
+    "limits": {
+      "heading": "Ce que cette page ne peut pas vous dire",
+      "group": "Une phrase sur un groupe décrit le groupe, pas vous. Un médicament peut être donné pour une raison qui n'est pas citée ici.",
+      "dose": "Janus ne dit pas quelle quantité d'un médicament prendre ni comment le prendre.",
+      "ask": "Un pharmacien ou un médecin peut vous dire pourquoi ce médicament a été donné et comment l'utiliser. Montrez-lui la boîte."
+    },
+    "official": {
+      "heading": "Ce que dit la source officielle",
+      "us": {
+        "title": "Texte de la notice professionnelle des États-Unis (base de la FDA)",
+        "language": "En anglais, tel que publié. Non traduit.",
+        "section": "Rubrique « Indications and Usage » de la notice de ce produit",
+        "cut": "La rubrique est plus longue que ce qui est affiché ici. La suite se trouve dans la notice complète.",
+        "open": "Ouvrir la notice complète sur DailyMed (en anglais)",
+        "version": "Version {version}",
+        "dated": "du {date}",
+        "data": "données openFDA du {date}",
+        "company": "L'entreprise qui commercialise le produit a rédigé ce texte et l'a transmis à la FDA. Selon openFDA, la FDA ne l'a pas vérifié.",
+        "differ": "Il peut différer de la notice qui se trouve dans votre boîte. Il est rédigé pour les professionnels de santé.",
+        "outdated": "Les données de notices détenues par Janus datent de plus de deux semaines."
+      },
+      "page": {
+        "title": {
+          "FR": "Fiche du produit dans la base de données publique des médicaments (BDPM, France)",
+          "ES": "Fiche du produit dans la base espagnole des médicaments (CIMA, AEMPS)"
+        },
+        "language": {
+          "fr": "La page est en français. Non traduite.",
+          "es": "La page est en espagnol. Non traduite."
+        },
+        "found": "Janus a trouvé cette page automatiquement à partir du nom du produit (données du {date}). Veuillez vérifier que le nom affiché sur la page est celui de votre boîte.",
+        "open": "Ouvrir la fiche du produit"
+      },
+      "none": {
+        "not_found_us": "Janus n'a pas de texte de notice pour ce code de produit. Janus ne conserve que les notices des produits qui ont un numéro de demande auprès de la FDA.",
+        "several_labels": "Plusieurs notices mentionnent ce code de produit. Janus ne choisit pas entre elles.",
+        "not_found_page": "Janus n'a pas trouvé la fiche de ce produit à partir de son nom.",
+        "source_unavailable": "Les textes officiels ne sont pas disponibles dans Janus pour le moment.",
+        "demo": "Les produits de la démo sont inventés : il n'existe donc pas de texte officiel pour eux.",
+        "homeopathic": "Janus n'affiche pas de texte officiel pour les produits homéopathiques.",
+        "by_name": "Ce médicament a été ajouté par le nom de sa substance active, et non comme produit. Il n'y a pas de texte de produit pour lui.",
+        "country": "Janus ne détient des textes officiels que pour les produits des États-Unis, et des liens vers la fiche officielle pour les produits de France et d'Espagne.",
+        "no_code": "Janus ne peut pas déterminer à quel produit des données officielles correspond cette boîte ; il n'affiche donc pas de texte officiel."
+      }
+    },
+    "nothing": {
+      "title": "Janus n'a pas d'information pour ce médicament",
+      "body": "Ce n'est pas un avis sur le médicament : Janus ne décrit qu'une courte liste de groupes. Un pharmacien ou un médecin peut vous dire à quoi il sert."
+    },
+    "errors": {
+      "unavailable": "L'information sur le médicament n'est pas disponible pour le moment. Veuillez réessayer plus tard."
+    }
   }
 }

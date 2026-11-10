@@ -53,6 +53,7 @@ const PLAIN = [
 ];
 const DEMO = [
   "/medicines",
+  "/medicines/info#demo-istanbul-0",
   "/passport",
   "/passport/item#demo-istanbul-0",
   "/passport/products#demo-istanbul-0",

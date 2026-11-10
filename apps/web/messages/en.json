@@ -2589,5 +2589,79 @@
     "errors": {
       "unavailable": "The recall records are not available right now. Please try again later."
     }
+  },
+  "PlainInfo": {
+    "link": "What is this medicine for?",
+    "eyebrow": "Medicine information",
+    "summary": "In plain words: what kind of medicine this is. Not advice about your own care.",
+    "back": "Back to the medicines",
+    "notFound": "This medicine is not on the list kept on this device.",
+    "loading": "Looking up what Janus holds for this medicine…",
+    "contains": {
+      "heading": "What it contains",
+      "one": "This medicine contains {name}.",
+      "unnamed": "This medicine contains an ingredient that Janus has no name for."
+    },
+    "group": {
+      "label": "Group of medicines",
+      "code": "ATC code",
+      "mixed": "Medicines with this ingredient belong to more than one group. Janus cannot tell from the code which group this medicine is in.",
+      "otherUses": "The same ingredient is also in other kinds of medicine that Janus does not describe.",
+      "none": "Janus has no description in plain words for the group of this ingredient. This says nothing about the ingredient."
+    },
+    "review": "Expert review has not yet been done.",
+    "method": "The sentences about groups are fixed texts written for Janus. They are picked automatically by the ATC code of the ingredient.",
+    "limits": {
+      "heading": "What this page cannot tell you",
+      "group": "A sentence about a group describes the group, not you. A medicine can be given for a reason that is not named here.",
+      "dose": "Janus does not say how much of a medicine to take or how to take it.",
+      "ask": "A pharmacist or doctor can tell you why this medicine was given and how to use it. Show them the box."
+    },
+    "official": {
+      "heading": "What the official source says",
+      "us": {
+        "title": "Label text from the United States (FDA label database)",
+        "language": "In English, as published. Not translated.",
+        "section": "Section “Indications and Usage” of this product's label",
+        "cut": "The section is longer than shown here. The full label has the rest.",
+        "open": "Open the full label at DailyMed (in English)",
+        "version": "Label version {version}",
+        "dated": "dated {date}",
+        "data": "openFDA data of {date}",
+        "company": "The company that markets the product wrote this text and submitted it to the FDA. According to openFDA, the FDA has not verified it.",
+        "differ": "It may differ from the leaflet in your box. It is written for health professionals.",
+        "outdated": "The label data Janus holds is more than two weeks old."
+      },
+      "page": {
+        "title": {
+          "FR": "Product page in the French medicines database (BDPM)",
+          "ES": "Product page in the Spanish medicines database (CIMA, AEMPS)"
+        },
+        "language": {
+          "fr": "The page is in French. Not translated.",
+          "es": "The page is in Spanish. Not translated."
+        },
+        "found": "Janus found this page automatically by the name of the product (data of {date}). Please check that the name on the page is the name on your box.",
+        "open": "Open the product page"
+      },
+      "none": {
+        "not_found_us": "Janus holds no label text for this product code. It keeps a label only for products with an FDA application number.",
+        "several_labels": "More than one label names this product code. Janus does not choose between them.",
+        "not_found_page": "Janus could not find the page of this product by its name.",
+        "source_unavailable": "The official texts are not available in Janus right now.",
+        "demo": "The demo products are invented, so there is no official text for them.",
+        "homeopathic": "Janus shows no official text for homeopathic products.",
+        "by_name": "This medicine was added by the name of its ingredient, not as a product. There is no product text for it.",
+        "country": "Janus holds official texts only for products from the United States, and links to the official page for products from France and Spain.",
+        "no_code": "Janus cannot tell which product this box is in the official data, so it shows no official text."
+      }
+    },
+    "nothing": {
+      "title": "Janus has no information for this medicine",
+      "body": "This is not a statement about the medicine: Janus describes only a short list of groups. A pharmacist or doctor can tell you what it is for."
+    },
+    "errors": {
+      "unavailable": "The medicine information is not available right now. Please try again later."
+    }
   }
 }
