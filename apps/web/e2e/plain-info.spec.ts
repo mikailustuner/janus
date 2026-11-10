@@ -95,7 +95,8 @@ const item = (
   boxName: box,
   needsConfirmation: false,
 });
-// Ohio item 0 (lisinopril, an ACE inhibitor) with an invented package; the box carries a lot.
+// An Ohio item whose only ingredient is lisinopril (C09AA03, an ACE inhibitor; the entry is borrowed from
+// Istanbul item 0) with an invented package; the box carries a lot.
 const usItem = {
   ...item(
     "us-1",
@@ -103,6 +104,14 @@ const usItem = {
     {
       product_name: "Exampletine 10 mg tablets (invented)",
       brand_name: "Exampletine 10 mg tablets (invented)",
+      generic_name: "lisinopril",
+      ingredient_text: "lisinopril",
+      ingredients: [
+        istanbul.items[0].resolution.candidates[0].ingredients.find(
+          (g: { ingredient_key: { qid: string } }) =>
+            g.ingredient_key.qid === "Q412208",
+        ),
+      ],
       packages: [{ ndc_published: "99999-123-30", ndc11: "99999012330" }],
     },
     "ZZBOX my blood pressure tablets",
@@ -390,10 +399,11 @@ test("loading, then an error with a retry, then the answer", async ({
         : answerFor(body as Body),
   });
   await page.goto("/en/medicines/info#us-1");
-  const error = page.getByRole("alert");
-  await expect(error).toContainText(
-    "The medicine information is not available right now. Please try again later.",
-  );
+  const error = page.getByRole("alert").filter({
+    hasText:
+      "The medicine information is not available right now. Please try again later.",
+  });
+  await expect(error).toBeVisible();
   await expect(page.getByTestId("plain-info-ingredient")).toHaveCount(0);
   await expect(page.getByTestId("plain-info-nothing")).toHaveCount(0);
   await expectNoAxeViolations(page);
