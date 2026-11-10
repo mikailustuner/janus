@@ -71,6 +71,7 @@ const KNOWN_SOURCES = [
   "openfda_ndc",
   "eu_fr_bdpm",
   "eu_es_cima",
+  "eu_it_aifa",
   "wikidata",
 ];
 

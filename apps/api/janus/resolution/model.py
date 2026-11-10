@@ -18,7 +18,7 @@ from janus.memory import messages
 Region = Literal["TR", "US", "EU"]
 # Regions a request may name. `EU` asks the French and Spanish adapters.
 RequestRegion = Literal["TR", "US", "EU"]
-Country = Literal["FR", "ES"]
+Country = Literal["FR", "ES", "IT"]
 CANDIDATE_ID = r"^(TR|US|EU):[a-z_]+:[0-9]{1,9}$"
 
 

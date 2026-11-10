@@ -37,6 +37,7 @@ Step = Literal[
     "anion_acid",
     "biologic_suffix",
     "titck_atc_bridge",
+    "national_atc_bridge",  # Canada and Italy, `prepare_national.py`
 ]
 LANGS = ("en", "tr", "de", "fr", "es")
 

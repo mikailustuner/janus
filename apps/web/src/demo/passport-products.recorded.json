@@ -1,7 +1,7 @@
 {
  "recorded": {
   "date": "2026-11-10",
-  "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a"
+  "dataset_version": "adbd41d19a87bc3d5b337983141d6ffe1d949a9e43c9915efaf00a5f083e08ff"
  },
  "answers": [
   {
@@ -16,7 +16,7 @@
     "limit": 8
    },
    "response": {
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "dataset_version": "adbd41d19a87bc3d5b337983141d6ffe1d949a9e43c9915efaf00a5f083e08ff",
     "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
     "source": {
      "source": 1,
@@ -217,7 +217,7 @@
     "limit": 8
    },
    "response": {
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "dataset_version": "adbd41d19a87bc3d5b337983141d6ffe1d949a9e43c9915efaf00a5f083e08ff",
     "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
     "source": {
      "source": 2,
@@ -226,7 +226,7 @@
      "country": "ES",
      "status": "loaded",
      "reason": null,
-     "snapshot_date": "2026-11-07",
+     "snapshot_date": "2026-11-10",
      "stale": false,
      "attribution": "cima",
      "as_published": false,
@@ -418,7 +418,7 @@
     "limit": 8
    },
    "response": {
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "dataset_version": "adbd41d19a87bc3d5b337983141d6ffe1d949a9e43c9915efaf00a5f083e08ff",
     "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
     "source": {
      "source": 4,
@@ -427,7 +427,7 @@
      "country": null,
      "status": "loaded",
      "reason": null,
-     "snapshot_date": "2026-11-06",
+     "snapshot_date": "2026-11-09",
      "stale": false,
      "attribution": "openfda",
      "as_published": false,
@@ -543,6 +543,408 @@
    "request": {
     "ingredients": [
      {
+      "key": "Q412666"
+     }
+    ],
+    "target": "eu_it_aifa",
+    "offset": 0,
+    "limit": 8
+   },
+   "response": {
+    "dataset_version": "adbd41d19a87bc3d5b337983141d6ffe1d949a9e43c9915efaf00a5f083e08ff",
+    "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
+    "source": {
+     "source": 5,
+     "source_id": "eu_it_aifa",
+     "region": "EU",
+     "country": "IT",
+     "status": "loaded",
+     "reason": null,
+     "snapshot_date": "2026-11-10",
+     "stale": false,
+     "attribution": "aifa",
+     "as_published": false,
+     "can_compare": {
+      "strength": true,
+      "dose_form": false
+     }
+    },
+    "keys": [
+     "Q412666"
+    ],
+    "unknown_keys": [],
+    "status": "present",
+    "total": 546,
+    "listings": 546,
+    "counts": {
+     "strength": {
+      "same": 0,
+      "different": 0,
+      "unknown": 546
+     },
+     "dose_form": {
+      "same": 0,
+      "different": 0,
+      "unknown": 546
+     }
+    },
+    "with_other_ingredients": 706,
+    "keys_found": [
+     "Q412666"
+    ],
+    "homeopathic_left_out": 0,
+    "not_finished_left_out": 0,
+    "offset": 0,
+    "limit": 8,
+    "products": [
+     {
+      "name": "HERZATEC 10 MG COMPRESSE - 28 COMPRESSE DIVISIBILI",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "10 milligrammi"
+       }
+      ],
+      "dose_form_published": "Compressa",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "HERZATEC 2,5 MG COMPRESSE - 28 COMPRESSE DIVISIBILI",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "2.5 milligrammi"
+       }
+      ],
+      "dose_form_published": "Compressa",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "HERZATEC 5 MG COMPRESSE - 14 COMPRESSE DIVISIBILI",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "5 milligrammi"
+       }
+      ],
+      "dose_form_published": "Compressa",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "KRUPIL 10 MG COMPRESSE - 28 COMPRESSE DIVISIBILI",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "10 milligrammi"
+       }
+      ],
+      "dose_form_published": "Compressa",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "KRUPIL 2,5 MG COMPRESSE - 28 COMPRESSE DIVISIBILI",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "2.5 milligrammi"
+       }
+      ],
+      "dose_form_published": "Compressa",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "KRUPIL 5 MG COMPRESSE - 14 COMPRESSE DIVISIBILI",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "5 milligrammi"
+       }
+      ],
+      "dose_form_published": "Compressa",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "KRUPIL 5 MG COMPRESSE- 28 COMPRESSE IN BLISTER PVC/AL",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "5 milligrammi"
+       }
+      ],
+      "dose_form_published": "Compressa",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "NORAPRIL 10 MG COMPRESSE- 28 COMPRESSE IN BLISTER PVDC/PVC/AL",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "10 milligrammi"
+       }
+      ],
+      "dose_form_published": "Compressa",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "not_stated",
+      "listings": 1
+     }
+    ],
+    "notices": [
+     "listing_is_lower_bound"
+    ],
+    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+   }
+  },
+  {
+   "request": {
+    "ingredients": [
+     {
+      "key": "Q412666"
+     }
+    ],
+    "target": "ca_dpd",
+    "offset": 0,
+    "limit": 8
+   },
+   "response": {
+    "dataset_version": "adbd41d19a87bc3d5b337983141d6ffe1d949a9e43c9915efaf00a5f083e08ff",
+    "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
+    "source": {
+     "source": 6,
+     "source_id": "ca_dpd",
+     "region": "CA",
+     "country": null,
+     "status": "loaded",
+     "reason": null,
+     "snapshot_date": "2026-11-02",
+     "stale": false,
+     "attribution": "dpd",
+     "as_published": false,
+     "can_compare": {
+      "strength": true,
+      "dose_form": false
+     }
+    },
+    "keys": [
+     "Q412666"
+    ],
+    "unknown_keys": [],
+    "status": "present",
+    "total": 52,
+    "listings": 55,
+    "counts": {
+     "strength": {
+      "same": 0,
+      "different": 0,
+      "unknown": 55
+     },
+     "dose_form": {
+      "same": 0,
+      "different": 0,
+      "unknown": 55
+     }
+    },
+    "with_other_ingredients": 7,
+    "keys_found": [
+     "Q412666"
+    ],
+    "homeopathic_left_out": 0,
+    "not_finished_left_out": 0,
+    "offset": 0,
+    "limit": 8,
+    "products": [
+     {
+      "name": "AG-RAMIPRIL",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "10 MG"
+       }
+      ],
+      "dose_form_published": "CAPSULE",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "AG-RAMIPRIL",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "2.5 MG"
+       }
+      ],
+      "dose_form_published": "CAPSULE",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "AG-RAMIPRIL",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "5 MG"
+       }
+      ],
+      "dose_form_published": "CAPSULE",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "ALTACE",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "1.25 MG"
+       }
+      ],
+      "dose_form_published": "CAPSULE",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "ALTACE",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "10 MG"
+       }
+      ],
+      "dose_form_published": "CAPSULE",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "ALTACE",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "2.5 MG"
+       }
+      ],
+      "dose_form_published": "CAPSULE",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "ALTACE",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "5 MG"
+       }
+      ],
+      "dose_form_published": "CAPSULE",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "APO-RAMIPRIL",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "1.25 MG"
+       }
+      ],
+      "dose_form_published": "CAPSULE",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     }
+    ],
+    "notices": [
+     "listing_is_lower_bound"
+    ],
+    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+   }
+  },
+  {
+   "request": {
+    "ingredients": [
+     {
       "key": "Q286846",
       "strength": {
        "amount": "40000",
@@ -557,7 +959,7 @@
     "limit": 8
    },
    "response": {
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "dataset_version": "adbd41d19a87bc3d5b337983141d6ffe1d949a9e43c9915efaf00a5f083e08ff",
     "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
     "source": {
      "source": 1,
@@ -764,7 +1166,7 @@
     "limit": 8
    },
    "response": {
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "dataset_version": "adbd41d19a87bc3d5b337983141d6ffe1d949a9e43c9915efaf00a5f083e08ff",
     "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
     "source": {
      "source": 2,
@@ -773,7 +1175,7 @@
      "country": "ES",
      "status": "loaded",
      "reason": null,
-     "snapshot_date": "2026-11-07",
+     "snapshot_date": "2026-11-10",
      "stale": false,
      "attribution": "cima",
      "as_published": false,
@@ -971,7 +1373,7 @@
     "limit": 8
    },
    "response": {
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "dataset_version": "adbd41d19a87bc3d5b337983141d6ffe1d949a9e43c9915efaf00a5f083e08ff",
     "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
     "source": {
      "source": 4,
@@ -980,7 +1382,7 @@
      "country": null,
      "status": "loaded",
      "reason": null,
-     "snapshot_date": "2026-11-06",
+     "snapshot_date": "2026-11-09",
      "stale": false,
      "attribution": "openfda",
      "as_published": false,
@@ -1164,6 +1566,420 @@
    "request": {
     "ingredients": [
      {
+      "key": "Q286846",
+      "strength": {
+       "amount": "40000",
+       "unit": "ug",
+       "basis": "unit"
+      }
+     }
+    ],
+    "dose_form": "oral_solid_delayed_release",
+    "target": "eu_it_aifa",
+    "offset": 0,
+    "limit": 8
+   },
+   "response": {
+    "dataset_version": "adbd41d19a87bc3d5b337983141d6ffe1d949a9e43c9915efaf00a5f083e08ff",
+    "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
+    "source": {
+     "source": 5,
+     "source_id": "eu_it_aifa",
+     "region": "EU",
+     "country": "IT",
+     "status": "loaded",
+     "reason": null,
+     "snapshot_date": "2026-11-10",
+     "stale": false,
+     "attribution": "aifa",
+     "as_published": false,
+     "can_compare": {
+      "strength": true,
+      "dose_form": false
+     }
+    },
+    "keys": [
+     "Q286846"
+    ],
+    "unknown_keys": [],
+    "status": "present",
+    "total": 781,
+    "listings": 855,
+    "counts": {
+     "strength": {
+      "same": 0,
+      "different": 0,
+      "unknown": 855
+     },
+     "dose_form": {
+      "same": 0,
+      "different": 0,
+      "unknown": 855
+     }
+    },
+    "with_other_ingredients": 1,
+    "keys_found": [
+     "Q286846"
+    ],
+    "homeopathic_left_out": 0,
+    "not_finished_left_out": 0,
+    "offset": 0,
+    "limit": 8,
+    "products": [
+     {
+      "name": "CONTROLOC CONTROL 20 MG-COMPRESSA GASTRORESISTENTE-USO ORALE-BLISTER (ALU/ALU) - 14 COMPRESSE",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "20 milligrammi"
+       }
+      ],
+      "dose_form_published": "Compressa gastroresistente",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "CONTROLOC CONTROL 20 MG-COMPRESSA GASTRORESISTENTE-USO ORALE-BLISTER (ALU/ALU) -7 COMPRESSE",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "20 milligrammi"
+       }
+      ],
+      "dose_form_published": "Compressa gastroresistente",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "CONTROLOC CONTROL 20 MG-COMPRESSA GASTRORESISTENTE-USO ORALE-BLISTER (ALU/ALU) CON RINFORZO IN CARTONE - 7 COMPRESSE",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "20 milligrammi"
+       }
+      ],
+      "dose_form_published": "Compressa gastroresistente",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "CONTROLOC CONTROL 20 MG-COMPRESSA GASTRORESISTENTE-USO ORALE-BLISTER (ALU/ALU) CON RINFORZO IN CARTONE -14 COMPRESSE",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "20 milligrammi"
+       }
+      ],
+      "dose_form_published": "Compressa gastroresistente",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "EUGASTROL REFLUSSO 20 MG COMPRESSE GASTRORESISTENTI- 14 COMPRESSE IN BLISTER AL/AL",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "20 milligrammi"
+       }
+      ],
+      "dose_form_published": "Compressa gastroresistente",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "EUGASTROL REFLUSSO 20 MG COMPRESSE GASTRORESISTENTI- 7 COMPRESSE IN BLISTER AL/AL",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "20 milligrammi"
+       }
+      ],
+      "dose_form_published": "Compressa gastroresistente",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "GASTROLOC 20 MG COMPRESSE GASTRORESISTENTI- 10 COMPRESSE IN BLISTER AL/OPA/AL/PVC",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "20 milligrammi"
+       }
+      ],
+      "dose_form_published": "Compressa gastroresistente",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "GASTROLOC 20 MG COMPRESSE GASTRORESISTENTI- 100 COMPRESSE IN BLISTER AL/OPA/AL/PVC",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "20 milligrammi"
+       }
+      ],
+      "dose_form_published": "Compressa gastroresistente",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "not_stated",
+      "listings": 1
+     }
+    ],
+    "notices": [
+     "listing_is_lower_bound"
+    ],
+    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+   }
+  },
+  {
+   "request": {
+    "ingredients": [
+     {
+      "key": "Q286846",
+      "strength": {
+       "amount": "40000",
+       "unit": "ug",
+       "basis": "unit"
+      }
+     }
+    ],
+    "dose_form": "oral_solid_delayed_release",
+    "target": "ca_dpd",
+    "offset": 0,
+    "limit": 8
+   },
+   "response": {
+    "dataset_version": "adbd41d19a87bc3d5b337983141d6ffe1d949a9e43c9915efaf00a5f083e08ff",
+    "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
+    "source": {
+     "source": 6,
+     "source_id": "ca_dpd",
+     "region": "CA",
+     "country": null,
+     "status": "loaded",
+     "reason": null,
+     "snapshot_date": "2026-11-02",
+     "stale": false,
+     "attribution": "dpd",
+     "as_published": false,
+     "can_compare": {
+      "strength": true,
+      "dose_form": false
+     }
+    },
+    "keys": [
+     "Q286846"
+    ],
+    "unknown_keys": [],
+    "status": "present",
+    "total": 31,
+    "listings": 39,
+    "counts": {
+     "strength": {
+      "same": 0,
+      "different": 0,
+      "unknown": 39
+     },
+     "dose_form": {
+      "same": 0,
+      "different": 0,
+      "unknown": 39
+     }
+    },
+    "with_other_ingredients": 0,
+    "keys_found": [
+     "Q286846"
+    ],
+    "homeopathic_left_out": 0,
+    "not_finished_left_out": 0,
+    "offset": 0,
+    "limit": 8,
+    "products": [
+     {
+      "name": "AG-PANTOPRAZOLE SODIUM",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "40 MG"
+       }
+      ],
+      "dose_form_published": "TABLET (DELAYED-RELEASE)",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "ALTA-PANTOPRAZOLE",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "40 MG"
+       }
+      ],
+      "dose_form_published": "TABLET (DELAYED-RELEASE)",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "APO-PANTOPRAZOLE",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "20 MG"
+       }
+      ],
+      "dose_form_published": "TABLET (DELAYED-RELEASE)",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "APO-PANTOPRAZOLE",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "40 MG"
+       }
+      ],
+      "dose_form_published": "TABLET (DELAYED-RELEASE)",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "AURO-PANTOPRAZOLE",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": null
+       }
+      ],
+      "dose_form_published": "TABLET (DELAYED-RELEASE)",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "BIO-PANTOPRAZOLE",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "40 MG"
+       }
+      ],
+      "dose_form_published": "TABLET (DELAYED-RELEASE)",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "JAMP PANTOPRAZOLE SODIUM",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "20 MG"
+       }
+      ],
+      "dose_form_published": "TABLET (DELAYED-RELEASE)",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "JAMP PANTOPRAZOLE SODIUM",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "40 MG"
+       }
+      ],
+      "dose_form_published": "TABLET (DELAYED-RELEASE)",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     }
+    ],
+    "notices": [
+     "listing_is_lower_bound"
+    ],
+    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+   }
+  },
+  {
+   "request": {
+    "ingredients": [
+     {
       "key": "Q411347"
      },
      {
@@ -1175,7 +1991,7 @@
     "limit": 8
    },
    "response": {
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "dataset_version": "adbd41d19a87bc3d5b337983141d6ffe1d949a9e43c9915efaf00a5f083e08ff",
     "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
     "source": {
      "source": 1,
@@ -1244,7 +2060,7 @@
     "limit": 8
    },
    "response": {
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "dataset_version": "adbd41d19a87bc3d5b337983141d6ffe1d949a9e43c9915efaf00a5f083e08ff",
     "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
     "source": {
      "source": 2,
@@ -1253,7 +2069,7 @@
      "country": "ES",
      "status": "loaded",
      "reason": null,
-     "snapshot_date": "2026-11-07",
+     "snapshot_date": "2026-11-10",
      "stale": false,
      "attribution": "cima",
      "as_published": false,
@@ -1313,7 +2129,7 @@
     "limit": 8
    },
    "response": {
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "dataset_version": "adbd41d19a87bc3d5b337983141d6ffe1d949a9e43c9915efaf00a5f083e08ff",
     "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
     "source": {
      "source": 4,
@@ -1322,13 +2138,151 @@
      "country": null,
      "status": "loaded",
      "reason": null,
-     "snapshot_date": "2026-11-06",
+     "snapshot_date": "2026-11-09",
      "stale": false,
      "attribution": "openfda",
      "as_published": false,
      "can_compare": {
       "strength": true,
       "dose_form": true
+     }
+    },
+    "keys": [
+     "Q411347",
+     "Q412208"
+    ],
+    "unknown_keys": [],
+    "status": "not_present",
+    "total": 0,
+    "listings": 0,
+    "counts": {
+     "strength": {
+      "same": 0,
+      "different": 0,
+      "unknown": 0
+     },
+     "dose_form": {
+      "same": 0,
+      "different": 0,
+      "unknown": 0
+     }
+    },
+    "with_other_ingredients": 0,
+    "keys_found": [
+     "Q411347",
+     "Q412208"
+    ],
+    "homeopathic_left_out": 0,
+    "not_finished_left_out": 0,
+    "offset": 0,
+    "limit": 8,
+    "products": [],
+    "notices": [
+     "listing_is_lower_bound"
+    ],
+    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+   }
+  },
+  {
+   "request": {
+    "ingredients": [
+     {
+      "key": "Q411347"
+     },
+     {
+      "key": "Q412208"
+     }
+    ],
+    "target": "eu_it_aifa",
+    "offset": 0,
+    "limit": 8
+   },
+   "response": {
+    "dataset_version": "adbd41d19a87bc3d5b337983141d6ffe1d949a9e43c9915efaf00a5f083e08ff",
+    "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
+    "source": {
+     "source": 5,
+     "source_id": "eu_it_aifa",
+     "region": "EU",
+     "country": "IT",
+     "status": "loaded",
+     "reason": null,
+     "snapshot_date": "2026-11-10",
+     "stale": false,
+     "attribution": "aifa",
+     "as_published": false,
+     "can_compare": {
+      "strength": true,
+      "dose_form": false
+     }
+    },
+    "keys": [
+     "Q411347",
+     "Q412208"
+    ],
+    "unknown_keys": [],
+    "status": "not_present",
+    "total": 0,
+    "listings": 0,
+    "counts": {
+     "strength": {
+      "same": 0,
+      "different": 0,
+      "unknown": 0
+     },
+     "dose_form": {
+      "same": 0,
+      "different": 0,
+      "unknown": 0
+     }
+    },
+    "with_other_ingredients": 0,
+    "keys_found": [
+     "Q411347",
+     "Q412208"
+    ],
+    "homeopathic_left_out": 0,
+    "not_finished_left_out": 0,
+    "offset": 0,
+    "limit": 8,
+    "products": [],
+    "notices": [
+     "listing_is_lower_bound"
+    ],
+    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+   }
+  },
+  {
+   "request": {
+    "ingredients": [
+     {
+      "key": "Q411347"
+     },
+     {
+      "key": "Q412208"
+     }
+    ],
+    "target": "ca_dpd",
+    "offset": 0,
+    "limit": 8
+   },
+   "response": {
+    "dataset_version": "adbd41d19a87bc3d5b337983141d6ffe1d949a9e43c9915efaf00a5f083e08ff",
+    "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
+    "source": {
+     "source": 6,
+     "source_id": "ca_dpd",
+     "region": "CA",
+     "country": null,
+     "status": "loaded",
+     "reason": null,
+     "snapshot_date": "2026-11-02",
+     "stale": false,
+     "attribution": "dpd",
+     "as_published": false,
+     "can_compare": {
+      "strength": true,
+      "dose_form": false
      }
     },
     "keys": [
@@ -1380,7 +2334,7 @@
     "limit": 8
    },
    "response": {
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "dataset_version": "adbd41d19a87bc3d5b337983141d6ffe1d949a9e43c9915efaf00a5f083e08ff",
     "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
     "source": {
      "source": 1,
@@ -1582,7 +2536,7 @@
     "limit": 8
    },
    "response": {
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "dataset_version": "adbd41d19a87bc3d5b337983141d6ffe1d949a9e43c9915efaf00a5f083e08ff",
     "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
     "source": {
      "source": 2,
@@ -1591,7 +2545,7 @@
      "country": "ES",
      "status": "loaded",
      "reason": null,
-     "snapshot_date": "2026-11-07",
+     "snapshot_date": "2026-11-10",
      "stale": false,
      "attribution": "cima",
      "as_published": false,
@@ -1784,7 +2738,7 @@
     "limit": 8
    },
    "response": {
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "dataset_version": "adbd41d19a87bc3d5b337983141d6ffe1d949a9e43c9915efaf00a5f083e08ff",
     "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
     "source": {
      "source": 4,
@@ -1793,7 +2747,7 @@
      "country": null,
      "status": "loaded",
      "reason": null,
-     "snapshot_date": "2026-11-06",
+     "snapshot_date": "2026-11-09",
      "stale": false,
      "attribution": "openfda",
      "as_published": false,
@@ -1838,6 +2792,271 @@
    "request": {
     "ingredients": [
      {
+      "key": "Q221637"
+     }
+    ],
+    "dose_form": "oral_liquid",
+    "target": "eu_it_aifa",
+    "offset": 0,
+    "limit": 8
+   },
+   "response": {
+    "dataset_version": "adbd41d19a87bc3d5b337983141d6ffe1d949a9e43c9915efaf00a5f083e08ff",
+    "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
+    "source": {
+     "source": 5,
+     "source_id": "eu_it_aifa",
+     "region": "EU",
+     "country": "IT",
+     "status": "loaded",
+     "reason": null,
+     "snapshot_date": "2026-11-10",
+     "stale": false,
+     "attribution": "aifa",
+     "as_published": false,
+     "can_compare": {
+      "strength": true,
+      "dose_form": false
+     }
+    },
+    "keys": [
+     "Q221637"
+    ],
+    "unknown_keys": [],
+    "status": "present",
+    "total": 96,
+    "listings": 96,
+    "counts": {
+     "strength": {
+      "same": 0,
+      "different": 0,
+      "unknown": 96
+     },
+     "dose_form": {
+      "same": 0,
+      "different": 0,
+      "unknown": 96
+     }
+    },
+    "with_other_ingredients": 0,
+    "keys_found": [
+     "Q221637"
+    ],
+    "homeopathic_left_out": 0,
+    "not_finished_left_out": 0,
+    "offset": 0,
+    "limit": 8,
+    "products": [
+     {
+      "name": "AMBROTUS 15 MG/2 ML SOLUZIONE DA NEBULIZZARE- 10 FIALE DA 2 ML",
+      "ingredients": [
+       {
+        "key": "Q221637",
+        "strength_published": "15 milligrammi"
+       }
+      ],
+      "dose_form_published": "Soluzione per nebulizzatore",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "AMBROTUS 30 MG/10 ML SCIROPPO- 20 CONTENITORI MONODOSE 10 ML",
+      "ingredients": [
+       {
+        "key": "Q221637",
+        "strength_published": "30 milligrammi"
+       }
+      ],
+      "dose_form_published": "Sciroppo",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "AMBROTUS 30 MG/10 ML SCIROPPO- FLACONE 200 ML",
+      "ingredients": [
+       {
+        "key": "Q221637",
+        "strength_published": "300 milligrammi"
+       }
+      ],
+      "dose_form_published": "Sciroppo",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "AMBROXOL TECNIGEN 15 MG/2 ML SOLUZIONE DA NEBULIZZARE- 10 FIALE",
+      "ingredients": [
+       {
+        "key": "Q221637",
+        "strength_published": "15 milligrammi"
+       }
+      ],
+      "dose_form_published": "Soluzione per nebulizzatore",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "AMBROXOL TECNIGEN 30 MG/10 ML SCIROPPO- 1 FLACONE DA 200 ML",
+      "ingredients": [
+       {
+        "key": "Q221637",
+        "strength_published": "300 milligrammi"
+       }
+      ],
+      "dose_form_published": "Sciroppo",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "AMBROXOL TECNIGEN 30 MG/10 ML SCIROPPO- 20 CONTENITORI MONODOSE DA 10 ML",
+      "ingredients": [
+       {
+        "key": "Q221637",
+        "strength_published": "30 milligrammi"
+       }
+      ],
+      "dose_form_published": "Sciroppo",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "AMBROXOLO ABC 15 MG GRANULATO PER SOSPENSIONE ORALE- 20 BUSTINE",
+      "ingredients": [
+       {
+        "key": "Q221637",
+        "strength_published": "15 milligrammi"
+       }
+      ],
+      "dose_form_published": "Granulato per soluzione orale",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "AMBROXOLO ABC 15 MG SOLUZIONE DA NEBULIZZARE- 6 FIALE",
+      "ingredients": [
+       {
+        "key": "Q221637",
+        "strength_published": "15 milligrammi"
+       }
+      ],
+      "dose_form_published": "Soluzione per nebulizzatore",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "not_stated",
+      "listings": 1
+     }
+    ],
+    "notices": [
+     "listing_is_lower_bound"
+    ],
+    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+   }
+  },
+  {
+   "request": {
+    "ingredients": [
+     {
+      "key": "Q221637"
+     }
+    ],
+    "dose_form": "oral_liquid",
+    "target": "ca_dpd",
+    "offset": 0,
+    "limit": 8
+   },
+   "response": {
+    "dataset_version": "adbd41d19a87bc3d5b337983141d6ffe1d949a9e43c9915efaf00a5f083e08ff",
+    "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
+    "source": {
+     "source": 6,
+     "source_id": "ca_dpd",
+     "region": "CA",
+     "country": null,
+     "status": "loaded",
+     "reason": null,
+     "snapshot_date": "2026-11-02",
+     "stale": false,
+     "attribution": "dpd",
+     "as_published": false,
+     "can_compare": {
+      "strength": true,
+      "dose_form": false
+     }
+    },
+    "keys": [
+     "Q221637"
+    ],
+    "unknown_keys": [],
+    "status": "not_in_source",
+    "total": 0,
+    "listings": 0,
+    "counts": {
+     "strength": {
+      "same": 0,
+      "different": 0,
+      "unknown": 0
+     },
+     "dose_form": {
+      "same": 0,
+      "different": 0,
+      "unknown": 0
+     }
+    },
+    "with_other_ingredients": 0,
+    "keys_found": [],
+    "homeopathic_left_out": 0,
+    "not_finished_left_out": 0,
+    "offset": 0,
+    "limit": 8,
+    "products": [],
+    "notices": [
+     "listing_is_lower_bound"
+    ],
+    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+   }
+  },
+  {
+   "request": {
+    "ingredients": [
+     {
       "key": "Q186969",
       "strength": {
        "amount": "400000",
@@ -1852,7 +3071,7 @@
     "limit": 8
    },
    "response": {
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "dataset_version": "adbd41d19a87bc3d5b337983141d6ffe1d949a9e43c9915efaf00a5f083e08ff",
     "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
     "source": {
      "source": 1,
@@ -2059,7 +3278,7 @@
     "limit": 8
    },
    "response": {
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "dataset_version": "adbd41d19a87bc3d5b337983141d6ffe1d949a9e43c9915efaf00a5f083e08ff",
     "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
     "source": {
      "source": 2,
@@ -2068,7 +3287,7 @@
      "country": "ES",
      "status": "loaded",
      "reason": null,
-     "snapshot_date": "2026-11-07",
+     "snapshot_date": "2026-11-10",
      "stale": false,
      "attribution": "cima",
      "as_published": false,
@@ -2266,7 +3485,7 @@
     "limit": 8
    },
    "response": {
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "dataset_version": "adbd41d19a87bc3d5b337983141d6ffe1d949a9e43c9915efaf00a5f083e08ff",
     "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
     "source": {
      "source": 4,
@@ -2275,7 +3494,7 @@
      "country": null,
      "status": "loaded",
      "reason": null,
-     "snapshot_date": "2026-11-06",
+     "snapshot_date": "2026-11-09",
      "stale": false,
      "attribution": "openfda",
      "as_published": false,
@@ -2459,6 +3678,420 @@
    "request": {
     "ingredients": [
      {
+      "key": "Q186969",
+      "strength": {
+       "amount": "400000",
+       "unit": "ug",
+       "basis": "unit"
+      }
+     }
+    ],
+    "dose_form": "oral_solid",
+    "target": "eu_it_aifa",
+    "offset": 0,
+    "limit": 8
+   },
+   "response": {
+    "dataset_version": "adbd41d19a87bc3d5b337983141d6ffe1d949a9e43c9915efaf00a5f083e08ff",
+    "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
+    "source": {
+     "source": 5,
+     "source_id": "eu_it_aifa",
+     "region": "EU",
+     "country": "IT",
+     "status": "loaded",
+     "reason": null,
+     "snapshot_date": "2026-11-10",
+     "stale": false,
+     "attribution": "aifa",
+     "as_published": false,
+     "can_compare": {
+      "strength": true,
+      "dose_form": false
+     }
+    },
+    "keys": [
+     "Q186969"
+    ],
+    "unknown_keys": [],
+    "status": "present",
+    "total": 595,
+    "listings": 646,
+    "counts": {
+     "strength": {
+      "same": 0,
+      "different": 45,
+      "unknown": 601
+     },
+     "dose_form": {
+      "same": 0,
+      "different": 0,
+      "unknown": 646
+     }
+    },
+    "with_other_ingredients": 65,
+    "keys_found": [
+     "Q186969"
+    ],
+    "homeopathic_left_out": 0,
+    "not_finished_left_out": 0,
+    "offset": 0,
+    "limit": 8,
+    "products": [
+     {
+      "name": "ALGOFEN 200 MG COMPRESSE RIVESTITE- 24 COMPRESSE",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "200 milligrammi"
+       }
+      ],
+      "dose_form_published": "Compressa rivestita",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "ALGOFEN 200 MG COMPRESSE RIVESTITE-12 COMPRESSE",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "200 milligrammi"
+       }
+      ],
+      "dose_form_published": "Compressa rivestita",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "ALGOPIRINA FEBBRE E DOLORE 200 MG SOSPENSIONE ORALE IN BUSTINE - GUSTO ARANCIA- 12 BUSTINE PET/AL/PE DA 10 ML",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "200 milligrammi"
+       }
+      ],
+      "dose_form_published": "Sospensione orale",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "ALGOPIRINA FEBBRE E DOLORE 200 MG SOSPENSIONE ORALE IN BUSTINE - GUSTO ARANCIA- 6 BUSTINE PET/AL/PE DA 10 ML",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "200 milligrammi"
+       }
+      ],
+      "dose_form_published": "Sospensione orale",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "ALGOPIRINDOL 600 MG COMPRESSE RIVESTITE CON FILM- 30 COMPRESSE IN BLISTER PVC/PVDC",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "600 milligrammi"
+       }
+      ],
+      "dose_form_published": "Compressa rivestita con film",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "ANTALGIL 200 MG COMPRESSE- 10 COMPRESSE",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "200 milligrammi"
+       }
+      ],
+      "dose_form_published": "Compressa",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "ANTALGIL 200 MG COMPRESSE- 30 COMPRESSE IN BLISTER PVC/AL",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "200 milligrammi"
+       }
+      ],
+      "dose_form_published": "Compressa",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "ANTALGIL DOLORE E FEBBRE 400 mg GRANULATO PER SOLUZIONE ORALE- 10 BUSTINE MONODOSE IN PAP/PE/AL/SURLYN",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": null
+       }
+      ],
+      "dose_form_published": "Granulato per soluzione orale",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "not_stated",
+      "listings": 1
+     }
+    ],
+    "notices": [
+     "listing_is_lower_bound"
+    ],
+    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+   }
+  },
+  {
+   "request": {
+    "ingredients": [
+     {
+      "key": "Q186969",
+      "strength": {
+       "amount": "400000",
+       "unit": "ug",
+       "basis": "unit"
+      }
+     }
+    ],
+    "dose_form": "oral_solid",
+    "target": "ca_dpd",
+    "offset": 0,
+    "limit": 8
+   },
+   "response": {
+    "dataset_version": "adbd41d19a87bc3d5b337983141d6ffe1d949a9e43c9915efaf00a5f083e08ff",
+    "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
+    "source": {
+     "source": 6,
+     "source_id": "ca_dpd",
+     "region": "CA",
+     "country": null,
+     "status": "loaded",
+     "reason": null,
+     "snapshot_date": "2026-11-02",
+     "stale": false,
+     "attribution": "dpd",
+     "as_published": false,
+     "can_compare": {
+      "strength": true,
+      "dose_form": false
+     }
+    },
+    "keys": [
+     "Q186969"
+    ],
+    "unknown_keys": [],
+    "status": "present",
+    "total": 46,
+    "listings": 47,
+    "counts": {
+     "strength": {
+      "same": 0,
+      "different": 8,
+      "unknown": 39
+     },
+     "dose_form": {
+      "same": 0,
+      "different": 0,
+      "unknown": 47
+     }
+    },
+    "with_other_ingredients": 20,
+    "keys_found": [
+     "Q186969"
+    ],
+    "homeopathic_left_out": 0,
+    "not_finished_left_out": 0,
+    "offset": 0,
+    "limit": 8,
+    "products": [
+     {
+      "name": "ADVIL 12 HOUR",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "600 MG"
+       }
+      ],
+      "dose_form_published": "TABLET (EXTENDED-RELEASE)",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "ADVIL ARTHRITIS PAIN",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "400 MG"
+       }
+      ],
+      "dose_form_published": "CAPSULE",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "ADVIL CAPLETS",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "200 MG"
+       }
+      ],
+      "dose_form_published": "TABLET",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "ADVIL EXTRA STRENGTH CAPLETS",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "400 MG"
+       }
+      ],
+      "dose_form_published": "TABLET",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "ADVIL EXTRA STRENGTH LIQUI-GELS",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "400 MG"
+       }
+      ],
+      "dose_form_published": "CAPSULE",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "ADVIL LIQUI-GELS",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "200 MG"
+       }
+      ],
+      "dose_form_published": "CAPSULE",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "ADVIL MIGRAINE & HEADACHE",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "400 MG"
+       }
+      ],
+      "dose_form_published": "CAPSULE",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "ADVIL MINI-GELS",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "200 MG"
+       }
+      ],
+      "dose_form_published": "CAPSULE",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     }
+    ],
+    "notices": [
+     "listing_is_lower_bound"
+    ],
+    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+   }
+  },
+  {
+   "request": {
+    "ingredients": [
+     {
       "key": "Q411347",
       "strength": {
        "amount": "5000",
@@ -2473,7 +4106,7 @@
     "limit": 8
    },
    "response": {
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "dataset_version": "adbd41d19a87bc3d5b337983141d6ffe1d949a9e43c9915efaf00a5f083e08ff",
     "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
     "source": {
      "source": 1,
@@ -2680,7 +4313,7 @@
     "limit": 8
    },
    "response": {
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "dataset_version": "adbd41d19a87bc3d5b337983141d6ffe1d949a9e43c9915efaf00a5f083e08ff",
     "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
     "source": {
      "source": 2,
@@ -2689,7 +4322,7 @@
      "country": "ES",
      "status": "loaded",
      "reason": null,
-     "snapshot_date": "2026-11-07",
+     "snapshot_date": "2026-11-10",
      "stale": false,
      "attribution": "cima",
      "as_published": false,
@@ -2887,7 +4520,7 @@
     "limit": 8
    },
    "response": {
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "dataset_version": "adbd41d19a87bc3d5b337983141d6ffe1d949a9e43c9915efaf00a5f083e08ff",
     "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
     "source": {
      "source": 4,
@@ -2896,7 +4529,7 @@
      "country": null,
      "status": "loaded",
      "reason": null,
-     "snapshot_date": "2026-11-06",
+     "snapshot_date": "2026-11-09",
      "stale": false,
      "attribution": "openfda",
      "as_published": false,
@@ -3068,6 +4701,420 @@
       "dose_form_reason": null,
       "marketed": "not_stated",
       "listings": 1
+     }
+    ],
+    "notices": [
+     "listing_is_lower_bound"
+    ],
+    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+   }
+  },
+  {
+   "request": {
+    "ingredients": [
+     {
+      "key": "Q411347",
+      "strength": {
+       "amount": "5000",
+       "unit": "ug",
+       "basis": "unit"
+      }
+     }
+    ],
+    "dose_form": "oral_solid",
+    "target": "eu_it_aifa",
+    "offset": 0,
+    "limit": 8
+   },
+   "response": {
+    "dataset_version": "adbd41d19a87bc3d5b337983141d6ffe1d949a9e43c9915efaf00a5f083e08ff",
+    "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
+    "source": {
+     "source": 5,
+     "source_id": "eu_it_aifa",
+     "region": "EU",
+     "country": "IT",
+     "status": "loaded",
+     "reason": null,
+     "snapshot_date": "2026-11-10",
+     "stale": false,
+     "attribution": "aifa",
+     "as_published": false,
+     "can_compare": {
+      "strength": true,
+      "dose_form": false
+     }
+    },
+    "keys": [
+     "Q411347"
+    ],
+    "unknown_keys": [],
+    "status": "present",
+    "total": 514,
+    "listings": 535,
+    "counts": {
+     "strength": {
+      "same": 0,
+      "different": 0,
+      "unknown": 535
+     },
+     "dose_form": {
+      "same": 0,
+      "different": 0,
+      "unknown": 535
+     }
+    },
+    "with_other_ingredients": 1236,
+    "keys_found": [
+     "Q411347"
+    ],
+    "homeopathic_left_out": 0,
+    "not_finished_left_out": 0,
+    "offset": 0,
+    "limit": 8,
+    "products": [
+     {
+      "name": "ABIS 10 MG COMPRESSE - 14 COMPRESSE",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "10 milligrammi"
+       }
+      ],
+      "dose_form_published": "Compressa",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "ABIS 5 MG COMPRESSE - 28 COMPRESSE",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "5 milligrammi"
+       }
+      ],
+      "dose_form_published": "Compressa",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "ALMIDIS 10 mg compresse- - 14 compresse in blister PVC/PVDC/Al",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "10 milligrammi"
+       }
+      ],
+      "dose_form_published": "Compressa",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "ALMIDIS 5 mg compresse- - 28 compresse in blister PVC/PVDC/Al",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "5 milligrammi"
+       }
+      ],
+      "dose_form_published": "Compressa",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "AMLODIPINA ABC 10 MG COMPRESSE- 10 COMPRESSE IN BLISTER PVC/PVDC/AL",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "10 milligrammi"
+       }
+      ],
+      "dose_form_published": "Compressa",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "AMLODIPINA ABC 10 MG COMPRESSE- 100 COMPRESSE IN BLISTER PVC/PVDC/AL",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "10 milligrammi"
+       }
+      ],
+      "dose_form_published": "Compressa",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "AMLODIPINA ABC 10 MG COMPRESSE- 100 COMPRESSE IN CONTENITORE HDPE",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "10 milligrammi"
+       }
+      ],
+      "dose_form_published": "Compressa",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "AMLODIPINA ABC 10 MG COMPRESSE- 14 COMPRESSE IN BLISTER PVC/PVDC/AL",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "10 milligrammi"
+       }
+      ],
+      "dose_form_published": "Compressa",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "not_stated",
+      "listings": 1
+     }
+    ],
+    "notices": [
+     "listing_is_lower_bound"
+    ],
+    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+   }
+  },
+  {
+   "request": {
+    "ingredients": [
+     {
+      "key": "Q411347",
+      "strength": {
+       "amount": "5000",
+       "unit": "ug",
+       "basis": "unit"
+      }
+     }
+    ],
+    "dose_form": "oral_solid",
+    "target": "ca_dpd",
+    "offset": 0,
+    "limit": 8
+   },
+   "response": {
+    "dataset_version": "adbd41d19a87bc3d5b337983141d6ffe1d949a9e43c9915efaf00a5f083e08ff",
+    "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
+    "source": {
+     "source": 6,
+     "source_id": "ca_dpd",
+     "region": "CA",
+     "country": null,
+     "status": "loaded",
+     "reason": null,
+     "snapshot_date": "2026-11-02",
+     "stale": false,
+     "attribution": "dpd",
+     "as_published": false,
+     "can_compare": {
+      "strength": true,
+      "dose_form": false
+     }
+    },
+    "keys": [
+     "Q411347"
+    ],
+    "unknown_keys": [],
+    "status": "present",
+    "total": 51,
+    "listings": 67,
+    "counts": {
+     "strength": {
+      "same": 0,
+      "different": 1,
+      "unknown": 66
+     },
+     "dose_form": {
+      "same": 0,
+      "different": 0,
+      "unknown": 67
+     }
+    },
+    "with_other_ingredients": 41,
+    "keys_found": [
+     "Q411347"
+    ],
+    "homeopathic_left_out": 0,
+    "not_finished_left_out": 0,
+    "offset": 0,
+    "limit": 8,
+    "products": [
+     {
+      "name": "ACH-AMLODIPINE",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "10 MG"
+       }
+      ],
+      "dose_form_published": "TABLET",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "ACH-AMLODIPINE",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "2.5 MG"
+       }
+      ],
+      "dose_form_published": "TABLET",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "ACH-AMLODIPINE",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "5 MG"
+       }
+      ],
+      "dose_form_published": "TABLET",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "AG-AMLODIPINE",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "10 MG"
+       }
+      ],
+      "dose_form_published": "TABLET",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "AG-AMLODIPINE",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "2.5 MG"
+       }
+      ],
+      "dose_form_published": "TABLET",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "AG-AMLODIPINE",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "5 MG"
+       }
+      ],
+      "dose_form_published": "TABLET",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "AMLODIPINE",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "10 MG"
+       }
+      ],
+      "dose_form_published": "TABLET",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 5
+     },
+     {
+      "name": "AMLODIPINE",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "2.5 MG"
+       }
+      ],
+      "dose_form_published": "TABLET",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 6
      }
     ],
     "notices": [

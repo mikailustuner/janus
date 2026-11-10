@@ -31,14 +31,14 @@ apps/api/           FastAPI service
   migrations/         Alembic migrations (forward-only, each with a downgrade)
   tests/              pytest + Hypothesis (property tests next to the module they test)
 apps/mcp/           MCP server (janus-mcp): a thin client of the API for AI assistants
-pipelines/          ETL jobs: titck, us_ndc, us_recalls, eu_fr_bdpm, eu_es_cima, wikidata_ingredients, onsides, faers, pipc, retractions, canon (OpenITI)
+pipelines/          ETL jobs: titck, us_ndc, us_recalls, eu_fr_bdpm, eu_es_cima, ca_dpd, eu_it_aifa, wikidata_ingredients, onsides, faers, pipc, retractions, canon (OpenITI)
 data/               small, redistributable files only (e.g. PIPC table, CC BY; curated mappings)
 docs/               public English docs: docs/kiro-usage.md now; architecture and data-source docs in Phase 5
   internal/           PRIVATE Turkish planning docs (idea, architecture, plan, research notes) — gitignored, never committed, never linked from public files
-LICENSE, NOTICE     code license; data attributions (OpenITI, OnSIDES, PIPC, NLM, WHOCC, openFDA, BDPM, AEMPS CIMA, Wikidata, Crossref/Retraction Watch)
+LICENSE, NOTICE     code license; data attributions (OpenITI, OnSIDES, PIPC, NLM, WHOCC, openFDA, BDPM, AEMPS CIMA, Health Canada DPD, AIFA, Wikidata, Crossref/Retraction Watch)
 ```
 
 ## Conventions
 - Medical logic lives in pure modules with no I/O; adapters (DB, HTTP, LLM, region data) are separate.
 - One spec per bounded area under `.kiro/specs/<area>/`.
-- Downloaded third-party files with unclear redistribution terms (e.g. TİTCK lists) are fetched at runtime and are **not** committed. Files with open licences (BDPM, CIMA extracts) may be cached but must keep source attribution and update date.
+- Downloaded third-party files with unclear redistribution terms (e.g. TİTCK lists) are fetched at runtime and are **not** committed. Files with open licences (BDPM, CIMA, Health Canada DPD and AIFA extracts) may be cached but must keep source attribution and update date.

@@ -61,17 +61,25 @@ ADAPTERS: tuple[RegionAdapter, ...] = (
 WIKIDATA = "wikidata"
 JANUS_CURATED = "janus_curated"  # curated Janus ingredient keys (J<n>)
 # Staleness follows the shared freshness rule (twice the cadence, evidence-integrity DP17).
-STALENESS_SOURCES = ("titck", "openfda_ndc", "eu_fr_bdpm", "eu_es_cima")
+STALENESS_SOURCES = ("titck", "openfda_ndc", "eu_fr_bdpm", "eu_es_cima", "eu_it_aifa")
 REGION_SOURCES: dict[Region, tuple[str, ...]] = {
     "TR": ("titck",),
     "US": ("openfda_ndc",),
-    "EU": ("eu_fr_bdpm", "eu_es_cima"),
+    "EU": ("eu_fr_bdpm", "eu_es_cima", "eu_it_aifa"),
 }
 # The EU sources are optional at load time (Req 9.7); a default search or scan uses them only if
-# they are loaded, while a request that names region EU needs both.
-OPTIONAL_SOURCES: frozenset[str] = frozenset({"eu_fr_bdpm", "eu_es_cima"})
+# they are loaded, while a request that names region EU needs the French and the Spanish one.
+OPTIONAL_SOURCES: frozenset[str] = frozenset({"eu_fr_bdpm", "eu_es_cima", "eu_it_aifa"})
+# Never needed, even when the region is named (national-products Req 7.3): the Italian source has
+# no pack-code lookup, so it is searched by name when loaded and its absence fails nothing.
+NAME_ONLY_SOURCES: frozenset[str] = frozenset({"eu_it_aifa"})
 COUNTRY_OF_SOURCE: dict[str, Country] = {
-    a.source_id: a.country for a in ADAPTERS if a.source_id is not None and a.country is not None
+    **{
+        a.source_id: a.country
+        for a in ADAPTERS
+        if a.source_id is not None and a.country is not None
+    },
+    "eu_it_aifa": "IT",
 }
 # Region hints for which no adapter exists yet (none today: FR, ES and DE have adapters).
 NOT_YET: tuple[str, ...] = ()
@@ -426,7 +434,7 @@ def search(
     # request that names a region needs all of that region's sources (Req 6.2).
     wanted: list[Region] = [region] if region else ["TR", "US", "EU"]
     required = REGION_SOURCES[region] if region else (*REGION_SOURCES["TR"], *REGION_SOURCES["US"])
-    cur = _current(conn, required)
+    cur = _current(conn, [s for s in required if s not in NAME_ONLY_SOURCES])
     sources = [s for r in wanted for s in REGION_SOURCES[r] if s in cur.sources]
     regions: list[Region] = [r for r in wanted if any(s in sources for s in REGION_SOURCES[r])]
     b = _Builder(conn, cur, forms)

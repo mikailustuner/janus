@@ -1,7 +1,7 @@
 "use client";
 /**
  * The presence rows of one box (design §8, Req 2.1, 2.2, 6, 7, 10.4): one row per source in the
- * order TR, FR, ES, DE, US with the box's own source last. Status, counts, the three comparison
+ * order TR, FR, ES, DE, US, IT, CA with the box's own source last. Status, counts, the three comparison
  * results with their reasons, the attribution line and the stale notice. One inset grouped list (a
  * description list) at every width, with a Countries / Comparison view (experience Req 29.7);
  * statuses carry text and a shape, never colour.
@@ -24,15 +24,22 @@ const FIELDS = ["strength", "dose_form", "strength_and_dose_form"] as const;
 export function ownSource(item: PassportItem): number | null {
   if ("entered_by_name" in item.source)
     return item.origin.country === "DE" ? 3 : null;
-  const i = ["titck", "eu_fr_bdpm", "eu_es_cima", null, "openfda_ndc"].indexOf(
-    item.source.source_id,
-  );
+  const i = [
+    "titck",
+    "eu_fr_bdpm",
+    "eu_es_cima",
+    null,
+    "openfda_ndc",
+    "eu_it_aifa",
+    "ca_dpd",
+  ].indexOf(item.source.source_id);
   return i >= 0 ? i : null;
 }
 
-export function rowOrder(item: PassportItem): number[] {
+/** `sources`: how many sources the answer holds (five in answers recorded earlier). */
+export function rowOrder(item: PassportItem, sources = 5): number[] {
   const own = ownSource(item);
-  return [0, 1, 2, 3, 4]
+  return Array.from({ length: sources }, (_, i) => i)
     .filter((i) => i !== own)
     .concat(own === null ? [] : [own]);
 }
@@ -252,7 +259,7 @@ export function PresenceRows({
 }) {
   const t = useT();
   const own = ownSource(item);
-  const rows = rowOrder(item).map((i) => ({
+  const rows = rowOrder(item, sources.length).map((i) => ({
     i,
     source: sources[i]!,
     answer: out.answers[i]!,

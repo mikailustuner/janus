@@ -380,6 +380,10 @@ def test_p8_homeopathic_parity_with_resolution(db_conn: psycopg.Connection, p: P
         dataset = res.dataset_version
         rows = repository.presence_rows(db_conn, dataset, keys)
     assert len(rows) == 1
+    if p.source_id == "ca_dpd":
+        assert res.candidates == []  # Canadian products are a target only, never a candidate
+        reset(db_conn)
+        return
     candidate = res.candidates[0]
     assert candidate.kind == "product"
     assert signature(rows[0], TABLE).homeopathic == candidate.homeopathic

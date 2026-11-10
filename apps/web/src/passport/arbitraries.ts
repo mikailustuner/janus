@@ -43,7 +43,12 @@ export const itemArb = (
       source: fc.oneof(
         fc.constant({ entered_by_name: true as const }),
         fc.record({
-          source_id: fc.constantFrom("titck", "eu_fr_bdpm", "openfda_ndc"),
+          source_id: fc.constantFrom(
+            "titck",
+            "eu_fr_bdpm",
+            "openfda_ndc",
+            "eu_it_aifa",
+          ),
           snapshot_date: fc.constantFrom("2026-11-06", "2026-11-03"),
         }),
       ),

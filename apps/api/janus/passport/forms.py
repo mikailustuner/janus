@@ -38,7 +38,9 @@ from janus.resolution.atc import DATA_DIR
 FORMS_FILE = Path(__file__).parent / "dose_form_groups.csv"  # packaged copy, read at startup
 DATA_FILE = DATA_DIR / "dose_form_groups.csv"  # the reviewed copy in the repository's data/
 HEADER = ["source_id", "published_form", "route", "group", "route_from_form", "note"]
-SOURCES: frozenset[str] = frozenset({"titck", "openfda_ndc", "eu_fr_bdpm", "eu_es_cima"})
+SOURCES: frozenset[str] = frozenset(
+    {"titck", "openfda_ndc", "eu_fr_bdpm", "eu_es_cima", "ca_dpd", "eu_it_aifa"}
+)
 ANY_ROUTE = "*"
 
 GROUPS: tuple[str, ...] = (

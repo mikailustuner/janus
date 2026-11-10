@@ -38,13 +38,13 @@ FormGroup = Literal[
     "other",
 ]
 Key = Annotated[str, StringConstraints(pattern=KEY)]
-SourceId = Literal["titck", "eu_fr_bdpm", "eu_es_cima", "openfda_ndc"]
+SourceId = Literal["titck", "eu_fr_bdpm", "eu_es_cima", "openfda_ndc", "eu_it_aifa", "ca_dpd"]
 Status = Literal["present", "not_present", "not_in_source", "source_unavailable"]
 Result = Literal["matched", "differs", "could_not_compare"]
 CmpReason = Literal["not_known_for_item", "not_known_in_source", "not_all_comparable"]
 Notice = Literal["presence_is_lower_bound", "unknown_ingredient_keys"]
 # `POST /passport/products` (design §15). Sources whose licence allows showing product names.
-ListableSourceId = Literal["eu_fr_bdpm", "eu_es_cima", "openfda_ndc"]
+ListableSourceId = Literal["eu_fr_bdpm", "eu_es_cima", "openfda_ndc", "eu_it_aifa", "ca_dpd"]
 Level = Literal["same", "different", "unknown"]
 LevelReason = Literal["not_known_for_item", "not_known_in_source"]
 Marketed = Literal["listed_as_marketed", "listed_as_not_marketed", "not_stated"]
@@ -125,15 +125,15 @@ class CanCompare(_Out):
 
 
 class SourceOut(_Out):
-    source: int  # index 0..4 in the fixed order TR, EU-FR, EU-ES, EU-DE, US
+    source: int  # index 0..6 in the fixed order TR, EU-FR, EU-ES, EU-DE, US, EU-IT, CA
     source_id: SourceId | None
-    region: Literal["TR", "EU", "US"]
-    country: Literal["FR", "ES", "DE"] | None
+    region: Literal["TR", "EU", "US", "CA"]
+    country: Literal["FR", "ES", "DE", "IT"] | None
     status: Literal["loaded", "source_unavailable"]
     reason: Literal["not_loaded", "no_open_product_database"] | None
     snapshot_date: str | None
     stale: bool
-    attribution: Literal["titck", "bdpm", "cima", "openfda"] | None
+    attribution: Literal["titck", "bdpm", "cima", "openfda", "aifa", "dpd"] | None
     as_published: bool
     can_compare: CanCompare
 

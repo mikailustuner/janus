@@ -133,6 +133,7 @@
       "eu_fr_bdpm": "BDPM (France)",
       "eu_es_cima": "CIMA, AEMPS (Espagne)",
       "wikidata": "Wikidata",
+      "eu_it_aifa": "Données ouvertes de l'AIFA (Italie)",
       "other": "Source {id}"
     },
     "sourceLine": "{source}, données du {date}",
@@ -737,7 +738,8 @@
     "showMore": "Afficher plus de résultats",
     "demoNoAdd": "Les médicaments de démo ne sont pas ajoutés à votre propre liste.",
     "back": "Retour au scan",
-    "tryOther": "Il existe d'autres façons d'essayer : photographiez l'étiquette ou saisissez le nom de la substance active. Ces deux façons ne dépendent pas du pays de la boîte."
+    "tryOther": "Il existe d'autres façons d'essayer : photographiez l'étiquette ou saisissez le nom de la substance active. Ces deux façons ne dépendent pas du pays de la boîte.",
+    "aifa": "Source : Agence italienne du médicament (AIFA), données ouvertes, licence CC BY 4.0. Nom et description de la boîte affichés tels que publiés ; l'AIFA ne cautionne pas Janus."
   },
   "OutcomeConsent": {
     "2026-11-v2": {
@@ -886,12 +888,16 @@
       "FR": "en France",
       "ES": "en Espagne",
       "DE": "en Allemagne",
+      "IT": "en Italie",
+      "CA": "au Canada",
       "US": "aux États-Unis"
     },
     "sourceName": {
       "titck": "TİTCK",
       "bdpm": "BDPM",
       "cima": "Nomenclátor (AEMPS)",
+      "aifa": "Données ouvertes AIFA",
+      "dpd": "BDPP (Santé Canada)",
       "openfda": "openFDA NDC"
     },
     "enteredByName": "Saisie par le nom, pas par un code",
@@ -1020,6 +1026,8 @@
       "titck": "Source : TİTCK, liste des médicaments à usage humain autorisés (Ruhsatlı Beşeri Tıbbi Ürünler Listesi), données du {date}.",
       "bdpm": "Source : Base de données publique des médicaments (BDPM), données du {date}. Affiché tel que publié, sans approbation de Janus par la BDPM.",
       "cima": "Source : AEMPS, Nomenclátor de prescripción, données du {date}.",
+      "aifa": "Source : Agence italienne du médicament (AIFA), données ouvertes, données du {date}, licence CC BY 4.0. Les enregistrements homéopathiques et les boîtes non autorisées sont exclus ; l'AIFA ne cautionne pas Janus.",
+      "dpd": "Source : Santé Canada, Base de données sur les produits pharmaceutiques (produits commercialisés), données du {date}. Contient des informations visées par la Licence du gouvernement ouvert – Canada. Ne constitue pas une approbation de Santé Canada.",
       "openfda": "Source : openFDA NDC directory, données du {date}. Sans approbation de la FDA."
     },
     "memory": {
@@ -1037,6 +1045,8 @@
       "FR": "France",
       "ES": "Espagne",
       "DE": "Allemagne",
+      "IT": "Italie",
+      "CA": "Canada",
       "US": "États-Unis"
     },
     "products": {

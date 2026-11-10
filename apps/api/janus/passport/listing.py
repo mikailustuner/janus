@@ -40,8 +40,15 @@ from janus.passport.schemas import (
 )
 
 # Open licences that allow showing the published product name with attribution and data date:
-# BDPM (Licence Ouverte), AEMPS Nomenclátor (reuse with attribution), openFDA NDC (CC0).
-LISTABLE_SOURCES: tuple[str, ...] = ("eu_fr_bdpm", "eu_es_cima", "openfda_ndc")
+# BDPM (Licence Ouverte), AEMPS Nomenclátor (reuse with attribution), openFDA NDC (CC0), AIFA open
+# data (CC BY 4.0), Health Canada DPD (Open Government Licence, Canada).
+LISTABLE_SOURCES: tuple[str, ...] = (
+    "eu_fr_bdpm",
+    "eu_es_cima",
+    "openfda_ndc",
+    "eu_it_aifa",
+    "ca_dpd",
+)
 # openFDA product types that are not finished medicines a person can be given (DP31).
 NOT_FINISHED_TYPES: frozenset[str] = frozenset(
     {
@@ -94,6 +101,9 @@ def marketed(
         return (
             "listed_as_not_marketed" if "commercialised:false" in status_published else "not_stated"
         )
+    if source_id == "ca_dpd":
+        # The DPD extract read is the marketed one; the status is the source's own word.
+        return "listed_as_marketed" if "MARKETED" in status_published else "not_stated"
     if (
         source_id == "openfda_ndc"
         and end_date is not None

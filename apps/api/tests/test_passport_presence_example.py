@@ -57,6 +57,8 @@ def test_presence_example(db_conn: psycopg.Connection) -> None:
         "source_unavailable",
         "source_unavailable",
         "present",
+        "source_unavailable",
+        "source_unavailable",
     ]
     a = first[4]
     assert (a.products, a.with_other_ingredients, a.homeopathic_left_out) == (3, 2, 1)
@@ -80,5 +82,7 @@ def test_presence_example(db_conn: psycopg.Connection) -> None:
         "not_loaded",
         "no_open_product_database",
         None,
+        "not_loaded",
+        "not_loaded",
     ]
     reset(db_conn)

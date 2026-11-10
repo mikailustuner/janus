@@ -32,7 +32,7 @@ browser ─HTTPS─▶ Cloudflare ─tunnel (outbound only)─▶ cloudflared �
 | `smoke.sh internal\|<url> [tag]` | Pages in two languages, public API routes, security headers, deployed commit |
 | `firewall.sh` + `janus-firewall.service` | Host rules (owner, sudo), re-applied at boot |
 | `sync-data.sh` | Developer machine → server copy of the built data runs (never TİTCK) |
-| `titck-refresh.sh` + `janus-titck.{service,timer}` | Weekly TİTCK fetch on the server, then `load-data.sh`; then the FDA recall records (`us_recalls`) and the data-quality report |
+| `titck-refresh.sh` + `janus-titck.{service,timer}` | Weekly TİTCK fetch on the server, the open Canadian and Italian product lists (`ca_dpd`, `eu_it_aifa`), then `load-data.sh`; then the FDA recall records (`us_recalls`) and the data-quality report |
 | `load-data.sh` | Evidence, cascade and resolution loaders into the database |
 | `pipelines.Dockerfile` | Image for pipeline jobs that must run on the server |
 

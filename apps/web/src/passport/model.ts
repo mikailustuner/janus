@@ -30,6 +30,8 @@ export const SOURCE_IDS = [
   "eu_fr_bdpm",
   "eu_es_cima",
   "openfda_ndc",
+  "eu_it_aifa",
+  "ca_dpd",
 ] as const;
 export const FORM_GROUPS = [
   "oral_solid",
@@ -52,13 +54,23 @@ export const COUNTABLE_GROUPS = [
   "oral_solid_delayed_release",
   "oral_solid_prolonged_release",
 ] as const;
-export const SOURCE_REGIONS = ["TR", "EU", "US"] as const;
-export const SOURCE_COUNTRIES = ["FR", "ES", "DE"] as const;
+export const SOURCE_REGIONS = ["TR", "EU", "US", "CA"] as const;
+export const SOURCE_COUNTRIES = ["FR", "ES", "DE", "IT"] as const;
+/** Sources of an answer: five in answers recorded before Italy and Canada were added. */
+export const MIN_SOURCES = 5;
+export const MAX_SOURCES = 7;
 export const UNAVAILABLE_REASONS = [
   "not_loaded",
   "no_open_product_database",
 ] as const;
-export const ATTRIBUTIONS = ["titck", "bdpm", "cima", "openfda"] as const;
+export const ATTRIBUTIONS = [
+  "titck",
+  "bdpm",
+  "cima",
+  "openfda",
+  "aifa",
+  "dpd",
+] as const;
 export const UNITS = ["ug", "IU"] as const;
 export const BASES = ["unit", "mL", "g"] as const;
 export const KEY = /^(Q[1-9][0-9]{0,9}|J[1-9][0-9]{0,5})$/;
@@ -83,7 +95,7 @@ export interface StrengthCode {
 /** Where a box comes from; `country` is null when only the region is known. */
 export interface Origin {
   region: "TR" | "EU" | "US" | "OTHER";
-  country: "TR" | "FR" | "ES" | "DE" | "US" | null;
+  country: "TR" | "FR" | "ES" | "DE" | "IT" | "US" | null;
 }
 export type ValueOrigin = "source" | "entered";
 
@@ -163,13 +175,13 @@ export const answer = D.obj({
 export const presenceOut = D.obj({
   dataset_version: D.pattern(/^[0-9a-f]{64}$/),
   form_table_version: D.pattern(/^[0-9a-f]{64}$/),
-  sources: D.arr(sourceOut, 5, 5),
+  sources: D.arr(sourceOut, MIN_SOURCES, MAX_SOURCES),
   items: D.arr(
     D.obj({
       item: int,
       keys,
       unknown_keys: keys,
-      answers: D.arr(answer, 5, 5),
+      answers: D.arr(answer, MIN_SOURCES, MAX_SOURCES),
     }),
   ),
   notices: D.arr(D.lit(...NOTICES)),
