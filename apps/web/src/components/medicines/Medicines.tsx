@@ -13,6 +13,7 @@ import { formatMonth } from "@/components/format";
 import { MonthPicker } from "@/components/MonthPicker";
 import { candidateIngredients } from "@/components/names";
 import { ItemBadges, ListSummaryExtra } from "@/components/passport/slots";
+import { RecallCheck } from "@/components/recall/RecallCheck";
 import { SourceAttribution } from "@/components/SourceAttribution";
 import { FhirExport } from "@/components/medicines/FhirExport";
 import { TimelineSummary } from "@/components/medicines/Timeline";
@@ -23,6 +24,7 @@ import { resultCache, useSession } from "@/flow/janus";
 import { listActions, type Item } from "@/store/list";
 import { setPending } from "@/flow/pending";
 import { resolverFor } from "@/flow/reresolve";
+import { recallQuery } from "@/recall/query";
 import { useRouter } from "@/i18n/navigation";
 import { useSettings } from "@/store/hooks";
 import { useT } from "@/theme/words";
@@ -53,6 +55,7 @@ function Reconfirm({ item }: { item: Item }) {
               ? { kind: "search", query: k.query, region: k.region }
               : k,
           typed: k.kind === "search" ? k.query : null,
+          lot: item.lot ?? null,
           replaces: item.id,
         });
         router.push("/confirm");
@@ -84,6 +87,8 @@ function ItemRow({
   const [name, setName] = useState(item.boxName);
   const ingredients = candidateIngredients(vocab, item.candidate, item.choices);
   const c = item.candidate;
+  // Recall check of a US product (recall-check Req 6.1, 6.7): not for demo items (read-only).
+  const recall = readOnly ? null : recallQuery(c, item.sourceKey);
   return (
     <Card
       as="li"
@@ -150,6 +155,7 @@ function ItemRow({
             : t("Medicines.startUnknown")}
         </p>
         {warned ? <AbruptStopLine vocab={vocab} /> : null}
+        {recall ? <RecallCheck query={recall} lot={item.lot ?? null} /> : null}
         {readOnly ? null : editing ? (
           <div className="flex flex-col gap-3 border-t border-line pt-3">
             <MonthPicker value={started} onChange={setStarted} />
@@ -239,6 +245,14 @@ export function Medicines() {
       ) : null}
       {readOnly ? (
         <p className="text-sm text-muted">{t("Medicines.demoReadOnly")}</p>
+      ) : null}
+      {session.demo &&
+      items.some(
+        (i) => i.candidate.kind === "product" && i.candidate.region === "US",
+      ) ? (
+        <p className="text-sm text-muted" data-testid="recall-demo">
+          {t("Recall.demo")}
+        </p>
       ) : null}
       {outOfDate && !result ? (
         <p role="status" className="card p-3 font-bold">

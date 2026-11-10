@@ -736,7 +736,7 @@
     "intro": "Janus est un prototype de recherche, pas un dispositif médical. Cette page indique ce qui reste sur votre appareil, ce qui est envoyé, ce qui est enregistré, pour combien de temps, et comment l'effacer.",
     "device": {
       "title": "Ce qui reste sur cet appareil",
-      "body": "Les photos des boîtes et des étiquettes, le texte reconnu, votre liste de médicaments avec les noms inscrits sur les boîtes, vos réglages, les jetons de la boucle de retour et des dons, et les rappels. Ils ne se trouvent que dans ce navigateur ; Janus n'utilise pas de compte."
+      "body": "Les photos des boîtes et des étiquettes, le texte reconnu, votre liste de médicaments avec les noms inscrits sur les boîtes et, pour une boîte scannée, son numéro de lot, vos réglages, les jetons de la boucle de retour et des dons, et les rappels. Ils ne se trouvent que dans ce navigateur ; Janus n'utilise pas de compte."
     },
     "sent": {
       "title": "Ce qui est envoyé à Janus",
@@ -2467,6 +2467,56 @@
       "bias": "Mesuré sur les données humaines d'Obach 2008 ({n} médicaments, consulté le {date}) : les demi-vies httk sont en moyenne géométrique {bias} fois {direction} ; {within} % à moins d'un facteur 2 ; erreur géométrique moyenne d'un facteur {gmfe}.",
       "notValidated": "Les concentrations à l'équilibre ne sont pas validées sur des données mesurées ; aucun intervalle calibré n'existe pour elles.",
       "compartmental": "Aucun intervalle calibré : les bandes montrent la dispersion de la population virtuelle, pas l'erreur du modèle. Concentrations, pics et aires ne sont pas validés sur des données mesurées au-delà de l'étude ci-dessus."
+    }
+  },
+  "Recall": {
+    "checking": "Vérification des fiches de rappel de la FDA…",
+    "listLabel": "Fiches de rappel de la FDA qui mentionnent ce code de produit",
+    "title": {
+      "product": "Ce produit figure dans une fiche de rappel de la FDA",
+      "lot": "Ce produit et ce lot figurent dans une fiche de rappel de la FDA"
+    },
+    "number": "Numéro de rappel",
+    "reportDate": "Date du rapport",
+    "classification": "Classification (telle que publiée par la FDA)",
+    "status": "Statut (tel que publié)",
+    "statusValue": {
+      "Ongoing": "En cours (Ongoing)",
+      "Completed": "Terminé (Completed)",
+      "Terminated": "Clôturé (Terminated)",
+      "other": "{status}"
+    },
+    "terminatedOn": "Clôturé le {date} (Terminated)",
+    "statusNote": "La FDA ne met pas à jour le statut dans ces rapports une fois la classification du rappel attribuée ; ce statut a pu changer depuis.",
+    "reason": "Motif, cité depuis la fiche (en anglais)",
+    "firm": "Entreprise à l'origine du rappel",
+    "notGiven": "Non indiqué dans la fiche",
+    "ndc": {
+      "package": "La fiche mentionne le code de conditionnement de ce produit.",
+      "product": "La fiche mentionne le code de ce produit. Elle peut concerner une autre taille de conditionnement."
+    },
+    "lot": {
+      "listed": "La lecture automatisée a trouvé le lot de votre boîte ({lot}) dans le texte des lots de la fiche.",
+      "not_listed": "La lecture automatisée n'a pas trouvé le lot de votre boîte ({lot}) dans le texte des lots de la fiche. Ce texte est rédigé librement et peut décrire les lots autrement. Veuillez le comparer avec votre boîte.",
+      "not_given": "Janus ne connaît pas le lot de votre boîte. Le lot est imprimé sur la boîte ; veuillez le comparer avec le texte des lots de la fiche."
+    },
+    "details": "Texte des lots et description du produit dans la fiche",
+    "lotText": "Texte des lots, cité depuis la fiche (en anglais)",
+    "lotTextCut": "Le texte des lots est plus long que ce qui est affiché ici. Le texte complet se trouve dans la fiche.",
+    "productText": "Description du produit, citée depuis la fiche (en anglais)",
+    "advice": "Janus ne peut pas dire si votre boîte fait partie de ce rappel. Un pharmacien peut le vérifier : montrez-lui la boîte et ce numéro de rappel.",
+    "openRecord": "Ouvrir la fiche sur openFDA (format de données)",
+    "search": "Rechercher dans les rapports de rappel de la FDA",
+    "more": "{count, plural, one {# autre fiche mentionne ce code de produit.} other {# autres fiches mentionnent ce code de produit.}} La recherche de rappels de la FDA les montre toutes.",
+    "none": "Les fiches de rappel de la FDA jusqu'au {date} (États-Unis uniquement) ont été vérifiées : aucune fiche ne mentionne ce code de produit. Cela ne signifie pas que ce médicament est exempt de problèmes.",
+    "about": "À propos de cette vérification",
+    "coverage": "{without} fiches sur {records} n'indiquent aucun code de produit dans leur texte et ne peuvent pas être trouvées de cette façon.",
+    "outdated": "Les données de rappel dont dispose Janus datent de plus de deux semaines.",
+    "method": "Recherche automatisée dans les rapports « Enforcement Reports » de la FDA (openFDA, données du {date}), États-Unis uniquement. La FDA ne publie pas ces rapports comme un service d'alerte. La relecture par des experts n'a pas encore été faite.",
+    "demo": "La vérification des rappels ne fonctionne pas dans la démo : les produits de la démo sont inventés.",
+    "failed": "Janus n'a pas pu vérifier les fiches de rappel de la FDA.",
+    "errors": {
+      "unavailable": "Les fiches de rappel ne sont pas disponibles pour le moment. Veuillez réessayer plus tard."
     }
   }
 }

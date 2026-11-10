@@ -1,11 +1,14 @@
 /**
  * GS1 element-string parser and outbound filter (experience design §6.2, Req 10.2–10.3, P1).
  *
- * Only (01) GTIN, (17) expiry and (712) national product number ever leave this module, in that
- * order, as `(01)…(17)…(712)…`. Serial (21), lot (10) and every other AI are dropped here and are
- * never stored or logged. A bare GTIN-8/12/13/14 with a valid check digit passes as digits.
+ * Only (01) GTIN, (17) expiry and (712) national product number ever leave the device, in that
+ * order, as `(01)…(17)…(712)…` (`content`). Serial (21) and every other AI are dropped here and
+ * are never stored or logged. The lot (10) is returned beside `content`, never inside it: it
+ * stays on the device for the recall check (recall-check Req 5) and is never sent or logged.
+ * A bare GTIN-8/12/13/14 with a valid check digit passes as digits.
  */
 import { validGtin } from "@/demo/codes";
+import { usableLot } from "@/recall/lot";
 
 const GS = "\x1d";
 
@@ -90,7 +93,13 @@ export function parseElementString(raw: string): ParsedGs1 | null {
 }
 
 export type Outbound =
-  | { kind: "send"; content: string; gtin: string | null }
+  | {
+      kind: "send";
+      content: string;
+      gtin: string | null;
+      /** AI (10) as read, for the device only; null when absent or malformed. */
+      lot: string | null;
+    }
   | { kind: "unreadable" };
 
 /** The content sent to `POST /resolve/scan`: (01), (17), (712) only, or bare GTIN digits. */
@@ -99,7 +108,7 @@ export function outbound(raw: string): Outbound {
   const digits = text.replace(/^\][A-Za-z]\d/, "");
   if (/^(\d{8}|\d{12}|\d{13}|\d{14})$/.test(digits))
     return validGtin(digits)
-      ? { kind: "send", content: digits, gtin: digits }
+      ? { kind: "send", content: digits, gtin: digits, lot: null }
       : { kind: "unreadable" };
   const parsed = parseElementString(text);
   if (parsed) {
@@ -111,17 +120,22 @@ export function outbound(raw: string): Outbound {
     if (exp && /^\d{6}$/.test(exp)) content += `(17)${exp}`;
     const cn = parsed.get("712");
     if (cn && /^[\x21-\x7e]{1,20}$/.test(cn)) content += `(712)${cn}`;
-    return { kind: "send", content, gtin };
+    return { kind: "send", content, gtin, lot: usableLot(parsed.get("10")) };
   }
   // Not parseable, but a leading (01) with a valid GTIN: send that alone.
   const lead = /^(?:\][A-Za-z]\d)?(?:\(01\)|\x1d?01)(\d{14})/.exec(text);
   if (lead && validGtin(lead[1]!))
-    return { kind: "send", content: `(01)${lead[1]}`, gtin: lead[1]! };
+    return {
+      kind: "send",
+      content: `(01)${lead[1]}`,
+      gtin: lead[1]!,
+      lot: null,
+    };
   return { kind: "unreadable" };
 }
 
 export type Typed =
-  | { kind: "scan"; content: string }
+  | { kind: "scan"; content: string; lot: string | null }
   | { kind: "ndc"; ndc: string }
   | { kind: "national_code" }
   | { kind: "search"; query: string }
@@ -136,20 +150,20 @@ export function classifyTyped(input: string): Typed {
   if (/\(\d{2,4}\)|\x1d/.test(t)) {
     const out = outbound(t);
     return out.kind === "send"
-      ? { kind: "scan", content: out.content }
+      ? { kind: "scan", content: out.content, lot: out.lot }
       : { kind: "invalid" };
   }
   const printed = /\bGTIN[:\s]*(\d{14})\b/i.exec(t);
   if (printed) {
     const out = outbound(`(01)${printed[1]}`);
     return out.kind === "send"
-      ? { kind: "scan", content: out.content }
+      ? { kind: "scan", content: out.content, lot: null }
       : { kind: "invalid" };
   }
   if (/\b(SN|LOT|PZN)\b/i.test(t) && /\d{6,}/.test(t))
     return { kind: "national_code" };
   if (/^(\d{8}|\d{12}|\d{13}|\d{14})$/.test(compact) && validGtin(compact))
-    return { kind: "scan", content: compact };
+    return { kind: "scan", content: compact, lot: null };
   const ndc = /^(?:NDC[:\s]*)?(\d{4,5}-\d{3,4}-\d{1,2})$/i.exec(t);
   if (ndc) return { kind: "ndc", ndc: ndc[1]! };
   const ndcDigits = /^NDC[:\s]*(\d{10,11})$/i.exec(t);

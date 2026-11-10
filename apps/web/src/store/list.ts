@@ -5,6 +5,7 @@
  */
 import type { Candidate, ScanRegion } from "@/api/contracts";
 import { candidate as candidateDecoder, decode } from "@/api/decode";
+import { usableLot } from "@/recall/lot";
 
 import { Doc, PREFIX, storage, type SafeStorage } from "./storage";
 
@@ -34,6 +35,8 @@ export interface Item {
   started: string | null; // "YYYY-MM"
   boxName: string;
   needsConfirmation: boolean;
+  /** The lot of the scanned box, AI (10): never sent to a server (recall-check Req 5). */
+  lot?: string;
 }
 
 export interface ListDoc {
@@ -90,6 +93,8 @@ export function validateItem(v: unknown): Item | null {
     return null;
   if (typeof o.boxName !== "string" || typeof o.needsConfirmation !== "boolean")
     return null;
+  if (o.lot !== undefined && (typeof o.lot !== "string" || !usableLot(o.lot)))
+    return null;
   return {
     id: o.id,
     sourceKey: o.sourceKey,
@@ -99,6 +104,7 @@ export function validateItem(v: unknown): Item | null {
     started: o.started as string | null,
     boxName: o.boxName,
     needsConfirmation: o.needsConfirmation,
+    ...(o.lot === undefined ? {} : { lot: o.lot }),
   };
 }
 
