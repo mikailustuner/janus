@@ -31,6 +31,8 @@ from janus.observability.logging import (
 from janus.observability.middleware import AccessLogMiddleware
 from janus.onset_table.router import OnsetTableHolder
 from janus.passport.forms import load as load_dose_forms
+from janus.plaininfo.groups import load as load_medicine_groups
+from janus.plaininfo.official import labels_holder, pages_holders
 from janus.quality.router import DataQualityHolder
 from janus.recalls.store import RecallsHolder
 from janus.seance.catalogue import PACKAGE_DIR as SEANCE_PACKAGE
@@ -117,6 +119,18 @@ def create_app(
     app.state.onset_table = OnsetTableHolder(settings.data_dir)
     # Recall check (recall-check design §6): 503 when no `us_recalls` run is installed.
     app.state.recalls = RecallsHolder(settings.data_dir)
+    # Plain medicine information (plain-medicine-info design §6): a defect in the group table
+    # stops startup; without the abrupt-stop list the route answers 503, so a group sentence is
+    # never shown without the warning; without a label or product-page run it answers without
+    # an official text.
+    from janus.plaininfo.router import Knowledge, load_abrupt_stop
+
+    try:
+        app.state.medicine_info = Knowledge(load_medicine_groups(), load_abrupt_stop())
+    except FileNotFoundError:
+        app.state.medicine_info = None
+    app.state.medicine_labels = labels_holder(settings.data_dir)
+    app.state.medicine_pages = pages_holders(settings.data_dir)
     app.state.note_keyring = (
         Keyring(settings.note_keys, settings.note_signing_key_id)
         if settings.note_keys and settings.note_signing_key_id
@@ -135,6 +149,7 @@ def create_app(
     from janus.onset_table.router import router as onset_table_router
     from janus.open.router import router as open_router
     from janus.passport.router import router as passport_router
+    from janus.plaininfo.router import router as medicine_info_router
     from janus.privacy.router import router as privacy_router
     from janus.quality.router import router as data_quality_router
     from janus.recalls.router import router as recalls_router
@@ -163,6 +178,7 @@ def create_app(
         data_quality_router,
         onset_table_router,
         recalls_router,
+        medicine_info_router,
         cds_router,
         simulation_router,
         *extra_routers,
