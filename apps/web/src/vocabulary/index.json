@@ -2,7 +2,7 @@
  "sources": {
   "apps/api/janus/notes/glossary/ingredients.csv": "269561b4e1d5707fb96551b984b8cea8ea043ad179337dc0772e6d71580555d9",
   "apps/api/janus/notes/glossary/cascades.csv": "4d4172059608b8d56a54dfb0a169c28b6f32d08beeff4625fe78bd0198ac4c3f",
-  "apps/api/janus/notes/glossary/sentences.csv": "a297927c25f9f3e004682c41505ca36d25546471e7f73adf517e49925301aae7",
+  "apps/api/janus/notes/glossary/sentences.csv": "1a71a9fe399ddceff27e2690935380b071047d728f58abb9af0b59cae651c70f",
   "apps/api/janus/memory/memory_events.csv": "dd24adec4ece889b5b5bce2cb42f5872f72aa0a350fd2df5a7356222e479a534",
   "data/pipc.csv": "2030ae28388507ac361656586e12f241b06da31c701ba6839fc127be002f7a64"
  },
