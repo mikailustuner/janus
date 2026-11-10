@@ -97,6 +97,56 @@ incidence.
   carry little drug-specific information are described in
   [httk-pop-older-adult-exposure.md](httk-pop-older-adult-exposure.md).
 
+## PK and simulation
+
+Three checks of the pharmacokinetic (PK) numbers behind Janus's research simulations, made on 2026-11-09. All
+extraction, annotation and scoring were automated; expert review has not yet been done.
+
+### httk half-life is biased
+
+- **Question.** How close are the half-life and the volume of distribution computed by the open httk package
+  (version 2.7.4, package defaults) to measured human values?
+- **Design.** Half-life against measured human intravenous half-lives (Obach, Lombardo & Waters 2008,
+  doi:10.1124/dmd.108.020479; the 205 drugs of that set for which httk has human parameters). Volume of
+  distribution at steady state (VDss) against Lombardo, Berellini & Obach 2018 (doi:10.1124/dmd.118.082966;
+  260 drugs).
+- **Result.** Half-life: 30.7% of drugs within 2-fold (95% CI 24.9–37.1), geometric mean fold error (GMFE) 3.83
+  (3.31–4.43); httk half-lives are typically about 2.1-fold too high. VDss: 50.4% within 2-fold (44.2–56.5), GMFE 2.43,
+  with almost no bias.
+- **Lesson.** Since half-life follows from volume and clearance, the error sits mainly in the predicted clearance. Janus
+  shows the measured error with every httk half-life and marks httk concentrations as not validated.
+
+### Label PK atlas: precise values, low recall, and no consistent parameter sets
+
+- **Question.** Can PK values (half-life, clearance, volume, bioavailability, Cmax, Tmax, AUC, protein binding) be
+  read from the text of FDA drug labels accurately enough to use?
+- **Design.** A deterministic parser and an independent automated extractor read the same label sentences; only
+  values on which both agreed were kept (28,562 values, 561 drugs). Gates were pre-registered: precision per field on a
+  blind sample of 300 values judged by two automated annotators, recall on 50 random labels, and an identity check
+  (reported half-life against ln 2 × volume / clearance).
+- **Result.** Precision of the agreed values 0.96–1.00 per field. Recall 0.31 (110 of 350 values; most misses are
+  in tables). The identity gate failed: half-life and ln 2 × V / CL differed more than 3-fold in 12.5% of drugs
+  (13 of 104; limit 5%), so no reconciled parameter sets are released. Against the 2018 reference set, the label
+  half-life was within 2-fold for 77% of 114 drugs and the httk half-life for 26% of the same drugs; this is
+  expected, because label values are measurements and httk values are predictions.
+- **Limits.** The annotators applied the same written rules as the extractor, so an error in a rule itself stays
+  invisible. A sentence is read without its paragraph: for metoclopramide, three of the four agreed half-life values
+  come from studies in children (automated check against the label text, 2026-11-10). Janus therefore shows a label
+  half-life only with its quoted sentence, route tag and DailyMed set id, and not where the surrounding paragraph
+  describes children or another special population.
+
+### Label data are not enough to simulate concentrations
+
+- **Question.** Do label parameters, with an explicit route rule and context tags, give concentration–time
+  simulations whose accuracy can be measured on held-out drugs?
+- **Result.** No. Testing a simulation needs a Cmax or AUC with its dose, route and regimen: across 609 drugs the
+  labels gave 54 such values (41 drugs), and none of the 22 AUC values in the recall sample was found. No held-out
+  test point remained, so the simulation and calibration gates ended as "insufficient evidence": 0 drugs can be
+  simulated with validated accuracy. Values taken from label tables failed their precision gate (Cmax 0.83, AUC 0.63,
+  Tmax 0.68) and were not used.
+- **Lesson.** The bottleneck is the data, not the model. Janus runs no simulation from label parameters and shows no
+  calibrated Cmax or AUC interval.
+
 ## What this means for Janus
 
 - Janus keeps checking only published, expert-agreed cascade patterns (PIPC). None of the discovery methods above is
@@ -104,6 +154,8 @@ incidence.
 - FAERS reported indications improve candidate coverage and may support a future research-only candidate list for
   expert review.
 - Extracted label data are used only as positive evidence, with the source sentence quoted.
+- Label-reported PK values are shown as quoted label sentences next to the model's values; they are not fed into
+  any simulation.
 
 ## Limitations
 
