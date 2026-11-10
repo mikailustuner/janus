@@ -27,6 +27,11 @@ repository currently contains the project skeleton only.
 | `docs/`      | Documentation; `docs/kiro-usage.md` is the development log                |
 | `.kiro/`     | Kiro steering, specs and hooks used to build the project                  |
 
+## For researchers
+
+Open data, the public read-only API, the MCP server, the CDS Hooks service, the pipelines and a worked
+example, in one place: [docs/for-researchers.md](docs/for-researchers.md).
+
 ## Local development
 
 Requirements: Docker with Compose, or Node 24 + pnpm 12 and

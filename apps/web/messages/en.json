@@ -590,6 +590,10 @@
       "simulate": {
         "title": "Queued model runs",
         "body": "Run the compartmental model or an httk virtual-population run on the Janus server, in a small queue."
+      },
+      "forResearchers": {
+        "title": "Janus for researchers",
+        "body": "One page: open data, API, MCP server, CDS Hooks, pipelines, a worked example and how to cite."
       }
     }
   },
@@ -2757,6 +2761,110 @@
     },
     "errors": {
       "unavailable": "The medicine information is not available right now. Please try again later."
+    }
+  },
+  "ForResearchers": {
+    "title": "Janus for researchers",
+    "summary": "Open data, API, MCP server, CDS Hooks, pipelines and a worked example in one place.",
+    "intro": "Everything on this page exists in the repository today. Pick a source, run one request, run the example, read the limits. Counts are reports, never people.",
+    "status": "Research prototype, not a medical device. Expert review has not yet been done.",
+    "path": {
+      "title": "Start in ten minutes",
+      "summary": "Four steps, no account needed.",
+      "s1": "Pick a source: the FAERS onset table is a good first one.",
+      "s2": "Run one request with curl (see the API card).",
+      "s3": "Run the worked example: one file, standard library only.",
+      "s4": "Read the limits before you use a number."
+    },
+    "data": {
+      "title": "Open data",
+      "summary": "Files under data/open/, versioned, with a licence per file.",
+      "cascade": "The 65 PIPC rows with Janus's class mapping, and the supporting mappings. Version 1.0.0. Licences: CC BY 4.0 (PIPC rows), Apache-2.0 (mappings).",
+      "onset": "FAERS time to onset for the 65 PIPC rows, descriptive only. CC BY 4.0. The version string is in the file and in the API answer.",
+      "quality": "Weekly ingredient data-quality findings. CC BY 4.0.",
+      "outcomes": "Open outcome dataset (API only, CC BY 4.0). No released cells yet: the file is valid and empty.",
+      "licences": "Cite a dataset by its version string and snapshot date. Each file keeps its own licence and source attribution.",
+      "doc": "Open data guide"
+    },
+    "api": {
+      "title": "Public read-only API",
+      "summary": "Routes without a request body that return released data.",
+      "body": "Base URL {base}. These routes carry no personal data. Errors are short codes in an error field.",
+      "routes": {
+        "cascade": "the 65 PIPC rows with Janus's class mapping",
+        "onset": "FAERS time-to-onset table, JSON or CSV",
+        "onsetRow": "one row (1-65) with its caveats",
+        "quality": "weekly data-quality findings, JSON, CSV or Markdown",
+        "outcomes": "open outcome dataset, JSON or CSV (released cells only)",
+        "memory": "FAERS counts snapshot: build, date, quarters",
+        "timemachine": "in silico time machine data (exploratory)",
+        "compounds": "allow-list of the exploratory simulations",
+        "cds": "CDS Hooks discovery document"
+      },
+      "examples": "Example requests (outputs of 2026-11-10; they change with each release)",
+      "rate": "Rate limits: the repository states them only for the queued simulations (3 submissions per 30 s and 5 per 10 min per client, 120 polls per minute; the answer is 429 with Retry-After). The read-only routes state no limit: be gentle, and download the files in data/open/ for bulk use. The public site refuses the default Python user agent (HTTP 403): send your own.",
+      "noPost": "The POST routes (medicine resolution, cascade check, notes, donations) carry a person's medicines and are not public API.",
+      "openapi": "OpenAPI description",
+      "doc": "Route table and rules"
+    },
+    "example": {
+      "title": "Worked example",
+      "summary": "The FAERS onset table in 20 lines",
+      "body": "Fetches the onset table, counts the rows that have a median time to onset and lists the three with the most reports. One request, standard library only. Set JANUS_API_URL to use a local API.",
+      "code": "Python (onset_summary.py)",
+      "output": "Output on 2026-11-10",
+      "caveat": "Description only: a median is published only for rows with enough reports and complete dates; zero-day and day-01 dates are heaped; the numbers are neither causal nor incidence.",
+      "file": "Open the file"
+    },
+    "mcp": {
+      "title": "MCP server",
+      "summary": "Seven tools for MCP clients",
+      "body": "apps/mcp is a thin client of the API for MCP clients such as Claude or Kiro. Tools: janus_resolve_code, janus_resolve_ndc, janus_search_medicines, janus_check_cascades, janus_cascade_package_rows, janus_time_machine_catalogue, janus_time_machine_cascade. Every result carries a safety block; nothing is logged or kept between calls.",
+      "run": "Run it (stdio)",
+      "kiro": "Kiro: .kiro/settings/mcp.json",
+      "doc": "MCP guide"
+    },
+    "cds": {
+      "title": "CDS Hooks service",
+      "summary": "Hooks order-select and order-sign",
+      "sandbox": "Sandbox only, not for clinical use. Do not connect it to a live EHR.",
+      "body": "The service janus-cascade checks draft medication orders against the PIPC list. Start dates are not read. No card does not mean the medicines are free of problems.",
+      "discovery": "Discovery and service",
+      "noAuth": "There is no client authentication (no signed JWT) yet.",
+      "doc": "CDS Hooks guide and sandbox walk-through"
+    },
+    "pipelines": {
+      "title": "Reproducible pipelines",
+      "summary": "One job per source",
+      "body": "pipelines/ is a separate uv project with one job per source. The source registry is sources.toml; the NOTICE file is generated from it.",
+      "run": "Run a job locally",
+      "notes": "Exit codes: 0 succeeded, 1 failed, 3 needs review, 4 refused. Artifacts go to JANUS_DATA_DIR. Some sources are large (FAERS about 250 MB). Lists with unclear redistribution terms are fetched at runtime and never committed.",
+      "doc": "Pipelines guide"
+    },
+    "notes": {
+      "title": "Research notes",
+      "summary": "Two draft notes",
+      "status": "Draft notes, not peer reviewed. Expert review has not yet been done.",
+      "httk": "HTTK-Pop older-adult exposure compared with FDA label ratios",
+      "negative": "Negative and null results: seven pre-registered hypotheses"
+    },
+    "limits": {
+      "title": "Limitations and how to report errors",
+      "summary": "Read these before you use a number.",
+      "l1": "Counts are reports, not people. FAERS is spontaneous reporting: not incidence, not deduplicated across cases.",
+      "l2": "The onset table is descriptive, not causal. The time machine is in silico and exploratory.",
+      "l3": "Mappings are made by automated rules and tests. Expert review has not yet been done.",
+      "l4": "The CDS Hooks service has no client authentication yet and is for sandboxes only.",
+      "report": "Found a mistake in a file, a number or this page? Open an issue on GitHub. Do not put personal or patient data in an issue. For an error in a source database, have a pharmacist check it before you report it upstream.",
+      "issues": "GitHub issues",
+      "corrections": "How to contribute corrections"
+    },
+    "cite": {
+      "title": "How to cite",
+      "summary": "Cite the version you used.",
+      "body": "There is no CITATION.cff yet: the project has not published citation metadata. Until then, cite the dataset with its version string and snapshot date:",
+      "example": "Citation text",
+      "pipc": "The PIPC list itself:"
     }
   }
 }

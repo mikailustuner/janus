@@ -590,6 +590,10 @@
       "simulate": {
         "title": "Modellläufe in der Warteschlange",
         "body": "Das Kompartimentmodell oder einen httk-Lauf mit virtueller Population auf dem Janus-Server rechnen, in einer kleinen Warteschlange."
+      },
+      "forResearchers": {
+        "title": "Janus für Forschende",
+        "body": "Eine Seite: offene Daten, API, MCP-Server, CDS Hooks, Pipelines, ein durchgerechnetes Beispiel und Zitierhinweis."
       }
     }
   },
@@ -2757,6 +2761,110 @@
     },
     "errors": {
       "unavailable": "Die Information zum Medikament ist gerade nicht verfügbar. Bitte versuchen Sie es später erneut."
+    }
+  },
+  "ForResearchers": {
+    "title": "Janus für Forschende",
+    "summary": "Offene Daten, API, MCP-Server, CDS Hooks, Pipelines und ein durchgerechnetes Beispiel an einem Ort.",
+    "intro": "Alles auf dieser Seite gibt es heute im Repository. Quelle wählen, eine Anfrage ausführen, das Beispiel ausführen, die Grenzen lesen. Zahlen sind Meldungen, nie Personen.",
+    "status": "Forschungsprototyp, kein Medizinprodukt. Eine Prüfung durch Fachleute ist noch nicht erfolgt.",
+    "path": {
+      "title": "In zehn Minuten starten",
+      "summary": "Vier Schritte, kein Konto nötig.",
+      "s1": "Quelle wählen: Die FAERS-Latenztabelle ist ein guter Anfang.",
+      "s2": "Eine Anfrage mit curl ausführen (siehe Karte zur API).",
+      "s3": "Das Beispiel ausführen: eine Datei, nur Standardbibliothek.",
+      "s4": "Die Grenzen lesen, bevor Sie eine Zahl verwenden."
+    },
+    "data": {
+      "title": "Offene Daten",
+      "summary": "Dateien unter data/open/, versioniert, mit einer Lizenz pro Datei.",
+      "cascade": "Die 65 PIPC-Zeilen mit der Klassenzuordnung von Janus und die unterstützenden Zuordnungen. Version 1.0.0. Lizenzen: CC BY 4.0 (PIPC-Zeilen), Apache-2.0 (Zuordnungen).",
+      "onset": "FAERS-Zeit bis zum Auftreten für die 65 PIPC-Zeilen, nur beschreibend. CC BY 4.0. Die Versionskennung steht in der Datei und in der API-Antwort.",
+      "quality": "Wöchentliche Befunde zur Datenqualität der Wirkstoffe. CC BY 4.0.",
+      "outcomes": "Offener Outcome-Datensatz (nur API, CC BY 4.0). Noch keine freigegebenen Zellen: Die Datei ist gültig und leer.",
+      "licences": "Datensatz mit Versionskennung und Stichtag zitieren. Jede Datei behält ihre Lizenz und Quellenangabe.",
+      "doc": "Leitfaden zu offenen Daten"
+    },
+    "api": {
+      "title": "Öffentliche, lesende API",
+      "summary": "Routen ohne Anfragekörper, die freigegebene Daten liefern.",
+      "body": "Basis-URL {base}. Diese Routen enthalten keine personenbezogenen Daten. Fehler sind kurze Codes im Feld error.",
+      "routes": {
+        "cascade": "die 65 PIPC-Zeilen mit der Klassenzuordnung von Janus",
+        "onset": "FAERS-Tabelle zur Zeit bis zum Auftreten, JSON oder CSV",
+        "onsetRow": "eine Zeile (1-65) mit ihren Einschränkungen",
+        "quality": "wöchentliche Befunde zur Datenqualität, JSON, CSV oder Markdown",
+        "outcomes": "offener Outcome-Datensatz, JSON oder CSV (nur freigegebene Zellen)",
+        "memory": "Stand der FAERS-Zählungen: Build, Datum, Quartale",
+        "timemachine": "In-silico-Daten der Zeitmaschine (explorativ)",
+        "compounds": "Positivliste der explorativen Simulationen",
+        "cds": "CDS-Hooks-Discovery-Dokument"
+      },
+      "examples": "Beispielanfragen (Ausgaben vom 2026-11-10; sie ändern sich mit jeder Veröffentlichung)",
+      "rate": "Ratenlimits: Das Repository nennt sie nur für die eingereihten Simulationen (3 Einreichungen pro 30 s und 5 pro 10 min je Client, 120 Abfragen pro Minute; Antwort 429 mit Retry-After). Für die lesenden Routen ist kein Limit angegeben: sparsam nutzen und für Massenabruf die Dateien in data/open/ herunterladen. Die öffentliche Seite lehnt den Standard-User-Agent von Python ab (HTTP 403): Senden Sie einen eigenen.",
+      "noPost": "Die POST-Routen (Arzneimittelzuordnung, Kaskadenprüfung, Notizen, Spenden) enthalten die Arzneimittel einer Person und sind keine öffentliche API.",
+      "openapi": "OpenAPI-Beschreibung",
+      "doc": "Routentabelle und Regeln"
+    },
+    "example": {
+      "title": "Durchgerechnetes Beispiel",
+      "summary": "Die FAERS-Latenztabelle in 20 Zeilen",
+      "body": "Lädt die Latenztabelle, zählt die Zeilen mit einem Median der Zeit bis zum Auftreten und listet die drei mit den meisten Meldungen. Eine Anfrage, nur Standardbibliothek. Mit JANUS_API_URL lässt sich eine lokale API verwenden.",
+      "code": "Python (onset_summary.py)",
+      "output": "Ausgabe vom 2026-11-10",
+      "caveat": "Nur beschreibend: Ein Median wird nur für Zeilen mit genug Meldungen und vollständigen Daten veröffentlicht; Daten mit Tag 0 und dem 1. des Monats häufen sich; die Zahlen sind weder kausal noch Inzidenz.",
+      "file": "Datei öffnen"
+    },
+    "mcp": {
+      "title": "MCP-Server",
+      "summary": "Sieben Werkzeuge für MCP-Clients",
+      "body": "apps/mcp ist ein dünner Client der API für MCP-Clients wie Claude oder Kiro. Werkzeuge: janus_resolve_code, janus_resolve_ndc, janus_search_medicines, janus_check_cascades, janus_cascade_package_rows, janus_time_machine_catalogue, janus_time_machine_cascade. Jedes Ergebnis enthält einen Sicherheitsblock; zwischen Aufrufen wird nichts protokolliert oder gespeichert.",
+      "run": "Starten (stdio)",
+      "kiro": "Kiro: .kiro/settings/mcp.json",
+      "doc": "MCP-Leitfaden"
+    },
+    "cds": {
+      "title": "CDS-Hooks-Dienst",
+      "summary": "Hooks order-select und order-sign",
+      "sandbox": "Nur Sandbox, nicht für den klinischen Einsatz. Nicht mit einer produktiven EHR verbinden.",
+      "body": "Der Dienst janus-cascade prüft entworfene Arzneimittelaufträge gegen die PIPC-Liste. Startdaten werden nicht gelesen. Keine Karte heißt nicht, dass die Arzneimittel frei von Problemen sind.",
+      "discovery": "Discovery und Dienst",
+      "noAuth": "Eine Client-Authentifizierung (signiertes JWT) gibt es noch nicht.",
+      "doc": "CDS-Hooks-Leitfaden und Sandbox-Anleitung"
+    },
+    "pipelines": {
+      "title": "Reproduzierbare Pipelines",
+      "summary": "Ein Job pro Quelle",
+      "body": "pipelines/ ist ein eigenes uv-Projekt mit einem Job pro Quelle. Das Quellenregister ist sources.toml; die Datei NOTICE wird daraus erzeugt.",
+      "run": "Einen Job lokal ausführen",
+      "notes": "Exit-Codes: 0 erfolgreich, 1 fehlgeschlagen, 3 Prüfung nötig, 4 abgelehnt. Artefakte landen in JANUS_DATA_DIR. Einige Quellen sind groß (FAERS etwa 250 MB). Listen mit unklaren Weitergabebedingungen werden zur Laufzeit geladen und nie eingecheckt.",
+      "doc": "Pipeline-Leitfaden"
+    },
+    "notes": {
+      "title": "Forschungsnotizen",
+      "summary": "Zwei Entwurfsnotizen",
+      "status": "Entwurfsnotizen, nicht begutachtet. Eine Prüfung durch Fachleute ist noch nicht erfolgt.",
+      "httk": "HTTK-Pop-Exposition bei älteren Erwachsenen im Vergleich mit Verhältnissen aus FDA-Fachinformationen",
+      "negative": "Negative und Null-Ergebnisse: sieben vorab registrierte Hypothesen"
+    },
+    "limits": {
+      "title": "Einschränkungen und wie Fehler gemeldet werden",
+      "summary": "Bitte lesen, bevor Sie eine Zahl verwenden.",
+      "l1": "Zahlen sind Meldungen, nicht Personen. FAERS beruht auf Spontanmeldungen: keine Inzidenz, nicht über Fälle hinweg dedupliziert.",
+      "l2": "Die Latenztabelle ist beschreibend, nicht kausal. Die Zeitmaschine ist in silico und explorativ.",
+      "l3": "Zuordnungen entstehen durch automatisierte Regeln und Tests. Eine Prüfung durch Fachleute ist noch nicht erfolgt.",
+      "l4": "Der CDS-Hooks-Dienst hat noch keine Client-Authentifizierung und ist nur für Sandboxes gedacht.",
+      "report": "Fehler in einer Datei, einer Zahl oder dieser Seite gefunden? Eröffnen Sie ein Issue auf GitHub. Keine personenbezogenen oder Patientendaten in ein Issue schreiben. Einen Fehler in einer Quelldatenbank vor der Meldung an die Quelle von einer Apothekerin oder einem Apotheker prüfen lassen.",
+      "issues": "GitHub-Issues",
+      "corrections": "Korrekturen beitragen"
+    },
+    "cite": {
+      "title": "So zitieren Sie",
+      "summary": "Zitieren Sie die verwendete Version.",
+      "body": "Es gibt noch keine CITATION.cff: Das Projekt hat keine Zitationsangaben veröffentlicht. Bis dahin den Datensatz mit Versionskennung und Stichtag zitieren:",
+      "example": "Zitiertext",
+      "pipc": "Die PIPC-Liste selbst:"
     }
   }
 }

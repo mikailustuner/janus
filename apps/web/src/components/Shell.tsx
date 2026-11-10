@@ -210,6 +210,7 @@ const WIDE = [
   "/research/faers-onset",
   "/research/faers-onset/row",
   "/research/developers",
+  "/research/for-researchers",
   "/research/model-explorer",
   "/research/simulate",
 ];
@@ -251,6 +252,14 @@ function Footer() {
             className="inline-flex min-h-11 items-center px-1 underline underline-offset-4"
           >
             {t("CascadeMap.footer")}
+          </Link>
+        </li>
+        <li>
+          <Link
+            href="/research/for-researchers"
+            className="inline-flex min-h-11 items-center px-1 underline underline-offset-4"
+          >
+            {t("ForResearchers.title")}
           </Link>
         </li>
         <li>

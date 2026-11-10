@@ -590,6 +590,10 @@
       "simulate": {
         "title": "Calculs de modèle en file d'attente",
         "body": "Lancer le modèle compartimental ou un calcul httk sur population virtuelle sur le serveur Janus, dans une petite file d'attente."
+      },
+      "forResearchers": {
+        "title": "Janus pour les chercheurs",
+        "body": "Une page : données ouvertes, API, serveur MCP, CDS Hooks, pipelines, un exemple complet et comment citer."
       }
     }
   },
@@ -2757,6 +2761,110 @@
     },
     "errors": {
       "unavailable": "L'information sur le médicament n'est pas disponible pour le moment. Veuillez réessayer plus tard."
+    }
+  },
+  "ForResearchers": {
+    "title": "Janus pour les chercheurs",
+    "summary": "Données ouvertes, API, serveur MCP, CDS Hooks, pipelines et un exemple complet au même endroit.",
+    "intro": "Tout ce qui figure sur cette page existe aujourd'hui dans le dépôt. Choisissez une source, lancez une requête, lancez l'exemple, lisez les limites. Les nombres sont des signalements, jamais des personnes.",
+    "status": "Prototype de recherche, pas un dispositif médical. La relecture par des experts n'a pas encore été faite.",
+    "path": {
+      "title": "Démarrer en dix minutes",
+      "summary": "Quatre étapes, aucun compte nécessaire.",
+      "s1": "Choisissez une source : le tableau des délais d'apparition FAERS est un bon début.",
+      "s2": "Lancez une requête avec curl (voir la carte de l'API).",
+      "s3": "Lancez l'exemple : un seul fichier, bibliothèque standard uniquement.",
+      "s4": "Lisez les limites avant d'utiliser un nombre."
+    },
+    "data": {
+      "title": "Données ouvertes",
+      "summary": "Fichiers sous data/open/, versionnés, une licence par fichier.",
+      "cascade": "Les 65 lignes PIPC avec la correspondance de classes de Janus, et les correspondances associées. Version 1.0.0. Licences : CC BY 4.0 (lignes PIPC), Apache-2.0 (correspondances).",
+      "onset": "Délai d'apparition FAERS pour les 65 lignes PIPC, descriptif uniquement. CC BY 4.0. La chaîne de version figure dans le fichier et dans la réponse de l'API.",
+      "quality": "Constats hebdomadaires sur la qualité des données des substances. CC BY 4.0.",
+      "outcomes": "Jeu de données ouvert des résultats (API uniquement, CC BY 4.0). Aucune cellule publiée pour l'instant : le fichier est valide et vide.",
+      "licences": "Citez un jeu de données avec sa chaîne de version et sa date d'instantané. Chaque fichier garde sa licence et sa mention de source.",
+      "doc": "Guide des données ouvertes"
+    },
+    "api": {
+      "title": "API publique en lecture seule",
+      "summary": "Routes sans corps de requête qui renvoient des données publiées.",
+      "body": "URL de base {base}. Ces routes ne contiennent aucune donnée personnelle. Les erreurs sont de courts codes dans un champ error.",
+      "routes": {
+        "cascade": "les 65 lignes PIPC avec la correspondance de classes de Janus",
+        "onset": "tableau des délais d'apparition FAERS, JSON ou CSV",
+        "onsetRow": "une ligne (1-65) avec ses réserves",
+        "quality": "constats hebdomadaires de qualité des données, JSON, CSV ou Markdown",
+        "outcomes": "jeu de données ouvert des résultats, JSON ou CSV (cellules publiées uniquement)",
+        "memory": "instantané des comptages FAERS : version, date, trimestres",
+        "timemachine": "données in silico de la machine à remonter le temps (exploratoire)",
+        "compounds": "liste autorisée des simulations exploratoires",
+        "cds": "document de découverte CDS Hooks"
+      },
+      "examples": "Exemples de requêtes (sorties du 2026-11-10 ; elles changent à chaque publication)",
+      "rate": "Limites de débit : le dépôt ne les indique que pour les simulations en file d'attente (3 envois par 30 s et 5 par 10 min par client, 120 interrogations par minute ; réponse 429 avec Retry-After). Les routes en lecture seule n'indiquent aucune limite : usage modéré, et pour un usage en masse téléchargez les fichiers de data/open/. Le site public refuse l'agent utilisateur Python par défaut (HTTP 403) : envoyez le vôtre.",
+      "noPost": "Les routes POST (résolution des médicaments, contrôle des cascades, notes, dons) contiennent les médicaments d'une personne et ne font pas partie de l'API publique.",
+      "openapi": "Description OpenAPI",
+      "doc": "Tableau des routes et règles"
+    },
+    "example": {
+      "title": "Exemple complet",
+      "summary": "Le tableau des délais d'apparition FAERS en 20 lignes",
+      "body": "Récupère le tableau, compte les lignes qui ont une médiane du délai d'apparition et liste les trois qui ont le plus de signalements. Une requête, bibliothèque standard uniquement. Définissez JANUS_API_URL pour utiliser une API locale.",
+      "code": "Python (onset_summary.py)",
+      "output": "Sortie du 2026-11-10",
+      "caveat": "Description uniquement : une médiane n'est publiée que pour les lignes avec assez de signalements et des dates complètes ; les dates au jour 0 et au 1er du mois s'accumulent ; les nombres ne sont ni causaux ni une incidence.",
+      "file": "Ouvrir le fichier"
+    },
+    "mcp": {
+      "title": "Serveur MCP",
+      "summary": "Sept outils pour les clients MCP",
+      "body": "apps/mcp est un client léger de l'API pour les clients MCP tels que Claude ou Kiro. Outils : janus_resolve_code, janus_resolve_ndc, janus_search_medicines, janus_check_cascades, janus_cascade_package_rows, janus_time_machine_catalogue, janus_time_machine_cascade. Chaque résultat porte un bloc de sécurité ; rien n'est journalisé ni conservé entre les appels.",
+      "run": "Lancer (stdio)",
+      "kiro": "Kiro : .kiro/settings/mcp.json",
+      "doc": "Guide MCP"
+    },
+    "cds": {
+      "title": "Service CDS Hooks",
+      "summary": "Hooks order-select et order-sign",
+      "sandbox": "Bac à sable uniquement, pas pour un usage clinique. Ne le connectez pas à un DPI en production.",
+      "body": "Le service janus-cascade compare les prescriptions en cours de saisie à la liste PIPC. Les dates de début ne sont pas lues. L'absence de carte ne signifie pas que les médicaments sont exempts de problèmes.",
+      "discovery": "Découverte et service",
+      "noAuth": "Il n'y a pas encore d'authentification du client (pas de JWT signé).",
+      "doc": "Guide CDS Hooks et pas-à-pas du bac à sable"
+    },
+    "pipelines": {
+      "title": "Pipelines reproductibles",
+      "summary": "Un job par source",
+      "body": "pipelines/ est un projet uv distinct avec un job par source. Le registre des sources est sources.toml ; le fichier NOTICE en est généré.",
+      "run": "Lancer un job en local",
+      "notes": "Codes de sortie : 0 réussi, 1 échec, 3 relecture nécessaire, 4 refusé. Les artefacts vont dans JANUS_DATA_DIR. Certaines sources sont volumineuses (FAERS environ 250 Mo). Les listes aux conditions de rediffusion floues sont téléchargées à l'exécution et jamais versionnées.",
+      "doc": "Guide des pipelines"
+    },
+    "notes": {
+      "title": "Notes de recherche",
+      "summary": "Deux notes provisoires",
+      "status": "Notes provisoires, non évaluées par des pairs. La relecture par des experts n'a pas encore été faite.",
+      "httk": "Exposition HTTK-Pop chez les adultes âgés comparée aux rapports des étiquettes FDA",
+      "negative": "Résultats négatifs et nuls : sept hypothèses préenregistrées"
+    },
+    "limits": {
+      "title": "Limites et comment signaler une erreur",
+      "summary": "À lire avant d'utiliser un nombre.",
+      "l1": "Les nombres sont des signalements, pas des personnes. FAERS repose sur la notification spontanée : pas d'incidence, pas de dédoublonnage entre cas.",
+      "l2": "Le tableau des délais est descriptif, pas causal. La machine à remonter le temps est in silico et exploratoire.",
+      "l3": "Les correspondances sont produites par des règles automatisées et des tests. La relecture par des experts n'a pas encore été faite.",
+      "l4": "Le service CDS Hooks n'a pas encore d'authentification du client et est réservé aux bacs à sable.",
+      "report": "Une erreur dans un fichier, un nombre ou cette page ? Ouvrez une issue sur GitHub. N'y mettez aucune donnée personnelle ni de patient. Pour une erreur dans une base source, faites-la vérifier par un pharmacien avant de la signaler à la source.",
+      "issues": "Issues GitHub",
+      "corrections": "Comment proposer des corrections"
+    },
+    "cite": {
+      "title": "Comment citer",
+      "summary": "Citez la version que vous avez utilisée.",
+      "body": "Il n'existe pas encore de CITATION.cff : le projet n'a pas publié de métadonnées de citation. D'ici là, citez le jeu de données avec sa chaîne de version et sa date d'instantané :",
+      "example": "Texte de citation",
+      "pipc": "La liste PIPC elle-même :"
     }
   }
 }
