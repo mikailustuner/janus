@@ -53,7 +53,19 @@ describe("contract mirror (types of schemas.py)", () => {
       Object.fromEntries(
         Object.entries(lit).filter(
           ([k]) =>
-            !["source_status", "not_compared_groups", "disclaimer"].includes(k),
+            ![
+              "source_status",
+              "not_compared_groups",
+              "disclaimer",
+              // the product list's sets are checked in products.test.tsx
+              "listable_source_id",
+              "level",
+              "level_reason",
+              "marketed",
+              "listing_notice",
+              "max_page",
+              "max_offset",
+            ].includes(k),
         ),
       ),
     );

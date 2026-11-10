@@ -522,3 +522,148 @@ the remaining fallback is the loader-built signature table (DP12), a `drug-resol
 5. **Published strengths next to the counts:** no. Counts only, so the answer can never read as a substitute list.
 6. **Dose-form groups:** a coarse Janus grouping of about 12 groups (oral solid, oral liquid, injection, inhaled, nasal, ophthalmic, otic, cutaneous, transdermal, rectal, vaginal, other), curated in `data/dose_form_groups.csv`; no EDQM data copied. Pharmacologist review stop stays.
 7. **Build tool:** implemented with Claude Code (Claude Opus 5.5) outside Kiro, following the specs, steering and `.kiro/hooks` scripts.
+
+---
+
+## 15. Extension 2026-11-10: products with the same active ingredient in another country
+
+Requirements 14–17. One new pure module, one statement, one route, one screen. `POST /passport/presence` is
+unchanged; the product list reuses its item query, signatures, source blocks, strength codes and dose-form groups.
+
+### 15.1 Facts measured on the dev dataset (2026-11-10)
+
+Ingredient sets = distinct sets of mapped keys over complete, non-homeopathic, finished products.
+
+| Source | Products | Counted products | Ingredient sets | Single | Combination |
+|---|---|---|---|---|---|
+| `titck` (item side only) | 23,137 | 20,418 | 1,601 | 1,226 | 375 |
+| `eu_fr_bdpm` | 20,914 | 17,646 | 1,405 | 1,173 | 232 |
+| `eu_es_cima` | 30,900 | 25,991 | 1,403 | 1,108 | 295 |
+| `openfda_ndc` | 138,262 | 78,022 | 1,711 | 1,322 | 389 |
+
+Share of a source's ingredient sets (and of its products) that have at least one listed product in the target:
+
+| Box from → target | Sets mapped | Products mapped | Combination sets mapped |
+|---|---|---|---|
+| Türkiye → France | 997 of 1,601 (62.3 %) | 16,329 of 20,418 (80.0 %) | 126 of 375 |
+| Türkiye → Spain | 1,000 of 1,601 (62.5 %) | 16,629 of 20,418 (81.4 %) | 136 of 375 |
+| Türkiye → United States | 1,016 of 1,601 (63.5 %) | 16,272 of 20,418 (79.7 %) | 116 of 375 |
+| France → Spain | 1,029 of 1,405 (73.2 %) | 15,796 of 17,646 (89.5 %) | 131 of 232 |
+| France → United States | 1,013 of 1,405 (72.1 %) | 15,024 of 17,646 (85.1 %) | 102 of 232 |
+| Spain → France | 1,029 of 1,403 (73.3 %) | 23,889 of 25,991 (91.9 %) | 131 of 295 |
+| Spain → United States | 1,002 of 1,403 (71.4 %) | 23,038 of 25,991 (88.6 %) | 121 of 295 |
+| United States → France | 1,013 of 1,711 (59.2 %) | 57,379 of 78,022 (73.5 %) | 102 of 389 |
+| United States → Spain | 1,002 of 1,711 (58.6 %) | 61,231 of 78,022 (78.5 %) | 121 of 389 |
+
+Not counted (so never listed): products with an unmapped or ambiguous ingredient (TİTCK 2,675; BDPM 3,262;
+Nomenclátor 4,397; openFDA 39,978) and homeopathic products. What can be compared: strength in openFDA (59.7 % of
+ingredient rows coded) and in the BDPM for countable forms (48.8 %); form in openFDA (84.1 %) and the BDPM (97.2 %);
+the Nomenclátor rows have no form and no strength basis, so every Spanish row is `unknown` on both (OD1); a TİTCK or
+typed box has a strength or form only when the user entered it from the box (DP21). Timing of the statement and the
+evaluation on the dev dataset: amlodipine 0.03–0.08 s, paracetamol in openFDA (1,096 entries, 521 rows) 0.25 s.
+
+### 15.2 Code layout (additions)
+```
+apps/api/janus/passport/
+  listing.py       LISTABLE_SOURCES, NOT_FINISHED_TYPES, marketed(), compare_strength(), compare_form(),
+                   listing(item, rows, forms, today) -> Listing                                      pure
+  repository.py    + LISTING_SQL, listing_rows(conn, dataset, source_id, keys)                       parameterised SQL
+  schemas.py       + ProductsIn, ProductsOut, ListedProduct, Level, Marketed, ListableSourceId
+  service.py       + products(conn, body, forms, today)
+  router.py        + POST /passport/products (same body handling as /passport/presence)
+apps/web/src/passport/
+  products.ts      ProductsOut decoder, buildProductsRequest(item, target, offset), loadProducts, recorded lookup
+  screens/ProductsView.tsx   the screen (country choice, caution, rows, states)
+apps/web/src/app/[locale]/passport/products/page.tsx
+apps/web/src/demo/passport-products.recorded.json   Cologne, first page per target (open-licence sources only)
+apps/web/scripts/record-passport-products.mjs
+```
+
+### 15.3 Contract
+```
+ProductsIn  { ingredients: [IngIn] (1..10, distinct keys), dose_form?: FormGroup | null,
+              target: "eu_fr_bdpm" | "eu_es_cima" | "openfda_ndc",
+              offset?: 0..100000 (0), limit?: 1..100 (50) }                    strict, extra="forbid"
+ProductsOut { dataset_version, form_table_version, source: SourceOut (§3.2),
+              keys: [Key] (sorted), unknown_keys: [Key],
+              status: "present" | "not_present" | "not_in_source" | "source_unavailable",
+              total: int (rows), listings: int (source entries),
+              counts: { strength: {same, different, unknown}, dose_form: {same, different, unknown} },   # entries
+              with_other_ingredients, keys_found, homeopathic_left_out, not_finished_left_out,
+              offset, limit, products: [ListedProduct] (one page),
+              notices: ["listing_is_lower_bound", "unknown_ingredient_keys"?], disclaimer }
+ListedProduct { name (as published), ingredients: [{key, strength_published: str | null}],
+                dose_form_published: str | null, dose_form_group: FormGroup | null,
+                strength: Level, strength_reason: "not_known_for_item" | "not_known_in_source" | null,
+                dose_form: Level, dose_form_reason: … | null,
+                marketed: "listed_as_marketed" | "listed_as_not_marketed" | "not_stated", listings: int }
+```
+Errors as §3.3. The statement (`LISTING_SQL`) is the presence statement restricted to one source, grouped by the
+shown fields (name = `coalesce(product_name, brand_name, generic_name)`, product type, marketing end date, published
+status); it uses the partial index of migration `0012`, so there is no new migration. Statements per request: the
+timeout, the current dataset (2), the known keys, the listing (5, constant). Status, `with_other_ingredients`,
+`keys_found` and `homeopathic_left_out` are computed by `presence.answer()` over the finished rows, so the list and
+the presence rows cannot disagree on what "exactly these ingredients" means.
+
+### 15.4 Comparison (pure, `listing.py`)
+- **Strength:** `unknown/not_known_for_item` when any item ingredient has no code; `unknown/not_known_in_source` when
+  the product repeats a key or any of its strengths has no code (`strength_code(source, published, group)`, §5.1);
+  else `same` when every code is equal, `different` otherwise. No tolerance, no salt-to-base conversion, no basis
+  assumed (a liquid in the BDPM has no stated reference quantity: `unknown`).
+- **Form:** `unknown` when either group is missing or is `other`; else `same` on equal groups, `different` otherwise.
+  Groups are coarse (§5.2): "same form group" is not "same form" (a film-coated tablet and a capsule share
+  `oral_solid`); modified-release groups are separate, so prolonged release against immediate release is `different`.
+- **Marketing:** BDPM `Commercialisée` / `Non commercialisée`; Nomenclátor `commercialised:true|false`; openFDA
+  `listed_as_not_marketed` only when the marketing end date is in the past; otherwise `not_stated`.
+- **Order:** marketing statement, strength level (`same`, `unknown`, `different`), form level, case-folded name, then
+  the whole row (a total order, so paging is stable).
+
+### 15.5 Screen (`ProductsView`, route `/passport/products#<item id>`)
+Reached from the item detail screen ("Products with the same active ingredient in another country"). The item is
+named by the URL fragment, as on the detail screen. Top to bottom: back link; title (the box name) with the active
+ingredient names; the caution card (Req 16.2), always shown, before any product; the box's own strength and form
+(`boxValues`); the country choice (`SegmentedControl`: France, Spain, United States; the box's own source is
+included, since a traveller may want another pack size at home) with the note on Türkiye and Germany (Req 15.1);
+the summary (entries, counts per level, the salt and base note of Req 16.3); the rows (`GroupedList`): published name with its `lang`,
+strength line and form line each with a level icon and text, marketing statement, number of entries; "Show more";
+attribution with the data date, stale notice, notices, the "listings only" sentence. The notes say that the comparison is automated, that expert review has not
+yet been done and that the order of the list is not a recommendation. Level icons are the existing
+`ResultIcon` shapes (`matched` → same, `differs` → different, `could_not_compare` → unknown); `different` also
+carries a text chip. States per Req 17.2. The request is built by `itemQuery` (§6.4) plus `target` and `offset`; the
+answer is kept in memory only.
+
+### 15.6 Decisions (additions)
+
+| # | Decision | Alternatives considered | Why |
+|---|---|---|---|
+| DP27 | Product names of listable sources are shown on a separate screen and route; supersedes DP3 and owner decision 5 for that screen only. | Keep counts only; add names to `/passport/presence`. | The traveller's question cannot be answered with a count. A separate route keeps the presence answer small and codes-only, and puts the caution text before every list. |
+| DP28 | Listable sources are a fixed allowlist: BDPM, Nomenclátor, openFDA NDC. TİTCK is never a target; the request model refuses it. | Derive from `res_source_version.license`; list TİTCK names since single names are already shown on resolution. | A licence string is not a decision. Showing one product a person scanned is identification; listing every TİTCK product of an ingredient is redistribution of the list, whose terms are unclear (`data-sources.md`). Open item OD6. |
+| DP29 | Matching is exact set equality on mapped keys (as DP2, DP11); per-product levels instead of the aggregated `matched/differs`. | Superset matches ("contains at least"); per-key matches for combinations. | A combination is a different product from its components; a per-product statement is what a pharmacist reads. |
+| DP30 | Levels reuse `strength_code` and the dose-form groups unchanged; no new normalisation, no salt handling, no tolerance. | Parse strengths from names; convert salts. | A wrong `same` is the worst error of this feature (DP6, owner decision 4). `unknown` with the published value shown is honest and still useful. |
+| DP31 | Bulk and further-processing openFDA product types are not listed and are counted in `not_finished_left_out`. | List everything the presence count includes. | They are not medicines a person is given. The presence count still includes them (noted as an open item, OD7). |
+| DP32 | Identical-looking entries are merged with a count; the order puts `same` first and is otherwise alphabetical; 50 rows per page. | One row per source entry; server-side filters. | openFDA lists one entry per labeller (amlodipine: 200 entries, 23 rows). Sorting is not ranking by quality: the `different` rows stay in the list, flagged. |
+| DP33 | Demo: recorded first page for the Cologne list only, from the three open-licence sources; other demo patients say the list is not part of the demo. | Record every demo patient; call the API in demo mode. | Demo mode never calls the API (DP26); the recorded file stays small and carries its source dates. |
+
+### 15.7 Correctness properties (additions)
+
+| # | Property | Validates | How |
+|---|---|---|---|
+| P22 | **Exact ingredient set.** Every listed product's key set equals the item's key set; the listing equals a brute-force model over the raw rows (complete, not homeopathic, finished, exact set), entry for entry. | Req 14.1, 14.2 | Hypothesis: pure on generated rows; database on synthetic datasets through the route, all pages. |
+| P23 | **No unfounded `same`.** Strength is `same` only if every ingredient has a code on both sides and the codes are equal (recomputed from the published strings); `different` only if all codes are known; `unknown` exactly when a reason is given. Same for form; `other` is never compared. | Req 14.4, 6.1 | Hypothesis, pure and database; examples for unit spellings and liquids. |
+| P24 | **Counts, order, pages.** Level counts add up to the entries; rows are distinct; the order does not depend on the order of the rows read; consecutive pages tile the full list. | Req 14.6, 14.8 | Hypothesis with permutations and page sizes. |
+| P25 | **Licensed sources only.** The target literal equals `LISTABLE_SOURCES`; `titck` and any other value are refused with 422; no TİTCK name appears in any answer. | Req 15.1, 15.2 | Model test; database property with a named TİTCK product. |
+| P26 | **Marketing statement.** `marketed()` follows §15.4 for each source and is `not_stated` for anything else. | Req 14.7 | Examples. |
+| P27 | **Route.** Stateless and silent (no key, name or body in logs); closed request schema; 422 names fields and echoes nothing; 503 with nothing partial; a missing source gives `source_unavailable`; five statements whatever the number of keys. | Req 15.3–15.8 | Database tests with the harness of P11, P14, P15. |
+| P28 | **Wording.** Every `Passport.products.*` string in five locales, rendered with generated parameters, has no substitution, forbidden or reassurance word; every level, reason, marketing code and listable source has a key in every locale; the caution text is rendered in every state that lists products. | Req 16 | vitest + fast-check (the existing P4/P16 harness) and render tests. |
+| P29 | **Request content.** For any item and target, the built body holds keys, strength codes, a form group, the target and paging numbers only, and equals `itemQuery(item)` plus those; no request is built for an item that cannot be checked or for a source that is not listable. | Req 14.9, 15.4, 9.1 | fast-check on generated items. |
+| P30 | **Rendered flags.** For any generated answer, a row shows the "same listed strength" text only when its level is `same`, shows the "different" flag exactly when a level is `different`, and never shows a word of the substitution list. | Req 14.5, 16.1 | fast-check render test. |
+
+### 15.8 Open items (additions)
+- **OD6 (owner):** whether TİTCK product names may be listed as a target (needs the terms of the list). Until then a
+  Turkish box can be looked up in France, Spain and the United States, not the reverse.
+- **OD7 (owner):** `/passport/presence` counts openFDA bulk and further-processing entries; the product list does
+  not, so the two numbers can differ for the United States.
+- **OD1 still open:** every Nomenclátor row is `unknown` for strength and form until the form code and the strength
+  basis are loaded.
+- Salts and bases: sources may state the amount of the salt or of the base; nothing is converted, so a salt-stated
+  product can read `different` against a base-stated box. The wording says so; expert review has not yet been done.

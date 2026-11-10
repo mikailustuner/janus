@@ -101,7 +101,7 @@ def is_homeopathic(strengths: Iterable[str | None], names: Iterable[str], region
     )
 
 
-def _comparable_form(group: str | None) -> bool:
+def comparable_form(group: str | None) -> bool:
     return group is not None and group not in NOT_COMPARED_GROUPS
 
 
@@ -121,7 +121,7 @@ def compare(item: ItemQuery, exact: Sequence[Signature]) -> Comparison:
     """Strength, dose form and both, over the counted products (signature x count)."""
     products = sum(s.products for s in exact)
     strength_known = all(item.strengths.get(k) is not None for k in item.keys)
-    form_known = _comparable_form(item.form_group)
+    form_known = comparable_form(item.form_group)
     totals = [0, 0, 0, 0, 0, 0]  # comparable and equal: strength, form, both
     for s in exact:
         s_cmp = (
@@ -132,7 +132,7 @@ def compare(item: ItemQuery, exact: Sequence[Signature]) -> Comparison:
         s_eq = s_cmp and all(
             item.strengths[k] == c for k, c in zip(s.keys, s.strengths, strict=True)
         )
-        f_cmp = form_known and _comparable_form(s.form_group)
+        f_cmp = form_known and comparable_form(s.form_group)
         f_eq = f_cmp and s.form_group == item.form_group
         flags = (s_cmp, s_eq, f_cmp, f_eq, s_cmp and f_cmp, s_eq and f_eq)
         totals = [t + (s.products if f else 0) for t, f in zip(totals, flags, strict=True)]

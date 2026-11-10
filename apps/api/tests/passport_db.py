@@ -73,6 +73,11 @@ class Product:
     dosage_form: str | None
     routes: tuple[str, ...]
     ingredients: tuple[Ing, ...]
+    # Listing fields (design §15); the defaults keep the presence datasets as they were.
+    name: str = "TESTPRODUCT"
+    product_type: str | None = None
+    status_published: tuple[str, ...] = ()
+    marketing_end_date: str | None = None
 
 
 @st.composite
@@ -120,7 +125,20 @@ def install(
     loaded = [*dict.fromkeys(sources), "wikidata"]
     payload = (
         json.dumps(
-            [[p.source_id, p.dosage_form, p.routes, p.ingredients] for p in items], default=str
+            [
+                [
+                    p.source_id,
+                    p.dosage_form,
+                    p.routes,
+                    p.ingredients,
+                    p.name,
+                    p.product_type,
+                    p.status_published,
+                    p.marketing_end_date,
+                ]
+                for p in items
+            ],
+            default=str,
         )
         + repr(loaded)
         + repr(dates)
@@ -148,9 +166,21 @@ def install(
                 continue
             conn.execute(
                 "INSERT INTO res_product (dataset_id, source_id, product_id, region, product_name, "
-                "routes, dosage_form, name_only, product_rxcuis) "
-                "VALUES (%s, %s, %s, %s, 'TESTPRODUCT', %s, %s, false, '{}')",
-                (dataset, p.source_id, pid, REGION[p.source_id], list(p.routes), p.dosage_form),
+                "routes, dosage_form, name_only, product_rxcuis, product_type, status_published, "
+                "marketing_end_date) "
+                "VALUES (%s, %s, %s, %s, %s, %s, %s, false, '{}', %s, %s, %s)",
+                (
+                    dataset,
+                    p.source_id,
+                    pid,
+                    REGION[p.source_id],
+                    p.name,
+                    list(p.routes),
+                    p.dosage_form,
+                    p.product_type,
+                    list(p.status_published),
+                    p.marketing_end_date,
+                ),
             )
             for pos, i in enumerate(p.ingredients):
                 atc = '[{"code": "A01AA01", "source_id": "wikidata", "product_ref": null}]'

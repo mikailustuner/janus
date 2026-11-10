@@ -1015,6 +1015,63 @@
       "ES": "España",
       "DE": "Alemania",
       "US": "Estados Unidos"
+    },
+    "products": {
+      "open": "Productos con el mismo principio activo en otro país",
+      "title": "El mismo principio activo en otro país",
+      "summary": "Productos que contienen {ingredients, plural, one {el mismo principio activo} other {exactamente los mismos principios activos}}: {names}.",
+      "caution": {
+        "title": "Antes de usar esta lista",
+        "notSame": "Cada producto de esta lista contiene {ingredients, plural, one {el mismo principio activo} other {los mismos principios activos}} que esta caja. Eso no lo convierte en el mismo medicamento: la cantidad de principio activo, la forma, el modo de liberación y los demás componentes pueden ser diferentes.",
+        "confirm": "Confírmelo con un farmacéutico o un médico antes de tomar un producto distinto.",
+        "noDosing": "Janus no da indicaciones sobre cuánto tomar y no convierte dosis."
+      },
+      "country": "País donde buscar",
+      "notListed": "Los nombres de productos de Turquía no se muestran, porque las condiciones de uso del listado de la TİTCK no lo permiten con claridad. Alemania no tiene una base de datos abierta de productos.",
+      "counts": {
+        "strength": "Cantidad en el listado comparada con esta caja: {same} con la misma cantidad, {different} con una cantidad diferente, {unknown} sin comparar.",
+        "dose_form": "Grupo de formas comparado con esta caja: {same} en el mismo grupo, {different} en otro grupo, {unknown} sin comparar."
+      },
+      "listCaption": "Productos que figuran en el listado: {country}",
+      "strength": {
+        "same": "Misma cantidad en el listado:",
+        "different": "Cantidad diferente en el listado:",
+        "unknown": "Cantidad no comparada: {reason} En el listado:"
+      },
+      "dose_form": {
+        "same": "Mismo grupo de formas ({group}). Forma indicada:",
+        "different": "Otro grupo de formas ({group}). Forma indicada:",
+        "unknown": "Forma no comparada: {reason} Forma indicada:"
+      },
+      "flag": "Diferente",
+      "notStated": "sin dato",
+      "ingredientValue": "{name} {value}",
+      "marketed": {
+        "listed_as_marketed": "Figura como comercializado en los datos de la fuente.",
+        "listed_as_not_marketed": "Figura como no comercializado en los datos de la fuente.",
+        "not_stated": "Si no se indica nada, la fuente no dice si el producto está comercializado."
+      },
+      "listings": "{count, plural, one {# entrada} other {# entradas}} en la fuente con este nombre, esta cantidad y esta forma.",
+      "showing": "Se muestran {shown} de {total, plural, one {# fila} other {# filas}}. Las entradas con el mismo nombre, la misma cantidad y la misma forma aparecen una sola vez.",
+      "more": "Mostrar más",
+      "moreError": "No se pudieron cargar más productos ahora.",
+      "notFinished": "{count, plural, one {# entrada no se muestra} other {# entradas no se muestran}}: principios activos a granel, no medicamentos terminados.",
+      "loading": "Buscando los productos…",
+      "loaded": "{count, plural, one {# fila de productos cargada} other {# filas de productos cargadas}}.",
+      "error": "Los productos no se pudieron buscar ahora.",
+      "notInDemo": "La lista de productos no forma parte de este paciente de demostración. El paciente de demostración de Colonia la muestra.",
+      "demoFirstPage": "La demostración contiene las primeras {shown} de {total} filas.",
+      "notes": {
+        "title": "Cómo leer esta lista",
+        "automated": "La comparación es automatizada: Janus compara la cantidad y la forma tal como las publican las fuentes. Todavía no se ha hecho la revisión de expertos.",
+        "salt": "Las fuentes pueden indicar la cantidad de una sal o de la base. Una dosis indicada diferente no demuestra que la cantidad de principio activo sea diferente, y el mismo número indicado no demuestra que sea la misma.",
+        "group": "Un grupo de formas es amplio: un comprimido y una cápsula por vía oral están en el mismo grupo.",
+        "order": "La lista se ordena según lo que indican los datos de la fuente y luego por nombre. El orden no es una recomendación."
+      },
+      "notice": {
+        "listing_is_lower_bound": "No se muestran los productos cuyos principios activos Janus no pudo reconocer.",
+        "unknown_ingredient_keys": "Algunos principios activos de esta caja no están en los datos actuales de medicamentos, así que no se pudo comprobar ninguna fuente para ellos."
+      }
     }
   },
   "Light": {

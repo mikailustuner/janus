@@ -33,7 +33,7 @@ import {
   strengthText,
 } from "./PresenceRows";
 
-function useHashId(): string | null | undefined {
+export function useHashId(): string | null | undefined {
   const [id, setId] = useState<string | null | undefined>(undefined);
   useEffect(() => {
     const read = () =>
@@ -209,6 +209,14 @@ export function PassportItemBody({
               ))}
             </ul>
           ) : null}
+          {reason ? null : (
+            <ButtonLink
+              variant="secondary"
+              href={`/passport/products#${encodeURIComponent(item.id)}`}
+            >
+              {t("Passport.products.open")}
+            </ButtonLink>
+          )}
           <p className="card p-5 font-bold">{t("Passport.listingsOnly")}</p>
         </aside>
       </div>

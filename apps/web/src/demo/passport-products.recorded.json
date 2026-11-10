@@ -1,0 +1,3080 @@
+{
+ "recorded": {
+  "date": "2026-11-10",
+  "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a"
+ },
+ "answers": [
+  {
+   "request": {
+    "ingredients": [
+     {
+      "key": "Q412666"
+     }
+    ],
+    "target": "eu_fr_bdpm",
+    "offset": 0,
+    "limit": 8
+   },
+   "response": {
+    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
+    "source": {
+     "source": 1,
+     "source_id": "eu_fr_bdpm",
+     "region": "EU",
+     "country": "FR",
+     "status": "loaded",
+     "reason": null,
+     "snapshot_date": "2026-11-03",
+     "stale": false,
+     "attribution": "bdpm",
+     "as_published": true,
+     "can_compare": {
+      "strength": true,
+      "dose_form": true
+     }
+    },
+    "keys": [
+     "Q412666"
+    ],
+    "unknown_keys": [],
+    "status": "present",
+    "total": 51,
+    "listings": 108,
+    "counts": {
+     "strength": {
+      "same": 0,
+      "different": 0,
+      "unknown": 108
+     },
+     "dose_form": {
+      "same": 0,
+      "different": 0,
+      "unknown": 108
+     }
+    },
+    "with_other_ingredients": 16,
+    "keys_found": [
+     "Q412666"
+    ],
+    "homeopathic_left_out": 0,
+    "not_finished_left_out": 0,
+    "offset": 0,
+    "limit": 8,
+    "products": [
+     {
+      "name": "RAMIPRIL ALMUS 1,25 mg, comprimé",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "1,25 mg"
+       }
+      ],
+      "dose_form_published": "comprimé",
+      "dose_form_group": "oral_solid",
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "RAMIPRIL ALMUS 10 mg, comprimé sécable",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "10 mg"
+       }
+      ],
+      "dose_form_published": "comprimé sécable",
+      "dose_form_group": "oral_solid",
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "listed_as_marketed",
+      "listings": 2
+     },
+     {
+      "name": "RAMIPRIL ALMUS 2,5 mg, comprimé sécable",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "2,5 mg"
+       }
+      ],
+      "dose_form_published": "comprimé sécable",
+      "dose_form_group": "oral_solid",
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "listed_as_marketed",
+      "listings": 2
+     },
+     {
+      "name": "RAMIPRIL ALMUS 5 mg, comprimé sécable",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "5 mg"
+       }
+      ],
+      "dose_form_published": "comprimé sécable",
+      "dose_form_group": "oral_solid",
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "listed_as_marketed",
+      "listings": 2
+     },
+     {
+      "name": "RAMIPRIL ARROW GENERIQUES 10 mg, comprimé sécable",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "10 mg"
+       }
+      ],
+      "dose_form_published": "comprimé sécable",
+      "dose_form_group": "oral_solid",
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "listed_as_marketed",
+      "listings": 2
+     },
+     {
+      "name": "RAMIPRIL ARROW GENERIQUES 5 mg, comprimé sécable",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "5 mg"
+       }
+      ],
+      "dose_form_published": "comprimé",
+      "dose_form_group": "oral_solid",
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "listed_as_marketed",
+      "listings": 2
+     },
+     {
+      "name": "RAMIPRIL ARROW LAB 1,25 mg, comprimé",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "1,25 mg"
+       }
+      ],
+      "dose_form_published": "comprimé",
+      "dose_form_group": "oral_solid",
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "listed_as_marketed",
+      "listings": 2
+     },
+     {
+      "name": "RAMIPRIL ARROW LAB 2,5 mg, comprimé sécable",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "2,5 mg"
+       }
+      ],
+      "dose_form_published": "comprimé sécable",
+      "dose_form_group": "oral_solid",
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "listed_as_marketed",
+      "listings": 2
+     }
+    ],
+    "notices": [
+     "listing_is_lower_bound"
+    ],
+    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+   }
+  },
+  {
+   "request": {
+    "ingredients": [
+     {
+      "key": "Q412666"
+     }
+    ],
+    "target": "eu_es_cima",
+    "offset": 0,
+    "limit": 8
+   },
+   "response": {
+    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
+    "source": {
+     "source": 2,
+     "source_id": "eu_es_cima",
+     "region": "EU",
+     "country": "ES",
+     "status": "loaded",
+     "reason": null,
+     "snapshot_date": "2026-11-07",
+     "stale": false,
+     "attribution": "cima",
+     "as_published": false,
+     "can_compare": {
+      "strength": false,
+      "dose_form": false
+     }
+    },
+    "keys": [
+     "Q412666"
+    ],
+    "unknown_keys": [],
+    "status": "present",
+    "total": 75,
+    "listings": 78,
+    "counts": {
+     "strength": {
+      "same": 0,
+      "different": 0,
+      "unknown": 78
+     },
+     "dose_form": {
+      "same": 0,
+      "different": 0,
+      "unknown": 78
+     }
+    },
+    "with_other_ingredients": 46,
+    "keys_found": [
+     "Q412666"
+    ],
+    "homeopathic_left_out": 0,
+    "not_finished_left_out": 0,
+    "offset": 0,
+    "limit": 8,
+    "products": [
+     {
+      "name": "ACOVIL  2,5 mg COMPRIMIDOS , 28 comprimidos",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "2,5 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "ACOVIL 10 mg COMPRIMIDOS , 28 comprimidos",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "10 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "ACOVIL 10 MG COMPRIMIDOS, 28 comprimidos",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "10 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "listed_as_marketed",
+      "listings": 2
+     },
+     {
+      "name": "ACOVIL 10 mg COMPRIMIDOS, 28 comprimidos",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "10 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "listed_as_marketed",
+      "listings": 2
+     },
+     {
+      "name": "ACOVIL 5 mg COMPRIMIDOS , 28 comprimidos",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "5 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "ACOVIL 5 MG COMPRIMIDOS, 28 comprimidos",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "5 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "ACOVIL 5 mg COMPRIMIDOS, 28 comprimidos",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "5 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "listed_as_marketed",
+      "listings": 2
+     },
+     {
+      "name": "RAMIPRIL ALTER GENÉRICOS 10 MG COMPRIMIDOS EFG, 28 comprimidos",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "10 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     }
+    ],
+    "notices": [
+     "listing_is_lower_bound"
+    ],
+    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+   }
+  },
+  {
+   "request": {
+    "ingredients": [
+     {
+      "key": "Q412666"
+     }
+    ],
+    "target": "openfda_ndc",
+    "offset": 0,
+    "limit": 8
+   },
+   "response": {
+    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
+    "source": {
+     "source": 4,
+     "source_id": "openfda_ndc",
+     "region": "US",
+     "country": null,
+     "status": "loaded",
+     "reason": null,
+     "snapshot_date": "2026-11-06",
+     "stale": false,
+     "attribution": "openfda",
+     "as_published": false,
+     "can_compare": {
+      "strength": true,
+      "dose_form": true
+     }
+    },
+    "keys": [
+     "Q412666"
+    ],
+    "unknown_keys": [],
+    "status": "present",
+    "total": 4,
+    "listings": 69,
+    "counts": {
+     "strength": {
+      "same": 0,
+      "different": 0,
+      "unknown": 69
+     },
+     "dose_form": {
+      "same": 0,
+      "different": 0,
+      "unknown": 69
+     }
+    },
+    "with_other_ingredients": 0,
+    "keys_found": [
+     "Q412666"
+    ],
+    "homeopathic_left_out": 0,
+    "not_finished_left_out": 13,
+    "offset": 0,
+    "limit": 8,
+    "products": [
+     {
+      "name": "Ramipril",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "1.25 mg/1"
+       }
+      ],
+      "dose_form_published": "CAPSULE",
+      "dose_form_group": "oral_solid",
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "not_stated",
+      "listings": 9
+     },
+     {
+      "name": "Ramipril",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "10 mg/1"
+       }
+      ],
+      "dose_form_published": "CAPSULE",
+      "dose_form_group": "oral_solid",
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "not_stated",
+      "listings": 23
+     },
+     {
+      "name": "Ramipril",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "2.5 mg/1"
+       }
+      ],
+      "dose_form_published": "CAPSULE",
+      "dose_form_group": "oral_solid",
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "not_stated",
+      "listings": 19
+     },
+     {
+      "name": "Ramipril",
+      "ingredients": [
+       {
+        "key": "Q412666",
+        "strength_published": "5 mg/1"
+       }
+      ],
+      "dose_form_published": "CAPSULE",
+      "dose_form_group": "oral_solid",
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_for_item",
+      "marketed": "not_stated",
+      "listings": 18
+     }
+    ],
+    "notices": [
+     "listing_is_lower_bound"
+    ],
+    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+   }
+  },
+  {
+   "request": {
+    "ingredients": [
+     {
+      "key": "Q286846",
+      "strength": {
+       "amount": "40000",
+       "unit": "ug",
+       "basis": "unit"
+      }
+     }
+    ],
+    "dose_form": "oral_solid_delayed_release",
+    "target": "eu_fr_bdpm",
+    "offset": 0,
+    "limit": 8
+   },
+   "response": {
+    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
+    "source": {
+     "source": 1,
+     "source_id": "eu_fr_bdpm",
+     "region": "EU",
+     "country": "FR",
+     "status": "loaded",
+     "reason": null,
+     "snapshot_date": "2026-11-03",
+     "stale": false,
+     "attribution": "bdpm",
+     "as_published": true,
+     "can_compare": {
+      "strength": true,
+      "dose_form": true
+     }
+    },
+    "keys": [
+     "Q286846"
+    ],
+    "unknown_keys": [],
+    "status": "present",
+    "total": 54,
+    "listings": 119,
+    "counts": {
+     "strength": {
+      "same": 50,
+      "different": 56,
+      "unknown": 13
+     },
+     "dose_form": {
+      "same": 106,
+      "different": 13,
+      "unknown": 0
+     }
+    },
+    "with_other_ingredients": 0,
+    "keys_found": [
+     "Q286846"
+    ],
+    "homeopathic_left_out": 0,
+    "not_finished_left_out": 0,
+    "offset": 0,
+    "limit": 8,
+    "products": [
+     {
+      "name": "INIPOMP 40 mg, comprimé gastro-résistant",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "40,00 mg"
+       }
+      ],
+      "dose_form_published": "comprimé gastro-résistant(e)",
+      "dose_form_group": "oral_solid_delayed_release",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "listed_as_marketed",
+      "listings": 3
+     },
+     {
+      "name": "PANTOPRAZOLE ALMUS 40 mg, comprimé gastro-résistant",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "40 mg"
+       }
+      ],
+      "dose_form_published": "comprimé gastro-résistant(e)",
+      "dose_form_group": "oral_solid_delayed_release",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "listed_as_marketed",
+      "listings": 2
+     },
+     {
+      "name": "PANTOPRAZOLE ARROW GENERIQUES 40 mg, comprimé gastro-résistant",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "40 mg"
+       }
+      ],
+      "dose_form_published": "comprimé gastro-résistant(e)",
+      "dose_form_group": "oral_solid_delayed_release",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "listed_as_marketed",
+      "listings": 5
+     },
+     {
+      "name": "PANTOPRAZOLE BIOGARAN 40 mg, comprimé gastro-résistant",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "40 mg"
+       }
+      ],
+      "dose_form_published": "comprimé gastro-résistant(e)",
+      "dose_form_group": "oral_solid_delayed_release",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "listed_as_marketed",
+      "listings": 4
+     },
+     {
+      "name": "PANTOPRAZOLE CRISTERS PHARMA 40 mg, comprimé gastro-résistant",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "40 mg"
+       }
+      ],
+      "dose_form_published": "comprimé gastro-résistant(e)",
+      "dose_form_group": "oral_solid_delayed_release",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "listed_as_marketed",
+      "listings": 2
+     },
+     {
+      "name": "PANTOPRAZOLE EG 40 mg, comprimé gastro-résistant",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "40 mg"
+       }
+      ],
+      "dose_form_published": "comprimé gastro-résistant(e)",
+      "dose_form_group": "oral_solid_delayed_release",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "listed_as_marketed",
+      "listings": 3
+     },
+     {
+      "name": "PANTOPRAZOLE EVOLUGEN 40 mg, comprimé gastro-résistant",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "40 mg"
+       }
+      ],
+      "dose_form_published": "comprimé gastro-résistant(e)",
+      "dose_form_group": "oral_solid_delayed_release",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "listed_as_marketed",
+      "listings": 2
+     },
+     {
+      "name": "PANTOPRAZOLE KRKA 40 mg, comprimé gastro-résistant",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "40,00 mg"
+       }
+      ],
+      "dose_form_published": "comprimé gastro-résistant(e)",
+      "dose_form_group": "oral_solid_delayed_release",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "listed_as_marketed",
+      "listings": 2
+     }
+    ],
+    "notices": [
+     "listing_is_lower_bound"
+    ],
+    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+   }
+  },
+  {
+   "request": {
+    "ingredients": [
+     {
+      "key": "Q286846",
+      "strength": {
+       "amount": "40000",
+       "unit": "ug",
+       "basis": "unit"
+      }
+     }
+    ],
+    "dose_form": "oral_solid_delayed_release",
+    "target": "eu_es_cima",
+    "offset": 0,
+    "limit": 8
+   },
+   "response": {
+    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
+    "source": {
+     "source": 2,
+     "source_id": "eu_es_cima",
+     "region": "EU",
+     "country": "ES",
+     "status": "loaded",
+     "reason": null,
+     "snapshot_date": "2026-11-07",
+     "stale": false,
+     "attribution": "cima",
+     "as_published": false,
+     "can_compare": {
+      "strength": false,
+      "dose_form": false
+     }
+    },
+    "keys": [
+     "Q286846"
+    ],
+    "unknown_keys": [],
+    "status": "present",
+    "total": 221,
+    "listings": 245,
+    "counts": {
+     "strength": {
+      "same": 0,
+      "different": 0,
+      "unknown": 245
+     },
+     "dose_form": {
+      "same": 0,
+      "different": 0,
+      "unknown": 245
+     }
+    },
+    "with_other_ingredients": 0,
+    "keys_found": [
+     "Q286846"
+    ],
+    "homeopathic_left_out": 0,
+    "not_finished_left_out": 0,
+    "offset": 0,
+    "limit": 8,
+    "products": [
+     {
+      "name": "ALAPANZOL 40 mg COMPRIMIDOS GASTRORRESISTENTES EFG, 28 comprimidos",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "40 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "ANAGASTRA 20 mg COMPRIMIDOS GASTRORRESISTENTES , 28 comprimidos",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "20 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "ANAGASTRA 20 MG COMPRIMIDOS GASTRORRESISTENTES, 28 comprimidos",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "20 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 2
+     },
+     {
+      "name": "ANAGASTRA 20 mg COMPRIMIDOS GASTRORRESISTENTES, 28 comprimidos",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "20 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 4
+     },
+     {
+      "name": "ANAGASTRA 40 mg COMPRIMIDOS GASTRORRESISTENTES , 28 comprimidos",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "40 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "ANAGASTRA 40 MG COMPRIMIDOS GASTRORRESISTENTES, 28 comprimidos",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "40 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 3
+     },
+     {
+      "name": "ANAGASTRA 40 mg COMPRIMIDOS GASTRORRESISTENTES, 28 comprimidos",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "40 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 4
+     },
+     {
+      "name": "ANAGASTRA 40 mg POLVO PARA SOLUCION INYECTABLE, 1 vial",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "40 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     }
+    ],
+    "notices": [
+     "listing_is_lower_bound"
+    ],
+    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+   }
+  },
+  {
+   "request": {
+    "ingredients": [
+     {
+      "key": "Q286846",
+      "strength": {
+       "amount": "40000",
+       "unit": "ug",
+       "basis": "unit"
+      }
+     }
+    ],
+    "dose_form": "oral_solid_delayed_release",
+    "target": "openfda_ndc",
+    "offset": 0,
+    "limit": 8
+   },
+   "response": {
+    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
+    "source": {
+     "source": 4,
+     "source_id": "openfda_ndc",
+     "region": "US",
+     "country": null,
+     "status": "loaded",
+     "reason": null,
+     "snapshot_date": "2026-11-06",
+     "stale": false,
+     "attribution": "openfda",
+     "as_published": false,
+     "can_compare": {
+      "strength": true,
+      "dose_form": true
+     }
+    },
+    "keys": [
+     "Q286846"
+    ],
+    "unknown_keys": [],
+    "status": "present",
+    "total": 33,
+    "listings": 168,
+    "counts": {
+     "strength": {
+      "same": 73,
+      "different": 79,
+      "unknown": 16
+     },
+     "dose_form": {
+      "same": 127,
+      "different": 35,
+      "unknown": 6
+     }
+    },
+    "with_other_ingredients": 0,
+    "keys_found": [
+     "Q286846"
+    ],
+    "homeopathic_left_out": 0,
+    "not_finished_left_out": 36,
+    "offset": 0,
+    "limit": 8,
+    "products": [
+     {
+      "name": "Pantoprazole",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "40 mg/1"
+       }
+      ],
+      "dose_form_published": "TABLET, DELAYED RELEASE",
+      "dose_form_group": "oral_solid_delayed_release",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "not_stated",
+      "listings": 5
+     },
+     {
+      "name": "PANTOPRAZOLE SODIUM",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "40 mg/1"
+       }
+      ],
+      "dose_form_published": "TABLET, DELAYED RELEASE",
+      "dose_form_group": "oral_solid_delayed_release",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "not_stated",
+      "listings": 19
+     },
+     {
+      "name": "Pantoprazole Sodium",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "40 mg/1"
+       }
+      ],
+      "dose_form_published": "TABLET, DELAYED RELEASE",
+      "dose_form_group": "oral_solid_delayed_release",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "not_stated",
+      "listings": 43
+     },
+     {
+      "name": "pantoprazole sodium",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "40 mg/1"
+       }
+      ],
+      "dose_form_published": "TABLET, DELAYED RELEASE",
+      "dose_form_group": "oral_solid_delayed_release",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "Pantoprazole Sodium DR",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "40 mg/1"
+       }
+      ],
+      "dose_form_published": "TABLET, DELAYED RELEASE",
+      "dose_form_group": "oral_solid_delayed_release",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "not_stated",
+      "listings": 3
+     },
+     {
+      "name": "Protonix Delayed-Release",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "40 mg/1"
+       }
+      ],
+      "dose_form_published": "TABLET, DELAYED RELEASE",
+      "dose_form_group": "oral_solid_delayed_release",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "Pantoprazole sodium delayed-release",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "40 mg/1"
+       }
+      ],
+      "dose_form_published": "TABLET",
+      "dose_form_group": "oral_solid",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "different",
+      "dose_form_reason": null,
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "PANTOPRAZOLE SODIUM",
+      "ingredients": [
+       {
+        "key": "Q286846",
+        "strength_published": "40 mg/1"
+       }
+      ],
+      "dose_form_published": "GRANULE, DELAYED RELEASE",
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "not_stated",
+      "listings": 3
+     }
+    ],
+    "notices": [
+     "listing_is_lower_bound"
+    ],
+    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+   }
+  },
+  {
+   "request": {
+    "ingredients": [
+     {
+      "key": "Q411347"
+     },
+     {
+      "key": "Q412208"
+     }
+    ],
+    "target": "eu_fr_bdpm",
+    "offset": 0,
+    "limit": 8
+   },
+   "response": {
+    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
+    "source": {
+     "source": 1,
+     "source_id": "eu_fr_bdpm",
+     "region": "EU",
+     "country": "FR",
+     "status": "loaded",
+     "reason": null,
+     "snapshot_date": "2026-11-03",
+     "stale": false,
+     "attribution": "bdpm",
+     "as_published": true,
+     "can_compare": {
+      "strength": true,
+      "dose_form": true
+     }
+    },
+    "keys": [
+     "Q411347",
+     "Q412208"
+    ],
+    "unknown_keys": [],
+    "status": "not_present",
+    "total": 0,
+    "listings": 0,
+    "counts": {
+     "strength": {
+      "same": 0,
+      "different": 0,
+      "unknown": 0
+     },
+     "dose_form": {
+      "same": 0,
+      "different": 0,
+      "unknown": 0
+     }
+    },
+    "with_other_ingredients": 0,
+    "keys_found": [
+     "Q411347",
+     "Q412208"
+    ],
+    "homeopathic_left_out": 0,
+    "not_finished_left_out": 0,
+    "offset": 0,
+    "limit": 8,
+    "products": [],
+    "notices": [
+     "listing_is_lower_bound"
+    ],
+    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+   }
+  },
+  {
+   "request": {
+    "ingredients": [
+     {
+      "key": "Q411347"
+     },
+     {
+      "key": "Q412208"
+     }
+    ],
+    "target": "eu_es_cima",
+    "offset": 0,
+    "limit": 8
+   },
+   "response": {
+    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
+    "source": {
+     "source": 2,
+     "source_id": "eu_es_cima",
+     "region": "EU",
+     "country": "ES",
+     "status": "loaded",
+     "reason": null,
+     "snapshot_date": "2026-11-07",
+     "stale": false,
+     "attribution": "cima",
+     "as_published": false,
+     "can_compare": {
+      "strength": false,
+      "dose_form": false
+     }
+    },
+    "keys": [
+     "Q411347",
+     "Q412208"
+    ],
+    "unknown_keys": [],
+    "status": "not_present",
+    "total": 0,
+    "listings": 0,
+    "counts": {
+     "strength": {
+      "same": 0,
+      "different": 0,
+      "unknown": 0
+     },
+     "dose_form": {
+      "same": 0,
+      "different": 0,
+      "unknown": 0
+     }
+    },
+    "with_other_ingredients": 0,
+    "keys_found": [
+     "Q411347",
+     "Q412208"
+    ],
+    "homeopathic_left_out": 0,
+    "not_finished_left_out": 0,
+    "offset": 0,
+    "limit": 8,
+    "products": [],
+    "notices": [
+     "listing_is_lower_bound"
+    ],
+    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+   }
+  },
+  {
+   "request": {
+    "ingredients": [
+     {
+      "key": "Q411347"
+     },
+     {
+      "key": "Q412208"
+     }
+    ],
+    "target": "openfda_ndc",
+    "offset": 0,
+    "limit": 8
+   },
+   "response": {
+    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
+    "source": {
+     "source": 4,
+     "source_id": "openfda_ndc",
+     "region": "US",
+     "country": null,
+     "status": "loaded",
+     "reason": null,
+     "snapshot_date": "2026-11-06",
+     "stale": false,
+     "attribution": "openfda",
+     "as_published": false,
+     "can_compare": {
+      "strength": true,
+      "dose_form": true
+     }
+    },
+    "keys": [
+     "Q411347",
+     "Q412208"
+    ],
+    "unknown_keys": [],
+    "status": "not_present",
+    "total": 0,
+    "listings": 0,
+    "counts": {
+     "strength": {
+      "same": 0,
+      "different": 0,
+      "unknown": 0
+     },
+     "dose_form": {
+      "same": 0,
+      "different": 0,
+      "unknown": 0
+     }
+    },
+    "with_other_ingredients": 0,
+    "keys_found": [
+     "Q411347",
+     "Q412208"
+    ],
+    "homeopathic_left_out": 0,
+    "not_finished_left_out": 0,
+    "offset": 0,
+    "limit": 8,
+    "products": [],
+    "notices": [
+     "listing_is_lower_bound"
+    ],
+    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+   }
+  },
+  {
+   "request": {
+    "ingredients": [
+     {
+      "key": "Q221637"
+     }
+    ],
+    "dose_form": "oral_liquid",
+    "target": "eu_fr_bdpm",
+    "offset": 0,
+    "limit": 8
+   },
+   "response": {
+    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
+    "source": {
+     "source": 1,
+     "source_id": "eu_fr_bdpm",
+     "region": "EU",
+     "country": "FR",
+     "status": "loaded",
+     "reason": null,
+     "snapshot_date": "2026-11-03",
+     "stale": false,
+     "attribution": "bdpm",
+     "as_published": true,
+     "can_compare": {
+      "strength": true,
+      "dose_form": true
+     }
+    },
+    "keys": [
+     "Q221637"
+    ],
+    "unknown_keys": [],
+    "status": "present",
+    "total": 15,
+    "listings": 15,
+    "counts": {
+     "strength": {
+      "same": 0,
+      "different": 0,
+      "unknown": 15
+     },
+     "dose_form": {
+      "same": 6,
+      "different": 6,
+      "unknown": 3
+     }
+    },
+    "with_other_ingredients": 0,
+    "keys_found": [
+     "Q221637"
+    ],
+    "homeopathic_left_out": 0,
+    "not_finished_left_out": 0,
+    "offset": 0,
+    "limit": 8,
+    "products": [
+     {
+      "name": "AMBROXOL BIOGARAN CONSEIL 0,6 % SANS SUCRE, solution buvable édulcorée au sorbitol",
+      "ingredients": [
+       {
+        "key": "Q221637",
+        "strength_published": "0,6 g"
+       }
+      ],
+      "dose_form_published": "solution buvable",
+      "dose_form_group": "oral_liquid",
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "AMBROXOL EG LABO CONSEIL 0,6 %, solution buvable",
+      "ingredients": [
+       {
+        "key": "Q221637",
+        "strength_published": "0,6 g"
+       }
+      ],
+      "dose_form_published": "solution buvable",
+      "dose_form_group": "oral_liquid",
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "AMBROXOL VIATRIS CONSEIL 0,6 %, solution buvable",
+      "ingredients": [
+       {
+        "key": "Q221637",
+        "strength_published": "0,6 g"
+       }
+      ],
+      "dose_form_published": "solution buvable",
+      "dose_form_group": "oral_liquid",
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "MUXOL, solution buvable",
+      "ingredients": [
+       {
+        "key": "Q221637",
+        "strength_published": "0,273 g"
+       }
+      ],
+      "dose_form_published": "solution buvable",
+      "dose_form_group": "oral_liquid",
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "SURBRONC EXPECTORANT AMBROXOL SANS SUCRE, solution buvable édulcorée au sucralose",
+      "ingredients": [
+       {
+        "key": "Q221637",
+        "strength_published": "0,600 g"
+       }
+      ],
+      "dose_form_published": "solution buvable",
+      "dose_form_group": "oral_liquid",
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "LYSOPAÏNE MAUX DE GORGE AMBROXOL CITRON 20 mg SANS SUCRE, pastille édulcorée au sorbitol et au sucralose",
+      "ingredients": [
+       {
+        "key": "Q221637",
+        "strength_published": "20 mg"
+       }
+      ],
+      "dose_form_published": "pastille",
+      "dose_form_group": "other",
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "LYSOPAÏNE MAUX DE GORGE AMBROXOL MENTHE 20 mg SANS SUCRE, pastille édulcorée au sorbitol et à la saccharine sodique",
+      "ingredients": [
+       {
+        "key": "Q221637",
+        "strength_published": "20 mg"
+       }
+      ],
+      "dose_form_published": "pastille",
+      "dose_form_group": "other",
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "AMBROXOL BIOGARAN CONSEIL 30 mg, comprimé sécable",
+      "ingredients": [
+       {
+        "key": "Q221637",
+        "strength_published": "30 mg"
+       }
+      ],
+      "dose_form_published": "comprimé sécable",
+      "dose_form_group": "oral_solid",
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "different",
+      "dose_form_reason": null,
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     }
+    ],
+    "notices": [
+     "listing_is_lower_bound"
+    ],
+    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+   }
+  },
+  {
+   "request": {
+    "ingredients": [
+     {
+      "key": "Q221637"
+     }
+    ],
+    "dose_form": "oral_liquid",
+    "target": "eu_es_cima",
+    "offset": 0,
+    "limit": 8
+   },
+   "response": {
+    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
+    "source": {
+     "source": 2,
+     "source_id": "eu_es_cima",
+     "region": "EU",
+     "country": "ES",
+     "status": "loaded",
+     "reason": null,
+     "snapshot_date": "2026-11-07",
+     "stale": false,
+     "attribution": "cima",
+     "as_published": false,
+     "can_compare": {
+      "strength": false,
+      "dose_form": false
+     }
+    },
+    "keys": [
+     "Q221637"
+    ],
+    "unknown_keys": [],
+    "status": "present",
+    "total": 32,
+    "listings": 32,
+    "counts": {
+     "strength": {
+      "same": 0,
+      "different": 0,
+      "unknown": 32
+     },
+     "dose_form": {
+      "same": 0,
+      "different": 0,
+      "unknown": 32
+     }
+    },
+    "with_other_ingredients": 0,
+    "keys_found": [
+     "Q221637"
+    ],
+    "homeopathic_left_out": 0,
+    "not_finished_left_out": 0,
+    "offset": 0,
+    "limit": 8,
+    "products": [
+     {
+      "name": "AMBROXOL ALDO-UNION 15 MG/2 ML SOLUCION ORAL O CONCENTRADO PARA INHALACION POR NEBULIZADOR 15 ampollas de 2 ml",
+      "ingredients": [
+       {
+        "key": "Q221637",
+        "strength_published": "7,5 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "AMBROXOL CINFA 3 MG/ML JARABE EFG, Frasco de 200 ml (PET)",
+      "ingredients": [
+       {
+        "key": "Q221637",
+        "strength_published": "3 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "AMBROXOL CINFA 6 MG/ML JARABE, 1 frasco de 200 ml (PET + cierre PP)",
+      "ingredients": [
+       {
+        "key": "Q221637",
+        "strength_published": "6 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "AMBROXOL NORMON 3 mg/ml SOLUCION ORAL EFG, 1 frasco de 200 ml",
+      "ingredients": [
+       {
+        "key": "Q221637",
+        "strength_published": "3 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "AMBROXOL STADA 6 MG/ML JARABE EFG 1 frasco de 250 ml",
+      "ingredients": [
+       {
+        "key": "Q221637",
+        "strength_published": "6 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "APOXOL 3 MG/ML JARABE EFG , 1 frasco de 200 ml",
+      "ingredients": [
+       {
+        "key": "Q221637",
+        "strength_published": "3 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "BROXIVAN 3 MG/ML SOLUCION ORAL EFG, 1 frasco de 150 ml",
+      "ingredients": [
+       {
+        "key": "Q221637",
+        "strength_published": "3 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "BROXIVAN 6 MG/ML SOLUCION ORAL EFG, 1 frasco de 200 ml",
+      "ingredients": [
+       {
+        "key": "Q221637",
+        "strength_published": "6 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_for_item",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     }
+    ],
+    "notices": [
+     "listing_is_lower_bound"
+    ],
+    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+   }
+  },
+  {
+   "request": {
+    "ingredients": [
+     {
+      "key": "Q221637"
+     }
+    ],
+    "dose_form": "oral_liquid",
+    "target": "openfda_ndc",
+    "offset": 0,
+    "limit": 8
+   },
+   "response": {
+    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
+    "source": {
+     "source": 4,
+     "source_id": "openfda_ndc",
+     "region": "US",
+     "country": null,
+     "status": "loaded",
+     "reason": null,
+     "snapshot_date": "2026-11-06",
+     "stale": false,
+     "attribution": "openfda",
+     "as_published": false,
+     "can_compare": {
+      "strength": true,
+      "dose_form": true
+     }
+    },
+    "keys": [
+     "Q221637"
+    ],
+    "unknown_keys": [],
+    "status": "not_in_source",
+    "total": 0,
+    "listings": 0,
+    "counts": {
+     "strength": {
+      "same": 0,
+      "different": 0,
+      "unknown": 0
+     },
+     "dose_form": {
+      "same": 0,
+      "different": 0,
+      "unknown": 0
+     }
+    },
+    "with_other_ingredients": 0,
+    "keys_found": [],
+    "homeopathic_left_out": 0,
+    "not_finished_left_out": 2,
+    "offset": 0,
+    "limit": 8,
+    "products": [],
+    "notices": [
+     "listing_is_lower_bound"
+    ],
+    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+   }
+  },
+  {
+   "request": {
+    "ingredients": [
+     {
+      "key": "Q186969",
+      "strength": {
+       "amount": "400000",
+       "unit": "ug",
+       "basis": "unit"
+      }
+     }
+    ],
+    "dose_form": "oral_solid",
+    "target": "eu_fr_bdpm",
+    "offset": 0,
+    "limit": 8
+   },
+   "response": {
+    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
+    "source": {
+     "source": 1,
+     "source_id": "eu_fr_bdpm",
+     "region": "EU",
+     "country": "FR",
+     "status": "loaded",
+     "reason": null,
+     "snapshot_date": "2026-11-03",
+     "stale": false,
+     "attribution": "bdpm",
+     "as_published": true,
+     "can_compare": {
+      "strength": true,
+      "dose_form": true
+     }
+    },
+    "keys": [
+     "Q186969"
+    ],
+    "unknown_keys": [],
+    "status": "present",
+    "total": 95,
+    "listings": 117,
+    "counts": {
+     "strength": {
+      "same": 59,
+      "different": 36,
+      "unknown": 22
+     },
+     "dose_form": {
+      "same": 95,
+      "different": 22,
+      "unknown": 0
+     }
+    },
+    "with_other_ingredients": 9,
+    "keys_found": [
+     "Q186969"
+    ],
+    "homeopathic_left_out": 0,
+    "not_finished_left_out": 0,
+    "offset": 0,
+    "limit": 8,
+    "products": [
+     {
+      "name": "ADVIL 400 mg, comprimé enrobé",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "400 mg"
+       }
+      ],
+      "dose_form_published": "comprimé enrobé",
+      "dose_form_group": "oral_solid",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "ADVILCAPS 400 mg, capsule molle",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "400 mg"
+       }
+      ],
+      "dose_form_published": "capsule molle",
+      "dose_form_group": "oral_solid",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "ADVILMED 400 mg, comprimé enrobé",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "400 mg"
+       }
+      ],
+      "dose_form_published": "comprimé enrobé",
+      "dose_form_group": "oral_solid",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "ANTARENE 400 mg, comprimé pelliculé",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "400 mg"
+       }
+      ],
+      "dose_form_published": "comprimé pelliculé",
+      "dose_form_group": "oral_solid",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "IBUPROFENE ARROW 400 mg, comprimé pelliculé",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "400 mg"
+       }
+      ],
+      "dose_form_published": "comprimé pelliculé",
+      "dose_form_group": "oral_solid",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "listed_as_marketed",
+      "listings": 3
+     },
+     {
+      "name": "IBUPROFENE ARROW CONSEIL 400 mg, capsule molle",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "400 mg"
+       }
+      ],
+      "dose_form_published": "capsule molle",
+      "dose_form_group": "oral_solid",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "IBUPROFENE ARROW CONSEIL 400 mg, comprimé enrobé",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "400,00 mg"
+       }
+      ],
+      "dose_form_published": "comprimé enrobé",
+      "dose_form_group": "oral_solid",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "IBUPROFENE BIOGARAN 400 mg, comprimé pelliculé",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "400 mg"
+       }
+      ],
+      "dose_form_published": "comprimé pelliculé",
+      "dose_form_group": "oral_solid",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     }
+    ],
+    "notices": [
+     "listing_is_lower_bound"
+    ],
+    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+   }
+  },
+  {
+   "request": {
+    "ingredients": [
+     {
+      "key": "Q186969",
+      "strength": {
+       "amount": "400000",
+       "unit": "ug",
+       "basis": "unit"
+      }
+     }
+    ],
+    "dose_form": "oral_solid",
+    "target": "eu_es_cima",
+    "offset": 0,
+    "limit": 8
+   },
+   "response": {
+    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
+    "source": {
+     "source": 2,
+     "source_id": "eu_es_cima",
+     "region": "EU",
+     "country": "ES",
+     "status": "loaded",
+     "reason": null,
+     "snapshot_date": "2026-11-07",
+     "stale": false,
+     "attribution": "cima",
+     "as_published": false,
+     "can_compare": {
+      "strength": false,
+      "dose_form": false
+     }
+    },
+    "keys": [
+     "Q186969"
+    ],
+    "unknown_keys": [],
+    "status": "present",
+    "total": 277,
+    "listings": 278,
+    "counts": {
+     "strength": {
+      "same": 0,
+      "different": 0,
+      "unknown": 278
+     },
+     "dose_form": {
+      "same": 0,
+      "different": 0,
+      "unknown": 278
+     }
+    },
+    "with_other_ingredients": 24,
+    "keys_found": [
+     "Q186969"
+    ],
+    "homeopathic_left_out": 0,
+    "not_finished_left_out": 0,
+    "offset": 0,
+    "limit": 8,
+    "products": [
+     {
+      "name": "APIROFENO 40 mg/ml SUSPENSION ORAL , 1 frasco de 150 ml",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "40 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "APIROFENO 40 mg/ml SUSPENSION ORAL , 1 frasco de 200 ml",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "40 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "APIROFENO 40 mg/ml SUSPENSION ORAL , 1 frasco de 50 ml",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "40 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "ARTICALM 50 mg/g  GEL , 1 tubo de 60 g",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "50 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "DALSY 20 mg/ml SUSPENSION ORAL , 1 frasco de 150 ml",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "20 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "DALSY 200 mg GRANULADO EFERVESCENTE , 20 sobres",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "200 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "DALSY 40 mg/ml SUSPENSION ORAL , 1 frasco de 150 ml",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "40 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "DALSYDOL 400 MG COMPRIMIDOS RECUBIERTOS CON PELICULA, 30 comprimidos",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "400 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     }
+    ],
+    "notices": [
+     "listing_is_lower_bound"
+    ],
+    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+   }
+  },
+  {
+   "request": {
+    "ingredients": [
+     {
+      "key": "Q186969",
+      "strength": {
+       "amount": "400000",
+       "unit": "ug",
+       "basis": "unit"
+      }
+     }
+    ],
+    "dose_form": "oral_solid",
+    "target": "openfda_ndc",
+    "offset": 0,
+    "limit": 8
+   },
+   "response": {
+    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
+    "source": {
+     "source": 4,
+     "source_id": "openfda_ndc",
+     "region": "US",
+     "country": null,
+     "status": "loaded",
+     "reason": null,
+     "snapshot_date": "2026-11-06",
+     "stale": false,
+     "attribution": "openfda",
+     "as_published": false,
+     "can_compare": {
+      "strength": true,
+      "dose_form": true
+     }
+    },
+    "keys": [
+     "Q186969"
+    ],
+    "unknown_keys": [],
+    "status": "present",
+    "total": 300,
+    "listings": 1155,
+    "counts": {
+     "strength": {
+      "same": 80,
+      "different": 1068,
+      "unknown": 7
+     },
+     "dose_form": {
+      "same": 919,
+      "different": 236,
+      "unknown": 0
+     }
+    },
+    "with_other_ingredients": 188,
+    "keys_found": [
+     "Q186969"
+    ],
+    "homeopathic_left_out": 1,
+    "not_finished_left_out": 119,
+    "offset": 0,
+    "limit": 8,
+    "products": [
+     {
+      "name": "IBU",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "400 mg/1"
+       }
+      ],
+      "dose_form_published": "TABLET",
+      "dose_form_group": "oral_solid",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "not_stated",
+      "listings": 3
+     },
+     {
+      "name": "IBUPROFEN",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "400 mg/1"
+       }
+      ],
+      "dose_form_published": "TABLET, FILM COATED",
+      "dose_form_group": "oral_solid",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "not_stated",
+      "listings": 4
+     },
+     {
+      "name": "Ibuprofen",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "400 mg/1"
+       }
+      ],
+      "dose_form_published": "TABLET",
+      "dose_form_group": "oral_solid",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "not_stated",
+      "listings": 25
+     },
+     {
+      "name": "Ibuprofen",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "400 mg/1"
+       }
+      ],
+      "dose_form_published": "TABLET, FILM COATED",
+      "dose_form_group": "oral_solid",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "not_stated",
+      "listings": 47
+     },
+     {
+      "name": "ibuprofen",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "400 mg/1"
+       }
+      ],
+      "dose_form_published": "TABLET",
+      "dose_form_group": "oral_solid",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "AeroTab Ibuprofen",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "200 mg/1000mg"
+       }
+      ],
+      "dose_form_published": "TABLET, COATED",
+      "dose_form_group": "oral_solid",
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "Dye-Free Ibuprofen",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "200 mg/1201"
+       }
+      ],
+      "dose_form_published": "CAPSULE, LIQUID FILLED",
+      "dose_form_group": "oral_solid",
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "not_stated",
+      "listings": 2
+     },
+     {
+      "name": "Dye-Free Ibuprofen 200",
+      "ingredients": [
+       {
+        "key": "Q186969",
+        "strength_published": "200 mg/1201"
+       }
+      ],
+      "dose_form_published": "CAPSULE, LIQUID FILLED",
+      "dose_form_group": "oral_solid",
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "not_stated",
+      "listings": 2
+     }
+    ],
+    "notices": [
+     "listing_is_lower_bound"
+    ],
+    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+   }
+  },
+  {
+   "request": {
+    "ingredients": [
+     {
+      "key": "Q411347",
+      "strength": {
+       "amount": "5000",
+       "unit": "ug",
+       "basis": "unit"
+      }
+     }
+    ],
+    "dose_form": "oral_solid",
+    "target": "eu_fr_bdpm",
+    "offset": 0,
+    "limit": 8
+   },
+   "response": {
+    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
+    "source": {
+     "source": 1,
+     "source_id": "eu_fr_bdpm",
+     "region": "EU",
+     "country": "FR",
+     "status": "loaded",
+     "reason": null,
+     "snapshot_date": "2026-11-03",
+     "stale": false,
+     "attribution": "bdpm",
+     "as_published": true,
+     "can_compare": {
+      "strength": true,
+      "dose_form": true
+     }
+    },
+    "keys": [
+     "Q411347"
+    ],
+    "unknown_keys": [],
+    "status": "present",
+    "total": 32,
+    "listings": 72,
+    "counts": {
+     "strength": {
+      "same": 36,
+      "different": 36,
+      "unknown": 0
+     },
+     "dose_form": {
+      "same": 72,
+      "different": 0,
+      "unknown": 0
+     }
+    },
+    "with_other_ingredients": 251,
+    "keys_found": [
+     "Q411347"
+    ],
+    "homeopathic_left_out": 0,
+    "not_finished_left_out": 0,
+    "offset": 0,
+    "limit": 8,
+    "products": [
+     {
+      "name": "AMLODIPINE ALMUS 5 mg, gélule",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "5,00 mg"
+       }
+      ],
+      "dose_form_published": "gélule",
+      "dose_form_group": "oral_solid",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "listed_as_marketed",
+      "listings": 2
+     },
+     {
+      "name": "AMLODIPINE ARROW 5 mg, gélule",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "5 mg"
+       }
+      ],
+      "dose_form_published": "gélule",
+      "dose_form_group": "oral_solid",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "listed_as_marketed",
+      "listings": 3
+     },
+     {
+      "name": "AMLODIPINE BIOGARAN 5 mg, gélule",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "5,00 mg"
+       }
+      ],
+      "dose_form_published": "gélule",
+      "dose_form_group": "oral_solid",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "listed_as_marketed",
+      "listings": 3
+     },
+     {
+      "name": "AMLODIPINE CRISTERS 5 mg, gélule",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "5,00 mg"
+       }
+      ],
+      "dose_form_published": "gélule",
+      "dose_form_group": "oral_solid",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "listed_as_marketed",
+      "listings": 2
+     },
+     {
+      "name": "AMLODIPINE EG 5 mg, gélule",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "5,00 mg"
+       }
+      ],
+      "dose_form_published": "gélule",
+      "dose_form_group": "oral_solid",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "listed_as_marketed",
+      "listings": 2
+     },
+     {
+      "name": "AMLODIPINE EVOLUGEN PHARMA 5 mg, gélule",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "5 mg"
+       }
+      ],
+      "dose_form_published": "gélule",
+      "dose_form_group": "oral_solid",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "listed_as_marketed",
+      "listings": 2
+     },
+     {
+      "name": "AMLODIPINE KRKA D.D 5 mg, comprimé sécable",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "5 mg"
+       }
+      ],
+      "dose_form_published": "comprimé sécable",
+      "dose_form_group": "oral_solid",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "listed_as_marketed",
+      "listings": 2
+     },
+     {
+      "name": "AMLODIPINE SANDOZ 5 mg, gélule",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "5,00 mg"
+       }
+      ],
+      "dose_form_published": "gélule",
+      "dose_form_group": "oral_solid",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "listed_as_marketed",
+      "listings": 2
+     }
+    ],
+    "notices": [
+     "listing_is_lower_bound"
+    ],
+    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+   }
+  },
+  {
+   "request": {
+    "ingredients": [
+     {
+      "key": "Q411347",
+      "strength": {
+       "amount": "5000",
+       "unit": "ug",
+       "basis": "unit"
+      }
+     }
+    ],
+    "dose_form": "oral_solid",
+    "target": "eu_es_cima",
+    "offset": 0,
+    "limit": 8
+   },
+   "response": {
+    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
+    "source": {
+     "source": 2,
+     "source_id": "eu_es_cima",
+     "region": "EU",
+     "country": "ES",
+     "status": "loaded",
+     "reason": null,
+     "snapshot_date": "2026-11-07",
+     "stale": false,
+     "attribution": "cima",
+     "as_published": false,
+     "can_compare": {
+      "strength": false,
+      "dose_form": false
+     }
+    },
+    "keys": [
+     "Q411347"
+    ],
+    "unknown_keys": [],
+    "status": "present",
+    "total": 100,
+    "listings": 100,
+    "counts": {
+     "strength": {
+      "same": 0,
+      "different": 0,
+      "unknown": 100
+     },
+     "dose_form": {
+      "same": 0,
+      "different": 0,
+      "unknown": 100
+     }
+    },
+    "with_other_ingredients": 360,
+    "keys_found": [
+     "Q411347"
+    ],
+    "homeopathic_left_out": 0,
+    "not_finished_left_out": 0,
+    "offset": 0,
+    "limit": 8,
+    "products": [
+     {
+      "name": "AMLODIPINO  ALTER 10 mg COMPRIMIDOS EFG, 30 comprimidos",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "10 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "AMLODIPINO  ALTER 5 mg COMPRIMIDOS EFG, 28 comprimidos",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "5 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "AMLODIPINO  ALTER 5 mg COMPRIMIDOS EFG, 30 comprimidos",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "5 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "AMLODIPINO ALMUS 10 mg COMPRIMIDOS EFG , 30 comprimidos",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "10 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "AMLODIPINO ALMUS 5 mg COMPRIMIDOS EFG, 30 comprimidos",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "5 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "AMLODIPINO AUROVITAS 10 MG COMPRIMIDOS EFG, 30 comprimidos",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "10 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "AMLODIPINO AUROVITAS 5 MG COMPRIMIDOS EFG, 30 comprimidos",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "5 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     },
+     {
+      "name": "AMLODIPINO BD-MABO 10 mg COMPRIMIDOS BUCODISPERSABLES EFG , 30 comprimidos",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "10 mg"
+       }
+      ],
+      "dose_form_published": null,
+      "dose_form_group": null,
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "unknown",
+      "dose_form_reason": "not_known_in_source",
+      "marketed": "listed_as_marketed",
+      "listings": 1
+     }
+    ],
+    "notices": [
+     "listing_is_lower_bound"
+    ],
+    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+   }
+  },
+  {
+   "request": {
+    "ingredients": [
+     {
+      "key": "Q411347",
+      "strength": {
+       "amount": "5000",
+       "unit": "ug",
+       "basis": "unit"
+      }
+     }
+    ],
+    "dose_form": "oral_solid",
+    "target": "openfda_ndc",
+    "offset": 0,
+    "limit": 8
+   },
+   "response": {
+    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "form_table_version": "6cb0c0970c16b3729f43b70fa5345d7fe2cd4f07d5c4284434b02af332d176d3",
+    "source": {
+     "source": 4,
+     "source_id": "openfda_ndc",
+     "region": "US",
+     "country": null,
+     "status": "loaded",
+     "reason": null,
+     "snapshot_date": "2026-11-06",
+     "stale": false,
+     "attribution": "openfda",
+     "as_published": false,
+     "can_compare": {
+      "strength": true,
+      "dose_form": true
+     }
+    },
+    "keys": [
+     "Q411347"
+    ],
+    "unknown_keys": [],
+    "status": "present",
+    "total": 23,
+    "listings": 200,
+    "counts": {
+     "strength": {
+      "same": 68,
+      "different": 129,
+      "unknown": 3
+     },
+     "dose_form": {
+      "same": 194,
+      "different": 6,
+      "unknown": 0
+     }
+    },
+    "with_other_ingredients": 372,
+    "keys_found": [
+     "Q411347"
+    ],
+    "homeopathic_left_out": 0,
+    "not_finished_left_out": 32,
+    "offset": 0,
+    "limit": 8,
+    "products": [
+     {
+      "name": "AMLODIPINE BESYLATE",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "5 mg/1"
+       }
+      ],
+      "dose_form_published": "TABLET",
+      "dose_form_group": "oral_solid",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "not_stated",
+      "listings": 8
+     },
+     {
+      "name": "Amlodipine Besylate",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "5 mg/1"
+       }
+      ],
+      "dose_form_published": "TABLET",
+      "dose_form_group": "oral_solid",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "not_stated",
+      "listings": 48
+     },
+     {
+      "name": "Amlodipine besylate",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "5 mg/1"
+       }
+      ],
+      "dose_form_published": "TABLET",
+      "dose_form_group": "oral_solid",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "not_stated",
+      "listings": 4
+     },
+     {
+      "name": "amlodipine besylate",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "5 mg/1"
+       }
+      ],
+      "dose_form_published": "TABLET",
+      "dose_form_group": "oral_solid",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "AMLODIPINE BESYLATE 5 mg",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "5 mg/1"
+       }
+      ],
+      "dose_form_published": "TABLET",
+      "dose_form_group": "oral_solid",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "not_stated",
+      "listings": 5
+     },
+     {
+      "name": "Norvasc",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "5 mg/1"
+       }
+      ],
+      "dose_form_published": "TABLET",
+      "dose_form_group": "oral_solid",
+      "strength": "same",
+      "strength_reason": null,
+      "dose_form": "same",
+      "dose_form_reason": null,
+      "marketed": "not_stated",
+      "listings": 2
+     },
+     {
+      "name": "Sdamlo",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "10 mg/10mg"
+       }
+      ],
+      "dose_form_published": "SOLUTION",
+      "dose_form_group": "oral_liquid",
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "different",
+      "dose_form_reason": null,
+      "marketed": "not_stated",
+      "listings": 1
+     },
+     {
+      "name": "Sdamlo",
+      "ingredients": [
+       {
+        "key": "Q411347",
+        "strength_published": "2.5 mg/2.5mg"
+       }
+      ],
+      "dose_form_published": "SOLUTION",
+      "dose_form_group": "oral_liquid",
+      "strength": "unknown",
+      "strength_reason": "not_known_in_source",
+      "dose_form": "different",
+      "dose_form_reason": null,
+      "marketed": "not_stated",
+      "listings": 1
+     }
+    ],
+    "notices": [
+     "listing_is_lower_bound"
+    ],
+    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+   }
+  }
+ ]
+}
