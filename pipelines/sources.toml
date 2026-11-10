@@ -846,3 +846,45 @@ license = "httk: MIT; dependencies: GPL-2+, GPL-2, MIT, MPL-2.0, LGPL-2.1+, Apac
 notes = ["Installed from the dated CRAN snapshot when the worker image is built (the httk version is checked at build time); called as a separate program; not committed. Pearce et al. 2017, J Stat Softw 79(4), doi:10.18637/jss.v079.i04."]
 storage = "separate_package"
 urls = ["https://cran.r-project.org/package=httk"]
+
+[[sources]]
+id = "scale_german_kiesel_2018"
+section = "clinical"
+name = "German anticholinergic burden score (Kiesel, Hopf, Drey 2018)"
+publisher = "BMC Geriatrics"
+license = "CC BY 4.0"
+notes = [
+  "Kiesel EK, Hopf YM, Drey M. An anticholinergic burden score for German prescribers: score development. BMC Geriatr 2018;18:239. doi:10.1186/s12877-018-0929-6, PMC6180424. Licence line read in the Europe PMC full text on 2026-11-10; the scored list is Table 4.",
+  "Table 4 is redistributed in data/anticholinergic_<scale>.csv with footnote markers removed and an ingredient key added (changes indicated). Shown in Janus under its own name with the paper cited; the scores are those of the paper.",
+]
+storage = "commit"
+cadence_days = 365
+urls = ["https://doi.org/10.1186/s12877-018-0929-6", "https://creativecommons.org/licenses/by/4.0/"]
+
+[[sources]]
+id = "scale_crideco_2022"
+section = "clinical"
+name = "CRIDECO anticholinergic load scale (Ramos et al. 2022)"
+publisher = "Journal of Personalized Medicine (MDPI)"
+license = "CC BY 4.0"
+notes = [
+  "Ramos H, Moreno L, Pérez-Tur J, Cháfer-Pericás C, García-Lluch G, Pardo J. CRIDECO Anticholinergic Load Scale: An Updated Anticholinergic Burden Scale. J Pers Med 2022;12(2):207. doi:10.3390/jpm12020207, PMC8876932. Licence line read in the Europe PMC full text on 2026-11-10; the scored list is Tables 1 to 3.",
+  "Redistributed in data/anticholinergic_<scale>.csv with footnote markers removed and an ingredient key added (changes indicated). Shown in Janus under its own name with the paper cited.",
+]
+storage = "commit"
+cadence_days = 365
+urls = ["https://doi.org/10.3390/jpm12020207", "https://creativecommons.org/licenses/by/4.0/"]
+
+[[sources]]
+id = "scale_brazil_2019"
+section = "clinical"
+name = "Brazilian anticholinergic activity drug scale (Nery and Reis 2019)"
+publisher = "Einstein (São Paulo)"
+license = "CC BY (Creative Commons Attribution License)"
+notes = [
+  "Nery RT, Reis AMM. Development of a Brazilian anticholinergic activity drug scale. Einstein (Sao Paulo) 2019;17(2):eAO4435. doi:10.31744/einstein_journal/2019AO4435, PMC6443211. Licence line read in the Europe PMC full text on 2026-11-10 (the version number is not printed in the article; Europe PMC records cc by); the scored list is Table 2.",
+  "Redistributed in data/anticholinergic_<scale>.csv with footnote markers removed and an ingredient key added; the ATC codes printed in the table are not used (changes indicated). Shown in Janus under its own name with the paper cited.",
+]
+storage = "commit"
+cadence_days = 365
+urls = ["https://doi.org/10.31744/einstein_journal/2019AO4435", "https://creativecommons.org/licenses/by/4.0/"]

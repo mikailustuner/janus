@@ -20,3 +20,7 @@
 - [x] 5. Part B, API and web: `safety/interactions.py`, `store.py`, `repository.py`, `interactions` block of
   `POST /safety/check`; card "Label text that names another medicine" in five languages; tests and Playwright
   - _Requirements: 4, 7_
+- [x] 6. Part C: the three scales as data (`data/anticholinergic_<scale>.csv`, `.meta.json`, `sources.toml`, NOTICE);
+  `safety/burden.py`; `burden` block of `POST /safety/check`; card in five languages; tests and Playwright
+  - _Requirements: 5, 6, 7_
+- [x] 7. Review passes (safety-auditor, localization-reviewer), findings fixed or recorded

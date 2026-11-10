@@ -97,6 +97,36 @@ export const interactions = D.obj({
   notices: D.arr(D.str),
 });
 
+export const burdenScale = D.obj({
+  scale_id: D.lit("kiesel2018", "crideco2022", "brazil2019"),
+  title: D.str,
+  citation: D.str,
+  url: D.pattern(/^https:\/\/doi\.org\/10\.[0-9]{4,9}\/[A-Za-z0-9._()\/-]+$/),
+  license: D.str,
+  license_url: D.pattern(
+    /^https:\/\/creativecommons\.org\/licenses\/by\/[0-9.]+\/$/,
+  ),
+  drugs_listed: D.int,
+  drugs_matched: D.int,
+  contributions: D.arr(
+    D.obj({
+      ingredient_key: KEY,
+      label_en: D.nullable(D.str),
+      items: D.arr(D.int, 1, 50),
+      score: D.lit(1, 2, 3),
+      drug: D.obj({ published_name: D.str, locator: D.str }),
+    }),
+  ),
+  total: D.int,
+});
+
+export const burden = D.obj({
+  status: D.lit("checked"),
+  rules_version: D.str,
+  scales: D.arr(burdenScale, 1, 3),
+  notices: D.arr(D.str),
+});
+
 export const safetyCheckOut = D.obj({
   dataset_version: D.str,
   items: D.int,
@@ -104,6 +134,7 @@ export const safetyCheckOut = D.obj({
   not_checked: D.arr(D.obj({ item: D.int, position: D.int })),
   duplication,
   interactions,
+  burden,
 });
 
 export type Member = Infer<typeof member>;
@@ -111,4 +142,6 @@ export type DuplicationFinding = Infer<typeof duplicationFinding>;
 export type Duplication = Infer<typeof duplication>;
 export type InteractionFinding = Infer<typeof interactionFinding>;
 export type Interactions = Infer<typeof interactions>;
+export type BurdenScale = Infer<typeof burdenScale>;
+export type Burden = Infer<typeof burden>;
 export type SafetyCheckOut = Infer<typeof safetyCheckOut>;

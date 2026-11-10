@@ -84,6 +84,14 @@ const noneData: SafetyCheckOut = {
     total_findings: 0,
     statement: { code: "no_label_passage_found" },
   },
+  burden: {
+    ...sample.burden,
+    scales: sample.burden.scales.map((s) => ({
+      ...s,
+      contributions: [],
+      total: 0,
+    })),
+  },
 };
 const none = ok(noneData);
 // Box names stay in the browser; long ones must wrap.
@@ -174,6 +182,20 @@ describe("W1: the decoder", () => {
       ["another ATC level", (a: Answer) => (a.duplication.atc_level = 3)],
       ["no duplication block", (a: Answer) => delete a.duplication],
       ["no interactions block", (a: Answer) => delete a.interactions],
+      ["no burden block", (a: Answer) => delete a.burden],
+      [
+        "a score outside the published range",
+        (a: Answer) => (a.burden.scales[0].contributions[0].score = 4),
+      ],
+      [
+        "a licence page of another kind",
+        (a: Answer) =>
+          (a.burden.scales[0].license_url = "https://example.org/"),
+      ],
+      [
+        "a scale that is not one of the three",
+        (a: Answer) => (a.burden.scales[0].scale_id = "acb"),
+      ],
       [
         "a label address elsewhere",
         (a: Answer) =>
@@ -249,7 +271,10 @@ describe.each(routing.locales)("SafetyCheck texts, %s", (locale) => {
   it("W3: nothing found says what was compared and is not a clearance", () => {
     const out = text(view(l, none));
     expect(out).toContain(
-      t("SafetyCheck.dup.none" as never, { count: 7 } as never),
+      t(
+        "SafetyCheck.dup.none" as never,
+        { count: sample.ingredients_checked } as never,
+      ),
     );
     expect(out).toContain(t("SafetyCheck.review" as never));
     expect(out).toContain(t("SafetyCheck.dup.method" as never));
@@ -349,6 +374,41 @@ describe.each(routing.locales)("SafetyCheck texts, %s", (locale) => {
         { group: "C09AA", count: 3 } as never,
       ),
     );
+  });
+
+  it("W3: burden: contributing medicines with the published score, the sum, the citation; no grade", () => {
+    const markup = view(l, ok(sample));
+    const out = text(markup);
+    expect(markup.match(/data-testid="burden-scale"/g)).toHaveLength(3);
+    const first = sample.burden.scales[0]!;
+    expect(first.contributions.length).toBeGreaterThan(0);
+    expect(out).toContain(first.title);
+    expect(out).toContain(
+      t("SafetyCheck.burden.total" as never, { total: first.total } as never),
+    );
+    expect(out).toContain(
+      t("SafetyCheck.burden.score" as never, { score: 3 } as never),
+    );
+    expect(out).toContain("Amitriptyline");
+    expect(out).toContain(first.citation);
+    expect(out).toContain(t("SafetyCheck.burden.advice" as never));
+    expect(out).toContain(t("SafetyCheck.burden.method" as never));
+    expect(markup).toContain(`href="${first.url}"`);
+    expect(violations(out, l)).toEqual([]);
+    expect(markup).not.toMatch(/(text|border|bg)-(risk|warn)/);
+    expect(out).not.toMatch(/\b(ACB|ARS|ADS)\b/);
+  });
+
+  it("W3: burden, no listed ingredient: how many drugs the scale lists, not a clearance", () => {
+    const markup = view(l, none);
+    const out = text(markup);
+    expect(markup.match(/data-testid="burden-none"/g)).toHaveLength(3);
+    expect(out).toContain(
+      t("SafetyCheck.burden.none" as never, { count: 151 } as never),
+    );
+    expect(out).not.toContain(t("SafetyCheck.burden.advice" as never));
+    expect(markup).not.toContain('data-testid="burden-total"');
+    expect(violations(out, l)).toEqual([]);
   });
 
   it("W3: loading and error with retry", () => {

@@ -41,6 +41,14 @@ const none = {
     total_findings: 0,
     statement: { code: "no_label_passage_found", text: "canonical" },
   },
+  burden: {
+    ...sample.burden,
+    scales: sample.burden.scales.map((s: { total: number }) => ({
+      ...s,
+      contributions: [],
+      total: 0,
+    })),
+  },
 };
 const off = {
   ...sample,
@@ -177,6 +185,21 @@ for (const locale of locales)
       );
       await expect(label).toContainText("ZZBOX2 ");
       await expect(section).toContainText(m.int.advice);
+      // Anticholinergic scales: three scales side by side, each with its own published sum.
+      const scales = section.getByTestId("burden-scale");
+      await expect(scales).toHaveCount(3);
+      for (const [i, sc] of sample.burden.scales.entries()) {
+        await expect(scales.nth(i)).toContainText(sc.title);
+        await expect(scales.nth(i).getByTestId("burden-total")).toHaveText(
+          plural(m.burden.total, 1).replace("{total}", String(sc.total)),
+        );
+        await expect(scales.nth(i).getByTestId("burden-row")).toHaveCount(
+          sc.contributions.length,
+        );
+      }
+      await expect(scales.first()).toContainText("Amitriptyline");
+      await expect(section).toContainText(m.burden.method);
+      await expect(section).toContainText(m.burden.advice);
       await expect(section.getByTestId("int-source")).toContainText(
         "2026-11-03",
       );
@@ -228,6 +251,9 @@ for (const locale of locales)
     );
     await expect(section.getByTestId("int-finding")).toHaveCount(0);
     await expect(section).not.toContainText(m.int.advice);
+    await expect(section.getByTestId("burden-none")).toHaveCount(3);
+    await expect(section.getByTestId("burden-total")).toHaveCount(0);
+    await expect(section).not.toContainText(m.burden.advice);
     await section.getByText(m.about).first().click();
     await expect(section).toContainText(m.dup.method);
     await expectNoAxeViolations(page);

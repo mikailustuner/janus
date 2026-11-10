@@ -2619,7 +2619,7 @@
       "finding": "Die US-Fachinformation zu {label} nennt {named}",
       "labelRow": "Fachinformation zu {ingredient} (Ihre Liste: {boxes})",
       "namedRow": "Darin genannt: {ingredient} (Ihre Liste: {boxes})",
-      "quote": "Zitat aus der Fachinformation, auf Englisch, wie veröffentlicht",
+      "quote": "Zitat aus der Fachinformation, auf Englisch, wie veröffentlicht Dieser Text richtet sich an Verschreibende; er ist keine Anweisung an Sie.",
       "matched": "Gefundener Name: {name}",
       "labelMeta": "Fachinformation zu {substance}, gültig ab {date}. Set-ID: {setId}.",
       "dateUnknown": "Datum nicht angegeben",
@@ -2636,6 +2636,19 @@
       "source": "Quelle: openFDA-Daten zu Arzneimittelinformationen (U.S. Food and Drug Administration, CC0 1.0), Datenstand {date}. Keine Empfehlung der FDA.",
       "outdated": "Diese Daten sind älter, als Janus erwartet.",
       "unavailable": "Die Texte der Fachinformationen sind derzeit nicht geladen, deshalb wurde diese Prüfung nicht ausgeführt."
+    },
+    "burden": {
+      "title": "Anticholinerge Last in veröffentlichten Skalen",
+      "listLabel": "Veröffentlichte anticholinerge Skalen und die Medikamente Ihrer Liste, die sie nennen",
+      "score": "Punktwert {score}",
+      "row": "{ingredient}, in der Skala genannt als „{drug}“ ({locator})",
+      "total": "Summe der veröffentlichten Punktwerte dieser Skala für Ihre Liste: {total}",
+      "none": "Diese Skala führt {count, plural, one {# Wirkstoff} other {# Wirkstoffe}} auf. Keiner der Wirkstoffe, die Janus auf Ihrer Liste lesen konnte, gehört dazu. Das bedeutet nicht, dass Ihre Medikamente keine solche Wirkung haben.",
+      "matched": "Janus konnte {matched} der {listed} Wirkstoffe dieser Skala einem bekannten Wirkstoff zuordnen; die übrigen lassen sich nicht mit Ihrer Liste vergleichen.",
+      "cite": "Quelle: {citation} Veröffentlicht unter {license}; Janus zeigt die Punktwerte wie veröffentlicht.",
+      "open": "Diese Veröffentlichung öffnen",
+      "advice": "Was ein Punktwert für Sie bedeutet, hängt von Ihren Dosen und Ihrer Gesundheit ab. Janus zieht daraus keinen Schluss. Eine Apothekerin, ein Apotheker oder eine Ärztin bzw. ein Arzt kann sich das mit Ihnen ansehen.",
+      "method": "Automatisierte Suche der Wirkstoffe Ihrer Liste in drei veröffentlichten Skalen anticholinerger Wirkstoffe. Jede Skala hat eigene Punktwerte; Janus addiert Punktwerte nur innerhalb einer Skala; Punktwerte verschiedener Skalen werden weder addiert noch verglichen, und Janus legt keinen Grenzwert fest. Eine Skala führt nur einen Teil der Wirkstoffe auf, ein hier fehlendes Medikament kann also trotzdem eine solche Wirkung haben."
     }
   }
 }

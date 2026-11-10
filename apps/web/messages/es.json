@@ -2619,7 +2619,7 @@
       "finding": "La etiqueta de EE. UU. de {label} cita {named}",
       "labelRow": "Etiqueta de {ingredient} (su lista: {boxes})",
       "namedRow": "Citado en ella: {ingredient} (su lista: {boxes})",
-      "quote": "Cita de la etiqueta, en inglés, tal como se publicó",
+      "quote": "Cita de la etiqueta, en inglés, tal como se publicó Este texto va dirigido a quienes prescriben; no es una instrucción para usted.",
       "matched": "Nombre encontrado: {name}",
       "labelMeta": "Etiqueta de {substance}, vigente desde {date}. Identificador del conjunto: {setId}.",
       "dateUnknown": "fecha no indicada",
@@ -2636,6 +2636,19 @@
       "source": "Fuente: datos de etiquetas de medicamentos de openFDA (U.S. Food and Drug Administration, CC0 1.0), datos del {date}. No es un aval de la FDA.",
       "outdated": "Estos datos son más antiguos de lo que Janus espera.",
       "unavailable": "Los textos de las etiquetas no están cargados ahora, por lo que esta comprobación no se ejecutó."
+    },
+    "burden": {
+      "title": "Carga anticolinérgica en escalas publicadas",
+      "listLabel": "Escalas anticolinérgicas publicadas y los medicamentos de su lista que citan",
+      "score": "Puntuación {score}",
+      "row": "{ingredient}, citado en la escala como «{drug}» ({locator})",
+      "total": "Suma de las puntuaciones publicadas de esta escala para su lista: {total}",
+      "none": "Esta escala incluye {count, plural, one {# fármaco} other {# fármacos}}. Ninguno de los principios activos que Janus pudo leer en su lista figura entre ellos. Esto no significa que sus medicamentos no tengan un efecto así.",
+      "matched": "Janus pudo asociar {matched} de los {listed} fármacos de esta escala con un principio activo conocido; los demás no se pueden comparar con su lista.",
+      "cite": "Fuente: {citation} Publicado bajo {license}; Janus muestra las puntuaciones tal como se publicaron.",
+      "open": "Abrir este artículo",
+      "advice": "Lo que una puntuación significa para usted depende de sus dosis y de su salud. Janus no saca ninguna conclusión de ella. Un farmacéutico o un médico puede verlo con usted.",
+      "method": "Búsqueda automatizada de los principios activos de su lista en tres escalas publicadas de fármacos anticolinérgicos. Cada escala tiene sus propias puntuaciones; Janus suma las puntuaciones solo dentro de una escala; las de escalas distintas no se suman ni se comparan, y Janus no fija ningún límite. Una escala incluye solo una parte de los fármacos, así que un medicamento que falta aquí puede tener igualmente un efecto así."
     }
   }
 }

@@ -2619,7 +2619,7 @@
       "finding": "The US label of {label} names {named}",
       "labelRow": "Label of {ingredient} (your list: {boxes})",
       "namedRow": "Named in it: {ingredient} (your list: {boxes})",
-      "quote": "Quoted from the label, in English, as published",
+      "quote": "Quoted from the label, in English, as published This text is written for prescribers; it is not an instruction to you.",
       "matched": "Name matched: {name}",
       "labelMeta": "Label for {substance}, effective {date}. Set id: {setId}.",
       "dateUnknown": "date not stated",
@@ -2636,6 +2636,19 @@
       "source": "Source: openFDA drug label data (U.S. Food and Drug Administration, CC0 1.0), data of {date}. Not an FDA endorsement.",
       "outdated": "This label data is older than Janus expects it to be.",
       "unavailable": "The label texts are not loaded right now, so this check did not run."
+    },
+    "burden": {
+      "title": "Anticholinergic burden in published scales",
+      "listLabel": "Published anticholinergic scales and the medicines of your list that they name",
+      "score": "Score {score}",
+      "row": "{ingredient}, named in the scale as \"{drug}\" ({locator})",
+      "total": "Sum of the published scores of this scale for your list: {total}",
+      "none": "This scale lists {count, plural, one {# drug} other {# drugs}}. None of the ingredients Janus could read on your list is among them. This does not mean that your medicines have no such effect.",
+      "matched": "Janus could match {matched} of the {listed} drugs of this scale to an ingredient it knows; the others cannot be compared with your list.",
+      "cite": "Source: {citation} Published under {license}; Janus shows the scores as published.",
+      "open": "Open this paper",
+      "advice": "What a score means for you depends on your doses and your health. Janus draws no conclusion from it. A pharmacist or doctor can look at it with you.",
+      "method": "Automated lookup of the ingredients on your list in three published scales of anticholinergic drugs. Each scale gives its own scores; Janus adds scores only within one scale; scores of different scales are not added or compared, and Janus sets no limit. A scale lists only some drugs, so a medicine that is missing here can still have such an effect."
     }
   }
 }

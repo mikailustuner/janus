@@ -2619,9 +2619,9 @@
       "finding": "L'étiquette américaine de {label} cite {named}",
       "labelRow": "Étiquette de {ingredient} (votre liste : {boxes})",
       "namedRow": "Cité dedans : {ingredient} (votre liste : {boxes})",
-      "quote": "Citation de l'étiquette, en anglais, telle que publiée",
+      "quote": "Citation de l'étiquette, en anglais, telle que publiée Ce texte s'adresse aux prescripteurs ; ce n'est pas une consigne pour vous.",
       "matched": "Nom trouvé : {name}",
-      "labelMeta": "Étiquette de {substance}, en vigueur le {date}. Identifiant du lot : {setId}.",
+      "labelMeta": "Étiquette de {substance}, en vigueur le {date}. Identifiant de l'ensemble (set id) : {setId}.",
       "dateUnknown": "date non indiquée",
       "open": "Ouvrir cette étiquette sur DailyMed",
       "opensNew": "(s'ouvre dans un nouvel onglet)",
@@ -2636,6 +2636,19 @@
       "source": "Source : données d'étiquettes de médicaments openFDA (U.S. Food and Drug Administration, CC0 1.0), données du {date}. Aucun aval de la FDA.",
       "outdated": "Ces données sont plus anciennes que ce que Janus prévoit.",
       "unavailable": "Les textes des étiquettes ne sont pas chargés pour le moment ; cette vérification n'a donc pas été exécutée."
+    },
+    "burden": {
+      "title": "Charge anticholinergique dans des échelles publiées",
+      "listLabel": "Échelles anticholinergiques publiées et médicaments de votre liste qu'elles citent",
+      "score": "Score {score}",
+      "row": "{ingredient}, cité dans l'échelle sous le nom « {drug} » ({locator})",
+      "total": "Somme des scores publiés de cette échelle pour votre liste : {total}",
+      "none": "Cette échelle liste {count, plural, one {# médicament} other {# médicaments}}. Aucune des substances actives que Janus a pu lire dans votre liste n'en fait partie. Cela ne signifie pas que vos médicaments n'ont pas un tel effet.",
+      "matched": "Janus a pu rattacher {matched} des {listed} médicaments de cette échelle à une substance active connue ; les autres ne peuvent pas être comparés à votre liste.",
+      "cite": "Source : {citation} Publié sous {license} ; Janus montre les scores tels que publiés.",
+      "open": "Ouvrir cet article",
+      "advice": "Ce qu'un score signifie pour vous dépend de vos doses et de votre santé. Janus n'en tire aucune conclusion. Un pharmacien ou un médecin peut l'examiner avec vous.",
+      "method": "Recherche automatisée des substances actives de votre liste dans trois échelles publiées de médicaments anticholinergiques. Chaque échelle a ses propres scores ; Janus n'additionne les scores qu'à l'intérieur d'une échelle ; les scores de différentes échelles ne sont ni additionnés ni comparés, et Janus ne fixe aucune limite. Une échelle ne liste qu'une partie des médicaments : un médicament absent ici peut quand même avoir un tel effet."
     }
   }
 }

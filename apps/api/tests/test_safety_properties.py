@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 from collections.abc import Iterator
 from pathlib import Path
 from typing import Any
@@ -199,6 +200,8 @@ WD = [
     wikidata_row("Q900022", ["N06AX16"], {"en": "venlafaxine", "tr": "venlafaksin"}),
     wikidata_row("Q900010", ["N05AX08"], {"en": "twin one", "tr": "ikizmadde"}),
     wikidata_row("Q900011", ["N05AX12"], {"en": "twin two", "tr": "ikizmadde"}),
+    wikidata_row("Q58397", ["N06AA09"], {"en": "amitriptyline", "tr": "amitriptilin"}),
+    wikidata_row("Q178566", ["N05BA02"], {"en": "chlordiazepoxide", "tr": "klordiazepoksit"}),
 ]
 TR = [
     titck_row(
@@ -381,6 +384,8 @@ def fixture_answer(env: Any) -> dict[str, Any]:
     client, ids, dataset, _ = env
     items: list[dict[str, Any]] = [{"product": ids[n]} for n in FIXTURE_ITEMS]
     items.append({"ingredient": "Q412208"})
+    items.append({"ingredient": "Q58397"})
+    items.append({"ingredient": "Q178566"})
     r = post(client, {"dataset_version": dataset, "items": items})
     assert r.status_code == 200, r.text
     return r.json()
@@ -571,3 +576,117 @@ def test_route_without_label_run_answers_unavailable_and_keeps_duplication(env: 
     assert body["interactions"]["status"] == "unavailable"
     assert body["interactions"]["findings"] == [] and body["interactions"]["source"] is None
     assert body["duplication"]["findings"][0]["kind"] == "same_ingredient"
+
+
+# --- Part C: anticholinergic burden in published scales (safety-check design §7, Req 5 and 6) ---
+from janus.safety import burden  # noqa: E402
+from janus.safety.burden import SCALES  # noqa: E402
+
+LISTED = sorted({k for sc in SCALES for k in sc.by_key})
+
+
+@st.composite
+def burden_lists(draw: st.DrawFn) -> list[EngineItem]:
+    keys = [*LISTED[:12], "Q1", "J1"]
+    n = draw(st.integers(0, 6))
+    return [
+        EngineItem(
+            i,
+            None,
+            tuple(
+                EngineIngredient(draw(st.sampled_from(keys)), frozenset(), True, "n")
+                for _ in range(draw(st.integers(0, 3)))
+            ),
+        )
+        for i in range(n)
+    ]
+
+
+@given(burden_lists())
+def test_c1_a_contribution_iff_a_listed_key_is_on_the_list_once_per_key_and_scale(
+    items: list[EngineItem],
+) -> None:
+    on_list = {
+        g.key: {it.index for it in items for h in it.ingredients if h.key == g.key}
+        for it in items
+        for g in it.ingredients
+    }
+    for res in burden.find(items):
+        got = {c.key: c for c in res.contributions}
+        assert len(got) == len(res.contributions)
+        assert set(got) == {k for k in on_list if k in res.scale.by_key}
+        for k, c in got.items():
+            assert c.items == tuple(sorted(on_list[k]))
+            assert c.score == res.scale.by_key[k].score >= 1
+
+
+@given(burden_lists(), st.randoms(use_true_random=False))
+def test_c2_total_is_the_sum_and_the_order_of_the_list_does_not_matter(
+    items: list[EngineItem], rnd: Any
+) -> None:
+    first = burden.find(items)
+    assert [r.total for r in first] == [sum(c.score for c in r.contributions) for r in first]
+    shuffled = list(items)
+    rnd.shuffle(shuffled)
+    again = burden.find(shuffled)
+    assert [[(c.key, c.score) for c in r.contributions] for r in first] == [
+        [(c.key, c.score) for c in r.contributions] for r in again
+    ]
+
+
+def test_c3_the_scales_are_the_published_lists_under_cc_by() -> None:
+    assert [(s.scale_id, len(s.drugs)) for s in SCALES] == [
+        ("kiesel2018", 151),
+        ("crideco2022", 215),
+        ("brazil2019", 125),
+    ]
+    for s in SCALES:
+        assert s.license.startswith("CC BY") and s.license_url.startswith("https://creativecommons")
+        assert s.url.startswith("https://doi.org/") and s.citation
+        assert {d.score for d in s.drugs} <= {1, 2, 3}
+        blob = " ".join([s.title, s.citation, *(d.published for d in s.drugs)])
+        assert not re.search(r"\b(ACB|ARS|ADS)\b", blob)
+        assert all(d.note for d in s.drugs if d.mapping != "name")
+    assert SCALES[0].by_key["Q58397"].published == "Amitriptyline"
+
+
+def test_c4_a_malformed_scale_file_stops_the_import(tmp_path: Path) -> None:
+    for sid in burden.SCALE_IDS:
+        for ext in ("csv", "meta.json"):
+            (tmp_path / f"anticholinergic_{sid}.{ext}").write_bytes(
+                (burden.DATA_DIR / f"anticholinergic_{sid}.{ext}").read_bytes()
+            )
+    assert len(burden.load_scales(tmp_path)) == 3
+    path = tmp_path / "anticholinergic_kiesel2018.csv"
+    text = path.read_text(encoding="utf-8")
+    for broken in (text.replace(",3,", ",7,", 1), text.replace("Q58397", "bad", 1)):
+        path.write_text(broken, encoding="utf-8")
+        with pytest.raises(ValueError):
+            burden.load_scale("kiesel2018", tmp_path)
+
+
+@pytest.mark.db
+def test_route_burden_names_contributing_medicines_with_published_scores(env: Any) -> None:
+    client, _, dataset, _ = env
+    items = [{"ingredient": "Q58397"}, {"ingredient": "Q178566"}, {"ingredient": "Q58397"}]
+    body = post(client, {"dataset_version": dataset, "items": items}).json()
+    b = body["burden"]
+    assert b["status"] == "checked" and b["rules_version"] == "burden-1"
+    by = {s["scale_id"]: s for s in b["scales"]}
+    kie = by["kiesel2018"]
+    assert [(c["label_en"], c["items"], c["score"]) for c in kie["contributions"]] == [
+        ("chlordiazepoxide", [1], 1),
+        ("amitriptyline", [0, 2], 3),
+    ]
+    assert kie["total"] == 4 and kie["drugs_listed"] == 151
+    assert kie["contributions"][1]["drug"] == {
+        "published_name": "Amitriptyline",
+        "locator": "Table 4, score 3",
+    }
+    assert by["brazil2019"]["total"] == 4 and by["crideco2022"]["total"] == 4
+    assert kie["citation"].startswith("Kiesel EK") and kie["license"] == "CC BY 4.0"
+    blob = json.dumps(b).lower()
+    assert not any(w in blob for w in ("high burden", "low burden", "acb", "risk"))
+    assert "no_threshold" in b["notices"]
+    none = post(client, {"dataset_version": dataset, "items": [{"ingredient": "Q411347"}]}).json()
+    assert all(s["contributions"] == [] and s["total"] == 0 for s in none["burden"]["scales"])

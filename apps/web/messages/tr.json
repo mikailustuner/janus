@@ -2619,7 +2619,7 @@
       "finding": "{label} için ABD prospektüsü {named} maddesini anıyor",
       "labelRow": "{ingredient} prospektüsü (listeniz: {boxes})",
       "namedRow": "Anılan: {ingredient} (listeniz: {boxes})",
-      "quote": "Prospektüsten, yayımlandığı gibi İngilizce alıntı",
+      "quote": "Prospektüsten, yayımlandığı gibi İngilizce alıntı Bu metin hekimler için yazılmıştır; size yönelik bir talimat değildir.",
       "matched": "Eşleşen ad: {name}",
       "labelMeta": "{substance} prospektüsü, yürürlük tarihi {date}. Set kimliği: {setId}.",
       "dateUnknown": "tarih belirtilmemiş",
@@ -2636,6 +2636,19 @@
       "source": "Kaynak: openFDA ilaç prospektüsü verileri (ABD Gıda ve İlaç Dairesi, CC0 1.0), veri tarihi {date}. FDA onayı değildir.",
       "outdated": "Bu prospektüs verisi Janus'un beklediğinden eski.",
       "unavailable": "Prospektüs metinleri şu anda yüklü değil, bu nedenle bu kontrol çalışmadı."
+    },
+    "burden": {
+      "title": "Yayımlanmış ölçeklerde antikolinerjik yük",
+      "listLabel": "Yayımlanmış antikolinerjik ölçekler ve listenizdeki bu ölçeklerde adı geçen ilaçlar",
+      "score": "Puan {score}",
+      "row": "{ingredient}, ölçekte \"{drug}\" olarak geçiyor ({locator})",
+      "total": "Listeniz için bu ölçeğin yayımlanmış puanlarının toplamı: {total}",
+      "none": "Bu ölçek {count, plural, one {# ilaç} other {# ilaç}} sayıyor. Janus'un listenizde okuyabildiği etkin maddelerden hiçbiri bunların arasında değil. Bu, ilaçlarınızın böyle bir etkisi olmadığı anlamına gelmez.",
+      "matched": "Janus bu ölçeğin {listed} ilacından {matched} tanesini bildiği bir etkin maddeyle eşleştirebildi; diğerleri listenizle karşılaştırılamaz.",
+      "cite": "Kaynak: {citation} {license} lisansıyla yayımlanmıştır; Janus puanları yayımlandığı gibi gösterir.",
+      "open": "Bu makaleyi aç",
+      "advice": "Bir puanın sizin için ne anlama geldiği dozlarınıza ve sağlığınıza bağlıdır. Janus bundan bir sonuç çıkarmaz. Bir eczacı veya doktor bunu sizinle birlikte inceleyebilir.",
+      "method": "Listenizdeki etkin maddelerin, antikolinerjik ilaçların yayımlanmış üç ölçeğinde otomatik olarak aranması. Her ölçek kendi puanlarını verir; Janus puanları yalnızca tek bir ölçeğin içinde toplar; farklı ölçeklerin puanları toplanmaz veya karşılaştırılmaz ve Janus bir sınır belirlemez. Bir ölçek yalnızca bazı ilaçları sayar; bu nedenle burada bulunmayan bir ilaç yine de böyle bir etki gösterebilir."
     }
   }
 }

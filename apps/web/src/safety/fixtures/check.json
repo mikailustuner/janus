@@ -1,7 +1,7 @@
 {
-  "dataset_version": "a9b06b01bfcae514c6cc025a674b6830ed152cccde38cb4aa2e9743dd772c5f0",
-  "items": 7,
-  "ingredients_checked": 7,
+  "dataset_version": "e71a597fbcb890d2390a930b8b06ae3d75d595ed0c9274fcdf017b02081cc715",
+  "items": 9,
+  "ingredients_checked": 9,
   "not_checked": [
     {
       "item": 5,
@@ -198,11 +198,25 @@
     ],
     "labels_not_found": [
       {
+        "ingredient_key": "Q178566",
+        "label_en": "chlordiazepoxide",
+        "items": [
+          8
+        ]
+      },
+      {
         "ingredient_key": "Q412208",
         "label_en": "lisinopril",
         "items": [
           0,
           6
+        ]
+      },
+      {
+        "ingredient_key": "Q58397",
+        "label_en": "amitriptyline",
+        "items": [
+          7
         ]
       },
       {
@@ -228,6 +242,130 @@
       "names_matched_automatically",
       "passage_may_state_no_effect",
       "classes_not_matched",
+      "absence_is_not_clearance"
+    ]
+  },
+  "burden": {
+    "status": "checked",
+    "rules_version": "burden-1",
+    "scales": [
+      {
+        "scale_id": "kiesel2018",
+        "title": "German anticholinergic burden score (Kiesel et al. 2018)",
+        "citation": "Kiesel EK, Hopf YM, Drey M. An anticholinergic burden score for German prescribers: score development. BMC Geriatr 2018;18:239. PMC6180424. doi:10.1186/s12877-018-0929-6. Table 4, CC BY 4.0.",
+        "url": "https://doi.org/10.1186/s12877-018-0929-6",
+        "license": "CC BY 4.0",
+        "license_url": "https://creativecommons.org/licenses/by/4.0/",
+        "drugs_listed": 151,
+        "drugs_matched": 149,
+        "contributions": [
+          {
+            "ingredient_key": "Q178566",
+            "label_en": "chlordiazepoxide",
+            "items": [
+              8
+            ],
+            "score": 1,
+            "drug": {
+              "published_name": "Chlordiazepoxide",
+              "locator": "Table 4, score 1"
+            }
+          },
+          {
+            "ingredient_key": "Q58397",
+            "label_en": "amitriptyline",
+            "items": [
+              7
+            ],
+            "score": 3,
+            "drug": {
+              "published_name": "Amitriptyline",
+              "locator": "Table 4, score 3"
+            }
+          }
+        ],
+        "total": 4
+      },
+      {
+        "scale_id": "crideco2022",
+        "title": "CRIDECO anticholinergic load scale (Ramos et al. 2022)",
+        "citation": "Ramos H, Moreno L, Pérez-Tur J, Cháfer-Pericás C, García-Lluch G, Pardo J. CRIDECO Anticholinergic Load Scale: An Updated Anticholinergic Burden Scale. J Pers Med 2022;12(2):207. PMC8876932. doi:10.3390/jpm12020207. Tables 1 to 3, CC BY 4.0.",
+        "url": "https://doi.org/10.3390/jpm12020207",
+        "license": "CC BY 4.0",
+        "license_url": "https://creativecommons.org/licenses/by/4.0/",
+        "drugs_listed": 215,
+        "drugs_matched": 209,
+        "contributions": [
+          {
+            "ingredient_key": "Q178566",
+            "label_en": "chlordiazepoxide",
+            "items": [
+              8
+            ],
+            "score": 1,
+            "drug": {
+              "published_name": "Chlordiazepoxide",
+              "locator": "Table 1"
+            }
+          },
+          {
+            "ingredient_key": "Q58397",
+            "label_en": "amitriptyline",
+            "items": [
+              7
+            ],
+            "score": 3,
+            "drug": {
+              "published_name": "Amitriptyline",
+              "locator": "Table 3"
+            }
+          }
+        ],
+        "total": 4
+      },
+      {
+        "scale_id": "brazil2019",
+        "title": "Brazilian anticholinergic activity drug scale (Nery and Reis 2019)",
+        "citation": "Nery RT, Reis AMM. Development of a Brazilian anticholinergic activity drug scale. Einstein (Sao Paulo) 2019;17(2):eAO4435. PMC6443211. doi:10.31744/einstein_journal/2019AO4435. Table 2, CC BY.",
+        "url": "https://doi.org/10.31744/einstein_journal/2019AO4435",
+        "license": "CC BY",
+        "license_url": "https://creativecommons.org/licenses/by/4.0/",
+        "drugs_listed": 125,
+        "drugs_matched": 122,
+        "contributions": [
+          {
+            "ingredient_key": "Q178566",
+            "label_en": "chlordiazepoxide",
+            "items": [
+              8
+            ],
+            "score": 1,
+            "drug": {
+              "published_name": "Chordiazepoxide",
+              "locator": "Table 2, score 1 column"
+            }
+          },
+          {
+            "ingredient_key": "Q58397",
+            "label_en": "amitriptyline",
+            "items": [
+              7
+            ],
+            "score": 3,
+            "drug": {
+              "published_name": "Amitriptyline",
+              "locator": "Table 2, score 3 column"
+            }
+          }
+        ],
+        "total": 4
+      }
+    ],
+    "notices": [
+      "published_scores_only",
+      "scales_not_comparable",
+      "no_threshold",
+      "list_not_complete",
       "absence_is_not_clearance"
     ]
   },

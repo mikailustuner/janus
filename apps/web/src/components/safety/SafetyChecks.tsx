@@ -13,6 +13,8 @@ import { keyName } from "@/components/names";
 import { Button, Card, Mono, SectionTitle } from "@/components/ui";
 import type { SafetyCall } from "@/safety/client";
 import type {
+  Burden,
+  BurdenScale,
   Duplication,
   DuplicationFinding,
   InteractionFinding,
@@ -117,9 +119,12 @@ function DuplicationBlock({
   names: Names;
 }) {
   const t = useT();
+  const method = (
+    <p className="text-sm text-muted">{t("SafetyCheck.dup.method")}</p>
+  );
   const about = (
     <>
-      <p className="text-sm text-muted">{t("SafetyCheck.dup.method")}</p>
+      {method}
       <Sources sources={dup.sources} />
     </>
   );
@@ -127,8 +132,9 @@ function DuplicationBlock({
     return (
       <div className="flex flex-col gap-2" data-testid="dup-none">
         <p>{t("SafetyCheck.dup.none", { count: data.ingredients_checked })}</p>
+        <Sources sources={dup.sources} />
         <Disclosure summary={t("SafetyCheck.about")} summaryClassName="text-sm">
-          {about}
+          {method}
         </Disclosure>
       </div>
     );
@@ -246,15 +252,19 @@ function InteractionsBlock({
     );
   const who = (r: { ingredient_key: string; label_en: string | null }) =>
     keyName(names.vocab, r.ingredient_key, r.label_en);
-  const about = (
+  const src = (
     <>
-      <p className="text-sm text-muted">{t("SafetyCheck.int.method")}</p>
       <p className="text-sm text-muted" data-testid="int-source">
         {t("SafetyCheck.int.source", { date: inter.source.snapshot_date })}
       </p>
       {inter.notices.includes("snapshot_outdated") ? (
         <p className="text-sm">{t("SafetyCheck.int.outdated")}</p>
       ) : null}
+    </>
+  );
+  const about = (
+    <>
+      <p className="text-sm text-muted">{t("SafetyCheck.int.method")}</p>
       {inter.labels_read.length ? (
         <>
           <p className="text-sm font-bold">{t("SafetyCheck.int.labelsRead")}</p>
@@ -284,8 +294,13 @@ function InteractionsBlock({
   if (inter.findings.length === 0)
     return (
       <div className="flex flex-col gap-2" data-testid="int-none">
-        <p>{t("SafetyCheck.int.none", { count: inter.labels_read.length })}</p>
+        {inter.labels_read.length ? (
+          <p>
+            {t("SafetyCheck.int.none", { count: inter.labels_read.length })}
+          </p>
+        ) : null}
         {notFound}
+        {src}
         <Disclosure summary={t("SafetyCheck.about")} summaryClassName="text-sm">
           {about}
         </Disclosure>
@@ -315,7 +330,111 @@ function InteractionsBlock({
       ) : null}
       <p className="font-bold">{t("SafetyCheck.int.advice")}</p>
       {notFound}
+      {src}
       {about}
+    </div>
+  );
+}
+
+function BurdenScaleItem({
+  scale,
+  names,
+}: {
+  scale: BurdenScale;
+  names: Names;
+}) {
+  const t = useT();
+  return (
+    <li
+      className="flex flex-col gap-2 rounded-[var(--radius-tile)] border border-line bg-surface p-3"
+      data-testid="burden-scale"
+      data-scale={scale.scale_id}
+    >
+      <h3 className="font-bold break-words">{scale.title}</h3>
+      {scale.contributions.length === 0 ? (
+        <p data-testid="burden-none">
+          {t("SafetyCheck.burden.none", { count: scale.drugs_listed })}
+        </p>
+      ) : (
+        <>
+          <ul className="flex flex-col gap-2">
+            {scale.contributions.map((c) => (
+              <li
+                key={c.ingredient_key}
+                className="flex flex-col gap-0.5 break-words"
+                data-testid="burden-row"
+              >
+                <span className="font-bold break-words">
+                  {c.items.map((i) => box(names, i)).join(", ")}
+                </span>
+                <span className="text-sm break-words text-muted">
+                  {t("SafetyCheck.burden.row", {
+                    ingredient: keyName(
+                      names.vocab,
+                      c.ingredient_key,
+                      c.label_en,
+                    ),
+                    drug: c.drug.published_name,
+                    locator: c.drug.locator,
+                  })}
+                </span>
+                <span className="text-sm">
+                  <Mono>
+                    {t("SafetyCheck.burden.score", { score: c.score })}
+                  </Mono>
+                </span>
+              </li>
+            ))}
+          </ul>
+          <p data-testid="burden-total">
+            {t("SafetyCheck.burden.total", { total: scale.total })}
+          </p>
+        </>
+      )}
+      <Disclosure summary={t("SafetyCheck.about")} summaryClassName="text-sm">
+        <p className="text-sm break-words text-muted">
+          {t("SafetyCheck.burden.cite", {
+            citation: scale.citation,
+            license: scale.license,
+          })}
+        </p>
+        <p className="text-sm text-muted">
+          {t("SafetyCheck.burden.matched", {
+            matched: scale.drugs_matched,
+            listed: scale.drugs_listed,
+          })}
+        </p>
+        <a
+          className={link}
+          href={scale.url}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {t("SafetyCheck.burden.open")}{" "}
+          <span className="sr-only">{t("SafetyCheck.int.opensNew")}</span>
+        </a>
+      </Disclosure>
+    </li>
+  );
+}
+
+function BurdenBlock({ burden, names }: { burden: Burden; names: Names }) {
+  const t = useT();
+  const any = burden.scales.some((s) => s.contributions.length > 0);
+  return (
+    <div className="flex flex-col gap-3" data-testid="burden">
+      <ul
+        className="flex flex-col gap-3"
+        aria-label={t("SafetyCheck.burden.listLabel")}
+      >
+        {burden.scales.map((s) => (
+          <BurdenScaleItem key={s.scale_id} scale={s} names={names} />
+        ))}
+      </ul>
+      {any ? (
+        <p className="font-bold">{t("SafetyCheck.burden.advice")}</p>
+      ) : null}
+      <p className="text-sm text-muted">{t("SafetyCheck.burden.method")}</p>
     </div>
   );
 }
@@ -405,6 +524,9 @@ export function SafetyView({
           </Block>
           <Block id="safety-int" title={t("SafetyCheck.int.title")}>
             <InteractionsBlock inter={state.data.interactions} names={names} />
+          </Block>
+          <Block id="safety-burden" title={t("SafetyCheck.burden.title")}>
+            <BurdenBlock burden={state.data.burden} names={names} />
           </Block>
         </>
       )}

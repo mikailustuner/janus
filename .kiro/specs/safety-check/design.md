@@ -88,6 +88,36 @@ long-enough, non-excluded names are searched; B6 long sentences are cut around t
 synthetic run (quote, nothing found, unavailable keeps duplication); pipeline tests (stream reader property,
 exclusions, newest label, count mismatch, scratch removed); web W1-W3 extended; Playwright extended.
 
+## 6b. Anticholinergic burden in published scales (Part C, Req 5 and 6; `safety/burden.py` pure)
+Three scales, each from a paper published under CC BY with the scored list inside it (licence line and table read
+in the Europe PMC full text on 2026-11-10): German anticholinergic burden score (Kiesel, Hopf, Drey, BMC Geriatr
+2018, Table 4, 151 drugs, CC BY 4.0), CRIDECO anticholinergic load scale (Ramos et al., J Pers Med 2022,
+Tables 1-3, 215 drugs, CC BY 4.0), Brazilian anticholinergic activity drug scale (Nery and Reis, Einstein 2019,
+Table 2, 125 drugs, CC BY; the version number is not printed in the article, Europe PMC records "cc by").
+Each list is committed as `data/anticholinergic_<scale>.csv` with `.meta.json` (source id, citation, DOI, licence,
+hash, retrieval date), recorded in `sources.toml` and so in NOTICE. Columns: drug as published (footnote markers
+removed), published score, locator, Janus ingredient key, mapping (`name`, `alias`, `none`) and a note. The ATC
+codes printed in the papers are not used (the Brazilian table has shifted codes for some rows).
+- Names are matched to keys by exact name in the drug resolution dataset (read-only check against the current
+  dataset on 2026-11-10: 460 of 491 rows by name, 20 by a recorded alias such as a spelling, a salt or an INN
+  synonym, 11 not matched with the reason). A key that carries two scores in one scale stops the import.
+- Janus names: "German anticholinergic burden score (Kiesel et al. 2018)", "CRIDECO anticholinergic load scale
+  (Ramos et al. 2022)", "Brazilian anticholinergic activity drug scale (Nery and Reis 2019)". The names ACB, ARS
+  and ADS are not used for anything shown and none of those scales' lists is used (the Kiesel table's own
+  column headers, which contain "ACB", are not copied).
+- A contribution is a (scale, key) pair for a checked ingredient of the list that the scale lists; it names the
+  list items, the published score and the name and table in the paper. The scale's total is the sum of its
+  contributions; scales are never added or averaged. The answer has no threshold, category or statement about the
+  person; the notices say so.
+- Web: one card with one tile per scale: contributing medicines (box names), ingredient, published name and
+  table, score, the sum; nothing listed: "This scale lists N drugs. None of the ingredients ... is among them.
+  This does not mean ..."; citation, licence, match count and a link to the paper folded under "About this
+  check". Neutral surface, no colour or word that grades a total.
+Properties: C1 contribution iff a listed key is on the list, once per key and scale, naming all its items, with
+the published score; C2 total is the sum, order independence; C3 the committed lists are the published ones
+(counts, licences, no ACB/ARS/ADS, notes for non-exact mappings); C4 a malformed file stops the import; route test
+with real keys; web W1/W3 extended.
+
 ## 7. API contract **[Client: experience, MCP]**
 `POST /safety/check`, medical route. Body: `EvaluateIn` of the cascade engine.
 - 422 `{"error": "invalid_request", "fields": [...]}` (the route's own field names and positions only; an unknown

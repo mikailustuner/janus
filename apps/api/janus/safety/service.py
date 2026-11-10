@@ -16,13 +16,18 @@ from janus.integrity.freshness import is_stale
 from janus.resolution import service as resolution
 from janus.resolution.model import SourceRef
 from janus.resolution.names import fold
-from janus.safety import duplication, interactions, repository
+from janus.safety import burden, duplication, interactions, repository
 from janus.safety.schemas import (
     DAILYMED_LABEL_URL,
     LABEL_SOURCE_URL,
     LABEL_TERMS_URL,
     NO_DUPLICATION,
     NO_LABEL_PASSAGE,
+    BurdenContributionOut,
+    BurdenDrugOut,
+    BurdenNotice,
+    BurdenOut,
+    BurdenScaleOut,
     DuplicationFindingOut,
     DuplicationOut,
     IngredientRefOut,
@@ -174,6 +179,48 @@ def interactions_out(
     )
 
 
+BURDEN_NOTICES: tuple[BurdenNotice, ...] = (
+    "published_scores_only",
+    "scales_not_comparable",
+    "no_threshold",
+    "list_not_complete",
+    "absence_is_not_clearance",
+)
+
+
+def burden_out(items: Sequence[EngineItem]) -> BurdenOut:
+    """The published scores of the list's ingredients, one block per scale."""
+    return BurdenOut(
+        status="checked",
+        rules_version=burden.RULES_VERSION,
+        scales=[
+            BurdenScaleOut(
+                scale_id=r.scale.scale_id,  # type: ignore[arg-type]
+                title=r.scale.title,
+                citation=r.scale.citation,
+                url=r.scale.url,
+                license=r.scale.license,
+                license_url=r.scale.license_url,
+                drugs_listed=len(r.scale.drugs),
+                drugs_matched=len(r.scale.by_key),
+                contributions=[
+                    BurdenContributionOut(
+                        ingredient_key=c.key,
+                        label_en=c.label_en,
+                        items=list(c.items),
+                        score=c.score,
+                        drug=BurdenDrugOut(published_name=c.drug.published, locator=c.drug.locator),
+                    )
+                    for c in r.contributions
+                ],
+                total=r.total,
+            )
+            for r in burden.find(items)
+        ],
+        notices=list(BURDEN_NOTICES),
+    )
+
+
 def label_subjects(
     conn: psycopg.Connection, dataset: str, items: Sequence[EngineItem]
 ) -> list[interactions.Subject]:
@@ -214,4 +261,5 @@ def check(
         interactions=interactions_unavailable()
         if labels is None
         else interactions_out(label_subjects(conn, current, items), labels, today),
+        burden=burden_out(items),
     )

@@ -141,6 +141,48 @@ class InteractionsOut(_Out):
     notices: list[InteractionNotice]
 
 
+class BurdenDrugOut(_Out):
+    published_name: str  # as printed in the paper
+    locator: str  # table of the paper
+
+
+class BurdenContributionOut(_Out):
+    ingredient_key: str
+    label_en: str | None
+    items: list[int]
+    score: int  # as published
+    drug: BurdenDrugOut
+
+
+class BurdenScaleOut(_Out):
+    scale_id: Literal["kiesel2018", "crideco2022", "brazil2019"]
+    title: str
+    citation: str
+    url: str  # the paper
+    license: str
+    license_url: str
+    drugs_listed: int  # drugs the scale lists
+    drugs_matched: int  # of those, drugs Janus can match to an ingredient key
+    contributions: list[BurdenContributionOut]
+    total: int  # sum of the published scores of the contributions shown
+
+
+BurdenNotice = Literal[
+    "published_scores_only",
+    "scales_not_comparable",
+    "no_threshold",
+    "list_not_complete",
+    "absence_is_not_clearance",
+]
+
+
+class BurdenOut(_Out):
+    status: Literal["checked"]
+    rules_version: str
+    scales: list[BurdenScaleOut]
+    notices: list[BurdenNotice]
+
+
 class SafetyCheckOut(_Out):
     dataset_version: str
     items: int
@@ -148,4 +190,5 @@ class SafetyCheckOut(_Out):
     not_checked: list[NotCheckedOut]
     duplication: DuplicationOut
     interactions: InteractionsOut
+    burden: BurdenOut
     disclaimer: str = DISCLAIMER
