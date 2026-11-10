@@ -65,10 +65,11 @@ class NdcIndex:
         return sum(p.records for p in self.partitions)
 
 
-def parse_index(data: bytes) -> NdcIndex:
+def parse_index(data: bytes, dataset: str = "ndc") -> NdcIndex:
+    """The partitions of one `results.drug.<dataset>` entry of openFDA's download index."""
     try:
         doc = cast(dict[str, Any], json.loads(data))
-        ndc = cast(dict[str, Any], doc["results"]["drug"]["ndc"])
+        ndc = cast(dict[str, Any], doc["results"]["drug"][dataset])
         partitions = tuple(
             Partition(url=str(p["file"]), records=int(p["records"]))
             for p in cast(list[dict[str, Any]], ndc["partitions"])
@@ -76,10 +77,10 @@ def parse_index(data: bytes) -> NdcIndex:
         export_date = str(ndc["export_date"])
     except (KeyError, TypeError, ValueError) as exc:
         raise SchemaMismatchError(
-            SchemaReport(missing=(f"download.json results.drug.ndc ({exc})",))
+            SchemaReport(missing=(f"download.json results.drug.{dataset} ({exc})",))
         ) from None
     if not partitions:
-        raise SchemaMismatchError(SchemaReport(missing=("download.json ndc partitions",)))
+        raise SchemaMismatchError(SchemaReport(missing=(f"download.json {dataset} partitions",)))
     return NdcIndex(export_date=export_date, partitions=partitions)
 
 
