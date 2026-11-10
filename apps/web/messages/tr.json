@@ -2591,12 +2591,12 @@
     }
   },
   "PlainInfo": {
-    "link": "Bu ilaç ne için kullanılır?",
+    "link": "Bu ne tür bir ilaç?",
     "eyebrow": "İlaç bilgisi",
-    "summary": "Sade bir dille: bu ilacın ne tür bir ilaç olduğu. Kendi bakımınızla ilgili tavsiye değildir.",
+    "summary": "Sade bir dille: bu ilacın ne tür bir ilaç olduğu. Sağlığınızla ilgili bir tavsiye değildir.",
     "back": "İlaçlara dön",
     "notFound": "Bu ilaç, bu cihazda tutulan listede yok.",
-    "loading": "Janus'ta bu ilaç için ne olduğuna bakılıyor…",
+    "loading": "Bu ilaç için Janus'taki bilgiler aranıyor…",
     "contains": {
       "heading": "İçinde ne var",
       "one": "Bu ilacın etkin maddesi: {name}.",
@@ -2626,10 +2626,11 @@
         "cut": "Bölüm burada gösterilenden daha uzundur. Devamı etiketin tamamındadır.",
         "open": "Etiketin tamamını DailyMed'de aç (İngilizce)",
         "version": "Etiket sürümü {version}",
-        "dated": "tarihi {date}",
+        "dated": "{date} tarihli",
         "data": "openFDA verisi, {date}",
         "company": "Bu metni ürünü pazarlayan şirket yazmış ve FDA'ya sunmuştur. openFDA'ya göre FDA metni doğrulamamıştır.",
         "differ": "Kutunuzdaki prospektüsten farklı olabilir. Sağlık çalışanları için yazılmıştır.",
+        "notForYou": "Bu, etiketten bir alıntıdır. Janus bunun sizin için geçerli olup olmadığını söylemez.",
         "outdated": "Janus'taki etiket verisi iki haftadan eskidir."
       },
       "page": {
@@ -2641,7 +2642,7 @@
           "fr": "Sayfa Fransızcadır. Çevrilmemiştir.",
           "es": "Sayfa İspanyolcadır. Çevrilmemiştir."
         },
-        "found": "Janus bu sayfayı ürünün adına göre otomatik olarak buldu ({date} tarihli veri). Lütfen sayfadaki adın kutunuzdaki adla aynı olduğunu kontrol edin.",
+        "found": "Janus bu sayfayı ürünün adına göre otomatik olarak buldu ({date} tarihli veri). Lütfen sayfadaki adın kutunuzdaki adla aynı olup olmadığını kontrol edin.",
         "open": "Ürün sayfasını aç"
       },
       "none": {
@@ -2649,7 +2650,7 @@
         "several_labels": "Bu ürün kodunu birden fazla etiket belirtiyor. Janus bunlar arasında seçim yapmaz.",
         "not_found_page": "Janus bu ürünün sayfasını adına göre bulamadı.",
         "source_unavailable": "Resmî metinler şu anda Janus'ta kullanılamıyor.",
-        "demo": "Demo ürünleri uydurmadır; bu yüzden onlar için resmî metin yoktur.",
+        "demo": "Demo ürünleri kurgusaldır; bu yüzden onlar için resmî metin yoktur.",
         "homeopathic": "Janus homeopatik ürünler için resmî metin göstermez.",
         "by_name": "Bu ilaç ürün olarak değil, etkin maddesinin adıyla eklendi. Bunun için ürün metni yoktur.",
         "country": "Janus'ta yalnızca Amerika Birleşik Devletleri'ndeki ürünler için resmî metin, Fransa ve İspanya'daki ürünler için de resmî sayfaya bağlantı vardır.",

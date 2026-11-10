@@ -1,7 +1,7 @@
 {
   "us": {
     "language": "tr",
-    "groups_version": "d03996d1624fc7d40ff5eea25742b14cd48351a8ece749857290fa145c8dbd28",
+    "groups_version": "5a483d19b0ae68b2316e1cfa7344ebb86a55662739e399ee83fdf7b7ca6c469c",
     "ingredients": [
       {
         "status": "single",
@@ -9,7 +9,7 @@
           {
             "id": "beta_blocker",
             "name": "Beta blokerler",
-            "text": "Bu gruptaki ilaçlar yüksek tansiyonda ve kalpten kaynaklanan göğüs ağrısı (anjina) veya düzensiz kalp atışı gibi bazı kalp hastalıklarında kullanılır.",
+            "text": "Bu gruptaki ilaçlar yüksek tansiyonda ve kalpten kaynaklanan göğüs ağrısı (anjina) veya düzensiz kalp atışı gibi bazı kalp hastalıklarında kullanılır. Bazıları migren gibi başka durumlarda da kullanılır.",
             "codes": [
               "C07AB02"
             ],
@@ -71,7 +71,7 @@
   },
   "fr": {
     "language": "de",
-    "groups_version": "d03996d1624fc7d40ff5eea25742b14cd48351a8ece749857290fa145c8dbd28",
+    "groups_version": "5a483d19b0ae68b2316e1cfa7344ebb86a55662739e399ee83fdf7b7ca6c469c",
     "ingredients": [
       {
         "status": "mixed",
@@ -115,7 +115,7 @@
   },
   "long": {
     "language": "en",
-    "groups_version": "d03996d1624fc7d40ff5eea25742b14cd48351a8ece749857290fa145c8dbd28",
+    "groups_version": "5a483d19b0ae68b2316e1cfa7344ebb86a55662739e399ee83fdf7b7ca6c469c",
     "ingredients": [
       {
         "status": "mixed",
@@ -132,7 +132,7 @@
           {
             "id": "inhaled_corticosteroid",
             "name": "Inhaled corticosteroids",
-            "text": "Medicines in this group reduce swelling and irritation (inflammation) in the airways. They are used for asthma and for other long-term lung conditions, such as COPD.",
+            "text": "Medicines in this group reduce swelling and irritation (inflammation) in the airways. They are used for asthma and for some other lung conditions.",
             "codes": [
               "R03BA02"
             ],
@@ -177,7 +177,7 @@
   },
   "none": {
     "language": "es",
-    "groups_version": "d03996d1624fc7d40ff5eea25742b14cd48351a8ece749857290fa145c8dbd28",
+    "groups_version": "5a483d19b0ae68b2316e1cfa7344ebb86a55662739e399ee83fdf7b7ca6c469c",
     "ingredients": [
       {
         "status": "none",

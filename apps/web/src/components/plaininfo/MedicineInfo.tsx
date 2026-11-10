@@ -162,6 +162,9 @@ function LabelQuote({
       </a>
       <p className="text-sm text-muted">{t("PlainInfo.official.us.company")}</p>
       <p className="text-sm text-muted">{t("PlainInfo.official.us.differ")}</p>
+      <p className="text-sm text-muted">
+        {t("PlainInfo.official.us.notForYou")}
+      </p>
       <p className="text-sm text-muted">{meta.join(" · ")}</p>
       {outdated ? (
         <p className="text-sm font-bold">

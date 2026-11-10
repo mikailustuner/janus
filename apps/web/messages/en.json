@@ -2591,7 +2591,7 @@
     }
   },
   "PlainInfo": {
-    "link": "What is this medicine for?",
+    "link": "What kind of medicine is this?",
     "eyebrow": "Medicine information",
     "summary": "In plain words: what kind of medicine this is. Not advice about your own care.",
     "back": "Back to the medicines",
@@ -2630,6 +2630,7 @@
         "data": "openFDA data of {date}",
         "company": "The company that markets the product wrote this text and submitted it to the FDA. According to openFDA, the FDA has not verified it.",
         "differ": "It may differ from the leaflet in your box. It is written for health professionals.",
+        "notForYou": "This is a quotation from the label. Janus does not say whether it applies to you.",
         "outdated": "The label data Janus holds is more than two weeks old."
       },
       "page": {

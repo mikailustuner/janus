@@ -2591,7 +2591,7 @@
     }
   },
   "PlainInfo": {
-    "link": "Wofür ist dieses Medikament?",
+    "link": "Was für ein Medikament ist das?",
     "eyebrow": "Information zum Medikament",
     "summary": "In einfachen Worten: was für ein Medikament das ist. Kein Rat zu Ihrer eigenen Behandlung.",
     "back": "Zurück zu den Medikamenten",
@@ -2605,7 +2605,7 @@
     "group": {
       "label": "Medikamentengruppe",
       "code": "ATC-Code",
-      "mixed": "Medikamente mit diesem Wirkstoff gehören zu mehr als einer Gruppe. Janus kann am Code nicht erkennen, zu welcher Gruppe dieses Medikament gehört.",
+      "mixed": "Medikamente mit diesem Wirkstoff gehören zu mehr als einer Gruppe. Janus kann anhand des Codes nicht erkennen, zu welcher Gruppe dieses Medikament gehört.",
       "otherUses": "Derselbe Wirkstoff ist auch in anderen Arten von Medikamenten enthalten, die Janus nicht beschreibt.",
       "none": "Janus hat für die Gruppe dieses Wirkstoffs keine Beschreibung in einfachen Worten. Das sagt nichts über den Wirkstoff aus."
     },
@@ -2613,24 +2613,25 @@
     "method": "Die Sätze zu den Gruppen sind feste Texte, die für Janus geschrieben wurden. Sie werden automatisch anhand des ATC-Codes des Wirkstoffs ausgewählt.",
     "limits": {
       "heading": "Was diese Seite Ihnen nicht sagen kann",
-      "group": "Ein Satz über eine Gruppe beschreibt die Gruppe, nicht Sie. Ein Medikament kann auch aus einem Grund verordnet worden sein, der hier nicht genannt ist.",
+      "group": "Ein Satz über eine Gruppe beschreibt die Gruppe, nicht Sie. Ein Medikament kann auch aus einem Grund angewendet werden, der hier nicht genannt ist.",
       "dose": "Janus sagt nicht, wie viel von einem Medikament einzunehmen ist oder wie es anzuwenden ist.",
-      "ask": "In der Apotheke oder ärztlichen Praxis kann man Ihnen sagen, warum dieses Medikament verordnet wurde und wie es anzuwenden ist. Zeigen Sie dort die Packung."
+      "ask": "In der Apotheke oder ärztlichen Praxis kann man Ihnen sagen, warum Sie dieses Medikament bekommen haben und wie es anzuwenden ist. Zeigen Sie dort die Packung."
     },
     "official": {
       "heading": "Was die offizielle Quelle sagt",
       "us": {
-        "title": "Text der Produktinformation aus den Vereinigten Staaten (Datenbank der FDA)",
+        "title": "Fachinformation aus den Vereinigten Staaten (Etikett in der FDA-Datenbank)",
         "language": "Auf Englisch, wie veröffentlicht. Nicht übersetzt.",
-        "section": "Abschnitt „Indications and Usage“ der Produktinformation dieses Produkts",
-        "cut": "Der Abschnitt ist länger als hier gezeigt. Der Rest steht in der vollständigen Produktinformation.",
-        "open": "Vollständige Produktinformation bei DailyMed öffnen (auf Englisch)",
+        "section": "Abschnitt „Indications and Usage“ der Fachinformation dieses Produkts",
+        "cut": "Der Abschnitt ist länger als hier gezeigt. Der Rest steht in der vollständigen Fachinformation.",
+        "open": "Vollständige Fachinformation bei DailyMed öffnen (auf Englisch)",
         "version": "Version {version}",
         "dated": "vom {date}",
         "data": "openFDA, Datenstand {date}",
         "company": "Das Unternehmen, das das Produkt vertreibt, hat diesen Text geschrieben und bei der FDA eingereicht. Laut openFDA hat die FDA ihn nicht überprüft.",
         "differ": "Er kann vom Beipackzettel in Ihrer Packung abweichen. Er ist für medizinisches Fachpersonal geschrieben.",
-        "outdated": "Die Daten zu den Produktinformationen in Janus sind älter als zwei Wochen."
+        "notForYou": "Das ist ein Zitat aus der Fachinformation. Janus sagt nicht, ob es auf Sie zutrifft.",
+        "outdated": "Die Daten zu den Fachinformationen in Janus sind älter als zwei Wochen."
       },
       "page": {
         "title": {
@@ -2645,8 +2646,8 @@
         "open": "Produktseite öffnen"
       },
       "none": {
-        "not_found_us": "Janus hat zu diesem Produktcode keinen Text der Produktinformation. Janus führt nur Produktinformationen von Produkten mit einer FDA-Zulassungsnummer.",
-        "several_labels": "Mehr als eine Produktinformation nennt diesen Produktcode. Janus wählt nicht zwischen ihnen aus.",
+        "not_found_us": "Janus hat zu diesem Produktcode keinen Text der Fachinformation. Janus führt nur Fachinformationen von Produkten mit einer FDA-Zulassungsnummer.",
+        "several_labels": "Mehr als eine Fachinformation nennt diesen Produktcode. Janus wählt nicht zwischen ihnen aus.",
         "not_found_page": "Janus konnte die Seite dieses Produkts über seinen Namen nicht finden.",
         "source_unavailable": "Die offiziellen Texte sind in Janus gerade nicht verfügbar.",
         "demo": "Die Demo-Produkte sind erfunden; deshalb gibt es für sie keinen offiziellen Text.",
