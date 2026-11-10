@@ -472,3 +472,24 @@ Process lessons:
 - Subagents left unbounded polling loops; every brief now requires bounded waits.
 
 State at the end: web 528 unit tests, Playwright 367 passed (axe, 375 and 1280 px, both themes, five languages), API 960 tests, CI green on all five jobs. Open items for experts are in `docs/pre-launch-checklist.md`.
+
+## Phase 5 (2026-11-09) — public deploy, integrations and research data, built with Claude Code (Claude Opus 5.5)
+
+Same method: a spec per item under `.kiro/specs/` (deploy, mcp-server, cds-hooks, data-quality, faers-onset-table), steering read first, the `.kiro/hooks` running after every write, and separate review passes from `.kiro/agents`.
+- **deploy:** the public site at https://janusmeds.org on the owner's server behind a locally managed Cloudflare Tunnel: no inbound port, API and database on an internal Docker network, non-root read-only containers, host firewall rules that keep Janus containers away from the server and private ranges, build-on-host releases with health-gated swap, isolation probes and smoke tests, automatic rollback. A weekly timer fetches the TİTCK list on the server and rebuilds the data-quality report.
+- **mcp-server:** seven read-only MCP tools over the public API (`.kiro/settings/mcp.json` starts it in Kiro).
+- **cds-hooks:** CDS Hooks 2.0.1 `order-select` / `order-sign` service returning information cards from the cascade engine.
+- **data-quality:** weekly comparison of ingredient codes across TİTCK, Wikidata, openFDA, BDPM and CIMA (220 findings in the first run: 12 confirmed errors, 102 for a pharmacist, 106 explained differences); upstream report drafts kept private.
+- **faers-onset-table:** descriptive FAERS time-to-onset for all 65 PIPC rows (32 with usable intervals).
+- **simulation service:** server-side virtual-population runs (R + httk) behind a database queue with two concurrent jobs, a queue cap, per-job time limit and a keyed-hash rate limit (no IP stored); no individual dosing, model error shown next to every result.
+- **Clinical White:** Glass Janus became a light-only clinical theme (owner decision) with a new hero image.
+- **Wording:** the "AI-reviewed, pending expert review" label was replaced by "Expert review has not yet been done" everywhere (owner decision).
+
+What the checks caught:
+- A local rehearsal of the deploy found that the API image could not start (repository-root paths at import), that the isolation probe passed without checking anything (`docker run` without `-i`), and that the stack shared the development compose project name; all fixed and now checked in CI.
+- The first public release served no images, fonts or scanner files (`public/` missing from the standalone image); the smoke test now checks static files.
+- A CDS Hooks property test generated an ingredient name ("SIN PROBLEMA") that tripped the medical-language list; the generator now excludes those words.
+- The pharmacologist pass on CDS Hooks found three blocking mapping issues (e.g. eye-drop codes carrying oral codes); all fixed.
+- The statistician pass on the onset table found zero-width bootstrap intervals on tied data and a date cluster that produced misleading medians; an exact interval and a cluster rule were added.
+
+Research (not product): several pre-registered experiments on open data (cascade signals, PK timing, label divergence, label-based cascade discovery, older-adult exposure, label PK atlas). Most hypotheses were not supported; the results are written up honestly, and one note is public (`docs/research/httk-pop-older-adult-exposure.md`). Expert review has not yet been done.
