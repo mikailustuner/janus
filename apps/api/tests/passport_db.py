@@ -19,7 +19,14 @@ from tests.resolution_db import reset
 
 KEYS = tuple(f"Q9999999{n:02d}" for n in range(1, 7))
 UNKNOWN_KEY = "Q999999990"  # never an ingredient of any synthetic dataset
-REGION = {"titck": "TR", "openfda_ndc": "US", "eu_fr_bdpm": "EU", "eu_es_cima": "EU"}
+REGION = {
+    "titck": "TR",
+    "openfda_ndc": "US",
+    "eu_fr_bdpm": "EU",
+    "eu_es_cima": "EU",
+    "eu_it_aifa": "EU",
+    "ca_dpd": "CA",
+}
 PRODUCT_SOURCES = tuple(REGION)
 HOMEOPATHIC_NAME = "TESTNAME POUR PRÉPARATIONS HOMÉOPATHIQUES"
 STRENGTHS = {
@@ -35,6 +42,24 @@ STRENGTHS = {
     ],
     "eu_fr_bdpm": ["5 mg", "5000 microgrammes", "10 mg", "2 CH", None],
     "eu_es_cima": ["5 mg", None],
+    "eu_it_aifa": [
+        "5 milligrammi",
+        "5000 microgrammi",
+        "50 milligram(s)/millilitre",
+        "50 gram(s)/litre",
+        "5 percent",
+        None,
+    ],
+    "ca_dpd": [
+        "5 MG",
+        "5000 MCG",
+        "250 MG / 5 ML",
+        "50 MG / ML",
+        "50 G / L",
+        "100 UNIT / ML",
+        "5 % / W/W",
+        None,
+    ],
 }
 FORMS: dict[str, list[tuple[str | None, tuple[str, ...]]]] = {
     "titck": [(None, ())],
@@ -56,6 +81,9 @@ FORMS: dict[str, list[tuple[str | None, tuple[str, ...]]]] = {
         (None, ()),
     ],
     "eu_es_cima": [(None, ())],
+    # No row of the committed table names these sources yet, so their group is unknown.
+    "eu_it_aifa": [("Compressa", ()), ("Soluzione orale", ()), (None, ())],
+    "ca_dpd": [("TABLET", ("ORAL",)), ("SOLUTION", ("ORAL",)), (None, ())],
 }
 
 
@@ -92,7 +120,13 @@ def ingredients(draw: st.DrawFn, source: str) -> Ing:
 
 @st.composite
 def products(draw: st.DrawFn, source: str | None = None) -> Product:
-    s = source or draw(st.sampled_from(["openfda_ndc", "eu_fr_bdpm"] * 3 + ["titck", "eu_es_cima"]))
+    s = source or draw(
+        st.sampled_from(
+            ["openfda_ndc", "eu_fr_bdpm"] * 3
+            + ["eu_it_aifa", "ca_dpd"] * 2
+            + ["titck", "eu_es_cima"]
+        )
+    )
     form, routes = draw(st.sampled_from(FORMS[s]))
     ings = draw(
         st.lists(ingredients(s), min_size=1, max_size=3).filter(
@@ -111,6 +145,8 @@ SOURCE_DATES = {
     "openfda_ndc": ("US", "2026-11-06", 7),
     "eu_fr_bdpm": ("EU", "2026-11-03", 30),
     "eu_es_cima": ("EU", "2026-11-07", 7),
+    "eu_it_aifa": ("EU", "2026-11-10", 7),
+    "ca_dpd": (None, "2026-11-02", 30),
     "wikidata": (None, "2026-11-07", 30),
 }
 

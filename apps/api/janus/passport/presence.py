@@ -19,13 +19,16 @@ from janus.passport.strength import StrengthCode, strength_code
 from janus.resolution.model import is_homeopathic_product
 from janus.resolution.prepare_eu import is_homeopathic_name
 
-# (source id, region, country) in the fixed answer order TR, EU-FR, EU-ES, EU-DE, US (Req 2.1).
+# (source id, region, country) in the fixed answer order TR, EU-FR, EU-ES, EU-DE, US (Req 2.1),
+# then EU-IT and CA (national-products Req 6.1: appended, so indexes 0 to 4 keep their meaning).
 SOURCE_ORDER: tuple[tuple[str | None, str, str | None], ...] = (
     ("titck", "TR", None),
     ("eu_fr_bdpm", "EU", "FR"),
     ("eu_es_cima", "EU", "ES"),
     (None, "EU", "DE"),
     ("openfda_ndc", "US", None),
+    ("eu_it_aifa", "EU", "IT"),
+    ("ca_dpd", "CA", None),
 )
 
 

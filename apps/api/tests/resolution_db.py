@@ -11,18 +11,21 @@ from janus.resolution.canonical import content_hash
 from janus.resolution.load import Artifact, Inputs
 from janus.resolution.prepare import OPENFDA, TITCK, WIKIDATA
 from janus.resolution.prepare_eu import ES_CIMA, FR_BDPM
+from janus.resolution.prepare_national import CA_DPD, IT_AIFA
 from tests.resolution_strategies import ROUTES, RULES
 
-CADENCES = {TITCK: 7, OPENFDA: 7, WIKIDATA: 30, FR_BDPM: 30, ES_CIMA: 7}
+CADENCES = {TITCK: 7, OPENFDA: 7, WIKIDATA: 30, FR_BDPM: 30, ES_CIMA: 7, CA_DPD: 30, IT_AIFA: 7}
 _META = {
     TITCK: ("titck-2", "TR", "2026-11-06", "Redistribution terms unclear"),
     OPENFDA: ("us_ndc-2", "US", "2026-11-06", "CC0 1.0 (public domain)"),
     WIKIDATA: ("wikidata_ingredients-1", None, "2026-11-07T16:39:17+00:00", "CC0 1.0"),
     FR_BDPM: ("eu_fr_bdpm-1", "EU", "2026-11-03", "Licence Ouverte (Etalab)"),
     ES_CIMA: ("eu_es_cima-1", "EU", "2026-11-07", "Reuse with attribution (Ley 37/2007)"),
+    CA_DPD: ("ca_dpd-1", None, "2026-11-02", "Open Government Licence \u2013 Canada (version 2.0)"),
+    IT_AIFA: ("eu_it_aifa-1", "EU", "2026-11-10", "CC BY 4.0"),
 }
-# The pipelines' manifests name the EU sources by their registry ids.
-MANIFEST_ID = {FR_BDPM: "bdpm", ES_CIMA: "cima"}
+# The pipelines' manifests name these sources by their registry ids.
+MANIFEST_ID = {FR_BDPM: "bdpm", ES_CIMA: "cima", CA_DPD: "dpd", IT_AIFA: "aifa"}
 
 
 def artifact(source_id: str, rows: Sequence[Any], run: str = "run-1") -> Artifact:
@@ -49,8 +52,11 @@ def inputs(
     run: str = "run-1",
     fr: Sequence[Any] | None = None,
     es: Sequence[Any] | None = None,
+    ca: Sequence[Any] | None = None,
+    it: Sequence[Any] | None = None,
 ) -> Inputs:
-    """`fr` and `es` are the BDPM and Nomenclátor rows; `None` leaves the source out."""
+    """`fr`, `es`, `ca` and `it` are the BDPM, Nomenclátor, DPD and AIFA rows; `None` leaves the
+    source out."""
     artifacts = {
         TITCK: artifact(TITCK, tr, run),
         OPENFDA: artifact(OPENFDA, us, run),
@@ -60,6 +66,10 @@ def inputs(
         artifacts[FR_BDPM] = artifact(FR_BDPM, fr, run)
     if es is not None:
         artifacts[ES_CIMA] = artifact(ES_CIMA, es, run)
+    if ca is not None:
+        artifacts[CA_DPD] = artifact(CA_DPD, ca, run)
+    if it is not None:
+        artifacts[IT_AIFA] = artifact(IT_AIFA, it, run)
     return Inputs(
         artifacts,
         RULES,

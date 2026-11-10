@@ -47,6 +47,15 @@ from janus.resolution.prepare_eu import (
     cima_products,
     is_homeopathic_name,
 )
+from janus.resolution.prepare_national import (
+    CA_DPD,
+    IT_AIFA,
+    NationalProduct,
+    aifa_products,
+    bridge_key,
+    dpd_products,
+    map_national_name,
+)
 
 TITCK = "titck"
 OPENFDA = "openfda_ndc"
@@ -101,7 +110,7 @@ class PreparedIngredient:
 class PreparedProduct:
     source_id: str
     product_id: int
-    region: Literal["TR", "US", "EU"]
+    region: Literal["TR", "US", "EU", "CA"]
     product_name: str | None
     brand_name: str | None
     generic_name: str | None
@@ -135,7 +144,7 @@ class IngredientRecord:
 class NameEntry:
     name_key: str
     kind: Literal["product", "ingredient"]
-    region: str  # "TR", "US", "EU" or "" for ingredients (all regions)
+    region: str  # "TR", "US", "EU" or "" for ingredients (all regions); never "CA" (DN4)
     ref: str  # candidate id or QID
     display: str
 
@@ -189,6 +198,7 @@ class _Raw:
     names: list[tuple[str, str | None]]  # (published name, strength)
     lang: Lang
     matches: list[Match] = field(default_factory=list[Match])
+    national: bool = False  # Canada, Italy: mapped by `map_national_name`
 
 
 def _titck_products(rows: Sequence[Row]) -> list[_Raw]:
@@ -282,6 +292,10 @@ def _eu_raws(products: Sequence[EuProduct], stats: Counter[str]) -> list[_Raw]:
     return out
 
 
+def _national_raws(products: Sequence[NationalProduct]) -> list[_Raw]:
+    return [_Raw(p.product, list(p.names), lang="en", national=True) for p in products]
+
+
 def eligible_items(
     wikidata_rows: Sequence[Row],
     rules: CombinationRules,
@@ -342,11 +356,14 @@ def prepare_dataset(
     *,
     fr_rows: Sequence[Row] | None = None,
     es_rows: Sequence[Row] | None = None,
+    ca_rows: Sequence[Row] | None = None,
+    it_rows: Sequence[Row] | None = None,
     component_codes: Sequence[ComponentCode] = (),
     code_exclusions: Sequence[CodeExclusion] = (),
 ) -> PreparedDataset:
     """`fr_rows` and `es_rows` are the BDPM and Nomenclátor artifacts; `None` means the source
-    is not loaded (no section, no products).
+    is not loaded (no section, no products). `ca_rows` and `it_rows` are the Health Canada DPD
+    and AIFA artifacts, likewise optional (national-products Req 4.6).
 
     `curated_rows` are Janus ingredient keys (`J<n>`) in the shape of Wikidata rows, for
     substances that no Wikidata item in the extract covers with a code (owner decision,
@@ -368,6 +385,15 @@ def prepare_dataset(
         raws += _eu_raws(bdpm_products(fr_rows), stats)
     if es_rows is not None:
         raws += _eu_raws(cima_products(es_rows), stats)
+    left_out: dict[str, Mapping[str, int]] = {}
+    for source_id, national_rows, build in (
+        (CA_DPD, ca_rows, dpd_products),
+        (IT_AIFA, it_rows, aifa_products),
+    ):
+        if national_rows is not None:
+            built, left = build(national_rows)
+            raws += _national_raws(built)
+            left_out[source_id] = left.counts
 
     # TİTCK ATC bridge (step 6): single-ingredient rows whose valid code belongs to one item.
     bridge: defaultdict[str, set[str]] = defaultdict(set)
@@ -377,14 +403,29 @@ def prepare_dataset(
             if not base.is_combination(p) and len(code2q.get(p, ())) == 1:
                 bridge[raw.names[0][0]].update(code2q[p])
 
+    # National ATC bridge (national-products Req 3.4, DN3): the same rule, per source, for Canada
+    # and Italy. Keyed by source and folded name, so one source never maps another's names.
+    national: defaultdict[tuple[str, str], set[str]] = defaultdict(set)
+    for raw in raws:
+        p = raw.product["published_atc"]
+        if raw.national and len(raw.names) == 1 and is_ingredient_level(p):
+            if not base.is_combination(p) and len(code2q.get(p, ())) == 1:
+                national[bridge_key(raw.product["source_id"], raw.names[0][0])].update(code2q[p])
+    national_bridge = {k: frozenset(v) for k, v in national.items()}
+
     index = NameIndex.build((index_item(r) for r in items.values()), synonyms, bridge, acid)
     index.acid.check_acids(lambda label: label_keys(index, label))  # Req 12.7: refuse a bad row
-    cache: dict[tuple[str, Lang], Match] = {}
+    cache: dict[tuple[str, str], Match] = {}
     for raw in raws:
+        source = raw.product["source_id"] if raw.national else ""
         for name, _ in raw.names:
-            key = (name, raw.lang)
+            key = (name, source or raw.lang)
             if key not in cache:
-                cache[key] = map_name(name, index, lang=raw.lang)
+                cache[key] = (
+                    map_national_name(source, name, index, national_bridge)
+                    if raw.national
+                    else map_name(name, index, lang=raw.lang)
+                )
             raw.matches.append(cache[key])
 
     # Observation rule input: codes of TİTCK and Nomenclátor products with >= 2 distinct mapped
@@ -461,7 +502,7 @@ def prepare_dataset(
 
     names = _name_entries(products, items)
     audit = _audit(products, wikidata_codes, check)
-    coverage = _coverage(products, records, items, stats)
+    coverage = _coverage(products, records, items, stats, left_out)
     return PreparedDataset(tuple(products), records, names, audit, coverage, tuple(component_codes))
 
 
@@ -540,6 +581,8 @@ def _name_entries(
     for p in products:
         if p.region == "US" and p.product_type not in FINISHED_TYPES:
             continue
+        if p.region == "CA":
+            continue  # Canadian products are passport targets only, never candidates (Req 7.4, DN4)
         for display in sorted(n for n in (p.product_name, p.brand_name, p.generic_name) if n):
             key = fold(display)
             if key:
@@ -645,6 +688,7 @@ def _coverage(
     records: Mapping[str, IngredientRecord],
     items: Mapping[str, Row],
     stats: Counter[str],
+    left_out: Mapping[str, Mapping[str, int]] | None = None,
 ) -> dict[str, Any]:
     tr = [p for p in products if p.source_id == TITCK]
     us = [p for p in products if p.source_id == OPENFDA]
@@ -688,4 +732,12 @@ def _coverage(
     es = [p for p in products if p.source_id == ES_CIMA]
     if es:
         out[ES_CIMA] = _source_coverage(es)
+    for source_id in (CA_DPD, IT_AIFA):
+        held = [p for p in products if p.source_id == source_id]
+        if held:
+            out[source_id] = {
+                **_source_coverage(held),
+                "with_identifier": sum(1 for p in held if p.codes),
+                "left_out": dict(sorted((left_out or {}).get(source_id, {}).items())),
+            }
     return out

@@ -383,8 +383,8 @@ def _fake_reader(invalid: frozenset[str]) -> Any:
 
 @settings(max_examples=40)
 @given(
-    present=st.sets(st.sampled_from([FR_BDPM, ES_CIMA])),
-    invalid=st.sets(st.sampled_from([FR_BDPM, ES_CIMA])),
+    present=st.sets(st.sampled_from(load_module.OPTIONAL)),
+    invalid=st.sets(st.sampled_from(load_module.OPTIONAL)),
 )
 def test_p47_gather_any_subset_loads_and_a_present_invalid_source_refuses(
     present: set[str], invalid: set[str]
@@ -411,6 +411,6 @@ def test_p47_gather_any_subset_loads_and_a_present_invalid_source_refuses(
         finally:
             mp.undo()
     assert set(got.artifacts) == {"titck", "openfda_ndc", "wikidata", *present}
-    assert set(missing_sources(got)) == {FR_BDPM, ES_CIMA} - present
+    assert set(missing_sources(got)) == set(load_module.OPTIONAL) - present
     assert set(got.cadences) == set(got.artifacts)
     assert got.cadences.get(FR_BDPM, 30) == 30 and got.cadences.get(ES_CIMA, 7) == 7

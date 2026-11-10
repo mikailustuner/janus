@@ -67,6 +67,8 @@ STATUS: dict[str, list[tuple[str, ...]]] = {
     "eu_es_cima": [("commercialised:true",), ("commercialised:false", "serialised:true"), ()],
     "openfda_ndc": [()],
     "titck": [()],
+    "eu_it_aifa": [("Autorizzata", "Procedura Nazionale"), ()],
+    "ca_dpd": [("MARKETED",), ()],
 }
 TYPES = ["HUMAN PRESCRIPTION DRUG", "HUMAN OTC DRUG", None, *sorted(NOT_FINISHED_TYPES)[:2]]
 END_DATES = [None, None, "20261109", "20261110", "20491231", "x"]

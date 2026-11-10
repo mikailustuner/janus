@@ -37,6 +37,8 @@ ATTRIBUTION = {
     "eu_fr_bdpm": "bdpm",
     "eu_es_cima": "cima",
     "openfda_ndc": "openfda",
+    "eu_it_aifa": "aifa",
+    "ca_dpd": "dpd",
 }
 
 

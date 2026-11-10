@@ -231,7 +231,7 @@ def test_p12_boundaries_are_accepted(
 # --- P13 ---------------------------------------------------------------------------------------
 @settings(max_examples=DB_EXAMPLES)
 @given(
-    loaded=st.lists(st.sampled_from(PRODUCT_SOURCES), max_size=4, unique=True),
+    loaded=st.lists(st.sampled_from(PRODUCT_SOURCES), max_size=6, unique=True),
     days=st.integers(0, 60),
 )
 def test_p13_sources_named(
@@ -248,7 +248,16 @@ def test_p13_sources_named(
     assert r.status_code == 200, r.text
     out = r.json()
     ids = [s["source_id"] for s in out["sources"]]
-    assert ids == ["titck", "eu_fr_bdpm", "eu_es_cima", None, "openfda_ndc"]
+    assert ids == [
+        "titck",
+        "eu_fr_bdpm",
+        "eu_es_cima",
+        None,
+        "openfda_ndc",
+        "eu_it_aifa",
+        "ca_dpd",
+    ]
+    assert [(s["region"], s["country"]) for s in out["sources"][5:]] == [("EU", "IT"), ("CA", None)]
     for s in out["sources"]:
         sid = s["source_id"]
         assert s["as_published"] == (sid == "eu_fr_bdpm")
@@ -261,12 +270,12 @@ def test_p13_sources_named(
         elif sid in loaded:
             _, snap, cadence = SOURCE_DATES[sid]
             assert s["status"] == "loaded" and s["snapshot_date"] == snap
-            assert s["attribution"] in ("titck", "bdpm", "cima", "openfda")
+            assert s["attribution"] in ("titck", "bdpm", "cima", "openfda", "aifa", "dpd")
             assert s["stale"] == is_stale(dt.date.fromisoformat(snap), day, cadence)
         else:
             assert (s["status"], s["reason"]) == ("source_unavailable", "not_loaded")
     for item in out["items"]:
-        assert [a["source"] for a in item["answers"]] == [0, 1, 2, 3, 4]
+        assert [a["source"] for a in item["answers"]] == list(range(len(out["sources"])))
         for a, s in zip(item["answers"], out["sources"], strict=True):
             if s["status"] != "loaded":
                 assert a["status"] == "source_unavailable" and a["comparison"] is None

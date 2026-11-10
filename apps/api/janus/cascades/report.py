@@ -72,8 +72,9 @@ def read_rows(
             str(r[0]), int(r[1]), str(r[2]), r[3], r[4], (str(r[0]), int(r[1])) in homeopathic
         )
         for r in conn.execute(
+            # Canadian products (region CA) are passport targets only and are not rule coverage.
             "SELECT source_id, product_id, region, product_type, published_atc FROM res_product "
-            "WHERE dataset_id = %s",
+            "WHERE dataset_id = %s AND region IN ('TR', 'US', 'EU')",
             (ds,),
         )
     ]

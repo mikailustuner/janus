@@ -12,6 +12,11 @@ BDPM, the form implies) what the amount refers to:
   countable form groups, else `None` (the reference quantity is not loaded).
 - `eu_es_cima`: `A U`, parsed for reports; the basis is not loaded, so always `None`.
 - `titck`: no strength stored; always `None`.
+- `ca_dpd`: `A U` (per unit only for the countable form groups, as for the BDPM), `A U / N ML` or
+  `A U / ML` (per mL), `A U / N L` (per mL, A / (1000 N)), `A U / N G` (per g). Every other
+  reference unit (vial, sachet, actuation, hour, `W/W` …) gives `None`. `UNIT` is not IU.
+- `eu_it_aifa`: `A U` with AIFA's unit names (`AIFA_UNITS`): plain mass and international units
+  (per unit only for the countable form groups) and mass per millilitre, litre or gram.
 
 U is a mass unit (`kg`, `g`, `mg`, `ug`, `mcg`, `µg`, `microgramme(s)`, `microgramo(s)`) or IU
 (`[iU]`, `[IU]`, `UI`). Homeopathic units, `[USP'U]`, `%`, mass-per-mass ratios and every other
@@ -41,7 +46,7 @@ Basis = Literal["unit", "mL", "g"]
 AMOUNT = re.compile(r"^(0|[1-9][0-9]{0,8})(\.[0-9]{0,5}[1-9])?$")  # request pattern (§3.1)
 SCALE = 10**6  # at most six decimals
 # Sources for which `strength_code` can give a code at all (design §3.2 `can_compare.strength`).
-CODED_SOURCES: frozenset[str] = frozenset({"openfda_ndc", "eu_fr_bdpm"})
+CODED_SOURCES: frozenset[str] = frozenset({"openfda_ndc", "eu_fr_bdpm", "ca_dpd", "eu_it_aifa"})
 
 MASS_UG: dict[str, int] = {
     "kg": 10**9,
@@ -69,6 +74,31 @@ _EU = re.compile(
     r"(?:,(?P<f>[0-9]+))?\s*(?P<u>[a-zµμ\[\]]+)$",
     re.IGNORECASE,
 )
+
+
+# Health Canada DPD: `A U` or `A U / [N ]DU`, as composed from the published cells by
+# `resolution/prepare_national.dpd_strength`.
+_CA = re.compile(
+    rf"^(?P<a>{_DEC})\s*(?P<u>[a-zµμ]+)(?:\s*/\s*(?:(?P<n>{_DEC})\s*)?(?P<du>[a-z]+))?$",
+    re.IGNORECASE,
+)
+# Reference units of the DPD that are a volume or a mass: (basis, how many of it one `DU` is).
+_CA_PER: dict[str, tuple[Basis, int]] = {"ml": ("mL", 1), "l": ("mL", 1000), "g": ("g", 1)}
+# AIFA unit names: (unit, micrograms or IU per one, basis, how many of the basis the name means).
+AIFA_UNITS: dict[str, tuple[Unit, int, Basis | None, int]] = {
+    "milligrammi": ("ug", 10**3, None, 1),
+    "grammi": ("ug", 10**6, None, 1),
+    "microgrammi": ("ug", 1, None, 1),
+    "international unit(s)": ("IU", 1, None, 1),
+    "milligram(s)/millilitre": ("ug", 10**3, "mL", 1),
+    "microgram(s)/millilitre": ("ug", 1, "mL", 1),
+    "gram(s)/millilitre": ("ug", 10**6, "mL", 1),
+    "gram(s)/litre": ("ug", 10**6, "mL", 1000),
+    "milligram(s)/litre": ("ug", 10**3, "mL", 1000),
+    "milligram(s)/gram": ("ug", 10**3, "g", 1),
+    "microgram(s)/gram": ("ug", 1, "g", 1),
+}
+_IT = re.compile(rf"^(?P<a>{_DEC}) (?P<u>.+)$")
 
 
 @dataclass(frozen=True)
@@ -144,6 +174,32 @@ def _parse_eu(published: str) -> Quantity | None:
     return Quantity(value * unit[1], unit[0], None)
 
 
+def _parse_ca(published: str) -> Quantity | None:
+    m = _CA.fullmatch(published.strip())
+    if m is None:
+        return None
+    unit = _unit(m["u"])
+    if unit is None or unit[0] != "ug":
+        return None  # `UNIT` is not an international unit; `%` and the like are not a mass
+    amount = Fraction(m["a"]) * unit[1]
+    if m["du"] is None:
+        return Quantity(amount, unit[0], None)
+    per = _CA_PER.get(m["du"].lower())
+    n = Fraction(m["n"]) if m["n"] else Fraction(1)
+    if per is None or n <= 0:
+        return None
+    return Quantity(amount / (n * per[1]), unit[0], per[0])
+
+
+def _parse_it(published: str) -> Quantity | None:
+    m = _IT.fullmatch(published.strip())
+    spec = AIFA_UNITS.get(m["u"]) if m else None
+    if m is None or spec is None:
+        return None
+    unit, factor, basis, per = spec
+    return Quantity(Fraction(m["a"]) * factor / per, unit, basis)
+
+
 def parse(source_id: str, published: str | None) -> Quantity | None:
     """The quantity a source's published strength states, or `None` (never raises)."""
     if not published:
@@ -152,6 +208,10 @@ def parse(source_id: str, published: str | None) -> Quantity | None:
         return _parse_us(published)
     if source_id in ("eu_fr_bdpm", "eu_es_cima"):
         return _parse_eu(published)
+    if source_id == "ca_dpd":
+        return _parse_ca(published)
+    if source_id == "eu_it_aifa":
+        return _parse_it(published)
     return None
 
 
@@ -166,6 +226,10 @@ def strength_code(
     basis = q.basis
     if source_id == "eu_fr_bdpm":
         basis = "unit" if form_group in COUNTABLE_GROUPS else None
+    elif source_id in ("ca_dpd", "eu_it_aifa"):
+        # No reference quantity stated: per unit only for tablets and capsules, as for the BDPM.
+        if basis is None and form_group in COUNTABLE_GROUPS:
+            basis = "unit"
     elif source_id != "openfda_ndc":
         basis = None  # the Nomenclátor basis is not loaded (OD1, owner decision 3)
     elif basis == "unit" and form_group not in COUNTABLE_GROUPS:

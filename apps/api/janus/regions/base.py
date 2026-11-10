@@ -18,10 +18,10 @@ from typing import Literal, Protocol
 from janus.resolution.gs1 import Gs1Data
 
 Region = Literal["TR", "US", "EU"]
-Country = Literal["FR", "ES"]
+Country = Literal["FR", "ES", "IT"]
 KeyKind = Literal[
     "tr_barcode", "ndc_product9", "ndc_package11", "fr_cip13", "es_cn", "es_ntin", "es_gtin"
-]
+]  # `ca_din` and `it_aic` are stored as identifiers; no adapter looks a scan up by them
 MatchedBy = Literal["barcode", "ndc_gtin", "cip13", "ntin", "gtin", "ai_712", "ntin_digits"]
 
 

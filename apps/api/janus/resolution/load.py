@@ -3,8 +3,8 @@
 `python -m janus.resolution.load [--data-dir PATH] [--activate DATASET]`
 
 Reads the `current` artifact of `titck`, `us_ndc` and `wikidata_ingredients` and, if they exist,
-of `eu_fr_bdpm` and `eu_es_cima` (optional, Req 9.7), refuses any artifact whose rows do not hash
-to its manifest, prepares the dataset (pure, `prepare.py`) and
+of `eu_fr_bdpm`, `eu_es_cima`, `ca_dpd` and `eu_it_aifa` (optional, Req 9.7), refuses any
+artifact whose rows do not hash to its manifest, prepares the dataset (pure, `prepare.py`) and
 writes it in one transaction that also switches `res_current`. A failure before commit leaves
 the served dataset untouched. The previous dataset is kept for `--activate`. Only reference data
 is written; this module and `contributions/repository.py` are the only users of `write_tx`.
@@ -43,6 +43,7 @@ from janus.resolution import (
     ndc,
     prepare,
     prepare_eu,
+    prepare_national,
 )
 from janus.resolution.anion_acid import AnionAcidTable
 from janus.resolution.atc import DATA_DIR, CombinationRules, RouteMap
@@ -61,6 +62,7 @@ from janus.resolution.prepare import (
     prepare_dataset,
 )
 from janus.resolution.prepare_eu import ES_CIMA, FR_BDPM
+from janus.resolution.prepare_national import CA_DPD, IT_AIFA
 from janus.settings import Settings
 
 PIPELINES: dict[str, str] = {
@@ -69,18 +71,24 @@ PIPELINES: dict[str, str] = {
     WIKIDATA: "wikidata_ingredients",
     FR_BDPM: "eu_fr_bdpm",
     ES_CIMA: "eu_es_cima",
+    CA_DPD: "ca_dpd",
+    IT_AIFA: "eu_it_aifa",
 }
-OPTIONAL: tuple[str, ...] = (FR_BDPM, ES_CIMA)  # a dataset without them still loads (Req 9.7)
+# A dataset without them still loads (Req 9.7).
+OPTIONAL: tuple[str, ...] = (FR_BDPM, ES_CIMA, CA_DPD, IT_AIFA)
 SCHEMAS: dict[str, frozenset[str]] = {
     TITCK: frozenset({"titck-2"}),
     OPENFDA: frozenset({"us_ndc-2"}),
     WIKIDATA: frozenset({"wikidata_ingredients-1"}),
     FR_BDPM: frozenset({"eu_fr_bdpm-1"}),
     ES_CIMA: frozenset({"eu_es_cima-1"}),
+    CA_DPD: frozenset({"ca_dpd-1"}),
+    IT_AIFA: frozenset({"eu_it_aifa-1"}),
 }
-# The pipelines' manifests and the source registry (pipelines/sources.toml) name the French and
-# Spanish sources `bdpm` and `cima`; the resolution tables use the pipeline names.
-REGISTRY_ID: dict[str, str] = {FR_BDPM: "bdpm", ES_CIMA: "cima"}
+# The pipelines' manifests and the source registry (pipelines/sources.toml) name the French,
+# Spanish, Canadian and Italian sources `bdpm`, `cima`, `dpd` and `aifa`; the resolution tables
+# use the pipeline names.
+REGISTRY_ID: dict[str, str] = {FR_BDPM: "bdpm", ES_CIMA: "cima", CA_DPD: "dpd", IT_AIFA: "aifa"}
 SYNONYMS_FILE = DATA_DIR / "ingredient_synonyms.csv"
 CURATED_FILE = DATA_DIR / "janus_ingredients.csv"
 COMPONENT_FILE = DATA_DIR / "component_codes.csv"
@@ -104,6 +112,7 @@ _CODE_MODULES = (
     ndc,
     prepare,
     prepare_eu,
+    prepare_national,
 )
 
 type Hook = Callable[[str], None]
@@ -361,6 +370,8 @@ def _prepare(inputs: Inputs) -> PreparedDataset:
         code_exclusions=inputs.code_exclusions,
         fr_rows=inputs.artifacts[FR_BDPM].rows if FR_BDPM in inputs.artifacts else None,
         es_rows=inputs.artifacts[ES_CIMA].rows if ES_CIMA in inputs.artifacts else None,
+        ca_rows=inputs.artifacts[CA_DPD].rows if CA_DPD in inputs.artifacts else None,
+        it_rows=inputs.artifacts[IT_AIFA].rows if IT_AIFA in inputs.artifacts else None,
     )
 
 
