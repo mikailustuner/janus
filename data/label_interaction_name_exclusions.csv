@@ -1,0 +1,28 @@
+name,reason
+calcium,"Stands for a class or a level in label text (""calcium channel blockers"", serum calcium)"
+potassium,"Stands for a class or a level (""potassium-sparing diuretics"", serum potassium)"
+sodium,"Part of salt names (""warfarin sodium"") and serum sodium"
+magnesium,Serum magnesium and magnesium-containing products in general
+iron,Iron-containing products in general
+zinc,Zinc-containing products in general
+glucose,Blood glucose
+estradiol,"""ethinyl estradiol"" is another substance"
+insulin,Any insulin
+thyroid,Thyroid function and thyroid hormones
+water,Not a medicine name in label text
+oxygen,Not a medicine name in label text
+prothrombin,"""prothrombin time"" (a laboratory test); found in 128 label sections of the 2026-11-09 download"
+platelet,"""platelet aggregation"", platelet counts"
+platelets,Platelet counts
+angiotensin ii,"""angiotensin II receptor blockers"" (a class)"
+norepinephrine,"Mostly the neurotransmitter (""serotonin and norepinephrine reuptake inhibitors"")"
+dopamine,"Mostly the neurotransmitter (""dopamine agonists"", ""dopamine antagonists"")"
+acetylcholine,The neurotransmitter
+somatostatin,"""somatostatin analogs"" (a class)"
+cholinesterase,"""cholinesterase inhibitors"" (a class)"
+cortisol,Plasma cortisol (a level)
+aldosterone,"""aldosterone antagonists"" (a class) and aldosterone levels"
+thrombin,"""direct thrombin inhibitors"" (a class)"
+bromide,"Part of salt names (""ipratropium bromide"")"
+ergot alkaloids,A class name
+estrogens,A class name

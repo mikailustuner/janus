@@ -2612,5 +2612,66 @@
     "errors": {
       "unavailable": "Geri çağırma kayıtları şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin."
     }
+  },
+  "SafetyCheck": {
+    "title": "Bu liste için diğer kontroller",
+    "intro": "Listenizin açık kaynaklarla otomatik karşılaştırmaları. Kaynakların ne yazdığını bildirir; tavsiye değildir.",
+    "review": "Uzman incelemesi henüz yapılmadı.",
+    "demo": "Listenin diğer kontrolleri (aynı etkin madde, prospektüs metni, antikolinerjik ölçekler) demoda çalışmaz.",
+    "checking": "Listenizdeki ilaçlar karşılaştırılıyor…",
+    "failed": "Janus bu kontrolleri yapamadı.",
+    "errors": {
+      "unavailable": "Bu kontroller şu anda kullanılamıyor. Lütfen daha sonra yeniden deneyin."
+    },
+    "notChecked": "{count, plural, one {Listenizdeki # etkin madde okunamadı ve karşılaştırılmadı.} other {Listenizdeki # etkin madde okunamadı ve karşılaştırılmadı.}}",
+    "about": "Bu kontrol hakkında",
+    "dup": {
+      "title": "Aynı etkin madde veya aynı grup",
+      "listLabel": "Aynı etkin maddeyi içeren veya aynı gruptan ilaçlar",
+      "sameIngredient": "{ingredient}, listenizdeki {count, plural, one {# ilaçta} other {# ilaçta}} var",
+      "sameGroup": "Listenizdeki {count, plural, one {# ilaç} other {# ilaç}} aynı ATC grubunda: {group}",
+      "unconfirmed": "Janus bu ilaçlardan en az birinin ürün formunu bilmiyor; bu yüzden grup uymayabilir.",
+      "advice": "Bu bilerek yapılmış olabilir; örneğin aynı ilacın iki farklı dozu. Janus bunu bilemez. Bir eczacı veya doktor sizinle birlikte bakabilir.",
+      "none": "Janus, listenizde okuyabildiği {count, plural, one {# etkin maddeyi} other {# etkin maddeyi}} karşılaştırdı: hiçbir etkin madde iki ilaçta yer almıyor ve hiçbir iki etkin madde aynı ATC kimyasal alt grubunda değil. Bu, ilaçlarınızda hiçbir sorun olmadığı anlamına gelmez.",
+      "method": "Etkin maddelerin ve ATC kodlarının otomatik karşılaştırması. Buradaki grup, ATC kimyasal alt grubudur (4. düzey); \"diğer\" alt grupları karşılaştırılmaz ve farklı alt gruplardaki ilaçlar yine de benzer etki gösterebilir. Yalnızca listenizin farklı satırlarındaki ilaçlar karşılaştırılır.",
+      "sources": "ATC kodlarının kaynağı: {sources}."
+    },
+    "int": {
+      "title": "Başka bir ilacı anan prospektüs metni",
+      "listLabel": "Listenizdeki başka bir etkin maddeyi anan ABD prospektüs pasajları",
+      "finding": "{label} için ABD prospektüsü {named} maddesini anıyor",
+      "labelRow": "{ingredient} prospektüsü (listeniz: {boxes})",
+      "namedRow": "Anılan: {ingredient} (listeniz: {boxes})",
+      "quote": "Prospektüsten, yayımlandığı gibi İngilizce alıntı Bu metin hekimler için yazılmıştır; size yönelik bir talimat değildir.",
+      "matched": "Eşleşen ad: {name}",
+      "labelMeta": "{substance} prospektüsü, yürürlük tarihi {date}. Set kimliği: {setId}.",
+      "dateUnknown": "tarih belirtilmemiş",
+      "open": "Bu prospektüsü DailyMed'de aç",
+      "opensNew": "(yeni sekmede açılır)",
+      "more": "{count, plural, one {Bu prospektüsün # pasajı daha onu anıyor.} other {Bu prospektüsün # pasajı daha onu anıyor.}}",
+      "truncated": "{total} prospektüs bulgusundan {shown} tanesi gösteriliyor.",
+      "advice": "Janus prospektüsten alıntı yapar, değerlendirmez. Bir pasaj bir etkiyi anlatıyor olabilir ya da etki görülmediğini söylüyor olabilir. Bir eczacı veya doktor bunu sizinle birlikte inceleyebilir.",
+      "none": "Janus, listenizdeki ilaçlar için {count, plural, one {# ABD prospektüsünün} other {# ABD prospektüsünün}} \"Drug Interactions\" bölümünü okudu ve listenizdeki başka bir etkin maddeyi anan bir pasaj bulmadı. Bu, ilaçların birbirini etkilemediği anlamına gelmez.",
+      "notFound": "Verilerde şu maddeler için ABD prospektüsü yok: {names}. Bunlar okunmadı.",
+      "labelsRead": "Okunan prospektüsler",
+      "readRow": "{ingredient}: {substance}, yürürlük tarihi {date}",
+      "method": "Listenizdeki diğer etkin maddeler için Janus'un elindeki adların, her etkin madde için bir ABD prospektüsünün (verilerdeki en yeni tek maddeli prospektüs) \"Drug Interactions\" bölümünde tam sözcük olarak otomatik aranması. İlaç sınıfları eşleştirilmez, başka ülkelerin prospektüsleri okunmaz ve prospektüs metni güncel olmayabilir.",
+      "source": "Kaynak: openFDA ilaç prospektüsü verileri (ABD Gıda ve İlaç Dairesi, CC0 1.0), veri tarihi {date}. FDA onayı değildir.",
+      "outdated": "Bu prospektüs verisi Janus'un beklediğinden eski.",
+      "unavailable": "Prospektüs metinleri şu anda yüklü değil, bu nedenle bu kontrol çalışmadı."
+    },
+    "burden": {
+      "title": "Yayımlanmış ölçeklerde antikolinerjik yük",
+      "listLabel": "Yayımlanmış antikolinerjik ölçekler ve listenizdeki bu ölçeklerde adı geçen ilaçlar",
+      "score": "Puan {score}",
+      "row": "{ingredient}, ölçekte \"{drug}\" olarak geçiyor ({locator})",
+      "total": "Listeniz için bu ölçeğin yayımlanmış puanlarının toplamı: {total}",
+      "none": "Bu ölçek {count, plural, one {# ilaç} other {# ilaç}} sayıyor. Janus'un listenizde okuyabildiği etkin maddelerden hiçbiri bunların arasında değil. Bu, ilaçlarınızın böyle bir etkisi olmadığı anlamına gelmez.",
+      "matched": "Janus bu ölçeğin {listed} ilacından {matched} tanesini bildiği bir etkin maddeyle eşleştirebildi; diğerleri listenizle karşılaştırılamaz.",
+      "cite": "Kaynak: {citation} {license} lisansıyla yayımlanmıştır; Janus puanları yayımlandığı gibi gösterir.",
+      "open": "Bu makaleyi aç",
+      "advice": "Bir puanın sizin için ne anlama geldiği dozlarınıza ve sağlığınıza bağlıdır. Janus bundan bir sonuç çıkarmaz. Bir eczacı veya doktor bunu sizinle birlikte inceleyebilir.",
+      "method": "Listenizdeki etkin maddelerin, antikolinerjik ilaçların yayımlanmış üç ölçeğinde otomatik olarak aranması. Her ölçek kendi puanlarını verir; Janus puanları yalnızca tek bir ölçeğin içinde toplar; farklı ölçeklerin puanları toplanmaz veya karşılaştırılmaz ve Janus bir sınır belirlemez. Bir ölçek yalnızca bazı ilaçları sayar; bu nedenle burada bulunmayan bir ilaç yine de böyle bir etki gösterebilir."
+    }
   }
 }

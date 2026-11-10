@@ -103,6 +103,19 @@ openFDA Drug Label
   Not an FDA endorsement.
   Indications text of the US labels of the light-face validation cases only.
 
+openFDA Drug Label — "Drug Interactions" sections (United States)
+  Publisher: U.S. Food and Drug Administration
+  License: CC0 1.0 (public domain)
+  Data provided by the U.S. Food and Drug Administration (https://open.fda.gov).
+  Not an FDA endorsement.
+  Label text is written by the product's manufacturer and submitted to FDA.
+  Janus quotes passages of the "Drug Interactions" section of one label per
+  active substance, found by automated name matching, with the label's set id
+  and effective date and a link to the label at DailyMed (U.S. National Library
+  of Medicine). A quoted passage is label text, not an assessment by Janus, FDA
+  or NLM.
+  Do not rely on openFDA to make decisions regarding medical care.
+
 RxNav / RxClass
   License: Free to use with the NLM attribution below
   This product uses publicly available data courtesy of the U.S. National
@@ -159,6 +172,46 @@ DailyMed drug labels (SPL): half-lives reported in US labels (simulation, Time m
   the Janus label PK atlas of 2026-11-09 (automated extraction; expert review
   has not yet been done). Shown next to the model's half-life; never a model
   input.
+
+German anticholinergic burden score (Kiesel, Hopf, Drey 2018)
+  Publisher: BMC Geriatrics
+  License: CC BY 4.0
+  Kiesel EK, Hopf YM, Drey M. An anticholinergic burden score for German
+  prescribers: score development. BMC Geriatr 2018;18:239.
+  doi:10.1186/s12877-018-0929-6, PMC6180424. Licence line read in the Europe PMC
+  full text on 2026-11-10; the scored list is Table 4.
+  Table 4 is redistributed in data/anticholinergic_<scale>.csv with footnote
+  markers removed and an ingredient key added (changes indicated). Shown in
+  Janus under its own name with the paper cited; the scores are those of the
+  paper.
+  Snapshot: retrieved 2026-11-10 (data/anticholinergic_kiesel2018.csv)
+
+CRIDECO anticholinergic load scale (Ramos et al. 2022)
+  Publisher: Journal of Personalized Medicine (MDPI)
+  License: CC BY 4.0
+  Ramos H, Moreno L, Pérez-Tur J, Cháfer-Pericás C, García-Lluch G, Pardo J.
+  CRIDECO Anticholinergic Load Scale: An Updated Anticholinergic Burden Scale. J
+  Pers Med 2022;12(2):207. doi:10.3390/jpm12020207, PMC8876932. Licence line
+  read in the Europe PMC full text on 2026-11-10; the scored list is Tables 1 to
+  3.
+  Redistributed in data/anticholinergic_<scale>.csv with footnote markers
+  removed and an ingredient key added (changes indicated). Shown in Janus under
+  its own name with the paper cited.
+  Snapshot: retrieved 2026-11-10 (data/anticholinergic_crideco2022.csv)
+
+Brazilian anticholinergic activity drug scale (Nery and Reis 2019)
+  Publisher: Einstein (São Paulo)
+  License: CC BY (Creative Commons Attribution License)
+  Nery RT, Reis AMM. Development of a Brazilian anticholinergic activity drug
+  scale. Einstein (Sao Paulo) 2019;17(2):eAO4435.
+  doi:10.31744/einstein_journal/2019AO4435, PMC6443211. Licence line read in the
+  Europe PMC full text on 2026-11-10 (the version number is not printed in the
+  article; Europe PMC records cc by); the scored list is Table 2.
+  Redistributed in data/anticholinergic_<scale>.csv with footnote markers
+  removed and an ingredient key added; the ATC codes printed in the table are
+  not used (changes indicated). Shown in Janus under its own name with the paper
+  cited.
+  Snapshot: retrieved 2026-11-10 (data/anticholinergic_brazil2019.csv)
 
 Adverse events
 --------------

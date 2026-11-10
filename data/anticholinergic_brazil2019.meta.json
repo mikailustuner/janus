@@ -1,0 +1,17 @@
+{
+  "source_id": "scale_brazil_2019",
+  "file": "data/anticholinergic_brazil2019.csv",
+  "scale_id": "brazil2019",
+  "title": "Brazilian anticholinergic activity drug scale (Nery and Reis 2019)",
+  "source_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6443211/fullTextXML",
+  "doi": "10.31744/einstein_journal/2019AO4435",
+  "pmcid": "PMC6443211",
+  "license": "CC BY",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "attribution": "Nery RT, Reis AMM. Development of a Brazilian anticholinergic activity drug scale. Einstein (Sao Paulo) 2019;17(2):eAO4435. PMC6443211. doi:10.31744/einstein_journal/2019AO4435. Table 2, CC BY.",
+  "snapshot_date": "2019-04-01",
+  "retrieved_date": "2026-11-10",
+  "content_sha256": "bea3315a815f56eb05d2d54b34bd5c4341039bc4de92beda4f3ac08ea90467e0",
+  "rows": 125,
+  "note": "Drug names and scores as published in Table 2; footnote markers removed. Added by Janus: ingredient_key, mapping, mapping_note (name = exact name in the drug resolution dataset, alias = spelling, salt or INN synonym explained in mapping_note, none = not matched). The ATC codes printed in the paper are not used. Licence line and the table holding the list were read in the Europe PMC full text on the retrieval date."
+}

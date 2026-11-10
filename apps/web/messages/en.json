@@ -2612,5 +2612,66 @@
     "errors": {
       "unavailable": "The recall records are not available right now. Please try again later."
     }
+  },
+  "SafetyCheck": {
+    "title": "More checks on this list",
+    "intro": "Automated comparisons of your list with open sources. They state what the sources say and are not advice.",
+    "review": "Expert review has not yet been done.",
+    "demo": "The further checks of the list (same ingredient, label text, anticholinergic scales) do not run in the demo.",
+    "checking": "Comparing the medicines on your list…",
+    "failed": "Janus could not run these checks.",
+    "errors": {
+      "unavailable": "These checks are not available right now. Please try again later."
+    },
+    "notChecked": "{count, plural, one {# ingredient on your list could not be read and was not compared.} other {# ingredients on your list could not be read and were not compared.}}",
+    "about": "About this check",
+    "dup": {
+      "title": "Same ingredient or same group",
+      "listLabel": "Medicines with the same ingredient or of the same group",
+      "sameIngredient": "{ingredient} is in {count, plural, one {# medicine} other {# medicines}} on your list",
+      "sameGroup": "{count, plural, one {# medicine} other {# medicines}} on your list belong to the same ATC group {group}",
+      "unconfirmed": "For at least one of these medicines Janus does not know the product form, so the group may not fit.",
+      "advice": "This can be intended, for example two strengths of the same medicine. Janus cannot tell. A pharmacist or doctor can look at it with you.",
+      "none": "Janus compared the {count, plural, one {# ingredient} other {# ingredients}} it could read on your list: no ingredient is in two medicines, and no two ingredients belong to the same ATC chemical subgroup. This does not mean your medicines are free of problems.",
+      "method": "Automated comparison of the ingredients and their ATC codes. A group here is an ATC chemical subgroup (4th level); the \"other\" subgroups are not compared, and medicines of different subgroups can still act alike. Only medicines on different lines of your list are compared.",
+      "sources": "ATC codes from: {sources}."
+    },
+    "int": {
+      "title": "Label text that names another medicine",
+      "listLabel": "US label passages that name another ingredient on your list",
+      "finding": "The US label of {label} names {named}",
+      "labelRow": "Label of {ingredient} (your list: {boxes})",
+      "namedRow": "Named in it: {ingredient} (your list: {boxes})",
+      "quote": "Quoted from the label, in English, as published This text is written for prescribers; it is not an instruction to you.",
+      "matched": "Name matched: {name}",
+      "labelMeta": "Label for {substance}, effective {date}. Set id: {setId}.",
+      "dateUnknown": "date not stated",
+      "open": "Open this label at DailyMed",
+      "opensNew": "(opens in a new tab)",
+      "more": "{count, plural, one {# more passage of this label names it.} other {# more passages of this label name it.}}",
+      "truncated": "Showing {shown} of {total} label findings.",
+      "advice": "Janus quotes the label and does not judge it. A passage can describe an effect or say that none was seen. A pharmacist or doctor can look at it with you.",
+      "none": "Janus read the \"Drug Interactions\" section of {count, plural, one {# US label} other {# US labels}} for the medicines on your list and found no passage that names another ingredient on your list. This does not mean that these medicines do not affect each other.",
+      "notFound": "No US label in the data for: {names}. These were not read.",
+      "labelsRead": "Labels read",
+      "readRow": "{ingredient}: {substance}, effective {date}",
+      "method": "Automated search of the \"Drug Interactions\" section of one US label per ingredient (the most recent single-substance label in the data) for the names Janus holds for the other ingredients on your list, as whole words. Classes of medicines are not matched, labels of other countries are not read, and label text can be out of date.",
+      "source": "Source: openFDA drug label data (U.S. Food and Drug Administration, CC0 1.0), data of {date}. Not an FDA endorsement.",
+      "outdated": "This label data is older than Janus expects it to be.",
+      "unavailable": "The label texts are not loaded right now, so this check did not run."
+    },
+    "burden": {
+      "title": "Anticholinergic burden in published scales",
+      "listLabel": "Published anticholinergic scales and the medicines of your list that they name",
+      "score": "Score {score}",
+      "row": "{ingredient}, named in the scale as \"{drug}\" ({locator})",
+      "total": "Sum of the published scores of this scale for your list: {total}",
+      "none": "This scale lists {count, plural, one {# drug} other {# drugs}}. None of the ingredients Janus could read on your list is among them. This does not mean that your medicines have no such effect.",
+      "matched": "Janus could match {matched} of the {listed} drugs of this scale to an ingredient it knows; the others cannot be compared with your list.",
+      "cite": "Source: {citation} Published under {license}; Janus shows the scores as published.",
+      "open": "Open this paper",
+      "advice": "What a score means for you depends on your doses and your health. Janus draws no conclusion from it. A pharmacist or doctor can look at it with you.",
+      "method": "Automated lookup of the ingredients on your list in three published scales of anticholinergic drugs. Each scale gives its own scores; Janus adds scores only within one scale; scores of different scales are not added or compared, and Janus sets no limit. A scale lists only some drugs, so a medicine that is missing here can still have such an effect."
+    }
   }
 }

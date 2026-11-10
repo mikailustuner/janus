@@ -2612,5 +2612,66 @@
     "errors": {
       "unavailable": "Los registros de retirada no están disponibles ahora. Inténtelo más tarde."
     }
+  },
+  "SafetyCheck": {
+    "title": "Otras comprobaciones de esta lista",
+    "intro": "Comparaciones automatizadas de su lista con fuentes abiertas. Indican lo que dicen las fuentes y no son un consejo.",
+    "review": "Todavía no se ha hecho la revisión de expertos.",
+    "demo": "Las demás comprobaciones de la lista (mismo principio activo, texto de la ficha, escalas anticolinérgicas) no funcionan en la demo.",
+    "checking": "Comparando los medicamentos de su lista…",
+    "failed": "Janus no pudo realizar estas comprobaciones.",
+    "errors": {
+      "unavailable": "Estas comprobaciones no están disponibles en este momento. Inténtelo de nuevo más tarde."
+    },
+    "notChecked": "{count, plural, one {# principio activo de su lista no se pudo leer y no se comparó.} other {# principios activos de su lista no se pudieron leer y no se compararon.}}",
+    "about": "Acerca de esta comprobación",
+    "dup": {
+      "title": "Mismo principio activo o mismo grupo",
+      "listLabel": "Medicamentos con el mismo principio activo o del mismo grupo",
+      "sameIngredient": "{ingredient} está en {count, plural, one {# medicamento} other {# medicamentos}} de su lista",
+      "sameGroup": "{count, plural, one {# medicamento de su lista pertenece} other {# medicamentos de su lista pertenecen}} al mismo grupo ATC {group}",
+      "unconfirmed": "Janus no conoce la forma de al menos uno de estos medicamentos, por lo que el grupo puede no corresponder.",
+      "advice": "Puede ser intencionado, por ejemplo dos dosis del mismo medicamento. Janus no puede saberlo. Un farmacéutico o un médico puede revisarlo con usted.",
+      "none": "Janus comparó {count, plural, one {el # principio activo} other {los # principios activos}} que pudo leer en su lista: ningún principio activo está en dos medicamentos y no hay dos principios activos del mismo subgrupo químico ATC. Esto no significa que sus medicamentos estén libres de problemas.",
+      "method": "Comparación automatizada de los principios activos y sus códigos ATC. Un grupo es aquí un subgrupo químico ATC (4.º nivel); los subgrupos «otros» no se comparan, y medicamentos de subgrupos distintos pueden actuar de forma parecida. Solo se comparan medicamentos de líneas distintas de su lista.",
+      "sources": "Códigos ATC de: {sources}."
+    },
+    "int": {
+      "title": "Texto de la etiqueta que cita otro medicamento",
+      "listLabel": "Pasajes de etiquetas de EE. UU. que citan otro principio activo de su lista",
+      "finding": "La etiqueta de EE. UU. de {label} cita {named}",
+      "labelRow": "Etiqueta de {ingredient} (su lista: {boxes})",
+      "namedRow": "Citado en ella: {ingredient} (su lista: {boxes})",
+      "quote": "Cita de la etiqueta, en inglés, tal como se publicó Este texto va dirigido a quienes prescriben; no es una instrucción para usted.",
+      "matched": "Nombre encontrado: {name}",
+      "labelMeta": "Etiqueta de {substance}, vigente desde {date}. Identificador del conjunto: {setId}.",
+      "dateUnknown": "fecha no indicada",
+      "open": "Abrir esta etiqueta en DailyMed",
+      "opensNew": "(se abre en una pestaña nueva)",
+      "more": "{count, plural, one {# pasaje más de esta etiqueta lo cita.} other {# pasajes más de esta etiqueta lo citan.}}",
+      "truncated": "Se muestran {shown} de {total} resultados de etiquetas.",
+      "advice": "Janus cita la etiqueta y no la valora. Un pasaje puede describir un efecto o indicar que no se observó ninguno. Un farmacéutico o un médico puede verlo con usted.",
+      "none": "Janus leyó la sección «Drug Interactions» de {count, plural, one {# etiqueta de EE. UU.} other {# etiquetas de EE. UU.}} de los medicamentos de su lista y no encontró ningún pasaje que cite otro principio activo de su lista. Esto no significa que estos medicamentos no se influyan entre sí.",
+      "notFound": "No hay etiqueta de EE. UU. en los datos para: {names}. No se leyeron.",
+      "labelsRead": "Etiquetas leídas",
+      "readRow": "{ingredient}: {substance}, vigente desde {date}",
+      "method": "Búsqueda automatizada, como palabras completas, en la sección «Drug Interactions» de una etiqueta de EE. UU. por principio activo (la más reciente con una sola sustancia en los datos) de los nombres que Janus tiene para los demás principios activos de su lista. No se buscan clases de medicamentos, no se leen etiquetas de otros países y el texto puede estar desactualizado.",
+      "source": "Fuente: datos de etiquetas de medicamentos de openFDA (U.S. Food and Drug Administration, CC0 1.0), datos del {date}. No es un aval de la FDA.",
+      "outdated": "Estos datos son más antiguos de lo que Janus espera.",
+      "unavailable": "Los textos de las etiquetas no están cargados ahora, por lo que esta comprobación no se ejecutó."
+    },
+    "burden": {
+      "title": "Carga anticolinérgica en escalas publicadas",
+      "listLabel": "Escalas anticolinérgicas publicadas y los medicamentos de su lista que citan",
+      "score": "Puntuación {score}",
+      "row": "{ingredient}, citado en la escala como «{drug}» ({locator})",
+      "total": "Suma de las puntuaciones publicadas de esta escala para su lista: {total}",
+      "none": "Esta escala incluye {count, plural, one {# fármaco} other {# fármacos}}. Ninguno de los principios activos que Janus pudo leer en su lista figura entre ellos. Esto no significa que sus medicamentos no tengan un efecto así.",
+      "matched": "Janus pudo asociar {matched} de los {listed} fármacos de esta escala con un principio activo conocido; los demás no se pueden comparar con su lista.",
+      "cite": "Fuente: {citation} Publicado bajo {license}; Janus muestra las puntuaciones tal como se publicaron.",
+      "open": "Abrir este artículo",
+      "advice": "Lo que una puntuación significa para usted depende de sus dosis y de su salud. Janus no saca ninguna conclusión de ella. Un farmacéutico o un médico puede verlo con usted.",
+      "method": "Búsqueda automatizada de los principios activos de su lista en tres escalas publicadas de fármacos anticolinérgicos. Cada escala tiene sus propias puntuaciones; Janus suma las puntuaciones solo dentro de una escala; las de escalas distintas no se suman ni se comparan, y Janus no fija ningún límite. Una escala incluye solo una parte de los fármacos, así que un medicamento que falta aquí puede tener igualmente un efecto así."
+    }
   }
 }

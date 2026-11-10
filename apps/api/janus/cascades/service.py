@@ -77,33 +77,12 @@ class Derived:
     component_pairs: frozenset[tuple[str, str]] = frozenset()
 
 
-def evaluate_request(
-    conn: psycopg.Connection,
-    body: EvaluateIn,
-    today: dt.date,
-    faers_event_keys: Mapping[int, str] | None = None,
-) -> CascadeResult:
-    return derive(conn, body, today, faers_event_keys).result
-
-
-def derive(
-    conn: psycopg.Connection,
-    body: EvaluateIn,
-    today: dt.date,
-    faers_event_keys: Mapping[int, str] | None = None,
-) -> Derived:
-    """The evaluation inside the caller's transaction; `POST /notes/document` reuses it."""
-    rb = repository.current_rule_base(conn)
-    current = resolution.current_dataset_id(conn)
-    if rb is None or current is None:
-        raise CascadesUnavailableError
-    if body.dataset_version != current:
-        raise DatasetVersionMismatchError
-    if faers_event_keys:
-        rb = dataclasses.replace(rb, faers_event_keys=dict(faers_event_keys))
-    snapshot = integrity_repository.load_snapshot(conn)
-    if not snapshot.records:
-        raise CascadesUnavailableError
+def engine_items(
+    conn: psycopg.Connection, body: EvaluateIn, today: dt.date
+) -> tuple[list[EngineItem], list[NotChecked], resolution.RuleInputs]:
+    """The request's items as engine input, in request order, with the ingredients that cannot
+    be checked. Raises `InvalidItemsError` (field paths only) or `CascadesUnavailableError`.
+    The safety check (`janus.safety`) reads the list through this function too."""
     now = _month_of(today)
     bad: list[str] = []
     starts: list[int | None] = []
@@ -154,6 +133,38 @@ def derive(
         unchecked += nc
     if bad:
         raise InvalidItemsError(sorted(set(bad)))
+    return items, unchecked, found
+
+
+def evaluate_request(
+    conn: psycopg.Connection,
+    body: EvaluateIn,
+    today: dt.date,
+    faers_event_keys: Mapping[int, str] | None = None,
+) -> CascadeResult:
+    return derive(conn, body, today, faers_event_keys).result
+
+
+def derive(
+    conn: psycopg.Connection,
+    body: EvaluateIn,
+    today: dt.date,
+    faers_event_keys: Mapping[int, str] | None = None,
+) -> Derived:
+    """The evaluation inside the caller's transaction; `POST /notes/document` reuses it."""
+    rb = repository.current_rule_base(conn)
+    current = resolution.current_dataset_id(conn)
+    if rb is None or current is None:
+        raise CascadesUnavailableError
+    if body.dataset_version != current:
+        raise DatasetVersionMismatchError
+    if faers_event_keys:
+        rb = dataclasses.replace(rb, faers_event_keys=dict(faers_event_keys))
+    snapshot = integrity_repository.load_snapshot(conn)
+    if not snapshot.records:
+        raise CascadesUnavailableError
+    now = _month_of(today)
+    items, unchecked, found = engine_items(conn, body, today)
     result = evaluate(
         items, rb, snapshot, today, found.combination_codes, unchecked, found.component_pairs
     )

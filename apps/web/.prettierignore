@@ -27,3 +27,5 @@ src/research/*.recorded.json
 # scripts/ocr-eval-fixtures.mjs and src/scan/eval/ocr-run.test.ts (ocr-first Req 5)
 .ocr-eval/
 src/scan/eval/*.json
+# Written by apps/api/tests/test_safety_properties.py (JANUS_WRITE_FIXTURES=1)
+src/safety/fixtures/*.json

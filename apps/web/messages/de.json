@@ -2612,5 +2612,66 @@
     "errors": {
       "unavailable": "Die Rückrufeinträge sind gerade nicht verfügbar. Bitte versuchen Sie es später erneut."
     }
+  },
+  "SafetyCheck": {
+    "title": "Weitere Prüfungen dieser Liste",
+    "intro": "Automatisierte Vergleiche Ihrer Liste mit offenen Quellen. Sie geben wieder, was in den Quellen steht, und sind keine Beratung.",
+    "review": "Eine Prüfung durch Fachleute ist noch nicht erfolgt.",
+    "demo": "Die weiteren Prüfungen der Liste (gleicher Wirkstoff, Text der Fachinformation, anticholinerge Skalen) laufen in der Demo nicht.",
+    "checking": "Die Medikamente auf Ihrer Liste werden verglichen …",
+    "failed": "Janus konnte diese Prüfungen nicht ausführen.",
+    "errors": {
+      "unavailable": "Diese Prüfungen sind gerade nicht verfügbar. Bitte versuchen Sie es später noch einmal."
+    },
+    "notChecked": "{count, plural, one {# Wirkstoff auf Ihrer Liste konnte nicht gelesen werden und wurde nicht verglichen.} other {# Wirkstoffe auf Ihrer Liste konnten nicht gelesen werden und wurden nicht verglichen.}}",
+    "about": "Über diese Prüfung",
+    "dup": {
+      "title": "Gleicher Wirkstoff oder gleiche Gruppe",
+      "listLabel": "Medikamente mit dem gleichen Wirkstoff oder aus der gleichen Gruppe",
+      "sameIngredient": "{ingredient} ist in {count, plural, one {# Medikament} other {# Medikamenten}} auf Ihrer Liste enthalten",
+      "sameGroup": "{count, plural, one {# Medikament auf Ihrer Liste gehört} other {# Medikamente auf Ihrer Liste gehören}} zur gleichen ATC-Gruppe {group}",
+      "unconfirmed": "Bei mindestens einem dieser Medikamente kennt Janus die Darreichungsform nicht; die Gruppe passt deshalb vielleicht nicht.",
+      "advice": "Das kann so gewollt sein, zum Beispiel zwei Stärken desselben Medikaments. Janus kann das nicht beurteilen. Ihre Apotheke oder Ihre Ärztin oder Ihr Arzt kann es mit Ihnen ansehen.",
+      "none": "Janus hat {count, plural, one {den # Wirkstoff} other {die # Wirkstoffe}} verglichen, die es auf Ihrer Liste lesen konnte: Kein Wirkstoff ist in zwei Medikamenten enthalten, und keine zwei Wirkstoffe gehören zur gleichen chemischen ATC-Untergruppe. Das bedeutet nicht, dass Ihre Medikamente frei von Problemen sind.",
+      "method": "Automatisierter Vergleich der Wirkstoffe und ihrer ATC-Codes. Eine Gruppe ist hier eine chemische ATC-Untergruppe (4. Ebene); die Untergruppen „andere“ werden nicht verglichen, und Medikamente verschiedener Untergruppen können trotzdem ähnlich wirken. Verglichen werden nur Medikamente in verschiedenen Zeilen Ihrer Liste.",
+      "sources": "ATC-Codes aus: {sources}."
+    },
+    "int": {
+      "title": "Text der Fachinformation, der ein anderes Medikament nennt",
+      "listLabel": "Passagen US-amerikanischer Fachinformationen, die einen anderen Wirkstoff Ihrer Liste nennen",
+      "finding": "Die US-Fachinformation zu {label} nennt {named}",
+      "labelRow": "Fachinformation zu {ingredient} (Ihre Liste: {boxes})",
+      "namedRow": "Darin genannt: {ingredient} (Ihre Liste: {boxes})",
+      "quote": "Zitat aus der Fachinformation, auf Englisch, wie veröffentlicht Dieser Text richtet sich an Verschreibende; er ist keine Anweisung an Sie.",
+      "matched": "Gefundener Name: {name}",
+      "labelMeta": "Fachinformation zu {substance}, gültig ab {date}. Set-ID: {setId}.",
+      "dateUnknown": "Datum nicht angegeben",
+      "open": "Diese Fachinformation bei DailyMed öffnen",
+      "opensNew": "(öffnet in einem neuen Tab)",
+      "more": "{count, plural, one {# weitere Passage dieser Fachinformation nennt ihn.} other {# weitere Passagen dieser Fachinformation nennen ihn.}}",
+      "truncated": "Gezeigt werden {shown} von {total} Funden in Fachinformationen.",
+      "advice": "Janus zitiert die Fachinformation und bewertet sie nicht. Eine Passage kann eine Wirkung beschreiben oder sagen, dass keine beobachtet wurde. Eine Apothekerin, ein Apotheker oder eine Ärztin bzw. ein Arzt kann sich das mit Ihnen ansehen.",
+      "none": "Janus hat den Abschnitt „Drug Interactions“ von {count, plural, one {# US-Fachinformation} other {# US-Fachinformationen}} zu den Medikamenten Ihrer Liste gelesen und keine Passage gefunden, die einen anderen Wirkstoff Ihrer Liste nennt. Das bedeutet nicht, dass diese Medikamente einander nicht beeinflussen.",
+      "notFound": "Für diese Wirkstoffe liegt keine US-Fachinformation in den Daten vor: {names}. Sie wurden nicht gelesen.",
+      "labelsRead": "Gelesene Fachinformationen",
+      "readRow": "{ingredient}: {substance}, gültig ab {date}",
+      "method": "Automatisierte Suche im Abschnitt „Drug Interactions“ einer US-Fachinformation je Wirkstoff (die neueste Fachinformation mit nur einem Wirkstoff in den Daten) nach den Namen, die Janus für die anderen Wirkstoffe Ihrer Liste kennt, als ganze Wörter. Wirkstoffklassen werden nicht abgeglichen, Fachinformationen anderer Länder nicht gelesen, und der Text kann veraltet sein.",
+      "source": "Quelle: openFDA-Daten zu Arzneimittelinformationen (U.S. Food and Drug Administration, CC0 1.0), Datenstand {date}. Keine Empfehlung der FDA.",
+      "outdated": "Diese Daten sind älter, als Janus erwartet.",
+      "unavailable": "Die Texte der Fachinformationen sind derzeit nicht geladen, deshalb wurde diese Prüfung nicht ausgeführt."
+    },
+    "burden": {
+      "title": "Anticholinerge Last in veröffentlichten Skalen",
+      "listLabel": "Veröffentlichte anticholinerge Skalen und die Medikamente Ihrer Liste, die sie nennen",
+      "score": "Punktwert {score}",
+      "row": "{ingredient}, in der Skala genannt als „{drug}“ ({locator})",
+      "total": "Summe der veröffentlichten Punktwerte dieser Skala für Ihre Liste: {total}",
+      "none": "Diese Skala führt {count, plural, one {# Wirkstoff} other {# Wirkstoffe}} auf. Keiner der Wirkstoffe, die Janus auf Ihrer Liste lesen konnte, gehört dazu. Das bedeutet nicht, dass Ihre Medikamente keine solche Wirkung haben.",
+      "matched": "Janus konnte {matched} der {listed} Wirkstoffe dieser Skala einem bekannten Wirkstoff zuordnen; die übrigen lassen sich nicht mit Ihrer Liste vergleichen.",
+      "cite": "Quelle: {citation} Veröffentlicht unter {license}; Janus zeigt die Punktwerte wie veröffentlicht.",
+      "open": "Diese Veröffentlichung öffnen",
+      "advice": "Was ein Punktwert für Sie bedeutet, hängt von Ihren Dosen und Ihrer Gesundheit ab. Janus zieht daraus keinen Schluss. Eine Apothekerin, ein Apotheker oder eine Ärztin bzw. ein Arzt kann sich das mit Ihnen ansehen.",
+      "method": "Automatisierte Suche der Wirkstoffe Ihrer Liste in drei veröffentlichten Skalen anticholinerger Wirkstoffe. Jede Skala hat eigene Punktwerte; Janus addiert Punktwerte nur innerhalb einer Skala; Punktwerte verschiedener Skalen werden weder addiert noch verglichen, und Janus legt keinen Grenzwert fest. Eine Skala führt nur einen Teil der Wirkstoffe auf, ein hier fehlendes Medikament kann also trotzdem eine solche Wirkung haben."
+    }
   }
 }

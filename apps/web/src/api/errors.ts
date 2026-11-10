@@ -43,7 +43,8 @@ export type Route =
   | "simulate"
   | "simulate/compounds"
   | "simulate/jobs"
-  | "recalls/check";
+  | "recalls/check"
+  | "safety/check";
 
 export const ROUTES: readonly Route[] = [
   "resolve/scan",
@@ -85,6 +86,7 @@ export const ROUTES: readonly Route[] = [
   "simulate/compounds",
   "simulate/jobs",
   "recalls/check",
+  "safety/check",
 ];
 
 export type ApiError =
@@ -148,6 +150,7 @@ export const MESSAGE_KEYS = [
   "Simulation.errors.unknownJob",
   "Simulation.errors.demoOnly",
   "Recall.errors.unavailable",
+  "SafetyCheck.errors.unavailable",
 ] as const;
 
 export type MessageKey = (typeof MESSAGE_KEYS)[number];
@@ -308,5 +311,11 @@ export function messageKeyFor(
     code === "recalls_unavailable"
   )
     return "Recall.errors.unavailable";
+  if (route === "safety/check") {
+    if (status === 409 && code === "dataset_version_mismatch")
+      return "Errors.dataset_changed";
+    if (status === 503 && code === "safety_unavailable")
+      return "SafetyCheck.errors.unavailable";
+  }
   return "Errors.generic";
 }

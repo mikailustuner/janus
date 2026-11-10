@@ -1,0 +1,17 @@
+{
+  "source_id": "scale_german_kiesel_2018",
+  "file": "data/anticholinergic_kiesel2018.csv",
+  "scale_id": "kiesel2018",
+  "title": "German anticholinergic burden score (Kiesel et al. 2018)",
+  "source_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6180424/fullTextXML",
+  "doi": "10.1186/s12877-018-0929-6",
+  "pmcid": "PMC6180424",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "attribution": "Kiesel EK, Hopf YM, Drey M. An anticholinergic burden score for German prescribers: score development. BMC Geriatr 2018;18:239. PMC6180424. doi:10.1186/s12877-018-0929-6. Table 4, CC BY 4.0.",
+  "snapshot_date": "2018-10-11",
+  "retrieved_date": "2026-11-10",
+  "content_sha256": "ec7786fc291ce8fff3b63149bbd9b02c1d5ace889dca3a958ff58f8c627e27d1",
+  "rows": 151,
+  "note": "Drug names and scores as published in Table 4; footnote markers removed. Added by Janus: ingredient_key, mapping, mapping_note (name = exact name in the drug resolution dataset, alias = spelling, salt or INN synonym explained in mapping_note, none = not matched). The ATC codes printed in the paper are not used. Licence line and the table holding the list were read in the Europe PMC full text on the retrieval date."
+}
