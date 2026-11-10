@@ -157,5 +157,5 @@ distinct date pairs, earliest class start) and a Weibull shape class. `status` s
   route rule.
 - **Curation**: `data/onset_key_exclusions.csv` (keys left out per class for this table, with reasons) and
   `data/onset_row_notes.csv` (known limits per row), Apache-2.0.
-- **Status:** methods and mappings reviewed by AI agents (statistician, pharmacologist); pending review by a
-  pharmacist and a statistician.
+- **Status:** methods and mappings checked by automated review passes (statistics, pharmacology). Expert review
+  has not yet been done.
