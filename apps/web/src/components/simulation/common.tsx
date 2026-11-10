@@ -280,12 +280,14 @@ const REPO = "https://github.com/mikailustuner/janus/blob/main";
  * 2026-11-09): HTTK-Pop's age effect is nearly the same for every drug; FDA labels report a median
  * exposure increase of about 35 % in older adults (Janus research note).
  */
-export function OlderAdultsNote() {
+export function OlderAdultsNote({ ratio = false }: { ratio?: boolean }) {
   const t = useT();
   const n = useNumbers();
   const o = EXPLORER.calibration.older_adults;
   return (
     <p className="text-sm" data-testid="sim-older-note">
+      {/* Next to an HTTK-Pop older-to-younger ratio: the ratio is not drug-specific. */}
+      {ratio ? `${t("Simulation.olderAdults.notDrugSpecific")} ` : null}
       {t("Simulation.olderAdults.note", {
         low: n.sig(o.httk_pop_ratio_range[0]),
         high: n.sig(o.httk_pop_ratio_range[1]),
@@ -301,6 +303,65 @@ export function OlderAdultsNote() {
         {t("Simulation.olderAdults.link")}
       </a>
     </p>
+  );
+}
+
+/**
+ * The half-life a US label reports for the drug, next to the model's value: every value with its
+ * route tag, its DailyMed set id and the label sentence as published (always English). Display
+ * only: never a model input. Nothing is rendered for a drug without a label value.
+ */
+export function LabelHalfLife({ drug }: { drug: string }) {
+  const t = useT();
+  const n = useNumbers();
+  const rows = EXPLORER.label_half_life.drugs[drug.toLowerCase()];
+  if (!rows?.length) return null;
+  const a = EXPLORER.label_half_life.accuracy;
+  return (
+    <div className="flex flex-col gap-2 text-sm" data-testid="label-half-life">
+      {rows.map((r) => {
+        const route = t(`Simulation.labelHalfLife.route.${r.route}`);
+        return (
+          <div key={`${r.set_id}:${r.sentence}`} className="flex flex-col">
+            <p className="font-bold">
+              {r.low_h === r.high_h
+                ? t("Simulation.labelHalfLife.single", {
+                    hours: n.sig(r.low_h),
+                    route,
+                  })
+                : t("Simulation.labelHalfLife.range", {
+                    low: n.sig(r.low_h),
+                    high: n.sig(r.high_h),
+                    route,
+                  })}
+            </p>
+            <p>
+              {t("Simulation.labelHalfLife.sentence")}{" "}
+              <q lang="en">{r.sentence}</q>
+            </p>
+            <a
+              className="inline-flex min-h-11 items-center font-bold break-words"
+              href={`https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=${r.set_id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {t("Simulation.labelHalfLife.source", {
+                setId: r.set_id,
+                version: r.spl_version,
+                date: r.effective,
+              })}
+            </a>
+          </div>
+        );
+      })}
+      <p className="text-muted">
+        {t("Simulation.labelHalfLife.context", {
+          n: a.n_drugs,
+          label: Math.round(a.label_within_2_fold * 100),
+          httk: Math.round(a.httk_within_2_fold * 100),
+        })}
+      </p>
+    </div>
   );
 }
 
@@ -343,7 +404,7 @@ export function HttkResultView({
           ratio: n.sig(r.older_to_younger_median_ratio),
         })}
       </p>
-      <OlderAdultsNote />
+      <OlderAdultsNote ratio />
       <section
         className="tile m-0 flex flex-col gap-2"
         aria-label={t("Simulation.modelError.title")}
@@ -375,6 +436,7 @@ export function HttkResultView({
         <p className="text-sm text-muted" lang="en">
           {h.dataset}
         </p>
+        <LabelHalfLife drug={compound} />
       </section>
       <p className="text-sm font-bold" data-testid="sim-not-validated">
         {t("Simulation.modelError.notValidated")}

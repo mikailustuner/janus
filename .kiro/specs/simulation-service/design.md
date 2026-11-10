@@ -70,6 +70,11 @@ calibration analysis (2026-11-09) and the research note `docs/research/httk-pop-
   prediction ÷/× √87.4 ≈ 9.35 (`calibration.half_life_interval`). The only calibrated interval.
 - httk concentrations: `validated: false`; compartmental bands: the population spread, no calibrated interval,
   validated only against the one study of the time machine (shown).
+- Label half-life (Req 6.7): `data/simulation/label_half_life.json` (`label-half-life-1`), exported into
+  `explorer.json` by the parity script and rendered by `LabelHalfLife` (httk result, time machine population block).
+  Today one value (metoclopramide, 5-6 h, route not stated); the other agreed metoclopramide values are from
+  paragraphs about children, haloperidol has only a depot-ester value and risperidone none (`not_shown` in the file).
+  Context sentence: label half-life within 2-fold of Lombardo 2018 for 77 % of 114 drugs, httk 26 % on the same drugs.
 - ADMET-AI: 286 of 1383 half-life and 490 of 1383 VDss predictions were ≤ 0 in PK-1; the time-machine screens show
   such values as "the model returned an invalid value" (`admetUsable`: strictly positive).
 - Older adults: label atlas median exposure ratio 1.35 (134 drugs) vs HTTK-Pop ratios 1.38-1.76 nearly constant

@@ -318,6 +318,20 @@ region = "US"
 cadence_days = 90
 urls = ["https://api.fda.gov/drug/label.json"]
 
+[[sources]]
+id = "dailymed_label_pk"
+section = "clinical"
+name = "DailyMed drug labels (SPL): half-lives reported in US labels (simulation, Time machine)"
+publisher = "U.S. National Library of Medicine; labeling as submitted to the U.S. Food and Drug Administration"
+license = "Public domain (FDA drug labeling as published on DailyMed)"
+notes = [
+  "Not an FDA or NLM endorsement. data/simulation/label_half_life.json: a few label sentences with their route tag, DailyMed set id and label version, from the Janus label PK atlas of 2026-11-09 (automated extraction; expert review has not yet been done). Shown next to the model's half-life; never a model input.",
+]
+storage = "commit"
+region = "US"
+cadence_days = 90
+urls = ["https://dailymed.nlm.nih.gov/dailymed/"]
+
 # --- Adverse events ---------------------------------------------------------
 
 [[sources]]

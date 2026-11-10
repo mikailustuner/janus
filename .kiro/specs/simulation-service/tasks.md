@@ -26,6 +26,8 @@
 - [x] 9. Automated review passes: safety auditor, pharmacologist, localization reviewer (`reviews.md`); fixes
   applied (worker role, IPv6 /64, header trust switch, per-compound intervals, httk ratio, directions, scope)
 - [x] 10. Checkpoint
+- [x] 11. Label-reported half-life next to the model's half-life (Req 6.7) and "not drug-specific" next to every
+  HTTK-Pop ratio (Req 6.8): data file, explorer export, `LabelHalfLife`, five languages, tests.
 
 ## Measured (development PC, 2026-11-09; worker in the hardened container: read-only, `noexec` tmpfs, no
 ## capabilities, internal network, own database role, 2.0 CPU / 1.5 GB; submit to result incl. 0.25 s polling)

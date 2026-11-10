@@ -192,6 +192,43 @@
       }
     }
   },
+  "label_half_life": {
+    "version": "label-half-life-1",
+    "source": {
+      "name": "DailyMed Structured Product Labeling (SPL), U.S. National Library of Medicine; labeling as submitted to the U.S. Food and Drug Administration",
+      "url": "https://dailymed.nlm.nih.gov/",
+      "license": "Public domain (FDA drug labeling as published on DailyMed); not an FDA or NLM endorsement",
+      "retrieved": "2026-11-09",
+      "sentences_rechecked_on_dailymed": "2026-11-10"
+    },
+    "accuracy": {
+      "note": "Measured on the whole atlas, not on these entries. Annotators were automated.",
+      "half_life_precision": 0.966,
+      "precision_per_field_range": [
+        0.96,
+        1.0
+      ],
+      "recall": 0.31,
+      "reference": "Lombardo, Berellini & Obach 2018, human intravenous pharmacokinetics (doi:10.1124/dmd.118.082966)",
+      "n_drugs": 114,
+      "label_within_2_fold": 0.772,
+      "httk_within_2_fold": 0.263
+    },
+    "drugs": {
+      "metoclopramide": [
+        {
+          "low_h": 5,
+          "high_h": 6,
+          "route": "unknown",
+          "substance": "metoclopramide hydrochloride",
+          "set_id": "0034a97a-fb05-418a-a234-de278907cd2a",
+          "spl_version": "5",
+          "effective": "2026-07-24",
+          "sentence": "The average elimination half-life in individuals with normal renal function is 5 to 6 hours."
+        }
+      ]
+    }
+  },
   "limits": {
     "doses_max": 14,
     "horizon_after_last_dose_h": 48,

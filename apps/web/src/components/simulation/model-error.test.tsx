@@ -16,6 +16,8 @@ import * as D from "@/api/decode";
 import { httkResult, type HttkResult } from "@/simulation/client";
 import recorded from "@/simulation/simulate.recorded.json";
 
+import { EXPLORER } from "@/simulation/explorer";
+
 import { CompartmentalModelNote, HttkResultView } from "./common";
 
 vi.mock("@/i18n/navigation", () => ({
@@ -85,6 +87,37 @@ describe("S9: measured model error", () => {
       ),
       { numRuns: 40 },
     );
+  });
+
+  it("a label half-life is shown with its route, set id and sentence, and only where one exists", () => {
+    const labelled = EXPLORER.label_half_life.drugs;
+    expect(Object.keys(labelled)).toContain("metoclopramide");
+    for (const locale of LOCALES) {
+      for (const compound of ["metoclopramide", "haloperidol", "risperidone"]) {
+        const html = render(
+          locale,
+          <HttkResultView r={base} compound={compound} />,
+        );
+        // Next to the ratio: it is not drug-specific.
+        expect(html).toContain(
+          messages[locale].Simulation.olderAdults.notDrugSpecific.replaceAll(
+            "'",
+            "&#x27;",
+          ),
+        );
+        const rows = labelled[compound] ?? [];
+        expect(html.includes('data-testid="label-half-life"')).toBe(
+          rows.length > 0,
+        );
+        for (const r of rows) {
+          expect(html).toContain(r.set_id);
+          expect(html).toContain(`<q lang="en">${r.sentence}</q>`);
+          expect(html).toContain(
+            messages[locale].Simulation.labelHalfLife.route[r.route],
+          );
+        }
+      }
+    }
   });
 
   it("the recorded httk run carries the calibrated interval around its half-life", () => {

@@ -2457,8 +2457,22 @@
       "canon_rhubarb_480mg": "Escenario del Canon: todo el contenido de hidroxiantracenos contado como reína libre, una estimación alta (sobre todo glucósidos; el modelo no tiene activación intestinal); una dosis histórica, atribuida a al-Juzi; traducción automática."
     },
     "olderAdults": {
+      "notDrugSpecific": "La relación mayores/jóvenes de HTTK-Pop no es específica de cada fármaco.",
       "note": "El efecto de la edad en HTTK-Pop es casi el mismo para todos los fármacos (relaciones {low}–{high}); las fichas técnicas de la FDA informan de un aumento mediano de la exposición de alrededor del {percent} % en adultos mayores ({drugs} fármacos, nota de investigación de Janus).",
       "link": "Nota de investigación: HTTK-Pop y exposición en adultos mayores"
+    },
+    "labelHalfLife": {
+      "range": "Semivida indicada en la ficha técnica de EE. UU.: {low}–{high} h ({route}).",
+      "single": "Semivida indicada en la ficha técnica de EE. UU.: {hours} h ({route}).",
+      "route": {
+        "iv": "vía intravenosa",
+        "oral": "vía oral",
+        "other": "otra vía",
+        "unknown": "vía no indicada en la frase de la ficha técnica"
+      },
+      "sentence": "Frase de la ficha técnica:",
+      "source": "DailyMed, identificador {setId} (versión {version} de la ficha técnica, {date})",
+      "context": "El valor de la ficha técnica es una medición citada en ella; el valor del modelo es una predicción. Frente a un conjunto de referencia publicado (Lombardo 2018), las semividas de las fichas técnicas estaban dentro de un factor 2 en el {label} % de {n} fármacos, y las semividas de httk en el {httk} % de los mismos fármacos. La extracción fue automatizada; todavía no se ha hecho la revisión de expertos. Se muestra solo para comparar: no se usa en ninguna simulación."
     },
     "modelError": {
       "title": "Error del modelo medido",

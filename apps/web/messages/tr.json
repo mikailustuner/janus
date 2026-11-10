@@ -2457,8 +2457,22 @@
       "canon_rhubarb_480mg": "Kanun senaryosu: hidroksiantrasen içeriğinin tamamı serbest rein sayılır, bu bir üst tahmindir (çoğu glikozittir; modelde bağırsakta etkinleşme yoktur); tek bir tarihsel doz, el-Huzi'ye atfedilir; makine çevirisi."
     },
     "olderAdults": {
+      "notDrugSpecific": "HTTK-Pop'un yaşlı/genç oranı ilaca özgü değildir.",
       "note": "HTTK-Pop'un yaş etkisi her ilaç için neredeyse aynıdır (oranlar {low}–{high}); FDA prospektüsleri yaşlı yetişkinlerde maruziyette yaklaşık %{percent} medyan artış bildirir ({drugs} ilaç, Janus araştırma notu).",
       "link": "Araştırma notu: HTTK-Pop ve yaşlı yetişkinlerde maruziyet"
+    },
+    "labelHalfLife": {
+      "range": "ABD prospektüsünde bildirilen yarılanma ömrü: {low}–{high} sa ({route}).",
+      "single": "ABD prospektüsünde bildirilen yarılanma ömrü: {hours} sa ({route}).",
+      "route": {
+        "iv": "damar içi",
+        "oral": "ağızdan",
+        "other": "başka yol",
+        "unknown": "prospektüs cümlesinde veriliş yolu belirtilmemiş"
+      },
+      "sentence": "Prospektüs cümlesi:",
+      "source": "DailyMed, set kimliği {setId} (prospektüs sürümü {version}, {date})",
+      "context": "Prospektüs değeri, prospektüsten alıntılanan bir ölçümdür; model değeri bir tahmindir. Yayımlanmış bir referans kümesine karşı (Lombardo 2018, {n} ilaç) 2 kat içinde kalanların payı: prospektüs yarılanma ömürleri %{label}, aynı ilaçlarda httk yarılanma ömürleri %{httk}. Çıkarım otomatik yapıldı; uzman incelemesi henüz yapılmadı. Yalnızca karşılaştırma için gösterilir: hiçbir simülasyonda kullanılmaz."
     },
     "modelError": {
       "title": "Ölçülmüş model hatası",

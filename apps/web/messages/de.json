@@ -2457,8 +2457,22 @@
       "canon_rhubarb_480mg": "Kanon-Szenario: der gesamte Gehalt an Hydroxyanthracenen als freies Rhein gezählt, eine obere Schätzung (überwiegend Glykoside; das Modell kennt keine Aktivierung im Darm); eine historische Dosis, al-Khuzi zugeschrieben; maschinelle Übersetzung."
     },
     "olderAdults": {
+      "notDrugSpecific": "Das Verhältnis Ältere zu Jüngeren aus HTTK-Pop ist nicht arzneistoffspezifisch.",
       "note": "Der Alterseffekt von HTTK-Pop ist für jeden Arzneistoff fast gleich (Verhältnisse {low}–{high}); FDA-Fachinformationen berichten bei Älteren einen medianen Anstieg der Exposition um etwa {percent} % ({drugs} Arzneistoffe, Janus-Forschungsnotiz).",
       "link": "Forschungsnotiz: HTTK-Pop und Exposition bei Älteren"
+    },
+    "labelHalfLife": {
+      "range": "In der US-Fachinformation angegebene Halbwertszeit: {low}–{high} h ({route}).",
+      "single": "In der US-Fachinformation angegebene Halbwertszeit: {hours} h ({route}).",
+      "route": {
+        "iv": "intravenös",
+        "oral": "oral",
+        "other": "anderer Applikationsweg",
+        "unknown": "Applikationsweg im Satz der Fachinformation nicht angegeben"
+      },
+      "sentence": "Satz aus der Fachinformation:",
+      "source": "DailyMed, Set-ID {setId} (Version {version} der Fachinformation, {date})",
+      "context": "Der Wert aus der Fachinformation ist eine dort zitierte Messung; der Modellwert ist eine Vorhersage. Gegenüber einem veröffentlichten Referenzdatensatz (Lombardo 2018) lagen die Halbwertszeiten aus Fachinformationen bei {label} % von {n} Arzneistoffen innerhalb des 2-Fachen, die httk-Halbwertszeiten bei {httk} % derselben Arzneistoffe. Die Extraktion erfolgte automatisiert; eine Prüfung durch Fachleute ist noch nicht erfolgt. Nur zum Vergleich gezeigt: Der Wert geht in keine Simulation ein."
     },
     "modelError": {
       "title": "Gemessener Modellfehler",

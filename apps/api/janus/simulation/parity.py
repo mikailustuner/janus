@@ -16,7 +16,7 @@ from typing import Any
 
 from janus.paths import repo_root
 from janus.simulation.allowlist import AllowList, allowlist
-from janus.simulation.calibration import calibration
+from janus.simulation.calibration import calibration, label_half_life
 from janus.simulation.compartmental import explore, horizon, params_for
 
 FIXTURE = Path("apps/web/src/simulation/parity.fixture.json")
@@ -102,6 +102,9 @@ def explorer(allow: AllowList) -> dict[str, Any]:
             for c in allow.compartmental.values()
         ],
         "calibration": calibration(),
+        "label_half_life": {
+            k: label_half_life()[k] for k in ("version", "source", "accuracy", "drugs")
+        },
         "limits": {
             "doses_max": lim.doses_max,
             "horizon_after_last_dose_h": lim.horizon_after_last_dose_h,

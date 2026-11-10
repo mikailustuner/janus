@@ -6,7 +6,10 @@
  * published one (never a bare verdict), the risk window with its coverage, the older/younger
  * populations as bands with the validation table, and whether the patient sentence is shown.
  */
+import { Fragment } from "react";
+
 import { BackLink, LargeTitle, StatGrid, StatTile } from "@/components/cards";
+import { LabelHalfLife, OlderAdultsNote } from "@/components/simulation/common";
 import { StateView } from "@/components/StateView";
 import type { Result } from "@/api/client";
 import { useCall } from "@/flow/useCall";
@@ -385,33 +388,33 @@ function Body({ out, catalogue }: { out: CascadeOut; catalogue: Catalogue }) {
                   (r) => r.drug.toLowerCase() === d.drug.toLowerCase(),
                 )?.credibility ?? "failed";
               return (
-                <p
-                  key={d.drug}
-                  className="text-sm"
-                  data-testid="tm-population-drug"
-                >
-                  <span className="font-bold">
-                    {t("TimeMachine.population.credibility", {
-                      drug: d.drug,
-                      verdict,
-                    })}
-                  </span>{" "}
-                  {t("TimeMachine.population.ratio", {
-                    drug: d.drug,
-                    ratio: n.sig(d.older_to_younger_ratio),
-                  })}{" "}
-                  {/* An absolute time from a model that is not credible is not shown
-                      (pharmacologist review B3). */}
-                  {verdict === "credible" &&
-                  d.days_to_90pct_steady_state !== null
-                    ? t("TimeMachine.population.steady", {
+                <Fragment key={d.drug}>
+                  <p className="text-sm" data-testid="tm-population-drug">
+                    <span className="font-bold">
+                      {t("TimeMachine.population.credibility", {
                         drug: d.drug,
-                        days: n.int(d.days_to_90pct_steady_state),
-                      })
-                    : null}
-                </p>
+                        verdict,
+                      })}
+                    </span>{" "}
+                    {t("TimeMachine.population.ratio", {
+                      drug: d.drug,
+                      ratio: n.sig(d.older_to_younger_ratio),
+                    })}{" "}
+                    {/* An absolute time from a model that is not credible is not shown
+                      (pharmacologist review B3). */}
+                    {verdict === "credible" &&
+                    d.days_to_90pct_steady_state !== null
+                      ? t("TimeMachine.population.steady", {
+                          drug: d.drug,
+                          days: n.int(d.days_to_90pct_steady_state),
+                        })
+                      : null}
+                  </p>
+                  <LabelHalfLife drug={d.drug} />
+                </Fragment>
               );
             })}
+            <OlderAdultsNote ratio />
             <p className="text-sm">
               <span className="font-bold">
                 {t("TimeMachine.population.doseBasis")}:{" "}

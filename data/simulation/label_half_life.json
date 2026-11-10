@@ -1,0 +1,41 @@
+{
+  "version": "label-half-life-1",
+  "about": "Half-lives reported in US drug labels, shown next to the model's half-life for the drugs of the httk comparison (display only; never a model input, never used for a simulation). One entry per label sentence, with its route tag, DailyMed set id and the sentence as published. Derived by Janus from the label PK atlas of 2026-11-09 (automated extraction; values on which two independent automated extractors agreed). Expert review has not yet been done. Not about any person and not a dose recommendation.",
+  "source": {
+    "name": "DailyMed Structured Product Labeling (SPL), U.S. National Library of Medicine; labeling as submitted to the U.S. Food and Drug Administration",
+    "url": "https://dailymed.nlm.nih.gov/",
+    "license": "Public domain (FDA drug labeling as published on DailyMed); not an FDA or NLM endorsement",
+    "retrieved": "2026-11-09",
+    "sentences_rechecked_on_dailymed": "2026-11-10"
+  },
+  "selection": "Half-life values of the atlas on which both automated extractors agreed, for the parent drug, from the label picked for the drug in the atlas. An automated check of the surrounding label paragraph (2026-11-10) drops a value when the paragraph describes children, another special population or a depot or prodrug form. Route tags: iv, oral, other, or unknown when the sentence and its paragraph state no route (the product's route is never assumed).",
+  "accuracy": {
+    "note": "Measured on the whole atlas, not on these entries. Annotators were automated.",
+    "half_life_precision": 0.966,
+    "precision_per_field_range": [0.96, 1.0],
+    "recall": 0.31,
+    "reference": "Lombardo, Berellini & Obach 2018, human intravenous pharmacokinetics (doi:10.1124/dmd.118.082966)",
+    "n_drugs": 114,
+    "label_within_2_fold": 0.772,
+    "httk_within_2_fold": 0.263
+  },
+  "drugs": {
+    "metoclopramide": [
+      {
+        "low_h": 5,
+        "high_h": 6,
+        "route": "unknown",
+        "substance": "metoclopramide hydrochloride",
+        "set_id": "0034a97a-fb05-418a-a234-de278907cd2a",
+        "spl_version": "5",
+        "effective": "2026-07-24",
+        "sentence": "The average elimination half-life in individuals with normal renal function is 5 to 6 hours."
+      }
+    ]
+  },
+  "not_shown": {
+    "metoclopramide": "Three further agreed values (4.1 h, 4.4 h, 4.5 h) come from paragraphs that describe studies in children.",
+    "haloperidol": "The only agreed value is the apparent half-life after a haloperidol decanoate depot injection (a prodrug ester in a depot form), which is not the half-life of haloperidol.",
+    "risperidone": "No agreed half-life value for the parent drug."
+  }
+}

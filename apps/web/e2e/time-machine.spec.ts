@@ -90,6 +90,12 @@ const PAGES = [
     path: "/research/time-machine/cascade#antipsychotic_eps_antiparkinson",
     ready: "tm-css",
   },
+  {
+    // The label-reported half-life with its route, set id and sentence.
+    name: "metoclopramide",
+    path: "/research/time-machine/cascade#metoclopramide_eps_antiparkinson",
+    ready: "label-half-life",
+  },
 ];
 
 for (const theme of THEMES)

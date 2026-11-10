@@ -30,7 +30,7 @@ from hypothesis import strategies as st
 from janus.paths import repo_root
 from janus.simulation import parity
 from janus.simulation.allowlist import allowlist
-from janus.simulation.calibration import calibration, half_life_interval
+from janus.simulation.calibration import ROUTES, calibration, half_life_interval, label_half_life
 from janus.simulation.compartmental import explore, params_for
 from janus.simulation.execute import ModelError, parse_httk
 from janus.simulation.ratelimit import Limiter, Window, client_address
@@ -541,3 +541,22 @@ def test_s9_calibration_file_is_consistent() -> None:
             10 * math.sqrt(h["conformal"]["interval_width_fold"]),
         )
     )
+
+
+def test_s9_label_half_lives_carry_route_set_id_and_sentence() -> None:
+    """Display-only label values: each has a route tag, a DailyMed set id and a label sentence that
+    states its numbers; only drugs of the httk comparison; never part of a request or a model."""
+    data = label_half_life()
+    assert set(data["drugs"]) <= set(ALLOW.httk)
+    for rows in data["drugs"].values():
+        assert rows
+        for r in rows:
+            assert r["route"] in ROUTES
+            assert re.fullmatch(r"[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}", r["set_id"])
+            assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", r["effective"])
+            assert 0 < r["low_h"] <= r["high_h"]
+            numbers = re.findall(r"\d+(?:\.\d+)?", r["sentence"])
+            assert f"{r['low_h']:g}" in numbers and f"{r['high_h']:g}" in numbers
+    a = data["accuracy"]
+    assert a["httk_within_2_fold"] < a["label_within_2_fold"] < 1 and a["n_drugs"] > 0
+    assert "label" not in " ".join(NAMES)

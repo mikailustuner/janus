@@ -112,6 +112,13 @@
    `docs/research/httk-pop-older-adult-exposure.md`, linked).
 6. THE calibration constants SHALL be a versioned data file with provenance and no label text
    (`data/simulation/calibration.json`).
+7. WHERE a US label reports a half-life for a drug of the httk comparison, the result and the time machine's
+   population block SHALL show it next to the model's value, each value with its route tag, its DailyMed set id and
+   the quoted label sentence (`data/simulation/label_half_life.json`: values on which two automated extractors
+   agreed; expert review has not yet been done). Display only: a label value is never a model input and no
+   simulation is run from label parameters. A drug without such a value shows nothing extra.
+8. WHEREVER the HTTK-Pop older-to-younger ratio is shown (httk result, time machine), the note of 5 SHALL first say
+   that the ratio is not drug-specific.
 
 ## Requirement 7: Quality
 1. Property tests: no person-specific field; every answer carries the disclaimer; the calibrated interval only

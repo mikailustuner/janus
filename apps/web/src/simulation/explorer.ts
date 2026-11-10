@@ -46,10 +46,29 @@ export interface Calibration {
   };
 }
 
+/** A half-life as one US label sentence reports it: display only, never a model input. */
+export interface LabelHalfLife {
+  low_h: number;
+  high_h: number;
+  route: "iv" | "oral" | "other" | "unknown";
+  set_id: string;
+  spl_version: string;
+  effective: string;
+  sentence: string;
+}
+
 export const EXPLORER = data as unknown as {
   version: string;
   compounds: Compound[];
   calibration: Calibration;
+  label_half_life: {
+    accuracy: {
+      n_drugs: number;
+      label_within_2_fold: number;
+      httk_within_2_fold: number;
+    };
+    drugs: Record<string, LabelHalfLife[] | undefined>;
+  };
   limits: {
     doses_max: number;
     horizon_after_last_dose_h: number;

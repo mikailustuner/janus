@@ -29,6 +29,25 @@ def calibration() -> dict[str, Any]:
     return load()
 
 
+ROUTES = ("iv", "oral", "other", "unknown")
+
+
+@cache
+def label_half_life() -> dict[str, Any]:
+    """Half-lives reported in US labels (`data/simulation/label_half_life.json`): shown next to the
+    model's half-life, each with its route tag, DailyMed set id and label sentence. Display only:
+    never a model input."""
+    path = repo_root() / "data" / "simulation" / "label_half_life.json"
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    for rows in raw["drugs"].values():
+        for r in rows:
+            if not (0 < r["low_h"] <= r["high_h"]) or r["route"] not in ROUTES:
+                raise ValueError("label half-life: bad value or route")
+            if not (r["set_id"] and r["sentence"].strip()):
+                raise ValueError("label half-life: a value needs its set id and sentence")
+    return raw
+
+
 def half_life_interval(t_h: float, cal: dict[str, Any] | None = None) -> tuple[float, float]:
     """The calibrated 80 % interval of an httk half-life (hours)."""
     if not (math.isfinite(t_h) and t_h > 0):

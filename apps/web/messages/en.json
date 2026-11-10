@@ -2457,8 +2457,22 @@
       "canon_rhubarb_480mg": "Canon scenario: the whole hydroxyanthracene content counted as free rhein, an upper estimate (mostly glycosides; the model has no activation in the gut); one historical dose, attributed to al-Khuzi; machine translation."
     },
     "olderAdults": {
+      "notDrugSpecific": "The older-to-younger ratio from HTTK-Pop is not drug-specific.",
       "note": "HTTK-Pop's age effect is nearly the same for every drug (ratios {low}–{high}); FDA labels report a median exposure increase of about {percent}% in older adults ({drugs} drugs, Janus research note).",
       "link": "Research note: HTTK-Pop and exposure in older adults"
+    },
+    "labelHalfLife": {
+      "range": "Half-life reported in the US label: {low}–{high} h ({route}).",
+      "single": "Half-life reported in the US label: {hours} h ({route}).",
+      "route": {
+        "iv": "intravenous",
+        "oral": "oral",
+        "other": "other route",
+        "unknown": "route not stated in the label sentence"
+      },
+      "sentence": "Label sentence:",
+      "source": "DailyMed, set id {setId} (label version {version}, {date})",
+      "context": "A label value is a measurement quoted from the label; the model value is a prediction. Against a published reference set (Lombardo 2018), label half-lives were within 2-fold for {label}% of {n} drugs and httk half-lives for {httk}% of the same drugs. Extraction was automated; expert review has not yet been done. Shown for comparison only: it is not used in any simulation."
     },
     "modelError": {
       "title": "Measured model error",

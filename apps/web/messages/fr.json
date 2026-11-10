@@ -2457,8 +2457,22 @@
       "canon_rhubarb_480mg": "Scénario du Canon : toute la teneur en hydroxyanthracènes comptée comme rhéine libre, une estimation haute (surtout des glycosides ; le modèle n'a pas d'activation intestinale) ; une dose historique, attribuée à al-Khuzi ; traduction automatique."
     },
     "olderAdults": {
+      "notDrugSpecific": "Le rapport âgés/jeunes de HTTK-Pop n'est pas propre à chaque médicament.",
       "note": "L'effet de l'âge dans HTTK-Pop est presque le même pour tous les médicaments (rapports {low}–{high}) ; les notices de la FDA rapportent une augmentation médiane de l'exposition d'environ {percent} % chez les adultes âgés ({drugs} médicaments, note de recherche Janus).",
       "link": "Note de recherche : HTTK-Pop et exposition chez les adultes âgés"
+    },
+    "labelHalfLife": {
+      "range": "Demi-vie indiquée dans la notice américaine : {low}–{high} h ({route}).",
+      "single": "Demi-vie indiquée dans la notice américaine : {hours} h ({route}).",
+      "route": {
+        "iv": "voie intraveineuse",
+        "oral": "voie orale",
+        "other": "autre voie",
+        "unknown": "voie non précisée dans la phrase de la notice"
+      },
+      "sentence": "Phrase de la notice :",
+      "source": "DailyMed, identifiant {setId} (version {version} de la notice, {date})",
+      "context": "La valeur de la notice est une mesure citée dans la notice ; la valeur du modèle est une prédiction. Par rapport à un jeu de référence publié (Lombardo 2018), les demi-vies des notices étaient à moins d'un facteur 2 pour {label} % de {n} médicaments, et les demi-vies httk pour {httk} % des mêmes médicaments. L'extraction a été automatisée ; la relecture par des experts n'a pas encore été faite. Affichée pour comparaison seulement : elle n'est utilisée dans aucune simulation."
     },
     "modelError": {
       "title": "Erreur du modèle mesurée",
