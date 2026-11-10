@@ -18,12 +18,22 @@ export function strengthParts(code: StrengthCode): {
 /** Source id of the resolution data → attribution code of the presence answer. */
 export const ATTRIBUTION_OF: Record<
   string,
-  "titck" | "bdpm" | "cima" | "openfda"
+  "titck" | "bdpm" | "cima" | "openfda" | "aifa" | "dpd"
 > = {
   titck: "titck",
   eu_fr_bdpm: "bdpm",
   eu_es_cima: "cima",
   openfda_ndc: "openfda",
+  eu_it_aifa: "aifa",
+  ca_dpd: "dpd",
 };
-/** Fixed source order of the answer (design §3.2): TR, EU-FR, EU-ES, EU-DE, US. */
-export const SOURCE_COUNTRY = ["TR", "FR", "ES", "DE", "US"] as const;
+/** Fixed source order of the answer (design §3.2): TR, EU-FR, EU-ES, EU-DE, US, EU-IT, CA. */
+export const SOURCE_COUNTRY = [
+  "TR",
+  "FR",
+  "ES",
+  "DE",
+  "US",
+  "IT",
+  "CA",
+] as const;

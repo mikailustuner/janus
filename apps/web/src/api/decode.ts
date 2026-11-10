@@ -238,7 +238,7 @@ export const productCandidate = obj({
   kind: lit("product"),
   candidate_id: str,
   region: lit("TR", "US", "EU"),
-  country: optional(lit("FR", "ES")),
+  country: optional(lit("FR", "ES", "IT")),
   matched_by: lit(
     "barcode",
     "ndc_gtin",

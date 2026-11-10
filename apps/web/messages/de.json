@@ -133,6 +133,7 @@
       "eu_fr_bdpm": "BDPM (Frankreich)",
       "eu_es_cima": "CIMA, AEMPS (Spanien)",
       "wikidata": "Wikidata",
+      "eu_it_aifa": "AIFA Open Data (Italien)",
       "other": "Quelle {id}"
     },
     "sourceLine": "{source}, Datenstand {date}",
@@ -714,6 +715,7 @@
     "chooseAmbiguous": "Bitte geben Sie an, welcher Wirkstoff es ist, oder wählen Sie „weiß nicht“.",
     "showMore": "Mehr Ergebnisse anzeigen",
     "demoNoAdd": "Demo-Medikamente werden nicht zu Ihrer eigenen Liste hinzugefügt.",
+    "aifa": "Quelle: Italienische Arzneimittelagentur (AIFA), Open Data, Lizenz CC BY 4.0. Packungsname und Packungsbeschreibung wie veröffentlicht; die AIFA billigt Janus nicht.",
     "back": "Zurück zum Scannen"
   },
   "OutcomeConsent": {
@@ -863,12 +865,16 @@
       "FR": "Frankreich",
       "ES": "Spanien",
       "DE": "Deutschland",
+      "IT": "Italien",
+      "CA": "Kanada",
       "US": "den Vereinigten Staaten"
     },
     "sourceName": {
       "titck": "TİTCK",
       "bdpm": "BDPM",
       "cima": "Nomenclátor (AEMPS)",
+      "aifa": "AIFA Open Data",
+      "dpd": "DPD (Health Canada)",
       "openfda": "openFDA NDC"
     },
     "enteredByName": "Über den Namen eingegeben, nicht über einen Code",
@@ -997,6 +1003,8 @@
       "titck": "Quelle: TİTCK, Liste der zugelassenen Humanarzneimittel (Ruhsatlı Beşeri Tıbbi Ürünler Listesi), Datenstand {date}.",
       "bdpm": "Quelle: Base de données publique des médicaments (BDPM), Datenstand {date}. Wie veröffentlicht angezeigt; keine Billigung von Janus durch die BDPM.",
       "cima": "Quelle: AEMPS, Nomenclátor de prescripción, Datenstand {date}.",
+      "aifa": "Quelle: Italienische Arzneimittelagentur (AIFA), Open Data, Datenstand {date}, Lizenz CC BY 4.0. Homöopathische Registrierungen und nicht zugelassene Packungen sind nicht enthalten; die AIFA billigt Janus nicht.",
+      "dpd": "Quelle: Health Canada, Drug Product Database (vermarktete Produkte), Datenstand {date}. Enthält Informationen, die unter der Open Government Licence – Canada lizenziert sind. Keine Billigung durch Health Canada.",
       "openfda": "Quelle: openFDA NDC directory, Datenstand {date}. Keine Billigung durch die FDA."
     },
     "memory": {
@@ -1014,6 +1022,8 @@
       "FR": "Frankreich",
       "ES": "Spanien",
       "DE": "Deutschland",
+      "IT": "Italien",
+      "CA": "Kanada",
       "US": "Vereinigte Staaten"
     },
     "products": {

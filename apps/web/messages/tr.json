@@ -133,6 +133,7 @@
       "eu_fr_bdpm": "BDPM (Fransa)",
       "eu_es_cima": "CIMA, AEMPS (İspanya)",
       "wikidata": "Wikidata",
+      "eu_it_aifa": "AIFA açık verisi (İtalya)",
       "other": "Kaynak {id}"
     },
     "sourceLine": "{source}, {date} tarihli veri",
@@ -714,6 +715,7 @@
     "chooseAmbiguous": "Lütfen hangi etkin madde olduğunu belirtin veya \"bilmiyorum\" seçin.",
     "showMore": "Daha fazla sonuç göster",
     "demoNoAdd": "Demo ilaçları kendi listenize eklenmez.",
+    "aifa": "Kaynak: İtalya İlaç Ajansı (AIFA), açık veri, CC BY 4.0 lisansı. Ambalaj adı ve tanımı yayımlandığı haliyle gösterilir; AIFA Janus'u onaylamaz.",
     "back": "Taramaya dön"
   },
   "OutcomeConsent": {
@@ -863,12 +865,16 @@
       "FR": "Fransa",
       "ES": "İspanya",
       "DE": "Almanya",
+      "IT": "İtalya",
+      "CA": "Kanada",
       "US": "Amerika Birleşik Devletleri"
     },
     "sourceName": {
       "titck": "TİTCK",
       "bdpm": "BDPM",
       "cima": "Nomenclátor (AEMPS)",
+      "aifa": "AIFA açık verisi",
+      "dpd": "DPD (Health Canada)",
       "openfda": "openFDA NDC"
     },
     "enteredByName": "Kodla değil, adıyla girildi",
@@ -997,6 +1003,8 @@
       "titck": "Kaynak: TİTCK Ruhsatlı Beşeri Tıbbi Ürünler Listesi, {date} tarihli veri.",
       "bdpm": "Kaynak: Base de données publique des médicaments (BDPM), {date} tarihli veri. Yayımlandığı şekliyle gösterilir; BDPM, Janus'u desteklediğini beyan etmez.",
       "cima": "Kaynak: AEMPS, Nomenclátor de prescripción, {date} tarihli veri.",
+      "aifa": "Kaynak: İtalya İlaç Ajansı (AIFA), açık veri, veri tarihi: {date}, CC BY 4.0 lisansı. Homeopatik kayıtlar ve ruhsatlı olmayan ambalajlar dışarıda bırakılmıştır; AIFA, Janus'u onaylamaz.",
+      "dpd": "Kaynak: Health Canada, Drug Product Database (pazarlanan ürünler), {date} tarihli veri. Open Government Licence – Canada kapsamında lisanslanmış bilgiler içerir. Health Canada tarafından onaylandığı anlamına gelmez.",
       "openfda": "Kaynak: openFDA NDC directory, {date} tarihli veri. FDA tarafından desteklendiği anlamına gelmez."
     },
     "memory": {
@@ -1014,6 +1022,8 @@
       "FR": "Fransa",
       "ES": "İspanya",
       "DE": "Almanya",
+      "IT": "İtalya",
+      "CA": "Kanada",
       "US": "Amerika Birleşik Devletleri"
     },
     "products": {

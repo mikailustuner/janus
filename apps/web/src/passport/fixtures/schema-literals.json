@@ -23,7 +23,9 @@
   "titck",
   "eu_fr_bdpm",
   "eu_es_cima",
-  "openfda_ndc"
+  "openfda_ndc",
+  "eu_it_aifa",
+  "ca_dpd"
  ],
  "form_group": [
   "oral_solid",
@@ -52,12 +54,14 @@
  "region": [
   "TR",
   "EU",
-  "US"
+  "US",
+  "CA"
  ],
  "country": [
   "FR",
   "ES",
-  "DE"
+  "DE",
+  "IT"
  ],
  "source_status": [
   "loaded",
@@ -71,7 +75,9 @@
   "titck",
   "bdpm",
   "cima",
-  "openfda"
+  "openfda",
+  "aifa",
+  "dpd"
  ],
  "unit": [
   "ug",
@@ -90,7 +96,9 @@
  "listable_source_id": [
   "eu_fr_bdpm",
   "eu_es_cima",
-  "openfda_ndc"
+  "openfda_ndc",
+  "eu_it_aifa",
+  "ca_dpd"
  ],
  "level": [
   "same",

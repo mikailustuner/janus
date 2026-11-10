@@ -23,7 +23,13 @@ import {
 } from "./model";
 import { itemQuery, notSentReason } from "./request";
 
-export const LISTABLE = ["eu_fr_bdpm", "eu_es_cima", "openfda_ndc"] as const;
+export const LISTABLE = [
+  "eu_fr_bdpm",
+  "eu_es_cima",
+  "openfda_ndc",
+  "eu_it_aifa",
+  "ca_dpd",
+] as const;
 export type Target = (typeof LISTABLE)[number];
 export const LEVELS = ["same", "different", "unknown"] as const;
 export type Level = (typeof LEVELS)[number];
@@ -46,15 +52,20 @@ export const MAX_OFFSET = 100_000;
 
 /** Country of a target (the `Passport.place` and `Passport.country` keys) and the language its
  * source publishes names in (the `lang` of a listed name). */
-export const TARGET_COUNTRY: Record<Target, "FR" | "ES" | "US"> = {
-  eu_fr_bdpm: "FR",
-  eu_es_cima: "ES",
-  openfda_ndc: "US",
-};
+export const TARGET_COUNTRY: Record<Target, "FR" | "ES" | "US" | "IT" | "CA"> =
+  {
+    eu_fr_bdpm: "FR",
+    eu_es_cima: "ES",
+    openfda_ndc: "US",
+    eu_it_aifa: "IT",
+    ca_dpd: "CA",
+  };
 export const TARGET_LANG: Record<Target, string> = {
   eu_fr_bdpm: "fr",
   eu_es_cima: "es",
   openfda_ndc: "en",
+  eu_it_aifa: "it",
+  ca_dpd: "en",
 };
 
 export interface ProductsIn extends ItemIn {

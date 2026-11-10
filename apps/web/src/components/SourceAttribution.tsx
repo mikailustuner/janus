@@ -3,12 +3,19 @@
 import type { Candidate } from "@/api/contracts";
 import { useT } from "@/theme/words";
 
-const KNOWN = ["titck", "openfda_ndc", "eu_fr_bdpm", "eu_es_cima", "wikidata"];
+export const KNOWN_SOURCES = [
+  "titck",
+  "openfda_ndc",
+  "eu_fr_bdpm",
+  "eu_es_cima",
+  "eu_it_aifa",
+  "wikidata",
+];
 
 export function SourceAttribution({ candidate }: { candidate: Candidate }) {
   const t = useT();
   const { source_id, snapshot_date } = candidate.source;
-  const source = KNOWN.includes(source_id)
+  const source = KNOWN_SOURCES.includes(source_id)
     ? t(`Common.source.${source_id}`)
     : t("Common.source.other", { id: source_id });
   return (

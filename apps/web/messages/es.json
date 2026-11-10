@@ -133,6 +133,7 @@
       "eu_fr_bdpm": "BDPM (Francia)",
       "eu_es_cima": "CIMA, AEMPS (España)",
       "wikidata": "Wikidata",
+      "eu_it_aifa": "Datos abiertos de la AIFA (Italia)",
       "other": "Fuente {id}"
     },
     "sourceLine": "{source}, datos del {date}",
@@ -714,6 +715,7 @@
     "chooseAmbiguous": "Indique qué principio activo es o elija «no lo sé».",
     "showMore": "Mostrar más resultados",
     "demoNoAdd": "Los medicamentos de la demo no se añaden a su propia lista.",
+    "aifa": "Fuente: Agencia Italiana del Medicamento (AIFA), datos abiertos, licencia CC BY 4.0. El nombre y la descripción del envase se muestran tal como se publican; la AIFA no respalda a Janus.",
     "back": "Volver a escanear"
   },
   "OutcomeConsent": {
@@ -863,12 +865,16 @@
       "FR": "Francia",
       "ES": "España",
       "DE": "Alemania",
+      "IT": "Italia",
+      "CA": "Canadá",
       "US": "Estados Unidos"
     },
     "sourceName": {
       "titck": "TİTCK",
       "bdpm": "BDPM",
       "cima": "Nomenclátor (AEMPS)",
+      "aifa": "Datos abiertos AIFA",
+      "dpd": "DPD (Health Canada)",
       "openfda": "openFDA NDC"
     },
     "enteredByName": "Introducida por el nombre, no por un código",
@@ -997,6 +1003,8 @@
       "titck": "Fuente: TİTCK, lista de medicamentos de uso humano autorizados (Ruhsatlı Beşeri Tıbbi Ürünler Listesi), datos del {date}.",
       "bdpm": "Fuente: Base de données publique des médicaments (BDPM), datos del {date}. Se muestra tal como se publica; la BDPM no avala a Janus.",
       "cima": "Fuente: AEMPS, Nomenclátor de prescripción, datos del {date}.",
+      "aifa": "Fuente: Agencia Italiana del Medicamento (AIFA), datos abiertos, datos a fecha de {date}, licencia CC BY 4.0. Se excluyen los registros homeopáticos y los envases no autorizados; la AIFA no avala a Janus.",
+      "dpd": "Fuente: Health Canada, Drug Product Database (productos comercializados), datos a fecha de {date}. Contiene información publicada bajo la Open Government Licence – Canada. No es un aval de Health Canada.",
       "openfda": "Fuente: openFDA NDC directory, datos del {date}. No es un aval de la FDA."
     },
     "memory": {
@@ -1014,6 +1022,8 @@
       "FR": "Francia",
       "ES": "España",
       "DE": "Alemania",
+      "IT": "Italia",
+      "CA": "Canadá",
       "US": "Estados Unidos"
     },
     "products": {

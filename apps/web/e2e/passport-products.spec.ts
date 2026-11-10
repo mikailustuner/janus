@@ -246,3 +246,58 @@ test("own list: an unavailable service offers a retry, never 'not found'", async
   await page.getByRole("button", { name: "Try again" }).click();
   await expect(page.getByTestId("listed-product")).toHaveCount(8);
 });
+
+test("own list: Italy and Canada as targets show source, data date and attribution", async ({
+  page,
+}, info) => {
+  await ownList(page);
+  const bodies: Body[] = [];
+  const dates = { eu_it_aifa: "2026-11-10", ca_dpd: "2026-11-02" } as const;
+  const sources = {
+    eu_it_aifa: { id: 5, region: "EU", country: "IT", attribution: "aifa" },
+    ca_dpd: { id: 6, region: "CA", country: null, attribution: "dpd" },
+  } as const;
+  await stubApi(page, {
+    "/passport/products": (body) => {
+      const b = body as Body;
+      bodies.push(b);
+      const out = answer("eu_fr_bdpm");
+      const s = sources[b.target as keyof typeof sources];
+      if (s) {
+        out.source = {
+          ...out.source,
+          source: s.id,
+          source_id: b.target,
+          region: s.region,
+          country: s.country,
+          attribution: s.attribution,
+          snapshot_date: dates[b.target as keyof typeof dates],
+        };
+      }
+      out.total = 8;
+      out.products = out.products.slice(0, 8);
+      return { body: out };
+    },
+  });
+  await page.goto("/en/passport/products#own-1");
+  await checks(page);
+  await page.getByRole("radio", { name: "Italy" }).check();
+  await expect(
+    page.getByText(/Source: Italian Medicines Agency \(AIFA\)/),
+  ).toContainText("data as of Nov 10, 2026");
+  await expect(page.getByText(/CC BY 4\.0/).first()).toBeVisible();
+  await checks(page);
+  await shot(page, "italy", info.project.name);
+  await page.getByRole("radio", { name: "Canada" }).check();
+  await expect(
+    page.getByText(/Source: Health Canada, Drug Product Database/),
+  ).toContainText("data as of Nov 2, 2026");
+  await expect(page.getByText(/Open Government Licence/).first()).toBeVisible();
+  await checks(page);
+  await shot(page, "canada", info.project.name);
+  expect(bodies.map((b) => b.target)).toEqual([
+    "eu_fr_bdpm",
+    "eu_it_aifa",
+    "ca_dpd",
+  ]);
+});

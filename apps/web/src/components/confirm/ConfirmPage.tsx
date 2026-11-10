@@ -14,7 +14,10 @@ import { formatDate } from "@/components/format";
 import { MonthPicker } from "@/components/MonthPicker";
 import { candidateIngredients, keyName } from "@/components/names";
 import { RecallCheck } from "@/components/recall/RecallCheck";
-import { SourceAttribution } from "@/components/SourceAttribution";
+import {
+  KNOWN_SOURCES,
+  SourceAttribution,
+} from "@/components/SourceAttribution";
 import { StateView } from "@/components/StateView";
 import { Button, ButtonLink, Card, PageTitle } from "@/components/ui";
 import { confirmView, readyToAdd, type CardView } from "@/flow/confirm";
@@ -161,6 +164,9 @@ function CandidateCard({
       {c.source.source_id === "eu_es_cima" ? (
         <p className="text-xs text-muted">{t("Confirm.cima")}</p>
       ) : null}
+      {c.source.source_id === "eu_it_aifa" ? (
+        <p className="text-xs text-muted">{t("Confirm.aifa")}</p>
+      ) : null}
       <Button
         variant={chosen ? "primary" : "secondary"}
         aria-pressed={chosen}
@@ -247,7 +253,7 @@ export function ConfirmPage() {
               sources: view.sources
                 .map(
                   (s) =>
-                    `${t(["titck", "openfda_ndc", "eu_fr_bdpm", "eu_es_cima", "wikidata"].includes(s.sourceId) ? `Common.source.${s.sourceId}` : "Common.source.other", { id: s.sourceId })} (${s.date})`,
+                    `${t(KNOWN_SOURCES.includes(s.sourceId) ? `Common.source.${s.sourceId}` : "Common.source.other", { id: s.sourceId })} (${s.date})`,
                 )
                 .join(", "),
             })}

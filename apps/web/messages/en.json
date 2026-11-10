@@ -133,6 +133,7 @@
       "eu_fr_bdpm": "BDPM (France)",
       "eu_es_cima": "CIMA, AEMPS (Spain)",
       "wikidata": "Wikidata",
+      "eu_it_aifa": "AIFA open data (Italy)",
       "other": "Source {id}"
     },
     "sourceLine": "{source}, data of {date}",
@@ -714,6 +715,7 @@
     "chooseAmbiguous": "Please answer which ingredient it is, or choose \"don't know\".",
     "showMore": "Show more results",
     "demoNoAdd": "Demo medicines are not added to your own list.",
+    "aifa": "Source: Italian Medicines Agency (AIFA), open data, licensed under CC BY 4.0. Pack name and description are shown as published; AIFA does not endorse Janus.",
     "back": "Back to scanning"
   },
   "OutcomeConsent": {
@@ -863,12 +865,16 @@
       "FR": "France",
       "ES": "Spain",
       "DE": "Germany",
+      "IT": "Italy",
+      "CA": "Canada",
       "US": "the United States"
     },
     "sourceName": {
       "titck": "TİTCK",
       "bdpm": "BDPM",
       "cima": "Nomenclátor (AEMPS)",
+      "aifa": "AIFA open data",
+      "dpd": "DPD (Health Canada)",
       "openfda": "openFDA NDC"
     },
     "enteredByName": "Entered by name, not by a code",
@@ -997,6 +1003,8 @@
       "titck": "Source: TİTCK list of licensed medicinal products for human use (Ruhsatlı Beşeri Tıbbi Ürünler Listesi), data of {date}.",
       "bdpm": "Source: Base de données publique des médicaments (BDPM), data of {date}. Shown as published; the BDPM does not endorse Janus.",
       "cima": "Source: AEMPS, Nomenclátor de prescripción, data of {date}.",
+      "aifa": "Source: Italian Medicines Agency (AIFA), open data, data as of {date}, licensed under CC BY 4.0. Homeopathic registrations and packs that are not authorised are left out; AIFA does not endorse Janus.",
+      "dpd": "Source: Health Canada, Drug Product Database (marketed products), data as of {date}. Contains information licensed under the Open Government Licence – Canada. Not a Health Canada endorsement.",
       "openfda": "Source: openFDA NDC directory, data of {date}. Not an FDA endorsement."
     },
     "memory": {
@@ -1014,6 +1022,8 @@
       "FR": "France",
       "ES": "Spain",
       "DE": "Germany",
+      "IT": "Italy",
+      "CA": "Canada",
       "US": "United States"
     },
     "products": {

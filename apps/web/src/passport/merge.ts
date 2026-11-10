@@ -10,7 +10,7 @@ import { fold, itemIdentity } from "./identity";
 import type { PassportItem } from "./model";
 
 const REGION_ORDER = ["TR", "EU", "US", "OTHER"] as const;
-const COUNTRY_ORDER = ["TR", "FR", "ES", "DE", "US"] as const;
+const COUNTRY_ORDER = ["TR", "FR", "ES", "DE", "US", "IT"] as const;
 
 const cmpText = (a: string, b: string) => (a < b ? -1 : a > b ? 1 : 0);
 
