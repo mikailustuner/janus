@@ -20,15 +20,15 @@ review agents in [`.kiro/`](.kiro)); the development log is
 
 ## What it does
 
-| Feature | What the person gets |
-| --- | --- |
-| Cascade check | Patterns from the published PIPC cascade list that match the medicine list, with sources and a doctor note |
-| Ways in | Barcode / GS1 code, label photo (read on the device) or the ingredient name — works for a box from any country when the ingredient name is printed in Latin letters |
-| Safety check | Same ingredient or same ATC subgroup twice; US label "Drug Interactions" passages that name another medicine on the list (quoted, no grading); three openly licensed anticholinergic burden scales, cited |
-| Recall check | Whether a US product or lot appears in an FDA recall (enforcement) record, quoted from the record |
-| Medication passport | Products with the same active ingredient in another country (France, Spain, United States, Canada, Italy), with strength and form shown as same / different / unknown — never "equivalent" |
-| Medicine information | What kind of medicine it is, in plain words in five languages, plus the official label text quoted untranslated |
-| Research tools | Time machine (evidence over time), séance (evidence synthesis), FAERS onset table, data-quality report, population simulation with measured model error |
+| Feature              | What the person gets                                                                                                                                                                                      |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Cascade check        | Patterns from the published PIPC cascade list that match the medicine list, with sources and a doctor note                                                                                                |
+| Ways in              | Barcode / GS1 code, label photo (read on the device) or the ingredient name — works for a box from any country when the ingredient name is printed in Latin letters                                       |
+| Safety check         | Same ingredient or same ATC subgroup twice; US label "Drug Interactions" passages that name another medicine on the list (quoted, no grading); three openly licensed anticholinergic burden scales, cited |
+| Recall check         | Whether a US product or lot appears in an FDA recall (enforcement) record, quoted from the record                                                                                                         |
+| Medication passport  | Products with the same active ingredient in another country (France, Spain, United States, Canada, Italy), with strength and form shown as same / different / unknown — never "equivalent"                |
+| Medicine information | What kind of medicine it is, in plain words in five languages, plus the official label text quoted untranslated                                                                                           |
+| Research tools       | Time machine (evidence over time), séance (evidence synthesis), FAERS onset table, data-quality report, population simulation with measured model error                                                   |
 
 Product data: Türkiye (TİTCK), France (BDPM), Spain (CIMA), United States (openFDA),
 Canada (Drug Product Database) and Italy (AIFA). Every source, licence and attribution is
@@ -56,16 +56,16 @@ pipelines and a worked example, in one place:
 
 ## Repository layout
 
-| Path         | Contents                                                       |
-| ------------ | -------------------------------------------------------------- |
-| `apps/web/`  | Next.js web app (PWA), five languages                          |
-| `apps/api/`  | FastAPI service (Python 3.12), PostgreSQL                      |
-| `apps/mcp/`  | Read-only MCP server over the public API                       |
-| `pipelines/` | Data ETL jobs, one per source                                  |
-| `data/`      | Small, redistributable data files and open data packages      |
+| Path         | Contents                                                               |
+| ------------ | ---------------------------------------------------------------------- |
+| `apps/web/`  | Next.js web app (PWA), five languages                                  |
+| `apps/api/`  | FastAPI service (Python 3.12), PostgreSQL                              |
+| `apps/mcp/`  | Read-only MCP server over the public API                               |
+| `pipelines/` | Data ETL jobs, one per source                                          |
+| `data/`      | Small, redistributable data files and open data packages               |
 | `deploy/`    | Hardened self-hosted deployment ([deploy/README.md](deploy/README.md)) |
-| `docs/`      | Documentation and research notes                               |
-| `.kiro/`     | Kiro steering, specs, hooks and review agents                  |
+| `docs/`      | Documentation and research notes                                       |
+| `.kiro/`     | Kiro steering, specs, hooks and review agents                          |
 
 ## Local development
 
