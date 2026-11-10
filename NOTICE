@@ -72,6 +72,31 @@ CIMA — Centro de Información online de Medicamentos (Spain)
   Source: AEMPS, CIMA / Nomenclátor de prescripción. The date of the last update
   is cited with each use (AEMPS legal notice). Not an AEMPS endorsement.
 
+DPD — Drug Product Database, data extract (Canada)
+  Publisher: Health Canada
+  License: Open Government Licence – Canada (version 2.0)
+  Contains information licensed under the Open Government Licence – Canada
+  (https://open.canada.ca/en/open-government-licence-canada).
+  Source: Health Canada, Drug Product Database data extract (marketed products);
+  the update date of the extract is cited with each use. No official status and
+  no endorsement by Health Canada or the Government of Canada is implied.
+  Licence checked on the Open Government Portal record of the dataset ("Licence:
+  Open Government Licence - Canada") on 2026-11-10.
+
+AIFA open data — Liste dei farmaci: confezioni and active ingredients (Italy)
+  Publisher: Agenzia Italiana del Farmaco (AIFA)
+  License: CC BY 4.0
+  Source: Agenzia Italiana del Farmaco (AIFA), open data,
+  https://www.aifa.gov.it/open-data, licensed under CC BY 4.0
+  (https://creativecommons.org/licenses/by/4.0/).
+  The update date of the files is cited with each use. Janus leaves out
+  homeopathic registrations and packs that are not authorised and joins the pack
+  name with the pack description; no other change is made to the published text.
+  No endorsement by AIFA is implied.
+  Licence checked on the AIFA open data page ("La licenza di distribuzione dei
+  dati utilizzata da AIFA la CC-BY (attribuzione) nella versione 4.0") on
+  2026-11-10.
+
 Wikidata
   Publisher: Wikimedia Foundation and Wikidata contributors
   License: CC0 1.0
