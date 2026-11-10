@@ -2589,5 +2589,29 @@
     "errors": {
       "unavailable": "Les fiches de rappel ne sont pas disponibles pour le moment. Veuillez réessayer plus tard."
     }
+  },
+  "SafetyCheck": {
+    "title": "Autres vérifications de cette liste",
+    "intro": "Comparaisons automatisées de votre liste avec des sources ouvertes. Elles rapportent ce que disent les sources et ne sont pas un conseil.",
+    "review": "La relecture par des experts n'a pas encore été faite.",
+    "demo": "Les autres vérifications de la liste (même substance active, texte de la notice, échelles anticholinergiques) ne fonctionnent pas dans la démo.",
+    "checking": "Comparaison des médicaments de votre liste…",
+    "failed": "Janus n'a pas pu effectuer ces vérifications.",
+    "errors": {
+      "unavailable": "Ces vérifications ne sont pas disponibles pour le moment. Veuillez réessayer plus tard."
+    },
+    "notChecked": "{count, plural, one {# substance active de votre liste n'a pas pu être lue et n'a pas été comparée.} other {# substances actives de votre liste n'ont pas pu être lues et n'ont pas été comparées.}}",
+    "about": "À propos de cette vérification",
+    "dup": {
+      "title": "Même substance active ou même groupe",
+      "listLabel": "Médicaments contenant la même substance active ou appartenant au même groupe",
+      "sameIngredient": "{ingredient} se trouve dans {count, plural, one {# médicament} other {# médicaments}} de votre liste",
+      "sameGroup": "{count, plural, one {# médicament de votre liste appartient} other {# médicaments de votre liste appartiennent}} au même groupe ATC {group}",
+      "unconfirmed": "Pour au moins un de ces médicaments, Janus ne connaît pas la forme du produit ; le groupe peut donc ne pas convenir.",
+      "advice": "Cela peut être voulu, par exemple deux dosages du même médicament. Janus ne peut pas le savoir. Un pharmacien ou un médecin peut le regarder avec vous.",
+      "none": "Janus a comparé {count, plural, one {la # substance active} other {les # substances actives}} qu'il a pu lire dans votre liste : aucune substance active ne se trouve dans deux médicaments, et aucune paire de substances actives n'appartient au même sous-groupe chimique ATC. Cela ne signifie pas que vos médicaments sont exempts de problèmes.",
+      "method": "Comparaison automatisée des substances actives et de leurs codes ATC. Un groupe est ici un sous-groupe chimique ATC (4e niveau) ; les sous-groupes « autres » ne sont pas comparés, et des médicaments de sous-groupes différents peuvent tout de même agir de façon semblable. Seuls les médicaments de lignes différentes de votre liste sont comparés.",
+      "sources": "Codes ATC issus de : {sources}."
+    }
   }
 }

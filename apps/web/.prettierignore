@@ -24,3 +24,5 @@ src/simulation/explorer.json
 src/simulation/simulate.recorded.json
 # scripts/record-research.mjs
 src/research/*.recorded.json
+# Written by apps/api/tests/test_safety_properties.py (JANUS_WRITE_FIXTURES=1)
+src/safety/fixtures/*.json

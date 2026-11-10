@@ -2589,5 +2589,29 @@
     "errors": {
       "unavailable": "The recall records are not available right now. Please try again later."
     }
+  },
+  "SafetyCheck": {
+    "title": "More checks on this list",
+    "intro": "Automated comparisons of your list with open sources. They state what the sources say and are not advice.",
+    "review": "Expert review has not yet been done.",
+    "demo": "The further checks of the list (same ingredient, label text, anticholinergic scales) do not run in the demo.",
+    "checking": "Comparing the medicines on your list…",
+    "failed": "Janus could not run these checks.",
+    "errors": {
+      "unavailable": "These checks are not available right now. Please try again later."
+    },
+    "notChecked": "{count, plural, one {# ingredient on your list could not be read and was not compared.} other {# ingredients on your list could not be read and were not compared.}}",
+    "about": "About this check",
+    "dup": {
+      "title": "Same ingredient or same group",
+      "listLabel": "Medicines with the same ingredient or of the same group",
+      "sameIngredient": "{ingredient} is in {count, plural, one {# medicine} other {# medicines}} on your list",
+      "sameGroup": "{count, plural, one {# medicine} other {# medicines}} on your list belong to the same ATC group {group}",
+      "unconfirmed": "For at least one of these medicines Janus does not know the product form, so the group may not fit.",
+      "advice": "This can be intended, for example two strengths of the same medicine. Janus cannot tell. A pharmacist or doctor can look at it with you.",
+      "none": "Janus compared the {count, plural, one {# ingredient} other {# ingredients}} it could read on your list: no ingredient is in two medicines, and no two ingredients belong to the same ATC chemical subgroup. This does not mean your medicines are free of problems.",
+      "method": "Automated comparison of the ingredients and their ATC codes. A group here is an ATC chemical subgroup (4th level); the \"other\" subgroups are not compared, and medicines of different subgroups can still act alike. Only medicines on different lines of your list are compared.",
+      "sources": "ATC codes from: {sources}."
+    }
   }
 }

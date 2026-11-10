@@ -2589,5 +2589,29 @@
     "errors": {
       "unavailable": "Geri çağırma kayıtları şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin."
     }
+  },
+  "SafetyCheck": {
+    "title": "Bu liste için diğer kontroller",
+    "intro": "Listenizin açık kaynaklarla otomatik karşılaştırmaları. Kaynakların ne yazdığını bildirir; tavsiye değildir.",
+    "review": "Uzman incelemesi henüz yapılmadı.",
+    "demo": "Listenin diğer kontrolleri (aynı etkin madde, prospektüs metni, antikolinerjik ölçekler) demoda çalışmaz.",
+    "checking": "Listenizdeki ilaçlar karşılaştırılıyor…",
+    "failed": "Janus bu kontrolleri yapamadı.",
+    "errors": {
+      "unavailable": "Bu kontroller şu anda kullanılamıyor. Lütfen daha sonra yeniden deneyin."
+    },
+    "notChecked": "{count, plural, one {Listenizdeki # etkin madde okunamadı ve karşılaştırılmadı.} other {Listenizdeki # etkin madde okunamadı ve karşılaştırılmadı.}}",
+    "about": "Bu kontrol hakkında",
+    "dup": {
+      "title": "Aynı etkin madde veya aynı grup",
+      "listLabel": "Aynı etkin maddeyi içeren veya aynı gruptan ilaçlar",
+      "sameIngredient": "{ingredient}, listenizdeki {count, plural, one {# ilaçta} other {# ilaçta}} var",
+      "sameGroup": "Listenizdeki {count, plural, one {# ilaç} other {# ilaç}} aynı ATC grubunda: {group}",
+      "unconfirmed": "Janus bu ilaçlardan en az birinin ürün formunu bilmiyor; bu yüzden grup uymayabilir.",
+      "advice": "Bu bilerek yapılmış olabilir; örneğin aynı ilacın iki farklı dozu. Janus bunu bilemez. Bir eczacı veya doktor sizinle birlikte bakabilir.",
+      "none": "Janus, listenizde okuyabildiği {count, plural, one {# etkin maddeyi} other {# etkin maddeyi}} karşılaştırdı: hiçbir etkin madde iki ilaçta yer almıyor ve hiçbir iki etkin madde aynı ATC kimyasal alt grubunda değil. Bu, ilaçlarınızda hiçbir sorun olmadığı anlamına gelmez.",
+      "method": "Etkin maddelerin ve ATC kodlarının otomatik karşılaştırması. Buradaki grup, ATC kimyasal alt grubudur (4. düzey); \"diğer\" alt grupları karşılaştırılmaz ve farklı alt gruplardaki ilaçlar yine de benzer etki gösterebilir. Yalnızca listenizin farklı satırlarındaki ilaçlar karşılaştırılır.",
+      "sources": "ATC kodlarının kaynağı: {sources}."
+    }
   }
 }

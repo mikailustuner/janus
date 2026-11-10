@@ -23,6 +23,7 @@ import { EmergencyNotice } from "@/components/EmergencyNotice";
 import { formatCount } from "@/components/format";
 import { TimelineSummary } from "@/components/medicines/Timeline";
 import { keyName } from "@/components/names";
+import { SafetyChecks } from "@/components/safety/SafetyChecks";
 import { SafetyLine } from "@/components/SafetyLine";
 import { StateView } from "@/components/StateView";
 import { ButtonLink, Card, SectionTitle } from "@/components/ui";
@@ -43,10 +44,13 @@ export function ResultsBody({
   boxNames,
   vocab,
   aside,
+  more,
 }: {
   result: CascadeResult;
   boxNames: readonly string[];
   vocab: Loaded;
+  /** Further checks of the same list, after the findings (safety-check Req 7.1). */
+  more?: ReactNode;
   /** Extra aside content (the timeline summary and the actions on the page). */
   aside?: ReactNode;
 }) {
@@ -185,6 +189,7 @@ export function ResultsBody({
               ))}
             </GroupedList>
           ) : null}
+          {more}
         </div>
         <aside className="flex min-w-0 flex-col gap-group lg:sticky lg:top-4">
           <GroupedList
@@ -303,6 +308,19 @@ export function Results() {
       result={evaluation.result}
       boxNames={session.items.map((i) => i.boxName)}
       vocab={vocab}
+      more={
+        session.demo ? (
+          <p className="px-row-x text-sm text-muted" data-testid="safety-demo">
+            {t("SafetyCheck.demo")}
+          </p>
+        ) : (
+          <SafetyChecks
+            body={evaluation.input}
+            boxNames={session.items.map((i) => i.boxName)}
+            vocab={vocab}
+          />
+        )
+      }
       aside={
         <>
           {/* Desktop only: the phone keeps the timeline on its own screen. */}

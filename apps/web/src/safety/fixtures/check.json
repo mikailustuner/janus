@@ -1,0 +1,126 @@
+{
+  "dataset_version": "a9b06b01bfcae514c6cc025a674b6830ed152cccde38cb4aa2e9743dd772c5f0",
+  "items": 7,
+  "ingredients_checked": 7,
+  "not_checked": [
+    {
+      "item": 5,
+      "position": 0,
+      "reason": "ambiguous"
+    }
+  ],
+  "duplication": {
+    "status": "checked",
+    "rules_version": "duplication-1",
+    "atc_level": 4,
+    "findings": [
+      {
+        "finding_id": "same_ingredient:Q411347",
+        "kind": "same_ingredient",
+        "atc_group": null,
+        "members": [
+          {
+            "ingredient_key": "Q411347",
+            "label_en": "amlodipine",
+            "items": [
+              0,
+              1,
+              4
+            ],
+            "codes": [
+              "C08CA01"
+            ],
+            "form_confirmed": true
+          }
+        ],
+        "items": [
+          0,
+          1,
+          4
+        ],
+        "form_confirmed": true
+      },
+      {
+        "finding_id": "same_ingredient:Q412208",
+        "kind": "same_ingredient",
+        "atc_group": null,
+        "members": [
+          {
+            "ingredient_key": "Q412208",
+            "label_en": "lisinopril",
+            "items": [
+              0,
+              6
+            ],
+            "codes": [
+              "C09AA03"
+            ],
+            "form_confirmed": false
+          }
+        ],
+        "items": [
+          0,
+          6
+        ],
+        "form_confirmed": false
+      },
+      {
+        "finding_id": "same_group:C09AA",
+        "kind": "same_group",
+        "atc_group": "C09AA",
+        "members": [
+          {
+            "ingredient_key": "Q412208",
+            "label_en": "lisinopril",
+            "items": [
+              0,
+              6
+            ],
+            "codes": [
+              "C09AA03"
+            ],
+            "form_confirmed": false
+          },
+          {
+            "ingredient_key": "Q900020",
+            "label_en": "ramipril",
+            "items": [
+              2
+            ],
+            "codes": [
+              "C09AA05"
+            ],
+            "form_confirmed": true
+          }
+        ],
+        "items": [
+          0,
+          2,
+          6
+        ],
+        "form_confirmed": false
+      }
+    ],
+    "sources": [
+      {
+        "source_id": "titck",
+        "run_id": "titck-run-1",
+        "region": "TR",
+        "snapshot_date": "2026-11-06"
+      },
+      {
+        "source_id": "wikidata",
+        "run_id": "wikidata-run-1",
+        "region": null,
+        "snapshot_date": "2026-11-07T16:39:17+00:00"
+      }
+    ],
+    "statement": null,
+    "notices": [
+      "between_list_items_only",
+      "residual_groups_not_compared",
+      "may_be_intended"
+    ]
+  },
+  "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
+}

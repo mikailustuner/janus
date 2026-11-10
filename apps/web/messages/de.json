@@ -2589,5 +2589,29 @@
     "errors": {
       "unavailable": "Die Rückrufeinträge sind gerade nicht verfügbar. Bitte versuchen Sie es später erneut."
     }
+  },
+  "SafetyCheck": {
+    "title": "Weitere Prüfungen dieser Liste",
+    "intro": "Automatisierte Vergleiche Ihrer Liste mit offenen Quellen. Sie geben wieder, was in den Quellen steht, und sind keine Beratung.",
+    "review": "Eine Prüfung durch Fachleute ist noch nicht erfolgt.",
+    "demo": "Die weiteren Prüfungen der Liste (gleicher Wirkstoff, Text der Fachinformation, anticholinerge Skalen) laufen in der Demo nicht.",
+    "checking": "Die Medikamente auf Ihrer Liste werden verglichen …",
+    "failed": "Janus konnte diese Prüfungen nicht ausführen.",
+    "errors": {
+      "unavailable": "Diese Prüfungen sind gerade nicht verfügbar. Bitte versuchen Sie es später noch einmal."
+    },
+    "notChecked": "{count, plural, one {# Wirkstoff auf Ihrer Liste konnte nicht gelesen werden und wurde nicht verglichen.} other {# Wirkstoffe auf Ihrer Liste konnten nicht gelesen werden und wurden nicht verglichen.}}",
+    "about": "Über diese Prüfung",
+    "dup": {
+      "title": "Gleicher Wirkstoff oder gleiche Gruppe",
+      "listLabel": "Medikamente mit dem gleichen Wirkstoff oder aus der gleichen Gruppe",
+      "sameIngredient": "{ingredient} ist in {count, plural, one {# Medikament} other {# Medikamenten}} auf Ihrer Liste enthalten",
+      "sameGroup": "{count, plural, one {# Medikament auf Ihrer Liste gehört} other {# Medikamente auf Ihrer Liste gehören}} zur gleichen ATC-Gruppe {group}",
+      "unconfirmed": "Bei mindestens einem dieser Medikamente kennt Janus die Darreichungsform nicht; die Gruppe passt deshalb vielleicht nicht.",
+      "advice": "Das kann so gewollt sein, zum Beispiel zwei Stärken desselben Medikaments. Janus kann das nicht beurteilen. Ihre Apotheke oder Ihre Ärztin oder Ihr Arzt kann es mit Ihnen ansehen.",
+      "none": "Janus hat {count, plural, one {den # Wirkstoff} other {die # Wirkstoffe}} verglichen, die es auf Ihrer Liste lesen konnte: Kein Wirkstoff ist in zwei Medikamenten enthalten, und keine zwei Wirkstoffe gehören zur gleichen chemischen ATC-Untergruppe. Das bedeutet nicht, dass Ihre Medikamente frei von Problemen sind.",
+      "method": "Automatisierter Vergleich der Wirkstoffe und ihrer ATC-Codes. Eine Gruppe ist hier eine chemische ATC-Untergruppe (4. Ebene); die Untergruppen „andere“ werden nicht verglichen, und Medikamente verschiedener Untergruppen können trotzdem ähnlich wirken. Verglichen werden nur Medikamente in verschiedenen Zeilen Ihrer Liste.",
+      "sources": "ATC-Codes aus: {sources}."
+    }
   }
 }

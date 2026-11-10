@@ -139,6 +139,7 @@ def create_app(
     from janus.quality.router import router as data_quality_router
     from janus.recalls.router import router as recalls_router
     from janus.resolution.router import router as resolution_router
+    from janus.safety.router import router as safety_router
     from janus.seance.router import router as seance_router
     from janus.simulation.router import SimulationLimits
     from janus.simulation.router import router as simulation_router
@@ -163,6 +164,7 @@ def create_app(
         data_quality_router,
         onset_table_router,
         recalls_router,
+        safety_router,
         cds_router,
         simulation_router,
         *extra_routers,
