@@ -229,6 +229,22 @@ cadence_days = 30
 urls = ["https://api.fda.gov/drug/label.json"]
 
 [[sources]]
+id = "openfda_label_interactions"
+section = "clinical"
+name = "openFDA Drug Label — \"Drug Interactions\" sections (United States)"
+publisher = "U.S. Food and Drug Administration"
+license = "CC0 1.0 (public domain)"
+notes = [
+  "Data provided by the U.S. Food and Drug Administration (https://open.fda.gov). Not an FDA endorsement.",
+  "Label text is written by the product's manufacturer and submitted to FDA. Janus quotes passages of the \"Drug Interactions\" section of one label per active substance, found by automated name matching, with the label's set id and effective date and a link to the label at DailyMed (U.S. National Library of Medicine). A quoted passage is label text, not an assessment by Janus, FDA or NLM.",
+  "Do not rely on openFDA to make decisions regarding medical care.",
+]
+storage = "cache"
+region = "US"
+cadence_days = 30
+urls = ["https://open.fda.gov/apis/drug/label/", "https://open.fda.gov/terms/", "https://dailymed.nlm.nih.gov/"]
+
+[[sources]]
 id = "rxnav"
 section = "clinical"
 name = "RxNav / RxClass"

@@ -103,6 +103,19 @@ openFDA Drug Label
   Not an FDA endorsement.
   Indications text of the US labels of the light-face validation cases only.
 
+openFDA Drug Label — "Drug Interactions" sections (United States)
+  Publisher: U.S. Food and Drug Administration
+  License: CC0 1.0 (public domain)
+  Data provided by the U.S. Food and Drug Administration (https://open.fda.gov).
+  Not an FDA endorsement.
+  Label text is written by the product's manufacturer and submitted to FDA.
+  Janus quotes passages of the "Drug Interactions" section of one label per
+  active substance, found by automated name matching, with the label's set id
+  and effective date and a link to the label at DailyMed (U.S. National Library
+  of Medicine). A quoted passage is label text, not an assessment by Janus, FDA
+  or NLM.
+  Do not rely on openFDA to make decisions regarding medical care.
+
 RxNav / RxClass
   License: Free to use with the NLM attribution below
   This product uses publicly available data courtesy of the U.S. National

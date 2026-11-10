@@ -2612,6 +2612,30 @@
       "none": "Janus comparó {count, plural, one {el # principio activo} other {los # principios activos}} que pudo leer en su lista: ningún principio activo está en dos medicamentos y no hay dos principios activos del mismo subgrupo químico ATC. Esto no significa que sus medicamentos estén libres de problemas.",
       "method": "Comparación automatizada de los principios activos y sus códigos ATC. Un grupo es aquí un subgrupo químico ATC (4.º nivel); los subgrupos «otros» no se comparan, y medicamentos de subgrupos distintos pueden actuar de forma parecida. Solo se comparan medicamentos de líneas distintas de su lista.",
       "sources": "Códigos ATC de: {sources}."
+    },
+    "int": {
+      "title": "Texto de la etiqueta que cita otro medicamento",
+      "listLabel": "Pasajes de etiquetas de EE. UU. que citan otro principio activo de su lista",
+      "finding": "La etiqueta de EE. UU. de {label} cita {named}",
+      "labelRow": "Etiqueta de {ingredient} (su lista: {boxes})",
+      "namedRow": "Citado en ella: {ingredient} (su lista: {boxes})",
+      "quote": "Cita de la etiqueta, en inglés, tal como se publicó",
+      "matched": "Nombre encontrado: {name}",
+      "labelMeta": "Etiqueta de {substance}, vigente desde {date}. Identificador del conjunto: {setId}.",
+      "dateUnknown": "fecha no indicada",
+      "open": "Abrir esta etiqueta en DailyMed",
+      "opensNew": "(se abre en una pestaña nueva)",
+      "more": "{count, plural, one {# pasaje más de esta etiqueta lo cita.} other {# pasajes más de esta etiqueta lo citan.}}",
+      "truncated": "Se muestran {shown} de {total} resultados de etiquetas.",
+      "advice": "Janus cita la etiqueta y no la valora. Un pasaje puede describir un efecto o indicar que no se observó ninguno. Un farmacéutico o un médico puede verlo con usted.",
+      "none": "Janus leyó la sección «Drug Interactions» de {count, plural, one {# etiqueta de EE. UU.} other {# etiquetas de EE. UU.}} de los medicamentos de su lista y no encontró ningún pasaje que cite otro principio activo de su lista. Esto no significa que estos medicamentos no se influyan entre sí.",
+      "notFound": "No hay etiqueta de EE. UU. en los datos para: {names}. No se leyeron.",
+      "labelsRead": "Etiquetas leídas",
+      "readRow": "{ingredient}: {substance}, vigente desde {date}",
+      "method": "Búsqueda automatizada, como palabras completas, en la sección «Drug Interactions» de una etiqueta de EE. UU. por principio activo (la más reciente con una sola sustancia en los datos) de los nombres que Janus tiene para los demás principios activos de su lista. No se buscan clases de medicamentos, no se leen etiquetas de otros países y el texto puede estar desactualizado.",
+      "source": "Fuente: datos de etiquetas de medicamentos de openFDA (U.S. Food and Drug Administration, CC0 1.0), datos del {date}. No es un aval de la FDA.",
+      "outdated": "Estos datos son más antiguos de lo que Janus espera.",
+      "unavailable": "Los textos de las etiquetas no están cargados ahora, por lo que esta comprobación no se ejecutó."
     }
   }
 }

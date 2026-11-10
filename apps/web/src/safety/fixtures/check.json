@@ -122,5 +122,114 @@
       "may_be_intended"
     ]
   },
+  "interactions": {
+    "status": "checked",
+    "rules_version": "label-interactions-1",
+    "source": {
+      "source_id": "openfda_label_interactions",
+      "run_id": "run-1",
+      "snapshot_date": "2026-11-03",
+      "license": "CC0 1.0 (public domain)",
+      "url": "https://open.fda.gov/apis/drug/label/",
+      "terms_url": "https://open.fda.gov/terms/",
+      "labels": 1
+    },
+    "findings": [
+      {
+        "finding_id": "label:Q411347:Q900020",
+        "label_of": {
+          "ingredient_key": "Q411347",
+          "label_en": "amlodipine",
+          "items": [
+            0,
+            1,
+            4
+          ]
+        },
+        "names": {
+          "ingredient_key": "Q900020",
+          "label_en": "ramipril",
+          "items": [
+            2
+          ]
+        },
+        "matched_name": "ramipril",
+        "label": {
+          "substance_name": "AMLODIPINE BESYLATE",
+          "set_id": "11111111-1111-4111-8111-111111111111",
+          "version": "3",
+          "effective_date": "2026-02-03",
+          "product_type": "HUMAN PRESCRIPTION DRUG",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=11111111-1111-4111-8111-111111111111"
+        },
+        "passages": [
+          {
+            "text": "Co-administration with ramipril was studied.",
+            "cut_start": false,
+            "cut_end": false
+          }
+        ],
+        "total_passages": 1,
+        "codes": [
+          "label_text_names_ingredient"
+        ]
+      }
+    ],
+    "total_findings": 1,
+    "truncated": false,
+    "labels_read": [
+      {
+        "ingredient_key": "Q411347",
+        "label_en": "amlodipine",
+        "items": [
+          0,
+          1,
+          4
+        ],
+        "label": {
+          "substance_name": "AMLODIPINE BESYLATE",
+          "set_id": "11111111-1111-4111-8111-111111111111",
+          "version": "3",
+          "effective_date": "2026-02-03",
+          "product_type": "HUMAN PRESCRIPTION DRUG",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=11111111-1111-4111-8111-111111111111"
+        }
+      }
+    ],
+    "labels_not_found": [
+      {
+        "ingredient_key": "Q412208",
+        "label_en": "lisinopril",
+        "items": [
+          0,
+          6
+        ]
+      },
+      {
+        "ingredient_key": "Q900005",
+        "label_en": "omeprazole",
+        "items": [
+          3
+        ]
+      },
+      {
+        "ingredient_key": "Q900020",
+        "label_en": "ramipril",
+        "items": [
+          2
+        ]
+      }
+    ],
+    "statement": null,
+    "notices": [
+      "us_labels_only",
+      "one_label_per_substance",
+      "quoted_label_text_not_an_assessment",
+      "names_matched_automatically",
+      "passage_may_state_no_effect",
+      "classes_not_matched",
+      "absence_is_not_clearance"
+    ]
+  },
   "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
 }

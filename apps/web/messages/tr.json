@@ -2612,6 +2612,30 @@
       "none": "Janus, listenizde okuyabildiği {count, plural, one {# etkin maddeyi} other {# etkin maddeyi}} karşılaştırdı: hiçbir etkin madde iki ilaçta yer almıyor ve hiçbir iki etkin madde aynı ATC kimyasal alt grubunda değil. Bu, ilaçlarınızda hiçbir sorun olmadığı anlamına gelmez.",
       "method": "Etkin maddelerin ve ATC kodlarının otomatik karşılaştırması. Buradaki grup, ATC kimyasal alt grubudur (4. düzey); \"diğer\" alt grupları karşılaştırılmaz ve farklı alt gruplardaki ilaçlar yine de benzer etki gösterebilir. Yalnızca listenizin farklı satırlarındaki ilaçlar karşılaştırılır.",
       "sources": "ATC kodlarının kaynağı: {sources}."
+    },
+    "int": {
+      "title": "Başka bir ilacı anan prospektüs metni",
+      "listLabel": "Listenizdeki başka bir etkin maddeyi anan ABD prospektüs pasajları",
+      "finding": "{label} için ABD prospektüsü {named} maddesini anıyor",
+      "labelRow": "{ingredient} prospektüsü (listeniz: {boxes})",
+      "namedRow": "Anılan: {ingredient} (listeniz: {boxes})",
+      "quote": "Prospektüsten, yayımlandığı gibi İngilizce alıntı",
+      "matched": "Eşleşen ad: {name}",
+      "labelMeta": "{substance} prospektüsü, yürürlük tarihi {date}. Set kimliği: {setId}.",
+      "dateUnknown": "tarih belirtilmemiş",
+      "open": "Bu prospektüsü DailyMed'de aç",
+      "opensNew": "(yeni sekmede açılır)",
+      "more": "{count, plural, one {Bu prospektüsün # pasajı daha onu anıyor.} other {Bu prospektüsün # pasajı daha onu anıyor.}}",
+      "truncated": "{total} prospektüs bulgusundan {shown} tanesi gösteriliyor.",
+      "advice": "Janus prospektüsten alıntı yapar, değerlendirmez. Bir pasaj bir etkiyi anlatıyor olabilir ya da etki görülmediğini söylüyor olabilir. Bir eczacı veya doktor bunu sizinle birlikte inceleyebilir.",
+      "none": "Janus, listenizdeki ilaçlar için {count, plural, one {# ABD prospektüsünün} other {# ABD prospektüsünün}} \"Drug Interactions\" bölümünü okudu ve listenizdeki başka bir etkin maddeyi anan bir pasaj bulmadı. Bu, ilaçların birbirini etkilemediği anlamına gelmez.",
+      "notFound": "Verilerde şu maddeler için ABD prospektüsü yok: {names}. Bunlar okunmadı.",
+      "labelsRead": "Okunan prospektüsler",
+      "readRow": "{ingredient}: {substance}, yürürlük tarihi {date}",
+      "method": "Listenizdeki diğer etkin maddeler için Janus'un elindeki adların, her etkin madde için bir ABD prospektüsünün (verilerdeki en yeni tek maddeli prospektüs) \"Drug Interactions\" bölümünde tam sözcük olarak otomatik aranması. İlaç sınıfları eşleştirilmez, başka ülkelerin prospektüsleri okunmaz ve prospektüs metni güncel olmayabilir.",
+      "source": "Kaynak: openFDA ilaç prospektüsü verileri (ABD Gıda ve İlaç Dairesi, CC0 1.0), veri tarihi {date}. FDA onayı değildir.",
+      "outdated": "Bu prospektüs verisi Janus'un beklediğinden eski.",
+      "unavailable": "Prospektüs metinleri şu anda yüklü değil, bu nedenle bu kontrol çalışmadı."
     }
   }
 }

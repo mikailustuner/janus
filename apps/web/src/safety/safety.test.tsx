@@ -70,7 +70,7 @@ const decoded = decode(safetyCheckOut, fixture);
 if (!decoded.ok) throw new Error("fixture does not match the contract");
 const sample: SafetyCheckOut = decoded.value;
 const ok = (data: SafetyCheckOut): SafetyState => ({ status: "ok", data });
-const none = ok({
+const noneData: SafetyCheckOut = {
   ...sample,
   not_checked: [],
   duplication: {
@@ -78,7 +78,14 @@ const none = ok({
     findings: [],
     statement: { code: "no_duplication_found" },
   },
-});
+  interactions: {
+    ...sample.interactions,
+    findings: [],
+    total_findings: 0,
+    statement: { code: "no_label_passage_found" },
+  },
+};
+const none = ok(noneData);
 // Box names stay in the browser; long ones must wrap.
 const BOXES = [
   "AMLIPIN 10 / 10",
@@ -166,6 +173,20 @@ describe("W1: the decoder", () => {
       ],
       ["another ATC level", (a: Answer) => (a.duplication.atc_level = 3)],
       ["no duplication block", (a: Answer) => delete a.duplication],
+      ["no interactions block", (a: Answer) => delete a.interactions],
+      [
+        "a label address elsewhere",
+        (a: Answer) =>
+          (a.interactions.findings[0].label.url = "https://example.org/x"),
+      ],
+      [
+        "a finding without a passage",
+        (a: Answer) => (a.interactions.findings[0].passages = []),
+      ],
+      [
+        "another label statement",
+        (a: Answer) => (a.interactions.statement = { code: "all_clear" }),
+      ],
       [
         "a statement of another kind",
         (a: Answer) => (a.duplication.statement = { code: "all_clear" }),
@@ -268,6 +289,68 @@ describe.each(routing.locales)("SafetyCheck texts, %s", (locale) => {
     expect(markup).not.toMatch(/(text|border|bg)-(risk|warn)/);
   });
 
+  it("W3: a label passage is quoted with its label, date and link, and not judged", () => {
+    const markup = view(l, ok(sample));
+    const out = text(markup);
+    const finding = sample.interactions.findings[0]!;
+    expect(markup.match(/data-testid="int-finding"/g)).toHaveLength(1);
+    expect(markup).toMatch(
+      /<blockquote[^>]*lang="en"[^>]*>Co-administration with ramipril was studied\.<\/blockquote>/,
+    );
+    expect(markup).toContain(`href="${finding.label.url}"`);
+    expect(markup).toMatch(/rel="noopener noreferrer"/);
+    expect(out).toContain("2026-02-03");
+    expect(out).toContain(finding.label.set_id);
+    expect(out).toContain(t("SafetyCheck.int.quote" as never));
+    expect(out).toContain(t("SafetyCheck.int.advice" as never));
+    expect(out).toContain(t("SafetyCheck.int.method" as never));
+    expect(out).toContain(
+      t("SafetyCheck.int.source" as never, { date: "2026-11-03" } as never),
+    );
+    expect(out).toContain("AMLIPIN 10 / 10");
+    expect(out).toContain("RAMI");
+    expect(violations(out, l)).toEqual([]);
+    expect(markup).not.toMatch(/(text|border|bg)-(risk|warn)/);
+  });
+
+  it("W3: label text, nothing found: what was read, not a clearance; unavailable says so", () => {
+    const out = text(view(l, none));
+    expect(out).toContain(
+      t("SafetyCheck.int.none" as never, { count: 1 } as never),
+    );
+    expect(out).toContain("AMLODIPINE BESYLATE");
+    const [head, tail] = t(
+      "SafetyCheck.int.notFound" as never,
+      { names: "§" } as never,
+    ).split("§");
+    expect(out).toContain(head);
+    expect(out).toContain(tail);
+    expect(out).not.toContain(t("SafetyCheck.int.advice" as never));
+    const off = view(
+      l,
+      ok({
+        ...sample,
+        interactions: {
+          ...sample.interactions,
+          status: "unavailable",
+          source: null,
+          findings: [],
+          labels_read: [],
+          labels_not_found: [],
+          statement: null,
+        },
+      }),
+    );
+    expect(off).toContain('data-testid="int-unavailable"');
+    expect(text(off)).toContain(t("SafetyCheck.int.unavailable" as never));
+    expect(text(off)).toContain(
+      t(
+        "SafetyCheck.dup.sameGroup" as never,
+        { group: "C09AA", count: 3 } as never,
+      ),
+    );
+  });
+
   it("W3: loading and error with retry", () => {
     const loading = view(l, { status: "loading" });
     expect(loading).toContain('role="status"');
@@ -338,7 +421,7 @@ describe("W4: what is rendered is what the answer names", () => {
         }),
         (findings) => {
           const data: SafetyCheckOut = {
-            ...sample,
+            ...noneData,
             duplication: {
               ...sample.duplication,
               findings,

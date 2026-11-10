@@ -2612,6 +2612,30 @@
       "none": "Janus compared the {count, plural, one {# ingredient} other {# ingredients}} it could read on your list: no ingredient is in two medicines, and no two ingredients belong to the same ATC chemical subgroup. This does not mean your medicines are free of problems.",
       "method": "Automated comparison of the ingredients and their ATC codes. A group here is an ATC chemical subgroup (4th level); the \"other\" subgroups are not compared, and medicines of different subgroups can still act alike. Only medicines on different lines of your list are compared.",
       "sources": "ATC codes from: {sources}."
+    },
+    "int": {
+      "title": "Label text that names another medicine",
+      "listLabel": "US label passages that name another ingredient on your list",
+      "finding": "The US label of {label} names {named}",
+      "labelRow": "Label of {ingredient} (your list: {boxes})",
+      "namedRow": "Named in it: {ingredient} (your list: {boxes})",
+      "quote": "Quoted from the label, in English, as published",
+      "matched": "Name matched: {name}",
+      "labelMeta": "Label for {substance}, effective {date}. Set id: {setId}.",
+      "dateUnknown": "date not stated",
+      "open": "Open this label at DailyMed",
+      "opensNew": "(opens in a new tab)",
+      "more": "{count, plural, one {# more passage of this label names it.} other {# more passages of this label name it.}}",
+      "truncated": "Showing {shown} of {total} label findings.",
+      "advice": "Janus quotes the label and does not judge it. A passage can describe an effect or say that none was seen. A pharmacist or doctor can look at it with you.",
+      "none": "Janus read the \"Drug Interactions\" section of {count, plural, one {# US label} other {# US labels}} for the medicines on your list and found no passage that names another ingredient on your list. This does not mean that these medicines do not affect each other.",
+      "notFound": "No US label in the data for: {names}. These were not read.",
+      "labelsRead": "Labels read",
+      "readRow": "{ingredient}: {substance}, effective {date}",
+      "method": "Automated search of the \"Drug Interactions\" section of one US label per ingredient (the most recent single-substance label in the data) for the names Janus holds for the other ingredients on your list, as whole words. Classes of medicines are not matched, labels of other countries are not read, and label text can be out of date.",
+      "source": "Source: openFDA drug label data (U.S. Food and Drug Administration, CC0 1.0), data of {date}. Not an FDA endorsement.",
+      "outdated": "This label data is older than Janus expects it to be.",
+      "unavailable": "The label texts are not loaded right now, so this check did not run."
     }
   }
 }

@@ -8,6 +8,7 @@ to do.
 
 from __future__ import annotations
 
+import datetime as dt
 from typing import Literal
 
 from pydantic import BaseModel, ConfigDict
@@ -21,12 +22,22 @@ NO_DUPLICATION = (
 )
 
 
+NO_LABEL_PASSAGE = (
+    'Janus read the "Drug Interactions" section of the US labels listed here and found no '
+    "passage that names another ingredient on this list. This does not mean that these "
+    "medicines do not affect each other."
+)
+LABEL_SOURCE_URL = "https://open.fda.gov/apis/drug/label/"
+LABEL_TERMS_URL = "https://open.fda.gov/terms/"
+DAILYMED_LABEL_URL = "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid={}"
+
+
 class _Out(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
 
 
 class StatementOut(_Out):
-    code: Literal["no_duplication_found"]
+    code: Literal["no_duplication_found", "no_label_passage_found"]
     text: str
 
 
@@ -59,10 +70,82 @@ class DuplicationOut(_Out):
     ]
 
 
+class LabelSourceOut(_Out):
+    source_id: Literal["openfda_label_interactions"]
+    run_id: str
+    snapshot_date: dt.date
+    license: str
+    url: str
+    terms_url: str
+    labels: int  # label sections Janus holds (one per active substance)
+
+
+class LabelOut(_Out):
+    substance_name: str  # as published on the label
+    set_id: str
+    version: str | None
+    effective_date: dt.date | None
+    product_type: str | None
+    url: str  # the label at DailyMed
+
+
+class IngredientRefOut(_Out):
+    ingredient_key: str
+    label_en: str | None
+    items: list[int]
+
+
+class LabelReadOut(IngredientRefOut):
+    label: LabelOut
+
+
+class PassageOut(_Out):
+    text: str  # quoted from the label, as published
+    cut_start: bool
+    cut_end: bool
+
+
+class InteractionFindingOut(_Out):
+    finding_id: str
+    label_of: IngredientRefOut  # the ingredient whose label is quoted
+    names: IngredientRefOut  # the ingredient the passage names
+    matched_name: str
+    label: LabelOut
+    passages: list[PassageOut]
+    total_passages: int
+    codes: list[Literal["label_text_names_ingredient"]] = ["label_text_names_ingredient"]
+
+
+InteractionNotice = Literal[
+    "us_labels_only",
+    "one_label_per_substance",
+    "quoted_label_text_not_an_assessment",
+    "names_matched_automatically",
+    "passage_may_state_no_effect",
+    "classes_not_matched",
+    "absence_is_not_clearance",
+    "snapshot_outdated",
+]
+
+
+class InteractionsOut(_Out):
+    status: Literal["checked", "unavailable"]
+    rules_version: str
+    source: LabelSourceOut | None
+    findings: list[InteractionFindingOut]
+    total_findings: int
+    truncated: bool
+    labels_read: list[LabelReadOut]
+    labels_not_found: list[IngredientRefOut]
+    statement: StatementOut | None
+    notices: list[InteractionNotice]
+
+
 class SafetyCheckOut(_Out):
     dataset_version: str
     items: int
     ingredients_checked: int
     not_checked: list[NotCheckedOut]
     duplication: DuplicationOut
+    interactions: InteractionsOut
     disclaimer: str = DISCLAIMER

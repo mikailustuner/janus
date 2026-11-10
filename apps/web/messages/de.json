@@ -2612,6 +2612,30 @@
       "none": "Janus hat {count, plural, one {den # Wirkstoff} other {die # Wirkstoffe}} verglichen, die es auf Ihrer Liste lesen konnte: Kein Wirkstoff ist in zwei Medikamenten enthalten, und keine zwei Wirkstoffe gehören zur gleichen chemischen ATC-Untergruppe. Das bedeutet nicht, dass Ihre Medikamente frei von Problemen sind.",
       "method": "Automatisierter Vergleich der Wirkstoffe und ihrer ATC-Codes. Eine Gruppe ist hier eine chemische ATC-Untergruppe (4. Ebene); die Untergruppen „andere“ werden nicht verglichen, und Medikamente verschiedener Untergruppen können trotzdem ähnlich wirken. Verglichen werden nur Medikamente in verschiedenen Zeilen Ihrer Liste.",
       "sources": "ATC-Codes aus: {sources}."
+    },
+    "int": {
+      "title": "Text der Fachinformation, der ein anderes Medikament nennt",
+      "listLabel": "Passagen US-amerikanischer Fachinformationen, die einen anderen Wirkstoff Ihrer Liste nennen",
+      "finding": "Die US-Fachinformation zu {label} nennt {named}",
+      "labelRow": "Fachinformation zu {ingredient} (Ihre Liste: {boxes})",
+      "namedRow": "Darin genannt: {ingredient} (Ihre Liste: {boxes})",
+      "quote": "Zitat aus der Fachinformation, auf Englisch, wie veröffentlicht",
+      "matched": "Gefundener Name: {name}",
+      "labelMeta": "Fachinformation zu {substance}, gültig ab {date}. Set-ID: {setId}.",
+      "dateUnknown": "Datum nicht angegeben",
+      "open": "Diese Fachinformation bei DailyMed öffnen",
+      "opensNew": "(öffnet in einem neuen Tab)",
+      "more": "{count, plural, one {# weitere Passage dieser Fachinformation nennt ihn.} other {# weitere Passagen dieser Fachinformation nennen ihn.}}",
+      "truncated": "Gezeigt werden {shown} von {total} Funden in Fachinformationen.",
+      "advice": "Janus zitiert die Fachinformation und bewertet sie nicht. Eine Passage kann eine Wirkung beschreiben oder sagen, dass keine beobachtet wurde. Eine Apothekerin, ein Apotheker oder eine Ärztin bzw. ein Arzt kann sich das mit Ihnen ansehen.",
+      "none": "Janus hat den Abschnitt „Drug Interactions“ von {count, plural, one {# US-Fachinformation} other {# US-Fachinformationen}} zu den Medikamenten Ihrer Liste gelesen und keine Passage gefunden, die einen anderen Wirkstoff Ihrer Liste nennt. Das bedeutet nicht, dass diese Medikamente einander nicht beeinflussen.",
+      "notFound": "Für diese Wirkstoffe liegt keine US-Fachinformation in den Daten vor: {names}. Sie wurden nicht gelesen.",
+      "labelsRead": "Gelesene Fachinformationen",
+      "readRow": "{ingredient}: {substance}, gültig ab {date}",
+      "method": "Automatisierte Suche im Abschnitt „Drug Interactions“ einer US-Fachinformation je Wirkstoff (die neueste Fachinformation mit nur einem Wirkstoff in den Daten) nach den Namen, die Janus für die anderen Wirkstoffe Ihrer Liste kennt, als ganze Wörter. Wirkstoffklassen werden nicht abgeglichen, Fachinformationen anderer Länder nicht gelesen, und der Text kann veraltet sein.",
+      "source": "Quelle: openFDA-Daten zu Arzneimittelinformationen (U.S. Food and Drug Administration, CC0 1.0), Datenstand {date}. Keine Empfehlung der FDA.",
+      "outdated": "Diese Daten sind älter, als Janus erwartet.",
+      "unavailable": "Die Texte der Fachinformationen sind derzeit nicht geladen, deshalb wurde diese Prüfung nicht ausgeführt."
     }
   }
 }

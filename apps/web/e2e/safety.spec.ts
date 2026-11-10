@@ -35,6 +35,45 @@ const none = {
     findings: [],
     statement: { code: "no_duplication_found", text: "canonical" },
   },
+  interactions: {
+    ...sample.interactions,
+    findings: [],
+    total_findings: 0,
+    statement: { code: "no_label_passage_found", text: "canonical" },
+  },
+};
+const off = {
+  ...sample,
+  interactions: {
+    ...sample.interactions,
+    status: "unavailable",
+    source: null,
+    findings: [],
+    total_findings: 0,
+    labels_read: [],
+    labels_not_found: [],
+    statement: null,
+    notices: [],
+  },
+};
+const long = {
+  ...sample,
+  interactions: {
+    ...sample.interactions,
+    findings: [
+      {
+        ...sample.interactions.findings[0],
+        passages: [
+          {
+            text: `${"Verylongwordwithoutanyspaceforwrapping".repeat(4)} ${"Co-administration with ramipril was studied in healthy volunteers. ".repeat(8)}`.trim(),
+            cut_start: true,
+            cut_end: true,
+          },
+        ],
+        total_passages: 3,
+      },
+    ],
+  },
 };
 const fx = read("../src/demo/fixtures/istanbul.json");
 const messages = Object.fromEntries(
@@ -124,6 +163,23 @@ for (const locale of locales)
       await expect(findings.nth(2)).toContainText("C09AA");
       await expect(findings.nth(2)).toContainText(m.dup.unconfirmed);
       await expect(section).toContainText(m.dup.advice);
+      // Label text: quoted, in English, with the label's date and a link; never graded.
+      const label = section.getByTestId("int-finding");
+      await expect(label).toHaveCount(1);
+      await expect(label.locator("blockquote")).toHaveText(
+        "Co-administration with ramipril was studied.",
+      );
+      await expect(label.locator("blockquote")).toHaveAttribute("lang", "en");
+      await expect(label).toContainText("2026-02-03");
+      await expect(label.getByRole("link")).toHaveAttribute(
+        "href",
+        sample.interactions.findings[0].label.url,
+      );
+      await expect(label).toContainText("ZZBOX2 ");
+      await expect(section).toContainText(m.int.advice);
+      await expect(section.getByTestId("int-source")).toContainText(
+        "2026-11-03",
+      );
       await expect(section).toContainText(m.review);
       await expect(section).toContainText(m.dup.method);
       await expect(section.getByTestId("safety-sources")).toContainText(
@@ -167,12 +223,54 @@ for (const locale of locales)
     );
     await expect(section.getByTestId("dup-finding")).toHaveCount(0);
     await expect(section).not.toContainText(m.dup.advice);
+    await expect(section.getByTestId("int-none")).toContainText(
+      plural(m.int.none, sample.interactions.labels_read.length),
+    );
+    await expect(section.getByTestId("int-finding")).toHaveCount(0);
+    await expect(section).not.toContainText(m.int.advice);
     await section.getByText(m.about).first().click();
     await expect(section).toContainText(m.dup.method);
     await expectNoAxeViolations(page);
     await expectNoHorizontalScroll(page);
     await shot(page, `none-${locale}`, info.project.name);
   });
+
+test("label text: unavailable, and a long quotation wraps without scrolling", async ({
+  page,
+}, info) => {
+  await seed(page);
+  await stubApi(page, {
+    "/cascades/evaluate": { body: fx.evaluation },
+    "/safety/check": { body: off },
+  });
+  await page.goto("/en/results");
+  const section = page.getByTestId("safety-checks");
+  await expect(section.getByTestId("int-unavailable")).toHaveText(
+    "The label texts are not loaded right now, so this check did not run.",
+  );
+  await expect(section.getByTestId("dup-finding")).toHaveCount(3);
+  await expectNoAxeViolations(page);
+  await shot(page, "labels-unavailable", info.project.name);
+
+  await stubApi(page, {
+    "/cascades/evaluate": { body: fx.evaluation },
+    "/safety/check": { body: long },
+  });
+  await page.reload();
+  await expect(page.getByTestId("int-finding")).toContainText(
+    "Verylongwordwithoutanyspaceforwrapping",
+  );
+  await expect(page.getByTestId("int-finding")).toContainText(
+    "Co-administration with ramipril",
+  );
+  await expect(page.getByTestId("int-finding")).toContainText(
+    "2 more passages of this label name it.",
+  );
+  await expectNoAxeViolations(page);
+  await expectNoHorizontalScroll(page);
+  await expectTouchTargets(page);
+  await shot(page, "labels-long", info.project.name);
+});
 
 test("loading, then an error with a retry, then the answer", async ({
   page,

@@ -387,10 +387,187 @@ def fixture_answer(env: Any) -> dict[str, Any]:
 
 
 @pytest.mark.db
-def test_web_fixture_is_the_api_answer(env: Any) -> None:
+def test_web_fixture_is_the_api_answer(with_labels: Any) -> None:
     """`apps/web/src/safety/fixtures/check.json` is this API's answer for an invented list; the
     web decoder and renderer are tested on it. Regenerate with JANUS_WRITE_FIXTURES=1."""
-    answer = fixture_answer(env)
+    answer = fixture_answer(with_labels)
     if os.environ.get("JANUS_WRITE_FIXTURES") == "1":
         WEB_FIXTURE.write_text(json.dumps(answer, indent=2, ensure_ascii=False) + "\n", "utf-8")
     assert json.loads(WEB_FIXTURE.read_text(encoding="utf-8")) == answer
+
+
+# --- Part B: label interaction text (safety-check design §6, Req 4) ---------------------------
+from janus.safety import interactions  # noqa: E402
+from janus.safety.interactions import Label, Subject  # noqa: E402
+from janus.safety.store import COLUMNS as LABEL_COLUMNS  # noqa: E402
+from janus.safety.store import LabelsHolder  # noqa: E402
+
+NAMES = ["ramipril", "lisinopril", "amlodipine", "omeprazole"]
+
+
+def label_of(text: str, name: str = "x") -> Label:
+    return Label(name, "set-" + name, "1", "2026-01-02", "HUMAN PRESCRIPTION DRUG", text)
+
+
+def subject(key: str, name: str, items: tuple[int, ...]) -> Subject:
+    return Subject(key, name, items, (name,), (name,))
+
+
+@st.composite
+def label_texts(draw: st.DrawFn) -> str:
+    words = draw(
+        st.lists(st.sampled_from([*NAMES, "may", "increase", "levels", "of", "x1"]), max_size=30)
+    )
+    return ". ".join(" ".join(words[i : i + 5]).capitalize() for i in range(0, len(words), 5))
+
+
+@given(label_texts(), st.sampled_from(NAMES))
+def test_b1_a_quoted_passage_is_label_text_and_contains_the_name(text: str, name: str) -> None:
+    found = interactions.passages(text, name)
+    pattern = interactions.name_pattern(name)
+    for p in found:
+        assert pattern.search(p.text)
+        piece = p.text.replace("\n", " ")
+        assert piece in text.replace("\n", " ")
+    assert bool(found) == bool(pattern.search(text))
+
+
+@given(
+    st.sampled_from(NAMES), st.text("abcdefghijklmnopqrstuvwxyz0123456789", min_size=1, max_size=3)
+)
+def test_b2_names_match_whole_words_only(name: str, extra: str) -> None:
+    assert not interactions.passages(f"Take {name}{extra} now.", name)
+    assert not interactions.passages(f"Take {extra}{name} now.", name)
+    assert interactions.passages(f"Take {name.upper()}, or other.", name)
+    assert interactions.passages(f"Take {name.replace('', ' ').strip()[:0]}{name}.", name)
+
+
+@given(
+    st.lists(st.sampled_from(NAMES), min_size=2, max_size=4, unique=True),
+    st.randoms(use_true_random=False),
+)
+def test_b3_order_of_the_list_does_not_change_the_findings(names: list[str], rnd: Any) -> None:
+    subs = [subject(f"Q{i}", n, (i,)) for i, n in enumerate(names)]
+    labels = {
+        n: label_of(f"It names {names[(i + 1) % len(names)]} here.", n) for i, n in enumerate(names)
+    }
+    first = interactions.find(subs, labels)
+    shuffled = list(subs)
+    rnd.shuffle(shuffled)
+    second = interactions.find(shuffled, labels)
+    assert [f.finding_id for f in first.findings] == [f.finding_id for f in second.findings]
+    assert [f.finding_id for f in first.findings] == sorted(f.finding_id for f in first.findings)
+
+
+def test_b4_same_item_pairs_and_self_names_give_no_finding() -> None:
+    labels = {"ramipril": label_of("Ramipril and lisinopril.", "ramipril")}
+    one_item = [subject("Q1", "ramipril", (0,)), subject("Q2", "lisinopril", (0,))]
+    res = interactions.find(one_item, labels)
+    assert res.findings == () and [s.key for s in res.labels_not_found] == ["Q2"]
+    two = [subject("Q1", "ramipril", (0,)), subject("Q2", "lisinopril", (1,))]
+    (f,) = interactions.find(two, labels).findings
+    assert (f.label_of.key, f.names.key, f.matched_name) == ("Q1", "Q2", "lisinopril")
+    assert f.finding_id == "label:Q1:Q2"
+
+
+def test_b5_search_names_are_kept_only_when_unambiguous() -> None:
+    known = {"albuterol": {"Q1"}, "albuterol sulfate": {"Q1"}, "calcium": {"Q2"}, "ab": {"Q3"}}
+    got = interactions.search_names("Q1", "salbutamol", ["ALBUTEROL SULFATE"], known)
+    assert got == ("albuterol sulfate", "albuterol")
+    assert interactions.search_names("Q2", "calcium", [], known) == ()  # on the exclusion list
+    assert interactions.search_names("Q3", "ab", [], known) == ()  # shorter than four characters
+    assert interactions.search_names("Q1", "albuterol", [], {"albuterol": {"Q1", "Q9"}}) == ()
+
+
+def test_b6_long_sentences_are_cut_around_the_match() -> None:
+    text = ("word " * 300) + "ramipril " + ("word " * 300)
+    (p,) = interactions.passages(text, "ramipril")
+    assert "ramipril" in p.text and len(p.text) <= interactions.PASSAGE_MAX + 10
+    assert p.cut_start and p.cut_end
+
+
+def _install_labels(data_dir: Path, rows: list[tuple[str, ...]]) -> None:
+    import duckdb  # local: only these tests write an artifact
+
+    root = data_dir / "artifacts" / "us_label_interactions"
+    run_dir = root / "runs" / "run-1"
+    run_dir.mkdir(parents=True)
+    con = duckdb.connect()
+    try:
+        con.execute(f"CREATE TABLE t ({', '.join(f'{c} VARCHAR' for c in LABEL_COLUMNS)})")
+        for row in rows:
+            marks = ", ".join("?" for _ in LABEL_COLUMNS)
+            con.execute(f"INSERT INTO t VALUES ({marks})", list(row))  # noqa: S608
+        con.execute(f"COPY t TO '{run_dir / 'rows.parquet'}' (FORMAT PARQUET)")
+    finally:
+        con.close()
+    doc = {
+        "run_id": "run-1",
+        "pipeline": "us_label_interactions",
+        "source_id": "openfda_label_interactions",
+        "license": "CC0 1.0 (public domain)",
+        "snapshot_date": "2026-11-03",
+        "schema_version": "us_label_interactions-1",
+        "outcome": "succeeded",
+    }
+    (run_dir / "manifest.json").write_text(json.dumps(doc), encoding="utf-8")
+    (root / "current").symlink_to(Path("runs") / "run-1")
+
+
+AMLO_LABEL = (
+    "AMLODIPINE BESYLATE", "11111111-1111-4111-8111-111111111111", "3", "2026-02-03",
+    "HUMAN PRESCRIPTION DRUG",
+    "Amlodipine may be used with other agents. Co-administration with ramipril was studied. "
+    "No interaction was seen with water.",
+)  # fmt: skip
+
+
+@pytest.fixture
+def with_labels(env: Any, tmp_path: Path) -> Iterator[Any]:
+    client, _, _, _ = env
+    _install_labels(tmp_path, [AMLO_LABEL])
+    old = getattr(client.app.state, "label_interactions", None)
+    client.app.state.label_interactions = LabelsHolder(tmp_path)
+    yield env
+    client.app.state.label_interactions = old
+
+
+@pytest.mark.db
+def test_route_quotes_the_label_that_names_another_ingredient(with_labels: Any) -> None:
+    client, ids, dataset, _ = with_labels
+    items = [{"product": ids[n]} for n in ["AMLO US", "RAMI", "OMEP"]]
+    r = post(client, {"dataset_version": dataset, "items": items})
+    assert r.status_code == 200, r.text
+    inter = r.json()["interactions"]
+    assert inter["status"] == "checked" and inter["statement"] is None
+    assert inter["source"]["snapshot_date"] == "2026-11-03" and inter["source"]["labels"] == 1
+    (f,) = inter["findings"]
+    assert (f["label_of"]["label_en"], f["names"]["label_en"]) == ("amlodipine", "ramipril")
+    assert f["matched_name"] == "ramipril" and f["total_passages"] == 1
+    assert f["passages"][0]["text"] == "Co-administration with ramipril was studied."
+    assert f["label"]["set_id"] == AMLO_LABEL[1] and f["label"]["effective_date"] == "2026-02-03"
+    assert f["label"]["url"].endswith("setid=" + AMLO_LABEL[1])
+    assert [x["label_en"] for x in inter["labels_not_found"]] == ["omeprazole", "ramipril"]
+    assert "quoted_label_text_not_an_assessment" in inter["notices"]
+    blob = json.dumps(inter).lower()
+    assert not any(w in blob for w in ("severity", "severe", "contraindicat", "avoid", "stop"))
+
+
+@pytest.mark.db
+def test_route_label_nothing_found_is_not_a_clearance(with_labels: Any) -> None:
+    client, ids, dataset, _ = with_labels
+    items = [{"product": ids[n]} for n in ["AMLO US", "OMEP"]]
+    inter = post(client, {"dataset_version": dataset, "items": items}).json()["interactions"]
+    assert inter["findings"] == [] and inter["statement"]["code"] == "no_label_passage_found"
+    assert "does not mean" in inter["statement"]["text"]
+    assert [x["ingredient_key"] for x in inter["labels_read"]] == ["Q411347"]
+
+
+@pytest.mark.db
+def test_route_without_label_run_answers_unavailable_and_keeps_duplication(env: Any) -> None:
+    client, ids, dataset, _ = env
+    items = [{"product": ids[n]} for n in ["AMLO", "AMLO US"]]
+    body = post(client, {"dataset_version": dataset, "items": items}).json()
+    assert body["interactions"]["status"] == "unavailable"
+    assert body["interactions"]["findings"] == [] and body["interactions"]["source"] is None
+    assert body["duplication"]["findings"][0]["kind"] == "same_ingredient"

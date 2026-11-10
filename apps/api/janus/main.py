@@ -33,6 +33,7 @@ from janus.onset_table.router import OnsetTableHolder
 from janus.passport.forms import load as load_dose_forms
 from janus.quality.router import DataQualityHolder
 from janus.recalls.store import RecallsHolder
+from janus.safety.store import LabelsHolder
 from janus.seance.catalogue import PACKAGE_DIR as SEANCE_PACKAGE
 from janus.seance.catalogue import load_catalogue as load_seance
 from janus.settings import EVENT_VOCABULARY, Settings
@@ -117,6 +118,9 @@ def create_app(
     app.state.onset_table = OnsetTableHolder(settings.data_dir)
     # Recall check (recall-check design §6): 503 when no `us_recalls` run is installed.
     app.state.recalls = RecallsHolder(settings.data_dir)
+    # Safety check (safety-check design §6): without a `us_label_interactions` run the label
+    # block of `/safety/check` answers `unavailable`; the other blocks still answer.
+    app.state.label_interactions = LabelsHolder(settings.data_dir)
     app.state.note_keyring = (
         Keyring(settings.note_keys, settings.note_signing_key_id)
         if settings.note_keys and settings.note_signing_key_id

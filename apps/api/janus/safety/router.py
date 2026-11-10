@@ -23,6 +23,7 @@ from janus.db.pool import Database
 from janus.http_policy.routes import medical_router
 from janus.safety import service
 from janus.safety.schemas import SafetyCheckOut
+from janus.safety.store import LabelsHolder
 
 router = medical_router()
 
@@ -53,7 +54,8 @@ def _field(loc: tuple[Any, ...]) -> str:
 @router.post("/safety/check", response_model=SafetyCheckOut)
 async def safety_check(request: Request) -> Any:
     """Automated comparisons of one medicine list: the same ingredient or ATC chemical subgroup
-    in two list items. States what the sources say; an empty result is not a clearance."""
+    in two list items, and passages of US label "Drug Interactions" sections that name another
+    ingredient of the list. States what the sources say; an empty result is not a clearance."""
     try:
         payload = json.loads(await request.body())
     except (ValueError, UnicodeDecodeError):
@@ -67,9 +69,13 @@ async def safety_check(request: Request) -> Any:
         return _error(503, "safety_unavailable")
     day = today()
 
+    holder = getattr(request.app.state, "label_interactions", None)
+
     def call() -> SafetyCheckOut:
+        # The first call after a new label run reads the artifact (a file read).
+        labels = holder.value if isinstance(holder, LabelsHolder) else None
         with db.read_only_tx() as conn:
-            return service.check(conn, body, day)
+            return service.check(conn, body, day, labels)
 
     try:
         result = await run_in_threadpool(call)

@@ -2612,6 +2612,30 @@
       "none": "Janus a comparé {count, plural, one {la # substance active} other {les # substances actives}} qu'il a pu lire dans votre liste : aucune substance active ne se trouve dans deux médicaments, et aucune paire de substances actives n'appartient au même sous-groupe chimique ATC. Cela ne signifie pas que vos médicaments sont exempts de problèmes.",
       "method": "Comparaison automatisée des substances actives et de leurs codes ATC. Un groupe est ici un sous-groupe chimique ATC (4e niveau) ; les sous-groupes « autres » ne sont pas comparés, et des médicaments de sous-groupes différents peuvent tout de même agir de façon semblable. Seuls les médicaments de lignes différentes de votre liste sont comparés.",
       "sources": "Codes ATC issus de : {sources}."
+    },
+    "int": {
+      "title": "Texte d'étiquette qui cite un autre médicament",
+      "listLabel": "Passages d'étiquettes américaines qui citent une autre substance active de votre liste",
+      "finding": "L'étiquette américaine de {label} cite {named}",
+      "labelRow": "Étiquette de {ingredient} (votre liste : {boxes})",
+      "namedRow": "Cité dedans : {ingredient} (votre liste : {boxes})",
+      "quote": "Citation de l'étiquette, en anglais, telle que publiée",
+      "matched": "Nom trouvé : {name}",
+      "labelMeta": "Étiquette de {substance}, en vigueur le {date}. Identifiant du lot : {setId}.",
+      "dateUnknown": "date non indiquée",
+      "open": "Ouvrir cette étiquette sur DailyMed",
+      "opensNew": "(s'ouvre dans un nouvel onglet)",
+      "more": "{count, plural, one {# autre passage de cette étiquette le cite.} other {# autres passages de cette étiquette le citent.}}",
+      "truncated": "{shown} résultats sur {total} issus d'étiquettes sont affichés.",
+      "advice": "Janus cite l'étiquette et ne la juge pas. Un passage peut décrire un effet ou indiquer qu'aucun n'a été observé. Un pharmacien ou un médecin peut l'examiner avec vous.",
+      "none": "Janus a lu la section « Drug Interactions » de {count, plural, one {# étiquette américaine} other {# étiquettes américaines}} des médicaments de votre liste et n'a trouvé aucun passage qui cite une autre substance active de votre liste. Cela ne signifie pas que ces médicaments n'agissent pas l'un sur l'autre.",
+      "notFound": "Pas d'étiquette américaine dans les données pour : {names}. Elles n'ont pas été lues.",
+      "labelsRead": "Étiquettes lues",
+      "readRow": "{ingredient} : {substance}, en vigueur le {date}",
+      "method": "Recherche automatisée, en mots entiers, dans la section « Drug Interactions » d'une étiquette américaine par substance active (la plus récente à une seule substance dans les données), des noms que Janus connaît pour les autres substances actives de votre liste. Les classes de médicaments ne sont pas recherchées, les étiquettes d'autres pays ne sont pas lues et le texte peut être dépassé.",
+      "source": "Source : données d'étiquettes de médicaments openFDA (U.S. Food and Drug Administration, CC0 1.0), données du {date}. Aucun aval de la FDA.",
+      "outdated": "Ces données sont plus anciennes que ce que Janus prévoit.",
+      "unavailable": "Les textes des étiquettes ne sont pas chargés pour le moment ; cette vérification n'a donc pas été exécutée."
     }
   }
 }

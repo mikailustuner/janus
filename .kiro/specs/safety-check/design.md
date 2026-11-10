@@ -49,6 +49,45 @@ Examples (`test_examples_from_the_spec`): AMLIPIN (amlodipine + lisinopril, comb
 nothing; with an amlodipine product → `same_ingredient` amlodipine; with a ramipril product → `same_group`
 `C09AA` (lisinopril inside AMLIPIN, ramipril); `C09BB03` appears nowhere.
 
+## 5. Label interaction text: the pipeline (Part B, Req 3)
+Job `us_label_interactions` (source `openfda_label_interactions`, CC0 1.0). It reads the openFDA label bulk
+download (the index `download.json`, 14 partitions of about 1.8 GB in all), writes one partition at a time to the
+run's scratch directory, streams it (`iter_results_stream`: one label in memory at a time) and leaves no partition
+behind; only the index is kept as raw input. A label is kept when it has a "Drug Interactions" section and exactly
+one active substance name; per substance name the label with the latest effective date is kept (ties: smaller set
+id, so the choice does not depend on download order). Rows: substance name as published, set id, version,
+effective date, product type, the section text as published, number of labels of the substance. The run fails when
+the parsed record count differs from the index; exclusions with reasons are in the manifest. Output: the usual
+`artifacts/us_label_interactions/current` run (parquet + manifest), a few megabytes; nothing is committed.
+**DP-S7** one label per single-substance name (latest effective date). Alternatives: all labels; the brand label.
+Why: bounded size, a stable choice; limit: the kept label can differ from the one a person holds.
+
+## 6. Label interaction text: matching (Part B, Req 4; `safety/interactions.py` pure, `store.py`, `repository.py`)
+- `LabelsHolder` reads the current run once and again when `current` points elsewhere (like the recall records);
+  no run installed, or an unreadable one: `interactions.status = "unavailable"`, the other blocks still answer.
+- The list's ingredients come from the same `engine_items`. Names searched for an ingredient B: its English label
+  and the leading words of the US substance names (NDC directory) mapped to B, kept only when the resolution
+  dataset knows the name for B and for no other ingredient (**DP-S9**), at least four characters, not on
+  `data/label_interaction_name_exclusions.csv` (names that in label text mostly mean a level, a salt or a class).
+- The label of A is the label kept for one of A's US substance names (latest effective date). A finding is made
+  for an ordered pair (A, B) of different ingredients in different list items when a sentence of that label
+  contains a name of B as whole words (case-insensitive; not inside a longer word or number); the longest name
+  that is found is reported. At most three sentences per finding (a sentence longer than 600 characters is cut
+  around the match, flagged), at most 30 findings (the total is reported). No class is inferred; no severity,
+  grade or instruction is produced; the notices say that a passage can state that no effect was seen.
+- Result and order do not depend on the order of the items (findings by label ingredient key, then named key).
+- Nothing found: the statement `no_label_passage_found`, the labels read with their dates, the ingredients with
+  no label (`labels_not_found`), the source and its date; "this does not mean ... do not affect each other".
+- Web: one card "Label text that names another medicine": per finding the box names, the quoted sentence
+  (`<blockquote lang="en">`), the matched name, label substance, effective date, set id and a DailyMed link; then
+  the sentence that Janus quotes the label and does not judge it, with the pharmacist-or-doctor line. Neutral
+  surface (no `--warn`/`--risk`).
+Properties: B1 a quoted passage is exact label text and contains the name; B2 whole words only; B3 order
+independence and documented order; B4 same-item pairs and self-names give no finding; B5 only unambiguous,
+long-enough, non-excluded names are searched; B6 long sentences are cut around the match; route tests with a
+synthetic run (quote, nothing found, unavailable keeps duplication); pipeline tests (stream reader property,
+exclusions, newest label, count mismatch, scratch removed); web W1-W3 extended; Playwright extended.
+
 ## 7. API contract **[Client: experience, MCP]**
 `POST /safety/check`, medical route. Body: `EvaluateIn` of the cascade engine.
 - 422 `{"error": "invalid_request", "fields": [...]}` (the route's own field names and positions only; an unknown

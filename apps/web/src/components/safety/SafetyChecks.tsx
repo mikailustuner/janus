@@ -15,6 +15,8 @@ import type { SafetyCall } from "@/safety/client";
 import type {
   Duplication,
   DuplicationFinding,
+  InteractionFinding,
+  Interactions,
   SafetyCheckOut,
 } from "@/safety/model";
 import { useSafety, type SafetyState } from "@/safety/useSafety";
@@ -150,6 +152,174 @@ function DuplicationBlock({
   );
 }
 
+const link =
+  "inline-flex min-h-11 items-center self-start text-sm font-bold underline underline-offset-4";
+
+function InteractionFindingItem({
+  finding,
+  names,
+}: {
+  finding: InteractionFinding;
+  names: Names;
+}) {
+  const t = useT();
+  const who = (r: InteractionFinding["label_of"]) =>
+    keyName(names.vocab, r.ingredient_key, r.label_en);
+  const boxes = (r: InteractionFinding["label_of"]) =>
+    r.items.map((i) => box(names, i)).join(", ");
+  const date = finding.label.effective_date ?? t("SafetyCheck.int.dateUnknown");
+  const more = finding.total_passages - finding.passages.length;
+  return (
+    <li
+      className="flex flex-col gap-2 rounded-[var(--radius-tile)] border border-line bg-surface p-3"
+      data-testid="int-finding"
+    >
+      <p className="font-bold break-words">
+        {t("SafetyCheck.int.finding", {
+          label: who(finding.label_of),
+          named: who(finding.names),
+        })}
+      </p>
+      <ul className="flex flex-col gap-1 text-sm break-words">
+        <li>
+          {t("SafetyCheck.int.labelRow", {
+            ingredient: who(finding.label_of),
+            boxes: boxes(finding.label_of),
+          })}
+        </li>
+        <li>
+          {t("SafetyCheck.int.namedRow", {
+            ingredient: who(finding.names),
+            boxes: boxes(finding.names),
+          })}
+        </li>
+      </ul>
+      <p className="text-sm text-muted">{t("SafetyCheck.int.quote")}</p>
+      {finding.passages.map((p, i) => (
+        <blockquote
+          key={i}
+          lang="en"
+          className="border-l-4 border-line pl-3 break-words"
+        >
+          {p.cut_start ? "\u2026 " : ""}
+          {p.text}
+          {p.cut_end ? " \u2026" : ""}
+        </blockquote>
+      ))}
+      {more > 0 ? (
+        <p className="text-sm">{t("SafetyCheck.int.more", { count: more })}</p>
+      ) : null}
+      <p className="text-sm break-words text-muted">
+        {t("SafetyCheck.int.matched", { name: finding.matched_name })}
+      </p>
+      <p className="text-sm break-words text-muted">
+        {t("SafetyCheck.int.labelMeta", {
+          substance: finding.label.substance_name,
+          date,
+          setId: finding.label.set_id,
+        })}
+      </p>
+      <a
+        className={link}
+        href={finding.label.url}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {t("SafetyCheck.int.open")}{" "}
+        <span className="sr-only">{t("SafetyCheck.int.opensNew")}</span>
+      </a>
+    </li>
+  );
+}
+
+function InteractionsBlock({
+  inter,
+  names,
+}: {
+  inter: Interactions;
+  names: Names;
+}) {
+  const t = useT();
+  if (inter.status === "unavailable" || !inter.source)
+    return (
+      <p data-testid="int-unavailable">{t("SafetyCheck.int.unavailable")}</p>
+    );
+  const who = (r: { ingredient_key: string; label_en: string | null }) =>
+    keyName(names.vocab, r.ingredient_key, r.label_en);
+  const about = (
+    <>
+      <p className="text-sm text-muted">{t("SafetyCheck.int.method")}</p>
+      <p className="text-sm text-muted" data-testid="int-source">
+        {t("SafetyCheck.int.source", { date: inter.source.snapshot_date })}
+      </p>
+      {inter.notices.includes("snapshot_outdated") ? (
+        <p className="text-sm">{t("SafetyCheck.int.outdated")}</p>
+      ) : null}
+      {inter.labels_read.length ? (
+        <>
+          <p className="text-sm font-bold">{t("SafetyCheck.int.labelsRead")}</p>
+          <ul className="flex flex-col gap-1 text-sm break-words text-muted">
+            {inter.labels_read.map((r) => (
+              <li key={r.ingredient_key}>
+                {t("SafetyCheck.int.readRow", {
+                  ingredient: who(r),
+                  substance: r.label.substance_name,
+                  date:
+                    r.label.effective_date ?? t("SafetyCheck.int.dateUnknown"),
+                })}
+              </li>
+            ))}
+          </ul>
+        </>
+      ) : null}
+    </>
+  );
+  const notFound = inter.labels_not_found.length ? (
+    <p className="text-sm break-words" data-testid="int-not-found">
+      {t("SafetyCheck.int.notFound", {
+        names: inter.labels_not_found.map(who).join(", "),
+      })}
+    </p>
+  ) : null;
+  if (inter.findings.length === 0)
+    return (
+      <div className="flex flex-col gap-2" data-testid="int-none">
+        <p>{t("SafetyCheck.int.none", { count: inter.labels_read.length })}</p>
+        {notFound}
+        <Disclosure summary={t("SafetyCheck.about")} summaryClassName="text-sm">
+          {about}
+        </Disclosure>
+      </div>
+    );
+  return (
+    <div className="flex flex-col gap-3" data-testid="int-findings">
+      <ul
+        className="flex flex-col gap-3"
+        aria-label={t("SafetyCheck.int.listLabel")}
+      >
+        {inter.findings.map((f) => (
+          <InteractionFindingItem
+            key={f.finding_id}
+            finding={f}
+            names={names}
+          />
+        ))}
+      </ul>
+      {inter.truncated ? (
+        <p className="text-sm">
+          {t("SafetyCheck.int.truncated", {
+            shown: inter.findings.length,
+            total: inter.total_findings,
+          })}
+        </p>
+      ) : null}
+      <p className="font-bold">{t("SafetyCheck.int.advice")}</p>
+      {notFound}
+      {about}
+    </div>
+  );
+}
+
 function Block({
   id,
   title,
@@ -232,6 +402,9 @@ export function SafetyView({
               dup={state.data.duplication}
               names={names}
             />
+          </Block>
+          <Block id="safety-int" title={t("SafetyCheck.int.title")}>
+            <InteractionsBlock inter={state.data.interactions} names={names} />
           </Block>
         </>
       )}
