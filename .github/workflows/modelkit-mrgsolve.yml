@@ -64,6 +64,10 @@ jobs:
           enable-cache: true
       - name: Round-trip test
         working-directory: apps/api
+        # Only the export tests run here, without a database; the CI-only rule that database tests
+        # must not skip (tests/conftest.py, DP19) belongs to the main API job.
+        env:
+          CI: "false"
         run: |
           uv sync --frozen
           uv run pytest -m mrgsolve tests/test_modelkit_export.py -q
