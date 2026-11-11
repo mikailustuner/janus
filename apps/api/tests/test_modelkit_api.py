@@ -95,7 +95,8 @@ def test_system_report(client: TestClient) -> None:
     s = client.get("/modelkit/validation").json()
     assert s["n_drugs"] == 6 and s["interpretable"] is False
     assert sum(s["by_status"].values()) == 6
-    assert "20" in s["conformal"] and s["caveats"]
+    assert s["conformal"] == "interval_n_too_small" and "n_very_small" in s["caveats"]
+    assert s["reason_text"]["expert_review_pending"] == "Expert review has not yet been done."
 
 
 @pytest.mark.parametrize("target", ["janus", "mrgsolve"])

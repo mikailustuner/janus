@@ -69,6 +69,7 @@ select = ["E", "F", "W", "I", "B", "UP", "S", "N", "RUF"]
 # Model kit: generated export text (licences, README, R script) has long lines by content.
 "janus/modelkit/export.py" = ["E501"]
 "janus/modelkit/router.py" = ["E501"]
+"janus/modelkit/reasons.py" = ["E501"]
 
 [tool.pyright]
 pythonVersion = "3.12"

@@ -1552,6 +1552,13 @@
             },
             "type": "array",
             "title": "Targets"
+          },
+          "reason_text": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Reason Text"
           }
         },
         "additionalProperties": false,
@@ -1563,7 +1570,8 @@
           "parameter_set",
           "no_set_reasons",
           "validation",
-          "targets"
+          "targets",
+          "reason_text"
         ],
         "title": "DrugOut"
       },
@@ -1747,6 +1755,13 @@
             },
             "type": "array",
             "title": "Attribution"
+          },
+          "reason_text": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Reason Text"
           }
         },
         "additionalProperties": false,
@@ -1756,7 +1771,8 @@
           "statements",
           "drug",
           "rows",
-          "attribution"
+          "attribution",
+          "reason_text"
         ],
         "title": "EvidenceOut"
       },
@@ -3707,16 +3723,12 @@
             ],
             "title": "Derivation"
           },
-          "note": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Note"
+          "notes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Notes"
           },
           "evidence_ids": {
             "items": {
@@ -3737,7 +3749,7 @@
           "n_studies",
           "between_study_cv",
           "derivation",
-          "note",
+          "notes",
           "evidence_ids"
         ],
         "title": "ParamOut"
@@ -4148,6 +4160,28 @@
             "type": "array",
             "title": "Warnings"
           },
+          "implied_half_life_h": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Implied Half Life H"
+          },
+          "stated_half_life_h": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Stated Half Life H"
+          },
           "params": {
             "items": {
               "$ref": "#/components/schemas/ParamOut"
@@ -4180,6 +4214,8 @@
           "complete",
           "missing",
           "warnings",
+          "implied_half_life_h",
+          "stated_half_life_h",
           "params",
           "left_out",
           "held_out_studies"
@@ -4432,6 +4468,13 @@
             },
             "type": "array",
             "title": "Caveats"
+          },
+          "reason_text": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Reason Text"
           }
         },
         "additionalProperties": false,
@@ -4446,7 +4489,8 @@
           "interpretable",
           "min_drugs_for_interpretation",
           "conformal",
-          "caveats"
+          "caveats",
+          "reason_text"
         ],
         "title": "SystemOut"
       },
@@ -4866,9 +4910,17 @@
             "type": "array",
             "title": "Suspect"
           },
-          "interval": {
+          "interval_reason": {
             "type": "string",
-            "title": "Interval"
+            "title": "Interval Reason"
+          },
+          "interval_min_studies": {
+            "type": "integer",
+            "title": "Interval Min Studies"
+          },
+          "interval_n_studies": {
+            "type": "integer",
+            "title": "Interval N Studies"
           },
           "band": {
             "items": {
@@ -4891,7 +4943,9 @@
           "points",
           "excluded",
           "suspect",
-          "interval",
+          "interval_reason",
+          "interval_min_studies",
+          "interval_n_studies",
           "band",
           "unit_note"
         ],

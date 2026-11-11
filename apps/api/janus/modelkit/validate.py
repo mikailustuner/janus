@@ -125,7 +125,7 @@ def validate(drug_key: str, rows: list[Ev], ps: ParameterSet | NoSet) -> Validat
     if isinstance(ps, NoSet):
         return Validation(
             drug_key, "not_validated", ("no_parameter_set", *ps.reasons), empty, (), (), (),
-            "not shown: no parameter set",
+            "interval_n_too_small",
         )  # fmt: skip
     pts: list[Point] = []
     excluded: list[tuple[str, str]] = []
@@ -133,7 +133,7 @@ def validate(drug_key: str, rows: list[Ev], ps: ParameterSet | NoSet) -> Validat
         if e.parameter not in ("cmax", "auc_inf", "auc_last", "auc_tau"):
             continue
         if e.study not in test:
-            excluded.append((e.eid, "observation in a study that also reports building parameters"))
+            excluded.append((e.eid, "observation_in_building_study"))
             continue
         why = _obs_reason(e, ps)
         if why:
@@ -143,7 +143,7 @@ def validate(drug_key: str, rows: list[Ev], ps: ParameterSet | NoSet) -> Validat
         assert e.dose is not None  # noqa: S101 - checked in _obs_reason
         pred = predict(ps, metric, e.dose)
         if pred is None or pred <= 0:
-            excluded.append((e.eid, "set cannot predict this metric"))
+            excluded.append((e.eid, "set_cannot_predict_metric"))
             continue
         ratio = pred / e.value_si
         pts.append(
@@ -162,6 +162,7 @@ def validate(drug_key: str, rows: list[Ev], ps: ParameterSet | NoSet) -> Validat
     cm = _metric("cmax", [p for p in pts if p.metric == "cmax"])
     reasons: list[str] = []
     suspect: list[str] = []
+    studies = {p.study_id for p in pts}
     if not pts:
         reasons.append("no_independent_observation")
     for m in (auc, cm):
@@ -171,14 +172,9 @@ def validate(drug_key: str, rows: list[Ev], ps: ParameterSet | NoSet) -> Validat
     if failed:
         status: Status = "failed"
         for m in failed:
-            if m.name == "auc":
-                suspect.append("clearance (CL or CL/F) or bioavailability: AUC is outside 2-fold")
-            else:
-                suspect.append(
-                    "absorption rate (derived from the time of peak concentration) or volume: "
-                    "Cmax is outside 2-fold"
-                    + (" while AUC is within 2-fold" if auc.tested and auc.in_band else "")
-                )
+            suspect.append(
+                "clearance_or_bioavailability" if m.name == "auc" else "absorption_rate_or_volume"
+            )
         reasons.append("tested_ratio_outside_2_fold")
     elif auc.tested and cm.tested:
         status = "validated"
@@ -188,10 +184,10 @@ def validate(drug_key: str, rows: list[Ev], ps: ParameterSet | NoSet) -> Validat
     for m in (auc, cm):
         if m.tested and m.near_limit:
             reasons.append(f"{m.name}_near_the_2_fold_limit")
-    studies = {p.study_id for p in pts}
     interval = (
-        "not shown: fewer than "
-        f"{MIN_STUDIES_FOR_INTERVAL} independent held-out studies ({len(studies)} here)"
+        "interval_n_too_small"
+        if len(studies) < MIN_STUDIES_FOR_INTERVAL
+        else "interval_system_level_only"
     )
     return Validation(
         drug_key, status, tuple(reasons), (auc, cm), tuple(pts), tuple(sorted(excluded)),
@@ -275,5 +271,5 @@ def system_report(vals: list[Validation]) -> SystemReport:
         studies,
         sum(m.n_drugs for m in out[:1]) >= MIN_DRUGS_FOR_INTERPRETATION,
         MIN_DRUGS_FOR_INTERPRETATION,
-        f"not shown: fewer than {MIN_STUDIES_FOR_INTERVAL} independent held-out studies",
+        "interval_n_too_small",
     )

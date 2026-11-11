@@ -47,13 +47,10 @@ def choose_model(vc: float | None, vss: float | None) -> tuple[str, str]:
     """One compartment unless a central and a steady-state volume exist and differ (design DP-M5
     of the spec; requirement 2.7). M0 has no central-volume parameter in its vocabulary."""
     if vc is None or vss is None:
-        return (
-            "one_compartment",
-            "no central-volume evidence (no distribution phase in the evidence)",
-        )
+        return "one_compartment", "no_central_volume_evidence"
     if vss / vc >= 1.25:
-        return "two_compartment", "central and steady-state volumes differ by at least 25 %"
-    return "one_compartment", "central and steady-state volumes agree within 25 %"
+        return "two_compartment", "two_volumes_differ"
+    return "one_compartment", "two_volumes_agree"
 
 
 @dataclass(frozen=True)
@@ -107,9 +104,9 @@ def pool(rows: list[Ev]) -> Pooled | None:
     cls: Cls = "A" if agree else "B"
     if all(r.statistic == "range_geomean" for r in use):
         cls = "C"
-    note = "studies disagree by more than 2-fold" if len(vals) >= 2 and not agree else None
+    note = "studies_disagree" if len(vals) >= 2 and not agree else None
     if healthy and len(healthy) < len(rows):
-        note = (note + "; " if note else "") + "healthy-adult values preferred"
+        note = (note + ";" if note else "") + "healthy_adult_preferred"
     return Pooled(value, cls, len(vals), spread, tuple(sorted(r.eid for r in use)), note)
 
 
@@ -141,6 +138,8 @@ class ParameterSet:
     left_out: tuple[tuple[str, str], ...]
     test_studies: tuple[tuple[str, str], ...]
     warnings: tuple[str, ...] = ()
+    implied_half_life_h: float | None = None
+    stated_half_life_h: float | None = None
 
     def get(self, name: str) -> Param | None:
         return next((p for p in self.params if p.name == name), None)
@@ -185,6 +184,7 @@ def build_set(drug_key: str, rows: list[Ev]) -> ParameterSet | NoSet:
 
     params: list[Param] = []
     reasons: list[str] = []
+    capped = False
     basis: Basis
     if cl_iv and v_iv and f_oral:
         basis, apparent = "iv", False
@@ -195,7 +195,7 @@ def build_set(drug_key: str, rows: list[Ev]) -> ParameterSet | NoSet:
             _p("f", "F (oral bioavailability)", "fraction", f_oral),
         ]
         if f != f_oral.value:
-            reasons.append("bioavailability above 1 was capped at 1")
+            capped = True
     elif cl_f:
         basis, apparent = "oral_apparent", True
         if v_f:
@@ -208,31 +208,27 @@ def build_set(drug_key: str, rows: list[Ev]) -> ParameterSet | NoSet:
                 None,
                 tuple(sorted({*cl_f.eids, *t_half.eids})),
             )
-            v_param = _p("v", "V/F (apparent)", "L", derived, "CL/F x half-life / ln 2")
+            v_param = _p("v", "V/F (apparent)", "L", derived, "v_from_clf_half_life")
         else:
             v_param = None
-            reasons.append("no volume (V/F) and no half-life to derive it")
+            reasons.append("no_volume_and_no_half_life")
         params.append(_p("cl", "CL/F (apparent)", "L/h", cl_f))
         if v_param:
             params.append(v_param)
         params.append(
             Param("f", "F (inside CL/F and V/F)", 1.0, "fraction", "C", 0, None, (),
-                  "fixed at 1: apparent parameters already contain bioavailability", None)
+                  "f_fixed_apparent", None)
         )  # fmt: skip
     else:
         if cl_iv and v_iv and not f_oral:
-            reasons.append(
-                "intravenous clearance and volume exist but no confirmed oral bioavailability"
-            )
+            reasons.append("iv_without_bioavailability")
         else:
             if not (cl_iv or cl_f):
-                reasons.append("no confirmed clearance (intravenous CL or oral CL/F)")
+                reasons.append("no_confirmed_clearance")
             if not (v_iv or v_f):
-                reasons.append("no confirmed volume (Vss or Vd, or V/F)")
+                reasons.append("no_confirmed_volume")
             if (cl_iv or v_iv) and not (cl_iv and v_iv):
-                reasons.append(
-                    "intravenous evidence is incomplete (clearance and volume are both needed)"
-                )
+                reasons.append("iv_evidence_incomplete")
         return NoSet(
             drug_key, tuple(reasons), _left_out(rows, set(), building, test), tuple(sorted(test))
         )
@@ -246,32 +242,30 @@ def build_set(drug_key: str, rows: list[Ev]) -> ParameterSet | NoSet:
             drug_key, tuple(reasons), _left_out(rows, set(), building, test), tuple(sorted(test))
         )
     k = cl_p.value / v_p.value
-    warnings = list(reasons)
+    warnings: list[str] = ["bioavailability_capped"] if capped else []
+    implied_half_life: float | None = None
+    stated_half_life: float | None = None
     missing: list[str] = []
     ka_param: Param | None = None
     if tmax:
         ka = solve_ka(k, tmax.value)
         if ka is None:
-            missing.append(
-                "absorption rate (peak time at or beyond what the elimination rate allows)"
-            )
+            missing.append("missing_absorption_no_solution")
         else:
             ka_param = Param(
                 "ka", "ka (derived from the time of peak concentration)", ka, "1/h", "C",
                 tmax.n_studies, None, tmax.eids,
-                "solve tmax = ln(ka/k) / (ka - k) with k = CL / V", tmax.note,
+                "ka_from_tmax", tmax.note,
             )  # fmt: skip
             params.append(ka_param)
     else:
-        missing.append("absorption rate (no confirmed time of peak concentration)")
+        missing.append("missing_absorption_no_peak_time")
     if t_half:
         implied = LN2 / k
         ratio = max(implied, t_half.value) / min(implied, t_half.value)
+        implied_half_life, stated_half_life = implied, t_half.value
         if ratio > 1.5:
-            warnings.append(
-                f"half-life implied by CL and V ({implied:.1f} h) differs from the stated "
-                f"half-life ({t_half.value:.1f} h) by {ratio:.1f}-fold"
-            )
+            warnings.append("half_life_inconsistent")
     model, model_reason = choose_model(None, None)
     used = {e for p in params for e in p.evidence}
     if t_half:
@@ -289,6 +283,8 @@ def build_set(drug_key: str, rows: list[Ev]) -> ParameterSet | NoSet:
         left_out=_left_out(rows, used, building, test),
         test_studies=tuple(sorted(test)),
         warnings=tuple(warnings),
+        implied_half_life_h=implied_half_life,
+        stated_half_life_h=stated_half_life,
     )
 
 
@@ -306,10 +302,10 @@ def _left_out(
         why = exclusion_reason(r)
         if why is None:
             if r.study in test:
-                why = "held-out study (observation, not used to build)"
+                why = "held_out_study"
             elif r.parameter not in BUILD_PARAMS:
-                why = "observation in a study that also reports building parameters (not tested)"
+                why = "observation_in_building_study"
             else:
-                why = "not needed: a preferred basis or a pooled value was used"
+                why = "not_needed_preferred_basis"
         out.append((r.eid, why))
     return tuple(out)

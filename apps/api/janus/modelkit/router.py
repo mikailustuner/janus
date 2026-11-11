@@ -19,8 +19,9 @@ from janus.http_policy.routes import medical_router
 from janus.modelkit import export as ex
 from janus.modelkit.builder import NoSet, ParameterSet
 from janus.modelkit.evidence import Ev
+from janus.modelkit.reasons import TEXT
 from janus.modelkit.store import DrugEntry, ModelkitHolder, Release
-from janus.modelkit.validate import Metric, Validation
+from janus.modelkit.validate import MIN_STUDIES_FOR_INTERVAL, Metric, Validation
 
 router = medical_router()
 UNAVAILABLE = {"error": "modelkit_unavailable"}
@@ -74,7 +75,9 @@ class ValidationOut(_Out):
     points: list[PointOut]
     excluded: list[ReasonOut]
     suspect: list[str]
-    interval: str
+    interval_reason: str
+    interval_min_studies: int
+    interval_n_studies: int
     band: list[float]
     unit_note: str
 
@@ -88,7 +91,7 @@ class ParamOut(_Out):
     n_studies: int
     between_study_cv: float | None
     derivation: str | None
-    note: str | None
+    notes: list[str]
     evidence_ids: list[str]
 
 
@@ -100,6 +103,8 @@ class SetOut(_Out):
     complete: bool
     missing: list[str]
     warnings: list[str]
+    implied_half_life_h: float | None
+    stated_half_life_h: float | None
     params: list[ParamOut]
     left_out: list[ReasonOut]
     held_out_studies: list[str]
@@ -136,6 +141,7 @@ class DrugOut(_Out):
     no_set_reasons: list[str]
     validation: ValidationOut
     targets: list[str]
+    reason_text: dict[str, str]
 
 
 class EvidenceRowOut(_Out):
@@ -179,6 +185,7 @@ class EvidenceOut(_Out):
     drug: str
     rows: list[EvidenceRowOut]
     attribution: list[str]
+    reason_text: dict[str, str]
 
 
 class SystemMetricOut(_Out):
@@ -202,6 +209,7 @@ class SystemOut(_Out):
     min_drugs_for_interpretation: int
     conformal: str
     caveats: list[str]
+    reason_text: dict[str, str]
 
 
 def _holder(request: Request) -> ModelkitHolder | None:
@@ -271,7 +279,9 @@ def validation_out(v: Validation) -> ValidationOut:
         ],
         excluded=[ReasonOut(evidence_id=e, reason=r) for e, r in v.excluded],
         suspect=list(v.suspect),
-        interval=v.interval,
+        interval_reason=v.interval,
+        interval_min_studies=MIN_STUDIES_FOR_INTERVAL,
+        interval_n_studies=len({p.study_id for p in v.points}),
         band=[0.5, 2.0],
         unit_note="ratio = predicted / observed; AUC to infinity in ng*h/mL, Cmax in ng/mL",
     )  # fmt: skip
@@ -286,11 +296,13 @@ def set_out(ps: ParameterSet) -> SetOut:
         complete=ps.complete,
         missing=list(ps.missing),
         warnings=list(ps.warnings),
+        implied_half_life_h=ps.implied_half_life_h,
+        stated_half_life_h=ps.stated_half_life_h,
         params=[
             ParamOut(
                 name=p.name, label=p.label, value=p.value, unit=p.unit, confidence_class=p.cls,
                 n_studies=p.n_studies, between_study_cv=p.spread_cv, derivation=p.derivation,
-                note=p.note, evidence_ids=list(p.evidence),
+                notes=[n for n in (p.note or "").split(";") if n], evidence_ids=list(p.evidence),
             )
             for p in ps.params
         ],
@@ -376,11 +388,8 @@ def system(request: Request, release: str | None = None) -> Any:
         interpretable=s.interpretable,
         min_drugs_for_interpretation=s.min_drugs_for_interpretation,
         conformal=s.conformal,
-        caveats=[
-            "n is very small: shares and fold errors describe these drugs, not drugs in general",
-            "every held-out observation was read automatically and confirmed by two automated passes",
-            "Expert review has not yet been done",
-        ],
+        caveats=["n_very_small", "two_automated_passes", "expert_review_pending"],
+        reason_text=TEXT,
     )
 
 
@@ -402,6 +411,7 @@ def drug(request: Request, key: str, release: str | None = None) -> Any:
         no_set_reasons=list(ps.reasons) if isinstance(ps, NoSet) else [],
         validation=validation_out(d.validation),
         targets=list(ex.TARGETS) if isinstance(ps, ParameterSet) and ps.complete else [],
+        reason_text=TEXT,
     )
 
 
@@ -420,6 +430,7 @@ def evidence(request: Request, key: str, release: str | None = None) -> Any:
         drug=d.key,
         rows=evidence_rows(d),
         attribution=ATTRIBUTION,
+        reason_text=TEXT,
     )
 
 

@@ -95,7 +95,7 @@ def test_iv_without_bioavailability_is_no_set() -> None:
         ev(parameter="vss", value=40.0, route="iv", study_id="L1"),
     ]
     ps = build_set("exampletine", rows)
-    assert isinstance(ps, NoSet) and "bioavailability" in " ".join(ps.reasons)
+    assert isinstance(ps, NoSet) and ps.reasons == ("iv_without_bioavailability",)
 
 
 def test_missing_tmax_gives_an_incomplete_set() -> None:
@@ -154,13 +154,13 @@ def test_validation_passes_and_fails() -> None:
     assert auc.tested and auc.n_studies == 2 and auc.gm_ratio == pytest.approx(1.0)
     # Cmax observed 1 ng/mL is far below the prediction: outside 2-fold, absorption suspect
     assert val.status == "failed" and val.metrics[1].in_band is False
-    assert any("absorption rate" in s for s in val.suspect)
+    assert "absorption_rate_or_volume" in val.suspect
     # AUC wrong by 3-fold: failed with clearance suspect
     rows = [r for r in oral_world() if r.parameter != "auc_inf"] + [
         ev(parameter="auc_inf", value=1666.0, dose=50.0, study_id="T1")
     ]
     val = validate("exampletine", rows, ps)
-    assert val.status == "failed" and any("clearance" in s for s in val.suspect)
+    assert val.status == "failed" and "clearance_or_bioavailability" in val.suspect
 
 
 def test_validated_when_both_in_band() -> None:
@@ -198,7 +198,8 @@ def test_observations_of_other_formulations_or_coadministration_are_not_tested()
     val = validate("exampletine", rows, ps)
     assert {p.study_id for p in val.points} == {"T1", "T2"}
     why = " ".join(r for _, r in val.excluded)
-    assert "formulation" in why and "coadministered" in why and "last_sampling" in why
+    assert "formulation_not_immediate_release" in why and "coadministered" in why
+    assert "last_sampling" in why
 
 
 def test_pooling_class_and_spread() -> None:
@@ -208,7 +209,7 @@ def test_pooling_class_and_spread() -> None:
     assert a is not None and a.cls == "A" and a.n_studies == 2 and a.spread_cv is not None
     assert 10.0 < a.value < 12.0 and a.value > math.sqrt(120)  # weighted towards the larger study
     b = pool([ev(value=10.0, study_id="A"), ev(value=30.0, study_id="B")])
-    assert b is not None and b.cls == "B" and b.note and "disagree" in b.note
+    assert b is not None and b.cls == "B" and b.note == "studies_disagree"
     c = pool([ev(value=10.0, statistic="range_geomean", value_low=5.0, value_high=20.0)])
     assert c is not None and c.cls == "C"
     h = pool([ev(value=10.0, study_id="A", population="patients"), ev(value=20.0, study_id="B")])
@@ -394,4 +395,4 @@ def test_system_report_counts() -> None:
     rep = system_report(vals)
     assert rep.n_drugs == 6 and sum(rep.by_status.values()) == 6
     assert rep.interpretable is False and rep.min_drugs_for_interpretation == 10
-    assert "20" in rep.conformal
+    assert rep.conformal == "interval_n_too_small"

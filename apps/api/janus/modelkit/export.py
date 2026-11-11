@@ -17,6 +17,7 @@ from typing import Any
 
 from janus.modelkit.builder import ParameterSet
 from janus.modelkit.evidence import Ev
+from janus.modelkit.reasons import text
 from janus.modelkit.validate import Validation
 from janus.paths import repo_root
 from janus.simulation.compartmental import Params
@@ -86,7 +87,7 @@ def engine_json(ps: ParameterSet, val: Validation | None) -> dict[str, Any]:
         "example_dose_mg": example_dose_mg(val),
         "example_dose_note": "a dose that appears in the evidence; not a dose recommendation",
         "validation_status": val.status if val else None,
-        "warnings": list(ps.warnings),
+        "warnings": [{"code": w, "text": text(w)} for w in ps.warnings],
     }
 
 
@@ -200,9 +201,9 @@ def provenance(
             }
             for e in used
         ],
-        "left_out": [{"id": e, "reason": why} for e, why in ps.left_out],
+        "left_out": [{"id": e, "reason": why, "reason_text": text(why)} for e, why in ps.left_out],
         "held_out_studies": [{"source": s, "study": t} for s, t in ps.test_studies],
-        "warnings": list(ps.warnings),
+        "warnings": [{"code": w, "text": text(w)} for w in ps.warnings],
         "validation": None if val is None else validation_summary(val, by_id),
         "sources": {f"{s}:{t}": meta.get(f"{s}:{t}") for s, t in studies},
     }
@@ -225,10 +226,13 @@ def validation_summary(val: Validation, by_id: dict[str, Ev]) -> dict[str, Any]:
             for p in val.points
         ],
         "status": val.status,
-        "reasons": list(val.reasons),
+        "reasons": [{"code": c, "text": text(c)} for c in val.reasons],
+        "excluded_observations": [
+            {"id": i, "reason": c, "reason_text": text(c)} for i, c in val.excluded
+        ],
         "metrics": [m.__dict__ for m in val.metrics],
-        "suspect": list(val.suspect),
-        "interval": val.interval,
+        "suspect": [{"code": c, "text": text(c)} for c in val.suspect],
+        "interval": text(val.interval),
         "note": "n is small; ratios are predicted / observed; shown with their counts",
     }
 
