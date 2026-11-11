@@ -165,3 +165,39 @@ text stays "Expert review has not yet been done".
 - **M16** The evidence job's merge replaces the seed's ClinicalTrials.gov rows of exactly the drugs the intake covers.
 - **M17** The gate is interpretable iff at least 10 drugs have both metrics tested (test).
 - **M18** The list route's page, search and filter agree with the full list; `counts` ignore the filters (test).
+
+## 13. Milestone M3 decisions
+- **DP-M22 Formulation and route are resolved from the study record, not assumed.** Two resolvers read, per (study,
+  drug, results group), the evidence in four layers, most specific first: the results group, the outcome measure, the
+  matching protocol arm (with the interventions of that arm that name the drug), and every intervention of the study that
+  names the drug. Only text about the drug counts (clauses that name it, or every clause where the arm gives no other
+  active drug; placebo clauses never). Resolver A (`formulation_a.py`) is pattern based; resolver B (`formulation_b.py`)
+  works on token sequences and the record structure; they share only the result type, the decision rule and the product
+  table (`formref.py`). Rule (`formref.decide`): nothing stated stays `unspecified`; fixed-dose-combination, then non-oral
+  route, then modified-release words win; a bare tablet or capsule word is the weakest evidence for immediate release and
+  loses against everything else; intravenous administration is a solution; oral and intravenous words in one layer, or an
+  explicit immediate-release word against solution evidence, are a conflict and stay unresolved. `formulation.py` is the
+  only place the two meet: the same formulation goes on both candidates if they agree, `unspecified` if not, and the
+  confirmation is decided again by code. The route is filled the same way where the readers had none.
+  The builder's immediate-release filter (DP-M3), the held-out rule and the status function are unchanged.
+- **DP-M23 Marketed products.** `data/modelkit/product_forms.csv` maps a brand name to the dosage form class of its
+  products in the public US product directory (openFDA NDC, CC0, human prescription products); a brand is kept only if all
+  its products fall in one class and its name contains no name of a pool drug. A study that names the brand resolves to that
+  class (a plain tablet or capsule counts as the weak immediate-release evidence).
+- **DP-M24 Intervals.** For each metric (AUC, Cmax) one score per (drug, held-out study) is the geometric mean of its
+  predicted / observed ratios; split-conformal width over all scores of the release (coverage 0.8); shown only from 20
+  independent held-out studies (unchanged minimum), and per drug only for a complete set that can predict the metric. Below
+  that the API and the interface give the reason code `interval_n_too_small` with n and the minimum.
+- **DP-M25 System report page.** `GET /modelkit/validation` carries counts of drugs, sets and rows, the formulation and
+  route counts of the confirmed values, the intervals, the reasons for Not validated and for no set, the measured precision
+  (read from the evidence manifest, made from `data/modelkit/precision.json`; Wilson intervals computed by the API) and the
+  list of what is missing. The web has its own page `/research/model-kit/report`; the list links to it.
+- **MCP `janus_modelkit_evidence`** returns the evidence rows of one drug (optional `parameter` and `role` filter), read-only.
+
+## 14. Milestone M3 properties
+- **M19** Unspecified never becomes immediate release without evidence in the record; a modified-release word always wins
+  over a generic tablet or capsule word (Hypothesis, both resolvers and the shared rule).
+- **M20** Resolver B imports nothing from resolver A, the readers or the pairing code (test).
+- **M21** No interval is given below 20 independent held-out studies; a study counts once per drug and metric (test).
+- **M22** Every `/modelkit` route answers with exactly the documented fields, no-store headers and the documented error codes
+  (contract tests).

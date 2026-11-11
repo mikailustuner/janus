@@ -22,8 +22,10 @@ import { Button } from "@/components/ui";
 import { useCall, type CallState } from "@/flow/useCall";
 import {
   EVIDENCE_PARAMS,
+  FORMULATIONS,
   keyFromHash,
   paramKey,
+  ROUTES,
   rowsById,
   shortStudy,
   TARGETS,
@@ -138,6 +140,9 @@ function Detail({
         summary={t("ModelKit.list.studies", { count: s.studies })}
         data-testid="mk-status-card"
       >
+        <p className="font-bold" data-testid="mk-status-explain">
+          {t(`ModelKit.drug.statusExplain.${s.status}`)}
+        </p>
         <ReasonList codes={s.status_reasons} testId="mk-status-reasons" />
         <p className="text-sm text-muted">{t("ModelKit.introValidation")}</p>
       </SummaryCard>
@@ -294,6 +299,21 @@ function EvidencePanel({ row }: { row: EvidenceRow }) {
           {row.study_id}
         </span>
       </p>
+      <p className="text-sm break-words" data-testid="mk-formulation">
+        <span className="font-bold">{t("ModelKit.ev.formulation")}: </span>
+        {formulationLabel(t, row.formulation)}
+        {" · "}
+        <span className="font-bold">{t("ModelKit.ev.route")}: </span>
+        {routeLabel(t, row.route)}
+      </p>
+      {row.note ? (
+        <p className="text-sm break-words">
+          <span className="font-bold">{t("ModelKit.ev.note")}: </span>
+          <span lang="en" data-testid="mk-note">
+            {row.note}
+          </span>
+        </p>
+      ) : null}
       <p className="text-sm break-words" lang="en">
         {row.source_version}
       </p>
@@ -321,6 +341,18 @@ function EvidencePanel({ row }: { row: EvidenceRow }) {
       </ul>
     </div>
   );
+}
+
+function formulationLabel(t: Translate, f: string): string {
+  return (FORMULATIONS as readonly string[]).includes(f)
+    ? t(`ModelKit.ev.formulations.${f}`)
+    : f;
+}
+
+function routeLabel(t: Translate, r: string): string {
+  return (ROUTES as readonly string[]).includes(r)
+    ? t(`ModelKit.ev.routes.${r}`)
+    : r;
 }
 
 function paramLabel(t: Translate, name: string): string {
@@ -584,13 +616,42 @@ function Validation({ out }: { out: DrugOut }) {
           {t("ModelKit.val.noPoints")}
         </p>
       )}
-      <p data-testid="mk-interval">
-        <Reason code={v.interval_reason} />{" "}
-        {t("ModelKit.val.intervalN", {
-          n: v.interval_n_studies,
-          min: v.interval_min_studies,
-        })}
-      </p>
+      <section
+        className="flex min-w-0 flex-col gap-2"
+        aria-labelledby="mk-val-int"
+        data-testid="mk-intervals"
+      >
+        <h3 id="mk-val-int" className="font-bold">
+          {t("ModelKit.val.intervalHeading")}
+        </h3>
+        {out.intervals.map((i) => (
+          <p key={i.metric} data-testid={`mk-interval-${i.metric}`}>
+            {i.shown && i.fold_half !== null
+              ? t("ModelKit.val.intervalShown", {
+                  metric: t(`ModelKit.val.${i.metric}`),
+                  fold: nf.format(i.fold_half),
+                  coverage: new Intl.NumberFormat(locale, {
+                    style: "percent",
+                    maximumFractionDigits: 0,
+                  }).format(i.coverage),
+                  n: i.n_studies,
+                })
+              : t("ModelKit.val.intervalNone", {
+                  metric: t(`ModelKit.val.${i.metric}`),
+                })}
+            {i.shown || !i.reason ? null : (
+              <>
+                {" "}
+                <Reason code={i.reason} />{" "}
+                {t("ModelKit.val.intervalN", {
+                  n: i.n_studies,
+                  min: i.min_studies,
+                })}
+              </>
+            )}
+          </p>
+        ))}
+      </section>
     </section>
   );
 }
@@ -672,6 +733,7 @@ function EvidenceTable({
       {reasons ? (
         <p className="text-sm text-muted">{t("ModelKit.ev.excludedHint")}</p>
       ) : null}
+      <p className="text-sm text-muted">{t("ModelKit.ev.formulationHint")}</p>
       <ScrollTable label={title}>
         <table className="tm-table words">
           <caption className="sr-only">{title}</caption>
@@ -680,6 +742,7 @@ function EvidenceTable({
               <th scope="col">{t("ModelKit.ev.parameter")}</th>
               <th scope="col">{t("ModelKit.params.value")}</th>
               <th scope="col">{t("ModelKit.chart.study")}</th>
+              <th scope="col">{t("ModelKit.ev.formulation")}</th>
               <th scope="col">
                 {reasons ? t("ModelKit.ev.reason") : t("ModelKit.ev.role")}
               </th>
@@ -715,6 +778,9 @@ function EvidenceTable({
                   >
                     {shortStudy(r.study_id)}
                   </td>
+                  <td data-testid="mk-ev-formulation">
+                    {formulationLabel(t, r.formulation)}
+                  </td>
                   <td>
                     {reasons ? (
                       <Reason code={r.reason ?? "not_used"} />
@@ -725,7 +791,7 @@ function EvidenceTable({
                 </tr>,
                 expanded ? (
                   <tr key={`${r.id}-p`}>
-                    <td colSpan={4} id={pid} className="whitespace-normal">
+                    <td colSpan={5} id={pid} className="whitespace-normal">
                       <div className="sticky start-0 w-[calc(100vw-5.5rem)] max-w-[44rem] py-2">
                         <EvidencePanel row={r} />
                       </div>

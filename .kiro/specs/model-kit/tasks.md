@@ -41,8 +41,16 @@
   - [x] List route paging and search, summaries per release, web list search and pages, recorded release
   - [x] Precision measured again on a blinded sample (two automated review passes); texts in five languages
   - [ ] Arm-level co-administration and population-PK filters at scale beyond the M1 fixes (no reader change in M2)
-- [ ] M3 System report by drug class, conformal intervals once n >= 20, bootstrap intervals, full API contract
-  tests, MCP `modelkit_evidence`
+- [~] M3 Formulation resolver, system report, intervals, API contract tests, MCP `modelkit_evidence`
+  - [x] Pre-registration written before any result (private)
+  - [x] Two independent formulation and route resolvers, product forms table, Hypothesis properties (DP-M22, DP-M23)
+  - [x] M2 pipeline re-run with the resolver (same bulk file), sets and strict gate recomputed (see `reviews.md`)
+  - [x] Intervals only from 20 independent held-out studies, otherwise the reason is shown (DP-M24)
+  - [x] System report page, drug page (status explanation, failed points and suspect parameter, formulation per evidence
+    row), API contract tests for all routes, MCP `janus_modelkit_evidence`, five languages
+  - [x] Precision measured again on a fresh blinded sample including the formulation field (two automated review passes)
+  - [ ] System report by drug class and bootstrap intervals in the product (not meaningful before 10 drugs have both
+    metrics tested)
 - [ ] M4 PK-Sim snapshot export and CI test; special populations (older adults from the audited atlas rows, renal
   and hepatic classes from labels)
 - [ ] M5 FDA clinical pharmacology reviews (born-digital first, then OCR) and PMC table reader (dose only from

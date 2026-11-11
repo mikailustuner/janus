@@ -77,6 +77,33 @@ const validation = D.obj({
   band: D.arr(D.num),
   unit_note: D.str,
 });
+const interval = D.obj({
+  metric: D.lit("auc", "cmax"),
+  shown: D.bool,
+  n_studies: D.int,
+  min_studies: D.int,
+  coverage: D.num,
+  fold_half: n,
+  reason: D.nullable(D.str),
+});
+const precision = D.obj({
+  measured_on: D.str,
+  n: D.int,
+  correct: D.int,
+  share: D.num,
+  wilson_low: D.num,
+  wilson_high: D.num,
+  n_conservative: D.int,
+  share_conservative: D.num,
+  wilson_low_conservative: D.num,
+  wilson_high_conservative: D.num,
+  formulation_n: D.nullable(D.int),
+  formulation_correct: D.nullable(D.int),
+  formulation_share: n,
+  formulation_wilson_low: n,
+  formulation_wilson_high: n,
+  target: D.num,
+});
 const param = D.obj({
   name: D.str,
   label: D.str,
@@ -121,6 +148,7 @@ export const drugOut = D.obj({
   parameter_set: D.nullable(paramSet),
   no_set_reasons: D.arr(D.str),
   validation,
+  intervals: D.arr(interval),
   targets: D.arr(D.lit(...TARGETS)),
   reason_text: text,
 });
@@ -198,6 +226,18 @@ export const systemOut = D.obj({
   min_drugs_for_interpretation: D.int,
   n_drugs_both_tested: D.int,
   conformal: D.str,
+  intervals: D.arr(interval),
+  n_with_set: D.int,
+  n_complete_set: D.int,
+  rows_total: D.int,
+  rows_confirmed: D.int,
+  confirmed_parent_rows: D.int,
+  formulation_counts: D.record(D.int),
+  route_counts: D.record(D.int),
+  not_validated_reasons: D.record(D.int),
+  no_set_reasons: D.record(D.int),
+  precision: D.nullable(precision),
+  missing: D.arr(D.str),
   caveats: D.arr(D.str),
   reason_text: text,
 });
@@ -211,6 +251,18 @@ export type PointOut = D.Infer<typeof point>;
 export type EvidenceRow = D.Infer<typeof evidenceRow>;
 export type EvidenceOut = D.Infer<typeof evidenceOut>;
 export type SystemOut = D.Infer<typeof systemOut>;
+export type IntervalOut = D.Infer<typeof interval>;
+export type PrecisionOut = D.Infer<typeof precision>;
+
+export const FORMULATIONS = [
+  "immediate_release",
+  "solution",
+  "modified_release",
+  "fixed_dose_combination",
+  "other_route",
+  "unspecified",
+] as const;
+export const ROUTES = ["oral", "iv", "unknown"] as const;
 
 export interface ModelKitFixture {
   recorded: string;
@@ -459,6 +511,12 @@ export const REASON_CODES = [
   "expert_review_pending",
   "interval_n_too_small",
   "interval_system_level_only",
+  "interval_shown",
+  "gate_not_interpretable",
+  "no_drug_validated",
+  "intervals_not_shown",
+  "formulation_often_unspecified",
+  "fewer_than_150_sets",
   "not_used",
 ] as const;
 

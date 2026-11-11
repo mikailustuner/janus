@@ -194,6 +194,13 @@ const PAGES = [
     open: null,
     release: true,
   },
+  { name: "report", path: "/research/model-kit/report", open: null },
+  {
+    name: "report-release",
+    path: "/research/model-kit/report",
+    open: null,
+    release: true,
+  },
   {
     name: "drug-release",
     path: `/research/model-kit/drug#${REL_DRUG}`,
@@ -223,7 +230,9 @@ for (const p of PAGES)
         await page.goto(`/${locale}${p.path}`);
         await expect(page.getByTestId("mk-research-use")).toBeVisible();
         if (p.name.startsWith("list"))
-          await expect(page.getByTestId("mk-system")).toBeVisible();
+          await expect(page.getByTestId("mk-report-link")).toBeVisible();
+        else if (p.name.startsWith("report"))
+          await expect(page.getByTestId("mk-report")).toBeVisible();
         else await expect(page.getByTestId("mk-validation")).toBeVisible();
         if ("open" in p && p.open) {
           await page.getByTestId(`mk-value-${p.open}`).click();
@@ -253,17 +262,8 @@ test.describe("list", () => {
     await expect(page.getByTestId("mk-summary")).toContainText(
       `${all.length} drug`,
     );
-    await expect(page.getByTestId("mk-interval")).toContainText(
-      "No interval is shown",
-    );
-    // the released precision of confirmed values is stated on the list page
-    await expect(page.getByTestId("mk-system-limits")).toContainText(
-      "Read every value as unverified",
-    );
-    // the gate: how many drugs have both AUC and Cmax tested, and whether that is enough
-    await expect(page.getByTestId("mk-gate")).toContainText(
-      String(rel.validation.n_drugs_both_tested),
-    );
+    // the system report has its own page, linked from the list
+    await expect(page.getByTestId("mk-report-link")).toBeVisible();
   });
 
   test("search, status filter and pages narrow the list and open a drug", async ({
@@ -472,9 +472,13 @@ test.describe("drug page", () => {
     ).toHaveCount(pts);
     await expect(page.getByTestId("mk-metrics")).toContainText("AUC");
     await expect(page.getByTestId("mk-metrics")).toContainText("Cmax");
-    await expect(page.getByTestId("mk-interval")).toContainText(
+    await expect(page.getByTestId("mk-interval-auc")).toContainText(
+      "no interval is shown",
+    );
+    await expect(page.getByTestId("mk-interval-cmax")).toContainText(
       "No interval is shown",
     );
+    await expect(page.getByTestId("mk-status-explain")).toBeVisible();
   });
 
   test("a drug without a set: reasons, evidence, no chart, no downloads", async ({
@@ -542,6 +546,51 @@ test.describe("drug page", () => {
   });
 });
 
+test.describe("system report", () => {
+  test("counts, the gate, intervals, precision and what is missing", async ({
+    page,
+  }) => {
+    await stubApi(page, relStubs);
+    await page.goto("/en/research/model-kit/report");
+    await expect(page.getByTestId("mk-report")).toBeVisible();
+    await expect(page.getByTestId("mk-gate")).toContainText(
+      String(rel.validation.n_drugs_both_tested),
+    );
+    await expect(page.getByTestId("mk-rows")).toContainText(
+      String(rel.validation.rows_total),
+    );
+    await expect(page.getByTestId("mk-formulation-table")).toContainText(
+      "Not stated",
+    );
+    for (const i of rel.validation.intervals as Json[])
+      await expect(page.getByTestId(`mk-interval-${i.metric}`)).toContainText(
+        i.shown ? "shown" : "independent held-out studies",
+      );
+    await expect(page.getByTestId("mk-missing")).toContainText(
+      "Expert review has not yet been done",
+    );
+    if (rel.validation.precision)
+      await expect(page.getByTestId("mk-precision")).toContainText(
+        `n = ${rel.validation.precision.n}`,
+      );
+    await expect(page.getByTestId("mk-precision")).toBeVisible();
+  });
+
+  test("503 and the back link", async ({ page }) => {
+    await stubApi(page, {
+      "/modelkit/validation": {
+        status: 503,
+        body: { error: "modelkit_unavailable" },
+      },
+    });
+    await page.goto("/en/research/model-kit/report");
+    await expect(
+      page.getByRole("link", { name: /Back to the drugs/ }),
+    ).toBeVisible();
+    await expect(page.getByTestId("mk-research-use")).toBeVisible();
+  });
+});
+
 test.describe("demo mode", () => {
   test("answers from the recorded file with no request; downloads are off", async ({
     page,
@@ -560,7 +609,7 @@ test.describe("demo mode", () => {
       .fill(rel.drugs.drugs[0].name.slice(0, 5));
     await expect(page.getByTestId("mk-drug").first()).toBeVisible();
     await page.getByTestId("mk-search").fill("");
-    await expect(page.getByTestId("mk-system")).toBeVisible();
+    await expect(page.getByTestId("mk-report-link")).toBeVisible();
     await expect(page.getByTestId("mk-demo")).toBeVisible();
     await page.goto(`/en/research/model-kit/drug#${REL_DRUG}`);
     await expect(page.getByTestId("mk-validation")).toBeVisible();

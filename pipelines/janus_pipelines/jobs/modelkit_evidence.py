@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import csv
 import io
+import json
 import math
 import re
 from collections import Counter
@@ -27,6 +28,7 @@ SCHEMA_VERSION: Final = "modelkit_evidence-2"
 PIPELINE_VERSION: Final = "modelkit-evidence-1.0"
 SEED_PATH: Final = ("data", "modelkit", "evidence_seed.csv")  # milestone M0 rows
 M1_PATH: Final = ("data", "modelkit", "evidence_m1.csv")  # milestone M1 rows (two readers)
+PRECISION_PATH: Final = ("data", "modelkit", "precision.json")  # measured precision (M3)
 _SPLIT: Final = "\n\x1e\n"
 # M0 rows of these sources are replaced by the M1 rows of the same drug (two readers)
 SUPERSEDED_SOURCES: Final = frozenset({"clinicaltrials_gov", "dailymed_spl"})
@@ -297,7 +299,9 @@ def _read_csv(text: str, name: str) -> list[tuple[str, dict[str, str]]]:
     return [(f"{name}:{i}", dict(raw)) for i, raw in enumerate(reader, 2)]
 
 
-def parse_seed(text: str, ctgov: Sequence[Row] = ()) -> ParseResult:
+def parse_seed(
+    text: str, ctgov: Sequence[Row] = (), precision: Mapping[str, Json] | None = None
+) -> ParseResult:
     """The seed text: the M0 file alone, or the M0 file and the M1 file joined by a record
     separator line. Rows of superseded sources (M0) are dropped for drugs the M1 file covers.
     `ctgov` are the checked rows of the `modelkit_ctgov` job (milestone M2); they replace every
@@ -357,6 +361,8 @@ def parse_seed(text: str, ctgov: Sequence[Row] = ()) -> ParseResult:
         "by_source": dict(sorted(Counter(str(r["source_id"]) for r in rows).items())),
         "studies": len({(r["source_id"], r["study_id"]) for r in rows}),
     }
+    if precision:
+        metrics["precision"] = dict(precision)
     return ParseResult(
         rows=rows, input_rows=input_rows, excluded={}, schema=SchemaReport(), metrics=metrics
     )
@@ -401,12 +407,15 @@ class ModelkitEvidenceJob(Job[bytes]):
 
     def __init__(self) -> None:
         self._ctgov: list[Row] = []
+        self._precision: dict[str, Json] | None = None
 
     def fetch(self, ctx: RunContext) -> RawInput[bytes]:
         data = ctx.repo_root.joinpath(*SEED_PATH).read_bytes()
         m1 = ctx.repo_root.joinpath(*M1_PATH)
         if m1.exists():
             data = data + _SPLIT.encode() + m1.read_bytes()
+        prec = ctx.repo_root.joinpath(*PRECISION_PATH)
+        self._precision = json.loads(prec.read_text("utf-8")) if prec.exists() else None
         retrieved = ctx.now()
         fingerprint, self._ctgov = _current_ctgov(ctx)
         dates = sorted(
@@ -415,7 +424,9 @@ class ModelkitEvidenceJob(Job[bytes]):
         return RawInput(
             payload=data,
             source_urls=(),
-            source_sha256=sha256_bytes(data + fingerprint.encode()),
+            source_sha256=sha256_bytes(
+                data + fingerprint.encode() + json.dumps(self._precision, sort_keys=True).encode()
+            ),
             retrieved_at=retrieved,
             snapshot_date=max([*dates, *_ctgov_dates(self._ctgov)])
             if dates or self._ctgov
@@ -423,4 +434,4 @@ class ModelkitEvidenceJob(Job[bytes]):
         )
 
     def parse(self, raw: RawInput[bytes]) -> ParseResult:
-        return parse_seed(raw.payload.decode("utf-8"), self._ctgov)
+        return parse_seed(raw.payload.decode("utf-8"), self._ctgov, self._precision)

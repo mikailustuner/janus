@@ -2909,7 +2909,9 @@
       "pages": "Pages de la liste des médicaments",
       "prev": "Précédent",
       "next": "Suivant",
-      "range": "{from}–{to} sur {total}"
+      "range": "{from}–{to} sur {total}",
+      "reportLink": "Ouvrir le rapport du système",
+      "reportIntro": "Effectifs, seuil, intervalles, précision mesurée et ce qui manque encore, pour toute la version."
     },
     "system": {
       "title": "Rapport du système",
@@ -2938,7 +2940,12 @@
       "noSetBody": "Les preuves ne permettent pas encore un jeu de paramètres. Voici les raisons.",
       "warnings": "Avertissement",
       "halfLives": "Demi-vie déduite {implied} h ; demi-vie indiquée {stated} h.",
-      "incomplete": "Le jeu est incomplet, il ne peut donc pas être exporté. Manque :"
+      "incomplete": "Le jeu est incomplet, il ne peut donc pas être exporté. Manque :",
+      "statusExplain": {
+        "validated": "Validé : l’ASC et la Cmax ont été testées sur des études mises de côté et chaque observation est à moins d’un facteur 2 de la prédiction. Cela décrit quelques études, pas le médicament en général.",
+        "not_validated": "Non validé : le jeu n’a pas pu être testé sur l’ASC et la Cmax avec des études mises de côté (voir les raisons). Ce n’est pas un échec du jeu ; les preuves ne suffisent pas encore.",
+        "failed": "Échec : au moins une observation mise de côté est à plus d’un facteur 2 de la prédiction. Les points en cause et le paramètre à soupçonner sont listés ci-dessous ; les médicaments en échec ne sont jamais masqués."
+      }
     },
     "params": {
       "title": "Paramètres",
@@ -2979,7 +2986,10 @@
       "noPoints": "Il n’y a aucune observation mise de côté, donc pas de graphique.",
       "intervalN": "({n} sur au moins {min} études indépendantes mises de côté.)",
       "failedPoints": "Observations hors d’un facteur 2",
-      "failedPoint": "{metric}, étude {study} : prédit / observé = {ratio}"
+      "failedPoint": "{metric}, étude {study} : prédit / observé = {ratio}",
+      "intervalHeading": "Intervalles de prédiction",
+      "intervalShown": "{metric} : la valeur observée d’une nouvelle étude devrait se trouver à ÷/× {fold} de la prédiction pour {coverage} des études (n = {n} études mises de côté, tous médicaments).",
+      "intervalNone": "{metric} : aucun intervalle n’est affiché."
     },
     "chart": {
       "title": "Observé par rapport à prédit",
@@ -3022,7 +3032,24 @@
       "studyId": "Identifiant de l’étude",
       "derived": "Valeur dérivée (calculée, non indiquée dans la source)",
       "showAll": "Afficher les {count} lignes",
-      "showFewer": "Afficher moins de lignes"
+      "showFewer": "Afficher moins de lignes",
+      "formulation": "Formulation",
+      "route": "Voie",
+      "note": "Note",
+      "formulationHint": "La formulation et la voie sont déterminées à partir de la fiche de l’étude par deux résolveurs automatisés indépendants ; « non indiquée » signifie que la fiche ne le dit pas, et une telle valeur n’est pas utilisée pour construire ou tester un jeu.",
+      "formulations": {
+        "immediate_release": "Libération immédiate",
+        "solution": "Solution",
+        "modified_release": "Libération modifiée",
+        "fixed_dose_combination": "Association à dose fixe",
+        "other_route": "Autre voie",
+        "unspecified": "Non indiquée"
+      },
+      "routes": {
+        "oral": "Orale",
+        "iv": "Intraveineuse",
+        "unknown": "Non indiquée"
+      }
     },
     "evParam": {
       "cl": "Clairance (CL)",
@@ -3113,8 +3140,43 @@
       "point_outside_2_fold": "Au moins une observation mise de côté est hors d’un facteur 2 de la prédiction.",
       "all_points_within_2_fold": "L’ASC et la Cmax ont été testées et chaque observation mise de côté est dans un facteur 2.",
       "cl_from_dose_and_auc": "Dérivé : CL/F = dose / ASC jusqu’à l’infini d’un bras d’étude (CL pour une dose intraveineuse).",
-      "confirmed_precision_below_target": "Sur un échantillon en aveugle de valeurs confirmées, deux passes de relecture automatisées en ont jugé 73 % correctes (n = 97, intervalle à 95 % de 64 à 81 %), sous l’objectif de 90 % de cette étape. Lisez chaque valeur comme non vérifiée."
+      "confirmed_precision_below_target": "Sur un échantillon en aveugle de valeurs confirmées, deux passes de relecture automatisées ont trouvé moins de valeurs correctes que l’objectif de 90 % de cette étape (la part mesurée, n et l’intervalle sont dans le rapport du système). Lisez chaque valeur comme non vérifiée.",
+      "interval_shown": "Les intervalles sont affichés : au moins 20 études indépendantes mises de côté.",
+      "gate_not_interpretable": "Moins de 10 médicaments ont l’ASC et la Cmax testées sur des études mises de côté, le seuil ne peut pas être interprété.",
+      "no_drug_validated": "Aucun médicament n’est validé.",
+      "intervals_not_shown": "Aucun intervalle de prédiction n’est affiché : trop peu d’études mises de côté.",
+      "formulation_often_unspecified": "Plus du quart des valeurs confirmées n’ont pas de formulation indiquée.",
+      "fewer_than_150_sets": "Moins de 150 médicaments ont un jeu de paramètres."
     },
-    "scrollHint": "Faites défiler latéralement pour voir toutes les colonnes."
+    "scrollHint": "Faites défiler latéralement pour voir toutes les colonnes.",
+    "report": {
+      "title": "Rapport du système",
+      "back": "Retour aux médicaments",
+      "intro": "Ce que la version entière peut dire et ne peut pas dire. Expérimental ; chaque valeur a été lue et confirmée par des lecteurs automatisés, et des passes de relecture automatisées ont mesuré leur taux de réussite.",
+      "countsTitle": "Effectifs",
+      "inStore": "{count, plural, one {# médicament} other {# médicaments}} dans cette version",
+      "withSet": "Jeux de paramètres",
+      "withSetSentence": "{set, plural, one {# médicament a} other {# médicaments ont}} un jeu de paramètres, dont {complete} un jeu complet exportable.",
+      "rows": "Lignes de preuve",
+      "rowsSentence": "{rows} lignes, {confirmed} confirmées par les deux lecteurs automatisés, dont {parent} pour le médicament lui-même.",
+      "formulationTitle": "Formulation des valeurs confirmées",
+      "formulationIntro": "Part des valeurs confirmées du médicament lui-même dont la formulation est indiquée dans la fiche de l’étude : {share} ({k} sur {n}). Une valeur sans formulation indiquée reste « non indiquée » et n’est pas utilisée pour construire ou tester un jeu.",
+      "formulationTable": "Valeurs confirmées du médicament selon la formulation et la voie",
+      "kind": "Type",
+      "values": "Valeurs",
+      "intervalsTitle": "Intervalles de prédiction",
+      "intervalsSentence": "{metric} : {n} des au moins {min} études indépendantes mises de côté nécessaires pour un intervalle.",
+      "intervalsShownSentence": "{metric} : affiché (÷/× {fold} pour {coverage} des études, n = {n}).",
+      "precisionTitle": "Précision des valeurs confirmées",
+      "precisionLine": "{share} des valeurs échantillonnées étaient correctes (intervalle de Wilson à 95 % de {low} à {high}, n = {n} ; échantillon en aveugle, deux passes de relecture automatisées, {date}).",
+      "precisionConservative": "Lecture prudente, tout ce qui n’est pas jugé correct par les deux passes compte comme faux : {share} ({low} à {high}, n = {n}).",
+      "precisionFormulation": "Le champ formulation seul : {share} ({low} à {high}, n = {n}).",
+      "precisionTarget": "Objectif de cette étape : {target}. En dessous de l’objectif, lisez chaque valeur comme non vérifiée.",
+      "precisionNone": "Aucune précision n’a été mesurée pour cette version.",
+      "missingTitle": "Ce qui manque",
+      "noSetTitle": "Pourquoi des médicaments n’ont pas de jeu de paramètres",
+      "notValidatedTitle": "Pourquoi des médicaments ne sont pas validés",
+      "drugsCount": "{count, plural, one {# médicament} other {# médicaments}}"
+    }
   }
 }
