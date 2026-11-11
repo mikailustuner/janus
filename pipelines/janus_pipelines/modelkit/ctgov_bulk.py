@@ -9,6 +9,7 @@ two independent readers. Build-time code, no network. Research use only. Not for
 from __future__ import annotations
 
 import json
+import pickle
 import zipfile
 from collections import Counter
 from collections.abc import Iterator
@@ -104,8 +105,17 @@ def _init_worker(identity_text: str) -> None:
     _G["table"] = IdentityTable.from_csv(identity_text)
 
 
-def _work(args: tuple[Path, list[str]]) -> Shard:
-    return _read_shard(args[0], args[1], _G["table"])
+def _work(args: tuple[Path, list[str], Path | None]) -> Shard:
+    """One shard; with a checkpoint file the result is kept there and reused by a later run."""
+    zip_path, names, checkpoint = args
+    if checkpoint is not None and checkpoint.exists():
+        return pickle.loads(checkpoint.read_bytes())  # noqa: S301 - our own earlier output
+    shard = _read_shard(zip_path, names, _G["table"])
+    if checkpoint is not None:
+        tmp = checkpoint.with_suffix(".tmp")
+        tmp.write_bytes(pickle.dumps(shard))
+        tmp.replace(checkpoint)
+    return shard
 
 
 def read_bulk(
@@ -114,6 +124,7 @@ def read_bulk(
     stats: dict[str, ReaderStats],
     counts: Counter[str],
     workers: int = 1,
+    checkpoint_dir: Path | None = None,
 ) -> tuple[list[Paired], list[Candidate], dict[str, set[str]]]:
     """Pairs of the two readers for every (study, drug); candidates only reader B found; the studies
     kept per drug. The member list is cut into SHARDS contiguous parts that are read independently
@@ -121,7 +132,17 @@ def read_bulk(
     with zipfile.ZipFile(zip_path) as zf:
         names = [i.filename for i in zf.infolist() if i.filename.endswith(".json")]
     size = max(1, -(-len(names) // SHARDS))
-    tasks = [(zip_path, names[i : i + size]) for i in range(0, len(names), size)]
+    if checkpoint_dir is not None:
+        checkpoint_dir.mkdir(parents=True, exist_ok=True)
+    tasks = [
+        (
+            zip_path,
+            names[i : i + size],
+            None if checkpoint_dir is None else checkpoint_dir / f"shard-{i // size:03d}.pkl",
+        )
+        for i in range(0, len(names), size)
+    ]
+    del names
     if workers <= 1:
         _init_worker(identity_text)
         shards = [_work(t) for t in tasks]

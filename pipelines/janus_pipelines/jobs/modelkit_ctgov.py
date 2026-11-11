@@ -97,8 +97,10 @@ class ModelkitCtgovJob(Job[Path]):
         table = IdentityTable.from_csv(identity)
         counts: Counter[str] = Counter()
         stats = {"a": ReaderStats(), "b": ReaderStats()}
+        cache_env = os.environ.get("JANUS_MODELKIT_CHECKPOINT_DIR")  # resumable research runs
+        cache = Path(cache_env) if cache_env else None
         workers = max(1, int(os.environ.get("JANUS_MODELKIT_WORKERS", "1")))
-        pairs, only_b, kept = read_bulk(raw.payload, identity, stats, counts, workers)
+        pairs, only_b, kept = read_bulk(raw.payload, identity, stats, counts, workers, cache)
         rows_csv, dropped = finalize_rows(pairs, table)
         date = raw.snapshot_date or raw.retrieved_at.date().isoformat()
         rows: list[Row] = []
