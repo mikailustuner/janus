@@ -73,4 +73,4 @@ short quotes only; no raw downloads.
   `pksim-inputs.json`. The evidence does not hold lipophilicity, pKa, fraction unbound, blood/plasma ratio, solubility,
   permeability, molecular weight or the clearance process; they are marked missing and nothing is invented. The file loads
   in PK-Sim 12.x and exports again (checked in `.github/workflows/modelkit-pksim.yml` with ospsuite 12.4.5, which bundles
-  PK-Sim core 12.3.173, GPL-2.0, on Linux); it is not simulated as exported.
+  PK-Sim core 12.3.173, GPL-2.0 with the Suite's clarifying addendum, on Linux); it is not simulated as exported.

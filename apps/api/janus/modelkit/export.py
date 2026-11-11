@@ -34,7 +34,7 @@ FIXED_TIME = (2026, 11, 11, 0, 0, 0)
 
 
 # --- PK-Sim (Open Systems Pharmacology) compound building block ------------------------------------
-# A project snapshot (JSON) with one Compound. Format: PKSim.Core.Snapshots (PK-Sim source, GPL-2.0), project
+# A project snapshot (JSON) with one Compound. Format: PKSim.Core.Snapshots (PK-Sim source, GPL-2.0 with a clarifying addendum), project
 # snapshot version 80 = PK-Sim 12.x. Tested with PK-Sim core 12.3.173 through ospsuite 12.4.5 (GPL-2.0) on Linux.
 PKSIM_SNAPSHOT_VERSION = 80
 PKSIM_TESTED = "PK-Sim 12.3.173 (ospsuite 12.4.5)"
@@ -355,8 +355,9 @@ def licenses_txt(prov: dict[str, Any], target: str = "janus") -> str:
             ]
     if target == "pksim":
         lines += [
-            "PK-Sim and the ospsuite R package (Open Systems Pharmacology Suite, GPL-2.0): the snapshot format is the",
-            "published, open source format of PK-Sim. No PK-Sim or ospsuite code is included in this file.",
+            "PK-Sim and the ospsuite R package (Open Systems Pharmacology Suite, GPL-2.0 with the",
+            "Suite's clarifying addendum): the snapshot format is their published, open source format.",
+            "No PK-Sim or ospsuite code is included in this file.",
             f"Load-tested with {PKSIM_TESTED}.",
             "",
         ]
@@ -396,7 +397,7 @@ def readme_txt(ps: ParameterSet, target: str) -> str:
                     "To load it in PK-Sim: import it as a project snapshot (File menu, see the PK-Sim documentation on",
                     "snapshots; menu wording may differ between versions). Command line, with the ospsuite R package:",
                     '  ospsuite::loadProjectFromSnapshot("pksim-compound.snapshot.json", output = "out")',
-                    "Open Systems Pharmacology tools are free and open source (GPL-2.0).",
+                    "Open Systems Pharmacology tools are free and open source (GPL-2.0 with a clarifying addendum).",
                 ]
                 if target == "pksim"
                 else []

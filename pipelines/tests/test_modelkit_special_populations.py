@@ -262,3 +262,28 @@ def test_aggregate_csv_is_deterministic_and_counts_labels() -> None:
     assert (
         len(lines) == 2 and ",s2," in lines[1] and lines[1].count(",2,") >= 1
     )  # latest label quoted, n_labels = 2
+
+
+def test_the_job_accounts_for_every_pair_and_every_excluded_label() -> None:
+    """A real run failed twice in this check; the unit is a candidate pair or an excluded label."""
+    from datetime import UTC, datetime
+
+    from janus_pipelines.core.runner import RawInput
+    from janus_pipelines.core.validation import check_accounting
+
+    payload = job.Payload()
+    label = SpLabel(
+        "s1", "1", "2025-01-01", "drugx",
+        {"geriatric_use": ("The AUC in elderly subjects was 30% higher than in young subjects.",)},
+    )  # fmt: skip
+    job.read_one(label, payload)
+    job.read_one(
+        SpLabel("s2", "1", "2025-01-01", "drugx", {"geriatric_use": ("Nothing numeric.",)}), payload
+    )
+    payload.counts["labels_read"] = 5
+    payload.counts["skip_not_a_pool_drug"] = 3
+    raw = RawInput(payload, (), "x", datetime(2026, 1, 1, tzinfo=UTC), "2026-01-01")
+    result = job.ModelkitSpecialPopulationsJob().parse(raw)
+    check_accounting(result.input_rows, result.n_output, result.excluded)
+    assert result.n_output >= 1 and result.excluded["matched_label_without_a_candidate"] == 1
+    assert result.metrics["labels_read"] == 5 and result.metrics["confirmed"] >= 1

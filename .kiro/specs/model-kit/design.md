@@ -213,7 +213,7 @@ text stays "Expert review has not yet been done".
   PK-Sim fills what a snapshot leaves out with its own defaults (they are PK-Sim's, not ours), and the total clearance of the
   evidence is not assigned to the hepatic or renal clearance process because that would be an assumption (PK-Sim then also needs
   body weight, fraction unbound and the blood/plasma ratio). The format is the open source snapshot schema of PK-Sim
-  (`PKSim.Core.Snapshots`, GPL-2.0); the keys used are tested against the property names of the classes.
+  (`PKSim.Core.Snapshots`, GPL-2.0 with the Suite's clarifying addendum; ospsuite and rSharp are GPL-2.0 too); the keys used are tested against the property names of the classes.
 - **DP-M28 PK-Sim check in CI.** Workflow `modelkit-pksim.yml` (path filtered, weekly and on demand, R image 4.6.1, .NET 8
   runtime from the distribution, ospsuite 12.4.5 and rSharp 1.2.3 from the project's GitHub release with sha256, cached): the export is
   loaded (`loadProjectFromSnapshot`), written back (`exportProjectToSnapshot`) and the compound's name, description and

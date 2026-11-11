@@ -213,8 +213,8 @@ def read_one(label: SpLabel, payload: Payload) -> None:
 
 
 def names_population(row: Mapping[str, Any]) -> bool:
-    """The quote itself names the population of its class (display rule, fixed in advance, PREREG addendum 3): a
-    statement whose class came only from a sub-section heading is kept in the run but not shown."""
+    """The quote itself names the population of its class (display rule fixed in advance): a
+    statement whose class came only from a sub-section heading is kept in the run, not shown."""
     return sp_a._POP[str(row["pop_class"])].search(str(row["quote"])) is not None  # pyright: ignore[reportPrivateUsage]
 
 
@@ -307,14 +307,15 @@ class ModelkitSpecialPopulationsJob(Job[Payload]):
             "reader_counts": dict(sorted(p.stats.counts.items())),
             "label_export_date": date,
         }
+        excluded = {
+            k.removeprefix("skip_"): v for k, v in sorted(p.counts.items()) if k.startswith("skip_")
+        }
         return ParseResult(
             rows=rows,
-            input_rows=p.counts["labels_read"],
-            excluded={
-                k.removeprefix("skip_"): v
-                for k, v in sorted(p.counts.items())
-                if k.startswith("skip_")
-            },
+            # Accounting unit: a candidate pair (an output row) or an excluded label. The number
+            # of label records read is in the metrics (`labels_read`).
+            input_rows=len(rows) + sum(excluded.values()),
+            excluded=excluded,
             schema=SchemaReport(),
             metrics=metrics,
         )
