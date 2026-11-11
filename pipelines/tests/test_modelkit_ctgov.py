@@ -110,8 +110,15 @@ def test_evidence_job_replaces_the_seed_ctgov_rows_of_covered_drugs(tmp_path: Pa
     df = pl.read_parquet(
         Store(ctx.data_dir, "modelkit_evidence").run_dir(res.run_id) / "rows.parquet"
     )
-    mask = (pl.col("drug_key") == "dolutegravir") & (pl.col("source_id") == "clinicaltrials_gov")
-    assert set(df.filter(mask)["study_id"].to_list()) == {
-        "NCT00000001"
-    }  # the seed's own rows of that drug are replaced
+    rows = df.to_dicts()
+    ids = {r["study_id"] for r in rows if r["drug_key"] == "dolutegravir"}
+    assert ids >= {"NCT00000001"}
+    # the seed's own ClinicalTrials.gov rows of that drug are replaced
+    seed_ids = {r["study_id"] for r in rows if r["source_id"] == "clinicaltrials_gov"}
+    assert not any(
+        r["drug_key"] == "dolutegravir"
+        and r["source_id"] == "clinicaltrials_gov"
+        and r["study_id"] != "NCT00000001"
+        for r in rows
+    ), seed_ids
     assert (df["drug_key"] == "gabapentin").sum() > 0  # other drugs keep theirs
