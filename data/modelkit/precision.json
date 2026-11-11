@@ -1,0 +1,10 @@
+{
+  "measured_on": "2026-11-11",
+  "n": 92,
+  "correct": 56,
+  "n_conservative": 100,
+  "correct_conservative": 56,
+  "formulation_n": 104,
+  "formulation_correct": 101,
+  "target": 0.9
+}

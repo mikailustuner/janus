@@ -1,0 +1,1064 @@
+brand,drug_key,form_class,route
+abigale,estradiol,fixed_dose_combination,oral
+abigale lo,estradiol,fixed_dose_combination,oral
+abilify,aripiprazole,immediate_release,oral
+abilify asimtufii,aripiprazole,modified_release,
+abirtega,abiraterone,immediate_release,
+abraxane,paclitaxel,solution,iv
+acanya,clindamycin,fixed_dose_combination,
+accucaine,lidocaine,other_route,
+acetadote,acetylcysteine,solution,iv
+aciphex,rabeprazole,modified_release,oral
+acticlate cap,doxycycline,immediate_release,oral
+activella,estradiol,fixed_dose_combination,oral
+actoplus met,metformin,fixed_dose_combination,oral
+acuvail,ketorolac,other_route,
+adempas,riociguat,immediate_release,oral
+advair diskus,fluticasone_propionate,fixed_dose_combination,
+advair hfa,fluticasone_propionate,fixed_dose_combination,
+afinitor,everolimus,immediate_release,oral
+aflora,ascorbic_acid,fixed_dose_combination,oral
+aggrastat,tirofiban,solution,iv
+airduo respiclick,fluticasone_propionate,fixed_dose_combination,
+airsupra,budesonide,fixed_dose_combination,
+ak fluor,fluorescein,solution,iv
+akeega,abiraterone,fixed_dose_combination,oral
+akeega,niraparib,fixed_dose_combination,oral
+akten,lidocaine,other_route,
+akynzeo,palonosetron,fixed_dose_combination,
+alecensa,alectinib,immediate_release,oral
+alimta,pemetrexed,solution,iv
+altafluor,fluorescein,fixed_dose_combination,
+alunbrig,brigatinib,immediate_release,oral
+alvesco,ciclesonide,other_route,
+ameluz,aminolevulinic_acid,other_route,
+amethyst,estradiol,fixed_dose_combination,oral
+amethyst,levonorgestrel,fixed_dose_combination,oral
+ampyra,dalfampridine,modified_release,oral
+amrix,cyclobenzaprine,modified_release,oral
+amzeeq,minocycline,other_route,
+anafranil,clomipramine,immediate_release,oral
+ancobon,flucytosine,immediate_release,oral
+angeliq,estradiol,fixed_dose_combination,oral
+annovera,estradiol,fixed_dose_combination,
+anoro ellipta,umeclidinium,fixed_dose_combination,
+aponvie,aprepitant,solution,iv
+aptiom,eslicarbazepine,immediate_release,oral
+arazlo,tazarotene,other_route,
+arbli,losartan,solution,oral
+arikayce,amikacin,other_route,
+aristada,aripiprazole,modified_release,
+aristada initio,aripiprazole,modified_release,
+arixtra,fondaparinux,other_route,
+arnuity ellipta,fluticasone_furoate,other_route,
+aromasin,exemestane,immediate_release,oral
+arthrotec,diclofenac,fixed_dose_combination,oral
+arynta,lisdexamfetamine,solution,oral
+asclera,polidocanol,solution,iv
+ascor,ascorbic_acid,solution,iv
+asmanex,mometasone_furoate,other_route,
+asmanex hfa,mometasone_furoate,other_route,
+astagraf xl,tacrolimus,modified_release,oral
+atacand,candesartan,immediate_release,oral
+atacand hct,candesartan,fixed_dose_combination,oral
+atacand hct,hydrochlorothiazide,fixed_dose_combination,oral
+atoncy,atomoxetine,solution,oral
+atorvaliq,atorvastatin,solution,oral
+atropen auto injector,atropine,other_route,
+atrovent hfa,ipratropium,other_route,
+atzumi,dihydroergotamine,other_route,
+aubagio,leflunomide_metabolite_a_771726,immediate_release,oral
+augmentin,amoxicillin,fixed_dose_combination,oral
+augmentin es 600,amoxicillin,fixed_dose_combination,oral
+aurlumyn,iloprost,solution,iv
+aurovela 1.5/30,estradiol,fixed_dose_combination,oral
+aurovela 1/20,estradiol,fixed_dose_combination,oral
+avaclyr,acyclovir,other_route,
+avalide,hydrochlorothiazide,fixed_dose_combination,oral
+avalide,irbesartan,fixed_dose_combination,oral
+aveed,testosterone,other_route,
+avgemsi,gemcitabine,solution,iv
+avopef,etoposide,solution,iv
+avycaz,ceftazidime,fixed_dose_combination,iv
+axtle,pemetrexed,solution,iv
+azilect,rasagiline,immediate_release,oral
+azmiro,testosterone,other_route,
+azstarys,dexmethylphenidate,fixed_dose_combination,oral
+bactrim,trimethoprim,fixed_dose_combination,oral
+bactrim ds,trimethoprim,fixed_dose_combination,oral
+bafiertam,monomethyl_fumarate,immediate_release,oral
+balversa,erdafitinib,immediate_release,oral
+beizray,docetaxel,solution,iv
+belbuca,buprenorphine,other_route,
+beleodaq,belinostat,solution,iv
+belrapzo,bendamustine,solution,iv
+belsomra,suvorexant,immediate_release,oral
+bendeka,bendamustine,solution,iv
+benicar,olmesartan,immediate_release,oral
+benicar hct,hydrochlorothiazide,fixed_dose_combination,oral
+benicar hct,olmesartan,fixed_dose_combination,oral
+bethkis,tobramycin,other_route,
+betimol,timolol,other_route,
+bevespi aerosphere,formoterol,fixed_dose_combination,
+bicillin c r 900/300,penicillin_g,fixed_dose_combination,
+bicillin cr,penicillin_g,fixed_dose_combination,
+bicillin l a,penicillin_g,other_route,
+bidil,hydralazine,fixed_dose_combination,oral
+bidil,isosorbide_dinitrate,fixed_dose_combination,oral
+biktarvy,emtricitabine,fixed_dose_combination,oral
+biktarvy,tenofovir,fixed_dose_combination,oral
+biorphen,phenylephrine,solution,iv
+bloxiverz,neostigmine,solution,iv
+bondlido,lidocaine,modified_release,
+boostervite,ascorbic_acid,fixed_dose_combination,oral
+boruzu,bortezomib,other_route,
+bosulif,bosutinib,immediate_release,oral
+bp vit 3,icosapent,fixed_dose_combination,oral
+braftovi,encorafenib,immediate_release,oral
+brekiya,dihydroergotamine,other_route,
+breo ellipta,fluticasone_furoate,fixed_dose_combination,
+brevibloc,esmolol,solution,iv
+brevital sodium,methohexital,other_route,
+breyna,budesonide,fixed_dose_combination,
+breyna,formoterol,fixed_dose_combination,
+breztri,budesonide,fixed_dose_combination,
+breztri,formoterol,fixed_dose_combination,
+bridion,sugammadex,solution,iv
+brilinta,ticagrelor,immediate_release,oral
+brisdelle,paroxetine,immediate_release,oral
+brixadi,buprenorphine,other_route,
+bruselix cream,lidocaine,other_route,
+bruselix gel,lidocaine,other_route,
+brynovin,sitagliptin,solution,oral
+bumex,bumetanide,immediate_release,oral
+bupivacine hcl,bupivacaine,other_route,
+bupivicaine hydrochloride,bupivacaine,other_route,
+butal/apap/caff,caffeine,fixed_dose_combination,oral
+butrans,buprenorphine,modified_release,
+byfavo,remimazolam,solution,iv
+bynfezia pen,octreotide,other_route,
+bystolic,nebivolol,immediate_release,oral
+cabometyx,cabozantinib,immediate_release,oral
+cabtreo,clindamycin,fixed_dose_combination,
+cadira compliant blood stat,lidocaine,fixed_dose_combination,
+caduet,amlodipine,fixed_dose_combination,oral
+caduet,atorvastatin,fixed_dose_combination,oral
+cafergot,caffeine,fixed_dose_combination,oral
+caldolor,ibuprofen,solution,iv
+calquence,acalabrutinib,immediate_release,oral
+camcevi,leuprolide,other_route,
+camcevi etm,leuprolide,other_route,
+camptosar,irinotecan,solution,iv
+cancidas,caspofungin,solution,iv
+caplyta,lumateperone,immediate_release,oral
+carbamazepin,carbamazepine,modified_release,oral
+carbatrol,carbamazepine,modified_release,oral
+carbocaine,mepivacaine,other_route,
+cardene iv,nicardipine,solution,iv
+cardura,doxazosin,immediate_release,oral
+cardura xl,doxazosin,modified_release,oral
+carnitor sf,carnitine_l,solution,oral
+cartia xt,diltiazem,modified_release,oral
+caverject,alprostadil,other_route,
+caverject impulse,alprostadil,other_route,
+cefotan,cefotetan,other_route,
+celebrex,celecoxib,immediate_release,oral
+cequa,cyclosporine,other_route,
+cerdelga,eliglustat,immediate_release,oral
+cerebyx,fosphenytoin,other_route,
+chromagen,ascorbic_acid,fixed_dose_combination,oral
+cimduo,lamivudine,fixed_dose_combination,oral
+cimduo,tenofovir,fixed_dose_combination,oral
+cinvanti,aprepitant,solution,iv
+citranatal 90 dha,ascorbic_acid,fixed_dose_combination,oral
+cleocin,clindamycin,other_route,
+cleocin hydrochloride,clindamycin,immediate_release,oral
+cleocin phosphate,clindamycin,other_route,
+cleocin t,clindamycin,other_route,
+cleviprex,clevidipine,solution,iv
+cligavyx,fulvestrant,other_route,
+clindacin,clindamycin,other_route,
+clindacin etz,clindamycin,other_route,
+clindacin p,clindamycin,other_route,
+clindagel,clindamycin,other_route,
+clindesse,clindamycin,other_route,
+clozaril,clozapine,immediate_release,oral
+cobalefol,ascorbic_acid,fixed_dose_combination,oral
+cobenfy,trospium,fixed_dose_combination,oral
+colcrys,colchicine,immediate_release,oral
+collavera,lidocaine,other_route,
+coly mycin m,colistimethate,other_route,
+combigan,timolol,fixed_dose_combination,
+combivent respimat,ipratropium,fixed_dose_combination,
+combivir,lamivudine,fixed_dose_combination,oral
+combivir,zidovudine,fixed_dose_combination,oral
+combogesic,ibuprofen,fixed_dose_combination,oral
+combogesic iv,ibuprofen,fixed_dose_combination,iv
+cometriq,cabozantinib,immediate_release,oral
+complera,emtricitabine,fixed_dose_combination,oral
+complera,tenofovir,fixed_dose_combination,oral
+concept dha,ascorbic_acid,fixed_dose_combination,oral
+concept ob,ascorbic_acid,fixed_dose_combination,oral
+concerta,dexmethylphenidate,modified_release,oral
+conjupri,amlodipine,immediate_release,oral
+contepo,fosfomycin,solution,iv
+contrave extended release,naltrexone,fixed_dose_combination,oral
+conzip,tramadol,modified_release,oral
+copiktra,duvelisib,immediate_release,oral
+coreg,carvedilol,immediate_release,oral
+coreg cr,carvedilol,modified_release,oral
+cosopt,timolol,fixed_dose_combination,
+cosopt pf,timolol,fixed_dose_combination,
+cotellic,cobimetinib,immediate_release,oral
+coxanto,oxaprozin,immediate_release,oral
+cozaar,losartan,immediate_release,oral
+crestor,rosuvastatin,immediate_release,oral
+crexont,levodopa,fixed_dose_combination,oral
+crinone,progesterone,other_route,
+cyclomydril,phenylephrine,fixed_dose_combination,
+cycloset,bromocriptine,immediate_release,oral
+cystadrops,cysteamine,other_route,
+cystagon,cysteamine,immediate_release,oral
+cystaran,cysteamine,other_route,
+daliresp,roflumilast,immediate_release,oral
+dalvance,dalbavancin,solution,iv
+dapzura rt,daptomycin,solution,iv
+daurismo,glasdegib,immediate_release,oral
+davimet,ascorbic_acid,fixed_dose_combination,oral
+davimet m,ascorbic_acid,fixed_dose_combination,oral
+davimet with fluoride,ascorbic_acid,fixed_dose_combination,oral
+davimet with iron,ascorbic_acid,fixed_dose_combination,oral
+daytrana,dexmethylphenidate,modified_release,
+delestrogen,estradiol,other_route,
+delstrigo,lamivudine,fixed_dose_combination,oral
+delstrigo,tenofovir,fixed_dose_combination,oral
+denavir,penciclovir,other_route,
+depakote,valproic_acid,modified_release,oral
+depakote er,valproic_acid,modified_release,oral
+depakote sprinkles,valproic_acid,immediate_release,oral
+depo provera,medroxyprogesterone_acetate,other_route,
+depo subq provera,medroxyprogesterone_acetate,other_route,
+dermacinrx lidotral,lidocaine,other_route,
+descovy,emtricitabine,fixed_dose_combination,oral
+descovy,tenofovir,fixed_dose_combination,oral
+desmoda,desmopressin,solution,oral
+detrol,tolterodine,immediate_release,oral
+dexedrine spansule,amphetamine,modified_release,oral
+dhivy,levodopa,fixed_dose_combination,oral
+diabecin hr,lidocaine,fixed_dose_combination,
+dialyvite,ascorbic_acid,fixed_dose_combination,oral
+dialyvite 5000,ascorbic_acid,fixed_dose_combination,oral
+diatrol,ascorbic_acid,fixed_dose_combination,oral
+dicloenac sodium and misoprostol dr,diclofenac,fixed_dose_combination,oral
+diclona,diclofenac,fixed_dose_combination,
+diclona,lidocaine,fixed_dose_combination,
+diclona gel,diclofenac,fixed_dose_combination,
+diclona gel,lidocaine,fixed_dose_combination,
+diclox patch 30ct,diclofenac,modified_release,
+diovan,valsartan,immediate_release,oral
+diovan hct,hydrochlorothiazide,fixed_dose_combination,oral
+diovan hct,valsartan,fixed_dose_combination,oral
+diprivan,propofol,solution,iv
+diskets,methadone,immediate_release,oral
+docivyx,docetaxel,solution,iv
+dolishale,estradiol,fixed_dose_combination,oral
+dolishale,levonorgestrel,fixed_dose_combination,oral
+dolobid,diflunisal,immediate_release,oral
+donnatal,atropine,fixed_dose_combination,oral
+donnatal,phenobarbital,fixed_dose_combination,oral
+donnatal,scopolamine,fixed_dose_combination,oral
+doptelet,avatrombopag,immediate_release,oral
+doryx mpc,doxycycline,modified_release,oral
+dotti,estradiol,modified_release,
+dovato,dolutegravir,fixed_dose_combination,oral
+dovato,lamivudine,fixed_dose_combination,oral
+doxy 100,doxycycline,solution,iv
+doxycyclate hyclate,doxycycline,immediate_release,oral
+drizalma sprinkle,duloxetine,modified_release,oral
+dry eye test,fluorescein,other_route,
+duaklir pressair,aclidinium,fixed_dose_combination,
+duaklir pressair,formoterol,fixed_dose_combination,
+duetact,glimepiride,fixed_dose_combination,oral
+dulera,formoterol,fixed_dose_combination,
+dulera,mometasone_furoate,fixed_dose_combination,
+duobrii,tazarotene,fixed_dose_combination,
+duopa,levodopa,fixed_dose_combination,
+duraclon,clonidine,other_route,
+duramorph,morphine,other_route,
+durysta,bimatoprost,modified_release,
+dyanavel xr,amphetamine,modified_release,oral
+dymista,azelastine,fixed_dose_combination,
+dymista,fluticasone_propionate,fixed_dose_combination,
+e.e.s 400,erythromycin,immediate_release,oral
+edarbyclor,chlorthalidone,fixed_dose_combination,oral
+edluar,zolpidem,immediate_release,oral
+elepsia xr 1000 mg,levetiracetam,modified_release,oral
+elepsia xr 1500 mg,levetiracetam,modified_release,oral
+elestrin,estradiol,other_route,
+eligard,leuprolide,modified_release,
+eliquis sprinkle,apixaban,immediate_release,oral
+ellence,doxorubicin,solution,iv
+eluryng,estradiol,fixed_dose_combination,
+eluryng,etonogestrel,fixed_dose_combination,
+emblaveo,aztreonam,fixed_dose_combination,iv
+embriva,ascorbic_acid,fixed_dose_combination,oral
+emend,fosaprepitant,solution,iv
+emrosi,minocycline,immediate_release,oral
+emsam,selegiline,modified_release,
+enbumyst,bumetanide,other_route,
+endocet,oxycodone,fixed_dose_combination,oral
+endometrin,progesterone,modified_release,
+enilloring,estradiol,fixed_dose_combination,
+enilloring,etonogestrel,fixed_dose_combination,
+entresto,valsartan,fixed_dose_combination,oral
+envarsus xr,tacrolimus,modified_release,oral
+eohilia,budesonide,solution,oral
+epidiolex,cannabidiol,solution,oral
+eprontia,topiramate,solution,oral
+equetro,carbamazepine,modified_release,oral
+erivedge,vismodegib,immediate_release,oral
+erleada,apalutamide,immediate_release,oral
+ery ped,erythromycin,solution,oral
+esbriet,pirfenidone,immediate_release,oral
+estring,estradiol,modified_release,
+ethyol,amifostine,solution,iv
+etyqa,estradiol,fixed_dose_combination,oral
+evamist,estradiol,other_route,
+evekeo,amphetamine,immediate_release,oral
+evista,raloxifene,immediate_release,oral
+evoxac,cevimeline,immediate_release,oral
+exforge,amlodipine,fixed_dose_combination,oral
+exforge,valsartan,fixed_dose_combination,oral
+exforge hct,amlodipine,fixed_dose_combination,oral
+exforge hct,hydrochlorothiazide,fixed_dose_combination,oral
+exforge hct,valsartan,fixed_dose_combination,oral
+exparel,bupivacaine,modified_release,
+fabior,tazarotene,other_route,
+fanapt,iloperidone,immediate_release,oral
+fareston,toremifene,immediate_release,oral
+farxiga,dapagliflozin,immediate_release,oral
+faslodex,fulvestrant,other_route,
+favlyxa,fluorouracil,solution,iv
+felbatol,felbamate,immediate_release,oral
+felopdipine,felodipine,modified_release,oral
+femring,estradiol,modified_release,
+fenopron tm,fenoprofen,immediate_release,oral
+fensolvi,leuprolide,modified_release,
+ferralet 90,ascorbic_acid,fixed_dose_combination,oral
+fetroja,cefiderocol,solution,iv
+fetzima,levomilnacipran,modified_release,oral
+fexmid,cyclobenzaprine,immediate_release,oral
+finazol,ascorbic_acid,fixed_dose_combination,oral
+fioricet,caffeine,fixed_dose_combination,oral
+firazyr,icatibant,other_route,
+firdapse,amifampridine,immediate_release,oral
+flavalta,lidocaine,fixed_dose_combination,
+flector,diclofenac,modified_release,
+fleqsuvy,baclofen,solution,oral
+floravita mini,ascorbic_acid,fixed_dose_combination,oral
+floriva,ascorbic_acid,fixed_dose_combination,oral
+flotrex,ascorbic_acid,fixed_dose_combination,oral
+flovent diskus,fluticasone_propionate,other_route,
+flovent hfa,fluticasone_propionate,other_route,
+fluorescite,fluorescein,other_route,
+fluticasone,fluticasone_propionate,other_route,
+focalin,dexmethylphenidate,immediate_release,oral
+focalin xr,dexmethylphenidate,modified_release,oral
+focinvez,fosaprepitant,solution,iv
+folartex,ascorbic_acid,fixed_dose_combination,oral
+folaten,ascorbic_acid,fixed_dose_combination,oral
+folcyteine,acetylcysteine,fixed_dose_combination,oral
+foliflex,ascorbic_acid,fixed_dose_combination,oral
+folitin z,ascorbic_acid,fixed_dose_combination,oral
+folivex,ascorbic_acid,fixed_dose_combination,oral
+folixia,ascorbic_acid,fixed_dose_combination,oral
+folyra,ascorbic_acid,fixed_dose_combination,oral
+fosamax,alendronate,immediate_release,oral
+fosamax plus d,alendronate,fixed_dose_combination,oral
+frindovyx,cyclophosphamide,solution,iv
+furoscix,furosemide,other_route,
+fyarro,sirolimus,solution,iv
+fyavolv,estradiol,fixed_dose_combination,oral
+fyremadel,ganirelix,other_route,
+gabarone,gabapentin,immediate_release,oral
+gablofen,baclofen,other_route,
+galafold,migalastat,immediate_release,oral
+gengraf,cyclosporine,immediate_release,oral
+gentak,gentamicin,other_route,
+genvoya,emtricitabine,fixed_dose_combination,oral
+genvoya,tenofovir,fixed_dose_combination,oral
+gestyra,ascorbic_acid,fixed_dose_combination,oral
+gilenya,fingolimod,immediate_release,oral
+gimoti,metoclopramide,other_route,
+gleevec,imatinib,immediate_release,oral
+gloperba,colchicine,solution,oral
+glostrips,fluorescein,other_route,
+glucotrol xl,glipizide,modified_release,oral
+glumetza,metformin,modified_release,oral
+glydo,lidocaine,other_route,
+glyxambi,empagliflozin,fixed_dose_combination,oral
+glyxambi,linagliptin,fixed_dose_combination,oral
+gobarden,bendamustine,solution,iv
+gocovri,amantadine,modified_release,oral
+goprelto,cocaine,other_route,
+grafapex,treosulfan,solution,iv
+gralise,gabapentin,immediate_release,oral
+granisol,granisetron,solution,oral
+guna diur,hydrochlorothiazide,fixed_dose_combination,oral
+gwyn lo,estradiol,fixed_dose_combination,
+hailey 1.5/30,estradiol,fixed_dose_combination,oral
+halaven,eribulin,solution,iv
+harliku,nitisinone,immediate_release,oral
+hemiclor,chlorthalidone,immediate_release,oral
+hetlioz,tasimelteon,immediate_release,oral
+hetlioz lq,tasimelteon,solution,oral
+horizant,gabapentin,modified_release,oral
+hyftor,sirolimus,other_route,
+hyzaar,hydrochlorothiazide,fixed_dose_combination,oral
+hyzaar,losartan,fixed_dose_combination,oral
+ibrance,palbociclib,immediate_release,oral
+iclusig,ponatinib,immediate_release,oral
+idhifa,enasidenib,immediate_release,oral
+igalmi,dexmedetomidine,other_route,
+imkeldi,imatinib,solution,oral
+inbrija,levodopa,other_route,
+infumorph 200,morphine,other_route,
+infumorph 500,morphine,other_route,
+ingrezza,valbenazine,immediate_release,oral
+ingrezza sprinkle,valbenazine,immediate_release,oral
+inlexzo,gemcitabine,modified_release,
+inlyta,axitinib,immediate_release,oral
+innopran xl,propranolol,modified_release,oral
+inrebic,fedratinib,immediate_release,oral
+inspra,eplerenone,immediate_release,oral
+integra f,ascorbic_acid,fixed_dose_combination,oral
+integra plus,ascorbic_acid,fixed_dose_combination,oral
+invanz,ertapenem,other_route,
+invokamet,canagliflozin,fixed_dose_combination,oral
+invokamet,metformin,fixed_dose_combination,oral
+invokamet xr,canagliflozin,fixed_dose_combination,oral
+invokamet xr,metformin,fixed_dose_combination,oral
+invokana,canagliflozin,immediate_release,oral
+iomeron,iomeprol,other_route,
+iomervu,iomeprol,other_route,
+ipratroprium bromide,ipratropium,other_route,
+iressa,gefitinib,immediate_release,oral
+isosorbide,isosorbide_dinitrate,immediate_release,oral
+istalol,timolol,other_route,
+jakafi,ruxolitinib,immediate_release,oral
+jakafi xr,ruxolitinib,modified_release,oral
+jalyn,dutasteride,fixed_dose_combination,oral
+jalyn,tamsulosin,fixed_dose_combination,oral
+jantoven,warfarin,immediate_release,oral
+janumet,metformin,fixed_dose_combination,oral
+janumet,sitagliptin,fixed_dose_combination,oral
+janumet xr,metformin,fixed_dose_combination,oral
+janumet xr,sitagliptin,fixed_dose_combination,oral
+jardiance,empagliflozin,immediate_release,oral
+javadin,clonidine,solution,oral
+jentadueto,linagliptin,fixed_dose_combination,oral
+jentadueto,metformin,fixed_dose_combination,oral
+jentadueto xr,linagliptin,fixed_dose_combination,oral
+jentadueto xr,metformin,fixed_dose_combination,oral
+jinteli,estradiol,fixed_dose_combination,oral
+jornay pm extended release,dexmethylphenidate,immediate_release,oral
+juluca,dolutegravir,fixed_dose_combination,oral
+junel 21 day,estradiol,fixed_dose_combination,oral
+junel fe,estradiol,fixed_dose_combination,oral
+juxtapid,lomitapide,immediate_release,oral
+jylamvo,methotrexate,solution,oral
+jynarque,tolvaptan,immediate_release,oral
+kaletra,ritonavir,fixed_dose_combination,oral
+kapspargo,metoprolol,modified_release,oral
+katerzia,amlodipine,solution,oral
+kazano,alogliptin,fixed_dose_combination,oral
+kazano,metformin,fixed_dose_combination,oral
+kenalog 10,triamcinolone_acetonide,other_route,
+kenalog 40,triamcinolone_acetonide,other_route,
+kenalog 80,triamcinolone_acetonide,other_route,
+kengreal,cangrelor,solution,iv
+keppra xr,levetiracetam,modified_release,oral
+ketalar,esketamine,other_route,
+ketrolac tromethamine,ketorolac,other_route,
+khapzory,folinic_acid,solution,iv
+kimyrsa,oritavancin,solution,iv
+kisqali,ribociclib,immediate_release,oral
+kitabis pak,tobramycin,other_route,
+kloxxado,naloxone,other_route,
+korlym,mifepristone,immediate_release,oral
+kourzeq,triamcinolone_acetonide,other_route,
+kyleena,levonorgestrel,other_route,
+kyprolis,carfilzomib,solution,iv
+lamictal xr,lamotrigine,modified_release,oral
+lasix,furosemide,immediate_release,oral
+lasix onyu,furosemide,other_route,
+latisse,bimatoprost,other_route,
+lentocilin,penicillin_g,other_route,
+lescol xl,fluvastatin,modified_release,oral
+letairis,ambrisentan,immediate_release,oral
+lexapro,citalopram,immediate_release,oral
+lexiscan,regadenoson,solution,iv
+librax,chlordiazepoxide,fixed_dose_combination,oral
+licart,diclofenac,modified_release,
+lidexa,lidocaine,other_route,
+lidexagel 5%,lidocaine,other_route,
+lido bdk,lidocaine,fixed_dose_combination,
+lidocan,lidocaine,modified_release,
+lidocan iii,lidocaine,modified_release,
+lidocan iv,lidocaine,modified_release,
+lidocan v,lidocaine,modified_release,
+lidocan vi,lidocaine,modified_release,
+lidocan vii,lidocaine,modified_release,
+lidocort,lidocaine,fixed_dose_combination,
+lidoderm,lidocaine,modified_release,
+lidogel,lidocaine,other_route,
+lidorex,lidocaine,other_route,
+lidoryx 5%,lidocaine,other_route,
+lidospra,lidocaine,other_route,
+lidothol,lidocaine,fixed_dose_combination,
+lidothol es,lidocaine,fixed_dose_combination,
+lidothol es patch,lidocaine,fixed_dose_combination,
+lidothol gel,lidocaine,fixed_dose_combination,
+lidothol patch,lidocaine,fixed_dose_combination,
+lidotral 3.88 percent plus hydrocortisone 1 percent cream,lidocaine,fixed_dose_combination,
+lidotral 3.88% roll on,lidocaine,other_route,
+lidotral 5 percent and hydrocortisone 1 percent with peptides and arnica,lidocaine,fixed_dose_combination,
+lidotral 5 percent roll on gel,lidocaine,other_route,
+lidotral 5% gel,lidocaine,other_route,
+lidotral five percent,lidocaine,other_route,
+lidotral five percent with menthol,lidocaine,fixed_dose_combination,
+lidotral two percent,lidocaine,other_route,
+lidotran,lidocaine,other_route,
+lidovara,lidocaine,other_route,
+lidox 5 patch,lidocaine,modified_release,
+lignospan forte,lidocaine,fixed_dose_combination,
+lignospan standard,lidocaine,fixed_dose_combination,
+likmez,metronidazole,solution,oral
+liletta,levonorgestrel,other_route,
+lipitor,atorvastatin,immediate_release,oral
+livalo,pitavastatin,immediate_release,oral
+lm plus relief,lidocaine,fixed_dose_combination,
+lodoco,colchicine,immediate_release,oral
+loestrin 21 day,estradiol,fixed_dose_combination,oral
+lofena,diclofenac,immediate_release,oral
+lomotil,atropine,fixed_dose_combination,oral
+lopreeza,estradiol,fixed_dose_combination,oral
+lorbrena,lorlatinib,immediate_release,oral
+loreev xr,lorazepam,modified_release,oral
+losortan potassium,losartan,immediate_release,oral
+lotensin hct,hydrochlorothiazide,fixed_dose_combination,oral
+luizza 1.5/30,estradiol,fixed_dose_combination,oral
+luizza 1/20,estradiol,fixed_dose_combination,oral
+lumavex,ascorbic_acid,fixed_dose_combination,oral
+lumigan,bimatoprost,other_route,
+lunatal dha,ascorbic_acid,fixed_dose_combination,oral
+lunavira,ascorbic_acid,fixed_dose_combination,oral
+lybalvi,olanzapine,fixed_dose_combination,oral
+lydexa 4.12%,lidocaine,other_route,
+lyllana,estradiol,modified_release,
+lynparza,olaparib,immediate_release,oral
+lyrica cr,pregabalin,modified_release,oral
+m natal plus,ascorbic_acid,fixed_dose_combination,oral
+malarone,atovaquone,fixed_dose_combination,oral
+marcaine spinal,bupivacaine,other_route,
+marcaine with epinephrine,bupivacaine,fixed_dose_combination,
+marvona 25 suik,bupivacaine,other_route,
+marvona suik,bupivacaine,other_route,
+matervia,ascorbic_acid,fixed_dose_combination,oral
+matzim la,diltiazem,modified_release,oral
+mavenclad,cladribine,immediate_release,oral
+maxalt,rizatriptan,immediate_release,oral
+mayzent,siponimod,immediate_release,oral
+medroxyprogesterone,medroxyprogesterone_acetate,immediate_release,oral
+mektovi,binimetinib,immediate_release,oral
+menostar,estradiol,modified_release,
+metadate cd,dexmethylphenidate,modified_release,oral
+methadose,methadone,solution,oral
+methadose dispersible,methadone,immediate_release,oral
+methadose sugar free,methadone,solution,oral
+methylin,dexmethylphenidate,solution,oral
+migergot,caffeine,fixed_dose_combination,
+mimvey,estradiol,fixed_dose_combination,oral
+minivelle,estradiol,modified_release,
+minovia mini,ascorbic_acid,fixed_dose_combination,oral
+mirabgeorn,mirabegron,modified_release,oral
+mirexa mini,ascorbic_acid,fixed_dose_combination,oral
+mitigo,morphine,other_route,
+mivara mini,ascorbic_acid,fixed_dose_combination,oral
+motegrity,prucalopride,immediate_release,oral
+motofen,atropine,fixed_dose_combination,oral
+motpoly xr,lacosamide,modified_release,oral
+movantik,naloxegol,immediate_release,oral
+mozobil,plerixafor,other_route,
+ms contin,morphine,modified_release,oral
+mulpleta,lusutrombopag,immediate_release,oral
+multaq,dronedarone,immediate_release,oral
+multi vitamin drops with fluoride and iron,ascorbic_acid,fixed_dose_combination,oral
+multi vitamin with fluoride,ascorbic_acid,fixed_dose_combination,oral
+multitam,ascorbic_acid,fixed_dose_combination,oral
+multitol m,ascorbic_acid,fixed_dose_combination,oral
+multivitamin,ascorbic_acid,fixed_dose_combination,oral
+multivitamin with fluoride,ascorbic_acid,fixed_dose_combination,oral
+mycapssa,octreotide,modified_release,oral
+mydayis,amphetamine,fixed_dose_combination,oral
+myfembree,estradiol,fixed_dose_combination,oral
+myrbetriq,mirabegron,modified_release,oral
+nalocet,oxycodone,fixed_dose_combination,oral
+namzaric,memantine,fixed_dose_combination,oral
+naprelan,naproxen,modified_release,oral
+naropin,ropivacaine,other_route,
+natesto nasal gel,testosterone,other_route,
+navitrux,fosaprepitant,solution,iv
+nayzilam,midazolam,other_route,
+nebupent,pentamidine,other_route,
+neoprofen,ibuprofen,solution,iv
+nerlynx,neratinib,immediate_release,oral
+nesina,alogliptin,immediate_release,oral
+neuac,clindamycin,fixed_dose_combination,
+neurozyl,lidocaine,other_route,
+nexiclon xr,clonidine,modified_release,oral
+nexium,esomeprazole,modified_release,oral
+nexletol,bempedoic_acid,immediate_release,oral
+nexlizet,bempedoic_acid,fixed_dose_combination,oral
+nexplanon,etonogestrel,modified_release,
+nexterone,amiodarone,solution,iv
+nicotrol,nicotine,other_route,
+niferex,ascorbic_acid,fixed_dose_combination,oral
+ninlaro,ixazomib,immediate_release,oral
+nitro bid,nitroglycerin,other_route,
+nitro dur,nitroglycerin,modified_release,
+nitro time,nitroglycerin,immediate_release,oral
+nitrostat,nitroglycerin,other_route,
+nityr,nitisinone,immediate_release,oral
+norgesic,caffeine,fixed_dose_combination,oral
+norgesic forte,caffeine,fixed_dose_combination,oral
+noritate,metronidazole,other_route,
+norixa mini,ascorbic_acid,fixed_dose_combination,oral
+norliqva,amlodipine,solution,oral
+norpace,disopyramide,immediate_release,oral
+northera,droxidopa,immediate_release,oral
+nortrel 21 day,estradiol,fixed_dose_combination,oral
+norvasc,amlodipine,immediate_release,oral
+norvexa mini,ascorbic_acid,fixed_dose_combination,oral
+nourianz,istradefylline,immediate_release,oral
+nuedexta,quinidine,fixed_dose_combination,oral
+numbrino,cocaine,other_route,
+numyra,lidocaine,other_route,
+nutralyn,ascorbic_acid,fixed_dose_combination,oral
+nuvaring,estradiol,fixed_dose_combination,
+nuvaring,etonogestrel,fixed_dose_combination,
+nuvessa,metronidazole,other_route,
+nuvexa,lidocaine,other_route,
+nymalize,nimodipine,solution,oral
+ocuflox,levofloxacin,other_route,
+odefsey,emtricitabine,fixed_dose_combination,oral
+odefsey,tenofovir,fixed_dose_combination,oral
+odomzo,sonidegib,immediate_release,oral
+olfoxacin otic soln,levofloxacin,other_route,
+omcazio,cabozantinib,immediate_release,oral
+omidria,ketorolac,fixed_dose_combination,
+omidria,phenylephrine,fixed_dose_combination,
+omnaris,ciclesonide,other_route,
+onapgo,apomorphine,other_route,
+onexton,clindamycin,fixed_dose_combination,
+onivyde,irinotecan,solution,iv
+ontralfy,tizanidine,solution,oral
+onureg,azacitidine,immediate_release,oral
+onyda xr,clonidine,modified_release,oral
+opfolda,miglustat,immediate_release,oral
+opsumit,macitentan,immediate_release,oral
+opsynvi,macitentan,fixed_dose_combination,oral
+opsynvi,tadalafil,fixed_dose_combination,oral
+opvee,nalmefene,other_route,
+opzelura,ruxolitinib,other_route,
+oracea,doxycycline,immediate_release,oral
+oralone,triamcinolone_acetonide,other_route,
+oraqix,lidocaine,fixed_dose_combination,
+orbactiv,oritavancin,solution,iv
+orenitram,treprostinil,modified_release,oral
+orkambi,ivacaftor,fixed_dose_combination,oral
+orphengesic forte,caffeine,fixed_dose_combination,oral
+orudis,ketoprofen,immediate_release,oral
+oseni,alogliptin,fixed_dose_combination,oral
+osmitrol,mannitol,solution,iv
+osphena,ospemifene,immediate_release,oral
+otezla,apremilast,immediate_release,oral
+otrexup,methotrexate,other_route,
+oxaydo,oxycodone,immediate_release,oral
+oxytrol,oxybutynin,modified_release,
+ozobax ds,baclofen,solution,oral
+pacerone,amiodarone,immediate_release,oral
+parsabiv,etelcalcetide,solution,iv
+pemazyre,pemigatinib,immediate_release,oral
+pemfexy,pemetrexed,solution,iv
+pemrydi rtu,pemetrexed,solution,iv
+pentam 300,pentamidine,other_route,
+percocet,oxycodone,fixed_dose_combination,oral
+perforomist,formoterol,other_route,
+phenohytro,atropine,fixed_dose_combination,oral
+phenohytro,phenobarbital,fixed_dose_combination,oral
+phenohytro,scopolamine,fixed_dose_combination,oral
+phyrago,dasatinib,immediate_release,oral
+plaquenil,hydroxychloroquine,immediate_release,oral
+pliaglis,lidocaine,fixed_dose_combination,
+pnv dha,ascorbic_acid,fixed_dose_combination,oral
+pnv omega,ascorbic_acid,fixed_dose_combination,oral
+pnv omega,icosapent,fixed_dose_combination,oral
+pnv prenatol,ascorbic_acid,fixed_dose_combination,oral
+pnv select,ascorbic_acid,fixed_dose_combination,oral
+polocaine,mepivacaine,other_route,
+polocaine mpf,mepivacaine,other_route,
+posfrea,palonosetron,solution,iv
+pred forte,prednisolone,other_route,
+pred mild,prednisolone,other_route,
+pregablin,pregabalin,immediate_release,oral
+prempro,medroxyprogesterone_acetate,fixed_dose_combination,oral
+prenatal plus vitamins,ascorbic_acid,fixed_dose_combination,oral
+prenatal vitamins plus low iron,ascorbic_acid,fixed_dose_combination,oral
+prenate dha,ascorbic_acid,fixed_dose_combination,oral
+prenate elite,ascorbic_acid,fixed_dose_combination,oral
+prenate enhance,ascorbic_acid,fixed_dose_combination,oral
+prenate essential,ascorbic_acid,fixed_dose_combination,oral
+prenate essential,icosapent,fixed_dose_combination,oral
+prenate mini,ascorbic_acid,fixed_dose_combination,oral
+prenate pixie,ascorbic_acid,fixed_dose_combination,oral
+prenate restore,ascorbic_acid,fixed_dose_combination,oral
+prenatol m,ascorbic_acid,fixed_dose_combination,oral
+prenatrix,ascorbic_acid,fixed_dose_combination,oral
+prenatryl,ascorbic_acid,fixed_dose_combination,oral
+pretrate,ascorbic_acid,fixed_dose_combination,oral
+prevacid,lansoprazole,modified_release,oral
+prevacid solutab,lansoprazole,modified_release,oral
+prevduo,neostigmine,fixed_dose_combination,iv
+prexxartan,valsartan,solution,oral
+prezcobix,darunavir,fixed_dose_combination,oral
+prezcobix ped,darunavir,fixed_dose_combination,oral
+priftin,rifapentine,immediate_release,oral
+pristiq extended release,desvenlafaxine,modified_release,oral
+procentra,amphetamine,solution,oral
+procysbi,cysteamine,modified_release,oral
+prolate,oxycodone,fixed_dose_combination,oral
+prometa,ascorbic_acid,fixed_dose_combination,oral
+promethegan,promethazine,other_route,
+prometrium,progesterone,immediate_release,oral
+prostin vr pediatric,alprostadil,other_route,
+protonix delayed release,pantoprazole,modified_release,oral
+protonix i.v.,pantoprazole,solution,iv
+protopam chloride,pralidoxime,other_route,
+provera,medroxyprogesterone_acetate,immediate_release,oral
+provigil,modafinil,immediate_release,oral
+prudoxin,doxepin,other_route,
+pryidostigmine bromide,pyridostigmine,solution,oral
+pulmicort flexhaler,budesonide,other_route,
+pulmicort respules,budesonide,other_route,
+purixan,mercaptopurine,solution,oral
+pylera,metronidazole,fixed_dose_combination,oral
+qamzova,meloxicam,solution,iv
+qbrelis,lisinopril,solution,oral
+qlonilik,clonidine,solution,oral
+qsymia,topiramate,fixed_dose_combination,oral
+qudexy xr,topiramate,modified_release,oral
+quflora pediatric,ascorbic_acid,fixed_dose_combination,oral
+quillichew er,dexmethylphenidate,modified_release,oral
+quillivant xr,dexmethylphenidate,modified_release,oral
+quzyttir,cetirizine,solution,iv
+qvar redihaler,beclomethasone_dipropionate,other_route,
+radiaura skin recovery,lidocaine,fixed_dose_combination,
+raldesy tm,trazodone,solution,oral
+rasuvo,methotrexate,other_route,
+reclast,zoledronic_acid,solution,iv
+rectiv,nitroglycerin,other_route,
+relenza,zanamivir,other_route,
+relexxii,dexmethylphenidate,modified_release,oral
+relgaabi,gabapentin,immediate_release,oral
+relpax,eletriptan,immediate_release,oral
+remodulin,treprostinil,other_route,
+restasis,cyclosporine,other_route,
+restasis multidose,cyclosporine,other_route,
+revonto,dantrolene,solution,iv
+rextovy,naloxone,other_route,
+rexulti,brexpiprazole,immediate_release,oral
+rezenopy,naloxone,other_route,
+ribotin e,ascorbic_acid,fixed_dose_combination,oral
+ritalin,dexmethylphenidate,immediate_release,oral
+rosuvastain calcium,rosuvastatin,immediate_release,oral
+rosuvstatin,rosuvastatin,immediate_release,oral
+roweepra,levetiracetam,immediate_release,oral
+roxicodone,oxycodone,immediate_release,oral
+roxybond,oxycodone,immediate_release,oral
+rozerem,ramelteon,immediate_release,oral
+rugby all day relief,naproxen,immediate_release,oral
+ryaltris,mometasone_furoate,fixed_dose_combination,
+rytary,levodopa,fixed_dose_combination,oral
+sajazir,icatibant,other_route,
+samsca,tolvaptan,immediate_release,oral
+sandostatin,octreotide,other_route,
+saphris,asenapine,other_route,
+savaysa,edoxaban,immediate_release,oral
+savella,levomilnacipran,immediate_release,oral
+scandonest 3% plain,mepivacaine,other_route,
+sdamlo,amlodipine,solution,oral
+se natal 19,ascorbic_acid,fixed_dose_combination,oral
+secuado,asenapine,modified_release,
+segluromet,ertugliflozin,fixed_dose_combination,oral
+segluromet,metformin,fixed_dose_combination,oral
+selzentry,maraviroc,immediate_release,oral
+sensipar,cinacalcet,immediate_release,oral
+septaforce,quinidine,fixed_dose_combination,oral
+seroquel,quetiapine,immediate_release,oral
+seroquel xr,quetiapine,modified_release,oral
+seysara,sarecycline,immediate_release,oral
+sezaby,phenobarbital,solution,iv
+signifor,pasireotide,other_route,
+siklos,hydroxyurea,immediate_release,oral
+silenor,doxepin,immediate_release,oral
+silvadene,sulfadiazine,other_route,
+sinuva,mometasone_furoate,modified_release,
+sirturo,bedaquiline,immediate_release,oral
+soaanz,torsemide,immediate_release,oral
+somatuline depot,lanreotide,other_route,
+sotylize,sotalol,solution,oral
+sovuna,hydroxychloroquine,immediate_release,oral
+spiriva handihaler,tiotropium,other_route,
+spiriva respimat,tiotropium,other_route,
+sporanox,itraconazole,immediate_release,oral
+spravato,esketamine,other_route,
+spravex,lidocaine,other_route,
+sprix,ketorolac,other_route,
+sprycel,dasatinib,immediate_release,oral
+ssd cream,sulfadiazine,other_route,
+steglatro,ertugliflozin,immediate_release,oral
+steglujan,ertugliflozin,fixed_dose_combination,oral
+steglujan,sitagliptin,fixed_dose_combination,oral
+stimate,desmopressin,other_route,
+stiolto respimat,olodaterol,fixed_dose_combination,
+stiolto respimat,tiotropium,fixed_dose_combination,
+stribild,emtricitabine,fixed_dose_combination,oral
+stribild,tenofovir,fixed_dose_combination,oral
+striverdi respimat,olodaterol,other_route,
+strovite one caplets,ascorbic_acid,fixed_dose_combination,oral
+sublocade,buprenorphine,other_route,
+suboxone,buprenorphine,fixed_dose_combination,
+suboxone,naloxone,fixed_dose_combination,
+sular,nisoldipine,modified_release,oral
+sulfameth/trimeth ds,trimethoprim,fixed_dose_combination,oral
+sulfamethox tmp ds,trimethoprim,fixed_dose_combination,oral
+sulfatrim,trimethoprim,fixed_dose_combination,oral
+sunosi,solriamfetol,immediate_release,oral
+sustol,granisetron,other_route,
+sutent,sunitinib,immediate_release,oral
+symbicort,budesonide,fixed_dose_combination,
+symbicort,formoterol,fixed_dose_combination,
+symbravo,meloxicam,fixed_dose_combination,oral
+symbravo,rizatriptan,fixed_dose_combination,oral
+symfi,lamivudine,fixed_dose_combination,oral
+symfi,tenofovir,fixed_dose_combination,oral
+symtuza,darunavir,fixed_dose_combination,oral
+symtuza,emtricitabine,fixed_dose_combination,oral
+symtuza,tenofovir,fixed_dose_combination,oral
+synarel,nafarelin,other_route,
+syndros,dronabinol,solution,oral
+synjardy,empagliflozin,fixed_dose_combination,oral
+synjardy,metformin,fixed_dose_combination,oral
+synjardy xr,empagliflozin,fixed_dose_combination,oral
+synjardy xr,metformin,fixed_dose_combination,oral
+tadliq,tadalafil,solution,oral
+talicia,amoxicillin,fixed_dose_combination,oral
+talicia,esomeprazole,fixed_dose_combination,oral
+talicia,rifabutin,fixed_dose_combination,oral
+targadox,doxycycline,immediate_release,oral
+tarpeyo,budesonide,modified_release,oral
+tazorac,tazarotene,other_route,
+tazverik,tazemetostat,immediate_release,oral
+teflaro,ceftaroline_fosamil,solution,iv
+tegretol xr,carbamazepine,modified_release,oral
+tekturna,aliskiren,immediate_release,oral
+tepadina,thiotepa,other_route,
+testim,testosterone,other_route,
+testopel,testosterone,modified_release,
+tezruly,terazosin,solution,oral
+thalitone,chlorthalidone,immediate_release,oral
+theo 24,theophylline,modified_release,oral
+tiadylt er,diltiazem,modified_release,oral
+tiazac extended release,diltiazem,modified_release,oral
+timoptic,timolol,other_route,
+timoptic in ocudose,timolol,other_route,
+timoptic xe,timolol,other_route,
+tindazole,tinidazole,immediate_release,oral
+tivicay,dolutegravir,immediate_release,oral
+tizandine,tizanidine,immediate_release,oral
+tizanidne hydrochloride,tizanidine,immediate_release,oral
+tobi podhaler,tobramycin,other_route,
+tobradex,tobramycin,fixed_dose_combination,
+tobradex st,tobramycin,fixed_dose_combination,
+tobrex,tobramycin,other_route,
+tolsura,itraconazole,immediate_release,oral
+tonmya,cyclobenzaprine,other_route,
+toronova ii suik,ketorolac,other_route,
+toronova suik,ketorolac,other_route,
+torpenz,everolimus,immediate_release,oral
+tosymra,sumatriptan,other_route,
+tradjenta,linagliptin,immediate_release,oral
+transderm scop,scopolamine,modified_release,
+treanda,bendamustine,solution,iv
+trelegy ellipta,fluticasone_furoate,fixed_dose_combination,
+trelegy ellipta,umeclidinium,fixed_dose_combination,
+trexall,methotrexate,immediate_release,oral
+treximet,naproxen,fixed_dose_combination,oral
+treximet,sumatriptan,fixed_dose_combination,oral
+trezix,caffeine,fixed_dose_combination,oral
+tri vite drops with fluoride,ascorbic_acid,fixed_dose_combination,oral
+tribenzor,amlodipine,fixed_dose_combination,oral
+tribenzor,hydrochlorothiazide,fixed_dose_combination,oral
+tribenzor,olmesartan,fixed_dose_combination,oral
+tricon,ascorbic_acid,fixed_dose_combination,oral
+tridacaine ii,lidocaine,modified_release,
+tridacaine iii,lidocaine,modified_release,
+tridacaine xl,lidocaine,modified_release,
+triderm,triamcinolone_acetonide,other_route,
+triesence,triamcinolone_acetonide,other_route,
+trijardy xr,empagliflozin,fixed_dose_combination,oral
+trijardy xr,linagliptin,fixed_dose_combination,oral
+trijardy xr,metformin,fixed_dose_combination,oral
+trilitas,tazarotene,other_route,
+triloan ii suik,triamcinolone_acetonide,other_route,
+triloan suik,triamcinolone_acetonide,other_route,
+trilocaine,lidocaine,other_route,
+trintellix,vortioxetine,immediate_release,oral
+tristart dha,ascorbic_acid,fixed_dose_combination,oral
+tristart dha,icosapent,fixed_dose_combination,oral
+triumeq,abacavir,fixed_dose_combination,oral
+triumeq,dolutegravir,fixed_dose_combination,oral
+triumeq,lamivudine,fixed_dose_combination,oral
+trokendi xr,topiramate,modified_release,oral
+trubrexa,lidocaine,fixed_dose_combination,
+trubrexa patch er,lidocaine,fixed_dose_combination,
+trudhesa,dihydroergotamine,other_route,
+tudorza pressair,aclidinium,other_route,
+turalio,pexidartinib,immediate_release,oral
+tuxarin,codeine,fixed_dose_combination,oral
+twirla,estradiol,fixed_dose_combination,
+twirla,levonorgestrel,fixed_dose_combination,
+tygacil,tigecycline,solution,iv
+tyzavan,vancomycin,solution,iv
+uloric,febuxostat,immediate_release,oral
+uzedy,risperidone,modified_release,
+vabomere,meropenem,fixed_dose_combination,iv
+vabrinty,leuprolide,modified_release,
+vagifem,estradiol,modified_release,
+vagizole,metronidazole,other_route,
+valtoco,diazepam,other_route,
+vandazole,metronidazole,other_route,
+varubi,rolapitant,immediate_release,oral
+vascepa,icosapent,immediate_release,oral
+vaseretic,hydrochlorothiazide,fixed_dose_combination,oral
+velcade,bortezomib,other_route,
+vemlidy,tenofovir,immediate_release,oral
+venexa,ascorbic_acid,fixed_dose_combination,oral
+venexa fe,ascorbic_acid,fixed_dose_combination,oral
+ventrixyl,ascorbic_acid,fixed_dose_combination,oral
+ventrixyl fe,ascorbic_acid,fixed_dose_combination,oral
+verkazia,cyclosporine,other_route,
+versacloz,clozapine,solution,oral
+vevye,cyclosporine,other_route,
+vidaza,azacitidine,other_route,
+vigamox,moxifloxacin,other_route,
+viracept,nelfinavir,immediate_release,oral
+virexa,ascorbic_acid,fixed_dose_combination,oral
+visceral polarity,quinidine,fixed_dose_combination,oral
+visipaque,iodixanol,other_route,
+vitafol fe plus,ascorbic_acid,fixed_dose_combination,oral
+vitafol one,ascorbic_acid,fixed_dose_combination,oral
+vitafol ultra,ascorbic_acid,fixed_dose_combination,oral
+vitalux,ascorbic_acid,fixed_dose_combination,oral
+vitamin c 10 %,ascorbic_acid,other_route,
+vitamin c 15 %,ascorbic_acid,other_route,
+vitavera,ascorbic_acid,fixed_dose_combination,oral
+vitramyn,ascorbic_acid,fixed_dose_combination,oral
+vitranol,ascorbic_acid,fixed_dose_combination,oral
+vitranol fe,ascorbic_acid,fixed_dose_combination,oral
+vitrexate,ascorbic_acid,fixed_dose_combination,oral
+vitrexate fe,ascorbic_acid,fixed_dose_combination,oral
+vitrexyl,ascorbic_acid,fixed_dose_combination,oral
+vitrexyl plus iron,ascorbic_acid,fixed_dose_combination,oral
+vivacaine,bupivacaine,fixed_dose_combination,
+vivimusta,bendamustine,solution,iv
+vizimpro,dacomitinib,immediate_release,oral
+vogelxo,testosterone,other_route,
+votrient,pazopanib,immediate_release,oral
+vykat xr,diazoxide,immediate_release,oral
+vyleesi,bremelanotide,other_route,
+vyscoxa,celecoxib,solution,oral
+vyxeos,cytarabine,fixed_dose_combination,iv
+vyxeos,daunorubicin,fixed_dose_combination,iv
+wakix,pitolisant,immediate_release,oral
+widaplik,amlodipine,fixed_dose_combination,oral
+widaplik,telmisartan,fixed_dose_combination,oral
+wixela inhub,fluticasone_propionate,fixed_dose_combination,
+xaciato,clindamycin,other_route,
+xatmep,methotrexate,solution,oral
+xcopri,cenobamate,immediate_release,oral
+xeljanz xr,tofacitinib,modified_release,oral
+xelstrym,amphetamine,modified_release,
+xerava,eravacycline,solution,iv
+xerese,acyclovir,fixed_dose_combination,
+xermelo,telotristat_ethyl,immediate_release,oral
+xhance,fluticasone_propionate,other_route,
+xiclo,diclofenac,modified_release,
+xiclofen,diclofenac,fixed_dose_combination,
+xifyrm,meloxicam,solution,iv
+xigduo xr,dapagliflozin,fixed_dose_combination,oral
+xigduo xr,metformin,fixed_dose_combination,oral
+xipere,triamcinolone_acetonide,other_route,
+xpovio,selinexor,immediate_release,oral
+xromi,hydroxyurea,solution,oral
+xtampza er,oxycodone,modified_release,oral
+xtandi,enzalutamide,immediate_release,oral
+xulane,estradiol,fixed_dose_combination,
+xyosted,testosterone,other_route,
+yargesa,miglustat,immediate_release,oral
+yonsa,abiraterone,immediate_release,oral
+yulithira,everolimus,immediate_release,oral
+yutrepia,treprostinil,other_route,
+yuvafem,estradiol,other_route,
+zafemy,estradiol,fixed_dose_combination,
+zavesca,miglustat,immediate_release,oral
+zaynich,cefepime,fixed_dose_combination,iv
+zegerid,esomeprazole,fixed_dose_combination,oral
+zejula,niraparib,immediate_release,oral
+zelboraf,vemurafenib,immediate_release,oral
+zembrace symtouch,sumatriptan,other_route,
+zenzedi,amphetamine,immediate_release,oral
+zeposia,ozanimod,immediate_release,oral
+zerviate,cetirizine,other_route,
+zestoretic,hydrochlorothiazide,fixed_dose_combination,oral
+zestoretic,lisinopril,fixed_dose_combination,oral
+ziana,clindamycin,fixed_dose_combination,
+zilxi,minocycline,other_route,
+zimhi,naloxone,other_route,
+zintrexyl c,ascorbic_acid,fixed_dose_combination,oral
+zituvimet,metformin,fixed_dose_combination,oral
+zituvimet,sitagliptin,fixed_dose_combination,oral
+zituvimet xr,metformin,fixed_dose_combination,oral
+zituvimet xr,sitagliptin,fixed_dose_combination,oral
+zituvio,sitagliptin,immediate_release,oral
+zoladex,goserelin,modified_release,
+zolymbus,bimatoprost,other_route,
+zomig,zolmitriptan,immediate_release,oral
+zonalon,doxepin,other_route,
+zonegran,zonisamide,immediate_release,oral
+zonisade,zonisamide,solution,oral
+zortress,everolimus,immediate_release,oral
+zoryve,roflumilast,other_route,
+ztlido,lidocaine,modified_release,
+zubsolv,buprenorphine,fixed_dose_combination,
+zubsolv,naloxone,fixed_dose_combination,
+zurnai,nalmefene,other_route,
+zybic,meloxicam,solution,oral
+zylet,tobramycin,fixed_dose_combination,
+zynrelef,bupivacaine,fixed_dose_combination,
+zynrelef,meloxicam,fixed_dose_combination,
+zypitamag,pitavastatin,immediate_release,oral
+zyprexa,olanzapine,immediate_release,oral
+zyprexa intramuscular,olanzapine,other_route,
+zytiga,abiraterone,immediate_release,oral

@@ -2909,7 +2909,9 @@
       "pages": "Páginas de la lista de medicamentos",
       "prev": "Anterior",
       "next": "Siguiente",
-      "range": "{from}–{to} de {total}"
+      "range": "{from}–{to} de {total}",
+      "reportLink": "Abrir el informe del sistema",
+      "reportIntro": "Recuentos, la puerta, intervalos, precisión medida y lo que aún falta, para toda la versión."
     },
     "system": {
       "title": "Informe del sistema",
@@ -2938,7 +2940,12 @@
       "noSetBody": "La evidencia aún no permite un conjunto de parámetros. Estas son las razones.",
       "warnings": "Advertencia",
       "halfLives": "Semivida implícita {implied} h; semivida indicada {stated} h.",
-      "incomplete": "El conjunto está incompleto, así que no se puede exportar. Falta:"
+      "incomplete": "El conjunto está incompleto, así que no se puede exportar. Falta:",
+      "statusExplain": {
+        "validated": "Validado: el AUC y la Cmax se probaron con estudios reservados y cada observación está a menos de un factor 2 de la predicción. Describe unos pocos estudios, no el fármaco en general.",
+        "not_validated": "No validado: el conjunto no pudo probarse en AUC y Cmax con estudios reservados (véanse los motivos). No es un fallo del conjunto; la evidencia aún no basta.",
+        "failed": "Fallido: al menos una observación reservada está fuera de un factor 2 de la predicción. Abajo se indican los puntos y el parámetro sospechoso; los fármacos fallidos nunca se ocultan."
+      }
     },
     "params": {
       "title": "Parámetros",
@@ -2979,7 +2986,10 @@
       "noPoints": "No hay ninguna observación reservada, así que no hay gráfico.",
       "intervalN": "({n} de al menos {min} estudios reservados independientes.)",
       "failedPoints": "Observaciones fuera de un factor 2",
-      "failedPoint": "{metric}, estudio {study}: predicho / observado = {ratio}"
+      "failedPoint": "{metric}, estudio {study}: predicho / observado = {ratio}",
+      "intervalHeading": "Intervalos de predicción",
+      "intervalShown": "{metric}: se espera que el valor observado de un estudio nuevo esté dentro de ÷/× {fold} de la predicción en {coverage} de los estudios (n = {n} estudios reservados, todos los fármacos).",
+      "intervalNone": "{metric}: no se muestra ningún intervalo."
     },
     "chart": {
       "title": "Observado frente a predicho",
@@ -3022,7 +3032,24 @@
       "studyId": "Identificador del estudio",
       "derived": "Valor derivado (calculado, no indicado en la fuente)",
       "showAll": "Mostrar las {count} filas",
-      "showFewer": "Mostrar menos filas"
+      "showFewer": "Mostrar menos filas",
+      "formulation": "Formulación",
+      "route": "Vía",
+      "note": "Nota",
+      "formulationHint": "La formulación y la vía las determinan, a partir del registro del estudio, dos resolutores automáticos independientes; «no indicada» significa que el registro no lo dice, y ese valor no se usa para construir ni probar un conjunto.",
+      "formulations": {
+        "immediate_release": "Liberación inmediata",
+        "solution": "Solución",
+        "modified_release": "Liberación modificada",
+        "fixed_dose_combination": "Combinación a dosis fija",
+        "other_route": "Otra vía",
+        "unspecified": "No indicada"
+      },
+      "routes": {
+        "oral": "Oral",
+        "iv": "Intravenosa",
+        "unknown": "No indicada"
+      }
     },
     "evParam": {
       "cl": "Aclaramiento (CL)",
@@ -3113,8 +3140,43 @@
       "point_outside_2_fold": "Al menos una observación reservada queda fuera de un factor 2 de la predicción.",
       "all_points_within_2_fold": "Se probaron el AUC y la Cmax y cada observación reservada está dentro de un factor 2.",
       "cl_from_dose_and_auc": "Derivado: CL/F = dosis / AUC hasta el infinito de un brazo de estudio (CL para una dosis intravenosa).",
-      "confirmed_precision_below_target": "En una muestra ciega de valores confirmados, dos pasadas de revisión automatizadas juzgaron correctos el 73 % (n = 97, intervalo del 95 % de 64 a 81 %), por debajo del objetivo del 90 % de este hito. Lea cada valor como no verificado."
+      "confirmed_precision_below_target": "En una muestra ciega de valores confirmados, dos pases de revisión automáticos hallaron menos valores correctos que el objetivo del 90 % de este hito (la proporción medida, n y el intervalo están en el informe del sistema). Lea cada valor como no verificado.",
+      "interval_shown": "Se muestran intervalos: al menos 20 estudios reservados independientes.",
+      "gate_not_interpretable": "Menos de 10 fármacos tienen AUC y Cmax probados con estudios reservados, por lo que la puerta no se puede interpretar.",
+      "no_drug_validated": "Ningún fármaco está validado.",
+      "intervals_not_shown": "No se muestran intervalos de predicción: faltan estudios reservados.",
+      "formulation_often_unspecified": "Más de una cuarta parte de los valores confirmados no tiene formulación indicada.",
+      "fewer_than_150_sets": "Menos de 150 fármacos tienen un conjunto de parámetros."
     },
-    "scrollHint": "Desplácese hacia los lados para ver todas las columnas."
+    "scrollHint": "Desplácese hacia los lados para ver todas las columnas.",
+    "report": {
+      "title": "Informe del sistema",
+      "back": "Volver a los fármacos",
+      "intro": "Lo que toda la versión puede y no puede decir. Experimental; cada valor fue leído y confirmado por lectores automáticos, y pases de revisión automáticos midieron con qué frecuencia acertaron.",
+      "countsTitle": "Recuentos",
+      "inStore": "{count, plural, one {# fármaco} other {# fármacos}} en esta versión",
+      "withSet": "Conjuntos de parámetros",
+      "withSetSentence": "{set, plural, one {# fármaco tiene} other {# fármacos tienen}} un conjunto de parámetros, {complete} de ellos uno completo que se puede exportar.",
+      "rows": "Filas de evidencia",
+      "rowsSentence": "{rows} filas, {confirmed} confirmadas por los dos lectores automáticos, {parent} de ellas del propio fármaco.",
+      "formulationTitle": "Formulación de los valores confirmados",
+      "formulationIntro": "Proporción de valores confirmados del propio fármaco cuya formulación consta en el registro del estudio: {share} ({k} de {n}). Un valor sin formulación indicada sigue como «no indicada» y no se usa para construir ni probar un conjunto.",
+      "formulationTable": "Valores confirmados del fármaco por formulación y por vía",
+      "kind": "Tipo",
+      "values": "Valores",
+      "intervalsTitle": "Intervalos de predicción",
+      "intervalsSentence": "{metric}: {n} de los al menos {min} estudios reservados independientes necesarios para un intervalo.",
+      "intervalsShownSentence": "{metric}: se muestra (÷/× {fold} para {coverage} de los estudios, n = {n}).",
+      "precisionTitle": "Precisión de los valores confirmados",
+      "precisionLine": "{share} de los valores muestreados eran correctos (intervalo de Wilson al 95 % de {low} a {high}, n = {n}; muestra ciega, dos pases de revisión automáticos, {date}).",
+      "precisionConservative": "Lectura prudente, todo lo que no den por correcto los dos pases cuenta como erróneo: {share} ({low} a {high}, n = {n}).",
+      "precisionFormulation": "Solo el campo de formulación: {share} ({low} a {high}, n = {n}).",
+      "precisionTarget": "Objetivo de este hito: {target}. Por debajo del objetivo, lea cada valor como no verificado.",
+      "precisionNone": "No se ha medido la precisión de esta versión.",
+      "missingTitle": "Lo que falta",
+      "noSetTitle": "Por qué hay fármacos sin conjunto de parámetros",
+      "notValidatedTitle": "Por qué hay fármacos no validados",
+      "drugsCount": "{count, plural, one {# fármaco} other {# fármacos}}"
+    }
   }
 }

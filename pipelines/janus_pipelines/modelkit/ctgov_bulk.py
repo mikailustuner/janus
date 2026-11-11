@@ -17,7 +17,8 @@ from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 from typing import Any
 
-from janus_pipelines.modelkit import reader_a, reader_b
+from janus_pipelines.modelkit import formulation, reader_a, reader_b
+from janus_pipelines.modelkit.formref import BrandTable
 from janus_pipelines.modelkit.model import Candidate, ReaderStats
 from janus_pipelines.modelkit.pairing import Paired, pair
 from janus_pipelines.modelkit.resolver import IdentityTable
@@ -73,7 +74,9 @@ SHARDS = 256  # a fixed number: the result does not depend on how many workers r
 _G: dict[str, Any] = {}
 
 
-def _read_shard(zip_path: Path, names: list[str], table: IdentityTable) -> Shard:
+def _read_shard(
+    zip_path: Path, names: list[str], table: IdentityTable, brands: BrandTable
+) -> Shard:
     pairs: list[Paired] = []
     only_b: list[Candidate] = []
     kept: dict[str, set[str]] = {}
@@ -96,13 +99,15 @@ def _read_shard(zip_path: Path, names: list[str], table: IdentityTable) -> Shard
                     continue
                 kept.setdefault(key, set()).add(nct)
                 p, left = pair(a_rows, b_rows)
+                p = formulation.resolve_pairs(p, study, table, brands, counts)
                 pairs += p
                 only_b += left
     return pairs, only_b, kept, counts, stats
 
 
-def _init_worker(identity_text: str) -> None:
+def _init_worker(identity_text: str, brands_text: str) -> None:
     _G["table"] = IdentityTable.from_csv(identity_text)
+    _G["brands"] = BrandTable.from_csv(brands_text) if brands_text else BrandTable.empty()
 
 
 def _work(args: tuple[Path, list[str], Path | None]) -> Shard:
@@ -110,7 +115,7 @@ def _work(args: tuple[Path, list[str], Path | None]) -> Shard:
     zip_path, names, checkpoint = args
     if checkpoint is not None and checkpoint.exists():
         return pickle.loads(checkpoint.read_bytes())  # noqa: S301 - our own earlier output
-    shard = _read_shard(zip_path, names, _G["table"])
+    shard = _read_shard(zip_path, names, _G["table"], _G["brands"])
     if checkpoint is not None:
         tmp = checkpoint.with_suffix(".tmp")
         tmp.write_bytes(pickle.dumps(shard))
@@ -125,6 +130,7 @@ def read_bulk(
     counts: Counter[str],
     workers: int = 1,
     checkpoint_dir: Path | None = None,
+    brands_text: str = "",
 ) -> tuple[list[Paired], list[Candidate], dict[str, set[str]]]:
     """Pairs of the two readers for every (study, drug); candidates only reader B found; the studies
     kept per drug. The member list is cut into SHARDS contiguous parts that are read independently
@@ -144,11 +150,11 @@ def read_bulk(
     ]
     del names
     if workers <= 1:
-        _init_worker(identity_text)
+        _init_worker(identity_text, brands_text)
         shards = [_work(t) for t in tasks]
     else:
         with ProcessPoolExecutor(
-            max_workers=workers, initializer=_init_worker, initargs=(identity_text,)
+            max_workers=workers, initializer=_init_worker, initargs=(identity_text, brands_text)
         ) as pool:
             shards = list(pool.map(_work, tasks))
     pairs: list[Paired] = []

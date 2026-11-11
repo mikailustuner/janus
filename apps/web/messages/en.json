@@ -2909,7 +2909,9 @@
       "pages": "Pages of the drug list",
       "prev": "Previous",
       "next": "Next",
-      "range": "{from}–{to} of {total}"
+      "range": "{from}–{to} of {total}",
+      "reportLink": "Open the system report",
+      "reportIntro": "Counts, the gate, intervals, measured precision and what is still missing, for the whole release."
     },
     "system": {
       "title": "System report",
@@ -2938,7 +2940,12 @@
       "noSetBody": "The evidence does not yet allow a parameter set. These are the reasons.",
       "warnings": "Warning",
       "halfLives": "Implied half-life {implied} h; stated half-life {stated} h.",
-      "incomplete": "The set is incomplete, so it cannot be exported. Missing:"
+      "incomplete": "The set is incomplete, so it cannot be exported. Missing:",
+      "statusExplain": {
+        "validated": "Validated: AUC and Cmax were both tested on held-out studies and every single observation is within 2-fold of the prediction. This describes a few studies, not the drug in general.",
+        "not_validated": "Not validated: the set could not be tested on both AUC and Cmax with held-out studies (see the reasons). This is not a failure of the set; it means the evidence is not enough yet.",
+        "failed": "Failed: at least one held-out observation is outside 2-fold of the prediction. The failed points and the parameter to suspect are listed below; failed drugs are never hidden."
+      }
     },
     "params": {
       "title": "Parameters",
@@ -2979,7 +2986,10 @@
       "noPoints": "There is no held-out observation, so there is no chart.",
       "intervalN": "({n} of at least {min} independent held-out studies.)",
       "failedPoints": "Observations outside 2-fold",
-      "failedPoint": "{metric}, study {study}: predicted / observed = {ratio}"
+      "failedPoint": "{metric}, study {study}: predicted / observed = {ratio}",
+      "intervalHeading": "Prediction intervals",
+      "intervalShown": "{metric}: the observed value of a new study is expected within ÷/× {fold} of the prediction for {coverage} of studies (n = {n} held-out studies, all drugs).",
+      "intervalNone": "{metric}: no interval is shown."
     },
     "chart": {
       "title": "Observed against predicted",
@@ -3022,7 +3032,24 @@
       "studyId": "Study id",
       "derived": "Derived value (calculated, not stated in the source)",
       "showAll": "Show all {count} rows",
-      "showFewer": "Show fewer rows"
+      "showFewer": "Show fewer rows",
+      "formulation": "Formulation",
+      "route": "Route",
+      "note": "Note",
+      "formulationHint": "Formulation and route are resolved from the study record by two independent automated resolvers; “not stated” means the record does not say, and such a value is not used to build or test a set.",
+      "formulations": {
+        "immediate_release": "Immediate release",
+        "solution": "Solution",
+        "modified_release": "Modified release",
+        "fixed_dose_combination": "Fixed-dose combination",
+        "other_route": "Other route",
+        "unspecified": "Not stated"
+      },
+      "routes": {
+        "oral": "Oral",
+        "iv": "Intravenous",
+        "unknown": "Not stated"
+      }
     },
     "evParam": {
       "cl": "Clearance (CL)",
@@ -3113,8 +3140,43 @@
       "point_outside_2_fold": "At least one held-out observation is outside 2-fold of the prediction.",
       "all_points_within_2_fold": "AUC and Cmax were tested and every held-out observation is within 2-fold.",
       "cl_from_dose_and_auc": "Derived: CL/F = dose / AUC to infinity of one study arm (CL for an intravenous dose).",
-      "confirmed_precision_below_target": "On a blinded sample of confirmed values, two automated review passes found 73 % correct (n = 97, 95 % interval 64 to 81 %), below the 90 % target of this milestone. Read every value as unverified."
+      "confirmed_precision_below_target": "On a blinded sample of confirmed values, two automated review passes found fewer correct values than the 90 % target of this milestone (the measured share, n and interval are in the system report). Read every value as unverified.",
+      "interval_shown": "Intervals are shown: at least 20 independent held-out studies.",
+      "gate_not_interpretable": "Fewer than 10 drugs have both AUC and Cmax tested on held-out studies, so the gate cannot be interpreted.",
+      "no_drug_validated": "No drug is validated.",
+      "intervals_not_shown": "No prediction intervals are shown: not enough held-out studies.",
+      "formulation_often_unspecified": "More than a quarter of the confirmed values have no stated formulation.",
+      "fewer_than_150_sets": "Fewer than 150 drugs have a parameter set."
     },
-    "scrollHint": "Scroll sideways to see all columns."
+    "scrollHint": "Scroll sideways to see all columns.",
+    "report": {
+      "title": "System report",
+      "back": "Back to the drugs",
+      "intro": "What the whole release can and cannot say. Experimental; every value was read and confirmed by automated readers, and automated review passes measured how often they were right.",
+      "countsTitle": "Counts",
+      "inStore": "{count, plural, one {# drug} other {# drugs}} in this release",
+      "withSet": "Parameter sets",
+      "withSetSentence": "{set, plural, one {# drug has} other {# drugs have}} a parameter set, {complete} a complete one that can be exported.",
+      "rows": "Evidence rows",
+      "rowsSentence": "{rows} rows, {confirmed} confirmed by both automated readers, {parent} of them for the parent drug.",
+      "formulationTitle": "Formulation of confirmed values",
+      "formulationIntro": "Share of confirmed parent-drug values whose formulation is stated in the study record: {share} ({k} of {n}). A value with no stated formulation stays “not stated” and is not used to build or test a set.",
+      "formulationTable": "Confirmed parent-drug values by formulation and by route",
+      "kind": "Kind",
+      "values": "Values",
+      "intervalsTitle": "Prediction intervals",
+      "intervalsSentence": "{metric}: {n} of the at least {min} independent held-out studies needed for an interval.",
+      "intervalsShownSentence": "{metric}: shown (÷/× {fold} for {coverage} of studies, n = {n}).",
+      "precisionTitle": "Precision of confirmed values",
+      "precisionLine": "{share} of the sampled values were correct (95 % Wilson interval {low} to {high}, n = {n}; blinded sample, two automated review passes, {date}).",
+      "precisionConservative": "Conservative reading, anything not called correct by both passes counts as wrong: {share} ({low} to {high}, n = {n}).",
+      "precisionFormulation": "The formulation field alone: {share} ({low} to {high}, n = {n}).",
+      "precisionTarget": "Target of this milestone: {target}. Below the target, read every value as unverified.",
+      "precisionNone": "No precision has been measured for this release.",
+      "missingTitle": "What is missing",
+      "noSetTitle": "Why drugs have no parameter set",
+      "notValidatedTitle": "Why drugs are not validated",
+      "drugsCount": "{count, plural, one {# drug} other {# drugs}}"
+    }
   }
 }

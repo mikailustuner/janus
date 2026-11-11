@@ -59,14 +59,21 @@ TEXT: dict[str, str] = {
     "n_very_small": "n is very small: shares and fold errors describe these drugs, not drugs in general.",
     "two_automated_passes": "Every held-out observation was read automatically and confirmed by two automated passes.",
     "confirmed_precision_below_target": (
-        "On a blinded sample of confirmed values, two automated review passes found 69 % correct "
-        "(n = 85, 95 % interval 59 to 78 %), below the 90 % target of this milestone. Read every "
-        "value as unverified."
+        "On a blinded sample of confirmed values, two automated review passes found fewer correct "
+        "values than the 90 % target of this milestone (the measured share, n and interval are in "
+        "the report). Read every value as unverified."
     ),
     "expert_review_pending": "Expert review has not yet been done.",
     # interval
     "interval_n_too_small": "No interval is shown: fewer than 20 independent held-out studies.",
     "interval_system_level_only": "Intervals are given at system level only, not per drug.",
+    "interval_shown": "Intervals are shown: at least 20 independent held-out studies.",
+    # what the release still lacks (system report)
+    "gate_not_interpretable": "Fewer than 10 drugs have both AUC and Cmax tested on held-out studies.",
+    "no_drug_validated": "No drug is validated.",
+    "intervals_not_shown": "No prediction intervals are shown: not enough held-out studies.",
+    "formulation_often_unspecified": "More than a quarter of confirmed values have no stated formulation.",
+    "fewer_than_150_sets": "Fewer than 150 drugs have a parameter set.",
 }
 
 

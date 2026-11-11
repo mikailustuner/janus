@@ -1614,6 +1614,13 @@
           "validation": {
             "$ref": "#/components/schemas/janus__modelkit__router__ValidationOut"
           },
+          "intervals": {
+            "items": {
+              "$ref": "#/components/schemas/janus__modelkit__router__IntervalOut"
+            },
+            "type": "array",
+            "title": "Intervals"
+          },
           "targets": {
             "items": {
               "type": "string"
@@ -1638,6 +1645,7 @@
           "parameter_set",
           "no_set_reasons",
           "validation",
+          "intervals",
           "targets",
           "reason_text"
         ],
@@ -4066,6 +4074,131 @@
         ],
         "title": "PointOut"
       },
+      "PrecisionOut": {
+        "properties": {
+          "measured_on": {
+            "type": "string",
+            "title": "Measured On"
+          },
+          "n": {
+            "type": "integer",
+            "title": "N"
+          },
+          "correct": {
+            "type": "integer",
+            "title": "Correct"
+          },
+          "share": {
+            "type": "number",
+            "title": "Share"
+          },
+          "wilson_low": {
+            "type": "number",
+            "title": "Wilson Low"
+          },
+          "wilson_high": {
+            "type": "number",
+            "title": "Wilson High"
+          },
+          "n_conservative": {
+            "type": "integer",
+            "title": "N Conservative"
+          },
+          "share_conservative": {
+            "type": "number",
+            "title": "Share Conservative"
+          },
+          "wilson_low_conservative": {
+            "type": "number",
+            "title": "Wilson Low Conservative"
+          },
+          "wilson_high_conservative": {
+            "type": "number",
+            "title": "Wilson High Conservative"
+          },
+          "formulation_n": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Formulation N"
+          },
+          "formulation_correct": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Formulation Correct"
+          },
+          "formulation_share": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Formulation Share"
+          },
+          "formulation_wilson_low": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Formulation Wilson Low"
+          },
+          "formulation_wilson_high": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Formulation Wilson High"
+          },
+          "target": {
+            "type": "number",
+            "title": "Target"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "measured_on",
+          "n",
+          "correct",
+          "share",
+          "wilson_low",
+          "wilson_high",
+          "n_conservative",
+          "share_conservative",
+          "wilson_low_conservative",
+          "wilson_high_conservative",
+          "formulation_n",
+          "formulation_correct",
+          "formulation_share",
+          "formulation_wilson_low",
+          "formulation_wilson_high",
+          "target"
+        ],
+        "title": "PrecisionOut",
+        "description": "Measured precision of confirmed values on a blinded sample (two automated review passes)."
+      },
       "RankOut": {
         "properties": {
           "best": {
@@ -4635,6 +4768,78 @@
             "type": "string",
             "title": "Conformal"
           },
+          "intervals": {
+            "items": {
+              "$ref": "#/components/schemas/janus__modelkit__router__IntervalOut"
+            },
+            "type": "array",
+            "title": "Intervals"
+          },
+          "n_with_set": {
+            "type": "integer",
+            "title": "N With Set"
+          },
+          "n_complete_set": {
+            "type": "integer",
+            "title": "N Complete Set"
+          },
+          "rows_total": {
+            "type": "integer",
+            "title": "Rows Total"
+          },
+          "rows_confirmed": {
+            "type": "integer",
+            "title": "Rows Confirmed"
+          },
+          "confirmed_parent_rows": {
+            "type": "integer",
+            "title": "Confirmed Parent Rows"
+          },
+          "formulation_counts": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Formulation Counts"
+          },
+          "route_counts": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Route Counts"
+          },
+          "not_validated_reasons": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Not Validated Reasons"
+          },
+          "no_set_reasons": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "No Set Reasons"
+          },
+          "precision": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PrecisionOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "missing": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Missing"
+          },
           "caveats": {
             "items": {
               "type": "string"
@@ -4663,6 +4868,18 @@
           "min_drugs_for_interpretation",
           "n_drugs_both_tested",
           "conformal",
+          "intervals",
+          "n_with_set",
+          "n_complete_set",
+          "rows_total",
+          "rows_confirmed",
+          "confirmed_parent_rows",
+          "formulation_counts",
+          "route_counts",
+          "not_validated_reasons",
+          "no_set_reasons",
+          "precision",
+          "missing",
           "caveats",
           "reason_text"
         ],
@@ -5037,6 +5254,69 @@
           "attribution"
         ],
         "title": "SnapshotOut"
+      },
+      "janus__modelkit__router__IntervalOut": {
+        "properties": {
+          "metric": {
+            "type": "string",
+            "enum": [
+              "auc",
+              "cmax"
+            ],
+            "title": "Metric"
+          },
+          "shown": {
+            "type": "boolean",
+            "title": "Shown"
+          },
+          "n_studies": {
+            "type": "integer",
+            "title": "N Studies"
+          },
+          "min_studies": {
+            "type": "integer",
+            "title": "Min Studies"
+          },
+          "coverage": {
+            "type": "number",
+            "title": "Coverage"
+          },
+          "fold_half": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fold Half"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "metric",
+          "shown",
+          "n_studies",
+          "min_studies",
+          "coverage",
+          "fold_half",
+          "reason"
+        ],
+        "title": "IntervalOut",
+        "description": "Split-conformal interval of one metric over the held-out studies of the release. `fold_half` is the\nfactor by which the prediction is divided and multiplied (coverage `coverage` of new studies); None\nwhen it is not shown (`reason` says why)."
       },
       "janus__modelkit__router__ValidationOut": {
         "properties": {

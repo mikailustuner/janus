@@ -1,41 +1,28 @@
 "use client";
 /**
  * The model-kit list (model-kit Req 6.1): the drugs with an "Experimental" badge, a status badge,
- * a one-line reason from the codes and the number of studies, then the system report (counts by
- * status, pooled fold errors with n, the interval statement). Demo mode answers from the
+ * a one-line reason from the codes and the number of studies, and a link to the system report page. Demo mode answers from the
  * recorded file with no request.
  */
-import { useLocale } from "next-intl";
 import { useEffect, useId, useState } from "react";
 
-import {
-  BackLink,
-  GroupedList,
-  LargeTitle,
-  Row,
-  RowLink,
-  StatGrid,
-  StatTile,
-} from "@/components/cards";
+import { BackLink, GroupedList, LargeTitle, RowLink } from "@/components/cards";
 import { StateView } from "@/components/StateView";
 import { Button } from "@/components/ui";
 import { useCall } from "@/flow/useCall";
 import {
   NO_QUERY,
-  PAGE_SIZE,
   STATUSES,
+  PAGE_SIZE,
   type DrugSummary,
   type DrugsQuery,
-  type ModelKitClient,
   type Status,
-  type SystemOut,
 } from "@/modelkit/model";
 import { useT } from "@/theme/words";
 
 import {
   ExperimentalChip,
   Reason,
-  ScrollTable,
   Statements,
   StatusChip,
   useModelKitClient,
@@ -192,7 +179,22 @@ export function ModelKitList() {
                 total={call.data.total}
                 onPage={setOffset}
               />
-              <SystemReport client={client} />
+              <GroupedList
+                header={t("ModelKit.system.title")}
+                headingId="mk-report-link"
+                data-testid="mk-report-link"
+              >
+                <RowLink href="/research/model-kit/report">
+                  <span className="flex flex-col gap-1">
+                    <span className="text-lg">
+                      {t("ModelKit.list.reportLink")}
+                    </span>
+                    <span className="font-normal text-muted">
+                      {t("ModelKit.list.reportIntro")}
+                    </span>
+                  </span>
+                </RowLink>
+              </GroupedList>
             </>
           )}
         </>
@@ -272,157 +274,5 @@ function DrugRow({ d }: { d: DrugSummary }) {
         </span>
       </span>
     </RowLink>
-  );
-}
-
-function SystemReport({ client }: { client: ModelKitClient }) {
-  const t = useT();
-  const call = useCall(() => client.system(), [client]);
-  if (call.status === "error")
-    return (
-      <StateView
-        state="error"
-        messageKey={call.error.messageKey}
-        retry={call.retry}
-      />
-    );
-  if (call.status !== "ok")
-    return <StateView state="loading" label={t("ModelKit.loading")} />;
-  return <SystemBody s={call.data} />;
-}
-
-function SystemBody({ s }: { s: SystemOut }) {
-  const t = useT();
-  const locale = useLocale();
-  const pct = new Intl.NumberFormat(locale, {
-    style: "percent",
-    maximumFractionDigits: 0,
-  });
-  const nf = new Intl.NumberFormat(locale, { maximumFractionDigits: 2 });
-  return (
-    <section
-      className="flex min-w-0 flex-col gap-group"
-      aria-labelledby="mk-system"
-      data-testid="mk-system"
-    >
-      <h2 id="mk-system" className="group-header">
-        {t("ModelKit.system.title")}
-      </h2>
-      <StatGrid>
-        {STATUSES.map((st) => (
-          <StatTile
-            key={st}
-            value={String(s.by_status[st] ?? 0)}
-            label={t(`ModelKit.status.${st}`)}
-            sentence={t("ModelKit.system.countSentence", {
-              count: s.by_status[st] ?? 0,
-              status: t(`ModelKit.status.${st}`),
-            })}
-          />
-        ))}
-        <StatTile
-          value={String(s.n_drugs_both_tested)}
-          label={t("ModelKit.system.bothTested")}
-          sentence={t("ModelKit.system.bothTestedSentence", {
-            count: s.n_drugs_both_tested,
-          })}
-        />
-        <StatTile
-          value={String(s.n_studies)}
-          label={t("ModelKit.system.studies")}
-          sentence={t("ModelKit.system.studiesSentence", {
-            count: s.n_studies,
-          })}
-        />
-      </StatGrid>
-      <p>
-        {t("ModelKit.system.n", { drugs: s.n_drugs, studies: s.n_studies })}
-      </p>
-      <ScrollTable label={t("ModelKit.system.metrics")}>
-        <table className="tm-table words" data-testid="mk-system-metrics">
-          <caption className="sr-only">{t("ModelKit.system.metrics")}</caption>
-          <thead>
-            <tr>
-              <th scope="col">{t("ModelKit.val.metric")}</th>
-              <th scope="col">{t("ModelKit.system.drugs")}</th>
-              <th scope="col">{t("ModelKit.val.gmfe")}</th>
-              <th scope="col">{t("ModelKit.system.within")}</th>
-              <th scope="col">{t("ModelKit.system.points")}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {s.metrics.map((m) => (
-              <tr key={m.name}>
-                <th scope="row">{t(`ModelKit.val.${m.name}`)}</th>
-                <td className="mono">{m.n_drugs}</td>
-                <td className="mono">
-                  {m.gmfe === null ? "—" : nf.format(m.gmfe)}
-                </td>
-                <td>
-                  <span className="mono">
-                    {t("ModelKit.system.ofN", {
-                      k: m.within_2_fold,
-                      n: m.n_drugs,
-                    })}
-                  </span>
-                  {m.within_2_fold_share !== null &&
-                  m.wilson_low !== null &&
-                  m.wilson_high !== null ? (
-                    <span className="block text-muted">
-                      {t("ModelKit.system.wilson", {
-                        share: pct.format(m.within_2_fold_share),
-                        low: pct.format(m.wilson_low),
-                        high: pct.format(m.wilson_high),
-                      })}
-                    </span>
-                  ) : null}
-                </td>
-                <td>
-                  <span className="mono">
-                    {t("ModelKit.system.pointsOf", {
-                      k: m.points_within_2_fold,
-                      n: m.n_points,
-                    })}
-                  </span>
-                  {m.points_gmfe !== null ? (
-                    <span className="block text-muted">
-                      {t("ModelKit.system.pointsGmfe", {
-                        gmfe: nf.format(m.points_gmfe),
-                      })}
-                    </span>
-                  ) : null}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </ScrollTable>
-      <GroupedList
-        header={t("ModelKit.system.limits")}
-        headingId="mk-system-limits"
-        data-testid="mk-system-limits"
-      >
-        <Row data-testid="mk-interval">
-          <Reason code={s.conformal} />{" "}
-          {t("ModelKit.system.minDrugs", { n: s.min_drugs_for_interpretation })}
-        </Row>
-        <Row data-testid="mk-gate">
-          {t(
-            s.interpretable
-              ? "ModelKit.system.gateReached"
-              : "ModelKit.system.gateNotReached",
-            {
-              both: s.n_drugs_both_tested,
-              min: s.min_drugs_for_interpretation,
-            },
-          )}
-        </Row>
-        {s.caveats.map((c) => (
-          <Row key={c}>
-            <Reason code={c} />
-          </Row>
-        ))}
-      </GroupedList>
-    </section>
   );
 }

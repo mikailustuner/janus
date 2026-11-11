@@ -71,7 +71,9 @@ def seed_rows() -> list[Ev]:
     return [ev_from_mapping(d) for d in seed_dicts()]
 
 
-def write_run(data_dir: Path, rows: list[dict[str, Any]]) -> Path:
+def write_run(
+    data_dir: Path, rows: list[dict[str, Any]], metrics: dict[str, Any] | None = None
+) -> Path:
     """`<data_dir>/artifacts/modelkit_evidence/runs/<id>` with rows.parquet and manifest.json and a
     `current` link, as the pipeline runner leaves it."""
     base = data_dir / "artifacts" / "modelkit_evidence"
@@ -97,7 +99,7 @@ def write_run(data_dir: Path, rows: list[dict[str, Any]]) -> Path:
                 "run_id": RUN_ID,
                 "snapshot_date": "2026-11-11",
                 "license": "Per row: each row keeps the terms of its own source",
-                "metrics": {},
+                "metrics": metrics or {},
             }
         ),
         encoding="utf-8",

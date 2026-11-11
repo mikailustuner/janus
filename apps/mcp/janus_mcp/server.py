@@ -29,6 +29,7 @@ CANDIDATE = r"^(TR|US|EU):[a-z_]+:[0-9]{1,9}$"
 MONTH = r"^\d{4}-(0[1-9]|1[0-2])$"
 CASCADE_ID = r"^[A-Za-z0-9_]{1,64}$"
 DRUG_KEY = r"^[a-z][a-z0-9_]{0,31}$"
+PARAMETER = r"^[a-z][a-z_]{0,15}$"
 MAX_ITEMS: Final = 50
 READ_ONLY: Final = ToolAnnotations(
     read_only_hint=True, destructive_hint=False, idempotent_hint=True, open_world_hint=False
@@ -242,6 +243,37 @@ def build_server(config: Config, transport: httpx2.AsyncBaseTransport | None = N
         key: Annotated[str, Field(pattern=DRUG_KEY)],
     ) -> dict[str, Any]:
         payload = await api("GET", f"/modelkit/drugs/{key}")
+        return result(payload, *safety.MODELKIT_LINES)
+
+    @server.tool(
+        annotations=READ_ONLY,
+        description=(
+            "The evidence rows behind one drug of the experimental model kit (Janus GET "
+            "/modelkit/drugs/{key}/evidence): every value with its quoted source text, locator, "
+            "formulation, route, both automated reader verdicts, whether it built the set, tested "
+            "it or was left out and why. `key` comes from janus_modelkit_search; `parameter` "
+            "(for example cmax or auc_inf) and `role` (building, validation, excluded) keep only "
+            "those rows. Research use only. " + safety.DISCLAIMER
+        ),
+    )
+    async def janus_modelkit_evidence(
+        key: Annotated[str, Field(pattern=DRUG_KEY)],
+        parameter: Annotated[str, Field(pattern=PARAMETER)] | None = None,
+        role: Literal["building", "validation", "excluded"] | None = None,
+    ) -> dict[str, Any]:
+        payload = await api("GET", f"/modelkit/drugs/{key}/evidence")
+        if (parameter or role) and isinstance(payload, dict):
+            obj = cast(dict[str, Any], payload)
+            raw = obj.get("rows")
+            rows = cast(list[Any], raw) if isinstance(raw, list) else []
+            dicts = [cast(dict[str, Any], r) for r in rows if isinstance(r, dict)]
+            kept: list[dict[str, Any]] = [
+                r
+                for r in dicts
+                if (not parameter or r.get("parameter") == parameter)
+                and (not role or r.get("role") == role)
+            ]
+            payload = {**obj, "rows": kept}
         return result(payload, *safety.MODELKIT_LINES)
 
     return server

@@ -43,3 +43,14 @@ short quotes only; no raw downloads.
   them with the two readers. `modelkit_evidence` merges its current run and replaces the ClinicalTrials.gov rows of the
   seed files for the drugs it covers. Source, terms, processing date and the statement of modification are in
   `pipelines/sources.toml` and `NOTICE`.
+
+## Milestone M3 files
+- `product_forms.csv`: dosage form class (immediate release, solution, modified release, fixed-dose combination, other
+  route) and route of marketed products (brand names) of the 609-drug pool, from the public US product directory
+  (openFDA NDC, CC0; human prescription products only; a brand is kept only if all its directory products fall in one
+  class). Made by `pipelines/tools/build_modelkit_product_forms.py`. The formulation resolvers
+  (`pipelines/janus_pipelines/modelkit/formulation_a.py` and `formulation_b.py`) use it when a study names a marketed
+  product. The directory lists today's products, not necessarily the product used in a study.
+- `precision.json`: the measured precision of confirmed values on the fresh blinded sample of milestone M3 (two automated
+  review passes, evaluation only): counts only; the evidence job copies it into the release manifest and the API computes
+  the Wilson intervals. Read every value as unverified. Expert review has not yet been done.

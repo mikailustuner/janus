@@ -2909,7 +2909,9 @@
       "pages": "İlaç listesinin sayfaları",
       "prev": "Önceki",
       "next": "Sonraki",
-      "range": "{from}–{to} / {total}"
+      "range": "{from}–{to} / {total}",
+      "reportLink": "Sistem raporunu aç",
+      "reportIntro": "Tüm sürüm için sayılar, kapı, aralıklar, ölçülen kesinlik ve hâlâ eksik olanlar."
     },
     "system": {
       "title": "Sistem raporu",
@@ -2938,7 +2940,12 @@
       "noSetBody": "Kanıtlar henüz bir parametre kümesine izin vermiyor. Nedenler şunlar.",
       "warnings": "Uyarı",
       "halfLives": "Çıkarılan yarı ömür {implied} sa; belirtilen yarı ömür {stated} sa.",
-      "incomplete": "Küme eksik olduğundan dışa aktarılamaz. Eksik olanlar:"
+      "incomplete": "Küme eksik olduğundan dışa aktarılamaz. Eksik olanlar:",
+      "statusExplain": {
+        "validated": "Doğrulandı: EAA ve Cmax ayrı tutulan çalışmalarda sınandı ve her tekil gözlem öngörünün 2 katı içinde. Bu, ilacın geneli için değil, birkaç çalışma için geçerlidir.",
+        "not_validated": "Doğrulanmadı: küme, ayrı tutulan çalışmalarla hem EAA hem Cmax için sınanamadı (nedenlere bakın). Bu kümenin başarısızlığı değildir; kanıt henüz yetmiyor demektir.",
+        "failed": "Başarısız: ayrı tutulan en az bir gözlem öngörünün 2 katının dışında. Başarısız noktalar ve şüphelenilecek parametre aşağıda; başarısız ilaçlar asla gizlenmez."
+      }
     },
     "params": {
       "title": "Parametreler",
@@ -2979,7 +2986,10 @@
       "noPoints": "Ayrı tutulan gözlem yok, bu yüzden grafik yok.",
       "intervalN": "(En az {min} bağımsız ayrı tutulan çalışmanın {n} tanesi.)",
       "failedPoints": "2 katın dışındaki gözlemler",
-      "failedPoint": "{metric}, çalışma {study}: öngörülen / gözlenen = {ratio}"
+      "failedPoint": "{metric}, çalışma {study}: öngörülen / gözlenen = {ratio}",
+      "intervalHeading": "Öngörü aralıkları",
+      "intervalShown": "{metric}: yeni bir çalışmanın gözlenen değerinin, çalışmaların {coverage} oranında, öngörünün ÷/× {fold} katı içinde olması beklenir (n = {n} ayrı tutulan çalışma, tüm ilaçlar).",
+      "intervalNone": "{metric}: aralık gösterilmiyor."
     },
     "chart": {
       "title": "Gözlenen ile öngörülen",
@@ -3022,7 +3032,24 @@
       "studyId": "Çalışma kimliği",
       "derived": "Türetilmiş değer (hesaplanmış, kaynakta belirtilmemiş)",
       "showAll": "{count} satırın tümünü göster",
-      "showFewer": "Daha az satır göster"
+      "showFewer": "Daha az satır göster",
+      "formulation": "Formülasyon",
+      "route": "Yol",
+      "note": "Not",
+      "formulationHint": "Formülasyon ve yol, çalışma kaydından iki bağımsız otomatik çözümleyici tarafından belirlenir; “belirtilmemiş” kayıt söylemiyor demektir ve böyle bir değer küme oluşturmak veya sınamak için kullanılmaz.",
+      "formulations": {
+        "immediate_release": "Hemen salım",
+        "solution": "Çözelti",
+        "modified_release": "Değiştirilmiş salım",
+        "fixed_dose_combination": "Sabit doz kombinasyonu",
+        "other_route": "Başka yol",
+        "unspecified": "Belirtilmemiş"
+      },
+      "routes": {
+        "oral": "Ağızdan",
+        "iv": "Damar içi",
+        "unknown": "Belirtilmemiş"
+      }
     },
     "evParam": {
       "cl": "Klerens (CL)",
@@ -3113,8 +3140,43 @@
       "point_outside_2_fold": "Ayrı tutulan en az bir gözlem, öngörünün 2 katının dışında.",
       "all_points_within_2_fold": "EAA ve Cmax sınandı ve ayrı tutulan her gözlem 2 kat içinde.",
       "cl_from_dose_and_auc": "Türetilmiş: CL/F = doz / sonsuza kadar EAA (tek çalışma kolu; damar içi dozda CL).",
-      "confirmed_precision_below_target": "Onaylanan değerlerden alınan kör bir örnekte iki otomatik gözden geçirme turu değerlerin %73'ünü doğru buldu (n = 97, %95 aralığı %64 ile %81), bu kilometre taşının %90 hedefinin altında. Her değeri doğrulanmamış sayın."
+      "confirmed_precision_below_target": "Onaylı değerlerin kör örnekleminde iki otomatik inceleme geçişi, bu kilometre taşının %90 hedefinden daha az doğru değer buldu (ölçülen pay, n ve aralık sistem raporunda). Her değeri doğrulanmamış sayın.",
+      "interval_shown": "Aralıklar gösteriliyor: en az 20 bağımsız ayrı tutulan çalışma var.",
+      "gate_not_interpretable": "Ayrı tutulan çalışmalarda hem EAA hem Cmax sınanmış ilaç sayısı 10’dan az; kapı yorumlanamaz.",
+      "no_drug_validated": "Doğrulanmış ilaç yok.",
+      "intervals_not_shown": "Öngörü aralığı gösterilmiyor: ayrı tutulan çalışma yetersiz.",
+      "formulation_often_unspecified": "Onaylı değerlerin dörtte birinden fazlasında formülasyon belirtilmemiş.",
+      "fewer_than_150_sets": "Parametre kümesi olan ilaç sayısı 150’den az."
     },
-    "scrollHint": "Tüm sütunları görmek için yana kaydırın."
+    "scrollHint": "Tüm sütunları görmek için yana kaydırın.",
+    "report": {
+      "title": "Sistem raporu",
+      "back": "İlaçlara dön",
+      "intro": "Tüm sürümün neyi söyleyip neyi söyleyemeyeceği. Deneysel; her değer otomatik okuyucularca okundu ve onaylandı, otomatik inceleme geçişleri ise ne sıklıkla doğru olduklarını ölçtü.",
+      "countsTitle": "Sayılar",
+      "inStore": "Bu sürümde {count, plural, one {# ilaç} other {# ilaç}}",
+      "withSet": "Parametre kümeleri",
+      "withSetSentence": "{set, plural, one {# ilacın} other {# ilacın}} parametre kümesi, {complete} tanesinin dışa aktarılabilir eksiksiz kümesi var.",
+      "rows": "Kanıt satırları",
+      "rowsSentence": "{rows} satır, {confirmed} tanesi iki otomatik okuyucuca onaylı, bunların {parent} tanesi ana ilaç için.",
+      "formulationTitle": "Onaylı değerlerin formülasyonu",
+      "formulationIntro": "Formülasyonu çalışma kaydında belirtilen onaylı ana ilaç değerlerinin payı: {share} ({n} değerin {k} tanesi). Formülasyonu belirtilmemiş değer “belirtilmemiş” kalır ve küme oluşturmak veya sınamak için kullanılmaz.",
+      "formulationTable": "Onaylı ana ilaç değerleri, formülasyona ve yola göre",
+      "kind": "Tür",
+      "values": "Değerler",
+      "intervalsTitle": "Öngörü aralıkları",
+      "intervalsSentence": "{metric}: aralık için gereken en az {min} bağımsız ayrı tutulan çalışmanın {n} tanesi var.",
+      "intervalsShownSentence": "{metric}: gösteriliyor (çalışmaların {coverage} oranı için ÷/× {fold}, n = {n}).",
+      "precisionTitle": "Onaylı değerlerin kesinliği",
+      "precisionLine": "Örneklenen değerlerin {share} oranı doğruydu (%95 Wilson aralığı {low} – {high}, n = {n}; kör örneklem, iki otomatik inceleme geçişi, {date}).",
+      "precisionConservative": "Temkinli okuma, iki geçişin de doğru demediği her şey yanlış sayılır: {share} ({low} – {high}, n = {n}).",
+      "precisionFormulation": "Yalnızca formülasyon alanı: {share} ({low} – {high}, n = {n}).",
+      "precisionTarget": "Bu kilometre taşının hedefi: {target}. Hedefin altında her değeri doğrulanmamış sayın.",
+      "precisionNone": "Bu sürüm için kesinlik ölçülmedi.",
+      "missingTitle": "Eksik olanlar",
+      "noSetTitle": "İlaçların neden parametre kümesi yok",
+      "notValidatedTitle": "İlaçların neden doğrulanmadığı",
+      "drugsCount": "{count, plural, one {# ilaç} other {# ilaç}}"
+    }
   }
 }

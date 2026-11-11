@@ -7,8 +7,9 @@ Research use only. Not for clinical decisions.
 
 from __future__ import annotations
 
+import math
 import re
-from typing import Any, Literal
+from typing import Any, Literal, cast
 
 from fastapi import Request
 from fastapi.responses import JSONResponse, Response
@@ -21,7 +22,13 @@ from janus.modelkit.builder import NoSet, ParameterSet
 from janus.modelkit.evidence import Ev
 from janus.modelkit.reasons import TEXT
 from janus.modelkit.store import DrugEntry, ModelkitHolder, Release
-from janus.modelkit.validate import MIN_STUDIES_FOR_INTERVAL, Metric, Validation
+from janus.modelkit.validate import (
+    MIN_STUDIES_FOR_INTERVAL,
+    IntervalInfo,
+    Metric,
+    Validation,
+    wilson,
+)
 
 router = medical_router()
 UNAVAILABLE = {"error": "modelkit_unavailable"}
@@ -137,6 +144,20 @@ class DrugsOut(_Out):
     counts: dict[str, int]  # whole release: by status, plus `all`, `with_set`
 
 
+class IntervalOut(_Out):
+    """Split-conformal interval of one metric over the held-out studies of the release. `fold_half` is the
+    factor by which the prediction is divided and multiplied (coverage `coverage` of new studies); None
+    when it is not shown (`reason` says why)."""
+
+    metric: Literal["auc", "cmax"]
+    shown: bool
+    n_studies: int
+    min_studies: int
+    coverage: float
+    fold_half: float | None
+    reason: str | None
+
+
 class DrugOut(_Out):
     release: dict[str, Any]
     statements: Statements
@@ -144,6 +165,7 @@ class DrugOut(_Out):
     parameter_set: SetOut | None
     no_set_reasons: list[str]
     validation: ValidationOut
+    intervals: list[IntervalOut]
     targets: list[str]
     reason_text: dict[str, str]
 
@@ -213,6 +235,27 @@ class SystemMetricOut(_Out):
     points_gmfe: float | None
 
 
+class PrecisionOut(_Out):
+    """Measured precision of confirmed values on a blinded sample (two automated review passes)."""
+
+    measured_on: str
+    n: int
+    correct: int
+    share: float
+    wilson_low: float
+    wilson_high: float
+    n_conservative: int
+    share_conservative: float
+    wilson_low_conservative: float
+    wilson_high_conservative: float
+    formulation_n: int | None
+    formulation_correct: int | None
+    formulation_share: float | None
+    formulation_wilson_low: float | None
+    formulation_wilson_high: float | None
+    target: float
+
+
 class SystemOut(_Out):
     release: dict[str, Any]
     statements: Statements
@@ -224,6 +267,18 @@ class SystemOut(_Out):
     min_drugs_for_interpretation: int
     n_drugs_both_tested: int
     conformal: str
+    intervals: list[IntervalOut]
+    n_with_set: int
+    n_complete_set: int
+    rows_total: int
+    rows_confirmed: int
+    confirmed_parent_rows: int
+    formulation_counts: dict[str, int]  # confirmed parent rows by resolved formulation
+    route_counts: dict[str, int]
+    not_validated_reasons: dict[str, int]
+    no_set_reasons: dict[str, int]
+    precision: PrecisionOut | None
+    missing: list[str]  # codes of what the release still lacks
     caveats: list[str]
     reason_text: dict[str, str]
 
@@ -255,6 +310,113 @@ def _drug(rel: Release, key: str) -> DrugEntry | JSONResponse:
     if d is None:
         return JSONResponse({"error": "unknown_drug"}, status_code=404)
     return d
+
+
+def _interval(i: IntervalInfo, drug_can_predict: bool) -> IntervalOut:
+    shown = i.shown and drug_can_predict and i.fold_width is not None
+    reason = (
+        None if shown else "interval_n_too_small" if not i.shown else "set_cannot_predict_metric"
+    )
+    return IntervalOut(
+        metric=i.name,
+        shown=shown,
+        n_studies=i.n_studies,
+        min_studies=MIN_STUDIES_FOR_INTERVAL,
+        coverage=i.coverage,
+        fold_half=math.sqrt(i.fold_width) if shown and i.fold_width else None,
+        reason=reason,
+    )
+
+
+def drug_intervals(rel: Release, d: DrugEntry) -> list[IntervalOut]:
+    ps = d.built
+    out: list[IntervalOut] = []
+    for i in rel.system.intervals:
+        can = (
+            isinstance(ps, ParameterSet)
+            and ps.complete
+            and (i.name == "auc" or ps.engine()[3] is not None)
+        )
+        out.append(_interval(i, can))
+    return out
+
+
+def _share(k: int, n: int) -> tuple[float, float, float]:
+    w = wilson(k, n) or (0.0, 0.0)
+    return (k / n if n else 0.0), w[0], w[1]
+
+
+def precision_out(raw: Any) -> PrecisionOut | None:
+    if not isinstance(raw, dict):
+        return None
+    raw = cast(dict[str, Any], raw)
+    try:
+        n, k = int(raw["n"]), int(raw["correct"])
+        nc, kc = int(raw["n_conservative"]), int(raw["correct_conservative"])
+        fn = raw.get("formulation_n")
+        fk = raw.get("formulation_correct")
+        a, lo, hi = _share(k, n)
+        ac, loc, hic = _share(kc, nc)
+        fa = _share(int(fk), int(fn)) if fn else None
+        return PrecisionOut(
+            measured_on=str(raw["measured_on"]), n=n, correct=k, share=a, wilson_low=lo, wilson_high=hi,
+            n_conservative=nc, share_conservative=ac, wilson_low_conservative=loc, wilson_high_conservative=hic,
+            formulation_n=int(fn) if fn else None, formulation_correct=int(fk) if fn else None,
+            formulation_share=fa[0] if fa else None, formulation_wilson_low=fa[1] if fa else None,
+            formulation_wilson_high=fa[2] if fa else None, target=float(raw.get("target", 0.9)),
+        )  # fmt: skip
+    except (KeyError, TypeError, ValueError):
+        return None
+
+
+def _system_extra(rel: Release) -> dict[str, Any]:
+    """Counts over the rows and sets of the release, computed once per release object."""
+    cached: dict[str, Any] | None = rel.__dict__.get("_system_extra")
+    if cached is not None:
+        return cached
+    form: dict[str, int] = {}
+    route: dict[str, int] = {}
+    rows = confirmed = parent = n_set = n_complete = 0
+    no_set: dict[str, int] = {}
+    for d in rel.drugs.values():
+        for r in d.rows:
+            rows += 1
+            if r.confirmed:
+                confirmed += 1
+                if r.analyte_class == "parent" and r.origin != "derived":
+                    parent += 1
+                    form[r.formulation] = form.get(r.formulation, 0) + 1
+                    route[r.route] = route.get(r.route, 0) + 1
+        if isinstance(d.built, ParameterSet):
+            n_set += 1
+            n_complete += d.built.complete
+        else:
+            for why in d.built.reasons:
+                no_set[why] = no_set.get(why, 0) + 1
+    cached = {
+        "rows": rows, "confirmed": confirmed, "parent": parent, "form": dict(sorted(form.items())),
+        "route": dict(sorted(route.items())), "n_set": n_set, "n_complete": n_complete,
+        "no_set": dict(sorted(no_set.items())),
+    }  # fmt: skip
+    rel.__dict__["_system_extra"] = cached
+    return cached
+
+
+def missing_codes(rel: Release, extra: dict[str, Any]) -> list[str]:
+    s = rel.system
+    out: list[str] = []
+    if not s.interpretable:
+        out.append("gate_not_interpretable")
+    if s.by_status.get("validated", 0) == 0:
+        out.append("no_drug_validated")
+    if not any(i.shown for i in s.intervals):
+        out.append("intervals_not_shown")
+    if extra["parent"] and extra["form"].get("unspecified", 0) / extra["parent"] > 0.25:
+        out.append("formulation_often_unspecified")
+    if extra["n_set"] < 150:
+        out.append("fewer_than_150_sets")
+    out.append("expert_review_pending")
+    return out
 
 
 def _metric(m: Metric) -> MetricOut:
@@ -449,6 +611,7 @@ def system(request: Request, release: str | None = None) -> Any:
     if isinstance(rel, JSONResponse):
         return rel
     s = rel.system
+    ex_ = _system_extra(rel)
     return SystemOut(
         release=rel.info(),
         statements=Statements(),
@@ -460,6 +623,18 @@ def system(request: Request, release: str | None = None) -> Any:
         min_drugs_for_interpretation=s.min_drugs_for_interpretation,
         n_drugs_both_tested=s.n_drugs_both_tested,
         conformal=s.conformal,
+        intervals=[_interval(i, True) for i in s.intervals],
+        n_with_set=ex_["n_set"],
+        n_complete_set=ex_["n_complete"],
+        rows_total=ex_["rows"],
+        rows_confirmed=ex_["confirmed"],
+        confirmed_parent_rows=ex_["parent"],
+        formulation_counts=ex_["form"],
+        route_counts=ex_["route"],
+        not_validated_reasons=s.reasons_not_validated,
+        no_set_reasons=ex_["no_set"],
+        precision=precision_out(rel.manifest_metrics.get("precision")),
+        missing=missing_codes(rel, ex_),
         caveats=[
             "n_very_small",
             "two_automated_passes",
@@ -487,6 +662,7 @@ def drug(request: Request, key: str, release: str | None = None) -> Any:
         parameter_set=set_out(ps) if isinstance(ps, ParameterSet) else None,
         no_set_reasons=list(ps.reasons) if isinstance(ps, NoSet) else [],
         validation=validation_out(d.validation),
+        intervals=drug_intervals(rel, d),
         targets=list(ex.TARGETS) if isinstance(ps, ParameterSet) and ps.complete else [],
         reason_text=TEXT,
     )

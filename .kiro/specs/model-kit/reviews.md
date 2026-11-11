@@ -100,3 +100,35 @@ that does not say tablet or solution) and cannot build or test (design DP-M3); o
 formulation and co-administration filters. A set needs a clearance and a volume (or a half-life), most
 ClinicalTrials.gov records report only Cmax, AUC or Tmax, and the held-out rule makes a study that also reports a
 half-life a building study. Clearances are derived only for a single-dose AUC to infinity with a known route.
+
+# Review notes: model kit M3 (automated checks only; expert review has not yet been done)
+
+M3 resolved the formulation and route of each value from the study record with two independent automated resolvers
+(design section 13) and re-ran the M2 pipeline on the same bulk file. Pre-registered before any result; figures below are
+the pre-registered metrics. No rule of the builder, the held-out split, the status function or the confirmation changed.
+
+| | M2 | M3 |
+|---|---|---|
+| Confirmed stated parent values of ClinicalTrials.gov | 2,392 | 2,565 |
+| Formulation stated (not "unspecified") | 1,248 (52.2 %) | 1,944 (75.8 %) |
+| Immediate release or solution (can build or test) | 809 (33.8 %) | 1,416 (55.2 %) |
+| Route known | 1,842 (77.0 %) | 2,199 (85.7 %) |
+| Drugs with a parameter set / complete set | 18 / 4 | 26 / 8 |
+| Validated / Failed / Not validated | 0 / 1 / 403 | 0 / 1 / 403 |
+| Drugs with AUC and Cmax both tested on held-out studies | 0 | 0 (one drug with an AUC point, one with a Cmax point) |
+| Gate (at least 10 drugs with both) | not interpretable | not interpretable |
+| Prediction intervals | not shown | not shown (1 held-out study per metric; 20 needed) |
+| Precision of confirmed values (blinded, two automated review passes) | 0.73 (0.64 to 0.81), n = 97 | 0.61 (0.51 to 0.70), n = 92 |
+| Precision of the formulation field, values with a stated formulation | not measured | 0.97 (0.92 to 0.99), n = 104 |
+
+The resolvers more than halved the unspecified formulations among confirmed values but this did not produce a validated
+drug or an interpretable gate: a set needs clearance and volume (labels and reviews, M5) and a test needs a study that
+reports Cmax or AUC but not a half-life. The precision of confirmed values is below the target of 0.90 and, on this fresh
+sample of other studies, lower than in M2; the intervals overlap, the sample is small, and the errors are the known classes
+(an enantiomer or racemate read as the drug, metabolites of a prodrug, renal or creatinine clearance read as clearance,
+a dose of the partner drug, another active drug in the arm), none of them new in M3. What the resolvers still get wrong:
+the route kept from the readers where the resolvers found an intravenous and an oral statement together (the readers'
+guess survives), a fixed-dose-combination word winning over a modified-release word, an extended-release product named in an
+arm text that the resolvers left unspecified.
+Limits: the resolvers were developed on the same registry; two review passes of one model family; precision, not recall; the
+product table lists today's directory products.

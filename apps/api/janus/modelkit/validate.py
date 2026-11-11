@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import math
 from collections import defaultdict
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Literal
 
 from janus.modelkit.builder import NoSet, ParameterSet
@@ -230,6 +230,38 @@ class SystemMetric:
 
 
 @dataclass(frozen=True)
+class IntervalInfo:
+    """Split-conformal interval of one metric over all held-out studies of the release (DP-M8).
+    Shown only from `MIN_STUDIES_FOR_INTERVAL` studies; below that `fold_width` is None."""
+
+    name: Literal["auc", "cmax"]
+    n_studies: int
+    shown: bool
+    fold_width: float | None
+    coverage: float
+
+
+COVERAGE = 0.8
+
+
+def conformal_intervals(vals: list[Validation]) -> tuple[IntervalInfo, IntervalInfo]:
+    """One score per (drug, held-out study, metric): the geometric mean of the study's ratios."""
+    out: list[IntervalInfo] = []
+    for name in ("auc", "cmax"):
+        per: dict[tuple[str, str], list[float]] = defaultdict(list)
+        for v in vals:
+            for p in v.points:
+                if p.metric == name:
+                    per[(v.drug_key, p.study_id)].append(math.log(p.ratio))
+        ratios = [math.exp(sum(x) / len(x)) for x in per.values()]
+        width = conformal_fold_width(ratios, COVERAGE)
+        out.append(
+            IntervalInfo(name, len(ratios), width is not None, width, COVERAGE)  # type: ignore[arg-type]
+        )
+    return out[0], out[1]
+
+
+@dataclass(frozen=True)
 class SystemReport:
     n_drugs: int
     by_status: dict[str, int]
@@ -239,6 +271,11 @@ class SystemReport:
     min_drugs_for_interpretation: int
     conformal: str
     n_drugs_both_tested: int = 0  # drugs with AUC and Cmax both tested on held-out studies
+    intervals: tuple[IntervalInfo, IntervalInfo] = (
+        IntervalInfo("auc", 0, False, None, COVERAGE),
+        IntervalInfo("cmax", 0, False, None, COVERAGE),
+    )
+    reasons_not_validated: dict[str, int] = field(default_factory=lambda: dict[str, int]())
 
 
 def system_report(vals: list[Validation]) -> SystemReport:
@@ -269,6 +306,12 @@ def system_report(vals: list[Validation]) -> SystemReport:
         )
     both = sum(1 for v in vals if all(m.tested for m in v.metrics))
     studies = sum(max(m.n_studies for m in v.metrics) for v in vals)
+    iv = conformal_intervals(vals)
+    reasons: dict[str, int] = defaultdict(int)
+    for v in vals:
+        if v.status == "not_validated":
+            for r in v.reasons:
+                reasons[r] += 1
     return SystemReport(
         len(vals),
         by_status,
@@ -276,6 +319,8 @@ def system_report(vals: list[Validation]) -> SystemReport:
         studies,
         both >= MIN_DRUGS_FOR_INTERPRETATION,
         MIN_DRUGS_FOR_INTERPRETATION,
-        "interval_n_too_small",
+        "interval_shown" if any(i.shown for i in iv) else "interval_n_too_small",
         both,
+        iv,
+        dict(sorted(reasons.items())),
     )

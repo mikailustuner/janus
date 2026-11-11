@@ -2909,7 +2909,9 @@
       "pages": "Seiten der Arzneimittelliste",
       "prev": "Zurück",
       "next": "Weiter",
-      "range": "{from}–{to} von {total}"
+      "range": "{from}–{to} von {total}",
+      "reportLink": "Systembericht öffnen",
+      "reportIntro": "Zahlen, Tor, Intervalle, gemessene Genauigkeit und was noch fehlt, für die ganze Version."
     },
     "system": {
       "title": "Systembericht",
@@ -2938,7 +2940,12 @@
       "noSetBody": "Die Evidenz erlaubt noch keinen Parametersatz. Das sind die Gründe.",
       "warnings": "Warnung",
       "halfLives": "Abgeleitete Halbwertszeit {implied} h; angegebene Halbwertszeit {stated} h.",
-      "incomplete": "Der Satz ist unvollständig und kann nicht exportiert werden. Es fehlt:"
+      "incomplete": "Der Satz ist unvollständig und kann nicht exportiert werden. Es fehlt:",
+      "statusExplain": {
+        "validated": "Validiert: AUC und Cmax wurden an zurückgehaltenen Studien geprüft, und jede einzelne Beobachtung liegt innerhalb des Zweifachen der Vorhersage. Das beschreibt wenige Studien, nicht den Wirkstoff im Allgemeinen.",
+        "not_validated": "Nicht validiert: Der Satz konnte mit zurückgehaltenen Studien nicht für AUC und Cmax geprüft werden (siehe Gründe). Das ist kein Scheitern des Satzes; die Evidenz reicht noch nicht.",
+        "failed": "Fehlgeschlagen: Mindestens eine zurückgehaltene Beobachtung liegt außerhalb des Zweifachen der Vorhersage. Die betroffenen Punkte und der verdächtige Parameter stehen unten; fehlgeschlagene Wirkstoffe werden nie verborgen."
+      }
     },
     "params": {
       "title": "Parameter",
@@ -2979,7 +2986,10 @@
       "noPoints": "Es gibt keine zurückgehaltene Beobachtung, daher kein Diagramm.",
       "intervalN": "({n} von mindestens {min} unabhängigen zurückgehaltenen Studien.)",
       "failedPoints": "Beobachtungen außerhalb des Faktors 2",
-      "failedPoint": "{metric}, Studie {study}: vorhergesagt / beobachtet = {ratio}"
+      "failedPoint": "{metric}, Studie {study}: vorhergesagt / beobachtet = {ratio}",
+      "intervalHeading": "Vorhersageintervalle",
+      "intervalShown": "{metric}: Der beobachtete Wert einer neuen Studie liegt bei {coverage} der Studien voraussichtlich innerhalb von ÷/× {fold} der Vorhersage (n = {n} zurückgehaltene Studien, alle Wirkstoffe).",
+      "intervalNone": "{metric}: Es wird kein Intervall gezeigt."
     },
     "chart": {
       "title": "Beobachtet gegen vorhergesagt",
@@ -3022,7 +3032,24 @@
       "studyId": "Studien-ID",
       "derived": "Abgeleiteter Wert (berechnet, nicht in der Quelle angegeben)",
       "showAll": "Alle {count} Zeilen anzeigen",
-      "showFewer": "Weniger Zeilen anzeigen"
+      "showFewer": "Weniger Zeilen anzeigen",
+      "formulation": "Formulierung",
+      "route": "Applikationsweg",
+      "note": "Hinweis",
+      "formulationHint": "Formulierung und Applikationsweg werden aus dem Studiendatensatz von zwei unabhängigen automatischen Auflösern bestimmt; „nicht angegeben“ heißt, der Datensatz sagt es nicht, und ein solcher Wert wird nicht zum Aufbau oder Test eines Satzes verwendet.",
+      "formulations": {
+        "immediate_release": "Sofortige Freisetzung",
+        "solution": "Lösung",
+        "modified_release": "Veränderte Freisetzung",
+        "fixed_dose_combination": "Fixe Kombination",
+        "other_route": "Anderer Weg",
+        "unspecified": "Nicht angegeben"
+      },
+      "routes": {
+        "oral": "Oral",
+        "iv": "Intravenös",
+        "unknown": "Nicht angegeben"
+      }
     },
     "evParam": {
       "cl": "Clearance (CL)",
@@ -3113,8 +3140,43 @@
       "point_outside_2_fold": "Mindestens eine zurückgehaltene Beobachtung liegt außerhalb des Faktors 2 der Vorhersage.",
       "all_points_within_2_fold": "AUC und Cmax wurden geprüft und jede zurückgehaltene Beobachtung liegt innerhalb des Faktors 2.",
       "cl_from_dose_and_auc": "Abgeleitet: CL/F = Dosis / AUC bis unendlich eines Studienarms (CL bei intravenöser Dosis).",
-      "confirmed_precision_below_target": "In einer verblindeten Stichprobe bestätigter Werte hielten zwei automatisierte Prüfdurchläufe 73 % für richtig (n = 97, 95-%-Intervall 64 bis 81 %), unter dem Ziel von 90 % dieses Meilensteins. Jeden Wert als ungeprüft lesen."
+      "confirmed_precision_below_target": "In einer verblindeten Stichprobe bestätigter Werte fanden zwei automatische Prüfdurchgänge weniger richtige Werte als das Ziel von 90 % dieses Meilensteins (Anteil, n und Intervall stehen im Systembericht). Jeden Wert als ungeprüft lesen.",
+      "interval_shown": "Intervalle werden gezeigt: mindestens 20 unabhängige zurückgehaltene Studien.",
+      "gate_not_interpretable": "Weniger als 10 Wirkstoffe haben AUC und Cmax an zurückgehaltenen Studien geprüft, das Tor lässt sich nicht deuten.",
+      "no_drug_validated": "Kein Wirkstoff ist validiert.",
+      "intervals_not_shown": "Es werden keine Vorhersageintervalle gezeigt: zu wenige zurückgehaltene Studien.",
+      "formulation_often_unspecified": "Bei mehr als einem Viertel der bestätigten Werte ist die Formulierung nicht angegeben.",
+      "fewer_than_150_sets": "Weniger als 150 Wirkstoffe haben einen Parametersatz."
     },
-    "scrollHint": "Zum Anzeigen aller Spalten seitlich scrollen."
+    "scrollHint": "Zum Anzeigen aller Spalten seitlich scrollen.",
+    "report": {
+      "title": "Systembericht",
+      "back": "Zurück zu den Wirkstoffen",
+      "intro": "Was die ganze Version sagen kann und was nicht. Experimentell; jeder Wert wurde von automatischen Lesern gelesen und bestätigt, und automatische Prüfdurchgänge haben gemessen, wie oft sie richtig lagen.",
+      "countsTitle": "Zahlen",
+      "inStore": "{count, plural, one {# Wirkstoff} other {# Wirkstoffe}} in dieser Version",
+      "withSet": "Parametersätze",
+      "withSetSentence": "{set, plural, one {# Wirkstoff hat} other {# Wirkstoffe haben}} einen Parametersatz, {complete} davon einen vollständigen, der exportiert werden kann.",
+      "rows": "Evidenzzeilen",
+      "rowsSentence": "{rows} Zeilen, {confirmed} von beiden automatischen Lesern bestätigt, davon {parent} für den Wirkstoff selbst.",
+      "formulationTitle": "Formulierung der bestätigten Werte",
+      "formulationIntro": "Anteil der bestätigten Werte des Wirkstoffs selbst, deren Formulierung im Studiendatensatz angegeben ist: {share} ({k} von {n}). Ein Wert ohne angegebene Formulierung bleibt „nicht angegeben“ und wird nicht zum Aufbau oder Test eines Satzes verwendet.",
+      "formulationTable": "Bestätigte Werte des Wirkstoffs nach Formulierung und Applikationsweg",
+      "kind": "Art",
+      "values": "Werte",
+      "intervalsTitle": "Vorhersageintervalle",
+      "intervalsSentence": "{metric}: {n} der mindestens {min} unabhängigen zurückgehaltenen Studien, die für ein Intervall nötig sind.",
+      "intervalsShownSentence": "{metric}: gezeigt (÷/× {fold} für {coverage} der Studien, n = {n}).",
+      "precisionTitle": "Genauigkeit der bestätigten Werte",
+      "precisionLine": "{share} der gezogenen Werte waren richtig (95-%-Wilson-Intervall {low} bis {high}, n = {n}; verblindete Stichprobe, zwei automatische Prüfdurchgänge, {date}).",
+      "precisionConservative": "Vorsichtige Lesart, alles, was nicht von beiden Durchgängen als richtig bezeichnet wurde, zählt als falsch: {share} ({low} bis {high}, n = {n}).",
+      "precisionFormulation": "Das Formulierungsfeld allein: {share} ({low} bis {high}, n = {n}).",
+      "precisionTarget": "Ziel dieses Meilensteins: {target}. Unter dem Ziel jeden Wert als ungeprüft lesen.",
+      "precisionNone": "Für diese Version wurde keine Genauigkeit gemessen.",
+      "missingTitle": "Was fehlt",
+      "noSetTitle": "Warum Wirkstoffe keinen Parametersatz haben",
+      "notValidatedTitle": "Warum Wirkstoffe nicht validiert sind",
+      "drugsCount": "{count, plural, one {# Wirkstoff} other {# Wirkstoffe}}"
+    }
   }
 }
