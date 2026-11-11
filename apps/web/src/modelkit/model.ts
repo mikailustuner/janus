@@ -254,7 +254,9 @@ export function pageOfDrugs(all: DrugsOut, query: DrugsQuery): DrugsOut {
   const q = query.q.trim().toLowerCase();
   const kept = all.drugs.filter(
     (d) =>
-      (!q || d.key.includes(q.replaceAll(" ", "_")) || d.name.toLowerCase().includes(q)) &&
+      (!q ||
+        d.key.includes(q.replaceAll(" ", "_")) ||
+        d.name.toLowerCase().includes(q)) &&
       (!query.status || d.status === query.status) &&
       (!query.hasSet || d.has_set),
   );

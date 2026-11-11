@@ -89,7 +89,9 @@ describe("list paging and search", () => {
         offset: 25,
         limit: 25,
       }),
-    ).toBe("modelkit/drugs?q=tra&status=failed&has_set=true&limit=25&offset=25");
+    ).toBe(
+      "modelkit/drugs?q=tra&status=failed&has_set=true&limit=25&offset=25",
+    );
   });
   it("the demo page applies the same filters as the API and counts the whole list", () => {
     const all = decode(drugsOut, fx.drugs);
@@ -112,14 +114,18 @@ describe("list paging and search", () => {
     expect(found.counts).toEqual(whole.counts); // counts ignore the filters
     for (const st of ["validated", "not_validated", "failed"] as const)
       expect(
-        pageOfDrugs(all.value, { ...NO_QUERY, status: st, limit: 1000 }).drugs.every(
-          (d) => d.status === st,
-        ),
+        pageOfDrugs(all.value, {
+          ...NO_QUERY,
+          status: st,
+          limit: 1000,
+        }).drugs.every((d) => d.status === st),
       ).toBe(true);
     expect(
-      pageOfDrugs(all.value, { ...NO_QUERY, hasSet: true, limit: 1000 }).drugs.every(
-        (d) => d.has_set,
-      ),
+      pageOfDrugs(all.value, {
+        ...NO_QUERY,
+        hasSet: true,
+        limit: 1000,
+      }).drugs.every((d) => d.has_set),
     ).toBe(true);
   });
 });

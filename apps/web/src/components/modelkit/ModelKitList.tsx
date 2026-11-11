@@ -192,10 +192,8 @@ export function ModelKitList() {
                 total={call.data.total}
                 onPage={setOffset}
               />
+              <SystemReport client={client} />
             </>
-          )}
-          {call.status === "ok" && call.data.counts.all === 0 ? null : (
-            <SystemReport client={client} />
           )}
         </>
       )}
@@ -413,7 +411,10 @@ function SystemBody({ s }: { s: SystemOut }) {
             s.interpretable
               ? "ModelKit.system.gateReached"
               : "ModelKit.system.gateNotReached",
-            { both: s.n_drugs_both_tested, min: s.min_drugs_for_interpretation },
+            {
+              both: s.n_drugs_both_tested,
+              min: s.min_drugs_for_interpretation,
+            },
           )}
         </Row>
         {s.caveats.map((c) => (
