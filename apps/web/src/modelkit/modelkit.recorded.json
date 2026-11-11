@@ -94,8 +94,8 @@
     "status": "not_validated",
     "status_reasons": [
      "no_parameter_set",
-     "no confirmed clearance (intravenous CL or oral CL/F)",
-     "intravenous evidence is incomplete (clearance and volume are both needed)"
+     "no_confirmed_clearance",
+     "iv_evidence_incomplete"
     ],
     "has_set": false,
     "set_complete": false,
@@ -173,8 +173,8 @@
     "status": "not_validated",
     "status_reasons": [
      "no_parameter_set",
-     "no confirmed clearance (intravenous CL or oral CL/F)",
-     "no confirmed volume (Vss or Vd, or V/F)"
+     "no_confirmed_clearance",
+     "no_confirmed_volume"
     ],
     "has_set": false,
     "set_complete": false,
@@ -213,8 +213,8 @@
     "status": "not_validated",
     "status_reasons": [
      "no_parameter_set",
-     "no confirmed clearance (intravenous CL or oral CL/F)",
-     "no confirmed volume (Vss or Vd, or V/F)"
+     "no_confirmed_clearance",
+     "no_confirmed_volume"
     ],
     "has_set": false,
     "set_complete": false,
@@ -289,12 +289,64 @@
   "n_studies": 4,
   "interpretable": false,
   "min_drugs_for_interpretation": 10,
-  "conformal": "not shown: fewer than 20 independent held-out studies",
+  "conformal": "interval_n_too_small",
   "caveats": [
-   "n is very small: shares and fold errors describe these drugs, not drugs in general",
-   "every held-out observation was read automatically and confirmed by two automated passes",
-   "Expert review has not yet been done"
-  ]
+   "n_very_small",
+   "two_automated_passes",
+   "expert_review_pending"
+  ],
+  "reason_text": {
+   "not_confirmed": "The two readers did not both agree with the extracted value.",
+   "analyte_not_parent": "The value is not for the parent drug.",
+   "coadministered": "The arm gave another active drug with it.",
+   "fixed_dose_combination": "The product is a fixed-dose combination.",
+   "formulation_not_immediate_release": "The formulation is not immediate-release or a solution.",
+   "bound_not_a_value": "The source gives only a bound (for example 'more than'), not a value.",
+   "per_kg_not_converted": "The value is per kilogram; there is no body weight, so it is not converted.",
+   "held_out_study": "Held-out study: its observations only test a set, they never build one.",
+   "observation_in_building_study": "An observation in a study that also reports building parameters; not tested.",
+   "not_needed_preferred_basis": "Not needed: a preferred basis or a pooled value was used.",
+   "auc_to_last_sampling_time_not_comparable": "AUC to the last sampling time: that time is not in the evidence.",
+   "not_an_observation": "Not an observation of Cmax or AUC.",
+   "needs_oral_dose": "A test needs an oral dose.",
+   "auc_tau_needs_multiple_dose_interval": "AUC over a dosing interval needs a multiple-dose arm with its interval.",
+   "steady_state_cmax_not_modelled": "Steady-state Cmax is not modelled in this milestone.",
+   "auc_inf_needs_single_dose": "AUC to infinity needs a single-dose arm.",
+   "set_has_no_absorption_rate": "The set has no absorption rate, so it cannot predict Cmax.",
+   "set_cannot_predict_metric": "The set cannot predict this metric.",
+   "no_parameter_set": "There is no parameter set to test.",
+   "no_independent_observation": "No independent observation: no held-out study reports Cmax or AUC.",
+   "auc_not_tested": "AUC was not tested.",
+   "cmax_not_tested": "Cmax was not tested.",
+   "tested_ratio_outside_2_fold": "A tested ratio of predicted to observed is outside 2-fold.",
+   "auc_and_cmax_within_2_fold": "AUC and Cmax both tested and within 2-fold.",
+   "auc_near_the_2_fold_limit": "The AUC ratio is within 10 % of the 2-fold limit.",
+   "cmax_near_the_2_fold_limit": "The Cmax ratio is within 10 % of the 2-fold limit.",
+   "no_confirmed_clearance": "No confirmed clearance (intravenous CL or oral CL/F).",
+   "no_confirmed_volume": "No confirmed volume (Vss or Vd, or V/F).",
+   "iv_evidence_incomplete": "Intravenous evidence is incomplete: clearance and volume are both needed.",
+   "iv_without_bioavailability": "Intravenous clearance and volume exist but no confirmed oral bioavailability.",
+   "no_volume_and_no_half_life": "No volume (V/F) and no half-life to derive it.",
+   "missing_absorption_no_peak_time": "Absorption rate missing: no confirmed time of peak concentration.",
+   "missing_absorption_no_solution": "Absorption rate missing: the peak time is at or beyond what the elimination rate allows.",
+   "bioavailability_capped": "A bioavailability above 1 was capped at 1.",
+   "half_life_inconsistent": "The half-life implied by CL and V differs from the stated half-life by more than 1.5-fold; the curve tail is not supported.",
+   "studies_disagree": "The studies disagree by more than 2-fold.",
+   "healthy_adult_preferred": "Healthy-adult values were preferred.",
+   "no_central_volume_evidence": "No central-volume evidence (no distribution phase): one compartment.",
+   "two_volumes_differ": "Central and steady-state volumes differ by at least 25 %: two compartments.",
+   "two_volumes_agree": "Central and steady-state volumes agree within 25 %: one compartment.",
+   "v_from_clf_half_life": "V/F = CL/F x half-life / ln 2",
+   "ka_from_tmax": "ka solves tmax = ln(ka/k) / (ka - k) with k = CL / V",
+   "f_fixed_apparent": "Fixed at 1: apparent parameters already contain bioavailability.",
+   "clearance_or_bioavailability": "Clearance (CL or CL/F) or bioavailability: AUC is outside 2-fold.",
+   "absorption_rate_or_volume": "Absorption rate (derived from the time of peak concentration) or volume: Cmax is outside 2-fold.",
+   "n_very_small": "n is very small: shares and fold errors describe these drugs, not drugs in general.",
+   "two_automated_passes": "Every held-out observation was read automatically and confirmed by two automated passes.",
+   "expert_review_pending": "Expert review has not yet been done.",
+   "interval_n_too_small": "No interval is shown: fewer than 20 independent held-out studies.",
+   "interval_system_level_only": "Intervals are given at system level only, not per drug."
+  }
  },
  "drug": {
   "dolutegravir": {
@@ -348,12 +400,14 @@
    },
    "parameter_set": {
     "model": "one_compartment",
-    "model_reason": "no central-volume evidence (no distribution phase in the evidence)",
+    "model_reason": "no_central_volume_evidence",
     "basis": "oral_apparent",
     "apparent": true,
     "complete": true,
     "missing": [],
     "warnings": [],
+    "implied_half_life_h": 12.060760941743046,
+    "stated_half_life_h": 14.492,
     "params": [
      {
       "name": "cl",
@@ -364,7 +418,7 @@
       "n_studies": 1,
       "between_study_cv": null,
       "derivation": null,
-      "note": null,
+      "notes": [],
       "evidence_ids": [
        "ev_8d6c2816f271"
       ]
@@ -378,7 +432,7 @@
       "n_studies": 1,
       "between_study_cv": null,
       "derivation": null,
-      "note": null,
+      "notes": [],
       "evidence_ids": [
        "ev_4f509ba9e284"
       ]
@@ -391,8 +445,8 @@
       "confidence_class": "C",
       "n_studies": 0,
       "between_study_cv": null,
-      "derivation": "fixed at 1: apparent parameters already contain bioavailability",
-      "note": null,
+      "derivation": "f_fixed_apparent",
+      "notes": [],
       "evidence_ids": []
      },
      {
@@ -403,8 +457,10 @@
       "confidence_class": "C",
       "n_studies": 1,
       "between_study_cv": null,
-      "derivation": "solve tmax = ln(ka/k) / (ka - k) with k = CL / V",
-      "note": "healthy-adult values preferred",
+      "derivation": "ka_from_tmax",
+      "notes": [
+       "healthy_adult_preferred"
+      ],
       "evidence_ids": [
        "ev_d1c2561a1e6b"
       ]
@@ -413,7 +469,7 @@
     "left_out": [
      {
       "evidence_id": "ev_065a478abaa9",
-      "reason": "not needed: a preferred basis or a pooled value was used"
+      "reason": "not_needed_preferred_basis"
      },
      {
       "evidence_id": "ev_1a2bb4c82aa1",
@@ -429,11 +485,11 @@
      },
      {
       "evidence_id": "ev_cf2e42f58901",
-      "reason": "held-out study (observation, not used to build)"
+      "reason": "held_out_study"
      },
      {
       "evidence_id": "ev_f8311f500684",
-      "reason": "not needed: a preferred basis or a pooled value was used"
+      "reason": "not_needed_preferred_basis"
      }
     ],
     "held_out_studies": [
@@ -484,7 +540,9 @@
     ],
     "excluded": [],
     "suspect": [],
-    "interval": "not shown: fewer than 20 independent held-out studies (1 here)",
+    "interval_reason": "interval_n_too_small",
+    "interval_min_studies": 20,
+    "interval_n_studies": 1,
     "band": [
      0.5,
      2.0
@@ -494,7 +552,59 @@
    "targets": [
     "janus",
     "mrgsolve"
-   ]
+   ],
+   "reason_text": {
+    "not_confirmed": "The two readers did not both agree with the extracted value.",
+    "analyte_not_parent": "The value is not for the parent drug.",
+    "coadministered": "The arm gave another active drug with it.",
+    "fixed_dose_combination": "The product is a fixed-dose combination.",
+    "formulation_not_immediate_release": "The formulation is not immediate-release or a solution.",
+    "bound_not_a_value": "The source gives only a bound (for example 'more than'), not a value.",
+    "per_kg_not_converted": "The value is per kilogram; there is no body weight, so it is not converted.",
+    "held_out_study": "Held-out study: its observations only test a set, they never build one.",
+    "observation_in_building_study": "An observation in a study that also reports building parameters; not tested.",
+    "not_needed_preferred_basis": "Not needed: a preferred basis or a pooled value was used.",
+    "auc_to_last_sampling_time_not_comparable": "AUC to the last sampling time: that time is not in the evidence.",
+    "not_an_observation": "Not an observation of Cmax or AUC.",
+    "needs_oral_dose": "A test needs an oral dose.",
+    "auc_tau_needs_multiple_dose_interval": "AUC over a dosing interval needs a multiple-dose arm with its interval.",
+    "steady_state_cmax_not_modelled": "Steady-state Cmax is not modelled in this milestone.",
+    "auc_inf_needs_single_dose": "AUC to infinity needs a single-dose arm.",
+    "set_has_no_absorption_rate": "The set has no absorption rate, so it cannot predict Cmax.",
+    "set_cannot_predict_metric": "The set cannot predict this metric.",
+    "no_parameter_set": "There is no parameter set to test.",
+    "no_independent_observation": "No independent observation: no held-out study reports Cmax or AUC.",
+    "auc_not_tested": "AUC was not tested.",
+    "cmax_not_tested": "Cmax was not tested.",
+    "tested_ratio_outside_2_fold": "A tested ratio of predicted to observed is outside 2-fold.",
+    "auc_and_cmax_within_2_fold": "AUC and Cmax both tested and within 2-fold.",
+    "auc_near_the_2_fold_limit": "The AUC ratio is within 10 % of the 2-fold limit.",
+    "cmax_near_the_2_fold_limit": "The Cmax ratio is within 10 % of the 2-fold limit.",
+    "no_confirmed_clearance": "No confirmed clearance (intravenous CL or oral CL/F).",
+    "no_confirmed_volume": "No confirmed volume (Vss or Vd, or V/F).",
+    "iv_evidence_incomplete": "Intravenous evidence is incomplete: clearance and volume are both needed.",
+    "iv_without_bioavailability": "Intravenous clearance and volume exist but no confirmed oral bioavailability.",
+    "no_volume_and_no_half_life": "No volume (V/F) and no half-life to derive it.",
+    "missing_absorption_no_peak_time": "Absorption rate missing: no confirmed time of peak concentration.",
+    "missing_absorption_no_solution": "Absorption rate missing: the peak time is at or beyond what the elimination rate allows.",
+    "bioavailability_capped": "A bioavailability above 1 was capped at 1.",
+    "half_life_inconsistent": "The half-life implied by CL and V differs from the stated half-life by more than 1.5-fold; the curve tail is not supported.",
+    "studies_disagree": "The studies disagree by more than 2-fold.",
+    "healthy_adult_preferred": "Healthy-adult values were preferred.",
+    "no_central_volume_evidence": "No central-volume evidence (no distribution phase): one compartment.",
+    "two_volumes_differ": "Central and steady-state volumes differ by at least 25 %: two compartments.",
+    "two_volumes_agree": "Central and steady-state volumes agree within 25 %: one compartment.",
+    "v_from_clf_half_life": "V/F = CL/F x half-life / ln 2",
+    "ka_from_tmax": "ka solves tmax = ln(ka/k) / (ka - k) with k = CL / V",
+    "f_fixed_apparent": "Fixed at 1: apparent parameters already contain bioavailability.",
+    "clearance_or_bioavailability": "Clearance (CL or CL/F) or bioavailability: AUC is outside 2-fold.",
+    "absorption_rate_or_volume": "Absorption rate (derived from the time of peak concentration) or volume: Cmax is outside 2-fold.",
+    "n_very_small": "n is very small: shares and fold errors describe these drugs, not drugs in general.",
+    "two_automated_passes": "Every held-out observation was read automatically and confirmed by two automated passes.",
+    "expert_review_pending": "Expert review has not yet been done.",
+    "interval_n_too_small": "No interval is shown: fewer than 20 independent held-out studies.",
+    "interval_system_level_only": "Intervals are given at system level only, not per drug."
+   }
   },
   "ertugliflozin": {
    "release": {
@@ -547,14 +657,16 @@
    },
    "parameter_set": {
     "model": "one_compartment",
-    "model_reason": "no central-volume evidence (no distribution phase in the evidence)",
+    "model_reason": "no_central_volume_evidence",
     "basis": "iv",
     "apparent": false,
     "complete": true,
     "missing": [],
     "warnings": [
-     "half-life implied by CL and V (5.3 h) differs from the stated half-life (16.1 h) by 3.0-fold"
+     "half_life_inconsistent"
     ],
+    "implied_half_life_h": 5.291436065881726,
+    "stated_half_life_h": 16.09099748306487,
     "params": [
      {
       "name": "cl",
@@ -565,7 +677,7 @@
       "n_studies": 1,
       "between_study_cv": null,
       "derivation": null,
-      "note": null,
+      "notes": [],
       "evidence_ids": [
        "ev_5bc1900c3d28"
       ]
@@ -579,7 +691,7 @@
       "n_studies": 1,
       "between_study_cv": null,
       "derivation": null,
-      "note": null,
+      "notes": [],
       "evidence_ids": [
        "ev_0089cf83c98c"
       ]
@@ -593,7 +705,7 @@
       "n_studies": 1,
       "between_study_cv": null,
       "derivation": null,
-      "note": null,
+      "notes": [],
       "evidence_ids": [
        "ev_3c8693b7ef2a"
       ]
@@ -606,8 +718,8 @@
       "confidence_class": "C",
       "n_studies": 1,
       "between_study_cv": null,
-      "derivation": "solve tmax = ln(ka/k) / (ka - k) with k = CL / V",
-      "note": null,
+      "derivation": "ka_from_tmax",
+      "notes": [],
       "evidence_ids": [
        "ev_22ab73aa6905"
       ]
@@ -620,31 +732,31 @@
      },
      {
       "evidence_id": "ev_32031fae41c3",
-      "reason": "held-out study (observation, not used to build)"
+      "reason": "held_out_study"
      },
      {
       "evidence_id": "ev_36890207f858",
-      "reason": "held-out study (observation, not used to build)"
+      "reason": "held_out_study"
      },
      {
       "evidence_id": "ev_8a8b36aedcaf",
-      "reason": "held-out study (observation, not used to build)"
+      "reason": "held_out_study"
      },
      {
       "evidence_id": "ev_c0d77f1b39c5",
-      "reason": "not needed: a preferred basis or a pooled value was used"
+      "reason": "not_needed_preferred_basis"
      },
      {
       "evidence_id": "ev_ce13cfd0c3a1",
-      "reason": "not needed: a preferred basis or a pooled value was used"
+      "reason": "not_needed_preferred_basis"
      },
      {
       "evidence_id": "ev_d587cedfe90d",
-      "reason": "held-out study (observation, not used to build)"
+      "reason": "held_out_study"
      },
      {
       "evidence_id": "ev_fa8954cdabdb",
-      "reason": "not needed: a preferred basis or a pooled value was used"
+      "reason": "not_needed_preferred_basis"
      }
     ],
     "held_out_studies": [
@@ -721,7 +833,9 @@
      }
     ],
     "suspect": [],
-    "interval": "not shown: fewer than 20 independent held-out studies (2 here)",
+    "interval_reason": "interval_n_too_small",
+    "interval_min_studies": 20,
+    "interval_n_studies": 2,
     "band": [
      0.5,
      2.0
@@ -731,7 +845,59 @@
    "targets": [
     "janus",
     "mrgsolve"
-   ]
+   ],
+   "reason_text": {
+    "not_confirmed": "The two readers did not both agree with the extracted value.",
+    "analyte_not_parent": "The value is not for the parent drug.",
+    "coadministered": "The arm gave another active drug with it.",
+    "fixed_dose_combination": "The product is a fixed-dose combination.",
+    "formulation_not_immediate_release": "The formulation is not immediate-release or a solution.",
+    "bound_not_a_value": "The source gives only a bound (for example 'more than'), not a value.",
+    "per_kg_not_converted": "The value is per kilogram; there is no body weight, so it is not converted.",
+    "held_out_study": "Held-out study: its observations only test a set, they never build one.",
+    "observation_in_building_study": "An observation in a study that also reports building parameters; not tested.",
+    "not_needed_preferred_basis": "Not needed: a preferred basis or a pooled value was used.",
+    "auc_to_last_sampling_time_not_comparable": "AUC to the last sampling time: that time is not in the evidence.",
+    "not_an_observation": "Not an observation of Cmax or AUC.",
+    "needs_oral_dose": "A test needs an oral dose.",
+    "auc_tau_needs_multiple_dose_interval": "AUC over a dosing interval needs a multiple-dose arm with its interval.",
+    "steady_state_cmax_not_modelled": "Steady-state Cmax is not modelled in this milestone.",
+    "auc_inf_needs_single_dose": "AUC to infinity needs a single-dose arm.",
+    "set_has_no_absorption_rate": "The set has no absorption rate, so it cannot predict Cmax.",
+    "set_cannot_predict_metric": "The set cannot predict this metric.",
+    "no_parameter_set": "There is no parameter set to test.",
+    "no_independent_observation": "No independent observation: no held-out study reports Cmax or AUC.",
+    "auc_not_tested": "AUC was not tested.",
+    "cmax_not_tested": "Cmax was not tested.",
+    "tested_ratio_outside_2_fold": "A tested ratio of predicted to observed is outside 2-fold.",
+    "auc_and_cmax_within_2_fold": "AUC and Cmax both tested and within 2-fold.",
+    "auc_near_the_2_fold_limit": "The AUC ratio is within 10 % of the 2-fold limit.",
+    "cmax_near_the_2_fold_limit": "The Cmax ratio is within 10 % of the 2-fold limit.",
+    "no_confirmed_clearance": "No confirmed clearance (intravenous CL or oral CL/F).",
+    "no_confirmed_volume": "No confirmed volume (Vss or Vd, or V/F).",
+    "iv_evidence_incomplete": "Intravenous evidence is incomplete: clearance and volume are both needed.",
+    "iv_without_bioavailability": "Intravenous clearance and volume exist but no confirmed oral bioavailability.",
+    "no_volume_and_no_half_life": "No volume (V/F) and no half-life to derive it.",
+    "missing_absorption_no_peak_time": "Absorption rate missing: no confirmed time of peak concentration.",
+    "missing_absorption_no_solution": "Absorption rate missing: the peak time is at or beyond what the elimination rate allows.",
+    "bioavailability_capped": "A bioavailability above 1 was capped at 1.",
+    "half_life_inconsistent": "The half-life implied by CL and V differs from the stated half-life by more than 1.5-fold; the curve tail is not supported.",
+    "studies_disagree": "The studies disagree by more than 2-fold.",
+    "healthy_adult_preferred": "Healthy-adult values were preferred.",
+    "no_central_volume_evidence": "No central-volume evidence (no distribution phase): one compartment.",
+    "two_volumes_differ": "Central and steady-state volumes differ by at least 25 %: two compartments.",
+    "two_volumes_agree": "Central and steady-state volumes agree within 25 %: one compartment.",
+    "v_from_clf_half_life": "V/F = CL/F x half-life / ln 2",
+    "ka_from_tmax": "ka solves tmax = ln(ka/k) / (ka - k) with k = CL / V",
+    "f_fixed_apparent": "Fixed at 1: apparent parameters already contain bioavailability.",
+    "clearance_or_bioavailability": "Clearance (CL or CL/F) or bioavailability: AUC is outside 2-fold.",
+    "absorption_rate_or_volume": "Absorption rate (derived from the time of peak concentration) or volume: Cmax is outside 2-fold.",
+    "n_very_small": "n is very small: shares and fold errors describe these drugs, not drugs in general.",
+    "two_automated_passes": "Every held-out observation was read automatically and confirmed by two automated passes.",
+    "expert_review_pending": "Expert review has not yet been done.",
+    "interval_n_too_small": "No interval is shown: fewer than 20 independent held-out studies.",
+    "interval_system_level_only": "Intervals are given at system level only, not per drug."
+   }
   },
   "gabapentin": {
    "release": {
@@ -750,8 +916,8 @@
     "status": "not_validated",
     "status_reasons": [
      "no_parameter_set",
-     "no confirmed clearance (intravenous CL or oral CL/F)",
-     "intravenous evidence is incomplete (clearance and volume are both needed)"
+     "no_confirmed_clearance",
+     "iv_evidence_incomplete"
     ],
     "has_set": false,
     "set_complete": false,
@@ -786,15 +952,15 @@
    },
    "parameter_set": null,
    "no_set_reasons": [
-    "no confirmed clearance (intravenous CL or oral CL/F)",
-    "intravenous evidence is incomplete (clearance and volume are both needed)"
+    "no_confirmed_clearance",
+    "iv_evidence_incomplete"
    ],
    "validation": {
     "status": "not_validated",
     "reasons": [
      "no_parameter_set",
-     "no confirmed clearance (intravenous CL or oral CL/F)",
-     "intravenous evidence is incomplete (clearance and volume are both needed)"
+     "no_confirmed_clearance",
+     "iv_evidence_incomplete"
     ],
     "metrics": [
      {
@@ -823,14 +989,68 @@
     "points": [],
     "excluded": [],
     "suspect": [],
-    "interval": "not shown: no parameter set",
+    "interval_reason": "interval_n_too_small",
+    "interval_min_studies": 20,
+    "interval_n_studies": 0,
     "band": [
      0.5,
      2.0
     ],
     "unit_note": "ratio = predicted / observed; AUC to infinity in ng*h/mL, Cmax in ng/mL"
    },
-   "targets": []
+   "targets": [],
+   "reason_text": {
+    "not_confirmed": "The two readers did not both agree with the extracted value.",
+    "analyte_not_parent": "The value is not for the parent drug.",
+    "coadministered": "The arm gave another active drug with it.",
+    "fixed_dose_combination": "The product is a fixed-dose combination.",
+    "formulation_not_immediate_release": "The formulation is not immediate-release or a solution.",
+    "bound_not_a_value": "The source gives only a bound (for example 'more than'), not a value.",
+    "per_kg_not_converted": "The value is per kilogram; there is no body weight, so it is not converted.",
+    "held_out_study": "Held-out study: its observations only test a set, they never build one.",
+    "observation_in_building_study": "An observation in a study that also reports building parameters; not tested.",
+    "not_needed_preferred_basis": "Not needed: a preferred basis or a pooled value was used.",
+    "auc_to_last_sampling_time_not_comparable": "AUC to the last sampling time: that time is not in the evidence.",
+    "not_an_observation": "Not an observation of Cmax or AUC.",
+    "needs_oral_dose": "A test needs an oral dose.",
+    "auc_tau_needs_multiple_dose_interval": "AUC over a dosing interval needs a multiple-dose arm with its interval.",
+    "steady_state_cmax_not_modelled": "Steady-state Cmax is not modelled in this milestone.",
+    "auc_inf_needs_single_dose": "AUC to infinity needs a single-dose arm.",
+    "set_has_no_absorption_rate": "The set has no absorption rate, so it cannot predict Cmax.",
+    "set_cannot_predict_metric": "The set cannot predict this metric.",
+    "no_parameter_set": "There is no parameter set to test.",
+    "no_independent_observation": "No independent observation: no held-out study reports Cmax or AUC.",
+    "auc_not_tested": "AUC was not tested.",
+    "cmax_not_tested": "Cmax was not tested.",
+    "tested_ratio_outside_2_fold": "A tested ratio of predicted to observed is outside 2-fold.",
+    "auc_and_cmax_within_2_fold": "AUC and Cmax both tested and within 2-fold.",
+    "auc_near_the_2_fold_limit": "The AUC ratio is within 10 % of the 2-fold limit.",
+    "cmax_near_the_2_fold_limit": "The Cmax ratio is within 10 % of the 2-fold limit.",
+    "no_confirmed_clearance": "No confirmed clearance (intravenous CL or oral CL/F).",
+    "no_confirmed_volume": "No confirmed volume (Vss or Vd, or V/F).",
+    "iv_evidence_incomplete": "Intravenous evidence is incomplete: clearance and volume are both needed.",
+    "iv_without_bioavailability": "Intravenous clearance and volume exist but no confirmed oral bioavailability.",
+    "no_volume_and_no_half_life": "No volume (V/F) and no half-life to derive it.",
+    "missing_absorption_no_peak_time": "Absorption rate missing: no confirmed time of peak concentration.",
+    "missing_absorption_no_solution": "Absorption rate missing: the peak time is at or beyond what the elimination rate allows.",
+    "bioavailability_capped": "A bioavailability above 1 was capped at 1.",
+    "half_life_inconsistent": "The half-life implied by CL and V differs from the stated half-life by more than 1.5-fold; the curve tail is not supported.",
+    "studies_disagree": "The studies disagree by more than 2-fold.",
+    "healthy_adult_preferred": "Healthy-adult values were preferred.",
+    "no_central_volume_evidence": "No central-volume evidence (no distribution phase): one compartment.",
+    "two_volumes_differ": "Central and steady-state volumes differ by at least 25 %: two compartments.",
+    "two_volumes_agree": "Central and steady-state volumes agree within 25 %: one compartment.",
+    "v_from_clf_half_life": "V/F = CL/F x half-life / ln 2",
+    "ka_from_tmax": "ka solves tmax = ln(ka/k) / (ka - k) with k = CL / V",
+    "f_fixed_apparent": "Fixed at 1: apparent parameters already contain bioavailability.",
+    "clearance_or_bioavailability": "Clearance (CL or CL/F) or bioavailability: AUC is outside 2-fold.",
+    "absorption_rate_or_volume": "Absorption rate (derived from the time of peak concentration) or volume: Cmax is outside 2-fold.",
+    "n_very_small": "n is very small: shares and fold errors describe these drugs, not drugs in general.",
+    "two_automated_passes": "Every held-out observation was read automatically and confirmed by two automated passes.",
+    "expert_review_pending": "Expert review has not yet been done.",
+    "interval_n_too_small": "No interval is shown: fewer than 20 independent held-out studies.",
+    "interval_system_level_only": "Intervals are given at system level only, not per drug."
+   }
   },
   "sunitinib": {
    "release": {
@@ -884,12 +1104,14 @@
    },
    "parameter_set": {
     "model": "one_compartment",
-    "model_reason": "no central-volume evidence (no distribution phase in the evidence)",
+    "model_reason": "no_central_volume_evidence",
     "basis": "oral_apparent",
     "apparent": true,
     "complete": true,
     "missing": [],
     "warnings": [],
+    "implied_half_life_h": null,
+    "stated_half_life_h": null,
     "params": [
      {
       "name": "cl",
@@ -900,7 +1122,7 @@
       "n_studies": 1,
       "between_study_cv": null,
       "derivation": null,
-      "note": null,
+      "notes": [],
       "evidence_ids": [
        "ev_51dfce55e5e3"
       ]
@@ -914,7 +1136,7 @@
       "n_studies": 1,
       "between_study_cv": null,
       "derivation": null,
-      "note": null,
+      "notes": [],
       "evidence_ids": [
        "ev_5a72da696cd7"
       ]
@@ -927,8 +1149,8 @@
       "confidence_class": "C",
       "n_studies": 0,
       "between_study_cv": null,
-      "derivation": "fixed at 1: apparent parameters already contain bioavailability",
-      "note": null,
+      "derivation": "f_fixed_apparent",
+      "notes": [],
       "evidence_ids": []
      },
      {
@@ -939,8 +1161,8 @@
       "confidence_class": "C",
       "n_studies": 1,
       "between_study_cv": null,
-      "derivation": "solve tmax = ln(ka/k) / (ka - k) with k = CL / V",
-      "note": null,
+      "derivation": "ka_from_tmax",
+      "notes": [],
       "evidence_ids": [
        "ev_8c2432bc6535"
       ]
@@ -949,15 +1171,15 @@
     "left_out": [
      {
       "evidence_id": "ev_307649f27cbb",
-      "reason": "held-out study (observation, not used to build)"
+      "reason": "held_out_study"
      },
      {
       "evidence_id": "ev_38d58ce26a0e",
-      "reason": "held-out study (observation, not used to build)"
+      "reason": "held_out_study"
      },
      {
       "evidence_id": "ev_50c11c54b071",
-      "reason": "held-out study (observation, not used to build)"
+      "reason": "held_out_study"
      },
      {
       "evidence_id": "ev_6a719d9b2cb9",
@@ -965,11 +1187,11 @@
      },
      {
       "evidence_id": "ev_96d12e0f3c63",
-      "reason": "not needed: a preferred basis or a pooled value was used"
+      "reason": "not_needed_preferred_basis"
      },
      {
       "evidence_id": "ev_98492eeae4e4",
-      "reason": "held-out study (observation, not used to build)"
+      "reason": "held_out_study"
      }
     ],
     "held_out_studies": [
@@ -1046,7 +1268,9 @@
      }
     ],
     "suspect": [],
-    "interval": "not shown: fewer than 20 independent held-out studies (1 here)",
+    "interval_reason": "interval_n_too_small",
+    "interval_min_studies": 20,
+    "interval_n_studies": 1,
     "band": [
      0.5,
      2.0
@@ -1056,7 +1280,59 @@
    "targets": [
     "janus",
     "mrgsolve"
-   ]
+   ],
+   "reason_text": {
+    "not_confirmed": "The two readers did not both agree with the extracted value.",
+    "analyte_not_parent": "The value is not for the parent drug.",
+    "coadministered": "The arm gave another active drug with it.",
+    "fixed_dose_combination": "The product is a fixed-dose combination.",
+    "formulation_not_immediate_release": "The formulation is not immediate-release or a solution.",
+    "bound_not_a_value": "The source gives only a bound (for example 'more than'), not a value.",
+    "per_kg_not_converted": "The value is per kilogram; there is no body weight, so it is not converted.",
+    "held_out_study": "Held-out study: its observations only test a set, they never build one.",
+    "observation_in_building_study": "An observation in a study that also reports building parameters; not tested.",
+    "not_needed_preferred_basis": "Not needed: a preferred basis or a pooled value was used.",
+    "auc_to_last_sampling_time_not_comparable": "AUC to the last sampling time: that time is not in the evidence.",
+    "not_an_observation": "Not an observation of Cmax or AUC.",
+    "needs_oral_dose": "A test needs an oral dose.",
+    "auc_tau_needs_multiple_dose_interval": "AUC over a dosing interval needs a multiple-dose arm with its interval.",
+    "steady_state_cmax_not_modelled": "Steady-state Cmax is not modelled in this milestone.",
+    "auc_inf_needs_single_dose": "AUC to infinity needs a single-dose arm.",
+    "set_has_no_absorption_rate": "The set has no absorption rate, so it cannot predict Cmax.",
+    "set_cannot_predict_metric": "The set cannot predict this metric.",
+    "no_parameter_set": "There is no parameter set to test.",
+    "no_independent_observation": "No independent observation: no held-out study reports Cmax or AUC.",
+    "auc_not_tested": "AUC was not tested.",
+    "cmax_not_tested": "Cmax was not tested.",
+    "tested_ratio_outside_2_fold": "A tested ratio of predicted to observed is outside 2-fold.",
+    "auc_and_cmax_within_2_fold": "AUC and Cmax both tested and within 2-fold.",
+    "auc_near_the_2_fold_limit": "The AUC ratio is within 10 % of the 2-fold limit.",
+    "cmax_near_the_2_fold_limit": "The Cmax ratio is within 10 % of the 2-fold limit.",
+    "no_confirmed_clearance": "No confirmed clearance (intravenous CL or oral CL/F).",
+    "no_confirmed_volume": "No confirmed volume (Vss or Vd, or V/F).",
+    "iv_evidence_incomplete": "Intravenous evidence is incomplete: clearance and volume are both needed.",
+    "iv_without_bioavailability": "Intravenous clearance and volume exist but no confirmed oral bioavailability.",
+    "no_volume_and_no_half_life": "No volume (V/F) and no half-life to derive it.",
+    "missing_absorption_no_peak_time": "Absorption rate missing: no confirmed time of peak concentration.",
+    "missing_absorption_no_solution": "Absorption rate missing: the peak time is at or beyond what the elimination rate allows.",
+    "bioavailability_capped": "A bioavailability above 1 was capped at 1.",
+    "half_life_inconsistent": "The half-life implied by CL and V differs from the stated half-life by more than 1.5-fold; the curve tail is not supported.",
+    "studies_disagree": "The studies disagree by more than 2-fold.",
+    "healthy_adult_preferred": "Healthy-adult values were preferred.",
+    "no_central_volume_evidence": "No central-volume evidence (no distribution phase): one compartment.",
+    "two_volumes_differ": "Central and steady-state volumes differ by at least 25 %: two compartments.",
+    "two_volumes_agree": "Central and steady-state volumes agree within 25 %: one compartment.",
+    "v_from_clf_half_life": "V/F = CL/F x half-life / ln 2",
+    "ka_from_tmax": "ka solves tmax = ln(ka/k) / (ka - k) with k = CL / V",
+    "f_fixed_apparent": "Fixed at 1: apparent parameters already contain bioavailability.",
+    "clearance_or_bioavailability": "Clearance (CL or CL/F) or bioavailability: AUC is outside 2-fold.",
+    "absorption_rate_or_volume": "Absorption rate (derived from the time of peak concentration) or volume: Cmax is outside 2-fold.",
+    "n_very_small": "n is very small: shares and fold errors describe these drugs, not drugs in general.",
+    "two_automated_passes": "Every held-out observation was read automatically and confirmed by two automated passes.",
+    "expert_review_pending": "Expert review has not yet been done.",
+    "interval_n_too_small": "No interval is shown: fewer than 20 independent held-out studies.",
+    "interval_system_level_only": "Intervals are given at system level only, not per drug."
+   }
   },
   "telmisartan": {
    "release": {
@@ -1075,8 +1351,8 @@
     "status": "not_validated",
     "status_reasons": [
      "no_parameter_set",
-     "no confirmed clearance (intravenous CL or oral CL/F)",
-     "no confirmed volume (Vss or Vd, or V/F)"
+     "no_confirmed_clearance",
+     "no_confirmed_volume"
     ],
     "has_set": false,
     "set_complete": false,
@@ -1111,15 +1387,15 @@
    },
    "parameter_set": null,
    "no_set_reasons": [
-    "no confirmed clearance (intravenous CL or oral CL/F)",
-    "no confirmed volume (Vss or Vd, or V/F)"
+    "no_confirmed_clearance",
+    "no_confirmed_volume"
    ],
    "validation": {
     "status": "not_validated",
     "reasons": [
      "no_parameter_set",
-     "no confirmed clearance (intravenous CL or oral CL/F)",
-     "no confirmed volume (Vss or Vd, or V/F)"
+     "no_confirmed_clearance",
+     "no_confirmed_volume"
     ],
     "metrics": [
      {
@@ -1148,14 +1424,68 @@
     "points": [],
     "excluded": [],
     "suspect": [],
-    "interval": "not shown: no parameter set",
+    "interval_reason": "interval_n_too_small",
+    "interval_min_studies": 20,
+    "interval_n_studies": 0,
     "band": [
      0.5,
      2.0
     ],
     "unit_note": "ratio = predicted / observed; AUC to infinity in ng*h/mL, Cmax in ng/mL"
    },
-   "targets": []
+   "targets": [],
+   "reason_text": {
+    "not_confirmed": "The two readers did not both agree with the extracted value.",
+    "analyte_not_parent": "The value is not for the parent drug.",
+    "coadministered": "The arm gave another active drug with it.",
+    "fixed_dose_combination": "The product is a fixed-dose combination.",
+    "formulation_not_immediate_release": "The formulation is not immediate-release or a solution.",
+    "bound_not_a_value": "The source gives only a bound (for example 'more than'), not a value.",
+    "per_kg_not_converted": "The value is per kilogram; there is no body weight, so it is not converted.",
+    "held_out_study": "Held-out study: its observations only test a set, they never build one.",
+    "observation_in_building_study": "An observation in a study that also reports building parameters; not tested.",
+    "not_needed_preferred_basis": "Not needed: a preferred basis or a pooled value was used.",
+    "auc_to_last_sampling_time_not_comparable": "AUC to the last sampling time: that time is not in the evidence.",
+    "not_an_observation": "Not an observation of Cmax or AUC.",
+    "needs_oral_dose": "A test needs an oral dose.",
+    "auc_tau_needs_multiple_dose_interval": "AUC over a dosing interval needs a multiple-dose arm with its interval.",
+    "steady_state_cmax_not_modelled": "Steady-state Cmax is not modelled in this milestone.",
+    "auc_inf_needs_single_dose": "AUC to infinity needs a single-dose arm.",
+    "set_has_no_absorption_rate": "The set has no absorption rate, so it cannot predict Cmax.",
+    "set_cannot_predict_metric": "The set cannot predict this metric.",
+    "no_parameter_set": "There is no parameter set to test.",
+    "no_independent_observation": "No independent observation: no held-out study reports Cmax or AUC.",
+    "auc_not_tested": "AUC was not tested.",
+    "cmax_not_tested": "Cmax was not tested.",
+    "tested_ratio_outside_2_fold": "A tested ratio of predicted to observed is outside 2-fold.",
+    "auc_and_cmax_within_2_fold": "AUC and Cmax both tested and within 2-fold.",
+    "auc_near_the_2_fold_limit": "The AUC ratio is within 10 % of the 2-fold limit.",
+    "cmax_near_the_2_fold_limit": "The Cmax ratio is within 10 % of the 2-fold limit.",
+    "no_confirmed_clearance": "No confirmed clearance (intravenous CL or oral CL/F).",
+    "no_confirmed_volume": "No confirmed volume (Vss or Vd, or V/F).",
+    "iv_evidence_incomplete": "Intravenous evidence is incomplete: clearance and volume are both needed.",
+    "iv_without_bioavailability": "Intravenous clearance and volume exist but no confirmed oral bioavailability.",
+    "no_volume_and_no_half_life": "No volume (V/F) and no half-life to derive it.",
+    "missing_absorption_no_peak_time": "Absorption rate missing: no confirmed time of peak concentration.",
+    "missing_absorption_no_solution": "Absorption rate missing: the peak time is at or beyond what the elimination rate allows.",
+    "bioavailability_capped": "A bioavailability above 1 was capped at 1.",
+    "half_life_inconsistent": "The half-life implied by CL and V differs from the stated half-life by more than 1.5-fold; the curve tail is not supported.",
+    "studies_disagree": "The studies disagree by more than 2-fold.",
+    "healthy_adult_preferred": "Healthy-adult values were preferred.",
+    "no_central_volume_evidence": "No central-volume evidence (no distribution phase): one compartment.",
+    "two_volumes_differ": "Central and steady-state volumes differ by at least 25 %: two compartments.",
+    "two_volumes_agree": "Central and steady-state volumes agree within 25 %: one compartment.",
+    "v_from_clf_half_life": "V/F = CL/F x half-life / ln 2",
+    "ka_from_tmax": "ka solves tmax = ln(ka/k) / (ka - k) with k = CL / V",
+    "f_fixed_apparent": "Fixed at 1: apparent parameters already contain bioavailability.",
+    "clearance_or_bioavailability": "Clearance (CL or CL/F) or bioavailability: AUC is outside 2-fold.",
+    "absorption_rate_or_volume": "Absorption rate (derived from the time of peak concentration) or volume: Cmax is outside 2-fold.",
+    "n_very_small": "n is very small: shares and fold errors describe these drugs, not drugs in general.",
+    "two_automated_passes": "Every held-out observation was read automatically and confirmed by two automated passes.",
+    "expert_review_pending": "Expert review has not yet been done.",
+    "interval_n_too_small": "No interval is shown: fewer than 20 independent held-out studies.",
+    "interval_system_level_only": "Intervals are given at system level only, not per drug."
+   }
   },
   "tramadol": {
    "release": {
@@ -1174,8 +1504,8 @@
     "status": "not_validated",
     "status_reasons": [
      "no_parameter_set",
-     "no confirmed clearance (intravenous CL or oral CL/F)",
-     "no confirmed volume (Vss or Vd, or V/F)"
+     "no_confirmed_clearance",
+     "no_confirmed_volume"
     ],
     "has_set": false,
     "set_complete": false,
@@ -1210,15 +1540,15 @@
    },
    "parameter_set": null,
    "no_set_reasons": [
-    "no confirmed clearance (intravenous CL or oral CL/F)",
-    "no confirmed volume (Vss or Vd, or V/F)"
+    "no_confirmed_clearance",
+    "no_confirmed_volume"
    ],
    "validation": {
     "status": "not_validated",
     "reasons": [
      "no_parameter_set",
-     "no confirmed clearance (intravenous CL or oral CL/F)",
-     "no confirmed volume (Vss or Vd, or V/F)"
+     "no_confirmed_clearance",
+     "no_confirmed_volume"
     ],
     "metrics": [
      {
@@ -1247,14 +1577,68 @@
     "points": [],
     "excluded": [],
     "suspect": [],
-    "interval": "not shown: no parameter set",
+    "interval_reason": "interval_n_too_small",
+    "interval_min_studies": 20,
+    "interval_n_studies": 0,
     "band": [
      0.5,
      2.0
     ],
     "unit_note": "ratio = predicted / observed; AUC to infinity in ng*h/mL, Cmax in ng/mL"
    },
-   "targets": []
+   "targets": [],
+   "reason_text": {
+    "not_confirmed": "The two readers did not both agree with the extracted value.",
+    "analyte_not_parent": "The value is not for the parent drug.",
+    "coadministered": "The arm gave another active drug with it.",
+    "fixed_dose_combination": "The product is a fixed-dose combination.",
+    "formulation_not_immediate_release": "The formulation is not immediate-release or a solution.",
+    "bound_not_a_value": "The source gives only a bound (for example 'more than'), not a value.",
+    "per_kg_not_converted": "The value is per kilogram; there is no body weight, so it is not converted.",
+    "held_out_study": "Held-out study: its observations only test a set, they never build one.",
+    "observation_in_building_study": "An observation in a study that also reports building parameters; not tested.",
+    "not_needed_preferred_basis": "Not needed: a preferred basis or a pooled value was used.",
+    "auc_to_last_sampling_time_not_comparable": "AUC to the last sampling time: that time is not in the evidence.",
+    "not_an_observation": "Not an observation of Cmax or AUC.",
+    "needs_oral_dose": "A test needs an oral dose.",
+    "auc_tau_needs_multiple_dose_interval": "AUC over a dosing interval needs a multiple-dose arm with its interval.",
+    "steady_state_cmax_not_modelled": "Steady-state Cmax is not modelled in this milestone.",
+    "auc_inf_needs_single_dose": "AUC to infinity needs a single-dose arm.",
+    "set_has_no_absorption_rate": "The set has no absorption rate, so it cannot predict Cmax.",
+    "set_cannot_predict_metric": "The set cannot predict this metric.",
+    "no_parameter_set": "There is no parameter set to test.",
+    "no_independent_observation": "No independent observation: no held-out study reports Cmax or AUC.",
+    "auc_not_tested": "AUC was not tested.",
+    "cmax_not_tested": "Cmax was not tested.",
+    "tested_ratio_outside_2_fold": "A tested ratio of predicted to observed is outside 2-fold.",
+    "auc_and_cmax_within_2_fold": "AUC and Cmax both tested and within 2-fold.",
+    "auc_near_the_2_fold_limit": "The AUC ratio is within 10 % of the 2-fold limit.",
+    "cmax_near_the_2_fold_limit": "The Cmax ratio is within 10 % of the 2-fold limit.",
+    "no_confirmed_clearance": "No confirmed clearance (intravenous CL or oral CL/F).",
+    "no_confirmed_volume": "No confirmed volume (Vss or Vd, or V/F).",
+    "iv_evidence_incomplete": "Intravenous evidence is incomplete: clearance and volume are both needed.",
+    "iv_without_bioavailability": "Intravenous clearance and volume exist but no confirmed oral bioavailability.",
+    "no_volume_and_no_half_life": "No volume (V/F) and no half-life to derive it.",
+    "missing_absorption_no_peak_time": "Absorption rate missing: no confirmed time of peak concentration.",
+    "missing_absorption_no_solution": "Absorption rate missing: the peak time is at or beyond what the elimination rate allows.",
+    "bioavailability_capped": "A bioavailability above 1 was capped at 1.",
+    "half_life_inconsistent": "The half-life implied by CL and V differs from the stated half-life by more than 1.5-fold; the curve tail is not supported.",
+    "studies_disagree": "The studies disagree by more than 2-fold.",
+    "healthy_adult_preferred": "Healthy-adult values were preferred.",
+    "no_central_volume_evidence": "No central-volume evidence (no distribution phase): one compartment.",
+    "two_volumes_differ": "Central and steady-state volumes differ by at least 25 %: two compartments.",
+    "two_volumes_agree": "Central and steady-state volumes agree within 25 %: one compartment.",
+    "v_from_clf_half_life": "V/F = CL/F x half-life / ln 2",
+    "ka_from_tmax": "ka solves tmax = ln(ka/k) / (ka - k) with k = CL / V",
+    "f_fixed_apparent": "Fixed at 1: apparent parameters already contain bioavailability.",
+    "clearance_or_bioavailability": "Clearance (CL or CL/F) or bioavailability: AUC is outside 2-fold.",
+    "absorption_rate_or_volume": "Absorption rate (derived from the time of peak concentration) or volume: Cmax is outside 2-fold.",
+    "n_very_small": "n is very small: shares and fold errors describe these drugs, not drugs in general.",
+    "two_automated_passes": "Every held-out observation was read automatically and confirmed by two automated passes.",
+    "expert_review_pending": "Expert review has not yet been done.",
+    "interval_n_too_small": "No interval is shown: fewer than 20 independent held-out studies.",
+    "interval_system_level_only": "Intervals are given at system level only, not per drug."
+   }
   }
  },
  "evidence": {
@@ -1405,7 +1789,7 @@
      "note": "origin: rule-based extractor; both readers worked from the quoted sentence only",
      "extracted_at": "2026-11-11",
      "role": "excluded",
-     "reason": "not needed: a preferred basis or a pooled value was used"
+     "reason": "not_needed_preferred_basis"
     },
     {
      "id": "ev_cb7b349472f8",
@@ -1507,7 +1891,7 @@
      "note": "origin: curated from the label text by the seed script; both readers worked from the quoted sentence only",
      "extracted_at": "2026-11-11",
      "role": "excluded",
-     "reason": "not needed: a preferred basis or a pooled value was used"
+     "reason": "not_needed_preferred_basis"
     },
     {
      "id": "ev_4aa6db3ebf65",
@@ -1616,7 +2000,59 @@
     "ClinicalTrials.gov: source of the data is ClinicalTrials.gov; each row shows the record's last update and when it was retrieved; units were converted, values re-typed, rows filtered and short parts of the posted text quoted (modifications by Janus).",
     "DailyMed labels and Drugs@FDA reviews: public domain (U.S. government work). Not an FDA or NLM endorsement.",
     "PubMed Central articles: only CC BY or CC0 articles; credit the authors and the article, see the licence of each article; changes: values transcribed, units converted, short parts quoted."
-   ]
+   ],
+   "reason_text": {
+    "not_confirmed": "The two readers did not both agree with the extracted value.",
+    "analyte_not_parent": "The value is not for the parent drug.",
+    "coadministered": "The arm gave another active drug with it.",
+    "fixed_dose_combination": "The product is a fixed-dose combination.",
+    "formulation_not_immediate_release": "The formulation is not immediate-release or a solution.",
+    "bound_not_a_value": "The source gives only a bound (for example 'more than'), not a value.",
+    "per_kg_not_converted": "The value is per kilogram; there is no body weight, so it is not converted.",
+    "held_out_study": "Held-out study: its observations only test a set, they never build one.",
+    "observation_in_building_study": "An observation in a study that also reports building parameters; not tested.",
+    "not_needed_preferred_basis": "Not needed: a preferred basis or a pooled value was used.",
+    "auc_to_last_sampling_time_not_comparable": "AUC to the last sampling time: that time is not in the evidence.",
+    "not_an_observation": "Not an observation of Cmax or AUC.",
+    "needs_oral_dose": "A test needs an oral dose.",
+    "auc_tau_needs_multiple_dose_interval": "AUC over a dosing interval needs a multiple-dose arm with its interval.",
+    "steady_state_cmax_not_modelled": "Steady-state Cmax is not modelled in this milestone.",
+    "auc_inf_needs_single_dose": "AUC to infinity needs a single-dose arm.",
+    "set_has_no_absorption_rate": "The set has no absorption rate, so it cannot predict Cmax.",
+    "set_cannot_predict_metric": "The set cannot predict this metric.",
+    "no_parameter_set": "There is no parameter set to test.",
+    "no_independent_observation": "No independent observation: no held-out study reports Cmax or AUC.",
+    "auc_not_tested": "AUC was not tested.",
+    "cmax_not_tested": "Cmax was not tested.",
+    "tested_ratio_outside_2_fold": "A tested ratio of predicted to observed is outside 2-fold.",
+    "auc_and_cmax_within_2_fold": "AUC and Cmax both tested and within 2-fold.",
+    "auc_near_the_2_fold_limit": "The AUC ratio is within 10 % of the 2-fold limit.",
+    "cmax_near_the_2_fold_limit": "The Cmax ratio is within 10 % of the 2-fold limit.",
+    "no_confirmed_clearance": "No confirmed clearance (intravenous CL or oral CL/F).",
+    "no_confirmed_volume": "No confirmed volume (Vss or Vd, or V/F).",
+    "iv_evidence_incomplete": "Intravenous evidence is incomplete: clearance and volume are both needed.",
+    "iv_without_bioavailability": "Intravenous clearance and volume exist but no confirmed oral bioavailability.",
+    "no_volume_and_no_half_life": "No volume (V/F) and no half-life to derive it.",
+    "missing_absorption_no_peak_time": "Absorption rate missing: no confirmed time of peak concentration.",
+    "missing_absorption_no_solution": "Absorption rate missing: the peak time is at or beyond what the elimination rate allows.",
+    "bioavailability_capped": "A bioavailability above 1 was capped at 1.",
+    "half_life_inconsistent": "The half-life implied by CL and V differs from the stated half-life by more than 1.5-fold; the curve tail is not supported.",
+    "studies_disagree": "The studies disagree by more than 2-fold.",
+    "healthy_adult_preferred": "Healthy-adult values were preferred.",
+    "no_central_volume_evidence": "No central-volume evidence (no distribution phase): one compartment.",
+    "two_volumes_differ": "Central and steady-state volumes differ by at least 25 %: two compartments.",
+    "two_volumes_agree": "Central and steady-state volumes agree within 25 %: one compartment.",
+    "v_from_clf_half_life": "V/F = CL/F x half-life / ln 2",
+    "ka_from_tmax": "ka solves tmax = ln(ka/k) / (ka - k) with k = CL / V",
+    "f_fixed_apparent": "Fixed at 1: apparent parameters already contain bioavailability.",
+    "clearance_or_bioavailability": "Clearance (CL or CL/F) or bioavailability: AUC is outside 2-fold.",
+    "absorption_rate_or_volume": "Absorption rate (derived from the time of peak concentration) or volume: Cmax is outside 2-fold.",
+    "n_very_small": "n is very small: shares and fold errors describe these drugs, not drugs in general.",
+    "two_automated_passes": "Every held-out observation was read automatically and confirmed by two automated passes.",
+    "expert_review_pending": "Expert review has not yet been done.",
+    "interval_n_too_small": "No interval is shown: fewer than 20 independent held-out studies.",
+    "interval_system_level_only": "Intervals are given at system level only, not per drug."
+   }
   },
   "ertugliflozin": {
    "release": {
@@ -1799,7 +2235,7 @@
      "note": null,
      "extracted_at": "2026-11-10",
      "role": "excluded",
-     "reason": "not needed: a preferred basis or a pooled value was used"
+     "reason": "not_needed_preferred_basis"
     },
     {
      "id": "ev_c0d77f1b39c5",
@@ -1833,7 +2269,7 @@
      "note": null,
      "extracted_at": "2026-11-10",
      "role": "excluded",
-     "reason": "not needed: a preferred basis or a pooled value was used"
+     "reason": "not_needed_preferred_basis"
     },
     {
      "id": "ev_d587cedfe90d",
@@ -2003,7 +2439,7 @@
      "note": "origin: rule-based extractor; both readers worked from the quoted sentence only",
      "extracted_at": "2026-11-11",
      "role": "excluded",
-     "reason": "not needed: a preferred basis or a pooled value was used"
+     "reason": "not_needed_preferred_basis"
     },
     {
      "id": "ev_22ab73aa6905",
@@ -2112,7 +2548,59 @@
     "ClinicalTrials.gov: source of the data is ClinicalTrials.gov; each row shows the record's last update and when it was retrieved; units were converted, values re-typed, rows filtered and short parts of the posted text quoted (modifications by Janus).",
     "DailyMed labels and Drugs@FDA reviews: public domain (U.S. government work). Not an FDA or NLM endorsement.",
     "PubMed Central articles: only CC BY or CC0 articles; credit the authors and the article, see the licence of each article; changes: values transcribed, units converted, short parts quoted."
-   ]
+   ],
+   "reason_text": {
+    "not_confirmed": "The two readers did not both agree with the extracted value.",
+    "analyte_not_parent": "The value is not for the parent drug.",
+    "coadministered": "The arm gave another active drug with it.",
+    "fixed_dose_combination": "The product is a fixed-dose combination.",
+    "formulation_not_immediate_release": "The formulation is not immediate-release or a solution.",
+    "bound_not_a_value": "The source gives only a bound (for example 'more than'), not a value.",
+    "per_kg_not_converted": "The value is per kilogram; there is no body weight, so it is not converted.",
+    "held_out_study": "Held-out study: its observations only test a set, they never build one.",
+    "observation_in_building_study": "An observation in a study that also reports building parameters; not tested.",
+    "not_needed_preferred_basis": "Not needed: a preferred basis or a pooled value was used.",
+    "auc_to_last_sampling_time_not_comparable": "AUC to the last sampling time: that time is not in the evidence.",
+    "not_an_observation": "Not an observation of Cmax or AUC.",
+    "needs_oral_dose": "A test needs an oral dose.",
+    "auc_tau_needs_multiple_dose_interval": "AUC over a dosing interval needs a multiple-dose arm with its interval.",
+    "steady_state_cmax_not_modelled": "Steady-state Cmax is not modelled in this milestone.",
+    "auc_inf_needs_single_dose": "AUC to infinity needs a single-dose arm.",
+    "set_has_no_absorption_rate": "The set has no absorption rate, so it cannot predict Cmax.",
+    "set_cannot_predict_metric": "The set cannot predict this metric.",
+    "no_parameter_set": "There is no parameter set to test.",
+    "no_independent_observation": "No independent observation: no held-out study reports Cmax or AUC.",
+    "auc_not_tested": "AUC was not tested.",
+    "cmax_not_tested": "Cmax was not tested.",
+    "tested_ratio_outside_2_fold": "A tested ratio of predicted to observed is outside 2-fold.",
+    "auc_and_cmax_within_2_fold": "AUC and Cmax both tested and within 2-fold.",
+    "auc_near_the_2_fold_limit": "The AUC ratio is within 10 % of the 2-fold limit.",
+    "cmax_near_the_2_fold_limit": "The Cmax ratio is within 10 % of the 2-fold limit.",
+    "no_confirmed_clearance": "No confirmed clearance (intravenous CL or oral CL/F).",
+    "no_confirmed_volume": "No confirmed volume (Vss or Vd, or V/F).",
+    "iv_evidence_incomplete": "Intravenous evidence is incomplete: clearance and volume are both needed.",
+    "iv_without_bioavailability": "Intravenous clearance and volume exist but no confirmed oral bioavailability.",
+    "no_volume_and_no_half_life": "No volume (V/F) and no half-life to derive it.",
+    "missing_absorption_no_peak_time": "Absorption rate missing: no confirmed time of peak concentration.",
+    "missing_absorption_no_solution": "Absorption rate missing: the peak time is at or beyond what the elimination rate allows.",
+    "bioavailability_capped": "A bioavailability above 1 was capped at 1.",
+    "half_life_inconsistent": "The half-life implied by CL and V differs from the stated half-life by more than 1.5-fold; the curve tail is not supported.",
+    "studies_disagree": "The studies disagree by more than 2-fold.",
+    "healthy_adult_preferred": "Healthy-adult values were preferred.",
+    "no_central_volume_evidence": "No central-volume evidence (no distribution phase): one compartment.",
+    "two_volumes_differ": "Central and steady-state volumes differ by at least 25 %: two compartments.",
+    "two_volumes_agree": "Central and steady-state volumes agree within 25 %: one compartment.",
+    "v_from_clf_half_life": "V/F = CL/F x half-life / ln 2",
+    "ka_from_tmax": "ka solves tmax = ln(ka/k) / (ka - k) with k = CL / V",
+    "f_fixed_apparent": "Fixed at 1: apparent parameters already contain bioavailability.",
+    "clearance_or_bioavailability": "Clearance (CL or CL/F) or bioavailability: AUC is outside 2-fold.",
+    "absorption_rate_or_volume": "Absorption rate (derived from the time of peak concentration) or volume: Cmax is outside 2-fold.",
+    "n_very_small": "n is very small: shares and fold errors describe these drugs, not drugs in general.",
+    "two_automated_passes": "Every held-out observation was read automatically and confirmed by two automated passes.",
+    "expert_review_pending": "Expert review has not yet been done.",
+    "interval_n_too_small": "No interval is shown: fewer than 20 independent held-out studies.",
+    "interval_system_level_only": "Intervals are given at system level only, not per drug."
+   }
   },
   "gabapentin": {
    "release": {
@@ -2159,7 +2647,7 @@
      "note": null,
      "extracted_at": "2026-11-10",
      "role": "excluded",
-     "reason": "held-out study (observation, not used to build)"
+     "reason": "held_out_study"
     },
     {
      "id": "ev_00c9a935654d",
@@ -2193,7 +2681,7 @@
      "note": null,
      "extracted_at": "2026-11-10",
      "role": "excluded",
-     "reason": "held-out study (observation, not used to build)"
+     "reason": "held_out_study"
     },
     {
      "id": "ev_9e5fd151f801",
@@ -2227,7 +2715,7 @@
      "note": null,
      "extracted_at": "2026-11-10",
      "role": "excluded",
-     "reason": "held-out study (observation, not used to build)"
+     "reason": "held_out_study"
     },
     {
      "id": "ev_17a81ce74c09",
@@ -2295,7 +2783,7 @@
      "note": null,
      "extracted_at": "2026-11-10",
      "role": "excluded",
-     "reason": "held-out study (observation, not used to build)"
+     "reason": "held_out_study"
     },
     {
      "id": "ev_2f0e9e4a73f0",
@@ -2329,7 +2817,7 @@
      "note": null,
      "extracted_at": "2026-11-10",
      "role": "excluded",
-     "reason": "held-out study (observation, not used to build)"
+     "reason": "held_out_study"
     },
     {
      "id": "ev_86bdc4b39ee9",
@@ -2397,7 +2885,7 @@
      "note": "origin: rule-based extractor; both readers worked from the quoted sentence only",
      "extracted_at": "2026-11-11",
      "role": "excluded",
-     "reason": "not needed: a preferred basis or a pooled value was used"
+     "reason": "not_needed_preferred_basis"
     },
     {
      "id": "ev_4a2e394a3d81",
@@ -2431,7 +2919,7 @@
      "note": "origin: rule-based extractor; both readers worked from the quoted sentence only",
      "extracted_at": "2026-11-11",
      "role": "excluded",
-     "reason": "not needed: a preferred basis or a pooled value was used"
+     "reason": "not_needed_preferred_basis"
     },
     {
      "id": "ev_b3fdee231d37",
@@ -2533,14 +3021,66 @@
      "note": "origin: rule-based extractor; both readers worked from the quoted sentence only",
      "extracted_at": "2026-11-11",
      "role": "excluded",
-     "reason": "not needed: a preferred basis or a pooled value was used"
+     "reason": "not_needed_preferred_basis"
     }
    ],
    "attribution": [
     "ClinicalTrials.gov: source of the data is ClinicalTrials.gov; each row shows the record's last update and when it was retrieved; units were converted, values re-typed, rows filtered and short parts of the posted text quoted (modifications by Janus).",
     "DailyMed labels and Drugs@FDA reviews: public domain (U.S. government work). Not an FDA or NLM endorsement.",
     "PubMed Central articles: only CC BY or CC0 articles; credit the authors and the article, see the licence of each article; changes: values transcribed, units converted, short parts quoted."
-   ]
+   ],
+   "reason_text": {
+    "not_confirmed": "The two readers did not both agree with the extracted value.",
+    "analyte_not_parent": "The value is not for the parent drug.",
+    "coadministered": "The arm gave another active drug with it.",
+    "fixed_dose_combination": "The product is a fixed-dose combination.",
+    "formulation_not_immediate_release": "The formulation is not immediate-release or a solution.",
+    "bound_not_a_value": "The source gives only a bound (for example 'more than'), not a value.",
+    "per_kg_not_converted": "The value is per kilogram; there is no body weight, so it is not converted.",
+    "held_out_study": "Held-out study: its observations only test a set, they never build one.",
+    "observation_in_building_study": "An observation in a study that also reports building parameters; not tested.",
+    "not_needed_preferred_basis": "Not needed: a preferred basis or a pooled value was used.",
+    "auc_to_last_sampling_time_not_comparable": "AUC to the last sampling time: that time is not in the evidence.",
+    "not_an_observation": "Not an observation of Cmax or AUC.",
+    "needs_oral_dose": "A test needs an oral dose.",
+    "auc_tau_needs_multiple_dose_interval": "AUC over a dosing interval needs a multiple-dose arm with its interval.",
+    "steady_state_cmax_not_modelled": "Steady-state Cmax is not modelled in this milestone.",
+    "auc_inf_needs_single_dose": "AUC to infinity needs a single-dose arm.",
+    "set_has_no_absorption_rate": "The set has no absorption rate, so it cannot predict Cmax.",
+    "set_cannot_predict_metric": "The set cannot predict this metric.",
+    "no_parameter_set": "There is no parameter set to test.",
+    "no_independent_observation": "No independent observation: no held-out study reports Cmax or AUC.",
+    "auc_not_tested": "AUC was not tested.",
+    "cmax_not_tested": "Cmax was not tested.",
+    "tested_ratio_outside_2_fold": "A tested ratio of predicted to observed is outside 2-fold.",
+    "auc_and_cmax_within_2_fold": "AUC and Cmax both tested and within 2-fold.",
+    "auc_near_the_2_fold_limit": "The AUC ratio is within 10 % of the 2-fold limit.",
+    "cmax_near_the_2_fold_limit": "The Cmax ratio is within 10 % of the 2-fold limit.",
+    "no_confirmed_clearance": "No confirmed clearance (intravenous CL or oral CL/F).",
+    "no_confirmed_volume": "No confirmed volume (Vss or Vd, or V/F).",
+    "iv_evidence_incomplete": "Intravenous evidence is incomplete: clearance and volume are both needed.",
+    "iv_without_bioavailability": "Intravenous clearance and volume exist but no confirmed oral bioavailability.",
+    "no_volume_and_no_half_life": "No volume (V/F) and no half-life to derive it.",
+    "missing_absorption_no_peak_time": "Absorption rate missing: no confirmed time of peak concentration.",
+    "missing_absorption_no_solution": "Absorption rate missing: the peak time is at or beyond what the elimination rate allows.",
+    "bioavailability_capped": "A bioavailability above 1 was capped at 1.",
+    "half_life_inconsistent": "The half-life implied by CL and V differs from the stated half-life by more than 1.5-fold; the curve tail is not supported.",
+    "studies_disagree": "The studies disagree by more than 2-fold.",
+    "healthy_adult_preferred": "Healthy-adult values were preferred.",
+    "no_central_volume_evidence": "No central-volume evidence (no distribution phase): one compartment.",
+    "two_volumes_differ": "Central and steady-state volumes differ by at least 25 %: two compartments.",
+    "two_volumes_agree": "Central and steady-state volumes agree within 25 %: one compartment.",
+    "v_from_clf_half_life": "V/F = CL/F x half-life / ln 2",
+    "ka_from_tmax": "ka solves tmax = ln(ka/k) / (ka - k) with k = CL / V",
+    "f_fixed_apparent": "Fixed at 1: apparent parameters already contain bioavailability.",
+    "clearance_or_bioavailability": "Clearance (CL or CL/F) or bioavailability: AUC is outside 2-fold.",
+    "absorption_rate_or_volume": "Absorption rate (derived from the time of peak concentration) or volume: Cmax is outside 2-fold.",
+    "n_very_small": "n is very small: shares and fold errors describe these drugs, not drugs in general.",
+    "two_automated_passes": "Every held-out observation was read automatically and confirmed by two automated passes.",
+    "expert_review_pending": "Expert review has not yet been done.",
+    "interval_n_too_small": "No interval is shown: fewer than 20 independent held-out studies.",
+    "interval_system_level_only": "Intervals are given at system level only, not per drug."
+   }
   },
   "sunitinib": {
    "release": {
@@ -2825,7 +3365,7 @@
      "note": null,
      "extracted_at": "2026-11-10",
      "role": "excluded",
-     "reason": "not needed: a preferred basis or a pooled value was used"
+     "reason": "not_needed_preferred_basis"
     },
     {
      "id": "ev_5a72da696cd7",
@@ -2866,7 +3406,59 @@
     "ClinicalTrials.gov: source of the data is ClinicalTrials.gov; each row shows the record's last update and when it was retrieved; units were converted, values re-typed, rows filtered and short parts of the posted text quoted (modifications by Janus).",
     "DailyMed labels and Drugs@FDA reviews: public domain (U.S. government work). Not an FDA or NLM endorsement.",
     "PubMed Central articles: only CC BY or CC0 articles; credit the authors and the article, see the licence of each article; changes: values transcribed, units converted, short parts quoted."
-   ]
+   ],
+   "reason_text": {
+    "not_confirmed": "The two readers did not both agree with the extracted value.",
+    "analyte_not_parent": "The value is not for the parent drug.",
+    "coadministered": "The arm gave another active drug with it.",
+    "fixed_dose_combination": "The product is a fixed-dose combination.",
+    "formulation_not_immediate_release": "The formulation is not immediate-release or a solution.",
+    "bound_not_a_value": "The source gives only a bound (for example 'more than'), not a value.",
+    "per_kg_not_converted": "The value is per kilogram; there is no body weight, so it is not converted.",
+    "held_out_study": "Held-out study: its observations only test a set, they never build one.",
+    "observation_in_building_study": "An observation in a study that also reports building parameters; not tested.",
+    "not_needed_preferred_basis": "Not needed: a preferred basis or a pooled value was used.",
+    "auc_to_last_sampling_time_not_comparable": "AUC to the last sampling time: that time is not in the evidence.",
+    "not_an_observation": "Not an observation of Cmax or AUC.",
+    "needs_oral_dose": "A test needs an oral dose.",
+    "auc_tau_needs_multiple_dose_interval": "AUC over a dosing interval needs a multiple-dose arm with its interval.",
+    "steady_state_cmax_not_modelled": "Steady-state Cmax is not modelled in this milestone.",
+    "auc_inf_needs_single_dose": "AUC to infinity needs a single-dose arm.",
+    "set_has_no_absorption_rate": "The set has no absorption rate, so it cannot predict Cmax.",
+    "set_cannot_predict_metric": "The set cannot predict this metric.",
+    "no_parameter_set": "There is no parameter set to test.",
+    "no_independent_observation": "No independent observation: no held-out study reports Cmax or AUC.",
+    "auc_not_tested": "AUC was not tested.",
+    "cmax_not_tested": "Cmax was not tested.",
+    "tested_ratio_outside_2_fold": "A tested ratio of predicted to observed is outside 2-fold.",
+    "auc_and_cmax_within_2_fold": "AUC and Cmax both tested and within 2-fold.",
+    "auc_near_the_2_fold_limit": "The AUC ratio is within 10 % of the 2-fold limit.",
+    "cmax_near_the_2_fold_limit": "The Cmax ratio is within 10 % of the 2-fold limit.",
+    "no_confirmed_clearance": "No confirmed clearance (intravenous CL or oral CL/F).",
+    "no_confirmed_volume": "No confirmed volume (Vss or Vd, or V/F).",
+    "iv_evidence_incomplete": "Intravenous evidence is incomplete: clearance and volume are both needed.",
+    "iv_without_bioavailability": "Intravenous clearance and volume exist but no confirmed oral bioavailability.",
+    "no_volume_and_no_half_life": "No volume (V/F) and no half-life to derive it.",
+    "missing_absorption_no_peak_time": "Absorption rate missing: no confirmed time of peak concentration.",
+    "missing_absorption_no_solution": "Absorption rate missing: the peak time is at or beyond what the elimination rate allows.",
+    "bioavailability_capped": "A bioavailability above 1 was capped at 1.",
+    "half_life_inconsistent": "The half-life implied by CL and V differs from the stated half-life by more than 1.5-fold; the curve tail is not supported.",
+    "studies_disagree": "The studies disagree by more than 2-fold.",
+    "healthy_adult_preferred": "Healthy-adult values were preferred.",
+    "no_central_volume_evidence": "No central-volume evidence (no distribution phase): one compartment.",
+    "two_volumes_differ": "Central and steady-state volumes differ by at least 25 %: two compartments.",
+    "two_volumes_agree": "Central and steady-state volumes agree within 25 %: one compartment.",
+    "v_from_clf_half_life": "V/F = CL/F x half-life / ln 2",
+    "ka_from_tmax": "ka solves tmax = ln(ka/k) / (ka - k) with k = CL / V",
+    "f_fixed_apparent": "Fixed at 1: apparent parameters already contain bioavailability.",
+    "clearance_or_bioavailability": "Clearance (CL or CL/F) or bioavailability: AUC is outside 2-fold.",
+    "absorption_rate_or_volume": "Absorption rate (derived from the time of peak concentration) or volume: Cmax is outside 2-fold.",
+    "n_very_small": "n is very small: shares and fold errors describe these drugs, not drugs in general.",
+    "two_automated_passes": "Every held-out observation was read automatically and confirmed by two automated passes.",
+    "expert_review_pending": "Expert review has not yet been done.",
+    "interval_n_too_small": "No interval is shown: fewer than 20 independent held-out studies.",
+    "interval_system_level_only": "Intervals are given at system level only, not per drug."
+   }
   },
   "telmisartan": {
    "release": {
@@ -3219,7 +3811,7 @@
      "note": "origin: rule-based extractor; both readers worked from the quoted sentence only",
      "extracted_at": "2026-11-11",
      "role": "excluded",
-     "reason": "not needed: a preferred basis or a pooled value was used"
+     "reason": "not_needed_preferred_basis"
     },
     {
      "id": "ev_461153f611a2",
@@ -3423,14 +4015,66 @@
      "note": "origin: rule-based extractor; both readers worked from the quoted sentence only",
      "extracted_at": "2026-11-11",
      "role": "excluded",
-     "reason": "not needed: a preferred basis or a pooled value was used"
+     "reason": "not_needed_preferred_basis"
     }
    ],
    "attribution": [
     "ClinicalTrials.gov: source of the data is ClinicalTrials.gov; each row shows the record's last update and when it was retrieved; units were converted, values re-typed, rows filtered and short parts of the posted text quoted (modifications by Janus).",
     "DailyMed labels and Drugs@FDA reviews: public domain (U.S. government work). Not an FDA or NLM endorsement.",
     "PubMed Central articles: only CC BY or CC0 articles; credit the authors and the article, see the licence of each article; changes: values transcribed, units converted, short parts quoted."
-   ]
+   ],
+   "reason_text": {
+    "not_confirmed": "The two readers did not both agree with the extracted value.",
+    "analyte_not_parent": "The value is not for the parent drug.",
+    "coadministered": "The arm gave another active drug with it.",
+    "fixed_dose_combination": "The product is a fixed-dose combination.",
+    "formulation_not_immediate_release": "The formulation is not immediate-release or a solution.",
+    "bound_not_a_value": "The source gives only a bound (for example 'more than'), not a value.",
+    "per_kg_not_converted": "The value is per kilogram; there is no body weight, so it is not converted.",
+    "held_out_study": "Held-out study: its observations only test a set, they never build one.",
+    "observation_in_building_study": "An observation in a study that also reports building parameters; not tested.",
+    "not_needed_preferred_basis": "Not needed: a preferred basis or a pooled value was used.",
+    "auc_to_last_sampling_time_not_comparable": "AUC to the last sampling time: that time is not in the evidence.",
+    "not_an_observation": "Not an observation of Cmax or AUC.",
+    "needs_oral_dose": "A test needs an oral dose.",
+    "auc_tau_needs_multiple_dose_interval": "AUC over a dosing interval needs a multiple-dose arm with its interval.",
+    "steady_state_cmax_not_modelled": "Steady-state Cmax is not modelled in this milestone.",
+    "auc_inf_needs_single_dose": "AUC to infinity needs a single-dose arm.",
+    "set_has_no_absorption_rate": "The set has no absorption rate, so it cannot predict Cmax.",
+    "set_cannot_predict_metric": "The set cannot predict this metric.",
+    "no_parameter_set": "There is no parameter set to test.",
+    "no_independent_observation": "No independent observation: no held-out study reports Cmax or AUC.",
+    "auc_not_tested": "AUC was not tested.",
+    "cmax_not_tested": "Cmax was not tested.",
+    "tested_ratio_outside_2_fold": "A tested ratio of predicted to observed is outside 2-fold.",
+    "auc_and_cmax_within_2_fold": "AUC and Cmax both tested and within 2-fold.",
+    "auc_near_the_2_fold_limit": "The AUC ratio is within 10 % of the 2-fold limit.",
+    "cmax_near_the_2_fold_limit": "The Cmax ratio is within 10 % of the 2-fold limit.",
+    "no_confirmed_clearance": "No confirmed clearance (intravenous CL or oral CL/F).",
+    "no_confirmed_volume": "No confirmed volume (Vss or Vd, or V/F).",
+    "iv_evidence_incomplete": "Intravenous evidence is incomplete: clearance and volume are both needed.",
+    "iv_without_bioavailability": "Intravenous clearance and volume exist but no confirmed oral bioavailability.",
+    "no_volume_and_no_half_life": "No volume (V/F) and no half-life to derive it.",
+    "missing_absorption_no_peak_time": "Absorption rate missing: no confirmed time of peak concentration.",
+    "missing_absorption_no_solution": "Absorption rate missing: the peak time is at or beyond what the elimination rate allows.",
+    "bioavailability_capped": "A bioavailability above 1 was capped at 1.",
+    "half_life_inconsistent": "The half-life implied by CL and V differs from the stated half-life by more than 1.5-fold; the curve tail is not supported.",
+    "studies_disagree": "The studies disagree by more than 2-fold.",
+    "healthy_adult_preferred": "Healthy-adult values were preferred.",
+    "no_central_volume_evidence": "No central-volume evidence (no distribution phase): one compartment.",
+    "two_volumes_differ": "Central and steady-state volumes differ by at least 25 %: two compartments.",
+    "two_volumes_agree": "Central and steady-state volumes agree within 25 %: one compartment.",
+    "v_from_clf_half_life": "V/F = CL/F x half-life / ln 2",
+    "ka_from_tmax": "ka solves tmax = ln(ka/k) / (ka - k) with k = CL / V",
+    "f_fixed_apparent": "Fixed at 1: apparent parameters already contain bioavailability.",
+    "clearance_or_bioavailability": "Clearance (CL or CL/F) or bioavailability: AUC is outside 2-fold.",
+    "absorption_rate_or_volume": "Absorption rate (derived from the time of peak concentration) or volume: Cmax is outside 2-fold.",
+    "n_very_small": "n is very small: shares and fold errors describe these drugs, not drugs in general.",
+    "two_automated_passes": "Every held-out observation was read automatically and confirmed by two automated passes.",
+    "expert_review_pending": "Expert review has not yet been done.",
+    "interval_n_too_small": "No interval is shown: fewer than 20 independent held-out studies.",
+    "interval_system_level_only": "Intervals are given at system level only, not per drug."
+   }
   },
   "tramadol": {
    "release": {
@@ -3647,7 +4291,7 @@
      "note": null,
      "extracted_at": "2026-11-10",
      "role": "excluded",
-     "reason": "observation in a study that also reports building parameters (not tested)"
+     "reason": "observation_in_building_study"
     },
     {
      "id": "ev_076239c6fcb1",
@@ -3851,7 +4495,7 @@
      "note": null,
      "extracted_at": "2026-11-10",
      "role": "excluded",
-     "reason": "observation in a study that also reports building parameters (not tested)"
+     "reason": "observation_in_building_study"
     },
     {
      "id": "ev_9fe4b41568f9",
@@ -4055,7 +4699,7 @@
      "note": null,
      "extracted_at": "2026-11-10",
      "role": "excluded",
-     "reason": "observation in a study that also reports building parameters (not tested)"
+     "reason": "observation_in_building_study"
     },
     {
      "id": "ev_ef89cfecd803",
@@ -4089,7 +4733,7 @@
      "note": "origin: rule-based extractor; both readers worked from the quoted sentence only",
      "extracted_at": "2026-11-11",
      "role": "excluded",
-     "reason": "not needed: a preferred basis or a pooled value was used"
+     "reason": "not_needed_preferred_basis"
     },
     {
      "id": "ev_50bfd59a4fe8",
@@ -4157,7 +4801,7 @@
      "note": "origin: curated from the label text by the seed script; both readers worked from the quoted sentence only",
      "extracted_at": "2026-11-11",
      "role": "excluded",
-     "reason": "not needed: a preferred basis or a pooled value was used"
+     "reason": "not_needed_preferred_basis"
     },
     {
      "id": "ev_d4a6e8a9c0bd",
@@ -4361,7 +5005,7 @@
      "note": "origin: curated from the label text by the seed script; both readers worked from the quoted sentence only",
      "extracted_at": "2026-11-11",
      "role": "excluded",
-     "reason": "not needed: a preferred basis or a pooled value was used"
+     "reason": "not_needed_preferred_basis"
     },
     {
      "id": "ev_e755470b9cf7",
@@ -4538,7 +5182,59 @@
     "ClinicalTrials.gov: source of the data is ClinicalTrials.gov; each row shows the record's last update and when it was retrieved; units were converted, values re-typed, rows filtered and short parts of the posted text quoted (modifications by Janus).",
     "DailyMed labels and Drugs@FDA reviews: public domain (U.S. government work). Not an FDA or NLM endorsement.",
     "PubMed Central articles: only CC BY or CC0 articles; credit the authors and the article, see the licence of each article; changes: values transcribed, units converted, short parts quoted."
-   ]
+   ],
+   "reason_text": {
+    "not_confirmed": "The two readers did not both agree with the extracted value.",
+    "analyte_not_parent": "The value is not for the parent drug.",
+    "coadministered": "The arm gave another active drug with it.",
+    "fixed_dose_combination": "The product is a fixed-dose combination.",
+    "formulation_not_immediate_release": "The formulation is not immediate-release or a solution.",
+    "bound_not_a_value": "The source gives only a bound (for example 'more than'), not a value.",
+    "per_kg_not_converted": "The value is per kilogram; there is no body weight, so it is not converted.",
+    "held_out_study": "Held-out study: its observations only test a set, they never build one.",
+    "observation_in_building_study": "An observation in a study that also reports building parameters; not tested.",
+    "not_needed_preferred_basis": "Not needed: a preferred basis or a pooled value was used.",
+    "auc_to_last_sampling_time_not_comparable": "AUC to the last sampling time: that time is not in the evidence.",
+    "not_an_observation": "Not an observation of Cmax or AUC.",
+    "needs_oral_dose": "A test needs an oral dose.",
+    "auc_tau_needs_multiple_dose_interval": "AUC over a dosing interval needs a multiple-dose arm with its interval.",
+    "steady_state_cmax_not_modelled": "Steady-state Cmax is not modelled in this milestone.",
+    "auc_inf_needs_single_dose": "AUC to infinity needs a single-dose arm.",
+    "set_has_no_absorption_rate": "The set has no absorption rate, so it cannot predict Cmax.",
+    "set_cannot_predict_metric": "The set cannot predict this metric.",
+    "no_parameter_set": "There is no parameter set to test.",
+    "no_independent_observation": "No independent observation: no held-out study reports Cmax or AUC.",
+    "auc_not_tested": "AUC was not tested.",
+    "cmax_not_tested": "Cmax was not tested.",
+    "tested_ratio_outside_2_fold": "A tested ratio of predicted to observed is outside 2-fold.",
+    "auc_and_cmax_within_2_fold": "AUC and Cmax both tested and within 2-fold.",
+    "auc_near_the_2_fold_limit": "The AUC ratio is within 10 % of the 2-fold limit.",
+    "cmax_near_the_2_fold_limit": "The Cmax ratio is within 10 % of the 2-fold limit.",
+    "no_confirmed_clearance": "No confirmed clearance (intravenous CL or oral CL/F).",
+    "no_confirmed_volume": "No confirmed volume (Vss or Vd, or V/F).",
+    "iv_evidence_incomplete": "Intravenous evidence is incomplete: clearance and volume are both needed.",
+    "iv_without_bioavailability": "Intravenous clearance and volume exist but no confirmed oral bioavailability.",
+    "no_volume_and_no_half_life": "No volume (V/F) and no half-life to derive it.",
+    "missing_absorption_no_peak_time": "Absorption rate missing: no confirmed time of peak concentration.",
+    "missing_absorption_no_solution": "Absorption rate missing: the peak time is at or beyond what the elimination rate allows.",
+    "bioavailability_capped": "A bioavailability above 1 was capped at 1.",
+    "half_life_inconsistent": "The half-life implied by CL and V differs from the stated half-life by more than 1.5-fold; the curve tail is not supported.",
+    "studies_disagree": "The studies disagree by more than 2-fold.",
+    "healthy_adult_preferred": "Healthy-adult values were preferred.",
+    "no_central_volume_evidence": "No central-volume evidence (no distribution phase): one compartment.",
+    "two_volumes_differ": "Central and steady-state volumes differ by at least 25 %: two compartments.",
+    "two_volumes_agree": "Central and steady-state volumes agree within 25 %: one compartment.",
+    "v_from_clf_half_life": "V/F = CL/F x half-life / ln 2",
+    "ka_from_tmax": "ka solves tmax = ln(ka/k) / (ka - k) with k = CL / V",
+    "f_fixed_apparent": "Fixed at 1: apparent parameters already contain bioavailability.",
+    "clearance_or_bioavailability": "Clearance (CL or CL/F) or bioavailability: AUC is outside 2-fold.",
+    "absorption_rate_or_volume": "Absorption rate (derived from the time of peak concentration) or volume: Cmax is outside 2-fold.",
+    "n_very_small": "n is very small: shares and fold errors describe these drugs, not drugs in general.",
+    "two_automated_passes": "Every held-out observation was read automatically and confirmed by two automated passes.",
+    "expert_review_pending": "Expert review has not yet been done.",
+    "interval_n_too_small": "No interval is shown: fewer than 20 independent held-out studies.",
+    "interval_system_level_only": "Intervals are given at system level only, not per drug."
+   }
   }
  }
 }
