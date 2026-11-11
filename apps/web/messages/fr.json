@@ -3002,7 +3002,9 @@
       },
       "confirm": "Confirmation (automatisée)",
       "studyId": "Identifiant de l’étude",
-      "derived": "Valeur dérivée (calculée, non indiquée dans la source)"
+      "derived": "Valeur dérivée (calculée, non indiquée dans la source)",
+      "showAll": "Afficher les {count} lignes",
+      "showFewer": "Afficher moins de lignes"
     },
     "evParam": {
       "cl": "Clairance (CL)",

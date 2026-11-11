@@ -3002,7 +3002,9 @@
       },
       "confirm": "Bestätigung (automatisiert)",
       "studyId": "Studien-ID",
-      "derived": "Abgeleiteter Wert (berechnet, nicht in der Quelle angegeben)"
+      "derived": "Abgeleiteter Wert (berechnet, nicht in der Quelle angegeben)",
+      "showAll": "Alle {count} Zeilen anzeigen",
+      "showFewer": "Weniger Zeilen anzeigen"
     },
     "evParam": {
       "cl": "Clearance (CL)",

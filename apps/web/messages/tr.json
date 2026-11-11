@@ -3002,7 +3002,9 @@
       },
       "confirm": "Onay (otomatik)",
       "studyId": "Çalışma kimliği",
-      "derived": "Türetilmiş değer (hesaplanmış, kaynakta belirtilmemiş)"
+      "derived": "Türetilmiş değer (hesaplanmış, kaynakta belirtilmemiş)",
+      "showAll": "{count} satırın tümünü göster",
+      "showFewer": "Daha az satır göster"
     },
     "evParam": {
       "cl": "Klerens (CL)",

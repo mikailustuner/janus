@@ -47,6 +47,8 @@ import {
 } from "./common";
 import { ValidationChart } from "./ValidationChart";
 
+/** Rows of an evidence table shown before "show all" (long-content state). */
+const ROW_LIMIT = 20;
 const EXTERNAL = { target: "_blank", rel: "noopener noreferrer" } as const;
 const BUTTON =
   "inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-[var(--radius-button)] px-4 py-2.5 text-base font-bold no-underline transition-colors duration-200 bg-accent text-on-accent hover:opacity-90";
@@ -656,6 +658,8 @@ function EvidenceTable({
     maximumSignificantDigits: 5,
   });
   const [open, setOpen] = useState<string | null>(null);
+  const [all, setAll] = useState(false);
+  const visible = all ? rows : rows.slice(0, ROW_LIMIT);
   return (
     <section
       className="flex min-w-0 flex-col gap-2"
@@ -682,9 +686,9 @@ function EvidenceTable({
             </tr>
           </thead>
           <tbody>
-            {rows.map((r) => {
+            {visible.map((r) => {
               const pid = `${id}-${r.id}`;
-              const shown = open === r.id;
+              const expanded = open === r.id;
               return [
                 <tr key={r.id} data-testid="mk-ev-row">
                   <th scope="row">{paramLabel(t, r.parameter)}</th>
@@ -698,9 +702,9 @@ function EvidenceTable({
                           </span>
                         </>
                       }
-                      expanded={shown}
+                      expanded={expanded}
                       controls={pid}
-                      onClick={() => setOpen(shown ? null : r.id)}
+                      onClick={() => setOpen(expanded ? null : r.id)}
                       testId="mk-ev-value"
                     />
                   </td>
@@ -719,7 +723,7 @@ function EvidenceTable({
                     )}
                   </td>
                 </tr>,
-                shown ? (
+                expanded ? (
                   <tr key={`${r.id}-p`}>
                     <td colSpan={4} id={pid} className="whitespace-normal">
                       <div className="sticky start-0 w-[calc(100vw-5.5rem)] max-w-[44rem] py-2">
@@ -733,6 +737,18 @@ function EvidenceTable({
           </tbody>
         </table>
       </ScrollTable>
+      {rows.length > ROW_LIMIT ? (
+        <Button
+          type="button"
+          onClick={() => setAll(!all)}
+          aria-expanded={all}
+          data-testid={`${id}-more`}
+        >
+          {all
+            ? t("ModelKit.ev.showFewer")
+            : t("ModelKit.ev.showAll", { count: rows.length })}
+        </Button>
+      ) : null}
     </section>
   );
 }

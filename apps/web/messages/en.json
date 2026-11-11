@@ -3002,7 +3002,9 @@
       },
       "confirm": "Confirmation (automated)",
       "studyId": "Study id",
-      "derived": "Derived value (calculated, not stated in the source)"
+      "derived": "Derived value (calculated, not stated in the source)",
+      "showAll": "Show all {count} rows",
+      "showFewer": "Show fewer rows"
     },
     "evParam": {
       "cl": "Clearance (CL)",

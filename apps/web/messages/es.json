@@ -3002,7 +3002,9 @@
       },
       "confirm": "Confirmación (automatizada)",
       "studyId": "Identificador del estudio",
-      "derived": "Valor derivado (calculado, no indicado en la fuente)"
+      "derived": "Valor derivado (calculado, no indicado en la fuente)",
+      "showAll": "Mostrar las {count} filas",
+      "showFewer": "Mostrar menos filas"
     },
     "evParam": {
       "cl": "Aclaramiento (CL)",

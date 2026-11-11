@@ -1973,6 +1973,66 @@
               }
             ],
             "title": "Reason"
+          },
+          "origin": {
+            "type": "string",
+            "title": "Origin"
+          },
+          "derivation": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Derivation"
+          },
+          "arm_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Arm Id"
+          },
+          "food": {
+            "type": "string",
+            "title": "Food"
+          },
+          "evidence_kind": {
+            "type": "string",
+            "title": "Evidence Kind"
+          },
+          "dispersion_type": {
+            "type": "string",
+            "title": "Dispersion Type"
+          },
+          "dispersion_low": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dispersion Low"
+          },
+          "dispersion_high": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dispersion High"
           }
         },
         "additionalProperties": false,
@@ -2009,7 +2069,15 @@
           "note",
           "extracted_at",
           "role",
-          "reason"
+          "reason",
+          "origin",
+          "derivation",
+          "arm_id",
+          "food",
+          "evidence_kind",
+          "dispersion_type",
+          "dispersion_low",
+          "dispersion_high"
         ],
         "title": "EvidenceRowOut"
       },
@@ -2512,7 +2580,7 @@
             "type": "integer",
             "title": "Within 2 Fold Points"
           },
-          "in_band": {
+          "all_within_2_fold": {
             "anyOf": [
               {
                 "type": "boolean"
@@ -2521,18 +2589,7 @@
                 "type": "null"
               }
             ],
-            "title": "In Band"
-          },
-          "near_limit": {
-            "anyOf": [
-              {
-                "type": "boolean"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Near Limit"
+            "title": "All Within 2 Fold"
           }
         },
         "additionalProperties": false,
@@ -2545,8 +2602,7 @@
           "gm_ratio",
           "gmfe",
           "within_2_fold_points",
-          "in_band",
-          "near_limit"
+          "all_within_2_fold"
         ],
         "title": "MetricOut"
       },
@@ -4910,6 +4966,13 @@
             "type": "array",
             "title": "Suspect"
           },
+          "failed_point_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Failed Point Ids"
+          },
           "interval_reason": {
             "type": "string",
             "title": "Interval Reason"
@@ -4943,6 +5006,7 @@
           "points",
           "excluded",
           "suspect",
+          "failed_point_ids",
           "interval_reason",
           "interval_min_studies",
           "interval_n_studies",

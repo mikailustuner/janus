@@ -253,6 +253,24 @@ test.describe("list", () => {
 });
 
 test.describe("drug page", () => {
+  test("a long evidence table shows 20 rows first and all on request", async ({
+    page,
+  }) => {
+    await stubApi(page, relStubs);
+    const excluded = rel.evidence[REL_DRUG]!.rows.filter(
+      (r: Json) => r.role === "excluded",
+    );
+    expect(excluded.length).toBeGreaterThan(20);
+    await page.goto(`/en/research/model-kit/drug#${REL_DRUG}`);
+    const rows = page.getByTestId("mk-excluded").getByTestId("mk-ev-row");
+    await expect(rows).toHaveCount(20);
+    const more = page.getByTestId("mk-excluded-more");
+    await expect(more).toHaveAttribute("aria-expanded", "false");
+    await more.click();
+    await expect(rows).toHaveCount(excluded.length);
+    await expect(more).toHaveAttribute("aria-expanded", "true");
+  });
+
   test("a value opens its evidence by keyboard: quote, source, both readers", async ({
     page,
   }) => {
