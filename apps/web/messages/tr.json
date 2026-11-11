@@ -1262,7 +1262,7 @@
     "framing": "Araştırılmaya değer aday — tedavi değildir.",
     "review": "4. aşama içeriği: Kanun pasajları, makine çevirileri, tanımlamalar ve çıkarılan iddialar iki otomatik incelemeden (tarihçi ve farmakolog) geçti; uzman incelemesi henüz yapılmadı.",
     "researcherOnly": "Araştırmacılar için. Bu sayfadaki hiçbir şey hasta sayfalarında gösterilmez.",
-    "demo": "Demo: katalog ve iki eşleşme {date} tarihinde gerçek verilerden kaydedildi; hiçbir istek gönderilmez.",
+    "demo": "Demo: katalog ve iki eşleşme {date} tarihinde gerçek verilerden kaydedildi; hiçbir istek gönderilmez. Liste her ilacı içerir; ilaç sayfaları bir seçim için kaydedilmiştir.",
     "pick": {
       "legend": "Bir eşleşme seçin",
       "substance": "Madde",
@@ -1818,7 +1818,7 @@
     "intro": "Zaman makinesi, İbn Sina'nın Kanun'undaki bazı ilaçları ve bazı reçete kaskadlarını bugünün açık verileriyle izler: içerdikleri moleküller, laboratuvarlarda ölçülen etkinlik, basit vücut modelleri ve kamuya açık advers olay bildirimlerinde yazılan başlama süresi.",
     "inSilico": "In silico ve keşif amaçlı: açık verilerden hesaplanmıştır, herhangi bir kişi hakkında kanıt değildir. Burada gösterilen bir molekül ya da konsantrasyon araştırılmaya değer bir adaydır — bir tedavi değildir ve asla alınacak bir doz değildir.",
     "review": "Uzman incelemesi henüz yapılmadı.",
-    "demo": "Demo: tüm yanıtlar {date} tarihinde gerçek yerel Janus API'sinden kaydedildi; hiçbir istek gönderilmez.",
+    "demo": "Demo: tüm yanıtlar {date} tarihinde gerçek yerel Janus API'sinden kaydedildi; hiçbir istek gönderilmez. Liste her ilacı içerir; ilaç sayfaları bir seçim için kaydedilmiştir.",
     "entry": {
       "title": "Zaman makinesi",
       "body": "Kanun'daki ilaçlar ve reçete kaskadları: moleküller, vücut modelleri ve bildirilen başlama süresi."
@@ -2037,7 +2037,7 @@
       "title": "Açık veri",
       "body": "Bağışlanan bildirimlerin ve doktorların bildirdiği sonuçların yayımlanan sayıları ve veri paketi olarak kaskad kural tabanı."
     },
-    "demo": "Demo: veri kümesi {date} tarihinde gerçek yerel Janus API'sinden kaydedildi; hiçbir istek gönderilmez.",
+    "demo": "Demo: veri kümesi {date} tarihinde gerçek yerel Janus API'sinden kaydedildi; hiçbir istek gönderilmez. Liste her ilacı içerir; ilaç sayfaları bir seçim için kaydedilmiştir.",
     "dataset": {
       "title": "Açık sonuç veri kümesi",
       "empty": "Henüz yayımlanan hücre yok. Bir sayı yalnızca en az 20 bildirim aynı ilaçları, olayı, yönü ve bölgeyi paylaştığında ve aşağıdaki kuralları geçtiğinde yayımlanır. O zamana kadar gösterilecek bir şey ve örnek bir sayı yok.",
@@ -2883,9 +2883,9 @@
     "experimental": "Deneysel",
     "researchUse": "Yalnızca araştırma amaçlıdır. Klinik kararlar için kullanılamaz.",
     "expertReview": "Uzman incelemesi henüz yapılmadı.",
-    "demo": "Demo: yanıtlar {date} tarihinde kaydedildi, hiçbir istek gönderilmez.",
+    "demo": "Demo: yanıtlar {date} tarihinde kaydedildi, hiçbir istek gönderilmez. Liste her ilacı içerir; ilaç sayfaları bir seçim için kaydedilmiştir.",
     "loading": "Model seti yükleniyor…",
-    "intro": "Birkaç ilaç için kanıta dayalı izlenebilir parametre kümeleri; her biri ayrı tutulan çalışmalara karşı sınanır ve her değer kaynak alıntısına bağlıdır. Bu bir doz hesaplayıcısı değildir ve hiçbir kişi için tavsiye vermez.",
+    "intro": "Kanıtın yettiği ilaçlar için (havuzdaki ilaçların çoğunda henüz yok) kanıta dayalı izlenebilir parametre kümeleri; her biri ayrı tutulan çalışmalara karşı sınanır ve her değer kaynak alıntısına bağlıdır. Bu bir doz hesaplayıcısı değildir ve hiçbir kişi için tavsiye vermez.",
     "introValidation": "Bir durum, parametre kümesinin ayrı tutulan birkaç çalışmaya karşı nasıl performans gösterdiğini anlatır. İlaç hakkında bir yargı değildir.",
     "yes": "Evet",
     "no": "Hayır",
@@ -3113,7 +3113,7 @@
       "point_outside_2_fold": "Ayrı tutulan en az bir gözlem, öngörünün 2 katının dışında.",
       "all_points_within_2_fold": "EAA ve Cmax sınandı ve ayrı tutulan her gözlem 2 kat içinde.",
       "cl_from_dose_and_auc": "Türetilmiş: CL/F = doz / sonsuza kadar EAA (tek çalışma kolu; damar içi dozda CL).",
-      "confirmed_precision_below_target": "Onaylanan değerlerden alınan kör bir örnekte iki otomatik gözden geçirme turu değerlerin %69'unu doğru buldu (n = 85, %95 aralığı %59 ile %78), bu kilometre taşının %90 hedefinin altında. Her değeri doğrulanmamış sayın."
+      "confirmed_precision_below_target": "Onaylanan değerlerden alınan kör bir örnekte iki otomatik gözden geçirme turu değerlerin %73'ünü doğru buldu (n = 97, %95 aralığı %64 ile %81), bu kilometre taşının %90 hedefinin altında. Her değeri doğrulanmamış sayın."
     },
     "scrollHint": "Tüm sütunları görmek için yana kaydırın."
   }

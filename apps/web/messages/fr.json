@@ -2883,9 +2883,9 @@
     "experimental": "Expérimental",
     "researchUse": "Usage de recherche uniquement. Pas pour des décisions cliniques.",
     "expertReview": "L’examen par des experts n’a pas encore été fait.",
-    "demo": "Démo : réponses enregistrées le {date}, aucune requête n’est envoyée.",
+    "demo": "Démo : réponses enregistrées le {date}, aucune requête n’est envoyée. La liste contient chaque médicament ; les pages ne sont enregistrées que pour une sélection.",
     "loading": "Chargement du kit de modèles…",
-    "intro": "Des jeux de paramètres traçables jusqu’aux preuves pour quelques médicaments, chacun testé sur des études mises de côté, chaque valeur étant reliée à sa citation source. Ce n’est pas un calculateur de dose et il ne donne aucun conseil à une personne.",
+    "intro": "Des jeux de paramètres traçables jusqu’aux preuves pour les médicaments dont les preuves suffisent (la plupart des médicaments du lot n’en ont pas encore), chacun testé sur des études mises de côté, chaque valeur étant reliée à sa citation source. Ce n’est pas un calculateur de dose et il ne donne aucun conseil à une personne.",
     "introValidation": "Un statut décrit comment un jeu de paramètres s’est comporté face à une poignée d’études mises de côté. Ce n’est pas un jugement sur le médicament.",
     "yes": "Oui",
     "no": "Non",
@@ -3113,7 +3113,7 @@
       "point_outside_2_fold": "Au moins une observation mise de côté est hors d’un facteur 2 de la prédiction.",
       "all_points_within_2_fold": "L’ASC et la Cmax ont été testées et chaque observation mise de côté est dans un facteur 2.",
       "cl_from_dose_and_auc": "Dérivé : CL/F = dose / ASC jusqu’à l’infini d’un bras d’étude (CL pour une dose intraveineuse).",
-      "confirmed_precision_below_target": "Sur un échantillon en aveugle de valeurs confirmées, deux passes de relecture automatisées en ont jugé 69 % correctes (n = 85, intervalle à 95 % de 59 à 78 %), sous l’objectif de 90 % de cette étape. Lisez chaque valeur comme non vérifiée."
+      "confirmed_precision_below_target": "Sur un échantillon en aveugle de valeurs confirmées, deux passes de relecture automatisées en ont jugé 73 % correctes (n = 97, intervalle à 95 % de 64 à 81 %), sous l’objectif de 90 % de cette étape. Lisez chaque valeur comme non vérifiée."
     },
     "scrollHint": "Faites défiler latéralement pour voir toutes les colonnes."
   }

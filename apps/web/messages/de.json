@@ -1262,7 +1262,7 @@
     "framing": "Ein Kandidat, der eine Untersuchung wert ist – keine Behandlung.",
     "review": "Inhalte der Phase 4: Die Kanon-Passagen, ihre maschinellen Übersetzungen, die Bestimmungen und die extrahierten Aussagen haben zwei automatisierte Prüfungen (Historiker und Pharmakologe) durchlaufen; eine Prüfung durch Fachleute ist noch nicht erfolgt.",
     "researcherOnly": "Für Forschende. Nichts auf dieser Seite wird in den Patientenseiten gezeigt.",
-    "demo": "Demo: Der Katalog und die zwei Paare wurden am {date} aus den echten Daten aufgezeichnet; es wird keine Anfrage gesendet.",
+    "demo": "Demo: Der Katalog und die zwei Paare wurden am {date} aus den echten Daten aufgezeichnet; es wird keine Anfrage gesendet. Die Liste enthält jedes Arzneimittel; Arzneimittelseiten sind für eine Auswahl aufgezeichnet.",
     "pick": {
       "legend": "Ein Paar wählen",
       "substance": "Substanz",
@@ -1818,7 +1818,7 @@
     "intro": "Die Zeitmaschine verfolgt Heilmittel aus Ibn Sinas Kanon und einige Verschreibungskaskaden durch die offenen Daten von heute: die enthaltenen Moleküle, im Labor gemessene Aktivität, einfache Körpermodelle und die Zeit bis zum Auftreten, wie sie in öffentlichen Meldungen unerwünschter Ereignisse steht.",
     "inSilico": "In silico und explorativ: aus offenen Daten berechnet, kein Beleg für irgendeine Person. Ein hier gezeigtes Molekül oder eine Konzentration ist ein untersuchenswerter Kandidat — keine Behandlung und niemals eine einzunehmende Dosis.",
     "review": "Eine Prüfung durch Fachleute ist noch nicht erfolgt.",
-    "demo": "Demo: alle Antworten wurden am {date} von der echten lokalen Janus-API aufgezeichnet; es wird keine Anfrage gesendet.",
+    "demo": "Demo: alle Antworten wurden am {date} von der echten lokalen Janus-API aufgezeichnet; es wird keine Anfrage gesendet. Die Liste enthält jedes Arzneimittel; Arzneimittelseiten sind für eine Auswahl aufgezeichnet.",
     "entry": {
       "title": "Zeitmaschine",
       "body": "Heilmittel des Kanons und Verschreibungskaskaden: Moleküle, Körpermodelle und gemeldete Zeit bis zum Auftreten."
@@ -2037,7 +2037,7 @@
       "title": "Offene Daten",
       "body": "Veröffentlichte Zahlen gespendeter Meldungen und ärztlich gemeldeter Behandlungsverläufe, und die Regelbasis der Kaskaden als Datenpaket."
     },
-    "demo": "Demo: Der Datensatz wurde am {date} von der echten lokalen Janus-API aufgezeichnet; es wird keine Anfrage gesendet.",
+    "demo": "Demo: Der Datensatz wurde am {date} von der echten lokalen Janus-API aufgezeichnet; es wird keine Anfrage gesendet. Die Liste enthält jedes Arzneimittel; Arzneimittelseiten sind für eine Auswahl aufgezeichnet.",
     "dataset": {
       "title": "Offener Datensatz der Behandlungsverläufe",
       "empty": "Noch keine veröffentlichten Zellen. Eine Zahl wird nur veröffentlicht, wenn mindestens 20 Meldungen dieselben Arzneimittel, dasselbe Ereignis, dieselbe Richtung und dieselbe Region betreffen und die Regeln unten erfüllen. Bis dahin gibt es nichts zu zeigen und keine Beispielzahl.",
@@ -2105,7 +2105,7 @@
     "intro": "Janus liest die Identitätsfelder von Wirkstoffen aus fünf Quellen: TİTCK (Türkei), AEMPS CIMA (Spanien), BDPM (Frankreich), openFDA NDC (USA) und Wikidata. Jede Woche vergleicht es die ATC-Codes, die sie für denselben Wirkstoff angeben, und listet jeden Unterschied auf: was neu ist, was bleibt und was seit dem vorigen Lauf behoben wurde.",
     "codesOnly": "Nur Codes und Zahlen: Dieser Bericht enthält keine Zeile der TİTCK-Liste, keinen Produktnamen, keinen Barcode und keinen Text des WHOCC-Index.",
     "review": "Mit festen Regeln erzeugt. Eine Prüfung durch Fachleute ist noch nicht erfolgt: Jeder Befund muss pharmazeutisch geprüft werden, bevor er an die Quelle gemeldet wird.",
-    "demo": "Demo: Der Bericht wurde am {date} von der echten lokalen Janus-API aufgezeichnet; es wird keine Anfrage gesendet.",
+    "demo": "Demo: Der Bericht wurde am {date} von der echten lokalen Janus-API aufgezeichnet; es wird keine Anfrage gesendet. Die Liste enthält jedes Arzneimittel; Arzneimittelseiten sind für eine Auswahl aufgezeichnet.",
     "loading": "Datenqualitätsbericht wird geladen …",
     "errors": {
       "unavailable": "Der Datenqualitätsbericht ist gerade nicht verfügbar. Bitte später erneut versuchen."
@@ -2231,7 +2231,7 @@
     "intro": "Für jedes Muster der PIPC-Liste (Arzneimittel A → Ereignis → Arzneimittel B): Wie lange nach dem Beginn eines Arzneimittels aus der Klasse von A begann das Ereignis laut den FAERS-Meldungen? Eine Methode auf Grundlage der Zeitmaschine, mit strengeren Regeln, für alle 65 Zeilen, mit der Zahl der Meldungen hinter jeder Angabe.",
     "framing": "Nur beschreibend: nicht kausal, keine Inzidenz. FAERS beruht auf Spontanmeldungen; Zahlen sind Meldungen, keine Personen. Ein Intervall ist, was Meldende eingetragen haben, kein bei Menschen gemessener Beginn.",
     "review": "Die Methoden haben automatische statistische und pharmakologische Prüfdurchläufe bestanden. Eine Prüfung durch Fachleute ist noch nicht erfolgt.",
-    "demo": "Demo: Die Tabelle wurde am {date} von der echten lokalen Janus-API aufgezeichnet; es wird keine Anfrage gesendet.",
+    "demo": "Demo: Die Tabelle wurde am {date} von der echten lokalen Janus-API aufgezeichnet; es wird keine Anfrage gesendet. Die Liste enthält jedes Arzneimittel; Arzneimittelseiten sind für eine Auswahl aufgezeichnet.",
     "loading": "Tabelle wird geladen …",
     "errors": {
       "unavailable": "Die Tabelle ist gerade nicht verfügbar. Bitte später erneut versuchen.",
@@ -2421,7 +2421,7 @@
   "Simulation": {
     "virtualPopulation": "Virtuelle Population, für die Forschung. Betrifft keine Person und ist keine Dosisempfehlung.",
     "inSilico": "In silico und explorativ: eine Modellausgabe für Lehre und Forschung. Sie beschreibt eine simulierte Gruppe, nie den Körper eines bestimmten Menschen, und sagt nichts darüber, was jemand einnehmen sollte.",
-    "demo": "Demo: Die Ergebnisse wurden am {date} von der echten lokalen Janus-API aufgezeichnet; es wird keine Anfrage gesendet.",
+    "demo": "Demo: Die Ergebnisse wurden am {date} von der echten lokalen Janus-API aufgezeichnet; es wird keine Anfrage gesendet. Die Liste enthält jedes Arzneimittel; Arzneimittelseiten sind für eine Auswahl aufgezeichnet.",
     "explorer": {
       "title": "Modell-Explorer",
       "summary": "Läuft auf diesem Gerät · nichts wird gesendet",
@@ -2883,9 +2883,9 @@
     "experimental": "Experimentell",
     "researchUse": "Nur zu Forschungszwecken. Nicht für klinische Entscheidungen.",
     "expertReview": "Eine Prüfung durch Fachleute hat noch nicht stattgefunden.",
-    "demo": "Demo: Antworten aufgezeichnet am {date}, es wird keine Anfrage gesendet.",
+    "demo": "Demo: Antworten aufgezeichnet am {date}, es wird keine Anfrage gesendet. Die Liste enthält jedes Arzneimittel; Arzneimittelseiten sind für eine Auswahl aufgezeichnet.",
     "loading": "Das Modell-Kit wird geladen…",
-    "intro": "Nachvollziehbare Parametersätze für einige Arzneimittel, jeweils an zurückgehaltenen Studien geprüft; jeder Wert ist mit seinem Quellzitat verknüpft. Das ist kein Dosisrechner und gibt keinen Rat für eine einzelne Person.",
+    "intro": "Nachvollziehbare Parametersätze für die Arzneimittel, bei denen die Belege reichen (die meisten Arzneimittel des Pools haben noch keinen), jeweils an zurückgehaltenen Studien geprüft; jeder Wert ist mit seinem Quellzitat verknüpft. Das ist kein Dosisrechner und gibt keinen Rat für eine einzelne Person.",
     "introValidation": "Ein Status beschreibt, wie ein Parametersatz bei einer Handvoll zurückgehaltener Studien abgeschnitten hat. Er ist keine Aussage über das Arzneimittel.",
     "yes": "Ja",
     "no": "Nein",
@@ -3113,7 +3113,7 @@
       "point_outside_2_fold": "Mindestens eine zurückgehaltene Beobachtung liegt außerhalb des Faktors 2 der Vorhersage.",
       "all_points_within_2_fold": "AUC und Cmax wurden geprüft und jede zurückgehaltene Beobachtung liegt innerhalb des Faktors 2.",
       "cl_from_dose_and_auc": "Abgeleitet: CL/F = Dosis / AUC bis unendlich eines Studienarms (CL bei intravenöser Dosis).",
-      "confirmed_precision_below_target": "In einer verblindeten Stichprobe bestätigter Werte hielten zwei automatisierte Prüfdurchläufe 69 % für richtig (n = 85, 95-%-Intervall 59 bis 78 %), unter dem Ziel von 90 % dieses Meilensteins. Jeden Wert als ungeprüft lesen."
+      "confirmed_precision_below_target": "In einer verblindeten Stichprobe bestätigter Werte hielten zwei automatisierte Prüfdurchläufe 73 % für richtig (n = 97, 95-%-Intervall 64 bis 81 %), unter dem Ziel von 90 % dieses Meilensteins. Jeden Wert als ungeprüft lesen."
     },
     "scrollHint": "Zum Anzeigen aller Spalten seitlich scrollen."
   }

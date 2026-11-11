@@ -24,8 +24,15 @@ from tests.modelkit_helpers import seed_dicts, write_run
 WEB = Path(__file__).resolve().parents[2] / "web" / "src" / "modelkit"
 RECORDED = WEB / "modelkit.recorded.json"  # the release: list, system report, featured drugs
 RECORDED_M0 = WEB / "modelkit.m0.recorded.json"  # the six M0 drugs: every kind of drug page
-# drug pages kept in the release file besides every drug with a parameter set (size limit 1 MB)
-FEATURED = ("candesartan", "sunitinib", "telmisartan", "tramadol", "ertugliflozin")
+# drug pages kept in the release file (size limit 1 MB); the list holds every drug
+FEATURED = (
+    "enzalutamide",
+    "gabapentin",
+    "brigatinib",
+    "theophylline",
+    "candesartan",
+    "sumatriptan",
+)
 RECORDED_ON = "2026-11-11"
 
 
@@ -45,9 +52,7 @@ def _answers(data_dir: Path, only: tuple[str, ...] | None) -> dict[str, Any]:
     app.state.modelkit = ModelkitHolder(data_dir)
     with TestClient(app) as cl:
         drugs = _all_drugs(cl)
-        keys = [
-            d["key"] for d in drugs["drugs"] if only is None or d["has_set"] or d["key"] in only
-        ]
+        keys = [d["key"] for d in drugs["drugs"] if only is None or d["key"] in only]
         return {
             "recorded": RECORDED_ON,
             "drugs": drugs,

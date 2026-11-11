@@ -384,15 +384,12 @@ DEFAULT_LIMIT = 50
 
 
 def _summaries(rel: Release) -> list[DrugSummary]:
-    """The summaries of the release, computed once (the store never changes a release)."""
-    cached = _SUMMARIES.get(rel.run_id)
+    """The summaries of the release, computed once per release object (a release never changes)."""
+    cached: list[DrugSummary] | None = rel.__dict__.get("_summaries")
     if cached is None:
-        _SUMMARIES.clear()  # one release at a time
-        cached = _SUMMARIES[rel.run_id] = [summary(d) for d in rel.drugs.values()]
+        cached = [summary(d) for d in rel.drugs.values()]
+        rel.__dict__["_summaries"] = cached
     return cached
-
-
-_SUMMARIES: dict[str, list[DrugSummary]] = {}
 
 
 @router.get("/modelkit/drugs", response_model=DrugsOut)
