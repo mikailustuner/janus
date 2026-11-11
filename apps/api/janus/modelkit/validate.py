@@ -1,10 +1,11 @@
 """Validation of a parameter set against held-out studies (design DP-M7, DP-M8; Req 3).
 
-Per metric (AUC, Cmax) the ratio predicted / observed is formed per study (geometric mean over the
-study's observations), then the geometric mean over studies. Validated only if AUC and Cmax were
-both tested and both ratios are within 2-fold; Failed if a tested ratio is outside; otherwise Not
-validated, with the reasons. No interval is shown that the data cannot support. Research use only.
-Not for clinical decisions.
+Strict rule (owner decision 2026-11-11): a drug is Validated only if AUC and Cmax were both tested
+and EVERY held-out observation point (each AUC and each Cmax point, every study) has a ratio
+predicted / observed within [0.5, 2]. If any tested point is outside 2-fold the status is Failed and
+the points and the suspect parameter are named; otherwise Not validated, with the reasons. The
+geometric mean ratio per metric is still reported, but it no longer decides the status. No interval
+is shown that the data cannot support. Research use only. Not for clinical decisions.
 """
 
 from __future__ import annotations
@@ -20,7 +21,6 @@ from janus.timemachine.pk import OneCompartment, auc_inf, cmax
 
 Status = Literal["validated", "not_validated", "failed"]
 BAND = 2.0
-NEAR = 0.9  # a ratio within 10 % of a band edge is "near the limit"
 MIN_STUDIES_FOR_INTERVAL = 20
 MIN_DRUGS_FOR_INTERPRETATION = 10
 
@@ -46,8 +46,7 @@ class Metric:
     gm_ratio: float | None
     gmfe: float | None
     within_2_fold_points: int
-    in_band: bool | None
-    near_limit: bool | None
+    all_within_2_fold: bool | None  # every point of the metric is within 2-fold
 
 
 @dataclass(frozen=True)
@@ -60,6 +59,7 @@ class Validation:
     excluded: tuple[tuple[str, str], ...]
     suspect: tuple[str, ...]
     interval: str
+    failed_points: tuple[str, ...] = ()  # evidence ids of the points outside 2-fold
 
 
 def predict(ps: ParameterSet, metric: str, dose_mg: float) -> float | None:
@@ -96,15 +96,14 @@ def _obs_reason(e: Ev, ps: ParameterSet) -> str | None:
 
 def _metric(name: Literal["auc", "cmax"], pts: list[Point]) -> Metric:
     if not pts:
-        return Metric(name, False, 0, 0, None, None, 0, None, None)
+        return Metric(name, False, 0, 0, None, None, 0, None)
     by_study: dict[str, list[float]] = defaultdict(list)
     for p in pts:
         by_study[p.study_id].append(math.log(p.ratio))
     study_logs = [sum(v) / len(v) for v in by_study.values()]
     gm = math.exp(sum(study_logs) / len(study_logs))
     gmfe = math.exp(sum(abs(math.log(p.ratio)) for p in pts) / len(pts))
-    in_band = 1 / BAND <= gm <= BAND
-    near = in_band and (gm > BAND * NEAR or gm < 1 / (BAND * NEAR))
+    all_in = all(p.within_2_fold for p in pts)
     return Metric(
         name,
         True,
@@ -113,8 +112,7 @@ def _metric(name: Literal["auc", "cmax"], pts: list[Point]) -> Metric:
         gm,
         gmfe,
         sum(p.within_2_fold for p in pts),
-        in_band,
-        near,
+        all_in,
     )
 
 
@@ -168,24 +166,20 @@ def validate(drug_key: str, rows: list[Ev], ps: ParameterSet | NoSet) -> Validat
     for m in (auc, cm):
         if not m.tested and pts:
             reasons.append(f"{m.name}_not_tested")
-    failed = [m for m in (auc, cm) if m.tested and m.in_band is False]
+    failed = [m for m in (auc, cm) if m.tested and m.all_within_2_fold is False]
+    failed_points = tuple(sorted(p.eid for p in pts if not p.within_2_fold))
     if failed:
         status: Status = "failed"
         for m in failed:
             suspect.append(
                 "clearance_or_bioavailability" if m.name == "auc" else "absorption_rate_or_volume"
             )
-        reasons.append("tested_ratio_outside_2_fold")
+        reasons.append("point_outside_2_fold")
     elif auc.tested and cm.tested:
         status = "validated"
-        reasons.append("auc_and_cmax_within_2_fold")
+        reasons.append("all_points_within_2_fold")
     else:
         status = "not_validated"
-    for m in (auc, cm):
-        if m.tested and m.near_limit:
-            reasons.append(f"{m.name}_near_the_2_fold_limit")
-        if m.tested and m.in_band and m.within_2_fold_points < m.n_points:
-            reasons.append(f"{m.name}_some_points_outside_2_fold")
     interval = (
         "interval_n_too_small"
         if len(studies) < MIN_STUDIES_FOR_INTERVAL
@@ -193,7 +187,7 @@ def validate(drug_key: str, rows: list[Ev], ps: ParameterSet | NoSet) -> Validat
     )
     return Validation(
         drug_key, status, tuple(reasons), (auc, cm), tuple(pts), tuple(sorted(excluded)),
-        tuple(suspect), interval,
+        tuple(suspect), interval, failed_points,
     )  # fmt: skip
 
 
@@ -251,7 +245,7 @@ def system_report(vals: list[Validation]) -> SystemReport:
     for name in ("auc", "cmax"):
         ms = [m for v in vals for m in v.metrics if m.name == name and m.tested]
         n = len(ms)
-        within = sum(1 for m in ms if m.in_band)
+        within = sum(1 for m in ms if m.all_within_2_fold)
         gmfe = math.exp(sum(abs(math.log(m.gm_ratio)) for m in ms if m.gm_ratio) / n) if n else None
         w = wilson(within, n)
         out.append(

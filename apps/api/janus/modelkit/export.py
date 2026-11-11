@@ -220,6 +220,7 @@ def validation_summary(val: Validation, by_id: dict[str, Ev]) -> dict[str, Any]:
                 "observed": p.observed,
                 "predicted": p.predicted,
                 "ratio": p.ratio,
+                "within_2_fold": p.within_2_fold,
                 "locator": by_id[p.eid].source_locator,
                 "quote": by_id[p.eid].quote,
             }
@@ -232,6 +233,7 @@ def validation_summary(val: Validation, by_id: dict[str, Ev]) -> dict[str, Any]:
         ],
         "metrics": [m.__dict__ for m in val.metrics],
         "suspect": [{"code": c, "text": text(c)} for c in val.suspect],
+        "failed_points": list(val.failed_points),
         "interval": text(val.interval),
         "note": "n is small; ratios are predicted / observed; shown with their counts",
     }

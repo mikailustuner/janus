@@ -82,7 +82,9 @@ def test_provenance_ties_every_parameter_to_evidence_with_quotes() -> None:
         if p["name"] != "f":
             assert p["evidence"]
     assert all(e["quote"] and e["locator"] for e in prov["evidence"])
-    assert prov["validation"]["status"] == "validated"
+    assert (
+        prov["validation"]["status"] == "failed" and len(prov["validation"]["failed_points"]) == 1
+    )
     assert prov["left_out"] and prov["kit"]["status"] == "experimental"
 
 

@@ -48,8 +48,7 @@ class MetricOut(_Out):
     gm_ratio: float | None
     gmfe: float | None
     within_2_fold_points: int
-    in_band: bool | None
-    near_limit: bool | None
+    all_within_2_fold: bool | None
 
 
 class PointOut(_Out):
@@ -75,6 +74,7 @@ class ValidationOut(_Out):
     points: list[PointOut]
     excluded: list[ReasonOut]
     suspect: list[str]
+    failed_point_ids: list[str]
     interval_reason: str
     interval_min_studies: int
     interval_n_studies: int
@@ -279,6 +279,7 @@ def validation_out(v: Validation) -> ValidationOut:
         ],
         excluded=[ReasonOut(evidence_id=e, reason=r) for e, r in v.excluded],
         suspect=list(v.suspect),
+        failed_point_ids=list(v.failed_points),
         interval_reason=v.interval,
         interval_min_studies=MIN_STUDIES_FOR_INTERVAL,
         interval_n_studies=len({p.study_id for p in v.points}),

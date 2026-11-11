@@ -153,7 +153,7 @@ def test_validation_passes_and_fails() -> None:
     auc = val.metrics[0]
     assert auc.tested and auc.n_studies == 2 and auc.gm_ratio == pytest.approx(1.0)
     # Cmax observed 1 ng/mL is far below the prediction: outside 2-fold, absorption suspect
-    assert val.status == "failed" and val.metrics[1].in_band is False
+    assert val.status == "failed" and val.metrics[1].all_within_2_fold is False
     assert "absorption_rate_or_volume" in val.suspect
     # AUC wrong by 3-fold: failed with clearance suspect
     rows = [r for r in oral_world() if r.parameter != "auc_inf"] + [
@@ -176,6 +176,25 @@ def test_validated_when_both_in_band() -> None:
     ]
     val = validate("exampletine", rows, ps)
     assert val.status == "validated" and not val.suspect
+
+
+def test_one_point_outside_2_fold_fails_even_if_the_drug_level_ratio_is_inside() -> None:
+    rows = oral_world()
+    ps = build_set("exampletine", rows)
+    assert isinstance(ps, ParameterSet)
+    f, cl, v, ka = ps.engine()
+    from janus.timemachine.pk import OneCompartment, cmax
+
+    c = cmax(OneCompartment(f, ka or 1.0, cl, v), 50.0) * 1000
+    # two Cmax points of one study: ratios 1/0.45 = 2.2 and 1/1.8; geometric mean about 1.1 (inside)
+    rows = [r for r in rows if r.parameter != "cmax"] + [
+        ev(parameter="cmax", value=c * 0.45, dose=50.0, study_id="T1", source_locator="a"),
+        ev(parameter="cmax", value=c * 1.8, dose=50.0, study_id="T1", source_locator="b"),
+    ]
+    val = validate("exampletine", rows, ps)
+    assert 0.5 < val.metrics[1].gm_ratio < 2.0  # type: ignore[operator]
+    assert val.status == "failed" and "point_outside_2_fold" in val.reasons
+    assert len(val.failed_points) == 1 and "absorption_rate_or_volume" in val.suspect
 
 
 def test_no_observation_is_not_validated() -> None:
@@ -347,11 +366,15 @@ def test_properties_of_the_builder(rows: list[Ev], rnd: random.Random) -> None:
     # M8: status follows the metrics
     tested = [m for m in val.metrics if m.tested]
     if val.status == "failed":
-        assert any(m.in_band is False for m in tested)
+        assert any(m.all_within_2_fold is False for m in tested)
     if val.status == "validated":
-        assert len(tested) == 2 and all(m.in_band for m in tested)
-    if any(m.tested and m.in_band is False for m in tested):
+        assert len(tested) == 2 and all(m.all_within_2_fold for m in tested)
+        # strict rule (owner decision 2026-11-11): Validated => every point within [0.5, 2]
+        assert val.points and all(0.5 <= p.ratio <= 2.0 for p in val.points)
+        assert not val.failed_points
+    if any(m.tested and m.all_within_2_fold is False for m in tested):
         assert val.status == "failed"
+    assert set(val.failed_points) == {p.eid for p in val.points if not p.within_2_fold}
     for p in val.points:
         assert p.within_2_fold == (1 / BAND <= p.ratio <= BAND)
 
@@ -375,10 +398,13 @@ def _seed_result() -> dict[str, tuple[str, str, bool]]:
 def test_seed_outcomes_are_stable() -> None:
     got = _seed_result()
     assert got["ertugliflozin"] == ("validated", "ParameterSet", True)
-    assert got["sunitinib"] == ("validated", "ParameterSet", True)
+    # strict rule: one Cmax point at 0.499 makes sunitinib Failed (drug-level ratio said Validated)
+    assert got["sunitinib"] == ("failed", "ParameterSet", True)
     sun = validate("sunitinib", seed_rows(), build_set("sunitinib", seed_rows()))
-    assert "cmax_near_the_2_fold_limit" in sun.reasons
-    assert "cmax_some_points_outside_2_fold" in sun.reasons
+    assert "point_outside_2_fold" in sun.reasons and "absorption_rate_or_volume" in sun.suspect
+    bad = [p for p in sun.points if not p.within_2_fold]
+    assert len(bad) == 1 and bad[0].metric == "cmax" and bad[0].ratio < 0.5
+    assert sun.failed_points == (bad[0].eid,)
     assert got["dolutegravir"] == ("not_validated", "ParameterSet", True)
     for d in ("gabapentin", "telmisartan", "tramadol"):
         assert got[d] == ("not_validated", "NoSet", False)

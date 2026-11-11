@@ -1,15 +1,19 @@
 # Review notes: model kit M0 (automated checks only; expert review has not yet been done)
 
+Update 2026-11-11 (owner decision, strict rule): a drug is Validated only if every held-out point is within
+2-fold. Sunitinib (one Cmax point at 0.499) is now Failed; the other statuses are unchanged. The table below
+records the M0 statuses under the earlier drug-level rule and is kept for the history.
+
 ## What the first milestone found
 
 The second data-source pilot called six drugs simulatable with a held-out value within 2-fold. M0 rebuilt
-them from confirmed evidence under stricter, written rules. The count of validated drugs falls from six to two,
+them from confirmed evidence under stricter, written rules. The count of validated drugs falls from six to one under the strict rule (two under the earlier drug-level rule),
 and the reasons are the useful result.
 
 | Drug | M0 status | Why |
 |---|---|---|
 | ertugliflozin | Validated (AUC 2 studies, ratio 0.91; Cmax 1 study, ratio 0.60) | intravenous clearance and volume from the label, bioavailability about 100 %, peak time from the label. The set does not reproduce the stated half-life (implied 5.3 h, stated 16.1 h); the page says so. |
-| sunitinib | Validated, near the limit (AUC 1 study, ratio 0.81; Cmax 1 study, ratio 0.50, one of two points just outside 2-fold) | apparent oral values from the label (ranges taken as geometric midpoints, class C). The observations come from one scanned review. |
+| sunitinib | Failed under the strict rule (AUC 1 study, ratio 0.81; Cmax 1 study, ratio 0.50, one of two Cmax points at 0.499, just outside 2-fold; the earlier drug-level rule had called it Validated, near the limit) | apparent oral values from the label (ranges taken as geometric midpoints, class C). The observations come from one scanned review. |
 | dolutegravir | Not validated: Cmax not tested (AUC 1 study, ratio 0.73) | apparent oral values from the label; no confirmed Cmax observation in a held-out study. |
 | gabapentin | Not validated: no parameter set | the label's clearance is age- and dose-dependent and the readers did not confirm it; bioavailability falls with dose. |
 | tramadol | Not validated: no parameter set | the per-kg label values are not converted, the sex-specific values are not used, the trial evidence is modified-release or not confirmed by both readers. |

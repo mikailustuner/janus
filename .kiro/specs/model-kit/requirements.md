@@ -28,7 +28,10 @@ not a PBPK simulator.
    reader A and reader B verdicts, `confirmed`, the confirmation reason, extraction time and pipeline version.
 2. A row SHALL be `confirmed` if and only if both readers agree with its value, unit, analyte (the parent drug)
    and context (no restriction such as one sex, a special population, fed state, dose dependence, a per-kg basis
-   or a bound). Rows where the readers disagree SHALL stay in the store, flagged, and SHALL NOT reach the builder.
+   or a bound). Disagreement rule (owner decision 2026-11-11): if the two readers agree on the value but differ on
+   its context (a study-arm restriction such as the test or reference arm of a crossover study,
+   co-administration, formulation, food state, population), that IS a disagreement and the value is not
+   confirmed. Rows where the readers disagree SHALL stay in the store, flagged, and SHALL NOT reach the builder.
 3. THE store SHALL be a versioned artifact built by a pipeline job from committed small source files, with the
    same run, manifest and `current` link rules as the other artifacts; the API SHALL load a new release without
    a restart.
@@ -63,9 +66,11 @@ not a PBPK simulator.
 1. FOR each drug with a set, the report SHALL compare the set's predicted Cmax and AUC with the observations of
    the held-out studies: ratio predicted/observed, per study, then the geometric mean over studies; the
    geometric mean fold error (GMFE), the share within 2-fold, the number of points and of studies.
-2. STATUS: **Validated** only if both AUC and Cmax were tested and both are within 2-fold; **Failed** if a tested
-   metric is outside 2-fold (the suspect parameter SHALL be named); otherwise **Not validated**, with the reason
-   (no independent observation, no parameter set, Cmax or AUC not testable).
+2. STATUS (strict rule, owner decision 2026-11-11): **Validated** only if both AUC and Cmax were tested and EVERY
+   held-out observation point (each AUC point and each Cmax point, in every study) is within 2-fold; **Failed** if
+   any tested point is outside 2-fold (the report SHALL show which point and name the suspect parameter);
+   otherwise **Not validated**, with the reason (no independent observation, no parameter set, Cmax or AUC not
+   testable). The geometric mean ratio and the GMFE are still reported but never decide the status.
 3. Observations of another formulation class, co-administered arms, unconfirmed rows, and AUC to the last
    sampling time (the time is not in the evidence) SHALL NOT be used; each exclusion SHALL be listed with its
    reason.
@@ -116,3 +121,11 @@ Coverage of at least 150 drugs with confirmed sets and 40 validated; AUC within 
 sample audit; three export targets tested in CI; at least one pharmacometrician and one clinical pharmacologist
 have reviewed the method; method write-up, user guide, limits page, change log; every source's terms met.
 Until then the product stays "experimental".
+
+## Owner decisions
+- **2026-11-11 (a) Strict validation rule.** A drug is Validated only if every held-out observation point (each
+  AUC and each Cmax point, every study) is within 2-fold. If any point is outside 2-fold the status is Failed,
+  with the point and the suspect parameter shown. The earlier drug-level geometric-mean ratio rule is withdrawn.
+  Sunitinib (one Cmax point at ratio 0.499) is therefore Failed.
+- **2026-11-11 (b) Context disagreement.** Agreement on the value alone is not confirmation; a difference in
+  context (arm restriction, co-administration, formulation, food, population) is a disagreement (Requirement 1.2).

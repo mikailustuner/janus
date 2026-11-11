@@ -167,3 +167,10 @@ def test_a_run_that_is_not_ours_is_ignored(tmp_path: Path) -> None:
     manifest["schema_version"] = "other-1"
     (run / "manifest.json").write_text(json.dumps(manifest))
     assert ModelkitHolder(tmp_path).value is None
+
+
+def test_web_recorded_file_is_the_api_answer() -> None:
+    """The answers the web tests decode and the demo shows are what this API returns."""
+    from tests.modelkit_record import RECORDED, recorded
+
+    assert json.loads(RECORDED.read_text(encoding="utf-8")) == recorded()

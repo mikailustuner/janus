@@ -29,7 +29,9 @@ Formulations: `immediate_release, solution, modified_release, fixed_dose_combina
 ## 3. Decisions
 - **DP-M1 Two readers, agreement by code.** Reader passes return what the quoted text states for the parent
   drug (value, unit, analyte, restriction). Code compares them with the extracted value (1 % tolerance, same unit,
-  restriction none). Rows the pilot already judged by two annotation passes keep those verdicts. A value the
+  restriction none). Context disagreement counts (owner decision 2026-11-11): two readers that give the same
+  value but a different context (arm restriction such as a crossover test or reference arm, co-administration,
+  formulation, food, population) are a disagreement and the value is not confirmed. Rows the pilot already judged by two annotation passes keep those verdicts. A value the
   readers cannot reproduce stays in the store as `confirmed = false`; it is shown on the drug page as "not used".
 - **DP-M2 Held-out rule is structural.** `split_studies` classifies studies by the parameters they report (all
   rows, confirmed or not, so the split cannot depend on the outcome of confirmation): a study reporting any of
@@ -43,11 +45,11 @@ Formulations: `immediate_release, solution, modified_release, fixed_dose_combina
   geometric mean with weights n (1 when n is missing); between-study spread reported as the geometric CV.
 - **DP-M6 Absorption rate from Tmax.** ka solves tmax = ln(ka/k)/(ka-k); no solution (tmax at or above 1/k)
   leaves ka unset and the set incomplete. Class C.
-- **DP-M7 Status function.** Per metric, the drug-level ratio is the geometric mean over studies of the study's
-  geometric mean of predicted/observed. Validated iff AUC and Cmax tested and both ratios in [0.5, 2]; Failed iff
-  a tested ratio is outside; else Not validated with reasons. A ratio within 10 % of a band edge is flagged "near
-  the limit". Suspect parameter: AUC off, then clearance (or bioavailability); Cmax off with AUC fine, then
-  absorption rate and volume.
+- **DP-M7 Status function (strict, owner decision 2026-11-11).** Every held-out point has a ratio predicted /
+  observed. Validated iff AUC and Cmax are both tested and every point is in [0.5, 2]; Failed iff any tested point
+  is outside; else Not validated with reasons. The geometric mean over studies and the GMFE are reported per
+  metric for information only. A failed drug lists the points outside 2-fold. Suspect parameter: an AUC point off,
+  then clearance (or bioavailability); a Cmax point off, then absorption rate and volume.
 - **DP-M8 No invented precision.** The existing conformal code (`simulation/calibration.py`) is calibrated for
   one quantity (screening-model half-lives) and does not apply to evidence-built sets; the same split-conformal
   quantile rule is implemented for log fold errors and returns nothing below 20 independent held-out studies.
@@ -85,7 +87,7 @@ not wait for it and skip the `mrgsolve` tests when R is missing. Locally: `pytes
 - **M5** Builder output does not depend on row order.
 - **M6** Modified-release, co-administered and fixed-dose-combination rows never appear in a set or a test.
 - **M7** The exported mrgsolve model reproduces the Janus engine curve within 1 % on a fixed grid.
-- **M8** Status is Failed iff a tested ratio is outside [0.5, 2]; Validated iff both tested and inside.
+- **M8** Status is Failed iff a tested point is outside [0.5, 2]; Validated iff both tested and every point inside (Validated implies all points within [0.5, 2]).
 - **M9** No export or page text contains a forbidden phrase (`medical-safety.md`) or "AI"; every export carries
   the two statements.
 - **M10** No per-kg row is converted.
