@@ -333,7 +333,7 @@ function Body({ s }: { s: SystemOut }) {
           {t("ModelKit.report.missingTitle")}
         </h2>
         <GroupedList
-          header={t("ModelKit.report.missingTitle")}
+          header={t("ModelKit.system.limits")}
           headingId="mk-rp-miss-list"
         >
           {s.missing.map((c) => (

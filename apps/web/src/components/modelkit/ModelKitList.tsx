@@ -6,12 +6,7 @@
  */
 import { useEffect, useId, useState } from "react";
 
-import {
-  BackLink,
-  GroupedList,
-  LargeTitle,
-  RowLink,
-} from "@/components/cards";
+import { BackLink, GroupedList, LargeTitle, RowLink } from "@/components/cards";
 import { StateView } from "@/components/StateView";
 import { Button } from "@/components/ui";
 import { useCall } from "@/flow/useCall";
