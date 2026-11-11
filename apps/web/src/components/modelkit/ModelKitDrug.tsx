@@ -25,6 +25,7 @@ import {
   keyFromHash,
   paramKey,
   rowsById,
+  shortStudy,
   TARGETS,
   type DrugOut,
   type EvidenceOut,
@@ -39,6 +40,7 @@ import {
   ExperimentalChip,
   Reason,
   ReasonList,
+  ScrollTable,
   Statements,
   StatusChip,
   useModelKitClient,
@@ -278,6 +280,12 @@ function EvidencePanel({ row }: { row: EvidenceRow }) {
           {row.source_locator}
         </span>
       </p>
+      <p className="text-sm break-words">
+        <span className="font-bold">{t("ModelKit.ev.studyId")}: </span>
+        <span lang="en" className="mono break-all" data-testid="mk-study-id">
+          {row.study_id}
+        </span>
+      </p>
       <p className="text-sm break-words" lang="en">
         {row.source_version}
       </p>
@@ -371,13 +379,8 @@ function Params({
         <Reason code={ps.model_reason} />
       </p>
       <p className="text-sm text-muted">{t("ModelKit.params.hint")}</p>
-      <div
-        className="card relative overflow-x-auto p-0"
-        tabIndex={0}
-        role="region"
-        aria-label={t("ModelKit.params.title")}
-      >
-        <table className="tm-table" data-testid="mk-param-table">
+      <ScrollTable label={t("ModelKit.params.title")}>
+        <table className="tm-table words" data-testid="mk-param-table">
           <caption className="sr-only">{t("ModelKit.params.title")}</caption>
           <thead>
             <tr>
@@ -415,8 +418,13 @@ function Params({
                 </tr>,
                 shown ? (
                   <tr key={`${p.name}-ev`}>
-                    <td colSpan={4} id={id} data-testid="mk-popover">
-                      <div className="flex flex-col gap-3 py-2">
+                    <td
+                      colSpan={4}
+                      id={id}
+                      data-testid="mk-popover"
+                      className="whitespace-normal"
+                    >
+                      <div className="sticky start-0 flex w-[calc(100vw-5.5rem)] max-w-[44rem] flex-col gap-3 py-2">
                         {p.derivation ? (
                           <p className="text-sm">
                             <span className="font-bold">
@@ -448,7 +456,7 @@ function Params({
             })}
           </tbody>
         </table>
-      </div>
+      </ScrollTable>
       <GroupedList
         header={t("ModelKit.params.legend")}
         headingId="mk-legend"
@@ -471,7 +479,7 @@ function Params({
 function Validation({ out }: { out: DrugOut }) {
   const t = useT();
   const locale = useLocale();
-  const nf = new Intl.NumberFormat(locale, { maximumFractionDigits: 2 });
+  const nf = new Intl.NumberFormat(locale, { maximumFractionDigits: 3 });
   const v = out.validation;
   return (
     <section
@@ -483,13 +491,8 @@ function Validation({ out }: { out: DrugOut }) {
         {t("ModelKit.val.title")}
       </h2>
       <p className="text-sm text-muted">{t("ModelKit.val.intro")}</p>
-      <div
-        className="card relative overflow-x-auto p-0"
-        tabIndex={0}
-        role="region"
-        aria-label={t("ModelKit.val.metrics")}
-      >
-        <table className="tm-table" data-testid="mk-metrics">
+      <ScrollTable label={t("ModelKit.val.metrics")}>
+        <table className="tm-table words" data-testid="mk-metrics">
           <caption className="sr-only">{t("ModelKit.val.metrics")}</caption>
           <thead>
             <tr>
@@ -528,7 +531,7 @@ function Validation({ out }: { out: DrugOut }) {
                         })}
                       </span>
                       <span className="block">
-                        {m.in_band
+                        {m.all_within_2_fold
                           ? t("ModelKit.val.ratioInside")
                           : t("ModelKit.val.ratioOutside")}
                       </span>
@@ -541,21 +544,25 @@ function Validation({ out }: { out: DrugOut }) {
             ))}
           </tbody>
         </table>
-      </div>
-      {v.metrics
-        .filter((m) => m.near_limit)
-        .map((m) => (
-          <p
-            key={m.name}
-            className="font-bold"
-            role="note"
-            data-testid="mk-near-limit"
-          >
-            {t("ModelKit.val.nearLimit", {
-              metric: t(`ModelKit.val.${m.name}`),
-            })}
-          </p>
-        ))}
+      </ScrollTable>
+      {v.failed_point_ids.length ? (
+        <div className="flex flex-col gap-1" data-testid="mk-failed-points">
+          <p className="font-bold">{t("ModelKit.val.failedPoints")}</p>
+          <ul className="m-0 flex list-disc flex-col gap-1 ps-5">
+            {v.points
+              .filter((p) => v.failed_point_ids.includes(p.evidence_id))
+              .map((p) => (
+                <li key={p.evidence_id} className="break-words">
+                  {t("ModelKit.val.failedPoint", {
+                    metric: t(`ModelKit.val.${p.metric}`),
+                    study: shortStudy(p.study_id),
+                    ratio: nf.format(p.ratio),
+                  })}
+                </li>
+              ))}
+          </ul>
+        </div>
+      ) : null}
       {v.suspect.length ? (
         <div className="flex flex-col gap-1" data-testid="mk-suspect">
           <p className="font-bold">{t("ModelKit.val.suspect")}</p>
@@ -655,13 +662,8 @@ function EvidenceTable({
       {reasons ? (
         <p className="text-sm text-muted">{t("ModelKit.ev.excludedHint")}</p>
       ) : null}
-      <div
-        className="card relative overflow-x-auto p-0"
-        tabIndex={0}
-        role="region"
-        aria-label={title}
-      >
-        <table className="tm-table">
+      <ScrollTable label={title}>
+        <table className="tm-table words">
           <caption className="sr-only">{title}</caption>
           <thead>
             <tr>
@@ -696,10 +698,14 @@ function EvidenceTable({
                       testId="mk-ev-value"
                     />
                   </td>
-                  <td lang="en" className="break-words">
-                    {r.study_id}
+                  <td
+                    lang="en"
+                    className="mono whitespace-nowrap"
+                    title={r.study_id}
+                  >
+                    {shortStudy(r.study_id)}
                   </td>
-                  <td className="break-words">
+                  <td>
                     {reasons ? (
                       <Reason code={r.reason ?? "not_used"} />
                     ) : (
@@ -709,8 +715,8 @@ function EvidenceTable({
                 </tr>,
                 shown ? (
                   <tr key={`${r.id}-p`}>
-                    <td colSpan={4} id={pid}>
-                      <div className="py-2">
+                    <td colSpan={4} id={pid} className="whitespace-normal">
+                      <div className="sticky start-0 w-[calc(100vw-5.5rem)] max-w-[44rem] py-2">
                         <EvidencePanel row={r} />
                       </div>
                     </td>
@@ -720,7 +726,7 @@ function EvidenceTable({
             })}
           </tbody>
         </table>
-      </div>
+      </ScrollTable>
     </section>
   );
 }

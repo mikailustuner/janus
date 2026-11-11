@@ -2944,7 +2944,7 @@
     },
     "val": {
       "title": "Ayrı tutulan çalışmalara karşı doğrulama",
-      "intro": "Yalnızca Cmax veya EAA bildiren çalışmalar bir küme oluşturmak için hiç kullanılmadı. Oran = öngörülen / gözlenen.",
+      "intro": "Yalnızca Cmax veya EAA bildiren çalışmalar bir küme oluşturmak için hiç kullanılmadı. Oran = öngörülen / gözlenen. Durum her tekil gözlemi kullanır: Doğrulandı yalnızca her biri 2 kat içindeyse; oran sütunu yalnızca bilgi için bir ortalamadır.",
       "metrics": "Doğrulama ölçütleri",
       "metric": "Ölçüt",
       "auc": "EAA",
@@ -2955,12 +2955,13 @@
       "ratio": "Oran",
       "gmfe": "GMFE",
       "within": "2 kat içinde",
-      "ratioInside": "Oran 2 kat içinde",
-      "ratioOutside": "Oran 2 katın dışında",
-      "nearLimit": "{metric}: oran 2 kat sınırının %10 yakınında.",
+      "ratioInside": "Tüm noktalar 2 kat içinde",
+      "ratioOutside": "Bir nokta 2 katın dışında",
       "suspect": "Şüpheli parametre:",
       "noPoints": "Ayrı tutulan gözlem yok, bu yüzden grafik yok.",
-      "intervalN": "(En az {min} bağımsız ayrı tutulan çalışmanın {n} tanesi.)"
+      "intervalN": "(En az {min} bağımsız ayrı tutulan çalışmanın {n} tanesi.)",
+      "failedPoints": "2 katın dışındaki gözlemler",
+      "failedPoint": "{metric}, çalışma {study}: öngörülen / gözlenen = {ratio}"
     },
     "chart": {
       "title": "Gözlenen ile öngörülen",
@@ -2999,7 +3000,8 @@
         "agree": "çıkarılan değerle uyuşuyor",
         "disagree": "çıkarılan değerle uyuşmuyor"
       },
-      "confirm": "Onay (otomatik)"
+      "confirm": "Onay (otomatik)",
+      "studyId": "Çalışma kimliği"
     },
     "evParam": {
       "cl": "Klerens (CL)",
@@ -3062,12 +3064,6 @@
       "no_independent_observation": "Bağımsız gözlem yok: ayrı tutulan hiçbir çalışma Cmax veya EAA bildirmiyor.",
       "auc_not_tested": "EAA sınanmadı.",
       "cmax_not_tested": "Cmax sınanmadı.",
-      "tested_ratio_outside_2_fold": "Sınanan bir öngörülen/gözlenen oranı 2 katın dışında.",
-      "auc_and_cmax_within_2_fold": "EAA ve Cmax ikisi de sınandı ve 2 kat içinde.",
-      "auc_near_the_2_fold_limit": "EAA oranı 2 kat sınırının %10 yakınında.",
-      "cmax_near_the_2_fold_limit": "Cmax oranı 2 kat sınırının %10 yakınında.",
-      "auc_some_points_outside_2_fold": "İlaç düzeyindeki EAA oranı 2 kat içinde, ancak bazı tekil gözlemler dışında.",
-      "cmax_some_points_outside_2_fold": "İlaç düzeyindeki Cmax oranı 2 kat içinde, ancak bazı tekil gözlemler dışında.",
       "no_confirmed_clearance": "Onaylı klerens yok (damar içi CL ya da oral CL/F).",
       "no_confirmed_volume": "Onaylı hacim yok (Vss veya Vd, ya da V/F).",
       "iv_evidence_incomplete": "Damar içi kanıt eksik: klerens ve hacim birlikte gerekir.",
@@ -3092,7 +3088,10 @@
       "expert_review_pending": "Uzman incelemesi henüz yapılmadı.",
       "interval_n_too_small": "Aralık gösterilmiyor: n çok küçük (20'den az bağımsız ayrı tutulan çalışma).",
       "interval_system_level_only": "Aralıklar yalnızca sistem düzeyinde verilir, ilaç başına verilmez.",
-      "not_used": "Kullanılmadı; daha belirli bir neden kaydedilmedi."
-    }
+      "not_used": "Kullanılmadı; daha belirli bir neden kaydedilmedi.",
+      "point_outside_2_fold": "Ayrı tutulan en az bir gözlem, öngörünün 2 katının dışında.",
+      "all_points_within_2_fold": "EAA ve Cmax sınandı ve ayrı tutulan her gözlem 2 kat içinde."
+    },
+    "scrollHint": "Tüm sütunları görmek için yana kaydırın."
   }
 }

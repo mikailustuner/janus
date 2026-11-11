@@ -33,8 +33,7 @@ const metric = D.obj({
   gm_ratio: n,
   gmfe: n,
   within_2_fold_points: D.int,
-  in_band: D.nullable(D.bool),
-  near_limit: D.nullable(D.bool),
+  all_within_2_fold: D.nullable(D.bool),
 });
 const status = D.lit(...STATUSES);
 const summary = D.obj({
@@ -71,6 +70,7 @@ const validation = D.obj({
   points: D.arr(point),
   excluded: D.arr(reasonOut),
   suspect: D.arr(D.str),
+  failed_point_ids: D.arr(D.str),
   interval_reason: D.str,
   interval_min_studies: D.int,
   interval_n_studies: D.int,
@@ -348,12 +348,8 @@ export const REASON_CODES = [
   "no_independent_observation",
   "auc_not_tested",
   "cmax_not_tested",
-  "tested_ratio_outside_2_fold",
-  "auc_and_cmax_within_2_fold",
-  "auc_near_the_2_fold_limit",
-  "cmax_near_the_2_fold_limit",
-  "auc_some_points_outside_2_fold",
-  "cmax_some_points_outside_2_fold",
+  "point_outside_2_fold",
+  "all_points_within_2_fold",
   "no_confirmed_clearance",
   "no_confirmed_volume",
   "iv_evidence_incomplete",
@@ -473,4 +469,14 @@ export function bandPolygon(axis: LogAxis): [number, number][] {
 export function inBand(p: Pick<PointOut, "observed" | "predicted">): boolean {
   const r = p.predicted / p.observed;
   return r >= 0.5 - 1e-12 && r <= 2 + 1e-12;
+}
+
+/** A long internal study id shortened for display (a UUID keeps its first eight characters, any
+ * other id over 16 characters is cut); the full id stays in the evidence panel and as a title. */
+export function shortStudy(id: string): string {
+  if (
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)
+  )
+    return `${id.slice(0, 8)}…`;
+  return id.length > 16 ? `${id.slice(0, 15)}…` : id;
 }

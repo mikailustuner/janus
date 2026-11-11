@@ -8,8 +8,16 @@
 import { useLocale } from "next-intl";
 import { useMemo } from "react";
 
-import { bandPolygon, logAxis, logPos, type PointOut } from "@/modelkit/model";
+import {
+  bandPolygon,
+  logAxis,
+  logPos,
+  shortStudy,
+  type PointOut,
+} from "@/modelkit/model";
 import { useT } from "@/theme/words";
+
+import { ScrollTable } from "./common";
 
 const SIZE = 300;
 const ML = 56;
@@ -187,12 +195,7 @@ export function ValidationChart({ points }: { points: readonly PointOut[] }) {
         </li>
       </ul>
       <p className="text-sm text-muted">{t("ModelKit.chart.unitNote")}</p>
-      <div
-        className="card relative overflow-x-auto p-0"
-        tabIndex={0}
-        role="region"
-        aria-label={t("ModelKit.chart.tableTitle")}
-      >
+      <ScrollTable label={t("ModelKit.chart.tableTitle")}>
         <table className="tm-table nowrap" data-testid="mk-chart-table">
           <caption className="sr-only">
             {t("ModelKit.chart.tableTitle")}
@@ -212,7 +215,9 @@ export function ValidationChart({ points }: { points: readonly PointOut[] }) {
             {points.map((p) => (
               <tr key={p.evidence_id}>
                 <th scope="row">{t(`ModelKit.val.${p.metric}`)}</th>
-                <td lang="en">{p.study_id}</td>
+                <td lang="en" className="mono" title={p.study_id}>
+                  {shortStudy(p.study_id)}
+                </td>
                 <td className="mono">{nf.format(p.dose_mg)}</td>
                 <td className="mono">{nf.format(p.observed)}</td>
                 <td className="mono">{nf.format(p.predicted)}</td>
@@ -224,7 +229,7 @@ export function ValidationChart({ points }: { points: readonly PointOut[] }) {
             ))}
           </tbody>
         </table>
-      </div>
+      </ScrollTable>
     </figure>
   );
 }

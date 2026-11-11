@@ -29,6 +29,7 @@ import { useT } from "@/theme/words";
 import {
   ExperimentalChip,
   Reason,
+  ScrollTable,
   Statements,
   StatusChip,
   useModelKitClient,
@@ -170,13 +171,8 @@ function SystemBody({ s }: { s: SystemOut }) {
       <p>
         {t("ModelKit.system.n", { drugs: s.n_drugs, studies: s.n_studies })}
       </p>
-      <div
-        className="card relative overflow-x-auto p-0"
-        tabIndex={0}
-        role="region"
-        aria-label={t("ModelKit.system.metrics")}
-      >
-        <table className="tm-table" data-testid="mk-system-metrics">
+      <ScrollTable label={t("ModelKit.system.metrics")}>
+        <table className="tm-table words" data-testid="mk-system-metrics">
           <caption className="sr-only">{t("ModelKit.system.metrics")}</caption>
           <thead>
             <tr>
@@ -217,7 +213,7 @@ function SystemBody({ s }: { s: SystemOut }) {
             ))}
           </tbody>
         </table>
-      </div>
+      </ScrollTable>
       <GroupedList
         header={t("ModelKit.system.limits")}
         headingId="mk-system-limits"

@@ -209,6 +209,35 @@
   .tm-table.nowrap td {
     white-space: nowrap;
   }
+  /* A scroller with edge shadows that show there is more to the side (model kit tables). */
+  .scroll-shadow {
+    background:
+      linear-gradient(to right, var(--surface) 30%, transparent) left center /
+        2rem 100% no-repeat local,
+      linear-gradient(to left, var(--surface) 30%, transparent) right center /
+        2rem 100% no-repeat local,
+      linear-gradient(
+          to right,
+          color-mix(in srgb, var(--fg) 22%, transparent),
+          transparent
+        )
+        left center / 0.75rem 100% no-repeat scroll,
+      linear-gradient(
+          to left,
+          color-mix(in srgb, var(--fg) 22%, transparent),
+          transparent
+        )
+        right center / 0.75rem 100% no-repeat scroll;
+    background-color: var(--surface);
+  }
+  /* Words wrap at spaces only, never inside a word: the table's narrowest width is its longest
+     word, and below that it scrolls inside its own box (model kit tables). */
+  .tm-table.words th,
+  .tm-table.words td {
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: manual;
+  }
   .tm-table thead th {
     color: var(--muted);
     font-weight: 700;

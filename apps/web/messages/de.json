@@ -2944,7 +2944,7 @@
     },
     "val": {
       "title": "Validierung an zurückgehaltenen Studien",
-      "intro": "Studien, die nur Cmax oder AUC berichten, wurden nie zum Aufbau eines Satzes verwendet. Verhältnis = vorhergesagt / beobachtet.",
+      "intro": "Studien, die nur Cmax oder AUC berichten, wurden nie zum Aufbau eines Satzes verwendet. Verhältnis = vorhergesagt / beobachtet. Der Status nutzt jede einzelne Beobachtung: Validiert nur, wenn jede innerhalb des Faktors 2 liegt; die Verhältnisspalte ist nur ein Mittelwert zur Information.",
       "metrics": "Validierungsmaße",
       "metric": "Maß",
       "auc": "AUC",
@@ -2955,12 +2955,13 @@
       "ratio": "Verhältnis",
       "gmfe": "GMFE",
       "within": "Innerhalb des Faktors 2",
-      "ratioInside": "Verhältnis innerhalb des Faktors 2",
-      "ratioOutside": "Verhältnis außerhalb des Faktors 2",
-      "nearLimit": "{metric}: Das Verhältnis liegt innerhalb von 10 % der Grenze des Faktors 2.",
+      "ratioInside": "Alle Punkte innerhalb des Faktors 2",
+      "ratioOutside": "Ein Punkt liegt außerhalb des Faktors 2",
       "suspect": "Verdächtiger Parameter:",
       "noPoints": "Es gibt keine zurückgehaltene Beobachtung, daher kein Diagramm.",
-      "intervalN": "({n} von mindestens {min} unabhängigen zurückgehaltenen Studien.)"
+      "intervalN": "({n} von mindestens {min} unabhängigen zurückgehaltenen Studien.)",
+      "failedPoints": "Beobachtungen außerhalb des Faktors 2",
+      "failedPoint": "{metric}, Studie {study}: vorhergesagt / beobachtet = {ratio}"
     },
     "chart": {
       "title": "Beobachtet gegen vorhergesagt",
@@ -2999,7 +3000,8 @@
         "agree": "stimmt mit dem extrahierten Wert überein",
         "disagree": "stimmt nicht mit dem extrahierten Wert überein"
       },
-      "confirm": "Bestätigung (automatisiert)"
+      "confirm": "Bestätigung (automatisiert)",
+      "studyId": "Studien-ID"
     },
     "evParam": {
       "cl": "Clearance (CL)",
@@ -3062,12 +3064,6 @@
       "no_independent_observation": "Keine unabhängige Beobachtung: Keine zurückgehaltene Studie berichtet Cmax oder AUC.",
       "auc_not_tested": "AUC wurde nicht geprüft.",
       "cmax_not_tested": "Cmax wurde nicht geprüft.",
-      "tested_ratio_outside_2_fold": "Ein geprüftes Verhältnis von vorhergesagt zu beobachtet liegt außerhalb des Faktors 2.",
-      "auc_and_cmax_within_2_fold": "AUC und Cmax wurden beide geprüft und liegen innerhalb des Faktors 2.",
-      "auc_near_the_2_fold_limit": "Das AUC-Verhältnis liegt innerhalb von 10 % der Grenze des Faktors 2.",
-      "cmax_near_the_2_fold_limit": "Das Cmax-Verhältnis liegt innerhalb von 10 % der Grenze des Faktors 2.",
-      "auc_some_points_outside_2_fold": "Das AUC-Verhältnis auf Arzneimittelebene liegt innerhalb des Faktors 2, einzelne Beobachtungen liegen aber außerhalb.",
-      "cmax_some_points_outside_2_fold": "Das Cmax-Verhältnis auf Arzneimittelebene liegt innerhalb des Faktors 2, einzelne Beobachtungen liegen aber außerhalb.",
       "no_confirmed_clearance": "Keine bestätigte Clearance (intravenöse CL oder orale CL/F).",
       "no_confirmed_volume": "Kein bestätigtes Volumen (Vss oder Vd, oder V/F).",
       "iv_evidence_incomplete": "Die intravenöse Evidenz ist unvollständig: Clearance und Volumen werden beide gebraucht.",
@@ -3092,7 +3088,10 @@
       "expert_review_pending": "Eine Prüfung durch Fachleute hat noch nicht stattgefunden.",
       "interval_n_too_small": "Es wird kein Intervall gezeigt: n ist zu klein (weniger als 20 unabhängige zurückgehaltene Studien).",
       "interval_system_level_only": "Intervalle gibt es nur auf Systemebene, nicht je Arzneimittel.",
-      "not_used": "Nicht verwendet; kein genauerer Grund vermerkt."
-    }
+      "not_used": "Nicht verwendet; kein genauerer Grund vermerkt.",
+      "point_outside_2_fold": "Mindestens eine zurückgehaltene Beobachtung liegt außerhalb des Faktors 2 der Vorhersage.",
+      "all_points_within_2_fold": "AUC und Cmax wurden geprüft und jede zurückgehaltene Beobachtung liegt innerhalb des Faktors 2."
+    },
+    "scrollHint": "Zum Anzeigen aller Spalten seitlich scrollen."
   }
 }

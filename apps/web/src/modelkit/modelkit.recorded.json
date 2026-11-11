@@ -2,7 +2,7 @@
   "recorded": "2026-11-11",
   "drugs": {
     "release": {
-      "run_id": "20261111T134142Z-636696f3-14a1",
+      "run_id": "20261111T120000Z-0a1b2c3d-0001",
       "snapshot_date": "2026-11-11",
       "pipeline_version": "modelkit-evidence-1.0"
     },
@@ -31,8 +31,7 @@
           "gm_ratio": 0.7332883583140234,
           "gmfe": 1.36372,
           "within_2_fold_points": 1,
-          "in_band": true,
-          "near_limit": false
+          "all_within_2_fold": true
         },
         "cmax": {
           "name": "cmax",
@@ -42,8 +41,7 @@
           "gm_ratio": null,
           "gmfe": null,
           "within_2_fold_points": 0,
-          "in_band": null,
-          "near_limit": null
+          "all_within_2_fold": null
         },
         "exportable": true,
         "experimental": true
@@ -52,7 +50,7 @@
         "key": "ertugliflozin",
         "name": "Ertugliflozin",
         "status": "validated",
-        "status_reasons": ["auc_and_cmax_within_2_fold"],
+        "status_reasons": ["all_points_within_2_fold"],
         "has_set": true,
         "set_complete": true,
         "basis": "iv",
@@ -67,8 +65,7 @@
           "gm_ratio": 0.9065748607290534,
           "gmfe": 1.1074234992073726,
           "within_2_fold_points": 2,
-          "in_band": true,
-          "near_limit": false
+          "all_within_2_fold": true
         },
         "cmax": {
           "name": "cmax",
@@ -78,8 +75,7 @@
           "gm_ratio": 0.5997613216929542,
           "gmfe": 1.6673299258066305,
           "within_2_fold_points": 1,
-          "in_band": true,
-          "near_limit": false
+          "all_within_2_fold": true
         },
         "exportable": true,
         "experimental": true
@@ -107,8 +103,7 @@
           "gm_ratio": null,
           "gmfe": null,
           "within_2_fold_points": 0,
-          "in_band": null,
-          "near_limit": null
+          "all_within_2_fold": null
         },
         "cmax": {
           "name": "cmax",
@@ -118,8 +113,7 @@
           "gm_ratio": null,
           "gmfe": null,
           "within_2_fold_points": 0,
-          "in_band": null,
-          "near_limit": null
+          "all_within_2_fold": null
         },
         "exportable": false,
         "experimental": true
@@ -127,12 +121,8 @@
       {
         "key": "sunitinib",
         "name": "Sunitinib",
-        "status": "validated",
-        "status_reasons": [
-          "auc_and_cmax_within_2_fold",
-          "cmax_near_the_2_fold_limit",
-          "cmax_some_points_outside_2_fold"
-        ],
+        "status": "failed",
+        "status_reasons": ["point_outside_2_fold"],
         "has_set": true,
         "set_complete": true,
         "basis": "oral_apparent",
@@ -147,8 +137,7 @@
           "gm_ratio": 0.806678653911464,
           "gmfe": 1.2396509999999996,
           "within_2_fold_points": 1,
-          "in_band": true,
-          "near_limit": false
+          "all_within_2_fold": true
         },
         "cmax": {
           "name": "cmax",
@@ -158,8 +147,7 @@
           "gm_ratio": 0.5041055355435148,
           "gmfe": 1.983711603011507,
           "within_2_fold_points": 1,
-          "in_band": true,
-          "near_limit": true
+          "all_within_2_fold": false
         },
         "exportable": true,
         "experimental": true
@@ -187,8 +175,7 @@
           "gm_ratio": null,
           "gmfe": null,
           "within_2_fold_points": 0,
-          "in_band": null,
-          "near_limit": null
+          "all_within_2_fold": null
         },
         "cmax": {
           "name": "cmax",
@@ -198,8 +185,7 @@
           "gm_ratio": null,
           "gmfe": null,
           "within_2_fold_points": 0,
-          "in_band": null,
-          "near_limit": null
+          "all_within_2_fold": null
         },
         "exportable": false,
         "experimental": true
@@ -227,8 +213,7 @@
           "gm_ratio": null,
           "gmfe": null,
           "within_2_fold_points": 0,
-          "in_band": null,
-          "near_limit": null
+          "all_within_2_fold": null
         },
         "cmax": {
           "name": "cmax",
@@ -238,8 +223,7 @@
           "gm_ratio": null,
           "gmfe": null,
           "within_2_fold_points": 0,
-          "in_band": null,
-          "near_limit": null
+          "all_within_2_fold": null
         },
         "exportable": false,
         "experimental": true
@@ -248,7 +232,7 @@
   },
   "validation": {
     "release": {
-      "run_id": "20261111T134142Z-636696f3-14a1",
+      "run_id": "20261111T120000Z-0a1b2c3d-0001",
       "snapshot_date": "2026-11-11",
       "pipeline_version": "modelkit-evidence-1.0"
     },
@@ -259,9 +243,9 @@
     },
     "n_drugs": 6,
     "by_status": {
-      "validated": 2,
+      "validated": 1,
       "not_validated": 4,
-      "failed": 0
+      "failed": 1
     },
     "metrics": [
       {
@@ -277,10 +261,10 @@
         "name": "cmax",
         "n_drugs": 2,
         "gmfe": 1.8186538207891376,
-        "within_2_fold": 2,
-        "within_2_fold_share": 1.0,
-        "wilson_low": 0.34238022395464934,
-        "wilson_high": 1.0
+        "within_2_fold": 1,
+        "within_2_fold_share": 0.5,
+        "wilson_low": 0.09453120463920085,
+        "wilson_high": 0.9054687953607992
       }
     ],
     "n_studies": 4,
@@ -315,12 +299,8 @@
       "no_independent_observation": "No independent observation: no held-out study reports Cmax or AUC.",
       "auc_not_tested": "AUC was not tested.",
       "cmax_not_tested": "Cmax was not tested.",
-      "tested_ratio_outside_2_fold": "A tested ratio of predicted to observed is outside 2-fold.",
-      "auc_and_cmax_within_2_fold": "AUC and Cmax both tested and within 2-fold.",
-      "auc_near_the_2_fold_limit": "The AUC ratio is within 10 % of the 2-fold limit.",
-      "auc_some_points_outside_2_fold": "The drug-level AUC ratio is within 2-fold, but some single observations are outside it.",
-      "cmax_some_points_outside_2_fold": "The drug-level Cmax ratio is within 2-fold, but some single observations are outside it.",
-      "cmax_near_the_2_fold_limit": "The Cmax ratio is within 10 % of the 2-fold limit.",
+      "point_outside_2_fold": "At least one held-out observation is outside 2-fold of the prediction.",
+      "all_points_within_2_fold": "AUC and Cmax were tested and every held-out observation is within 2-fold.",
       "no_confirmed_clearance": "No confirmed clearance (intravenous CL or oral CL/F).",
       "no_confirmed_volume": "No confirmed volume (Vss or Vd, or V/F).",
       "iv_evidence_incomplete": "Intravenous evidence is incomplete: clearance and volume are both needed.",
@@ -350,7 +330,7 @@
   "drug": {
     "dolutegravir": {
       "release": {
-        "run_id": "20261111T134142Z-636696f3-14a1",
+        "run_id": "20261111T120000Z-0a1b2c3d-0001",
         "snapshot_date": "2026-11-11",
         "pipeline_version": "modelkit-evidence-1.0"
       },
@@ -378,8 +358,7 @@
           "gm_ratio": 0.7332883583140234,
           "gmfe": 1.36372,
           "within_2_fold_points": 1,
-          "in_band": true,
-          "near_limit": false
+          "all_within_2_fold": true
         },
         "cmax": {
           "name": "cmax",
@@ -389,8 +368,7 @@
           "gm_ratio": null,
           "gmfe": null,
           "within_2_fold_points": 0,
-          "in_band": null,
-          "near_limit": null
+          "all_within_2_fold": null
         },
         "exportable": true,
         "experimental": true
@@ -496,8 +474,7 @@
             "gm_ratio": 0.7332883583140234,
             "gmfe": 1.36372,
             "within_2_fold_points": 1,
-            "in_band": true,
-            "near_limit": false
+            "all_within_2_fold": true
           },
           {
             "name": "cmax",
@@ -507,8 +484,7 @@
             "gm_ratio": null,
             "gmfe": null,
             "within_2_fold_points": 0,
-            "in_band": null,
-            "near_limit": null
+            "all_within_2_fold": null
           }
         ],
         "points": [
@@ -525,6 +501,7 @@
         ],
         "excluded": [],
         "suspect": [],
+        "failed_point_ids": [],
         "interval_reason": "interval_n_too_small",
         "interval_min_studies": 20,
         "interval_n_studies": 1,
@@ -555,12 +532,8 @@
         "no_independent_observation": "No independent observation: no held-out study reports Cmax or AUC.",
         "auc_not_tested": "AUC was not tested.",
         "cmax_not_tested": "Cmax was not tested.",
-        "tested_ratio_outside_2_fold": "A tested ratio of predicted to observed is outside 2-fold.",
-        "auc_and_cmax_within_2_fold": "AUC and Cmax both tested and within 2-fold.",
-        "auc_near_the_2_fold_limit": "The AUC ratio is within 10 % of the 2-fold limit.",
-        "auc_some_points_outside_2_fold": "The drug-level AUC ratio is within 2-fold, but some single observations are outside it.",
-        "cmax_some_points_outside_2_fold": "The drug-level Cmax ratio is within 2-fold, but some single observations are outside it.",
-        "cmax_near_the_2_fold_limit": "The Cmax ratio is within 10 % of the 2-fold limit.",
+        "point_outside_2_fold": "At least one held-out observation is outside 2-fold of the prediction.",
+        "all_points_within_2_fold": "AUC and Cmax were tested and every held-out observation is within 2-fold.",
         "no_confirmed_clearance": "No confirmed clearance (intravenous CL or oral CL/F).",
         "no_confirmed_volume": "No confirmed volume (Vss or Vd, or V/F).",
         "iv_evidence_incomplete": "Intravenous evidence is incomplete: clearance and volume are both needed.",
@@ -589,7 +562,7 @@
     },
     "ertugliflozin": {
       "release": {
-        "run_id": "20261111T134142Z-636696f3-14a1",
+        "run_id": "20261111T120000Z-0a1b2c3d-0001",
         "snapshot_date": "2026-11-11",
         "pipeline_version": "modelkit-evidence-1.0"
       },
@@ -602,7 +575,7 @@
         "key": "ertugliflozin",
         "name": "Ertugliflozin",
         "status": "validated",
-        "status_reasons": ["auc_and_cmax_within_2_fold"],
+        "status_reasons": ["all_points_within_2_fold"],
         "has_set": true,
         "set_complete": true,
         "basis": "iv",
@@ -617,8 +590,7 @@
           "gm_ratio": 0.9065748607290534,
           "gmfe": 1.1074234992073726,
           "within_2_fold_points": 2,
-          "in_band": true,
-          "near_limit": false
+          "all_within_2_fold": true
         },
         "cmax": {
           "name": "cmax",
@@ -628,8 +600,7 @@
           "gm_ratio": 0.5997613216929542,
           "gmfe": 1.6673299258066305,
           "within_2_fold_points": 1,
-          "in_band": true,
-          "near_limit": false
+          "all_within_2_fold": true
         },
         "exportable": true,
         "experimental": true
@@ -736,7 +707,7 @@
       "no_set_reasons": [],
       "validation": {
         "status": "validated",
-        "reasons": ["auc_and_cmax_within_2_fold"],
+        "reasons": ["all_points_within_2_fold"],
         "metrics": [
           {
             "name": "auc",
@@ -746,8 +717,7 @@
             "gm_ratio": 0.9065748607290534,
             "gmfe": 1.1074234992073726,
             "within_2_fold_points": 2,
-            "in_band": true,
-            "near_limit": false
+            "all_within_2_fold": true
           },
           {
             "name": "cmax",
@@ -757,8 +727,7 @@
             "gm_ratio": 0.5997613216929542,
             "gmfe": 1.6673299258066305,
             "within_2_fold_points": 1,
-            "in_band": true,
-            "near_limit": false
+            "all_within_2_fold": true
           }
         ],
         "points": [
@@ -800,6 +769,7 @@
           }
         ],
         "suspect": [],
+        "failed_point_ids": [],
         "interval_reason": "interval_n_too_small",
         "interval_min_studies": 20,
         "interval_n_studies": 2,
@@ -830,12 +800,8 @@
         "no_independent_observation": "No independent observation: no held-out study reports Cmax or AUC.",
         "auc_not_tested": "AUC was not tested.",
         "cmax_not_tested": "Cmax was not tested.",
-        "tested_ratio_outside_2_fold": "A tested ratio of predicted to observed is outside 2-fold.",
-        "auc_and_cmax_within_2_fold": "AUC and Cmax both tested and within 2-fold.",
-        "auc_near_the_2_fold_limit": "The AUC ratio is within 10 % of the 2-fold limit.",
-        "auc_some_points_outside_2_fold": "The drug-level AUC ratio is within 2-fold, but some single observations are outside it.",
-        "cmax_some_points_outside_2_fold": "The drug-level Cmax ratio is within 2-fold, but some single observations are outside it.",
-        "cmax_near_the_2_fold_limit": "The Cmax ratio is within 10 % of the 2-fold limit.",
+        "point_outside_2_fold": "At least one held-out observation is outside 2-fold of the prediction.",
+        "all_points_within_2_fold": "AUC and Cmax were tested and every held-out observation is within 2-fold.",
         "no_confirmed_clearance": "No confirmed clearance (intravenous CL or oral CL/F).",
         "no_confirmed_volume": "No confirmed volume (Vss or Vd, or V/F).",
         "iv_evidence_incomplete": "Intravenous evidence is incomplete: clearance and volume are both needed.",
@@ -864,7 +830,7 @@
     },
     "gabapentin": {
       "release": {
-        "run_id": "20261111T134142Z-636696f3-14a1",
+        "run_id": "20261111T120000Z-0a1b2c3d-0001",
         "snapshot_date": "2026-11-11",
         "pipeline_version": "modelkit-evidence-1.0"
       },
@@ -896,8 +862,7 @@
           "gm_ratio": null,
           "gmfe": null,
           "within_2_fold_points": 0,
-          "in_band": null,
-          "near_limit": null
+          "all_within_2_fold": null
         },
         "cmax": {
           "name": "cmax",
@@ -907,8 +872,7 @@
           "gm_ratio": null,
           "gmfe": null,
           "within_2_fold_points": 0,
-          "in_band": null,
-          "near_limit": null
+          "all_within_2_fold": null
         },
         "exportable": false,
         "experimental": true
@@ -931,8 +895,7 @@
             "gm_ratio": null,
             "gmfe": null,
             "within_2_fold_points": 0,
-            "in_band": null,
-            "near_limit": null
+            "all_within_2_fold": null
           },
           {
             "name": "cmax",
@@ -942,13 +905,13 @@
             "gm_ratio": null,
             "gmfe": null,
             "within_2_fold_points": 0,
-            "in_band": null,
-            "near_limit": null
+            "all_within_2_fold": null
           }
         ],
         "points": [],
         "excluded": [],
         "suspect": [],
+        "failed_point_ids": [],
         "interval_reason": "interval_n_too_small",
         "interval_min_studies": 20,
         "interval_n_studies": 0,
@@ -979,12 +942,8 @@
         "no_independent_observation": "No independent observation: no held-out study reports Cmax or AUC.",
         "auc_not_tested": "AUC was not tested.",
         "cmax_not_tested": "Cmax was not tested.",
-        "tested_ratio_outside_2_fold": "A tested ratio of predicted to observed is outside 2-fold.",
-        "auc_and_cmax_within_2_fold": "AUC and Cmax both tested and within 2-fold.",
-        "auc_near_the_2_fold_limit": "The AUC ratio is within 10 % of the 2-fold limit.",
-        "auc_some_points_outside_2_fold": "The drug-level AUC ratio is within 2-fold, but some single observations are outside it.",
-        "cmax_some_points_outside_2_fold": "The drug-level Cmax ratio is within 2-fold, but some single observations are outside it.",
-        "cmax_near_the_2_fold_limit": "The Cmax ratio is within 10 % of the 2-fold limit.",
+        "point_outside_2_fold": "At least one held-out observation is outside 2-fold of the prediction.",
+        "all_points_within_2_fold": "AUC and Cmax were tested and every held-out observation is within 2-fold.",
         "no_confirmed_clearance": "No confirmed clearance (intravenous CL or oral CL/F).",
         "no_confirmed_volume": "No confirmed volume (Vss or Vd, or V/F).",
         "iv_evidence_incomplete": "Intravenous evidence is incomplete: clearance and volume are both needed.",
@@ -1013,7 +972,7 @@
     },
     "sunitinib": {
       "release": {
-        "run_id": "20261111T134142Z-636696f3-14a1",
+        "run_id": "20261111T120000Z-0a1b2c3d-0001",
         "snapshot_date": "2026-11-11",
         "pipeline_version": "modelkit-evidence-1.0"
       },
@@ -1025,12 +984,8 @@
       "summary": {
         "key": "sunitinib",
         "name": "Sunitinib",
-        "status": "validated",
-        "status_reasons": [
-          "auc_and_cmax_within_2_fold",
-          "cmax_near_the_2_fold_limit",
-          "cmax_some_points_outside_2_fold"
-        ],
+        "status": "failed",
+        "status_reasons": ["point_outside_2_fold"],
         "has_set": true,
         "set_complete": true,
         "basis": "oral_apparent",
@@ -1045,8 +1000,7 @@
           "gm_ratio": 0.806678653911464,
           "gmfe": 1.2396509999999996,
           "within_2_fold_points": 1,
-          "in_band": true,
-          "near_limit": false
+          "all_within_2_fold": true
         },
         "cmax": {
           "name": "cmax",
@@ -1056,8 +1010,7 @@
           "gm_ratio": 0.5041055355435148,
           "gmfe": 1.983711603011507,
           "within_2_fold_points": 1,
-          "in_band": true,
-          "near_limit": true
+          "all_within_2_fold": false
         },
         "exportable": true,
         "experimental": true
@@ -1152,12 +1105,8 @@
       },
       "no_set_reasons": [],
       "validation": {
-        "status": "validated",
-        "reasons": [
-          "auc_and_cmax_within_2_fold",
-          "cmax_near_the_2_fold_limit",
-          "cmax_some_points_outside_2_fold"
-        ],
+        "status": "failed",
+        "reasons": ["point_outside_2_fold"],
         "metrics": [
           {
             "name": "auc",
@@ -1167,8 +1116,7 @@
             "gm_ratio": 0.806678653911464,
             "gmfe": 1.2396509999999996,
             "within_2_fold_points": 1,
-            "in_band": true,
-            "near_limit": false
+            "all_within_2_fold": true
           },
           {
             "name": "cmax",
@@ -1178,8 +1126,7 @@
             "gm_ratio": 0.5041055355435148,
             "gmfe": 1.983711603011507,
             "within_2_fold_points": 1,
-            "in_band": true,
-            "near_limit": true
+            "all_within_2_fold": false
           }
         ],
         "points": [
@@ -1220,7 +1167,8 @@
             "reason": "auc_to_last_sampling_time_not_comparable"
           }
         ],
-        "suspect": [],
+        "suspect": ["absorption_rate_or_volume"],
+        "failed_point_ids": ["ev_98492eeae4e4"],
         "interval_reason": "interval_n_too_small",
         "interval_min_studies": 20,
         "interval_n_studies": 1,
@@ -1251,12 +1199,8 @@
         "no_independent_observation": "No independent observation: no held-out study reports Cmax or AUC.",
         "auc_not_tested": "AUC was not tested.",
         "cmax_not_tested": "Cmax was not tested.",
-        "tested_ratio_outside_2_fold": "A tested ratio of predicted to observed is outside 2-fold.",
-        "auc_and_cmax_within_2_fold": "AUC and Cmax both tested and within 2-fold.",
-        "auc_near_the_2_fold_limit": "The AUC ratio is within 10 % of the 2-fold limit.",
-        "auc_some_points_outside_2_fold": "The drug-level AUC ratio is within 2-fold, but some single observations are outside it.",
-        "cmax_some_points_outside_2_fold": "The drug-level Cmax ratio is within 2-fold, but some single observations are outside it.",
-        "cmax_near_the_2_fold_limit": "The Cmax ratio is within 10 % of the 2-fold limit.",
+        "point_outside_2_fold": "At least one held-out observation is outside 2-fold of the prediction.",
+        "all_points_within_2_fold": "AUC and Cmax were tested and every held-out observation is within 2-fold.",
         "no_confirmed_clearance": "No confirmed clearance (intravenous CL or oral CL/F).",
         "no_confirmed_volume": "No confirmed volume (Vss or Vd, or V/F).",
         "iv_evidence_incomplete": "Intravenous evidence is incomplete: clearance and volume are both needed.",
@@ -1285,7 +1229,7 @@
     },
     "telmisartan": {
       "release": {
-        "run_id": "20261111T134142Z-636696f3-14a1",
+        "run_id": "20261111T120000Z-0a1b2c3d-0001",
         "snapshot_date": "2026-11-11",
         "pipeline_version": "modelkit-evidence-1.0"
       },
@@ -1317,8 +1261,7 @@
           "gm_ratio": null,
           "gmfe": null,
           "within_2_fold_points": 0,
-          "in_band": null,
-          "near_limit": null
+          "all_within_2_fold": null
         },
         "cmax": {
           "name": "cmax",
@@ -1328,8 +1271,7 @@
           "gm_ratio": null,
           "gmfe": null,
           "within_2_fold_points": 0,
-          "in_band": null,
-          "near_limit": null
+          "all_within_2_fold": null
         },
         "exportable": false,
         "experimental": true
@@ -1352,8 +1294,7 @@
             "gm_ratio": null,
             "gmfe": null,
             "within_2_fold_points": 0,
-            "in_band": null,
-            "near_limit": null
+            "all_within_2_fold": null
           },
           {
             "name": "cmax",
@@ -1363,13 +1304,13 @@
             "gm_ratio": null,
             "gmfe": null,
             "within_2_fold_points": 0,
-            "in_band": null,
-            "near_limit": null
+            "all_within_2_fold": null
           }
         ],
         "points": [],
         "excluded": [],
         "suspect": [],
+        "failed_point_ids": [],
         "interval_reason": "interval_n_too_small",
         "interval_min_studies": 20,
         "interval_n_studies": 0,
@@ -1400,12 +1341,8 @@
         "no_independent_observation": "No independent observation: no held-out study reports Cmax or AUC.",
         "auc_not_tested": "AUC was not tested.",
         "cmax_not_tested": "Cmax was not tested.",
-        "tested_ratio_outside_2_fold": "A tested ratio of predicted to observed is outside 2-fold.",
-        "auc_and_cmax_within_2_fold": "AUC and Cmax both tested and within 2-fold.",
-        "auc_near_the_2_fold_limit": "The AUC ratio is within 10 % of the 2-fold limit.",
-        "auc_some_points_outside_2_fold": "The drug-level AUC ratio is within 2-fold, but some single observations are outside it.",
-        "cmax_some_points_outside_2_fold": "The drug-level Cmax ratio is within 2-fold, but some single observations are outside it.",
-        "cmax_near_the_2_fold_limit": "The Cmax ratio is within 10 % of the 2-fold limit.",
+        "point_outside_2_fold": "At least one held-out observation is outside 2-fold of the prediction.",
+        "all_points_within_2_fold": "AUC and Cmax were tested and every held-out observation is within 2-fold.",
         "no_confirmed_clearance": "No confirmed clearance (intravenous CL or oral CL/F).",
         "no_confirmed_volume": "No confirmed volume (Vss or Vd, or V/F).",
         "iv_evidence_incomplete": "Intravenous evidence is incomplete: clearance and volume are both needed.",
@@ -1434,7 +1371,7 @@
     },
     "tramadol": {
       "release": {
-        "run_id": "20261111T134142Z-636696f3-14a1",
+        "run_id": "20261111T120000Z-0a1b2c3d-0001",
         "snapshot_date": "2026-11-11",
         "pipeline_version": "modelkit-evidence-1.0"
       },
@@ -1466,8 +1403,7 @@
           "gm_ratio": null,
           "gmfe": null,
           "within_2_fold_points": 0,
-          "in_band": null,
-          "near_limit": null
+          "all_within_2_fold": null
         },
         "cmax": {
           "name": "cmax",
@@ -1477,8 +1413,7 @@
           "gm_ratio": null,
           "gmfe": null,
           "within_2_fold_points": 0,
-          "in_band": null,
-          "near_limit": null
+          "all_within_2_fold": null
         },
         "exportable": false,
         "experimental": true
@@ -1501,8 +1436,7 @@
             "gm_ratio": null,
             "gmfe": null,
             "within_2_fold_points": 0,
-            "in_band": null,
-            "near_limit": null
+            "all_within_2_fold": null
           },
           {
             "name": "cmax",
@@ -1512,13 +1446,13 @@
             "gm_ratio": null,
             "gmfe": null,
             "within_2_fold_points": 0,
-            "in_band": null,
-            "near_limit": null
+            "all_within_2_fold": null
           }
         ],
         "points": [],
         "excluded": [],
         "suspect": [],
+        "failed_point_ids": [],
         "interval_reason": "interval_n_too_small",
         "interval_min_studies": 20,
         "interval_n_studies": 0,
@@ -1549,12 +1483,8 @@
         "no_independent_observation": "No independent observation: no held-out study reports Cmax or AUC.",
         "auc_not_tested": "AUC was not tested.",
         "cmax_not_tested": "Cmax was not tested.",
-        "tested_ratio_outside_2_fold": "A tested ratio of predicted to observed is outside 2-fold.",
-        "auc_and_cmax_within_2_fold": "AUC and Cmax both tested and within 2-fold.",
-        "auc_near_the_2_fold_limit": "The AUC ratio is within 10 % of the 2-fold limit.",
-        "auc_some_points_outside_2_fold": "The drug-level AUC ratio is within 2-fold, but some single observations are outside it.",
-        "cmax_some_points_outside_2_fold": "The drug-level Cmax ratio is within 2-fold, but some single observations are outside it.",
-        "cmax_near_the_2_fold_limit": "The Cmax ratio is within 10 % of the 2-fold limit.",
+        "point_outside_2_fold": "At least one held-out observation is outside 2-fold of the prediction.",
+        "all_points_within_2_fold": "AUC and Cmax were tested and every held-out observation is within 2-fold.",
         "no_confirmed_clearance": "No confirmed clearance (intravenous CL or oral CL/F).",
         "no_confirmed_volume": "No confirmed volume (Vss or Vd, or V/F).",
         "iv_evidence_incomplete": "Intravenous evidence is incomplete: clearance and volume are both needed.",
@@ -1585,7 +1515,7 @@
   "evidence": {
     "dolutegravir": {
       "release": {
-        "run_id": "20261111T134142Z-636696f3-14a1",
+        "run_id": "20261111T120000Z-0a1b2c3d-0001",
         "snapshot_date": "2026-11-11",
         "pipeline_version": "modelkit-evidence-1.0"
       },
@@ -1965,12 +1895,8 @@
         "no_independent_observation": "No independent observation: no held-out study reports Cmax or AUC.",
         "auc_not_tested": "AUC was not tested.",
         "cmax_not_tested": "Cmax was not tested.",
-        "tested_ratio_outside_2_fold": "A tested ratio of predicted to observed is outside 2-fold.",
-        "auc_and_cmax_within_2_fold": "AUC and Cmax both tested and within 2-fold.",
-        "auc_near_the_2_fold_limit": "The AUC ratio is within 10 % of the 2-fold limit.",
-        "auc_some_points_outside_2_fold": "The drug-level AUC ratio is within 2-fold, but some single observations are outside it.",
-        "cmax_some_points_outside_2_fold": "The drug-level Cmax ratio is within 2-fold, but some single observations are outside it.",
-        "cmax_near_the_2_fold_limit": "The Cmax ratio is within 10 % of the 2-fold limit.",
+        "point_outside_2_fold": "At least one held-out observation is outside 2-fold of the prediction.",
+        "all_points_within_2_fold": "AUC and Cmax were tested and every held-out observation is within 2-fold.",
         "no_confirmed_clearance": "No confirmed clearance (intravenous CL or oral CL/F).",
         "no_confirmed_volume": "No confirmed volume (Vss or Vd, or V/F).",
         "iv_evidence_incomplete": "Intravenous evidence is incomplete: clearance and volume are both needed.",
@@ -1999,7 +1925,7 @@
     },
     "ertugliflozin": {
       "release": {
-        "run_id": "20261111T134142Z-636696f3-14a1",
+        "run_id": "20261111T120000Z-0a1b2c3d-0001",
         "snapshot_date": "2026-11-11",
         "pipeline_version": "modelkit-evidence-1.0"
       },
@@ -2515,12 +2441,8 @@
         "no_independent_observation": "No independent observation: no held-out study reports Cmax or AUC.",
         "auc_not_tested": "AUC was not tested.",
         "cmax_not_tested": "Cmax was not tested.",
-        "tested_ratio_outside_2_fold": "A tested ratio of predicted to observed is outside 2-fold.",
-        "auc_and_cmax_within_2_fold": "AUC and Cmax both tested and within 2-fold.",
-        "auc_near_the_2_fold_limit": "The AUC ratio is within 10 % of the 2-fold limit.",
-        "auc_some_points_outside_2_fold": "The drug-level AUC ratio is within 2-fold, but some single observations are outside it.",
-        "cmax_some_points_outside_2_fold": "The drug-level Cmax ratio is within 2-fold, but some single observations are outside it.",
-        "cmax_near_the_2_fold_limit": "The Cmax ratio is within 10 % of the 2-fold limit.",
+        "point_outside_2_fold": "At least one held-out observation is outside 2-fold of the prediction.",
+        "all_points_within_2_fold": "AUC and Cmax were tested and every held-out observation is within 2-fold.",
         "no_confirmed_clearance": "No confirmed clearance (intravenous CL or oral CL/F).",
         "no_confirmed_volume": "No confirmed volume (Vss or Vd, or V/F).",
         "iv_evidence_incomplete": "Intravenous evidence is incomplete: clearance and volume are both needed.",
@@ -2549,7 +2471,7 @@
     },
     "gabapentin": {
       "release": {
-        "run_id": "20261111T134142Z-636696f3-14a1",
+        "run_id": "20261111T120000Z-0a1b2c3d-0001",
         "snapshot_date": "2026-11-11",
         "pipeline_version": "modelkit-evidence-1.0"
       },
@@ -2997,12 +2919,8 @@
         "no_independent_observation": "No independent observation: no held-out study reports Cmax or AUC.",
         "auc_not_tested": "AUC was not tested.",
         "cmax_not_tested": "Cmax was not tested.",
-        "tested_ratio_outside_2_fold": "A tested ratio of predicted to observed is outside 2-fold.",
-        "auc_and_cmax_within_2_fold": "AUC and Cmax both tested and within 2-fold.",
-        "auc_near_the_2_fold_limit": "The AUC ratio is within 10 % of the 2-fold limit.",
-        "auc_some_points_outside_2_fold": "The drug-level AUC ratio is within 2-fold, but some single observations are outside it.",
-        "cmax_some_points_outside_2_fold": "The drug-level Cmax ratio is within 2-fold, but some single observations are outside it.",
-        "cmax_near_the_2_fold_limit": "The Cmax ratio is within 10 % of the 2-fold limit.",
+        "point_outside_2_fold": "At least one held-out observation is outside 2-fold of the prediction.",
+        "all_points_within_2_fold": "AUC and Cmax were tested and every held-out observation is within 2-fold.",
         "no_confirmed_clearance": "No confirmed clearance (intravenous CL or oral CL/F).",
         "no_confirmed_volume": "No confirmed volume (Vss or Vd, or V/F).",
         "iv_evidence_incomplete": "Intravenous evidence is incomplete: clearance and volume are both needed.",
@@ -3031,7 +2949,7 @@
     },
     "sunitinib": {
       "release": {
-        "run_id": "20261111T134142Z-636696f3-14a1",
+        "run_id": "20261111T120000Z-0a1b2c3d-0001",
         "snapshot_date": "2026-11-11",
         "pipeline_version": "modelkit-evidence-1.0"
       },
@@ -3377,12 +3295,8 @@
         "no_independent_observation": "No independent observation: no held-out study reports Cmax or AUC.",
         "auc_not_tested": "AUC was not tested.",
         "cmax_not_tested": "Cmax was not tested.",
-        "tested_ratio_outside_2_fold": "A tested ratio of predicted to observed is outside 2-fold.",
-        "auc_and_cmax_within_2_fold": "AUC and Cmax both tested and within 2-fold.",
-        "auc_near_the_2_fold_limit": "The AUC ratio is within 10 % of the 2-fold limit.",
-        "auc_some_points_outside_2_fold": "The drug-level AUC ratio is within 2-fold, but some single observations are outside it.",
-        "cmax_some_points_outside_2_fold": "The drug-level Cmax ratio is within 2-fold, but some single observations are outside it.",
-        "cmax_near_the_2_fold_limit": "The Cmax ratio is within 10 % of the 2-fold limit.",
+        "point_outside_2_fold": "At least one held-out observation is outside 2-fold of the prediction.",
+        "all_points_within_2_fold": "AUC and Cmax were tested and every held-out observation is within 2-fold.",
         "no_confirmed_clearance": "No confirmed clearance (intravenous CL or oral CL/F).",
         "no_confirmed_volume": "No confirmed volume (Vss or Vd, or V/F).",
         "iv_evidence_incomplete": "Intravenous evidence is incomplete: clearance and volume are both needed.",
@@ -3411,7 +3325,7 @@
     },
     "telmisartan": {
       "release": {
-        "run_id": "20261111T134142Z-636696f3-14a1",
+        "run_id": "20261111T120000Z-0a1b2c3d-0001",
         "snapshot_date": "2026-11-11",
         "pipeline_version": "modelkit-evidence-1.0"
       },
@@ -3995,12 +3909,8 @@
         "no_independent_observation": "No independent observation: no held-out study reports Cmax or AUC.",
         "auc_not_tested": "AUC was not tested.",
         "cmax_not_tested": "Cmax was not tested.",
-        "tested_ratio_outside_2_fold": "A tested ratio of predicted to observed is outside 2-fold.",
-        "auc_and_cmax_within_2_fold": "AUC and Cmax both tested and within 2-fold.",
-        "auc_near_the_2_fold_limit": "The AUC ratio is within 10 % of the 2-fold limit.",
-        "auc_some_points_outside_2_fold": "The drug-level AUC ratio is within 2-fold, but some single observations are outside it.",
-        "cmax_some_points_outside_2_fold": "The drug-level Cmax ratio is within 2-fold, but some single observations are outside it.",
-        "cmax_near_the_2_fold_limit": "The Cmax ratio is within 10 % of the 2-fold limit.",
+        "point_outside_2_fold": "At least one held-out observation is outside 2-fold of the prediction.",
+        "all_points_within_2_fold": "AUC and Cmax were tested and every held-out observation is within 2-fold.",
         "no_confirmed_clearance": "No confirmed clearance (intravenous CL or oral CL/F).",
         "no_confirmed_volume": "No confirmed volume (Vss or Vd, or V/F).",
         "iv_evidence_incomplete": "Intravenous evidence is incomplete: clearance and volume are both needed.",
@@ -4029,7 +3939,7 @@
     },
     "tramadol": {
       "release": {
-        "run_id": "20261111T134142Z-636696f3-14a1",
+        "run_id": "20261111T120000Z-0a1b2c3d-0001",
         "snapshot_date": "2026-11-11",
         "pipeline_version": "modelkit-evidence-1.0"
       },
@@ -5157,12 +5067,8 @@
         "no_independent_observation": "No independent observation: no held-out study reports Cmax or AUC.",
         "auc_not_tested": "AUC was not tested.",
         "cmax_not_tested": "Cmax was not tested.",
-        "tested_ratio_outside_2_fold": "A tested ratio of predicted to observed is outside 2-fold.",
-        "auc_and_cmax_within_2_fold": "AUC and Cmax both tested and within 2-fold.",
-        "auc_near_the_2_fold_limit": "The AUC ratio is within 10 % of the 2-fold limit.",
-        "auc_some_points_outside_2_fold": "The drug-level AUC ratio is within 2-fold, but some single observations are outside it.",
-        "cmax_some_points_outside_2_fold": "The drug-level Cmax ratio is within 2-fold, but some single observations are outside it.",
-        "cmax_near_the_2_fold_limit": "The Cmax ratio is within 10 % of the 2-fold limit.",
+        "point_outside_2_fold": "At least one held-out observation is outside 2-fold of the prediction.",
+        "all_points_within_2_fold": "AUC and Cmax were tested and every held-out observation is within 2-fold.",
         "no_confirmed_clearance": "No confirmed clearance (intravenous CL or oral CL/F).",
         "no_confirmed_volume": "No confirmed volume (Vss or Vd, or V/F).",
         "iv_evidence_incomplete": "Intravenous evidence is incomplete: clearance and volume are both needed.",

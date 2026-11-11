@@ -2944,7 +2944,7 @@
     },
     "val": {
       "title": "Validation sur des études mises de côté",
-      "intro": "Les études qui ne rapportent que la Cmax ou l’ASC n’ont jamais servi à construire un jeu. Rapport = prédit / observé.",
+      "intro": "Les études qui ne rapportent que la Cmax ou l’ASC n’ont jamais servi à construire un jeu. Rapport = prédit / observé. Le statut utilise chaque observation : Validé seulement si chacune est dans un facteur 2 ; la colonne du rapport est une moyenne, donnée à titre indicatif.",
       "metrics": "Mesures de validation",
       "metric": "Mesure",
       "auc": "ASC",
@@ -2955,12 +2955,13 @@
       "ratio": "Rapport",
       "gmfe": "GMFE",
       "within": "Dans un facteur 2",
-      "ratioInside": "Rapport dans un facteur 2",
-      "ratioOutside": "Rapport hors d’un facteur 2",
-      "nearLimit": "{metric} : le rapport est à moins de 10 % de la limite du facteur 2.",
+      "ratioInside": "Tous les points dans un facteur 2",
+      "ratioOutside": "Un point est hors d’un facteur 2",
       "suspect": "Paramètre suspect :",
       "noPoints": "Il n’y a aucune observation mise de côté, donc pas de graphique.",
-      "intervalN": "({n} sur au moins {min} études indépendantes mises de côté.)"
+      "intervalN": "({n} sur au moins {min} études indépendantes mises de côté.)",
+      "failedPoints": "Observations hors d’un facteur 2",
+      "failedPoint": "{metric}, étude {study} : prédit / observé = {ratio}"
     },
     "chart": {
       "title": "Observé par rapport à prédit",
@@ -2999,7 +3000,8 @@
         "agree": "est d’accord avec la valeur extraite",
         "disagree": "n’est pas d’accord avec la valeur extraite"
       },
-      "confirm": "Confirmation (automatisée)"
+      "confirm": "Confirmation (automatisée)",
+      "studyId": "Identifiant de l’étude"
     },
     "evParam": {
       "cl": "Clairance (CL)",
@@ -3062,12 +3064,6 @@
       "no_independent_observation": "Aucune observation indépendante : aucune étude mise de côté ne rapporte la Cmax ou l’ASC.",
       "auc_not_tested": "L’ASC n’a pas été testée.",
       "cmax_not_tested": "La Cmax n’a pas été testée.",
-      "tested_ratio_outside_2_fold": "Un rapport testé de prédit à observé est hors d’un facteur 2.",
-      "auc_and_cmax_within_2_fold": "ASC et Cmax testées toutes deux et dans un facteur 2.",
-      "auc_near_the_2_fold_limit": "Le rapport de l’ASC est à moins de 10 % de la limite du facteur 2.",
-      "cmax_near_the_2_fold_limit": "Le rapport de la Cmax est à moins de 10 % de la limite du facteur 2.",
-      "auc_some_points_outside_2_fold": "Le rapport de l’ASC au niveau du médicament est dans un facteur 2, mais certaines observations isolées sont en dehors.",
-      "cmax_some_points_outside_2_fold": "Le rapport de la Cmax au niveau du médicament est dans un facteur 2, mais certaines observations isolées sont en dehors.",
       "no_confirmed_clearance": "Aucune clairance confirmée (CL intraveineuse ou CL/F orale).",
       "no_confirmed_volume": "Aucun volume confirmé (Vss ou Vd, ou V/F).",
       "iv_evidence_incomplete": "Les preuves intraveineuses sont incomplètes : la clairance et le volume sont tous deux nécessaires.",
@@ -3092,7 +3088,10 @@
       "expert_review_pending": "L’examen par des experts n’a pas encore été fait.",
       "interval_n_too_small": "Aucun intervalle n’est montré : n est trop petit (moins de 20 études indépendantes mises de côté).",
       "interval_system_level_only": "Les intervalles ne sont donnés qu’au niveau du système, pas par médicament.",
-      "not_used": "Non utilisée ; aucune raison plus précise n’est enregistrée."
-    }
+      "not_used": "Non utilisée ; aucune raison plus précise n’est enregistrée.",
+      "point_outside_2_fold": "Au moins une observation mise de côté est hors d’un facteur 2 de la prédiction.",
+      "all_points_within_2_fold": "L’ASC et la Cmax ont été testées et chaque observation mise de côté est dans un facteur 2."
+    },
+    "scrollHint": "Faites défiler latéralement pour voir toutes les colonnes."
   }
 }

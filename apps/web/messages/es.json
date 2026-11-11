@@ -2944,7 +2944,7 @@
     },
     "val": {
       "title": "Validación con estudios reservados",
-      "intro": "Los estudios que solo informan Cmax o AUC nunca se usaron para construir un conjunto. Razón = predicho / observado.",
+      "intro": "Los estudios que solo informan Cmax o AUC nunca se usaron para construir un conjunto. Razón = predicho / observado. El estado usa cada observación: Validado solo si cada una está dentro de un factor 2; la columna de la razón es una media solo informativa.",
       "metrics": "Medidas de validación",
       "metric": "Medida",
       "auc": "AUC",
@@ -2955,12 +2955,13 @@
       "ratio": "Razón",
       "gmfe": "GMFE",
       "within": "Dentro de un factor 2",
-      "ratioInside": "Razón dentro de un factor 2",
-      "ratioOutside": "Razón fuera de un factor 2",
-      "nearLimit": "{metric}: la razón está a menos del 10 % del límite del factor 2.",
+      "ratioInside": "Todos los puntos dentro de un factor 2",
+      "ratioOutside": "Un punto queda fuera de un factor 2",
       "suspect": "Parámetro sospechoso:",
       "noPoints": "No hay ninguna observación reservada, así que no hay gráfico.",
-      "intervalN": "({n} de al menos {min} estudios reservados independientes.)"
+      "intervalN": "({n} de al menos {min} estudios reservados independientes.)",
+      "failedPoints": "Observaciones fuera de un factor 2",
+      "failedPoint": "{metric}, estudio {study}: predicho / observado = {ratio}"
     },
     "chart": {
       "title": "Observado frente a predicho",
@@ -2999,7 +3000,8 @@
         "agree": "concuerda con el valor extraído",
         "disagree": "no concuerda con el valor extraído"
       },
-      "confirm": "Confirmación (automatizada)"
+      "confirm": "Confirmación (automatizada)",
+      "studyId": "Identificador del estudio"
     },
     "evParam": {
       "cl": "Aclaramiento (CL)",
@@ -3062,12 +3064,6 @@
       "no_independent_observation": "Sin observación independiente: ningún estudio reservado informa Cmax o AUC.",
       "auc_not_tested": "No se probó el AUC.",
       "cmax_not_tested": "No se probó la Cmax.",
-      "tested_ratio_outside_2_fold": "Una razón probada de predicho a observado está fuera de un factor 2.",
-      "auc_and_cmax_within_2_fold": "AUC y Cmax probadas ambas y dentro de un factor 2.",
-      "auc_near_the_2_fold_limit": "La razón del AUC está a menos del 10 % del límite del factor 2.",
-      "cmax_near_the_2_fold_limit": "La razón de la Cmax está a menos del 10 % del límite del factor 2.",
-      "auc_some_points_outside_2_fold": "La razón del AUC a nivel del fármaco está dentro de un factor 2, pero algunas observaciones individuales quedan fuera.",
-      "cmax_some_points_outside_2_fold": "La razón de la Cmax a nivel del fármaco está dentro de un factor 2, pero algunas observaciones individuales quedan fuera.",
       "no_confirmed_clearance": "Sin aclaramiento confirmado (CL intravenoso o CL/F oral).",
       "no_confirmed_volume": "Sin volumen confirmado (Vss o Vd, o V/F).",
       "iv_evidence_incomplete": "La evidencia intravenosa está incompleta: hacen falta el aclaramiento y el volumen.",
@@ -3092,7 +3088,10 @@
       "expert_review_pending": "Aún no se ha realizado una revisión por expertos.",
       "interval_n_too_small": "No se muestra intervalo: n es demasiado pequeño (menos de 20 estudios reservados independientes).",
       "interval_system_level_only": "Los intervalos se dan solo a nivel de sistema, no por fármaco.",
-      "not_used": "No usada; no se registra una razón más específica."
-    }
+      "not_used": "No usada; no se registra una razón más específica.",
+      "point_outside_2_fold": "Al menos una observación reservada queda fuera de un factor 2 de la predicción.",
+      "all_points_within_2_fold": "Se probaron el AUC y la Cmax y cada observación reservada está dentro de un factor 2."
+    },
+    "scrollHint": "Desplácese hacia los lados para ver todas las columnas."
   }
 }

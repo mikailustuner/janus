@@ -2944,7 +2944,7 @@
     },
     "val": {
       "title": "Validation against held-out studies",
-      "intro": "Studies that only report Cmax or AUC were never used to build a set. Ratio = predicted / observed.",
+      "intro": "Studies that only report Cmax or AUC were never used to build a set. Ratio = predicted / observed. The status uses every single observation: Validated only if each one is within 2-fold; the ratio column is a mean for information only.",
       "metrics": "Validation metrics",
       "metric": "Metric",
       "auc": "AUC",
@@ -2955,12 +2955,13 @@
       "ratio": "Ratio",
       "gmfe": "GMFE",
       "within": "Within 2-fold",
-      "ratioInside": "Ratio inside 2-fold",
-      "ratioOutside": "Ratio outside 2-fold",
-      "nearLimit": "{metric}: the ratio is within 10 % of the 2-fold limit.",
+      "ratioInside": "All points inside 2-fold",
+      "ratioOutside": "A point is outside 2-fold",
       "suspect": "Suspect parameter:",
       "noPoints": "There is no held-out observation, so there is no chart.",
-      "intervalN": "({n} of at least {min} independent held-out studies.)"
+      "intervalN": "({n} of at least {min} independent held-out studies.)",
+      "failedPoints": "Observations outside 2-fold",
+      "failedPoint": "{metric}, study {study}: predicted / observed = {ratio}"
     },
     "chart": {
       "title": "Observed against predicted",
@@ -2999,7 +3000,8 @@
         "agree": "agrees with the extracted value",
         "disagree": "does not agree with the extracted value"
       },
-      "confirm": "Confirmation (automated)"
+      "confirm": "Confirmation (automated)",
+      "studyId": "Study id"
     },
     "evParam": {
       "cl": "Clearance (CL)",
@@ -3062,12 +3064,6 @@
       "no_independent_observation": "No independent observation: no held-out study reports Cmax or AUC.",
       "auc_not_tested": "AUC was not tested.",
       "cmax_not_tested": "Cmax was not tested.",
-      "tested_ratio_outside_2_fold": "A tested ratio of predicted to observed is outside 2-fold.",
-      "auc_and_cmax_within_2_fold": "AUC and Cmax both tested and within 2-fold.",
-      "auc_near_the_2_fold_limit": "The AUC ratio is within 10 % of the 2-fold limit.",
-      "cmax_near_the_2_fold_limit": "The Cmax ratio is within 10 % of the 2-fold limit.",
-      "auc_some_points_outside_2_fold": "The drug-level AUC ratio is within 2-fold, but some single observations are outside it.",
-      "cmax_some_points_outside_2_fold": "The drug-level Cmax ratio is within 2-fold, but some single observations are outside it.",
       "no_confirmed_clearance": "No confirmed clearance (intravenous CL or oral CL/F).",
       "no_confirmed_volume": "No confirmed volume (Vss or Vd, or V/F).",
       "iv_evidence_incomplete": "Intravenous evidence is incomplete: clearance and volume are both needed.",
@@ -3092,7 +3088,10 @@
       "expert_review_pending": "Expert review has not yet been done.",
       "interval_n_too_small": "No interval is shown: n is too small (fewer than 20 independent held-out studies).",
       "interval_system_level_only": "Intervals are given at system level only, not per drug.",
-      "not_used": "Not used; no more specific reason is recorded."
-    }
+      "not_used": "Not used; no more specific reason is recorded.",
+      "point_outside_2_fold": "At least one held-out observation is outside 2-fold of the prediction.",
+      "all_points_within_2_fold": "AUC and Cmax were tested and every held-out observation is within 2-fold."
+    },
+    "scrollHint": "Scroll sideways to see all columns."
   }
 }

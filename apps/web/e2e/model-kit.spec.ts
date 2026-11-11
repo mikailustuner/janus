@@ -53,10 +53,54 @@ const stubs = {
   ),
 };
 
-const VALIDATED = "sunitinib";
+const VALIDATED = "ertugliflozin";
+const FAILED = "sunitinib"; // one Cmax point outside 2-fold (strict rule, owner decision 2026-11-11)
 const WITH_SET = "dolutegravir";
 const NO_SET = "gabapentin";
 const HALF_LIFE = "ertugliflozin";
+
+/**
+ * No table cell wraps inside a word and no scroll region pokes out of the viewport: every cell of
+ * every table is at least as wide as its longest word (canvas measurement in the cell's own font),
+ * and each scroller ends inside the viewport (a regression check for the 375 px layout).
+ */
+async function expectTablesFit(page: Page): Promise<void> {
+  const bad = await page.evaluate(() => {
+    const canvas = document.createElement("canvas").getContext("2d")!;
+    const out: string[] = [];
+    for (const cell of document.querySelectorAll<HTMLTableCellElement>(
+      "main table th, main table td",
+    )) {
+      const r = cell.getBoundingClientRect();
+      if (r.width === 0) continue;
+      const cs = getComputedStyle(cell);
+      canvas.font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+      const words = (cell.innerText || "")
+        .split(/[\s\-\u2013\u2014]+/)
+        .filter(Boolean);
+      const longest = Math.max(
+        0,
+        ...words.map((w) => canvas.measureText(w).width),
+      );
+      const inner =
+        r.width - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+      if (cell.colSpan > 1) continue; // the evidence panel wraps long ids by design
+      if (inner + 1 < longest)
+        out.push(
+          `${cell.tagName} "${(cell.innerText || "").slice(0, 30)}" ${inner.toFixed(0)} < ${longest.toFixed(0)}`,
+        );
+    }
+    for (const sc of document.querySelectorAll<HTMLElement>(
+      "[data-testid=mk-scroll]",
+    )) {
+      const r = sc.getBoundingClientRect();
+      if (r.right > window.innerWidth + 0.5 || r.left < -0.5)
+        out.push(`scroller outside viewport ${r.left}..${r.right}`);
+    }
+    return out;
+  });
+  expect(bad, "cells narrower than their longest word").toEqual([]);
+}
 
 async function checks(page: Page, locale: (typeof LOCALES)[number]) {
   const m = messages[locale].ModelKit;
@@ -73,6 +117,7 @@ async function checks(page: Page, locale: (typeof LOCALES)[number]) {
   );
   await expectNoAxeViolations(page);
   await expectNoHorizontalScroll(page);
+  await expectTablesFit(page);
   await expectTouchTargets(page);
   const text = await page.locator("body").innerText();
   expect(findForbiddenPhrases(text, forbiddenPhrases[locale])).toEqual([]);
@@ -98,6 +143,11 @@ const PAGES = [
   {
     name: "drug-validated",
     path: `/research/model-kit/drug#${VALIDATED}`,
+    open: "cl",
+  },
+  {
+    name: "drug-failed",
+    path: `/research/model-kit/drug#${FAILED}`,
     open: "cl",
   },
   { name: "drug-not-validated", path: `/research/model-kit/drug#${WITH_SET}` },
@@ -139,10 +189,9 @@ test.describe("list", () => {
       await expect(row.getByTestId("mk-status")).toBeVisible();
       await expect(row).toContainText(/\d+ stud/);
     }
-    const sunitinib = fx.drugs.drugs.find((d: Json) => d.key === VALIDATED);
     await expect(
       page.locator(`[data-testid="mk-drug"]`).filter({ hasText: "Sunitinib" }),
-    ).toContainText(sunitinib.status === "validated" ? "Validated" : "Not");
+    ).toContainText("Failed");
     await expect(page.getByTestId("mk-interval")).toContainText(
       "No interval is shown",
     );
@@ -221,7 +270,7 @@ test.describe("drug page", () => {
     page,
   }) => {
     await stubApi(page, stubs);
-    await page.goto(`/en/research/model-kit/drug#${VALIDATED}`);
+    await page.goto(`/en/research/model-kit/drug#${FAILED}`);
     await expect(page.getByTestId("mk-apparent")).toContainText("CL/F, V/F");
     await expect(page.getByTestId("mk-param-table")).toContainText(
       "CL/F (apparent)",
@@ -234,6 +283,28 @@ test.describe("drug page", () => {
     await expect(box).toContainText(fmt(w.stated_half_life_h));
     await expect(box).toContainText("half-life");
     await expect(page.getByTestId("mk-legend")).toContainText("A");
+  });
+
+  test("strict rule: a point outside 2-fold fails the drug and is named with its suspect parameter", async ({
+    page,
+  }) => {
+    await stubApi(page, stubs);
+    await page.goto(`/en/research/model-kit/drug#${FAILED}`);
+    await expect(page.getByTestId("mk-status").first()).toHaveAttribute(
+      "data-status",
+      "failed",
+    );
+    const bad = fx.drug[FAILED]!.validation.points.filter(
+      (p: Json) => !p.within_2_fold,
+    );
+    expect(bad.length).toBeGreaterThan(0);
+    await expect(
+      page.getByTestId("mk-failed-points").locator("li"),
+    ).toHaveCount(bad.length);
+    await expect(page.getByTestId("mk-suspect")).toBeVisible();
+    await expect(page.getByTestId("mk-status-reasons")).toContainText(
+      "outside 2-fold",
+    );
   });
 
   test("the chart has a name, a band and a table with every point", async ({

@@ -4,6 +4,8 @@
  * status badges, the research-use statements and the translated reason codes. Status colours use
  * existing tokens only; red (`--risk`) is never used here (it means real risk).
  */
+import { useEffect, useRef, useState, type ReactNode } from "react";
+
 import { useT } from "@/theme/words";
 import {
   demoModelKit,
@@ -105,5 +107,51 @@ export function ReasonList({
         </li>
       ))}
     </ul>
+  );
+}
+
+/**
+ * A table that never breaks words: it scrolls inside its own focusable region (the pattern of the
+ * other research tables, `tm-table nowrap`), with a visible edge shadow and a hint line so the
+ * sideways scroll can be found. The page itself never scrolls sideways.
+ */
+export function ScrollTable({
+  label,
+  children,
+}: {
+  label: string;
+  children: ReactNode;
+}) {
+  const t = useT();
+  const ref = useRef<HTMLDivElement>(null);
+  const [wide, setWide] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const measure = () => setWide(el.scrollWidth > el.clientWidth + 1);
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    if (el.firstElementChild) ro.observe(el.firstElementChild);
+    return () => ro.disconnect();
+  }, []);
+  return (
+    <div className="flex max-w-full min-w-0 flex-col gap-1">
+      <div
+        ref={ref}
+        className="card scroll-shadow relative max-w-full overflow-x-auto p-0"
+        tabIndex={0}
+        role="region"
+        aria-label={label}
+        data-testid="mk-scroll"
+      >
+        {children}
+      </div>
+      {wide ? (
+        <p className="text-xs text-muted" data-testid="mk-scroll-hint">
+          {t("ModelKit.scrollHint")}
+        </p>
+      ) : null}
+    </div>
   );
 }

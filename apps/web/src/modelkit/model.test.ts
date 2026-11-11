@@ -17,6 +17,7 @@ import {
   EVIDENCE_PARAMS,
   evidenceOut,
   inBand,
+  shortStudy,
   keyFromHash,
   logAxis,
   logPos,
@@ -127,6 +128,13 @@ describe("view model", () => {
     }[])
       for (const p of d.validation.points)
         expect(inBand(p)).toBe(p.within_2_fold);
+  });
+  it("shortStudy cuts long internal ids and keeps short ones", () => {
+    expect(shortStudy("NCT02404805")).toBe("NCT02404805");
+    expect(shortStudy("485bc9db-8665-9f5a-e063-6394a90a7921")).toBe(
+      "485bc9db…",
+    );
+    expect(shortStudy("FDA review WINHZLLDWRZWRT")).toBe("FDA review WINH…");
   });
   it("labels apparent parameters CL/F and V/F", () => {
     expect(paramKey("cl", true)).toBe("ModelKit.param.clApparent");
