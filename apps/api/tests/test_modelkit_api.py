@@ -105,7 +105,7 @@ def test_drug_detail_with_set_and_validation(client: TestClient) -> None:
     assert set(names) == {"cl", "v", "f", "ka"} and names["ka"]["confidence_class"] == "C"
     assert d["validation"]["metrics"][1]["n_points"] == 2
     assert d["validation"]["band"] == [0.5, 2.0]
-    assert d["targets"] == ["janus", "mrgsolve"]
+    assert d["targets"] == ["janus", "mrgsolve", "pksim"]
     none = client.get("/modelkit/drugs/telmisartan").json()
     assert none["parameter_set"] is None and none["no_set_reasons"] and none["targets"] == []
 
@@ -134,7 +134,7 @@ def test_system_report(client: TestClient) -> None:
     assert s["reason_text"]["expert_review_pending"] == "Expert review has not yet been done."
 
 
-@pytest.mark.parametrize("target", ["janus", "mrgsolve"])
+@pytest.mark.parametrize("target", ["janus", "mrgsolve", "pksim"])
 def test_export_is_a_zip_with_provenance(client: TestClient, target: str) -> None:
     r = client.get(f"/modelkit/drugs/ertugliflozin/export/{target}")
     assert r.status_code == 200 and r.headers["content-type"] == "application/zip"
@@ -149,7 +149,7 @@ def test_errors_are_codes(client: TestClient) -> None:
     assert client.get("/modelkit/drugs/nothing").status_code == 404
     bad = client.get("/modelkit/drugs/Bad-Key")
     assert bad.status_code == 422 and bad.json() == {"error": "invalid_request", "fields": ["key"]}
-    t = client.get("/modelkit/drugs/sunitinib/export/pksim")
+    t = client.get("/modelkit/drugs/sunitinib/export/nonmem")
     assert t.status_code == 422 and t.json()["fields"] == ["target"]
     assert client.get("/modelkit/drugs/tramadol/export/janus").json() == {
         "error": "no_parameter_set"

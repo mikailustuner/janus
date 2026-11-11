@@ -34,7 +34,10 @@ packages = ["janus"]
 [tool.pytest.ini_options]
 testpaths = ["tests", "janus"]
 addopts = "-ra --strict-markers"
-markers = ["mrgsolve: needs R with the pinned mrgsolve (own CI job; JANUS_REQUIRE_MRGSOLVE=1 makes a missing R a failure)"]
+markers = [
+  "mrgsolve: needs R with the pinned mrgsolve (own CI job; JANUS_REQUIRE_MRGSOLVE=1 makes a missing R a failure)",
+  "pksim: needs R with ospsuite and a .NET 8 runtime (own CI job; JANUS_REQUIRE_PKSIM=1 makes a missing one a failure)",
+]
 
 [tool.ruff]
 target-version = "py312"

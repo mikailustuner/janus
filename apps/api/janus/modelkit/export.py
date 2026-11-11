@@ -29,8 +29,25 @@ EXPERIMENTAL = "Experimental: this model kit is an early research preview."
 STATEMENTS = (RESEARCH_USE, NO_REVIEW, EXPERIMENTAL)
 MRGSOLVE_LICENCE = "GPL (>= 2)"
 MRGSOLVE_PINNED = "2.0.1"
-TARGETS = ("janus", "mrgsolve")
+TARGETS = ("janus", "mrgsolve", "pksim")
 FIXED_TIME = (2026, 11, 11, 0, 0, 0)
+
+
+# --- PK-Sim (Open Systems Pharmacology) compound building block ------------------------------------
+# A project snapshot (JSON) with one Compound. Format: PKSim.Core.Snapshots (PK-Sim source, GPL-2.0), project
+# snapshot version 80 = PK-Sim 12.x. Tested with PK-Sim core 12.3.173 through ospsuite 12.4.5 (GPL-2.0) on Linux.
+PKSIM_SNAPSHOT_VERSION = 80
+PKSIM_TESTED = "PK-Sim 12.3.173 (ospsuite 12.4.5)"
+# What a mechanistic PK-Sim compound needs and the evidence of the kit does not hold (never invented).
+PKSIM_MISSING = (
+    ("Molecular weight", "g/mol", "molecular_weight"),
+    ("Lipophilicity (logP)", "log units", "lipophilicity"),
+    ("Fraction unbound in plasma", "fraction", "fraction_unbound"),
+    ("pKa and compound type (acid, base, neutral)", "pKa", "pka"),
+    ("Solubility at a reference pH", "mg/l", "solubility"),
+    ("Intestinal permeability and permeability", "cm/min", "permeability"),
+    ("Blood/plasma concentration ratio", "ratio", "blood_plasma_ratio"),
+)
 
 
 class NotExportableError(ValueError):
@@ -292,7 +309,7 @@ def references_bib(prov: dict[str, Any]) -> str:
     return "\n\n".join(out) + "\n"
 
 
-def licenses_txt(prov: dict[str, Any]) -> str:
+def licenses_txt(prov: dict[str, Any], target: str = "janus") -> str:
     srcs = {k.split(":")[0] for k in prov["sources"]}
     lines = [
         RESEARCH_USE,
@@ -336,20 +353,28 @@ def licenses_txt(prov: dict[str, Any]) -> str:
                 "  No endorsement by the authors is implied.",
                 "",
             ]
-    lines += [
-        "R/mrgsolve: model.cpp is meant to be run with the mrgsolve R package (GPL (>= 2)); it is not included.",
-        f"Tested with mrgsolve {MRGSOLVE_PINNED}.",
-        "",
-    ]
+    if target == "pksim":
+        lines += [
+            "PK-Sim and the ospsuite R package (Open Systems Pharmacology Suite, GPL-2.0): the snapshot format is the",
+            "published, open source format of PK-Sim. No PK-Sim or ospsuite code is included in this file.",
+            f"Load-tested with {PKSIM_TESTED}.",
+            "",
+        ]
+    else:
+        lines += [
+            "R/mrgsolve: model.cpp is meant to be run with the mrgsolve R package (GPL (>= 2)); it is not included.",
+            f"Tested with mrgsolve {MRGSOLVE_PINNED}.",
+            "",
+        ]
     return "\n".join(lines)
 
 
 def readme_txt(ps: ParameterSet, target: str) -> str:
-    what = (
-        "janus-model.json (Janus engine parameters)"
-        if target == "janus"
-        else "model.cpp and example.R (R/mrgsolve)"
-    )
+    what = {
+        "janus": "janus-model.json (Janus engine parameters)",
+        "mrgsolve": "model.cpp and example.R (R/mrgsolve)",
+        "pksim": "pksim-compound.snapshot.json (PK-Sim project snapshot with one compound) and pksim-inputs.json",
+    }[target]
     return "\n".join(
         [
             f"Janus model kit (experimental): {ps.drug_key}",
@@ -360,9 +385,124 @@ def readme_txt(ps: ParameterSet, target: str) -> str:
             f"Files: {what}, provenance.json (every value to its source and quote), references.bib, LICENSES.txt.",
             "This is a starting model from published evidence, with a validation status in provenance.json.",
             "It is not a dose calculator, not for any person, and it does not say a medicine or dose is safe.",
+            *(
+                [
+                    "",
+                    "PK-Sim: this is a compound building block, not a simulation. It holds no logP, pKa, fraction unbound,",
+                    "blood/plasma ratio, solubility, permeability, molecular weight or clearance process: the evidence has",
+                    "none of them, they are marked missing in pksim-inputs.json, and nothing was invented. You supply them.",
+                    f"Format: PK-Sim project snapshot, version {PKSIM_SNAPSHOT_VERSION} (PK-Sim 12.x). Loaded and exported again",
+                    f"with {PKSIM_TESTED} on Linux in an automated check; not simulated; not tested with other versions.",
+                    "To load it in PK-Sim: import it as a project snapshot (File menu, see the PK-Sim documentation on",
+                    "snapshots; menu wording may differ between versions). Command line, with the ospsuite R package:",
+                    '  ospsuite::loadProjectFromSnapshot("pksim-compound.snapshot.json", output = "out")',
+                    "Open Systems Pharmacology tools are free and open source (GPL-2.0).",
+                ]
+                if target == "pksim"
+                else []
+            ),
             "",
         ]
     )
+
+
+def _pksim_summary(ps: ParameterSet) -> list[dict[str, Any]]:
+    return [
+        {
+            "name": q.name,
+            "label": q.label,
+            "value": q.value,
+            "unit": q.unit,
+            "confidence_class": q.cls,
+            "derivation": q.derivation,
+        }
+        for q in ps.params
+    ]
+
+
+def pksim_description(ps: ParameterSet) -> str:
+    cl = ps.get("cl")
+    summary = "; ".join(f"{q.label} {q.value:.4g} {q.unit} (class {q.cls})" for q in ps.params)
+    return (
+        f"Janus model kit (experimental), {ps.drug_key}. {RESEARCH_USE} {NO_REVIEW} "
+        "This compound building block holds no physico-chemical value and no clearance process, because the evidence "
+        "does not contain them (logP, pKa, fraction unbound, blood/plasma ratio, solubility, permeability, molecular "
+        "weight: all missing; nothing was invented). A mechanistic PK-Sim model needs them from you. "
+        f"Pharmacokinetic summary from cited evidence, not an input to PK-Sim: {summary}. "
+        + ("CL and V are apparent (CL/F, V/F). " if ps.apparent and cl else "")
+        + "Every value and its source quote: provenance.json."
+    )
+
+
+def pksim_snapshot(ps: ParameterSet) -> dict[str, Any]:
+    """A PK-Sim project snapshot with one compound (the name, a description, small molecule). Keys follow
+    PKSim.Core.Snapshots.Project and .Compound; there is no other content (see `pksim_description`)."""
+    desc = pksim_description(ps)
+    return {
+        "Version": PKSIM_SNAPSHOT_VERSION,
+        "Name": f"Janus model kit {ps.drug_key}",
+        "Description": f"{RESEARCH_USE} {NO_REVIEW} {EXPERIMENTAL}",
+        "Compounds": [{"Name": ps.drug_key, "Description": desc, "IsSmallMolecule": True}],
+    }
+
+
+def pksim_inputs(ps: ParameterSet) -> dict[str, Any]:
+    """What the snapshot holds and what PK-Sim still needs, each with a status. `missing` = the evidence has no value."""
+    cl = ps.get("cl")
+    return {
+        "schema": "janus.modelkit.pksim-inputs/1",
+        "statements": list(STATEMENTS),
+        "compound": ps.drug_key,
+        "pksim": {
+            "snapshot_version": PKSIM_SNAPSHOT_VERSION,
+            "versions": "PK-Sim 12.x (snapshot version 80)",
+            "load_tested_with": PKSIM_TESTED,
+            "simulated": False,
+            "simulated_note": (
+                "The file loads in PK-Sim and returns on export. It was not simulated: a mechanistic simulation needs "
+                "the inputs marked missing."
+            ),
+        },
+        "inputs": [
+            {"pksim_input": label, "unit": unit, "key": key, "status": "missing", "value": None}
+            for label, unit, key in PKSIM_MISSING
+        ]
+        + [
+            {
+                "pksim_input": "Clearance process (hepatic, renal or other)",
+                "key": "clearance_process",
+                "status": "not_assigned",
+                "value": None,
+                "evidence": None
+                if cl is None
+                else {
+                    "parameter": cl.label,
+                    "value": cl.value,
+                    "unit": cl.unit,
+                    "apparent": ps.apparent,
+                },
+                "note": (
+                    "The evidence gives a total clearance, not the organ or process. PK-Sim needs a process with its "
+                    "own parameters (and the body weight, fraction unbound and blood/plasma ratio); assigning the "
+                    "total clearance to hepatic or renal clearance would be an assumption, so none is made."
+                ),
+            }
+        ],
+        "not_inputs_of_pksim": [
+            {
+                "name": q.name,
+                "label": q.label,
+                "value": q.value,
+                "unit": q.unit,
+                "why": "PK-Sim derives distribution and absorption from the compound's physico-chemistry and "
+                "the physiology; it has no input for this value on the compound.",
+            }
+            for q in ps.params
+            if q.name != "cl"
+        ],
+        "summary": _pksim_summary(ps),
+        "screening_values": "none: no estimated physico-chemical value is included",
+    }
 
 
 def build_zip(files: dict[str, str]) -> bytes:
@@ -386,12 +526,19 @@ def export_files(
     common = {
         "provenance.json": json.dumps(prov, indent=2, sort_keys=True, ensure_ascii=False) + "\n",
         "references.bib": references_bib(prov),
-        "LICENSES.txt": licenses_txt(prov),
+        "LICENSES.txt": licenses_txt(prov, target),
         "README.txt": readme_txt(ps, target),
     }
     if target == "janus":
         common["janus-model.json"] = (
             json.dumps(engine_json(ps, val), indent=2, sort_keys=True, ensure_ascii=False) + "\n"
+        )
+    elif target == "pksim":
+        common["pksim-compound.snapshot.json"] = (
+            json.dumps(pksim_snapshot(ps), indent=2, ensure_ascii=False) + "\n"
+        )
+        common["pksim-inputs.json"] = (
+            json.dumps(pksim_inputs(ps), indent=2, sort_keys=True, ensure_ascii=False) + "\n"
         )
     else:
         common["model.cpp"] = mrgsolve_cpp(ps)
