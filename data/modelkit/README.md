@@ -51,3 +51,6 @@ short quotes only; no raw downloads.
   class). Made by `pipelines/tools/build_modelkit_product_forms.py`. The formulation resolvers
   (`pipelines/janus_pipelines/modelkit/formulation_a.py` and `formulation_b.py`) use it when a study names a marketed
   product. The directory lists today's products, not necessarily the product used in a study.
+- `precision.json`: the measured precision of confirmed values on the fresh blinded sample of milestone M3 (two automated
+  review passes, evaluation only): counts only; the evidence job copies it into the release manifest and the API computes
+  the Wilson intervals. Read every value as unverified. Expert review has not yet been done.
