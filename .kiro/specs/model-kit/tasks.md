@@ -34,8 +34,13 @@
   - [ ] Confirmed-value precision >= 0.90 (measured 0.66 in run 1 and 0.69 in run 2). Open: a reader that is not a
     cue-sharing twin of A, a stricter arm-context reader (comparator and combination arms), population and route
     from the document structure, reader B dose fallback (xfail test), a larger sample, expert review.
-- [ ] M2 ClinicalTrials.gov bulk ingestion (documented bulk download, not the API), arm-level co-administration
-  filter, population-PK output filter, set builder at scale, pre-registered gate with >= 10 interpretable drugs
+- [~] M2 ClinicalTrials.gov bulk ingestion, set builder at scale, pre-registered gate (see `reviews.md` for the numbers)
+  - [x] Official bulk download (not the API), job `modelkit_ctgov`, sources and NOTICE, resumable shards, merge into
+    `modelkit_evidence`, pool identity table (609 drugs)
+  - [x] Pre-registration written before any result (private); gate counts drugs with both metrics tested
+  - [x] List route paging and search, summaries per release, web list search and pages, recorded release
+  - [x] Precision measured again on a blinded sample (two automated review passes); texts in five languages
+  - [ ] Arm-level co-administration and population-PK filters at scale beyond the M1 fixes (no reader change in M2)
 - [ ] M3 System report by drug class, conformal intervals once n >= 20, bootstrap intervals, full API contract
   tests, MCP `modelkit_evidence`
 - [ ] M4 PK-Sim snapshot export and CI test; special populations (older adults from the audited atlas rows, renal
