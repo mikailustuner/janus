@@ -6,6 +6,7 @@ dependencies stay out of the API image. Research prototype, not a medical device
 Phase 1 jobs: `pipc`, `titck`, `wikidata_ingredients`, `us_ndc`, `retractions`.
 Phase 2 jobs: `eu_fr_bdpm`, `eu_es_cima`, `faers`.
 National product lists (spec `.kiro/specs/national-products/`): `ca_dpd`, `eu_it_aifa`.
+Model kit (experimental, spec `.kiro/specs/model-kit/`): `modelkit_evidence`, from the committed `data/modelkit/evidence_seed.csv` (no network).
 Later phases: `onsides`, `canon`.
 
 ## Commands
@@ -30,6 +31,7 @@ uv run janus-pipelines run eu_it_aifa           # Italy: AIFA open data, packs a
 uv run janus-pipelines run eu_it_aifa --input DIR --snapshot-date YYYY-MM-DD        # local copies
 uv run janus-pipelines run faers                # FDA AEMS (FAERS) latest four quarters, ~250 MB
 uv run janus-pipelines run faers --quarters 2026Q3,2026Q2   # named quarters (back-fill)
+uv run janus-pipelines run modelkit_evidence    # model kit evidence store (reads data/modelkit/evidence_seed.csv)
 uv run janus-pipelines status                   # current artifact per pipeline
 uv run janus-pipelines promote NAME RUN_ID --by NAME   # promote a needs_review run
 uv run janus-pipelines notice [--check]         # NOTICE from sources.toml
