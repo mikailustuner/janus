@@ -237,8 +237,7 @@ def build_server(config: Config, transport: httpx2.AsyncBaseTransport | None = N
             "parameter set with confidence classes and evidence ids, the validation report, what "
             "was left out and the special-population statements (older adults, renal and hepatic "
             "impairment) quoted from US labels; `key` comes from janus_modelkit_search. Research "
-            "use only. "
-            + safety.DISCLAIMER
+            "use only. " + safety.DISCLAIMER
         ),
     )
     async def janus_modelkit_get(

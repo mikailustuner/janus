@@ -36,16 +36,18 @@ def write_files(root: Path, statements: list[dict[str, str]], atlas: list[dict[s
     d = root / "data" / "modelkit"
     d.mkdir(parents=True)
     with (d / "special_populations.csv").open("w", encoding="utf-8", newline="") as fh:
-        w = csv.DictWriter(fh, fieldnames=FIELDS.split(","), lineterminator="\n")
+        w: csv.DictWriter[str] = csv.DictWriter(
+            fh, fieldnames=FIELDS.split(","), lineterminator="\n"
+        )
         w.writeheader()
         w.writerows(statements)
     cols = "drug_key,measure,ratio,qualitative,quote,set_id,version,n_labels,quote_checked".split(
         ","
     )
     with (d / "special_populations_atlas.csv").open("w", encoding="utf-8", newline="") as fh:
-        w = csv.DictWriter(fh, fieldnames=cols, lineterminator="\n")
-        w.writeheader()
-        w.writerows(atlas)
+        w2: csv.DictWriter[str] = csv.DictWriter(fh, fieldnames=cols, lineterminator="\n")
+        w2.writeheader()
+        w2.writerows(atlas)
     (d / "special_populations.meta.json").write_text(
         json.dumps(
             {
@@ -153,7 +155,11 @@ def test_system_counts(sp_root: Path) -> None:
 @pytest.fixture
 def client(tmp_path: Path, sp_root: Path, monkeypatch: pytest.MonkeyPatch) -> Iterator[TestClient]:
     sp = special.load(sp_root)
-    monkeypatch.setattr(special, "load", lambda root=None: sp)
+
+    def fake_load(root: Path | None = None) -> special.Special:
+        return sp
+
+    monkeypatch.setattr(special, "load", fake_load)
     write_run(tmp_path, seed_dicts(), {})
     app: FastAPI = create_app(configure_logs=False)
     app.state.modelkit = ModelkitHolder(tmp_path)

@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import math
 import re
+from dataclasses import asdict
 from typing import Any, Literal, cast
 
 from fastapi import Request
@@ -455,18 +456,14 @@ def special_out(key: str) -> SpecialOut:
         notes.append("sp_atlas_note")
     return SpecialOut(
         statements=[
-            SpecialStatementOut(
-                **{
-                    **s.__dict__,
-                    "source_url": DAILYMED + s.set_id,
-                    "status": special.CONFIRMED_STATUS,
-                }
+            SpecialStatementOut.model_validate(
+                {**asdict(x), "source_url": DAILYMED + x.set_id, "status": special.CONFIRMED_STATUS}
             )
-            for s in st
+            for x in st
         ],
         atlas=[
-            SpecialAtlasOut(
-                **{**a.__dict__, "source_url": DAILYMED + a.set_id, "status": special.ATLAS_STATUS}
+            SpecialAtlasOut.model_validate(
+                {**asdict(a), "source_url": DAILYMED + a.set_id, "status": special.ATLAS_STATUS}
             )
             for a in at
         ],
@@ -497,7 +494,9 @@ def special_system() -> SpecialSystemOut:
     c = special.system_counts(sp)
     return SpecialSystemOut(
         **c,
-        coverage={str(k): int(v) for k, v in (sp.meta.get("coverage") or {}).items()},
+        coverage={
+            str(k): int(v) for k, v in cast(dict[str, Any], sp.meta.get("coverage") or {}).items()
+        },
         precision=special_precision(sp.meta.get("precision")),
     )
 

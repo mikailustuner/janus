@@ -11,6 +11,7 @@ import subprocess
 import zipfile
 from io import BytesIO
 from pathlib import Path
+from typing import Any
 
 import pytest
 
@@ -214,16 +215,16 @@ def _have_pksim() -> bool:
     return r.returncode == 0
 
 
-def _completed_for_test(snap: dict) -> dict:  # type: ignore[type-arg]
+def _completed_for_test(snap: dict[str, Any]) -> dict[str, Any]:
     """The export completed with TEST-ONLY numbers (not drug data) and the building blocks a
     simulation needs: shows that the exported compound is a valid base for a PK-Sim simulation once
     a person supplies the missing inputs."""
-    name = snap["Compounds"][0]["Name"]
+    name = str(snap["Compounds"][0]["Name"])
     methods = [
         "Cellular partition coefficient method - Rodgers and Rowland",
         "Cellular permeability - PK-Sim Standard",
     ]
-    comp = {
+    comp: dict[str, Any] = {
         **snap["Compounds"][0],
         "Lipophilicity": [
             {
@@ -279,7 +280,7 @@ def _completed_for_test(snap: dict) -> dict:  # type: ignore[type-arg]
             {"Name": "InputDose", "Value": 10.0, "Unit": "mg"},
         ],
     }
-    sim = {
+    sim: dict[str, Any] = {
         "Name": "Sim",
         "Model": "4Comp",
         "Individual": "Ind",
