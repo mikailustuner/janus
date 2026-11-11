@@ -5,15 +5,15 @@
 - [x] 2. Evidence seed `data/modelkit/evidence_seed.csv` (six pilot drugs; verdicts of two reader passes; quotes
   and locators) and `data/modelkit/README.md`
   - _Requirements: 1.1, 1.2, 1.4, 1.5_
-- [ ] 3. Pipeline job `modelkit_evidence`: validation, unit normalisation, derived `confirmed`, parquet + manifest;
+- [x] 3. Pipeline job `modelkit_evidence`: validation, unit normalisation, derived `confirmed`, parquet + manifest;
   sources and NOTICE; tests (M4, derived flag)
   - _Requirements: 1.3, 1.4_
-- [ ] 4. API store, builder (M1-M3, M5, M6, M10), validation (M8), tests
+- [x] 4. API store, builder (M1-M3, M5, M6, M10), validation (M8), tests
   - _Requirements: 2, 3_
-- [ ] 5. Exports: Janus engine JSON, mrgsolve, provenance, bib, licences; deterministic zip; mrgsolve round-trip
-  test (M7) and CI job
+- [x] 5. Exports: Janus engine JSON, mrgsolve, provenance, bib, licences; deterministic zip; mrgsolve round-trip
+  test (M7) and its own workflow (`.github/workflows/modelkit-mrgsolve.yml`)
   - _Requirements: 4_
-- [ ] 6. API routes, public API document, `docs/open-api.md`
+- [x] 6. API routes, public API document, `docs/open-api.md`
   - _Requirements: 5_
 - [ ] 7. Web: list and drug page, five languages, themes, 375 px, axe, Playwright; link from researchers page
   - _Requirements: 6_
