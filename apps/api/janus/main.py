@@ -18,6 +18,7 @@ from janus.light.store import LightHolder
 from janus.memory.reader import CountsHolder
 from janus.memory.shared import ContributionsSource
 from janus.memory.vocabulary import load_events
+from janus.modelkit.store import ModelkitHolder
 from janus.notes.glossary import load as load_glossary
 from janus.notes.glossary import vocabulary_digest
 from janus.notes.source import OutcomesSource
@@ -120,6 +121,8 @@ def create_app(
     app.state.onset_table = OnsetTableHolder(settings.data_dir)
     # Recall check (recall-check design §6): 503 when no `us_recalls` run is installed.
     app.state.recalls = RecallsHolder(settings.data_dir)
+    # Drug model kit (experimental, spec model-kit): 503 without a `modelkit_evidence` run.
+    app.state.modelkit = ModelkitHolder(settings.data_dir)
     # Safety check (safety-check design §6): without a `us_label_interactions` run the label
     # block of `/safety/check` answers `unavailable`; the other blocks still answer.
     app.state.label_interactions = LabelsHolder(settings.data_dir)
@@ -148,6 +151,7 @@ def create_app(
     from janus.light.router import router as light_router
     from janus.memory.router import router as memory_router
     from janus.memory.router import snapshot_router as memory_snapshot_router
+    from janus.modelkit.router import router as modelkit_router
     from janus.notes.router import donation as notes_donation_router
     from janus.notes.router import router as notes_router
     from janus.onset_table.router import router as onset_table_router
@@ -183,6 +187,7 @@ def create_app(
         data_quality_router,
         onset_table_router,
         recalls_router,
+        modelkit_router,
         safety_router,
         medicine_info_router,
         cds_router,

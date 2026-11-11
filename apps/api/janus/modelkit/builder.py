@@ -1,0 +1,309 @@
+"""Parameter-set builder (design DP-M2 to DP-M6; requirements 2.1-2.9). Pure and deterministic:
+the same rows in any order give the same set.
+
+One-compartment model with first-order absorption, as the Janus engine
+(`janus.timemachine.pk.OneCompartment`). Intravenous clearance and volume are preferred; without
+them apparent oral values (CL/F, V/F) are used and labelled apparent. A per-kg value is never
+converted (there is no body weight). The absorption rate is derived from the time of peak
+concentration. Research use only. Not for clinical decisions.
+"""
+
+from __future__ import annotations
+
+import math
+from collections import defaultdict
+from dataclasses import dataclass
+from typing import Literal
+
+from janus.modelkit.evidence import BUILD_PARAMS, Ev, exclusion_reason, split_studies
+
+LN2 = math.log(2.0)
+Cls = Literal["A", "B", "C"]
+Basis = Literal["iv", "oral_apparent"]
+
+
+def solve_ka(k: float, tmax: float) -> float | None:
+    """The absorption rate ka (> k) for which a one-compartment model peaks at `tmax`:
+    tmax = ln(ka / k) / (ka - k). None when no such rate exists (tmax at or above 1 / k)."""
+    if not (k > 0 and tmax > 0) or tmax >= 1.0 / k * 0.999:
+        return None
+
+    def g(ka: float) -> float:
+        return math.log(ka / k) / (ka - k) - tmax
+
+    lo, hi = k * (1 + 1e-9), max(k, 1e-3) * 1e4 + 1e3
+    if g(lo) <= 0 or g(hi) >= 0:  # g decreases from 1/k - tmax > 0 to about -tmax < 0
+        return None
+    for _ in range(200):
+        mid = math.sqrt(lo * hi)
+        if g(mid) > 0:
+            lo = mid
+        else:
+            hi = mid
+    return math.sqrt(lo * hi)
+
+
+def choose_model(vc: float | None, vss: float | None) -> tuple[str, str]:
+    """One compartment unless a central and a steady-state volume exist and differ (design DP-M5
+    of the spec; requirement 2.7). M0 has no central-volume parameter in its vocabulary."""
+    if vc is None or vss is None:
+        return (
+            "one_compartment",
+            "no central-volume evidence (no distribution phase in the evidence)",
+        )
+    if vss / vc >= 1.25:
+        return "two_compartment", "central and steady-state volumes differ by at least 25 %"
+    return "one_compartment", "central and steady-state volumes agree within 25 %"
+
+
+@dataclass(frozen=True)
+class Pooled:
+    value: float
+    cls: Cls
+    n_studies: int
+    spread_cv: float | None
+    eids: tuple[str, ...]
+    note: str | None = None
+
+
+def _gmean(xs: list[float]) -> float:
+    return math.exp(sum(math.log(x) for x in xs) / len(xs))
+
+
+def pool(rows: list[Ev]) -> Pooled | None:
+    """One value per study (geometric mean of the study's rows), then the geometric mean over
+    studies weighted by the number of subjects (1 when unknown). Healthy-adult rows win when any
+    exist. Class A: two or more independent studies within 2-fold; B: one study, or studies that
+    disagree; C: every contributing row is a stated range."""
+    if not rows:
+        return None
+    healthy = [r for r in rows if "healthy" in (r.population or "")]
+    use = healthy or rows
+    by_study: dict[tuple[str, str], list[Ev]] = defaultdict(list)
+    for r in use:
+        by_study[r.study].append(r)
+    vals: list[float] = []
+    weights: list[float] = []
+    for study in sorted(by_study):
+        rs = by_study[study]
+        vals.append(_gmean([r.value_si for r in rs]))
+        weights.append(float(max((r.n_subjects or 1) for r in rs)))
+    value = math.exp(
+        sum(w * math.log(v) for w, v in zip(weights, vals, strict=True)) / sum(weights)
+    )
+    spread = None
+    if len(vals) >= 2:
+        logs = [math.log(v) for v in vals]
+        m = sum(logs) / len(logs)
+        sd = math.sqrt(sum((x - m) ** 2 for x in logs) / (len(logs) - 1))
+        spread = math.sqrt(math.expm1(sd * sd))
+    agree = len(vals) >= 2 and max(vals) / min(vals) <= 2.0
+    cls: Cls = "A" if agree else "B"
+    if all(r.statistic == "range_geomean" for r in use):
+        cls = "C"
+    note = "studies disagree by more than 2-fold" if len(vals) >= 2 and not agree else None
+    if healthy and len(healthy) < len(rows):
+        note = (note + "; " if note else "") + "healthy-adult values preferred"
+    return Pooled(value, cls, len(vals), spread, tuple(sorted(r.eid for r in use)), note)
+
+
+@dataclass(frozen=True)
+class Param:
+    name: str
+    label: str
+    value: float
+    unit: str
+    cls: Cls
+    n_studies: int
+    spread_cv: float | None
+    evidence: tuple[str, ...]
+    derivation: str | None = None
+    note: str | None = None
+
+
+@dataclass(frozen=True)
+class ParameterSet:
+    drug_key: str
+    model: str
+    model_reason: str
+    basis: Basis
+    apparent: bool
+    params: tuple[Param, ...]
+    complete: bool
+    missing: tuple[str, ...]
+    used: tuple[str, ...]
+    left_out: tuple[tuple[str, str], ...]
+    test_studies: tuple[tuple[str, str], ...]
+    warnings: tuple[str, ...] = ()
+
+    def get(self, name: str) -> Param | None:
+        return next((p for p in self.params if p.name == name), None)
+
+    def engine(self) -> tuple[float, float, float, float | None]:
+        """(F, CL, V, ka) of the model; F is 1 for apparent parameters (inside CL/F and V/F)."""
+        f = self.get("f")
+        cl, v, ka = self.get("cl"), self.get("v"), self.get("ka")
+        assert cl is not None and v is not None and f is not None  # noqa: S101 - set is usable
+        return f.value, cl.value, v.value, ka.value if ka else None
+
+
+@dataclass(frozen=True)
+class NoSet:
+    drug_key: str
+    reasons: tuple[str, ...]
+    left_out: tuple[tuple[str, str], ...]
+    test_studies: tuple[tuple[str, str], ...]
+
+
+def _p(name: str, label: str, unit: str, pooled: Pooled, derivation: str | None = None) -> Param:
+    return Param(
+        name, label, pooled.value, unit, pooled.cls, pooled.n_studies, pooled.spread_cv,
+        pooled.eids, derivation, pooled.note,
+    )  # fmt: skip
+
+
+def build_set(drug_key: str, rows: list[Ev]) -> ParameterSet | NoSet:
+    """The parameter set of one drug from its evidence rows, or why there is none."""
+    rows = sorted((r for r in rows if r.drug_key == drug_key), key=lambda r: r.eid)
+    building, test = split_studies(rows)
+    ok = [r for r in rows if exclusion_reason(r) is None and r.study in building]
+
+    def get(parameter: str, route: set[str]) -> Pooled | None:
+        return pool([r for r in ok if r.parameter == parameter and r.route in route])
+
+    cl_iv, f_oral = get("cl", {"iv"}), get("f", {"oral"})
+    v_iv = get("vss", {"iv"}) or get("vd", {"iv"})
+    cl_f, v_f = get("cl_f", {"oral"}), get("v_f", {"oral"})
+    t_half = get("t_half", {"oral", "unknown"})
+    tmax = get("tmax", {"oral"})
+
+    params: list[Param] = []
+    reasons: list[str] = []
+    basis: Basis
+    if cl_iv and v_iv and f_oral:
+        basis, apparent = "iv", False
+        f = min(f_oral.value, 1.0)
+        params += [
+            _p("cl", "CL (intravenous)", "L/h", cl_iv),
+            _p("v", "V (intravenous)", "L", v_iv),
+            _p("f", "F (oral bioavailability)", "fraction", f_oral),
+        ]
+        if f != f_oral.value:
+            reasons.append("bioavailability above 1 was capped at 1")
+    elif cl_f:
+        basis, apparent = "oral_apparent", True
+        if v_f:
+            v_param = _p("v", "V/F (apparent)", "L", v_f)
+        elif t_half:
+            derived = Pooled(
+                cl_f.value * t_half.value / LN2,
+                "C",
+                min(cl_f.n_studies, t_half.n_studies),
+                None,
+                tuple(sorted({*cl_f.eids, *t_half.eids})),
+            )
+            v_param = _p("v", "V/F (apparent)", "L", derived, "CL/F x half-life / ln 2")
+        else:
+            v_param = None
+            reasons.append("no volume (V/F) and no half-life to derive it")
+        params.append(_p("cl", "CL/F (apparent)", "L/h", cl_f))
+        if v_param:
+            params.append(v_param)
+        params.append(
+            Param("f", "F (inside CL/F and V/F)", 1.0, "fraction", "C", 0, None, (),
+                  "fixed at 1: apparent parameters already contain bioavailability", None)
+        )  # fmt: skip
+    else:
+        if cl_iv and v_iv and not f_oral:
+            reasons.append(
+                "intravenous clearance and volume exist but no confirmed oral bioavailability"
+            )
+        else:
+            if not (cl_iv or cl_f):
+                reasons.append("no confirmed clearance (intravenous CL or oral CL/F)")
+            if not (v_iv or v_f):
+                reasons.append("no confirmed volume (Vss or Vd, or V/F)")
+            if (cl_iv or v_iv) and not (cl_iv and v_iv):
+                reasons.append(
+                    "intravenous evidence is incomplete (clearance and volume are both needed)"
+                )
+        return NoSet(
+            drug_key, tuple(reasons), _left_out(rows, set(), building, test), tuple(sorted(test))
+        )
+
+    cl_p, v_p = (
+        next((p for p in params if p.name == "cl"), None),
+        next((p for p in params if p.name == "v"), None),
+    )
+    if cl_p is None or v_p is None:
+        return NoSet(
+            drug_key, tuple(reasons), _left_out(rows, set(), building, test), tuple(sorted(test))
+        )
+    k = cl_p.value / v_p.value
+    warnings = list(reasons)
+    missing: list[str] = []
+    ka_param: Param | None = None
+    if tmax:
+        ka = solve_ka(k, tmax.value)
+        if ka is None:
+            missing.append(
+                "absorption rate (peak time at or beyond what the elimination rate allows)"
+            )
+        else:
+            ka_param = Param(
+                "ka", "ka (derived from the time of peak concentration)", ka, "1/h", "C",
+                tmax.n_studies, None, tmax.eids,
+                "solve tmax = ln(ka/k) / (ka - k) with k = CL / V", tmax.note,
+            )  # fmt: skip
+            params.append(ka_param)
+    else:
+        missing.append("absorption rate (no confirmed time of peak concentration)")
+    if t_half:
+        implied = LN2 / k
+        ratio = max(implied, t_half.value) / min(implied, t_half.value)
+        if ratio > 1.5:
+            warnings.append(
+                f"half-life implied by CL and V ({implied:.1f} h) differs from the stated "
+                f"half-life ({t_half.value:.1f} h) by {ratio:.1f}-fold"
+            )
+    model, model_reason = choose_model(None, None)
+    used = {e for p in params for e in p.evidence}
+    if t_half:
+        used |= set(t_half.eids)
+    return ParameterSet(
+        drug_key=drug_key,
+        model=model,
+        model_reason=model_reason,
+        basis=basis,
+        apparent=apparent,
+        params=tuple(params),
+        complete=ka_param is not None,
+        missing=tuple(missing),
+        used=tuple(sorted(used)),
+        left_out=_left_out(rows, used, building, test),
+        test_studies=tuple(sorted(test)),
+        warnings=tuple(warnings),
+    )
+
+
+def _left_out(
+    rows: list[Ev],
+    used: set[str],
+    building: frozenset[tuple[str, str]],
+    test: frozenset[tuple[str, str]],
+) -> tuple[tuple[str, str], ...]:
+    """Every row of the drug that did not build the set, with the first reason."""
+    out: list[tuple[str, str]] = []
+    for r in rows:
+        if r.eid in used:
+            continue
+        why = exclusion_reason(r)
+        if why is None:
+            if r.study in test:
+                why = "held-out study (observation, not used to build)"
+            elif r.parameter not in BUILD_PARAMS:
+                why = "observation in a study that also reports building parameters (not tested)"
+            else:
+                why = "not needed: a preferred basis or a pooled value was used"
+        out.append((r.eid, why))
+    return tuple(out)

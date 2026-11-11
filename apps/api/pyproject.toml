@@ -65,6 +65,9 @@ select = ["E", "F", "W", "I", "B", "UP", "S", "N", "RUF"]
 # Queue SQL interpolates only the constant column list `_COLS`; every value is a parameter.
 "janus/simulation/queue.py" = ["S311", "S108", "S608"]
 "tests/test_simulation_*.py" = ["S101", "S311"]
+# Model kit: generated export text (licences, README, R script) has long lines by content.
+"janus/modelkit/export.py" = ["E501"]
+"janus/modelkit/router.py" = ["E501"]
 
 [tool.pyright]
 pythonVersion = "3.12"
