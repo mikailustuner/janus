@@ -70,7 +70,7 @@ describe("decoders accept the recorded answers", () => {
   it("the demo client answers from the file and 404s an unknown key", async () => {
     const c = demoModelKit(fx);
     expect((await c.drugs(NO_QUERY)).ok).toBe(true);
-    expect((await c.drug("sunitinib")).ok).toBe(true);
+    expect((await c.drug("enzalutamide")).ok).toBe(true);
     const r = await c.drug("nope");
     expect(r.ok).toBe(false);
     if (!r.ok) expect(r.error.messageKey).toBe("ModelKit.errors.unknown");
