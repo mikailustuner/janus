@@ -13,7 +13,7 @@ import duckdb
 
 PIPELINE = "modelkit_evidence"
 SOURCE_ID = "modelkit_evidence"
-SCHEMA_VERSION = "modelkit_evidence-1"
+SCHEMA_VERSION = "modelkit_evidence-2"
 
 # Parameters a parameter set is built from; observations only test a set.
 BUILD_PARAMS = frozenset({"cl", "cl_f", "vss", "vd", "v_f", "t_half", "tmax", "f"})
@@ -25,7 +25,8 @@ COLUMNS = (
     "statistic", "unit", "value_si", "dose", "dose_unit", "route", "regimen", "interval_h",
     "population", "n_subjects", "formulation", "coadministered", "study_id", "source_id",
     "source_locator", "source_version", "quote", "reader_a", "reader_b", "confirmed",
-    "confirm_reason", "note", "extracted_at", "pipeline_version",
+    "confirm_reason", "note", "extracted_at", "pipeline_version", "arm_id", "origin", "derivation",
+    "evidence_kind", "food", "dispersion_type", "dispersion_low", "dispersion_high",
 )  # fmt: skip
 
 
@@ -63,6 +64,14 @@ class Ev:
     confirm_reason: str
     note: str | None
     extracted_at: str
+    arm_id: str | None = None
+    origin: str = "m0_annotation"  # m0_annotation, reader_pair, derived
+    derivation: str | None = None  # how a derived value was made
+    evidence_kind: str = "pk"  # pk, interaction
+    food: str = "unspecified"
+    dispersion_type: str = "none"
+    dispersion_low: float | None = None
+    dispersion_high: float | None = None
 
     @property
     def study(self) -> tuple[str, str]:
@@ -110,6 +119,14 @@ def ev_from_mapping(m: dict[str, Any]) -> Ev:
         confirm_reason=m["confirm_reason"],
         note=m["note"],
         extracted_at=str(m["extracted_at"]),
+        arm_id=m.get("arm_id"),
+        origin=m.get("origin") or "m0_annotation",
+        derivation=m.get("derivation"),
+        evidence_kind=m.get("evidence_kind") or "pk",
+        food=m.get("food") or "unspecified",
+        dispersion_type=m.get("dispersion_type") or "none",
+        dispersion_low=m.get("dispersion_low"),
+        dispersion_high=m.get("dispersion_high"),
     )
 
 
@@ -146,7 +163,7 @@ def exclusion_reason(e: Ev) -> str | None:
         return "not_confirmed"
     if e.analyte_class != "parent":
         return "analyte_not_parent"
-    if e.coadministered:
+    if e.coadministered or e.evidence_kind == "interaction":
         return "coadministered"
     if e.formulation == "fixed_dose_combination":
         return "fixed_dose_combination"
@@ -161,9 +178,20 @@ def exclusion_reason(e: Ev) -> str | None:
 
 def split_studies(rows: list[Ev]) -> tuple[frozenset[tuple[str, str]], frozenset[tuple[str, str]]]:
     """(building studies, test studies) of one drug. Looks only at which parameters a study
-    reports, in every row (confirmed or not), so the split cannot depend on confirmation."""
+    reports, in every row (confirmed or not), so the split cannot depend on confirmation.
+
+    A derived row (clearance made from dose and AUC of one arm) is not a parameter the study
+    reports: it does not make its study a building study. When a drug has no stated building
+    parameter at all but has derived clearances, ONE study is designated to build the set: the
+    first in sorted order among the studies that have derived rows. The others stay test studies,
+    and the designated study never tests (it builds)."""
+    stated = [e for e in rows if e.origin != "derived"]
     building = {
-        e.study for e in rows if e.parameter in BUILD_PARAMS or e.parameter.endswith("_per_kg")
+        e.study for e in stated if e.parameter in BUILD_PARAMS or e.parameter.endswith("_per_kg")
     }
-    test = {e.study for e in rows if e.parameter in OBS_PARAMS} - building
+    if not any(e.parameter in ("cl", "cl_f") for e in stated):
+        derived = sorted({e.study for e in rows if e.origin == "derived"})
+        if derived:
+            building.add(derived[0])
+    test = {e.study for e in stated if e.parameter in OBS_PARAMS} - building
     return frozenset(building), frozenset(test)

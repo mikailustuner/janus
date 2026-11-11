@@ -21,10 +21,15 @@ import polars as pl
 from janus_pipelines.core.canonical import Json, Row, sha256_bytes
 from janus_pipelines.core.runner import Job, ParseResult, RawInput, RunContext
 from janus_pipelines.core.validation import ExpectedSchema, Field, SchemaReport
+from janus_pipelines.modelkit.units import Canonical, to_canonical
 
-SCHEMA_VERSION: Final = "modelkit_evidence-1"
+SCHEMA_VERSION: Final = "modelkit_evidence-2"
 PIPELINE_VERSION: Final = "modelkit-evidence-1.0"
-SEED_PATH: Final = ("data", "modelkit", "evidence_seed.csv")
+SEED_PATH: Final = ("data", "modelkit", "evidence_seed.csv")  # milestone M0 rows
+M1_PATH: Final = ("data", "modelkit", "evidence_m1.csv")  # milestone M1 rows (two readers)
+_SPLIT: Final = "\n\x1e\n"
+# M0 rows of these sources are replaced by the M1 rows of the same drug (two readers)
+SUPERSEDED_SOURCES: Final = frozenset({"clinicaltrials_gov", "dailymed_spl"})
 
 # parameter -> (canonical unit, {stated unit: factor}). Per-kg values keep a per-kg unit.
 _MIN_PER_H: Final = 60.0 / 1000.0  # mL/min -> L/h
@@ -52,7 +57,20 @@ FORMULATIONS: Final = frozenset(
 STATISTICS: Final = frozenset(
     {"mean", "geomean", "median", "stated", "range_geomean", "lower_bound"}
 )
-ANALYTE_CLASSES: Final = frozenset({"parent", "metabolite", "unconfirmed"})
+ANALYTE_CLASSES: Final = frozenset(
+    {
+        "parent", "parent_unbound", "metabolite", "enantiomer", "total", "prodrug",
+        "combination_partner", "unconfirmed", "unspecified",
+    }
+)  # fmt: skip
+ORIGINS: Final = frozenset({"m0_annotation", "reader_pair", "derived"})
+KINDS: Final = frozenset({"pk", "interaction"})
+FOODS: Final = frozenset({"fasted", "fed", "unspecified"})
+SPREADS: Final = frozenset({"none", "sd", "cv_percent", "range", "ci95", "iqr", "se"})
+EXTRA_COLUMNS: Final[tuple[str, ...]] = (
+    "arm_id", "origin", "derivation", "evidence_kind", "food", "dispersion_type", "dispersion_low",
+    "dispersion_high",
+)  # fmt: skip
 SOURCES: Final = frozenset({"clinicaltrials_gov", "dailymed_spl", "pmc_oa", "drugsatfda_review"})
 VERDICTS: Final = frozenset({"agree", "disagree"})
 DRUG_KEY: Final = re.compile(r"^[a-z][a-z0-9_]{0,31}$")
@@ -64,6 +82,8 @@ SEED_COLUMNS: Final[tuple[str, ...]] = (
     "n_subjects", "formulation", "coadministered", "study_id", "source_id", "source_locator",
     "source_version", "quote", "reader_a", "reader_b", "confirm_reason", "note", "extracted_at",
 )  # fmt: skip
+
+SEED_COLUMNS_FULL: Final[tuple[str, ...]] = (*SEED_COLUMNS, *EXTRA_COLUMNS)
 
 EVIDENCE_SCHEMA = ExpectedSchema(
     version=SCHEMA_VERSION,
@@ -102,6 +122,14 @@ EVIDENCE_ROW: Final[Mapping[str, pl.DataType]] = {
     "note": pl.String(),
     "extracted_at": pl.String(),
     "pipeline_version": pl.String(),
+    "arm_id": pl.String(),
+    "origin": pl.String(),
+    "derivation": pl.String(),
+    "evidence_kind": pl.String(),
+    "food": pl.String(),
+    "dispersion_type": pl.String(),
+    "dispersion_low": pl.Float64(),
+    "dispersion_high": pl.Float64(),
 }
 
 
@@ -152,7 +180,14 @@ def evidence_row(raw: Mapping[str, str], where: str) -> Row:
     value = _num(raw, "value", where, required=True)
     assert value is not None  # noqa: S101 - narrowed by required=True
     unit = raw["unit"].strip()
-    value_si = to_si(parameter, value, unit)
+    canon = to_canonical(parameter, value, unit)
+    if not isinstance(canon, Canonical):
+        raise ValueError(f"{where}: unit {unit!r} for {parameter!r}: {canon.issue}")
+    if canon.parameter != parameter:
+        raise ValueError(
+            f"{where}: a per-kg unit makes {parameter!r} a {canon.parameter!r} (never converted)"
+        )
+    value_si = canon.value_si
     low, high = _num(raw, "value_low", where), _num(raw, "value_high", where)
     statistic = _choice(raw, "statistic", STATISTICS, where)
     if (statistic == "range_geomean") != (low is not None and high is not None):
@@ -191,6 +226,20 @@ def evidence_row(raw: Mapping[str, str], where: str) -> Row:
     if coadmin not in ("true", "false"):
         raise ValueError(f"{where}: coadministered must be true or false")
     confirmed = reader_a == "agree" and reader_b == "agree" and analyte_class == "parent"
+    origin = (raw.get("origin") or "m0_annotation").strip()
+    kind = (raw.get("evidence_kind") or "pk").strip()
+    food = (raw.get("food") or "unspecified").strip()
+    spread = (raw.get("dispersion_type") or "none").strip()
+    for name, val, allowed in (
+        ("origin", origin, ORIGINS), ("evidence_kind", kind, KINDS), ("food", food, FOODS),
+        ("dispersion_type", spread, SPREADS),
+    ):  # fmt: skip
+        if val not in allowed:
+            raise ValueError(f"{where}: {name} {val!r} is not one of {sorted(allowed)}")
+    if origin == "derived" and not (raw.get("derivation") or "").strip():
+        raise ValueError(f"{where}: a derived value needs its derivation")
+    disp_low = _num(raw, "dispersion_low", where) if "dispersion_low" in raw else None
+    disp_high = _num(raw, "dispersion_high", where) if "dispersion_high" in raw else None
     return {
         "drug_key": drug,
         "analyte": raw["analyte"].strip(),
@@ -223,19 +272,43 @@ def evidence_row(raw: Mapping[str, str], where: str) -> Row:
         "note": raw["note"].strip() or None,
         "extracted_at": raw["extracted_at"].strip(),
         "pipeline_version": PIPELINE_VERSION,
+        "arm_id": (raw.get("arm_id") or "").strip() or None,
+        "origin": origin,
+        "derivation": (raw.get("derivation") or "").strip() or None,
+        "evidence_kind": kind,
+        "food": food,
+        "dispersion_type": spread,
+        "dispersion_low": disp_low,
+        "dispersion_high": disp_high,
     }
 
 
-def parse_seed(text: str) -> ParseResult:
+def _read_csv(text: str, name: str) -> list[tuple[str, dict[str, str]]]:
     reader = csv.DictReader(io.StringIO(text))
-    if tuple(reader.fieldnames or ()) != SEED_COLUMNS:
-        raise ValueError("seed header differs from the expected columns")
+    if tuple(reader.fieldnames or ()) not in (SEED_COLUMNS, SEED_COLUMNS_FULL):
+        raise ValueError(f"{name}: header differs from the expected columns")
+    return [(f"{name}:{i}", dict(raw)) for i, raw in enumerate(reader, 2)]
+
+
+def parse_seed(text: str) -> ParseResult:
+    """The seed text: the M0 file alone, or the M0 file and the M1 file joined by a record
+    separator line. Rows of superseded sources (M0) are dropped for drugs the M1 file covers."""
+    parts = text.split(_SPLIT)
+    lines = _read_csv(parts[0], "evidence_seed.csv")
+    if len(parts) > 1:
+        m1 = _read_csv(parts[1], "evidence_m1.csv")
+        covered = {raw["drug_key"] for _, raw in m1}
+        lines = [
+            (w, r)
+            for w, r in lines
+            if not (r["drug_key"] in covered and r["source_id"] in SUPERSEDED_SOURCES)
+        ] + m1
     rows: list[Row] = []
     seen: set[tuple[str, str, str, str]] = set()
     input_rows = 0
-    for i, raw in enumerate(reader, 2):
+    for where, raw in lines:
         input_rows += 1
-        row = evidence_row(raw, f"evidence_seed.csv:{i}")
+        row = evidence_row(raw, where)
         key = (
             str(row["drug_key"]),
             str(row["parameter"]),
@@ -243,7 +316,7 @@ def parse_seed(text: str) -> ParseResult:
             str(row["value"]),
         )
         if key in seen:
-            raise ValueError(f"evidence_seed.csv:{i}: duplicate row")
+            raise ValueError(f"{where}: duplicate row")
         seen.add(key)
         rows.append(row)
     by_drug = Counter(str(r["drug_key"]) for r in rows)
@@ -270,6 +343,9 @@ class ModelkitEvidenceJob(Job[bytes]):
 
     def fetch(self, ctx: RunContext) -> RawInput[bytes]:
         data = ctx.repo_root.joinpath(*SEED_PATH).read_bytes()
+        m1 = ctx.repo_root.joinpath(*M1_PATH)
+        if m1.exists():
+            data = data + _SPLIT.encode() + m1.read_bytes()
         retrieved = ctx.now()
         dates = sorted(
             {d for d in re.findall(r"20[0-9]{2}-[0-9]{2}-[0-9]{2}$", data.decode(), re.M)}

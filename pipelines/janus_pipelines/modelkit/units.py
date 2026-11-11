@@ -69,10 +69,34 @@ def _add(a: Dim, b: Dim, sign: int) -> Dim:
     )
 
 
+_WORDS: Final = (
+    (r"\bnanograms?\b", "ng"), (r"\bmicrograms?\b", "ug"), (r"\bmilligrams?\b", "mg"),
+    (r"\bpicograms?\b", "pg"), (r"\bkilograms?\b", "kg"), (r"\bgrams?\b", "g"),
+    (r"\bmilliliters?\b|\bmillilitres?\b", "ml"), (r"\bdeciliters?\b", "dl"),
+    (r"\bliters?\b|\blitres?\b", "l"), (r"\bhours?\b", "h"), (r"\bminutes?\b", "min"),
+    (r"\bseconds?\b", "s"), (r"\bdays?\b", "d"), (r"\bpercent(?:age)?\b", "%"),
+    (r"\bper\b", "/"),
+)  # fmt: skip
+
+
+def _plain(text: str) -> str:
+    """A unit written in words ('Hours*microgram per milliliter', 'nanogram per milliliter
+    (ng/mL)') as symbols. A bracketed symbol form wins over the words in front of it."""
+    s = text.strip().translate(_MU).lower()
+    if m := re.search(r"\(([^()]*[/*][^()]*)\)\s*$", s):
+        inner = m.group(1).strip()
+        if inner:
+            s = inner
+    s = re.sub(r"\([^)]*\)", "", s)
+    for rx, sym in _WORDS:
+        s = re.sub(rx, sym, s)
+    return s.replace("-", "*").replace(" / ", "/").replace("/ ", "/").replace(" /", "/")
+
+
 def parse_unit(text: str) -> Unit | None:
     """The dimension and factor of a unit string such as 'ng*h/mL', 'mL/min/kg', 'ug.hr/mL';
     None when a symbol is unknown. A 'kg' after a '/' is body mass; elsewhere it is a mass."""
-    s = text.strip().translate(_MU).lower().replace("−", "-")  # noqa: RUF001
+    s = _plain(text)
     if not s:
         return None
     parts = [p.strip() for p in s.split("/")]

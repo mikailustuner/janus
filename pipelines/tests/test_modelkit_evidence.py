@@ -108,7 +108,7 @@ def test_unit_not_allowed_for_parameter() -> None:
 @pytest.mark.parametrize(
     ("changes", "message"),
     [
-        ({"unit": "L"}, "not allowed"),
+        ({"unit": "L"}, "dimension_mismatch"),
         ({"parameter": "bogus"}, "parameter"),
         ({"value": "-1"}, "positive"),
         ({"reader_a": "yes"}, "reader_a"),

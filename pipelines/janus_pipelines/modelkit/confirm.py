@@ -13,6 +13,8 @@ from __future__ import annotations
 from dataclasses import dataclass, fields
 from typing import Final
 
+from janus_pipelines.modelkit.units import parse_unit
+
 TOLERANCE: Final = 0.01  # relative, between the two readers' values
 
 
@@ -27,12 +29,22 @@ class Context:
     population: str = "unspecified"  # healthy_adult, patients, special, unspecified
     sex: str = "all"  # all, male, female
     species: str = "human"
+    route: str = "unknown"  # oral, iv, unknown
+    regimen: str = "unknown"  # single, multiple, unknown
 
     def differences(self, other: Context) -> tuple[str, ...]:
         """The names of the context fields in which the two contexts differ."""
-        return tuple(
-            f.name for f in fields(self) if getattr(self, f.name) != getattr(other, f.name)
-        )
+        out: list[str] = []
+        for f in fields(self):
+            a, b = getattr(self, f.name), getattr(other, f.name)
+            if f.name == "coadministered":
+                a, b = (
+                    bool(a),
+                    bool(b),
+                )  # which other drug is not compared, only whether there is one
+            if a != b:
+                out.append(f.name)
+        return tuple(out)
 
 
 @dataclass(frozen=True, slots=True)
@@ -43,6 +55,8 @@ class Reading:
     unit: str | None
     analyte_class: str | None  # parent, metabolite, enantiomer, combination_partner, total, ...
     context: Context
+    dose_mg: float | None = None  # only from a table, footnote, methods or arm definition
+    center_type: str = "unspecified"  # arithmetic, geometric, median, unspecified
 
 
 @dataclass(frozen=True, slots=True)
@@ -50,6 +64,12 @@ class Confirmation:
     confirmed: bool
     reason: str  # a code
     differing: tuple[str, ...] = ()  # context fields in which the readers differ
+
+
+def _unit_key(unit: str | None) -> object:
+    """Two spellings of one unit ('L/h', 'L/hour') are the same unit: compare dimension and factor."""
+    u = None if unit is None else parse_unit(unit)
+    return unit if u is None else (u.dim, round(u.factor, 12))
 
 
 def values_agree(a: float, b: float, tolerance: float = TOLERANCE) -> bool:
@@ -66,10 +86,16 @@ def confirm(a: Reading, b: Reading) -> Confirmation:
         return Confirmation(False, "reader_found_no_value")
     if not values_agree(a.value, b.value):
         return Confirmation(False, "values_differ")
-    if a.unit != b.unit:
+    if _unit_key(a.unit) != _unit_key(b.unit):
         return Confirmation(False, "units_differ")
     if a.analyte_class != b.analyte_class:
         return Confirmation(False, "analytes_differ")
+    if (a.dose_mg is None) != (b.dose_mg is None) or (
+        a.dose_mg is not None and b.dose_mg is not None and not values_agree(a.dose_mg, b.dose_mg)
+    ):
+        return Confirmation(False, "doses_differ")
+    if "unspecified" not in (a.center_type, b.center_type) and a.center_type != b.center_type:
+        return Confirmation(False, "mean_types_differ")
     differing = a.context.differences(b.context)
     if differing:
         # same value, different context: a disagreement (owner decision 2026-11-11)

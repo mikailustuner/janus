@@ -44,3 +44,12 @@ def test_value_unit_analyte_and_missing_values() -> None:
 @given(st.floats(1e-6, 1e6), st.floats(1e-6, 1e6))
 def test_values_agree_is_symmetric(a: float, b: float) -> None:
     assert values_agree(a, b) == values_agree(b, a)
+
+
+def test_dose_and_mean_type_must_not_conflict() -> None:
+    assert confirm(replace(A, dose_mg=50.0), replace(A, dose_mg=50.2)).confirmed
+    assert confirm(replace(A, dose_mg=50.0), replace(A, dose_mg=100.0)).reason == "doses_differ"
+    assert confirm(replace(A, dose_mg=50.0), A).reason == "doses_differ"
+    assert confirm(replace(A, center_type="geometric"), A).confirmed  # one says nothing
+    r = confirm(replace(A, center_type="geometric"), replace(A, center_type="median"))
+    assert r.reason == "mean_types_differ"

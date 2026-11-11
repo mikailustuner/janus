@@ -3001,7 +3001,8 @@
         "disagree": "n’est pas d’accord avec la valeur extraite"
       },
       "confirm": "Confirmation (automatisée)",
-      "studyId": "Identifiant de l’étude"
+      "studyId": "Identifiant de l’étude",
+      "derived": "Valeur dérivée (calculée, non indiquée dans la source)"
     },
     "evParam": {
       "cl": "Clairance (CL)",
@@ -3090,7 +3091,8 @@
       "interval_system_level_only": "Les intervalles ne sont donnés qu’au niveau du système, pas par médicament.",
       "not_used": "Non utilisée ; aucune raison plus précise n’est enregistrée.",
       "point_outside_2_fold": "Au moins une observation mise de côté est hors d’un facteur 2 de la prédiction.",
-      "all_points_within_2_fold": "L’ASC et la Cmax ont été testées et chaque observation mise de côté est dans un facteur 2."
+      "all_points_within_2_fold": "L’ASC et la Cmax ont été testées et chaque observation mise de côté est dans un facteur 2.",
+      "cl_from_dose_and_auc": "Dérivé : CL/F = dose / ASC jusqu’à l’infini d’un bras d’étude (CL pour une dose intraveineuse)."
     },
     "scrollHint": "Faites défiler latéralement pour voir toutes les colonnes."
   }

@@ -3001,7 +3001,8 @@
         "disagree": "does not agree with the extracted value"
       },
       "confirm": "Confirmation (automated)",
-      "studyId": "Study id"
+      "studyId": "Study id",
+      "derived": "Derived value (calculated, not stated in the source)"
     },
     "evParam": {
       "cl": "Clearance (CL)",
@@ -3090,7 +3091,8 @@
       "interval_system_level_only": "Intervals are given at system level only, not per drug.",
       "not_used": "Not used; no more specific reason is recorded.",
       "point_outside_2_fold": "At least one held-out observation is outside 2-fold of the prediction.",
-      "all_points_within_2_fold": "AUC and Cmax were tested and every held-out observation is within 2-fold."
+      "all_points_within_2_fold": "AUC and Cmax were tested and every held-out observation is within 2-fold.",
+      "cl_from_dose_and_auc": "Derived: CL/F = dose / AUC to infinity of one study arm (CL for an intravenous dose)."
     },
     "scrollHint": "Scroll sideways to see all columns."
   }

@@ -3001,7 +3001,8 @@
         "disagree": "çıkarılan değerle uyuşmuyor"
       },
       "confirm": "Onay (otomatik)",
-      "studyId": "Çalışma kimliği"
+      "studyId": "Çalışma kimliği",
+      "derived": "Türetilmiş değer (hesaplanmış, kaynakta belirtilmemiş)"
     },
     "evParam": {
       "cl": "Klerens (CL)",
@@ -3090,7 +3091,8 @@
       "interval_system_level_only": "Aralıklar yalnızca sistem düzeyinde verilir, ilaç başına verilmez.",
       "not_used": "Kullanılmadı; daha belirli bir neden kaydedilmedi.",
       "point_outside_2_fold": "Ayrı tutulan en az bir gözlem, öngörünün 2 katının dışında.",
-      "all_points_within_2_fold": "EAA ve Cmax sınandı ve ayrı tutulan her gözlem 2 kat içinde."
+      "all_points_within_2_fold": "EAA ve Cmax sınandı ve ayrı tutulan her gözlem 2 kat içinde.",
+      "cl_from_dose_and_auc": "Türetilmiş: CL/F = doz / sonsuza kadar EAA (tek çalışma kolu; damar içi dozda CL)."
     },
     "scrollHint": "Tüm sütunları görmek için yana kaydırın."
   }

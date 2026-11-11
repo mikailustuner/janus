@@ -267,6 +267,12 @@ function EvidencePanel({ row }: { row: EvidenceRow }) {
           {nf.format(row.value)} <span lang="en">{row.unit}</span>
         </span>
       </p>
+      {row.origin === "derived" ? (
+        <p className="text-sm font-bold" data-testid="mk-derived">
+          {t("ModelKit.ev.derived")}
+          {row.derivation ? <>: {row.derivation}</> : null}
+        </p>
+      ) : null}
       <blockquote
         lang="en"
         className="m-0 border-s-4 border-line ps-3 break-words"

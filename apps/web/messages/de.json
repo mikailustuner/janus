@@ -3001,7 +3001,8 @@
         "disagree": "stimmt nicht mit dem extrahierten Wert überein"
       },
       "confirm": "Bestätigung (automatisiert)",
-      "studyId": "Studien-ID"
+      "studyId": "Studien-ID",
+      "derived": "Abgeleiteter Wert (berechnet, nicht in der Quelle angegeben)"
     },
     "evParam": {
       "cl": "Clearance (CL)",
@@ -3090,7 +3091,8 @@
       "interval_system_level_only": "Intervalle gibt es nur auf Systemebene, nicht je Arzneimittel.",
       "not_used": "Nicht verwendet; kein genauerer Grund vermerkt.",
       "point_outside_2_fold": "Mindestens eine zurückgehaltene Beobachtung liegt außerhalb des Faktors 2 der Vorhersage.",
-      "all_points_within_2_fold": "AUC und Cmax wurden geprüft und jede zurückgehaltene Beobachtung liegt innerhalb des Faktors 2."
+      "all_points_within_2_fold": "AUC und Cmax wurden geprüft und jede zurückgehaltene Beobachtung liegt innerhalb des Faktors 2.",
+      "cl_from_dose_and_auc": "Abgeleitet: CL/F = Dosis / AUC bis unendlich eines Studienarms (CL bei intravenöser Dosis)."
     },
     "scrollHint": "Zum Anzeigen aller Spalten seitlich scrollen."
   }

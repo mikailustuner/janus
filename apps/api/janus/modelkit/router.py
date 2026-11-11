@@ -177,6 +177,14 @@ class EvidenceRowOut(_Out):
     extracted_at: str
     role: Literal["building", "validation", "excluded"]
     reason: str | None
+    origin: str
+    derivation: str | None
+    arm_id: str | None
+    food: str
+    evidence_kind: str
+    dispersion_type: str
+    dispersion_low: float | None
+    dispersion_high: float | None
 
 
 class EvidenceOut(_Out):
@@ -342,7 +350,10 @@ def evidence_rows(d: DrugEntry) -> list[EvidenceRowOut]:
                 source_version=r.source_version, source_url=source_url(r), quote=r.quote,
                 reader_a=r.reader_a, reader_b=r.reader_b, confirmed=r.confirmed,
                 confirm_reason=r.confirm_reason, note=r.note, extracted_at=r.extracted_at,
-                role=role, reason=reason,
+                role=role, reason=reason, origin=r.origin, derivation=r.derivation,
+                arm_id=r.arm_id, food=r.food, evidence_kind=r.evidence_kind,
+                dispersion_type=r.dispersion_type, dispersion_low=r.dispersion_low,
+                dispersion_high=r.dispersion_high,
             )
         )  # fmt: skip
     return out

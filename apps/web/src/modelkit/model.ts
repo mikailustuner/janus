@@ -153,6 +153,14 @@ const evidenceRow = D.obj({
   extracted_at: D.str,
   role: D.lit("building", "validation", "excluded"),
   reason: D.nullable(D.str),
+  origin: D.str,
+  derivation: D.nullable(D.str),
+  arm_id: D.nullable(D.str),
+  food: D.str,
+  evidence_kind: D.str,
+  dispersion_type: D.str,
+  dispersion_low: n,
+  dispersion_high: n,
 });
 export const evidenceOut = D.obj({
   release,
@@ -365,6 +373,7 @@ export const REASON_CODES = [
   "two_volumes_differ",
   "two_volumes_agree",
   "v_from_clf_half_life",
+  "cl_from_dose_and_auc",
   "ka_from_tmax",
   "f_fixed_apparent",
   "clearance_or_bioavailability",

@@ -50,6 +50,7 @@ TEXT: dict[str, str] = {
     # derivations
     "v_from_clf_half_life": "V/F = CL/F x half-life / ln 2",
     "ka_from_tmax": "ka solves tmax = ln(ka/k) / (ka - k) with k = CL / V",
+    "cl_from_dose_and_auc": "Derived: CL/F = dose / AUC to infinity of one study arm (CL for an intravenous dose).",
     "f_fixed_apparent": "Fixed at 1: apparent parameters already contain bioavailability.",
     # suspects
     "clearance_or_bioavailability": "Clearance (CL or CL/F) or bioavailability: AUC is outside 2-fold.",

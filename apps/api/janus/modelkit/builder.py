@@ -61,6 +61,7 @@ class Pooled:
     spread_cv: float | None
     eids: tuple[str, ...]
     note: str | None = None
+    derived: bool = False  # every contributing row is a clearance derived from dose and AUC
 
 
 def _gmean(xs: list[float]) -> float:
@@ -102,12 +103,15 @@ def pool(rows: list[Ev]) -> Pooled | None:
         spread = math.sqrt(math.expm1(sd * sd))
     agree = len(vals) >= 2 and max(vals) / min(vals) <= 2.0
     cls: Cls = "A" if agree else "B"
-    if all(r.statistic == "range_geomean" for r in use):
+    all_derived = all(r.origin == "derived" for r in use)
+    if all_derived or all(r.statistic == "range_geomean" for r in use):
         cls = "C"
     note = "studies_disagree" if len(vals) >= 2 and not agree else None
     if healthy and len(healthy) < len(rows):
         note = (note + ";" if note else "") + "healthy_adult_preferred"
-    return Pooled(value, cls, len(vals), spread, tuple(sorted(r.eid for r in use)), note)
+    return Pooled(
+        value, cls, len(vals), spread, tuple(sorted(r.eid for r in use)), note, all_derived
+    )
 
 
 @dataclass(frozen=True)
@@ -161,9 +165,10 @@ class NoSet:
 
 
 def _p(name: str, label: str, unit: str, pooled: Pooled, derivation: str | None = None) -> Param:
+    how = derivation or ("cl_from_dose_and_auc" if pooled.derived else None)
     return Param(
         name, label, pooled.value, unit, pooled.cls, pooled.n_studies, pooled.spread_cv,
-        pooled.eids, derivation, pooled.note,
+        pooled.eids, how, pooled.note,
     )  # fmt: skip
 
 

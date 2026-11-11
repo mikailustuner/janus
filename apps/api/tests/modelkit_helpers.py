@@ -54,6 +54,14 @@ def seed_dicts() -> list[dict[str, Any]]:
                     "confirmed": both and r["analyte_class"] == "parent",
                     "note": r["note"] or None,
                     "pipeline_version": "modelkit-evidence-1.0",
+                    "arm_id": None,
+                    "origin": "m0_annotation",
+                    "derivation": None,
+                    "evidence_kind": "pk",
+                    "food": "unspecified",
+                    "dispersion_type": "none",
+                    "dispersion_low": None,
+                    "dispersion_high": None,
                 }
             )
     return out
@@ -85,7 +93,7 @@ def write_run(data_dir: Path, rows: list[dict[str, Any]]) -> Path:
             {
                 "outcome": "succeeded",
                 "source_id": "modelkit_evidence",
-                "schema_version": "modelkit_evidence-1",
+                "schema_version": "modelkit_evidence-2",
                 "run_id": RUN_ID,
                 "snapshot_date": "2026-11-11",
                 "license": "Per row: each row keeps the terms of its own source",

@@ -425,3 +425,35 @@ def test_system_report_counts() -> None:
     assert rep.n_drugs == 6 and sum(rep.by_status.values()) == 6
     assert rep.interpretable is False and rep.min_drugs_for_interpretation == 10
     assert rep.conformal == "interval_n_too_small"
+
+
+def test_derived_clearance_builds_from_one_designated_study_and_never_tests_it() -> None:
+    """A clearance derived from dose and AUC is not 'reported' by its study (it does not make the
+    study a building study). With no stated clearance, one study is designated to build; the
+    others keep testing."""
+    rows = [
+        ev(parameter="t_half", value=10.0, unit="h", study_id="B1"),
+        ev(parameter="tmax", value=2.0, unit="h", study_id="B1"),
+        # study A1 (designated: first in sorted order) and C1, both with AUC and a derived CL/F
+        ev(parameter="auc_inf", value=2500.0, dose=50.0, study_id="A1"),
+        ev(parameter="cl_f", value=20.0, unit="L/h", study_id="A1", origin="derived",
+           derivation="CL/F = dose / AUC", source_locator="A1#derived"),
+        ev(parameter="auc_inf", value=2000.0, dose=50.0, study_id="C1"),
+        ev(parameter="cmax", value=200.0, dose=50.0, study_id="C1"),
+        ev(parameter="cl_f", value=25.0, unit="L/h", study_id="C1", origin="derived",
+           derivation="CL/F = dose / AUC", source_locator="C1#derived"),
+    ]  # fmt: skip
+    building, test = split_studies(rows)
+    assert ("clinicaltrials_gov", "A1") in building and ("clinicaltrials_gov", "B1") in building
+    assert test == {("clinicaltrials_gov", "C1")}
+    ps = build_set("exampletine", rows)
+    assert isinstance(ps, ParameterSet)
+    cl = ps.get("cl")
+    assert cl is not None and cl.value == pytest.approx(20.0) and cl.cls == "C"
+    assert cl.derivation == "cl_from_dose_and_auc"
+    val = validate("exampletine", rows, ps)
+    assert {p.study_id for p in val.points} == {"C1"}
+    # a stated clearance anywhere switches the designation off
+    stated = [*rows, ev(parameter="cl_f", value=22.0, unit="L/h", study_id="B1")]
+    building, test = split_studies(stated)
+    assert ("clinicaltrials_gov", "A1") not in building
