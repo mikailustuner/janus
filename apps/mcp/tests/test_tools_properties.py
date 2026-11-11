@@ -30,6 +30,7 @@ TOOLS = {
     "janus_time_machine_cascade",
     "janus_modelkit_search",
     "janus_modelkit_get",
+    "janus_modelkit_evidence",
 }
 DATASET = "a" * 64
 # medical-safety.md rule 2, all five languages (kept equal to the steering file by hand).
@@ -149,6 +150,9 @@ def tool_calls(draw: st.DrawFn) -> tuple[str, dict[str, Any], str, str, Any]:
     if kind == "janus_modelkit_get":
         key = draw(st.text(string.ascii_lowercase, min_size=1, max_size=20))
         return kind, {"key": key}, "GET", f"/modelkit/drugs/{key}", None
+    if kind == "janus_modelkit_evidence":
+        key = draw(st.text(string.ascii_lowercase, min_size=1, max_size=20))
+        return kind, {"key": key}, "GET", f"/modelkit/drugs/{key}/evidence", None
     cid = draw(st.text(string.ascii_lowercase + "_", min_size=1, max_size=30))
     return kind, {"cascade_id": cid}, "GET", f"/timemachine/cascade/{cid}", None
 
@@ -266,6 +270,9 @@ BAD_ARGS: list[tuple[str, dict[str, Any]]] = [
     ("janus_time_machine_cascade", {"cascade_id": "../health"}),
     ("janus_modelkit_get", {"key": "../health"}),
     ("janus_modelkit_get", {"key": "Bad-Key"}),
+    ("janus_modelkit_evidence", {"key": "../health"}),
+    ("janus_modelkit_evidence", {"key": "sunitinib", "parameter": "Cmax; drop"}),
+    ("janus_modelkit_evidence", {"key": "sunitinib", "role": "everything"}),
     ("janus_modelkit_search", {"query": "x" * 33}),
 ]  # fmt: skip
 
@@ -302,6 +309,29 @@ def test_modelkit_search_filters_and_carries_the_research_lines() -> None:
     assert any("Research use only" in w for w in out["janus_safety"]["wording"])
     whole = call(stub, "janus_modelkit_search", {}).structured_content
     assert whole is not None and whole["result"]["drugs"] == drugs
+
+
+def test_modelkit_evidence_filters_and_carries_the_research_lines() -> None:
+    rows = [
+        {"id": "a", "parameter": "cmax", "role": "validation"},
+        {"id": "b", "parameter": "auc_inf", "role": "building"},
+        {"id": "c", "parameter": "cmax", "role": "excluded"},
+    ]
+    stub = StubApi(body={"release": {}, "drug": "sunitinib", "rows": rows})
+    whole = call(stub, "janus_modelkit_evidence", {"key": "sunitinib"}).structured_content
+    assert whole is not None and whole["result"]["rows"] == rows
+    assert stub.sent[-1].path == "/modelkit/drugs/sunitinib/evidence"
+    out = call(
+        stub, "janus_modelkit_evidence", {"key": "sunitinib", "parameter": "cmax"}
+    ).structured_content
+    assert out is not None and [r["id"] for r in out["result"]["rows"]] == ["a", "c"]
+    both = call(
+        stub,
+        "janus_modelkit_evidence",
+        {"key": "sunitinib", "parameter": "cmax", "role": "excluded"},
+    ).structured_content
+    assert both is not None and [r["id"] for r in both["result"]["rows"]] == ["c"]
+    assert any("Research use only" in w for w in both["janus_safety"]["wording"])
 
 
 def test_check_result_carries_the_check_lines() -> None:
