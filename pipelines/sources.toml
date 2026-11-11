@@ -329,6 +329,22 @@ cadence_days = 90
 urls = ["https://clinicaltrials.gov/data-api/about-api/api-downloads"]
 
 [[sources]]
+id = "modelkit_special_populations"
+section = "clinical"
+name = "Janus drug model kit: special populations from US labels (experimental)"
+publisher = "Janus"
+license = "CC0 1.0 (public domain); the quoted sentences are label text of openFDA"
+notes = [
+  "Research use only. Not for clinical decisions. Expert review has not yet been done.",
+  "The openFDA drug label bulk files (about 1.8 GB in 14 files, CC0 1.0, https://open.fda.gov, not an FDA endorsement) are read once, one file at a time, by two independent automated readers: the exposure change (AUC or Cmax ratio) of older adults, of patients with renal impairment and of patients with hepatic impairment as the label states it, with the quoted sentence and the label's set id and version. The raw files are never committed; the confirmed statements are written to data/modelkit/special_populations.csv.",
+  "openFDA states that the labeling is the most recent listing information the company submitted to FDA, that its content has neither been altered nor verified by FDA, and that it may not be the labeling on currently distributed products. Do not rely on openFDA to make decisions regarding medical care.",
+]
+storage = "commit"
+region = "US"
+cadence_days = 90
+urls = ["https://api.fda.gov/download.json"]
+
+[[sources]]
 id = "clinicaltrials_gov"
 section = "clinical"
 name = "ClinicalTrials.gov posted results (model kit evidence)"

@@ -198,7 +198,7 @@ def test_resolve_pairs_sets_the_same_formulation_on_both_and_recomputes_confirma
 
 
 def test_resolve_pairs_makes_the_route_unknown_on_an_oral_and_intravenous_statement() -> None:
-    """Owner decision 2026-11-11 (M4): the readers' own route does not survive an oral/IV conflict."""
+    """Owner decision 2026-11-11 (M4): the readers' route does not survive an oral/IV conflict."""
     from collections import Counter
 
     from janus_pipelines.modelkit.confirm import Confirmation
@@ -214,8 +214,14 @@ def test_resolve_pairs_makes_the_route_unknown_on_an_oral_and_intravenous_statem
     assert out.a.context.route == out.b.context.route == "unknown"  # type: ignore[union-attr]
     assert counts["route_oral_iv_conflict"] == 1
     # without the conflict the readers' route is still used where the resolvers found none
-    p2 = Paired(_candidate(LOC, "unspecified", "oral"), _candidate(LOC, "unspecified", "oral"), Confirmation(True, "agree"))
-    (out2,) = formulation.resolve_pairs([p2], record(iv_desc="Dolutegravir 50 mg"), TABLE, BRANDS, Counter())
+    p2 = Paired(
+        _candidate(LOC, "unspecified", "oral"),
+        _candidate(LOC, "unspecified", "oral"),
+        Confirmation(True, "agree"),
+    )
+    (out2,) = formulation.resolve_pairs(
+        [p2], record(iv_desc="Dolutegravir 50 mg"), TABLE, BRANDS, Counter()
+    )
     assert out2.a.context.route == "oral"  # type: ignore[union-attr]
 
 

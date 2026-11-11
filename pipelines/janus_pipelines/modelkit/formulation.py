@@ -22,8 +22,9 @@ from janus_pipelines.modelkit.model import Candidate
 from janus_pipelines.modelkit.pairing import Paired
 from janus_pipelines.modelkit.resolver import IdentityTable
 
-
-ROUTE_CONFLICT = "conflict:iv_and_oral"  # the `why` of `formref.decide` for oral and intravenous words together
+ROUTE_CONFLICT = (
+    "conflict:iv_and_oral"  # the `why` of `formref.decide` for oral and intravenous words together
+)
 
 
 def combine(a: Resolution, b: Resolution) -> Resolution:
@@ -77,7 +78,12 @@ def resolve_pairs(
             route = had_a  # both readers found it independently of the resolvers
         if res.formulation == "other_route" and had_a == had_b == "other":
             route = "other"
-        if not oral_and_iv and route != "unknown" and had_a == had_b and had_a not in ("unknown", route):
+        if (
+            not oral_and_iv
+            and route != "unknown"
+            and had_a == had_b
+            and had_a not in ("unknown", route)
+        ):
             route = "unknown"  # the readers and the resolvers contradict each other
             counts["route_conflict"] += 1
         a2, b2 = _apply(p.a, res, route), _apply(p.b, res, route)
