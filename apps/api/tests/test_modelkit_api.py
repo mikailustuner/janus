@@ -169,8 +169,22 @@ def test_a_run_that_is_not_ours_is_ignored(tmp_path: Path) -> None:
     assert ModelkitHolder(tmp_path).value is None
 
 
-def test_web_recorded_file_is_the_api_answer() -> None:
-    """The answers the web tests decode and the demo shows are what this API returns."""
-    from tests.modelkit_record import RECORDED, recorded
+def test_web_recorded_file_matches_the_api_models() -> None:
+    """The answers the web tests decode and the demo shows are valid answers of this API (the file
+    is made by `python -m tests.modelkit_record`, which runs the pipeline job on the seeds)."""
+    from janus.modelkit.router import DrugOut, DrugsOut, EvidenceOut, SystemOut
+    from tests.modelkit_record import RECORDED
 
-    assert json.loads(RECORDED.read_text(encoding="utf-8")) == recorded()
+    rec = json.loads(RECORDED.read_text(encoding="utf-8"))
+    DrugsOut.model_validate(rec["drugs"])
+    SystemOut.model_validate(rec["validation"])
+    for key, d in rec["drug"].items():
+        DrugOut.model_validate(d)
+        EvidenceOut.model_validate(rec["evidence"][key])
+
+
+def test_web_m0_recorded_file_is_the_api_answer() -> None:
+    """The six golden M0 drugs (every kind of drug page): what this API returns for the M0 seed."""
+    from tests.modelkit_record import RECORDED_M0, recorded_m0
+
+    assert json.loads(RECORDED_M0.read_text(encoding="utf-8")) == recorded_m0()

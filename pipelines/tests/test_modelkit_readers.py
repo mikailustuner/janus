@@ -6,6 +6,8 @@ import ast
 from pathlib import Path
 from typing import Any
 
+import pytest
+
 from janus_pipelines.modelkit import reader_a, reader_b
 from janus_pipelines.modelkit.model import Candidate, ReaderStats
 from janus_pipelines.modelkit.pairing import pair
@@ -178,3 +180,116 @@ def test_reader_b_shares_no_extraction_code_with_reader_a() -> None:
     assert "arm_context" not in b_imports and "classify_analyte" not in b_imports
     assert "pairing" not in b_imports  # B never sees A's output
     assert "reader_b" not in " ".join(sorted(_imports(root / "reader_a.py")))
+
+
+# --- error classes found by the blinded review of run 1 (fixed for run 2) ----------------------
+
+
+def study_for(
+    drug: str, title: str, group: str, interventions: list[str], unit: str = "ng*h/mL"
+) -> dict[str, Any]:
+    s = study([outcome(title, group, "10", unit)], interventions)
+    s["protocolSection"]["armsInterventionsModule"]["armGroups"][0]["label"] = group
+    return s
+
+
+def both(s: dict[str, Any], drug: str) -> tuple[list[Candidate], list[Candidate]]:
+    return (
+        reader_a.read_ctgov(s, drug, TABLE, ReaderStats()),
+        reader_b.read_ctgov(s, drug, TABLE, ReaderStats()),
+    )
+
+
+def test_once_daily_on_day_one_is_not_a_multiple_dose_regimen() -> None:
+    a, b = both(
+        study_for("eplerenone", "Cmax of Eplerenone", "Eplerenone 200 mg once daily for 1 day", ["Eplerenone"], "ng/mL"),
+        "eplerenone",
+    )  # fmt: skip
+    assert a[0].context.regimen == b[0].context.regimen == "single"
+    a, b = both(
+        study_for("eplerenone", "Cmax of Eplerenone", "Eplerenone 200 mg once daily", ["Eplerenone"], "ng/mL"),
+        "eplerenone",
+    )  # fmt: skip
+    assert a[0].context.regimen == b[0].context.regimen == "unknown"  # 'daily' alone says nothing
+
+
+def test_an_intramuscular_injection_is_not_intravenous_and_not_oral_immediate_release() -> None:
+    a, b = both(
+        study_for("naltrexone", "Tmax of Naltrexone", "Vivitrol 380 mg intramuscular injection", ["Naltrexone"], "h"),
+        "naltrexone",
+    )  # fmt: skip
+    for c in (a[0], b[0]):
+        assert c.context.route == "other" and c.context.formulation == "other_route"
+
+
+def test_a_combination_product_or_another_intervention_makes_an_interaction_arm() -> None:
+    a, b = both(
+        study_for(
+            "naltrexone", "Cmax of Naltrexone", "EMBEDA capsule containing 120 mg morphine and 4.8 mg naltrexone",
+            ["Naltrexone", "Morphine sulfate"], "ng/mL",
+        ),
+        "naltrexone",
+    )  # fmt: skip
+    assert a[0].context.coadministered and b[0].context.coadministered
+
+
+def test_reader_a_does_not_read_a_count_of_tablets_as_a_dose() -> None:
+    a, _ = both(
+        study_for("selinexor", "Cmax of Selinexor", "Selinexor 2 x 20 mg tablets", ["Selinexor"], "ng/mL"),
+        "selinexor",
+    )  # fmt: skip
+    assert a[0].dose_mg is None
+
+
+def test_reader_a_gives_a_dose_to_its_nearest_drug() -> None:
+    a, _ = both(
+        study_for(
+            "vinorelbine", "Cmax of Vinorelbine", "40 mg afatinib with vinorelbine 25 mg/m2", ["Vinorelbine", "Afatinib"], "ng/mL"
+        ),
+        "vinorelbine",
+    )  # fmt: skip
+    assert a[0].dose_mg is None
+
+
+@pytest.mark.xfail(strict=True, reason="open item: reader B falls back to the only dose of a group")
+def test_reader_b_does_not_take_the_only_dose_when_it_belongs_to_another_drug() -> None:
+    _, b = both(
+        study_for(
+            "vinorelbine", "Cmax of Vinorelbine", "40 mg afatinib with vinorelbine 25 mg/m2", ["Vinorelbine", "Afatinib"], "ng/mL"
+        ),
+        "vinorelbine",
+    )  # fmt: skip
+    _, b2 = both(
+        study_for("selinexor", "Cmax of Selinexor", "Selinexor 2 x 20 mg tablets", ["Selinexor"], "ng/mL"),
+        "selinexor",
+    )  # fmt: skip
+    assert b[0].dose_mg is None and b2[0].dose_mg is None
+
+
+def test_a_value_of_another_substance_of_the_record_is_not_the_parent() -> None:
+    a, b = both(
+        study_for("rivaroxaban", "Half-life of Andexanet", "Rivaroxaban 20 mg, then andexanet", ["Rivaroxaban", "Andexanet alfa"], "h"),
+        "rivaroxaban",
+    )  # fmt: skip
+    assert a[0].analyte != "parent" and b[0].analyte != "parent"
+
+
+def test_label_table_food_state_comes_from_the_column_header_not_the_caption() -> None:
+    table = {
+        "caption": "Table 2 Pharmacokinetic parameters with a light breakfast, high-fat breakfast or fasted",
+        "title": "12.3 Pharmacokinetics",
+        "prev_para": "",
+        "grid": [
+            ["Parameter", "0.4 mg tamsulosin to healthy volunteers", "0.4 mg tamsulosin to healthy volunteers"],
+            ["", "High-Fat Breakfast", "Fasted"],
+            ["Cmax (ng/mL)", "10.1", "17.1"],
+        ],
+    }  # fmt: skip
+    doc: dict[str, Any] = {"version": "1", "effective": "20260101", "paras": []}
+    a = reader_a.read_label(doc, {"s#T1": table}, "s", "tamsulosin", TABLE, ReaderStats())
+    b = reader_b.read_label(doc, {"s#T1": table}, "s", "tamsulosin", TABLE, ReaderStats())
+    for rows in (a, b):
+        by_col = {c.arm_id: c.context.food for c in rows}
+        assert by_col == {"c1": "fed", "c2": "fasted"}
+    paired, _ = pair(a, b)
+    assert all(p.result.confirmed for p in paired)

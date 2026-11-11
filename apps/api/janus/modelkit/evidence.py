@@ -180,12 +180,13 @@ def split_studies(rows: list[Ev]) -> tuple[frozenset[tuple[str, str]], frozenset
     """(building studies, test studies) of one drug. Looks only at which parameters a study
     reports, in every row (confirmed or not), so the split cannot depend on confirmation.
 
-    A derived row (clearance made from dose and AUC of one arm) is not a parameter the study
-    reports: it does not make its study a building study. When a drug has no stated building
-    parameter at all but has derived clearances, ONE study is designated to build the set: the
-    first in sorted order among the studies that have derived rows. The others stay test studies,
+    Only rows of the parent drug count: a half-life of a metabolite does not make a study a
+    building study (M1). A derived row (clearance made from dose and AUC of one arm) is not a
+    parameter the study reports: it does not make its study a building study. When a drug has no
+    stated clearance at all but has derived clearances, ONE study is designated to build the set:
+    the first in sorted order among the studies with derived rows. The others stay test studies,
     and the designated study never tests (it builds)."""
-    stated = [e for e in rows if e.origin != "derived"]
+    stated = [e for e in rows if e.origin != "derived" and e.analyte_class == "parent"]
     building = {
         e.study for e in stated if e.parameter in BUILD_PARAMS or e.parameter.endswith("_per_kg")
     }
@@ -193,5 +194,6 @@ def split_studies(rows: list[Ev]) -> tuple[frozenset[tuple[str, str]], frozenset
         derived = sorted({e.study for e in rows if e.origin == "derived"})
         if derived:
             building.add(derived[0])
-    test = {e.study for e in stated if e.parameter in OBS_PARAMS} - building
+    obs_rows = [e for e in rows if e.parameter in OBS_PARAMS and e.origin != "derived"]
+    test = {e.study for e in obs_rows if e.analyte_class == "parent"} - building
     return frozenset(building), frozenset(test)

@@ -7,14 +7,14 @@ with the derivation text) and is never a stated value. Research use only. Not fo
 
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from typing import Any
 
 # 1 mg = 1e6 ng; AUC in ng*h/mL; dose / AUC in mL/h = 1e6 / 1e3 L/h per (mg / (ng*h/mL))
 _L_PER_H_PER_MG_PER_AUC = 1e6 / 1e3
 
 
-def derive_clearance(rows: list[Mapping[str, Any]]) -> list[dict[str, Any]]:
+def derive_clearance(rows: Sequence[Mapping[str, Any]]) -> list[dict[str, Any]]:
     """One derived clearance row per eligible AUC-to-infinity row of the same arm."""
     out: list[dict[str, Any]] = []
     for r in rows:

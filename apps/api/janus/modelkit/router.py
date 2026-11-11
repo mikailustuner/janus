@@ -400,7 +400,12 @@ def system(request: Request, release: str | None = None) -> Any:
         interpretable=s.interpretable,
         min_drugs_for_interpretation=s.min_drugs_for_interpretation,
         conformal=s.conformal,
-        caveats=["n_very_small", "two_automated_passes", "expert_review_pending"],
+        caveats=[
+            "n_very_small",
+            "two_automated_passes",
+            "confirmed_precision_below_target",
+            "expert_review_pending",
+        ],
         reason_text=TEXT,
     )
 

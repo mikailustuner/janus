@@ -9,6 +9,7 @@ Research use only. Not for clinical decisions.
 from __future__ import annotations
 
 import re
+from collections.abc import Sequence
 from typing import Any, Final
 
 from janus_pipelines.modelkit.confirm import Context
@@ -89,30 +90,49 @@ def parameter_of(title: str) -> str | None:
     return hits[0] if hits else None
 
 
-def dose_mg_near(text: str, names: frozenset[str]) -> float | None:
-    """The dose in mg next to the drug's name; else the only dose in the text; else None."""
+def dose_mg_near(
+    text: str, names: frozenset[str], others: Sequence[str] = (), table: IdentityTable | None = None
+) -> float | None:
+    """The dose in mg whose nearest drug name (in either direction) is this drug; None when the
+    nearest name is another drug, when the dose is a count of tablets ('2 x 20 mg'), or when it is
+    ambiguous. With one dose and no other drug named, that dose."""
     doses = [
         (
             m.start(),
+            m.end(),
             float(m.group(1)) * _DOSE_FACTOR[m.group(2).lower().replace("\u03bc", "\u00b5")],
         )
         for m in _DOSE.finditer(text)
     ]
     if not doses:
         return None
-    distinct = {round(d, 6) for _, d in doses}
-    if len(distinct) == 1:
-        return doses[0][1]
     t = norm(text)
-    best: tuple[int, float] | None = None
+    other_names = [norm(o) for o in others if norm(o)]
+    if table is not None:
+        other_names += [n for k in table.by_key.values() for n in k.names if n not in names]
+        other_names += list(table.partners_in(text))
+    mentions: list[tuple[int, int, bool]] = []
     for n in names:
-        for m in re.finditer(rf"\b{re.escape(n)}\b", t):
-            for pos, d in doses:
-                after = pos - m.end()
-                gap = after if 0 <= after <= 30 else 100 + abs(pos - m.start())
-                if gap <= 140 and (best is None or gap < best[0]):
-                    best = (gap, d)
-    return best[1] if best else None
+        mentions += [(m.start(), m.end(), True) for m in re.finditer(rf"\b{re.escape(n)}\b", t)]
+    for n in set(other_names):
+        mentions += [(m.start(), m.end(), False) for m in re.finditer(rf"\b{re.escape(n)}\b", t)]
+    found: set[float] = set()
+    for pos, end, d in doses:
+        if re.search(r"\d\s*[x\u00d7]\s*$", text[max(0, pos - 4) : pos]):
+            return None  # '2 x 20 mg': a count of units, not the dose
+        if not mentions:
+            found.add(d)
+            continue
+        near = min(
+            mentions,
+            key=lambda m: (
+                min(abs(pos - m[1]), abs(m[0] - end)) + (0 if m[0] >= end else 8),
+                not m[2],
+            ),
+        )
+        if near[2] and min(abs(pos - near[1]), abs(near[0] - end)) <= 45:
+            found.add(d)
+    return next(iter(found)) if len(found) == 1 else None
 
 
 def interval_of(text: str) -> float | None:
@@ -152,7 +172,7 @@ def read_ctgov(
     active = [
         i["name"]
         for i in proto.get("armsInterventionsModule", {}).get("interventions", [])
-        if i.get("type") in ("DRUG", "BIOLOGICAL", "COMBINATION_PRODUCT")
+        if i.get("type") not in ("BEHAVIORAL", "PROCEDURE", "DEVICE", "OTHER")
         and "placebo" not in norm(i["name"])
     ]
     study_actives = {k for n in active for k in table.drugs_in(n)}
@@ -195,14 +215,19 @@ def read_ctgov(
                     if analyte == "unspecified" and single_active:
                         analyte = "parent"
                     arm_text = f"{g.get('title', '')} {g.get('description', '')}"
-                    ac = arm_context(f"{arm_text} {title}", drug_key, table)
-                    named_other = [
-                        n
-                        for n in active
-                        if drug_key not in table.drugs_in(n) and norm(n) in norm(arm_text)
-                    ]
-                    if named_other and not ac.interaction:
-                        ac = _interaction(ac, named_other)
+                    others_named = [n for n in active if drug_key not in table.drugs_in(n)]
+                    ac = arm_context(f"{arm_text} {title}", drug_key, table, others_named)
+                    if (
+                        analyte in ("parent", "unspecified")
+                        and drug_key not in table.drugs_in(f"{title} {g.get('title', '')}")
+                        and any(
+                            re.search(
+                                rf"\b{re.escape(norm(n))}\b", norm(f"{title} {g.get('title', '')}")
+                            )
+                            for n in others_named
+                        )
+                    ):
+                        analyte, why = "unconfirmed", "the title or group names another substance"
                     ctx = ac.context
                     if ctx.population == "unspecified" and (
                         re.search(r"\bhealthy\b", elig) or healthy_flag is True
@@ -214,9 +239,9 @@ def read_ctgov(
                             ctx,
                             formulation=arm_context(own_iv, drug_key, table).context.formulation,
                         )
-                    if ctx.route == "unknown" and not ac.interaction:
-                        ctx = _with(ctx, route="oral")
-                    dose = dose_mg_near(arm_text, names) or dose_mg_near(title, names)
+                    dose = dose_mg_near(arm_text, names, others_named, table) or dose_mg_near(
+                        title, names, others_named, table
+                    )
                     if parameter == "f":
                         dose = None
                     parsed = parse_stat(
@@ -257,13 +282,6 @@ def _with(ctx: Context, **changes: str) -> Context:
     from dataclasses import replace
 
     return replace(ctx, **changes)
-
-
-def _interaction(ac: ArmContext, others: list[str]) -> ArmContext:
-    from dataclasses import replace
-
-    ctx = replace(ac.context, coadministered=", ".join(sorted(norm(o) for o in others)))
-    return ArmContext(ctx, True, ac.route, ac.notes)
 
 
 # --- DailyMed label text: sentences and flattened table rows -------------------------------------
@@ -520,6 +538,14 @@ def _table_candidates(
                 stats.skip(conv.issue)
                 continue
             ac = arm_context(ctx_text, drug_key, table)
+            # a caption that lists every condition ("light breakfast, high-fat or fasted") does not
+            # say which column is which: food comes from the column header alone
+            ac = ArmContext(
+                _with(ac.context, food=arm_context(header, drug_key, table).context.food),
+                ac.interaction,
+                ac.route,
+                ac.notes,
+            )
             dose = (
                 dose_mg_near(ctx_text, names)
                 if param in ("cmax", "auc_inf", "auc_tau", "auc_last")

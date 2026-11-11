@@ -3092,7 +3092,8 @@
       "not_used": "Nicht verwendet; kein genauerer Grund vermerkt.",
       "point_outside_2_fold": "Mindestens eine zurückgehaltene Beobachtung liegt außerhalb des Faktors 2 der Vorhersage.",
       "all_points_within_2_fold": "AUC und Cmax wurden geprüft und jede zurückgehaltene Beobachtung liegt innerhalb des Faktors 2.",
-      "cl_from_dose_and_auc": "Abgeleitet: CL/F = Dosis / AUC bis unendlich eines Studienarms (CL bei intravenöser Dosis)."
+      "cl_from_dose_and_auc": "Abgeleitet: CL/F = Dosis / AUC bis unendlich eines Studienarms (CL bei intravenöser Dosis).",
+      "confirmed_precision_below_target": "In einer verblindeten Stichprobe bestätigter Werte hielten zwei automatisierte Prüfdurchläufe 69 % für richtig (n = 85, 95-%-Intervall 59 bis 78 %), unter dem Ziel von 90 % dieses Meilensteins. Jeden Wert als ungeprüft lesen."
     },
     "scrollHint": "Zum Anzeigen aller Spalten seitlich scrollen."
   }

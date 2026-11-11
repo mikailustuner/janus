@@ -3092,7 +3092,8 @@
       "not_used": "Non utilisée ; aucune raison plus précise n’est enregistrée.",
       "point_outside_2_fold": "Au moins une observation mise de côté est hors d’un facteur 2 de la prédiction.",
       "all_points_within_2_fold": "L’ASC et la Cmax ont été testées et chaque observation mise de côté est dans un facteur 2.",
-      "cl_from_dose_and_auc": "Dérivé : CL/F = dose / ASC jusqu’à l’infini d’un bras d’étude (CL pour une dose intraveineuse)."
+      "cl_from_dose_and_auc": "Dérivé : CL/F = dose / ASC jusqu’à l’infini d’un bras d’étude (CL pour une dose intraveineuse).",
+      "confirmed_precision_below_target": "Sur un échantillon en aveugle de valeurs confirmées, deux passes de relecture automatisées en ont jugé 69 % correctes (n = 85, intervalle à 95 % de 59 à 78 %), sous l’objectif de 90 % de cette étape. Lisez chaque valeur comme non vérifiée."
     },
     "scrollHint": "Faites défiler latéralement pour voir toutes les colonnes."
   }

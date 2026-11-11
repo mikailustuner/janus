@@ -28,12 +28,16 @@ import {
 type Json = Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
 const read = (p: string) =>
   JSON.parse(readFileSync(join(import.meta.dirname, p), "utf8"));
-const fx = read("../src/modelkit/modelkit.recorded.json") as {
+type Recorded = {
   drugs: Json;
   validation: Json;
   drug: Record<string, Json>;
   evidence: Record<string, Json>;
 };
+// The six golden drugs of milestone M0: one of every kind of drug page.
+const fx = read("../src/modelkit/modelkit.m0.recorded.json") as Recorded;
+// The release (milestone M1): the list, the system report and the drugs with a set.
+const rel = read("../src/modelkit/modelkit.recorded.json") as Recorded;
 const messages = Object.fromEntries(
   LOCALES.map((l) => [l, read(`../messages/${l}.json`)]),
 );
@@ -42,16 +46,24 @@ const locales = process.env.E2E_LOCALES
   ? LOCALES.filter((l) => process.env.E2E_LOCALES!.split(",").includes(l))
   : LOCALES;
 
-const stubs = {
-  "/modelkit/drugs": { body: fx.drugs },
-  "/modelkit/validation": { body: fx.validation },
+const stubsOf = (r: Recorded) => ({
+  "/modelkit/drugs": { body: r.drugs },
+  "/modelkit/validation": { body: r.validation },
   ...Object.fromEntries(
-    Object.keys(fx.drug).flatMap((k) => [
-      [`/modelkit/drugs/${k}`, { body: fx.drug[k] }],
-      [`/modelkit/drugs/${k}/evidence`, { body: fx.evidence[k] }],
+    Object.keys(r.drug).flatMap((k) => [
+      [`/modelkit/drugs/${k}`, { body: r.drug[k] }],
+      [`/modelkit/drugs/${k}/evidence`, { body: r.evidence[k] }],
     ]),
   ),
-};
+});
+const stubs = stubsOf(fx);
+const relStubs = stubsOf(rel);
+// A release drug with a complete set and a validation point, for the release pages.
+const REL_DRUG = Object.keys(rel.drug).find(
+  (k) =>
+    rel.drug[k]!.parameter_set?.complete &&
+    rel.drug[k]!.validation.points.length,
+)!;
 
 const VALIDATED = "ertugliflozin";
 const FAILED = "sunitinib"; // one Cmax point outside 2-fold (strict rule, owner decision 2026-11-11)
@@ -141,6 +153,18 @@ async function shot(page: Page, name: string, project: string, theme: string) {
 const PAGES = [
   { name: "list", path: "/research/model-kit", open: null },
   {
+    name: "list-release",
+    path: "/research/model-kit",
+    open: null,
+    release: true,
+  },
+  {
+    name: "drug-release",
+    path: `/research/model-kit/drug#${REL_DRUG}`,
+    open: "cl",
+    release: true,
+  },
+  {
     name: "drug-validated",
     path: `/research/model-kit/drug#${VALIDATED}`,
     open: "cl",
@@ -159,10 +183,10 @@ for (const p of PAGES)
     for (const locale of locales)
       test(`${p.name}, ${locale}, ${theme}`, async ({ page }, info) => {
         await useTheme(page, theme);
-        await stubApi(page, stubs);
+        await stubApi(page, "release" in p && p.release ? relStubs : stubs);
         await page.goto(`/${locale}${p.path}`);
         await expect(page.getByTestId("mk-research-use")).toBeVisible();
-        if (p.name === "list")
+        if (p.name.startsWith("list"))
           await expect(page.getByTestId("mk-system")).toBeVisible();
         else await expect(page.getByTestId("mk-validation")).toBeVisible();
         if ("open" in p && p.open) {
@@ -178,10 +202,10 @@ test.describe("list", () => {
   test("every drug has the Experimental badge, a status, a reason and n", async ({
     page,
   }) => {
-    await stubApi(page, stubs);
+    await stubApi(page, relStubs);
     await page.goto("/en/research/model-kit");
     const rows = page.getByTestId("mk-drug");
-    await expect(rows).toHaveCount(fx.drugs.drugs.length);
+    await expect(rows).toHaveCount(rel.drugs.drugs.length);
     for (const row of await rows.all()) {
       await expect(row.getByTestId("mk-experimental")).toHaveText(
         "Experimental",
@@ -189,17 +213,22 @@ test.describe("list", () => {
       await expect(row.getByTestId("mk-status")).toBeVisible();
       await expect(row).toContainText(/\d+ stud/);
     }
+    const failed = rel.drugs.drugs.find((d: Json) => d.status === "failed");
+    expect(failed).toBeTruthy();
+    const name = failed.name as string;
     await expect(
-      page.locator(`[data-testid="mk-drug"]`).filter({ hasText: "Sunitinib" }),
+      page.locator(`[data-testid="mk-drug"]`).filter({ hasText: name }),
     ).toContainText("Failed");
     await expect(page.getByTestId("mk-interval")).toContainText(
       "No interval is shown",
     );
-    await page.getByRole("link", { name: /Sunitinib/ }).click();
-    await expect(page).toHaveURL(/model-kit\/drug#sunitinib$/);
-    await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-      "Sunitinib",
+    // the released precision of confirmed values is stated on the list page
+    await expect(page.getByTestId("mk-system-limits")).toContainText(
+      "Read every value as unverified",
     );
+    await page.getByRole("link", { name: new RegExp(name) }).click();
+    await expect(page).toHaveURL(new RegExp(`model-kit/drug#${failed.key}$`));
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(name);
   });
 
   test("empty and 503", async ({ page }) => {
@@ -405,15 +434,15 @@ test.describe("demo mode", () => {
     const seen = recordRequests(page);
     await page.goto("/en/research/model-kit");
     await expect(page.getByTestId("mk-drug")).toHaveCount(
-      fx.drugs.drugs.length,
+      rel.drugs.drugs.length,
     );
     await expect(page.getByTestId("mk-system")).toBeVisible();
     await expect(page.getByTestId("mk-demo")).toBeVisible();
-    await page.goto(`/en/research/model-kit/drug#${VALIDATED}`);
+    await page.goto(`/en/research/model-kit/drug#${REL_DRUG}`);
     await expect(page.getByTestId("mk-validation")).toBeVisible();
     await page.getByTestId("mk-value-cl").click();
     await expect(page.getByTestId("mk-quote").first()).toBeVisible();
-    for (const t of fx.drug[VALIDATED]!.targets)
+    for (const t of rel.drug[REL_DRUG]!.targets)
       await expect(page.getByTestId(`mk-download-${t}`)).toBeDisabled();
     await expect(page.getByTestId("mk-dl-demo")).toContainText(
       "Downloads need the live service",

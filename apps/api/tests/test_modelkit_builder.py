@@ -457,3 +457,13 @@ def test_derived_clearance_builds_from_one_designated_study_and_never_tests_it()
     stated = [*rows, ev(parameter="cl_f", value=22.0, unit="L/h", study_id="B1")]
     building, test = split_studies(stated)
     assert ("clinicaltrials_gov", "A1") not in building
+
+
+def test_metabolite_rows_do_not_decide_the_split() -> None:
+    rows = [
+        ev(parameter="auc_inf", value=1000.0, dose=50.0, study_id="T1"),
+        ev(parameter="t_half", value=80.0, unit="h", study_id="T1", analyte_class="metabolite"),
+        ev(parameter="t_half", value=10.0, unit="h", study_id="B1"),
+    ]
+    building, test = split_studies(rows)
+    assert test == {("clinicaltrials_gov", "T1")} and building == {("clinicaltrials_gov", "B1")}

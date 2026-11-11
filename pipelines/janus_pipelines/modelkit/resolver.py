@@ -15,6 +15,7 @@ import csv
 import io
 import re
 import unicodedata
+from collections.abc import Sequence
 from dataclasses import dataclass
 from typing import Final, Literal
 
@@ -239,6 +240,11 @@ _COADMIN: Final = re.compile(
     r"\b(?:co ?administ\w*|concomitant\w*|in combination with|combined with|drug interaction|interaction|"
     r"pre ?treat\w*|premedicat\w*|background (?:therapy|treatment)|given with|taken with)\b"
 )
+_OTHER_ROUTE: Final = re.compile(
+    r"\b(?:intramuscular|intramuscularly|subcutaneous|subcutaneously|topical|topically|cream|gel|ointment|"
+    r"transdermal|patch|inhaled|inhalation|nasal|intranasal|ophthalmic|vaginal|rectal|perianal|"
+    r"sublingual|buccal|intrathecal|epidural|intradermal|intraocular|im|sc|suppository)\b"
+)
 _ARM: Final = re.compile(
     r"\b(?:test|reference|treatment [a-d]|period [12]|sequence [a-d]+|crossover|cross over|"
     r"test formulation|reference formulation)\b"
@@ -257,20 +263,20 @@ class ArmContext:
         return self.context.species == "human"
 
 
-def arm_context(text: str, drug_key: str, table: IdentityTable) -> ArmContext:
+def arm_context(
+    text: str, drug_key: str, table: IdentityTable, hints: Sequence[str] = ()
+) -> ArmContext:
     """Context of one study arm or table column from its title and description text."""
-    t = norm(text)
+    t = re.sub(
+        r"[^.;()]*\bplacebo\b[^.;()]*", " ", norm(text)
+    )  # a placebo clause names no active drug
     notes: list[str] = []
     others = [k for k in table.drugs_in(t) if k != drug_key]
     partners = [p for p in table.partners_in(t) if p not in table.by_key[drug_key].names]
-    coadmin = bool(_COADMIN.search(t)) and bool(others or partners)
-    if (others or partners) and re.search(
-        r"\b(?:with|plus|and|\+)\s+(?:\w+\s+){0,3}(?:"
-        + "|".join(map(re.escape, [*others, *partners]))
-        + r")\b",
-        t,
-    ):
-        coadmin = True
+    for h in hints:
+        if norm(h) and re.search(rf"\b{re.escape(norm(h))}\b", t):
+            partners.append(norm(h))
+    coadmin = bool(others or partners)  # another active drug named anywhere in the arm text
     other_names = ", ".join(sorted(set(others + partners)))
     formulation = "unspecified"
     if _FDC.search(t):
@@ -302,20 +308,30 @@ def arm_context(text: str, drug_key: str, table: IdentityTable) -> ArmContext:
     if m := _ARM.search(t):
         arm = m.group(0)
     route = (
-        "iv"
-        if re.search(r"\b(?:intravenous|iv|infusion|injection)\b", t)
+        "other"
+        if _OTHER_ROUTE.search(t)
+        else "iv"
+        if re.search(r"\b(?:intravenous|iv|infusion)\b", t)
         else "oral"
         if re.search(r"\b(?:oral|orally|tablets?|capsules?|po)\b", t)
         else "unknown"
     )
+    if route == "other":
+        formulation = "other_route"
+    _multiple = re.search(
+        r"\bmultiple\b|\bsteady state\b|\bcmax ss\b|\brepeated\b|\bmaintenance\b|\bdays? \d+ ?(?:to|and|-) ?\d+\b"
+        r"|\bfor (?:[2-9]|\d\d+) (?:days|weeks|months)\b|\bx ?(?:[2-9]|\d\d+) days\b|\bday (?:7|14|15|21|28)\b",
+        t,
+    )
+    _single = re.search(
+        r"\bsingle\b|\bone dose\b|\bon day 1\b|\bday 1 only\b|\bfor (?:1|one) day\b|\b1 day\b|\bonce on\b",
+        t,
+    )
     regimen = (
         "multiple"
-        if re.search(
-            r"\b(?:multiple|steady state|once daily|twice daily|q\d+h|bid|qd|tid|daily for|for \d+ days|days 1)\b",
-            t,
-        )
+        if _multiple and not _single
         else "single"
-        if re.search(r"\b(?:single|one)[ -]dose\b|\bsingle\b|\bday 1 only\b", t)
+        if _single and not _multiple
         else "unknown"
     )
     if coadmin:

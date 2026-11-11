@@ -3092,7 +3092,8 @@
       "not_used": "Kullanılmadı; daha belirli bir neden kaydedilmedi.",
       "point_outside_2_fold": "Ayrı tutulan en az bir gözlem, öngörünün 2 katının dışında.",
       "all_points_within_2_fold": "EAA ve Cmax sınandı ve ayrı tutulan her gözlem 2 kat içinde.",
-      "cl_from_dose_and_auc": "Türetilmiş: CL/F = doz / sonsuza kadar EAA (tek çalışma kolu; damar içi dozda CL)."
+      "cl_from_dose_and_auc": "Türetilmiş: CL/F = doz / sonsuza kadar EAA (tek çalışma kolu; damar içi dozda CL).",
+      "confirmed_precision_below_target": "Onaylanan değerlerden alınan kör bir örnekte iki otomatik gözden geçirme turu değerlerin %69'unu doğru buldu (n = 85, %95 aralığı %59 ile %78), bu kilometre taşının %90 hedefinin altında. Her değeri doğrulanmamış sayın."
     },
     "scrollHint": "Tüm sütunları görmek için yana kaydırın."
   }

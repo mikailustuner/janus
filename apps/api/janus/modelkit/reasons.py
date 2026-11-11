@@ -58,6 +58,11 @@ TEXT: dict[str, str] = {
     # system caveats
     "n_very_small": "n is very small: shares and fold errors describe these drugs, not drugs in general.",
     "two_automated_passes": "Every held-out observation was read automatically and confirmed by two automated passes.",
+    "confirmed_precision_below_target": (
+        "On a blinded sample of confirmed values, two automated review passes found 69 % correct "
+        "(n = 85, 95 % interval 59 to 78 %), below the 90 % target of this milestone. Read every "
+        "value as unverified."
+    ),
     "expert_review_pending": "Expert review has not yet been done.",
     # interval
     "interval_n_too_small": "No interval is shown: fewer than 20 independent held-out studies.",

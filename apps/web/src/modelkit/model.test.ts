@@ -9,6 +9,7 @@ import { decode } from "@/api/decode";
 import { routing } from "@/i18n/routing";
 
 import recorded from "./modelkit.recorded.json";
+import recordedM0 from "./modelkit.m0.recorded.json";
 import {
   bandPolygon,
   demoModelKit,
@@ -32,6 +33,7 @@ import {
 
 type Tree = { [k: string]: string | Tree };
 const fx = recorded as unknown as ModelKitFixture;
+const fx0 = recordedM0 as unknown as ModelKitFixture;
 const root = (p: string) => join(import.meta.dirname, "../../../..", p);
 const catalogue = (l: string) =>
   JSON.parse(
@@ -47,12 +49,14 @@ const has = (t: Tree, path: string) =>
 
 describe("decoders accept the recorded answers", () => {
   it("drugs, system report, every drug and every evidence list", () => {
-    expect(decode(drugsOut, fx.drugs).ok).toBe(true);
-    expect(decode(systemOut, fx.validation).ok).toBe(true);
-    for (const k of Object.keys(fx.drug))
-      expect(decode(drugOut, fx.drug[k]).ok, k).toBe(true);
-    for (const k of Object.keys(fx.evidence))
-      expect(decode(evidenceOut, fx.evidence[k]).ok, k).toBe(true);
+    for (const f of [fx, fx0]) {
+      expect(decode(drugsOut, f.drugs).ok).toBe(true);
+      expect(decode(systemOut, f.validation).ok).toBe(true);
+      for (const k of Object.keys(f.drug))
+        expect(decode(drugOut, f.drug[k]).ok, k).toBe(true);
+      for (const k of Object.keys(f.evidence))
+        expect(decode(evidenceOut, f.evidence[k]).ok, k).toBe(true);
+    }
   });
   it("a changed enum is a contract error", () => {
     const bad = structuredClone(fx.drugs) as { drugs: { status: string }[] };
@@ -117,7 +121,7 @@ describe("view model", () => {
     expect(inBand({ observed: 10, predicted: 20 })).toBe(true);
     expect(inBand({ observed: 10, predicted: 5 })).toBe(true);
     expect(inBand({ observed: 10, predicted: 4.9 })).toBe(false);
-    for (const d of Object.values(fx.drug) as {
+    for (const d of [...Object.values(fx.drug), ...Object.values(fx0.drug)] as {
       validation: {
         points: {
           observed: number;
@@ -151,7 +155,10 @@ describe("reason codes", () => {
     else if (Array.isArray(x)) x.forEach(add);
   };
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  for (const d of Object.values(fx.drug) as Record<string, any>[]) {
+  for (const d of [
+    ...Object.values(fx.drug),
+    ...Object.values(fx0.drug),
+  ] as Record<string, any>[]) {
     add(d.summary.status_reasons);
     add(d.no_set_reasons);
     add(d.validation.reasons);
@@ -174,7 +181,10 @@ describe("reason codes", () => {
   const sys = fx.validation as { conformal: string; caveats: string[] };
   add(sys.conformal);
   add(sys.caveats);
-  for (const e of Object.values(fx.evidence) as {
+  for (const e of [
+    ...Object.values(fx.evidence),
+    ...Object.values(fx0.evidence),
+  ] as {
     rows: { reason: string | null }[];
   }[])
     add(e.rows.map((r) => r.reason));

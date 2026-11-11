@@ -380,6 +380,7 @@ export const REASON_CODES = [
   "absorption_rate_or_volume",
   "n_very_small",
   "two_automated_passes",
+  "confirmed_precision_below_target",
   "expert_review_pending",
   "interval_n_too_small",
   "interval_system_level_only",

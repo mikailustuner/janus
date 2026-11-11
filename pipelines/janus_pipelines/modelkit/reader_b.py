@@ -15,7 +15,7 @@ from typing import Any, Final
 
 from janus_pipelines.modelkit.confirm import Context
 from janus_pipelines.modelkit.model import Candidate, ReaderStats
-from janus_pipelines.modelkit.resolver import AnalyteClass, IdentityTable
+from janus_pipelines.modelkit.resolver import PARTNERS, AnalyteClass, IdentityTable
 from janus_pipelines.modelkit.units import (
     Center,
     Refused,
@@ -134,23 +134,71 @@ def _doses_in(tokens: list[str]) -> list[tuple[int, float]]:
 _MASS: Final = {"mg": 1.0, "mcg": 1e-3, "ug": 1e-3, "g": 1e3}
 
 
-def _dose_beside_name(text: str, own: set[str]) -> float | None:
-    """The one dose in mg written right after (else just before) a name of the drug."""
+_OTHER_ROUTE_TOKENS: Final = frozenset(
+    "intramuscular intramuscularly subcutaneous subcutaneously topical topically cream gel ointment "
+    "transdermal patch inhaled inhalation nasal intranasal ophthalmic vaginal rectal perianal "
+    "sublingual buccal intrathecal epidural intradermal intraocular im sc suppository".split()
+)
+
+
+def _route(toks: set[str]) -> str:
+    if toks & _OTHER_ROUTE_TOKENS:
+        return "other"
+    if toks & {"intravenous", "iv", "infusion"}:
+        return "iv"
+    if toks & {"oral", "orally", "tablet", "tablets", "capsule", "capsules", "po"}:
+        return "oral"
+    return "unknown"
+
+
+def _regimen(toks: set[str], joined: str) -> str:
+    """Multiple only on explicit evidence (steady state, repeated, days N to M, for 2+ days);
+    single on 'single', 'day 1' or 'one day'; both or neither is unknown."""
+    multiple = bool(
+        {"multiple", "steady", "repeated", "maintenance"} & toks
+        or re.search(
+            r"\bdays? \d+ (?:to|and|\d+)|\bfor (?:[2-9]|\d\d+) (?:days|weeks|months)\b", joined
+        )
+        or re.search(r"\bx (?:[2-9]|\d\d+) days\b", joined)
+    )
+    single = bool(
+        "single" in toks
+        or re.search(
+            r"\bon day 1\b|\bfor (?:1|one) day\b|\b1 day\b|\bone dose\b|\bday 1 only\b", joined
+        )
+    )
+    return (
+        "multiple"
+        if multiple and not single
+        else "single"
+        if single and not multiple
+        else "unknown"
+    )
+
+
+def _dose_beside_name(
+    text: str, own: set[str], others: frozenset[str] = frozenset()
+) -> float | None:
+    """The one dose in mg whose nearest name is this drug (a dose nearer to another drug's name
+    belongs to that drug; a count such as '2 x 20 mg' is not a dose)."""
     toks = _tokens(text)
     own_tokens = {w for n in own for w in _tokens(n)}
-    after: set[float] = set()
-    before: set[float] = set()
-    doses = _doses_in(toks)
-    for i, t in enumerate(toks):
-        if t not in own_tokens:
-            continue
-        for pos, d in doses:
-            if 0 < pos - i <= 6:
-                after.add(d)
-            elif 0 < i - pos <= 5:
-                before.add(d)
-    use = after or before
-    return next(iter(use)) if len(use) == 1 else None
+    other_tokens = {w for n in others for w in _tokens(n)} - own_tokens
+    found: set[float] = set()
+    for pos, d in _doses_in(toks):
+        if pos > 0 and toks[pos - 1] == "x":
+            return None
+        best: tuple[int, bool] | None = None
+        for i, t in enumerate(toks):
+            mine = t in own_tokens
+            if not (mine or t in other_tokens):
+                continue
+            gap = i - pos if i > pos else (pos - i) + 3  # a name after the dose is nearer
+            if best is None or gap < best[0]:
+                best = (gap, mine)
+        if best is None or (best[1] and best[0] <= 8):
+            found.add(d)
+    return next(iter(found)) if len(found) == 1 else None
 
 
 def _arm_for(group_title: str, arms: list[dict[str, Any]]) -> dict[str, Any] | None:
@@ -240,6 +288,16 @@ def read_ctgov(
     elig = proto.get("eligibilityModule", {})
     ages = set(elig.get("stdAges", []))
     healthy = elig.get("healthyVolunteers")
+    study_others = [
+        n for n in intervs if drug_key not in table.drugs_in(n) and "placebo" not in n.lower()
+    ]
+    other_name_set = frozenset(
+        {
+            *study_others,
+            *PARTNERS,
+            *(x for k in table.by_key.values() for x in k.names if k.drug_key != drug_key),
+        }
+    )
     out: list[Candidate] = []
     for oi, om in enumerate(study["resultsSection"]["outcomeMeasuresModule"]["outcomeMeasures"], 1):
         center = _CENTER.get(om.get("paramType", ""))
@@ -282,6 +340,15 @@ def read_ctgov(
                     single_arm = len(real) == 1 and arm_drugs == {drug_key}
                     label = f"{title} {cls.get('title', '')} {cat.get('title', '')}"
                     analyte = _classify(label, arm_drugs, single_arm, drug_key, table)
+                    head_toks = set(_tokens(title + " " + g.get("title", "")))
+                    if (
+                        analyte in ("parent", "unspecified")
+                        and drug_key not in table.drugs_in(title + " " + g.get("title", ""))
+                        and any(
+                            {w for w in _tokens(n) if len(w) > 2} <= head_toks for n in study_others
+                        )
+                    ):
+                        analyte = "unconfirmed"
                     gtext = f"{g.get('title', '')} {g.get('description', '')}"
                     toks = set(_tokens(gtext + " " + (arm or {}).get("label", "")))
                     clean = re.sub(r"[^.;()]*placebo[^.;()]*", " ", gtext, flags=re.I)
@@ -292,11 +359,12 @@ def read_ctgov(
                         for n in arm_names
                         if "placebo" not in n.lower() and drug_key not in table.drugs_in(n)
                     ]
-                    inter = bool(other_active) or bool(real_other)
-                    inter = inter or (
-                        bool(table.partners_in(clean))
-                        and bool({"with", "plus", "coadministration", "coadministered"} & toks)
-                    )
+                    ctoks = set(_tokens(clean))
+                    named_study_other = [
+                        n for n in study_others if {w for w in _tokens(n) if len(w) > 2} <= ctoks
+                    ]
+                    inter = bool(other_active) or bool(real_other) or bool(named_study_other)
+                    inter = inter or bool(table.partners_in(clean))
                     form = "unspecified"
                     ftoks = toks | set(_tokens(" ".join(arm_names)))
                     if {"fixed", "fdc"} & ftoks or ("combination" in ftoks and "tablet" in ftoks):
@@ -366,16 +434,11 @@ def read_ctgov(
                     )
                     species = "animal" if (toks | set(_tokens(title))) & _ANIMALS else "human"
                     ttoks = set(_tokens(title + " " + gtext))
-                    regimen = (
-                        "multiple"
-                        if {"multiple", "steady", "daily", "bid", "qd", "repeated"} & ttoks
-                        else "single"
-                        if {"single", "one"} & ttoks
-                        else "unknown"
-                    )
-                    route = (
-                        "iv" if {"intravenous", "iv", "infusion", "injection"} & ttoks else "oral"
-                    )
+                    jt = " ".join(_tokens(title + " " + gtext))
+                    regimen = _regimen(ttoks, jt)
+                    route = _route(ttoks)
+                    if route == "other":
+                        form = "other_route"
                     arm_tag = next(
                         (t for t in ("test", "reference", "crossover") if t in toks), None
                     )
@@ -393,7 +456,7 @@ def read_ctgov(
                     dose = None
                     if parameter != "f":
                         own = set(table.by_key[drug_key].names | table.by_key[drug_key].codes)
-                        dose = _dose_beside_name(gtext, own)
+                        dose = _dose_beside_name(gtext, own, other_name_set)
                         if dose is None:
                             ds = {d for _, d in _doses_in(_tokens(gtext))}
                             dose = next(iter(ds)) if len(ds) == 1 else None
@@ -636,13 +699,13 @@ def read_label(
             ctx = Context(
                 None,
                 None,
-                form,
+                "other_route" if _route(ctxt) == "other" else form,
                 "fed" if {"fed", "meal", "food", "breakfast"} & ctxt else "fasted" if {"fasted", "fasting"} & ctxt else "unspecified",
                 "special" if {"children", "pediatric", "elderly", "renal", "hepatic", "impairment"} & ctxt
                 else "healthy_adult" if "healthy" in ctxt else "unspecified",
                 "all", "human",
-                "iv" if {"intravenous", "iv", "infusion"} & ctxt else "oral" if {"oral", "orally", "tablet", "tablets", "capsule", "capsules"} & ctxt else "unknown",
-                "single" if "single" in ctxt else "multiple" if {"multiple", "daily", "steady"} & ctxt else "unknown",
+                _route(ctxt),
+                _regimen(ctxt, " ".join(x.lower() for x in sent_toks)),
             )  # fmt: skip
             dose = None
             if param in ("cmax", "auc_inf", "auc_tau", "auc_last"):
@@ -736,6 +799,9 @@ def _grid_candidates(
                 if c < len(grid[h])
                 for t in _tokens(grid[h][c] + " " + caption)
             }
+            food_toks = {
+                t.lower() for h in range(n_head) if c < len(grid[h]) for t in _tokens(grid[h][c])
+            }
             conv = to_canonical(resolve_parameter(param, unit), value, unit)
             if isinstance(conv, Refused):
                 stats.skip(conv.issue)
@@ -762,13 +828,13 @@ def _grid_candidates(
             ctx = Context(
                 next((t for t in ("test", "reference", "crossover") if t in header_toks), None),
                 None,
-                form,
-                "fed" if {"fed", "meal", "breakfast"} & header_toks else "fasted" if {"fasted", "fasting"} & header_toks else "unspecified",
+                "other_route" if _route(header_toks) == "other" else form,
+                "fed" if {"fed", "meal", "breakfast"} & food_toks else "fasted" if {"fasted", "fasting"} & food_toks else "unspecified",
                 "special" if {"children", "pediatric", "elderly", "renal", "hepatic", "impairment"} & header_toks
                 else "healthy_adult" if "healthy" in header_toks
                 else "patients" if "patients" in header_toks else "unspecified",
-                "all", "human", "oral" if {"oral", "orally", "tablet", "tablets", "capsule", "capsules"} & header_toks else "unknown",
-                "single" if "single" in header_toks else "multiple" if {"multiple", "daily", "steady"} & header_toks else "unknown",
+                "all", "human", _route(header_toks),
+                _regimen(header_toks, " ".join(_tokens(head_text + " " + caption)).lower()),
             )  # fmt: skip
             out.append(
                 Candidate(

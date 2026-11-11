@@ -38,8 +38,11 @@ class NotExportableError(ValueError):
 
 @cache
 def source_meta() -> dict[str, dict[str, Any]]:
-    path = repo_root() / "data" / "modelkit" / "sources_m0.json"
-    return json.loads(path.read_text(encoding="utf-8"))
+    out: dict[str, dict[str, Any]] = {}
+    for name in ("sources_m0.json", "sources_m1.json"):
+        path = repo_root() / "data" / "modelkit" / name
+        out.update(json.loads(path.read_text(encoding="utf-8")))
+    return out
 
 
 def engine_params(ps: ParameterSet) -> Params:

@@ -52,7 +52,14 @@ UNITS: Final[Mapping[str, tuple[str, Mapping[str, float]]]] = {
 ROUTES: Final = frozenset({"oral", "iv", "unknown"})
 REGIMENS: Final = frozenset({"single", "multiple", "unknown"})
 FORMULATIONS: Final = frozenset(
-    {"immediate_release", "solution", "modified_release", "fixed_dose_combination", "unspecified"}
+    {
+        "immediate_release",
+        "solution",
+        "modified_release",
+        "fixed_dose_combination",
+        "other_route",
+        "unspecified",
+    }
 )
 STATISTICS: Final = frozenset(
     {"mean", "geomean", "median", "stated", "range_geomean", "lower_bound"}

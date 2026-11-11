@@ -171,3 +171,31 @@ def test_run_writes_a_versioned_artifact(tmp_path: Path) -> None:
     assert df.height == result.manifest.counts.output
     assert df["confirmed"].sum() > 0
     assert result.manifest.license.startswith("Per row")
+
+
+M1 = REPO / "data" / "modelkit" / "evidence_m1.csv"
+
+
+def test_committed_seeds_parse_together_and_stay_small() -> None:
+    from janus_pipelines.jobs.modelkit_evidence import SUPERSEDED_SOURCES
+
+    for f in (SEED, M1, REPO / "data" / "modelkit" / "sources_m1.json"):
+        assert f.stat().st_size < 1_000_000, f.name  # requirement 1.5
+    sep = "\n\x1e\n"
+    res = parse_seed(SEED.read_text("utf-8") + sep + M1.read_text("utf-8"))
+    rows = res.rows
+    assert res.metrics["rows"] == len(rows) > 500
+    drugs_m1 = {str(r["drug_key"]) for r in rows if r["origin"] == "reader_pair"}
+    # M0 rows of a re-read source are replaced; the rest of M0 (PMC, scanned review) is kept
+    kept_m0 = [r for r in rows if r["origin"] == "m0_annotation"]
+    assert all(
+        r["source_id"] not in SUPERSEDED_SOURCES or r["drug_key"] not in drugs_m1 for r in kept_m0
+    )
+    assert {str(r["source_id"]) for r in kept_m0} <= {"pmc_oa", "drugsatfda_review"}
+    # a confirmed row is always a parent row of both readers; only parent rows can reach a set
+    assert all(r["analyte_class"] == "parent" for r in rows if r["confirmed"])
+    assert all(
+        r["origin"] == "derived" for r in rows if r["origin"] == "derived" and r["derivation"]
+    )
+    text = " ".join(str(r["quote"]) + str(r["confirm_reason"]) for r in rows)
+    assert " AI " not in text and "reviewed by" not in text

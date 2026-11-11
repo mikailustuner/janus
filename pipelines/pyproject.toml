@@ -48,6 +48,7 @@ allowed-confusables = ["ı", "İ", "–"]
 [tool.ruff.lint.per-file-ignores]
 # Regular-expression tables of the model kit readers read better on long lines.
 "janus_pipelines/modelkit/*.py" = ["E501"]
+"tests/test_modelkit_readers.py" = ["E501", "S101"]
 "tests/**" = ["S101"]
 # Arabic text of the Canon pipeline: letters that look like Latin ones are meant.
 "janus_pipelines/jobs/canon_text.py" = ["RUF001"]

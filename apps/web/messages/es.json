@@ -3092,7 +3092,8 @@
       "not_used": "No usada; no se registra una razón más específica.",
       "point_outside_2_fold": "Al menos una observación reservada queda fuera de un factor 2 de la predicción.",
       "all_points_within_2_fold": "Se probaron el AUC y la Cmax y cada observación reservada está dentro de un factor 2.",
-      "cl_from_dose_and_auc": "Derivado: CL/F = dosis / AUC hasta el infinito de un brazo de estudio (CL para una dosis intravenosa)."
+      "cl_from_dose_and_auc": "Derivado: CL/F = dosis / AUC hasta el infinito de un brazo de estudio (CL para una dosis intravenosa).",
+      "confirmed_precision_below_target": "En una muestra ciega de valores confirmados, dos pasadas de revisión automatizadas juzgaron correctos el 69 % (n = 85, intervalo del 95 % de 59 a 78 %), por debajo del objetivo del 90 % de este hito. Lea cada valor como no verificado."
     },
     "scrollHint": "Desplácese hacia los lados para ver todas las columnas."
   }

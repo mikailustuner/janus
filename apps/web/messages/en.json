@@ -3092,7 +3092,8 @@
       "not_used": "Not used; no more specific reason is recorded.",
       "point_outside_2_fold": "At least one held-out observation is outside 2-fold of the prediction.",
       "all_points_within_2_fold": "AUC and Cmax were tested and every held-out observation is within 2-fold.",
-      "cl_from_dose_and_auc": "Derived: CL/F = dose / AUC to infinity of one study arm (CL for an intravenous dose)."
+      "cl_from_dose_and_auc": "Derived: CL/F = dose / AUC to infinity of one study arm (CL for an intravenous dose).",
+      "confirmed_precision_below_target": "On a blinded sample of confirmed values, two automated review passes found 69 % correct (n = 85, 95 % interval 59 to 78 %), below the 90 % target of this milestone. Read every value as unverified."
     },
     "scrollHint": "Scroll sideways to see all columns."
   }
