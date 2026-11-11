@@ -36,7 +36,8 @@ class StubApi:
         if self.raise_error:
             raise httpx2.ConnectError("refused")
         raw = request.content
-        self.sent.append(Sent(request.method, request.url.path, json.loads(raw) if raw else None))
+        target = request.url.raw_path.decode()  # path and query string, as sent
+        self.sent.append(Sent(request.method, target, json.loads(raw) if raw else None))
         return httpx2.Response(self.status, json=self.body)
 
 
