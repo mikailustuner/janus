@@ -15,7 +15,7 @@ const SIZE = 300;
 const ML = 56;
 const MT = 12;
 const MB = 44;
-const MR = 12;
+const MR = 28;
 
 export function ValidationChart({ points }: { points: readonly PointOut[] }) {
   const t = useT();

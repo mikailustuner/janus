@@ -43,6 +43,7 @@ const PLAIN = [
   "/demo/codes",
   "/research",
   "/research/for-researchers",
+  "/research/model-kit",
   "/scan",
   "/confirm",
   "/privacy",
@@ -114,6 +115,10 @@ for (const theme of THEMES)
       // No API in these checks: /privacy shows "the region cannot be shown right now".
       await stubApi(page, {
         "/privacy/storage": { status: 503, body: { error: "unavailable" } },
+        "/modelkit/drugs": {
+          status: 503,
+          body: { error: "modelkit_unavailable" },
+        },
       });
       for (const route of PLAIN) {
         await page.goto(`/${locale}${route}`);
