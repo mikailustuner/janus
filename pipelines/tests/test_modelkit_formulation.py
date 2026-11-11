@@ -197,6 +197,28 @@ def test_resolve_pairs_sets_the_same_formulation_on_both_and_recomputes_confirma
     assert any(n.startswith("formulation:") for n in out.a.notes)
 
 
+def test_resolve_pairs_makes_the_route_unknown_on_an_oral_and_intravenous_statement() -> None:
+    """Owner decision 2026-11-11 (M4): the readers' own route does not survive an oral/IV conflict."""
+    from collections import Counter
+
+    from janus_pipelines.modelkit.confirm import Confirmation
+
+    s = record(group_desc="Dolutegravir oral tablet, then dolutegravir IV infusion")
+    p = Paired(
+        _candidate(LOC, "immediate_release", "oral"),
+        _candidate(LOC, "immediate_release", "oral"),
+        Confirmation(True, "agree"),
+    )
+    counts: Counter[str] = Counter()
+    (out,) = formulation.resolve_pairs([p], s, TABLE, BRANDS, counts)
+    assert out.a.context.route == out.b.context.route == "unknown"  # type: ignore[union-attr]
+    assert counts["route_oral_iv_conflict"] == 1
+    # without the conflict the readers' route is still used where the resolvers found none
+    p2 = Paired(_candidate(LOC, "unspecified", "oral"), _candidate(LOC, "unspecified", "oral"), Confirmation(True, "agree"))
+    (out2,) = formulation.resolve_pairs([p2], record(iv_desc="Dolutegravir 50 mg"), TABLE, BRANDS, Counter())
+    assert out2.a.context.route == "oral"  # type: ignore[union-attr]
+
+
 def test_resolve_pairs_leaves_an_unmatched_candidate_alone() -> None:
     from collections import Counter
 
@@ -314,3 +336,19 @@ def test_product_table_is_consistent() -> None:
         "other_route",
     }
     assert len(by) == len(rows)  # one class per brand and drug
+
+
+@given(st.sampled_from(["iv", "oral"]))
+def test_property_a_conflict_never_keeps_a_reader_route(reader_route: str) -> None:
+    from collections import Counter
+
+    from janus_pipelines.modelkit.confirm import Confirmation
+
+    s = record(group_desc="Dolutegravir given orally and as an intravenous infusion")
+    p = Paired(
+        _candidate(LOC, "unspecified", reader_route),
+        _candidate(LOC, "unspecified", reader_route),
+        Confirmation(True, "agree"),
+    )
+    (out,) = formulation.resolve_pairs([p], s, TABLE, BRANDS, Counter())
+    assert out.a.context.route == "unknown"  # type: ignore[union-attr]
