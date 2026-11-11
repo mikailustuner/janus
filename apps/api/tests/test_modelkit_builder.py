@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import math
 import random
+from typing import Literal
 
 import pytest
 from hypothesis import given, settings
@@ -20,6 +21,8 @@ from janus.modelkit.builder import (
 from janus.modelkit.evidence import Ev, exclusion_reason, split_studies
 from janus.modelkit.validate import (
     BAND,
+    Metric,
+    Validation,
     conformal_fold_width,
     system_report,
     validate,
@@ -425,6 +428,42 @@ def test_system_report_counts() -> None:
     assert rep.n_drugs == 6 and sum(rep.by_status.values()) == 6
     assert rep.interpretable is False and rep.min_drugs_for_interpretation == 10
     assert rep.conformal == "interval_n_too_small"
+
+
+def _val(key: str, auc: bool, cmax: bool) -> Validation:
+    def m(name: Literal["auc", "cmax"], tested: bool) -> Metric:
+        return Metric(
+            name,
+            tested,
+            1 if tested else 0,
+            1 if tested else 0,
+            1.0 if tested else None,
+            1.0 if tested else None,
+            1 if tested else 0,
+            True if tested else None,
+        )
+
+    return Validation(
+        key,
+        "not_validated",
+        (),
+        (m("auc", auc), m("cmax", cmax)),
+        (),
+        (),
+        (),
+        "interval_n_too_small",
+    )
+
+
+def test_gate_is_interpretable_only_with_ten_drugs_that_have_both_metrics_tested() -> None:
+    """Pre-registered M2 rule: at least 10 drugs with AUC AND Cmax tested, not 10 AUC-only."""
+    auc_only = [_val(f"a{i}", True, False) for i in range(12)]
+    assert system_report(auc_only).interpretable is False
+    nine = [_val(f"b{i}", True, True) for i in range(9)]
+    assert system_report(nine + auc_only).interpretable is False
+    ten = [_val(f"c{i}", True, True) for i in range(10)]
+    rep = system_report(ten)
+    assert rep.interpretable is True and rep.n_drugs_both_tested == 10
 
 
 def test_derived_clearance_builds_from_one_designated_study_and_never_tests_it() -> None:

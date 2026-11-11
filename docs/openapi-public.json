@@ -679,7 +679,7 @@
     "/modelkit/drugs": {
       "get": {
         "summary": "Drugs",
-        "description": "The drugs of the experimental model kit with their validation status.",
+        "description": "The drugs of the experimental model kit with their validation status. `q` keeps the drugs\nwhose name contains it, `status` and `has_set` filter; `limit` (at most 200) and `offset` page\nthe answer. Sorted by name.",
         "operationId": "drugs_modelkit_drugs_get",
         "parameters": [
           {
@@ -696,6 +696,74 @@
                 }
               ],
               "title": "Release"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "name": "has_set",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Has Set"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "title": "Offset"
             }
           }
         ],
@@ -1684,6 +1752,25 @@
             },
             "type": "array",
             "title": "Drugs"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "offset": {
+            "type": "integer",
+            "title": "Offset"
+          },
+          "limit": {
+            "type": "integer",
+            "title": "Limit"
+          },
+          "counts": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Counts"
           }
         },
         "additionalProperties": false,
@@ -1691,7 +1778,11 @@
         "required": [
           "release",
           "statements",
-          "drugs"
+          "drugs",
+          "total",
+          "offset",
+          "limit",
+          "counts"
         ],
         "title": "DrugsOut"
       },
@@ -4459,6 +4550,25 @@
               }
             ],
             "title": "Wilson High"
+          },
+          "n_points": {
+            "type": "integer",
+            "title": "N Points"
+          },
+          "points_within_2_fold": {
+            "type": "integer",
+            "title": "Points Within 2 Fold"
+          },
+          "points_gmfe": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Points Gmfe"
           }
         },
         "additionalProperties": false,
@@ -4470,7 +4580,10 @@
           "within_2_fold",
           "within_2_fold_share",
           "wilson_low",
-          "wilson_high"
+          "wilson_high",
+          "n_points",
+          "points_within_2_fold",
+          "points_gmfe"
         ],
         "title": "SystemMetricOut"
       },
@@ -4514,6 +4627,10 @@
             "type": "integer",
             "title": "Min Drugs For Interpretation"
           },
+          "n_drugs_both_tested": {
+            "type": "integer",
+            "title": "N Drugs Both Tested"
+          },
           "conformal": {
             "type": "string",
             "title": "Conformal"
@@ -4544,6 +4661,7 @@
           "n_studies",
           "interpretable",
           "min_drugs_for_interpretation",
+          "n_drugs_both_tested",
           "conformal",
           "caveats",
           "reason_text"

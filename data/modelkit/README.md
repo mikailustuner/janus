@@ -33,3 +33,13 @@ short quotes only; no raw downloads.
 - Measured precision of confirmed values on a blinded sample (two automated review passes): 0.69, n = 85, below the
   0.90 target (`.kiro/specs/model-kit/reviews.md`). Read every value as unverified. Research use only. Not for clinical
   decisions. Expert review has not yet been done.
+
+## Milestone M2 files
+- `identity_m2.csv`: names of the 609-drug pool (pool names, Wikidata labels and aliases, CC0; the M1 codes,
+  metabolites and prodrugs for the 50 M1 drugs; very short, generic and slang names left out). Made by
+  `pipelines/tools/build_modelkit_identity.py`. The ClinicalTrials.gov intake (`modelkit_ctgov`) uses it.
+- ClinicalTrials.gov rows of the whole pool are not committed: the job `modelkit_ctgov` reads the official bulk file of
+  all study records, keeps the studies with posted results that name a pool drug and report a PK outcome, and reads
+  them with the two readers. `modelkit_evidence` merges its current run and replaces the ClinicalTrials.gov rows of the
+  seed files for the drugs it covers. Source, terms, processing date and the statement of modification are in
+  `pipelines/sources.toml` and `NOTICE`.

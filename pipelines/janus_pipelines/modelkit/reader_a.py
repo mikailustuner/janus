@@ -113,8 +113,12 @@ def dose_mg_near(
         other_names += list(table.partners_in(text))
     mentions: list[tuple[int, int, bool]] = []
     for n in names:
+        if n not in t:
+            continue
         mentions += [(m.start(), m.end(), True) for m in re.finditer(rf"\b{re.escape(n)}\b", t)]
     for n in set(other_names):
+        if n not in t:  # a name that is not a substring of the text cannot match (speed only)
+            continue
         mentions += [(m.start(), m.end(), False) for m in re.finditer(rf"\b{re.escape(n)}\b", t)]
     found: set[float] = set()
     for pos, end, d in doses:

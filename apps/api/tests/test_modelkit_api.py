@@ -63,6 +63,41 @@ def test_list_has_statuses_and_statements(client: TestClient) -> None:
     assert all(d["experimental"] for d in body["drugs"])
 
 
+def test_list_pages_filters_and_counts_the_whole_release(client: TestClient) -> None:
+    whole = client.get("/modelkit/drugs").json()
+    assert whole["total"] == 6 and whole["offset"] == 0 and whole["limit"] == 50
+    assert (
+        whole["counts"]["all"] == 6
+        and sum(whole["counts"][s] for s in ("validated", "not_validated", "failed")) == 6
+    )
+    page = client.get("/modelkit/drugs", params={"limit": 2, "offset": 2}).json()
+    assert [d["key"] for d in page["drugs"]] == [d["key"] for d in whole["drugs"][2:4]]
+    assert page["total"] == 6 and page["counts"] == whole["counts"]  # counts ignore the filters
+    found = client.get("/modelkit/drugs", params={"q": " TRA "}).json()
+    assert [d["key"] for d in found["drugs"]] == ["tramadol"] and found["total"] == 1
+    val = client.get("/modelkit/drugs", params={"status": "validated"}).json()
+    assert val["total"] == whole["counts"]["validated"]
+    with_set = client.get("/modelkit/drugs", params={"has_set": "true"}).json()
+    assert with_set["total"] == whole["counts"]["with_set"]
+
+
+@pytest.mark.parametrize(
+    ("params", "field"),
+    [
+        ({"limit": 0}, "limit"),
+        ({"limit": 201}, "limit"),
+        ({"offset": -1}, "offset"),
+        ({"status": "good"}, "status"),
+        ({"q": "a;b"}, "q"),
+    ],
+)
+def test_list_refuses_bad_parameters_by_field_name(
+    client: TestClient, params: dict[str, object], field: str
+) -> None:
+    r = client.get("/modelkit/drugs", params=params)  # type: ignore[arg-type]
+    assert r.status_code == 422 and r.json() == {"error": "invalid_request", "fields": [field]}
+
+
 def test_drug_detail_with_set_and_validation(client: TestClient) -> None:
     d = client.get("/modelkit/drugs/sunitinib").json()
     assert d["parameter_set"]["basis"] == "oral_apparent" and d["parameter_set"]["apparent"]

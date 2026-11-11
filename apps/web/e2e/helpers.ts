@@ -30,7 +30,7 @@ type Stub = { status?: number; body: unknown };
  */
 export async function stubApi(
   page: Page,
-  stubs: Record<string, Stub | ((body: unknown) => Stub)> = {},
+  stubs: Record<string, Stub | ((body: unknown, url: URL) => Stub)> = {},
 ): Promise<Request[]> {
   const seen: Request[] = [];
   await page.route("**/api/**", async (route) => {
@@ -45,7 +45,10 @@ export async function stubApi(
       });
       return;
     }
-    const answer = typeof stub === "function" ? stub(req.postDataJSON()) : stub;
+    const answer =
+      typeof stub === "function"
+        ? stub(req.postDataJSON(), new URL(req.url()))
+        : stub;
     await route.fulfill({
       status: answer.status ?? 200,
       contentType: "application/json",

@@ -13,7 +13,7 @@ import io
 import math
 import re
 from collections import Counter
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from typing import ClassVar, Final
 
 import polars as pl
@@ -297,9 +297,11 @@ def _read_csv(text: str, name: str) -> list[tuple[str, dict[str, str]]]:
     return [(f"{name}:{i}", dict(raw)) for i, raw in enumerate(reader, 2)]
 
 
-def parse_seed(text: str) -> ParseResult:
+def parse_seed(text: str, ctgov: Sequence[Row] = ()) -> ParseResult:
     """The seed text: the M0 file alone, or the M0 file and the M1 file joined by a record
-    separator line. Rows of superseded sources (M0) are dropped for drugs the M1 file covers."""
+    separator line. Rows of superseded sources (M0) are dropped for drugs the M1 file covers.
+    `ctgov` are the checked rows of the `modelkit_ctgov` job (milestone M2); they replace every
+    ClinicalTrials.gov row of the seed files for the drugs they cover."""
     parts = text.split(_SPLIT)
     lines = _read_csv(parts[0], "evidence_seed.csv")
     if len(parts) > 1:
@@ -313,6 +315,12 @@ def parse_seed(text: str) -> ParseResult:
     rows: list[Row] = []
     seen: set[tuple[str, str, str, str]] = set()
     input_rows = 0
+    ctgov_drugs = {str(r["drug_key"]) for r in ctgov}
+    lines = [
+        (w, r)
+        for w, r in lines
+        if not (r["drug_key"] in ctgov_drugs and r["source_id"] == "clinicaltrials_gov")
+    ]
     for where, raw in lines:
         input_rows += 1
         row = evidence_row(raw, where)
@@ -324,6 +332,18 @@ def parse_seed(text: str) -> ParseResult:
         )
         if key in seen:
             raise ValueError(f"{where}: duplicate row")
+        seen.add(key)
+        rows.append(row)
+    for row in ctgov:
+        input_rows += 1
+        key = (
+            str(row["drug_key"]),
+            str(row["parameter"]),
+            str(row["source_locator"]),
+            str(row["value"]),
+        )
+        if key in seen:
+            raise ValueError(f"modelkit_ctgov: duplicate row {key}")
         seen.add(key)
         rows.append(row)
     by_drug = Counter(str(r["drug_key"]) for r in rows)
@@ -342,11 +362,45 @@ def parse_seed(text: str) -> ParseResult:
     )
 
 
+CTGOV_PIPELINE: Final = "modelkit_ctgov"
+
+
+def _current_ctgov(ctx: RunContext) -> tuple[str, list[Row]]:
+    """(fingerprint, rows) of the current `modelkit_ctgov` artifact; ("", []) when there is none.
+    The rows were checked by that job; they are checked again here, as the seed rows are."""
+    run = ctx.data_dir / "artifacts" / CTGOV_PIPELINE / "current"
+    rows_file = run / "rows.parquet"
+    if not rows_file.is_file():
+        return "", []
+    manifest = (run / "manifest.json").read_bytes()
+    frame = pl.read_parquet(rows_file)
+    rows = [
+        evidence_row(_as_text(r), f"{CTGOV_PIPELINE}:{i}") for i, r in enumerate(frame.to_dicts())
+    ]
+    return sha256_bytes(manifest), rows
+
+
+def _as_text(r: Mapping[str, object]) -> dict[str, str]:
+    """A stored row back to the strings of a seed line."""
+    out = {c: "" for c in SEED_COLUMNS_FULL}
+    for k, v in r.items():
+        if k in out and v is not None:
+            out[k] = ("true" if v else "false") if isinstance(v, bool) else str(v)
+    return out
+
+
+def _ctgov_dates(rows: Sequence[Row]) -> list[str]:
+    return [str(r["extracted_at"]) for r in rows[:1]]
+
+
 class ModelkitEvidenceJob(Job[bytes]):
     name = "modelkit_evidence"
     source_id = "modelkit_evidence"
     schema = EVIDENCE_SCHEMA
     polars_schema: ClassVar[Mapping[str, pl.DataType]] = EVIDENCE_ROW
+
+    def __init__(self) -> None:
+        self._ctgov: list[Row] = []
 
     def fetch(self, ctx: RunContext) -> RawInput[bytes]:
         data = ctx.repo_root.joinpath(*SEED_PATH).read_bytes()
@@ -354,16 +408,19 @@ class ModelkitEvidenceJob(Job[bytes]):
         if m1.exists():
             data = data + _SPLIT.encode() + m1.read_bytes()
         retrieved = ctx.now()
+        fingerprint, self._ctgov = _current_ctgov(ctx)
         dates = sorted(
             {d for d in re.findall(r"20[0-9]{2}-[0-9]{2}-[0-9]{2}$", data.decode(), re.M)}
         )
         return RawInput(
             payload=data,
             source_urls=(),
-            source_sha256=sha256_bytes(data),
+            source_sha256=sha256_bytes(data + fingerprint.encode()),
             retrieved_at=retrieved,
-            snapshot_date=dates[-1] if dates else retrieved.date().isoformat(),
+            snapshot_date=max([*dates, *_ctgov_dates(self._ctgov)])
+            if dates or self._ctgov
+            else retrieved.date().isoformat(),
         )
 
     def parse(self, raw: RawInput[bytes]) -> ParseResult:
-        return parse_seed(raw.payload.decode("utf-8"))
+        return parse_seed(raw.payload.decode("utf-8"), self._ctgov)

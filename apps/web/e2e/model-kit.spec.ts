@@ -46,8 +46,43 @@ const locales = process.env.E2E_LOCALES
   ? LOCALES.filter((l) => process.env.E2E_LOCALES!.split(",").includes(l))
   : LOCALES;
 
+/** The list route as the API answers it: name search, status, has_set, limit and offset. */
+const listStub =
+  (r: Recorded) =>
+  (_body: unknown, url: URL): { body: unknown } => {
+    const all = r.drugs.drugs as Json[];
+    const q = (url.searchParams.get("q") ?? "").toLowerCase();
+    const st = url.searchParams.get("status");
+    const hasSet = url.searchParams.get("has_set") === "true";
+    const limit = Number(url.searchParams.get("limit") ?? 50);
+    const offset = Number(url.searchParams.get("offset") ?? 0);
+    const kept = all.filter(
+      (d) =>
+        (!q ||
+          d.key.includes(q.replaceAll(" ", "_")) ||
+          d.name.toLowerCase().includes(q)) &&
+        (!st || d.status === st) &&
+        (!hasSet || d.has_set),
+    );
+    const counts: Record<string, number> = {
+      all: all.length,
+      with_set: all.filter((d) => d.has_set).length,
+    };
+    for (const s of ["validated", "not_validated", "failed"])
+      counts[s] = all.filter((d) => d.status === s).length;
+    return {
+      body: {
+        ...r.drugs,
+        drugs: kept.slice(offset, offset + limit),
+        total: kept.length,
+        offset,
+        limit,
+        counts,
+      },
+    };
+  };
 const stubsOf = (r: Recorded) => ({
-  "/modelkit/drugs": { body: r.drugs },
+  "/modelkit/drugs": listStub(r),
   "/modelkit/validation": { body: r.validation },
   ...Object.fromEntries(
     Object.keys(r.drug).flatMap((k) => [
@@ -65,6 +100,7 @@ const REL_DRUG = Object.keys(rel.drug).find(
     rel.drug[k]!.validation.points.length,
 )!;
 
+const PAGE = 25; // drugs per page of the list
 const VALIDATED = "ertugliflozin";
 const FAILED = "sunitinib"; // one Cmax point outside 2-fold (strict rule, owner decision 2026-11-11)
 const WITH_SET = "dolutegravir";
@@ -204,8 +240,9 @@ test.describe("list", () => {
   }) => {
     await stubApi(page, relStubs);
     await page.goto("/en/research/model-kit");
+    const all = rel.drugs.drugs as Json[];
     const rows = page.getByTestId("mk-drug");
-    await expect(rows).toHaveCount(rel.drugs.drugs.length);
+    await expect(rows).toHaveCount(Math.min(PAGE, all.length));
     for (const row of await rows.all()) {
       await expect(row.getByTestId("mk-experimental")).toHaveText(
         "Experimental",
@@ -213,12 +250,9 @@ test.describe("list", () => {
       await expect(row.getByTestId("mk-status")).toBeVisible();
       await expect(row).toContainText(/\d+ stud/);
     }
-    const failed = rel.drugs.drugs.find((d: Json) => d.status === "failed");
-    expect(failed).toBeTruthy();
-    const name = failed.name as string;
-    await expect(
-      page.locator(`[data-testid="mk-drug"]`).filter({ hasText: name }),
-    ).toContainText("Failed");
+    await expect(page.getByTestId("mk-summary")).toContainText(
+      `${all.length} drug`,
+    );
     await expect(page.getByTestId("mk-interval")).toContainText(
       "No interval is shown",
     );
@@ -226,14 +260,80 @@ test.describe("list", () => {
     await expect(page.getByTestId("mk-system-limits")).toContainText(
       "Read every value as unverified",
     );
-    await page.getByRole("link", { name: new RegExp(name) }).click();
-    await expect(page).toHaveURL(new RegExp(`model-kit/drug#${failed.key}$`));
-    await expect(page.getByRole("heading", { level: 1 })).toHaveText(name);
+    // the gate: how many drugs have both AUC and Cmax tested, and whether that is enough
+    await expect(page.getByTestId("mk-gate")).toContainText(
+      String(rel.validation.n_drugs_both_tested),
+    );
+  });
+
+  test("search, status filter and pages narrow the list and open a drug", async ({
+    page,
+  }) => {
+    await stubApi(page, relStubs);
+    await page.goto("/en/research/model-kit");
+    const all = rel.drugs.drugs as Json[];
+    const failed = all.find((d) => d.status === "failed");
+    expect(failed).toBeTruthy();
+    // status filter
+    await page.getByTestId("mk-status-filter").selectOption("failed");
+    const nFailed = all.filter((d) => d.status === "failed").length;
+    await expect(page.getByTestId("mk-matches")).toContainText(
+      `${nFailed} drug`,
+    );
+    await expect(page.getByTestId("mk-drug").first()).toContainText("Failed");
+    await page.getByTestId("mk-status-filter").selectOption("");
+    // name search (waits for a pause in typing) and a search without a match
+    await page.getByTestId("mk-search").fill(failed!.name.slice(0, 5));
+    await expect(
+      page.locator('[data-testid="mk-drug"]').filter({ hasText: failed!.name }),
+    ).toBeVisible();
+    await page.getByTestId("mk-search").fill("zzzzzzzz");
+    await expect(page.getByTestId("mk-matches")).toContainText("0 drugs");
+    await expect(
+      page.getByText(messages.en.ModelKit.list.noMatch),
+    ).toBeVisible();
+    await page.getByTestId("mk-search").fill("");
+    // pages: 25 at a time, previous disabled on the first page
+    if (all.length > PAGE) {
+      await expect(page.getByTestId("mk-prev")).toBeDisabled();
+      await page.getByTestId("mk-next").click();
+      await expect(page.getByTestId("mk-range")).toContainText(
+        `${PAGE + 1}–${Math.min(2 * PAGE, all.length)} of ${all.length}`,
+      );
+      await expect(page.getByTestId("mk-drug").first()).toContainText(
+        all[PAGE]!.name,
+      );
+      await page.getByTestId("mk-prev").click();
+      await expect(page.getByTestId("mk-range")).toContainText(`1–${PAGE}`);
+    }
+    // a row opens its drug page
+    await page.getByTestId("mk-search").fill(failed!.name);
+    await page
+      .getByRole("link", { name: new RegExp(failed!.name) })
+      .first()
+      .click();
+    await expect(page).toHaveURL(new RegExp(`model-kit/drug#${failed!.key}$`));
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+      failed!.name,
+    );
   });
 
   test("empty and 503", async ({ page }) => {
     await stubApi(page, {
-      "/modelkit/drugs": { body: { ...fx.drugs, drugs: [] } },
+      "/modelkit/drugs": {
+        body: {
+          ...fx.drugs,
+          drugs: [],
+          total: 0,
+          counts: {
+            all: 0,
+            with_set: 0,
+            validated: 0,
+            not_validated: 0,
+            failed: 0,
+          },
+        },
+      },
     });
     await page.goto("/en/research/model-kit");
     await expect(page.getByText(messages.en.ModelKit.list.empty)).toBeVisible();
@@ -452,8 +552,14 @@ test.describe("demo mode", () => {
     const seen = recordRequests(page);
     await page.goto("/en/research/model-kit");
     await expect(page.getByTestId("mk-drug")).toHaveCount(
-      rel.drugs.drugs.length,
+      Math.min(PAGE, rel.drugs.drugs.length),
     );
+    // the demo searches the recorded list in the browser, still with no request
+    await page
+      .getByTestId("mk-search")
+      .fill(rel.drugs.drugs[0].name.slice(0, 5));
+    await expect(page.getByTestId("mk-drug").first()).toBeVisible();
+    await page.getByTestId("mk-search").fill("");
     await expect(page.getByTestId("mk-system")).toBeVisible();
     await expect(page.getByTestId("mk-demo")).toBeVisible();
     await page.goto(`/en/research/model-kit/drug#${REL_DRUG}`);

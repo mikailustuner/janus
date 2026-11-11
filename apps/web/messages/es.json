@@ -2883,9 +2883,9 @@
     "experimental": "Experimental",
     "researchUse": "Solo para uso en investigación. No para decisiones clínicas.",
     "expertReview": "Aún no se ha realizado una revisión por expertos.",
-    "demo": "Demo: respuestas grabadas el {date}, no se envía ninguna petición.",
+    "demo": "Demo: respuestas grabadas el {date}, no se envía ninguna petición. La lista contiene todos los medicamentos; las páginas se graban solo para una selección.",
     "loading": "Cargando el kit de modelos…",
-    "intro": "Conjuntos de parámetros trazables hasta la evidencia para unos pocos fármacos, cada uno probado con estudios reservados, con cada valor enlazado a su cita de origen. No es una calculadora de dosis y no da consejo a ninguna persona.",
+    "intro": "Conjuntos de parámetros trazables hasta la evidencia para los fármacos con evidencia suficiente (la mayoría de los del conjunto aún no tiene), cada uno probado con estudios reservados, con cada valor enlazado a su cita de origen. No es una calculadora de dosis y no da consejo a ninguna persona.",
     "introValidation": "Un estado describe cómo le fue a un conjunto de parámetros frente a un puñado de estudios reservados. No es una afirmación sobre el medicamento.",
     "yes": "Sí",
     "no": "No",
@@ -2898,7 +2898,18 @@
       "title": "Fármacos",
       "summary": "{count, plural, one {# fármaco} other {# fármacos}} · experimental",
       "studies": "{count, plural, one {# estudio} other {# estudios}}",
-      "empty": "No hay fármacos en esta versión."
+      "empty": "No hay fármacos en esta versión.",
+      "filter": "Buscar un medicamento",
+      "search": "Buscar por nombre",
+      "status": "Estado",
+      "anyStatus": "Cualquier estado",
+      "hasSet": "Solo medicamentos con un conjunto de parámetros",
+      "matches": "{count, plural, one {# medicamento coincide} other {# medicamentos coinciden}}",
+      "noMatch": "Ningún medicamento coincide con estos filtros.",
+      "pages": "Páginas de la lista de medicamentos",
+      "prev": "Anterior",
+      "next": "Siguiente",
+      "range": "{from}–{to} de {total}"
     },
     "system": {
       "title": "Informe del sistema",
@@ -2912,7 +2923,14 @@
       "ofN": "{k} de {n}",
       "wilson": "{share}, intervalo de Wilson del 95 % de {low} a {high}",
       "limits": "Lo que este informe puede y no puede decir",
-      "minDrugs": "Hacen falta al menos {n} fármacos para que las proporciones se lean como algo más que una descripción."
+      "minDrugs": "Hacen falta al menos {n} fármacos para que las proporciones se lean como algo más que una descripción.",
+      "bothTested": "AUC y Cmax probadas",
+      "bothTestedSentence": "{count, plural, one {# medicamento con AUC y Cmax probadas en estudios reservados} other {# medicamentos con AUC y Cmax probadas en estudios reservados}}",
+      "points": "Puntos dentro de un factor 2",
+      "pointsOf": "{k} de {n} puntos",
+      "pointsGmfe": "GMFE de los puntos: {gmfe}",
+      "gateReached": "{both} medicamentos tienen AUC y Cmax probadas en estudios reservados (hacen falta al menos {min}), así que la barrera puede leerse como los recuentos y proporciones de arriba. Sigue describiendo estos medicamentos, no los medicamentos en general.",
+      "gateNotReached": "Solo {both, plural, one {# medicamento tiene} other {# medicamentos tienen}} AUC y Cmax probadas en estudios reservados; hacen falta al menos {min}. La barrera aún no puede interpretarse: los recuentos de arriba son solo descripción."
     },
     "drug": {
       "statusTitle": "Estado de validación",
@@ -3095,7 +3113,7 @@
       "point_outside_2_fold": "Al menos una observación reservada queda fuera de un factor 2 de la predicción.",
       "all_points_within_2_fold": "Se probaron el AUC y la Cmax y cada observación reservada está dentro de un factor 2.",
       "cl_from_dose_and_auc": "Derivado: CL/F = dosis / AUC hasta el infinito de un brazo de estudio (CL para una dosis intravenosa).",
-      "confirmed_precision_below_target": "En una muestra ciega de valores confirmados, dos pasadas de revisión automatizadas juzgaron correctos el 69 % (n = 85, intervalo del 95 % de 59 a 78 %), por debajo del objetivo del 90 % de este hito. Lea cada valor como no verificado."
+      "confirmed_precision_below_target": "En una muestra ciega de valores confirmados, dos pasadas de revisión automatizadas juzgaron correctos el 73 % (n = 97, intervalo del 95 % de 64 a 81 %), por debajo del objetivo del 90 % de este hito. Lea cada valor como no verificado."
     },
     "scrollHint": "Desplácese hacia los lados para ver todas las columnas."
   }

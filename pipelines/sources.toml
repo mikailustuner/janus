@@ -309,10 +309,24 @@ publisher = "Janus"
 license = "Per row: each row keeps the terms of its own source (see the four sources below)"
 notes = [
   "Research use only. Not for clinical decisions. Expert review has not yet been done.",
-  "Short quotes, locators and values with the verdicts of two automated readers; the committed inputs are data/modelkit/evidence_seed.csv (milestone M0) and data/modelkit/evidence_m1.csv (milestone M1, 50 drugs, ClinicalTrials.gov and DailyMed).",
+  "Short quotes, locators and values with the verdicts of two automated readers; the committed inputs are data/modelkit/evidence_seed.csv (milestone M0) and data/modelkit/evidence_m1.csv (milestone M1, 50 drugs, ClinicalTrials.gov and DailyMed); from milestone M2 the ClinicalTrials.gov rows of the whole 609-drug pool come from the job modelkit_ctgov.",
 ]
 storage = "cache"
 cadence_days = 90
+
+[[sources]]
+id = "modelkit_ctgov"
+section = "clinical"
+name = "Janus drug model kit: ClinicalTrials.gov bulk intake (experimental)"
+publisher = "Janus"
+license = "The rows keep the terms of ClinicalTrials.gov (see the next source)"
+notes = [
+  "Research use only. Not for clinical decisions. Expert review has not yet been done.",
+  "One download of the official bulk file of all study records (ctg-studies.json.zip, about 2 GB), read by the job and then removed; the raw file is never committed. Studies with posted results that name a drug of the pool and report a PK outcome measure are read by two automated readers.",
+]
+storage = "cache"
+cadence_days = 90
+urls = ["https://clinicaltrials.gov/data-api/about-api/api-downloads"]
 
 [[sources]]
 id = "clinicaltrials_gov"
@@ -321,7 +335,8 @@ name = "ClinicalTrials.gov posted results (model kit evidence)"
 publisher = "U.S. National Library of Medicine"
 license = "Free to reuse with attribution (ClinicalTrials.gov terms and conditions); some records may carry third-party copyright"
 notes = [
-  "Source of the data: ClinicalTrials.gov. The date each record was processed by ClinicalTrials.gov is shown with every row (record last updated; retrieved 2026-11-10).",
+  "Source of the data: ClinicalTrials.gov. The date each record was processed by ClinicalTrials.gov is shown with every row (record last updated). Milestone M1 rows were retrieved 2026-11-10 through the data API; from milestone M2 the rows come from the official bulk download of all study records (https://clinicaltrials.gov/api/v2/studies/download?format=json.zip, one file, not a crawl; processed 2026-11-11), because robots.txt disallows crawling the API.",
+  "Terms as read for the pilot (page last updated January 31, 2023): attribute the source as ClinicalTrials.gov, show the date the data were processed, state the modifications made, keep the data current (the weekly refresh replaces the rows). Some records may carry third-party copyright; no proprietary rights are asserted. The terms page is rendered by the browser; on 2026-11-11 it could not be read again by the crawler, so the 2023 text is the one relied on.",
   "Modifications by Janus: values were re-typed from the posted results, units were converted to canonical units (for example mL/min to L/h), rows were filtered by analyte, arm and population, and short parts of the posted text are quoted. The registry text is not changed beyond that.",
   "The study records are entered by sponsors; NLM checks format, not scientific validity. Not an NLM endorsement.",
 ]

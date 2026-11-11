@@ -12,6 +12,7 @@ import logging
 import sys
 from collections.abc import Sequence
 from typing import Annotated, Any, Final, Literal, cast
+from urllib.parse import quote
 
 import httpx2
 from mcp.server.mcpserver import MCPServer
@@ -217,7 +218,8 @@ def build_server(config: Config, transport: httpx2.AsyncBaseTransport | None = N
         ]
         | None = None,
     ) -> dict[str, Any]:
-        payload = await api("GET", "/modelkit/drugs")
+        path = "/modelkit/drugs?limit=50" + (f"&q={quote(query)}" if query else "")
+        payload = await api("GET", path)
         if query and isinstance(payload, dict):
             obj = cast(dict[str, Any], payload)
             raw = obj.get("drugs")

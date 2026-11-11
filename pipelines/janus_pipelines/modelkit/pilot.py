@@ -123,6 +123,48 @@ def _clean_quote(text: str) -> str:
     return re.sub(r"\s+", " ", text).strip()[:360]
 
 
+def finalize_rows(
+    pairs: list[Paired], table: IdentityTable
+) -> tuple[list[dict[str, str]], Counter[str]]:
+    """Seed rows (strings) for every paired candidate, de-duplicated and checked, plus the derived
+    clearances. Returns the rows and the counts of dropped candidates by reason."""
+    rows: list[dict[str, str]] = []
+    dropped = Counter[str]()
+    seen: set[tuple[str, str, str, str]] = set()
+    for p in pairs:
+        r = candidate_row(p, table)
+        if r is None:
+            dropped["observation_without_dose"] += 1
+            continue
+        r["quote"] = _clean_quote(r["quote"])
+        k = (r["drug_key"], r["parameter"], r["source_locator"], r["value"])
+        if k in seen:
+            dropped["duplicate"] += 1
+            continue
+        seen.add(k)
+        try:
+            evidence_row(r, "check")
+        except ValueError as exc:
+            dropped["invalid:" + str(exc).split(":", 1)[-1].strip()[:50]] += 1
+            continue
+        rows.append(r)
+    dicts = [evidence_row(r, "x") for r in rows]
+    derived = derive_clearance(dicts)
+    for dd in derived:
+        row = {c: ("" if dd.get(c) is None else _fmt(dd[c])) for c in SEED_COLUMNS_FULL}
+        row["coadministered"] = "true" if dd["coadministered"] else "false"
+        row["dose_unit"] = "mg"
+        row["reader_a"], row["reader_b"] = dd["reader_a"], dd["reader_b"]
+        row["quote"] = _clean_quote(str(dd["quote"]))
+        try:
+            evidence_row(row, "derived")
+        except ValueError as exc:
+            dropped["derived_invalid:" + str(exc)[:40]] += 1
+            continue
+        rows.append(row)
+    return rows, dropped
+
+
 def run(data: Path, out: Path) -> dict[str, Any]:
     """Read every source, pair the readers, build rows. Returns the metrics."""
     repo = Path(__file__).resolve().parents[3]
@@ -165,40 +207,7 @@ def run(data: Path, out: Path) -> dict[str, Any]:
             "b": len(b_rows),
             "confirmed": sum(x.result.confirmed for x in p),
         }
-    rows: list[dict[str, str]] = []
-    dropped = Counter[str]()
-    seen: set[tuple[str, str, str, str]] = set()
-    for p in pairs:
-        r = candidate_row(p, table)
-        if r is None:
-            dropped["observation_without_dose"] += 1
-            continue
-        r["quote"] = _clean_quote(r["quote"])
-        k = (r["drug_key"], r["parameter"], r["source_locator"], r["value"])
-        if k in seen:
-            dropped["duplicate"] += 1
-            continue
-        seen.add(k)
-        try:
-            evidence_row(r, "check")
-        except ValueError as exc:
-            dropped["invalid:" + str(exc).split(":", 1)[-1].strip()[:50]] += 1
-            continue
-        rows.append(r)
-    dicts = [evidence_row(r, "x") for r in rows]
-    derived = derive_clearance(dicts)
-    for dd in derived:
-        row = {c: ("" if dd.get(c) is None else _fmt(dd[c])) for c in SEED_COLUMNS_FULL}
-        row["coadministered"] = "true" if dd["coadministered"] else "false"
-        row["dose_unit"] = "mg"
-        row["reader_a"], row["reader_b"] = dd["reader_a"], dd["reader_b"]
-        row["quote"] = _clean_quote(str(dd["quote"]))
-        try:
-            evidence_row(row, "derived")
-        except ValueError as exc:
-            dropped["derived_invalid:" + str(exc)[:40]] += 1
-            continue
-        rows.append(row)
+    rows, dropped = finalize_rows(pairs, table)
     write_csv(out / "rows_reader_output.csv", rows)  # exactly what the readers confirmed
     enriched = enrich_label_rows(rows, docs, {slug(d["name"]): d["set_id"] for d in pilot})
     write_csv(out / "rows_all.csv", rows)

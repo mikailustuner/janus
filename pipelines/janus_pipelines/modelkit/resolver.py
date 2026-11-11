@@ -17,7 +17,7 @@ import re
 import unicodedata
 from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Final, Literal
+from typing import Any, Final, Literal
 
 from janus_pipelines.modelkit.confirm import Context
 
@@ -89,6 +89,28 @@ _SPLIT: Final = re.compile(
 )
 
 
+def _trie_pattern(words: Sequence[str]) -> str:
+    """One regular expression for many words, built from a prefix tree so matching does not scan every
+    word at every position (a pool of hundreds of drugs has thousands of names). The longest word
+    that fits is tried first, as with an alternation sorted by length."""
+    root: dict[str, Any] = {}
+    for w in words:
+        node = root
+        for ch in w:
+            node = node.setdefault(ch, {})
+        node[""] = {}
+
+    def build(node: dict[str, Any]) -> str:
+        end = "" in node
+        alts = [re.escape(ch) + build(child) for ch, child in sorted(node.items()) if ch]
+        if not alts:
+            return ""
+        body = alts[0] if len(alts) == 1 else "(?:" + "|".join(alts) + ")"
+        return f"(?:{body})?" if end else body
+
+    return build(root) or "(?!)"
+
+
 class IdentityTable:
     def __init__(self, identities: list[Identity]) -> None:
         self.by_key = {i.drug_key: i for i in identities}
@@ -96,8 +118,7 @@ class IdentityTable:
         for i in identities:
             for n in i.names | i.codes:
                 self._names.setdefault(n, i.drug_key)
-        alts = sorted(self._names, key=len, reverse=True)
-        self._rx = re.compile(r"\b(?:" + "|".join(re.escape(a) for a in alts) + r")\b")
+        self._rx = re.compile(r"\b(?:" + _trie_pattern(list(self._names)) + r")\b")
 
     @classmethod
     def from_csv(cls, text: str) -> IdentityTable:

@@ -131,6 +131,10 @@ class DrugsOut(_Out):
     release: dict[str, Any]
     statements: Statements
     drugs: list[DrugSummary]
+    total: int  # drugs matching the filters
+    offset: int
+    limit: int
+    counts: dict[str, int]  # whole release: by status, plus `all`, `with_set`
 
 
 class DrugOut(_Out):
@@ -204,6 +208,9 @@ class SystemMetricOut(_Out):
     within_2_fold_share: float | None
     wilson_low: float | None
     wilson_high: float | None
+    n_points: int
+    points_within_2_fold: int
+    points_gmfe: float | None
 
 
 class SystemOut(_Out):
@@ -215,6 +222,7 @@ class SystemOut(_Out):
     n_studies: int
     interpretable: bool
     min_drugs_for_interpretation: int
+    n_drugs_both_tested: int
     conformal: str
     caveats: list[str]
     reason_text: dict[str, str]
@@ -321,7 +329,7 @@ def set_out(ps: ParameterSet) -> SetOut:
 
 
 def source_url(r: Ev) -> str | None:
-    m = ex.source_meta().get(f"{r.source_id}:{r.study_id}")
+    m = ex.source_info(r)
     return str(m["url"]) if m else None
 
 
@@ -370,16 +378,67 @@ ATTRIBUTION = [
 ]
 
 
+SEARCH = re.compile(r"^[a-z0-9 _.\-]{1,32}$")
+MAX_LIMIT = 200
+DEFAULT_LIMIT = 50
+
+
+def _summaries(rel: Release) -> list[DrugSummary]:
+    """The summaries of the release, computed once per release object (a release never changes)."""
+    cached: list[DrugSummary] | None = rel.__dict__.get("_summaries")
+    if cached is None:
+        cached = [summary(d) for d in rel.drugs.values()]
+        rel.__dict__["_summaries"] = cached
+    return cached
+
+
 @router.get("/modelkit/drugs", response_model=DrugsOut)
-def drugs(request: Request, release: str | None = None) -> Any:
-    """The drugs of the experimental model kit with their validation status."""
+def drugs(
+    request: Request,
+    release: str | None = None,
+    q: str | None = None,
+    status: str | None = None,
+    has_set: bool | None = None,
+    limit: int = DEFAULT_LIMIT,
+    offset: int = 0,
+) -> Any:
+    """The drugs of the experimental model kit with their validation status. `q` keeps the drugs
+    whose name contains it, `status` and `has_set` filter; `limit` (at most 200) and `offset` page
+    the answer. Sorted by name."""
     rel = _release(request, release)
     if isinstance(rel, JSONResponse):
         return rel
+    bad: list[str] = []
+    needle = (q or "").strip().lower()
+    if q is not None and not SEARCH.match(needle):
+        bad.append("q")
+    if status is not None and status not in ("validated", "not_validated", "failed"):
+        bad.append("status")
+    if not 1 <= limit <= MAX_LIMIT:
+        bad.append("limit")
+    if offset < 0 or offset > 100_000:
+        bad.append("offset")
+    if bad:
+        return JSONResponse({"error": "invalid_request", "fields": bad}, status_code=422)
+    allrows = _summaries(rel)
+    kept = [
+        d
+        for d in allrows
+        if (not needle or needle.replace(" ", "_") in d.key or needle in d.name.lower())
+        and (status is None or d.status == status)
+        and (has_set is None or d.has_set == has_set)
+    ]
+    counts = {"all": len(allrows), "with_set": sum(d.has_set for d in allrows)}
+    for st in ("validated", "not_validated", "failed"):
+        counts[st] = sum(d.status == st for d in allrows)
     return DrugsOut(
         release=rel.info(),
         statements=Statements(),
-        drugs=[summary(d) for d in rel.drugs.values()],
+        drugs=kept[offset : offset + limit],
+        total=len(kept),
+        offset=offset,
+        limit=limit,
+        counts=counts,
     )
 
 
@@ -399,6 +458,7 @@ def system(request: Request, release: str | None = None) -> Any:
         n_studies=s.n_studies,
         interpretable=s.interpretable,
         min_drugs_for_interpretation=s.min_drugs_for_interpretation,
+        n_drugs_both_tested=s.n_drugs_both_tested,
         conformal=s.conformal,
         caveats=[
             "n_very_small",

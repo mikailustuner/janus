@@ -78,3 +78,25 @@ unit 162. Seeds hold 916 rows (all parent rows, at most 3 non-parent rows per dr
 
 Limits: the readers were developed on the same 50 drugs and documents; the two review passes are runs of one model
 family and may share blind spots; the sample measures precision, not recall; run 2 changes were made after seeing run 1.
+
+# Review notes: model kit M2 (automated checks only; expert review has not yet been done)
+
+M2 read the official ClinicalTrials.gov bulk file for the 609-drug pool (design section 11). Pre-registered before any
+result; the figures below are the pre-registered metrics.
+
+| | Result |
+|---|---|
+| Study records in the bulk file / with posted results / with a PK outcome / naming a pool drug | 611,234 / 80,976 / 7,070 / 2,966 |
+| Candidate values (reader A) / rows stored / confirmed parent rows | 67,771 / 36,376 / 2,458 (183 drugs) |
+| Drugs in the store (any row) | 404 |
+| Drugs with a parameter set / complete set | 18 / 4 |
+| Status: Validated / Failed / Not validated | 0 / 1 / 403 |
+| Drugs with AUC and Cmax both tested on held-out studies | 0 (needed: 10) |
+| **Gate** | **Not interpretable.** One held-out Cmax point (enzalutamide, ratio 0.35); no AUC point |
+| Precision of confirmed values (blinded sample, two automated review passes, 166 drugs that are not development drugs) | 0.73 (Wilson 95 % 0.64 to 0.81), n = 97; conservative 0.71 (0.61 to 0.79); below the 0.90 target |
+
+What limits the number of sets: of 2,489 confirmed stated rows (200 drugs), 47 % have an unspecified formulation (an arm
+that does not say tablet or solution) and cannot build or test (design DP-M3); only 612 rows of 72 drugs pass the
+formulation and co-administration filters. A set needs a clearance and a volume (or a half-life), most
+ClinicalTrials.gov records report only Cmax, AUC or Tmax, and the held-out rule makes a study that also reports a
+half-life a building study. Clearances are derived only for a single-dose AUC to infinity with a known route.

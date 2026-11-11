@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import io
 import json
+import re
 import zipfile
 from functools import cache
 from typing import Any
@@ -43,6 +44,27 @@ def source_meta() -> dict[str, dict[str, Any]]:
         path = repo_root() / "data" / "modelkit" / name
         out.update(json.loads(path.read_text(encoding="utf-8")))
     return out
+
+
+_NCT = re.compile(r"^NCT[0-9]{8}$")
+
+
+def source_info(r: Ev, meta: dict[str, dict[str, Any]] | None = None) -> dict[str, Any] | None:
+    """Metadata of the study behind a row: the committed record (milestones M0 and M1) or, for a
+    ClinicalTrials.gov record read by the bulk intake (milestone M2), what the row itself says."""
+    known = (meta if meta is not None else source_meta()).get(f"{r.source_id}:{r.study_id}")
+    if known is not None:
+        return known
+    if r.source_id == "clinicaltrials_gov" and _NCT.match(r.study_id):
+        return {
+            "type": "registry_record",
+            "title": f"ClinicalTrials.gov record {r.study_id}",
+            "url": f"https://clinicaltrials.gov/study/{r.study_id}",
+            "last_update": r.source_version,
+            "retrieved": r.extracted_at,
+            "licence": "ClinicalTrials.gov terms; attribution required",
+        }
+    return None
 
 
 def engine_params(ps: ParameterSet) -> Params:
@@ -208,7 +230,10 @@ def provenance(
         "held_out_studies": [{"source": s, "study": t} for s, t in ps.test_studies],
         "warnings": [{"code": w, "text": text(w)} for w in ps.warnings],
         "validation": None if val is None else validation_summary(val, by_id),
-        "sources": {f"{s}:{t}": meta.get(f"{s}:{t}") for s, t in studies},
+        "sources": {
+            f"{s}:{t}": source_info(next(r for r in rows if r.study == (s, t)), meta)
+            for s, t in studies
+        },
     }
 
 

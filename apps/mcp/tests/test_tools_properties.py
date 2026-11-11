@@ -145,7 +145,7 @@ def tool_calls(draw: st.DrawFn) -> tuple[str, dict[str, Any], str, str, Any]:
     if kind == "janus_time_machine_catalogue":
         return kind, {}, "GET", "/timemachine/catalogue", None
     if kind == "janus_modelkit_search":
-        return kind, {}, "GET", "/modelkit/drugs", None
+        return kind, {}, "GET", "/modelkit/drugs?limit=50", None
     if kind == "janus_modelkit_get":
         key = draw(st.text(string.ascii_lowercase, min_size=1, max_size=20))
         return kind, {"key": key}, "GET", f"/modelkit/drugs/{key}", None
