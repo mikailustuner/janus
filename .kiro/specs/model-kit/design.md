@@ -68,10 +68,13 @@ Server components read the API through the existing server fetch helper; client 
 the evidence popover. Keys in `messages/*.json` under `modelKit`. Design tokens of `design.md`.
 
 ## 6. mrgsolve in CI
-A separate job installs R from the runner image, installs the pinned mrgsolve from a fixed CRAN snapshot with
-binary packages cached, builds the export for every drug with a complete set and compares the mrgsolve curve with
-the Janus engine curve (tolerance 1 %). It runs on pull requests that touch the model kit and nightly; the main
-jobs do not wait for it. Locally: `pytest -m mrgsolve`.
+A separate workflow (`.github/workflows/modelkit-mrgsolve.yml`) runs in the `rocker/r-ver:4.6.1` image (the R of the
+simulator image, CRAN pinned to a dated snapshot), installs mrgsolve 2.0.1 once (cached) and checks the version,
+builds the export for every drug with a complete set and compares the mrgsolve curve with the Janus engine curve
+(tolerance 1 % where the curve is at least 0.1 % of its peak, 0.1 % of the peak elsewhere; one dose and three
+doses). It runs on pushes and pull requests that touch the model kit, nightly and on demand; the main jobs do
+not wait for it and skip the `mrgsolve` tests when R is missing. Locally: `pytest -m mrgsolve`; set
+`JANUS_REQUIRE_MRGSOLVE=1` to turn a missing R into a failure.
 
 ## 7. Correctness properties
 - **M1** The test studies of a drug share no study id with the rows the builder used.

@@ -40,6 +40,10 @@ export type Route =
   | "open/data-quality"
   | "open/faers-onset"
   | "open/faers-onset/row"
+  | "modelkit/drugs"
+  | "modelkit/drug"
+  | "modelkit/evidence"
+  | "modelkit/validation"
   | "simulate"
   | "simulate/compounds"
   | "simulate/jobs"
@@ -83,6 +87,10 @@ export const ROUTES: readonly Route[] = [
   "open/data-quality",
   "open/faers-onset",
   "open/faers-onset/row",
+  "modelkit/drugs",
+  "modelkit/drug",
+  "modelkit/evidence",
+  "modelkit/validation",
   "simulate",
   "simulate/compounds",
   "simulate/jobs",
@@ -146,6 +154,8 @@ export const MESSAGE_KEYS = [
   "DataQuality.errors.unavailable",
   "Onset.errors.unavailable",
   "Onset.errors.unknown",
+  "ModelKit.errors.unavailable",
+  "ModelKit.errors.unknown",
   "Simulation.errors.unavailable",
   "Simulation.errors.queueFull",
   "Simulation.errors.rateLimited",
@@ -295,6 +305,13 @@ export function messageKeyFor(
       return "Onset.errors.unavailable";
     if (status === 404 && code === "unknown_position")
       return "Onset.errors.unknown";
+  }
+  // model-kit Req 6: no release installed (503), or an unknown drug key (404).
+  if (route.startsWith("modelkit/")) {
+    if (status === 503 && code === "modelkit_unavailable")
+      return "ModelKit.errors.unavailable";
+    if (status === 404 && code === "unknown_drug")
+      return "ModelKit.errors.unknown";
   }
   // simulation-service design §2: switched off, queue full, rate limited, expired job.
   if (route.startsWith("simulate")) {

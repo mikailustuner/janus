@@ -1,0 +1,476 @@
+/**
+ * The experimental drug model starter kit (model-kit Req 6): decoders for the read-only
+ * `/modelkit/*` answers, the live client and a demo client over the recorded answers
+ * (`modelkit.recorded.json`, no request at all), and the pure view model (hash key, status badge,
+ * log-log chart maths, reason-code lookup). The API sends reason CODES; the interface translates
+ * them (messages `ModelKit.reasons.*`). Research use only. Not for clinical decisions.
+ */
+import { HttpClient, type Result } from "@/api/client";
+import * as D from "@/api/decode";
+
+const n = D.nullable(D.num);
+
+export const STATUSES = ["validated", "not_validated", "failed"] as const;
+export type Status = (typeof STATUSES)[number];
+export const TARGETS = ["janus", "mrgsolve"] as const;
+export type Target = (typeof TARGETS)[number];
+
+const release = D.obj({
+  run_id: D.str,
+  snapshot_date: D.str,
+  pipeline_version: D.str,
+});
+const statements = D.obj({
+  research_use: D.str,
+  expert_review: D.str,
+  experimental: D.str,
+});
+const metric = D.obj({
+  name: D.lit("auc", "cmax"),
+  tested: D.bool,
+  n_points: D.int,
+  n_studies: D.int,
+  gm_ratio: n,
+  gmfe: n,
+  within_2_fold_points: D.int,
+  in_band: D.nullable(D.bool),
+  near_limit: D.nullable(D.bool),
+});
+const status = D.lit(...STATUSES);
+const summary = D.obj({
+  key: D.str,
+  name: D.str,
+  status,
+  status_reasons: D.arr(D.str),
+  has_set: D.bool,
+  set_complete: D.bool,
+  basis: D.nullable(D.str),
+  rows: D.int,
+  confirmed_rows: D.int,
+  studies: D.int,
+  auc: metric,
+  cmax: metric,
+  exportable: D.bool,
+  experimental: D.lit(true),
+});
+const reasonOut = D.obj({ evidence_id: D.str, reason: D.str });
+const point = D.obj({
+  evidence_id: D.str,
+  metric: D.lit("auc", "cmax"),
+  study_id: D.str,
+  dose_mg: D.num,
+  observed: D.num,
+  predicted: D.num,
+  ratio: D.num,
+  within_2_fold: D.bool,
+});
+const validation = D.obj({
+  status,
+  reasons: D.arr(D.str),
+  metrics: D.arr(metric),
+  points: D.arr(point),
+  excluded: D.arr(reasonOut),
+  suspect: D.arr(D.str),
+  interval_reason: D.str,
+  interval_min_studies: D.int,
+  interval_n_studies: D.int,
+  band: D.arr(D.num),
+  unit_note: D.str,
+});
+const param = D.obj({
+  name: D.str,
+  label: D.str,
+  value: D.num,
+  unit: D.str,
+  confidence_class: D.lit("A", "B", "C"),
+  n_studies: D.int,
+  between_study_cv: n,
+  derivation: D.nullable(D.str),
+  notes: D.arr(D.str),
+  evidence_ids: D.arr(D.str),
+});
+const paramSet = D.obj({
+  model: D.str,
+  model_reason: D.str,
+  basis: D.lit("iv", "oral_apparent"),
+  apparent: D.bool,
+  complete: D.bool,
+  missing: D.arr(D.str),
+  warnings: D.arr(D.str),
+  implied_half_life_h: n,
+  stated_half_life_h: n,
+  params: D.arr(param),
+  left_out: D.arr(reasonOut),
+  held_out_studies: D.arr(D.str),
+});
+const text = D.record(D.str);
+
+export const drugsOut = D.obj({
+  release,
+  statements,
+  drugs: D.arr(summary),
+});
+export const drugOut = D.obj({
+  release,
+  statements,
+  summary,
+  parameter_set: D.nullable(paramSet),
+  no_set_reasons: D.arr(D.str),
+  validation,
+  targets: D.arr(D.lit(...TARGETS)),
+  reason_text: text,
+});
+const evidenceRow = D.obj({
+  id: D.str,
+  analyte: D.str,
+  analyte_class: D.str,
+  parameter: D.str,
+  value: D.num,
+  value_low: n,
+  value_high: n,
+  statistic: D.str,
+  unit: D.str,
+  value_si: D.num,
+  dose: n,
+  route: D.str,
+  regimen: D.str,
+  interval_h: n,
+  population: D.nullable(D.str),
+  n_subjects: D.nullable(D.int),
+  formulation: D.str,
+  coadministered: D.bool,
+  study_id: D.str,
+  source_id: D.str,
+  source_locator: D.str,
+  source_version: D.str,
+  source_url: D.nullable(D.str),
+  quote: D.str,
+  reader_a: D.lit("agree", "disagree"),
+  reader_b: D.lit("agree", "disagree"),
+  confirmed: D.bool,
+  confirm_reason: D.str,
+  note: D.nullable(D.str),
+  extracted_at: D.str,
+  role: D.lit("building", "validation", "excluded"),
+  reason: D.nullable(D.str),
+});
+export const evidenceOut = D.obj({
+  release,
+  statements,
+  drug: D.str,
+  rows: D.arr(evidenceRow),
+  attribution: D.arr(D.str),
+  reason_text: text,
+});
+export const systemOut = D.obj({
+  release,
+  statements,
+  n_drugs: D.int,
+  by_status: D.record(D.int),
+  metrics: D.arr(
+    D.obj({
+      name: D.lit("auc", "cmax"),
+      n_drugs: D.int,
+      gmfe: n,
+      within_2_fold: D.int,
+      within_2_fold_share: n,
+      wilson_low: n,
+      wilson_high: n,
+    }),
+  ),
+  n_studies: D.int,
+  interpretable: D.bool,
+  min_drugs_for_interpretation: D.int,
+  conformal: D.str,
+  caveats: D.arr(D.str),
+  reason_text: text,
+});
+
+export type DrugSummary = D.Infer<typeof summary>;
+export type DrugsOut = D.Infer<typeof drugsOut>;
+export type DrugOut = D.Infer<typeof drugOut>;
+export type ParamOut = D.Infer<typeof param>;
+export type MetricOut = D.Infer<typeof metric>;
+export type PointOut = D.Infer<typeof point>;
+export type EvidenceRow = D.Infer<typeof evidenceRow>;
+export type EvidenceOut = D.Infer<typeof evidenceOut>;
+export type SystemOut = D.Infer<typeof systemOut>;
+
+export interface ModelKitFixture {
+  recorded: string;
+  drugs: unknown;
+  validation: unknown;
+  drug: Record<string, unknown>;
+  evidence: Record<string, unknown>;
+}
+
+export interface ModelKitClient {
+  /** True when the zip downloads can be offered (live service only). */
+  downloads: boolean;
+  drugs(): Promise<Result<DrugsOut>>;
+  system(): Promise<Result<SystemOut>>;
+  drug(key: string): Promise<Result<DrugOut>>;
+  evidence(key: string): Promise<Result<EvidenceOut>>;
+  exportUrl(key: string, target: Target): string;
+}
+
+export const KEY = /^[a-z][a-z0-9_]{0,31}$/;
+
+/** The drug key of a URL fragment (`#sunitinib`); null when it is not a valid key. */
+export function keyFromHash(hash: string): string | null {
+  const v = hash.replace(/^#/, "");
+  return KEY.test(v) ? v : null;
+}
+
+const http = new HttpClient();
+const buildError = (route: "modelkit/drug" | "modelkit/evidence") =>
+  ({
+    ok: false,
+    error: { kind: "build", route, messageKey: "Errors.client_defect" },
+  }) as const;
+
+export const liveModelKit: ModelKitClient = {
+  downloads: true,
+  drugs: () => http.call("modelkit/drugs", "GET", null, drugsOut),
+  system: () => http.call("modelkit/validation", "GET", null, systemOut),
+  drug: async (key) =>
+    KEY.test(key)
+      ? http.call(
+          "modelkit/drug",
+          "GET",
+          null,
+          drugOut,
+          undefined,
+          `modelkit/drugs/${key}`,
+        )
+      : buildError("modelkit/drug"),
+  evidence: async (key) =>
+    KEY.test(key)
+      ? http.call(
+          "modelkit/evidence",
+          "GET",
+          null,
+          evidenceOut,
+          undefined,
+          `modelkit/drugs/${key}/evidence`,
+        )
+      : buildError("modelkit/evidence"),
+  exportUrl: (key, target) => `/api/modelkit/drugs/${key}/export/${target}`,
+};
+
+export function demoModelKit(fx: ModelKitFixture): ModelKitClient {
+  const contract = (route: "modelkit/drugs" | "modelkit/validation") =>
+    ({
+      ok: false,
+      error: { kind: "contract", route, messageKey: "Errors.generic" },
+    }) as const;
+  const unknown = (route: "modelkit/drug" | "modelkit/evidence") =>
+    ({
+      ok: false,
+      error: {
+        kind: "http",
+        route,
+        status: 404,
+        code: "unknown_drug",
+        fields: [],
+        messageKey: "ModelKit.errors.unknown",
+      },
+    }) as const;
+  const answer = async <T>(
+    d: D.Decoder<T>,
+    raw: unknown,
+    route: "modelkit/drugs" | "modelkit/validation",
+  ): Promise<Result<T>> => {
+    const r = D.decode(d, raw);
+    return r.ok ? { ok: true, data: r.value } : contract(route);
+  };
+  const byKey = async <T>(
+    d: D.Decoder<T>,
+    all: Record<string, unknown>,
+    key: string,
+    route: "modelkit/drug" | "modelkit/evidence",
+  ): Promise<Result<T>> => {
+    if (!Object.hasOwn(all, key)) return unknown(route);
+    const r = D.decode(d, all[key]);
+    return r.ok
+      ? { ok: true, data: r.value }
+      : {
+          ok: false,
+          error: { kind: "contract", route, messageKey: "Errors.generic" },
+        };
+  };
+  return {
+    downloads: false,
+    drugs: () => answer(drugsOut, fx.drugs, "modelkit/drugs"),
+    system: () => answer(systemOut, fx.validation, "modelkit/validation"),
+    drug: (k) => byKey(drugOut, fx.drug, k, "modelkit/drug"),
+    evidence: (k) => byKey(evidenceOut, fx.evidence, k, "modelkit/evidence"),
+    exportUrl: () => "",
+  };
+}
+
+export function loadModelKitFixture(): Promise<ModelKitFixture> {
+  return import("./modelkit.recorded.json").then(
+    (m) => m.default as unknown as ModelKitFixture,
+  );
+}
+
+// --- view model ----------------------------------------------------------------------------------
+
+export type Tone = "validated" | "not_validated" | "failed";
+
+/** Message key and presentation of a status. Never red: red is for real risk only. */
+export function statusBadge(s: Status): { labelKey: string; tone: Tone } {
+  return { labelKey: `ModelKit.status.${s}`, tone: s };
+}
+
+/** Every reason code the API can send; each has a message in `ModelKit.reasons`. */
+export const REASON_CODES = [
+  "not_confirmed",
+  "analyte_not_parent",
+  "coadministered",
+  "fixed_dose_combination",
+  "formulation_not_immediate_release",
+  "bound_not_a_value",
+  "per_kg_not_converted",
+  "held_out_study",
+  "observation_in_building_study",
+  "not_needed_preferred_basis",
+  "auc_to_last_sampling_time_not_comparable",
+  "not_an_observation",
+  "needs_oral_dose",
+  "auc_tau_needs_multiple_dose_interval",
+  "steady_state_cmax_not_modelled",
+  "auc_inf_needs_single_dose",
+  "set_has_no_absorption_rate",
+  "set_cannot_predict_metric",
+  "no_parameter_set",
+  "no_independent_observation",
+  "auc_not_tested",
+  "cmax_not_tested",
+  "tested_ratio_outside_2_fold",
+  "auc_and_cmax_within_2_fold",
+  "auc_near_the_2_fold_limit",
+  "cmax_near_the_2_fold_limit",
+  "auc_some_points_outside_2_fold",
+  "cmax_some_points_outside_2_fold",
+  "no_confirmed_clearance",
+  "no_confirmed_volume",
+  "iv_evidence_incomplete",
+  "iv_without_bioavailability",
+  "no_volume_and_no_half_life",
+  "missing_absorption_no_peak_time",
+  "missing_absorption_no_solution",
+  "bioavailability_capped",
+  "half_life_inconsistent",
+  "studies_disagree",
+  "healthy_adult_preferred",
+  "no_central_volume_evidence",
+  "two_volumes_differ",
+  "two_volumes_agree",
+  "v_from_clf_half_life",
+  "ka_from_tmax",
+  "f_fixed_apparent",
+  "clearance_or_bioavailability",
+  "absorption_rate_or_volume",
+  "n_very_small",
+  "two_automated_passes",
+  "expert_review_pending",
+  "interval_n_too_small",
+  "interval_system_level_only",
+  "not_used",
+] as const;
+
+const KNOWN = new Set<string>(REASON_CODES);
+
+/** The message key of a reason code, or null for a code this version does not know. */
+export function reasonKey(code: string): string | null {
+  return KNOWN.has(code) ? `ModelKit.reasons.${code}` : null;
+}
+
+export const PARAM_NAMES = ["cl", "v", "f", "ka"] as const;
+
+/** Message key of a parameter label; apparent oral values are labelled CL/F, V/F. */
+export function paramKey(name: string, apparent: boolean): string | null {
+  if (!(PARAM_NAMES as readonly string[]).includes(name)) return null;
+  return `ModelKit.param.${apparent && name !== "ka" ? `${name}Apparent` : name}`;
+}
+
+export const EVIDENCE_PARAMS = [
+  "cl",
+  "cl_f",
+  "vss",
+  "vd",
+  "v_f",
+  "t_half",
+  "tmax",
+  "f",
+  "cmax",
+  "auc_inf",
+  "auc_last",
+  "auc_tau",
+  "cl_per_kg",
+  "vd_per_kg",
+] as const;
+
+/** Rows by id, for the evidence behind a value. */
+export function rowsById(
+  rows: readonly EvidenceRow[],
+): Map<string, EvidenceRow> {
+  return new Map(rows.map((r) => [r.id, r]));
+}
+
+// --- chart: observed against predicted, log-log, 2-fold band -------------------------------------
+
+export interface LogAxis {
+  min: number;
+  max: number;
+  /** One tick per decade. */
+  ticks: number[];
+}
+
+/**
+ * One axis for both directions (a square plot, so y = x is the diagonal): whole decades around
+ * every observed and predicted value, at least one decade wide.
+ */
+export function logAxis(values: readonly number[]): LogAxis {
+  const v = values.filter((x) => Number.isFinite(x) && x > 0);
+  if (!v.length) return { min: 1, max: 10, ticks: [1, 10] };
+  const lo = Math.floor(Math.log10(Math.min(...v)) + 1e-9);
+  let hi = Math.ceil(Math.log10(Math.max(...v)) - 1e-9);
+  if (hi <= lo) hi = lo + 1;
+  const ticks: number[] = [];
+  for (let d = lo; d <= hi; d++) ticks.push(10 ** d);
+  return { min: 10 ** lo, max: 10 ** hi, ticks };
+}
+
+/** Position 0-1 of a value on a log axis, clamped. */
+export function logPos(axis: LogAxis, v: number): number {
+  if (!Number.isFinite(v) || v <= 0) return 0;
+  const f =
+    (Math.log10(v) - Math.log10(axis.min)) /
+    (Math.log10(axis.max) - Math.log10(axis.min));
+  return Math.min(1, Math.max(0, f));
+}
+
+/**
+ * The band between y = x / 2 and y = 2x, clipped to the square, as a closed polygon in data space.
+ * Needs max / min >= 4, which `logAxis` guarantees (at least one decade).
+ */
+export function bandPolygon(axis: LogAxis): [number, number][] {
+  const { min, max } = axis;
+  return [
+    [min, min],
+    [min, 2 * min],
+    [max / 2, max],
+    [max, max],
+    [max, max / 2],
+    [2 * min, min],
+  ];
+}
+
+/** Whether a point lies in the 2-fold band (inclusive), by its ratio predicted / observed. */
+export function inBand(p: Pick<PointOut, "observed" | "predicted">): boolean {
+  const r = p.predicted / p.observed;
+  return r >= 0.5 - 1e-12 && r <= 2 + 1e-12;
+}
