@@ -175,7 +175,9 @@ def read_one(label: SpLabel, payload: Payload) -> None:
             payload.drugs_with_text[cls].add(label.drug_key)
     a = sp_a.read_label(label, payload.stats)
     b = sp_b.read_label(label, payload.stats)
-    for p in pair_label(a, b):
+    pairs = pair_label(a, b)
+    counts["labels_with_a_candidate" if pairs else "skip_matched_label_without_a_candidate"] += 1
+    for p in pairs:
         c = p.a or p.b
         assert c is not None  # noqa: S101 - a pair has at least one side
         payload.rows.append(
@@ -208,6 +210,12 @@ def read_one(label: SpLabel, payload: Payload) -> None:
                 "reader_b": "found" if p.b else "none",
             }
         )
+
+
+def names_population(row: Mapping[str, Any]) -> bool:
+    """The quote itself names the population of its class (display rule, fixed in advance, PREREG addendum 3): a
+    statement whose class came only from a sub-section heading is kept in the run but not shown."""
+    return sp_a._POP[str(row["pop_class"])].search(str(row["quote"])) is not None  # pyright: ignore[reportPrivateUsage]
 
 
 def read_partition(zip_bytes: bytes, table: IdentityTable, payload: Payload) -> None:
@@ -291,6 +299,7 @@ class ModelkitSpecialPopulationsJob(Job[Payload]):
             "drugs_with_class_text": {k: len(v) for k, v in sorted(p.drugs_with_text.items())},
             "candidate_pairs": len(rows),
             "confirmed": len(confirmed),
+            "confirmed_displayed": sum(1 for r in confirmed if names_population(r)),
             "confirmed_by_class": dict(sorted(by_class.items())),
             "confirmed_by_class_and_measure": dict(sorted(by_measure.items())),
             "drugs_with_a_confirmed_statement": len({str(r["drug_key"]) for r in confirmed}),
@@ -315,7 +324,7 @@ class ModelkitSpecialPopulationsJob(Job[Payload]):
 
     def on_promote(self, ctx: RunContext, store: Store, run_id: str) -> None:
         """Write the committed copy data/modelkit/special_populations.csv (confirmed statements)."""
-        rows = [r for r in store.read_rows(run_id) if r["confirmed"]]
+        rows = [r for r in store.read_rows(run_id) if r["confirmed"] and names_population(r)]
         text = aggregate_csv(rows)
         out = self.extra_output_paths(ctx)[0]
         out.parent.mkdir(parents=True, exist_ok=True)

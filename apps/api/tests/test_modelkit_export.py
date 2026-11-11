@@ -122,18 +122,41 @@ def test_incomplete_set_does_not_export() -> None:
 
 # --- PK-Sim compound (milestone M4, properties M24 and M25) ---------------------------------------
 
-# Property names of the PK-Sim snapshot classes (PKSim.Core.Snapshots, PK-Sim 12.3 source, GPL-2.0); the export may
-# use only these (the loader ignores or rejects others).
+# Property names of the PK-Sim snapshot classes (PKSim.Core.Snapshots, PK-Sim 12.3 source, GPL-2.0);
+# the export may use only these (the loader ignores or rejects others).
 PKSIM_PROJECT_KEYS = {
-    "Version", "Name", "Description", "ExpressionProfiles", "Individuals", "Populations", "Compounds",
-    "Formulations", "Protocols", "ObserverSets", "Events", "Simulations", "ParameterIdentifications",
-    "ObservedData", "SimulationComparisons", "QualificationPlans",
-}  # fmt: skip
+    "Version",
+    "Name",
+    "Description",
+    "ExpressionProfiles",
+    "Individuals",
+    "Populations",
+    "Compounds",
+    "Formulations",
+    "Protocols",
+    "ObserverSets",
+    "Events",
+    "Simulations",
+    "ParameterIdentifications",
+    "ObservedData",
+    "SimulationComparisons",
+    "QualificationPlans",
+}
 PKSIM_COMPOUND_KEYS = {
-    "Name", "Description", "Parameters", "IsSmallMolecule", "PlasmaProteinBindingPartner", "Lipophilicity",
-    "FractionUnbound", "Solubility", "IntestinalPermeability", "Permeability", "PkaTypes", "Processes",
+    "Name",
+    "Description",
+    "Parameters",
+    "IsSmallMolecule",
+    "PlasmaProteinBindingPartner",
+    "Lipophilicity",
+    "FractionUnbound",
+    "Solubility",
+    "IntestinalPermeability",
+    "Permeability",
+    "PkaTypes",
+    "Processes",
     "CalculationMethods",
-}  # fmt: skip
+}
 
 
 @pytest.mark.parametrize("drug", ["dolutegravir", "ertugliflozin", "sunitinib"])
@@ -145,9 +168,16 @@ def test_pksim_snapshot_uses_only_known_properties_and_invents_nothing(drug: str
     assert set(c) <= PKSIM_COMPOUND_KEYS and c["Name"] == drug
     # nothing physico-chemical, no process, no alternative: the evidence has none (M24)
     assert not set(c) & {
-        "Lipophilicity", "FractionUnbound", "Solubility", "IntestinalPermeability", "Permeability",
-        "PkaTypes", "Processes", "Parameters", "CalculationMethods",
-    }  # fmt: skip
+        "Lipophilicity",
+        "FractionUnbound",
+        "Solubility",
+        "IntestinalPermeability",
+        "Permeability",
+        "PkaTypes",
+        "Processes",
+        "Parameters",
+        "CalculationMethods",
+    }
     assert ex.RESEARCH_USE in c["Description"] and ex.NO_REVIEW in c["Description"]
     inputs = json.loads(files["pksim-inputs.json"])
     missing = {i["key"] for i in inputs["inputs"] if i["status"] == "missing"}
@@ -164,16 +194,18 @@ def test_pksim_clearance_is_not_assigned_to_an_organ() -> None:
 
 
 def test_pksim_zip_is_deterministic() -> None:
-    assert ex.build_zip(files_for("sunitinib", "pksim")) == ex.build_zip(files_for("sunitinib", "pksim"))
+    assert ex.build_zip(files_for("sunitinib", "pksim")) == ex.build_zip(
+        files_for("sunitinib", "pksim")
+    )
 
 
-# --- PK-Sim load and round trip (M25), when R with ospsuite and .NET 8 are present --------------------------------
+# --- PK-Sim load and round trip (M25), when R with ospsuite and .NET 8 are present ---------
 
 
 def _have_pksim() -> bool:
     if shutil.which("Rscript") is None or shutil.which("dotnet") is None:
         return False
-    r = subprocess.run(  # noqa: S603
+    r = subprocess.run(
         ["Rscript", "-e", "quit(status = as.integer(!requireNamespace('ospsuite', quietly=TRUE)))"],  # noqa: S607
         capture_output=True,
         check=False,
@@ -183,8 +215,9 @@ def _have_pksim() -> bool:
 
 
 def _completed_for_test(snap: dict) -> dict:  # type: ignore[type-arg]
-    """The export completed with TEST-ONLY numbers (not drug data) and the building blocks a simulation needs: proves
-    that the exported compound is a valid base for a PK-Sim simulation once a person supplies the missing inputs."""
+    """The export completed with TEST-ONLY numbers (not drug data) and the building blocks a
+    simulation needs: shows that the exported compound is a valid base for a PK-Sim simulation once
+    a person supplies the missing inputs."""
     name = snap["Compounds"][0]["Name"]
     methods = [
         "Cellular partition coefficient method - Rodgers and Rowland",
@@ -192,22 +225,94 @@ def _completed_for_test(snap: dict) -> dict:  # type: ignore[type-arg]
     ]
     comp = {
         **snap["Compounds"][0],
-        "Lipophilicity": [{"Name": "test", "Parameters": [{"Name": "Lipophilicity", "Value": 2.0, "Unit": "Log Units"}]}],
-        "FractionUnbound": [{"Name": "test", "Species": "Human", "Parameters": [{"Name": "Fraction unbound (plasma, reference value)", "Value": 0.5}]}],
-        "Solubility": [{"Name": "test", "Parameters": [{"Name": "Solubility at reference pH", "Value": 1000.0, "Unit": "mg/l"}, {"Name": "Reference pH", "Value": 7.0}]}],
-        "Processes": [{"InternalName": "GlomerularFiltration", "DataSource": "GFR", "Species": "Human", "Parameters": [{"Name": "GFR fraction", "Value": 1.0}]}],
+        "Lipophilicity": [
+            {
+                "Name": "test",
+                "Parameters": [{"Name": "Lipophilicity", "Value": 2.0, "Unit": "Log Units"}],
+            }
+        ],
+        "FractionUnbound": [
+            {
+                "Name": "test",
+                "Species": "Human",
+                "Parameters": [
+                    {"Name": "Fraction unbound (plasma, reference value)", "Value": 0.5}
+                ],
+            }
+        ],
+        "Solubility": [
+            {
+                "Name": "test",
+                "Parameters": [
+                    {"Name": "Solubility at reference pH", "Value": 1000.0, "Unit": "mg/l"},
+                    {"Name": "Reference pH", "Value": 7.0},
+                ],
+            }
+        ],
+        "Processes": [
+            {
+                "InternalName": "GlomerularFiltration",
+                "DataSource": "GFR",
+                "Species": "Human",
+                "Parameters": [{"Name": "GFR fraction", "Value": 1.0}],
+            }
+        ],
         "CalculationMethods": methods,
         "Parameters": [{"Name": "Molecular weight", "Value": 300.0, "Unit": "g/mol"}],
-    }  # fmt: skip
-    ind = {"Name": "Ind", "OriginData": {"CalculationMethods": ["SurfaceAreaPlsInt_VAR1", "Body surface area - Mosteller"], "Species": "Human", "Population": "European_ICRP_2002", "Gender": "MALE", "Age": {"Value": 30.0, "Unit": "year(s)"}}}  # fmt: skip
-    prot = {"Name": "IV bolus", "ApplicationType": "IntravenousBolus", "DosingInterval": "Single", "Parameters": [{"Name": "Start time", "Value": 0.0, "Unit": "h"}, {"Name": "InputDose", "Value": 10.0, "Unit": "mg"}]}  # fmt: skip
+    }
+    ind = {
+        "Name": "Ind",
+        "OriginData": {
+            "CalculationMethods": ["SurfaceAreaPlsInt_VAR1", "Body surface area - Mosteller"],
+            "Species": "Human",
+            "Population": "European_ICRP_2002",
+            "Gender": "MALE",
+            "Age": {"Value": 30.0, "Unit": "year(s)"},
+        },
+    }
+    prot = {
+        "Name": "IV bolus",
+        "ApplicationType": "IntravenousBolus",
+        "DosingInterval": "Single",
+        "Parameters": [
+            {"Name": "Start time", "Value": 0.0, "Unit": "h"},
+            {"Name": "InputDose", "Value": 10.0, "Unit": "mg"},
+        ],
+    }
     sim = {
-        "Name": "Sim", "Model": "4Comp", "Individual": "Ind", "Solver": {},
-        "OutputSchema": [{"Parameters": [{"Name": "Start time", "Value": 0.0, "Unit": "h"}, {"Name": "End time", "Value": 24.0, "Unit": "h"}, {"Name": "Resolution", "Value": 4.0, "Unit": "pts/h"}]}],
-        "OutputSelections": [f"Organism|PeripheralVenousBlood|{name}|Plasma (Peripheral Venous Blood)"],
-        "Compounds": [{"Name": name, "CalculationMethods": methods, "Processes": [{"Name": "Glomerular Filtration-GFR", "SystemicProcessType": "GFR"}], "Protocol": {"Name": "IV bolus"}}],
-    }  # fmt: skip
-    return {"Version": snap["Version"], "Name": "completed", "Individuals": [ind], "Compounds": [comp], "Protocols": [prot], "Simulations": [sim]}  # fmt: skip
+        "Name": "Sim",
+        "Model": "4Comp",
+        "Individual": "Ind",
+        "Solver": {},
+        "OutputSchema": [
+            {
+                "Parameters": [
+                    {"Name": "Start time", "Value": 0.0, "Unit": "h"},
+                    {"Name": "End time", "Value": 24.0, "Unit": "h"},
+                    {"Name": "Resolution", "Value": 4.0, "Unit": "pts/h"},
+                ]
+            }
+        ],
+        "OutputSelections": [
+            f"Organism|PeripheralVenousBlood|{name}|Plasma (Peripheral Venous Blood)"
+        ],
+        "Compounds": [
+            {
+                "Name": name,
+                "CalculationMethods": methods,
+                "Processes": [{"Name": "Glomerular Filtration-GFR", "SystemicProcessType": "GFR"}],
+                "Protocol": {"Name": "IV bolus"},
+            }
+        ],
+    }
+    return {
+        "Version": snap["Version"],
+        "Name": "completed",
+        "Individuals": [ind],
+        "Compounds": [comp],
+        "Protocols": [prot],
+        "Simulations": [sim],
+    }
 
 
 @pytest.mark.pksim
@@ -219,7 +324,9 @@ def test_pksim_loads_exports_again_and_simulates_when_completed(tmp_path: Path, 
         pytest.skip("R with ospsuite and .NET 8 are not installed")
     snap = json.loads(files_for(drug, "pksim")["pksim-compound.snapshot.json"])
     (tmp_path / "export.json").write_text(json.dumps(snap), encoding="utf-8")
-    (tmp_path / "completed.json").write_text(json.dumps(_completed_for_test(snap)), encoding="utf-8")
+    (tmp_path / "completed.json").write_text(
+        json.dumps(_completed_for_test(snap)), encoding="utf-8"
+    )
     r = subprocess.run(  # noqa: S603
         ["Rscript", str(HERE / "pksim_roundtrip.R"), str(tmp_path)],  # noqa: S607
         capture_output=True,

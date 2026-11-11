@@ -3082,7 +3082,9 @@
       "janus": "Janus engine file (zip)",
       "mrgsolve": "mrgsolve model (zip)",
       "demo": "Downloads need the live service. In the demo they are switched off.",
-      "contents": "Each zip holds the model file, the provenance of every value, references and licences. Experimental; research use only."
+      "contents": "Each zip holds the model file, the provenance of every value, references and licences. Experimental; research use only.",
+      "pksim": "PK-Sim compound (zip)",
+      "pksimNote": "PK-Sim: a compound building block only, not a simulation. The physico-chemical values PK-Sim needs are not in the evidence; they are marked missing, never invented. The file loads in PK-Sim; it was not simulated as exported."
     },
     "errors": {
       "unavailable": "The model kit is not available right now. Try again later.",
@@ -3146,7 +3148,12 @@
       "no_drug_validated": "No drug is validated.",
       "intervals_not_shown": "No prediction intervals are shown: not enough held-out studies.",
       "formulation_often_unspecified": "More than a quarter of the confirmed values have no stated formulation.",
-      "fewer_than_150_sets": "Fewer than 150 drugs have a parameter set."
+      "fewer_than_150_sets": "Fewer than 150 drugs have a parameter set.",
+      "sp_statements_note": "Exposure ratios as the US label states them, quoted. Two independent automated readers agree on each; no person has checked them. They are not carried into this drug's model and are not dose advice.",
+      "sp_atlas_note": "Rows of the older-adult exposure atlas: one automated extraction that the two-reader rule did not confirm and that no person has checked. Evidence only, not a verdict.",
+      "sp_none": "No special-population statement was confirmed for this drug.",
+      "two_readers_agree": "Two independent automated readers agree; not checked by a person.",
+      "automated_extraction_unconfirmed": "One automated extraction, not confirmed by the two-reader rule, not checked by a person."
     },
     "scrollHint": "Scroll sideways to see all columns.",
     "report": {
@@ -3177,6 +3184,58 @@
       "noSetTitle": "Why drugs have no parameter set",
       "notValidatedTitle": "Why drugs are not validated",
       "drugsCount": "{count, plural, one {# drug} other {# drugs}}"
+    },
+    "sp": {
+      "title": "Special populations",
+      "intro": "What the US label states about the exposure (AUC or Cmax) of older adults and of people with kidney or liver impairment, compared with a reference group, quoted as written. Not a dose recommendation, and not carried into the model of this drug.",
+      "empty": "No special-population statement was confirmed for this drug.",
+      "source": "US label, version {version}.",
+      "sourceDated": "US label, version {version}, effective {date}.",
+      "openLabel": "Open the label on DailyMed",
+      "definition": "Population as the label defines it",
+      "reference": "Compared with",
+      "ratio": "{ratio} × the reference group",
+      "nLabels": "{count, plural, one {# label states} other {# labels state}} the same ratio.",
+      "atlasTitle": "Older-adult atlas rows, not confirmed ({count})",
+      "atlasIntro": "Rows of an earlier automated extraction about older adults. The two-reader rule did not confirm them and no person has checked them. They are shown as evidence with their quote, never as a verdict.",
+      "qualitative": "the label says similar or no difference (no number)",
+      "notChecked": "The quote could not be found word for word in the cited label version.",
+      "class": {
+        "geriatric": "Older adults",
+        "renal": "Kidney (renal) impairment",
+        "hepatic": "Liver (hepatic) impairment"
+      },
+      "grade": {
+        "mild": "mild",
+        "moderate": "moderate",
+        "severe": "severe",
+        "esrd": "end-stage renal disease",
+        "dialysis": "dialysis",
+        "cp_a": "Child-Pugh class A",
+        "cp_b": "Child-Pugh class B",
+        "cp_c": "Child-Pugh class C",
+        "age65": "age 65 and over",
+        "age75": "age 75 and over",
+        "age80": "age 80 and over"
+      },
+      "measure": {
+        "auc": "Exposure (AUC)",
+        "cmax": "Peak concentration (Cmax)"
+      },
+      "atlasMeasure": {
+        "auc": "Exposure (AUC)",
+        "cmax": "Peak concentration (Cmax)",
+        "cl": "Clearance",
+        "conc": "Exposure (measure not named)"
+      },
+      "systemTitle": "Special populations (US labels)",
+      "systemIntro": "Exposure ratios of older adults and of people with kidney or liver impairment, as US labels state them. Two independent automated readers read the label text; a statement counts only if both agree. Quoted evidence only: no model extrapolation, no dose advice.",
+      "systemCounts": "{statements, plural, one {# statement} other {# statements}} for {drugs, plural, one {# drug} other {# drugs}}. Drugs per group: older adults {geriatric}, kidney impairment {renal}, liver impairment {hepatic}.",
+      "systemCoverage": "{read} label records read; {matched} labels of single-ingredient drugs of the pool matched, covering {drugs} drugs.",
+      "systemPrecision": "{share} of the sampled statements were correct (95 % Wilson interval {low} to {high}, n = {n}; blinded sample, two automated review passes, {date}).",
+      "systemPrecisionConservative": "Conservative reading, anything not called correct by both passes counts as wrong: {share} ({low} to {high}, n = {n}).",
+      "systemPrecisionNone": "No precision has been measured for these statements.",
+      "systemAtlas": "{rows, plural, one {# atlas row} other {# atlas rows}} for {drugs, plural, one {# drug} other {# drugs}} appear on the drug pages as unconfirmed evidence."
     }
   }
 }

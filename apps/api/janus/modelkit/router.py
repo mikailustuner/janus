@@ -18,6 +18,7 @@ from starlette.concurrency import run_in_threadpool
 
 from janus.http_policy.routes import medical_router
 from janus.modelkit import export as ex
+from janus.modelkit import special
 from janus.modelkit.builder import NoSet, ParameterSet
 from janus.modelkit.evidence import Ev
 from janus.modelkit.reasons import TEXT
@@ -158,6 +159,77 @@ class IntervalOut(_Out):
     reason: str | None
 
 
+class SpecialStatementOut(_Out):
+    """An exposure ratio of a special population as a US label states it, quoted. Read by two independent
+    automated readers that agree; not checked by a person; not extrapolated to a model; no dose advice."""
+
+    pop_class: Literal["geriatric", "renal", "hepatic"]
+    grade: str  # "" when the statement names none: mild, moderate, severe, esrd, cp_a, cp_b, cp_c, age65 ...
+    measure: Literal["auc", "cmax"]
+    ratio: float  # population / reference population
+    ratio_text: str  # as the label words it
+    definition: str  # the population as the label defines it (age band, creatinine clearance, Child-Pugh class)
+    reference: str  # the reference population if the sentence names one, else ""
+    quote: str
+    set_id: str
+    version: str
+    effective_date: str
+    section: str
+    n_labels: int  # labels that state the same ratio for this drug
+    from_table: bool
+    source_url: str
+    status: Literal["two_readers_agree"]
+
+
+class SpecialAtlasOut(_Out):
+    """A row of the older-adult exposure atlas: one automated extraction, NOT confirmed by the two-reader rule and
+    not checked by a person. Evidence only, never a verdict."""
+
+    measure: str  # auc, cmax, cl, exposure
+    ratio: float
+    qualitative: bool  # the label says "similar" or "no difference", not a number
+    quote: str
+    set_id: str
+    version: str
+    n_labels: int
+    quote_checked: bool  # the quote was found verbatim in the label version it cites
+    source_url: str
+    status: Literal["automated_extraction_unconfirmed"]
+
+
+class SpecialOut(_Out):
+    statements: list[SpecialStatementOut]
+    atlas: list[SpecialAtlasOut]
+    notes: list[str]  # reason codes
+
+
+class SpecialPrecisionOut(_Out):
+    """Measured precision of the confirmed statements on a blinded sample (two automated review passes)."""
+
+    measured_on: str
+    n: int
+    correct: int
+    share: float
+    wilson_low: float
+    wilson_high: float
+    n_conservative: int
+    share_conservative: float
+    wilson_low_conservative: float
+    wilson_high_conservative: float
+    target: float
+
+
+class SpecialSystemOut(_Out):
+    drugs: int  # drugs with at least one confirmed statement
+    statements: int
+    by_class: dict[str, int]
+    drugs_by_class: dict[str, int]
+    atlas_drugs: int
+    atlas_rows: int
+    coverage: dict[str, int]  # what the label job read (counts), from its manifest
+    precision: SpecialPrecisionOut | None
+
+
 class DrugOut(_Out):
     release: dict[str, Any]
     statements: Statements
@@ -167,6 +239,7 @@ class DrugOut(_Out):
     validation: ValidationOut
     intervals: list[IntervalOut]
     targets: list[str]
+    special_populations: SpecialOut
     reason_text: dict[str, str]
 
 
@@ -278,6 +351,7 @@ class SystemOut(_Out):
     not_validated_reasons: dict[str, int]
     no_set_reasons: dict[str, int]
     precision: PrecisionOut | None
+    special_populations: SpecialSystemOut
     missing: list[str]  # codes of what the release still lacks
     caveats: list[str]
     reason_text: dict[str, str]
@@ -367,6 +441,65 @@ def precision_out(raw: Any) -> PrecisionOut | None:
         )  # fmt: skip
     except (KeyError, TypeError, ValueError):
         return None
+
+
+DAILYMED = "https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid="
+
+
+def special_out(key: str) -> SpecialOut:
+    sp = special.load()
+    st = sp.statements.get(key, ())
+    at = sp.atlas.get(key, ())
+    notes = ["sp_statements_note"] if st else ["sp_none"]
+    if at:
+        notes.append("sp_atlas_note")
+    return SpecialOut(
+        statements=[
+            SpecialStatementOut(
+                **{
+                    **s.__dict__,
+                    "source_url": DAILYMED + s.set_id,
+                    "status": special.CONFIRMED_STATUS,
+                }
+            )
+            for s in st
+        ],
+        atlas=[
+            SpecialAtlasOut(
+                **{**a.__dict__, "source_url": DAILYMED + a.set_id, "status": special.ATLAS_STATUS}
+            )
+            for a in at
+        ],
+        notes=notes,
+    )
+
+
+def special_precision(raw: Any) -> SpecialPrecisionOut | None:
+    if not isinstance(raw, dict):
+        return None
+    raw = cast(dict[str, Any], raw)
+    try:
+        n, k = int(raw["n"]), int(raw["correct"])
+        nc, kc = int(raw["n_conservative"]), int(raw["correct_conservative"])
+        a, lo, hi = _share(k, n)
+        ac, loc, hic = _share(kc, nc)
+        return SpecialPrecisionOut(
+            measured_on=str(raw["measured_on"]), n=n, correct=k, share=a, wilson_low=lo, wilson_high=hi,
+            n_conservative=nc, share_conservative=ac, wilson_low_conservative=loc,
+            wilson_high_conservative=hic, target=float(raw.get("target", 0.9)),
+        )  # fmt: skip
+    except (KeyError, TypeError, ValueError):
+        return None
+
+
+def special_system() -> SpecialSystemOut:
+    sp = special.load()
+    c = special.system_counts(sp)
+    return SpecialSystemOut(
+        **c,
+        coverage={str(k): int(v) for k, v in (sp.meta.get("coverage") or {}).items()},
+        precision=special_precision(sp.meta.get("precision")),
+    )
 
 
 def _system_extra(rel: Release) -> dict[str, Any]:
@@ -634,6 +767,7 @@ def system(request: Request, release: str | None = None) -> Any:
         not_validated_reasons=s.reasons_not_validated,
         no_set_reasons=ex_["no_set"],
         precision=precision_out(rel.manifest_metrics.get("precision")),
+        special_populations=special_system(),
         missing=missing_codes(rel, ex_),
         caveats=[
             "n_very_small",
@@ -664,6 +798,7 @@ def drug(request: Request, key: str, release: str | None = None) -> Any:
         validation=validation_out(d.validation),
         intervals=drug_intervals(rel, d),
         targets=list(ex.TARGETS) if isinstance(ps, ParameterSet) and ps.complete else [],
+        special_populations=special_out(key),
         reason_text=TEXT,
     )
 

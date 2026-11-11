@@ -67,6 +67,77 @@ export function ModelKitReport() {
   );
 }
 
+function SpecialSystemSection({
+  s,
+  pct,
+}: {
+  s: SystemOut;
+  pct: Intl.NumberFormat;
+}) {
+  const t = useT();
+  const sp = s.special_populations;
+  const p = sp.precision;
+  return (
+    <section
+      className="flex min-w-0 flex-col gap-group"
+      aria-labelledby="mk-rp-sp"
+      data-testid="mk-sp-system"
+    >
+      <h2 id="mk-rp-sp" className="group-header">
+        {t("ModelKit.sp.systemTitle")}
+      </h2>
+      <p className="max-w-[72ch]">{t("ModelKit.sp.systemIntro")}</p>
+      <p className="max-w-[72ch] font-bold">
+        {t("ModelKit.sp.systemCounts", {
+          drugs: sp.drugs,
+          statements: sp.statements,
+          geriatric: sp.drugs_by_class.geriatric ?? 0,
+          renal: sp.drugs_by_class.renal ?? 0,
+          hepatic: sp.drugs_by_class.hepatic ?? 0,
+        })}
+      </p>
+      {sp.coverage.labels_read ? (
+        <p className="max-w-[72ch] text-sm">
+          {t("ModelKit.sp.systemCoverage", {
+            read: sp.coverage.labels_read ?? 0,
+            matched: sp.coverage.labels_matched ?? 0,
+            drugs: sp.coverage.drugs_with_a_matched_label ?? 0,
+          })}
+        </p>
+      ) : null}
+      {p ? (
+        <>
+          <p className="max-w-[72ch] font-bold">
+            {t("ModelKit.sp.systemPrecision", {
+              share: pct.format(p.share),
+              low: pct.format(p.wilson_low),
+              high: pct.format(p.wilson_high),
+              n: p.n,
+              date: p.measured_on,
+            })}
+          </p>
+          <p className="max-w-[72ch] text-sm">
+            {t("ModelKit.sp.systemPrecisionConservative", {
+              share: pct.format(p.share_conservative),
+              low: pct.format(p.wilson_low_conservative),
+              high: pct.format(p.wilson_high_conservative),
+              n: p.n_conservative,
+            })}
+          </p>
+        </>
+      ) : (
+        <p>{t("ModelKit.sp.systemPrecisionNone")}</p>
+      )}
+      <p className="max-w-[72ch] text-sm">
+        {t("ModelKit.sp.systemAtlas", {
+          rows: sp.atlas_rows,
+          drugs: sp.atlas_drugs,
+        })}
+      </p>
+    </section>
+  );
+}
+
 function Body({ s }: { s: SystemOut }) {
   const t = useT();
   const locale = useLocale();
@@ -323,6 +394,8 @@ function Body({ s }: { s: SystemOut }) {
           <p>{t("ModelKit.report.precisionNone")}</p>
         )}
       </section>
+
+      <SpecialSystemSection s={s} pct={pct} />
 
       <section
         className="flex min-w-0 flex-col gap-group"

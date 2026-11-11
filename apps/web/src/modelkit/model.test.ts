@@ -30,8 +30,11 @@ import {
   paramKey,
   REASON_CODES,
   reasonKey,
+  SP_CLASSES,
+  SP_GRADES,
   statusBadge,
   systemOut,
+  TARGETS,
   type ModelKitFixture,
 } from "./model";
 
@@ -273,6 +276,11 @@ describe("reason codes", () => {
       "ModelKit.errors.unavailable",
       "ModelKit.errors.unknown",
       "ModelKit.errors.invalidKey",
+      ...SP_CLASSES.map((x) => `ModelKit.sp.class.${x}`),
+      ...SP_GRADES.map((x) => `ModelKit.sp.grade.${x}`),
+      ...["auc", "cmax"].map((x) => `ModelKit.sp.measure.${x}`),
+      ...["auc", "cmax", "cl", "conc"].map((x) => `ModelKit.sp.atlasMeasure.${x}`),
+      ...TARGETS.map((x) => `ModelKit.dl.${x}`),
     ].filter((k) => !has(c, k));
     expect(missing).toEqual([]);
   });

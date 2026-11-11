@@ -3082,7 +3082,9 @@
       "janus": "Fichier du moteur Janus (zip)",
       "mrgsolve": "Modèle mrgsolve (zip)",
       "demo": "Les téléchargements demandent le service en ligne. Dans la démo, ils sont désactivés.",
-      "contents": "Chaque zip contient le fichier de modèle, la provenance de chaque valeur, les références et les licences. Expérimental ; usage de recherche uniquement."
+      "contents": "Chaque zip contient le fichier de modèle, la provenance de chaque valeur, les références et les licences. Expérimental ; usage de recherche uniquement.",
+      "pksim": "Composé PK-Sim (zip)",
+      "pksimNote": "PK-Sim : un simple élément de construction « composé », pas une simulation. Les valeurs physico-chimiques dont PK-Sim a besoin ne figurent pas dans les preuves ; elles sont marquées manquantes, jamais inventées. Le fichier se charge dans PK-Sim ; tel qu’exporté, il n’a pas été simulé."
     },
     "errors": {
       "unavailable": "Le kit de modèles n’est pas disponible pour le moment. Réessayez plus tard.",
@@ -3146,7 +3148,12 @@
       "no_drug_validated": "Aucun médicament n’est validé.",
       "intervals_not_shown": "Aucun intervalle de prédiction n’est affiché : trop peu d’études mises de côté.",
       "formulation_often_unspecified": "Plus du quart des valeurs confirmées n’ont pas de formulation indiquée.",
-      "fewer_than_150_sets": "Moins de 150 médicaments ont un jeu de paramètres."
+      "fewer_than_150_sets": "Moins de 150 médicaments ont un jeu de paramètres.",
+      "sp_statements_note": "Rapports d’exposition tels que la notice américaine les indique, cités. Deux lecteurs automatiques indépendants concordent sur chacun ; aucune personne ne les a vérifiés. Ils ne sont pas repris dans le modèle de ce médicament et ne sont pas un conseil de dose.",
+      "sp_atlas_note": "Lignes de l’atlas d’exposition des adultes âgés : une extraction automatique que la règle des deux lecteurs n’a pas confirmée et qu’aucune personne n’a vérifiée. Preuve uniquement, pas un verdict.",
+      "sp_none": "Aucune déclaration sur les populations particulières n’a été confirmée pour ce médicament.",
+      "two_readers_agree": "Deux lecteurs automatiques indépendants concordent ; non vérifié par une personne.",
+      "automated_extraction_unconfirmed": "Une extraction automatique, non confirmée par la règle des deux lecteurs, non vérifiée par une personne."
     },
     "scrollHint": "Faites défiler latéralement pour voir toutes les colonnes.",
     "report": {
@@ -3177,6 +3184,58 @@
       "noSetTitle": "Pourquoi des médicaments n’ont pas de jeu de paramètres",
       "notValidatedTitle": "Pourquoi des médicaments ne sont pas validés",
       "drugsCount": "{count, plural, one {# médicament} other {# médicaments}}"
+    },
+    "sp": {
+      "title": "Populations particulières",
+      "intro": "Ce que la notice américaine indique sur l’exposition (ASC ou Cmax) des adultes âgés et des personnes ayant une insuffisance rénale ou hépatique, par rapport à un groupe de référence, citée telle qu’écrite. Pas une recommandation de dose, et non reprise dans le modèle de ce médicament.",
+      "empty": "Aucune déclaration sur les populations particulières n’a été confirmée pour ce médicament.",
+      "source": "Notice américaine, version {version}.",
+      "sourceDated": "Notice américaine, version {version}, en vigueur le {date}.",
+      "openLabel": "Ouvrir la notice sur DailyMed",
+      "definition": "Population telle que la notice la définit",
+      "reference": "Comparée à",
+      "ratio": "{ratio} × le groupe de référence",
+      "nLabels": "{count, plural, one {# notice indique} other {# notices indiquent}} le même rapport.",
+      "atlasTitle": "Lignes de l’atlas des adultes âgés, non confirmées ({count})",
+      "atlasIntro": "Lignes d’une extraction automatique antérieure sur les adultes âgés. La règle des deux lecteurs ne les a pas confirmées et aucune personne ne les a vérifiées. Elles sont montrées comme preuve avec leur citation, jamais comme un verdict.",
+      "qualitative": "la notice dit similaire ou pas de différence (pas de chiffre)",
+      "notChecked": "La citation n’a pas été retrouvée mot pour mot dans la version de la notice citée.",
+      "class": {
+        "geriatric": "Adultes âgés",
+        "renal": "Insuffisance rénale",
+        "hepatic": "Insuffisance hépatique"
+      },
+      "grade": {
+        "mild": "légère",
+        "moderate": "modérée",
+        "severe": "sévère",
+        "esrd": "insuffisance rénale terminale",
+        "dialysis": "dialyse",
+        "cp_a": "classe Child-Pugh A",
+        "cp_b": "classe Child-Pugh B",
+        "cp_c": "classe Child-Pugh C",
+        "age65": "65 ans et plus",
+        "age75": "75 ans et plus",
+        "age80": "80 ans et plus"
+      },
+      "measure": {
+        "auc": "Exposition (ASC)",
+        "cmax": "Concentration maximale (Cmax)"
+      },
+      "atlasMeasure": {
+        "auc": "Exposition (ASC)",
+        "cmax": "Concentration maximale (Cmax)",
+        "cl": "Clairance",
+        "conc": "Exposition (mesure non nommée)"
+      },
+      "systemTitle": "Populations particulières (notices américaines)",
+      "systemIntro": "Rapports d’exposition des adultes âgés et des personnes ayant une insuffisance rénale ou hépatique, tels que les notices américaines les indiquent. Deux lecteurs automatiques indépendants lisent le texte de la notice ; une déclaration ne compte que si les deux concordent. Preuve citée uniquement : pas d’extrapolation au modèle, pas de conseil de dose.",
+      "systemCounts": "{statements, plural, one {# déclaration} other {# déclarations}} pour {drugs, plural, one {# médicament} other {# médicaments}}. Médicaments par groupe : adultes âgés {geriatric}, insuffisance rénale {renal}, insuffisance hépatique {hepatic}.",
+      "systemCoverage": "{read} enregistrements de notices lus ; {matched} notices de médicaments à une seule substance du pool associées, couvrant {drugs} médicaments.",
+      "systemPrecision": "{share} des déclarations échantillonnées étaient correctes (intervalle de Wilson à 95 % {low} à {high}, n = {n} ; échantillon en aveugle, deux passes de relecture automatisées, {date}).",
+      "systemPrecisionConservative": "Lecture prudente, tout ce que les deux passes n’ont pas jugé correct compte comme faux : {share} ({low} à {high}, n = {n}).",
+      "systemPrecisionNone": "Aucune précision n’a été mesurée pour ces déclarations.",
+      "systemAtlas": "{rows, plural, one {# ligne d’atlas} other {# lignes d’atlas}} pour {drugs, plural, one {# médicament} other {# médicaments}} apparaissent sur les pages des médicaments comme preuve non confirmée."
     }
   }
 }

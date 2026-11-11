@@ -234,8 +234,10 @@ def build_server(config: Config, transport: httpx2.AsyncBaseTransport | None = N
         annotations=READ_ONLY,
         description=(
             "One drug of the experimental model kit (Janus GET /modelkit/drugs/{key}): the "
-            "parameter set with confidence classes and evidence ids, the validation report and "
-            "what was left out; `key` comes from janus_modelkit_search. Research use only. "
+            "parameter set with confidence classes and evidence ids, the validation report, what "
+            "was left out and the special-population statements (older adults, renal and hepatic "
+            "impairment) quoted from US labels; `key` comes from janus_modelkit_search. Research "
+            "use only. "
             + safety.DISCLAIMER
         ),
     )

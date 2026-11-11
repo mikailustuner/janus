@@ -201,3 +201,45 @@ text stays "Expert review has not yet been done".
 - **M21** No interval is given below 20 independent held-out studies; a study counts once per drug and metric (test).
 - **M22** Every `/modelkit` route answers with exactly the documented fields, no-store headers and the documented error codes
   (contract tests).
+
+## 15. Milestone M4 decisions
+- **DP-M26 Route on conflict.** `formulation.resolve_pairs`: if either resolver reports `conflict:iv_and_oral` (oral and
+  intravenous words in one evidence layer) the route of the pair is `unknown` and the readers' own route is not used.
+  Nothing else changed (owner decision 2026-11-11 (c)); the held-out unit stays the study (decision (d)).
+- **DP-M27 PK-Sim export.** The target `pksim` is a zip with `pksim-compound.snapshot.json` (a PK-Sim project snapshot,
+  version 80 = PK-Sim 12.x: `Version`, `Name`, `Description`, `Compounds` with one compound that has a name, a description
+  and `IsSmallMolecule`), `pksim-inputs.json` (what is missing, with a status, and what the evidence says that PK-Sim has no
+  input for), and the common files. No physico-chemical value, no alternative and no process is written: the evidence has none,
+  PK-Sim fills what a snapshot leaves out with its own defaults (they are PK-Sim's, not ours), and the total clearance of the
+  evidence is not assigned to the hepatic or renal clearance process because that would be an assumption (PK-Sim then also needs
+  body weight, fraction unbound and the blood/plasma ratio). The format is the open source snapshot schema of PK-Sim
+  (`PKSim.Core.Snapshots`, GPL-2.0); the keys used are tested against the property names of the classes.
+- **DP-M28 PK-Sim check in CI.** Workflow `modelkit-pksim.yml` (path filtered, weekly and on demand, R image 4.6.1, .NET 8
+  runtime from the distribution, ospsuite 12.4.5 and rSharp 1.2.3 from the project's GitHub release with sha256, cached): the export is
+  loaded (`loadProjectFromSnapshot`), written back (`exportProjectToSnapshot`) and the compound's name, description and
+  small-molecule flag must survive; a copy completed with test-only numbers (not drug data) plus an individual, a protocol and a
+  simulation is run (`runSimulationsFromSnapshot`) and must give a positive, non-negative concentration profile. The export itself
+  is not simulated: it lacks the inputs. ospsuite 12.4.5 bundles PK-Sim core 12.3.173; macOS is not supported by the run function.
+- **DP-M29 Special populations.** Reader A (`sp_a`, sentence level patterns) and reader B (`sp_b`, headings first, then clauses and
+  token windows) read the sections 8.5, 8, 12.3 and the clinical pharmacology text of the openFDA label files and their tables;
+  they share only `sp_model` (result type, vocabulary). Convention: "X % higher" = 1 + X/100, "X % lower" = 1 - X/100, "X-fold
+  or X times higher" = X, "X-fold lower" = 1/X, a range gives its geometric mean, a ratio outside (0, 50] is refused. A sub-section
+  heading gives its class to at most 5 following sentences and only to a sentence that compares with a reference group. A
+  confidence level ("90 % CI") is not a magnitude; a dialysis session is not a population; an absolute concentration column is not
+  a ratio. `sp_confirm` pairs the candidates (class, grade, measure, ratio within 1 %, no context flag, same sentence).
+- **DP-M30 Special populations in the product.** The job `modelkit_special_populations` writes the confirmed statements to
+  `data/modelkit/special_populations.csv` (one row per drug, class, grade, measure and ratio; the label with the latest effective
+  date is quoted; `n_labels` counts the labels with the same ratio). The older-adult atlas rows are in
+  `special_populations_atlas.csv`; `special_populations.meta.json` holds coverage and the measured precision. The drug answer has
+  `special_populations` (statements, atlas rows, reason codes), the system report has the counts, coverage and precision. The web
+  drug page has a section "Special populations" (statements as quoted evidence; atlas rows in a collapsed block with their status).
+
+## 16. Milestone M4 properties
+- **M23** On an oral and intravenous conflict the route is unknown; the readers' own route never survives it (test, Hypothesis).
+- **M24** The PK-Sim export invents nothing: only schema keys, no physico-chemical value, no process; every missing input has the
+  status `missing` or `not_assigned` and no value (tests).
+- **M25** The PK-Sim export loads in PK-Sim, exports again with name, description and small-molecule flag intact, and a completed
+  copy simulates (CI workflow, `pytest -m pksim`).
+- **M26** Reader B imports nothing from reader A or the pairing; both readers give the same ratio for the same sentence by the
+  fixed convention (Hypothesis, shared table of sentences).
+- **M27** A confirmed pair always agrees within 1 %, on class, grade and measure, without context flags (Hypothesis).

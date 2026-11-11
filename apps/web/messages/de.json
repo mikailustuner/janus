@@ -3082,7 +3082,9 @@
       "janus": "Janus-Engine-Datei (zip)",
       "mrgsolve": "mrgsolve-Modell (zip)",
       "demo": "Downloads brauchen den Live-Dienst. In der Demo sind sie abgeschaltet.",
-      "contents": "Jede zip enthält die Modelldatei, die Herkunft jedes Werts, Literaturangaben und Lizenzen. Experimentell; nur zu Forschungszwecken."
+      "contents": "Jede zip enthält die Modelldatei, die Herkunft jedes Werts, Literaturangaben und Lizenzen. Experimentell; nur zu Forschungszwecken.",
+      "pksim": "PK-Sim-Verbindung (zip)",
+      "pksimNote": "PK-Sim: nur ein Verbindungs-Baustein, keine Simulation. Die physikochemischen Werte, die PK-Sim braucht, stehen nicht in der Evidenz; sie sind als fehlend markiert, nie erfunden. Die Datei lässt sich in PK-Sim laden; so wie exportiert wurde sie nicht simuliert."
     },
     "errors": {
       "unavailable": "Das Modell-Kit ist gerade nicht verfügbar. Versuchen Sie es später erneut.",
@@ -3146,7 +3148,12 @@
       "no_drug_validated": "Kein Wirkstoff ist validiert.",
       "intervals_not_shown": "Es werden keine Vorhersageintervalle gezeigt: zu wenige zurückgehaltene Studien.",
       "formulation_often_unspecified": "Bei mehr als einem Viertel der bestätigten Werte ist die Formulierung nicht angegeben.",
-      "fewer_than_150_sets": "Weniger als 150 Wirkstoffe haben einen Parametersatz."
+      "fewer_than_150_sets": "Weniger als 150 Wirkstoffe haben einen Parametersatz.",
+      "sp_statements_note": "Expositionsverhältnisse, wie die US-Fachinformation sie angibt, zitiert. Zwei unabhängige automatische Leser stimmen bei jeder überein; keine Person hat sie geprüft. Sie sind nicht in das Modell dieses Wirkstoffs übernommen und keine Dosisempfehlung.",
+      "sp_atlas_note": "Zeilen des Atlas zur Exposition älterer Erwachsener: eine automatische Extraktion, die die Zwei-Leser-Regel nicht bestätigt hat und die keine Person geprüft hat. Nur Evidenz, kein Urteil.",
+      "sp_none": "Für diesen Wirkstoff wurde keine Aussage zu speziellen Bevölkerungsgruppen bestätigt.",
+      "two_readers_agree": "Zwei unabhängige automatische Leser stimmen überein; nicht von einer Person geprüft.",
+      "automated_extraction_unconfirmed": "Eine automatische Extraktion, nicht durch die Zwei-Leser-Regel bestätigt, nicht von einer Person geprüft."
     },
     "scrollHint": "Zum Anzeigen aller Spalten seitlich scrollen.",
     "report": {
@@ -3177,6 +3184,58 @@
       "noSetTitle": "Warum Wirkstoffe keinen Parametersatz haben",
       "notValidatedTitle": "Warum Wirkstoffe nicht validiert sind",
       "drugsCount": "{count, plural, one {# Wirkstoff} other {# Wirkstoffe}}"
+    },
+    "sp": {
+      "title": "Spezielle Bevölkerungsgruppen",
+      "intro": "Was die US-Fachinformation über die Exposition (AUC oder Cmax) von älteren Erwachsenen und von Menschen mit eingeschränkter Nieren- oder Leberfunktion im Vergleich zu einer Referenzgruppe angibt, wörtlich zitiert. Keine Dosisempfehlung, und nicht in das Modell dieses Wirkstoffs übernommen.",
+      "empty": "Für diesen Wirkstoff wurde keine Aussage zu speziellen Bevölkerungsgruppen bestätigt.",
+      "source": "US-Fachinformation, Version {version}.",
+      "sourceDated": "US-Fachinformation, Version {version}, gültig ab {date}.",
+      "openLabel": "Fachinformation auf DailyMed öffnen",
+      "definition": "Gruppe, wie die Fachinformation sie definiert",
+      "reference": "Verglichen mit",
+      "ratio": "{ratio} × die Referenzgruppe",
+      "nLabels": "{count, plural, one {# Fachinformation nennt} other {# Fachinformationen nennen}} dasselbe Verhältnis.",
+      "atlasTitle": "Zeilen des Atlas für ältere Erwachsene, nicht bestätigt ({count})",
+      "atlasIntro": "Zeilen einer früheren automatischen Extraktion zu älteren Erwachsenen. Die Zwei-Leser-Regel hat sie nicht bestätigt, und keine Person hat sie geprüft. Sie werden mit ihrem Zitat als Evidenz gezeigt, nie als Urteil.",
+      "qualitative": "die Fachinformation sagt ähnlich oder kein Unterschied (keine Zahl)",
+      "notChecked": "Das Zitat wurde in der angegebenen Fassung der Fachinformation nicht wortgleich gefunden.",
+      "class": {
+        "geriatric": "Ältere Erwachsene",
+        "renal": "Eingeschränkte Nierenfunktion (renal)",
+        "hepatic": "Eingeschränkte Leberfunktion (hepatisch)"
+      },
+      "grade": {
+        "mild": "leicht",
+        "moderate": "mittelgradig",
+        "severe": "schwer",
+        "esrd": "terminale Niereninsuffizienz",
+        "dialysis": "Dialyse",
+        "cp_a": "Child-Pugh-Klasse A",
+        "cp_b": "Child-Pugh-Klasse B",
+        "cp_c": "Child-Pugh-Klasse C",
+        "age65": "ab 65 Jahren",
+        "age75": "ab 75 Jahren",
+        "age80": "ab 80 Jahren"
+      },
+      "measure": {
+        "auc": "Exposition (AUC)",
+        "cmax": "Spitzenkonzentration (Cmax)"
+      },
+      "atlasMeasure": {
+        "auc": "Exposition (AUC)",
+        "cmax": "Spitzenkonzentration (Cmax)",
+        "cl": "Clearance",
+        "conc": "Exposition (Messgröße nicht benannt)"
+      },
+      "systemTitle": "Spezielle Bevölkerungsgruppen (US-Fachinformationen)",
+      "systemIntro": "Expositionsverhältnisse von älteren Erwachsenen und von Menschen mit eingeschränkter Nieren- oder Leberfunktion, wie US-Fachinformationen sie angeben. Zwei unabhängige automatische Leser lesen den Text der Fachinformation; eine Aussage zählt nur, wenn beide übereinstimmen. Nur zitierte Evidenz: keine Modell-Extrapolation, keine Dosisempfehlung.",
+      "systemCounts": "{statements, plural, one {# Aussage} other {# Aussagen}} zu {drugs, plural, one {# Wirkstoff} other {# Wirkstoffen}}. Wirkstoffe je Gruppe: ältere Erwachsene {geriatric}, Nierenfunktionsstörung {renal}, Leberfunktionsstörung {hepatic}.",
+      "systemCoverage": "{read} Datensätze von Fachinformationen gelesen; {matched} Fachinformationen von Ein-Wirkstoff-Arzneimitteln des Pools zugeordnet, das sind {drugs} Wirkstoffe.",
+      "systemPrecision": "{share} der gezogenen Aussagen waren richtig (95-%-Wilson-Intervall {low} bis {high}, n = {n}; verblindete Stichprobe, zwei automatische Prüfdurchgänge, {date}).",
+      "systemPrecisionConservative": "Vorsichtige Lesart, alles, was nicht beide Durchgänge als richtig bezeichnen, zählt als falsch: {share} ({low} bis {high}, n = {n}).",
+      "systemPrecisionNone": "Für diese Aussagen wurde keine Genauigkeit gemessen.",
+      "systemAtlas": "{rows, plural, one {# Atlas-Zeile} other {# Atlas-Zeilen}} zu {drugs, plural, one {# Wirkstoff} other {# Wirkstoffen}} erscheinen auf den Wirkstoffseiten als unbestätigte Evidenz."
     }
   }
 }
