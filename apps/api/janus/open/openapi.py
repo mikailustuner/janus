@@ -41,6 +41,11 @@ PUBLIC: Final = (
     "/open/faers-onset/{position}",
     "/open/cascade-package/pipc",
     "/cds-services",
+    "/modelkit/drugs",
+    "/modelkit/drugs/{key}",
+    "/modelkit/drugs/{key}/evidence",
+    "/modelkit/drugs/{key}/export/{target}",
+    "/modelkit/validation",
 )
 
 ERR = "#/components/schemas/PublicError"
@@ -125,6 +130,15 @@ EXAMPLES: Final[Mapping[str, Mapping[str, Any]]] = {
     "/open/cascade-package/pipc": {
         "503": {"unavailable": {"value": {"error": "package_unavailable"}}},
     },
+    "/modelkit/drugs": {"503": {"unavailable": {"value": {"error": "modelkit_unavailable"}}}},
+    "/modelkit/drugs/{key}": {
+        "404": {"unknown": {"value": {"error": "unknown_drug"}}},
+        "503": {"unavailable": {"value": {"error": "modelkit_unavailable"}}},
+    },
+    "/modelkit/drugs/{key}/export/{target}": {
+        "409": {"none": {"value": {"error": "no_parameter_set"}}},
+        "503": {"unavailable": {"value": {"error": "modelkit_unavailable"}}},
+    },
 }
 
 
@@ -190,7 +204,8 @@ def document() -> dict[str, Any]:
                 "service status, the FAERS snapshot, the séance catalogue, the light-face "
                 "overview, validation and export, the time machine, the open outcome dataset, the "
                 "weekly data-quality report, the FAERS onset table of the PIPC rows, the PIPC "
-                "rows of the open cascade package and the CDS Hooks discovery document. "
+                "rows of the open cascade package, the CDS Hooks discovery document and the "
+                "experimental drug model kit (parameter sets from cited evidence, validation, exports). "
                 "Medical routes are `no-store`; nothing but an access line (route, status, "
                 "latency) is logged. Research prototype, not a medical device; not medical "
                 "advice. Documentation: docs/open-api.md."

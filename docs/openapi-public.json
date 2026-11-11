@@ -3,7 +3,7 @@
   "info": {
     "title": "Janus public read-only API",
     "version": "1.0.0",
-    "description": "The GET routes of the Janus API that take no body and return no personal data: service status, the FAERS snapshot, the séance catalogue, the light-face overview, validation and export, the time machine, the open outcome dataset, the weekly data-quality report, the FAERS onset table of the PIPC rows, the PIPC rows of the open cascade package and the CDS Hooks discovery document. Medical routes are `no-store`; nothing but an access line (route, status, latency) is logged. Research prototype, not a medical device; not medical advice. Documentation: docs/open-api.md.",
+    "description": "The GET routes of the Janus API that take no body and return no personal data: service status, the FAERS snapshot, the séance catalogue, the light-face overview, validation and export, the time machine, the open outcome dataset, the weekly data-quality report, the FAERS onset table of the PIPC rows, the PIPC rows of the open cascade package, the CDS Hooks discovery document and the experimental drug model kit (parameter sets from cited evidence, validation, exports). Medical routes are `no-store`; nothing but an access line (route, status, latency) is logged. Research prototype, not a medical device; not medical advice. Documentation: docs/open-api.md.",
     "license": {
       "name": "Apache-2.0",
       "identifier": "Apache-2.0"
@@ -167,7 +167,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ValidationOut"
+                  "$ref": "#/components/schemas/janus__light__schemas__ValidationOut"
                 }
               }
             }
@@ -669,6 +669,308 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/DiscoveryOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/modelkit/drugs": {
+      "get": {
+        "summary": "Drugs",
+        "description": "The drugs of the experimental model kit with their validation status.",
+        "operationId": "drugs_modelkit_drugs_get",
+        "parameters": [
+          {
+            "name": "release",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Release"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DrugsOut"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicError"
+                },
+                "examples": {
+                  "unavailable": {
+                    "value": {
+                      "error": "modelkit_unavailable"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/modelkit/drugs/{key}": {
+      "get": {
+        "summary": "Drug",
+        "description": "One drug: parameter set, validation report and what was left out.",
+        "operationId": "drug_modelkit_drugs__key__get",
+        "parameters": [
+          {
+            "name": "key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Key"
+            }
+          },
+          {
+            "name": "release",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Release"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DrugOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicError"
+                },
+                "examples": {
+                  "unknown": {
+                    "value": {
+                      "error": "unknown_drug"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicError"
+                },
+                "examples": {
+                  "unavailable": {
+                    "value": {
+                      "error": "modelkit_unavailable"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/modelkit/drugs/{key}/evidence": {
+      "get": {
+        "summary": "Evidence",
+        "description": "Every evidence row of the drug with its quote, source and both reader verdicts.",
+        "operationId": "evidence_modelkit_drugs__key__evidence_get",
+        "parameters": [
+          {
+            "name": "key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Key"
+            }
+          },
+          {
+            "name": "release",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Release"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvidenceOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/modelkit/drugs/{key}/export/{target}": {
+      "get": {
+        "summary": "Export",
+        "description": "A zip with the model file(s), provenance.json, references.bib and LICENSES.txt.",
+        "operationId": "export_modelkit_drugs__key__export__target__get",
+        "parameters": [
+          {
+            "name": "key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Key"
+            }
+          },
+          {
+            "name": "target",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Target"
+            }
+          },
+          {
+            "name": "release",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Release"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Model files and provenance.",
+            "content": {
+              "application/zip": {}
+            }
+          },
+          "409": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicError"
+                },
+                "examples": {
+                  "none": {
+                    "value": {
+                      "error": "no_parameter_set"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicError"
+                },
+                "examples": {
+                  "unavailable": {
+                    "value": {
+                      "error": "modelkit_unavailable"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/modelkit/validation": {
+      "get": {
+        "summary": "System",
+        "description": "The system report over all drugs: counts by status, pooled fold errors with n.",
+        "operationId": "system_modelkit_validation_get",
+        "parameters": [
+          {
+            "name": "release",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Release"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SystemOut"
                 }
               }
             }
@@ -1211,6 +1513,180 @@
         ],
         "title": "DiscoveryOut"
       },
+      "DrugOut": {
+        "properties": {
+          "release": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Release"
+          },
+          "statements": {
+            "$ref": "#/components/schemas/Statements"
+          },
+          "summary": {
+            "$ref": "#/components/schemas/DrugSummary"
+          },
+          "parameter_set": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SetOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "no_set_reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "No Set Reasons"
+          },
+          "validation": {
+            "$ref": "#/components/schemas/janus__modelkit__router__ValidationOut"
+          },
+          "targets": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Targets"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "release",
+          "statements",
+          "summary",
+          "parameter_set",
+          "no_set_reasons",
+          "validation",
+          "targets"
+        ],
+        "title": "DrugOut"
+      },
+      "DrugSummary": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "title": "Key"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "validated",
+              "not_validated",
+              "failed"
+            ],
+            "title": "Status"
+          },
+          "status_reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Status Reasons"
+          },
+          "has_set": {
+            "type": "boolean",
+            "title": "Has Set"
+          },
+          "set_complete": {
+            "type": "boolean",
+            "title": "Set Complete"
+          },
+          "basis": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Basis"
+          },
+          "rows": {
+            "type": "integer",
+            "title": "Rows"
+          },
+          "confirmed_rows": {
+            "type": "integer",
+            "title": "Confirmed Rows"
+          },
+          "studies": {
+            "type": "integer",
+            "title": "Studies"
+          },
+          "auc": {
+            "$ref": "#/components/schemas/MetricOut"
+          },
+          "cmax": {
+            "$ref": "#/components/schemas/MetricOut"
+          },
+          "exportable": {
+            "type": "boolean",
+            "title": "Exportable"
+          },
+          "experimental": {
+            "type": "boolean",
+            "const": true,
+            "title": "Experimental",
+            "default": true
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "key",
+          "name",
+          "status",
+          "status_reasons",
+          "has_set",
+          "set_complete",
+          "basis",
+          "rows",
+          "confirmed_rows",
+          "studies",
+          "auc",
+          "cmax",
+          "exportable"
+        ],
+        "title": "DrugSummary"
+      },
+      "DrugsOut": {
+        "properties": {
+          "release": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Release"
+          },
+          "statements": {
+            "$ref": "#/components/schemas/Statements"
+          },
+          "drugs": {
+            "items": {
+              "$ref": "#/components/schemas/DrugSummary"
+            },
+            "type": "array",
+            "title": "Drugs"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "release",
+          "statements",
+          "drugs"
+        ],
+        "title": "DrugsOut"
+      },
       "EstimatesOut": {
         "properties": {
           "prr": {
@@ -1243,6 +1719,283 @@
           "chi2_form"
         ],
         "title": "EstimatesOut"
+      },
+      "EvidenceOut": {
+        "properties": {
+          "release": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Release"
+          },
+          "statements": {
+            "$ref": "#/components/schemas/Statements"
+          },
+          "drug": {
+            "type": "string",
+            "title": "Drug"
+          },
+          "rows": {
+            "items": {
+              "$ref": "#/components/schemas/EvidenceRowOut"
+            },
+            "type": "array",
+            "title": "Rows"
+          },
+          "attribution": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Attribution"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "release",
+          "statements",
+          "drug",
+          "rows",
+          "attribution"
+        ],
+        "title": "EvidenceOut"
+      },
+      "EvidenceRowOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "analyte": {
+            "type": "string",
+            "title": "Analyte"
+          },
+          "analyte_class": {
+            "type": "string",
+            "title": "Analyte Class"
+          },
+          "parameter": {
+            "type": "string",
+            "title": "Parameter"
+          },
+          "value": {
+            "type": "number",
+            "title": "Value"
+          },
+          "value_low": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value Low"
+          },
+          "value_high": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value High"
+          },
+          "statistic": {
+            "type": "string",
+            "title": "Statistic"
+          },
+          "unit": {
+            "type": "string",
+            "title": "Unit"
+          },
+          "value_si": {
+            "type": "number",
+            "title": "Value Si"
+          },
+          "dose": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dose"
+          },
+          "route": {
+            "type": "string",
+            "title": "Route"
+          },
+          "regimen": {
+            "type": "string",
+            "title": "Regimen"
+          },
+          "interval_h": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Interval H"
+          },
+          "population": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Population"
+          },
+          "n_subjects": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "N Subjects"
+          },
+          "formulation": {
+            "type": "string",
+            "title": "Formulation"
+          },
+          "coadministered": {
+            "type": "boolean",
+            "title": "Coadministered"
+          },
+          "study_id": {
+            "type": "string",
+            "title": "Study Id"
+          },
+          "source_id": {
+            "type": "string",
+            "title": "Source Id"
+          },
+          "source_locator": {
+            "type": "string",
+            "title": "Source Locator"
+          },
+          "source_version": {
+            "type": "string",
+            "title": "Source Version"
+          },
+          "source_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Url"
+          },
+          "quote": {
+            "type": "string",
+            "title": "Quote"
+          },
+          "reader_a": {
+            "type": "string",
+            "title": "Reader A"
+          },
+          "reader_b": {
+            "type": "string",
+            "title": "Reader B"
+          },
+          "confirmed": {
+            "type": "boolean",
+            "title": "Confirmed"
+          },
+          "confirm_reason": {
+            "type": "string",
+            "title": "Confirm Reason"
+          },
+          "note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Note"
+          },
+          "extracted_at": {
+            "type": "string",
+            "title": "Extracted At"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "building",
+              "validation",
+              "excluded"
+            ],
+            "title": "Role"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "analyte",
+          "analyte_class",
+          "parameter",
+          "value",
+          "value_low",
+          "value_high",
+          "statistic",
+          "unit",
+          "value_si",
+          "dose",
+          "route",
+          "regimen",
+          "interval_h",
+          "population",
+          "n_subjects",
+          "formulation",
+          "coadministered",
+          "study_id",
+          "source_id",
+          "source_locator",
+          "source_version",
+          "source_url",
+          "quote",
+          "reader_a",
+          "reader_b",
+          "confirmed",
+          "confirm_reason",
+          "note",
+          "extracted_at",
+          "role",
+          "reason"
+        ],
+        "title": "EvidenceRowOut"
       },
       "ExportOut": {
         "properties": {
@@ -1694,6 +2447,92 @@
           "simulations"
         ],
         "title": "Meta"
+      },
+      "MetricOut": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "enum": [
+              "auc",
+              "cmax"
+            ],
+            "title": "Name"
+          },
+          "tested": {
+            "type": "boolean",
+            "title": "Tested"
+          },
+          "n_points": {
+            "type": "integer",
+            "title": "N Points"
+          },
+          "n_studies": {
+            "type": "integer",
+            "title": "N Studies"
+          },
+          "gm_ratio": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gm Ratio"
+          },
+          "gmfe": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gmfe"
+          },
+          "within_2_fold_points": {
+            "type": "integer",
+            "title": "Within 2 Fold Points"
+          },
+          "in_band": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "In Band"
+          },
+          "near_limit": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Near Limit"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name",
+          "tested",
+          "n_points",
+          "n_studies",
+          "gm_ratio",
+          "gmfe",
+          "within_2_fold_points",
+          "in_band",
+          "near_limit"
+        ],
+        "title": "MetricOut"
       },
       "OnsetRowOut": {
         "properties": {
@@ -2815,6 +3654,94 @@
         ],
         "title": "PairSummaryOut"
       },
+      "ParamOut": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "value": {
+            "type": "number",
+            "title": "Value"
+          },
+          "unit": {
+            "type": "string",
+            "title": "Unit"
+          },
+          "confidence_class": {
+            "type": "string",
+            "enum": [
+              "A",
+              "B",
+              "C"
+            ],
+            "title": "Confidence Class"
+          },
+          "n_studies": {
+            "type": "integer",
+            "title": "N Studies"
+          },
+          "between_study_cv": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Between Study Cv"
+          },
+          "derivation": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Derivation"
+          },
+          "note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Note"
+          },
+          "evidence_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Evidence Ids"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name",
+          "label",
+          "value",
+          "unit",
+          "confidence_class",
+          "n_studies",
+          "between_study_cv",
+          "derivation",
+          "note",
+          "evidence_ids"
+        ],
+        "title": "ParamOut"
+      },
       "PipcRowOut": {
         "properties": {
           "position": {
@@ -2927,6 +3854,59 @@
         ],
         "title": "PipcRowOut"
       },
+      "PointOut": {
+        "properties": {
+          "evidence_id": {
+            "type": "string",
+            "title": "Evidence Id"
+          },
+          "metric": {
+            "type": "string",
+            "enum": [
+              "auc",
+              "cmax"
+            ],
+            "title": "Metric"
+          },
+          "study_id": {
+            "type": "string",
+            "title": "Study Id"
+          },
+          "dose_mg": {
+            "type": "number",
+            "title": "Dose Mg"
+          },
+          "observed": {
+            "type": "number",
+            "title": "Observed"
+          },
+          "predicted": {
+            "type": "number",
+            "title": "Predicted"
+          },
+          "ratio": {
+            "type": "number",
+            "title": "Ratio"
+          },
+          "within_2_fold": {
+            "type": "boolean",
+            "title": "Within 2 Fold"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "evidence_id",
+          "metric",
+          "study_id",
+          "dose_mg",
+          "observed",
+          "predicted",
+          "ratio",
+          "within_2_fold"
+        ],
+        "title": "PointOut"
+      },
       "RankOut": {
         "properties": {
           "best": {
@@ -2950,6 +3930,25 @@
           "population"
         ],
         "title": "RankOut"
+      },
+      "ReasonOut": {
+        "properties": {
+          "evidence_id": {
+            "type": "string",
+            "title": "Evidence Id"
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "evidence_id",
+          "reason"
+        ],
+        "title": "ReasonOut"
       },
       "RegionName": {
         "type": "string",
@@ -3109,6 +4108,106 @@
         ],
         "title": "ServiceOut"
       },
+      "SetOut": {
+        "properties": {
+          "model": {
+            "type": "string",
+            "title": "Model"
+          },
+          "model_reason": {
+            "type": "string",
+            "title": "Model Reason"
+          },
+          "basis": {
+            "type": "string",
+            "enum": [
+              "iv",
+              "oral_apparent"
+            ],
+            "title": "Basis"
+          },
+          "apparent": {
+            "type": "boolean",
+            "title": "Apparent"
+          },
+          "complete": {
+            "type": "boolean",
+            "title": "Complete"
+          },
+          "missing": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Missing"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Warnings"
+          },
+          "params": {
+            "items": {
+              "$ref": "#/components/schemas/ParamOut"
+            },
+            "type": "array",
+            "title": "Params"
+          },
+          "left_out": {
+            "items": {
+              "$ref": "#/components/schemas/ReasonOut"
+            },
+            "type": "array",
+            "title": "Left Out"
+          },
+          "held_out_studies": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Held Out Studies"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "model",
+          "model_reason",
+          "basis",
+          "apparent",
+          "complete",
+          "missing",
+          "warnings",
+          "params",
+          "left_out",
+          "held_out_studies"
+        ],
+        "title": "SetOut"
+      },
+      "Statements": {
+        "properties": {
+          "research_use": {
+            "type": "string",
+            "title": "Research Use",
+            "default": "Research use only. Not for clinical decisions."
+          },
+          "expert_review": {
+            "type": "string",
+            "title": "Expert Review",
+            "default": "Expert review has not yet been done."
+          },
+          "experimental": {
+            "type": "string",
+            "title": "Experimental",
+            "default": "Experimental: this model kit is an early research preview."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "Statements"
+      },
       "StatsOut": {
         "properties": {
           "region": {
@@ -3207,6 +4306,150 @@
         ],
         "title": "StorageInfo"
       },
+      "SystemMetricOut": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "enum": [
+              "auc",
+              "cmax"
+            ],
+            "title": "Name"
+          },
+          "n_drugs": {
+            "type": "integer",
+            "title": "N Drugs"
+          },
+          "gmfe": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gmfe"
+          },
+          "within_2_fold": {
+            "type": "integer",
+            "title": "Within 2 Fold"
+          },
+          "within_2_fold_share": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Within 2 Fold Share"
+          },
+          "wilson_low": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Wilson Low"
+          },
+          "wilson_high": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Wilson High"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name",
+          "n_drugs",
+          "gmfe",
+          "within_2_fold",
+          "within_2_fold_share",
+          "wilson_low",
+          "wilson_high"
+        ],
+        "title": "SystemMetricOut"
+      },
+      "SystemOut": {
+        "properties": {
+          "release": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Release"
+          },
+          "statements": {
+            "$ref": "#/components/schemas/Statements"
+          },
+          "n_drugs": {
+            "type": "integer",
+            "title": "N Drugs"
+          },
+          "by_status": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "By Status"
+          },
+          "metrics": {
+            "items": {
+              "$ref": "#/components/schemas/SystemMetricOut"
+            },
+            "type": "array",
+            "title": "Metrics"
+          },
+          "n_studies": {
+            "type": "integer",
+            "title": "N Studies"
+          },
+          "interpretable": {
+            "type": "boolean",
+            "title": "Interpretable"
+          },
+          "min_drugs_for_interpretation": {
+            "type": "integer",
+            "title": "Min Drugs For Interpretation"
+          },
+          "conformal": {
+            "type": "string",
+            "title": "Conformal"
+          },
+          "caveats": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Caveats"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "release",
+          "statements",
+          "n_drugs",
+          "by_status",
+          "metrics",
+          "n_studies",
+          "interpretable",
+          "min_drugs_for_interpretation",
+          "conformal",
+          "caveats"
+        ],
+        "title": "SystemOut"
+      },
       "TotalsOut": {
         "properties": {
           "region": {
@@ -3229,109 +4472,6 @@
           "reports_all"
         ],
         "title": "TotalsOut"
-      },
-      "ValidationOut": {
-        "properties": {
-          "schema_version": {
-            "type": "string",
-            "const": "light-1",
-            "title": "Schema Version",
-            "default": "light-1"
-          },
-          "status": {
-            "type": "string",
-            "enum": [
-              "experimental",
-              "prototype"
-            ],
-            "title": "Status"
-          },
-          "review_status": {
-            "type": "string",
-            "const": "ai_reviewed_pending_expert",
-            "title": "Review Status",
-            "default": "ai_reviewed_pending_expert"
-          },
-          "snapshot": {
-            "$ref": "#/components/schemas/janus__light__schemas__SnapshotOut"
-          },
-          "codes": {
-            "items": {
-              "type": "string"
-            },
-            "type": "array",
-            "title": "Codes"
-          },
-          "disclaimer": {
-            "type": "string",
-            "title": "Disclaimer"
-          },
-          "attribution": {
-            "items": {
-              "type": "string"
-            },
-            "type": "array",
-            "title": "Attribution"
-          },
-          "top_k": {
-            "type": "integer",
-            "title": "Top K"
-          },
-          "cases": {
-            "items": {
-              "$ref": "#/components/schemas/CaseResultOut"
-            },
-            "type": "array",
-            "title": "Cases"
-          },
-          "primary": {
-            "$ref": "#/components/schemas/janus__light__schemas__SummaryOut"
-          },
-          "sensitivity": {
-            "$ref": "#/components/schemas/janus__light__schemas__SummaryOut"
-          },
-          "goals": {
-            "items": {
-              "$ref": "#/components/schemas/GoalRef"
-            },
-            "type": "array",
-            "title": "Goals"
-          },
-          "ingredients": {
-            "additionalProperties": {
-              "additionalProperties": {
-                "type": "string"
-              },
-              "type": "object"
-            },
-            "type": "object",
-            "title": "Ingredients"
-          },
-          "sources": {
-            "items": {
-              "$ref": "#/components/schemas/janus__light__schemas__SourceOut"
-            },
-            "type": "array",
-            "title": "Sources"
-          }
-        },
-        "additionalProperties": false,
-        "type": "object",
-        "required": [
-          "status",
-          "snapshot",
-          "codes",
-          "disclaimer",
-          "attribution",
-          "top_k",
-          "cases",
-          "primary",
-          "sensitivity",
-          "goals",
-          "ingredients",
-          "sources"
-        ],
-        "title": "ValidationOut"
       },
       "janus__light__schemas__SnapshotOut": {
         "properties": {
@@ -3462,6 +4602,109 @@
         ],
         "title": "SummaryOut"
       },
+      "janus__light__schemas__ValidationOut": {
+        "properties": {
+          "schema_version": {
+            "type": "string",
+            "const": "light-1",
+            "title": "Schema Version",
+            "default": "light-1"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "experimental",
+              "prototype"
+            ],
+            "title": "Status"
+          },
+          "review_status": {
+            "type": "string",
+            "const": "ai_reviewed_pending_expert",
+            "title": "Review Status",
+            "default": "ai_reviewed_pending_expert"
+          },
+          "snapshot": {
+            "$ref": "#/components/schemas/janus__light__schemas__SnapshotOut"
+          },
+          "codes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Codes"
+          },
+          "disclaimer": {
+            "type": "string",
+            "title": "Disclaimer"
+          },
+          "attribution": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Attribution"
+          },
+          "top_k": {
+            "type": "integer",
+            "title": "Top K"
+          },
+          "cases": {
+            "items": {
+              "$ref": "#/components/schemas/CaseResultOut"
+            },
+            "type": "array",
+            "title": "Cases"
+          },
+          "primary": {
+            "$ref": "#/components/schemas/janus__light__schemas__SummaryOut"
+          },
+          "sensitivity": {
+            "$ref": "#/components/schemas/janus__light__schemas__SummaryOut"
+          },
+          "goals": {
+            "items": {
+              "$ref": "#/components/schemas/GoalRef"
+            },
+            "type": "array",
+            "title": "Goals"
+          },
+          "ingredients": {
+            "additionalProperties": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            "type": "object",
+            "title": "Ingredients"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/janus__light__schemas__SourceOut"
+            },
+            "type": "array",
+            "title": "Sources"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "status",
+          "snapshot",
+          "codes",
+          "disclaimer",
+          "attribution",
+          "top_k",
+          "cases",
+          "primary",
+          "sensitivity",
+          "goals",
+          "ingredients",
+          "sources"
+        ],
+        "title": "ValidationOut"
+      },
       "janus__memory__schemas__IntervalOut": {
         "properties": {
           "low": {
@@ -3576,6 +4819,83 @@
           "attribution"
         ],
         "title": "SnapshotOut"
+      },
+      "janus__modelkit__router__ValidationOut": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "validated",
+              "not_validated",
+              "failed"
+            ],
+            "title": "Status"
+          },
+          "reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Reasons"
+          },
+          "metrics": {
+            "items": {
+              "$ref": "#/components/schemas/MetricOut"
+            },
+            "type": "array",
+            "title": "Metrics"
+          },
+          "points": {
+            "items": {
+              "$ref": "#/components/schemas/PointOut"
+            },
+            "type": "array",
+            "title": "Points"
+          },
+          "excluded": {
+            "items": {
+              "$ref": "#/components/schemas/ReasonOut"
+            },
+            "type": "array",
+            "title": "Excluded"
+          },
+          "suspect": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Suspect"
+          },
+          "interval": {
+            "type": "string",
+            "title": "Interval"
+          },
+          "band": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "title": "Band"
+          },
+          "unit_note": {
+            "type": "string",
+            "title": "Unit Note"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "status",
+          "reasons",
+          "metrics",
+          "points",
+          "excluded",
+          "suspect",
+          "interval",
+          "band",
+          "unit_note"
+        ],
+        "title": "ValidationOut"
       },
       "janus__quality__router__FindingOut": {
         "properties": {

@@ -26,6 +26,11 @@ Base URL: `/api` on a Janus deployment (same origin as the web app). Nothing is 
 | `GET /open/faers-onset/{position}` | one PIPC row (1-65) with the caveats | 404 `unknown_position`, 422 `invalid_request` |
 | `GET /open/cascade-package/pipc` | the 65 PIPC rows (CC BY 4.0) with Janus's class mapping (Apache-2.0), package version and citation; also used by the [MCP server](mcp.md) | 503 `package_unavailable` |
 | `GET /cds-services` | the CDS Hooks discovery document ([`cds-hooks.md`](cds-hooks.md)) | — |
+| `GET /modelkit/drugs` | the experimental drug model kit: the drugs, each with its validation status (validated / not validated / failed) | 503 `modelkit_unavailable`, 404 `unknown_release`, 422 `invalid_request` |
+| `GET /modelkit/drugs/{key}` | one drug: parameter set (value, unit, confidence class, evidence ids), validation report, what was left out | 503, 404 `unknown_drug`, 422 |
+| `GET /modelkit/drugs/{key}/evidence` | every evidence row of the drug: quote, source locator and link, both reader verdicts, whether it was used | 503, 404, 422 |
+| `GET /modelkit/drugs/{key}/export/{target}` | a zip (`target` = `janus` or `mrgsolve`) with the model file(s), `provenance.json`, `references.bib`, `LICENSES.txt` | 409 `no_parameter_set` / `incomplete_set`, 503, 404, 422 |
+| `GET /modelkit/validation` | the system report over all drugs: counts by status, pooled fold errors with n | 503 |
 
 ## Rules every route follows
 
@@ -37,6 +42,7 @@ Base URL: `/api` on a Janus deployment (same origin as the web app). Nothing is 
   cases. Donated and outcome counts are released only as described in [`open-data.md`](open-data.md).
 - **Onset table** rows are descriptive, not causal and not incidence; a row with too few reports or dominated by
   one identical date pair publishes counts only (`status`).
+- **Model kit** (experimental): every answer carries "Research use only. Not for clinical decisions." and "Expert review has not yet been done."; a validation status describes a handful of held-out studies (n is shown), not the drug in general. Routes accept an optional `release` (the run id of the evidence release); another id is a 404 `unknown_release`.
 - **Time machine** answers are in silico and exploratory, "expert review has not yet been done"
   (`meta.review_status`); a concentration or dose in them is never a dose a person could take.
 
