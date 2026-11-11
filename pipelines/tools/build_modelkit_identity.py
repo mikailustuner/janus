@@ -2,8 +2,8 @@
 
 Names come from the pool's own drug names, the Wikidata labels and aliases (CC0) of the drug's item
 (local `wikidata_ingredients` artifact) and, for the drugs of milestone M1, the curated company
-codes, metabolites and prodrugs of `identity_m1.csv`. Very short or generic words are left out so that a
-common word never names a drug. Research use only.
+codes, metabolites and prodrugs of `identity_m1.csv`. Very short or generic words are left out so
+that a common word never names a drug. Research use only.
 
     python tools/build_modelkit_identity.py POOL_CSV WIKIDATA_PARQUET IDENTITY_M1_CSV OUT_CSV
 
