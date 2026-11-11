@@ -46,3 +46,8 @@
   decision)
 - [ ] Two-compartment engine and export, per-kg handling with explicit body weight in a source, a class D
   fallback only if the owner wants it
+
+## Reopened after M2–M6 (owner decision 2026-11-11)
+
+- [ ] M1 exit criterion: confirmed-value precision ≥ 0.90 on a blinded sample (measured 0.69, n = 85). Shared error
+      classes to fix first: regimen, route, combination arms, comparator drugs, population words in label sentences.

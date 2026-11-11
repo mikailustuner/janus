@@ -126,3 +126,10 @@ telmisartan). The pilot called all six simulatable; the stricter M0 rules change
 - **M12** Unit conversion goes through the dimension check; a per-kg unit is never converted (tests: units).
 - **M13** Reader B's module imports nothing from reader A, the resolver's classification or the pairing code (test).
 - **M14** A derived clearance equals dose / AUC(0-inf) of its own arm and is labelled derived (test).
+
+## 10. Owner decision 2026-11-11: M1 ships as experimental
+
+M1 is merged and shown as **experimental**, with the measured confirmed-value precision (0.69, below the 0.90 exit
+target) stated on every page and the instruction to read every value as unverified. M1 is not complete: its exit
+criterion is reopened after the later milestones (M2–M6) and must be met before any production label. The status
+text stays "Expert review has not yet been done".
