@@ -1,4 +1,4 @@
-# Model kit evidence seed (experimental)
+# Model kit evidence seeds (experimental)
 
 `evidence_seed.csv` is the small committed input of the `modelkit_evidence` pipeline job (spec:
 `.kiro/specs/model-kit/`). One row per fact for six drugs (dolutegravir, ertugliflozin, gabapentin, sunitinib,
@@ -18,3 +18,18 @@ Source terms: ClinicalTrials.gov data is shown with attribution, the date the re
 statement that units were converted and values re-typed (see `pipelines/sources.toml`, `NOTICE`). FDA labels and
 reviews are public domain. PMC rows come from articles under CC BY with per-article attribution. The file holds
 short quotes only; no raw downloads.
+
+## Milestone M1 files
+- `evidence_m1.csv`: values read from ClinicalTrials.gov outcome measures and DailyMed label section 12.3 for the 50
+  pilot drugs by two independent automated readers (reader A pattern based, reader B structure first); a value is
+  confirmed only if both give the same value, unit, analyte, dose and context (code decides). All rows of the parent
+  drug, confirmed or not, and at most three rows per drug of other analytes (metabolite, partner drug, unknown code) as
+  examples of what is stored apart. Derived clearances (dose / AUC to infinity of one arm) carry `origin = derived`.
+  Made by `python -m janus_pipelines.modelkit.pilot` from private pilot inputs; the readers are in
+  `pipelines/janus_pipelines/modelkit/`.
+- `identity_m1.csv`: names of the 50 drugs: Wikidata labels and aliases (CC0) and a short curated list of named
+  metabolites and prodrugs; the resolver uses it for analyte classes.
+- `sources_m1.json`: title, link and terms of every record behind a row.
+- Measured precision of confirmed values on a blinded sample (two automated review passes): 0.69, n = 85, below the
+  0.90 target (`.kiro/specs/model-kit/reviews.md`). Read every value as unverified. Research use only. Not for clinical
+  decisions. Expert review has not yet been done.

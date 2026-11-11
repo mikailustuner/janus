@@ -154,10 +154,10 @@ describe("reason codes", () => {
     if (typeof x === "string") seen.add(x);
     else if (Array.isArray(x)) x.forEach(add);
   };
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   for (const d of [
     ...Object.values(fx.drug),
     ...Object.values(fx0.drug),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ] as Record<string, any>[]) {
     add(d.summary.status_reasons);
     add(d.no_set_reasons);

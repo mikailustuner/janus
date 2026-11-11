@@ -33,8 +33,9 @@ Formulations: `immediate_release, solution, modified_release, fixed_dose_combina
   value but a different context (arm restriction such as a crossover test or reference arm, co-administration,
   formulation, food, population) are a disagreement and the value is not confirmed. Rows the pilot already judged by two annotation passes keep those verdicts. A value the
   readers cannot reproduce stays in the store as `confirmed = false`; it is shown on the drug page as "not used".
-- **DP-M2 Held-out rule is structural.** `split_studies` classifies studies by the parameters they report (all
-  rows, confirmed or not, so the split cannot depend on the outcome of confirmation): a study reporting any of
+- **DP-M2 Held-out rule is structural.** `split_studies` classifies studies by the parameters they report for the
+  parent drug (all parent rows, confirmed or not, so the split cannot depend on the outcome of confirmation; M1:
+  a metabolite row does not count, a derived clearance does not count, see DP-M14): a study reporting any of
   `cl, cl_f, vss, vd, v_f, t_half, tmax, f` is a building study; a study reporting only `cmax` / `auc_*` is a test
   study; labels never test. Test studies are never read by the builder (the builder takes only the building
   rows), so the rule holds by construction; a property test checks it.
@@ -95,3 +96,33 @@ not wait for it and skip the `mrgsolve` tests when R is missing. Locally: `pytes
 ## 8. M0 evidence and findings
 Six drugs from the second data-source pilot (dolutegravir, ertugliflozin, gabapentin, sunitinib, tramadol,
 telmisartan). The pilot called all six simulatable; the stricter M0 rules change that, see `reviews.md`.
+
+## 9. Milestone M1 decisions
+- **DP-M12 Evidence schema 2.** `modelkit_evidence-2` adds `arm_id, origin (m0_annotation | reader_pair | derived),
+  derivation, evidence_kind (pk | interaction), food, dispersion_type, dispersion_low, dispersion_high`; analyte
+  classes `parent, parent_unbound, metabolite, enantiomer, total, prodrug, combination_partner, unconfirmed,
+  unspecified`; formulation `other_route` (intramuscular, topical, patch and similar). The job reads
+  `evidence_seed.csv` (M0) and `evidence_m1.csv` (M1); M0 rows of ClinicalTrials.gov and DailyMed are replaced by the
+  M1 rows of the same drug, M0 rows of PMC and the scanned review are kept with their M0 annotation verdicts.
+- **DP-M13 Build-time reading in `pipelines/janus_pipelines/modelkit/`.** `resolver.py` (names from
+  `data/modelkit/identity_m1.csv`: Wikidata labels and aliases, CC0, plus a short curated list of metabolites and
+  prodrugs; analyte class; study-arm context), `units.py` (unit table, dimension analysis, per-kg handling, mean type
+  and dispersion), `reader_a.py` (pattern based: sentences, titles, flattened table lines, the resolver),
+  `reader_b.py` (structure first: the unit's dimension, arm-to-intervention links, eligibility flags, the table grid,
+  token rules; shares only reference data), `confirm.py` and `pairing.py` (the only place the two meet),
+  `derive.py`, `pilot.py` (the 50-drug re-run). Disagreement rule: DP-M1.
+- **DP-M14 Derived clearance and the split.** Derived rows never make their study a building study; with no stated
+  clearance one study builds (first in sorted order) and never tests. A set built from derived clearance has class C
+  and says "Derived: CL/F = dose / AUC to infinity of one study arm".
+- **DP-M15 Label formulation and route.** When a label sentence is silent on formulation and route, they are taken
+  from the label's own dosage forms and routes (structured data of the same label) only if every form is a plain oral
+  form and the only route is oral. This is a separate step after confirmation and is noted on the row.
+- **DP-M16 Measured precision is shown.** The system report carries the caveat `confirmed_precision_below_target`
+  (blinded sample, two automated review passes) for as long as the target of 0.90 is not met.
+
+## 10. Milestone M1 properties
+- **M11** Only a row of the parent drug that both readers confirm reaches the builder; a non-parent analyte, an
+  interaction arm, an `other_route` formulation and a per-kg value never do (tests: builder properties, readers).
+- **M12** Unit conversion goes through the dimension check; a per-kg unit is never converted (tests: units).
+- **M13** Reader B's module imports nothing from reader A, the resolver's classification or the pairing code (test).
+- **M14** A derived clearance equals dose / AUC(0-inf) of its own arm and is labelled derived (test).

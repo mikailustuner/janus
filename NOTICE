@@ -161,8 +161,10 @@ Janus drug model kit evidence store (experimental)
   sources below)
   Research use only. Not for clinical decisions. Expert review has not yet been
   done.
-  Short quotes, locators and values with the verdicts of two automated reader
-  passes; the committed input is data/modelkit/evidence_seed.csv.
+  Short quotes, locators and values with the verdicts of two automated readers;
+  the committed inputs are data/modelkit/evidence_seed.csv (milestone M0) and
+  data/modelkit/evidence_m1.csv (milestone M1, 50 drugs, ClinicalTrials.gov and
+  DailyMed).
 
 ClinicalTrials.gov posted results (model kit evidence)
   Publisher: U.S. National Library of Medicine

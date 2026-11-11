@@ -1,6 +1,7 @@
 # Requirements: Drug model starter kit ("Model kit")
 
-> Status: experimental. Milestone M0 is built; M1 onwards are open tasks (`tasks.md`). Research use only, not for
+> Status: experimental. Milestones M0 and M1 are built (M1 did not reach its precision target, see `reviews.md`);
+> M2 onwards are open tasks (`tasks.md`). Research use only, not for
 > clinical decisions. Expert review has not yet been done. All reading, confirmation and checking in this feature
 > is automated; nothing in it has been reviewed by a person.
 
@@ -40,6 +41,19 @@ not a PBPK simulator.
    re-typed, rows filtered). FDA label and review text is public domain; PubMed Central rows are used only from
    articles licensed CC BY or CC0, with per-article attribution.
 5. No raw bulk download and no file larger than 1 MB SHALL be committed.
+6. (M1) The store SHALL keep non-parent analytes (named metabolite, enantiomer, unbound, total, prodrug,
+   combination partner, unknown code) as separate analytes: they never feed a parent parameter set. A study arm that
+   gives another active drug is interaction evidence only. Species other than human are not stored as evidence.
+7. (M1) Units SHALL be checked by dimension: a value is converted only if its unit has the dimension of its
+   parameter; a per-kg value keeps its per-kg parameter (`cl_per_kg`, `vd_per_kg`) and is never converted to an
+   absolute value or read as CL/F without an explicit body weight; molar units are refused without a molar mass.
+   The mean type (arithmetic, geometric, median) and the dispersion (SD, CV %, range, interval) are separate fields.
+   A dose SHALL come only from an arm definition, a table, a footnote or the methods, never from an abstract.
+8. (M1) Reader B SHALL be an implementation independent of reader A (a different parsing strategy, no shared
+   extraction code, run without seeing A's output). The runtime has no language model; reader code is build-time
+   only. Confirmation = same value (+-1 %), unit, analyte, dose and context (Requirement 1.2).
+9. (M1) CL/F = dose / AUC(0-inf) (CL for an intravenous dose) SHALL be derived only where one study arm gives both,
+   and the row SHALL be labelled derived with its derivation.
 
 ## Requirement 2: Parameter-set builder
 1. THE builder SHALL be pure and deterministic: the same rows in any order give the same set.
@@ -59,8 +73,10 @@ not a PBPK simulator.
    2-fold), B (one confirmed study, or studies that disagree), C (derived from other parameters or from a stated
    range). Class D (a screening-model fallback) is not produced in M0.
 9. Held-out rule: THE studies used to test a set SHALL be chosen before building by a rule that looks only at
-   which parameters a study reports; a study that reports any building parameter is never a test study; the same
-   study never builds and tests; arms of one study stay on one side.
+   which parameters a study reports for the parent drug; a study that reports any building parameter is never a
+   test study; the same study never builds and tests; arms of one study stay on one side. A clearance derived from
+   dose and AUC is not "reported" by its study; when a drug has no stated clearance, one study (the first in sorted
+   order among those with derived rows) is designated to build and never tests.
 
 ## Requirement 3: Validation report
 1. FOR each drug with a set, the report SHALL compare the set's predicted Cmax and AUC with the observations of

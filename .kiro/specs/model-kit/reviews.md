@@ -41,3 +41,40 @@ and the reasons are the useful result.
 - Clearance from AUC and dose (CL/F = dose / AUC to infinity) is not derived in M0 (task M1).
 - The CI job for mrgsolve could not be run on a hosted runner in this environment; the round trip was run locally
   (R 4.6.1, mrgsolve 2.0.1) with a negative control (a 2 % clearance change fails the 1 % check).
+
+# Review notes: model kit M1 (automated checks only; expert review has not yet been done)
+
+M1 re-read the 50 pilot drugs with the resolver, the unit checker and two independent readers (design section 9).
+The exit target, a precision of at least 0.90 for confirmed values on a blinded sample, was **not met**.
+
+| | Run 1 | Run 2 (after the failure classes of run 1) |
+|---|---|---|
+| Confirmed stated values in the pool | 450 | 346 (run 1 sample removed) |
+| Blinded sample (at most 3 per document) | 100 | 100 |
+| Two automated review passes agree (correct or incorrect) | 94 | 85 |
+| Primary precision (both passes correct / both passes agree) | 0.66 (Wilson 95 % 0.56 to 0.75) | 0.69 (0.59 to 0.78) |
+| Conservative (anything not called correct by both counts as wrong) | 0.62 (0.52 to 0.71) | 0.59 (0.49 to 0.68) |
+| By source, run 2 | | ClinicalTrials.gov 48 of 59 (0.81), label text 11 of 26 (0.42) |
+
+Reader agreement (share of reader A's parent-drug values that reader B confirms): ClinicalTrials.gov 0.46
+(458 of 987, Wilson 0.43 to 0.50), label text 0.61 (98 of 161, 0.53 to 0.68). Almost all remaining errors were shared
+by both readers (a cue that both use), not caught by the second reader.
+
+What the review found, and what was fixed for run 2: regimen read as "multiple dose" from the word "daily"; an
+injection read as intravenous; a second active drug in the same arm not recognised; a dose taken from the neighbour in a
+combination; the value of a comparator or antidote in the same record; a fed/fasted column taken from a caption.
+What is left (open items): arm context of combination and comparator groups (dabrafenib with trametinib, a combination
+product), analyte of closely named drugs (cisatracurium for atracurium), special populations and phases in label
+sentences (paediatric, renal impairment, a beta phase), route from the label sentence, and a reader B that is not a twin
+of reader A.
+
+Sets and gate (strict rule): of the 50 drugs, 42 have any evidence row for the parent drug; 4 have a parameter set
+(2 complete); 0 are Validated, 1 Failed (a single Cmax point), 41 Not validated; the system gate is not interpretable
+(fewer than 10 drugs with AUC and Cmax tested). The six M0 drugs are all Not validated under M1 (ertugliflozin was
+Validated and sunitinib Failed in M0): the M0 rows had been judged by annotation passes that are not a product
+pipeline, and the deterministic readers confirm fewer rows. 7 clearances were derived (dose / AUC); 2 remain after run 2.
+Values refused by the unit checker (ClinicalTrials.gov, reader A): dimension mismatch 1,411, unknown unit 316, molar
+unit 162. Seeds hold 916 rows (all parent rows, at most 3 non-parent rows per drug as examples of separate analytes).
+
+Limits: the readers were developed on the same 50 drugs and documents; the two review passes are runs of one model
+family and may share blind spots; the sample measures precision, not recall; run 2 changes were made after seeing run 1.

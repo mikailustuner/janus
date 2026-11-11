@@ -15,15 +15,25 @@
   - _Requirements: 4_
 - [x] 6. API routes, public API document, `docs/open-api.md`
   - _Requirements: 5_
-- [ ] 7. Web: list and drug page, five languages, themes, 375 px, axe, Playwright; link from researchers page
+- [x] 7. Web: list and drug page, five languages, themes, 375 px, axe, Playwright; link from researchers page (tables scroll in their own region without breaking words; check in `e2e/model-kit.spec.ts`)
   - _Requirements: 6_
 - [x] 8. MCP tools `janus_modelkit_search`, `janus_modelkit_get` (`modelkit_evidence` is open, M3)
   - _Requirements: 7_
-- [ ] 9. Checkpoint: all CI-equivalent checks, screenshots
+- [x] 9. Checkpoint: all CI-equivalent checks, screenshots
 
 ## Later milestones (open)
-- [ ] M1 Analyte resolver (names, salts, company codes, metabolites, enantiomers), unit and dimension checks, an
-  independent reader B implemented as code, re-run of the 50-drug pilot; target confirmed-value accuracy >= 0.90
+- [x] M1 (built; the precision target was NOT met, see `reviews.md`)
+  - [x] Analyte and context resolver (names and company codes from `identity_m1.csv`, metabolites, enantiomers,
+    unbound, total, combination partners, prodrugs; arm context: other active drug, food, formulation, population,
+    sex, species, route, regimen)
+  - [x] Unit and dimension checker (per-kg kept apart, candesartan regression, mean type and dispersion separate)
+  - [x] Independent reader B (structure first) beside reader A (pattern based); confirmation by code
+  - [x] Derived CL/F = dose / AUC(0-inf) with a test; held-out rule adapted (DP-M14)
+  - [x] Re-run of the 50-drug pilot, pre-registered; blinded sample with two automated review passes (two runs)
+  - [x] Evidence seed `evidence_m1.csv`, sources, recorded answers, web texts in five languages
+  - [ ] Confirmed-value precision >= 0.90 (measured 0.66 in run 1 and 0.69 in run 2). Open: a reader that is not a
+    cue-sharing twin of A, a stricter arm-context reader (comparator and combination arms), population and route
+    from the document structure, reader B dose fallback (xfail test), a larger sample, expert review.
 - [ ] M2 ClinicalTrials.gov bulk ingestion (documented bulk download, not the API), arm-level co-administration
   filter, population-PK output filter, set builder at scale, pre-registered gate with >= 10 interpretable drugs
 - [ ] M3 System report by drug class, conformal intervals once n >= 20, bootstrap intervals, full API contract
