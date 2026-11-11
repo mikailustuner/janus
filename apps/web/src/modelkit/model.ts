@@ -145,6 +145,7 @@ export const SP_GRADES = [
   "age65",
   "age75",
   "age80",
+  "pooled",
 ] as const;
 const specialStatement = D.obj({
   pop_class: D.lit(...SP_CLASSES),

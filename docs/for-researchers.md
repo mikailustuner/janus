@@ -192,8 +192,11 @@ Draft notes, not peer reviewed. **Expert review has not yet been done.**
 
 A few drugs with parameter sets whose every value links to a source quote, tested against held-out studies:
 [/en/research/model-kit](https://janusmeds.org/en/research/model-kit) in the web app, routes under `/modelkit` in
-[open-api.md](open-api.md). **Experimental.** Research use only. Not for clinical decisions. It is not a dose
-calculator. **Expert review has not yet been done.**
+[open-api.md](open-api.md). Each drug page also quotes what US labels state about the exposure of older adults and of people
+with kidney or liver impairment (two automated readers agree on each statement; no extrapolation, no dose advice), and the
+export holds the Janus engine file, an R/mrgsolve model and a PK-Sim compound (a compound building block only: the inputs PK-Sim
+needs and the evidence lacks are marked missing, never invented). **Experimental.** Research use only. Not for clinical
+decisions. It is not a dose calculator. **Expert review has not yet been done.**
 
 ## 9. Limitations and how to report errors
 

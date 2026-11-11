@@ -857,7 +857,12 @@ function SpQuote({
         {effective
           ? t("ModelKit.sp.sourceDated", { version, date: effective })
           : t("ModelKit.sp.source", { version })}{" "}
-        <a href={url} {...EXTERNAL} className="break-all underline">
+        <a
+          href={url}
+          {...EXTERNAL}
+          className="break-all underline"
+          aria-label={`${t("ModelKit.sp.openLabel")} (${setId.slice(0, 8)})`}
+        >
           {t("ModelKit.sp.openLabel")}
         </a>{" "}
         <span lang="en" className="mono break-all">
@@ -877,7 +882,9 @@ function SpStatement({ s }: { s: SpecialStatement }) {
       data-testid="mk-sp-statement"
       data-class={s.pop_class}
     >
-      <p className="font-bold break-words">{spTitle(t, s.pop_class, s.grade)}</p>
+      <p className="font-bold break-words">
+        {spTitle(t, s.pop_class, s.grade)}
+      </p>
       <p className="break-words">
         {t(`ModelKit.sp.measure.${s.measure}`)}:{" "}
         <span className="font-bold">
@@ -889,8 +896,7 @@ function SpStatement({ s }: { s: SpecialStatement }) {
       </p>
       {s.definition ? (
         <p className="text-sm break-words">
-          {t("ModelKit.sp.definition")}:{" "}
-          <span lang="en">{s.definition}</span>
+          {t("ModelKit.sp.definition")}: <span lang="en">{s.definition}</span>
         </p>
       ) : null}
       {s.reference ? (
@@ -962,7 +968,9 @@ function SpecialPopulations({ out }: { out: DrugOut }) {
       <h2 id="mk-sp" className="group-header">
         {t("ModelKit.sp.title")}
       </h2>
-      <p className="max-w-[72ch] text-sm text-muted">{t("ModelKit.sp.intro")}</p>
+      <p className="max-w-[72ch] text-sm text-muted">
+        {t("ModelKit.sp.intro")}
+      </p>
       <ReasonList codes={sp.notes} testId="mk-sp-notes" />
       {sp.statements.length ? (
         <>

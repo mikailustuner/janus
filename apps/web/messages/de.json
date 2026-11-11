@@ -3216,7 +3216,8 @@
         "cp_c": "Child-Pugh-Klasse C",
         "age65": "ab 65 Jahren",
         "age75": "ab 75 Jahren",
-        "age80": "ab 80 Jahren"
+        "age80": "ab 80 Jahren",
+        "pooled": "mehrere Grade zusammen"
       },
       "measure": {
         "auc": "Exposition (AUC)",

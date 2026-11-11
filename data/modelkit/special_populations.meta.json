@@ -1,0 +1,22 @@
+{
+  "coverage": {
+    "labels_read": 264510,
+    "labels_matched": 20791,
+    "drugs_with_a_matched_label": 602,
+    "labels_with_a_candidate": 6016,
+    "candidate_pairs": 18834,
+    "confirmed_pairs": 6070,
+    "confirmed_pairs_displayed": 5671,
+    "drugs_with_a_displayed_statement": 151
+  },
+  "label_export_date": "2026-11-09",
+  "precision": {
+    "measured_on": "2026-11-11",
+    "n": 79,
+    "correct": 64,
+    "n_conservative": 100,
+    "correct_conservative": 64,
+    "target": 0.9
+  },
+  "note": "Counts only. Precision: blinded sample of 100 displayed statements, two automated review passes, evaluation only (second iteration of the readers; the first iteration measured 59 of 94 agreed items). Expert review has not yet been done."
+}

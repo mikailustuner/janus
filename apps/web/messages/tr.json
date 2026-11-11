@@ -3216,7 +3216,8 @@
         "cp_c": "Child-Pugh sınıf C",
         "age65": "65 yaş ve üzeri",
         "age75": "75 yaş ve üzeri",
-        "age80": "80 yaş ve üzeri"
+        "age80": "80 yaş ve üzeri",
+        "pooled": "birkaç derece birlikte"
       },
       "measure": {
         "auc": "Maruziyet (EAA/AUC)",

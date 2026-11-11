@@ -656,7 +656,8 @@ test.describe("special populations", () => {
     await expect(page.getByTestId("mk-sp-notes")).toContainText(
       messages.en.ModelKit.reasons.sp_statements_note,
     );
-    const statements = rel.drug[SP_DRUG!]!.special_populations.statements as Json[];
+    const statements = rel.drug[SP_DRUG!]!.special_populations
+      .statements as Json[];
     const shown = page.getByTestId("mk-sp-statement");
     await expect(shown).toHaveCount(Math.min(6, statements.length));
     const first = shown.first();
@@ -669,7 +670,9 @@ test.describe("special populations", () => {
     });
     await expect(link).toHaveAttribute(
       "href",
-      new RegExp(`^https://dailymed\\.nlm\\.nih\\.gov/.*setid=${statements[0]!.set_id}$`),
+      new RegExp(
+        `^https://dailymed\\.nlm\\.nih\\.gov/.*setid=${statements[0]!.set_id}$`,
+      ),
     );
     await expect(first).toContainText(`version ${statements[0]!.version}`);
     // no dose advice, no verdict wording
