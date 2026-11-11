@@ -26,7 +26,7 @@ Base URL: `/api` on a Janus deployment (same origin as the web app). Nothing is 
 | `GET /open/faers-onset/{position}` | one PIPC row (1-65) with the caveats | 404 `unknown_position`, 422 `invalid_request` |
 | `GET /open/cascade-package/pipc` | the 65 PIPC rows (CC BY 4.0) with Janus's class mapping (Apache-2.0), package version and citation; also used by the [MCP server](mcp.md) | 503 `package_unavailable` |
 | `GET /cds-services` | the CDS Hooks discovery document ([`cds-hooks.md`](cds-hooks.md)) | — |
-| `GET /modelkit/drugs` | the experimental drug model kit: the drugs, each with its validation status (validated / not validated / failed) | 503 `modelkit_unavailable`, 404 `unknown_release`, 422 `invalid_request` |
+| `GET /modelkit/drugs` | the experimental drug model kit: the drugs, each with its validation status (validated / not validated / failed); `q` (name), `status`, `has_set`, `limit` (1 to 200, default 50) and `offset` page and filter the list, `counts` always describe the whole release | 503 `modelkit_unavailable`, 404 `unknown_release`, 422 `invalid_request` |
 | `GET /modelkit/drugs/{key}` | one drug: parameter set (value, unit, confidence class, evidence ids), validation report, what was left out | 503, 404 `unknown_drug`, 422 |
 | `GET /modelkit/drugs/{key}/evidence` | every evidence row of the drug: quote, source locator and link, both reader verdicts, whether it was used | 503, 404, 422 |
 | `GET /modelkit/drugs/{key}/export/{target}` | a zip (`target` = `janus` or `mrgsolve`) with the model file(s), `provenance.json`, `references.bib`, `LICENSES.txt` | 409 `no_parameter_set` / `incomplete_set`, 503, 404, 422 |

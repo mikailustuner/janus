@@ -12,6 +12,7 @@ import json
 import zipfile
 from collections import Counter
 from collections.abc import Iterator
+from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 from typing import Any
 
@@ -24,21 +25,23 @@ _RESULTS = b'"resultsSection"'
 _MAX_MEMBER = 200_000_000  # bytes; a single study record is far smaller
 
 
-def iter_result_studies(zip_path: Path, counts: Counter[str]) -> Iterator[dict[str, Any]]:
-    """Every study record of the bulk file that has posted results with outcome measures."""
-    with zipfile.ZipFile(zip_path) as zf:
-        for info in zf.infolist():
-            if not info.filename.endswith(".json") or info.file_size > _MAX_MEMBER:
-                continue
-            counts["studies"] += 1
-            raw = zf.read(info)
-            if _RESULTS not in raw:
-                continue
-            counts["studies_with_results"] += 1
-            study = json.loads(raw)
-            if "outcomeMeasuresModule" not in study.get("resultsSection", {}):
-                continue
-            yield study
+def iter_result_studies(
+    zf: zipfile.ZipFile, names: list[str], counts: Counter[str]
+) -> Iterator[dict[str, Any]]:
+    """Every listed study record of the bulk file that has posted results with outcome measures."""
+    for name in names:
+        info = zf.getinfo(name)
+        if info.file_size > _MAX_MEMBER:
+            continue
+        counts["studies"] += 1
+        raw = zf.read(info)
+        if _RESULTS not in raw:
+            continue
+        counts["studies_with_results"] += 1
+        study = json.loads(raw)
+        if "outcomeMeasuresModule" not in study.get("resultsSection", {}):
+            continue
+        yield study
 
 
 def has_pk_outcome(study: dict[str, Any]) -> bool:
@@ -61,33 +64,83 @@ def study_drugs(study: dict[str, Any], table: IdentityTable) -> list[str]:
     return table.drugs_in(" . ".join(parts))
 
 
-def read_bulk(
-    zip_path: Path,
-    table: IdentityTable,
-    stats: dict[str, ReaderStats],
-    counts: Counter[str],
-) -> tuple[list[Paired], list[Candidate], dict[str, set[str]]]:
-    """Pairs of the two readers for every (study, drug); candidates only reader B found; the studies
-    kept per drug."""
+Shard = tuple[
+    list[Paired], list[Candidate], dict[str, set[str]], Counter[str], dict[str, ReaderStats]
+]
+SHARDS = 256  # a fixed number: the result does not depend on how many workers run them
+
+_G: dict[str, Any] = {}
+
+
+def _read_shard(zip_path: Path, names: list[str], table: IdentityTable) -> Shard:
     pairs: list[Paired] = []
     only_b: list[Candidate] = []
     kept: dict[str, set[str]] = {}
-    for study in iter_result_studies(zip_path, counts):
-        if not has_pk_outcome(study):
-            continue
-        counts["studies_with_pk_outcome"] += 1
-        drugs = study_drugs(study, table)
-        if not drugs:
-            continue
-        counts["studies_naming_a_pool_drug"] += 1
-        nct = study["protocolSection"]["identificationModule"]["nctId"]
-        for key in drugs:
-            a_rows = reader_a.read_ctgov(study, key, table, stats["a"])
-            b_rows = reader_b.read_ctgov(study, key, table, stats["b"])
-            if not a_rows and not b_rows:
+    counts: Counter[str] = Counter()
+    stats = {"a": ReaderStats(), "b": ReaderStats()}
+    with zipfile.ZipFile(zip_path) as zf:
+        for study in iter_result_studies(zf, names, counts):
+            if not has_pk_outcome(study):
                 continue
-            kept.setdefault(key, set()).add(nct)
-            p, left = pair(a_rows, b_rows)
-            pairs += p
-            only_b += left
+            counts["studies_with_pk_outcome"] += 1
+            drugs = study_drugs(study, table)
+            if not drugs:
+                continue
+            counts["studies_naming_a_pool_drug"] += 1
+            nct = study["protocolSection"]["identificationModule"]["nctId"]
+            for key in drugs:
+                a_rows = reader_a.read_ctgov(study, key, table, stats["a"])
+                b_rows = reader_b.read_ctgov(study, key, table, stats["b"])
+                if not a_rows and not b_rows:
+                    continue
+                kept.setdefault(key, set()).add(nct)
+                p, left = pair(a_rows, b_rows)
+                pairs += p
+                only_b += left
+    return pairs, only_b, kept, counts, stats
+
+
+def _init_worker(identity_text: str) -> None:
+    _G["table"] = IdentityTable.from_csv(identity_text)
+
+
+def _work(args: tuple[Path, list[str]]) -> Shard:
+    return _read_shard(args[0], args[1], _G["table"])
+
+
+def read_bulk(
+    zip_path: Path,
+    identity_text: str,
+    stats: dict[str, ReaderStats],
+    counts: Counter[str],
+    workers: int = 1,
+) -> tuple[list[Paired], list[Candidate], dict[str, set[str]]]:
+    """Pairs of the two readers for every (study, drug); candidates only reader B found; the studies
+    kept per drug. The member list is cut into SHARDS contiguous parts that are read independently
+    (in `workers` processes) and joined in order, so the result is the same for any worker count."""
+    with zipfile.ZipFile(zip_path) as zf:
+        names = [i.filename for i in zf.infolist() if i.filename.endswith(".json")]
+    size = max(1, -(-len(names) // SHARDS))
+    tasks = [(zip_path, names[i : i + size]) for i in range(0, len(names), size)]
+    if workers <= 1:
+        _init_worker(identity_text)
+        shards = [_work(t) for t in tasks]
+    else:
+        with ProcessPoolExecutor(
+            max_workers=workers, initializer=_init_worker, initargs=(identity_text,)
+        ) as pool:
+            shards = list(pool.map(_work, tasks))
+    pairs: list[Paired] = []
+    only_b: list[Candidate] = []
+    kept: dict[str, set[str]] = {}
+    for p, ob, k, c, st in shards:
+        pairs += p
+        only_b += ob
+        for key, ncts in k.items():
+            kept.setdefault(key, set()).update(ncts)
+        counts.update(c)
+        for r in "ab":
+            stats[r].seen += st[r].seen
+            for why, n in st[r].skipped.items():
+                stats[r].skipped[why] = stats[r].skipped.get(why, 0) + n
     return pairs, only_b, kept

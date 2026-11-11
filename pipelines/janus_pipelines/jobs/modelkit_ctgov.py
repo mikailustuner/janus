@@ -17,6 +17,7 @@ posted text quoted. See `sources.toml` and `NOTICE`.
 from __future__ import annotations
 
 import hashlib
+import os
 import time
 from collections import Counter
 from collections.abc import Mapping
@@ -92,10 +93,12 @@ class ModelkitCtgovJob(Job[Path]):
 
     def parse(self, raw: RawInput[Path]) -> ParseResult:
         repo = Path(__file__).resolve().parents[3]
-        table = IdentityTable.from_csv(repo.joinpath(*IDENTITY_PATH).read_text("utf-8"))
+        identity = repo.joinpath(*IDENTITY_PATH).read_text("utf-8")
+        table = IdentityTable.from_csv(identity)
         counts: Counter[str] = Counter()
         stats = {"a": ReaderStats(), "b": ReaderStats()}
-        pairs, only_b, kept = read_bulk(raw.payload, table, stats, counts)
+        workers = max(1, int(os.environ.get("JANUS_MODELKIT_WORKERS", "1")))
+        pairs, only_b, kept = read_bulk(raw.payload, identity, stats, counts, workers)
         rows_csv, dropped = finalize_rows(pairs, table)
         date = raw.snapshot_date or raw.retrieved_at.date().isoformat()
         rows: list[Row] = []

@@ -2898,7 +2898,18 @@
       "title": "Arzneimittel",
       "summary": "{count, plural, one {# Arzneimittel} other {# Arzneimittel}} · experimentell",
       "studies": "{count, plural, one {# Studie} other {# Studien}}",
-      "empty": "Keine Arzneimittel in dieser Version."
+      "empty": "Keine Arzneimittel in dieser Version.",
+      "filter": "Arzneimittel finden",
+      "search": "Nach Name suchen",
+      "status": "Status",
+      "anyStatus": "Jeder Status",
+      "hasSet": "Nur Arzneimittel mit Parametersatz",
+      "matches": "{count, plural, one {# Arzneimittel passt} other {# Arzneimittel passen}}",
+      "noMatch": "Kein Arzneimittel passt zu diesen Filtern.",
+      "pages": "Seiten der Arzneimittelliste",
+      "prev": "Zurück",
+      "next": "Weiter",
+      "range": "{from}–{to} von {total}"
     },
     "system": {
       "title": "Systembericht",
@@ -2912,7 +2923,14 @@
       "ofN": "{k} von {n}",
       "wilson": "{share}, 95-%-Wilson-Intervall {low} bis {high}",
       "limits": "Was dieser Bericht aussagen kann und was nicht",
-      "minDrugs": "Es braucht mindestens {n} Arzneimittel, bevor die Anteile mehr als eine Beschreibung sind."
+      "minDrugs": "Es braucht mindestens {n} Arzneimittel, bevor die Anteile mehr als eine Beschreibung sind.",
+      "bothTested": "AUC und Cmax geprüft",
+      "bothTestedSentence": "{count, plural, one {# Arzneimittel mit AUC und Cmax an zurückgehaltenen Studien geprüft} other {# Arzneimittel mit AUC und Cmax an zurückgehaltenen Studien geprüft}}",
+      "points": "Punkte innerhalb des 2-Fachen",
+      "pointsOf": "{k} von {n} Punkten",
+      "pointsGmfe": "GMFE der Punkte: {gmfe}",
+      "gateReached": "Bei {both} Arzneimitteln wurden AUC und Cmax an zurückgehaltenen Studien geprüft (mindestens {min} sind nötig); die Hürde lässt sich also als die Zahlen und Anteile oben lesen. Sie beschreibt weiterhin diese Arzneimittel, nicht Arzneimittel im Allgemeinen.",
+      "gateNotReached": "Nur bei {both, plural, one {# Arzneimittel wurden} other {# Arzneimitteln wurden}} AUC und Cmax an zurückgehaltenen Studien geprüft; mindestens {min} sind nötig. Die Hürde lässt sich noch nicht deuten: Die Zahlen oben sind nur Beschreibung."
     },
     "drug": {
       "statusTitle": "Validierungsstatus",

@@ -109,6 +109,10 @@ export const drugsOut = D.obj({
   release,
   statements,
   drugs: D.arr(summary),
+  total: D.int,
+  offset: D.int,
+  limit: D.int,
+  counts: D.record(D.int),
 });
 export const drugOut = D.obj({
   release,
@@ -184,11 +188,15 @@ export const systemOut = D.obj({
       within_2_fold_share: n,
       wilson_low: n,
       wilson_high: n,
+      n_points: D.int,
+      points_within_2_fold: D.int,
+      points_gmfe: n,
     }),
   ),
   n_studies: D.int,
   interpretable: D.bool,
   min_drugs_for_interpretation: D.int,
+  n_drugs_both_tested: D.int,
   conformal: D.str,
   caveats: D.arr(D.str),
   reason_text: text,
@@ -212,10 +220,64 @@ export interface ModelKitFixture {
   evidence: Record<string, unknown>;
 }
 
+/** What the list page asks for: a name search, a status, only drugs with a set, one page. */
+export interface DrugsQuery {
+  q: string;
+  status: Status | "";
+  hasSet: boolean;
+  offset: number;
+  limit: number;
+}
+export const PAGE_SIZE = 25;
+export const NO_QUERY: DrugsQuery = {
+  q: "",
+  status: "",
+  hasSet: false,
+  offset: 0,
+  limit: PAGE_SIZE,
+};
+
+/** The query string of the live list route (only what differs from the defaults). */
+export function drugsPath(query: DrugsQuery): string {
+  const p = new URLSearchParams();
+  const q = query.q.trim().toLowerCase();
+  if (q) p.set("q", q);
+  if (query.status) p.set("status", query.status);
+  if (query.hasSet) p.set("has_set", "true");
+  p.set("limit", String(query.limit));
+  if (query.offset) p.set("offset", String(query.offset));
+  return `modelkit/drugs?${p.toString()}`;
+}
+
+/** The same filter and page the API applies, over a full list (the recorded demo answer). */
+export function pageOfDrugs(all: DrugsOut, query: DrugsQuery): DrugsOut {
+  const q = query.q.trim().toLowerCase();
+  const kept = all.drugs.filter(
+    (d) =>
+      (!q || d.key.includes(q.replaceAll(" ", "_")) || d.name.toLowerCase().includes(q)) &&
+      (!query.status || d.status === query.status) &&
+      (!query.hasSet || d.has_set),
+  );
+  const counts: Record<string, number> = {
+    all: all.drugs.length,
+    with_set: all.drugs.filter((d) => d.has_set).length,
+  };
+  for (const st of STATUSES)
+    counts[st] = all.drugs.filter((d) => d.status === st).length;
+  return {
+    ...all,
+    drugs: kept.slice(query.offset, query.offset + query.limit),
+    total: kept.length,
+    offset: query.offset,
+    limit: query.limit,
+    counts,
+  };
+}
+
 export interface ModelKitClient {
   /** True when the zip downloads can be offered (live service only). */
   downloads: boolean;
-  drugs(): Promise<Result<DrugsOut>>;
+  drugs(query: DrugsQuery): Promise<Result<DrugsOut>>;
   system(): Promise<Result<SystemOut>>;
   drug(key: string): Promise<Result<DrugOut>>;
   evidence(key: string): Promise<Result<EvidenceOut>>;
@@ -239,7 +301,15 @@ const buildError = (route: "modelkit/drug" | "modelkit/evidence") =>
 
 export const liveModelKit: ModelKitClient = {
   downloads: true,
-  drugs: () => http.call("modelkit/drugs", "GET", null, drugsOut),
+  drugs: (query) =>
+    http.call(
+      "modelkit/drugs",
+      "GET",
+      null,
+      drugsOut,
+      undefined,
+      drugsPath(query),
+    ),
   system: () => http.call("modelkit/validation", "GET", null, systemOut),
   drug: async (key) =>
     KEY.test(key)
@@ -309,7 +379,10 @@ export function demoModelKit(fx: ModelKitFixture): ModelKitClient {
   };
   return {
     downloads: false,
-    drugs: () => answer(drugsOut, fx.drugs, "modelkit/drugs"),
+    drugs: async (query) => {
+      const r = await answer(drugsOut, fx.drugs, "modelkit/drugs");
+      return r.ok ? { ok: true, data: pageOfDrugs(r.data, query) } : r;
+    },
     system: () => answer(systemOut, fx.validation, "modelkit/validation"),
     drug: (k) => byKey(drugOut, fx.drug, k, "modelkit/drug"),
     evidence: (k) => byKey(evidenceOut, fx.evidence, k, "modelkit/evidence"),

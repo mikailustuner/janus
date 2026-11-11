@@ -2898,7 +2898,18 @@
       "title": "Fármacos",
       "summary": "{count, plural, one {# fármaco} other {# fármacos}} · experimental",
       "studies": "{count, plural, one {# estudio} other {# estudios}}",
-      "empty": "No hay fármacos en esta versión."
+      "empty": "No hay fármacos en esta versión.",
+      "filter": "Buscar un medicamento",
+      "search": "Buscar por nombre",
+      "status": "Estado",
+      "anyStatus": "Cualquier estado",
+      "hasSet": "Solo medicamentos con un conjunto de parámetros",
+      "matches": "{count, plural, one {# medicamento coincide} other {# medicamentos coinciden}}",
+      "noMatch": "Ningún medicamento coincide con estos filtros.",
+      "pages": "Páginas de la lista de medicamentos",
+      "prev": "Anterior",
+      "next": "Siguiente",
+      "range": "{from}–{to} de {total}"
     },
     "system": {
       "title": "Informe del sistema",
@@ -2912,7 +2923,14 @@
       "ofN": "{k} de {n}",
       "wilson": "{share}, intervalo de Wilson del 95 % de {low} a {high}",
       "limits": "Lo que este informe puede y no puede decir",
-      "minDrugs": "Hacen falta al menos {n} fármacos para que las proporciones se lean como algo más que una descripción."
+      "minDrugs": "Hacen falta al menos {n} fármacos para que las proporciones se lean como algo más que una descripción.",
+      "bothTested": "AUC y Cmax probadas",
+      "bothTestedSentence": "{count, plural, one {# medicamento con AUC y Cmax probadas en estudios reservados} other {# medicamentos con AUC y Cmax probadas en estudios reservados}}",
+      "points": "Puntos dentro de un factor 2",
+      "pointsOf": "{k} de {n} puntos",
+      "pointsGmfe": "GMFE de los puntos: {gmfe}",
+      "gateReached": "{both} medicamentos tienen AUC y Cmax probadas en estudios reservados (hacen falta al menos {min}), así que la barrera puede leerse como los recuentos y proporciones de arriba. Sigue describiendo estos medicamentos, no los medicamentos en general.",
+      "gateNotReached": "Solo {both, plural, one {# medicamento tiene} other {# medicamentos tienen}} AUC y Cmax probadas en estudios reservados; hacen falta al menos {min}. La barrera aún no puede interpretarse: los recuentos de arriba son solo descripción."
     },
     "drug": {
       "statusTitle": "Estado de validación",

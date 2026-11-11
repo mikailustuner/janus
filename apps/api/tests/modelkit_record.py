@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 import os
+import shutil
 import subprocess
 import tempfile
 from pathlib import Path
@@ -28,11 +29,22 @@ FEATURED = ("candesartan", "sunitinib", "telmisartan", "tramadol", "ertugliflozi
 RECORDED_ON = "2026-11-11"
 
 
+def _all_drugs(cl: TestClient) -> dict[str, Any]:
+    """Every page of the list as one answer (the demo pages and filters it in the browser)."""
+    first = cl.get("/modelkit/drugs", params={"limit": 200}).json()
+    drugs = list(first["drugs"])
+    while len(drugs) < first["total"]:
+        drugs += cl.get("/modelkit/drugs", params={"limit": 200, "offset": len(drugs)}).json()[
+            "drugs"
+        ]
+    return {**first, "drugs": drugs, "offset": 0, "limit": len(drugs)}
+
+
 def _answers(data_dir: Path, only: tuple[str, ...] | None) -> dict[str, Any]:
     app = create_app(configure_logs=False)
     app.state.modelkit = ModelkitHolder(data_dir)
     with TestClient(app) as cl:
-        drugs = cl.get("/modelkit/drugs").json()
+        drugs = _all_drugs(cl)
         keys = [
             d["key"] for d in drugs["drugs"] if only is None or d["has_set"] or d["key"] in only
         ]
@@ -53,8 +65,17 @@ def recorded_m0() -> dict[str, Any]:
 
 
 def recorded() -> dict[str, Any]:
+    """The release: the committed seeds plus the current `modelkit_ctgov` artifact of the data
+    directory in `MODELKIT_CTGOV_DATA` (milestone M2; run that job first)."""
     pipelines = Path(__file__).resolve().parents[3] / "pipelines"
+    ctgov = os.environ.get("MODELKIT_CTGOV_DATA")
     with tempfile.TemporaryDirectory() as tmp:
+        if ctgov:
+            shutil.copytree(
+                Path(ctgov) / "artifacts" / "modelkit_ctgov",
+                Path(tmp) / "artifacts" / "modelkit_ctgov",
+                symlinks=True,
+            )
         subprocess.run(  # noqa: S603 - fixed argument list, no shell
             [
                 "uv",
@@ -75,6 +96,6 @@ def recorded() -> dict[str, Any]:
 
 if __name__ == "__main__":
     for path, data in ((RECORDED, recorded()), (RECORDED_M0, recorded_m0())):
-        text = json.dumps(data, ensure_ascii=False, indent=2) + "\n"
+        text = json.dumps(data, ensure_ascii=False, separators=(",", ":")) + "\n"
         assert len(text.encode()) < 1_000_000, f"{path.name} is over 1 MB"
         path.write_text(text, "utf-8")

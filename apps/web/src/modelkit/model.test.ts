@@ -14,6 +14,7 @@ import {
   bandPolygon,
   demoModelKit,
   drugOut,
+  drugsPath,
   drugsOut,
   EVIDENCE_PARAMS,
   evidenceOut,
@@ -22,6 +23,9 @@ import {
   keyFromHash,
   logAxis,
   logPos,
+  NO_QUERY,
+  PAGE_SIZE,
+  pageOfDrugs,
   PARAM_NAMES,
   paramKey,
   REASON_CODES,
@@ -65,12 +69,58 @@ describe("decoders accept the recorded answers", () => {
   });
   it("the demo client answers from the file and 404s an unknown key", async () => {
     const c = demoModelKit(fx);
-    expect((await c.drugs()).ok).toBe(true);
+    expect((await c.drugs(NO_QUERY)).ok).toBe(true);
     expect((await c.drug("sunitinib")).ok).toBe(true);
     const r = await c.drug("nope");
     expect(r.ok).toBe(false);
     if (!r.ok) expect(r.error.messageKey).toBe("ModelKit.errors.unknown");
     expect(c.downloads).toBe(false);
+  });
+});
+
+describe("list paging and search", () => {
+  it("the live path carries only what differs from the defaults", () => {
+    expect(drugsPath(NO_QUERY)).toBe(`modelkit/drugs?limit=${PAGE_SIZE}`);
+    expect(
+      drugsPath({
+        q: "  Tra ",
+        status: "failed",
+        hasSet: true,
+        offset: 25,
+        limit: 25,
+      }),
+    ).toBe("modelkit/drugs?q=tra&status=failed&has_set=true&limit=25&offset=25");
+  });
+  it("the demo page applies the same filters as the API and counts the whole list", () => {
+    const all = decode(drugsOut, fx.drugs);
+    expect(all.ok).toBe(true);
+    if (!all.ok) return;
+    const whole = pageOfDrugs(all.value, NO_QUERY);
+    expect(whole.total).toBe(all.value.drugs.length);
+    expect(whole.drugs.length).toBe(Math.min(PAGE_SIZE, whole.total));
+    expect(whole.counts.all).toBe(whole.total);
+    const second = pageOfDrugs(all.value, { ...NO_QUERY, offset: PAGE_SIZE });
+    expect(second.drugs.map((d) => d.key)).toEqual(
+      all.value.drugs.slice(PAGE_SIZE, 2 * PAGE_SIZE).map((d) => d.key),
+    );
+    const first = all.value.drugs[0]!;
+    const found = pageOfDrugs(all.value, {
+      ...NO_QUERY,
+      q: first.key.slice(0, 5).toUpperCase(),
+    });
+    expect(found.drugs.some((d) => d.key === first.key)).toBe(true);
+    expect(found.counts).toEqual(whole.counts); // counts ignore the filters
+    for (const st of ["validated", "not_validated", "failed"] as const)
+      expect(
+        pageOfDrugs(all.value, { ...NO_QUERY, status: st, limit: 1000 }).drugs.every(
+          (d) => d.status === st,
+        ),
+      ).toBe(true);
+    expect(
+      pageOfDrugs(all.value, { ...NO_QUERY, hasSet: true, limit: 1000 }).drugs.every(
+        (d) => d.has_set,
+      ),
+    ).toBe(true);
   });
 });
 

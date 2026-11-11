@@ -2898,7 +2898,18 @@
       "title": "Drugs",
       "summary": "{count, plural, one {# drug} other {# drugs}} · experimental",
       "studies": "{count, plural, one {# study} other {# studies}}",
-      "empty": "No drugs in this release."
+      "empty": "No drugs in this release.",
+      "filter": "Find a drug",
+      "search": "Search by name",
+      "status": "Status",
+      "anyStatus": "Any status",
+      "hasSet": "Only drugs with a parameter set",
+      "matches": "{count, plural, one {# drug matches} other {# drugs match}}",
+      "noMatch": "No drug matches these filters.",
+      "pages": "Pages of the drug list",
+      "prev": "Previous",
+      "next": "Next",
+      "range": "{from}–{to} of {total}"
     },
     "system": {
       "title": "System report",
@@ -2912,7 +2923,14 @@
       "ofN": "{k} of {n}",
       "wilson": "{share}, 95 % Wilson interval {low} to {high}",
       "limits": "What this report can and cannot say",
-      "minDrugs": "At least {n} drugs are needed before the shares are read as more than a description."
+      "minDrugs": "At least {n} drugs are needed before the shares are read as more than a description.",
+      "bothTested": "AUC and Cmax tested",
+      "bothTestedSentence": "{count, plural, one {# drug with both AUC and Cmax tested on held-out studies} other {# drugs with both AUC and Cmax tested on held-out studies}}",
+      "points": "Points within 2-fold",
+      "pointsOf": "{k} of {n} points",
+      "pointsGmfe": "GMFE of the points: {gmfe}",
+      "gateReached": "{both} drugs have both AUC and Cmax tested on held-out studies (at least {min} are needed), so the gate can be read as the counts and shares above. It still describes these drugs, not drugs in general.",
+      "gateNotReached": "Only {both, plural, one {# drug has} other {# drugs have}} both AUC and Cmax tested on held-out studies; at least {min} are needed. The gate cannot be interpreted yet: the counts above are descriptions only."
     },
     "drug": {
       "statusTitle": "Validation status",

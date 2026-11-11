@@ -2898,7 +2898,18 @@
       "title": "İlaçlar",
       "summary": "{count, plural, one {# ilaç} other {# ilaç}} · deneysel",
       "studies": "{count, plural, one {# çalışma} other {# çalışma}}",
-      "empty": "Bu sürümde ilaç yok."
+      "empty": "Bu sürümde ilaç yok.",
+      "filter": "İlaç bul",
+      "search": "Ada göre ara",
+      "status": "Durum",
+      "anyStatus": "Herhangi bir durum",
+      "hasSet": "Yalnız parametre kümesi olan ilaçlar",
+      "matches": "{count, plural, one {# ilaç eşleşiyor} other {# ilaç eşleşiyor}}",
+      "noMatch": "Bu süzgeçlere uyan ilaç yok.",
+      "pages": "İlaç listesinin sayfaları",
+      "prev": "Önceki",
+      "next": "Sonraki",
+      "range": "{from}–{to} / {total}"
     },
     "system": {
       "title": "Sistem raporu",
@@ -2912,7 +2923,14 @@
       "ofN": "{n} içinde {k}",
       "wilson": "{share}, %95 Wilson aralığı {low} ile {high}",
       "limits": "Bu rapor neyi söyleyebilir, neyi söyleyemez",
-      "minDrugs": "Oranların bir betimlemeden fazlası olarak okunabilmesi için en az {n} ilaç gerekir."
+      "minDrugs": "Oranların bir betimlemeden fazlası olarak okunabilmesi için en az {n} ilaç gerekir.",
+      "bothTested": "AUC ve Cmax sınanan",
+      "bothTestedSentence": "{count, plural, one {# ilaçta ayrı tutulan çalışmalarda hem AUC hem Cmax sınandı} other {# ilaçta ayrı tutulan çalışmalarda hem AUC hem Cmax sınandı}}",
+      "points": "2 kat içindeki noktalar",
+      "pointsOf": "{k} / {n} nokta",
+      "pointsGmfe": "Noktaların GMFE değeri: {gmfe}",
+      "gateReached": "{both} ilaçta ayrı tutulan çalışmalarda hem AUC hem Cmax sınandı (en az {min} gerekir); bu yüzden kapı yukarıdaki sayı ve oranlar olarak okunabilir. Yine de bu ilaçları anlatır, genel olarak ilaçları değil.",
+      "gateNotReached": "Ayrı tutulan çalışmalarda hem AUC hem Cmax yalnızca {both, plural, one {# ilaçta} other {# ilaçta}} sınandı; en az {min} gerekir. Kapı henüz yorumlanamaz: yukarıdaki sayılar yalnızca betimlemedir."
     },
     "drug": {
       "statusTitle": "Doğrulama durumu",

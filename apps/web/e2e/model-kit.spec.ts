@@ -46,8 +46,41 @@ const locales = process.env.E2E_LOCALES
   ? LOCALES.filter((l) => process.env.E2E_LOCALES!.split(",").includes(l))
   : LOCALES;
 
+/** The list route as the API answers it: name search, status, has_set, limit and offset. */
+const listStub =
+  (r: Recorded) =>
+  (_body: unknown, url: URL): { body: unknown } => {
+    const all = r.drugs.drugs as Json[];
+    const q = (url.searchParams.get("q") ?? "").toLowerCase();
+    const st = url.searchParams.get("status");
+    const hasSet = url.searchParams.get("has_set") === "true";
+    const limit = Number(url.searchParams.get("limit") ?? 50);
+    const offset = Number(url.searchParams.get("offset") ?? 0);
+    const kept = all.filter(
+      (d) =>
+        (!q || d.key.includes(q.replaceAll(" ", "_")) || d.name.toLowerCase().includes(q)) &&
+        (!st || d.status === st) &&
+        (!hasSet || d.has_set),
+    );
+    const counts: Record<string, number> = {
+      all: all.length,
+      with_set: all.filter((d) => d.has_set).length,
+    };
+    for (const s of ["validated", "not_validated", "failed"])
+      counts[s] = all.filter((d) => d.status === s).length;
+    return {
+      body: {
+        ...r.drugs,
+        drugs: kept.slice(offset, offset + limit),
+        total: kept.length,
+        offset,
+        limit,
+        counts,
+      },
+    };
+  };
 const stubsOf = (r: Recorded) => ({
-  "/modelkit/drugs": { body: r.drugs },
+  "/modelkit/drugs": listStub(r),
   "/modelkit/validation": { body: r.validation },
   ...Object.fromEntries(
     Object.keys(r.drug).flatMap((k) => [

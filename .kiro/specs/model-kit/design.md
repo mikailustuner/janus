@@ -133,3 +133,35 @@ M1 is merged and shown as **experimental**, with the measured confirmed-value pr
 target) stated on every page and the instruction to read every value as unverified. M1 is not complete: its exit
 criterion is reopened after the later milestones (M2–M6) and must be met before any production label. The status
 text stays "Expert review has not yet been done".
+
+## 11. Milestone M2 decisions
+- **DP-M17 ClinicalTrials.gov through the official bulk file.** The job `modelkit_ctgov` downloads the one file
+  `ctg-studies.json.zip` (all study records; one request, timeouts, generic user agent, no contact data) to its scratch
+  directory, reads it and removes it; the raw file is never committed. The data API is not crawled (robots.txt disallows
+  `/api/` for crawlers). Source, terms, processing date and the statement of modification are in `sources.toml` and
+  `NOTICE`. The job writes rows of the evidence schema (`modelkit_evidence-2`, no change); `modelkit_evidence` merges the
+  current run of `modelkit_ctgov` and drops the seed files' ClinicalTrials.gov rows of every drug the new run covers.
+  Run order: `modelkit_ctgov`, then `modelkit_evidence`, then `deploy/sync-data.sh` from the developer machine (the
+  server needs neither job).
+- **DP-M18 Pool.** The 609 drugs of the atlas pilots; names in `data/modelkit/identity_m2.csv` (pool names, Wikidata
+  labels and aliases of the drug's item, CC0; the curated codes, metabolites and prodrugs of M1 for its 50 drugs; very
+  short, generic and slang names left out). The matcher is a prefix-tree regular expression (same matches as the sorted
+  alternation of M1, tested), because thousands of names make a plain alternation slow.
+- **DP-M19 Study to drug.** A study record is read for every pool drug named by its interventions (name, other names),
+  arm groups or titles, if it has posted results and an outcome measure whose title names a PK parameter. Both readers
+  read the same (study, drug) pair; confirmation is as in DP-M1. No reader or confirmation rule changed in M2.
+- **DP-M20 Gate rule.** The system gate is interpretable iff at least 10 drugs have both AUC and Cmax tested on
+  held-out studies (M1 counted drugs with AUC tested only). The system report also gives the point-level counts per
+  metric (held-out points, points within 2-fold, GMFE of the points). Bootstrap intervals are computed in the
+  milestone's research analysis, not in the product (M3).
+- **DP-M21 List at scale.** `GET /modelkit/drugs` takes `q`, `status`, `has_set`, `limit` (1 to 200, default 50) and
+  `offset`, answers sorted by name with `total` and release-wide `counts`; the summaries are computed once per release.
+  The web list searches and pages (25 per page); the recorded demo answer holds every drug's summary and the drug pages
+  of the drugs with a parameter set.
+
+## 12. Milestone M2 properties
+- **M15** The intake keeps a study only if it has posted results, a PK outcome measure and names a pool drug (test on a
+  synthetic bulk file).
+- **M16** The evidence job's merge replaces the seed's ClinicalTrials.gov rows of exactly the drugs the intake covers.
+- **M17** The gate is interpretable iff at least 10 drugs have both metrics tested (test).
+- **M18** The list route's page, search and filter agree with the full list; `counts` ignore the filters (test).

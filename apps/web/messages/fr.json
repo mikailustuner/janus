@@ -2898,7 +2898,18 @@
       "title": "Médicaments",
       "summary": "{count, plural, one {# médicament} other {# médicaments}} · expérimental",
       "studies": "{count, plural, one {# étude} other {# études}}",
-      "empty": "Aucun médicament dans cette version."
+      "empty": "Aucun médicament dans cette version.",
+      "filter": "Trouver un médicament",
+      "search": "Rechercher par nom",
+      "status": "Statut",
+      "anyStatus": "Tous les statuts",
+      "hasSet": "Seulement les médicaments avec un jeu de paramètres",
+      "matches": "{count, plural, one {# médicament correspond} other {# médicaments correspondent}}",
+      "noMatch": "Aucun médicament ne correspond à ces filtres.",
+      "pages": "Pages de la liste des médicaments",
+      "prev": "Précédent",
+      "next": "Suivant",
+      "range": "{from}–{to} sur {total}"
     },
     "system": {
       "title": "Rapport du système",
@@ -2912,7 +2923,14 @@
       "ofN": "{k} sur {n}",
       "wilson": "{share}, intervalle de Wilson à 95 % de {low} à {high}",
       "limits": "Ce que ce rapport peut et ne peut pas dire",
-      "minDrugs": "Il faut au moins {n} médicaments avant que les parts soient lues comme plus qu’une description."
+      "minDrugs": "Il faut au moins {n} médicaments avant que les parts soient lues comme plus qu’une description.",
+      "bothTested": "AUC et Cmax testées",
+      "bothTestedSentence": "{count, plural, one {# médicament dont l’AUC et la Cmax sont testées sur des études mises de côté} other {# médicaments dont l’AUC et la Cmax sont testées sur des études mises de côté}}",
+      "points": "Points à moins d’un facteur 2",
+      "pointsOf": "{k} points sur {n}",
+      "pointsGmfe": "GMFE des points : {gmfe}",
+      "gateReached": "{both} médicaments ont l’AUC et la Cmax testées sur des études mises de côté (il en faut au moins {min}) : la barrière peut donc se lire comme les nombres et parts ci-dessus. Elle décrit toujours ces médicaments, pas les médicaments en général.",
+      "gateNotReached": "Seulement {both, plural, one {# médicament a} other {# médicaments ont}} l’AUC et la Cmax testées sur des études mises de côté ; il en faut au moins {min}. La barrière ne peut pas encore être interprétée : les nombres ci-dessus ne sont qu’une description."
     },
     "drug": {
       "statusTitle": "Statut de validation",

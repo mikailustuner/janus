@@ -224,6 +224,9 @@ class SystemMetric:
     within_2_fold_share: float | None
     wilson_low: float | None
     wilson_high: float | None
+    n_points: int = 0  # held-out points of the metric over all drugs (point level)
+    points_within_2_fold: int = 0
+    points_gmfe: float | None = None
 
 
 @dataclass(frozen=True)
@@ -235,6 +238,7 @@ class SystemReport:
     interpretable: bool
     min_drugs_for_interpretation: int
     conformal: str
+    n_drugs_both_tested: int = 0  # drugs with AUC and Cmax both tested on held-out studies
 
 
 def system_report(vals: list[Validation]) -> SystemReport:
@@ -248,6 +252,7 @@ def system_report(vals: list[Validation]) -> SystemReport:
         within = sum(1 for m in ms if m.all_within_2_fold)
         gmfe = math.exp(sum(abs(math.log(m.gm_ratio)) for m in ms if m.gm_ratio) / n) if n else None
         w = wilson(within, n)
+        pts = [p for v in vals for p in v.points if p.metric == name]
         out.append(
             SystemMetric(
                 name,
@@ -257,15 +262,20 @@ def system_report(vals: list[Validation]) -> SystemReport:
                 within / n if n else None,
                 w[0] if w else None,
                 w[1] if w else None,
+                len(pts),
+                sum(p.within_2_fold for p in pts),
+                math.exp(sum(abs(math.log(p.ratio)) for p in pts) / len(pts)) if pts else None,
             )  # type: ignore[arg-type]
         )
+    both = sum(1 for v in vals if all(m.tested for m in v.metrics))
     studies = sum(max(m.n_studies for m in v.metrics) for v in vals)
     return SystemReport(
         len(vals),
         by_status,
         (out[0], out[1]),
         studies,
-        sum(m.n_drugs for m in out[:1]) >= MIN_DRUGS_FOR_INTERPRETATION,
+        both >= MIN_DRUGS_FOR_INTERPRETATION,
         MIN_DRUGS_FOR_INTERPRETATION,
         "interval_n_too_small",
+        both,
     )

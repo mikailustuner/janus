@@ -122,3 +122,24 @@ def test_evidence_job_replaces_the_seed_ctgov_rows_of_covered_drugs(tmp_path: Pa
         for r in rows
     ), seed_ids
     assert (df["drug_key"] == "gabapentin").sum() > 0  # other drugs keep theirs
+
+
+def test_the_result_does_not_depend_on_the_number_of_workers(tmp_path: Path) -> None:
+    import os
+    from collections import Counter
+
+    from janus_pipelines.modelkit.ctgov_bulk import read_bulk
+    from janus_pipelines.modelkit.model import ReaderStats
+
+    z = tmp_path / "ctg-studies.json.zip"
+    _make_zip(z)
+    text = (REPO / "data" / "modelkit" / "identity_m2.csv").read_text("utf-8")
+    seen: list[tuple[list[tuple[str, str, float]], dict[str, int]]] = []
+    for workers in (1, 2):
+        counts: Counter[str] = Counter()
+        stats = {"a": ReaderStats(), "b": ReaderStats()}
+        pairs, _, kept = read_bulk(z, text, stats, counts, workers)
+        seen.append(([(p.a.drug_key, p.a.locator, p.a.value) for p in pairs], dict(counts)))
+        assert set(kept) == {"dolutegravir"}
+    assert seen[0] == seen[1] and seen[0][0]
+    assert os.environ.get("JANUS_MODELKIT_WORKERS") is None
