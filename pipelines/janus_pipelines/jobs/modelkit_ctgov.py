@@ -39,6 +39,7 @@ from janus_pipelines.modelkit.resolver import IdentityTable
 
 BULK_URL: Final = "https://clinicaltrials.gov/api/v2/studies/download?format=json.zip"
 IDENTITY_PATH: Final = ("data", "modelkit", "identity_m2.csv")
+PRODUCTS_PATH: Final = ("data", "modelkit", "product_forms.csv")
 CONNECT_TIMEOUT: Final = 30.0
 READ_TIMEOUT: Final = 120.0  # between two blocks of the stream
 TOTAL_TIMEOUT: Final = 3600.0  # whole download
@@ -95,12 +96,15 @@ class ModelkitCtgovJob(Job[Path]):
         repo = Path(__file__).resolve().parents[3]
         identity = repo.joinpath(*IDENTITY_PATH).read_text("utf-8")
         table = IdentityTable.from_csv(identity)
+        products = repo.joinpath(*PRODUCTS_PATH).read_text("utf-8")
         counts: Counter[str] = Counter()
         stats = {"a": ReaderStats(), "b": ReaderStats()}
         cache_env = os.environ.get("JANUS_MODELKIT_CHECKPOINT_DIR")  # resumable research runs
         cache = Path(cache_env) if cache_env else None
         workers = max(1, int(os.environ.get("JANUS_MODELKIT_WORKERS", "1")))
-        pairs, only_b, kept = read_bulk(raw.payload, identity, stats, counts, workers, cache)
+        pairs, only_b, kept = read_bulk(
+            raw.payload, identity, stats, counts, workers, cache, products
+        )
         rows_csv, dropped = finalize_rows(pairs, table)
         date = raw.snapshot_date or raw.retrieved_at.date().isoformat()
         rows: list[Row] = []
