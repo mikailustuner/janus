@@ -299,6 +299,77 @@ region = "US"
 cadence_days = 30
 urls = ["https://open.fda.gov/apis/drug/label/", "https://open.fda.gov/terms/", "https://dailymed.nlm.nih.gov/"]
 
+# --- Drug model kit (experimental; spec .kiro/specs/model-kit) -------------------
+
+[[sources]]
+id = "modelkit_evidence"
+section = "clinical"
+name = "Janus drug model kit evidence store (experimental)"
+publisher = "Janus"
+license = "Per row: each row keeps the terms of its own source (see the four sources below)"
+notes = [
+  "Research use only. Not for clinical decisions. Expert review has not yet been done.",
+  "Short quotes, locators and values with the verdicts of two automated reader passes; the committed input is data/modelkit/evidence_seed.csv.",
+]
+storage = "cache"
+cadence_days = 90
+
+[[sources]]
+id = "clinicaltrials_gov"
+section = "clinical"
+name = "ClinicalTrials.gov posted results (model kit evidence)"
+publisher = "U.S. National Library of Medicine"
+license = "Free to reuse with attribution (ClinicalTrials.gov terms and conditions); some records may carry third-party copyright"
+notes = [
+  "Source of the data: ClinicalTrials.gov. The date each record was processed by ClinicalTrials.gov is shown with every row (record last updated; retrieved 2026-11-10).",
+  "Modifications by Janus: values were re-typed from the posted results, units were converted to canonical units (for example mL/min to L/h), rows were filtered by analyte, arm and population, and short parts of the posted text are quoted. The registry text is not changed beyond that.",
+  "The study records are entered by sponsors; NLM checks format, not scientific validity. Not an NLM endorsement.",
+]
+storage = "commit"
+cadence_days = 90
+urls = ["https://clinicaltrials.gov/about-site/terms-conditions"]
+
+[[sources]]
+id = "dailymed_spl"
+section = "clinical"
+name = "DailyMed structured product labels, clinical pharmacology section (model kit evidence)"
+publisher = "U.S. National Library of Medicine / U.S. Food and Drug Administration"
+license = "Public domain (U.S. government work); label text is written by the manufacturer"
+notes = [
+  "Janus quotes sentences of the clinical pharmacology section of one label per drug with the label's set id, version and effective date. A quoted sentence is label text, not an assessment by Janus, FDA or NLM. Not an FDA or NLM endorsement.",
+]
+storage = "commit"
+region = "US"
+cadence_days = 90
+urls = ["https://dailymed.nlm.nih.gov/"]
+
+[[sources]]
+id = "pmc_oa"
+section = "clinical"
+name = "PubMed Central Open Access articles licensed CC BY or CC0 (model kit evidence)"
+publisher = "Authors of each article, via Europe PMC"
+license = "CC BY 4.0 or CC0 1.0, per article"
+notes = [
+  "Only articles whose own licence is CC BY or CC0 are used. Each row names the article (PMCID) and the table cell. Attribution: credit the authors and the source article, see the licence link in the article; changes: values were transcribed from a table, units converted, and short parts quoted. Not an endorsement by the authors.",
+]
+storage = "commit"
+cadence_days = 90
+urls = ["https://europepmc.org/"]
+
+[[sources]]
+id = "drugsatfda_review"
+section = "clinical"
+name = "Drugs@FDA clinical pharmacology reviews (model kit evidence)"
+publisher = "U.S. Food and Drug Administration"
+license = "Public domain, unless noted (sponsor material reproduced inside a review may be an exception)"
+notes = [
+  "A short quote and the page of the review PDF. Text of scanned reviews was read by optical character recognition and checked against the page image by the reader passes. Not an FDA endorsement.",
+]
+storage = "commit"
+region = "US"
+cadence_days = 90
+urls = ["https://www.fda.gov/about-fda/about-website/website-policies"]
+
 [[sources]]
 id = "rxnav"
 section = "clinical"

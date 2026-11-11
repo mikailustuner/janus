@@ -1,0 +1,286 @@
+"""`modelkit_evidence` pipeline: the evidence store of the drug model kit (spec model-kit).
+
+Reads the small committed seed `data/modelkit/evidence_seed.csv` (one row per fact: value as the
+source states it, locator, quote, two reader verdicts), checks every row, normalises units to
+canonical ones, derives `confirmed` (both readers agree and the analyte is the parent drug) and
+writes the versioned artifact. No network access: the seed is the input. Research use only.
+"""
+
+from __future__ import annotations
+
+import csv
+import io
+import math
+import re
+from collections import Counter
+from collections.abc import Mapping
+from typing import ClassVar, Final
+
+import polars as pl
+
+from janus_pipelines.core.canonical import Json, Row, sha256_bytes
+from janus_pipelines.core.runner import Job, ParseResult, RawInput, RunContext
+from janus_pipelines.core.validation import ExpectedSchema, Field, SchemaReport
+
+SCHEMA_VERSION: Final = "modelkit_evidence-1"
+PIPELINE_VERSION: Final = "modelkit-evidence-1.0"
+SEED_PATH: Final = ("data", "modelkit", "evidence_seed.csv")
+
+# parameter -> (canonical unit, {stated unit: factor}). Per-kg values keep a per-kg unit.
+_MIN_PER_H: Final = 60.0 / 1000.0  # mL/min -> L/h
+UNITS: Final[Mapping[str, tuple[str, Mapping[str, float]]]] = {
+    "cl": ("L/h", {"L/h": 1.0, "mL/min": _MIN_PER_H}),
+    "cl_f": ("L/h", {"L/h": 1.0, "mL/min": _MIN_PER_H}),
+    "vss": ("L", {"L": 1.0}),
+    "vd": ("L", {"L": 1.0}),
+    "v_f": ("L", {"L": 1.0}),
+    "t_half": ("h", {"h": 1.0}),
+    "tmax": ("h", {"h": 1.0}),
+    "f": ("fraction", {"%": 0.01, "fraction": 1.0}),
+    "cmax": ("ng/mL", {"ng/mL": 1.0, "ug/L": 1.0}),
+    "auc_inf": ("ng*h/mL", {"ng*h/mL": 1.0, "h*ug/L": 1.0}),
+    "auc_last": ("ng*h/mL", {"ng*h/mL": 1.0, "h*ug/L": 1.0}),
+    "auc_tau": ("ng*h/mL", {"ng*h/mL": 1.0, "h*ug/L": 1.0}),
+    "cl_per_kg": ("L/h/kg", {"mL/min/kg": _MIN_PER_H}),
+    "vd_per_kg": ("L/kg", {"L/kg": 1.0}),
+}
+ROUTES: Final = frozenset({"oral", "iv", "unknown"})
+REGIMENS: Final = frozenset({"single", "multiple", "unknown"})
+FORMULATIONS: Final = frozenset(
+    {"immediate_release", "solution", "modified_release", "fixed_dose_combination", "unspecified"}
+)
+STATISTICS: Final = frozenset(
+    {"mean", "geomean", "median", "stated", "range_geomean", "lower_bound"}
+)
+ANALYTE_CLASSES: Final = frozenset({"parent", "metabolite", "unconfirmed"})
+SOURCES: Final = frozenset({"clinicaltrials_gov", "dailymed_spl", "pmc_oa", "drugsatfda_review"})
+VERDICTS: Final = frozenset({"agree", "disagree"})
+DRUG_KEY: Final = re.compile(r"^[a-z][a-z0-9_]{0,31}$")
+DATE: Final = re.compile(r"^[0-9]{4}-[0-9]{2}-[0-9]{2}$")
+
+SEED_COLUMNS: Final[tuple[str, ...]] = (
+    "drug_key", "analyte", "analyte_class", "parameter", "value", "value_low", "value_high",
+    "statistic", "unit", "dose", "dose_unit", "route", "regimen", "interval_h", "population",
+    "n_subjects", "formulation", "coadministered", "study_id", "source_id", "source_locator",
+    "source_version", "quote", "reader_a", "reader_b", "confirm_reason", "note", "extracted_at",
+)  # fmt: skip
+
+EVIDENCE_SCHEMA = ExpectedSchema(
+    version=SCHEMA_VERSION,
+    fields=tuple(Field(c, frozenset({"str"})) for c in ("drug_key", "parameter", "unit", "quote")),
+)
+
+EVIDENCE_ROW: Final[Mapping[str, pl.DataType]] = {
+    "drug_key": pl.String(),
+    "analyte": pl.String(),
+    "analyte_class": pl.String(),
+    "parameter": pl.String(),
+    "value": pl.Float64(),
+    "value_low": pl.Float64(),
+    "value_high": pl.Float64(),
+    "statistic": pl.String(),
+    "unit": pl.String(),
+    "value_si": pl.Float64(),
+    "dose": pl.Float64(),
+    "dose_unit": pl.String(),
+    "route": pl.String(),
+    "regimen": pl.String(),
+    "interval_h": pl.Float64(),
+    "population": pl.String(),
+    "n_subjects": pl.Int64(),
+    "formulation": pl.String(),
+    "coadministered": pl.Boolean(),
+    "study_id": pl.String(),
+    "source_id": pl.String(),
+    "source_locator": pl.String(),
+    "source_version": pl.String(),
+    "quote": pl.String(),
+    "reader_a": pl.String(),
+    "reader_b": pl.String(),
+    "confirmed": pl.Boolean(),
+    "confirm_reason": pl.String(),
+    "note": pl.String(),
+    "extracted_at": pl.String(),
+    "pipeline_version": pl.String(),
+}
+
+
+def to_si(parameter: str, value: float, unit: str) -> float:
+    """The value in the parameter's canonical unit; ValueError for a unit not allowed for it."""
+    canonical, table = UNITS[parameter]
+    if unit not in table:
+        raise ValueError(f"unit {unit!r} is not allowed for {parameter!r} (canonical {canonical})")
+    return value * table[unit]
+
+
+def from_si(parameter: str, value_si: float, unit: str) -> float:
+    """Inverse of `to_si`."""
+    canonical, table = UNITS[parameter]
+    if unit not in table:
+        raise ValueError(f"unit {unit!r} is not allowed for {parameter!r} (canonical {canonical})")
+    return value_si / table[unit]
+
+
+def _num(row: Mapping[str, str], key: str, where: str, *, required: bool = False) -> float | None:
+    text = row[key].strip()
+    if not text:
+        if required:
+            raise ValueError(f"{where}: {key} is required")
+        return None
+    try:
+        x = float(text)
+    except ValueError:
+        raise ValueError(f"{where}: {key} is not a number") from None
+    if not math.isfinite(x) or x <= 0:
+        raise ValueError(f"{where}: {key} must be positive and finite")
+    return x
+
+
+def _choice(row: Mapping[str, str], key: str, allowed: frozenset[str], where: str) -> str:
+    text = row[key].strip()
+    if text not in allowed:
+        raise ValueError(f"{where}: {key} {text!r} is not one of {sorted(allowed)}")
+    return text
+
+
+def evidence_row(raw: Mapping[str, str], where: str) -> Row:
+    """One checked, normalised output row from one seed line. Raises ValueError naming the line."""
+    parameter = _choice(raw, "parameter", frozenset(UNITS), where)
+    drug = raw["drug_key"].strip()
+    if not DRUG_KEY.match(drug):
+        raise ValueError(f"{where}: bad drug_key")
+    value = _num(raw, "value", where, required=True)
+    assert value is not None  # noqa: S101 - narrowed by required=True
+    unit = raw["unit"].strip()
+    value_si = to_si(parameter, value, unit)
+    low, high = _num(raw, "value_low", where), _num(raw, "value_high", where)
+    statistic = _choice(raw, "statistic", STATISTICS, where)
+    if (statistic == "range_geomean") != (low is not None and high is not None):
+        raise ValueError(f"{where}: a range needs both bounds and statistic range_geomean")
+    if low is not None and high is not None and not (low <= high):
+        raise ValueError(f"{where}: range bounds out of order")
+    if low is not None and high is not None and abs(value - math.sqrt(low * high)) > 1e-3 * value:
+        raise ValueError(f"{where}: value is not the geometric mean of the stated range")
+    dose = _num(raw, "dose", where)
+    if (dose is None) != (not raw["dose_unit"].strip()):
+        raise ValueError(f"{where}: dose and dose_unit go together")
+    if raw["dose_unit"].strip() not in ("", "mg"):
+        raise ValueError(f"{where}: only mg doses are accepted")
+    n_text = raw["n_subjects"].strip()
+    if n_text and (not n_text.isdigit() or int(n_text) < 1):
+        raise ValueError(f"{where}: n_subjects must be a positive integer")
+    reader_a = _choice(raw, "reader_a", VERDICTS, where)
+    reader_b = _choice(raw, "reader_b", VERDICTS, where)
+    analyte_class = _choice(raw, "analyte_class", ANALYTE_CLASSES, where)
+    source_id = _choice(raw, "source_id", SOURCES, where)
+    for key in (
+        "analyte",
+        "study_id",
+        "source_locator",
+        "source_version",
+        "quote",
+        "confirm_reason",
+    ):
+        if not raw[key].strip():
+            raise ValueError(f"{where}: {key} is required")
+    if parameter in ("cmax", "auc_inf", "auc_last", "auc_tau") and dose is None:
+        raise ValueError(f"{where}: an observation needs its dose")
+    if not DATE.match(raw["extracted_at"].strip()):
+        raise ValueError(f"{where}: extracted_at must be YYYY-MM-DD")
+    coadmin = raw["coadministered"].strip().lower()
+    if coadmin not in ("true", "false"):
+        raise ValueError(f"{where}: coadministered must be true or false")
+    confirmed = reader_a == "agree" and reader_b == "agree" and analyte_class == "parent"
+    return {
+        "drug_key": drug,
+        "analyte": raw["analyte"].strip(),
+        "analyte_class": analyte_class,
+        "parameter": parameter,
+        "value": value,
+        "value_low": low,
+        "value_high": high,
+        "statistic": statistic,
+        "unit": unit,
+        "value_si": value_si,
+        "dose": dose,
+        "dose_unit": raw["dose_unit"].strip() or None,
+        "route": _choice(raw, "route", ROUTES, where),
+        "regimen": _choice(raw, "regimen", REGIMENS, where),
+        "interval_h": _num(raw, "interval_h", where),
+        "population": raw["population"].strip() or None,
+        "n_subjects": int(n_text) if n_text else None,
+        "formulation": _choice(raw, "formulation", FORMULATIONS, where),
+        "coadministered": coadmin == "true",
+        "study_id": raw["study_id"].strip(),
+        "source_id": source_id,
+        "source_locator": raw["source_locator"].strip(),
+        "source_version": raw["source_version"].strip(),
+        "quote": raw["quote"].strip(),
+        "reader_a": reader_a,
+        "reader_b": reader_b,
+        "confirmed": confirmed,
+        "confirm_reason": raw["confirm_reason"].strip(),
+        "note": raw["note"].strip() or None,
+        "extracted_at": raw["extracted_at"].strip(),
+        "pipeline_version": PIPELINE_VERSION,
+    }
+
+
+def parse_seed(text: str) -> ParseResult:
+    reader = csv.DictReader(io.StringIO(text))
+    if tuple(reader.fieldnames or ()) != SEED_COLUMNS:
+        raise ValueError("seed header differs from the expected columns")
+    rows: list[Row] = []
+    seen: set[tuple[str, str, str, str]] = set()
+    input_rows = 0
+    for i, raw in enumerate(reader, 2):
+        input_rows += 1
+        row = evidence_row(raw, f"evidence_seed.csv:{i}")
+        key = (
+            str(row["drug_key"]),
+            str(row["parameter"]),
+            str(row["source_locator"]),
+            str(row["value"]),
+        )
+        if key in seen:
+            raise ValueError(f"evidence_seed.csv:{i}: duplicate row")
+        seen.add(key)
+        rows.append(row)
+    by_drug = Counter(str(r["drug_key"]) for r in rows)
+    confirmed = sum(1 for r in rows if r["confirmed"])
+    metrics: dict[str, Json] = {
+        "rows": len(rows),
+        "confirmed": confirmed,
+        "not_confirmed": len(rows) - confirmed,
+        "confirmed_share": round(confirmed / len(rows), 4) if rows else None,
+        "by_drug": dict(sorted(by_drug.items())),
+        "by_source": dict(sorted(Counter(str(r["source_id"]) for r in rows).items())),
+        "studies": len({(r["source_id"], r["study_id"]) for r in rows}),
+    }
+    return ParseResult(
+        rows=rows, input_rows=input_rows, excluded={}, schema=SchemaReport(), metrics=metrics
+    )
+
+
+class ModelkitEvidenceJob(Job[bytes]):
+    name = "modelkit_evidence"
+    source_id = "modelkit_evidence"
+    schema = EVIDENCE_SCHEMA
+    polars_schema: ClassVar[Mapping[str, pl.DataType]] = EVIDENCE_ROW
+
+    def fetch(self, ctx: RunContext) -> RawInput[bytes]:
+        data = ctx.repo_root.joinpath(*SEED_PATH).read_bytes()
+        retrieved = ctx.now()
+        dates = sorted(
+            {d for d in re.findall(r"20[0-9]{2}-[0-9]{2}-[0-9]{2}$", data.decode(), re.M)}
+        )
+        return RawInput(
+            payload=data,
+            source_urls=(),
+            source_sha256=sha256_bytes(data),
+            retrieved_at=retrieved,
+            snapshot_date=dates[-1] if dates else retrieved.date().isoformat(),
+        )
+
+    def parse(self, raw: RawInput[bytes]) -> ParseResult:
+        return parse_seed(raw.payload.decode("utf-8"))

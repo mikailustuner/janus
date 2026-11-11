@@ -155,6 +155,56 @@ openFDA Drug Label — "Drug Interactions" sections (United States)
   or NLM.
   Do not rely on openFDA to make decisions regarding medical care.
 
+Janus drug model kit evidence store (experimental)
+  Publisher: Janus
+  License: Per row: each row keeps the terms of its own source (see the four
+  sources below)
+  Research use only. Not for clinical decisions. Expert review has not yet been
+  done.
+  Short quotes, locators and values with the verdicts of two automated reader
+  passes; the committed input is data/modelkit/evidence_seed.csv.
+
+ClinicalTrials.gov posted results (model kit evidence)
+  Publisher: U.S. National Library of Medicine
+  License: Free to reuse with attribution (ClinicalTrials.gov terms and
+  conditions); some records may carry third-party copyright
+  Source of the data: ClinicalTrials.gov. The date each record was processed by
+  ClinicalTrials.gov is shown with every row (record last updated; retrieved
+  2026-11-10).
+  Modifications by Janus: values were re-typed from the posted results, units
+  were converted to canonical units (for example mL/min to L/h), rows were
+  filtered by analyte, arm and population, and short parts of the posted text
+  are quoted. The registry text is not changed beyond that.
+  The study records are entered by sponsors; NLM checks format, not scientific
+  validity. Not an NLM endorsement.
+
+DailyMed structured product labels, clinical pharmacology section (model kit evidence)
+  Publisher: U.S. National Library of Medicine / U.S. Food and Drug
+  Administration
+  License: Public domain (U.S. government work); label text is written by the
+  manufacturer
+  Janus quotes sentences of the clinical pharmacology section of one label per
+  drug with the label's set id, version and effective date. A quoted sentence is
+  label text, not an assessment by Janus, FDA or NLM. Not an FDA or NLM
+  endorsement.
+
+PubMed Central Open Access articles licensed CC BY or CC0 (model kit evidence)
+  Publisher: Authors of each article, via Europe PMC
+  License: CC BY 4.0 or CC0 1.0, per article
+  Only articles whose own licence is CC BY or CC0 are used. Each row names the
+  article (PMCID) and the table cell. Attribution: credit the authors and the
+  source article, see the licence link in the article; changes: values were
+  transcribed from a table, units converted, and short parts quoted. Not an
+  endorsement by the authors.
+
+Drugs@FDA clinical pharmacology reviews (model kit evidence)
+  Publisher: U.S. Food and Drug Administration
+  License: Public domain, unless noted (sponsor material reproduced inside a
+  review may be an exception)
+  A short quote and the page of the review PDF. Text of scanned reviews was read
+  by optical character recognition and checked against the page image by the
+  reader passes. Not an FDA endorsement.
+
 RxNav / RxClass
   License: Free to use with the NLM attribution below
   This product uses publicly available data courtesy of the U.S. National
