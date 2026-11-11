@@ -52,6 +52,16 @@ PACKAGE_LINES: Final = (
     "The PIPC columns are CC BY 4.0: cite Rochon PA et al., Eur Geriatr Med 2025, "
     "doi:10.1007/s41999-025-01215-x. Janus's class mapping columns are Apache-2.0.",
 )
+MODELKIT_LINES: Final = (
+    "The model kit is experimental. Say: Research use only. Not for clinical decisions. Expert "
+    "review has not yet been done.",
+    "A parameter set is a starting model from cited evidence for researchers, not a dose "
+    "calculator and not for any person; never derive or suggest a dose from it, and never call a "
+    "drug or a model safe.",
+    "Report the validation status as given (validated, not validated or failed) with n; it "
+    "describes a handful of held-out studies, not the drug in general. The readers that confirmed "
+    "the values were automated; never say that a person reviewed anything.",
+)
 RESOLVE_LINES: Final = (
     "A resolved product or ingredient is what the public registers publish for that code or "
     "name; check the candidate with the person (several candidates can match).",

@@ -21,6 +21,8 @@ unchanged. There is no second engine; whether a pattern exists is decided by the
 | `janus_cascade_package_rows` | `GET /open/cascade-package/pipc` | the 65 PIPC rows (CC BY 4.0) with Janus's class mapping (Apache-2.0); `row` selects one |
 | `janus_time_machine_catalogue` | `GET /timemachine/catalogue` | remedy and cascade ids, validation, sources |
 | `janus_time_machine_cascade` | `GET /timemachine/cascade/{id}` | FAERS time to onset (reports, not people), published timing, populations |
+| `janus_modelkit_search` | `GET /modelkit/drugs` | experimental drug model kit: drugs with a validation status; optional `query` keeps names containing it |
+| `janus_modelkit_get` | `GET /modelkit/drugs/{key}` | one drug of the model kit: parameter set with evidence ids, validation report, what was left out. Research use only |
 
 Every result is `{"janus_safety": {...}, "result": <the API's JSON>}`. Errors are fixed codes:
 `janus_api_error: <code>` (with field names when the API names them), `janus_api_unreachable`,

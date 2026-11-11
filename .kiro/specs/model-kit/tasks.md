@@ -17,7 +17,7 @@
   - _Requirements: 5_
 - [ ] 7. Web: list and drug page, five languages, themes, 375 px, axe, Playwright; link from researchers page
   - _Requirements: 6_
-- [ ] 8. MCP tools `modelkit_search`, `modelkit_get`
+- [x] 8. MCP tools `janus_modelkit_search`, `janus_modelkit_get` (`modelkit_evidence` is open, M3)
   - _Requirements: 7_
 - [ ] 9. Checkpoint: all CI-equivalent checks, screenshots
 

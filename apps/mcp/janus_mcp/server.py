@@ -1,6 +1,6 @@
 """The Janus MCP server (mcp-server design §2-§6).
 
-Seven read-only tools, each one call to the Janus API. Arguments are checked with the API's own
+Nine read-only tools, each one call to the Janus API. Arguments are checked with the API's own
 limits before a request is sent; results are the API's JSON under `result`, next to the fixed
 `janus_safety` block. Nothing is logged, cached or stored.
 """
@@ -27,6 +27,7 @@ QID = r"^(Q[1-9][0-9]{0,9}|J[1-9][0-9]{0,5})$"
 CANDIDATE = r"^(TR|US|EU):[a-z_]+:[0-9]{1,9}$"
 MONTH = r"^\d{4}-(0[1-9]|1[0-2])$"
 CASCADE_ID = r"^[A-Za-z0-9_]{1,64}$"
+DRUG_KEY = r"^[a-z][a-z0-9_]{0,31}$"
 MAX_ITEMS: Final = 50
 READ_ONLY: Final = ToolAnnotations(
     read_only_hint=True, destructive_hint=False, idempotent_hint=True, open_world_hint=False
@@ -200,6 +201,46 @@ def build_server(config: Config, transport: httpx2.AsyncBaseTransport | None = N
     ) -> dict[str, Any]:
         payload = await api("GET", f"/timemachine/cascade/{cascade_id}")
         return result(payload, *safety.TIME_MACHINE_LINES)
+
+    @server.tool(
+        annotations=READ_ONLY,
+        description=(
+            "Search the experimental drug model kit (Janus GET /modelkit/drugs): drugs with a "
+            "parameter set built from cited evidence and a validation status. `query` keeps the "
+            "drugs whose name contains it. Research use only. " + safety.DISCLAIMER
+        ),
+    )
+    async def janus_modelkit_search(
+        query: Annotated[
+            str,
+            StringConstraints(strip_whitespace=True, to_lower=True, min_length=1, max_length=32),
+        ]
+        | None = None,
+    ) -> dict[str, Any]:
+        payload = await api("GET", "/modelkit/drugs")
+        if query and isinstance(payload, dict):
+            obj = cast(dict[str, Any], payload)
+            raw = obj.get("drugs")
+            drugs = cast(list[Any], raw) if isinstance(raw, list) else []
+            dicts = [cast(dict[str, Any], d) for d in drugs if isinstance(d, dict)]
+            kept: list[dict[str, Any]] = [d for d in dicts if query in str(d.get("key", ""))]
+            payload = {**obj, "drugs": kept}
+        return result(payload, *safety.MODELKIT_LINES)
+
+    @server.tool(
+        annotations=READ_ONLY,
+        description=(
+            "One drug of the experimental model kit (Janus GET /modelkit/drugs/{key}): the "
+            "parameter set with confidence classes and evidence ids, the validation report and "
+            "what was left out; `key` comes from janus_modelkit_search. Research use only. "
+            + safety.DISCLAIMER
+        ),
+    )
+    async def janus_modelkit_get(
+        key: Annotated[str, Field(pattern=DRUG_KEY)],
+    ) -> dict[str, Any]:
+        payload = await api("GET", f"/modelkit/drugs/{key}")
+        return result(payload, *safety.MODELKIT_LINES)
 
     return server
 

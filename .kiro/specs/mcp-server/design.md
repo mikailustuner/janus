@@ -104,7 +104,7 @@ Plus: the tool list and annotations; configuration errors; an integration test a
 | DP7 | No retries; 10 s timeout | Retry on timeout | POSTs are stateless but the client cannot know a deployment's proxy rules; an assistant can call again |
 | DP8 | Catch every exception in a tool, raise `ToolError` with a fixed code | Let the SDK report exceptions | The SDK logs `str(exc)` and tracebacks; exception text from HTTP libraries can contain URLs or values |
 | DP9 | Streamable HTTP binds a loopback address only and has no authentication; `JANUS_API_URL` is https unless loopback (safety review S9) | OAuth (SDK auth); any host | Local use only; a remote deployment needs authentication first (open item); medicine lists never cross a network unencrypted |
-| DP10 | Only these seven tools; no notes, donations or outcomes | Expose all POST routes | Notes, donations and outcomes involve consent and tokens that must be handled by the person in the web app, not by an assistant |
+| DP10 | Only these tools (seven, plus the two read-only model kit tools `janus_modelkit_search` and `janus_modelkit_get`, spec `model-kit`); no notes, donations or outcomes | Expose all POST routes | Notes, donations and outcomes involve consent and tokens that must be handled by the person in the web app, not by an assistant |
 
 ## 9. Open items
 - Authentication for a remote streamable-HTTP deployment (MCP authorization spec, OAuth 2.1).

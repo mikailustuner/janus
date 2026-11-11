@@ -28,6 +28,8 @@ TOOLS = {
     "janus_cascade_package_rows",
     "janus_time_machine_catalogue",
     "janus_time_machine_cascade",
+    "janus_modelkit_search",
+    "janus_modelkit_get",
 }
 DATASET = "a" * 64
 # medical-safety.md rule 2, all five languages (kept equal to the steering file by hand).
@@ -94,7 +96,7 @@ def test_p5_no_forbidden_phrase_in_texts() -> None:
     texts = [t.description or "" for t in with_client(tools)]
     texts += [safety.INSTRUCTIONS, safety.EMERGENCY, safety.DISCLAIMER, *safety.WORDING]
     texts += [*safety.CHECK_LINES, *safety.TIME_MACHINE_LINES, *safety.PACKAGE_LINES]
-    texts += [*safety.RESOLVE_LINES]
+    texts += [*safety.RESOLVE_LINES, *safety.MODELKIT_LINES]
     for t in texts:
         assert forbidden_in(t) == [], t
     for path in Path(__file__).parents[1].joinpath("janus_mcp").glob("*.py"):
@@ -142,6 +144,11 @@ def tool_calls(draw: st.DrawFn) -> tuple[str, dict[str, Any], str, str, Any]:
         return kind, {}, "GET", "/open/cascade-package/pipc", None
     if kind == "janus_time_machine_catalogue":
         return kind, {}, "GET", "/timemachine/catalogue", None
+    if kind == "janus_modelkit_search":
+        return kind, {}, "GET", "/modelkit/drugs", None
+    if kind == "janus_modelkit_get":
+        key = draw(st.text(string.ascii_lowercase, min_size=1, max_size=20))
+        return kind, {"key": key}, "GET", f"/modelkit/drugs/{key}", None
     cid = draw(st.text(string.ascii_lowercase + "_", min_size=1, max_size=30))
     return kind, {"cascade_id": cid}, "GET", f"/timemachine/cascade/{cid}", None
 
@@ -257,6 +264,9 @@ BAD_ARGS: list[tuple[str, dict[str, Any]]] = [
         {"ingredient": "Q1", "choices": [{"position": 0, "ingredient": "Q2"}]}]}),
     ("janus_cascade_package_rows", {"row": 66}),
     ("janus_time_machine_cascade", {"cascade_id": "../health"}),
+    ("janus_modelkit_get", {"key": "../health"}),
+    ("janus_modelkit_get", {"key": "Bad-Key"}),
+    ("janus_modelkit_search", {"query": "x" * 33}),
 ]  # fmt: skip
 
 
@@ -282,6 +292,16 @@ def test_p7_row_filter(positions: list[int], row: int) -> None:
     assert out["result"]["package"] == "janus-cascade-package"
     whole = call(stub, "janus_cascade_package_rows", {}).structured_content
     assert whole is not None and whole["result"]["rows"] == rows
+
+
+def test_modelkit_search_filters_and_carries_the_research_lines() -> None:
+    drugs = [{"key": "sunitinib"}, {"key": "tramadol"}, {"key": "telmisartan"}]
+    stub = StubApi(body={"release": {}, "drugs": drugs})
+    out = call(stub, "janus_modelkit_search", {"query": " TRA "}).structured_content
+    assert out is not None and out["result"]["drugs"] == [{"key": "tramadol"}]
+    assert any("Research use only" in w for w in out["janus_safety"]["wording"])
+    whole = call(stub, "janus_modelkit_search", {}).structured_content
+    assert whole is not None and whole["result"]["drugs"] == drugs
 
 
 def test_check_result_carries_the_check_lines() -> None:
