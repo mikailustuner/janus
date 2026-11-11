@@ -51,7 +51,7 @@ _MEASURE = {
 }
 _OTHER = re.compile(
     r"half-life|\bt\s?1/2\b|t½|clearance|\bCL\b|\bCL/F\b|volume of distribution|\bVd\b|\bT\s?max\b|protein binding|"
-    r"unbound fraction|bioavailability|excretion|elimination|urinary|oral dose",
+    r"unbound fraction|bioavailability|excretion|elimination|urinary|oral dose|\bMRT\b|mean residence time",
     re.I,
 )
 _PCT_AFTER = re.compile(
@@ -64,7 +64,13 @@ _PCT_BEFORE = re.compile(
 _PCT_RANGE_BEFORE = re.compile(
     rf"\b({_UP}|{_DN})\b[^.;%\d(]{{0,45}}?{_N}\s?%?\s?(?:to|-|and)\s?{_N}\s?%", re.I
 )
-_FOLD_PAIR = re.compile(rf"{_N}-?\s+(?:and|or|to)\s+{_N}[- ]?(?:fold|times)\b", re.I)
+_FOLD_PAIR = re.compile(rf"{_N}-?\s+(?:and|or)\s+{_N}[- ]?(?:fold|times)\b", re.I)
+_FOLD_LIST = re.compile(
+    r"(?:\d+(?:\.\d+)?[- ]?(?:fold|times)\s?,?\s?(?:and |or )?){3,}", re.I
+)  # three or more fold values in a row
+_FOLD_RANGE = re.compile(
+    rf"{_N}[- ]*(?:(?:fold|times)\s)?(?:to|-)\s?{_N}[- ]?(?:fold|times)\b", re.I
+)
 _PCT_RANGE = re.compile(
     rf"{_N}\s?(?:%\s?(?:to|-)|(?:to|-|and))\s?{_N}\s?%\s*(?:\([^)]*\)\s*)?(?:was |were )?({_UP}|{_DN})\b",
     re.I,
@@ -86,7 +92,7 @@ _REF = re.compile(
 )
 _FLAGS = {
     "metabolite": re.compile(
-        r"metabolite|glucuronide|conjugate|prodrug|active moiety|\bM\d\b|\b[A-Z]{2,5}-?\d{3,}[A-Z]?\b|\bepoxide\b|"
+        r"metabolite|glucuronide|conjugate|prodrug|active moiety|\bM\d\b|\b[A-Z]{1,5}-?\d{2,}[A-Z]?\b|\bepoxide\b|"
         r"\b(?:and|or) its\b",
         re.I,
     ),
@@ -130,6 +136,25 @@ def sentences(text: str) -> list[str]:
     for a, b in _PROTECT:
         out = [p.replace(b, a) for p in out]
     return out
+
+
+_CP_LIST = re.compile(
+    r"child[- ]?pugh(?: class| grade| score| category)?\s*(?:class\s*)?([ABC])\b"
+    r"((?:\s*(?:,\s*(?:and|or)?|and|or|to|-|/)\s*(?:class\s*)?[ABC]\b)*)",
+    re.I,
+)
+
+
+def _grade_list(pop: str, s: str) -> list[tuple[int, str]]:
+    """(position, grade) of the grades a sentence names, in order; Child-Pugh letter lists are expanded."""
+    if pop == "hepatic":
+        out: list[tuple[int, str]] = []
+        for m in _CP_LIST.finditer(s):
+            letters = [m.group(1), *re.findall(r"\b([ABC])\b", m.group(2))]
+            out += [(m.start() + k, "cp_" + x.lower()) for k, x in enumerate(letters)]
+        if out:
+            return out
+    return [(m.start(), _grade_of(pop, m.group(0))) for m in _GRADE.finditer(s)]
 
 
 def _grade_of(pop: str, text: str) -> str:
@@ -222,12 +247,26 @@ def _magnitudes(s: str) -> list[tuple[int, float, str]]:
                 r2 = _ratio(m.group(1), pct=float(extra))
                 if r2:  # "increased by 40 %, 70 % and 130 %": the listed percentages share the direction
                     out.append((m.end() - len(m.group(3)) + k, r2, extra + " %"))
+    for m in _FOLD_RANGE.finditer(s):  # "2 to 3 times higher", "1.5- to 2-fold": the geometric mean
+        d = _near_direction(s, m.start(), m.end())
+        pair = [_ratio(d, fold=float(m.group(i))) for i in (1, 2)] if d else []
+        if pair and all(pair) and free(m.start(), m.end()):
+            out.append((m.start(), math.sqrt((pair[0] or 0) * (pair[1] or 0)), m.group(0)))
+            taken.append((m.start(), m.end()))
     for m in _FOLD_PAIR.finditer(s):
         d = _near_direction(s, m.start(), m.end())
         pair = [_ratio(d, fold=float(m.group(i))) for i in (1, 2)] if d else []
         if pair and all(pair) and free(m.start(), m.end()):
             out.append((m.start(), pair[0] or 0, m.group(1) + "-fold"))
             out.append((m.start() + 1, pair[1] or 0, m.group(2) + "-fold"))
+            taken.append((m.start(), m.end()))
+    for m in _FOLD_LIST.finditer(s):  # "a 1.8-fold, 3.2-fold, and 3.6-fold increase": one direction
+        d = _near_direction(s, m.start(), m.end())
+        nums = re.findall(r"\d+(?:\.\d+)?", m.group(0))
+        rs = [_ratio(d, fold=float(x)) for x in nums] if d else []
+        if rs and all(rs) and free(m.start(), m.end()):
+            for k, r in enumerate(rs):
+                out.append((m.start() + k, r or 0, nums[k] + "-fold"))
             taken.append((m.start(), m.end()))
     for m in _FOLD.finditer(s):
         d = _near_direction(s, m.start(), m.end())
@@ -304,6 +343,22 @@ def _flags(s: str, drug: str = "") -> tuple[str, ...]:
         out.append(
             "metabolite"
         )  # "hydroxy-<drug>", "<drug> glucuronide": another analyte named like the drug
+    name = drug.replace("_", " ")
+    if (
+        name
+        and " " not in name
+        and "metabolite" not in out
+        and any(
+            name in w.lower() and w.lower() != name for w in re.findall(r"[A-Za-z][A-Za-z-]{4,}", s)
+        )
+    ):
+        out.append(
+            "metabolite"
+        )  # "levocetirizine", "fingolimod-phosphate": a word that contains the name
+    if re.search(r"\bDay\s?\d\b", s):
+        out.append("dose_change")  # values of single days of a dosing regimen
+    if re.search(r"\b(?:male|female|men|women|males|females|gender|sex)\b", _reference(s), re.I):
+        out.append("sex")  # compared by sex, not by age or impairment
     return tuple(out)
 
 
@@ -361,12 +416,7 @@ def read_sentence(
     mags = _magnitudes(s)
     if not mags:
         return []
-    gm = list(_GRADE.finditer(s))
-    if pop == "hepatic" and any(
-        m.group(2) for m in gm
-    ):  # "moderate (Child-Pugh B)": the class letter decides
-        gm = [m for m in gm if m.group(2)]
-    grades = [(m.start(), _grade_of(pop, m.group(0))) for m in gm]
+    grades = _grade_list(pop, s)  # "moderate (Child-Pugh B)": the class letter decides
     respectively = "respectively" in s.lower()
     measures_in_order: list[str] = []
     for _, name in sorted([(m.start(), n) for n, rx in _MEASURE.items() for m in rx.finditer(s)]):
@@ -389,14 +439,30 @@ def read_sentence(
                 )
                 continue
             measures = [one]
-            # "AUC and Cmax were increased by 30 %": one magnitude, two measures named before it
-            if len(mags) == 1 and len(measures_in_order) == 2 and not respectively:
+            # "AUC and Cmax were increased by 30 %": one magnitude, both measures named before it
+            first = {
+                n: min(m.start() for m in rx.finditer(s))
+                for n, rx in _MEASURE.items()
+                if rx.search(s)
+            }
+            if (
+                len(mags) == 1
+                and len(measures_in_order) == 2
+                and not respectively
+                and max(first.values()) < pos
+            ):
                 measures = list(measures_in_order)
-        if respectively and len(grades) == len(mags) > 1:
+        if pop == "geriatric" or not grades:
+            grade = _grade_of(pop, s)
+        elif (
+            len(grades) == len(mags) > 1
+        ):  # "mild, moderate and severe: 40 %, 70 % and 130 %": by order
             grade = grades[i][1]
+        elif len(grades) > 1 and len(mags) == 1:  # "mild and moderate impairment: 1.5- to 2-fold"
+            grade = "pooled"
         else:
             before = [g for g in grades if g[0] <= pos]
-            grade = (before[-1] if before else grades[0])[1] if grades else _grade_of(pop, s)
+            grade = (before[-1] if before else grades[0])[1]
         for measure in measures:
             out.append(
                 SpCandidate(

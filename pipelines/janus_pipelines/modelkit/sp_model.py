@@ -28,6 +28,7 @@ GRADES: Final = (
     "age65",
     "age75",
     "age80",
+    "pooled",  # several grades together ("mild and moderate"): one statement for all of them
 )
 # Fields of the openFDA label that can carry a statement (US sections 8.5, 8.6, 8.7 and 12.3), in the order read.
 SECTION_FIELDS: Final = (

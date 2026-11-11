@@ -34,7 +34,7 @@ _DOWN = frozenset(
 )
 _OTHER_WORDS = frozenset(
     "half-life half t1/2 t½ clearance cl cl/f volume vd tmax binding unbound bioavailability excretion elimination "
-    "urinary".split()
+    "urinary mrt residence".split()
 )
 _IMPAIR = frozenset("impairment insufficiency dysfunction failure disease impaired".split())
 _ABBR = frozenset({"e.g", "i.e", "vs", "approx", "al", "fig", "no"})
@@ -233,6 +233,14 @@ def _mags(toks: list[str], low: list[str]) -> list[tuple[int, float, str]]:
             if j < n and low[j] == "%":
                 j += 1
             plain_first = j == i + 1  # "25 and 45 %" is a range; "25 % and 45 %" is a list
+            if plain_first and j + 1 < n and _is_num(toks[j]) and low[j + 1] == "%":  # "25-45 %"
+                d = _direction(low, i, 7) or _direction(low, j + 1, 7)
+                a, b = _to_ratio(d, pct=float(toks[i])), _to_ratio(d, pct=float(toks[j]))
+                if a and b:
+                    out.append((i, math.sqrt(a * b), f"{toks[i]}-{toks[j]} %"))
+                    used |= {i, j}
+                    i = j + 2
+                    continue
             if (
                 j + 1 < n
                 and (low[j] == "to" or (low[j] == "and" and plain_first))
@@ -247,10 +255,25 @@ def _mags(toks: list[str], low: list[str]) -> list[tuple[int, float, str]]:
                     used |= set(range(i, j + 3))
                     i = j + 3
                     continue
-            # fold pair: "1.5 and 2.1 fold"
+            # fold range: "2 to 3 times", "1.5- to 2-fold", "1.7-2.0 times": the geometric mean
             if (
                 i + 3 < n
-                and low[i + 1] in ("and", "or", "to")
+                and low[i + 1] == "to"
+                and _is_num(toks[i + 2])
+                and low[i + 3] in ("fold", "times")
+            ) or (i + 2 < n and _is_num(toks[i + 1]) and low[i + 2] in ("fold", "times")):
+                k = i + 2 if low[i + 1] == "to" else i + 1
+                d = _direction(low, i, 8)
+                a, b = _to_ratio(d, fold=float(toks[i])), _to_ratio(d, fold=float(toks[k]))
+                if a and b:
+                    out.append((i, math.sqrt(a * b), f"{toks[i]} to {toks[k]}-fold"))
+                    used |= {i, k}
+                    i = k + 2
+                    continue
+            # fold pair: "1.5 and 2.1 fold" (a list: two magnitudes)
+            if (
+                i + 3 < n
+                and low[i + 1] in ("and", "or")
                 and _is_num(toks[i + 2])
                 and low[i + 3] in ("fold", "times")
             ):
@@ -262,7 +285,17 @@ def _mags(toks: list[str], low: list[str]) -> list[tuple[int, float, str]]:
                     i += 4
                     continue
             if i + 1 < n and low[i + 1] in ("fold", "times"):
-                r = _to_ratio(_direction(low, i, 6), fold=float(toks[i]))
+                d = _direction(low, i, 6)
+                if d is None:  # a list of fold values shares the direction of its last item
+                    k = i
+                    while (
+                        k + 2 < n
+                        and low[k + 2] in (",", "and", "or")
+                        and _is_num(toks[min(k + 3, n - 1)])
+                    ):
+                        k += 3
+                    d = _direction(low, min(k + 1, n - 1), 6)
+                r = _to_ratio(d, fold=float(toks[i]))
                 if r:
                     out.append((i, r, f"{toks[i]}-fold"))
                     used.add(i)
@@ -343,9 +376,24 @@ def _grade_tokens(low: list[str], pop: str) -> list[tuple[int, str]]:
     for i, t in enumerate(low):
         if pop in ("renal", "hepatic"):
             if t.startswith("child-pugh"):
-                for j in range(i + 1, min(len(low), i + 4)):
+                found = False
+                for j in range(i + 1, min(len(low), i + 10)):
                     if low[j] in ("a", "b", "c"):
-                        out.append((i, "cp_" + low[j]))
+                        out.append((i + j - i, "cp_" + low[j]))  # position of the letter, in order
+                        found = True
+                    elif low[j] in (
+                        "class",
+                        "score",
+                        "grade",
+                        "category",
+                        ",",
+                        "and",
+                        "or",
+                        "to",
+                        "/",
+                    ):
+                        continue
+                    elif found or j > i + 3:
                         break
             elif t in ("mild", "moderate", "severe"):
                 out.append((i, t))
@@ -387,10 +435,30 @@ def _flags(low: list[str], text: str, drug: str = "") -> tuple[str, ...]:
         out.append("metabolite")
     if re.search(r"enantiomer|\b[RS]\)?-[a-z]", text):
         out.append("enantiomer")
-    if re.search(r"\b[A-Z]{2,5}-?\d{3,}[A-Z]?\b|\bM\d\b|\bepoxide\b", text) or re.search(
+    if (
+        name
+        and " " not in name
+        and any(
+            name in t and t != name and len(t) > 4
+            for t in re.findall(r"[a-z][a-z-]+", text.lower())
+        )
+    ):
+        out.append(
+            "metabolite"
+        )  # "levocetirizine", "fingolimod-phosphate": a word that contains the name
+    if re.search(r"\bday\s?\d\b", text, re.I):
+        out.append("dose_change")  # values of single days of a dosing regimen
+    if re.search(r"\b[A-Z]{1,5}-?\d{2,}[A-Z]?\b|\bM\d\b|\bepoxide\b", text) or re.search(
         r"\b(?:and|or) its\b", text, re.I
     ):
         out.append("metabolite")
+    ref_toks = _tok(text)
+    if re.search(
+        r"\b(?:male|female|men|women|males|females|gender|sex)\b",
+        _reference(ref_toks, _low(ref_toks)),
+        re.I,
+    ):
+        out.append("sex")  # compared by sex, not by age or impairment
     if re.search(r"dose[- ](?:adjust|reduction)|reduced dose|lower dose", text, re.I):
         out.append("dose_change")
     if "in combination with" in text.lower() or "when given with" in text.lower():
@@ -494,19 +562,31 @@ def read_sentence(
             before = [m for m in meas if m[0] < pos and pos - m[0] <= 30]
             pick = max(before) if before else None
             if pick is None:
-                after = [m for m in meas if m[0] >= pos and m[0] - pos <= 10]
+                anchor = pos  # the last number of a list that starts here: "1.8-fold, 3.2-fold and 3.6-fold increase in AUC"
+                for later, _, _ in mags:
+                    if later > anchor and later - anchor <= 5:
+                        anchor = later
+                after = [m for m in meas if m[0] >= pos and m[0] - anchor <= 10]
                 pick = min(after) if after else None
             if pick is None or pick[1] == "other":
                 stats.add("b_skip_magnitude_of_another_quantity" if pick else "b_skip_no_measure")
                 continue
             measures = [pick[1]]
-            if len(mags) == 1 and len(ordered) == 2 and not respectively:
+            first_at = {m: min(i for i, x in meas if x == m) for m in ordered}
+            if (
+                len(mags) == 1
+                and len(ordered) == 2
+                and not respectively
+                and max(first_at.values()) < pos
+            ):
                 measures = list(ordered)
         grades = _grade_tokens(low, pop)
         if pop == "geriatric":
             grade = _geri_grade(low)
-        elif respectively and len(grades) == len(mags) > 1:
+        elif len(grades) == len(mags) > 1:  # by order, with or without "respectively"
             grade = grades[idx][1]
+        elif len(grades) > 1 and len(mags) == 1:
+            grade = "pooled"
         elif grades:
             prior = [g for g in grades if g[0] <= pos]
             grade = (prior[-1] if prior else grades[0])[1]

@@ -61,6 +61,47 @@ CASES: list[tuple[str, list[tuple[str, str, str, float]]]] = [
         "Following a 4-hour hemodialysis treatment, AUC of the drug is reduced by about 50%.",
         [],  # a dialysis session is not a population
     ),
+    (
+        "In patients with severe hepatic impairment the AUCs were 2 to 3 times higher than in the "
+        "patients with normal liver function.",
+        [
+            ("hepatic", "severe", "auc", 2.4495)
+        ],  # a range is the geometric mean, not one of its ends
+    ),
+    (
+        "The mean exposure (AUC) in patients with mild and moderate renal impairment "
+        "increased 1.5- to 2-fold compared to patients with normal renal function.",
+        [("renal", "pooled", "auc", 1.7321)],  # two grades, one statement
+    ),
+    (
+        "Compared to normal subjects, there was a 1.8-fold, 3.2-fold, and 3.6-fold increase in AUC "
+        "for subjects with hepatic impairment of Child-Pugh class A, B, and C.",
+        [
+            ("hepatic", "cp_a", "auc", 1.8),
+            ("hepatic", "cp_b", "auc", 3.2),
+            ("hepatic", "cp_c", "auc", 3.6),
+        ],
+    ),
+    (
+        "In patients with mild, moderate, and severe renal impairment AUC increased by 23%, 47%, "
+        "and 75%, compared to healthy subjects.",
+        [
+            ("renal", "mild", "auc", 1.23),
+            ("renal", "moderate", "auc", 1.47),
+            ("renal", "severe", "auc", 1.75),
+        ],
+    ),
+    (
+        "Niraparib AUC increased 1.6-fold in patients with moderate hepatic impairment "
+        "with no effect on Cmax.",
+        [("hepatic", "moderate", "auc", 1.6)],  # Cmax comes after the number: not part of it
+    ),
+    (
+        "In elderly subjects the half-life increased by 85% and the mean residence time "
+        "(MRT) by 65%, "
+        "with no change in AUC or Cmax.",
+        [],
+    ),
 ]
 
 
@@ -273,9 +314,12 @@ def test_the_job_accounts_for_every_pair_and_every_excluded_label() -> None:
 
     payload = job.Payload()
     label = SpLabel(
-        "s1", "1", "2025-01-01", "drugx",
+        "s1",
+        "1",
+        "2025-01-01",
+        "drugx",
         {"geriatric_use": ("The AUC in elderly subjects was 30% higher than in young subjects.",)},
-    )  # fmt: skip
+    )
     job.read_one(label, payload)
     job.read_one(
         SpLabel("s2", "1", "2025-01-01", "drugx", {"geriatric_use": ("Nothing numeric.",)}), payload
@@ -286,4 +330,60 @@ def test_the_job_accounts_for_every_pair_and_every_excluded_label() -> None:
     result = job.ModelkitSpecialPopulationsJob().parse(raw)
     check_accounting(result.input_rows, result.n_output, result.excluded)
     assert result.n_output >= 1 and result.excluded["matched_label_without_a_candidate"] == 1
-    assert result.metrics["labels_read"] == 5 and result.metrics["confirmed"] >= 1
+    metrics = result.metrics
+    assert metrics["labels_read"] == 5
+    assert isinstance(metrics["confirmed"], int) and metrics["confirmed"] >= 1
+
+
+@pytest.mark.parametrize(
+    ("sentence", "drug", "flag"),
+    [
+        (
+            "In patients with severe hepatic impairment, fingolimod-phosphate Cmax was "
+            "decreased by 22% "
+            "compared to healthy subjects.",
+            "fingolimod",
+            "metabolite",
+        ),
+        (
+            "Levocetirizine exposure (AUC) increased 4-fold in patients with severe "
+            "renal impairment "
+            "compared to healthy subjects.",
+            "cetirizine",
+            "metabolite",
+        ),
+        (
+            "The AUC of SN-38 in patients 65 years of age and older was 11% higher than in younger "
+            "patients.",
+            "irinotecan",
+            "metabolite",
+        ),
+        (
+            "AUC of the drug was 10% higher on Day 1 and 18% higher on Day 3 in patients "
+            "with moderate "
+            "hepatic impairment compared to healthy subjects.",
+            "aprepitant",
+            "dose_change",
+        ),
+    ],
+)
+def test_other_analytes_and_single_days_are_flagged_by_both_readers(
+    sentence: str, drug: str, flag: str
+) -> None:
+    label = SpLabel("s", "1", "", drug)
+    a = sp_a.read_sentence(label, "pharmacokinetics", sentence, SpStats())
+    b = sp_b.read_sentence(label, "pharmacokinetics", None, sentence, SpStats())
+    assert a and b
+    assert all(flag in c.flags for c in a) and all(flag in c.flags for c in b)
+    assert not any(judge(x, y)[0] for x in a for y in b)  # never confirmed
+
+
+def test_a_comparison_by_sex_is_flagged() -> None:
+    s = (
+        "The average AUC in young and elderly female subjects was approximately 15% to "
+        "20% higher than "
+        "in young and elderly male subjects."
+    )
+    label = SpLabel("s", "1", "", "drugx")
+    assert all("sex" in c.flags for c in sp_a.read_sentence(label, "f", s, SpStats()))
+    assert all("sex" in c.flags for c in sp_b.read_sentence(label, "f", None, s, SpStats()))
