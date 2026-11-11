@@ -184,6 +184,8 @@ def validate(drug_key: str, rows: list[Ev], ps: ParameterSet | NoSet) -> Validat
     for m in (auc, cm):
         if m.tested and m.near_limit:
             reasons.append(f"{m.name}_near_the_2_fold_limit")
+        if m.tested and m.in_band and m.within_2_fold_points < m.n_points:
+            reasons.append(f"{m.name}_some_points_outside_2_fold")
     interval = (
         "interval_n_too_small"
         if len(studies) < MIN_STUDIES_FOR_INTERVAL

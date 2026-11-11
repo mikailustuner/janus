@@ -32,6 +32,8 @@ TEXT: dict[str, str] = {
     "tested_ratio_outside_2_fold": "A tested ratio of predicted to observed is outside 2-fold.",
     "auc_and_cmax_within_2_fold": "AUC and Cmax both tested and within 2-fold.",
     "auc_near_the_2_fold_limit": "The AUC ratio is within 10 % of the 2-fold limit.",
+    "auc_some_points_outside_2_fold": "The drug-level AUC ratio is within 2-fold, but some single observations are outside it.",
+    "cmax_some_points_outside_2_fold": "The drug-level Cmax ratio is within 2-fold, but some single observations are outside it.",
     "cmax_near_the_2_fold_limit": "The Cmax ratio is within 10 % of the 2-fold limit.",
     # why there is no set
     "no_confirmed_clearance": "No confirmed clearance (intravenous CL or oral CL/F).",

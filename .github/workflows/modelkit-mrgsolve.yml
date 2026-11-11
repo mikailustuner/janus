@@ -1,0 +1,69 @@
+name: Model kit mrgsolve round trip
+
+# Spec .kiro/specs/model-kit (requirement 4.2, property M7): an exported mrgsolve model must load,
+# simulate and reproduce the Janus engine curve within 1 %. Kept out of the main CI so the other
+# jobs do not wait for R: it runs only when the model kit changes, nightly, and on demand.
+on:
+  push:
+    paths:
+      - "apps/api/janus/modelkit/**"
+      - "apps/api/janus/simulation/compartmental.py"
+      - "apps/api/janus/timemachine/pk.py"
+      - "apps/api/tests/*modelkit*"
+      - "apps/api/tests/mrgsolve_roundtrip.R"
+      - "data/modelkit/**"
+      - ".github/workflows/modelkit-mrgsolve.yml"
+  pull_request:
+    paths:
+      - "apps/api/janus/modelkit/**"
+      - "apps/api/janus/simulation/compartmental.py"
+      - "apps/api/janus/timemachine/pk.py"
+      - "apps/api/tests/*modelkit*"
+      - "apps/api/tests/mrgsolve_roundtrip.R"
+      - "data/modelkit/**"
+      - ".github/workflows/modelkit-mrgsolve.yml"
+  schedule:
+    - cron: "23 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: modelkit-mrgsolve-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  mrgsolve:
+    name: mrgsolve loads, simulates, matches the Janus engine
+    runs-on: ubuntu-latest
+    # The same R as the simulator image (apps/api/simulator.Dockerfile): R 4.6.1 with CRAN pinned
+    # to a dated snapshot by the image.
+    container: rocker/r-ver:4.6.1
+    timeout-minutes: 30
+    env:
+      JANUS_REQUIRE_MRGSOLVE: "1"
+      HYPOTHESIS_PROFILE: ci
+      MRGSOLVE_VERSION: "2.0.1" # licence GPL (>= 2), recorded in the export's LICENSES.txt
+      R_LIBS_USER: ${{ github.workspace }}/.rlib
+    steps:
+      - uses: actions/checkout@v7
+      - name: Cache the R library
+        uses: actions/cache@v4
+        with:
+          path: .rlib
+          key: rlib-r4.6.1-mrgsolve-2.0.1
+      - name: Install mrgsolve (pinned) and jsonlite
+        run: |
+          mkdir -p "$R_LIBS_USER"
+          Rscript -e 'if (!requireNamespace("mrgsolve", quietly = TRUE)) install.packages(c("mrgsolve", "jsonlite"), Ncpus = 2)'
+          Rscript -e 'v <- as.character(packageVersion("mrgsolve")); cat("mrgsolve", v, "\n"); stopifnot(v == Sys.getenv("MRGSOLVE_VERSION"))'
+      - uses: astral-sh/setup-uv@v10.3.3
+        with:
+          working-directory: apps/api
+          enable-cache: true
+      - name: Round-trip test
+        working-directory: apps/api
+        run: |
+          uv sync --frozen
+          uv run pytest -m mrgsolve tests/test_modelkit_export.py -q

@@ -376,6 +376,9 @@ def test_seed_outcomes_are_stable() -> None:
     got = _seed_result()
     assert got["ertugliflozin"] == ("validated", "ParameterSet", True)
     assert got["sunitinib"] == ("validated", "ParameterSet", True)
+    sun = validate("sunitinib", seed_rows(), build_set("sunitinib", seed_rows()))
+    assert "cmax_near_the_2_fold_limit" in sun.reasons
+    assert "cmax_some_points_outside_2_fold" in sun.reasons
     assert got["dolutegravir"] == ("not_validated", "ParameterSet", True)
     for d in ("gabapentin", "telmisartan", "tramadol"):
         assert got[d] == ("not_validated", "NoSet", False)
