@@ -594,6 +594,10 @@
       "forResearchers": {
         "title": "Janus para investigadores",
         "body": "Una página: datos abiertos, API, servidor MCP, CDS Hooks, pipelines, un ejemplo completo y cómo citar."
+      },
+      "modelKit": {
+        "title": "Kit inicial de modelos de fármacos (experimental)",
+        "body": "Conjuntos de parámetros trazables hasta la evidencia para unos pocos fármacos, probados con estudios reservados. Experimental, solo para uso en investigación, no es una calculadora de dosis."
       }
     }
   },
@@ -2865,6 +2869,230 @@
       "body": "Todavía no hay CITATION.cff: el proyecto no ha publicado metadatos de cita. Hasta entonces, cite el conjunto de datos con su cadena de versión y la fecha de la instantánea:",
       "example": "Texto de la cita",
       "pipc": "La propia lista PIPC:"
+    },
+    "modelKit": {
+      "title": "Kit inicial de modelos de fármacos (experimental)",
+      "summary": "Conjuntos de parámetros con su evidencia y un informe de validación.",
+      "body": "Unos pocos fármacos con conjuntos de parámetros cuyo valor se enlaza a una cita de origen, probados con estudios reservados. Experimental: solo para uso en investigación, no para decisiones clínicas, no es una calculadora de dosis. Las rutas de la API están bajo /modelkit.",
+      "link": "Abrir el kit de modelos",
+      "doc": "Documento de la API pública"
+    }
+  },
+  "ModelKit": {
+    "title": "Kit inicial de modelos de fármacos",
+    "experimental": "Experimental",
+    "researchUse": "Solo para uso en investigación. No para decisiones clínicas.",
+    "expertReview": "Aún no se ha realizado una revisión por expertos.",
+    "demo": "Demo: respuestas grabadas el {date}, no se envía ninguna petición.",
+    "loading": "Cargando el kit de modelos…",
+    "intro": "Conjuntos de parámetros trazables hasta la evidencia para unos pocos fármacos, cada uno probado con estudios reservados, con cada valor enlazado a su cita de origen. No es una calculadora de dosis y no da consejo a ninguna persona.",
+    "introValidation": "Un estado describe cómo le fue a un conjunto de parámetros frente a un puñado de estudios reservados. No es una afirmación sobre el medicamento.",
+    "yes": "Sí",
+    "no": "No",
+    "status": {
+      "validated": "Validado",
+      "not_validated": "No validado",
+      "failed": "Fallido"
+    },
+    "list": {
+      "title": "Fármacos",
+      "summary": "{count, plural, one {# fármaco} other {# fármacos}} · experimental",
+      "studies": "{count, plural, one {# estudio} other {# estudios}}",
+      "empty": "No hay fármacos en esta versión."
+    },
+    "system": {
+      "title": "Informe del sistema",
+      "countSentence": "{count, plural, one {# fármaco} other {# fármacos}}: {status}",
+      "studies": "Estudios reservados",
+      "studiesSentence": "{count, plural, one {# estudio reservado independiente} other {# estudios reservados independientes}}",
+      "n": "n = {drugs, plural, one {# fármaco} other {# fármacos}} y {studies, plural, one {# estudio reservado} other {# estudios reservados}}.",
+      "metrics": "Predicho frente a observado, todos los fármacos",
+      "drugs": "Fármacos probados",
+      "within": "Dentro de un factor 2",
+      "ofN": "{k} de {n}",
+      "wilson": "{share}, intervalo de Wilson del 95 % de {low} a {high}",
+      "limits": "Lo que este informe puede y no puede decir",
+      "minDrugs": "Hacen falta al menos {n} fármacos para que las proporciones se lean como algo más que una descripción."
+    },
+    "drug": {
+      "statusTitle": "Estado de validación",
+      "noSet": "Sin conjunto de parámetros",
+      "noSetBody": "La evidencia aún no permite un conjunto de parámetros. Estas son las razones.",
+      "warnings": "Advertencia",
+      "halfLives": "Semivida implícita {implied} h; semivida indicada {stated} h.",
+      "incomplete": "El conjunto está incompleto, así que no se puede exportar. Falta:"
+    },
+    "params": {
+      "title": "Parámetros",
+      "apparent": "Parámetros aparentes (CL/F, V/F): la biodisponibilidad oral va incluida en ellos.",
+      "model": "Modelo: {model}.",
+      "hint": "Active un valor para ver la evidencia que hay detrás: la cita, la fuente y los resultados de los dos lectores.",
+      "name": "Parámetro",
+      "value": "Valor",
+      "class": "Clase de confianza",
+      "sources": "Estudios",
+      "derivation": "Cómo se obtuvo",
+      "noRows": "Sin fila de origen: este valor sale de una regla, no de una cita.",
+      "legend": "Clases de confianza",
+      "classA": "Dos o más estudios confirmados independientes que concuerdan dentro de un factor 2.",
+      "classB": "Un estudio confirmado, o estudios que discrepan.",
+      "classC": "Derivada de otros parámetros o de un intervalo indicado."
+    },
+    "models": {
+      "one_compartment": "un compartimento",
+      "two_compartment": "dos compartimentos"
+    },
+    "val": {
+      "title": "Validación con estudios reservados",
+      "intro": "Los estudios que solo informan Cmax o AUC nunca se usaron para construir un conjunto. Razón = predicho / observado.",
+      "metrics": "Medidas de validación",
+      "metric": "Medida",
+      "auc": "AUC",
+      "cmax": "Cmax",
+      "n": "Observaciones",
+      "nCell": "{points, plural, one {# punto} other {# puntos}}, {studies, plural, one {# estudio} other {# estudios}}",
+      "notTested": "No probado",
+      "ratio": "Razón",
+      "gmfe": "GMFE",
+      "within": "Dentro de un factor 2",
+      "ratioInside": "Razón dentro de un factor 2",
+      "ratioOutside": "Razón fuera de un factor 2",
+      "nearLimit": "{metric}: la razón está a menos del 10 % del límite del factor 2.",
+      "suspect": "Parámetro sospechoso:",
+      "noPoints": "No hay ninguna observación reservada, así que no hay gráfico.",
+      "intervalN": "({n} de al menos {min} estudios reservados independientes.)"
+    },
+    "chart": {
+      "title": "Observado frente a predicho",
+      "alt": "Diagrama de dispersión log-log de {n} observaciones reservadas ({auc} AUC, {cmax} Cmax), predicho frente a observado, con la banda del factor 2; {inside} están dentro de la banda. La tabla de abajo recoge cada número.",
+      "observed": "Observado",
+      "predicted": "Predicho",
+      "hollow": "Hueco: fuera de un factor 2",
+      "band": "Banda del factor 2",
+      "diagonal": "Predicho = observado",
+      "unitNote": "AUC hasta el infinito en ng·h/mL, Cmax en ng/mL. Ambos ejes son logarítmicos.",
+      "tableTitle": "Observaciones reservadas",
+      "study": "Estudio",
+      "dose": "Dosis (mg)"
+    },
+    "ev": {
+      "title": "Evidencia",
+      "used": "Evidencia usada",
+      "excluded": "Evidencia excluida",
+      "table": "Evidencia y por qué no se usó",
+      "excludedHint": "Cada fila está en el almacén de evidencia, pero no se usó para construir ni probar el conjunto, por la razón indicada.",
+      "empty": "No hay filas de evidencia para este fármaco.",
+      "parameter": "Parámetro",
+      "reason": "Razón",
+      "role": "Usada para",
+      "roles": {
+        "building": "Construir el conjunto",
+        "validation": "Probar el conjunto",
+        "excluded": "No usada"
+      },
+      "locator": "Localizador en la fuente",
+      "openSource": "Abrir la fuente (pestaña nueva)",
+      "noLink": "No hay enlace a esta fuente.",
+      "readerA": "Lector A",
+      "readerB": "Lector B",
+      "verdict": {
+        "agree": "concuerda con el valor extraído",
+        "disagree": "no concuerda con el valor extraído"
+      },
+      "confirm": "Confirmación (automatizada)"
+    },
+    "evParam": {
+      "cl": "Aclaramiento (CL)",
+      "cl_f": "Aclaramiento aparente (CL/F)",
+      "vss": "Volumen en estado estacionario (Vss)",
+      "vd": "Volumen de distribución (Vd)",
+      "v_f": "Volumen aparente (V/F)",
+      "t_half": "Semivida",
+      "tmax": "Tiempo de la concentración máxima (Tmax)",
+      "f": "Biodisponibilidad (F)",
+      "cmax": "Cmax",
+      "auc_inf": "AUC hasta el infinito",
+      "auc_last": "AUC hasta la última muestra",
+      "auc_tau": "AUC en un intervalo de dosificación",
+      "cl_per_kg": "Aclaramiento por kg",
+      "vd_per_kg": "Volumen por kg"
+    },
+    "param": {
+      "cl": "CL (intravenoso)",
+      "clApparent": "CL/F (aparente)",
+      "v": "V (intravenoso)",
+      "vApparent": "V/F (aparente)",
+      "f": "F (biodisponibilidad oral)",
+      "fApparent": "F (incluida en CL/F y V/F)",
+      "ka": "ka (derivada del tiempo de la concentración máxima)"
+    },
+    "dl": {
+      "title": "Descargar",
+      "body": "El conjunto de parámetros como archivo de modelo, para investigación.",
+      "janus": "Archivo del motor Janus (zip)",
+      "mrgsolve": "Modelo mrgsolve (zip)",
+      "demo": "Las descargas necesitan el servicio en vivo. En la demo están desactivadas.",
+      "contents": "Cada zip contiene el archivo del modelo, la procedencia de cada valor, referencias y licencias. Experimental; solo para uso en investigación."
+    },
+    "errors": {
+      "unavailable": "El kit de modelos no está disponible ahora. Inténtelo más tarde.",
+      "unknown": "Este fármaco no está en el kit de modelos.",
+      "invalidKey": "Esta dirección no nombra ningún fármaco del kit de modelos. Elija uno de la lista."
+    },
+    "reasons": {
+      "not_confirmed": "Los dos lectores automatizados no concordaron ambos con el valor extraído.",
+      "analyte_not_parent": "El valor no es del fármaco original.",
+      "coadministered": "El grupo recibió otro fármaco activo junto con él.",
+      "fixed_dose_combination": "El producto es una combinación de dosis fija.",
+      "formulation_not_immediate_release": "La formulación no es de liberación inmediata ni una solución.",
+      "bound_not_a_value": "La fuente da solo un límite (por ejemplo «más de»), no un valor.",
+      "per_kg_not_converted": "El valor es por kilogramo; no hay peso corporal, así que no se convierte.",
+      "held_out_study": "Estudio reservado: sus observaciones solo prueban un conjunto, nunca lo construyen.",
+      "observation_in_building_study": "Observación de un estudio que también informa parámetros de construcción; no probada.",
+      "not_needed_preferred_basis": "No hacía falta: se usó una base preferida o un valor agrupado.",
+      "auc_to_last_sampling_time_not_comparable": "AUC hasta el último tiempo de muestreo: ese tiempo no está en la evidencia.",
+      "not_an_observation": "No es una observación de Cmax ni de AUC.",
+      "needs_oral_dose": "Una prueba necesita una dosis oral.",
+      "auc_tau_needs_multiple_dose_interval": "El AUC en un intervalo de dosificación necesita un grupo de dosis múltiples con su intervalo.",
+      "steady_state_cmax_not_modelled": "La Cmax en estado estacionario no se modela en esta etapa.",
+      "auc_inf_needs_single_dose": "El AUC hasta el infinito necesita un grupo de dosis única.",
+      "set_has_no_absorption_rate": "El conjunto no tiene velocidad de absorción, así que no puede predecir la Cmax.",
+      "set_cannot_predict_metric": "El conjunto no puede predecir esta medida.",
+      "no_parameter_set": "No hay un conjunto de parámetros que probar.",
+      "no_independent_observation": "Sin observación independiente: ningún estudio reservado informa Cmax o AUC.",
+      "auc_not_tested": "No se probó el AUC.",
+      "cmax_not_tested": "No se probó la Cmax.",
+      "tested_ratio_outside_2_fold": "Una razón probada de predicho a observado está fuera de un factor 2.",
+      "auc_and_cmax_within_2_fold": "AUC y Cmax probadas ambas y dentro de un factor 2.",
+      "auc_near_the_2_fold_limit": "La razón del AUC está a menos del 10 % del límite del factor 2.",
+      "cmax_near_the_2_fold_limit": "La razón de la Cmax está a menos del 10 % del límite del factor 2.",
+      "auc_some_points_outside_2_fold": "La razón del AUC a nivel del fármaco está dentro de un factor 2, pero algunas observaciones individuales quedan fuera.",
+      "cmax_some_points_outside_2_fold": "La razón de la Cmax a nivel del fármaco está dentro de un factor 2, pero algunas observaciones individuales quedan fuera.",
+      "no_confirmed_clearance": "Sin aclaramiento confirmado (CL intravenoso o CL/F oral).",
+      "no_confirmed_volume": "Sin volumen confirmado (Vss o Vd, o V/F).",
+      "iv_evidence_incomplete": "La evidencia intravenosa está incompleta: hacen falta el aclaramiento y el volumen.",
+      "iv_without_bioavailability": "Hay aclaramiento y volumen intravenosos, pero no biodisponibilidad oral confirmada.",
+      "no_volume_and_no_half_life": "Sin volumen (V/F) y sin semivida para derivarlo.",
+      "missing_absorption_no_peak_time": "Falta la velocidad de absorción: no hay tiempo de concentración máxima confirmado.",
+      "missing_absorption_no_solution": "Falta la velocidad de absorción: el tiempo del máximo está en o más allá de lo que permite la velocidad de eliminación.",
+      "bioavailability_capped": "Una biodisponibilidad superior a 1 se limitó a 1.",
+      "half_life_inconsistent": "La semivida implícita en CL y V difiere de la indicada en más de 1,5 veces; la cola de la curva no está respaldada.",
+      "studies_disagree": "Los estudios discrepan en más de un factor 2.",
+      "healthy_adult_preferred": "Se prefirieron los valores de adultos sanos.",
+      "no_central_volume_evidence": "Sin evidencia del volumen central (sin fase de distribución): un compartimento.",
+      "two_volumes_differ": "Los volúmenes central y en estado estacionario difieren al menos un 25 %: dos compartimentos.",
+      "two_volumes_agree": "Los volúmenes central y en estado estacionario concuerdan dentro del 25 %: un compartimento.",
+      "v_from_clf_half_life": "V/F = CL/F × semivida / ln 2.",
+      "ka_from_tmax": "ka resuelve tmax = ln(ka/k) / (ka − k) con k = CL / V.",
+      "f_fixed_apparent": "Fijada en 1: los parámetros aparentes ya contienen la biodisponibilidad.",
+      "clearance_or_bioavailability": "Aclaramiento (CL o CL/F) o biodisponibilidad: el AUC está fuera de un factor 2.",
+      "absorption_rate_or_volume": "Velocidad de absorción (derivada del tiempo de la concentración máxima) o volumen: la Cmax está fuera de un factor 2.",
+      "n_very_small": "n es muy pequeño: las proporciones y los errores de factor describen estos fármacos, no los fármacos en general.",
+      "two_automated_passes": "Cada observación reservada se leyó automáticamente y se confirmó con dos pasadas automatizadas.",
+      "expert_review_pending": "Aún no se ha realizado una revisión por expertos.",
+      "interval_n_too_small": "No se muestra intervalo: n es demasiado pequeño (menos de 20 estudios reservados independientes).",
+      "interval_system_level_only": "Los intervalos se dan solo a nivel de sistema, no por fármaco.",
+      "not_used": "No usada; no se registra una razón más específica."
     }
   }
 }

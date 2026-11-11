@@ -594,6 +594,10 @@
       "forResearchers": {
         "title": "Janus für Forschende",
         "body": "Eine Seite: offene Daten, API, MCP-Server, CDS Hooks, Pipelines, ein durchgerechnetes Beispiel und Zitierhinweis."
+      },
+      "modelKit": {
+        "title": "Starterkit für Arzneimittelmodelle (experimentell)",
+        "body": "Nachvollziehbare Parametersätze für einige Arzneimittel, an zurückgehaltenen Studien geprüft. Experimentell, nur zu Forschungszwecken, kein Dosisrechner."
       }
     }
   },
@@ -2865,6 +2869,230 @@
       "body": "Es gibt noch keine CITATION.cff: Das Projekt hat keine Zitationsangaben veröffentlicht. Bis dahin den Datensatz mit Versionskennung und Stichtag zitieren:",
       "example": "Zitiertext",
       "pipc": "Die PIPC-Liste selbst:"
+    },
+    "modelKit": {
+      "title": "Starterkit für Arzneimittelmodelle (experimentell)",
+      "summary": "Parametersätze mit ihrer Evidenz und ein Validierungsbericht.",
+      "body": "Einige Arzneimittel mit Parametersätzen, deren Werte jeweils mit einem Quellzitat verknüpft sind, geprüft an zurückgehaltenen Studien. Experimentell: nur zu Forschungszwecken, nicht für klinische Entscheidungen, kein Dosisrechner. Die API-Routen liegen unter /modelkit.",
+      "link": "Modell-Kit öffnen",
+      "doc": "Dokument zur öffentlichen API"
+    }
+  },
+  "ModelKit": {
+    "title": "Starterkit für Arzneimittelmodelle",
+    "experimental": "Experimentell",
+    "researchUse": "Nur zu Forschungszwecken. Nicht für klinische Entscheidungen.",
+    "expertReview": "Eine Prüfung durch Fachleute hat noch nicht stattgefunden.",
+    "demo": "Demo: Antworten aufgezeichnet am {date}, es wird keine Anfrage gesendet.",
+    "loading": "Das Modell-Kit wird geladen…",
+    "intro": "Nachvollziehbare Parametersätze für einige Arzneimittel, jeweils an zurückgehaltenen Studien geprüft; jeder Wert ist mit seinem Quellzitat verknüpft. Das ist kein Dosisrechner und gibt keinen Rat für eine einzelne Person.",
+    "introValidation": "Ein Status beschreibt, wie ein Parametersatz bei einer Handvoll zurückgehaltener Studien abgeschnitten hat. Er ist keine Aussage über das Arzneimittel.",
+    "yes": "Ja",
+    "no": "Nein",
+    "status": {
+      "validated": "Validiert",
+      "not_validated": "Nicht validiert",
+      "failed": "Fehlgeschlagen"
+    },
+    "list": {
+      "title": "Arzneimittel",
+      "summary": "{count, plural, one {# Arzneimittel} other {# Arzneimittel}} · experimentell",
+      "studies": "{count, plural, one {# Studie} other {# Studien}}",
+      "empty": "Keine Arzneimittel in dieser Version."
+    },
+    "system": {
+      "title": "Systembericht",
+      "countSentence": "{count, plural, one {# Arzneimittel} other {# Arzneimittel}}: {status}",
+      "studies": "Zurückgehaltene Studien",
+      "studiesSentence": "{count, plural, one {# unabhängige zurückgehaltene Studie} other {# unabhängige zurückgehaltene Studien}}",
+      "n": "n = {drugs, plural, one {# Arzneimittel} other {# Arzneimittel}} und {studies, plural, one {# zurückgehaltene Studie} other {# zurückgehaltene Studien}}.",
+      "metrics": "Vorhergesagt gegen beobachtet, alle Arzneimittel",
+      "drugs": "Geprüfte Arzneimittel",
+      "within": "Innerhalb des Faktors 2",
+      "ofN": "{k} von {n}",
+      "wilson": "{share}, 95-%-Wilson-Intervall {low} bis {high}",
+      "limits": "Was dieser Bericht aussagen kann und was nicht",
+      "minDrugs": "Es braucht mindestens {n} Arzneimittel, bevor die Anteile mehr als eine Beschreibung sind."
+    },
+    "drug": {
+      "statusTitle": "Validierungsstatus",
+      "noSet": "Kein Parametersatz",
+      "noSetBody": "Die Evidenz erlaubt noch keinen Parametersatz. Das sind die Gründe.",
+      "warnings": "Warnung",
+      "halfLives": "Abgeleitete Halbwertszeit {implied} h; angegebene Halbwertszeit {stated} h.",
+      "incomplete": "Der Satz ist unvollständig und kann nicht exportiert werden. Es fehlt:"
+    },
+    "params": {
+      "title": "Parameter",
+      "apparent": "Scheinbare Parameter (CL/F, V/F): die orale Bioverfügbarkeit steckt darin.",
+      "model": "Modell: {model}.",
+      "hint": "Aktivieren Sie einen Wert, um die Evidenz dahinter zu sehen: das Zitat, die Quelle und beide Leseergebnisse.",
+      "name": "Parameter",
+      "value": "Wert",
+      "class": "Vertrauensklasse",
+      "sources": "Studien",
+      "derivation": "Wie abgeleitet",
+      "noRows": "Keine Quellzeile: Dieser Wert folgt aus einer Regel, nicht aus einem Zitat.",
+      "legend": "Vertrauensklassen",
+      "classA": "Zwei oder mehr unabhängige bestätigte Studien, die innerhalb des Faktors 2 übereinstimmen.",
+      "classB": "Eine bestätigte Studie oder Studien, die sich widersprechen.",
+      "classC": "Aus anderen Parametern oder aus einem angegebenen Bereich abgeleitet."
+    },
+    "models": {
+      "one_compartment": "ein Kompartiment",
+      "two_compartment": "zwei Kompartimente"
+    },
+    "val": {
+      "title": "Validierung an zurückgehaltenen Studien",
+      "intro": "Studien, die nur Cmax oder AUC berichten, wurden nie zum Aufbau eines Satzes verwendet. Verhältnis = vorhergesagt / beobachtet.",
+      "metrics": "Validierungsmaße",
+      "metric": "Maß",
+      "auc": "AUC",
+      "cmax": "Cmax",
+      "n": "Beobachtungen",
+      "nCell": "{points, plural, one {# Punkt} other {# Punkte}}, {studies, plural, one {# Studie} other {# Studien}}",
+      "notTested": "Nicht geprüft",
+      "ratio": "Verhältnis",
+      "gmfe": "GMFE",
+      "within": "Innerhalb des Faktors 2",
+      "ratioInside": "Verhältnis innerhalb des Faktors 2",
+      "ratioOutside": "Verhältnis außerhalb des Faktors 2",
+      "nearLimit": "{metric}: Das Verhältnis liegt innerhalb von 10 % der Grenze des Faktors 2.",
+      "suspect": "Verdächtiger Parameter:",
+      "noPoints": "Es gibt keine zurückgehaltene Beobachtung, daher kein Diagramm.",
+      "intervalN": "({n} von mindestens {min} unabhängigen zurückgehaltenen Studien.)"
+    },
+    "chart": {
+      "title": "Beobachtet gegen vorhergesagt",
+      "alt": "Doppelt logarithmisches Streudiagramm von {n} zurückgehaltenen Beobachtungen ({auc} AUC, {cmax} Cmax), vorhergesagt gegen beobachtet, mit dem Band des Faktors 2; {inside} liegen im Band. Die Tabelle darunter nennt jede Zahl.",
+      "observed": "Beobachtet",
+      "predicted": "Vorhergesagt",
+      "hollow": "Hohl: außerhalb des Faktors 2",
+      "band": "Band des Faktors 2",
+      "diagonal": "Vorhergesagt = beobachtet",
+      "unitNote": "AUC bis unendlich in ng·h/mL, Cmax in ng/mL. Beide Achsen sind logarithmisch.",
+      "tableTitle": "Zurückgehaltene Beobachtungen",
+      "study": "Studie",
+      "dose": "Dosis (mg)"
+    },
+    "ev": {
+      "title": "Evidenz",
+      "used": "Verwendete Evidenz",
+      "excluded": "Ausgeschlossene Evidenz",
+      "table": "Evidenz und warum sie nicht verwendet wurde",
+      "excludedHint": "Jede Zeile liegt im Evidenzspeicher, wurde aber aus dem angegebenen Grund weder zum Aufbau noch zum Test des Satzes verwendet.",
+      "empty": "Keine Evidenzzeilen für dieses Arzneimittel.",
+      "parameter": "Parameter",
+      "reason": "Grund",
+      "role": "Verwendet für",
+      "roles": {
+        "building": "Aufbau des Satzes",
+        "validation": "Test des Satzes",
+        "excluded": "Nicht verwendet"
+      },
+      "locator": "Fundstelle in der Quelle",
+      "openSource": "Quelle öffnen (neuer Tab)",
+      "noLink": "Kein Link zu dieser Quelle.",
+      "readerA": "Leser A",
+      "readerB": "Leser B",
+      "verdict": {
+        "agree": "stimmt mit dem extrahierten Wert überein",
+        "disagree": "stimmt nicht mit dem extrahierten Wert überein"
+      },
+      "confirm": "Bestätigung (automatisiert)"
+    },
+    "evParam": {
+      "cl": "Clearance (CL)",
+      "cl_f": "Scheinbare Clearance (CL/F)",
+      "vss": "Verteilungsvolumen im Steady State (Vss)",
+      "vd": "Verteilungsvolumen (Vd)",
+      "v_f": "Scheinbares Volumen (V/F)",
+      "t_half": "Halbwertszeit",
+      "tmax": "Zeit der Spitzenkonzentration (Tmax)",
+      "f": "Bioverfügbarkeit (F)",
+      "cmax": "Cmax",
+      "auc_inf": "AUC bis unendlich",
+      "auc_last": "AUC bis zur letzten Probe",
+      "auc_tau": "AUC über ein Dosisintervall",
+      "cl_per_kg": "Clearance pro kg",
+      "vd_per_kg": "Volumen pro kg"
+    },
+    "param": {
+      "cl": "CL (intravenös)",
+      "clApparent": "CL/F (scheinbar)",
+      "v": "V (intravenös)",
+      "vApparent": "V/F (scheinbar)",
+      "f": "F (orale Bioverfügbarkeit)",
+      "fApparent": "F (in CL/F und V/F enthalten)",
+      "ka": "ka (aus der Zeit der Spitzenkonzentration abgeleitet)"
+    },
+    "dl": {
+      "title": "Herunterladen",
+      "body": "Der Parametersatz als Modelldatei, für die Forschung.",
+      "janus": "Janus-Engine-Datei (zip)",
+      "mrgsolve": "mrgsolve-Modell (zip)",
+      "demo": "Downloads brauchen den Live-Dienst. In der Demo sind sie abgeschaltet.",
+      "contents": "Jede zip enthält die Modelldatei, die Herkunft jedes Werts, Literaturangaben und Lizenzen. Experimentell; nur zu Forschungszwecken."
+    },
+    "errors": {
+      "unavailable": "Das Modell-Kit ist gerade nicht verfügbar. Versuchen Sie es später erneut.",
+      "unknown": "Dieses Arzneimittel ist nicht im Modell-Kit.",
+      "invalidKey": "Diese Adresse nennt kein Arzneimittel des Modell-Kits. Wählen Sie eines aus der Liste."
+    },
+    "reasons": {
+      "not_confirmed": "Die beiden automatisierten Leser stimmten nicht beide mit dem extrahierten Wert überein.",
+      "analyte_not_parent": "Der Wert gilt nicht für den Ausgangswirkstoff.",
+      "coadministered": "Der Arm erhielt zusätzlich einen anderen Wirkstoff.",
+      "fixed_dose_combination": "Das Produkt ist eine Fixdosis-Kombination.",
+      "formulation_not_immediate_release": "Die Darreichungsform ist weder schnell freisetzend noch eine Lösung.",
+      "bound_not_a_value": "Die Quelle nennt nur eine Grenze (zum Beispiel „mehr als“), keinen Wert.",
+      "per_kg_not_converted": "Der Wert gilt pro Kilogramm; es gibt kein Körpergewicht, daher wird nicht umgerechnet.",
+      "held_out_study": "Zurückgehaltene Studie: Ihre Beobachtungen testen einen Satz nur, sie bauen nie einen auf.",
+      "observation_in_building_study": "Beobachtung in einer Studie, die auch Aufbauparameter berichtet; nicht getestet.",
+      "not_needed_preferred_basis": "Nicht nötig: Eine bevorzugte Grundlage oder ein gepoolter Wert wurde verwendet.",
+      "auc_to_last_sampling_time_not_comparable": "AUC bis zur letzten Probenzeit: Diese Zeit steht nicht in der Evidenz.",
+      "not_an_observation": "Keine Beobachtung von Cmax oder AUC.",
+      "needs_oral_dose": "Ein Test braucht eine orale Dosis.",
+      "auc_tau_needs_multiple_dose_interval": "AUC über ein Dosisintervall braucht einen Mehrfachdosis-Arm mit seinem Intervall.",
+      "steady_state_cmax_not_modelled": "Cmax im Steady State wird in diesem Meilenstein nicht modelliert.",
+      "auc_inf_needs_single_dose": "AUC bis unendlich braucht einen Einzeldosis-Arm.",
+      "set_has_no_absorption_rate": "Der Satz hat keine Absorptionsrate und kann Cmax daher nicht vorhersagen.",
+      "set_cannot_predict_metric": "Der Satz kann dieses Maß nicht vorhersagen.",
+      "no_parameter_set": "Es gibt keinen Parametersatz zum Testen.",
+      "no_independent_observation": "Keine unabhängige Beobachtung: Keine zurückgehaltene Studie berichtet Cmax oder AUC.",
+      "auc_not_tested": "AUC wurde nicht geprüft.",
+      "cmax_not_tested": "Cmax wurde nicht geprüft.",
+      "tested_ratio_outside_2_fold": "Ein geprüftes Verhältnis von vorhergesagt zu beobachtet liegt außerhalb des Faktors 2.",
+      "auc_and_cmax_within_2_fold": "AUC und Cmax wurden beide geprüft und liegen innerhalb des Faktors 2.",
+      "auc_near_the_2_fold_limit": "Das AUC-Verhältnis liegt innerhalb von 10 % der Grenze des Faktors 2.",
+      "cmax_near_the_2_fold_limit": "Das Cmax-Verhältnis liegt innerhalb von 10 % der Grenze des Faktors 2.",
+      "auc_some_points_outside_2_fold": "Das AUC-Verhältnis auf Arzneimittelebene liegt innerhalb des Faktors 2, einzelne Beobachtungen liegen aber außerhalb.",
+      "cmax_some_points_outside_2_fold": "Das Cmax-Verhältnis auf Arzneimittelebene liegt innerhalb des Faktors 2, einzelne Beobachtungen liegen aber außerhalb.",
+      "no_confirmed_clearance": "Keine bestätigte Clearance (intravenöse CL oder orale CL/F).",
+      "no_confirmed_volume": "Kein bestätigtes Volumen (Vss oder Vd, oder V/F).",
+      "iv_evidence_incomplete": "Die intravenöse Evidenz ist unvollständig: Clearance und Volumen werden beide gebraucht.",
+      "iv_without_bioavailability": "Intravenöse Clearance und Volumen liegen vor, aber keine bestätigte orale Bioverfügbarkeit.",
+      "no_volume_and_no_half_life": "Kein Volumen (V/F) und keine Halbwertszeit, um es abzuleiten.",
+      "missing_absorption_no_peak_time": "Absorptionsrate fehlt: keine bestätigte Zeit der Spitzenkonzentration.",
+      "missing_absorption_no_solution": "Absorptionsrate fehlt: Die Spitzenzeit liegt bei oder jenseits dessen, was die Eliminationsrate zulässt.",
+      "bioavailability_capped": "Eine Bioverfügbarkeit über 1 wurde auf 1 begrenzt.",
+      "half_life_inconsistent": "Die aus CL und V abgeleitete Halbwertszeit weicht um mehr als das 1,5-Fache von der angegebenen ab; der Kurvenausläufer ist nicht belegt.",
+      "studies_disagree": "Die Studien weichen um mehr als den Faktor 2 voneinander ab.",
+      "healthy_adult_preferred": "Werte gesunder Erwachsener wurden bevorzugt.",
+      "no_central_volume_evidence": "Keine Evidenz für das zentrale Volumen (keine Verteilungsphase): ein Kompartiment.",
+      "two_volumes_differ": "Zentrales Volumen und Volumen im Steady State unterscheiden sich um mindestens 25 %: zwei Kompartimente.",
+      "two_volumes_agree": "Zentrales Volumen und Volumen im Steady State stimmen innerhalb von 25 % überein: ein Kompartiment.",
+      "v_from_clf_half_life": "V/F = CL/F × Halbwertszeit / ln 2.",
+      "ka_from_tmax": "ka löst tmax = ln(ka/k) / (ka − k) mit k = CL / V.",
+      "f_fixed_apparent": "Auf 1 festgelegt: Scheinbare Parameter enthalten die Bioverfügbarkeit bereits.",
+      "clearance_or_bioavailability": "Clearance (CL oder CL/F) oder Bioverfügbarkeit: AUC liegt außerhalb des Faktors 2.",
+      "absorption_rate_or_volume": "Absorptionsrate (aus der Zeit der Spitzenkonzentration abgeleitet) oder Volumen: Cmax liegt außerhalb des Faktors 2.",
+      "n_very_small": "n ist sehr klein: Anteile und Faktorabweichungen beschreiben diese Arzneimittel, nicht Arzneimittel im Allgemeinen.",
+      "two_automated_passes": "Jede zurückgehaltene Beobachtung wurde automatisch gelesen und durch zwei automatisierte Durchgänge bestätigt.",
+      "expert_review_pending": "Eine Prüfung durch Fachleute hat noch nicht stattgefunden.",
+      "interval_n_too_small": "Es wird kein Intervall gezeigt: n ist zu klein (weniger als 20 unabhängige zurückgehaltene Studien).",
+      "interval_system_level_only": "Intervalle gibt es nur auf Systemebene, nicht je Arzneimittel.",
+      "not_used": "Nicht verwendet; kein genauerer Grund vermerkt."
     }
   }
 }

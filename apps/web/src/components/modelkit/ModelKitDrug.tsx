@@ -551,7 +551,9 @@ function Validation({ out }: { out: DrugOut }) {
             role="note"
             data-testid="mk-near-limit"
           >
-            {t("ModelKit.val.nearLimit", { metric: t(`ModelKit.val.${m.name}`) })}
+            {t("ModelKit.val.nearLimit", {
+              metric: t(`ModelKit.val.${m.name}`),
+            })}
           </p>
         ))}
       {v.suspect.length ? (
@@ -723,13 +725,7 @@ function EvidenceTable({
   );
 }
 
-function Downloads({
-  out,
-  client,
-}: {
-  out: DrugOut;
-  client: ModelKitClient;
-}) {
+function Downloads({ out, client }: { out: DrugOut; client: ModelKitClient }) {
   const t = useT();
   const key = out.summary.key;
   const targets = TARGETS.filter((x) => out.targets.includes(x));

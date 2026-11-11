@@ -8,12 +8,7 @@
 import { useLocale } from "next-intl";
 import { useMemo } from "react";
 
-import {
-  bandPolygon,
-  logAxis,
-  logPos,
-  type PointOut,
-} from "@/modelkit/model";
+import { bandPolygon, logAxis, logPos, type PointOut } from "@/modelkit/model";
 import { useT } from "@/theme/words";
 
 const SIZE = 300;
@@ -116,13 +111,7 @@ export function ValidationChart({ points }: { points: readonly PointOut[] }) {
             strokeWidth: hollow ? 2.5 : 1,
           };
           return p.metric === "auc" ? (
-            <circle
-              key={p.evidence_id}
-              cx={cx}
-              cy={cy}
-              r={6}
-              {...common}
-            />
+            <circle key={p.evidence_id} cx={cx} cy={cy} r={6} {...common} />
           ) : (
             <rect
               key={p.evidence_id}
@@ -205,7 +194,9 @@ export function ValidationChart({ points }: { points: readonly PointOut[] }) {
         aria-label={t("ModelKit.chart.tableTitle")}
       >
         <table className="tm-table nowrap" data-testid="mk-chart-table">
-          <caption className="sr-only">{t("ModelKit.chart.tableTitle")}</caption>
+          <caption className="sr-only">
+            {t("ModelKit.chart.tableTitle")}
+          </caption>
           <thead>
             <tr>
               <th scope="col">{t("ModelKit.val.metric")}</th>

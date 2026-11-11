@@ -98,10 +98,7 @@ export function ReasonList({
   testId?: string;
 }) {
   return (
-    <ul
-      className="m-0 flex list-disc flex-col gap-1 ps-5"
-      data-testid={testId}
-    >
+    <ul className="m-0 flex list-disc flex-col gap-1 ps-5" data-testid={testId}>
       {codes.map((c) => (
         <li key={c} className="break-words">
           <Reason code={c} />

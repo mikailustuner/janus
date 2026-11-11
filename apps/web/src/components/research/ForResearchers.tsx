@@ -21,6 +21,7 @@ import {
   REPO,
   SITE,
 } from "@/research/forResearchers";
+import { Link } from "@/i18n/navigation";
 import { useT } from "@/theme/words";
 
 const BLOB = `${REPO}/blob/main`;
@@ -216,6 +217,23 @@ export function ForResearchers() {
             <DocLink href={`${BLOB}/NOTICE`}>NOTICE</DocLink>
             <DocLink href={`${BLOB}/pipelines/README.md`}>
               {t("ForResearchers.pipelines.doc")}
+            </DocLink>
+          </SummaryCard>
+          <SummaryCard
+            id="fr-modelkit"
+            title={t("ForResearchers.modelKit.title")}
+            summary={t("ForResearchers.modelKit.summary")}
+            data-testid="fr-modelkit"
+          >
+            <p>{t("ForResearchers.modelKit.body")}</p>
+            <Link
+              className="inline-flex min-h-11 items-center self-start font-bold"
+              href="/research/model-kit"
+            >
+              {t("ForResearchers.modelKit.link")}
+            </Link>
+            <DocLink href={`${BLOB}/docs/open-api.md`}>
+              {t("ForResearchers.modelKit.doc")}
             </DocLink>
           </SummaryCard>
           <SummaryCard

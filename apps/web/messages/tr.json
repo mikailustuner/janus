@@ -594,6 +594,10 @@
       "forResearchers": {
         "title": "Araştırmacılar için Janus",
         "body": "Tek sayfa: açık veri, API, MCP sunucusu, CDS Hooks, işlem hatları, çalışan bir örnek ve nasıl atıf yapılır."
+      },
+      "modelKit": {
+        "title": "İlaç modeli başlangıç seti (deneysel)",
+        "body": "Birkaç ilaç için kanıta dayalı izlenebilir parametre kümeleri, ayrı tutulan çalışmalara karşı sınanmış. Deneysel, yalnızca araştırma amaçlı, doz hesaplayıcısı değil."
       }
     }
   },
@@ -2865,6 +2869,230 @@
       "body": "Henüz CITATION.cff yok: proje atıf bilgilerini yayımlamadı. O zamana kadar veri kümesine sürüm dizesi ve anlık görüntü tarihiyle atıf yapın:",
       "example": "Atıf metni",
       "pipc": "PIPC listesinin kendisi:"
+    },
+    "modelKit": {
+      "title": "İlaç modeli başlangıç seti (deneysel)",
+      "summary": "Kanıtlarıyla parametre kümeleri ve bir doğrulama raporu.",
+      "body": "Her değeri bir kaynak alıntısına bağlı parametre kümeleri olan birkaç ilaç, ayrı tutulan çalışmalara karşı sınanmış. Deneysel: yalnızca araştırma amaçlı, klinik kararlar için değil, doz hesaplayıcısı değil. API yolları /modelkit altındadır.",
+      "link": "Model setini aç",
+      "doc": "Herkese açık API belgesi"
+    }
+  },
+  "ModelKit": {
+    "title": "İlaç modeli başlangıç seti",
+    "experimental": "Deneysel",
+    "researchUse": "Yalnızca araştırma amaçlıdır. Klinik kararlar için kullanılamaz.",
+    "expertReview": "Uzman incelemesi henüz yapılmadı.",
+    "demo": "Demo: yanıtlar {date} tarihinde kaydedildi, hiçbir istek gönderilmez.",
+    "loading": "Model seti yükleniyor…",
+    "intro": "Birkaç ilaç için kanıta dayalı izlenebilir parametre kümeleri; her biri ayrı tutulan çalışmalara karşı sınanır ve her değer kaynak alıntısına bağlıdır. Bu bir doz hesaplayıcısı değildir ve hiçbir kişi için tavsiye vermez.",
+    "introValidation": "Bir durum, parametre kümesinin ayrı tutulan birkaç çalışmaya karşı nasıl performans gösterdiğini anlatır. İlaç hakkında bir yargı değildir.",
+    "yes": "Evet",
+    "no": "Hayır",
+    "status": {
+      "validated": "Doğrulandı",
+      "not_validated": "Doğrulanmadı",
+      "failed": "Başarısız"
+    },
+    "list": {
+      "title": "İlaçlar",
+      "summary": "{count, plural, one {# ilaç} other {# ilaç}} · deneysel",
+      "studies": "{count, plural, one {# çalışma} other {# çalışma}}",
+      "empty": "Bu sürümde ilaç yok."
+    },
+    "system": {
+      "title": "Sistem raporu",
+      "countSentence": "{count, plural, one {# ilaç} other {# ilaç}}: {status}",
+      "studies": "Ayrı tutulan çalışmalar",
+      "studiesSentence": "{count, plural, one {# bağımsız ayrı tutulan çalışma} other {# bağımsız ayrı tutulan çalışma}}",
+      "n": "n = {drugs, plural, one {# ilaç} other {# ilaç}} ve {studies, plural, one {# ayrı tutulan çalışma} other {# ayrı tutulan çalışma}}.",
+      "metrics": "Öngörülen ile gözlenen, tüm ilaçlar",
+      "drugs": "Sınanan ilaçlar",
+      "within": "2 kat içinde",
+      "ofN": "{n} içinde {k}",
+      "wilson": "{share}, %95 Wilson aralığı {low} ile {high}",
+      "limits": "Bu rapor neyi söyleyebilir, neyi söyleyemez",
+      "minDrugs": "Oranların bir betimlemeden fazlası olarak okunabilmesi için en az {n} ilaç gerekir."
+    },
+    "drug": {
+      "statusTitle": "Doğrulama durumu",
+      "noSet": "Parametre kümesi yok",
+      "noSetBody": "Kanıtlar henüz bir parametre kümesine izin vermiyor. Nedenler şunlar.",
+      "warnings": "Uyarı",
+      "halfLives": "Çıkarılan yarı ömür {implied} sa; belirtilen yarı ömür {stated} sa.",
+      "incomplete": "Küme eksik olduğundan dışa aktarılamaz. Eksik olanlar:"
+    },
+    "params": {
+      "title": "Parametreler",
+      "apparent": "Görünür parametreler (CL/F, V/F): oral biyoyararlanım bunların içindedir.",
+      "model": "Model: {model}.",
+      "hint": "Bir değerin arkasındaki kanıtı görmek için değeri etkinleştirin: alıntı, kaynak ve iki okuyucunun sonucu.",
+      "name": "Parametre",
+      "value": "Değer",
+      "class": "Güven sınıfı",
+      "sources": "Çalışmalar",
+      "derivation": "Nasıl türetildi",
+      "noRows": "Kaynak satırı yok: bu değer bir alıntıdan değil, bir kuraldan çıkar.",
+      "legend": "Güven sınıfları",
+      "classA": "2 kat içinde uyuşan, iki veya daha fazla bağımsız onaylı çalışma.",
+      "classB": "Tek bir onaylı çalışma ya da birbirini tutmayan çalışmalar.",
+      "classC": "Diğer parametrelerden veya belirtilen bir aralıktan türetilmiş."
+    },
+    "models": {
+      "one_compartment": "tek kompartman",
+      "two_compartment": "iki kompartman"
+    },
+    "val": {
+      "title": "Ayrı tutulan çalışmalara karşı doğrulama",
+      "intro": "Yalnızca Cmax veya EAA bildiren çalışmalar bir küme oluşturmak için hiç kullanılmadı. Oran = öngörülen / gözlenen.",
+      "metrics": "Doğrulama ölçütleri",
+      "metric": "Ölçüt",
+      "auc": "EAA",
+      "cmax": "Cmax",
+      "n": "Gözlemler",
+      "nCell": "{points, plural, one {# nokta} other {# nokta}}, {studies, plural, one {# çalışma} other {# çalışma}}",
+      "notTested": "Sınanmadı",
+      "ratio": "Oran",
+      "gmfe": "GMFE",
+      "within": "2 kat içinde",
+      "ratioInside": "Oran 2 kat içinde",
+      "ratioOutside": "Oran 2 katın dışında",
+      "nearLimit": "{metric}: oran 2 kat sınırının %10 yakınında.",
+      "suspect": "Şüpheli parametre:",
+      "noPoints": "Ayrı tutulan gözlem yok, bu yüzden grafik yok.",
+      "intervalN": "(En az {min} bağımsız ayrı tutulan çalışmanın {n} tanesi.)"
+    },
+    "chart": {
+      "title": "Gözlenen ile öngörülen",
+      "alt": "Ayrı tutulan {n} gözlemin ({auc} EAA, {cmax} Cmax) öngörülen ve gözlenen değerlerinin log-log saçılım grafiği, 2 kat bandıyla; {inside} tanesi bandın içinde. Aşağıdaki tablo her sayıyı listeler.",
+      "observed": "Gözlenen",
+      "predicted": "Öngörülen",
+      "hollow": "İçi boş: 2 katın dışında",
+      "band": "2 kat bandı",
+      "diagonal": "Öngörülen = gözlenen",
+      "unitNote": "Sonsuza kadar EAA ng·sa/mL, Cmax ng/mL cinsinden. İki eksen de logaritmiktir.",
+      "tableTitle": "Ayrı tutulan gözlemler",
+      "study": "Çalışma",
+      "dose": "Doz (mg)"
+    },
+    "ev": {
+      "title": "Kanıt",
+      "used": "Kullanılan kanıt",
+      "excluded": "Dışarıda bırakılan kanıt",
+      "table": "Kanıt ve neden kullanılmadığı",
+      "excludedHint": "Her satır kanıt deposunda durur ama gösterilen nedenle kümeyi oluşturmak veya sınamak için kullanılmadı.",
+      "empty": "Bu ilaç için kanıt satırı yok.",
+      "parameter": "Parametre",
+      "reason": "Neden",
+      "role": "Kullanım",
+      "roles": {
+        "building": "Kümeyi oluşturma",
+        "validation": "Kümeyi sınama",
+        "excluded": "Kullanılmadı"
+      },
+      "locator": "Kaynak konumu",
+      "openSource": "Kaynağı aç (yeni sekme)",
+      "noLink": "Bu kaynak için bağlantı yok.",
+      "readerA": "Okuyucu A",
+      "readerB": "Okuyucu B",
+      "verdict": {
+        "agree": "çıkarılan değerle uyuşuyor",
+        "disagree": "çıkarılan değerle uyuşmuyor"
+      },
+      "confirm": "Onay (otomatik)"
+    },
+    "evParam": {
+      "cl": "Klerens (CL)",
+      "cl_f": "Görünür klerens (CL/F)",
+      "vss": "Kararlı durum dağılım hacmi (Vss)",
+      "vd": "Dağılım hacmi (Vd)",
+      "v_f": "Görünür hacim (V/F)",
+      "t_half": "Yarı ömür",
+      "tmax": "Doruk derişim zamanı (Tmax)",
+      "f": "Biyoyararlanım (F)",
+      "cmax": "Cmax",
+      "auc_inf": "Sonsuza kadar EAA",
+      "auc_last": "Son örneğe kadar EAA",
+      "auc_tau": "Bir doz aralığı boyunca EAA",
+      "cl_per_kg": "Kg başına klerens",
+      "vd_per_kg": "Kg başına hacim"
+    },
+    "param": {
+      "cl": "CL (damar içi)",
+      "clApparent": "CL/F (görünür)",
+      "v": "V (damar içi)",
+      "vApparent": "V/F (görünür)",
+      "f": "F (oral biyoyararlanım)",
+      "fApparent": "F (CL/F ve V/F içinde)",
+      "ka": "ka (doruk derişim zamanından türetilmiş)"
+    },
+    "dl": {
+      "title": "İndir",
+      "body": "Parametre kümesi, araştırma için bir model dosyası olarak.",
+      "janus": "Janus motoru dosyası (zip)",
+      "mrgsolve": "mrgsolve modeli (zip)",
+      "demo": "İndirmeler canlı hizmeti gerektirir. Demoda kapalıdır.",
+      "contents": "Her zip, model dosyasını, her değerin kaynağını, kaynakçayı ve lisansları içerir. Deneysel; yalnızca araştırma amaçlıdır."
+    },
+    "errors": {
+      "unavailable": "Model seti şu anda kullanılamıyor. Daha sonra yeniden deneyin.",
+      "unknown": "Bu ilaç model setinde yok.",
+      "invalidKey": "Bu adres model setindeki bir ilacı belirtmiyor. Listeden birini seçin."
+    },
+    "reasons": {
+      "not_confirmed": "İki otomatik okuyucu çıkarılan değerle birlikte uyuşmadı.",
+      "analyte_not_parent": "Değer ana ilaca ait değil.",
+      "coadministered": "Kol, yanında başka bir etkin ilaç da verdi.",
+      "fixed_dose_combination": "Ürün sabit doz kombinasyonudur.",
+      "formulation_not_immediate_release": "Formülasyon hemen salımlı ya da çözelti değil.",
+      "bound_not_a_value": "Kaynak yalnızca bir sınır (örneğin “şundan fazla”) veriyor, değer vermiyor.",
+      "per_kg_not_converted": "Değer kilogram başınadır; vücut ağırlığı olmadığından dönüştürülmedi.",
+      "held_out_study": "Ayrı tutulan çalışma: gözlemleri bir kümeyi yalnızca sınar, asla oluşturmaz.",
+      "observation_in_building_study": "Oluşturma parametrelerini de bildiren bir çalışmadaki gözlem; sınanmadı.",
+      "not_needed_preferred_basis": "Gerekmedi: tercih edilen bir temel ya da birleştirilmiş bir değer kullanıldı.",
+      "auc_to_last_sampling_time_not_comparable": "Son örnekleme zamanına kadar EAA: bu zaman kanıtta yok.",
+      "not_an_observation": "Cmax veya EAA gözlemi değil.",
+      "needs_oral_dose": "Bir sınama oral doz gerektirir.",
+      "auc_tau_needs_multiple_dose_interval": "Bir doz aralığı boyunca EAA, aralığı bilinen çok dozlu bir kol gerektirir.",
+      "steady_state_cmax_not_modelled": "Kararlı durum Cmax bu aşamada modellenmiyor.",
+      "auc_inf_needs_single_dose": "Sonsuza kadar EAA tek dozlu bir kol gerektirir.",
+      "set_has_no_absorption_rate": "Kümede emilim hızı yok, bu yüzden Cmax öngörülemez.",
+      "set_cannot_predict_metric": "Küme bu ölçütü öngöremez.",
+      "no_parameter_set": "Sınanacak bir parametre kümesi yok.",
+      "no_independent_observation": "Bağımsız gözlem yok: ayrı tutulan hiçbir çalışma Cmax veya EAA bildirmiyor.",
+      "auc_not_tested": "EAA sınanmadı.",
+      "cmax_not_tested": "Cmax sınanmadı.",
+      "tested_ratio_outside_2_fold": "Sınanan bir öngörülen/gözlenen oranı 2 katın dışında.",
+      "auc_and_cmax_within_2_fold": "EAA ve Cmax ikisi de sınandı ve 2 kat içinde.",
+      "auc_near_the_2_fold_limit": "EAA oranı 2 kat sınırının %10 yakınında.",
+      "cmax_near_the_2_fold_limit": "Cmax oranı 2 kat sınırının %10 yakınında.",
+      "auc_some_points_outside_2_fold": "İlaç düzeyindeki EAA oranı 2 kat içinde, ancak bazı tekil gözlemler dışında.",
+      "cmax_some_points_outside_2_fold": "İlaç düzeyindeki Cmax oranı 2 kat içinde, ancak bazı tekil gözlemler dışında.",
+      "no_confirmed_clearance": "Onaylı klerens yok (damar içi CL ya da oral CL/F).",
+      "no_confirmed_volume": "Onaylı hacim yok (Vss veya Vd, ya da V/F).",
+      "iv_evidence_incomplete": "Damar içi kanıt eksik: klerens ve hacim birlikte gerekir.",
+      "iv_without_bioavailability": "Damar içi klerens ve hacim var, ancak onaylı oral biyoyararlanım yok.",
+      "no_volume_and_no_half_life": "Hacim (V/F) yok ve onu türetecek yarı ömür de yok.",
+      "missing_absorption_no_peak_time": "Emilim hızı eksik: onaylı doruk derişim zamanı yok.",
+      "missing_absorption_no_solution": "Emilim hızı eksik: doruk zamanı, eliminasyon hızının izin verdiği sınırda ya da ötesinde.",
+      "bioavailability_capped": "1'in üzerindeki bir biyoyararlanım 1'e sınırlandı.",
+      "half_life_inconsistent": "CL ve V'den çıkan yarı ömür, belirtilen yarı ömürden 1,5 katın üzerinde farklı; eğrinin kuyruğu desteklenmiyor.",
+      "studies_disagree": "Çalışmalar 2 katın üzerinde farklı.",
+      "healthy_adult_preferred": "Sağlıklı yetişkin değerleri tercih edildi.",
+      "no_central_volume_evidence": "Merkezi hacim kanıtı yok (dağılım evresi yok): tek kompartman.",
+      "two_volumes_differ": "Merkezi ve kararlı durum hacimleri en az %25 farklı: iki kompartman.",
+      "two_volumes_agree": "Merkezi ve kararlı durum hacimleri %25 içinde uyuşuyor: tek kompartman.",
+      "v_from_clf_half_life": "V/F = CL/F × yarı ömür / ln 2.",
+      "ka_from_tmax": "ka, k = CL / V iken tmax = ln(ka/k) / (ka − k) denklemini çözer.",
+      "f_fixed_apparent": "1'e sabitlendi: görünür parametreler biyoyararlanımı zaten içerir.",
+      "clearance_or_bioavailability": "Klerens (CL veya CL/F) ya da biyoyararlanım: EAA 2 katın dışında.",
+      "absorption_rate_or_volume": "Emilim hızı (doruk derişim zamanından türetilmiş) ya da hacim: Cmax 2 katın dışında.",
+      "n_very_small": "n çok küçük: oranlar ve kat hataları bu ilaçları anlatır, genel olarak ilaçları değil.",
+      "two_automated_passes": "Ayrı tutulan her gözlem otomatik okundu ve iki otomatik geçişle onaylandı.",
+      "expert_review_pending": "Uzman incelemesi henüz yapılmadı.",
+      "interval_n_too_small": "Aralık gösterilmiyor: n çok küçük (20'den az bağımsız ayrı tutulan çalışma).",
+      "interval_system_level_only": "Aralıklar yalnızca sistem düzeyinde verilir, ilaç başına verilmez.",
+      "not_used": "Kullanılmadı; daha belirli bir neden kaydedilmedi."
     }
   }
 }

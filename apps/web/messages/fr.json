@@ -594,6 +594,10 @@
       "forResearchers": {
         "title": "Janus pour les chercheurs",
         "body": "Une page : données ouvertes, API, serveur MCP, CDS Hooks, pipelines, un exemple complet et comment citer."
+      },
+      "modelKit": {
+        "title": "Kit de départ de modèles de médicaments (expérimental)",
+        "body": "Des jeux de paramètres traçables jusqu’aux preuves pour quelques médicaments, testés sur des études mises de côté. Expérimental, usage de recherche uniquement, pas un calculateur de dose."
       }
     }
   },
@@ -2865,6 +2869,230 @@
       "body": "Il n'existe pas encore de CITATION.cff : le projet n'a pas publié de métadonnées de citation. D'ici là, citez le jeu de données avec sa chaîne de version et sa date d'instantané :",
       "example": "Texte de citation",
       "pipc": "La liste PIPC elle-même :"
+    },
+    "modelKit": {
+      "title": "Kit de départ de modèles de médicaments (expérimental)",
+      "summary": "Des jeux de paramètres avec leurs preuves et un rapport de validation.",
+      "body": "Quelques médicaments avec des jeux de paramètres dont chaque valeur est reliée à une citation source, testés sur des études mises de côté. Expérimental : usage de recherche uniquement, pas pour des décisions cliniques, pas un calculateur de dose. Les routes de l’API sont sous /modelkit.",
+      "link": "Ouvrir le kit de modèles",
+      "doc": "Document de l’API publique"
+    }
+  },
+  "ModelKit": {
+    "title": "Kit de départ de modèles de médicaments",
+    "experimental": "Expérimental",
+    "researchUse": "Usage de recherche uniquement. Pas pour des décisions cliniques.",
+    "expertReview": "L’examen par des experts n’a pas encore été fait.",
+    "demo": "Démo : réponses enregistrées le {date}, aucune requête n’est envoyée.",
+    "loading": "Chargement du kit de modèles…",
+    "intro": "Des jeux de paramètres traçables jusqu’aux preuves pour quelques médicaments, chacun testé sur des études mises de côté, chaque valeur étant reliée à sa citation source. Ce n’est pas un calculateur de dose et il ne donne aucun conseil à une personne.",
+    "introValidation": "Un statut décrit comment un jeu de paramètres s’est comporté face à une poignée d’études mises de côté. Ce n’est pas un jugement sur le médicament.",
+    "yes": "Oui",
+    "no": "Non",
+    "status": {
+      "validated": "Validé",
+      "not_validated": "Non validé",
+      "failed": "Échec"
+    },
+    "list": {
+      "title": "Médicaments",
+      "summary": "{count, plural, one {# médicament} other {# médicaments}} · expérimental",
+      "studies": "{count, plural, one {# étude} other {# études}}",
+      "empty": "Aucun médicament dans cette version."
+    },
+    "system": {
+      "title": "Rapport du système",
+      "countSentence": "{count, plural, one {# médicament} other {# médicaments}} : {status}",
+      "studies": "Études mises de côté",
+      "studiesSentence": "{count, plural, one {# étude indépendante mise de côté} other {# études indépendantes mises de côté}}",
+      "n": "n = {drugs, plural, one {# médicament} other {# médicaments}} et {studies, plural, one {# étude mise de côté} other {# études mises de côté}}.",
+      "metrics": "Prédit par rapport à observé, tous les médicaments",
+      "drugs": "Médicaments testés",
+      "within": "Dans un facteur 2",
+      "ofN": "{k} sur {n}",
+      "wilson": "{share}, intervalle de Wilson à 95 % de {low} à {high}",
+      "limits": "Ce que ce rapport peut et ne peut pas dire",
+      "minDrugs": "Il faut au moins {n} médicaments avant que les parts soient lues comme plus qu’une description."
+    },
+    "drug": {
+      "statusTitle": "Statut de validation",
+      "noSet": "Pas de jeu de paramètres",
+      "noSetBody": "Les preuves ne permettent pas encore un jeu de paramètres. Voici les raisons.",
+      "warnings": "Avertissement",
+      "halfLives": "Demi-vie déduite {implied} h ; demi-vie indiquée {stated} h.",
+      "incomplete": "Le jeu est incomplet, il ne peut donc pas être exporté. Manque :"
+    },
+    "params": {
+      "title": "Paramètres",
+      "apparent": "Paramètres apparents (CL/F, V/F) : la biodisponibilité orale y est incluse.",
+      "model": "Modèle : {model}.",
+      "hint": "Activez une valeur pour voir les preuves qui la sous-tendent : la citation, la source et les résultats des deux lecteurs.",
+      "name": "Paramètre",
+      "value": "Valeur",
+      "class": "Classe de confiance",
+      "sources": "Études",
+      "derivation": "Comment elle est obtenue",
+      "noRows": "Pas de ligne source : cette valeur découle d’une règle, pas d’une citation.",
+      "legend": "Classes de confiance",
+      "classA": "Deux études confirmées indépendantes ou plus, concordantes dans un facteur 2.",
+      "classB": "Une étude confirmée, ou des études qui divergent.",
+      "classC": "Déduite d’autres paramètres ou d’une plage indiquée."
+    },
+    "models": {
+      "one_compartment": "un compartiment",
+      "two_compartment": "deux compartiments"
+    },
+    "val": {
+      "title": "Validation sur des études mises de côté",
+      "intro": "Les études qui ne rapportent que la Cmax ou l’ASC n’ont jamais servi à construire un jeu. Rapport = prédit / observé.",
+      "metrics": "Mesures de validation",
+      "metric": "Mesure",
+      "auc": "ASC",
+      "cmax": "Cmax",
+      "n": "Observations",
+      "nCell": "{points, plural, one {# point} other {# points}}, {studies, plural, one {# étude} other {# études}}",
+      "notTested": "Non testé",
+      "ratio": "Rapport",
+      "gmfe": "GMFE",
+      "within": "Dans un facteur 2",
+      "ratioInside": "Rapport dans un facteur 2",
+      "ratioOutside": "Rapport hors d’un facteur 2",
+      "nearLimit": "{metric} : le rapport est à moins de 10 % de la limite du facteur 2.",
+      "suspect": "Paramètre suspect :",
+      "noPoints": "Il n’y a aucune observation mise de côté, donc pas de graphique.",
+      "intervalN": "({n} sur au moins {min} études indépendantes mises de côté.)"
+    },
+    "chart": {
+      "title": "Observé par rapport à prédit",
+      "alt": "Nuage de points log-log de {n} observations mises de côté ({auc} ASC, {cmax} Cmax), prédit par rapport à observé, avec la bande du facteur 2 ; {inside} sont dans la bande. Le tableau ci-dessous donne chaque nombre.",
+      "observed": "Observé",
+      "predicted": "Prédit",
+      "hollow": "Creux : hors d’un facteur 2",
+      "band": "Bande du facteur 2",
+      "diagonal": "Prédit = observé",
+      "unitNote": "ASC jusqu’à l’infini en ng·h/mL, Cmax en ng/mL. Les deux axes sont logarithmiques.",
+      "tableTitle": "Observations mises de côté",
+      "study": "Étude",
+      "dose": "Dose (mg)"
+    },
+    "ev": {
+      "title": "Preuves",
+      "used": "Preuves utilisées",
+      "excluded": "Preuves exclues",
+      "table": "Preuves et raison de leur non-utilisation",
+      "excludedHint": "Chaque ligne est dans le stock de preuves mais n’a servi ni à construire ni à tester le jeu, pour la raison indiquée.",
+      "empty": "Aucune ligne de preuve pour ce médicament.",
+      "parameter": "Paramètre",
+      "reason": "Raison",
+      "role": "Utilisée pour",
+      "roles": {
+        "building": "Construire le jeu",
+        "validation": "Tester le jeu",
+        "excluded": "Non utilisée"
+      },
+      "locator": "Localisation dans la source",
+      "openSource": "Ouvrir la source (nouvel onglet)",
+      "noLink": "Pas de lien vers cette source.",
+      "readerA": "Lecteur A",
+      "readerB": "Lecteur B",
+      "verdict": {
+        "agree": "est d’accord avec la valeur extraite",
+        "disagree": "n’est pas d’accord avec la valeur extraite"
+      },
+      "confirm": "Confirmation (automatisée)"
+    },
+    "evParam": {
+      "cl": "Clairance (CL)",
+      "cl_f": "Clairance apparente (CL/F)",
+      "vss": "Volume à l’état d’équilibre (Vss)",
+      "vd": "Volume de distribution (Vd)",
+      "v_f": "Volume apparent (V/F)",
+      "t_half": "Demi-vie",
+      "tmax": "Temps du pic de concentration (Tmax)",
+      "f": "Biodisponibilité (F)",
+      "cmax": "Cmax",
+      "auc_inf": "ASC jusqu’à l’infini",
+      "auc_last": "ASC jusqu’au dernier prélèvement",
+      "auc_tau": "ASC sur un intervalle de dose",
+      "cl_per_kg": "Clairance par kg",
+      "vd_per_kg": "Volume par kg"
+    },
+    "param": {
+      "cl": "CL (intraveineuse)",
+      "clApparent": "CL/F (apparente)",
+      "v": "V (intraveineux)",
+      "vApparent": "V/F (apparent)",
+      "f": "F (biodisponibilité orale)",
+      "fApparent": "F (incluse dans CL/F et V/F)",
+      "ka": "ka (déduite du temps du pic de concentration)"
+    },
+    "dl": {
+      "title": "Télécharger",
+      "body": "Le jeu de paramètres sous forme de fichier de modèle, pour la recherche.",
+      "janus": "Fichier du moteur Janus (zip)",
+      "mrgsolve": "Modèle mrgsolve (zip)",
+      "demo": "Les téléchargements demandent le service en ligne. Dans la démo, ils sont désactivés.",
+      "contents": "Chaque zip contient le fichier de modèle, la provenance de chaque valeur, les références et les licences. Expérimental ; usage de recherche uniquement."
+    },
+    "errors": {
+      "unavailable": "Le kit de modèles n’est pas disponible pour le moment. Réessayez plus tard.",
+      "unknown": "Ce médicament n’est pas dans le kit de modèles.",
+      "invalidKey": "Cette adresse ne désigne aucun médicament du kit de modèles. Choisissez-en un dans la liste."
+    },
+    "reasons": {
+      "not_confirmed": "Les deux lecteurs automatisés n’étaient pas tous deux d’accord avec la valeur extraite.",
+      "analyte_not_parent": "La valeur ne concerne pas le médicament parent.",
+      "coadministered": "Le bras recevait un autre médicament actif avec lui.",
+      "fixed_dose_combination": "Le produit est une association à dose fixe.",
+      "formulation_not_immediate_release": "La formulation n’est ni à libération immédiate ni une solution.",
+      "bound_not_a_value": "La source ne donne qu’une borne (par exemple « plus de »), pas une valeur.",
+      "per_kg_not_converted": "La valeur est par kilogramme ; il n’y a pas de poids corporel, elle n’est donc pas convertie.",
+      "held_out_study": "Étude mise de côté : ses observations ne font que tester un jeu, elles n’en construisent jamais.",
+      "observation_in_building_study": "Observation d’une étude qui rapporte aussi des paramètres de construction ; non testée.",
+      "not_needed_preferred_basis": "Inutile : une base préférée ou une valeur regroupée a été utilisée.",
+      "auc_to_last_sampling_time_not_comparable": "ASC jusqu’au dernier prélèvement : ce temps n’est pas dans les preuves.",
+      "not_an_observation": "Pas une observation de Cmax ou d’ASC.",
+      "needs_oral_dose": "Un test demande une dose orale.",
+      "auc_tau_needs_multiple_dose_interval": "L’ASC sur un intervalle de dose demande un bras à doses multiples avec son intervalle.",
+      "steady_state_cmax_not_modelled": "La Cmax à l’état d’équilibre n’est pas modélisée dans cette étape.",
+      "auc_inf_needs_single_dose": "L’ASC jusqu’à l’infini demande un bras à dose unique.",
+      "set_has_no_absorption_rate": "Le jeu n’a pas de vitesse d’absorption, il ne peut donc pas prédire la Cmax.",
+      "set_cannot_predict_metric": "Le jeu ne peut pas prédire cette mesure.",
+      "no_parameter_set": "Il n’y a pas de jeu de paramètres à tester.",
+      "no_independent_observation": "Aucune observation indépendante : aucune étude mise de côté ne rapporte la Cmax ou l’ASC.",
+      "auc_not_tested": "L’ASC n’a pas été testée.",
+      "cmax_not_tested": "La Cmax n’a pas été testée.",
+      "tested_ratio_outside_2_fold": "Un rapport testé de prédit à observé est hors d’un facteur 2.",
+      "auc_and_cmax_within_2_fold": "ASC et Cmax testées toutes deux et dans un facteur 2.",
+      "auc_near_the_2_fold_limit": "Le rapport de l’ASC est à moins de 10 % de la limite du facteur 2.",
+      "cmax_near_the_2_fold_limit": "Le rapport de la Cmax est à moins de 10 % de la limite du facteur 2.",
+      "auc_some_points_outside_2_fold": "Le rapport de l’ASC au niveau du médicament est dans un facteur 2, mais certaines observations isolées sont en dehors.",
+      "cmax_some_points_outside_2_fold": "Le rapport de la Cmax au niveau du médicament est dans un facteur 2, mais certaines observations isolées sont en dehors.",
+      "no_confirmed_clearance": "Aucune clairance confirmée (CL intraveineuse ou CL/F orale).",
+      "no_confirmed_volume": "Aucun volume confirmé (Vss ou Vd, ou V/F).",
+      "iv_evidence_incomplete": "Les preuves intraveineuses sont incomplètes : la clairance et le volume sont tous deux nécessaires.",
+      "iv_without_bioavailability": "Clairance et volume intraveineux présents, mais aucune biodisponibilité orale confirmée.",
+      "no_volume_and_no_half_life": "Pas de volume (V/F) et pas de demi-vie pour le déduire.",
+      "missing_absorption_no_peak_time": "Vitesse d’absorption manquante : pas de temps de pic de concentration confirmé.",
+      "missing_absorption_no_solution": "Vitesse d’absorption manquante : le temps du pic est égal ou supérieur à ce que permet la vitesse d’élimination.",
+      "bioavailability_capped": "Une biodisponibilité supérieure à 1 a été plafonnée à 1.",
+      "half_life_inconsistent": "La demi-vie déduite de CL et V diffère de la demi-vie indiquée de plus d’un facteur 1,5 ; la queue de la courbe n’est pas étayée.",
+      "studies_disagree": "Les études divergent de plus d’un facteur 2.",
+      "healthy_adult_preferred": "Les valeurs d’adultes en bonne santé ont été préférées.",
+      "no_central_volume_evidence": "Pas de preuve du volume central (pas de phase de distribution) : un compartiment.",
+      "two_volumes_differ": "Les volumes central et à l’état d’équilibre diffèrent d’au moins 25 % : deux compartiments.",
+      "two_volumes_agree": "Les volumes central et à l’état d’équilibre concordent à 25 % près : un compartiment.",
+      "v_from_clf_half_life": "V/F = CL/F × demi-vie / ln 2.",
+      "ka_from_tmax": "ka résout tmax = ln(ka/k) / (ka − k) avec k = CL / V.",
+      "f_fixed_apparent": "Fixée à 1 : les paramètres apparents contiennent déjà la biodisponibilité.",
+      "clearance_or_bioavailability": "Clairance (CL ou CL/F) ou biodisponibilité : l’ASC est hors d’un facteur 2.",
+      "absorption_rate_or_volume": "Vitesse d’absorption (déduite du temps du pic de concentration) ou volume : la Cmax est hors d’un facteur 2.",
+      "n_very_small": "n est très petit : les parts et les erreurs en facteur décrivent ces médicaments, pas les médicaments en général.",
+      "two_automated_passes": "Chaque observation mise de côté a été lue automatiquement et confirmée par deux passes automatisées.",
+      "expert_review_pending": "L’examen par des experts n’a pas encore été fait.",
+      "interval_n_too_small": "Aucun intervalle n’est montré : n est trop petit (moins de 20 études indépendantes mises de côté).",
+      "interval_system_level_only": "Les intervalles ne sont donnés qu’au niveau du système, pas par médicament.",
+      "not_used": "Non utilisée ; aucune raison plus précise n’est enregistrée."
     }
   }
 }

@@ -21,6 +21,7 @@ const TOOLS = [
   { key: "developers", href: "/research/developers" },
   { key: "modelExplorer", href: "/research/model-explorer" },
   { key: "simulate", href: "/research/simulate" },
+  { key: "modelKit", href: "/research/model-kit" },
 ] as const;
 
 /**

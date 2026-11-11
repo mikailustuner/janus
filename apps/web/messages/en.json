@@ -594,6 +594,10 @@
       "forResearchers": {
         "title": "Janus for researchers",
         "body": "One page: open data, API, MCP server, CDS Hooks, pipelines, a worked example and how to cite."
+      },
+      "modelKit": {
+        "title": "Drug model starter kit (experimental)",
+        "body": "Evidence-traceable parameter sets for a few drugs, tested against held-out studies. Experimental, research use only, not a dose calculator."
       }
     }
   },
@@ -2865,6 +2869,230 @@
       "body": "There is no CITATION.cff yet: the project has not published citation metadata. Until then, cite the dataset with its version string and snapshot date:",
       "example": "Citation text",
       "pipc": "The PIPC list itself:"
+    },
+    "modelKit": {
+      "title": "Drug model starter kit (experimental)",
+      "summary": "Parameter sets with their evidence and a validation report.",
+      "body": "A few drugs with parameter sets whose every value links to a source quote, tested against held-out studies. Experimental: research use only, not for clinical decisions, not a dose calculator. The API routes are under /modelkit.",
+      "link": "Open the model kit",
+      "doc": "Public API document"
+    }
+  },
+  "ModelKit": {
+    "title": "Drug model starter kit",
+    "experimental": "Experimental",
+    "researchUse": "Research use only. Not for clinical decisions.",
+    "expertReview": "Expert review has not yet been done.",
+    "demo": "Demo: answers recorded on {date}, no request is sent.",
+    "loading": "Loading the model kit…",
+    "intro": "Evidence-traceable parameter sets for a few drugs, each tested against held-out studies, with every value linked to its source quote. This is not a dose calculator and it gives no advice about any person.",
+    "introValidation": "A status describes how a parameter set did against a handful of held-out studies. It is not a statement about the medicine.",
+    "yes": "Yes",
+    "no": "No",
+    "status": {
+      "validated": "Validated",
+      "not_validated": "Not validated",
+      "failed": "Failed"
+    },
+    "list": {
+      "title": "Drugs",
+      "summary": "{count, plural, one {# drug} other {# drugs}} · experimental",
+      "studies": "{count, plural, one {# study} other {# studies}}",
+      "empty": "No drugs in this release."
+    },
+    "system": {
+      "title": "System report",
+      "countSentence": "{count, plural, one {# drug} other {# drugs}}: {status}",
+      "studies": "Held-out studies",
+      "studiesSentence": "{count, plural, one {# independent held-out study} other {# independent held-out studies}}",
+      "n": "n = {drugs, plural, one {# drug} other {# drugs}} and {studies, plural, one {# held-out study} other {# held-out studies}}.",
+      "metrics": "Predicted against observed, all drugs",
+      "drugs": "Drugs tested",
+      "within": "Within 2-fold",
+      "ofN": "{k} of {n}",
+      "wilson": "{share}, 95 % Wilson interval {low} to {high}",
+      "limits": "What this report can and cannot say",
+      "minDrugs": "At least {n} drugs are needed before the shares are read as more than a description."
+    },
+    "drug": {
+      "statusTitle": "Validation status",
+      "noSet": "No parameter set",
+      "noSetBody": "The evidence does not yet allow a parameter set. These are the reasons.",
+      "warnings": "Warning",
+      "halfLives": "Implied half-life {implied} h; stated half-life {stated} h.",
+      "incomplete": "The set is incomplete, so it cannot be exported. Missing:"
+    },
+    "params": {
+      "title": "Parameters",
+      "apparent": "Apparent parameters (CL/F, V/F): oral bioavailability is inside them.",
+      "model": "Model: {model}.",
+      "hint": "Activate a value to see the evidence behind it: the quote, the source and both reader results.",
+      "name": "Parameter",
+      "value": "Value",
+      "class": "Confidence class",
+      "sources": "Studies",
+      "derivation": "How it was derived",
+      "noRows": "No source row: this value follows from a rule, not from a quote.",
+      "legend": "Confidence classes",
+      "classA": "Two or more independent confirmed studies that agree within 2-fold.",
+      "classB": "One confirmed study, or studies that disagree.",
+      "classC": "Derived from other parameters or from a stated range."
+    },
+    "models": {
+      "one_compartment": "one compartment",
+      "two_compartment": "two compartments"
+    },
+    "val": {
+      "title": "Validation against held-out studies",
+      "intro": "Studies that only report Cmax or AUC were never used to build a set. Ratio = predicted / observed.",
+      "metrics": "Validation metrics",
+      "metric": "Metric",
+      "auc": "AUC",
+      "cmax": "Cmax",
+      "n": "Observations",
+      "nCell": "{points, plural, one {# point} other {# points}}, {studies, plural, one {# study} other {# studies}}",
+      "notTested": "Not tested",
+      "ratio": "Ratio",
+      "gmfe": "GMFE",
+      "within": "Within 2-fold",
+      "ratioInside": "Ratio inside 2-fold",
+      "ratioOutside": "Ratio outside 2-fold",
+      "nearLimit": "{metric}: the ratio is within 10 % of the 2-fold limit.",
+      "suspect": "Suspect parameter:",
+      "noPoints": "There is no held-out observation, so there is no chart.",
+      "intervalN": "({n} of at least {min} independent held-out studies.)"
+    },
+    "chart": {
+      "title": "Observed against predicted",
+      "alt": "Log-log scatter of {n} held-out observations ({auc} AUC, {cmax} Cmax), predicted against observed, with the 2-fold band; {inside} are inside the band. The table below lists every number.",
+      "observed": "Observed",
+      "predicted": "Predicted",
+      "hollow": "Hollow: outside 2-fold",
+      "band": "2-fold band",
+      "diagonal": "Predicted = observed",
+      "unitNote": "AUC to infinity in ng·h/mL, Cmax in ng/mL. Both axes are logarithmic.",
+      "tableTitle": "Held-out observations",
+      "study": "Study",
+      "dose": "Dose (mg)"
+    },
+    "ev": {
+      "title": "Evidence",
+      "used": "Evidence used",
+      "excluded": "Excluded evidence",
+      "table": "Evidence and why it was not used",
+      "excludedHint": "Each row is in the evidence store but was not used to build or test the set, for the reason shown.",
+      "empty": "No evidence rows for this drug.",
+      "parameter": "Parameter",
+      "reason": "Reason",
+      "role": "Used for",
+      "roles": {
+        "building": "Building the set",
+        "validation": "Testing the set",
+        "excluded": "Not used"
+      },
+      "locator": "Source locator",
+      "openSource": "Open the source (new tab)",
+      "noLink": "No link to this source.",
+      "readerA": "Reader A",
+      "readerB": "Reader B",
+      "verdict": {
+        "agree": "agrees with the extracted value",
+        "disagree": "does not agree with the extracted value"
+      },
+      "confirm": "Confirmation (automated)"
+    },
+    "evParam": {
+      "cl": "Clearance (CL)",
+      "cl_f": "Apparent clearance (CL/F)",
+      "vss": "Volume at steady state (Vss)",
+      "vd": "Volume of distribution (Vd)",
+      "v_f": "Apparent volume (V/F)",
+      "t_half": "Half-life",
+      "tmax": "Time of peak concentration (Tmax)",
+      "f": "Bioavailability (F)",
+      "cmax": "Cmax",
+      "auc_inf": "AUC to infinity",
+      "auc_last": "AUC to last sample",
+      "auc_tau": "AUC over a dosing interval",
+      "cl_per_kg": "Clearance per kg",
+      "vd_per_kg": "Volume per kg"
+    },
+    "param": {
+      "cl": "CL (intravenous)",
+      "clApparent": "CL/F (apparent)",
+      "v": "V (intravenous)",
+      "vApparent": "V/F (apparent)",
+      "f": "F (oral bioavailability)",
+      "fApparent": "F (inside CL/F and V/F)",
+      "ka": "ka (derived from the time of peak concentration)"
+    },
+    "dl": {
+      "title": "Download",
+      "body": "The parameter set as a model file, for research.",
+      "janus": "Janus engine file (zip)",
+      "mrgsolve": "mrgsolve model (zip)",
+      "demo": "Downloads need the live service. In the demo they are switched off.",
+      "contents": "Each zip holds the model file, the provenance of every value, references and licences. Experimental; research use only."
+    },
+    "errors": {
+      "unavailable": "The model kit is not available right now. Try again later.",
+      "unknown": "This drug is not in the model kit.",
+      "invalidKey": "This address does not name a drug of the model kit. Choose one from the list."
+    },
+    "reasons": {
+      "not_confirmed": "The two automated readers did not both agree with the extracted value.",
+      "analyte_not_parent": "The value is not for the parent drug.",
+      "coadministered": "The arm gave another active drug with it.",
+      "fixed_dose_combination": "The product is a fixed-dose combination.",
+      "formulation_not_immediate_release": "The formulation is not immediate-release or a solution.",
+      "bound_not_a_value": "The source gives only a bound (for example “more than”), not a value.",
+      "per_kg_not_converted": "The value is per kilogram; there is no body weight, so it is not converted.",
+      "held_out_study": "Held-out study: its observations only test a set, they never build one.",
+      "observation_in_building_study": "An observation in a study that also reports building parameters; not tested.",
+      "not_needed_preferred_basis": "Not needed: a preferred basis or a pooled value was used.",
+      "auc_to_last_sampling_time_not_comparable": "AUC to the last sampling time: that time is not in the evidence.",
+      "not_an_observation": "Not an observation of Cmax or AUC.",
+      "needs_oral_dose": "A test needs an oral dose.",
+      "auc_tau_needs_multiple_dose_interval": "AUC over a dosing interval needs a multiple-dose arm with its interval.",
+      "steady_state_cmax_not_modelled": "Steady-state Cmax is not modelled in this milestone.",
+      "auc_inf_needs_single_dose": "AUC to infinity needs a single-dose arm.",
+      "set_has_no_absorption_rate": "The set has no absorption rate, so it cannot predict Cmax.",
+      "set_cannot_predict_metric": "The set cannot predict this metric.",
+      "no_parameter_set": "There is no parameter set to test.",
+      "no_independent_observation": "No independent observation: no held-out study reports Cmax or AUC.",
+      "auc_not_tested": "AUC was not tested.",
+      "cmax_not_tested": "Cmax was not tested.",
+      "tested_ratio_outside_2_fold": "A tested ratio of predicted to observed is outside 2-fold.",
+      "auc_and_cmax_within_2_fold": "AUC and Cmax both tested and within 2-fold.",
+      "auc_near_the_2_fold_limit": "The AUC ratio is within 10 % of the 2-fold limit.",
+      "cmax_near_the_2_fold_limit": "The Cmax ratio is within 10 % of the 2-fold limit.",
+      "auc_some_points_outside_2_fold": "The drug-level AUC ratio is within 2-fold, but some single observations are outside it.",
+      "cmax_some_points_outside_2_fold": "The drug-level Cmax ratio is within 2-fold, but some single observations are outside it.",
+      "no_confirmed_clearance": "No confirmed clearance (intravenous CL or oral CL/F).",
+      "no_confirmed_volume": "No confirmed volume (Vss or Vd, or V/F).",
+      "iv_evidence_incomplete": "Intravenous evidence is incomplete: clearance and volume are both needed.",
+      "iv_without_bioavailability": "Intravenous clearance and volume exist but no confirmed oral bioavailability.",
+      "no_volume_and_no_half_life": "No volume (V/F) and no half-life to derive it.",
+      "missing_absorption_no_peak_time": "Absorption rate missing: no confirmed time of peak concentration.",
+      "missing_absorption_no_solution": "Absorption rate missing: the peak time is at or beyond what the elimination rate allows.",
+      "bioavailability_capped": "A bioavailability above 1 was capped at 1.",
+      "half_life_inconsistent": "The half-life implied by CL and V differs from the stated half-life by more than 1.5-fold; the curve tail is not supported.",
+      "studies_disagree": "The studies disagree by more than 2-fold.",
+      "healthy_adult_preferred": "Healthy-adult values were preferred.",
+      "no_central_volume_evidence": "No central-volume evidence (no distribution phase): one compartment.",
+      "two_volumes_differ": "Central and steady-state volumes differ by at least 25 %: two compartments.",
+      "two_volumes_agree": "Central and steady-state volumes agree within 25 %: one compartment.",
+      "v_from_clf_half_life": "V/F = CL/F × half-life / ln 2.",
+      "ka_from_tmax": "ka solves tmax = ln(ka/k) / (ka − k) with k = CL / V.",
+      "f_fixed_apparent": "Fixed at 1: apparent parameters already contain bioavailability.",
+      "clearance_or_bioavailability": "Clearance (CL or CL/F) or bioavailability: AUC is outside 2-fold.",
+      "absorption_rate_or_volume": "Absorption rate (derived from the time of peak concentration) or volume: Cmax is outside 2-fold.",
+      "n_very_small": "n is very small: shares and fold errors describe these drugs, not drugs in general.",
+      "two_automated_passes": "Every held-out observation was read automatically and confirmed by two automated passes.",
+      "expert_review_pending": "Expert review has not yet been done.",
+      "interval_n_too_small": "No interval is shown: n is too small (fewer than 20 independent held-out studies).",
+      "interval_system_level_only": "Intervals are given at system level only, not per drug.",
+      "not_used": "Not used; no more specific reason is recorded."
     }
   }
 }

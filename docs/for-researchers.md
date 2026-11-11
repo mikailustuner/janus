@@ -188,6 +188,13 @@ Draft notes, not peer reviewed. **Expert review has not yet been done.**
 [open-data.md](open-data.md), [open-api.md](open-api.md), [mcp.md](mcp.md), [cds-hooks.md](cds-hooks.md),
 [contributing-corrections.md](contributing-corrections.md).
 
+## 8a. Drug model starter kit (experimental)
+
+A few drugs with parameter sets whose every value links to a source quote, tested against held-out studies:
+[/en/research/model-kit](https://janusmeds.org/en/research/model-kit) in the web app, routes under `/modelkit` in
+[open-api.md](open-api.md). **Experimental.** Research use only. Not for clinical decisions. It is not a dose
+calculator. **Expert review has not yet been done.**
+
 ## 9. Limitations and how to report errors
 
 - Counts are **reports, not people**. FAERS is spontaneous reporting: not incidence, not deduplicated across cases.

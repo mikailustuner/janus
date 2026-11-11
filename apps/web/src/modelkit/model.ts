@@ -272,7 +272,7 @@ export function demoModelKit(fx: ModelKitFixture): ModelKitClient {
         route,
         status: 404,
         code: "unknown_drug",
-        fields: [],
+        fields: [] as string[],
         messageKey: "ModelKit.errors.unknown",
       },
     }) as const;

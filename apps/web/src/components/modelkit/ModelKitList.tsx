@@ -91,9 +91,7 @@ export function ModelKitList() {
 function DrugRow({ d }: { d: DrugSummary }) {
   const t = useT();
   return (
-    <RowLink
-      href={{ pathname: "/research/model-kit/drug", hash: d.key }}
-    >
+    <RowLink href={{ pathname: "/research/model-kit/drug", hash: d.key }}>
       <span className="flex flex-col gap-1.5" data-testid="mk-drug">
         <span className="text-lg break-words">{d.name}</span>
         <span className="flex flex-wrap gap-2">
@@ -169,7 +167,9 @@ function SystemBody({ s }: { s: SystemOut }) {
           })}
         />
       </StatGrid>
-      <p>{t("ModelKit.system.n", { drugs: s.n_drugs, studies: s.n_studies })}</p>
+      <p>
+        {t("ModelKit.system.n", { drugs: s.n_drugs, studies: s.n_studies })}
+      </p>
       <div
         className="card relative overflow-x-auto p-0"
         tabIndex={0}
