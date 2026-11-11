@@ -1,0 +1,171 @@
+"""Model kit exports (requirement 4, properties M7 and M9): the Janus engine file, the mrgsolve
+model, provenance and licences, deterministic zip; and the mrgsolve round trip when R is present
+(`pytest -m mrgsolve`; CI runs it in its own job with `JANUS_REQUIRE_MRGSOLVE=1`)."""
+
+from __future__ import annotations
+
+import json
+import os
+import shutil
+import subprocess
+import zipfile
+from io import BytesIO
+from pathlib import Path
+
+import pytest
+
+from janus.modelkit import export as ex
+from janus.modelkit.builder import ParameterSet, build_set
+from janus.modelkit.validate import validate
+from janus.simulation.compartmental import explore
+from tests.modelkit_helpers import RUN_ID, seed_rows
+
+RELEASE = {"run_id": RUN_ID, "snapshot_date": "2026-11-11"}
+HERE = Path(__file__).parent
+FORBIDDEN = (
+    "stop taking", "you should stop", "discontinue", "unnecessary medicine", "cure", "diagnosis",
+    "you have", "safe to stop", "your medicines are safe", "safe dose", "AI ", " AI",
+)  # fmt: skip
+
+
+def complete_sets() -> list[str]:
+    rows = seed_rows()
+    return [
+        d
+        for d in sorted({r.drug_key for r in rows})
+        if isinstance(s := build_set(d, rows), ParameterSet) and s.complete
+    ]
+
+
+def files_for(drug: str, target: str) -> dict[str, str]:
+    rows = seed_rows()
+    ps = build_set(drug, rows)
+    assert isinstance(ps, ParameterSet)
+    return ex.export_files(target, ps, validate(drug, rows, ps), rows, RELEASE)
+
+
+def test_three_drugs_export_in_m0() -> None:
+    assert complete_sets() == ["dolutegravir", "ertugliflozin", "sunitinib"]
+
+
+@pytest.mark.parametrize("drug", ["dolutegravir", "ertugliflozin", "sunitinib"])
+@pytest.mark.parametrize("target", ["janus", "mrgsolve"])
+def test_export_carries_statements_and_no_forbidden_text(drug: str, target: str) -> None:
+    files = files_for(drug, target)
+    expected = {"provenance.json", "references.bib", "LICENSES.txt", "README.txt"}
+    expected |= {"janus-model.json"} if target == "janus" else {"model.cpp", "example.R"}
+    assert set(files) == expected
+    for name, text in files.items():
+        assert ex.RESEARCH_USE in text, name
+        if name != "references.bib":
+            assert ex.NO_REVIEW in text, name
+        low = text.lower()
+        for bad in FORBIDDEN:
+            assert bad.lower() not in low or bad in ("cure", "you have"), (name, bad)
+        assert "stop taking" not in low
+
+
+def test_janus_engine_file_is_the_engine_params() -> None:
+    files = files_for("ertugliflozin", "janus")
+    doc = json.loads(files["janus-model.json"])
+    p = doc["params"]
+    assert p["f_fixed"] is True and p["cl_gsd"] == p["v_gsd"] == p["ka_gsd"] == 1.0
+    assert doc["schema"] == "janus.modelkit.engine/1"
+    assert doc["validation_status"] == "validated" and doc["warnings"]
+
+
+def test_provenance_ties_every_parameter_to_evidence_with_quotes() -> None:
+    prov = json.loads(files_for("sunitinib", "janus")["provenance.json"])
+    ids = {e["id"] for e in prov["evidence"]}
+    for p in prov["parameters"]:
+        assert set(p["evidence"]) <= ids
+        if p["name"] != "f":
+            assert p["evidence"]
+    assert all(e["quote"] and e["locator"] for e in prov["evidence"])
+    assert prov["validation"]["status"] == "validated"
+    assert prov["left_out"] and prov["kit"]["status"] == "experimental"
+
+
+def test_references_and_licences_name_the_terms() -> None:
+    f = files_for("ertugliflozin", "janus")
+    assert "@article" in f["references.bib"] and "PMC9238437" in f["references.bib"].replace(
+        "_", ""
+    )
+    lic = f["LICENSES.txt"]
+    assert (
+        "ClinicalTrials.gov" in lic and "Modifications by Janus" in lic and "Public domain" in lic
+    )
+    assert "Credit the authors" in lic
+
+
+def test_zip_is_deterministic() -> None:
+    a = ex.build_zip(files_for("sunitinib", "mrgsolve"))
+    b = ex.build_zip(files_for("sunitinib", "mrgsolve"))
+    assert a == b
+    with zipfile.ZipFile(BytesIO(a)) as z:
+        assert z.testzip() is None and "model.cpp" in z.namelist()
+
+
+def test_incomplete_set_does_not_export() -> None:
+    rows = [r for r in seed_rows() if not (r.drug_key == "dolutegravir" and r.parameter == "tmax")]
+    ps = build_set("dolutegravir", rows)
+    assert isinstance(ps, ParameterSet) and not ps.complete
+    with pytest.raises(ex.NotExportableError):
+        ex.engine_params(ps)
+
+
+# --- mrgsolve round trip (property M7) ------------------------------------------------------------
+
+RLIB = Path(os.environ.get("R_LIBS_USER", "")) if os.environ.get("R_LIBS_USER") else None
+
+
+def _have_mrgsolve() -> bool:
+    if shutil.which("Rscript") is None:
+        return False
+    r = subprocess.run(
+        ["Rscript", "-e", "quit(status = as.integer(!requireNamespace('mrgsolve', quietly=TRUE)))"],  # noqa: S607
+        capture_output=True,
+        check=False,
+        timeout=120,
+    )
+    return r.returncode == 0
+
+
+@pytest.mark.mrgsolve
+@pytest.mark.parametrize("drug", ["dolutegravir", "ertugliflozin", "sunitinib"])
+@pytest.mark.parametrize(("doses", "interval"), [(1, None), (3, 24)])
+def test_mrgsolve_reproduces_the_janus_engine_curve(
+    tmp_path: Path, drug: str, doses: int, interval: int | None
+) -> None:
+    if not _have_mrgsolve():
+        if os.environ.get("JANUS_REQUIRE_MRGSOLVE") == "1":
+            pytest.fail("R with mrgsolve is required (JANUS_REQUIRE_MRGSOLVE=1)")
+        pytest.skip("R with mrgsolve is not installed")
+    rows = seed_rows()
+    ps = build_set(drug, rows)
+    assert isinstance(ps, ParameterSet)
+    files = ex.export_files("mrgsolve", ps, validate(drug, rows, ps), rows, RELEASE)
+    (tmp_path / "model.cpp").write_text(files["model.cpp"], encoding="utf-8")
+    dose = ex.example_dose_mg(validate(drug, rows, ps))
+    ref = explore(ex.engine_params(ps), dose, 240.0, 1, interval_h=interval, doses=doses)
+    cp = ref["p50_ng_ml"]
+    (tmp_path / "ref.json").write_text(
+        json.dumps({"dose": dose, "times": ref["hours"], "interval_h": interval, "doses": doses}),
+        encoding="utf-8",
+    )
+    r = subprocess.run(  # noqa: S603
+        ["Rscript", str(HERE / "mrgsolve_roundtrip.R"), str(tmp_path)],  # noqa: S607
+        capture_output=True,
+        text=True,
+        check=False,
+        timeout=600,
+    )
+    assert r.returncode == 0, r.stderr[-2000:]
+    out = json.loads((tmp_path / "out.json").read_text(encoding="utf-8"))
+    peak = max(cp)
+    assert peak > 0
+    for t, a, b in zip(ref["hours"], cp, out["cp"], strict=True):
+        if a >= 1e-3 * peak:
+            assert abs(b - a) <= 0.01 * a, (drug, t, a, b)
+        else:
+            assert abs(b - a) <= 1e-3 * peak, (drug, t, a, b)

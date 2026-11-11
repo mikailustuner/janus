@@ -34,6 +34,7 @@ packages = ["janus"]
 [tool.pytest.ini_options]
 testpaths = ["tests", "janus"]
 addopts = "-ra --strict-markers"
+markers = ["mrgsolve: needs R with the pinned mrgsolve (own CI job; JANUS_REQUIRE_MRGSOLVE=1 makes a missing R a failure)"]
 
 [tool.ruff]
 target-version = "py312"

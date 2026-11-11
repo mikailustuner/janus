@@ -109,7 +109,7 @@ def ev_from_mapping(m: dict[str, Any]) -> Ev:
         confirmed=bool(m["confirmed"]),
         confirm_reason=m["confirm_reason"],
         note=m["note"],
-        extracted_at=m["extracted_at"],
+        extracted_at=str(m["extracted_at"]),
     )
 
 

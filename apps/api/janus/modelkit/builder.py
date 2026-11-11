@@ -67,6 +67,8 @@ class Pooled:
 
 
 def _gmean(xs: list[float]) -> float:
+    if len(xs) == 1:
+        return xs[0]
     return math.exp(sum(math.log(x) for x in xs) / len(xs))
 
 
@@ -88,8 +90,12 @@ def pool(rows: list[Ev]) -> Pooled | None:
         rs = by_study[study]
         vals.append(_gmean([r.value_si for r in rs]))
         weights.append(float(max((r.n_subjects or 1) for r in rs)))
-    value = math.exp(
-        sum(w * math.log(v) for w, v in zip(weights, vals, strict=True)) / sum(weights)
+    value = (
+        vals[0]
+        if len(vals) == 1
+        else math.exp(
+            sum(w * math.log(v) for w, v in zip(weights, vals, strict=True)) / sum(weights)
+        )
     )
     spread = None
     if len(vals) >= 2:

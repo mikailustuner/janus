@@ -92,7 +92,7 @@ def engine_json(ps: ParameterSet, val: Validation | None) -> dict[str, Any]:
 
 def mrgsolve_cpp(ps: ParameterSet) -> str:
     p = engine_params(ps)
-    return f"""$PROBLEM {ps.drug_key}: Janus model kit starter model (experimental)
+    return f"""$PROB {ps.drug_key}: Janus model kit starter model (experimental)
 // {RESEARCH_USE} {NO_REVIEW}
 // One compartment, first-order absorption. Units: dose mg, time h, CL L/h, V L, KA 1/h,
 // concentration CP in ng/mL. {"CL and V are apparent (CL/F, V/F); F is 1." if ps.apparent else ""}
@@ -148,7 +148,8 @@ def provenance(
     by_id = {r.eid: r for r in rows}
     used = sorted(ps.used)
     meta = source_meta()
-    studies = sorted({by_id[e].study for e in used})
+    pts = [p.eid for p in val.points] if val else []
+    studies = sorted({by_id[e].study for e in [*used, *pts]})
     return {
         "kit": {
             "name": "Janus drug model starter kit",
@@ -202,13 +203,27 @@ def provenance(
         "left_out": [{"id": e, "reason": why} for e, why in ps.left_out],
         "held_out_studies": [{"source": s, "study": t} for s, t in ps.test_studies],
         "warnings": list(ps.warnings),
-        "validation": None if val is None else validation_summary(val),
+        "validation": None if val is None else validation_summary(val, by_id),
         "sources": {f"{s}:{t}": meta.get(f"{s}:{t}") for s, t in studies},
     }
 
 
-def validation_summary(val: Validation) -> dict[str, Any]:
+def validation_summary(val: Validation, by_id: dict[str, Ev]) -> dict[str, Any]:
     return {
+        "observations": [
+            {
+                "id": p.eid,
+                "metric": p.metric,
+                "study": p.study_id,
+                "dose_mg": p.dose_mg,
+                "observed": p.observed,
+                "predicted": p.predicted,
+                "ratio": p.ratio,
+                "locator": by_id[p.eid].source_locator,
+                "quote": by_id[p.eid].quote,
+            }
+            for p in val.points
+        ],
         "status": val.status,
         "reasons": list(val.reasons),
         "metrics": [m.__dict__ for m in val.metrics],
