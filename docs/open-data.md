@@ -1,6 +1,6 @@
 # Janus open data
 
-Janus publishes two kinds of open data. Both are research material, not medical advice. Janus is a
+Janus publishes these kinds of open data. Both are research material, not medical advice. Janus is a
 research prototype, not a medical device.
 
 1. **The open outcome dataset**: counts of donated reports and of doctor-confirmed outcomes, released only
@@ -11,6 +11,8 @@ research prototype, not a medical device.
    across TİTCK, Wikidata, openFDA NDC, BDPM and AEMPS CIMA, with what changed since the previous week.
 4. **The FAERS onset table for the 65 PIPC cascades** (`data/open/faers-onset/`): descriptive time to onset
    from FAERS reports for every PIPC row.
+5. **The drug model starter kit data package** (built, not yet published): the evidence rows, parameter sets and
+   validation report of a model-kit release ([section 5](#5-the-drug-model-starter-kit-data-package)).
 
 The read-only API that serves the dataset (and the other public routes) is described in
 [`open-api.md`](open-api.md) and [`openapi-public.json`](openapi-public.json).
@@ -159,3 +161,26 @@ distinct date pairs, earliest class start) and a Weibull shape class. `status` s
   `data/onset_row_notes.csv` (known limits per row), Apache-2.0.
 - **Status:** methods and mappings checked by automated review passes (statistics, pharmacology). Expert review
   has not yet been done.
+
+## 5. The drug model starter kit data package
+
+Built by `python -m janus.modelkit.package --out DIR` (from `apps/api`) from the current `modelkit_evidence`
+release, or `--run RUN_DIR`; the same release gives the same bytes. It is **not committed and not uploaded**: the
+evidence file is about 29 MB, and publication with a DOI is the project owner's decision. Experimental. Research use
+only. Not for clinical decisions. Expert review has not yet been done.
+
+| File | Content |
+|---|---|
+| `evidence.csv` | every published evidence row of the release (quote, locator, source version, both automated reader verdicts, `confirmed`); values as stated plus the canonical `value_si`; dose in mg |
+| `special_populations.csv` | US-label exposure ratios of older adults and of renal and hepatic impairment (`data/modelkit/special_populations.csv`) |
+| `parameter_sets.csv`, `parameter_sets.json` | the one-compartment parameter sets with evidence ids, confidence classes and derivations |
+| `validation.json` | each drug's status, held-out points and reasons, and the system report |
+| `licences.json` | per source: licence, attribution, and for ClinicalTrials.gov the processing date of the bulk file and the statement of changes; each PubMed Central article with its licence |
+| `README.md`, `datapackage.json` | how to read it; Frictionless descriptor with a sha256 hash and row count per file |
+| `.zenodo.json` | a metadata draft **without a DOI and without creators** (added by the owner before any upload) |
+
+- **Only publishable rows.** The build stops on any row of a source the release does not publish: the Drugs@FDA
+  review and PMC table values of milestone M5 are held back (`data/modelkit/precision_documents.json`), and a PMC
+  row needs a CC BY or CC0 licence. Each row keeps the terms of its own source.
+- Spec: `.kiro/specs/model-kit/` (DP-M38).
+

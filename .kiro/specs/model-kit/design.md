@@ -279,3 +279,33 @@ text stays "Expert review has not yet been done".
 - **M29** The pilot's horse case and every non-human article reach no reader (test).
 - **M30** A study linked to another study never tests; without links the split is unchanged (tests).
 - **M31** Dispersion, count and test columns never give a value; a dose is never taken from an abstract (tests).
+
+## 19. Milestone M6 decisions
+- **DP-M36 Special populations are evidence, not set inputs (plan section 7 rule 3).** `population_class` reads the row's
+  population: `special` (the readers' class: children, older adults, renal or hepatic impairment), `healthy`, `patients`,
+  `unspecified`. A special row never builds and never tests (`exclusion_reason`: `special_population`). A row of patients
+  builds only if the drug has no healthy-adult row the builder can read (parameter and route in `builder.READS`, building
+  study, no exclusion). The reference of a set is the class of the rows it uses (healthy, else patients, else unspecified);
+  a held-out observation is tested only if its class is the reference or unspecified (every class but special for an
+  unspecified reference). Other rows get `not_reference_population`; a set that uses a patients row carries the warning
+  `reference_population_patients`. The study split is unchanged (every row of every population still decides it), so
+  nothing is loosened. Pre-registered with three dated addenda (private).
+
+## 20. Milestone M6 properties
+- **M32** No used row and no tested point is of a special population; used rows are of the drug's building classes and
+  tested points of the classes compatible with the set's reference (Hypothesis, builder properties).
+- **DP-M37 Expert sample audit record.** `pipelines/janus_pipelines/modelkit/audit.py` scores filled answer sheets
+  (precision = correct / (correct + incorrect), Wilson 95 %, per stratum, margin and overall; strict consensus of several
+  reviewers; Cohen's kappa) and checks the record `modelkit_expert_audit-1` (date, release audited, n, correct, cannot
+  judge, precision, Wilson bounds, criterion of plan 12.3 met, reviewer roles; exactly these fields, no name). The tool
+  `pipelines/tools/score_modelkit_audit.py` writes it; `modelkit_evidence` reads `data/modelkit/expert_audit.json` when it
+  exists (absent: input hash unchanged). The API puts it in `statements.expert_audit` and the line "Expert audit: precision X
+  (n = N, date)." in `statements.expert_review`; the system report replaces the caveat `expert_review_pending` with
+  `expert_audit_sample_only` and lists `expert_audit_below_target` while the criterion is not met. Web and MCP rebuild the
+  line from the numbers. Exports keep "Expert review has not yet been done." (the audit does not review a model file).
+- **DP-M38 Data package.** `janus.modelkit.package` writes the package of a release (evidence, special populations, sets,
+  validation, licences, README, `datapackage.json`, `.zenodo.json` without DOI or creators); a row of an unpublished source
+  or a PMC row without CC BY or CC0 stops the build. Not committed, not uploaded (owner decision).
+- **M33** The scoring recomputes from the counts; a record with any other field (a name) or numbers that do not recompute
+  is refused by the job and not shown by the API (tests).
+- **M34** The package holds only publishable rows and every file's hash; the same release gives the same bytes (tests).

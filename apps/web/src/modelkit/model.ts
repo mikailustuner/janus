@@ -20,10 +20,26 @@ const release = D.obj({
   snapshot_date: D.str,
   pipeline_version: D.str,
 });
+/** The expert sample audit (plan 6.4, 12.3): counts, date and reviewer roles; absent until done. */
+const expertAudit = D.obj({
+  date: D.str,
+  release_audited: D.str,
+  n_items: D.int,
+  n: D.int,
+  correct: D.int,
+  cannot_judge: D.int,
+  precision: D.num,
+  wilson_low: D.num,
+  wilson_high: D.num,
+  criterion_met: D.bool,
+  reviewer_roles: D.arr(D.str),
+});
+export type ExpertAudit = D.Infer<typeof expertAudit>;
 const statements = D.obj({
   research_use: D.str,
   expert_review: D.str,
   experimental: D.str,
+  expert_audit: D.optional(expertAudit),
 });
 const metric = D.obj({
   name: D.lit("auc", "cmax"),
@@ -572,6 +588,8 @@ export const REASON_CODES = [
   "formulation_not_immediate_release",
   "bound_not_a_value",
   "per_kg_not_converted",
+  "special_population",
+  "not_reference_population",
   "held_out_study",
   "observation_in_building_study",
   "same_study_in_another_source",
@@ -601,6 +619,7 @@ export const REASON_CODES = [
   "half_life_inconsistent",
   "studies_disagree",
   "healthy_adult_preferred",
+  "reference_population_patients",
   "no_central_volume_evidence",
   "two_volumes_differ",
   "two_volumes_agree",
@@ -614,6 +633,8 @@ export const REASON_CODES = [
   "two_automated_passes",
   "confirmed_precision_below_target",
   "expert_review_pending",
+  "expert_audit_sample_only",
+  "expert_audit_below_target",
   "sp_statements_note",
   "sp_atlas_note",
   "sp_none",

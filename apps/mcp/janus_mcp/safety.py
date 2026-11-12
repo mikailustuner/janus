@@ -7,7 +7,8 @@ and are passed on unchanged.
 
 from __future__ import annotations
 
-from typing import Any, Final
+import re
+from typing import Any, Final, cast
 
 DISCLAIMER: Final = (
     "Janus provides information, not medical advice. Research prototype — not a medical device."
@@ -68,6 +69,37 @@ MODELKIT_LINES: Final = (
     "authors in `source_version`: credit the authors and the article and name the licence "
     "whenever you quote it. A value from a Drugs@FDA review links the PDF page in `source_url`.",
 )
+AUDIT_STATUS_LINE: Final = (
+    "Report the validation status as given (validated, not validated or failed) with n; it "
+    "describes a handful of held-out studies, not the drug in general. The readers that confirmed "
+    "the values were automated; a person judged only the random sample of the expert audit, so "
+    "never say that a person checked a particular value."
+)
+_DATE: Final = re.compile(r"^20[0-9]{2}-[01][0-9]-[0-3][0-9]$")
+
+
+def modelkit_lines(payload: Any) -> tuple[str, ...]:
+    """The model kit lines of one answer. With an expert audit record in the answer's
+    `statements.expert_audit` the pending-review sentence becomes the audit line, rebuilt from its
+    numbers (never passed on as free text); without one the lines are `MODELKIT_LINES`."""
+    st = cast(dict[str, Any], payload).get("statements") if isinstance(payload, dict) else None
+    raw = cast(dict[str, Any], st).get("expert_audit") if isinstance(st, dict) else None
+    if not isinstance(raw, dict):
+        return MODELKIT_LINES
+    a = cast(dict[str, Any], raw)
+    precision, n, date = a.get("precision"), a.get("n"), a.get("date")
+    if not (
+        isinstance(precision, (int, float)) and 0 <= precision <= 1
+        and isinstance(n, int) and n > 0 and isinstance(date, str) and _DATE.match(date)
+    ):  # fmt: skip
+        return MODELKIT_LINES
+    first = (
+        "The model kit is experimental. Say: Research use only. Not for clinical decisions. "
+        f"Expert audit: precision {precision:.2f} (n = {n}, {date})."
+    )
+    return (first, MODELKIT_LINES[1], AUDIT_STATUS_LINE, *MODELKIT_LINES[3:])
+
+
 RESOLVE_LINES: Final = (
     "A resolved product or ingredient is what the public registers publish for that code or "
     "name; check the candidate with the person (several candidates can match).",

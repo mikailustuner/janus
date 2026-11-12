@@ -93,6 +93,18 @@ def test_provenance_ties_every_parameter_to_evidence_with_quotes() -> None:
     assert prov["left_out"] and prov["kit"]["status"] == "experimental"
 
 
+def test_provenance_lists_the_points_outside_2_fold() -> None:
+    from tests.test_modelkit_builder import oral_world
+
+    rows = oral_world()  # Cmax observed far below the prediction: Failed
+    ps = build_set("exampletine", rows)
+    assert isinstance(ps, ParameterSet)
+    val = validate("exampletine", rows, ps)
+    prov = json.loads(ex.export_files("janus", ps, val, rows, RELEASE)["provenance.json"])
+    assert prov["validation"]["status"] == "failed"
+    assert prov["validation"]["failed_points"] == list(val.failed_points) and val.failed_points
+
+
 def test_references_and_licences_name_the_terms() -> None:
     f = files_for("ertugliflozin", "janus")
     assert "@article" in f["references.bib"] and "PMC9238437" in f["references.bib"].replace(

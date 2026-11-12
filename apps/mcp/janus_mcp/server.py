@@ -228,7 +228,7 @@ def build_server(config: Config, transport: httpx2.AsyncBaseTransport | None = N
             dicts = [cast(dict[str, Any], d) for d in drugs if isinstance(d, dict)]
             kept: list[dict[str, Any]] = [d for d in dicts if query in str(d.get("key", ""))]
             payload = {**obj, "drugs": kept}
-        return result(payload, *safety.MODELKIT_LINES)
+        return result(payload, *safety.modelkit_lines(payload))
 
     @server.tool(
         annotations=READ_ONLY,
@@ -244,7 +244,7 @@ def build_server(config: Config, transport: httpx2.AsyncBaseTransport | None = N
         key: Annotated[str, Field(pattern=DRUG_KEY)],
     ) -> dict[str, Any]:
         payload = await api("GET", f"/modelkit/drugs/{key}")
-        return result(payload, *safety.MODELKIT_LINES)
+        return result(payload, *safety.modelkit_lines(payload))
 
     @server.tool(
         annotations=READ_ONLY,
@@ -277,7 +277,7 @@ def build_server(config: Config, transport: httpx2.AsyncBaseTransport | None = N
                 and (not role or r.get("role") == role)
             ]
             payload = {**obj, "rows": kept}
-        return result(payload, *safety.MODELKIT_LINES)
+        return result(payload, *safety.modelkit_lines(payload))
 
     return server
 

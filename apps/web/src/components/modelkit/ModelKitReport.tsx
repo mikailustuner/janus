@@ -48,7 +48,10 @@ export function ModelKitReport() {
       <div className="flex flex-wrap gap-2">
         <ExperimentalChip />
       </div>
-      <Statements recorded={recorded} />
+      <Statements
+        recorded={recorded}
+        audit={call.status === "ok" ? call.data.statements.expert_audit : null}
+      />
       <p className="max-w-[72ch]">{t("ModelKit.report.intro")}</p>
       {failed || call.status === "error" ? (
         <StateView

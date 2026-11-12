@@ -748,3 +748,66 @@ test.describe("special populations", () => {
     await expect(sp).toContainText(messages.en.ModelKit.sp.systemIntro);
   });
 });
+
+// Milestone M6: with an expert audit record in the answers the review line gives precision, n and
+// date (plan 6.4); without one it stays "Expert review has not yet been done." (the checks above).
+const AUDIT = {
+  date: "2027-01-15",
+  release_audited: "20261112T135125Z-8ac5398b-3c00",
+  n_items: 366,
+  n: 320,
+  correct: 310,
+  cannot_judge: 30,
+  precision: 310 / 320,
+  wilson_low: 0.9435,
+  wilson_high: 0.983,
+  criterion_met: true,
+  reviewer_roles: ["clinical_pharmacologist", "pharmacometrician"],
+};
+const withAudit = (r: Recorded): Recorded => {
+  const st = (o: Json) => ({
+    ...o,
+    statements: { ...o.statements, expert_audit: AUDIT },
+  });
+  return {
+    drugs: st(r.drugs),
+    validation: st(r.validation),
+    drug: Object.fromEntries(
+      Object.entries(r.drug).map(([k, v]) => [k, st(v)]),
+    ),
+    evidence: Object.fromEntries(
+      Object.entries(r.evidence).map(([k, v]) => [k, st(v)]),
+    ),
+  };
+};
+const auditStubs = stubsOf(withAudit(fx));
+
+for (const theme of THEMES)
+  for (const locale of ["en", "tr"] as const)
+    for (const path of [
+      "/research/model-kit",
+      "/research/model-kit/report",
+      `/research/model-kit/drug#${FAILED}`,
+    ])
+      test(`expert audit line, ${path}, ${locale}, ${theme}`, async ({
+        page,
+      }, info) => {
+        await useTheme(page, theme);
+        await stubApi(page, auditStubs);
+        await page.goto(`/${locale}${path}`);
+        await page.waitForLoadState("networkidle");
+        const review = page.getByTestId("mk-review");
+        await expect(review).toHaveAttribute("data-audit", "yes");
+        await expect(review).toHaveText(
+          locale === "en"
+            ? "Expert audit: precision 0.97 (n = 320, 2027\u201101\u201115)."
+            : "Uzman denetimi: doğruluk 0,97 (n = 320, 2027\u201101\u201115).",
+        );
+        await expect(review).not.toHaveText(
+          messages[locale].ModelKit.expertReview,
+        );
+        await expectNoAxeViolations(page);
+        await expectNoHorizontalScroll(page);
+        if (path === "/research/model-kit")
+          await shot(page, `audit-${locale}`, info.project.name, theme);
+      });

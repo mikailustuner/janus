@@ -7,7 +7,7 @@ import hashlib
 import json
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 import duckdb
 
@@ -188,6 +188,8 @@ def exclusion_reason(e: Ev) -> str | None:
         return "bound_not_a_value"
     if e.parameter.endswith("_per_kg"):
         return "per_kg_not_converted"
+    if population_class(e.population) == "special":
+        return "special_population"
     return None
 
 
@@ -232,3 +234,31 @@ def split_studies(
         building |= test & linked
         test -= linked
     return frozenset(building), frozenset(test)
+
+
+# --- population (milestone M6; plan section 7 rule 3) --------------------------------------------
+
+PopClass = Literal["special", "healthy", "patients", "unspecified"]
+
+
+def population_class(population: str | None) -> PopClass:
+    """The class of a row's population field: `special` (the readers' special-population class:
+    children, older adults, renal or hepatic impairment), `healthy`, `patients` or `unspecified`."""
+    p = (population or "").lower()
+    if "special" in p:
+        return "special"
+    if "healthy" in p:
+        return "healthy"
+    if "patient" in p:
+        return "patients"
+    return "unspecified"
+
+
+def compatible_populations(reference: str) -> frozenset[PopClass]:
+    """The population classes a set of this reference population may be tested on: the reference
+    itself and `unspecified`; with an `unspecified` reference every class but special."""
+    if reference == "healthy":
+        return frozenset({"healthy", "unspecified"})
+    if reference == "patients":
+        return frozenset({"patients", "unspecified"})
+    return frozenset({"healthy", "patients", "unspecified"})

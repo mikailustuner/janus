@@ -12,6 +12,8 @@ TEXT: dict[str, str] = {
     "formulation_not_immediate_release": "The formulation is not immediate-release or a solution.",
     "bound_not_a_value": "The source gives only a bound (for example 'more than'), not a value.",
     "per_kg_not_converted": "The value is per kilogram; there is no body weight, so it is not converted.",
+    "special_population": "The value is for a special population (children, older adults, renal or hepatic impairment); special populations are evidence, not set inputs.",
+    "not_reference_population": "Another population than the one this drug's set is built from (healthy adults are preferred); not used to build or test.",
     "held_out_study": "Held-out study: its observations only test a set, they never build one.",
     "observation_in_building_study": "An observation in a study that also reports building parameters; not tested.",
     "same_study_in_another_source": "May be the same study as one in another source (shared trial number, study code or identical results); kept on the building side, not tested.",
@@ -45,6 +47,7 @@ TEXT: dict[str, str] = {
     "half_life_inconsistent": "The half-life implied by CL and V differs from the stated half-life by more than 1.5-fold; the curve tail is not supported.",
     "studies_disagree": "The studies disagree by more than 2-fold.",
     "healthy_adult_preferred": "Healthy-adult values were preferred.",
+    "reference_population_patients": "No healthy-adult value: the set is built from values in patients (and values whose population is not stated) and is tested only on such observations.",
     "no_central_volume_evidence": "No central-volume evidence (no distribution phase): one compartment.",
     "two_volumes_differ": "Central and steady-state volumes differ by at least 25 %: two compartments.",
     "two_volumes_agree": "Central and steady-state volumes agree within 25 %: one compartment.",
@@ -65,6 +68,8 @@ TEXT: dict[str, str] = {
         "the report). Read every value as unverified."
     ),
     "expert_review_pending": "Expert review has not yet been done.",
+    "expert_audit_sample_only": "The expert audit judged a random sample of confirmed values, not every value; read every other value as unverified.",
+    "expert_audit_below_target": "The expert audit did not meet the target (precision at least 0.95 with a lower 95 % bound of at least 0.90 on at least 300 judged values).",
     # special populations (older adults, renal and hepatic impairment) quoted from US labels
     "sp_statements_note": (
         "Exposure ratios as the US label states them, quoted. Two independent automated readers agree on each; "

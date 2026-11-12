@@ -223,3 +223,75 @@ def test_web_m0_recorded_file_is_the_api_answer() -> None:
     from tests.modelkit_record import RECORDED_M0, recorded_m0
 
     assert json.loads(RECORDED_M0.read_text(encoding="utf-8")) == recorded_m0()
+
+
+# --- milestone M6: the expert sample audit record ------------------------------------------------
+
+AUDIT = {
+    "schema": "modelkit_expert_audit-1", "date": "2027-01-15", "release_audited": RUN_ID,
+    "n_items": 366, "n": 320, "correct": 310, "cannot_judge": 30, "precision": 310 / 320,
+    "wilson_low": 0.9435, "wilson_high": 0.9830, "criterion_met": True,
+    "reviewer_roles": ["clinical_pharmacologist", "pharmacometrician"],
+}  # fmt: skip
+
+
+def _client_with(tmp_path: Path, metrics: dict[str, object]) -> TestClient:
+    write_run(tmp_path, seed_dicts(), metrics)
+    app: FastAPI = create_app(configure_logs=False)
+    app.state.modelkit = ModelkitHolder(tmp_path)
+    return TestClient(app)
+
+
+def test_without_an_audit_record_every_answer_says_expert_review_is_pending(
+    client: TestClient,
+) -> None:
+    for path in (
+        "/modelkit/drugs", "/modelkit/validation", "/modelkit/drugs/sunitinib",
+        "/modelkit/drugs/sunitinib/evidence",
+    ):  # fmt: skip
+        st = client.get(path).json()["statements"]
+        assert st["expert_review"] == "Expert review has not yet been done."
+        assert st["expert_audit"] is None
+    s = client.get("/modelkit/validation").json()
+    assert "expert_review_pending" in s["caveats"] and "expert_review_pending" in s["missing"]
+
+
+def test_an_audit_record_replaces_the_statement_everywhere(tmp_path: Path) -> None:
+    with _client_with(tmp_path, {"expert_audit": AUDIT}) as cl:
+        for path in (
+            "/modelkit/drugs", "/modelkit/validation", "/modelkit/drugs/sunitinib",
+            "/modelkit/drugs/sunitinib/evidence",
+        ):  # fmt: skip
+            st = cl.get(path).json()["statements"]
+            assert st["expert_review"] == "Expert audit: precision 0.97 (n = 320, 2027-01-15)."
+            assert st["expert_audit"]["n"] == 320 and st["expert_audit"]["criterion_met"] is True
+            assert "name" not in json.dumps(st["expert_audit"])
+        s = cl.get("/modelkit/validation").json()
+        assert "expert_audit_sample_only" in s["caveats"]
+        assert "expert_review_pending" not in s["caveats"] + s["missing"]
+        assert "expert_audit_below_target" not in s["missing"]
+
+
+def test_an_audit_below_the_target_is_named_in_what_is_missing(tmp_path: Path) -> None:
+    low = {**AUDIT, "correct": 280, "precision": 0.875, "criterion_met": False}
+    with _client_with(tmp_path, {"expert_audit": low}) as cl:
+        s = cl.get("/modelkit/validation").json()
+        assert "expert_audit_below_target" in s["missing"]
+        assert s["statements"]["expert_review"].startswith("Expert audit: precision 0.88 (n = 320")
+
+
+@pytest.mark.parametrize(
+    "bad",
+    [
+        {**AUDIT, "reviewer_name": "someone"},
+        {**AUDIT, "n": 0},
+        {**AUDIT, "date": "15 January"},
+        {**AUDIT, "correct": 400},
+        "not a record",
+    ],
+)
+def test_a_malformed_audit_record_is_not_shown(tmp_path: Path, bad: object) -> None:
+    with _client_with(tmp_path, {"expert_audit": bad}) as cl:
+        st = cl.get("/modelkit/drugs").json()["statements"]
+        assert st["expert_review"] == "Expert review has not yet been done."
+        assert st["expert_audit"] is None

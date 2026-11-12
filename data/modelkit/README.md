@@ -84,3 +84,11 @@ short quotes only; no raw downloads.
   M5 (Drugs@FDA review tables, PMC article tables; blinded samples of 100 values, two automated review passes) and whether
   their values are published. Rule fixed before the measurement: published only if the precision is at least 0.70 and the
   upper Wilson bound at least 0.75. Both measured 0.48 on 2026-11-12: neither is published.
+
+## Milestone M6 files
+- No new committed file. `expert_audit.json` is **absent** until a person has audited the pre-registered sample of the
+  published confirmed values. When the project owner adds it (written by `pipelines/tools/score_modelkit_audit.py`
+  with `--record`), the job `modelkit_evidence` checks it strictly (exact fields, counts that recompute, reviewer roles
+  only, never a name) and copies it into the manifest; the API, the web pages and the MCP text then show "Expert audit:
+  precision X (n = N, date)." instead of "Expert review has not yet been done."
+

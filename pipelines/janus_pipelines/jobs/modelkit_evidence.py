@@ -22,6 +22,7 @@ import polars as pl
 from janus_pipelines.core.canonical import Json, Row, sha256_bytes
 from janus_pipelines.core.runner import Job, ParseResult, RawInput, RunContext
 from janus_pipelines.core.validation import ExpectedSchema, Field, SchemaReport
+from janus_pipelines.modelkit.audit import check_record
 from janus_pipelines.modelkit.study_identity import groups, keys_text
 from janus_pipelines.modelkit.units import Canonical, to_canonical
 
@@ -32,6 +33,8 @@ M1_PATH: Final = ("data", "modelkit", "evidence_m1.csv")  # milestone M1 rows (t
 PRECISION_PATH: Final = ("data", "modelkit", "precision.json")  # measured precision (M3)
 # measured precision of the document sources and whether their values are published (M5)
 DOC_PRECISION_PATH: Final = ("data", "modelkit", "precision_documents.json")
+# the expert sample audit (milestone M6): absent until a person has audited a sample
+EXPERT_AUDIT_PATH: Final = ("data", "modelkit", "expert_audit.json")
 CTGOV_IDS_PATH: Final = (
     "data",
     "modelkit",
@@ -362,6 +365,7 @@ def parse_seed(
     documents: Sequence[Row] = (),
     ctgov_ids: Mapping[str, str] | None = None,
     doc_precision: Mapping[str, Json] | None = None,
+    expert_audit: Mapping[str, Json] | None = None,
 ) -> ParseResult:
     """The seed text: the M0 file alone, or the M0 file and the M1 file joined by a record
     separator line. Rows of superseded sources (M0) are dropped for drugs the M1 file covers.
@@ -430,6 +434,9 @@ def parse_seed(
         metrics["precision"] = dict(precision)
     if doc_precision:
         metrics["precision_documents"] = dict(doc_precision)
+    if expert_audit is not None:
+        check_record(expert_audit)
+        metrics["expert_audit"] = dict(expert_audit)
     metrics["document_rows_held_back"] = dict(sorted(held_back.items()))
     metrics["study_identity_links"] = dict(sorted(links.items()))
     metrics["study_groups_with_several_studies"] = sum(
@@ -505,6 +512,7 @@ class ModelkitEvidenceJob(Job[bytes]):
         self._documents: list[Row] = []
         self._precision: dict[str, Json] | None = None
         self._doc_precision: dict[str, Json] | None = None
+        self._expert_audit: dict[str, Json] | None = None
         self._ctgov_ids: dict[str, str] = {}
 
     def fetch(self, ctx: RunContext) -> RawInput[bytes]:
@@ -516,6 +524,8 @@ class ModelkitEvidenceJob(Job[bytes]):
         self._precision = json.loads(prec.read_text("utf-8")) if prec.exists() else None
         dprec = ctx.repo_root.joinpath(*DOC_PRECISION_PATH)
         self._doc_precision = json.loads(dprec.read_text("utf-8")) if dprec.exists() else None
+        audit = ctx.repo_root.joinpath(*EXPERT_AUDIT_PATH)
+        self._expert_audit = json.loads(audit.read_text("utf-8")) if audit.exists() else None
         ids = ctx.repo_root.joinpath(*CTGOV_IDS_PATH)
         ids_text = ids.read_text("utf-8") if ids.exists() else "nct_id,codes\n"
         self._ctgov_ids = ctgov_keys(ids_text)
@@ -535,6 +545,11 @@ class ModelkitEvidenceJob(Job[bytes]):
                 + ids_text.encode()
                 + json.dumps(self._precision, sort_keys=True).encode()
                 + json.dumps(self._doc_precision, sort_keys=True).encode()
+                + (
+                    json.dumps(self._expert_audit, sort_keys=True).encode()
+                    if self._expert_audit is not None
+                    else b""
+                )
             ),
             retrieved_at=retrieved,
             snapshot_date=max([*dates, *_ctgov_dates(self._ctgov)])
@@ -550,4 +565,5 @@ class ModelkitEvidenceJob(Job[bytes]):
             self._documents,
             self._ctgov_ids,
             self._doc_precision,
+            self._expert_audit,
         )

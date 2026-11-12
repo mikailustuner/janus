@@ -14,11 +14,19 @@ from janus.modelkit.builder import (
     NoSet,
     ParameterSet,
     build_set,
+    building_populations,
     choose_model,
     pool,
+    set_reference,
     solve_ka,
 )
-from janus.modelkit.evidence import Ev, exclusion_reason, split_studies
+from janus.modelkit.evidence import (
+    Ev,
+    compatible_populations,
+    exclusion_reason,
+    population_class,
+    split_studies,
+)
 from janus.modelkit.validate import (
     BAND,
     Metric,
@@ -281,6 +289,9 @@ PARAMS = [
 ]
 
 
+POPULATIONS = ["healthy adults", "healthy adults", None, "patients", "special population"]
+
+
 @st.composite
 def worlds(draw: st.DrawFn) -> list[Ev]:
     rows: list[Ev] = []
@@ -317,6 +328,7 @@ def worlds(draw: st.DrawFn) -> list[Ev]:
                     ),
                     confirmed=draw(st.booleans()),
                     n_subjects=draw(st.sampled_from([None, 6, 24])),
+                    population=draw(st.sampled_from(POPULATIONS)),
                 )
             )
     # values of fractions must be in (0, 1]
@@ -333,6 +345,7 @@ def worlds(draw: st.DrawFn) -> list[Ev]:
             coadministered=r.coadministered,
             formulation=r.formulation,
             confirmed=r.confirmed,
+            population=r.population,
         )
         for r in rows
     ]
@@ -355,6 +368,14 @@ def test_properties_of_the_builder(rows: list[Ev], rnd: random.Random) -> None:
     # M2 and M6: only confirmed, parent, not co-administered, immediate-release rows
     for e in used | pts:
         assert exclusion_reason(by_id[e]) is None
+    # M32: special populations never build or test; every used row and point is of a class
+    # compatible with the drug's reference population (milestone M6)
+    for e in used:
+        assert population_class(by_id[e].population) in building_populations(rows)
+    tested = compatible_populations(set_reference(used, rows))
+    for e in pts:
+        assert population_class(by_id[e].population) in tested
+    assert all(population_class(by_id[e].population) != "special" for e in used | pts)
     # M10: no per-kg parameter
     assert all(not by_id[e].parameter.endswith("per_kg") for e in used)
     # M3: every estimated parameter lists evidence that exists
@@ -408,6 +429,11 @@ def test_seed_outcomes_are_stable() -> None:
     bad = [p for p in sun.points if not p.within_2_fold]
     assert len(bad) == 1 and bad[0].metric == "cmax" and bad[0].ratio < 0.5
     assert sun.failed_points == (bad[0].eid,)
+    # M6: the set uses label values only (population not stated), so the healthy-adult review
+    # observations are tested; the patients' peak time (route unknown) cannot enter the set
+    sun_set = build_set("sunitinib", seed_rows())
+    assert isinstance(sun_set, ParameterSet)
+    assert "reference_population_patients" not in sun_set.warnings
     assert got["dolutegravir"] == ("not_validated", "ParameterSet", True)
     for d in ("gabapentin", "telmisartan", "tramadol"):
         assert got[d] == ("not_validated", "NoSet", False)
@@ -541,3 +567,101 @@ def test_no_group_means_the_study_alone() -> None:
     assert split_studies(rows) == split_studies(
         [ev(**{**r.public(), "study_group": None}) for r in rows]
     )
+
+
+# --- milestone M6: special populations are evidence, not set inputs (plan section 7 rule 3) -----
+
+
+def test_special_population_rows_never_build() -> None:
+    # the only clearance is from a renal-impairment arm: no set
+    rows = [r for r in oral_world() if r.parameter != "cl_f"] + [
+        ev(parameter="cl_f", value=10.0, unit="L/h", study_id="B1", population="special population")
+    ]
+    ps = build_set("exampletine", rows)
+    assert isinstance(ps, NoSet) and "no_confirmed_clearance" in ps.reasons
+    special = next(r for r in rows if r.population == "special population")
+    assert exclusion_reason(special) == "special_population"
+    assert dict(ps.left_out)[special.eid] == "special_population"
+
+
+def test_special_population_observations_are_never_tested() -> None:
+    rows = [
+        *oral_world(),
+        ev(
+            parameter="auc_inf",
+            value=1.0,
+            dose=50.0,
+            study_id="T3",
+            population="special population",
+        ),
+    ]
+    ps = build_set("exampletine", rows)
+    val = validate("exampletine", rows, ps)
+    assert {p.study_id for p in val.points} == {"T1", "T2"}
+    assert "special_population" in dict(val.excluded).values()
+
+
+def test_patients_neither_build_nor_test_when_healthy_adults_exist() -> None:
+    rows = [
+        *oral_world(),
+        ev(parameter="tmax", value=6.0, study_id="B2", population="patients"),
+        ev(parameter="auc_inf", value=1.0, dose=50.0, study_id="T3", population="patients"),
+    ]
+    ps = build_set("exampletine", rows)
+    assert isinstance(ps, ParameterSet)
+    tmax = ps.get("ka")
+    assert tmax is not None and all(r.study_id != "B2" for r in rows if r.eid in tmax.evidence)
+    left = dict(ps.left_out)
+    patients = [r for r in rows if r.population == "patients"]
+    assert all(left[r.eid] == "not_reference_population" for r in patients)
+    val = validate("exampletine", rows, ps)
+    assert {p.study_id for p in val.points} == {"T1", "T2"}
+    assert dict(val.excluded)[patients[1].eid] == "not_reference_population"
+    assert "reference_population_patients" not in ps.warnings
+
+
+def test_patients_build_and_test_when_no_healthy_adult_value_exists() -> None:
+    rows = [ev(**{**r.public(), "population": "patients"}) for r in oral_world()]
+    # a healthy-adult observation: another class than the set's
+    rows.append(ev(parameter="auc_inf", value=1.0, dose=50.0, study_id="T3"))
+    ps = build_set("exampletine", rows)
+    assert isinstance(ps, ParameterSet) and "reference_population_patients" in ps.warnings
+    val = validate("exampletine", rows, ps)
+    assert {p.study_id for p in val.points} == {"T1", "T2"}
+    healthy = next(r for r in rows if r.study_id == "T3")
+    assert dict(val.excluded)[healthy.eid] == "not_reference_population"
+
+
+def test_a_patient_row_the_builder_cannot_read_does_not_decide_the_reference() -> None:
+    # sunitinib in the seed: a peak time of patients with an unknown route never enters the set
+    rows = [r for r in oral_world() if r.parameter != "tmax"]
+    rows = [ev(**{**r.public(), "population": None}) for r in rows]
+    rows += [
+        ev(parameter="tmax", value=2.0, study_id="B1", population=None),
+        ev(parameter="tmax", value=6.0, study_id="B2", population="patients", route="unknown"),
+    ]
+    rows = [  # healthy-adult observations in the test studies
+        ev(**{**r.public(), "population": "healthy adults"}) if r.study_id.startswith("T") else r
+        for r in rows
+    ]
+    ps = build_set("exampletine", rows)
+    assert isinstance(ps, ParameterSet) and "reference_population_patients" not in ps.warnings
+    assert {p.study_id for p in validate("exampletine", rows, ps).points} == {"T1", "T2"}
+
+
+def test_unspecified_population_is_usable_with_either_reference() -> None:
+    rows = [ev(**{**r.public(), "population": None}) for r in oral_world()]
+    ps = build_set("exampletine", rows)
+    assert isinstance(ps, ParameterSet) and ps.complete
+    assert {p.study_id for p in validate("exampletine", rows, ps).points} == {"T1", "T2"}
+    assert isinstance(ps, ParameterSet) and set_reference(ps.used, rows) == "unspecified"
+    healthy_ps = build_set("exampletine", oral_world())
+    assert isinstance(healthy_ps, ParameterSet)
+    assert set_reference(healthy_ps.used, oral_world()) == "healthy"
+    # an unspecified building side tests healthy-adult and patient observations alike
+    obs = [
+        ev(parameter="auc_inf", value=5000.0, dose=50.0, study_id="T3"),
+        ev(parameter="auc_inf", value=5000.0, dose=50.0, study_id="T4", population="patients"),
+    ]
+    val = validate("exampletine", rows + obs, build_set("exampletine", rows + obs))
+    assert {"T3", "T4"} <= {p.study_id for p in val.points}

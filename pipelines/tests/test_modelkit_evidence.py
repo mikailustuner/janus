@@ -25,6 +25,7 @@ from janus_pipelines.jobs.modelkit_evidence import (
     parse_seed,
     to_si,
 )
+from janus_pipelines.modelkit.audit import wilson
 from tests.stub_job import FIXED_NOW
 
 REPO = Path(__file__).resolve().parents[2]
@@ -244,3 +245,36 @@ def test_every_row_gets_its_study_group() -> None:
     assert groups["PMC1"] == groups["PMC2"] == "pmc_oa:PMC1"
     assert all(r["study_group"] for r in res.rows)
     assert res.metrics["study_identity_links"] == {"nct": 1}
+
+
+# --- milestone M6: the expert sample audit record ------------------------------------------------
+
+
+def _audit_record() -> dict[str, object]:
+    lo, hi = wilson(310, 320) or (0.0, 0.0)
+    return {
+        "schema": "modelkit_expert_audit-1", "date": "2027-01-15",
+        "release_audited": "20261112T135125Z-8ac5398b-3c00", "n_items": 366, "n": 320,
+        "correct": 310, "cannot_judge": 30, "precision": 310 / 320, "wilson_low": lo,
+        "wilson_high": hi, "criterion_met": True,
+        "reviewer_roles": ["clinical_pharmacologist", "pharmacometrician"],
+    }  # fmt: skip
+
+
+def test_no_audit_record_means_no_audit_metric() -> None:
+    assert "expert_audit" not in parse_seed(SEED.read_text("utf-8")).metrics
+
+
+def test_an_audit_record_is_carried_into_the_manifest() -> None:
+    rec = _audit_record()
+    got = parse_seed(SEED.read_text("utf-8"), expert_audit=rec).metrics["expert_audit"]  # type: ignore[arg-type]
+    assert got == rec
+
+
+@pytest.mark.parametrize(
+    "change",
+    [{"reviewer_name": "someone"}, {"precision": 0.5}, {"reviewer_roles": []}, {"date": "soon"}],
+)
+def test_a_bad_audit_record_fails_the_run(change: dict[str, object]) -> None:
+    with pytest.raises(ValueError, match="expert_audit"):
+        parse_seed(SEED.read_text("utf-8"), expert_audit={**_audit_record(), **change})  # type: ignore[arg-type]
