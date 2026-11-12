@@ -13,7 +13,9 @@ import duckdb
 
 PIPELINE = "modelkit_evidence"
 SOURCE_ID = "modelkit_evidence"
-SCHEMA_VERSION = "modelkit_evidence-2"
+SCHEMA_VERSION = "modelkit_evidence-3"
+# milestone M5 adds the study identity columns; a run of schema 2 is read with empty ones
+SCHEMA_VERSIONS = frozenset({"modelkit_evidence-2", SCHEMA_VERSION})
 
 # Parameters a parameter set is built from; observations only test a set.
 BUILD_PARAMS = frozenset({"cl", "cl_f", "vss", "vd", "v_f", "t_half", "tmax", "f"})
@@ -28,6 +30,7 @@ COLUMNS = (
     "confirm_reason", "note", "extracted_at", "pipeline_version", "arm_id", "origin", "derivation",
     "evidence_kind", "food", "dispersion_type", "dispersion_low", "dispersion_high",
 )  # fmt: skip
+IDENTITY_COLUMNS = ("study_keys", "study_group")  # schema 3 (M5)
 
 
 @dataclass(frozen=True)
@@ -72,10 +75,16 @@ class Ev:
     dispersion_type: str = "none"
     dispersion_low: float | None = None
     dispersion_high: float | None = None
+    study_keys: str | None = None  # NCT:..|CODE:..|DOC:.. (M5 study identity)
+    study_group: str | None = None  # the study's identity group; None: the study alone
 
     @property
     def study(self) -> tuple[str, str]:
         return (self.source_id, self.study_id)
+
+    @property
+    def group(self) -> str:
+        return self.study_group or f"{self.source_id}:{self.study_id}"
 
     def public(self) -> dict[str, Any]:
         d = {k: getattr(self, k) for k in self.__dataclass_fields__}
@@ -127,6 +136,8 @@ def ev_from_mapping(m: dict[str, Any]) -> Ev:
         dispersion_type=m.get("dispersion_type") or "none",
         dispersion_low=m.get("dispersion_low"),
         dispersion_high=m.get("dispersion_high"),
+        study_keys=m.get("study_keys"),
+        study_group=m.get("study_group"),
     )
 
 
@@ -138,15 +149,19 @@ def read_run(run: Path) -> tuple[dict[str, Any], list[Ev]]:
         raise ValueError("needs_review run was not promoted")
     if outcome not in ("succeeded", "needs_review"):
         raise ValueError("run did not succeed")
-    if manifest.get("source_id") != SOURCE_ID or manifest.get("schema_version") != SCHEMA_VERSION:
-        raise ValueError("not a modelkit_evidence-1 run")
+    if (
+        manifest.get("source_id") != SOURCE_ID
+        or manifest.get("schema_version") not in SCHEMA_VERSIONS
+    ):
+        raise ValueError("not a modelkit_evidence run")
+    cols = COLUMNS + (IDENTITY_COLUMNS if manifest["schema_version"] == SCHEMA_VERSION else ())
     con = duckdb.connect()
     try:
         cur = con.execute(
-            f"SELECT {', '.join(COLUMNS)} FROM read_parquet(?)",  # noqa: S608 - constant columns
+            f"SELECT {', '.join(cols)} FROM read_parquet(?)",  # noqa: S608 - constant columns
             [str(run / "rows.parquet")],
         )
-        rows = [ev_from_mapping(dict(zip(COLUMNS, r, strict=True))) for r in cur.fetchall()]
+        rows = [ev_from_mapping(dict(zip(cols, r, strict=True))) for r in cur.fetchall()]
     except duckdb.Error as exc:
         raise ValueError("rows cannot be read") from exc
     finally:
@@ -176,7 +191,19 @@ def exclusion_reason(e: Ev) -> str | None:
     return None
 
 
-def split_studies(rows: list[Ev]) -> tuple[frozenset[tuple[str, str]], frozenset[tuple[str, str]]]:
+def linked_studies(rows: list[Ev]) -> frozenset[tuple[str, str]]:
+    """Studies of one drug that share an identity group with another study (milestone M5: a shared
+    NCT number, a shared sponsor study code, a numerical duplicate, or a review's document-level
+    study with the coded studies of its PDF)."""
+    members: dict[str, set[tuple[str, str]]] = {}
+    for e in rows:
+        members.setdefault(e.group, set()).add(e.study)
+    return frozenset(s for m in members.values() if len(m) > 1 for s in m)
+
+
+def split_studies(
+    rows: list[Ev], identity: bool = True
+) -> tuple[frozenset[tuple[str, str]], frozenset[tuple[str, str]]]:
     """(building studies, test studies) of one drug. Looks only at which parameters a study
     reports, in every row (confirmed or not), so the split cannot depend on confirmation.
 
@@ -185,7 +212,11 @@ def split_studies(rows: list[Ev]) -> tuple[frozenset[tuple[str, str]], frozenset
     parameter the study reports: it does not make its study a building study. When a drug has no
     stated clearance at all but has derived clearances, ONE study is designated to build the set:
     the first in sorted order among the studies with derived rows. The others stay test studies,
-    and the designated study never tests (it builds)."""
+    and the designated study never tests (it builds).
+
+    Study identity (M5, pre-registered): a study that may be the same study as another one (same
+    identity group) never tests; it is put on the training side. It can build only through its
+    own building parameters. `identity=False` gives the split without this rule (for reports)."""
     stated = [e for e in rows if e.origin != "derived" and e.analyte_class == "parent"]
     building = {
         e.study for e in stated if e.parameter in BUILD_PARAMS or e.parameter.endswith("_per_kg")
@@ -196,4 +227,8 @@ def split_studies(rows: list[Ev]) -> tuple[frozenset[tuple[str, str]], frozenset
             building.add(derived[0])
     obs_rows = [e for e in rows if e.parameter in OBS_PARAMS and e.origin != "derived"]
     test = {e.study for e in obs_rows if e.analyte_class == "parent"} - building
+    if identity:
+        linked = linked_studies(rows)
+        building |= test & linked
+        test -= linked
     return frozenset(building), frozenset(test)

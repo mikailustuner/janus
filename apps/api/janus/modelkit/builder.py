@@ -15,7 +15,13 @@ from collections import defaultdict
 from dataclasses import dataclass
 from typing import Literal
 
-from janus.modelkit.evidence import BUILD_PARAMS, Ev, exclusion_reason, split_studies
+from janus.modelkit.evidence import (
+    BUILD_PARAMS,
+    Ev,
+    exclusion_reason,
+    linked_studies,
+    split_studies,
+)
 
 LN2 = math.log(2.0)
 Cls = Literal["A", "B", "C"]
@@ -301,6 +307,7 @@ def _left_out(
 ) -> tuple[tuple[str, str], ...]:
     """Every row of the drug that did not build the set, with the first reason."""
     out: list[tuple[str, str]] = []
+    linked = linked_studies(rows)
     for r in rows:
         if r.eid in used:
             continue
@@ -309,7 +316,11 @@ def _left_out(
             if r.study in test:
                 why = "held_out_study"
             elif r.parameter not in BUILD_PARAMS:
-                why = "observation_in_building_study"
+                why = (
+                    "same_study_in_another_source"
+                    if r.study in linked
+                    else "observation_in_building_study"
+                )
             else:
                 why = "not_needed_preferred_basis"
         out.append((r.eid, why))

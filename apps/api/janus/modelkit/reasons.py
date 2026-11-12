@@ -14,6 +14,7 @@ TEXT: dict[str, str] = {
     "per_kg_not_converted": "The value is per kilogram; there is no body weight, so it is not converted.",
     "held_out_study": "Held-out study: its observations only test a set, they never build one.",
     "observation_in_building_study": "An observation in a study that also reports building parameters; not tested.",
+    "same_study_in_another_source": "May be the same study as one in another source (shared trial number, study code or identical results); kept on the building side, not tested.",
     "not_needed_preferred_basis": "Not needed: a preferred basis or a pooled value was used.",
     # why an observation was not tested
     "auc_to_last_sampling_time_not_comparable": "AUC to the last sampling time: that time is not in the evidence.",

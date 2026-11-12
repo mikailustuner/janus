@@ -22,13 +22,21 @@ import polars as pl
 from janus_pipelines.core.canonical import Json, Row, sha256_bytes
 from janus_pipelines.core.runner import Job, ParseResult, RawInput, RunContext
 from janus_pipelines.core.validation import ExpectedSchema, Field, SchemaReport
+from janus_pipelines.modelkit.study_identity import groups, keys_text
 from janus_pipelines.modelkit.units import Canonical, to_canonical
 
-SCHEMA_VERSION: Final = "modelkit_evidence-2"
+SCHEMA_VERSION: Final = "modelkit_evidence-3"
 PIPELINE_VERSION: Final = "modelkit-evidence-1.0"
 SEED_PATH: Final = ("data", "modelkit", "evidence_seed.csv")  # milestone M0 rows
 M1_PATH: Final = ("data", "modelkit", "evidence_m1.csv")  # milestone M1 rows (two readers)
 PRECISION_PATH: Final = ("data", "modelkit", "precision.json")  # measured precision (M3)
+# measured precision of the document sources and whether their values are published (M5)
+DOC_PRECISION_PATH: Final = ("data", "modelkit", "precision_documents.json")
+CTGOV_IDS_PATH: Final = (
+    "data",
+    "modelkit",
+    "ctgov_study_ids.csv",
+)  # sponsor codes of the records (M5)
 _SPLIT: Final = "\n\x1e\n"
 # M0 rows of these sources are replaced by the M1 rows of the same drug (two readers)
 SUPERSEDED_SOURCES: Final = frozenset({"clinicaltrials_gov", "dailymed_spl"})
@@ -93,6 +101,10 @@ SEED_COLUMNS: Final[tuple[str, ...]] = (
 )  # fmt: skip
 
 SEED_COLUMNS_FULL: Final[tuple[str, ...]] = (*SEED_COLUMNS, *EXTRA_COLUMNS)
+STORED_COLUMNS: Final[tuple[str, ...]] = (
+    *SEED_COLUMNS_FULL,
+    "study_keys",
+)  # a stored row read back (M5)
 
 EVIDENCE_SCHEMA = ExpectedSchema(
     version=SCHEMA_VERSION,
@@ -139,6 +151,8 @@ EVIDENCE_ROW: Final[Mapping[str, pl.DataType]] = {
     "dispersion_type": pl.String(),
     "dispersion_low": pl.Float64(),
     "dispersion_high": pl.Float64(),
+    "study_keys": pl.String(),
+    "study_group": pl.String(),
 }
 
 
@@ -289,6 +303,8 @@ def evidence_row(raw: Mapping[str, str], where: str) -> Row:
         "dispersion_type": spread,
         "dispersion_low": disp_low,
         "dispersion_high": disp_high,
+        "study_keys": (raw.get("study_keys") or "").strip() or None,
+        "study_group": None,
     }
 
 
@@ -299,8 +315,53 @@ def _read_csv(text: str, name: str) -> list[tuple[str, dict[str, str]]]:
     return [(f"{name}:{i}", dict(raw)) for i, raw in enumerate(reader, 2)]
 
 
+DOCUMENT_SOURCES: Final = ("drugsatfda_review", "pmc_oa")
+
+
+def published_sources(doc_precision: Mapping[str, Json] | None) -> frozenset[str]:
+    """The document sources whose values may be published: the pre-registered rule of M5 (precision
+    at least 0.70 and the upper Wilson bound at least 0.75 on a blinded sample), recorded as
+    `published` in precision_documents.json."""
+    out: set[str] = set()
+    for src, entry in (doc_precision or {}).items():
+        if src in DOCUMENT_SOURCES and isinstance(entry, dict) and entry.get("published") is True:
+            out.add(src)
+    return frozenset(out)
+
+
+def ctgov_keys(text: str) -> dict[str, str]:
+    """NCT id -> study keys from data/modelkit/ctgov_study_ids.csv."""
+    out: dict[str, str] = {}
+    for r in csv.DictReader(io.StringIO(text)):
+        out[r["nct_id"]] = keys_text([r["nct_id"]], [c for c in r["codes"].split("|") if c])
+    return out
+
+
+def assign_groups(
+    rows: Sequence[Row], ctgov_ids: Mapping[str, str]
+) -> tuple[list[Row], dict[str, int]]:
+    """The rows with `study_keys` of registry rows and `study_group` of every row filled (study
+    identity rule of M5), and the counts of links by rule."""
+    keyed: list[dict[str, Json]] = []
+    for r in rows:
+        d = dict(r)
+        if d["source_id"] == "clinicaltrials_gov" and not d.get("study_keys"):
+            sid = str(d["study_id"])
+            d["study_keys"] = ctgov_ids.get(sid) or keys_text([sid])
+        keyed.append(d)
+    group, links = groups(keyed)
+    for d in keyed:
+        d["study_group"] = group[(str(d["drug_key"]), str(d["source_id"]), str(d["study_id"]))]
+    return list(keyed), links
+
+
 def parse_seed(
-    text: str, ctgov: Sequence[Row] = (), precision: Mapping[str, Json] | None = None
+    text: str,
+    ctgov: Sequence[Row] = (),
+    precision: Mapping[str, Json] | None = None,
+    documents: Sequence[Row] = (),
+    ctgov_ids: Mapping[str, str] | None = None,
+    doc_precision: Mapping[str, Json] | None = None,
 ) -> ParseResult:
     """The seed text: the M0 file alone, or the M0 file and the M1 file joined by a record
     separator line. Rows of superseded sources (M0) are dropped for drugs the M1 file covers.
@@ -338,7 +399,10 @@ def parse_seed(
             raise ValueError(f"{where}: duplicate row")
         seen.add(key)
         rows.append(row)
-    for row in ctgov:
+    published = published_sources(doc_precision)
+    held_back = Counter(str(r["source_id"]) for r in documents if r["source_id"] not in published)
+    extra = [r for r in documents if r["source_id"] in published]
+    for row in [*ctgov, *extra]:
         input_rows += 1
         key = (
             str(row["drug_key"]),
@@ -347,9 +411,10 @@ def parse_seed(
             str(row["value"]),
         )
         if key in seen:
-            raise ValueError(f"modelkit_ctgov: duplicate row {key}")
+            raise ValueError(f"modelkit_ctgov or modelkit_documents: duplicate row {key}")
         seen.add(key)
         rows.append(row)
+    rows, links = assign_groups(rows, ctgov_ids or {})
     by_drug = Counter(str(r["drug_key"]) for r in rows)
     confirmed = sum(1 for r in rows if r["confirmed"])
     metrics: dict[str, Json] = {
@@ -363,6 +428,17 @@ def parse_seed(
     }
     if precision:
         metrics["precision"] = dict(precision)
+    if doc_precision:
+        metrics["precision_documents"] = dict(doc_precision)
+    metrics["document_rows_held_back"] = dict(sorted(held_back.items()))
+    metrics["study_identity_links"] = dict(sorted(links.items()))
+    metrics["study_groups_with_several_studies"] = sum(
+        1 for n in Counter(
+            (str(r["drug_key"]), str(r["study_group"])) for r in {
+                (r["drug_key"], r["source_id"], r["study_id"]): r for r in rows
+            }.values()
+        ).values() if n > 1
+    )  # fmt: skip
     return ParseResult(
         rows=rows, input_rows=input_rows, excluded={}, schema=SchemaReport(), metrics=metrics
     )
@@ -388,11 +464,30 @@ def _current_ctgov(ctx: RunContext) -> tuple[str, list[Row]]:
 
 def _as_text(r: Mapping[str, object]) -> dict[str, str]:
     """A stored row back to the strings of a seed line."""
-    out = {c: "" for c in SEED_COLUMNS_FULL}
+    out = {c: "" for c in STORED_COLUMNS}
     for k, v in r.items():
         if k in out and v is not None:
             out[k] = ("true" if v else "false") if isinstance(v, bool) else str(v)
     return out
+
+
+DOCUMENTS_PIPELINE: Final = "modelkit_documents"
+
+
+def _current_documents(ctx: RunContext) -> tuple[str, list[Row]]:
+    """(fingerprint, rows) of the current `modelkit_documents` artifact; ("", []) when there is
+    none."""
+    run = ctx.data_dir / "artifacts" / DOCUMENTS_PIPELINE / "current"
+    rows_file = run / "rows.parquet"
+    if not rows_file.is_file():
+        return "", []
+    manifest = (run / "manifest.json").read_bytes()
+    frame = pl.read_parquet(rows_file)
+    rows = [
+        evidence_row(_as_text(r), f"{DOCUMENTS_PIPELINE}:{i}")
+        for i, r in enumerate(frame.to_dicts())
+    ]
+    return sha256_bytes(manifest), rows
 
 
 def _ctgov_dates(rows: Sequence[Row]) -> list[str]:
@@ -407,7 +502,10 @@ class ModelkitEvidenceJob(Job[bytes]):
 
     def __init__(self) -> None:
         self._ctgov: list[Row] = []
+        self._documents: list[Row] = []
         self._precision: dict[str, Json] | None = None
+        self._doc_precision: dict[str, Json] | None = None
+        self._ctgov_ids: dict[str, str] = {}
 
     def fetch(self, ctx: RunContext) -> RawInput[bytes]:
         data = ctx.repo_root.joinpath(*SEED_PATH).read_bytes()
@@ -416,8 +514,14 @@ class ModelkitEvidenceJob(Job[bytes]):
             data = data + _SPLIT.encode() + m1.read_bytes()
         prec = ctx.repo_root.joinpath(*PRECISION_PATH)
         self._precision = json.loads(prec.read_text("utf-8")) if prec.exists() else None
+        dprec = ctx.repo_root.joinpath(*DOC_PRECISION_PATH)
+        self._doc_precision = json.loads(dprec.read_text("utf-8")) if dprec.exists() else None
+        ids = ctx.repo_root.joinpath(*CTGOV_IDS_PATH)
+        ids_text = ids.read_text("utf-8") if ids.exists() else "nct_id,codes\n"
+        self._ctgov_ids = ctgov_keys(ids_text)
         retrieved = ctx.now()
         fingerprint, self._ctgov = _current_ctgov(ctx)
+        doc_fingerprint, self._documents = _current_documents(ctx)
         dates = sorted(
             {d for d in re.findall(r"20[0-9]{2}-[0-9]{2}-[0-9]{2}$", data.decode(), re.M)}
         )
@@ -425,7 +529,12 @@ class ModelkitEvidenceJob(Job[bytes]):
             payload=data,
             source_urls=(),
             source_sha256=sha256_bytes(
-                data + fingerprint.encode() + json.dumps(self._precision, sort_keys=True).encode()
+                data
+                + fingerprint.encode()
+                + doc_fingerprint.encode()
+                + ids_text.encode()
+                + json.dumps(self._precision, sort_keys=True).encode()
+                + json.dumps(self._doc_precision, sort_keys=True).encode()
             ),
             retrieved_at=retrieved,
             snapshot_date=max([*dates, *_ctgov_dates(self._ctgov)])
@@ -434,4 +543,11 @@ class ModelkitEvidenceJob(Job[bytes]):
         )
 
     def parse(self, raw: RawInput[bytes]) -> ParseResult:
-        return parse_seed(raw.payload.decode("utf-8"), self._ctgov, self._precision)
+        return parse_seed(
+            raw.payload.decode("utf-8"),
+            self._ctgov,
+            self._precision,
+            self._documents,
+            self._ctgov_ids,
+            self._doc_precision,
+        )

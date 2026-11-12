@@ -506,3 +506,38 @@ def test_metabolite_rows_do_not_decide_the_split() -> None:
     ]
     building, test = split_studies(rows)
     assert test == {("clinicaltrials_gov", "T1")} and building == {("clinicaltrials_gov", "B1")}
+
+
+# --- milestone M5: study identity across sources (leakage guard) ---------------------------------
+
+
+def test_a_study_linked_to_another_never_tests() -> None:
+    rows = oral_world()
+    # T2 is described again by an article: same identity group as the registry record
+    rows = [
+        ev(**{**r.public(), "study_group": "clinicaltrials_gov:T2"}) if r.study_id == "T2" else r
+        for r in rows
+    ]
+    rows.append(
+        ev(parameter="auc_inf", value=10000.0, dose=100.0, study_id="PMC1", source_id="pmc_oa",
+           study_group="clinicaltrials_gov:T2")
+    )  # fmt: skip
+    building, test = split_studies(rows)
+    assert ("clinicaltrials_gov", "T1") in test
+    assert ("clinicaltrials_gov", "T2") not in test and ("pmc_oa", "PMC1") not in test
+    assert {("clinicaltrials_gov", "T2"), ("pmc_oa", "PMC1")} <= building
+    ps = build_set("exampletine", rows)
+    val = validate("exampletine", rows, ps)
+    assert {p.study_id for p in val.points} == {"T1"}
+    reasons = dict(val.excluded)
+    linked = [
+        r for r in rows if r.study_id in ("T2", "PMC1") and r.parameter in ("auc_inf", "cmax")
+    ]
+    assert all(reasons[r.eid] == "same_study_in_another_source" for r in linked)
+
+
+def test_no_group_means_the_study_alone() -> None:
+    rows = oral_world()
+    assert split_studies(rows) == split_studies(
+        [ev(**{**r.public(), "study_group": None}) for r in rows]
+    )
