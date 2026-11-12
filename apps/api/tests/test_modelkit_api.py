@@ -295,3 +295,18 @@ def test_a_malformed_audit_record_is_not_shown(tmp_path: Path, bad: object) -> N
         st = cl.get("/modelkit/drugs").json()["statements"]
         assert st["expert_review"] == "Expert review has not yet been done."
         assert st["expert_audit"] is None
+
+
+def test_system_caveats_drop_the_below_target_line_only_at_or_above_target() -> None:
+    from janus.modelkit.router import precision_out, system_caveats
+
+    def rec(n: int, k: int) -> dict[str, object]:
+        return {"measured_on": "2026-11-12", "n": n, "correct": k, "n_conservative": n,
+                "correct_conservative": k, "target": 0.9}  # fmt: skip
+
+    below, above = precision_out(rec(10, 7)), precision_out(rec(126, 125))
+    assert "confirmed_precision_below_target" in system_caveats(below, False)
+    assert "confirmed_precision_below_target" in system_caveats(None, False)
+    got = system_caveats(above, False)
+    assert "confirmed_precision_below_target" not in got and "expert_review_pending" in got
+    assert system_caveats(above, True)[-1] == "expert_audit_sample_only"

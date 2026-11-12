@@ -881,6 +881,15 @@ def drugs(
     )
 
 
+def system_caveats(precision: PrecisionOut | None, audited: bool) -> list[str]:
+    """System caveats; the below-target line only when no precision is measured or it is below its target."""
+    out = ["n_very_small", "two_automated_passes"]
+    if precision is None or precision.share < precision.target:
+        out.append("confirmed_precision_below_target")
+    out.append("expert_audit_sample_only" if audited else "expert_review_pending")
+    return out
+
+
 @router.get("/modelkit/validation", response_model=SystemOut)
 def system(request: Request, release: str | None = None) -> Any:
     """The system report over all drugs: counts by status, pooled fold errors with n."""
@@ -889,6 +898,7 @@ def system(request: Request, release: str | None = None) -> Any:
         return rel
     s = rel.system
     ex_ = _system_extra(rel)
+    precision = precision_out(rel.manifest_metrics.get("precision"))
     return SystemOut(
         release=rel.info(),
         statements=statements(rel),
@@ -910,19 +920,12 @@ def system(request: Request, release: str | None = None) -> Any:
         route_counts=ex_["route"],
         not_validated_reasons=s.reasons_not_validated,
         no_set_reasons=ex_["no_set"],
-        precision=precision_out(rel.manifest_metrics.get("precision")),
+        precision=precision,
         document_sources=document_sources(rel),
         study_identity=study_identity(rel),
         special_populations=special_system(),
         missing=missing_codes(rel, ex_),
-        caveats=[
-            "n_very_small",
-            "two_automated_passes",
-            "confirmed_precision_below_target",
-            "expert_review_pending"
-            if statements(rel).expert_audit is None
-            else "expert_audit_sample_only",
-        ],
+        caveats=system_caveats(precision, statements(rel).expert_audit is not None),
         reason_text=TEXT,
     )
 

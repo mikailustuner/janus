@@ -51,10 +51,20 @@ _SPECIES: Final = re.compile(
     r"\b(?:rats?|mice|mouse|dogs?|monkeys?|rabbits?|pigs?|minipigs?|beagle|primate|animal)\b", re.I
 )
 
+_NOT_A_STUDY_VALUE: Final = re.compile(
+    r"in vitro|stability|\btargets?\b|previous|published|literature|comparison with|compared with other|"
+    r"simulat|predicted|model[- ]?(?:based|estimated|derived)|population pharmacokinetic|\biiv\b|\biov\b|"
+    r"covariate|bayesian|nonmem|monte carlo|case report|a patient\b|participant \d",
+    re.I,
+)
+_RELEASE_IN_METHODS: Final = re.compile(
+    r"extended[- ]release|sustained[- ]release|controlled[- ]release|fixed[- ]dose", re.I
+)
+
 LEVELS: Final = {
     1: frozenset({"not_a_plain_number", "decimal_comma", "statistic_column", "analyte_word", "species_word", "other_drug_in_table"}),
     2: frozenset({"population_word", "combination_word", "product_word", "drug_not_named_in_table", "coadministered_claimed"}),
-    3: frozenset({"other_drug_in_methods"}),
+    3: frozenset({"other_drug_in_methods", "not_a_study_value", "methods_context"}),
 }  # fmt: skip
 
 
@@ -110,6 +120,16 @@ def check(
         fails.append("coadministered_claimed")
     if any(k != drug_key for k in ids.drugs_in(article.methods + " ; " + article.title)):
         fails.append("other_drug_in_methods")
+    if _NOT_A_STUDY_VALUE.search(
+        " ; ".join([article.title, table.caption, header, table.footnotes])
+    ):
+        fails.append("not_a_study_value")
+    if (
+        _POPULATION.search(article.methods + " ; " + article.title)
+        or _SPECIES.search(article.methods)
+        or _RELEASE_IN_METHODS.search(article.methods)
+    ):
+        fails.append("methods_context")
     return tuple(fails)
 
 

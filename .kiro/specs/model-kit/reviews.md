@@ -235,3 +235,19 @@ almost all are renal clearance read as total clearance (a known reader error); n
 The expert sample audit is pre-registered and drawn (366 items of the published confirmed values: 286 evidence values,
 80 label statements; a 20-drug method review); no person has answered it yet. Without an audit record every surface
 still says "Expert review has not yet been done."
+
+## Precision work: strict publication checks (automated checks only; expert review has not yet been done)
+Pre-registered with dated addenda (private). Every number below comes from two automated review passes on values the rule
+designer had not looked at; development samples are not reported as precision.
+
+| Reader | Method | Fresh-sample precision (agreed) | Coverage | Used |
+|---|---|---|---|---|
+| ClinicalTrials.gov values | strict record check, level >= 3 (iteration 2) | 125 / 126 (census of every kept value not reviewed before; 14 studies) | 336 of 2,565 agreed values | yes |
+| same, iteration 1 | level >= 3 | 87 / 87 in studies without earlier errors; 14 / 22 in studies with earlier errors | 416 | replaced by iteration 2 |
+| US-label special-population statements | strict statement check, level >= 2 | 28 / 38 (0.74) | 73 of 389 statements | no |
+| same, with list-aligning reader C | level >= 2 | 9 / 15 | 70 | no |
+| PMC article tables | structure-first table typing, level 3 | 21 / 37 (0.57); abstained values 10 / 18 | 268 of 2,289 rows | no (held back) |
+| Drugs@FDA review PDFs | none (no fresh frame) | not measured | | no (held back) |
+
+The values within a study are correlated, so the ClinicalTrials.gov interval is optimistic; the production bar of plan 12.3
+needs the expert audit.

@@ -306,6 +306,14 @@ text stays "Expert review has not yet been done".
 - **DP-M38 Data package.** `janus.modelkit.package` writes the package of a release (evidence, special populations, sets,
   validation, licences, README, `datapackage.json`, `.zenodo.json` without DOI or creators); a row of an unpublished source
   or a PMC row without CC BY or CC0 stops the build. Not committed, not uploaded (owner decision).
+- **DP-M39 Strict publication check (selective prediction).** After the two readers agree, `strict_ctgov.check` reads only
+  the record's structure (interventions, arms, result group, outcome measure, cell titles) and the row's formulation, route,
+  regimen, dose and co-administration flags, and returns rule codes; `level` maps them to nested levels 1-5. The
+  ClinicalTrials.gov intake keeps a value confirmed only at level >= 3 (`PUBLISH_LEVEL`); below it the row stays in the run
+  with `confirmed = false` and reason `strict_check` plus the codes. It shares no code with readers A and B (test). Measured
+  on fresh blinded samples with two automated passes (private pre-registration); the measured precision is in
+  `data/modelkit/precision.json`. The same kind of check exists for label statements (`strict_sp`, with the list-aligning
+  third reader `sp_c`) and PMC tables (`strict_pmc`); neither reached its pre-registered precision and neither is used.
 - **M33** The scoring recomputes from the counts; a record with any other field (a name) or numbers that do not recompute
   is refused by the job and not shown by the API (tests).
 - **M34** The package holds only publishable rows and every file's hash; the same release gives the same bytes (tests).

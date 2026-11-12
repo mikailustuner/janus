@@ -102,3 +102,6 @@
 
 - [ ] M1 exit criterion: confirmed-value precision ≥ 0.90 on a blinded sample (measured 0.69, n = 85). Shared error
       classes to fix first: regimen, route, combination arms, comparator drugs, population words in label sentences.
+      Precision work (2026-11-12): met for ClinicalTrials.gov values by abstention only (DP-M39): two automated passes
+      found 125 of 126 kept values correct; about 13 % of the values the readers agree on stay confirmed. Expert review
+      has not yet been done.
