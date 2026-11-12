@@ -18,14 +18,27 @@ from typing import Literal
 from janus.modelkit.evidence import (
     BUILD_PARAMS,
     Ev,
+    compatible_populations,
     exclusion_reason,
     linked_studies,
+    population_class,
     split_studies,
 )
 
 LN2 = math.log(2.0)
 Cls = Literal["A", "B", "C"]
 Basis = Literal["iv", "oral_apparent"]
+# the (parameter, routes) the builder reads; nothing else can enter a set
+READS: dict[str, frozenset[str]] = {
+    "cl": frozenset({"iv"}),
+    "vss": frozenset({"iv"}),
+    "vd": frozenset({"iv"}),
+    "f": frozenset({"oral"}),
+    "cl_f": frozenset({"oral"}),
+    "v_f": frozenset({"oral"}),
+    "t_half": frozenset({"oral", "unknown"}),
+    "tmax": frozenset({"oral"}),
+}
 
 
 def solve_ka(k: float, tmax: float) -> float | None:
@@ -178,20 +191,54 @@ def _p(name: str, label: str, unit: str, pooled: Pooled, derivation: str | None 
     )  # fmt: skip
 
 
+def building_populations(rows: list[Ev]) -> frozenset[str]:
+    """The population classes that may build a set of one drug (plan section 7 rule 3): healthy
+    adults and unspecified rows when the drug has a healthy-adult row the builder can read in a
+    building study, otherwise also patients. Special populations never build."""
+    building, _ = split_studies(rows)
+    healthy = any(
+        exclusion_reason(r) is None
+        and r.study in building
+        and r.route in READS.get(r.parameter, frozenset())
+        and population_class(r.population) == "healthy"
+        for r in rows
+    )
+    if healthy:
+        return frozenset({"healthy", "unspecified"})
+    return frozenset({"healthy", "patients", "unspecified"})
+
+
+def set_reference(used: set[str] | tuple[str, ...], rows: list[Ev]) -> str:
+    """The reference population of a set: the class of the rows it uses (healthy before patients;
+    `unspecified` when no used row states its population)."""
+    ids = set(used)
+    seen = {population_class(r.population) for r in rows if r.eid in ids}
+    if "healthy" in seen:
+        return "healthy"
+    return "patients" if "patients" in seen else "unspecified"
+
+
 def build_set(drug_key: str, rows: list[Ev]) -> ParameterSet | NoSet:
     """The parameter set of one drug from its evidence rows, or why there is none."""
     rows = sorted((r for r in rows if r.drug_key == drug_key), key=lambda r: r.eid)
     building, test = split_studies(rows)
-    ok = [r for r in rows if exclusion_reason(r) is None and r.study in building]
+    allowed = building_populations(rows)
+    ok = [
+        r
+        for r in rows
+        if exclusion_reason(r) is None
+        and r.study in building
+        and population_class(r.population) in allowed
+    ]
 
-    def get(parameter: str, route: set[str]) -> Pooled | None:
-        return pool([r for r in ok if r.parameter == parameter and r.route in route])
+    def get(parameter: str) -> Pooled | None:
+        return pool([r for r in ok if r.parameter == parameter and r.route in READS[parameter]])
 
-    cl_iv, f_oral = get("cl", {"iv"}), get("f", {"oral"})
-    v_iv = get("vss", {"iv"}) or get("vd", {"iv"})
-    cl_f, v_f = get("cl_f", {"oral"}), get("v_f", {"oral"})
-    t_half = get("t_half", {"oral", "unknown"})
-    tmax = get("tmax", {"oral"})
+    cl_iv, f_oral = get("cl"), get("f")
+    v_iv = get("vss") or get("vd")
+    cl_f, v_f = get("cl_f"), get("v_f")
+    t_half = get("t_half")
+    tmax = get("tmax")
 
     params: list[Param] = []
     reasons: list[str] = []
@@ -281,6 +328,8 @@ def build_set(drug_key: str, rows: list[Ev]) -> ParameterSet | NoSet:
     used = {e for p in params for e in p.evidence}
     if t_half:
         used |= set(t_half.eids)
+    if set_reference(used, ok) == "patients":
+        warnings.append("reference_population_patients")
     return ParameterSet(
         drug_key=drug_key,
         model=model,
@@ -308,10 +357,15 @@ def _left_out(
     """Every row of the drug that did not build the set, with the first reason."""
     out: list[tuple[str, str]] = []
     linked = linked_studies(rows)
+    build_ok = building_populations(rows)
+    test_ok = compatible_populations(set_reference(used, rows))
     for r in rows:
         if r.eid in used:
             continue
         why = exclusion_reason(r)
+        cls = population_class(r.population)
+        if why is None and cls not in (test_ok if r.study in test else build_ok):
+            why = "not_reference_population"
         if why is None:
             if r.study in test:
                 why = "held_out_study"

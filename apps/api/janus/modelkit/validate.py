@@ -15,8 +15,15 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from typing import Literal
 
-from janus.modelkit.builder import NoSet, ParameterSet
-from janus.modelkit.evidence import Ev, exclusion_reason, linked_studies, split_studies
+from janus.modelkit.builder import NoSet, ParameterSet, set_reference
+from janus.modelkit.evidence import (
+    Ev,
+    compatible_populations,
+    exclusion_reason,
+    linked_studies,
+    population_class,
+    split_studies,
+)
 from janus.timemachine.pk import OneCompartment, auc_inf, cmax
 
 Status = Literal["validated", "not_validated", "failed"]
@@ -73,10 +80,12 @@ def predict(ps: ParameterSet, metric: str, dose_mg: float) -> float | None:
     return cmax(OneCompartment(f, ka, cl, v), dose_mg) * 1000.0
 
 
-def _obs_reason(e: Ev, ps: ParameterSet) -> str | None:
+def _obs_reason(e: Ev, ps: ParameterSet, allowed: frozenset[str]) -> str | None:
     why = exclusion_reason(e)
     if why:
         return why
+    if population_class(e.population) not in allowed:
+        return "not_reference_population"
     if e.parameter == "auc_last":
         return "auc_to_last_sampling_time_not_comparable"
     if e.parameter not in ("cmax", "auc_inf", "auc_tau"):
@@ -128,6 +137,7 @@ def validate(drug_key: str, rows: list[Ev], ps: ParameterSet | NoSet) -> Validat
     pts: list[Point] = []
     excluded: list[tuple[str, str]] = []
     linked = linked_studies(rows)
+    allowed: frozenset[str] = compatible_populations(set_reference(ps.used, rows))
     for e in rows:
         if e.parameter not in ("cmax", "auc_inf", "auc_last", "auc_tau"):
             continue
@@ -141,7 +151,7 @@ def validate(drug_key: str, rows: list[Ev], ps: ParameterSet | NoSet) -> Validat
                 )
             )
             continue
-        why = _obs_reason(e, ps)
+        why = _obs_reason(e, ps, allowed)
         if why:
             excluded.append((e.eid, why))
             continue
