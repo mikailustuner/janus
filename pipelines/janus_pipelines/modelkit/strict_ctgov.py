@@ -338,7 +338,9 @@ def check(
     named_analyte = ref is not None and any(
         _word(n, both) for n in ref.analytes.get(drug_key, ()) if len(n) >= 3
     )
-    gtitle = norm(group.get("title", ""))
+    gtitle = (
+        norm(group.get("title", "")) if ref is not None else ""
+    )  # round-3 rule, with the tables
     if _ANALYTE.search(outcome) or _PD.search(outcome) or named_analyte or _ANALYTE.search(gtitle):
         fails.append("analyte_word")
     cells = norm(_cell_titles(om, locator))
@@ -377,7 +379,7 @@ def check(
         fails.append("combination_product")
     if dose_claimed and (_PER_SIZE.search(gtext.replace(" ", "")) or _PER_SIZE.search(gtext)):
         fails.append("per_size_dose")
-    if dose_claimed and _MULTI_UNIT.search(gtext):
+    if ref is not None and dose_claimed and _MULTI_UNIT.search(gtext):
         fails.append("multi_unit_dose")
     if (regimen == "multiple" and _SINGLE_CUE.search(both)) or (
         regimen == "single" and _MULTI_CUE.search(both)
@@ -412,16 +414,6 @@ def level(fails: tuple[str, ...]) -> int:
 
 # Shipped level (precision study, addendum 2): a confirmed value below it becomes unconfirmed.
 PUBLISH_LEVEL: Final = 3
-_REFERENCE: list[Reference] = []
-
-
-def reference() -> Reference:
-    """The committed reference tables, loaded once per process."""
-    if not _REFERENCE:
-        _REFERENCE.append(Reference.load())
-    return _REFERENCE[0]
-
-
 def _arbitrated(p: Paired, study: dict[str, Any], table: IdentityTable) -> Paired | None:
     """Round 3: two disagreements the record can settle. (a) one reader says the analyte is the
     parent drug and the other leaves it unspecified, in a record whose only drug intervention is the
@@ -455,15 +447,16 @@ def apply(
     brands: BrandTable,
     counts: Counter[str],
     ref: Reference | None = None,
+    arbitrate: bool = False,
 ) -> list[Paired]:
     """Confirmed pairs of one study whose strict level is below PUBLISH_LEVEL become unconfirmed with
     reason `strict_check` and the failed rule codes. A pair the record can arbitrate (`_arbitrated`)
     is confirmed when it then reaches PUBLISH_LEVEL (reason `strict_arbitration`). Every other pair
-    is returned unchanged."""
-    ref = reference() if ref is None else ref
+    is returned unchanged. The round-3 parts (reference tables `ref`, `arbitrate`) are off by default:
+    they did not pass their acceptance sample (too few fresh values), so the shipped intake does not use them."""
     out: list[Paired] = []
     for p in pairs:
-        arb = None if p.result.confirmed else _arbitrated(p, study, table)
+        arb = None if p.result.confirmed or not arbitrate else _arbitrated(p, study, table)
         if not p.result.confirmed and arb is None:
             out.append(p)
             continue

@@ -357,13 +357,15 @@ def test_arbitration_settles_unspecified_analyte_only_in_a_single_agent_record()
     b = replace(a, analyte="unspecified")
     differs = Confirmation(False, "analytes_differ")
     counts: Counter[str] = Counter()
-    got = strict_ctgov.apply([Paired(a, b, differs)], record(), IDS, BRANDS, counts, REF)[0]
+    got = strict_ctgov.apply(
+        [Paired(a, b, differs)], record(), IDS, BRANDS, counts, REF, arbitrate=True
+    )[0]
     assert got.result.confirmed and got.result.reason == "strict_arbitration"
     assert got.b is not None and got.a.analyte == got.b.analyte == "parent"
     two = record(interventions=(("Lisinopril", ""), ("Metformin", "")))
-    assert not strict_ctgov.apply([Paired(a, b, differs)], two, IDS, BRANDS, counts, REF)[
-        0
-    ].result.confirmed
+    assert not strict_ctgov.apply(
+        [Paired(a, b, differs)], two, IDS, BRANDS, counts, REF, arbitrate=True
+    )[0].result.confirmed
 
 
 def test_arbitration_drops_a_one_sided_dose_only_where_the_parameter_needs_none() -> None:
@@ -372,10 +374,14 @@ def test_arbitration_drops_a_one_sided_dose_only_where_the_parameter_needs_none(
     b = replace(a, dose_mg=None)
     differs = Confirmation(False, "doses_differ")
     counts: Counter[str] = Counter()
-    got = strict_ctgov.apply([Paired(a, b, differs)], record(), IDS, BRANDS, counts, REF)[0]
+    got = strict_ctgov.apply(
+        [Paired(a, b, differs)], record(), IDS, BRANDS, counts, REF, arbitrate=True
+    )[0]
     assert got.result.confirmed and got.a.dose_mg is None
     cmax_a, cmax_b = _cand(ctx), replace(_cand(ctx), dose_mg=None)
-    kept = strict_ctgov.apply([Paired(cmax_a, cmax_b, differs)], record(), IDS, BRANDS, counts, REF)
+    kept = strict_ctgov.apply(
+        [Paired(cmax_a, cmax_b, differs)], record(), IDS, BRANDS, counts, REF, arbitrate=True
+    )
     assert not kept[0].result.confirmed
 
 
