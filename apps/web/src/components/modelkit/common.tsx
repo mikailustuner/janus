@@ -4,6 +4,7 @@
  * status badges, the research-use statements and the translated reason codes. Status colours use
  * existing tokens only; red (`--risk`) is never used here (it means real risk).
  */
+import { useLocale } from "next-intl";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import { useT } from "@/theme/words";
@@ -13,6 +14,7 @@ import {
   loadModelKitFixture,
   reasonKey,
   statusBadge,
+  type ExpertAudit,
   type Status,
 } from "@/modelkit/model";
 
@@ -57,16 +59,41 @@ export function StatusChip({ status }: { status: Status }) {
   );
 }
 
-/** The two statements every model-kit screen carries (Req 6.1, 6.5). */
-export function Statements({ recorded }: { recorded: string | null }) {
+/** The two statements every model-kit screen carries (Req 6.1, 6.5). With an expert audit record
+ * in the answer (plan 6.4) the review line gives its precision, n and date instead of "Expert
+ * review has not yet been done." */
+export function Statements({
+  recorded,
+  audit,
+}: {
+  recorded: string | null;
+  audit?: ExpertAudit | null;
+}) {
   const t = useT();
+  const locale = useLocale();
+  const review = audit
+    ? t("ModelKit.expertAudit", {
+        precision: new Intl.NumberFormat(locale, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        }).format(audit.precision),
+        n: audit.n,
+        // non-breaking hyphens: the ISO date never breaks across lines at 375 px
+        date: audit.date.replaceAll("-", "\u2011"),
+      })
+    : t("ModelKit.expertReview");
   return (
     <div className="flex flex-col gap-2">
       <p className="card p-4 font-bold" data-testid="mk-research-use">
         {t("ModelKit.researchUse")}
       </p>
-      <p className="text-sm font-bold" role="note" data-testid="mk-review">
-        {t("ModelKit.expertReview")}
+      <p
+        className="text-sm font-bold"
+        role="note"
+        data-testid="mk-review"
+        data-audit={audit ? "yes" : "no"}
+      >
+        {review}
       </p>
       {recorded ? (
         <p className="chip self-start" data-testid="mk-demo">

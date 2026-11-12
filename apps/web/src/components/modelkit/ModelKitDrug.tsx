@@ -135,7 +135,7 @@ function Detail({
           </span>
         }
       />
-      <Statements recorded={recorded} />
+      <Statements recorded={recorded} audit={out.statements.expert_audit} />
       <SummaryCard
         id="mk-status-card"
         title={t("ModelKit.drug.statusTitle")}

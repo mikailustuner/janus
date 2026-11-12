@@ -73,7 +73,10 @@ export function ModelKitList() {
       <div className="flex flex-wrap gap-2">
         <ExperimentalChip />
       </div>
-      <Statements recorded={recorded} />
+      <Statements
+        recorded={recorded}
+        audit={ready ? call.data.statements.expert_audit : null}
+      />
       <p className="max-w-[72ch]">{t("ModelKit.intro")}</p>
       <p className="max-w-[72ch] text-sm text-muted">
         {t("ModelKit.introValidation")}

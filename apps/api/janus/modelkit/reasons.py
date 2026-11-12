@@ -68,6 +68,8 @@ TEXT: dict[str, str] = {
         "the report). Read every value as unverified."
     ),
     "expert_review_pending": "Expert review has not yet been done.",
+    "expert_audit_sample_only": "The expert audit judged a random sample of confirmed values, not every value; read every other value as unverified.",
+    "expert_audit_below_target": "The expert audit did not meet the target (precision at least 0.95 with a lower 95 % bound of at least 0.90 on at least 300 judged values).",
     # special populations (older adults, renal and hepatic impairment) quoted from US labels
     "sp_statements_note": (
         "Exposure ratios as the US label states them, quoted. Two independent automated readers agree on each; "

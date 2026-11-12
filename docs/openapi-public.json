@@ -2315,6 +2315,74 @@
         ],
         "title": "EvidenceRowOut"
       },
+      "ExpertAuditOut": {
+        "properties": {
+          "date": {
+            "type": "string",
+            "title": "Date"
+          },
+          "release_audited": {
+            "type": "string",
+            "title": "Release Audited"
+          },
+          "n_items": {
+            "type": "integer",
+            "title": "N Items"
+          },
+          "n": {
+            "type": "integer",
+            "title": "N"
+          },
+          "correct": {
+            "type": "integer",
+            "title": "Correct"
+          },
+          "cannot_judge": {
+            "type": "integer",
+            "title": "Cannot Judge"
+          },
+          "precision": {
+            "type": "number",
+            "title": "Precision"
+          },
+          "wilson_low": {
+            "type": "number",
+            "title": "Wilson Low"
+          },
+          "wilson_high": {
+            "type": "number",
+            "title": "Wilson High"
+          },
+          "criterion_met": {
+            "type": "boolean",
+            "title": "Criterion Met"
+          },
+          "reviewer_roles": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Reviewer Roles"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "date",
+          "release_audited",
+          "n_items",
+          "n",
+          "correct",
+          "cannot_judge",
+          "precision",
+          "wilson_low",
+          "wilson_high",
+          "criterion_met",
+          "reviewer_roles"
+        ],
+        "title": "ExpertAuditOut",
+        "description": "The expert sample audit of the release (plan 6.4, 12.3): a person judged a stratified random\nsample of the published confirmed values. Counts, dates and reviewer roles only; no name."
+      },
       "ExportOut": {
         "properties": {
           "schema_version": {
@@ -4976,6 +5044,16 @@
             "type": "string",
             "title": "Experimental",
             "default": "Experimental: this model kit is an early research preview."
+          },
+          "expert_audit": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ExpertAuditOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,

@@ -32,6 +32,8 @@ Base URL: `/api` on a Janus deployment (same origin as the web app). Nothing is 
 | `GET /modelkit/drugs/{key}/export/{target}` | a zip (`target` = `janus`, `mrgsolve` or `pksim`) with the model file(s) (`pksim`: a PK-Sim compound snapshot and `pksim-inputs.json` listing what PK-Sim still needs, marked missing), `provenance.json`, `references.bib`, `LICENSES.txt` | 409 `no_parameter_set` / `incomplete_set`, 503, 404, 422 |
 | `GET /modelkit/validation` | the system report over all drugs: counts by status, pooled fold errors with n, formulation and route counts of the confirmed values, intervals, measured precision (Wilson interval, n), special-population counts, coverage and measured precision, the document sources of milestone M5 (Drugs@FDA review PDFs, PubMed Central articles licensed CC BY or CC0: rows, measured precision, published or held back) and the study identity rule (a study that may be the same study in another source never tests; how many held-out studies it removed), reasons and what is missing | 503 |
 
+Every `/modelkit` answer carries `statements`. `statements.expert_audit` is `null` and `statements.expert_review` says "Expert review has not yet been done." until a person has audited a stratified random sample of the published confirmed values; with an audit record, `expert_audit` gives its date, n, precision with its Wilson 95 % interval, whether the target was met and the reviewers' roles (never names), and `expert_review` reads "Expert audit: precision X (n = N, date)."
+
 ## Rules every route follows
 
 - **Errors are codes**: `{"error": "<code>"}` (a 422 also names `fields`, never their values). No route sends a

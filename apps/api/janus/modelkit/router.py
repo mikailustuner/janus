@@ -43,10 +43,28 @@ class _Out(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
 
 
+class ExpertAuditOut(_Out):
+    """The expert sample audit of the release (plan 6.4, 12.3): a person judged a stratified random
+    sample of the published confirmed values. Counts, dates and reviewer roles only; no name."""
+
+    date: str
+    release_audited: str
+    n_items: int
+    n: int  # items judged correct or incorrect
+    correct: int
+    cannot_judge: int
+    precision: float
+    wilson_low: float
+    wilson_high: float
+    criterion_met: bool  # precision >= 0.95, Wilson lower >= 0.90, n >= 300 (plan 12.3)
+    reviewer_roles: list[str]
+
+
 class Statements(_Out):
     research_use: str = ex.RESEARCH_USE
-    expert_review: str = ex.NO_REVIEW
+    expert_review: str = ex.NO_REVIEW  # "Expert audit: precision X (n = N, date)." with an audit
     experimental: str = ex.EXPERIMENTAL
+    expert_audit: ExpertAuditOut | None = None
 
 
 class MetricOut(_Out):
@@ -475,6 +493,38 @@ def precision_out(raw: Any) -> PrecisionOut | None:
 
 
 DAILYMED = "https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid="
+AUDIT_DATE = re.compile(r"^20[0-9]{2}-[01][0-9]-[0-3][0-9]$")
+
+
+def expert_audit_out(raw: Any) -> ExpertAuditOut | None:
+    """The audit record of the manifest (checked by the evidence job), or None when there is none
+    or it does not have the documented shape."""
+    if not isinstance(raw, dict):
+        return None
+    try:
+        a = ExpertAuditOut.model_validate(
+            {k: v for k, v in cast(dict[str, Any], raw).items() if k != "schema"}
+        )
+    except ValueError:
+        return None
+    if not AUDIT_DATE.match(a.date) or not 0 < a.n <= a.n_items or a.correct > a.n:
+        return None
+    return a
+
+
+def audit_line(a: ExpertAuditOut) -> str:
+    return f"Expert audit: precision {a.precision:.2f} (n = {a.n}, {a.date})."
+
+
+def statements(rel: Release) -> Statements:
+    """The statements of every answer: with an expert audit record its line replaces "Expert review
+    has not yet been done." """
+    cached: Statements | None = rel.__dict__.get("_statements")
+    if cached is None:
+        a = expert_audit_out(rel.manifest_metrics.get("expert_audit"))
+        cached = Statements(expert_review=audit_line(a), expert_audit=a) if a else Statements()
+        rel.__dict__["_statements"] = cached
+    return cached
 
 
 def special_out(key: str) -> SpecialOut:
@@ -638,7 +688,11 @@ def missing_codes(rel: Release, extra: dict[str, Any]) -> list[str]:
         out.append("formulation_often_unspecified")
     if extra["n_set"] < 150:
         out.append("fewer_than_150_sets")
-    out.append("expert_review_pending")
+    audit = statements(rel).expert_audit
+    if audit is None:
+        out.append("expert_review_pending")
+    elif not audit.criterion_met:
+        out.append("expert_audit_below_target")
     return out
 
 
@@ -818,7 +872,7 @@ def drugs(
         counts[st] = sum(d.status == st for d in allrows)
     return DrugsOut(
         release=rel.info(),
-        statements=Statements(),
+        statements=statements(rel),
         drugs=kept[offset : offset + limit],
         total=len(kept),
         offset=offset,
@@ -837,7 +891,7 @@ def system(request: Request, release: str | None = None) -> Any:
     ex_ = _system_extra(rel)
     return SystemOut(
         release=rel.info(),
-        statements=Statements(),
+        statements=statements(rel),
         n_drugs=s.n_drugs,
         by_status=s.by_status,
         metrics=[SystemMetricOut(**m.__dict__) for m in s.metrics],
@@ -865,7 +919,9 @@ def system(request: Request, release: str | None = None) -> Any:
             "n_very_small",
             "two_automated_passes",
             "confirmed_precision_below_target",
-            "expert_review_pending",
+            "expert_review_pending"
+            if statements(rel).expert_audit is None
+            else "expert_audit_sample_only",
         ],
         reason_text=TEXT,
     )
@@ -883,7 +939,7 @@ def drug(request: Request, key: str, release: str | None = None) -> Any:
     ps = d.built
     return DrugOut(
         release=rel.info(),
-        statements=Statements(),
+        statements=statements(rel),
         summary=summary(d),
         parameter_set=set_out(ps) if isinstance(ps, ParameterSet) else None,
         no_set_reasons=list(ps.reasons) if isinstance(ps, NoSet) else [],
@@ -906,7 +962,7 @@ def evidence(request: Request, key: str, release: str | None = None) -> Any:
         return d
     return EvidenceOut(
         release=rel.info(),
-        statements=Statements(),
+        statements=statements(rel),
         drug=d.key,
         rows=evidence_rows(d),
         attribution=ATTRIBUTION,
