@@ -414,6 +414,8 @@ def level(fails: tuple[str, ...]) -> int:
 
 # Shipped level (precision study, addendum 2): a confirmed value below it becomes unconfirmed.
 PUBLISH_LEVEL: Final = 3
+
+
 def _arbitrated(p: Paired, study: dict[str, Any], table: IdentityTable) -> Paired | None:
     """Round 3: two disagreements the record can settle. (a) one reader says the analyte is the
     parent drug and the other leaves it unspecified, in a record whose only drug intervention is the
