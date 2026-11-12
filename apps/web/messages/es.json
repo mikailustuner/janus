@@ -3,6 +3,68 @@
     "title": "Janus",
     "description": "Lee los medicamentos de casa y señala patrones de cascada de prescripción que puede valer la pena comentar con su médico."
   },
+  "About": {
+    "title": "Acerca de Janus",
+    "summary": "Una comprobación de cascadas de prescripción para los medicamentos de casa",
+    "what": {
+      "title": "Qué es Janus",
+      "body": "Janus lee los medicamentos que hay en casa de una persona, a partir del código de la caja, de una foto de la etiqueta o del nombre del medicamento, y busca patrones de cascada de prescripción: casos en los que el efecto adverso de un medicamento pudo confundirse con una enfermedad nueva y tratarse con otro medicamento. Cada patrón se enlaza con su fuente publicada y se convierte en una nota breve que la persona puede llevar a su médico, en el idioma del médico."
+    },
+    "principles": {
+      "title": "Principios",
+      "p1": "Janus ofrece información, no consejo médico.",
+      "p2": "Janus nunca dice a nadie que empiece, deje o cambie un medicamento.",
+      "p3": "Janus nunca da por bueno un medicamento. Cuando no encuentra nada, indica qué fuentes ha consultado y cuándo.",
+      "p4": "Los patrones proceden solo de listas publicadas y citadas. Janus no inventa reglas.",
+      "p5": "Janus es un prototipo de investigación, no un producto sanitario: ni autorizado por la FDA ni con marcado CE.",
+      "p6": "Todavía no se ha hecho la revisión de expertos."
+    },
+    "privacy": {
+      "title": "Privacidad",
+      "body": "Las fotos y el texto de las etiquetas se quedan en su dispositivo. Su lista de medicamentos se queda en su navegador. No hay cuenta ni cookies de seguimiento.",
+      "link": "Leer la página de privacidad"
+    },
+    "sources": {
+      "title": "Fuentes de datos abiertos",
+      "intro": "Los datos de producto proceden de listas públicas. Cada fuente, licencia y atribución figura en el archivo NOTICE.",
+      "tr": "Turquía: TİTCK",
+      "fr": "Francia: BDPM",
+      "es": "España: CIMA",
+      "us": "Estados Unidos: openFDA",
+      "ca": "Canadá: Drug Product Database (DPD)",
+      "it": "Italia: AIFA",
+      "link": "NOTICE en GitHub"
+    },
+    "openSource": {
+      "title": "Código abierto",
+      "body": "El código es abierto, con licencia Apache-2.0. La página de herramientas de investigación describe los datos abiertos, la API pública y las demás herramientas.",
+      "repo": "Código fuente en GitHub",
+      "research": "Herramientas de investigación"
+    },
+    "maintainer": {
+      "title": "Quién lo mantiene",
+      "body": "Janus es un proyecto independiente de código abierto, mantenido por Mikail Üstüner."
+    },
+    "status": "Prototipo de investigación, no es un producto sanitario (ni autorizado por la FDA ni con marcado CE). Todavía no se ha hecho la revisión de expertos."
+  },
+  "Seo": {
+    "about": "Qué es Janus, los principios que sigue, de dónde vienen sus datos y quién lo mantiene. Un prototipo de investigación, no un producto sanitario.",
+    "demo": "Pruebe Janus con tres pacientes sintéticos. No se envía nada y no se guarda nada.",
+    "cascades": "Los patrones de cascada de prescripción que comprueba Janus, cada uno enlazado con su fuente publicada. Información, no consejo médico.",
+    "passport": "Todas las cajas en una lista: si las listas públicas de varios países muestran un producto con los mismos principios activos.",
+    "openData": "Datos abiertos de Janus: recuentos publicados y la base de reglas de cascadas de prescripción, de libre reutilización para la investigación.",
+    "privacy": "Qué se queda en su dispositivo, qué se envía, qué se guarda y cómo borrarlo. Janus no tiene cuenta ni cookies de seguimiento.",
+    "research": "Herramientas de investigación basadas en datos públicos de efectos adversos: máquina del tiempo, resumen de la evidencia, tiempo hasta la aparición en FAERS, calidad de datos y simulaciones.",
+    "forResearchers": "Paquetes de datos abiertos, la API pública de solo lectura, el servidor MCP, los pipelines y un ejemplo resuelto en un solo lugar. Los recuentos son notificaciones, nunca personas.",
+    "developers": "Use las comprobaciones y los conjuntos de datos abiertos de Janus desde otro software: servidor MCP, servicio CDS Hooks, API pública de solo lectura y datos abiertos.",
+    "dataQuality": "Una comparación semanal de los códigos ATC que cinco fuentes públicas dan para el mismo principio activo, con cada diferencia listada.",
+    "faersOnset": "Para cada patrón publicado de cascada de prescripción: cuánto tiempo después de empezar un medicamento comenzó el evento según quienes notifican a FAERS. Notificaciones, no personas.",
+    "timeMachine": "Siga remedios del Canon de Avicena y algunas cascadas de prescripción a través de los datos abiertos de hoy. Investigación exploratoria, no consejo.",
+    "seance": "Tres testigos lado a lado para la investigación: un texto histórico, notificaciones de eventos adversos y estudios publicados. Nunca se funden en una sola puntuación.",
+    "modelExplorer": "Explore modelos sencillos del cuerpo y su error medido frente a estudios publicados. Para la investigación; no es una calculadora de dosis.",
+    "modelKit": "Conjuntos de parámetros con trazabilidad a la evidencia para fármacos con evidencia suficiente, probados con estudios reservados. No es una calculadora de dosis.",
+    "simulate": "Ejecuciones de modelos en cola con poblaciones virtuales, para la investigación. No trata de ninguna persona y no es una recomendación de dosis."
+  },
   "LocaleSwitcher": {
     "label": "Idioma"
   },

@@ -19,7 +19,7 @@ check() {  # check <path> <expected status>
   else printf '  FAIL %s %s (want %s)\n' "$code" "$1" "$2"; fail=1; fi
 }
 for lang in en tr; do
-  for page in "" /demo /results /passport /research /research/time-machine /open-data /privacy \
+  for page in "" /demo /results /passport /research /research/time-machine /open-data /privacy /about \
     /research/data-quality /research/faers-onset /research/developers /research/model-explorer \
     /research/simulate; do
     check "/$lang$page" 200
@@ -29,6 +29,8 @@ for route in /health /privacy/storage /memory/snapshot /seance/catalogue /light/
   /timemachine/catalogue /open/outcomes /simulate/compounds; do
   check "/api$route" 200
 done
+# Crawler files (served by the app, not from public/).
+for file in /sitemap.xml /robots.txt; do check "$file" 200; done
 # Static files outside the build output (public/): home media, fonts, service worker, scanner.
 for asset in /home/door-1280.mp4 /home/door-poster.webp /home/night-cabinet-1600.avif \
   /home/clinical-hero-1600.avif /fonts/Fraunces-SemiBold.ttf /sw.js /manifest.webmanifest \

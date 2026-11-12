@@ -3,6 +3,68 @@
     "title": "Janus",
     "description": "Reads the medicines at home and points out prescribing-cascade patterns that may be worth discussing with your doctor."
   },
+  "About": {
+    "title": "About Janus",
+    "summary": "A prescribing-cascade check for the medicines at home",
+    "what": {
+      "title": "What Janus is",
+      "body": "Janus reads the medicines in a person's home, from the code on the box, a photo of the label or the medicine's name, and looks for prescribing-cascade patterns: cases where a side effect of one medicine may have been mistaken for a new condition and treated with another medicine. Each pattern is linked to its published source and turned into a short note the person can take to their doctor, in the doctor's language."
+    },
+    "principles": {
+      "title": "Principles",
+      "p1": "Janus provides information, not medical advice.",
+      "p2": "Janus never tells anyone to start, stop or change a medicine.",
+      "p3": "Janus never gives reassurance about a medicine. When it finds nothing, it says which sources it checked and when.",
+      "p4": "Patterns come only from published, cited lists. Janus does not invent rules.",
+      "p5": "Janus is a research prototype, not a medical device: it has no FDA clearance and no CE mark.",
+      "p6": "Expert review has not yet been done."
+    },
+    "privacy": {
+      "title": "Privacy",
+      "body": "Photos and label text stay on your device. Your medicine list stays in your browser. There is no account and there are no tracking cookies.",
+      "link": "Read the privacy page"
+    },
+    "sources": {
+      "title": "Open data sources",
+      "intro": "Product data comes from public lists. Every source, licence and attribution is listed in the NOTICE file.",
+      "tr": "Türkiye: TİTCK",
+      "fr": "France: BDPM",
+      "es": "Spain: CIMA",
+      "us": "United States: openFDA",
+      "ca": "Canada: Drug Product Database (DPD)",
+      "it": "Italy: AIFA",
+      "link": "NOTICE on GitHub"
+    },
+    "openSource": {
+      "title": "Open source",
+      "body": "The code is open source under the Apache-2.0 licence. The research tools page describes the open data, the public API and the other tools.",
+      "repo": "Source code on GitHub",
+      "research": "Research tools"
+    },
+    "maintainer": {
+      "title": "Who maintains it",
+      "body": "Janus is an independent open-source project maintained by Mikail Üstüner."
+    },
+    "status": "Research prototype, not a medical device (no FDA clearance, no CE mark). Expert review has not yet been done."
+  },
+  "Seo": {
+    "about": "What Janus is, the principles it follows, where its data comes from and who maintains it. A research prototype, not a medical device.",
+    "demo": "Try Janus with three synthetic patients. Nothing is sent and nothing is stored.",
+    "cascades": "The prescribing-cascade patterns Janus checks, each linked to its published source. Information, not medical advice.",
+    "passport": "All boxes in one list: whether the public product lists of several countries show a product with the same active ingredients.",
+    "openData": "Open data from Janus: released counts and the prescribing-cascade rule base, free to reuse for research.",
+    "privacy": "What stays on your device, what is sent, what is stored and how to delete it. Janus has no account and no tracking cookies.",
+    "research": "Research tools built on public side-effect data: time machine, evidence summary, FAERS time to onset, data-quality report and model runs.",
+    "forResearchers": "Open data packages, the public read-only API, the MCP server, pipelines and a worked example in one place. Counts are reports, never people.",
+    "developers": "Use Janus checks and open datasets from other software: an MCP server, a CDS Hooks service, a public read-only API and open data packages.",
+    "dataQuality": "A weekly comparison of the ATC codes that five public sources give for the same ingredient, with every difference listed.",
+    "faersOnset": "For each published prescribing-cascade pattern, how long after starting a medicine FAERS reporters say the event began. Reports, not people.",
+    "timeMachine": "Follow remedies of Ibn Sina's Canon and some prescribing cascades through today's open data. Exploratory research, not advice.",
+    "seance": "Three witnesses side by side for research: a historical text, adverse-event reports and published studies. Never merged into one score.",
+    "modelExplorer": "Explore simple body models and their measured error against published studies. For research; not a dose calculator.",
+    "modelKit": "Evidence-traceable parameter sets for drugs with enough evidence, tested against held-out studies. Not a dose calculator.",
+    "simulate": "Queued model runs with virtual populations, for research. Not about any person and not a dose recommendation."
+  },
   "LocaleSwitcher": {
     "label": "Language"
   },

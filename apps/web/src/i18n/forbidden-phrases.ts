@@ -46,3 +46,27 @@ export function findForbiddenPhrases(
     new RegExp(`(?<!\\p{L})${escape(phrase)}(?!\\p{L})`, "iu").test(text),
   );
 }
+
+/**
+ * Words the website must never use: it does not mention the event it was built for. Matched
+ * at the start of a word, so inflected forms are caught too (Turkish "yarışması", ...). Covers
+ * every user-facing surface: messages, pages, metadata, sitemap, structured data, images.
+ */
+export const contestTerms = [
+  "kiroween",
+  "hackathon",
+  "devpost",
+  "competition",
+  "contest",
+  "yarışma",
+  "wettbewerb",
+  "concours",
+  "concurso",
+] as const;
+
+/** Returns the contest terms found in `text`, case-insensitive. */
+export function findContestTerms(text: string): string[] {
+  return contestTerms.filter((term) =>
+    new RegExp(`(?<!\\p{L})${escape(term)}`, "iu").test(text),
+  );
+}

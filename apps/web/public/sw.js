@@ -1,6 +1,6 @@
 /*
  * Janus service worker (experience design §13.4, DP22). Hand-written and small:
- * - never caches /api (medical results are never served from a cache, Req 22.5);
+ * - never caches /api (medical results are never served from a cache, Req 22.5), /sitemap.xml or /robots.txt;
  * - precaches the demo routes of the five languages, the doctor page and the PDF fonts at install;
  * - cache-first for /_next/static (immutable), stale-while-revalidate for other same-origin GETs
  *   (pages, RSC payloads, the demo fixture and vocabulary chunks), so the demo works offline
@@ -71,6 +71,8 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(req.url);
   if (req.method !== "GET" || url.origin !== self.location.origin) return;
   if (url.pathname.startsWith("/api/")) return; // network only, never cached
+  // Crawler files are never served from a cache: the browser always asks the server.
+  if (url.pathname === "/sitemap.xml" || url.pathname === "/robots.txt") return;
   if (url.pathname.startsWith("/_next/static/")) {
     event.respondWith(
       caches.match(req).then(

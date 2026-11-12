@@ -3,6 +3,68 @@
     "title": "Janus",
     "description": "Liest die Medikamente zu Hause und zeigt Muster von Verschreibungskaskaden, über die ein Gespräch mit Ihrer Ärztin oder Ihrem Arzt sinnvoll sein kann."
   },
+  "About": {
+    "title": "Über Janus",
+    "summary": "Eine Prüfung auf Verschreibungskaskaden für die Medikamente zu Hause",
+    "what": {
+      "title": "Was Janus ist",
+      "body": "Janus liest die Medikamente im Haushalt einer Person, vom Code auf der Packung, von einem Foto des Etiketts oder vom Namen des Medikaments, und sucht nach Mustern von Verschreibungskaskaden: Fälle, in denen eine Nebenwirkung eines Medikaments für ein neues Leiden gehalten und mit einem weiteren Medikament beantwortet worden sein könnte. Jedes Muster ist mit seiner veröffentlichten Quelle verknüpft und wird zu einer kurzen Notiz, die die Person zu ihrer Ärztin oder ihrem Arzt mitnehmen kann, in der Sprache der Ärztin oder des Arztes."
+    },
+    "principles": {
+      "title": "Grundsätze",
+      "p1": "Janus bietet Informationen, keine medizinische Beratung.",
+      "p2": "Janus sagt niemandem, dass er ein Medikament beginnen, absetzen oder ändern soll.",
+      "p3": "Janus gibt für kein Medikament Entwarnung. Findet es nichts, nennt es, welche Quellen es wann geprüft hat.",
+      "p4": "Muster stammen nur aus veröffentlichten, belegten Listen. Janus erfindet keine Regeln.",
+      "p5": "Janus ist ein Forschungsprototyp, kein Medizinprodukt: weder von der FDA zugelassen noch CE-gekennzeichnet.",
+      "p6": "Eine Prüfung durch Fachleute ist noch nicht erfolgt."
+    },
+    "privacy": {
+      "title": "Datenschutz",
+      "body": "Fotos und Etikettentext bleiben auf Ihrem Gerät. Ihre Medikamentenliste bleibt in Ihrem Browser. Es gibt kein Konto und keine Tracking-Cookies.",
+      "link": "Zur Datenschutzseite"
+    },
+    "sources": {
+      "title": "Offene Datenquellen",
+      "intro": "Die Produktdaten stammen aus öffentlichen Listen. Jede Quelle, Lizenz und Namensnennung steht in der Datei NOTICE.",
+      "tr": "Türkei: TİTCK",
+      "fr": "Frankreich: BDPM",
+      "es": "Spanien: CIMA",
+      "us": "USA: openFDA",
+      "ca": "Kanada: Drug Product Database (DPD)",
+      "it": "Italien: AIFA",
+      "link": "NOTICE auf GitHub"
+    },
+    "openSource": {
+      "title": "Open Source",
+      "body": "Der Code ist Open Source unter der Lizenz Apache-2.0. Die Seite für Forschungswerkzeuge beschreibt die offenen Daten, die öffentliche API und die weiteren Werkzeuge.",
+      "repo": "Quellcode auf GitHub",
+      "research": "Forschungswerkzeuge"
+    },
+    "maintainer": {
+      "title": "Wer Janus betreut",
+      "body": "Janus ist ein unabhängiges Open-Source-Projekt, betreut von Mikail Üstüner."
+    },
+    "status": "Forschungsprototyp, kein Medizinprodukt (weder von der FDA zugelassen noch CE-gekennzeichnet). Eine Prüfung durch Fachleute ist noch nicht erfolgt."
+  },
+  "Seo": {
+    "about": "Was Janus ist, welchen Grundsätzen es folgt, woher die Daten stammen und wer es betreut. Ein Forschungsprototyp, kein Medizinprodukt.",
+    "demo": "Janus mit drei synthetischen Patienten ausprobieren. Es wird nichts gesendet und nichts gespeichert.",
+    "cascades": "Die Muster von Verschreibungskaskaden, die Janus prüft, jedes mit seiner veröffentlichten Quelle. Information, keine medizinische Beratung.",
+    "passport": "Alle Packungen in einer Liste: Zeigen die öffentlichen Produktlisten mehrerer Länder ein Produkt mit denselben Wirkstoffen?",
+    "openData": "Offene Daten von Janus: freigegebene Zählwerte und die Regelbasis der Verschreibungskaskaden, frei nutzbar für die Forschung.",
+    "privacy": "Was auf Ihrem Gerät bleibt, was gesendet und was gespeichert wird und wie Sie es löschen. Janus hat kein Konto und keine Tracking-Cookies.",
+    "research": "Forschungswerkzeuge auf Basis öffentlicher Nebenwirkungsdaten: Zeitmaschine, Evidenzübersicht, FAERS-Zeit bis zum Auftreten, Datenqualitätsbericht und Modellläufe.",
+    "forResearchers": "Offene Datenpakete, die öffentliche Nur-Lese-API, der MCP-Server, Pipelines und ein durchgerechnetes Beispiel an einem Ort. Zählwerte sind Meldungen, nie Personen.",
+    "developers": "Janus-Prüfungen und offene Datensätze aus anderer Software nutzen: MCP-Server, CDS-Hooks-Dienst, öffentliche Nur-Lese-API und offene Datenpakete.",
+    "dataQuality": "Ein wöchentlicher Vergleich der ATC-Codes, die fünf öffentliche Quellen für denselben Wirkstoff angeben, mit jeder Abweichung.",
+    "faersOnset": "Für jedes veröffentlichte Muster einer Verschreibungskaskade: Wie lange nach Beginn eines Medikaments setzte das Ereignis laut FAERS-Meldenden ein? Meldungen, keine Personen.",
+    "timeMachine": "Heilmittel aus Ibn Sinas Kanon und einige Verschreibungskaskaden anhand heutiger offener Daten verfolgen. Explorative Forschung, kein Rat.",
+    "seance": "Drei Zeugen nebeneinander für die Forschung: ein historischer Text, Meldungen unerwünschter Ereignisse und veröffentlichte Studien. Nie zu einem Wert verschmolzen.",
+    "modelExplorer": "Einfache Körpermodelle und ihren gemessenen Fehler gegenüber veröffentlichten Studien erkunden. Für die Forschung; kein Dosisrechner.",
+    "modelKit": "Belegbare Parametersätze für Arzneimittel mit ausreichender Evidenz, gegen zurückgehaltene Studien getestet. Kein Dosisrechner.",
+    "simulate": "Eingereihte Modellläufe mit virtuellen Bevölkerungen, für die Forschung. Nicht über eine Person und keine Dosisempfehlung."
+  },
   "LocaleSwitcher": {
     "label": "Sprache"
   },

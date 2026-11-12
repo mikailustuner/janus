@@ -51,7 +51,11 @@ const nextConfig: NextConfig = {
   outputFileTracingRoot: workspaceRoot,
   poweredByHeader: false,
   agentRules: false,
-  env: { NEXT_PUBLIC_JANUS_BUILD: build },
+  env: {
+    NEXT_PUBLIC_JANUS_BUILD: build,
+    // The sitemap's lastModified: a page only changes with a new build.
+    NEXT_PUBLIC_JANUS_BUILD_TIME: new Date().toISOString(),
+  },
   devIndicators: false,
   cacheComponents: true,
   partialPrefetching: true,

@@ -3,6 +3,68 @@
     "title": "Janus",
     "description": "Lit les médicaments de la maison et signale des schémas de cascade de prescription qu'il peut être utile d'aborder avec votre médecin."
   },
+  "About": {
+    "title": "À propos de Janus",
+    "summary": "Une vérification des cascades de prescription pour les médicaments de la maison",
+    "what": {
+      "title": "Ce qu'est Janus",
+      "body": "Janus lit les médicaments présents au domicile d'une personne, à partir du code de la boîte, d'une photo de l'étiquette ou du nom du médicament, et recherche des schémas de cascade de prescription : des cas où l'effet indésirable d'un médicament a pu être pris pour une nouvelle affection et traité par un autre médicament. Chaque schéma est relié à sa source publiée et devient une courte note que la personne peut emporter chez son médecin, dans la langue du médecin."
+    },
+    "principles": {
+      "title": "Principes",
+      "p1": "Janus fournit des informations, pas des conseils médicaux.",
+      "p2": "Janus ne dit jamais à personne de commencer, d'arrêter ou de modifier un médicament.",
+      "p3": "Janus ne rassure jamais sur un médicament. Quand il ne trouve rien, il indique quelles sources il a consultées et quand.",
+      "p4": "Les schémas viennent uniquement de listes publiées et citées. Janus n'invente pas de règles.",
+      "p5": "Janus est un prototype de recherche, pas un dispositif médical : ni autorisé par la FDA, ni marqué CE.",
+      "p6": "La relecture par des experts n'a pas encore été faite."
+    },
+    "privacy": {
+      "title": "Confidentialité",
+      "body": "Les photos et le texte des étiquettes restent sur votre appareil. Votre liste de médicaments reste dans votre navigateur. Il n'y a pas de compte et pas de cookies de suivi.",
+      "link": "Lire la page confidentialité"
+    },
+    "sources": {
+      "title": "Sources de données ouvertes",
+      "intro": "Les données produits viennent de listes publiques. Chaque source, licence et attribution figure dans le fichier NOTICE.",
+      "tr": "Turquie : TİTCK",
+      "fr": "France : BDPM",
+      "es": "Espagne : CIMA",
+      "us": "États-Unis : openFDA",
+      "ca": "Canada : Drug Product Database (DPD)",
+      "it": "Italie : AIFA",
+      "link": "NOTICE sur GitHub"
+    },
+    "openSource": {
+      "title": "Logiciel libre",
+      "body": "Le code est ouvert, sous licence Apache-2.0. La page des outils de recherche décrit les données ouvertes, l'API publique et les autres outils.",
+      "repo": "Code source sur GitHub",
+      "research": "Outils de recherche"
+    },
+    "maintainer": {
+      "title": "Qui le maintient",
+      "body": "Janus est un projet libre et indépendant, maintenu par Mikail Üstüner."
+    },
+    "status": "Prototype de recherche, pas un dispositif médical (ni autorisé par la FDA, ni marqué CE). La relecture par des experts n'a pas encore été faite."
+  },
+  "Seo": {
+    "about": "Ce qu'est Janus, les principes qu'il suit, d'où viennent ses données et qui le maintient. Un prototype de recherche, pas un dispositif médical.",
+    "demo": "Essayez Janus avec trois patients synthétiques. Rien n'est envoyé et rien n'est enregistré.",
+    "cascades": "Les schémas de cascade de prescription que Janus vérifie, chacun relié à sa source publiée. Des informations, pas des conseils médicaux.",
+    "passport": "Toutes les boîtes dans une seule liste : les listes publiques de plusieurs pays montrent-elles un produit aux mêmes substances actives ?",
+    "openData": "Les données ouvertes de Janus : effectifs publiés et base de règles des cascades de prescription, réutilisables librement pour la recherche.",
+    "privacy": "Ce qui reste sur votre appareil, ce qui est envoyé, ce qui est enregistré et comment le supprimer. Janus n'a ni compte ni cookies de suivi.",
+    "research": "Des outils de recherche fondés sur des données publiques d'effets indésirables : machine à remonter le temps, synthèse des preuves, délai d'apparition FAERS, qualité des données et simulations.",
+    "forResearchers": "Jeux de données ouverts, API publique en lecture seule, serveur MCP, pipelines et un exemple pas à pas au même endroit. Les effectifs sont des signalements, jamais des personnes.",
+    "developers": "Utilisez les contrôles et les jeux de données ouverts de Janus depuis d'autres logiciels : serveur MCP, service CDS Hooks, API publique en lecture seule et données ouvertes.",
+    "dataQuality": "Une comparaison hebdomadaire des codes ATC donnés par cinq sources publiques pour une même substance, avec chaque écart listé.",
+    "faersOnset": "Pour chaque schéma publié de cascade de prescription : combien de temps après le début d'un médicament l'événement a-t-il commencé selon les déclarants FAERS ? Des signalements, pas des personnes.",
+    "timeMachine": "Suivez des remèdes du Canon d'Ibn Sina et quelques cascades de prescription à travers les données ouvertes d'aujourd'hui. Recherche exploratoire, pas un conseil.",
+    "seance": "Trois témoins côte à côte pour la recherche : un texte historique, des signalements d'événements indésirables et des études publiées. Jamais fusionnés en un seul score.",
+    "modelExplorer": "Explorez des modèles simples du corps et leur erreur mesurée par rapport aux études publiées. Pour la recherche ; pas un calculateur de dose.",
+    "modelKit": "Des jeux de paramètres traçables jusqu'aux preuves pour les médicaments bien documentés, testés sur des études mises de côté. Pas un calculateur de dose.",
+    "simulate": "Simulations en file d'attente avec des populations virtuelles, pour la recherche. Ne concerne aucune personne et n'est pas une recommandation de dose."
+  },
   "LocaleSwitcher": {
     "label": "Langue"
   },
