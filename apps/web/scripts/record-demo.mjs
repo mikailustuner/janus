@@ -15,7 +15,7 @@ import { writeFileSync } from "node:fs";
 import { join } from "node:path";
 const API = process.env.JANUS_RECORD_API ?? "http://127.0.0.1:8010";
 const OUT = join(import.meta.dirname, "../src/demo/fixtures");
-const LANGUAGES = ["en", "tr", "de", "fr", "es"];
+const LANGUAGES = ["en", "tr", "de", "fr", "es", "pt"];
 const OUTCOME_CONSENT_VERSION = "2026-11-v2";
 const tr = (query, atc) => ({
   how: "tr_by_code",

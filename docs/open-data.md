@@ -62,7 +62,7 @@ The read-only API that serves the dataset (and the other public routes) is descr
 | `snapshot_date` | date `YYYY-MM-DD` | UTC day the file was produced |
 | `layer` | `contributions` \| `outcomes` | donated reports, or doctor-confirmed outcomes |
 | `ingredients` | 1–2 keys (CSV: joined with `\|`) | ingredient keys: Wikidata items (`Q…`, CC0) or curated Janus keys (`J…`, `data/janus_ingredients.csv`) |
-| `event` | string | Janus event key (`apps/api/janus/memory/memory_events.csv`; lay labels in five languages in the web vocabulary) |
+| `event` | string | Janus event key (`apps/api/janus/memory/memory_events.csv`; lay labels in six languages in the web vocabulary) |
 | `direction` | `adverse` \| `benefit` | the person or doctor reported a harm or an improvement |
 | `region` | `TR` \| `EU` \| `US` | the only geography Janus stores |
 | `value` | integer ≥ 0 | number of **reports** (never people) in the cell, with noise added |

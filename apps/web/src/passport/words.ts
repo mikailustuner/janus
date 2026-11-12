@@ -15,7 +15,7 @@ import {
 } from "@/i18n/forbidden-phrases";
 import { reassurance } from "@/i18n/reassurance";
 
-export type Locale = "en" | "tr" | "de" | "fr" | "es";
+export type Locale = "en" | "tr" | "de" | "fr" | "es" | "pt";
 
 export const substitutionWords: Record<Locale, readonly string[]> = {
   en: [
@@ -67,6 +67,16 @@ export const substitutionWords: Record<Locale, readonly string[]> = {
     "cambiar a",
     "alternativa",
   ],
+  pt: [
+    "equivalente",
+    "intercambiável",
+    "em vez de",
+    "em lugar de",
+    "substitu",
+    "trocar por",
+    "mudar para",
+    "alternativa",
+  ],
 };
 
 export const removalWords: Record<Locale, readonly string[]> = {
@@ -82,6 +92,16 @@ export const removalWords: Record<Locale, readonly string[]> = {
   de: ["entfern", "lösch", "nur eines", "brauchen Sie nicht"],
   fr: ["supprim", "retir", "un seul suffit", "besoin des deux"],
   es: ["elimin", "quit", "borr", "solo uno", "necesita ambos"],
+  pt: [
+    "remov",
+    "elimin",
+    "apag",
+    "retir",
+    "apenas um",
+    "só um",
+    "precisa de ambos",
+    "um deles basta",
+  ],
 };
 
 const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");

@@ -15,7 +15,7 @@ import pytest
 from janus.memory import messages
 
 WEB = Path(__file__).resolve().parents[3] / "apps" / "web" / "messages"
-LOCALES = ("en", "tr", "de", "fr", "es")
+LOCALES = ("en", "tr", "de", "fr", "es", "pt")
 REGIONS_FOR_LINES = ("US", "TR", "EU", "OTHER", "UNKNOWN")
 SAFETY_CODES = (
     "crisis_support", "urgent_care_skin", "urgent_care_heart", "urgent_care_gi",

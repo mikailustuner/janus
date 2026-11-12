@@ -128,7 +128,7 @@ const bodies = (
 const plural = (message: string, count: number) =>
   message
     .replace(
-      /\{count, plural, one \{([^}]*)\} other \{([^}]*)\}\}/,
+      /\{count, plural, (?:=0 \{[^}]*\} )?one \{([^}]*)\} other \{([^}]*)\}\}/,
       (_, one, other) => (count === 1 ? one : other),
     )
     .replace(/#/g, String(count));

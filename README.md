@@ -27,7 +27,7 @@ review agents in [`.kiro/`](.kiro)); the development log is
 | Safety check         | Same ingredient or same ATC subgroup twice; US label "Drug Interactions" passages that name another medicine on the list (quoted, no grading); three openly licensed anticholinergic burden scales, cited |
 | Recall check         | Whether a US product or lot appears in an FDA recall (enforcement) record, quoted from the record                                                                                                         |
 | Medication passport  | Products with the same active ingredient in another country (France, Spain, United States, Canada, Italy), with strength and form shown as same / different / unknown — never "equivalent"                |
-| Medicine information | What kind of medicine it is, in plain words in five languages, plus the official label text quoted untranslated                                                                                           |
+| Medicine information | What kind of medicine it is, in plain words in six languages, plus the official label text quoted untranslated                                                                                            |
 | Research tools       | Time machine (evidence over time), séance (evidence synthesis), FAERS onset table, data-quality report, population simulation with measured model error                                                   |
 
 Product data: Türkiye (TİTCK), France (BDPM), Spain (CIMA), United States (openFDA),
@@ -58,7 +58,7 @@ pipelines and a worked example, in one place:
 
 | Path         | Contents                                                               |
 | ------------ | ---------------------------------------------------------------------- |
-| `apps/web/`  | Next.js web app (PWA), five languages                                  |
+| `apps/web/`  | Next.js web app (PWA), six languages                                   |
 | `apps/api/`  | FastAPI service (Python 3.12), PostgreSQL                              |
 | `apps/mcp/`  | Read-only MCP server over the public API                               |
 | `pipelines/` | Data ETL jobs, one per source                                          |

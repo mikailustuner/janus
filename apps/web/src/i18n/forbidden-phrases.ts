@@ -33,6 +33,14 @@ export const forbiddenPhrases = {
   ],
   fr: ["arrêtez de prendre", "médicament inutile", "guérit", "diagnostic"],
   es: ["deje de tomar", "medicamento innecesario", "cura", "diagnóstico"],
+  pt: [
+    "pare de tomar",
+    "deixe de tomar",
+    "interrompa",
+    "medicamento desnecessário",
+    "cura",
+    "diagnóstico",
+  ],
 } as const;
 
 const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -62,6 +70,8 @@ export const contestTerms = [
   "wettbewerb",
   "concours",
   "concurso",
+  "competição",
+  "competicao",
 ] as const;
 
 /** Returns the contest terms found in `text`, case-insensitive. */

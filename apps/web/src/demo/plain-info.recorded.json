@@ -1,5 +1,5 @@
 {
-  "groups_version": "5a483d19b0ae68b2316e1cfa7344ebb86a55662739e399ee83fdf7b7ca6c469c",
+  "groups_version": "a5756e3747db23da6d8c8fe2af1023181f826cba3a555f8c329d5af8ef1a4370",
   "ingredients": {
     "en": {
       "": {
@@ -1061,6 +1061,226 @@
             "id": "paracetamol",
             "name": "Medicamentos con paracetamol",
             "text": "Los medicamentos de este grupo se usan para el dolor y la fiebre.",
+            "codes": [
+              "N02BE01"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "N02BF01 N03AX12": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": true
+      },
+      "N05BA12": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": true
+      },
+      "N06AB06": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": true
+      },
+      "N06DA02": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "R05CB06": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": false
+      }
+    },
+    "pt": {
+      "": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "A02BC01": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "ppi",
+            "name": "Inibidores da bomba de protões (medicamentos que reduzem o ácido do estômago)",
+            "text": "Os medicamentos deste grupo reduzem a quantidade de ácido que o estômago produz. Usam-se para a azia, o refluxo ácido e as úlceras do estômago.",
+            "codes": [
+              "A02BC01"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "A02BC02": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "ppi",
+            "name": "Inibidores da bomba de protões (medicamentos que reduzem o ácido do estômago)",
+            "text": "Os medicamentos deste grupo reduzem a quantidade de ácido que o estômago produz. Usam-se para a azia, o refluxo ácido e as úlceras do estômago.",
+            "codes": [
+              "A02BC02"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "A06AD11": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "laxative",
+            "name": "Laxantes",
+            "text": "Os medicamentos deste grupo ajudam a esvaziar o intestino. Usam-se para a obstipação e alguns também para limpar o intestino antes de um exame ou de uma cirurgia.",
+            "codes": [
+              "A06AD11"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "A10BA02": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "diabetes_non_insulin",
+            "name": "Medicamentos que baixam o açúcar no sangue, diferentes da insulina",
+            "text": "Os medicamentos deste grupo baixam o açúcar no sangue. A maioria usa-se para a diabetes; alguns também se usam para o controlo do peso ou para doenças do coração e do rim.",
+            "codes": [
+              "A10BA02"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "C01EB16 G02CC01 M01AE01 M02AA13 R02AX02": {
+        "status": "mixed",
+        "groups": [
+          {
+            "id": "nsaid",
+            "name": "Anti-inflamatórios não esteroides (AINE)",
+            "text": "Os medicamentos deste grupo usam-se para a dor e para o inchaço e a dor local (inflamação). Alguns também se usam para a febre.",
+            "codes": [
+              "M01AE01"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": true,
+        "abrupt_stop": false
+      },
+      "C03CA01": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "diuretic",
+            "name": "Diuréticos (comprimidos para urinar mais)",
+            "text": "Os medicamentos deste grupo ajudam o corpo a eliminar mais água na urina. Usam-se para a tensão arterial elevada (hipertensão) e para o inchaço provocado por excesso de líquido no corpo.",
+            "codes": [
+              "C03CA01"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "C08CA01": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "calcium_channel_blocker",
+            "name": "Bloqueadores dos canais de cálcio (di-hidropiridinas)",
+            "text": "Os medicamentos deste grupo usam-se para a tensão arterial elevada (hipertensão). Alguns também se usam para a dor no peito que tem origem no coração (angina de peito).",
+            "codes": [
+              "C08CA01"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "C09AA03": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "ace_inhibitor",
+            "name": "Inibidores da enzima de conversão da angiotensina (IECA)",
+            "text": "Os medicamentos deste grupo usam-se para a tensão arterial elevada (hipertensão) e para algumas doenças do coração e do rim.",
+            "codes": [
+              "C09AA03"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "C09AA05": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "ace_inhibitor",
+            "name": "Inibidores da enzima de conversão da angiotensina (IECA)",
+            "text": "Os medicamentos deste grupo usam-se para a tensão arterial elevada (hipertensão) e para algumas doenças do coração e do rim.",
+            "codes": [
+              "C09AA05"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "C10AA05": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "statin",
+            "name": "Estatinas (medicamentos que baixam o colesterol)",
+            "text": "Os medicamentos deste grupo baixam o colesterol no sangue.",
+            "codes": [
+              "C10AA05"
+            ],
+            "review_status": "not_reviewed"
+          }
+        ],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "G04BD04": {
+        "status": "none",
+        "groups": [],
+        "other_uses": false,
+        "abrupt_stop": false
+      },
+      "N02BE01": {
+        "status": "single",
+        "groups": [
+          {
+            "id": "paracetamol",
+            "name": "Medicamentos com paracetamol",
+            "text": "Os medicamentos deste grupo usam-se para a dor e a febre.",
             "codes": [
               "N02BE01"
             ],

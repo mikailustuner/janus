@@ -177,6 +177,7 @@ def test_p5_every_group_has_every_text_within_the_rules() -> None:
         "de": "Medikamente dieser Gruppe ",
         "fr": "Les médicaments de ce groupe ",
         "es": "Los medicamentos de este grupo ",
+        "pt": "Os medicamentos deste grupo ",
     }
     assert all(g.uses[lang].startswith(starts[lang]) for g in TABLE.groups for lang in LANGUAGES)
     assert {g.status for g in TABLE.groups} == {"not_reviewed"}

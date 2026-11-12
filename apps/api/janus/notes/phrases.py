@@ -39,6 +39,14 @@ FORBIDDEN: Final[Mapping[str, tuple[str, ...]]] = {
     "de": ("absetzen Sie", "nicht mehr einnehmen", "unnötiges Medikament", "heilt", "Diagnose"),
     "fr": ("arrêtez de prendre", "médicament inutile", "guérit", "diagnostic"),
     "es": ("deje de tomar", "medicamento innecesario", "cura", "diagnóstico"),
+    "pt": (
+        "pare de tomar",
+        "deixe de tomar",
+        "interrompa",
+        "medicamento desnecessário",
+        "cura",
+        "diagnóstico",
+    ),
 }
 
 REASSURANCE: Final[Mapping[str, tuple[str, ...]]] = {
@@ -68,9 +76,15 @@ REASSURANCE: Final[Mapping[str, tuple[str, ...]]] = {
         "inofensivas", "inocuo", "inocua", "inocuos", "inocuas", "sin riesgo", "sin riesgos",
         "nada de qué preocuparse", "todo en orden",
     ),
+    "pt": (
+        "seguro", "segura", "seguros", "seguras", "com segurança", "sem perigo", "sem problemas",
+        "sem problema", "nenhum problema", "não há problema", "inofensivo", "inofensiva",
+        "inofensivos", "inofensivas", "inócuo", "inócua", "inócuos", "inócuas", "sem risco",
+        "sem riscos", "nada com que se preocupar", "tudo em ordem",
+    ),
 }  # fmt: skip
 
-LANGUAGES: Final = ("en", "tr", "de", "fr", "es")
+LANGUAGES: Final = ("en", "tr", "de", "fr", "es", "pt")
 
 # A Unicode letter: a word character that is neither a digit nor the underscore (JS `\p{L}`).
 _LETTER: Final = r"[^\W\d_]"

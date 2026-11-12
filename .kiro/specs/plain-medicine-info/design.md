@@ -63,7 +63,7 @@ come from the sources drug resolution already uses (`whocc_atc` in NOTICE).
 
 ### The groups and the exact sentences
 <!-- groups-table:start (generated from apps/api/janus/plaininfo/groups.csv by the test helper; do not edit by hand) -->
-31 groups, 310 texts. Status of every row: `not_reviewed`.
+31 groups, 372 texts. Status of every row: `not_reviewed`.
 
 | Group id | ATC prefixes (excluded codes) | Lang. | Name | Sentence |
 |---|---|---|---|---|
@@ -72,156 +72,187 @@ come from the sources drug resolution already uses (`whocc_atc` in NOTICE).
 |  |  | de | Protonenpumpenhemmer (Magensäurehemmer) | Medikamente dieser Gruppe verringern die Menge an Säure, die der Magen bildet. Sie werden bei Sodbrennen, Rückfluss von Magensäure (Reflux) und Magengeschwüren angewendet. |
 |  |  | fr | Inhibiteurs de la pompe à protons (médicaments qui réduisent l'acidité de l'estomac) | Les médicaments de ce groupe réduisent la quantité d'acide produite par l'estomac. Ils sont utilisés en cas de brûlures d'estomac, de reflux acide et d'ulcère de l'estomac. |
 |  |  | es | Inhibidores de la bomba de protones (medicamentos que reducen el ácido del estómago) | Los medicamentos de este grupo reducen la cantidad de ácido que produce el estómago. Se usan para el ardor de estómago, el reflujo ácido y las úlceras de estómago. |
+|  |  | pt | Inibidores da bomba de protões (medicamentos que reduzem o ácido do estômago) | Os medicamentos deste grupo reduzem a quantidade de ácido que o estômago produz. Usam-se para a azia, o refluxo ácido e as úlceras do estômago. |
 | `h2_blocker` | A02BA | en | H2 blockers (medicines that reduce stomach acid) | Medicines in this group lower the amount of acid the stomach makes. They are used for heartburn, acid reflux and stomach ulcers. |
 |  |  | tr | H2 reseptör blokerleri (mide asidini azaltan ilaçlar) | Bu gruptaki ilaçlar midenin ürettiği asit miktarını azaltır. Mide yanması, reflü ve mide ülserinde kullanılır. |
 |  |  | de | H2-Blocker (Magensäurehemmer) | Medikamente dieser Gruppe verringern die Menge an Säure, die der Magen bildet. Sie werden bei Sodbrennen, Rückfluss von Magensäure (Reflux) und Magengeschwüren angewendet. |
 |  |  | fr | Anti-H2 (médicaments qui réduisent l'acidité de l'estomac) | Les médicaments de ce groupe réduisent la quantité d'acide produite par l'estomac. Ils sont utilisés en cas de brûlures d'estomac, de reflux acide et d'ulcère de l'estomac. |
 |  |  | es | Anti-H2 / antihistamínicos H2 (medicamentos que reducen el ácido del estómago) | Los medicamentos de este grupo reducen la cantidad de ácido que produce el estómago. Se usan para el ardor de estómago, el reflujo ácido y las úlceras de estómago. |
+|  |  | pt | Antagonistas dos recetores H2 (medicamentos que reduzem o ácido do estômago) | Os medicamentos deste grupo reduzem a quantidade de ácido que o estômago produz. Usam-se para a azia, o refluxo ácido e as úlceras do estômago. |
 | `laxative` | A06A | en | Laxatives | Medicines in this group help to empty the bowel. They are used for constipation, and some are used to clear the bowel before an examination or operation. |
 |  |  | tr | Laksatifler (kabızlık ilaçları) | Bu gruptaki ilaçlar bağırsakların boşalmasına yardımcı olur. Kabızlıkta kullanılır; bazıları bir muayene veya ameliyattan önce bağırsağı temizlemek için de kullanılır. |
 |  |  | de | Abführmittel | Medikamente dieser Gruppe helfen, den Darm zu entleeren. Sie werden bei Verstopfung angewendet, einige auch, um den Darm vor einer Untersuchung oder Operation zu reinigen. |
 |  |  | fr | Laxatifs | Les médicaments de ce groupe aident à vider l'intestin. Ils sont utilisés en cas de constipation, et certains pour nettoyer l'intestin avant un examen ou une opération. |
 |  |  | es | Laxantes | Los medicamentos de este grupo ayudan a vaciar el intestino. Se usan para el estreñimiento y algunos también para limpiar el intestino antes de una exploración o una operación. |
+|  |  | pt | Laxantes | Os medicamentos deste grupo ajudam a esvaziar o intestino. Usam-se para a obstipação e alguns também para limpar o intestino antes de um exame ou de uma cirurgia. |
 | `antidiarrheal` | A07DA | en | Medicines that slow the bowel (for diarrhea) | Medicines in this group slow down the movement of the bowel. They are used for diarrhea. |
 |  |  | tr | Bağırsak hareketlerini yavaşlatan ilaçlar (ishal için) | Bu gruptaki ilaçlar bağırsak hareketlerini yavaşlatır. İshalde kullanılır. |
 |  |  | de | Medikamente, die die Darmbewegung bremsen (gegen Durchfall) | Medikamente dieser Gruppe verlangsamen die Bewegung des Darms. Sie werden bei Durchfall angewendet. |
 |  |  | fr | Médicaments qui ralentissent l'intestin (contre la diarrhée) | Les médicaments de ce groupe ralentissent les mouvements de l'intestin. Ils sont utilisés en cas de diarrhée. |
 |  |  | es | Medicamentos que frenan el intestino (para la diarrea) | Los medicamentos de este grupo frenan el movimiento del intestino. Se usan para la diarrea. |
+|  |  | pt | Medicamentos que abrandam o intestino (para a diarreia) | Os medicamentos deste grupo abrandam o movimento do intestino. Usam-se para a diarreia. |
 | `insulin` | A10A | en | Insulins | Medicines in this group are insulins. They lower blood sugar and are used for diabetes. |
 |  |  | tr | İnsülinler | Bu gruptaki ilaçlar insülindir. Kan şekerini düşürür ve diyabette (şeker hastalığında) kullanılır. |
 |  |  | de | Insuline | Medikamente dieser Gruppe sind Insuline. Sie senken den Blutzucker und werden bei Diabetes (Zuckerkrankheit) angewendet. |
 |  |  | fr | Insulines | Les médicaments de ce groupe sont des insulines. Ils font baisser le sucre dans le sang (glycémie) et sont utilisés en cas de diabète. |
 |  |  | es | Insulinas | Los medicamentos de este grupo son insulinas. Bajan el azúcar en la sangre y se usan para la diabetes. |
+|  |  | pt | Insulinas | Os medicamentos deste grupo são insulinas. Baixam o açúcar no sangue e usam-se para a diabetes. |
 | `diabetes_non_insulin` | A10B | en | Blood sugar lowering medicines other than insulin | Medicines in this group lower blood sugar. Most are used for diabetes; some are also used for weight management or for heart and kidney conditions. |
 |  |  | tr | İnsülin dışındaki kan şekeri düşürücü ilaçlar | Bu gruptaki ilaçlar kan şekerini düşürür. Çoğu diyabette (şeker hastalığında) kullanılır; bazıları kilo kontrolü veya kalp ve böbrek hastalıkları için de kullanılır. |
 |  |  | de | Blutzuckersenkende Medikamente außer Insulin | Medikamente dieser Gruppe senken den Blutzucker. Die meisten werden bei Diabetes (Zuckerkrankheit) angewendet; einige auch zur Gewichtsregulierung oder bei Herz- und Nierenerkrankungen. |
 |  |  | fr | Médicaments qui font baisser le sucre dans le sang, autres que l'insuline | Les médicaments de ce groupe font baisser le sucre dans le sang (glycémie). La plupart sont utilisés en cas de diabète ; certains le sont aussi pour la gestion du poids ou pour des maladies du cœur et des reins. |
 |  |  | es | Medicamentos que bajan el azúcar en la sangre, distintos de la insulina | Los medicamentos de este grupo bajan el azúcar en la sangre. La mayoría se usan para la diabetes; algunos también se usan para el control del peso o para enfermedades del corazón y del riñón. |
+|  |  | pt | Medicamentos que baixam o açúcar no sangue, diferentes da insulina | Os medicamentos deste grupo baixam o açúcar no sangue. A maioria usa-se para a diabetes; alguns também se usam para o controlo do peso ou para doenças do coração e do rim. |
 | `vitamin_d` | A11CC | en | Vitamin D | Medicines in this group contain vitamin D. They are used when the body has too little vitamin D and for some bone conditions. |
 |  |  | tr | D vitamini | Bu gruptaki ilaçlar D vitamini içerir. Vücutta D vitamini eksikliği olduğunda ve bazı kemik hastalıklarında kullanılır. |
 |  |  | de | Vitamin D | Medikamente dieser Gruppe enthalten Vitamin D. Sie werden angewendet, wenn der Körper zu wenig Vitamin D hat, und bei einigen Knochenerkrankungen. |
 |  |  | fr | Vitamine D | Les médicaments de ce groupe contiennent de la vitamine D. Ils sont utilisés lorsque le corps manque de vitamine D et pour certaines maladies des os. |
 |  |  | es | Vitamina D | Los medicamentos de este grupo contienen vitamina D. Se usan cuando al cuerpo le falta vitamina D y para algunas enfermedades de los huesos. |
+|  |  | pt | Vitamina D | Os medicamentos deste grupo contêm vitamina D. Usam-se quando o corpo tem pouca vitamina D e para algumas doenças dos ossos. |
 | `anticoagulant` | B01AA B01AB B01AE B01AF | en | Anticoagulants (often called blood thinners) | Medicines in this group make the blood clot less easily. They are used to prevent harmful blood clots, and when a clot has already formed. |
 |  |  | tr | Antikoagülanlar (halk arasında kan sulandırıcılar) | Bu gruptaki ilaçlar kanın pıhtılaşmasını zorlaştırır. Zararlı kan pıhtılarını önlemek için ve pıhtı oluştuğunda kullanılır. |
 |  |  | de | Gerinnungshemmer (oft Blutverdünner genannt) | Medikamente dieser Gruppe sorgen dafür, dass das Blut weniger leicht gerinnt. Sie werden angewendet, um schädlichen Blutgerinnseln vorzubeugen, und wenn sich bereits ein Gerinnsel gebildet hat. |
 |  |  | fr | Anticoagulants (souvent appelés « fluidifiants du sang ») | Les médicaments de ce groupe rendent le sang moins apte à coaguler. Ils sont utilisés pour prévenir les caillots sanguins dangereux, et lorsqu'un caillot s'est déjà formé. |
 |  |  | es | Anticoagulantes (a menudo llamados «diluyentes de la sangre») | Los medicamentos de este grupo hacen que la sangre coagule con menos facilidad. Se usan para prevenir coágulos de sangre peligrosos y cuando ya se ha formado un coágulo. |
+|  |  | pt | Anticoagulantes (muitas vezes chamados «diluidores do sangue») | Os medicamentos deste grupo fazem com que o sangue coagule com menos facilidade. Usam-se para prevenir coágulos de sangue prejudiciais e quando já se formou um coágulo. |
 | `antiplatelet` | B01AC (not B01AC09 B01AC11 B01AC21 B01AC23 B01AC27) | en | Antiplatelet medicines | Medicines in this group make blood platelets less sticky. They are used to make harmful blood clots less likely, for example after a heart attack or a stroke. |
 |  |  | tr | Antitrombosit (antiagregan) ilaçlar | Bu gruptaki ilaçlar kan pulcuklarının (trombositlerin) birbirine yapışmasını azaltır. Örneğin kalp krizi veya inmeden sonra zararlı kan pıhtılarının oluşma olasılığını azaltmak için kullanılır. |
 |  |  | de | Thrombozytenaggregationshemmer (Plättchenhemmer) | Medikamente dieser Gruppe sorgen dafür, dass die Blutplättchen weniger leicht verklumpen. Sie werden angewendet, damit schädliche Blutgerinnsel seltener entstehen, zum Beispiel nach einem Herzinfarkt oder Schlaganfall. |
 |  |  | fr | Antiagrégants plaquettaires | Les médicaments de ce groupe diminuent la tendance des plaquettes du sang à s'agglutiner. Ils sont utilisés pour réduire le risque de caillots sanguins dangereux, par exemple après un infarctus ou un accident vasculaire cérébral (AVC). |
 |  |  | es | Antiagregantes plaquetarios | Los medicamentos de este grupo hacen que las plaquetas de la sangre se peguen menos entre sí. Se usan para reducir el riesgo de coágulos de sangre peligrosos, por ejemplo después de un infarto o de un ictus (accidente cerebrovascular). |
+|  |  | pt | Antiagregantes plaquetários | Os medicamentos deste grupo fazem com que as plaquetas do sangue fiquem menos aderentes. Usam-se para tornar menos prováveis os coágulos de sangue prejudiciais, por exemplo após um enfarte do coração ou um AVC. |
 | `iron` | B03A | en | Iron medicines | Medicines in this group contain iron. They are used when the body has too little iron, which can cause a low blood count (anemia). |
 |  |  | tr | Demir ilaçları | Bu gruptaki ilaçlar demir içerir. Vücutta demir eksikliği olduğunda kullanılır; demir eksikliği kansızlığa (anemi) yol açabilir. |
 |  |  | de | Eisenpräparate | Medikamente dieser Gruppe enthalten Eisen. Sie werden angewendet, wenn der Körper zu wenig Eisen hat; das kann zu Blutarmut (Anämie) führen. |
 |  |  | fr | Médicaments à base de fer | Les médicaments de ce groupe contiennent du fer. Ils sont utilisés lorsque le corps manque de fer, ce qui peut entraîner une anémie. |
 |  |  | es | Medicamentos con hierro | Los medicamentos de este grupo contienen hierro. Se usan cuando al cuerpo le falta hierro, lo que puede causar anemia. |
+|  |  | pt | Medicamentos com ferro | Os medicamentos deste grupo contêm ferro. Usam-se quando o corpo tem pouco ferro, o que pode levar a uma contagem de células do sangue baixa (anemia). |
 | `nitrate` | C01DA | en | Nitrates | Medicines in this group widen the blood vessels. They are used for chest pain that comes from the heart (angina). |
 |  |  | tr | Nitratlar | Bu gruptaki ilaçlar kan damarlarını genişletir. Kalpten kaynaklanan göğüs ağrısında (anjina) kullanılır. |
 |  |  | de | Nitrate | Medikamente dieser Gruppe erweitern die Blutgefäße. Sie werden bei Brustschmerzen, die vom Herzen ausgehen (Angina pectoris), angewendet. |
 |  |  | fr | Dérivés nitrés | Les médicaments de ce groupe dilatent les vaisseaux sanguins. Ils sont utilisés en cas de douleurs dans la poitrine venant du cœur (angine de poitrine). |
 |  |  | es | Nitratos | Los medicamentos de este grupo dilatan los vasos sanguíneos. Se usan para el dolor en el pecho que viene del corazón (angina de pecho). |
+|  |  | pt | Nitratos | Os medicamentos deste grupo alargam os vasos sanguíneos. Usam-se para a dor no peito que tem origem no coração (angina de peito). |
 | `diuretic` | C03AA C03BA C03CA | en | Diuretics (water tablets) | Medicines in this group help the body pass more water in the urine. They are used for high blood pressure and for swelling caused by too much fluid in the body. |
 |  |  | tr | Diüretikler (idrar söktürücüler) | Bu gruptaki ilaçlar vücudun idrarla daha fazla su atmasına yardımcı olur. Yüksek tansiyonda ve vücutta fazla sıvı birikmesine bağlı şişlikte (ödem) kullanılır. |
 |  |  | de | Diuretika (Wassertabletten) | Medikamente dieser Gruppe helfen dem Körper, mehr Wasser über den Urin auszuscheiden. Sie werden bei Bluthochdruck und bei Schwellungen durch zu viel Flüssigkeit im Körper (Ödeme) angewendet. |
 |  |  | fr | Diurétiques | Les médicaments de ce groupe aident le corps à éliminer plus d'eau dans les urines. Ils sont utilisés en cas d'hypertension artérielle (tension élevée) et de gonflements dus à un excès de liquide dans le corps (œdèmes). |
 |  |  | es | Diuréticos | Los medicamentos de este grupo ayudan al cuerpo a eliminar más agua por la orina. Se usan para la presión arterial alta (hipertensión) y para la hinchazón causada por un exceso de líquido en el cuerpo (edema). |
+|  |  | pt | Diuréticos (comprimidos para urinar mais) | Os medicamentos deste grupo ajudam o corpo a eliminar mais água na urina. Usam-se para a tensão arterial elevada (hipertensão) e para o inchaço provocado por excesso de líquido no corpo. |
 | `beta_blocker` | C07A | en | Beta blockers | Medicines in this group are used for high blood pressure and for some heart conditions, such as chest pain that comes from the heart (angina) or an irregular heartbeat Some are also used for other conditions, such as migraine. |
 |  |  | tr | Beta blokerler | Bu gruptaki ilaçlar yüksek tansiyonda ve kalpten kaynaklanan göğüs ağrısı (anjina) veya düzensiz kalp atışı gibi bazı kalp hastalıklarında kullanılır. Bazıları migren gibi başka durumlarda da kullanılır. |
 |  |  | de | Betablocker | Medikamente dieser Gruppe werden bei Bluthochdruck und bei einigen Herzerkrankungen angewendet, zum Beispiel bei Brustschmerzen, die vom Herzen ausgehen (Angina pectoris), oder bei unregelmäßigem Herzschlag. Einige werden auch bei anderen Beschwerden angewendet, zum Beispiel bei Migräne. |
 |  |  | fr | Bêtabloquants | Les médicaments de ce groupe sont utilisés en cas d'hypertension artérielle (tension élevée) et pour certaines maladies du cœur, par exemple des douleurs dans la poitrine venant du cœur (angine de poitrine) ou un rythme cardiaque irrégulier. Certains sont aussi utilisés dans d'autres cas, par exemple la migraine. |
 |  |  | es | Betabloqueantes | Los medicamentos de este grupo se usan para la presión arterial alta (hipertensión) y para algunas enfermedades del corazón, como el dolor en el pecho que viene del corazón (angina de pecho) o los latidos irregulares. Algunos también se usan para otros problemas, como la migraña. |
+|  |  | pt | Betabloqueantes | Os medicamentos deste grupo usam-se para a tensão arterial elevada (hipertensão) e para algumas doenças do coração, como a dor no peito que tem origem no coração (angina de peito) ou o batimento cardíaco irregular. Alguns também se usam para outras situações, como a enxaqueca. |
 | `calcium_channel_blocker` | C08CA (not C08CA06) | en | Calcium channel blockers (dihydropyridines) | Medicines in this group are used for high blood pressure. Some are also used for chest pain that comes from the heart (angina). |
 |  |  | tr | Kalsiyum kanal blokerleri (dihidropiridinler) | Bu gruptaki ilaçlar yüksek tansiyonda kullanılır. Bazıları kalpten kaynaklanan göğüs ağrısında (anjina) da kullanılır. |
 |  |  | de | Kalziumkanalblocker (Dihydropyridine) | Medikamente dieser Gruppe werden bei Bluthochdruck angewendet. Einige werden auch bei Brustschmerzen, die vom Herzen ausgehen (Angina pectoris), angewendet. |
 |  |  | fr | Inhibiteurs calciques (dihydropyridines) | Les médicaments de ce groupe sont utilisés en cas d'hypertension artérielle (tension élevée). Certains le sont aussi en cas de douleurs dans la poitrine venant du cœur (angine de poitrine). |
 |  |  | es | Antagonistas del calcio (dihidropiridinas) | Los medicamentos de este grupo se usan para la presión arterial alta (hipertensión). Algunos también se usan para el dolor en el pecho que viene del corazón (angina de pecho). |
+|  |  | pt | Bloqueadores dos canais de cálcio (di-hidropiridinas) | Os medicamentos deste grupo usam-se para a tensão arterial elevada (hipertensão). Alguns também se usam para a dor no peito que tem origem no coração (angina de peito). |
 | `ace_inhibitor` | C09AA | en | ACE inhibitors | Medicines in this group are used for high blood pressure and for some heart and kidney conditions. |
 |  |  | tr | Anjiyotensin dönüştürücü enzim (ACE) inhibitörleri | Bu gruptaki ilaçlar yüksek tansiyonda ve bazı kalp ve böbrek hastalıklarında kullanılır. |
 |  |  | de | ACE-Hemmer | Medikamente dieser Gruppe werden bei Bluthochdruck und bei einigen Herz- und Nierenerkrankungen angewendet. |
 |  |  | fr | Inhibiteurs de l'enzyme de conversion de l'angiotensine (IEC) | Les médicaments de ce groupe sont utilisés en cas d'hypertension artérielle (tension élevée) et pour certaines maladies du cœur et des reins. |
 |  |  | es | Inhibidores de la enzima convertidora de angiotensina (IECA) | Los medicamentos de este grupo se usan para la presión arterial alta (hipertensión) y para algunas enfermedades del corazón y del riñón. |
+|  |  | pt | Inibidores da enzima de conversão da angiotensina (IECA) | Os medicamentos deste grupo usam-se para a tensão arterial elevada (hipertensão) e para algumas doenças do coração e do rim. |
 | `angiotensin_receptor_blocker` | C09CA | en | Angiotensin receptor blockers (sartans) | Medicines in this group are used for high blood pressure and for some heart and kidney conditions. |
 |  |  | tr | Anjiyotensin reseptör blokerleri (sartanlar) | Bu gruptaki ilaçlar yüksek tansiyonda ve bazı kalp ve böbrek hastalıklarında kullanılır. |
 |  |  | de | Angiotensin-Rezeptorblocker (Sartane) | Medikamente dieser Gruppe werden bei Bluthochdruck und bei einigen Herz- und Nierenerkrankungen angewendet. |
 |  |  | fr | Antagonistes des récepteurs de l'angiotensine II (sartans) | Les médicaments de ce groupe sont utilisés en cas d'hypertension artérielle (tension élevée) et pour certaines maladies du cœur et des reins. |
 |  |  | es | Antagonistas de los receptores de la angiotensina II (sartanes) | Los medicamentos de este grupo se usan para la presión arterial alta (hipertensión) y para algunas enfermedades del corazón y del riñón. |
+|  |  | pt | Antagonistas dos recetores da angiotensina (sartanos) | Os medicamentos deste grupo usam-se para a tensão arterial elevada (hipertensão) e para algumas doenças do coração e do rim. |
 | `statin` | C10AA | en | Statins (cholesterol-lowering medicines) | Medicines in this group lower cholesterol in the blood. |
 |  |  | tr | Statinler (kolesterol düşürücü ilaçlar) | Bu gruptaki ilaçlar kandaki kolesterolü düşürür. |
 |  |  | de | Statine (Cholesterinsenker) | Medikamente dieser Gruppe senken das Cholesterin im Blut. |
 |  |  | fr | Statines (médicaments qui font baisser le cholestérol) | Les médicaments de ce groupe font baisser le cholestérol dans le sang. |
 |  |  | es | Estatinas (medicamentos que bajan el colesterol) | Los medicamentos de este grupo bajan el colesterol en la sangre. |
+|  |  | pt | Estatinas (medicamentos que baixam o colesterol) | Os medicamentos deste grupo baixam o colesterol no sangue. |
 | `prostate_alpha_blocker` | G04CA | en | Alpha blockers for the prostate | Medicines in this group are used for difficulty passing urine that is caused by an enlarged prostate. |
 |  |  | tr | Prostat için alfa blokerler | Bu gruptaki ilaçlar prostat büyümesine bağlı idrar yapma güçlüğünde kullanılır. |
 |  |  | de | Alphablocker für die Prostata | Medikamente dieser Gruppe werden bei Beschwerden beim Wasserlassen angewendet, die durch eine vergrößerte Prostata verursacht werden. |
 |  |  | fr | Alpha-bloquants pour la prostate | Les médicaments de ce groupe sont utilisés en cas de difficultés à uriner dues à une augmentation du volume de la prostate. |
 |  |  | es | Alfabloqueantes para la próstata | Los medicamentos de este grupo se usan para la dificultad al orinar causada por el aumento de tamaño de la próstata. |
+|  |  | pt | Alfabloqueantes para a próstata | Os medicamentos deste grupo usam-se para a dificuldade em urinar provocada pelo aumento do tamanho da próstata. |
 | `systemic_corticosteroid` | H02AB | en | Corticosteroids (often called cortisone or steroids) | Medicines in this group calm inflammation and the body's defense (immune) system, or replace a hormone the body makes too little of. They are used for many different conditions. |
 |  |  | tr | Kortikosteroidler (halk arasında kortizon) | Bu gruptaki ilaçlar iltihabı ve vücudun savunma (bağışıklık) sistemini yatıştırır ya da vücudun yeterince üretemediği bir hormonun yerini tutar. Birçok farklı hastalıkta kullanılır. |
 |  |  | de | Kortikosteroide (oft Kortison genannt) | Medikamente dieser Gruppe dämpfen Entzündungen und das Abwehrsystem (Immunsystem) des Körpers oder ersetzen ein Hormon, das der Körper zu wenig bildet. Sie werden bei vielen verschiedenen Erkrankungen angewendet. |
 |  |  | fr | Corticoïdes (souvent appelés cortisone) | Les médicaments de ce groupe calment l'inflammation et le système de défense (immunitaire) du corps, ou remplacent une hormone que le corps ne produit pas en quantité suffisante. Ils sont utilisés pour de nombreuses maladies différentes. |
 |  |  | es | Corticoides (a menudo llamados cortisona) | Los medicamentos de este grupo calman la inflamación y el sistema de defensa (inmunitario) del cuerpo, o reemplazan una hormona que el cuerpo produce en cantidad insuficiente. Se usan para muchas enfermedades distintas. |
+|  |  | pt | Corticosteroides (muitas vezes chamados cortisona ou esteroides) | Os medicamentos deste grupo acalmam a inflamação e o sistema de defesa (imunitário) do corpo, ou substituem uma hormona que o corpo produz em quantidade insuficiente. Usam-se para muitas doenças diferentes. |
 | `thyroid_hormone` | H03AA | en | Thyroid hormones | Medicines in this group contain thyroid hormone. They are used when the thyroid gland makes too little of it. |
 |  |  | tr | Tiroid hormonları | Bu gruptaki ilaçlar tiroid hormonu içerir. Tiroid bezi bu hormonu yeterince üretmediğinde kullanılır. |
 |  |  | de | Schilddrüsenhormone | Medikamente dieser Gruppe enthalten Schilddrüsenhormon. Sie werden angewendet, wenn die Schilddrüse zu wenig davon bildet. |
 |  |  | fr | Hormones thyroïdiennes | Les médicaments de ce groupe contiennent de l'hormone thyroïdienne. Ils sont utilisés lorsque la glande thyroïde n'en produit pas assez. |
 |  |  | es | Hormonas tiroideas | Los medicamentos de este grupo contienen hormona tiroidea. Se usan cuando la glándula tiroides no produce suficiente. |
+|  |  | pt | Hormonas da tiroide | Os medicamentos deste grupo contêm hormona da tiroide. Usam-se quando a glândula tiroide produz pouca. |
 | `antibiotic` | J01 | en | Antibiotics (medicines against bacteria) | Medicines in this group are antibiotics. They are used for infections caused by bacteria. |
 |  |  | tr | Antibiyotikler (bakterilere karşı ilaçlar) | Bu gruptaki ilaçlar antibiyotiktir. Bakterilerin yol açtığı enfeksiyonlarda kullanılır. |
 |  |  | de | Antibiotika (Medikamente gegen Bakterien) | Medikamente dieser Gruppe sind Antibiotika. Sie werden bei Infektionen angewendet, die durch Bakterien verursacht werden. |
 |  |  | fr | Antibiotiques (médicaments contre les bactéries) | Les médicaments de ce groupe sont des antibiotiques. Ils sont utilisés en cas d'infection due à des bactéries. |
 |  |  | es | Antibióticos (medicamentos contra las bacterias) | Los medicamentos de este grupo son antibióticos. Se usan para las infecciones causadas por bacterias. |
+|  |  | pt | Antibióticos (medicamentos contra as bactérias) | Os medicamentos deste grupo são antibióticos. Usam-se para infeções provocadas por bactérias. |
 | `nsaid` | M01AB M01AC M01AE M01AH | en | Non-steroidal anti-inflammatory medicines (NSAIDs) | Medicines in this group are used for pain and for swelling and soreness (inflammation). Some are also used for fever. |
 |  |  | tr | Steroid olmayan antiinflamatuar ilaçlar (NSAİİ) | Bu gruptaki ilaçlar ağrı ve iltihap (şişlik ve hassasiyet) için kullanılır. Bazıları ateş için de kullanılır. |
 |  |  | de | Nichtsteroidale Antirheumatika (NSAR) | Medikamente dieser Gruppe werden bei Schmerzen und Entzündungen (Schwellung und Reizung) angewendet. Einige werden auch bei Fieber angewendet. |
 |  |  | fr | Anti-inflammatoires non stéroïdiens (AINS) | Les médicaments de ce groupe sont utilisés contre la douleur et l'inflammation (gonflement et irritation). Certains sont aussi utilisés contre la fièvre. |
 |  |  | es | Antiinflamatorios no esteroideos (AINE) | Los medicamentos de este grupo se usan para el dolor y la inflamación (hinchazón e irritación). Algunos se usan también para la fiebre. |
+|  |  | pt | Anti-inflamatórios não esteroides (AINE) | Os medicamentos deste grupo usam-se para a dor e para o inchaço e a dor local (inflamação). Alguns também se usam para a febre. |
 | `urate_lowering` | M04AA | en | Medicines that lower uric acid | Medicines in this group lower uric acid in the blood. They are used for gout. |
 |  |  | tr | Ürik asidi düşüren ilaçlar | Bu gruptaki ilaçlar kandaki ürik asidi düşürür. Gut hastalığında kullanılır. |
 |  |  | de | Harnsäuresenkende Medikamente | Medikamente dieser Gruppe senken die Harnsäure im Blut. Sie werden bei Gicht angewendet. |
 |  |  | fr | Médicaments qui font baisser l'acide urique | Les médicaments de ce groupe font baisser l'acide urique dans le sang. Ils sont utilisés en cas de goutte. |
 |  |  | es | Medicamentos que bajan el ácido úrico | Los medicamentos de este grupo bajan el ácido úrico en la sangre. Se usan para la gota. |
+|  |  | pt | Medicamentos que baixam o ácido úrico | Os medicamentos deste grupo baixam o ácido úrico no sangue. Usam-se para a gota. |
 | `bisphosphonate` | M05BA | en | Bisphosphonates (bone medicines) | Medicines in this group slow down the loss of bone. They are used for conditions that make bones weak, such as osteoporosis. |
 |  |  | tr | Bifosfonatlar (kemik ilaçları) | Bu gruptaki ilaçlar kemik kaybını yavaşlatır. Osteoporoz (kemik erimesi) gibi kemikleri zayıflatan hastalıklarda kullanılır. |
 |  |  | de | Bisphosphonate (Knochenmittel) | Medikamente dieser Gruppe verlangsamen den Abbau von Knochen. Sie werden bei Erkrankungen angewendet, die die Knochen schwächen, zum Beispiel bei Osteoporose (Knochenschwund). |
 |  |  | fr | Bisphosphonates (médicaments des os) | Les médicaments de ce groupe ralentissent la perte osseuse. Ils sont utilisés pour des maladies qui fragilisent les os, comme l'ostéoporose. |
 |  |  | es | Bisfosfonatos (medicamentos para los huesos) | Los medicamentos de este grupo frenan la pérdida de hueso. Se usan para enfermedades que debilitan los huesos, como la osteoporosis. |
+|  |  | pt | Bifosfonatos (medicamentos para os ossos) | Os medicamentos deste grupo abrandam a perda de osso. Usam-se para doenças que enfraquecem os ossos, como a osteoporose. |
 | `paracetamol` | N02BE | en | Paracetamol (acetaminophen) medicines | Medicines in this group are used for pain and fever. |
 |  |  | tr | Parasetamol içeren ilaçlar | Bu gruptaki ilaçlar ağrı ve ateş için kullanılır. |
 |  |  | de | Paracetamol-Präparate | Medikamente dieser Gruppe werden bei Schmerzen und Fieber angewendet. |
 |  |  | fr | Médicaments à base de paracétamol | Les médicaments de ce groupe sont utilisés contre la douleur et la fièvre. |
 |  |  | es | Medicamentos con paracetamol | Los medicamentos de este grupo se usan para el dolor y la fiebre. |
+|  |  | pt | Medicamentos com paracetamol | Os medicamentos deste grupo usam-se para a dor e a febre. |
 | `triptan` | N02CC | en | Triptans (migraine medicines) | Medicines in this group are used for migraine attacks. |
 |  |  | tr | Triptanlar (migren ilaçları) | Bu gruptaki ilaçlar migren ataklarında kullanılır. |
 |  |  | de | Triptane (Migränemittel) | Medikamente dieser Gruppe werden bei Migräneanfällen angewendet. |
 |  |  | fr | Triptans (médicaments de la migraine) | Les médicaments de ce groupe sont utilisés en cas de crise de migraine. |
 |  |  | es | Triptanes (medicamentos para la migraña) | Los medicamentos de este grupo se usan para las crisis de migraña. |
+|  |  | pt | Triptanos (medicamentos para a enxaqueca) | Os medicamentos deste grupo usam-se para as crises de enxaqueca. |
 | `nasal_corticosteroid` | R01AD | en | Corticosteroids for the nose | Medicines in this group reduce swelling and irritation (inflammation) inside the nose. They are used for hay fever and other allergies that affect the nose. |
 |  |  | tr | Burun için kortikosteroidler | Bu gruptaki ilaçlar burun içindeki iltihabı (şişlik ve hassasiyeti) azaltır. Saman nezlesinde ve burnu etkileyen diğer alerjilerde kullanılır. |
 |  |  | de | Kortikosteroide für die Nase (Kortison-Nasensprays) | Medikamente dieser Gruppe verringern die Entzündung (Schwellung und Reizung) in der Nase. Sie werden bei Heuschnupfen und anderen Allergien angewendet, die die Nase betreffen. |
 |  |  | fr | Corticoïdes pour le nez | Les médicaments de ce groupe réduisent l'inflammation (gonflement et irritation) à l'intérieur du nez. Ils sont utilisés en cas de rhume des foins et d'autres allergies qui touchent le nez. |
 |  |  | es | Corticoides para la nariz | Los medicamentos de este grupo reducen la inflamación (hinchazón e irritación) dentro de la nariz. Se usan para la fiebre del heno y otras alergias que afectan a la nariz. |
+|  |  | pt | Corticosteroides para o nariz | Os medicamentos deste grupo reduzem o inchaço e a irritação (inflamação) dentro do nariz. Usam-se para a febre dos fenos e outras alergias que afetam o nariz. |
 | `inhaled_bronchodilator` | R03AC R03BB | en | Inhaled medicines that open the airways (bronchodilators) | Medicines in this group open the airways. They are used for asthma or for other long-term lung conditions in which the airways are narrow, such as COPD. |
 |  |  | tr | Hava yollarını genişleten inhaler ilaçlar (bronkodilatörler) | Bu gruptaki ilaçlar hava yollarını genişletir. Astımda veya KOAH gibi hava yollarının daraldığı diğer uzun süreli akciğer hastalıklarında kullanılır. |
 |  |  | de | Inhalative Medikamente, die die Atemwege erweitern (Bronchodilatatoren) | Medikamente dieser Gruppe erweitern die Atemwege. Sie werden bei Asthma oder bei anderen dauerhaften Lungenerkrankungen mit verengten Atemwegen angewendet, zum Beispiel bei COPD. |
 |  |  | fr | Médicaments inhalés qui ouvrent les voies respiratoires (bronchodilatateurs) | Les médicaments de ce groupe ouvrent les voies respiratoires. Ils sont utilisés en cas d'asthme ou d'autres maladies pulmonaires de longue durée dans lesquelles les voies respiratoires sont rétrécies, comme la BPCO. |
 |  |  | es | Medicamentos inhalados que abren las vías respiratorias (broncodilatadores) | Los medicamentos de este grupo abren las vías respiratorias. Se usan para el asma o para otras enfermedades pulmonares de larga duración en las que las vías respiratorias están estrechadas, como la EPOC. |
+|  |  | pt | Medicamentos inalados que abrem as vias respiratórias (broncodilatadores) | Os medicamentos deste grupo abrem as vias respiratórias. Usam-se para a asma ou para outras doenças pulmonares de longa duração em que as vias respiratórias estão estreitadas, como a DPOC. |
 | `inhaled_corticosteroid` | R03BA | en | Inhaled corticosteroids | Medicines in this group reduce swelling and irritation (inflammation) in the airways. They are used for asthma and for some other lung conditions. |
 |  |  | tr | İnhaler kortikosteroidler | Bu gruptaki ilaçlar hava yollarındaki iltihabı (şişlik ve hassasiyeti) azaltır. Astımda ve bazı diğer akciğer hastalıklarında kullanılır. |
 |  |  | de | Inhalative Kortikosteroide (Kortison zum Inhalieren) | Medikamente dieser Gruppe verringern die Entzündung (Schwellung und Reizung) in den Atemwegen. Sie werden bei Asthma und bei einigen anderen Lungenerkrankungen angewendet. |
 |  |  | fr | Corticoïdes inhalés | Les médicaments de ce groupe réduisent l'inflammation (gonflement et irritation) des voies respiratoires. Ils sont utilisés en cas d'asthme et de certaines autres maladies des poumons. |
 |  |  | es | Corticoides inhalados | Los medicamentos de este grupo reducen la inflamación (hinchazón e irritación) de las vías respiratorias. Se usan para el asma y para algunas otras enfermedades de los pulmones. |
+|  |  | pt | Corticosteroides inalados | Os medicamentos deste grupo reduzem o inchaço e a irritação (inflamação) das vias respiratórias. Usam-se para a asma e para algumas outras doenças dos pulmões. |
 | `antihistamine` | R06AE07 R06AE09 R06AX13 R06AX22 R06AX26 R06AX27 R06AX28 R06AX29 | en | Antihistamines (allergy medicines) | Medicines in this group are used for allergy symptoms, such as sneezing, a runny nose, itchy eyes and an itchy skin rash (hives). |
 |  |  | tr | Antihistaminikler (alerji ilaçları) | Bu gruptaki ilaçlar hapşırma, burun akıntısı, gözlerde kaşıntı ve kaşıntılı deri döküntüsü (kurdeşen) gibi alerji belirtilerinde kullanılır. |
 |  |  | de | Antihistaminika (Allergiemittel) | Medikamente dieser Gruppe werden bei Allergiebeschwerden angewendet, zum Beispiel bei Niesen, laufender Nase, juckenden Augen und juckendem Hautausschlag (Nesselsucht). |
 |  |  | fr | Antihistaminiques (médicaments contre l'allergie) | Les médicaments de ce groupe sont utilisés contre les symptômes d'allergie, comme les éternuements, le nez qui coule, les yeux qui démangent et les plaques sur la peau qui démangent (urticaire). |
 |  |  | es | Antihistamínicos (medicamentos para la alergia) | Los medicamentos de este grupo se usan para los síntomas de alergia, como estornudos, goteo nasal, picor de ojos y erupción en la piel con picor (urticaria). |
+|  |  | pt | Anti-histamínicos (medicamentos para a alergia) | Os medicamentos deste grupo usam-se para os sintomas de alergia, como espirros, nariz a pingar, comichão nos olhos e erupção na pele com comichão (urticária). |
 | `eye_pressure_drops` | S01ED S01EE | en | Eye medicines that lower pressure in the eye | Medicines in this group lower the pressure inside the eye. They are used for glaucoma and for raised eye pressure. |
 |  |  | tr | Göz içi basıncını düşüren göz ilaçları | Bu gruptaki ilaçlar göz içi basıncını düşürür. Glokomda (göz tansiyonu) ve yüksek göz içi basıncında kullanılır. |
 |  |  | de | Augenmedikamente, die den Augeninnendruck senken | Medikamente dieser Gruppe senken den Druck im Auge. Sie werden bei Glaukom (grünem Star) und bei erhöhtem Augeninnendruck angewendet. |
 |  |  | fr | Médicaments pour les yeux qui font baisser la pression dans l'œil | Les médicaments de ce groupe font baisser la pression à l'intérieur de l'œil. Ils sont utilisés en cas de glaucome et de pression trop élevée dans l'œil. |
 |  |  | es | Medicamentos para los ojos que bajan la presión dentro del ojo | Los medicamentos de este grupo bajan la presión dentro del ojo. Se usan para el glaucoma y para la presión ocular alta. |
+|  |  | pt | Medicamentos para os olhos que baixam a pressão dentro do olho | Os medicamentos deste grupo baixam a pressão dentro do olho. Usam-se para o glaucoma e para a pressão ocular elevada. |
 <!-- groups-table:end -->
 
 ## 4. Pipeline `us_labels` (Req 3.1-3.3)

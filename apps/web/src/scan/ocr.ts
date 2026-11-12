@@ -14,6 +14,7 @@ const LANG: Record<Locale, string> = {
   de: "deu",
   fr: "fra",
   es: "spa",
+  pt: "por",
 };
 
 export type Recognised = Pass;

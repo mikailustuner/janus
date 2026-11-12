@@ -124,6 +124,7 @@ test("the home has canonical, hreflang, Open Graph, Twitter card and JSON-LD, an
     de: "https://janusmeds.org/de",
     fr: "https://janusmeds.org/fr",
     es: "https://janusmeds.org/es",
+    pt: "https://janusmeds.org/pt",
     "x-default": "https://janusmeds.org/en",
   });
   expect(await content('meta[property="og:image"]')).toBe(

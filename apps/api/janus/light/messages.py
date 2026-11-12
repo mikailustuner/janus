@@ -1,6 +1,6 @@
 """Closed set of light-face codes and their English canonical sentences (design §7, Req 4.5; P3).
 
-The API returns codes; the screens show the `Light` namespace in five languages. These sentences
+The API returns codes; the screens show the `Light` namespace in six languages. These sentences
 are the reference wording, scanned by the medical-language guard. Rule 7 of medical-safety.md:
 every output is a candidate worth investigating, not a treatment. The only sentence that uses the
 word "treatment" is that negation.

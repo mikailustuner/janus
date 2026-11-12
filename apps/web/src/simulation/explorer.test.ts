@@ -166,7 +166,7 @@ describe("S8: the model screens never touch patient data", () => {
 
 describe("messages", () => {
   it("the sentence exists in every locale", () => {
-    for (const l of ["en", "tr", "de", "fr", "es"]) {
+    for (const l of ["en", "tr", "de", "fr", "es", "pt"]) {
       const m = JSON.parse(
         readFileSync(
           join(import.meta.dirname, `../../messages/${l}.json`),

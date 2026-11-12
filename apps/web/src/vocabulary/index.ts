@@ -125,6 +125,7 @@ const loaders: Record<Locale, () => Promise<{ default: unknown }>> = {
   de: () => import("./de.json"),
   fr: () => import("./fr.json"),
   es: () => import("./es.json"),
+  pt: () => import("./pt.json"),
 };
 
 export function load(locale: Locale): Promise<Loaded> {

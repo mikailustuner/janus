@@ -96,6 +96,30 @@ export const reassurance = {
     "nada de qué preocuparse",
     "todo en orden",
   ],
+  pt: [
+    "seguro",
+    "segura",
+    "seguros",
+    "seguras",
+    "com segurança",
+    "sem perigo",
+    "sem problemas",
+    "sem problema",
+    "nenhum problema",
+    "não há problema",
+    "inofensivo",
+    "inofensiva",
+    "inofensivos",
+    "inofensivas",
+    "inócuo",
+    "inócua",
+    "inócuos",
+    "inócuas",
+    "sem risco",
+    "sem riscos",
+    "nada com que se preocupar",
+    "tudo em ordem",
+  ],
 } as const;
 
 /** Theme-device words that Glass must never show (Req 6.5, design §8.2). */
@@ -105,6 +129,7 @@ export const themeWords = {
   de: ["Geist", "Geister", "Maske", "Zombie", "Séance"],
   fr: ["fantôme", "fantômes", "masque", "zombie", "séance"],
   es: ["fantasma", "fantasmas", "máscara", "zombi", "sesión espiritista"],
+  pt: ["fantasma", "fantasmas", "máscara", "zombie", "sessão espiritista"],
 } as const;
 
 /** Compliance claims Janus must never make (privacy.md; design §12). */
@@ -145,5 +170,13 @@ export const complianceWords = {
     "certificación",
     "conforme con el RGPD",
     "conforme con HIPAA",
+  ],
+  pt: [
+    "certificado",
+    "certificada",
+    "certificação",
+    "em conformidade com o RGPD",
+    "conforme com o RGPD",
+    "conforme HIPAA",
   ],
 } as const;

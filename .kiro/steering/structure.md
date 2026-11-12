@@ -6,7 +6,7 @@ inclusion: always
 
 ```
 .kiro/              steering, specs, hooks, agents, settings/mcp.json  (never gitignored)
-apps/web/           Next.js PWA (i18n: en, tr, de, fr, es)
+apps/web/           Next.js PWA (i18n: en, tr, de, fr, es, pt)
   src/scan/           zxing-wasm decoding, tesseract.js OCR (on-device)
   src/note/           doctor note PDF (in the browser)
   src/demo/           judge/demo mode: sample codes, synthetic patients
@@ -28,7 +28,7 @@ apps/api/           FastAPI service
   janus/privacy/      storage-region guard and endpoint
   janus/cds/          CDS Hooks 2.0 service (discovery, order-select / order-sign cards)
   janus/recalls/      recall check: US product code (and lot) against FDA enforcement report records
-  janus/plaininfo/    plain medicine information: fixed group sentences in five languages, the US label's indications as a quotation, FR/ES product page links
+  janus/plaininfo/    plain medicine information: fixed group sentences in six languages, the US label's indications as a quotation, FR/ES product page links
   migrations/         Alembic migrations (forward-only, each with a downgrade)
   tests/              pytest + Hypothesis (property tests next to the module they test)
 apps/mcp/           MCP server (janus-mcp): a thin client of the API for AI assistants

@@ -26,7 +26,7 @@ from janus.notes.phrases import violations
 from janus.resolution.atc import ATC_PREFIX, INGREDIENT_LEVEL
 
 GROUPS_FILE = Path(__file__).parent / "groups.csv"
-Language = Literal["en", "tr", "de", "fr", "es"]
+Language = Literal["en", "tr", "de", "fr", "es", "pt"]
 LANGUAGES: tuple[Language, ...] = get_args(Language)
 ReviewStatus = Literal["not_reviewed", "expert_reviewed"]
 HEADER = [

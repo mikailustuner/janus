@@ -62,7 +62,7 @@ def valid_rows(draw: st.DrawFn) -> list[Row]:
             {
                 "key": key,
                 "direction": "adverse",
-                **{f"label_{c}": f"{key} {c}" for c in ("en", "tr", "de", "fr", "es")},
+                **{f"label_{c}": f"{key} {c}" for c in ("en", "tr", "de", "fr", "es", "pt")},
                 "pts": "|".join(pts),
                 "pipc_positions": ";".join(mine),
                 "status": draw(st.sampled_from(["proposed", "active", "deprecated"])),
@@ -74,7 +74,7 @@ def valid_rows(draw: st.DrawFn) -> list[Row]:
             {
                 "key": key,
                 "direction": "benefit",
-                **{f"label_{c}": f"{key} {c}" for c in ("en", "tr", "de", "fr", "es")},
+                **{f"label_{c}": f"{key} {c}" for c in ("en", "tr", "de", "fr", "es", "pt")},
                 "status": "proposed",
             }
         )
@@ -195,7 +195,7 @@ def test_partial_coverage_is_allowed_only_when_asked() -> None:
         {
             "key": k,
             "direction": "adverse",
-            **{f"label_{c}": "x" for c in ("en", "tr", "de", "fr", "es")},
+            **{f"label_{c}": "x" for c in ("en", "tr", "de", "fr", "es", "pt")},
             "pts": "Cough",
             "status": "proposed",
         }
@@ -204,7 +204,7 @@ def test_partial_coverage_is_allowed_only_when_asked() -> None:
         {
             "key": k,
             "direction": "benefit",
-            **{f"label_{c}": "x" for c in ("en", "tr", "de", "fr", "es")},
+            **{f"label_{c}": "x" for c in ("en", "tr", "de", "fr", "es", "pt")},
             "status": "proposed",
         }
         for k in BENEFIT_PLACEHOLDERS
