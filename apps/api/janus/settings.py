@@ -59,6 +59,8 @@ class Settings:
     simulation_enabled: bool = False
     # Count rate limits by Cloudflare's CF-Connecting-IP (only behind the tunnel; deploy compose).
     trust_cf_connecting_ip: bool = False
+    # Port of the private Prometheus listener (observability); None = no listener.
+    metrics_port: int | None = None
 
     @classmethod
     def from_env(cls, env: Mapping[str, str] | None = None) -> Settings:
@@ -89,7 +91,18 @@ class Settings:
             trust_cf_connecting_ip=parse_switch(
                 e.get("JANUS_BEHIND_CLOUDFLARE", ""), "JANUS_BEHIND_CLOUDFLARE"
             ),
+            metrics_port=parse_metrics_port(e.get("JANUS_METRICS_PORT", "")),
         )
+
+
+def parse_metrics_port(raw: str) -> int | None:
+    """A TCP port of 1024 to 65535 other than the API's own 8000; empty means no listener."""
+    text = raw.strip()
+    if not text:
+        return None
+    if not re.fullmatch(r"[0-9]{4,5}", text) or not 1024 <= int(text) <= 65535 or text == "8000":
+        raise SettingsError("JANUS_METRICS_PORT must be a port from 1024 to 65535, not 8000")
+    return int(text)
 
 
 def parse_switch(raw: str, name: str) -> bool:
