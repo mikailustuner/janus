@@ -177,3 +177,18 @@ small-molecule flag, plus `pksim-inputs.json` that lists every missing input wit
 screening value is included. PK-Sim fills what a snapshot leaves out with its own defaults. Not simulated as exported.
 Shipped: target `pksim` of the export route, the separate workflow `.github/workflows/modelkit-pksim.yml` (path filtered,
 weekly and on demand, R image 4.6.1, ospsuite and rSharp pinned by release asset and sha256, cached library).
+
+## Special populations from US labels
+Two independent automated readers read the openFDA label files (264,510 records, 20,791 single-substance prescription labels of 602 pool
+drugs matched); a statement counts only if both agree on label, population class, grade, measure and value (within 1 %) and on the
+context. 6,070 confirmed pairs, 5,671 of them with a quote that names its own population (the display rule): 389 unique statements for
+151 drugs (older adults 41 drugs, renal impairment 66, hepatic impairment 75). Recall is low: of 577 drugs with older-adult text, 41 have a
+statement; no table gave a confirmed statement.
+Precision on blinded samples of 100 displayed statements (two automated review passes), two iterations of the readers:
+first iteration 0.63 (Wilson 95 % 0.53 to 0.72), n = 94 agreed items; second iteration, after the error classes of the first sample were
+read and fixed (stated openly: that iteration is not blind to the first sample; its sample is fresh): 0.81 (0.71 to 0.88), n = 79;
+conservative 0.64 (0.54 to 0.73). Below the 0.90 target. Remaining errors: another analyte (a metabolite code), a label assigned to the
+wrong pool drug through an identity alias, one value per grade in a list, the wrong measure, a clearance reduction read as AUC.
+The statements are shown as quoted evidence (two readers agree, no person has checked, no model extrapolation, no dose advice). The
+older-adult atlas rows (64, one per drug) are shown only as unconfirmed evidence with their quote and status.
+Limits: one model family and no outside knowledge in the review passes; precision, not recall; the readers were developed on the same labels.
