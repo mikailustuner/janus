@@ -64,9 +64,9 @@ MODELKIT_LINES: Final = (
     "Special-population statements are quoted label text with a ratio that two automated readers "
     "agreed on; give the quote and the label version, never extrapolate them to a person or a "
     "dose, and never describe them as reviewed by a person.",
-    "A value from a PubMed Central article carries the article's licence (CC BY or CC0) and its authors in "
-    "`source_version`: credit the authors and the article and name the licence whenever you quote it. A value from a "
-    "Drugs@FDA review links the PDF page in `source_url`.",
+    "A value from a PubMed Central article carries the article's licence (CC BY or CC0) and its "
+    "authors in `source_version`: credit the authors and the article and name the licence "
+    "whenever you quote it. A value from a Drugs@FDA review links the PDF page in `source_url`.",
 )
 RESOLVE_LINES: Final = (
     "A resolved product or ingredient is what the public registers publish for that code or "
