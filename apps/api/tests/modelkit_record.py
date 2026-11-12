@@ -33,7 +33,7 @@ FEATURED = (
     "candesartan",
     "sumatriptan",
 )
-RECORDED_ON = "2026-11-11"
+RECORDED_ON = "2026-11-12"
 
 
 def _all_drugs(cl: TestClient) -> dict[str, Any]:

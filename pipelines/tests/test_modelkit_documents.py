@@ -419,3 +419,9 @@ def test_a_title_naming_a_metabolite_is_never_the_parent() -> None:
     assert not any(ok for _, _, ok in got)
     got = _pmc_one("PK parameters of telmisartan (Study AB-1001)", grid)
     assert any(ok for _, _, ok in got)
+
+
+def test_equal_values_with_and_without_n_do_not_break_the_grouping() -> None:
+    rows = [_row("pmc_oa", "PMC1", n_subjects=None), _row("pmc_oa", "PMC2", n_subjects=12)]
+    g, _ = groups(rows)
+    assert g[("d", "pmc_oa", "PMC1")] == g[("d", "pmc_oa", "PMC2")]

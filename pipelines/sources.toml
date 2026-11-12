@@ -337,7 +337,7 @@ license = "The rows keep the terms of their source (see drugsatfda_review and pm
 notes = [
   "Research use only. Not for clinical decisions. Expert review has not yet been done.",
   "Milestone M5. Review PDFs are located through the Drugs@FDA data file (one download from fda.gov; review pages and PDFs on accessdata.fda.gov at most one request per second); PMC articles are found with the Europe PMC search (title names the drug and a pharmacokinetic word, open access, licence CC BY or CC0; one request every 10 seconds as the site's robots.txt asks) and read from the PMC Article Datasets of NLM. Only tables are read, by two independent automated readers; only the text layer of born-digital PDFs is read. The raw files are never committed.",
-  "A source's values enter the evidence store only if their measured precision allows it (data/modelkit/precision_documents.json). A study that may be the same study in another source (shared trial number, shared sponsor study code, identical results) never tests a parameter set.",
+  "A source's values enter the evidence store only if their measured precision allows it (data/modelkit/precision_documents.json). Measured on 2026-11-12 (blinded samples, two automated review passes): review tables 0.48 and PMC tables 0.48, both below the pre-registered threshold, so neither source's milestone-M5 values are published in the current release. A study that may be the same study in another source (shared trial number, shared sponsor study code, identical results) never tests a parameter set.",
 ]
 storage = "cache"
 cadence_days = 90

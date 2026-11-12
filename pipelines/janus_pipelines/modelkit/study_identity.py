@@ -109,7 +109,7 @@ def groups(rows: Sequence[Mapping[str, Any]]) -> tuple[dict[StudyKey, str], dict
             )
         )
     for vals in cells.values():
-        vals.sort()
+        vals.sort(key=lambda x: (x[0], x[1], x[3]))
         for i, (v, d, n, s) in enumerate(vals):
             for v2, d2, n2, s2 in vals[i + 1 :]:
                 if v2 > v * (1 + TOLERANCE) + 1e-12:
