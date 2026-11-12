@@ -251,3 +251,10 @@ designer had not looked at; development samples are not reported as precision.
 
 The values within a study are correlated, so the ClinicalTrials.gov interval is optimistic; the production bar of plan 12.3
 needs the expert audit.
+
+Second round (maximise coverage at precision >= 0.90; acceptance: >= 120 agreed items from >= 40 studies, <= 5 per study,
+error-prone studies at their share). A relaxed rule set plus a record-check vote on co-administration disagreements (711 values,
+84 drugs, 17 sets) measured 0.72 post-stratified (0.65 to 0.79) on its fresh acceptance sample and was not shipped; the level-3
+check stays. The level-3 set cannot be re-measured under the new criterion: almost every one of its values has been reviewed.
+The report card now says the precision covers ClinicalTrials.gov values only, and the special-population precision shown is the
+latest fresh measurement (57 of 88 agreed; stratum-weighted about 0.62).
