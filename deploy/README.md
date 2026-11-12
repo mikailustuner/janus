@@ -24,20 +24,22 @@ browser ─HTTPS─▶ Cloudflare ─tunnel (outbound only)─▶ cloudflared �
 
 ## Files
 
-| File                                               | Purpose                                                                                                                                                                                                                                                                         |
-| -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `compose.yml`                                      | The stack (copied to `STACK_DIR`)                                                                                                                                                                                                                                               |
-| `env.example`                                      | Template of `STACK_DIR/.env` (mode 600, secrets generated on the server)                                                                                                                                                                                                        |
-| `cloudflared.config.yml.example`                   | Tunnel ingress: `janusmeds.org → web:3000`, everything else 404                                                                                                                                                                                                                 |
-| `check_compose.py`                                 | CI check of the hardening rules on the resolved compose file                                                                                                                                                                                                                    |
-| `deploy.sh <commit>` / `rollback.sh [tag]`         | Build on the server, migrate, swap, check; roll back on failure                                                                                                                                                                                                                 |
-| `verify-isolation.sh`                              | Probes from each Janus network: server ports, other networks, metadata must be closed                                                                                                                                                                                           |
-| `smoke.sh internal\|<url> [tag]`                   | Pages in two languages, public API routes, security headers, deployed commit                                                                                                                                                                                                    |
-| `firewall.sh` + `janus-firewall.service`           | Host rules (owner, sudo), re-applied at boot                                                                                                                                                                                                                                    |
-| `sync-data.sh`                                     | Developer machine → server copy of the built data runs (never TİTCK)                                                                                                                                                                                                            |
-| `titck-refresh.sh` + `janus-titck.{service,timer}` | Weekly TİTCK fetch on the server, the open Canadian and Italian product lists (`ca_dpd`, `eu_it_aifa`), then `load-data.sh`; then the FDA recall records (`us_recalls`), the model kit evidence (`modelkit_evidence`, seed files mounted read-only) and the data-quality report |
-| `load-data.sh`                                     | Evidence, cascade and resolution loaders into the database                                                                                                                                                                                                                      |
-| `pipelines.Dockerfile`                             | Image for pipeline jobs that must run on the server                                                                                                                                                                                                                             |
+| File                                                             | Purpose                                                                                                                                                                                                                                                                         |
+| ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `compose.yml`                                                    | The stack (copied to `STACK_DIR`)                                                                                                                                                                                                                                               |
+| `env.example`                                                    | Template of `STACK_DIR/.env` (mode 600, secrets generated on the server)                                                                                                                                                                                                        |
+| `cloudflared.config.yml.example`                                 | Tunnel ingress: `janusmeds.org → web:3000`, everything else 404                                                                                                                                                                                                                 |
+| `check_compose.py`                                               | CI check of the hardening rules on the resolved compose file                                                                                                                                                                                                                    |
+| `deploy.sh <commit>` / `rollback.sh [tag]`                       | Build on the server, migrate, swap, check; roll back on failure                                                                                                                                                                                                                 |
+| `verify-isolation.sh`                                            | Probes from each Janus network: server ports, other networks, metadata must be closed                                                                                                                                                                                           |
+| `smoke.sh internal\|<url> [tag]`                                 | Pages in two languages, public API routes, security headers, deployed commit                                                                                                                                                                                                    |
+| `firewall.sh` + `janus-firewall.service`                         | Host rules (owner, sudo), re-applied at boot                                                                                                                                                                                                                                    |
+| `sync-data.sh`                                                   | Developer machine → server copy of the built data runs (never TİTCK)                                                                                                                                                                                                            |
+| `titck-refresh.sh` + `janus-titck.{service,timer}`               | Weekly TİTCK fetch on the server, the open Canadian and Italian product lists (`ca_dpd`, `eu_it_aifa`), then `load-data.sh`; then the FDA recall records (`us_recalls`), the model kit evidence (`modelkit_evidence`, seed files mounted read-only) and the data-quality report |
+| `load-data.sh`                                                   | Evidence, cascade and resolution loaders into the database                                                                                                                                                                                                                      |
+| `pipelines.Dockerfile`                                           | Image for pipeline jobs that must run on the server                                                                                                                                                                                                                             |
+| `backup-serve.sh` / `backup-pull.sh` / `backup-restore-check.sh` | Backups pulled by a separate machine; see "Backups"                                                                                                                                                                                                                             |
+| `janus-backup@.service` + `janus-backup-{db,data}.timer`         | Backup machine's user units: daily dump, weekly data snapshot                                                                                                                                                                                                                   |
 
 ## Check locally
 
@@ -94,6 +96,31 @@ on the internal network only:
   switching `prometheus_client` to its multi-process mode.
 
 Reference: `docs/metrics.md` (every series, its labels and meaning).
+
+## Backups
+
+A separate machine pulls the backups; the server holds no credential for it, so a compromised server cannot
+reach or delete them.
+
+- **Access.** The backup machine has its own key. On the server, `authorized_keys` binds it to
+  `command="STACK_DIR/backup-serve.sh",restrict,from="<backup machine>"`. `backup-serve.sh` (installed as a
+  copy in `STACK_DIR`, so a release checkout never changes it) answers three requests only: `pg_dump`,
+  `releases.log`, and a read-only `rrsync` of `STACK_DIR/data`. Shell, other commands, writes, paths
+  outside `data/` and port forwarding are refused. `.env` is never readable.
+- **Database.** `backup-pull.sh db` daily: a custom-format `pg_dump`, accepted only if it starts with `PGDMP`
+  and `pg_restore --list` reads it; the newest 14 dumps and `releases.log` copies are kept.
+- **Data.** `backup-pull.sh data` weekly: a snapshot of `STACK_DIR/data` (build artifacts, `current` links);
+  unchanged files are hard links to the previous snapshot; the newest 4 are kept.
+- **Restore check.** `backup-restore-check.sh <dump>` restores into a throwaway Postgres 16 container (own
+  name, no network, removed afterwards) and prints time, table count, migration and the largest tables.
+- **Failure.** A failed pull posts to the private notification service when `NTFY_URL` and `NTFY_TOKEN` are
+  set. Timers use `Persistent=true`, so a run missed while the machine was off happens at the next start.
+- **External check.** `.github/workflows/uptime.yml` requests the home page, `/api/health` and the model kit
+  API every 15 minutes from outside the server's network; a failed run sends GitHub's failed-workflow
+  notification.
+- **Restore.** Stop `api`, `web` and `simulator`, then
+  `docker compose ... exec -T postgres pg_restore -U janus -d janus --clean --if-exists < janus-<time>.dump`;
+  copy a data snapshot back with rsync; start the stack and run `smoke.sh`.
 
 ## Releases that change the deploy scripts
 
