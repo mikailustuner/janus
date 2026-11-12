@@ -25,11 +25,11 @@ from janus.light import build as light_build
 from janus.light import messages
 from janus.light.cards import goal_cards
 from janus.light.curation import read_texts
+from janus.light.model import LANGS as LANGUAGES  # Wikidata and curated labels: five languages
 from janus.light.schemas import LightFile
 from janus.light.service import export
 from janus.light.store import LightHolder, LightUnavailableError
 from janus.memory.faers_build import ReportFact
-from janus.light.model import LANGS as LANGUAGES  # Wikidata and curated labels: five languages
 from janus.notes.phrases import violations
 from tests.memory_counts import make_counts
 

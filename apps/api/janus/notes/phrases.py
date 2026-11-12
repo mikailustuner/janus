@@ -40,7 +40,11 @@ FORBIDDEN: Final[Mapping[str, tuple[str, ...]]] = {
     "fr": ("arrêtez de prendre", "médicament inutile", "guérit", "diagnostic"),
     "es": ("deje de tomar", "medicamento innecesario", "cura", "diagnóstico"),
     "pt": (
-        "pare de tomar", "deixe de tomar", "interrompa", "medicamento desnecessário", "cura",
+        "pare de tomar",
+        "deixe de tomar",
+        "interrompa",
+        "medicamento desnecessário",
+        "cura",
         "diagnóstico",
     ),
 }

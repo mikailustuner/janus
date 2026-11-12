@@ -23,7 +23,8 @@ from janus.notes.templates import Spec
 
 DECIMAL: Final = {"en": ".", "tr": ",", "de": ",", "fr": ",", "es": ",", "pt": ","}
 GROUP: Final = {"en": ",", "tr": ".", "de": ".", "fr": "\u202f", "es": ".", "pt": "\u00a0"}
-MIN_GROUPING: Final = {"en": 1, "tr": 1, "de": 1, "fr": 1, "es": 2, "pt": 2}  # CLDR minimumGroupingDigits
+# CLDR minimumGroupingDigits
+MIN_GROUPING: Final = {"en": 1, "tr": 1, "de": 1, "fr": 1, "es": 2, "pt": 2}
 NBSP: Final = "\u00a0"
 RATIO_LOW: Final = Decimal("0.01")
 RATIO_HIGH: Final = 1000
