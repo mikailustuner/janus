@@ -108,3 +108,11 @@ short quotes only; no raw downloads.
 - US-label special-population statements and the document sources (FDA reviews, PMC articles) are unchanged: their
   strict checks (`strict_sp.py` with the list-aligning reader `sp_c.py`, `strict_pmc.py`) did not reach the pre-registered
   precision on fresh samples and are not used for publishing.
+- Round 3 reference tables, used only by the strict check (made by `pipelines/tools/build_modelkit_reference.py`):
+  `analytes.csv` (drug, name, relation, source): metabolite names read from the pharmacokinetics and clinical
+  pharmacology sections of single-substance openFDA drug labels (CC0; only metabolite-shaped names are kept), prodrug
+  esters from the public US product directory (openFDA NDC, CC0; dabigatran etexilate, tenofovir alafenamide ...),
+  and reversal agents from label indications (andexanet alfa, idarucizumab). `combination_products.csv` (brand,
+  components, source): products with two or more active ingredients, at least one a pool drug, from the same
+  directory (prescription and OTC) and from multi-ingredient labels. A value whose outcome or group names one of
+  these, or whose intervention names such a product, is not kept. Automated, not checked by a person.

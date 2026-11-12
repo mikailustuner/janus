@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import ast
 from collections import Counter
+from dataclasses import replace
 from pathlib import Path
 from typing import Any
 
@@ -302,3 +303,77 @@ def test_pmc_decimal_comma_other_drug_and_combination_abstain() -> None:
     grid2 = (("Parameter", "Lisinopril/HCTZ FDC"), ("Cmax (ng/mL)", "40.1"))
     a2, t2 = article("PK after a fixed-dose combination", grid2)
     assert strict_pmc.level(strict_pmc.check(a2, t2, 1, 1, "lisinopril", IDS)) < 2
+
+
+# --- round 3: reference tables and arbitration -------------------------------------------------
+
+REF = strict_ctgov.Reference.from_csv(
+    "drug_key,name,relation,source\nlisinopril,desethyl lisinopril,metabolite,t\n"
+    "lisinopril,andexanet alfa,reversal_agent,t\n",
+    "brand,components,source\nzestoretic plus,hydrochlorothiazide|lisinopril,t\n",
+)
+
+
+def ref_level(study: dict[str, Any]) -> int:
+    fails = strict_ctgov.check(
+        study, "lisinopril", LOC, "immediate_release", "oral", "single", IDS, True, False, "cmax",
+        BRANDS, REF,
+    )  # fmt: skip
+    return strict_ctgov.level(fails)
+
+
+def test_reference_tables_catch_named_metabolites_reversal_agents_and_combinations() -> None:
+    assert ref_level(record()) == max(strict_ctgov.LEVELS)
+    assert ref_level(record(outcome_title="Cmax of Desethyl Lisinopril")) == 0
+    assert ref_level(record(group_desc="Lisinopril then andexanet alfa bolus")) == 0
+    zest = record(interventions=(("Zestoretic Plus", ""),))
+    fails = strict_ctgov.check(
+        zest,
+        "lisinopril",
+        LOC,
+        "immediate_release",
+        "oral",
+        "single",
+        IDS,
+        True,
+        False,
+        "cmax",
+        BRANDS,
+        REF,
+    )
+    assert "combination_product" in fails
+
+
+def test_committed_reference_tables_load_and_name_known_entries() -> None:
+    ref = strict_ctgov.Reference.load()
+    assert "dabigatran etexilate" in ref.analytes["dabigatran"]
+    assert "andexanet alfa" in ref.reversal
+    assert any("advil pm" == b for b in ref.combos_of("ibuprofen"))
+
+
+def test_arbitration_settles_unspecified_analyte_only_in_a_single_agent_record() -> None:
+    ctx = Context(formulation="immediate_release", route="oral", regimen="single")
+    a = _cand(ctx)
+    b = replace(a, analyte="unspecified")
+    differs = Confirmation(False, "analytes_differ")
+    counts: Counter[str] = Counter()
+    got = strict_ctgov.apply([Paired(a, b, differs)], record(), IDS, BRANDS, counts, REF)[0]
+    assert got.result.confirmed and got.result.reason == "strict_arbitration"
+    assert got.b is not None and got.a.analyte == got.b.analyte == "parent"
+    two = record(interventions=(("Lisinopril", ""), ("Metformin", "")))
+    assert not strict_ctgov.apply([Paired(a, b, differs)], two, IDS, BRANDS, counts, REF)[
+        0
+    ].result.confirmed
+
+
+def test_arbitration_drops_a_one_sided_dose_only_where_the_parameter_needs_none() -> None:
+    ctx = Context(formulation="immediate_release", route="oral", regimen="single")
+    a = replace(_cand(ctx), parameter="tmax")
+    b = replace(a, dose_mg=None)
+    differs = Confirmation(False, "doses_differ")
+    counts: Counter[str] = Counter()
+    got = strict_ctgov.apply([Paired(a, b, differs)], record(), IDS, BRANDS, counts, REF)[0]
+    assert got.result.confirmed and got.a.dose_mg is None
+    cmax_a, cmax_b = _cand(ctx), replace(_cand(ctx), dose_mg=None)
+    kept = strict_ctgov.apply([Paired(cmax_a, cmax_b, differs)], record(), IDS, BRANDS, counts, REF)
+    assert not kept[0].result.confirmed

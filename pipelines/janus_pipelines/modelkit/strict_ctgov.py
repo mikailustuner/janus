@@ -14,13 +14,17 @@ clinical decisions.
 
 from __future__ import annotations
 
+import csv
+import io
 import re
 from collections import Counter
-from dataclasses import replace
+from dataclasses import dataclass, replace
+from pathlib import Path
 from typing import Any, Final
 
-from janus_pipelines.modelkit.confirm import Confirmation
+from janus_pipelines.modelkit.confirm import Confirmation, confirm
 from janus_pipelines.modelkit.formref import BrandTable
+from janus_pipelines.modelkit.model import DOSE_PARAMS
 from janus_pipelines.modelkit.pairing import Paired
 from janus_pipelines.modelkit.resolver import IdentityTable, norm
 
@@ -96,6 +100,13 @@ _PARAM_GROUP: Final = {
     "t_half": "t_half", "tmax": "tmax", "cmax": "cmax", "auc_inf": "auc", "auc_last": "auc", "auc_tau": "auc",
     "cl": "cl", "cl_f": "cl", "cl_per_kg": "cl", "vss": "v", "vd": "v", "vd_per_kg": "v", "v_f": "v",
 }  # fmt: skip
+# Several units of one strength ("four 5-mg capsules", "2 x 20 mg", "two tablets"): the readers take
+# the unit strength as the dose (a known shared error).
+_MULTI_UNIT: Final = re.compile(
+    r"(?<![a-z0-9.])(?:two|three|four|five|six|eight|ten|(?:[2-9]|1[0-9])(?![0-9.]))\s*(?:x|times)?\s*"
+    r"(?:\d+(?:\.\d+)?\s*(?:mg|mcg|ug|g)\s*)?(?:tablets?|capsules?|caps|tabs|sachets?|vials?)|"
+    r"(?<![a-z0-9.])[2-9]\s*x\s*\d+(?:\.\d+)?\s*(?:mg|mcg|ug)"
+)
 _PER_SIZE: Final = re.compile(r"mg\s*/\s*(?:m2|m 2|m²|kg)|per (?:m2|kg|square)|/\s*kg\b|mg/m")
 _SINGLE_CUE: Final = re.compile(
     r"single dose|single oral dose|single iv dose|\bday 1\b(?! (?:to|through|and))"
@@ -111,11 +122,67 @@ PUBLISHABLE_ROUTES: Final = frozenset({"oral", "iv"})
 # Pre-registered levels: a value is at level L if it fails no rule of levels 1..L.
 LEVELS: Final = {
     1: frozenset({"cell_names_other_parameter", "analyte_word", "matrix_word", "clearance_type_word", "transform_word", "population_word", "other_drug_named", "drug_not_named", "racemate_or_sibling_named"}),
-    2: frozenset({"product_word", "combination_word", "per_size_dose", "regimen_conflict", "route_not_plain", "coadministered_claimed"}),
+    2: frozenset({"product_word", "combination_word", "per_size_dose", "multi_unit_dose", "combination_product", "regimen_conflict", "route_not_plain", "coadministered_claimed"}),
     3: frozenset({"not_single_agent_group"}),
     4: frozenset({"form_not_plain"}),
     5: frozenset({"not_single_agent_record"}),
 }  # fmt: skip
+
+
+@dataclass(frozen=True)
+class Reference:
+    """Round-3 reference tables: names that are not the parent drug (metabolites, prodrug esters,
+    reversal agents) per drug, and marketed combination products (brand -> components)."""
+
+    analytes: dict[str, tuple[str, ...]]
+    reversal: frozenset[str]
+    combos: dict[str, frozenset[str]]
+
+    @classmethod
+    def from_csv(cls, analytes_text: str, combos_text: str) -> Reference:
+        an: dict[str, list[str]] = {}
+        rev: set[str] = set()
+        for r in csv.DictReader(io.StringIO(analytes_text)):
+            an.setdefault(r["drug_key"], []).append(norm(r["name"]))
+            if r["relation"] == "reversal_agent":
+                rev.add(norm(r["name"]))
+        co = {
+            norm(r["brand"]): frozenset(r["components"].split("|"))
+            for r in csv.DictReader(io.StringIO(combos_text))
+        }
+        return cls({k: tuple(v) for k, v in an.items()}, frozenset(rev), co)
+
+    def combos_of(self, drug_key: str) -> tuple[str, ...]:
+        """Brands (5+ characters) that combine the drug with at least one other ingredient."""
+        cache: dict[str, tuple[str, ...]] = self.__dict__.setdefault("_by_drug", {})
+        if drug_key not in cache:
+            cache[drug_key] = tuple(
+                b for b, c in self.combos.items() if drug_key in c and len(c) >= 2 and len(b) >= 5
+            )
+        return cache[drug_key]
+
+    @classmethod
+    def load(cls) -> Reference:
+        base = Path(__file__).resolve().parents[3] / "data" / "modelkit"
+        return cls.from_csv(
+            (base / "analytes.csv").read_text("utf-8"),
+            (base / "combination_products.csv").read_text("utf-8"),
+        )
+
+
+def _word(name: str, text: str) -> bool:
+    return re.search(r"(?<![a-z0-9])" + re.escape(name) + r"(?![a-z0-9])", text) is not None
+
+
+def _combination_product(study: dict[str, Any], drug_key: str, text: str, ref: Reference) -> bool:
+    """An intervention or the group names a marketed product that combines the drug with another."""
+    arms = study.get("protocolSection", {}).get("armsInterventionsModule", {})
+    names = " ; ".join(
+        " ; ".join([iv.get("name", ""), *iv.get("otherNames", [])])
+        for iv in arms.get("interventions", [])
+    )
+    hay = norm(names) + " ; " + text
+    return any(_word(brand, hay) for brand in ref.combos_of(drug_key))
 
 
 def _locate(study: dict[str, Any], locator: str) -> tuple[dict[str, Any], dict[str, Any]] | None:
@@ -255,6 +322,7 @@ def check(
     coadministered: bool = False,
     parameter: str = "",
     brands: BrandTable | None = None,
+    ref: Reference | None = None,
 ) -> tuple[str, ...]:
     """Codes of the strict rules this confirmed value fails (empty = passes every level)."""
     found = _locate(study, locator)
@@ -267,7 +335,11 @@ def check(
     gtext = norm(" . ".join([group.get("title", ""), group.get("description", "")]))
     both = outcome + " . " + gtext
     fails: list[str] = []
-    if _ANALYTE.search(outcome) or _PD.search(outcome):
+    named_analyte = ref is not None and any(
+        _word(n, both) for n in ref.analytes.get(drug_key, ()) if len(n) >= 3
+    )
+    gtitle = norm(group.get("title", ""))
+    if _ANALYTE.search(outcome) or _PD.search(outcome) or named_analyte or _ANALYTE.search(gtitle):
         fails.append("analyte_word")
     cells = norm(_cell_titles(om, locator))
     group_of = _PARAM_GROUP.get(parameter)
@@ -283,7 +355,12 @@ def check(
     if _POPULATION.search(both) or "CHILD" in ages or ages == ["OLDER_ADULT"]:
         fails.append("population_word")
     named = table.drugs_in(both)
-    if any(k != drug_key for k in named) or _other_intervention_named(study, drug_key, both, table):
+    reversal = ref is not None and any(_word(n, both) for n in ref.reversal)
+    if (
+        any(k != drug_key for k in named)
+        or _other_intervention_named(study, drug_key, both, table)
+        or reversal
+    ):
         fails.append("other_drug_named")
     agents = _agents(study, table)
     if _racemate_only(study, drug_key, both):
@@ -296,8 +373,12 @@ def check(
         fails.append("product_word")
     if _COMBINATION.search(gtext) or _COMBINATION.search(norm(om.get("title", ""))):
         fails.append("combination_word")
+    if ref is not None and _combination_product(study, drug_key, both, ref):
+        fails.append("combination_product")
     if dose_claimed and (_PER_SIZE.search(gtext.replace(" ", "")) or _PER_SIZE.search(gtext)):
         fails.append("per_size_dose")
+    if dose_claimed and _MULTI_UNIT.search(gtext):
+        fails.append("multi_unit_dose")
     if (regimen == "multiple" and _SINGLE_CUE.search(both)) or (
         regimen == "single" and _MULTI_CUE.search(both)
     ):
@@ -331,6 +412,40 @@ def level(fails: tuple[str, ...]) -> int:
 
 # Shipped level (precision study, addendum 2): a confirmed value below it becomes unconfirmed.
 PUBLISH_LEVEL: Final = 3
+_REFERENCE: list[Reference] = []
+
+
+def reference() -> Reference:
+    """The committed reference tables, loaded once per process."""
+    if not _REFERENCE:
+        _REFERENCE.append(Reference.load())
+    return _REFERENCE[0]
+
+
+def _arbitrated(p: Paired, study: dict[str, Any], table: IdentityTable) -> Paired | None:
+    """Round 3: two disagreements the record can settle. (a) one reader says the analyte is the
+    parent drug and the other leaves it unspecified, in a record whose only drug intervention is the
+    drug; (b) only one reader found a dose, for a parameter that does not need one (the dose is then
+    left out). The pair is re-confirmed with that field equalised; None when that does not apply or
+    the readers still differ."""
+    b = p.b
+    if b is None or p.result.reason not in ("analytes_differ", "doses_differ"):
+        return None
+    a2, b2 = p.a, b
+    if {p.a.analyte, b.analyte} == {"parent", "unspecified"}:
+        agents = _agents(study, table)
+        if not (len(agents) == 1 and agents[0] == [p.a.drug_key]):
+            return None
+        a2, b2 = replace(a2, analyte="parent"), replace(b2, analyte="parent")
+    one_dose = (a2.dose_mg is None) != (b2.dose_mg is None)
+    if one_dose and p.a.parameter not in DOSE_PARAMS:
+        a2, b2 = replace(a2, dose_mg=None), replace(b2, dose_mg=None)
+    if (a2, b2) == (p.a, b):
+        return None
+    res = confirm(a2.reading(), b2.reading())
+    if not res.confirmed:
+        return None
+    return Paired(a2, b2, Confirmation(True, "strict_arbitration", ()))
 
 
 def apply(
@@ -339,15 +454,21 @@ def apply(
     table: IdentityTable,
     brands: BrandTable,
     counts: Counter[str],
+    ref: Reference | None = None,
 ) -> list[Paired]:
     """Confirmed pairs of one study whose strict level is below PUBLISH_LEVEL become unconfirmed with
-    reason `strict_check` and the failed rule codes; every other pair is returned unchanged."""
+    reason `strict_check` and the failed rule codes. A pair the record can arbitrate (`_arbitrated`)
+    is confirmed when it then reaches PUBLISH_LEVEL (reason `strict_arbitration`). Every other pair
+    is returned unchanged."""
+    ref = reference() if ref is None else ref
     out: list[Paired] = []
     for p in pairs:
-        if not p.result.confirmed:
+        arb = None if p.result.confirmed else _arbitrated(p, study, table)
+        if not p.result.confirmed and arb is None:
             out.append(p)
             continue
-        a, ctx = p.a, p.a.context
+        q = p if arb is None else arb
+        a, ctx = q.a, q.a.context
         fails = check(
             study,
             a.drug_key,
@@ -360,7 +481,15 @@ def apply(
             bool(ctx.coadministered),
             a.parameter,
             brands,
+            ref,
         )
+        if arb is not None:
+            if level(fails) >= PUBLISH_LEVEL:
+                counts["strict_arbitration_confirmed"] += 1
+                out.append(arb)
+            else:
+                out.append(p)
+            continue
         if level(fails) >= PUBLISH_LEVEL:
             counts["strict_check_passed"] += 1
             out.append(p)
