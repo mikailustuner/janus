@@ -299,7 +299,9 @@ export class DemoClient implements JanusReadClient {
         answer<NoteOut>("notes/document", D.noteOut, undefined),
       );
     const docs: NoteOut[] = [];
-    for (const lang of b.languages) {
+    // A language recorded before it was added (pt) has no recorded note yet: the note is shown
+    // in the recorded languages only until `record:demo` is run against the API again.
+    for (const lang of b.languages.filter((l) => l in this.f.notes)) {
       const r = D.decode(D.noteOut, this.f.notes[lang]);
       if (!r.ok)
         return Promise.resolve(
