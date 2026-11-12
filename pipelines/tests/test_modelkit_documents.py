@@ -382,3 +382,40 @@ def test_pmc_spread_columns_are_never_values() -> None:
     )
     assert {p.a.value for p in pairs} == {253.46}
     assert all(p.b is None or p.b.value == 253.46 for p in pairs)
+
+
+# --- iteration 2 (addendum 6): rules from the first blinded review sample ----------------------
+
+
+def _pmc_one(caption: str, grid: tuple[tuple[str, ...], ...]) -> list[tuple[str, float, bool]]:
+    art = Article(
+        "PMC3", "Pharmacokinetics of telmisartan in healthy volunteers", "J", "2024", "", ("A B",), "",
+        "Healthy subjects took part.", "Twelve healthy subjects received a single oral dose of 40 mg telmisartan tablets.",
+        (Table("t1", "Table 1", caption, grid, 1, ""),), (), "CC BY 4.0",
+    )  # fmt: skip
+    pairs = documents.read_article(art, "telmisartan", TABLE, BRANDS, {"a": ReaderStats(), "b": ReaderStats()}, Counter(), "v")
+    return [(p.a.parameter, p.a.value, p.result.confirmed) for p in pairs]
+
+
+def test_a_count_column_is_never_a_value() -> None:
+    grid = (("Parameter", "N", "Mean"), ("Cmax (ng/mL)", "24", "300"), ("t1/2 (h)", "24", "20.5"))
+    got = _pmc_one("PK parameters of telmisartan", grid)
+    assert {v for _, v, ok in got if ok} == {300.0, 20.5}
+
+
+def test_tables_of_models_special_populations_and_animals_are_not_read() -> None:
+    grid = (("Parameter", "Mean"), ("CL/F (L/h)", "30"))
+    for caption in (
+        "Population pharmacokinetic model parameter estimates of telmisartan",
+        "PK of telmisartan in subjects with hepatic impairment",
+        "Toxicokinetics of telmisartan in dogs",
+    ):
+        assert _pmc_one(caption, grid) == []
+
+
+def test_a_title_naming_a_metabolite_is_never_the_parent() -> None:
+    grid = (("Parameter", "Mean"), ("t1/2 (h)", "30"))
+    got = _pmc_one("PK parameters of telmisartan and its metabolite M2", grid)
+    assert not any(ok for _, _, ok in got)
+    got = _pmc_one("PK parameters of telmisartan (Study AB-1001)", grid)
+    assert any(ok for _, _, ok in got)

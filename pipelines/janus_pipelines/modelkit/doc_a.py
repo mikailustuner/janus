@@ -27,6 +27,7 @@ from janus_pipelines.modelkit.pmc_jats import Article
 from janus_pipelines.modelkit.reader_a import dose_mg_near, parameter_of
 from janus_pipelines.modelkit.resolver import IdentityTable, arm_context, classify_analyte, norm
 from janus_pipelines.modelkit.review_text import Page
+from janus_pipelines.modelkit.species import names_animal
 from janus_pipelines.modelkit.units import (
     Center,
     Refused,
@@ -55,7 +56,7 @@ _FOOT: Final = re.compile(
 _DISP_HEAD: Final = re.compile(r"\b(?:c\.?v\.?|cv%|%cv|sd|s\.d\.|std|se)\b", re.I)
 _SPREAD_HEAD: Final = re.compile(
     r"\b(?:s\.?d\.?|sem?|std\.?|c\.?v\.?\s*%?|%\s*cv|cv\s*w|cvw|cv\s*intra|min(?:imum)?|max(?:imum)?|range|ci|iqr|p[ -]?value|p|"
-    r"power|n|no\.|number|count|"
+    r"power|n|no\.|number|count|rse|rsd|inter|intra|subjects?|variability|between|within|"
     r"standard deviation|standard error|coefficient of variation)\b",
     re.I,
 )
@@ -72,6 +73,33 @@ def other_drug_table(caption: str, drug_key: str, table: IdentityTable) -> bool:
     not this drug's."""
     named = table.drugs_in(caption)
     return bool(named) and drug_key not in named
+
+
+_SKIP_TABLE: Final = re.compile(
+    r"\bmodel\b|estimates?\b|population (?:pk|pharmacokinetic)|simulat|toxicokinetic|radioactiv|"
+    r"\b(?:renal|hepatic)(?:ly)? (?:impair\w*|insufficien\w*|function)|\belderly\b|geriatric|p(?:a)?ediatric|"
+    r"\bchildren\b|adolescent|\binfants?\b",
+    re.I,
+)
+_OTHER_ANALYTE_TITLE: Final = re.compile(r"metabolit|\bM\d{1,2}\b|\b[A-Z]{1,5}-?\d{3,}[A-Za-z]?\b")
+
+
+def skip_table(title: str, foot: str) -> bool:
+    """A table of a model, a simulation, an animal or radioactivity study, or of a special population (milestone M5,
+    iteration 2): never read."""
+    return bool(_SKIP_TABLE.search(title)) or names_animal(title, foot)
+
+
+def title_names_other_analyte(title: str) -> bool:
+    """The title names a metabolite or a code (another moiety may be in the table): no value is taken as the parent."""
+    bare = _STUDY.sub(" ", re.sub(r"\btable\s+\S+|\bNCT\d{8}\b", " ", title, flags=re.I))
+    return bool(_OTHER_ANALYTE_TITLE.search(bare))
+
+
+def count_like(cell: str, neighbours: list[str]) -> bool:
+    """An integer that repeats unchanged in the same column of a neighbouring parameter row: a number of subjects."""
+    c = cell.strip()
+    return bool(re.fullmatch(r"\d{1,4}", c)) and any(n.strip() == c for n in neighbours)
 
 
 def spread_column(head: str) -> bool:
@@ -334,7 +362,17 @@ def read_review(
                 if flat[j][3] and _DESIGN.search(flat[j][2])
             )
         center = _center(" ".join(head_lines) + " " + title)
+        if skip_table(title, foot_text):
+            stats.skip("table_skipped")
+            continue
+        near = [flat[x][2] for x in (k - 1, k + 1, k - 2, k + 2) if 0 <= x < len(flat)]
+        near_cells = [_split2(t, m.end()) for t in near]
         for ci, (col, cell) in enumerate(values):
+            if count_like(
+                cell, [nc[2 * ci if disp else ci][1] for nc in near_cells if len(nc) == len(cells)]
+            ):
+                stats.skip("count_column")
+                continue
             if not _NUMCELL.match(cell.strip()):
                 stats.skip("cell_not_a_value")
                 continue
@@ -359,6 +397,8 @@ def read_review(
                 analyte = "parent"
             if other_drug_table(title, doc.drug_key, table):
                 analyte, why = "combination_partner", "the table title names another drug"
+            elif title_names_other_analyte(title):
+                analyte, why = "unconfirmed", "the table title names a metabolite or a code"
             ctx_text = f"{head} . {title} . {foot_text}"
             ac = arm_context(ctx_text, doc.drug_key, table)
             food = arm_context(f"{head} . {title}", doc.drug_key, table).context.food
@@ -415,6 +455,9 @@ def read_pmc(
         if _RATIO.search(caption) and not re.search(r"pharmacokinetic", caption, re.I):
             stats.skip("ratio_table")
             continue
+        if skip_table(caption, tb.footnotes):
+            stats.skip("table_skipped")
+            continue
         for r in range(nh, len(grid)):
             row = grid[r]
             label = row[0] if row else ""
@@ -441,6 +484,12 @@ def read_pmc(
                 if spread_column(last_head) or (not row_param and spread_column(label)):
                     stats.skip("spread_column")
                     continue
+                others = [
+                    grid[x][c] for x in (r - 1, r + 1) if nh <= x < len(grid) and c < len(grid[x])
+                ]
+                if row_param and count_like(cell, others):
+                    stats.skip("count_column")
+                    continue
                 unit = _unit_of(unit_src, "")
                 if unit is None:
                     stats.skip("no_unit")
@@ -464,6 +513,8 @@ def read_pmc(
                     analyte = "parent"
                 if other_drug_table(caption, drug_key, table):
                     analyte, why = "combination_partner", "the caption names another drug"
+                elif title_names_other_analyte(caption):
+                    analyte, why = "unconfirmed", "the caption names a metabolite or a code"
                 ac = arm_context(f"{arm} . {caption} . {tb.footnotes}", drug_key, table)
                 food = arm_context(f"{arm} . {caption}", drug_key, table).context.food
                 ac = replace(ac, context=replace(ac.context, food=food))

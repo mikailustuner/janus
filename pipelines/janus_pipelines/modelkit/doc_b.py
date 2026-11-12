@@ -43,7 +43,8 @@ from janus_pipelines.modelkit.units import Center, Refused, Stat, resolve_parame
 _FIELD: Final = re.compile(r"\S(?:.*?\S)?(?=\s{2,}|\s*$)")
 _LEAD_NUM: Final = re.compile(r"^[<>~]?\s*(\d[\d,]*(?:\.\d+)?)")
 _DISP_TOKENS: Final = frozenset(
-    "cv cvw c v sd se sem std dev deviation error min max minimum maximum range ci iqr p pvalue power n no number count".split()
+    "cv cvw c v sd se sem std dev deviation error min max minimum maximum range ci iqr p pvalue power n no "
+    "number count rse rsd inter intra subject subjects variability between within".split()
 )
 _BAD_TOKENS: Final = frozenset(
     "ratio ratios gmr ci confidence fold difference change predicted simulated simulation model gls ls lsm "
@@ -217,6 +218,39 @@ def _normalised(unit: str, label: str) -> bool:
         or bool(lt & {"dn", "dw", "dose"})
         or bool(re.search(r"/\s*D\b", label))
     )
+
+
+_SKIP_TOKENS: Final = frozenset(
+    "model estimate estimates simulation simulated simulations toxicokinetic toxicokinetics radioactivity "
+    "radiolabeled elderly geriatric pediatric paediatric children adolescents adolescent infants infant impairment "
+    "impaired insufficiency rat rats dog dogs monkey monkeys mouse mice rabbit rabbits minipig minipigs animal "
+    "animals".split()
+)
+
+
+def _skip(text: str) -> bool:
+    """Iteration 2 (M5): a table of a model, a simulation, an animal or radioactivity study, or of a special
+    population, is not read."""
+    toks = set(_tokens(text))
+    return bool(toks & _SKIP_TOKENS) or ("population" in toks and "pharmacokinetic" in toks)
+
+
+def _moiety_title(title: str) -> bool:
+    """The title names a metabolite or a code token (letters then at least three digits, or M and a number)."""
+    bare = re.sub(r"(?i)\b(?:study|studies|protocol|trial|report|table)\s+\S+", " ", title)
+    toks = _tokens(bare)
+    return any(
+        t.startswith("metabolit")
+        or re.fullmatch(r"m\d{1,2}", t)
+        or re.fullmatch(r"[a-z]{1,5}\d{3,}[a-z]?", t)
+        for t in toks
+    ) or bool(re.search(r"\b[A-Za-z]{1,5}-\d{3,}", bare))
+
+
+def _counts(cell: str, column: list[str]) -> bool:
+    """An integer that repeats in another row of the same column: a number of subjects."""
+    c = cell.strip()
+    return bool(re.fullmatch(r"\d{1,4}", c)) and column.count(c) > 1
 
 
 def _foreign_table(title: str, drug_key: str, table: IdentityTable) -> bool:
@@ -450,6 +484,14 @@ def read_review(
                 if lines[x][3] and _DESIGN_TOKENS & set(_tokens(lines[x][2]))
             )
         title_toks = set(_tokens(title))
+        if _skip(f"{title} {foot}"):
+            continue
+        column_cells: dict[int, list[str]] = {}
+        for b in data_rows:
+            for s0, _e0, t0 in _fields(lines[b][2])[1:]:
+                ci0 = next((i for i, (cs, ce) in enumerate(merged) if cs <= s0 < ce + 1), None)
+                if ci0 is not None:
+                    column_cells.setdefault(ci0, []).append(t0.strip())
         for ci in range(len(merged)):
             if _spread_words(col_low[ci]):
                 col_head[ci] = "\x00dispersion"
@@ -479,6 +521,8 @@ def read_review(
                 ci = next((i for i, (cs, ce) in enumerate(merged) if cs <= s < ce + 1), None)
                 if ci is None or col_head[ci] == "\x00dispersion":
                     continue
+                if _counts(cell, column_cells.get(ci, [])):
+                    continue
                 value = _numeric(cell)
                 if value is None or value <= 0:
                     continue
@@ -496,6 +540,8 @@ def read_review(
                     analyte = "parent"
                 if _foreign_table(title, drug_key, table):
                     analyte = "combination_partner"
+                elif _moiety_title(title):
+                    analyte = "unconfirmed"
                 all_toks = head_toks | title_toks | set(_tokens(foot))
                 ctx = _context(
                     head_toks | title_toks,
@@ -558,6 +604,8 @@ def read_pmc(
             and "pharmacokinetics" not in cap_toks
         ):
             continue
+        if _skip(f"{tb.label} {tb.caption} {tb.footnotes}"):
+            continue
         for r in range(nh, len(grid)):
             row = grid[r]
             label = row[0] if row else ""
@@ -574,6 +622,9 @@ def read_pmc(
                     "",
                 )
                 if _spread_words(lowest) or (not row_up and _spread_words(label)):
+                    continue
+                column = [grid[x][c] for x in range(nh, len(grid)) if c < len(grid[x])]
+                if row_up and _counts(row[c], column):
                     continue
                 up = row_up or _unit_param(head)
                 if up is None:
@@ -595,6 +646,8 @@ def read_pmc(
                     analyte = "parent"
                 if _foreign_table(f"{tb.label} {tb.caption}", drug_key, table):
                     analyte = "combination_partner"
+                elif _moiety_title(f"{tb.label} {tb.caption}"):
+                    analyte = "unconfirmed"
                 arm_toks = set(_tokens(arm))
                 all_toks = arm_toks | cap_toks | set(_tokens(tb.footnotes))
                 ctx = _context(
