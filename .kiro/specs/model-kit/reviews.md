@@ -258,3 +258,8 @@ error-prone studies at their share). A relaxed rule set plus a record-check vote
 check stays. The level-3 set cannot be re-measured under the new criterion: almost every one of its values has been reviewed.
 The report card now says the precision covers ClinicalTrials.gov values only, and the special-population precision shown is the
 latest fresh measurement (57 of 88 agreed; stratum-weighted about 0.62).
+
+Third round (new evidence): record arbitration of two disagreement causes and two reference tables (analytes, combination
+products; openFDA, CC0) raise the level-3 set from 336 to 385 values (57 drugs; sets unchanged at 8, 2 complete), but only 39
+never-reviewed values in 13 studies remain for an acceptance sample, so none of the candidates could be accepted and none
+ships; the code and tables are kept, switched off.
