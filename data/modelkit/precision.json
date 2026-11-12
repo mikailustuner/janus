@@ -1,10 +1,10 @@
 {
-  "measured_on": "2026-11-11",
-  "n": 92,
-  "correct": 56,
-  "n_conservative": 100,
-  "correct_conservative": 56,
-  "formulation_n": 104,
-  "formulation_correct": 101,
+  "measured_on": "2026-11-12",
+  "n": 126,
+  "correct": 125,
+  "n_conservative": 126,
+  "correct_conservative": 125,
+  "formulation_n": 122,
+  "formulation_correct": 121,
   "target": 0.9
 }

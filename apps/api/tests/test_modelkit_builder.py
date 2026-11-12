@@ -520,7 +520,7 @@ def test_derived_clearance_builds_from_one_designated_study_and_never_tests_it()
     assert cl.derivation == "cl_from_dose_and_auc"
     single = validate_single_split("exampletine", rows, ps)
     assert {p.study_id for p in single.points} == {"C1"}
-    # leave one study out (DP-M39): A1 also tests, against the set built without A1, where C1 is
+    # leave one study out (DP-M40): A1 also tests, against the set built without A1, where C1 is
     # the designated study (CL/F 25 L/h)
     val = validate("exampletine", rows, ps)
     a1 = next(p for p in val.points if p.study_id == "A1")

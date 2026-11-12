@@ -1,4 +1,4 @@
-// Feature: model-kit gate study (DP-M39). The validation section explains the leave-one-study-out
+// Feature: model-kit gate study (DP-M40). The validation section explains the leave-one-study-out
 // design and counts the points whose study also builds the set shown, in every language.
 import { readFileSync } from "node:fs";
 import { join } from "node:path";

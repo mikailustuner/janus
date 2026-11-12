@@ -92,3 +92,27 @@ short quotes only; no raw downloads.
   only, never a name) and copies it into the manifest; the API, the web pages and the MCP text then show "Expert audit:
   precision X (n = N, date)." instead of "Expert review has not yet been done."
 
+
+## Precision work (strict publication check)
+- ClinicalTrials.gov values: after the two readers agree, a third, separate check
+  (`pipelines/janus_pipelines/modelkit/strict_ctgov.py`) reads only the record's structure (interventions, arms, the
+  result group, the outcome measure and the cell titles) and abstains unless the context is plain: no other agent in the
+  arm or record, no metabolite, matrix, clearance-type, transformed, modelled or pharmacodynamic read-out, no special
+  population, no release-modifying or non-oral non-intravenous product, no body-size dose, no regimen contradiction, a
+  known oral or intravenous route. Values below level 3 are kept in the run with `confirmed = false` and the reason
+  "the strict publication check abstained (codes)". This trades coverage for precision: about one in eight of the values
+  the two readers agree on stays confirmed.
+- `precision.json` now holds the measurement of that check: every not-yet-reviewed confirmed value of non-development drugs
+  at level 3 (126 values, 14 studies), two automated review passes, evaluation only. Values within a study are correlated,
+  so read the interval as optimistic. Read every value as unverified. Expert review has not yet been done.
+- US-label special-population statements and the document sources (FDA reviews, PMC articles) are unchanged: their
+  strict checks (`strict_sp.py` with the list-aligning reader `sp_c.py`, `strict_pmc.py`) did not reach the pre-registered
+  precision on fresh samples and are not used for publishing.
+- Round 3 reference tables, used only by the strict check (made by `pipelines/tools/build_modelkit_reference.py`):
+  `analytes.csv` (drug, name, relation, source): metabolite names read from the pharmacokinetics and clinical
+  pharmacology sections of single-substance openFDA drug labels (CC0; only metabolite-shaped names are kept), prodrug
+  esters from the public US product directory (openFDA NDC, CC0; dabigatran etexilate, tenofovir alafenamide ...),
+  and reversal agents from label indications (andexanet alfa, idarucizumab). `combination_products.csv` (brand,
+  components, source): products with two or more active ingredients, at least one a pool drug, from the same
+  directory (prescription and OTC) and from multi-ingredient labels. A value whose outcome or group names one of
+  these, or whose intervention names such a product, is not kept. Automated, not checked by a person.

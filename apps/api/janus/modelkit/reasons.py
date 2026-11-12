@@ -30,7 +30,7 @@ TEXT: dict[str, str] = {
     "set_has_no_absorption_rate": "The set has no absorption rate, so it cannot predict Cmax.",
     "set_cannot_predict_metric": "The set cannot predict this metric.",
     "fold_has_no_parameter_set": "Without this study the drug's other studies give no parameter set, so this observation cannot be tested.",
-    # held-out design (DP-M39)
+    # held-out design (DP-M40)
     "leave_one_study_out": "Each study with an observation is held out in turn: the set is built again from the drug's other studies only and predicts the held-out study. No held-out study influences the set that tests it.",
     "single_split": "Only studies that report no building parameter test the set shown (milestones M0 to M6).",
     "rebuilt_without_study": "This study also helps build the set shown; this point was predicted by the set built without it.",

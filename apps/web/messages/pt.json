@@ -3253,7 +3253,7 @@
       "intervalsTitle": "Intervalos de previsão",
       "intervalsSentence": "{metric}: {n} dos pelo menos {min} estudos reservados independentes necessários para um intervalo.",
       "intervalsShownSentence": "{metric}: apresentado (÷/× {fold} para {coverage} dos estudos, n = {n}).",
-      "precisionTitle": "Precisão dos valores confirmados",
+      "precisionTitle": "Precisão dos valores confirmados (apenas valores do ClinicalTrials.gov)",
       "precisionLine": "{share} dos valores amostrados estavam corretos (intervalo de Wilson a 95 % de {low} a {high}, n = {n}; amostra cega, duas passagens de revisão automatizadas, {date}).",
       "precisionConservative": "Leitura conservadora, tudo o que não for considerado correto por ambas as passagens conta como errado: {share} ({low} a {high}, n = {n}).",
       "precisionFormulation": "Apenas o campo da formulação: {share} ({low} a {high}, n = {n}).",

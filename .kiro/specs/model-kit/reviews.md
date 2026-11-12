@@ -256,3 +256,31 @@ Why the gate stays empty: 32 studies of 24 drugs hold a testable observation; 15
 only a study it can rebuild without, which needs a second study with a clearance (and a peak time for Cmax): the upper bound is 1 drug.
 With the held-back FDA review and PMC rows included (exploratory, not published): 31 sets, 16 complete, still 1 drug with both metrics.
 External reference sets: Lombardo et al. 2018 is under the Elsevier user licence (not open) and intravenous only; not used.
+
+## Precision work: strict publication checks (automated checks only; expert review has not yet been done)
+Pre-registered with dated addenda (private). Every number below comes from two automated review passes on values the rule
+designer had not looked at; development samples are not reported as precision.
+
+| Reader | Method | Fresh-sample precision (agreed) | Coverage | Used |
+|---|---|---|---|---|
+| ClinicalTrials.gov values | strict record check, level >= 3 (iteration 2) | 125 / 126 (census of every kept value not reviewed before; 14 studies) | 336 of 2,565 agreed values | yes |
+| same, iteration 1 | level >= 3 | 87 / 87 in studies without earlier errors; 14 / 22 in studies with earlier errors | 416 | replaced by iteration 2 |
+| US-label special-population statements | strict statement check, level >= 2 | 28 / 38 (0.74) | 73 of 389 statements | no |
+| same, with list-aligning reader C | level >= 2 | 9 / 15 | 70 | no |
+| PMC article tables | structure-first table typing, level 3 | 21 / 37 (0.57); abstained values 10 / 18 | 268 of 2,289 rows | no (held back) |
+| Drugs@FDA review PDFs | none (no fresh frame) | not measured | | no (held back) |
+
+The values within a study are correlated, so the ClinicalTrials.gov interval is optimistic; the production bar of plan 12.3
+needs the expert audit.
+
+Second round (maximise coverage at precision >= 0.90; acceptance: >= 120 agreed items from >= 40 studies, <= 5 per study,
+error-prone studies at their share). A relaxed rule set plus a record-check vote on co-administration disagreements (711 values,
+84 drugs, 17 sets) measured 0.72 post-stratified (0.65 to 0.79) on its fresh acceptance sample and was not shipped; the level-3
+check stays. The level-3 set cannot be re-measured under the new criterion: almost every one of its values has been reviewed.
+The report card now says the precision covers ClinicalTrials.gov values only, and the special-population precision shown is the
+latest fresh measurement (57 of 88 agreed; stratum-weighted about 0.62).
+
+Third round (new evidence): record arbitration of two disagreement causes and two reference tables (analytes, combination
+products; openFDA, CC0) raise the level-3 set from 336 to 385 values (57 drugs; sets unchanged at 8, 2 complete), but only 39
+never-reviewed values in 13 studies remain for an acceptance sample, so none of the candidates could be accepted and none
+ships; the code and tables are kept, switched off.

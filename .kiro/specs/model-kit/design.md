@@ -306,12 +306,20 @@ text stays "Expert review has not yet been done".
 - **DP-M38 Data package.** `janus.modelkit.package` writes the package of a release (evidence, special populations, sets,
   validation, licences, README, `datapackage.json`, `.zenodo.json` without DOI or creators); a row of an unpublished source
   or a PMC row without CC BY or CC0 stops the build. Not committed, not uploaded (owner decision).
+- **DP-M39 Strict publication check (selective prediction).** After the two readers agree, `strict_ctgov.check` reads only
+  the record's structure (interventions, arms, result group, outcome measure, cell titles) and the row's formulation, route,
+  regimen, dose and co-administration flags, and returns rule codes; `level` maps them to nested levels 1-5. The
+  ClinicalTrials.gov intake keeps a value confirmed only at level >= 3 (`PUBLISH_LEVEL`); below it the row stays in the run
+  with `confirmed = false` and reason `strict_check` plus the codes. It shares no code with readers A and B (test). Measured
+  on fresh blinded samples with two automated passes (private pre-registration); the measured precision is in
+  `data/modelkit/precision.json`. The same kind of check exists for label statements (`strict_sp`, with the list-aligning
+  third reader `sp_c`) and PMC tables (`strict_pmc`); neither reached its pre-registered precision and neither is used.
 - **M33** The scoring recomputes from the counts; a record with any other field (a name) or numbers that do not recompute
   is refused by the job and not shown by the API (tests).
 - **M34** The package holds only publishable rows and every file's hash; the same release gives the same bytes (tests).
 
 ## 21. Gate study decisions (pre-registered, private)
-- **DP-M39 Leave one study out.** Every study of a drug that reports an observation (cmax, auc_inf, auc_tau; not a label study,
+- **DP-M40 Leave one study out.** Every study of a drug that reports an observation (cmax, auc_inf, auc_tau; not a label study,
   not linked to another study by the M5 identity guard) is held out in turn. Its fold set is `build_set` of the drug's rows without
   that study's rows (the unchanged builder: its own split, DP-M14, the population rule); the study's observations are tested against
   the fold set with the unchanged observation filters and population compatibility. Points of all folds feed the unchanged strict
@@ -319,7 +327,7 @@ text stays "Expert review has not yet been done".
   `rebuilt_without_study`. A drug without a set shown is never validated. Labels never test (now enforced: the single split let a
   label study that reports only observations test). Every point of the single split is a point here with the same ratio. The
   single split stays as `validate_single_split` for comparison; the API's `validation.design` says which design gave the points.
-- **DP-M40 Derived rules (class C).** R1: an intravenous half-life gives V/F = CL/F x t1/2 / ln 2 only when no oral (or
+- **DP-M41 Derived rules (class C).** R1: an intravenous half-life gives V/F = CL/F x t1/2 / ln 2 only when no oral (or
   route-unstated) half-life is confirmed (note `half_life_intravenous`). R2: an intravenous set without a stated volume gets
   V = CL x t1/2(iv) / ln 2 (`v_from_cl_half_life`). R3: F = (AUC_oral / dose_oral) / (AUC_iv / dose_iv) from single-dose AUC to
   infinity of both routes in one building study (plan section 7 rule 1, `f_from_same_study_auc`), capped at 1 (the cap now also
@@ -330,7 +338,7 @@ text stays "Expert review has not yet been done".
 ## 22. Gate study properties
 - **M35** A fold set holds no row of its held-out study and does not change when any row of that study changes or is added
   (Hypothesis over worlds that produce rebuilt points; the test checks that they do).
-- **M36** Every single-split point is a leave-one-study-out point with the same ratio (labels excepted, see DP-M39); results do not
+- **M36** Every single-split point is a leave-one-study-out point with the same ratio (labels excepted, see DP-M40); results do not
   depend on row order.
 - **M37** No point without a set shown; Failed iff a point is outside [0.5, 2]; Validated iff AUC and Cmax are tested and every point
   is inside (unchanged rule).

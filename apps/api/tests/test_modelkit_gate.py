@@ -1,4 +1,4 @@
-"""Model kit gate study: leave-one-study-out validation (DP-M39, properties M35-M37) and the derived
+"""Model kit gate study: leave-one-study-out validation (DP-M40, properties M35-M37) and the derived
 parameter rules R1, R2, R3 and steady-state Cmax (R5). Research use only."""
 
 from __future__ import annotations

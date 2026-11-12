@@ -1,6 +1,6 @@
-"""Validation of a parameter set against held-out studies (design DP-M7, DP-M8, DP-M39; Req 3).
+"""Validation of a parameter set against held-out studies (design DP-M7, DP-M8, DP-M40; Req 3).
 
-Held-out design (DP-M39, leave one study out): every study that reports an observation (except label
+Held-out design (DP-M40, leave one study out): every study that reports an observation (except label
 studies and studies linked to another study) is held out in turn; the set is built again from the
 drug's OTHER studies only, with the unchanged builder, and the held-out study's observations are
 predicted by that set. A held-out study therefore never influences the set that tests it. The set
@@ -78,7 +78,7 @@ class Validation:
     suspect: tuple[str, ...]
     interval: str
     failed_points: tuple[str, ...] = ()  # evidence ids of the points outside 2-fold
-    design: Design = "leave_one_study_out"  # DP-M39; "single_split" is the M0 to M6 design
+    design: Design = "leave_one_study_out"  # DP-M40; "single_split" is the M0 to M6 design
 
 
 def cmax_steady_state(f: float, ka: float, cl: float, v: float, dose: float, tau: float) -> float:
@@ -177,7 +177,7 @@ def _point(e: Ev, ps: ParameterSet, rebuilt: bool) -> Point | None:
 
 
 def held_out_candidates(rows: list[Ev]) -> list[tuple[str, str]]:
-    """The studies of one drug that are held out in turn (DP-M39): a study with an observation row,
+    """The studies of one drug that are held out in turn (DP-M40): a study with an observation row,
     not a label study, not linked to another study (M5 identity guard: it never tests)."""
     linked = linked_studies(rows)
     return sorted(
@@ -198,7 +198,7 @@ def fold_rows(rows: list[Ev], study: tuple[str, str]) -> list[Ev]:
 
 
 def validate(drug_key: str, rows: list[Ev], ps: ParameterSet | NoSet) -> Validation:
-    """Leave-one-study-out validation (DP-M39) of the drug's set. The strict status rule is
+    """Leave-one-study-out validation (DP-M40) of the drug's set. The strict status rule is
     unchanged; every point is predicted by a set built without the point's study."""
     rows = [r for r in rows if r.drug_key == drug_key]
     if isinstance(ps, NoSet):

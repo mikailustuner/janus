@@ -3253,7 +3253,7 @@
       "intervalsTitle": "Öngörü aralıkları",
       "intervalsSentence": "{metric}: aralık için gereken en az {min} bağımsız ayrı tutulan çalışmanın {n} tanesi var.",
       "intervalsShownSentence": "{metric}: gösteriliyor (çalışmaların {coverage} oranı için ÷/× {fold}, n = {n}).",
-      "precisionTitle": "Onaylı değerlerin kesinliği",
+      "precisionTitle": "Onaylı değerlerin kesinliği (yalnızca ClinicalTrials.gov değerleri)",
       "precisionLine": "Örneklenen değerlerin {share} oranı doğruydu (%95 Wilson aralığı {low} – {high}, n = {n}; kör örneklem, iki otomatik inceleme geçişi, {date}).",
       "precisionConservative": "Temkinli okuma, iki geçişin de doğru demediği her şey yanlış sayılır: {share} ({low} – {high}, n = {n}).",
       "precisionFormulation": "Yalnızca formülasyon alanı: {share} ({low} – {high}, n = {n}).",

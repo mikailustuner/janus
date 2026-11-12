@@ -362,7 +362,7 @@ test.describe("drug page", () => {
         page,
       }, info) => {
         // a recorded release drug whose points are marked as predicted by a set built without
-        // their study (the recorded drug pages have none; DP-M39)
+        // their study (the recorded drug pages have none; DP-M40)
         const d = rel.drug[REL_DRUG]!;
         const pts = d.validation.points as Json[];
         const body = {
