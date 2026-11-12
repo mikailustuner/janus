@@ -3101,6 +3101,7 @@
       "per_kg_not_converted": "The value is per kilogram; there is no body weight, so it is not converted.",
       "held_out_study": "Held-out study: its observations only test a set, they never build one.",
       "observation_in_building_study": "An observation in a study that also reports building parameters; not tested.",
+      "same_study_in_another_source": "May be the same study as one in another source (shared trial number, study code or identical results); kept on the building side, not tested.",
       "not_needed_preferred_basis": "Not needed: a preferred basis or a pooled value was used.",
       "auc_to_last_sampling_time_not_comparable": "AUC to the last sampling time: that time is not in the evidence.",
       "not_an_observation": "Not an observation of Cmax or AUC.",
@@ -3183,7 +3184,21 @@
       "missingTitle": "What is missing",
       "noSetTitle": "Why drugs have no parameter set",
       "notValidatedTitle": "Why drugs are not validated",
-      "drugsCount": "{count, plural, one {# drug} other {# drugs}}"
+      "drugsCount": "{count, plural, one {# drug} other {# drugs}}",
+      "docTitle": "Review PDFs and articles",
+      "docIntro": "Values read from tables of Drugs@FDA review PDFs (born-digital text layer) and of PubMed Central articles licensed CC BY or CC0, by two automated readers. A source is published only if its measured precision is not clearly below the earlier sources.",
+      "docSource": {
+        "drugsatfda_review": "Drugs@FDA review PDFs",
+        "pmc_oa": "PubMed Central articles (CC BY or CC0)"
+      },
+      "docPublished": "Published in this release",
+      "docHeldBack": "Held back: measured precision too low; its values are not in this release",
+      "docNotMeasured": "Not measured yet; its values are not in this release",
+      "docRows": "{rows} values in this release, {confirmed} confirmed by both readers.",
+      "docHeldRows": "{n} values held back.",
+      "docPrecision": "Precision of confirmed values: {share} (95 % Wilson interval {low} to {high}, n = {n}; blinded sample, two automated review passes, {date}). Conservative reading: {cons}.",
+      "docIdentityTitle": "Same study in two sources",
+      "docIdentityLine": "A study that may be the same study as one in another source (shared trial number, shared study code, identical results, or one review document) never tests a set. This removed {removed} of {before} held-out studies; {groups} groups of studies are linked."
     },
     "sp": {
       "title": "Special populations",

@@ -3101,6 +3101,7 @@
       "per_kg_not_converted": "El valor es por kilogramo; no hay peso corporal, así que no se convierte.",
       "held_out_study": "Estudio reservado: sus observaciones solo prueban un conjunto, nunca lo construyen.",
       "observation_in_building_study": "Observación de un estudio que también informa parámetros de construcción; no probada.",
+      "same_study_in_another_source": "Puede ser el mismo estudio que uno de otra fuente (número de ensayo, código de estudio o resultados idénticos); se mantiene del lado de construcción, no se prueba.",
       "not_needed_preferred_basis": "No hacía falta: se usó una base preferida o un valor agrupado.",
       "auc_to_last_sampling_time_not_comparable": "AUC hasta el último tiempo de muestreo: ese tiempo no está en la evidencia.",
       "not_an_observation": "No es una observación de Cmax ni de AUC.",
@@ -3183,7 +3184,21 @@
       "missingTitle": "Lo que falta",
       "noSetTitle": "Por qué hay fármacos sin conjunto de parámetros",
       "notValidatedTitle": "Por qué hay fármacos no validados",
-      "drugsCount": "{count, plural, one {# fármaco} other {# fármacos}}"
+      "drugsCount": "{count, plural, one {# fármaco} other {# fármacos}}",
+      "docTitle": "PDF de revisiones y artículos",
+      "docIntro": "Valores leídos de tablas de los PDF de revisiones de Drugs@FDA (capa de texto de origen digital) y de artículos de PubMed Central con licencia CC BY o CC0, por dos lectores automatizados. Una fuente solo se publica si su precisión medida no está claramente por debajo de la de las fuentes anteriores.",
+      "docSource": {
+        "drugsatfda_review": "PDF de revisiones de Drugs@FDA",
+        "pmc_oa": "Artículos de PubMed Central (CC BY o CC0)"
+      },
+      "docPublished": "Publicada en esta versión",
+      "docHeldBack": "Retenida: precisión medida demasiado baja; sus valores no están en esta versión",
+      "docNotMeasured": "Aún no medida; sus valores no están en esta versión",
+      "docRows": "{rows} valores en esta versión, {confirmed} confirmados por ambos lectores.",
+      "docHeldRows": "{n} valores retenidos.",
+      "docPrecision": "Precisión de los valores confirmados: {share} (intervalo de Wilson del 95 % de {low} a {high}, n = {n}; muestra ciega, dos pasadas de revisión automatizadas, {date}). Lectura prudente: {cons}.",
+      "docIdentityTitle": "El mismo estudio en dos fuentes",
+      "docIdentityLine": "Un estudio que puede ser el mismo que uno de otra fuente (número de ensayo común, código de estudio común, resultados idénticos o un mismo documento de revisión) nunca prueba un conjunto. Esto retiró {removed} de {before} estudios reservados; {groups} grupos de estudios están vinculados."
     },
     "sp": {
       "title": "Poblaciones especiales",

@@ -67,6 +67,88 @@ export function ModelKitReport() {
   );
 }
 
+function DocumentSourcesSection({
+  s,
+  pct,
+}: {
+  s: SystemOut;
+  pct: Intl.NumberFormat;
+}) {
+  const t = useT();
+  const id = s.study_identity;
+  return (
+    <section
+      className="flex min-w-0 flex-col gap-group"
+      aria-labelledby="mk-rp-docs"
+      data-testid="mk-doc-sources"
+    >
+      <h2 id="mk-rp-docs" className="group-header">
+        {t("ModelKit.report.docTitle")}
+      </h2>
+      <p className="max-w-[72ch]">{t("ModelKit.report.docIntro")}</p>
+      <GroupedList
+        header={t("ModelKit.report.docTitle")}
+        headingId="mk-rp-docs-list"
+      >
+        {s.document_sources.map((d) => (
+          <Row key={d.source_id}>
+            <div
+              className="flex min-w-0 flex-col gap-1"
+              data-testid="mk-doc-source"
+            >
+              <p className="font-bold">
+                {t(`ModelKit.report.docSource.${d.source_id}`)}
+              </p>
+              <p data-testid="mk-doc-status">
+                {d.published
+                  ? t("ModelKit.report.docPublished")
+                  : d.n === null
+                    ? t("ModelKit.report.docNotMeasured")
+                    : t("ModelKit.report.docHeldBack")}
+              </p>
+              <p className="text-sm">
+                {t("ModelKit.report.docRows", {
+                  rows: d.rows,
+                  confirmed: d.confirmed_rows,
+                })}{" "}
+                {d.held_back_rows > 0
+                  ? t("ModelKit.report.docHeldRows", { n: d.held_back_rows })
+                  : null}
+              </p>
+              {d.n !== null &&
+              d.share !== null &&
+              d.wilson_low !== null &&
+              d.wilson_high !== null &&
+              d.share_conservative !== null ? (
+                <p className="max-w-[72ch] text-sm">
+                  {t("ModelKit.report.docPrecision", {
+                    share: pct.format(d.share),
+                    low: pct.format(d.wilson_low),
+                    high: pct.format(d.wilson_high),
+                    n: d.n,
+                    date: d.measured_on ?? "",
+                    cons: pct.format(d.share_conservative),
+                  })}
+                </p>
+              ) : null}
+            </div>
+          </Row>
+        ))}
+      </GroupedList>
+      <h3 className="font-bold" id="mk-rp-ident">
+        {t("ModelKit.report.docIdentityTitle")}
+      </h3>
+      <p className="max-w-[72ch]" data-testid="mk-identity">
+        {t("ModelKit.report.docIdentityLine", {
+          removed: id.test_studies_without_rule - id.test_studies,
+          before: id.test_studies_without_rule,
+          groups: id.groups_with_several_studies,
+        })}
+      </p>
+    </section>
+  );
+}
+
 function SpecialSystemSection({
   s,
   pct,
@@ -394,6 +476,8 @@ function Body({ s }: { s: SystemOut }) {
           <p>{t("ModelKit.report.precisionNone")}</p>
         )}
       </section>
+
+      <DocumentSourcesSection s={s} pct={pct} />
 
       <SpecialSystemSection s={s} pct={pct} />
 

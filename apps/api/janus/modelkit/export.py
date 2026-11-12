@@ -57,21 +57,42 @@ class NotExportableError(ValueError):
 @cache
 def source_meta() -> dict[str, dict[str, Any]]:
     out: dict[str, dict[str, Any]] = {}
-    for name in ("sources_m0.json", "sources_m1.json"):
+    for name in ("sources_m0.json", "sources_m1.json", "sources_m5.json"):
         path = repo_root() / "data" / "modelkit" / name
-        out.update(json.loads(path.read_text(encoding="utf-8")))
+        if path.exists():
+            out.update(json.loads(path.read_text(encoding="utf-8")))
     return out
 
 
 _NCT = re.compile(r"^NCT[0-9]{8}$")
+_FDA_PDF = re.compile(r"^https://www\.accessdata\.fda\.gov/drugsatfda_docs/[^#\s]+\.pdf#page=\d+&")
+_PMC = re.compile(r"^(PMC[0-9]{4,10})#")
 
 
 def source_info(r: Ev, meta: dict[str, dict[str, Any]] | None = None) -> dict[str, Any] | None:
     """Metadata of the study behind a row: the committed record (milestones M0 and M1) or, for a
-    ClinicalTrials.gov record read by the bulk intake (milestone M2), what the row itself says."""
+    ClinicalTrials.gov record read by the bulk intake (milestone M2) and for a review PDF or a PMC article read in
+    milestone M5, what the row itself says (the PDF page; the article with its licence and attribution)."""
     known = (meta if meta is not None else source_meta()).get(f"{r.source_id}:{r.study_id}")
     if known is not None:
         return known
+    if r.source_id == "drugsatfda_review" and _FDA_PDF.match(r.source_locator):
+        url = r.source_locator.split("&", 1)[0]  # the PDF at the page of the value
+        return {
+            "type": "review",
+            "title": f"Drugs@FDA review ({r.study_id})",
+            "url": url,
+            "retrieved": r.extracted_at,
+            "licence": "public domain unless noted (U.S. government work)",
+        }
+    if r.source_id == "pmc_oa" and (m := _PMC.match(r.source_locator)):
+        return {
+            "type": "document",
+            "title": f"PubMed Central article {m.group(1)}",
+            "url": f"https://pmc.ncbi.nlm.nih.gov/articles/{m.group(1)}/",
+            "retrieved": r.extracted_at,
+            "licence": r.source_version,
+        }
     if r.source_id == "clinicaltrials_gov" and _NCT.match(r.study_id):
         return {
             "type": "registry_record",
@@ -341,7 +362,9 @@ def licenses_txt(prov: dict[str, Any], target: str = "janus") -> str:
         lines += [
             "Drugs@FDA clinical pharmacology reviews (U.S. Food and Drug Administration)",
             "  Public domain unless noted (sponsor material reproduced in a review may be an exception).",
-            "  Scanned pages were read by optical character recognition; numbers were checked against the page image.",
+            "  Values of born-digital reviews come from the PDF's text layer (two automated readers); values of the one",
+            "  scanned review of milestone M0 were read by optical character recognition and their numbers checked",
+            "  against the page image by automated reader passes. Not an FDA endorsement.",
             "",
         ]
     for _key, m in sorted(prov["sources"].items()):

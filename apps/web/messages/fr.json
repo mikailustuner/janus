@@ -3101,6 +3101,7 @@
       "per_kg_not_converted": "La valeur est par kilogramme ; il n’y a pas de poids corporel, elle n’est donc pas convertie.",
       "held_out_study": "Étude mise de côté : ses observations ne font que tester un jeu, elles n’en construisent jamais.",
       "observation_in_building_study": "Observation d’une étude qui rapporte aussi des paramètres de construction ; non testée.",
+      "same_study_in_another_source": "Peut-être la même étude qu’une étude d’une autre source (numéro d’essai, code d’étude ou résultats identiques) ; gardée du côté construction, non testée.",
       "not_needed_preferred_basis": "Inutile : une base préférée ou une valeur regroupée a été utilisée.",
       "auc_to_last_sampling_time_not_comparable": "ASC jusqu’au dernier prélèvement : ce temps n’est pas dans les preuves.",
       "not_an_observation": "Pas une observation de Cmax ou d’ASC.",
@@ -3183,7 +3184,21 @@
       "missingTitle": "Ce qui manque",
       "noSetTitle": "Pourquoi des médicaments n’ont pas de jeu de paramètres",
       "notValidatedTitle": "Pourquoi des médicaments ne sont pas validés",
-      "drugsCount": "{count, plural, one {# médicament} other {# médicaments}}"
+      "drugsCount": "{count, plural, one {# médicament} other {# médicaments}}",
+      "docTitle": "PDF de revues et articles",
+      "docIntro": "Valeurs lues dans les tableaux des PDF de revues Drugs@FDA (couche de texte d’origine numérique) et des articles PubMed Central sous licence CC BY ou CC0, par deux lecteurs automatisés. Une source n’est publiée que si sa précision mesurée n’est pas nettement inférieure à celle des sources précédentes.",
+      "docSource": {
+        "drugsatfda_review": "PDF de revues Drugs@FDA",
+        "pmc_oa": "Articles PubMed Central (CC BY ou CC0)"
+      },
+      "docPublished": "Publiée dans cette version",
+      "docHeldBack": "Retenue : précision mesurée trop faible ; ses valeurs ne sont pas dans cette version",
+      "docNotMeasured": "Pas encore mesurée ; ses valeurs ne sont pas dans cette version",
+      "docRows": "{rows} valeurs dans cette version, dont {confirmed} confirmées par les deux lecteurs.",
+      "docHeldRows": "{n} valeurs retenues.",
+      "docPrecision": "Précision des valeurs confirmées : {share} (intervalle de Wilson à 95 % de {low} à {high}, n = {n} ; échantillon en aveugle, deux passages de vérification automatisés, {date}). Lecture prudente : {cons}.",
+      "docIdentityTitle": "Même étude dans deux sources",
+      "docIdentityLine": "Une étude qui peut être la même qu’une étude d’une autre source (même numéro d’essai, même code d’étude, résultats identiques ou même document de revue) ne teste jamais un jeu. Cela a retiré {removed} des {before} études réservées ; {groups} groupes d’études sont liés."
     },
     "sp": {
       "title": "Populations particulières",

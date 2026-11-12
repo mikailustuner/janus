@@ -250,7 +250,8 @@ def build_server(config: Config, transport: httpx2.AsyncBaseTransport | None = N
         annotations=READ_ONLY,
         description=(
             "The evidence rows behind one drug of the experimental model kit (Janus GET "
-            "/modelkit/drugs/{key}/evidence): every value with its quoted source text, locator, "
+            "/modelkit/drugs/{key}/evidence): every value (ClinicalTrials.gov results, US labels, Drugs@FDA review "
+            "PDFs, PubMed Central articles licensed CC BY or CC0) with its quoted source text, locator, "
             "formulation, route, both automated reader verdicts, whether it built the set, tested "
             "it or was left out and why. `key` comes from janus_modelkit_search; `parameter` "
             "(for example cmax or auc_inf) and `role` (building, validation, excluded) keep only "

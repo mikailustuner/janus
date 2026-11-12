@@ -3101,6 +3101,7 @@
       "per_kg_not_converted": "Değer kilogram başınadır; vücut ağırlığı olmadığından dönüştürülmedi.",
       "held_out_study": "Ayrı tutulan çalışma: gözlemleri bir kümeyi yalnızca sınar, asla oluşturmaz.",
       "observation_in_building_study": "Oluşturma parametrelerini de bildiren bir çalışmadaki gözlem; sınanmadı.",
+      "same_study_in_another_source": "Başka bir kaynaktaki bir çalışmayla aynı çalışma olabilir (ortak deneme numarası, çalışma kodu ya da aynı sonuçlar); oluşturma tarafında tutuldu, sınanmadı.",
       "not_needed_preferred_basis": "Gerekmedi: tercih edilen bir temel ya da birleştirilmiş bir değer kullanıldı.",
       "auc_to_last_sampling_time_not_comparable": "Son örnekleme zamanına kadar EAA: bu zaman kanıtta yok.",
       "not_an_observation": "Cmax veya EAA gözlemi değil.",
@@ -3183,7 +3184,21 @@
       "missingTitle": "Eksik olanlar",
       "noSetTitle": "İlaçların neden parametre kümesi yok",
       "notValidatedTitle": "İlaçların neden doğrulanmadığı",
-      "drugsCount": "{count, plural, one {# ilaç} other {# ilaç}}"
+      "drugsCount": "{count, plural, one {# ilaç} other {# ilaç}}",
+      "docTitle": "İnceleme PDF'leri ve makaleler",
+      "docIntro": "Drugs@FDA inceleme PDF'lerinin (doğal dijital metin katmanı) ve CC BY ya da CC0 lisanslı PubMed Central makalelerinin tablolarından iki otomatik okuyucunun okuduğu değerler. Bir kaynak, ölçülen kesinliği önceki kaynakların açıkça altında değilse yayımlanır.",
+      "docSource": {
+        "drugsatfda_review": "Drugs@FDA inceleme PDF'leri",
+        "pmc_oa": "PubMed Central makaleleri (CC BY ya da CC0)"
+      },
+      "docPublished": "Bu sürümde yayımlandı",
+      "docHeldBack": "Geri tutuldu: ölçülen kesinlik çok düşük; değerleri bu sürümde yok",
+      "docNotMeasured": "Henüz ölçülmedi; değerleri bu sürümde yok",
+      "docRows": "Bu sürümde {rows} değer, {confirmed} tanesi iki okuyucu tarafından doğrulandı.",
+      "docHeldRows": "{n} değer geri tutuldu.",
+      "docPrecision": "Doğrulanmış değerlerin kesinliği: {share} (%95 Wilson aralığı {low} ile {high} arası, n = {n}; körleştirilmiş örneklem, iki otomatik inceleme geçişi, {date}). Temkinli okuma: {cons}.",
+      "docIdentityTitle": "İki kaynakta aynı çalışma",
+      "docIdentityLine": "Başka bir kaynaktaki bir çalışmayla aynı çalışma olabilecek bir çalışma (ortak deneme numarası, ortak çalışma kodu, aynı sonuçlar ya da tek bir inceleme belgesi) bir seti asla sınamaz. Bu kural {before} ayrılmış çalışmadan {removed} tanesini çıkardı; {groups} çalışma grubu birbirine bağlı."
     },
     "sp": {
       "title": "Özel popülasyonlar",

@@ -70,17 +70,20 @@ def recorded_m0() -> dict[str, Any]:
 
 
 def recorded() -> dict[str, Any]:
-    """The release: the committed seeds plus the current `modelkit_ctgov` artifact of the data
-    directory in `MODELKIT_CTGOV_DATA` (milestone M2; run that job first)."""
+    """The release: the committed seeds plus the current `modelkit_ctgov` artifact (milestone M2)
+    and `modelkit_documents` artifact (milestone M5) of the data directory in
+    `MODELKIT_CTGOV_DATA` (run those jobs first)."""
     pipelines = Path(__file__).resolve().parents[3] / "pipelines"
     ctgov = os.environ.get("MODELKIT_CTGOV_DATA")
     with tempfile.TemporaryDirectory() as tmp:
         if ctgov:
-            shutil.copytree(
-                Path(ctgov) / "artifacts" / "modelkit_ctgov",
-                Path(tmp) / "artifacts" / "modelkit_ctgov",
-                symlinks=True,
-            )
+            for job in ("modelkit_ctgov", "modelkit_documents"):  # documents: milestone M5
+                if (Path(ctgov) / "artifacts" / job).exists():
+                    shutil.copytree(
+                        Path(ctgov) / "artifacts" / job,
+                        Path(tmp) / "artifacts" / job,
+                        symlinks=True,
+                    )
         subprocess.run(  # noqa: S603 - fixed argument list, no shell
             [
                 "uv",
