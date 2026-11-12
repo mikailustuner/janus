@@ -24,7 +24,7 @@ from janus.notes import phrases
 from janus.notes.templates import CATALOGUE, KINDS, PARAM_TYPES, ROLES, Spec
 
 GLOSSARY_DIR: Final = Path(__file__).parent / "glossary"
-LANGUAGES: Final = ("en", "tr", "de", "fr", "es")
+LANGUAGES: Final = ("en", "tr", "de", "fr", "es", "pt")
 STATUSES: Final = ("proposed", "accepted", "rejected")
 PIPC_ROWS: Final = 65
 KEY_RE: Final = re.compile(r"^(Q[1-9][0-9]{0,9}|J[1-9][0-9]{0,5})$")

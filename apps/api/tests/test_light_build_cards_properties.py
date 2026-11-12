@@ -29,7 +29,8 @@ from janus.light.schemas import LightFile
 from janus.light.service import export
 from janus.light.store import LightHolder, LightUnavailableError
 from janus.memory.faers_build import ReportFact
-from janus.notes.phrases import LANGUAGES, violations
+from janus.light.model import LANGS as LANGUAGES  # Wikidata and curated labels: five languages
+from janus.notes.phrases import violations
 from tests.memory_counts import make_counts
 
 PAPER = "paper:yang_2011:pone.0028025"

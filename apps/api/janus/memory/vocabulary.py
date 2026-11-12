@@ -2,7 +2,7 @@
 
 `apps/api/janus/memory/memory_events.csv`: one row per Janus event key,
 
-    key,direction,label_en,label_tr,label_de,label_fr,label_es,pts,pipc_positions,status,safety_line,note
+    key,direction,label_en,label_tr,label_de,label_fr,label_es,label_pt,pts,pipc_positions,status,safety_line,note
 
 - `pts`: Preferred Terms as published in FAERS, `|`-separated; empty for `benefit` keys.
 - `pipc_positions`: the PIPC rows (1-65) whose adverse event the key stands for, `;`-separated.
@@ -40,6 +40,7 @@ COLUMNS: Final = (
     "label_de",
     "label_fr",
     "label_es",
+    "label_pt",
     "pts",
     "pipc_positions",
     "status",
@@ -54,7 +55,7 @@ SAFETY_LINES: Final = (
     "urgent_care_seizure",
     "urgent_care_breathing",
 )
-LANGUAGES: Final = ("en", "tr", "de", "fr", "es")
+LANGUAGES: Final = ("en", "tr", "de", "fr", "es", "pt")
 DIRECTIONS: Final = ("adverse", "benefit")
 STATUSES: Final = ("proposed", "active", "deprecated")
 PIPC_ROWS: Final = 65

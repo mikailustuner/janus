@@ -39,7 +39,7 @@ EPOCH_MONDAY: Final = dt.date(1970, 1, 5)
 MAX_FINDINGS: Final = 255
 MAX_CODES_PER_SIDE: Final = 2
 MAX_TOKEN_CHARS: Final = 4096
-LANGUAGES: Final = ("en", "tr", "de", "fr", "es")
+LANGUAGES: Final = ("en", "tr", "de", "fr", "es", "pt")
 REGIONS: Final = ("TR", "EU", "US")
 DIRECTIONS: Final = ("adverse", "benefit")
 
@@ -50,7 +50,7 @@ KEY_RE: Final = re.compile(r"^(Q[1-9][0-9]{0,9}|J[1-9][0-9]{0,5})$")
 ATC_RE: Final = re.compile(r"^[A-Z][0-9]{2}[A-Z]{2}[0-9]{2}$")
 _B64_RE: Final = re.compile(r"^[A-Za-z0-9_-]+$")
 
-Language = Literal["en", "tr", "de", "fr", "es"]
+Language = Literal["en", "tr", "de", "fr", "es", "pt"]
 Region = Literal["TR", "EU", "US"]
 Direction = Literal["adverse", "benefit"]
 

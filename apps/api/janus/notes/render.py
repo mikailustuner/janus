@@ -1,14 +1,14 @@
 """Number, date and placeholder rendering per language (doctor-loop design §5.3, DP26). Pure.
 
-Fixed rules for five languages, no locale library. The auditor (design §5.5) checks that every
+Fixed rules for six languages, no locale library. The auditor (design §5.5) checks that every
 numeral of a claim sentence comes from these functions, so the builder and the auditor share them.
 
-| | en | tr | de | fr | es |
-| decimal | . | , | , | , | , |
-| grouping | , | . | . | U+202F | . from 5 digits |
-| month | 03/2026 | 03.2026 | 03.2026 | 03/2026 | 03/2026 |
-| date | 2026-11-08 | 08.11.2026 | 08.11.2026 | 08/11/2026 | 08/11/2026 |
-| percent | 11.9% | %11,9 | 11,9 % (NBSP) | 11,9 % (U+202F) | 11,9 % (NBSP) |
+| | en | tr | de | fr | es | pt |
+| decimal | . | , | , | , | , | , |
+| grouping | , | . | . | U+202F | . from 5 digits | NBSP from 5 digits |
+| month | 03/2026 | 03.2026 | 03.2026 | 03/2026 | 03/2026 | 03/2026 |
+| date | 2026-11-08 | 08.11.2026 | 08.11.2026 | 08/11/2026 | 08/11/2026 | 08/11/2026 |
+| percent | 11.9% | %11,9 | 11,9 % (NBSP) | 11,9 % (U+202F) | 11,9 % (NBSP) | 11,9% |
 """
 
 from __future__ import annotations
@@ -21,9 +21,9 @@ from typing import Final
 
 from janus.notes.templates import Spec
 
-DECIMAL: Final = {"en": ".", "tr": ",", "de": ",", "fr": ",", "es": ","}
-GROUP: Final = {"en": ",", "tr": ".", "de": ".", "fr": "\u202f", "es": "."}
-MIN_GROUPING: Final = {"en": 1, "tr": 1, "de": 1, "fr": 1, "es": 2}  # CLDR minimumGroupingDigits
+DECIMAL: Final = {"en": ".", "tr": ",", "de": ",", "fr": ",", "es": ",", "pt": ","}
+GROUP: Final = {"en": ",", "tr": ".", "de": ".", "fr": "\u202f", "es": ".", "pt": "\u00a0"}
+MIN_GROUPING: Final = {"en": 1, "tr": 1, "de": 1, "fr": 1, "es": 2, "pt": 2}  # CLDR minimumGroupingDigits
 NBSP: Final = "\u00a0"
 RATIO_LOW: Final = Decimal("0.01")
 RATIO_HIGH: Final = 1000
@@ -84,10 +84,10 @@ def format_ratio(value: float, lang: str) -> str:
 
 def format_percent(value: Decimal, lang: str) -> str:
     number = format_decimal(value, lang)
-    if lang == "en":
-        return number + "%"
     if lang == "tr":
         return "%" + number
+    if lang in ("en", "pt"):
+        return number + "%"
     if lang == "fr":
         return number + "\u202f%"
     return number + NBSP + "%"

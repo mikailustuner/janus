@@ -17,7 +17,7 @@ HEX64 = r"^[0-9a-f]{64}$"
 BUILD_ID = r"^[0-9A-Za-z_.-]{1,80}$"
 TOKEN = r"^[A-Za-z0-9_-]{40,4096}$"  # noqa: S105 (a pattern, not a secret)
 CONSENT = r"^[a-z0-9][a-z0-9.-]{0,31}$"
-Language = Literal["en", "tr", "de", "fr", "es"]
+Language = Literal["en", "tr", "de", "fr", "es", "pt"]
 UserRegion = Literal["US", "TR", "EU", "OTHER", "UNKNOWN"]
 LoopRegion = Literal["TR", "EU", "US"]
 
