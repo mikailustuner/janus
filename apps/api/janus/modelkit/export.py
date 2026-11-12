@@ -287,12 +287,14 @@ def validation_summary(val: Validation, by_id: dict[str, Ev]) -> dict[str, Any]:
                 "predicted": p.predicted,
                 "ratio": p.ratio,
                 "within_2_fold": p.within_2_fold,
+                "rebuilt_without_study": p.rebuilt_without_study,
                 "locator": by_id[p.eid].source_locator,
                 "quote": by_id[p.eid].quote,
             }
             for p in val.points
         ],
         "status": val.status,
+        "design": {"code": val.design, "text": text(val.design)},
         "reasons": [{"code": c, "text": text(c)} for c in val.reasons],
         "excluded_observations": [
             {"id": i, "reason": c, "reason_text": text(c)} for i, c in val.excluded

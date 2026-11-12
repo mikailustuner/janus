@@ -3032,7 +3032,7 @@
     },
     "val": {
       "title": "Validación con estudios reservados",
-      "intro": "Los estudios que solo informan Cmax o AUC nunca se usaron para construir un conjunto. Razón = predicho / observado. El estado usa cada observación: Validado solo si cada una está dentro de un factor 2; la columna de la razón es una media solo informativa.",
+      "intro": "Cada estudio que informa Cmax o AUC se deja fuera por turno: el conjunto se construye de nuevo solo con los demás estudios del fármaco y predice ese estudio, de modo que ningún estudio dejado fuera influye en el conjunto que lo prueba. Cociente = predicho / observado. El estado usa cada observación: Validado solo si cada una está dentro de 2 veces; la columna del cociente es una media solo informativa.",
       "metrics": "Medidas de validación",
       "metric": "Medida",
       "auc": "AUC",
@@ -3052,7 +3052,8 @@
       "failedPoint": "{metric}, estudio {study}: predicho / observado = {ratio}",
       "intervalHeading": "Intervalos de predicción",
       "intervalShown": "{metric}: se espera que el valor observado de un estudio nuevo esté dentro de ÷/× {fold} de la predicción en {coverage} de los estudios (n = {n} estudios reservados, todos los fármacos).",
-      "intervalNone": "{metric}: no se muestra ningún intervalo."
+      "intervalNone": "{metric}: no se muestra ningún intervalo.",
+      "rebuiltCount": "{k} de {n} puntos proceden de estudios que también contribuyen al conjunto mostrado; cada uno se predijo con el conjunto construido sin su estudio."
     },
     "chart": {
       "title": "Observado frente a predicho",
@@ -3222,7 +3223,16 @@
       "sp_atlas_note": "Filas del atlas de exposición de adultos mayores: una extracción automática que la regla de los dos lectores no confirmó y que ninguna persona ha revisado. Solo evidencia, no un veredicto.",
       "sp_none": "No se confirmó ninguna declaración sobre poblaciones especiales para este medicamento.",
       "two_readers_agree": "Dos lectores automáticos independientes coinciden; no revisado por una persona.",
-      "automated_extraction_unconfirmed": "Una extracción automática, no confirmada por la regla de los dos lectores, no revisada por una persona."
+      "automated_extraction_unconfirmed": "Una extracción automática, no confirmada por la regla de los dos lectores, no revisada por una persona.",
+      "label_never_tests": "Un valor de una ficha técnica de EE. UU.: las fichas resumen los estudios del fabricante, por eso nunca prueban un conjunto.",
+      "steady_state_cmax_needs_interval": "Una Cmax tras dosis repetidas solo se prueba con su intervalo de dosificación (entonces se predice en estado estacionario).",
+      "fold_has_no_parameter_set": "Sin este estudio, los demás estudios del fármaco no dan ningún conjunto de parámetros; esta observación no se puede probar.",
+      "leave_one_study_out": "Cada estudio con una observación se deja fuera por turno: el conjunto se construye de nuevo solo con los demás estudios del fármaco y predice el estudio dejado fuera. Ningún estudio dejado fuera influye en el conjunto que lo prueba.",
+      "single_split": "Solo los estudios sin parámetros de construcción prueban el conjunto mostrado.",
+      "rebuilt_without_study": "Este estudio también contribuye al conjunto mostrado; este punto se predijo con el conjunto construido sin él.",
+      "v_from_cl_half_life": "Derivado: V = CL × semivida intravenosa / ln 2 (sin volumen indicado).",
+      "f_from_same_study_auc": "Derivado: F = (AUC oral / dosis oral) / (AUC intravenosa / dosis intravenosa) de un mismo estudio.",
+      "half_life_intravenous": "La semivida es la intravenosa (no se confirmó ninguna semivida oral)."
     },
     "scrollHint": "Desplácese hacia los lados para ver todas las columnas.",
     "report": {

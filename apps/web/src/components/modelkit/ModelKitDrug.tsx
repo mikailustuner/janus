@@ -519,7 +519,7 @@ function Params({
   );
 }
 
-function Validation({ out }: { out: DrugOut }) {
+export function Validation({ out }: { out: DrugOut }) {
   const t = useT();
   const locale = useLocale();
   const nf = new Intl.NumberFormat(locale, { maximumFractionDigits: 3 });
@@ -534,6 +534,14 @@ function Validation({ out }: { out: DrugOut }) {
         {t("ModelKit.val.title")}
       </h2>
       <p className="text-sm text-muted">{t("ModelKit.val.intro")}</p>
+      {v.points.some((p) => p.rebuilt_without_study) ? (
+        <p className="text-sm" data-testid="mk-rebuilt">
+          {t("ModelKit.val.rebuiltCount", {
+            k: v.points.filter((p) => p.rebuilt_without_study).length,
+            n: v.points.length,
+          })}
+        </p>
+      ) : null}
       <ScrollTable label={t("ModelKit.val.metrics")}>
         <table className="tm-table words" data-testid="mk-metrics">
           <caption className="sr-only">{t("ModelKit.val.metrics")}</caption>

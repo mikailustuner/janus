@@ -3032,7 +3032,7 @@
     },
     "val": {
       "title": "Ayrı tutulan çalışmalara karşı doğrulama",
-      "intro": "Yalnızca Cmax veya EAA bildiren çalışmalar bir küme oluşturmak için hiç kullanılmadı. Oran = öngörülen / gözlenen. Durum her tekil gözlemi kullanır: Doğrulandı yalnızca her biri 2 kat içindeyse; oran sütunu yalnızca bilgi için bir ortalamadır.",
+      "intro": "Cmax veya AUC bildiren her çalışma sırayla dışarıda tutulur: set yalnızca ilacın diğer çalışmalarından yeniden kurulur ve o çalışmayı tahmin eder; böylece dışarıda tutulan hiçbir çalışma onu sınayan seti etkilemez. Oran = tahmin / gözlem. Durum her bir gözlemi kullanır: yalnızca her biri 2 kat içindeyse Doğrulandı; oran sütunu yalnızca bilgi amaçlı bir ortalamadır.",
       "metrics": "Doğrulama ölçütleri",
       "metric": "Ölçüt",
       "auc": "EAA",
@@ -3052,7 +3052,8 @@
       "failedPoint": "{metric}, çalışma {study}: öngörülen / gözlenen = {ratio}",
       "intervalHeading": "Öngörü aralıkları",
       "intervalShown": "{metric}: yeni bir çalışmanın gözlenen değerinin, çalışmaların {coverage} oranında, öngörünün ÷/× {fold} katı içinde olması beklenir (n = {n} ayrı tutulan çalışma, tüm ilaçlar).",
-      "intervalNone": "{metric}: aralık gösterilmiyor."
+      "intervalNone": "{metric}: aralık gösterilmiyor.",
+      "rebuiltCount": "{n} noktanın {k} tanesi gösterilen setin kurulumuna da katkı veren çalışmalardan; her biri kendi çalışması olmadan kurulan setle tahmin edildi."
     },
     "chart": {
       "title": "Gözlenen ile öngörülen",
@@ -3222,7 +3223,16 @@
       "sp_atlas_note": "Yaşlı maruziyet atlasının satırları: iki okuyucu kuralının doğrulamadığı ve hiçbir kişinin kontrol etmediği tek bir otomatik çıkarım. Yalnızca kanıt, hüküm değil.",
       "sp_none": "Bu ilaç için doğrulanmış bir özel popülasyon ifadesi yok.",
       "two_readers_agree": "İki bağımsız otomatik okuyucu aynı sonuca vardı; hiçbir kişi kontrol etmedi.",
-      "automated_extraction_unconfirmed": "Tek bir otomatik çıkarım, iki okuyucu kuralıyla doğrulanmadı, hiçbir kişi kontrol etmedi."
+      "automated_extraction_unconfirmed": "Tek bir otomatik çıkarım, iki okuyucu kuralıyla doğrulanmadı, hiçbir kişi kontrol etmedi.",
+      "label_never_tests": "ABD prospektüsünden bir değer: prospektüsler firmanın çalışmalarını özetler, bu yüzden hiçbir zaman bir seti sınamaz.",
+      "steady_state_cmax_needs_interval": "Tekrarlanan dozlardan sonraki bir Cmax yalnızca doz aralığıyla sınanır (o zaman kararlı durumda tahmin edilir).",
+      "fold_has_no_parameter_set": "Bu çalışma olmadan ilacın diğer çalışmaları bir parametre seti vermiyor; bu gözlem sınanamaz.",
+      "leave_one_study_out": "Gözlem bildiren her çalışma sırayla dışarıda tutulur: set yalnızca ilacın diğer çalışmalarından yeniden kurulur ve dışarıda tutulan çalışmayı tahmin eder. Dışarıda tutulan hiçbir çalışma onu sınayan seti etkilemez.",
+      "single_split": "Yalnızca kurulum parametresi bildirmeyen çalışmalar gösterilen seti sınar.",
+      "rebuilt_without_study": "Bu çalışma gösterilen setin kurulumuna da katkı veriyor; bu nokta, bu çalışma olmadan kurulan setle tahmin edildi.",
+      "v_from_cl_half_life": "Türetilmiş: V = CL × intravenöz yarı ömür / ln 2 (bildirilmiş hacim yok).",
+      "f_from_same_study_auc": "Türetilmiş: F = (oral AUC / oral doz) / (intravenöz AUC / intravenöz doz), tek bir çalışmadan.",
+      "half_life_intravenous": "Yarı ömür intravenöz olandır (onaylı oral yarı ömür yok)."
     },
     "scrollHint": "Tüm sütunları görmek için yana kaydırın.",
     "report": {

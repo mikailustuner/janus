@@ -4261,6 +4261,10 @@
           "within_2_fold": {
             "type": "boolean",
             "title": "Within 2 Fold"
+          },
+          "rebuilt_without_study": {
+            "type": "boolean",
+            "title": "Rebuilt Without Study"
           }
         },
         "additionalProperties": false,
@@ -4273,7 +4277,8 @@
           "observed",
           "predicted",
           "ratio",
-          "within_2_fold"
+          "within_2_fold",
+          "rebuilt_without_study"
         ],
         "title": "PointOut"
       },
@@ -5914,6 +5919,14 @@
             ],
             "title": "Status"
           },
+          "design": {
+            "type": "string",
+            "enum": [
+              "leave_one_study_out",
+              "single_split"
+            ],
+            "title": "Design"
+          },
           "reasons": {
             "items": {
               "type": "string"
@@ -5984,6 +5997,7 @@
         "type": "object",
         "required": [
           "status",
+          "design",
           "reasons",
           "metrics",
           "points",
