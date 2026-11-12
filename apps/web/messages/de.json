@@ -3243,7 +3243,7 @@
       "intervalsTitle": "Vorhersageintervalle",
       "intervalsSentence": "{metric}: {n} der mindestens {min} unabhängigen zurückgehaltenen Studien, die für ein Intervall nötig sind.",
       "intervalsShownSentence": "{metric}: gezeigt (÷/× {fold} für {coverage} der Studien, n = {n}).",
-      "precisionTitle": "Genauigkeit der bestätigten Werte",
+      "precisionTitle": "Genauigkeit der bestätigten Werte (nur Werte aus ClinicalTrials.gov)",
       "precisionLine": "{share} der gezogenen Werte waren richtig (95-%-Wilson-Intervall {low} bis {high}, n = {n}; verblindete Stichprobe, zwei automatische Prüfdurchgänge, {date}).",
       "precisionConservative": "Vorsichtige Lesart, alles, was nicht von beiden Durchgängen als richtig bezeichnet wurde, zählt als falsch: {share} ({low} bis {high}, n = {n}).",
       "precisionFormulation": "Das Formulierungsfeld allein: {share} ({low} bis {high}, n = {n}).",

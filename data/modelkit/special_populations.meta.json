@@ -11,12 +11,12 @@
   },
   "label_export_date": "2026-11-09",
   "precision": {
-    "measured_on": "2026-11-11",
-    "n": 79,
-    "correct": 64,
-    "n_conservative": 100,
-    "correct_conservative": 64,
+    "measured_on": "2026-11-12",
+    "n": 88,
+    "correct": 57,
+    "n_conservative": 90,
+    "correct_conservative": 57,
     "target": 0.9
   },
-  "note": "Counts only. Precision: blinded sample of 100 displayed statements, two automated review passes, evaluation only (second iteration of the readers; the first iteration measured 59 of 94 agreed items). Expert review has not yet been done."
+  "note": "Counts only. Precision: the most recent fresh, pre-registered measurement of the displayed statements: a blinded stratified sample of 90 unique statements that no earlier sample had judged (all 40 that pass the strictest rules, 30 and 20 at random from the rest), two automated review passes, evaluation only; 57 of the 88 items both passes agreed on were correct. Weighted by the stratum sizes the estimate is lower, about 0.62. The earlier figure (64 of 79, 2026-11-11) came from a row-level sample. Expert review has not yet been done."
 }

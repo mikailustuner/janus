@@ -3243,7 +3243,7 @@
       "intervalsTitle": "Prediction intervals",
       "intervalsSentence": "{metric}: {n} of the at least {min} independent held-out studies needed for an interval.",
       "intervalsShownSentence": "{metric}: shown (÷/× {fold} for {coverage} of studies, n = {n}).",
-      "precisionTitle": "Precision of confirmed values",
+      "precisionTitle": "Precision of confirmed values (ClinicalTrials.gov values only)",
       "precisionLine": "{share} of the sampled values were correct (95 % Wilson interval {low} to {high}, n = {n}; blinded sample, two automated review passes, {date}).",
       "precisionConservative": "Conservative reading, anything not called correct by both passes counts as wrong: {share} ({low} to {high}, n = {n}).",
       "precisionFormulation": "The formulation field alone: {share} ({low} to {high}, n = {n}).",
