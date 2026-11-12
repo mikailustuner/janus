@@ -1628,6 +1628,9 @@
             "type": "array",
             "title": "Targets"
           },
+          "special_populations": {
+            "$ref": "#/components/schemas/SpecialOut"
+          },
           "reason_text": {
             "additionalProperties": {
               "type": "string"
@@ -1647,6 +1650,7 @@
           "validation",
           "intervals",
           "targets",
+          "special_populations",
           "reason_text"
         ],
         "title": "DrugOut"
@@ -4502,6 +4506,329 @@
         ],
         "title": "SetOut"
       },
+      "SpecialAtlasOut": {
+        "properties": {
+          "measure": {
+            "type": "string",
+            "title": "Measure"
+          },
+          "ratio": {
+            "type": "number",
+            "title": "Ratio"
+          },
+          "qualitative": {
+            "type": "boolean",
+            "title": "Qualitative"
+          },
+          "quote": {
+            "type": "string",
+            "title": "Quote"
+          },
+          "set_id": {
+            "type": "string",
+            "title": "Set Id"
+          },
+          "version": {
+            "type": "string",
+            "title": "Version"
+          },
+          "n_labels": {
+            "type": "integer",
+            "title": "N Labels"
+          },
+          "quote_checked": {
+            "type": "boolean",
+            "title": "Quote Checked"
+          },
+          "source_url": {
+            "type": "string",
+            "title": "Source Url"
+          },
+          "status": {
+            "type": "string",
+            "const": "automated_extraction_unconfirmed",
+            "title": "Status"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "measure",
+          "ratio",
+          "qualitative",
+          "quote",
+          "set_id",
+          "version",
+          "n_labels",
+          "quote_checked",
+          "source_url",
+          "status"
+        ],
+        "title": "SpecialAtlasOut",
+        "description": "A row of the older-adult exposure atlas: one automated extraction, NOT confirmed by the two-reader rule and\nnot checked by a person. Evidence only, never a verdict."
+      },
+      "SpecialOut": {
+        "properties": {
+          "statements": {
+            "items": {
+              "$ref": "#/components/schemas/SpecialStatementOut"
+            },
+            "type": "array",
+            "title": "Statements"
+          },
+          "atlas": {
+            "items": {
+              "$ref": "#/components/schemas/SpecialAtlasOut"
+            },
+            "type": "array",
+            "title": "Atlas"
+          },
+          "notes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Notes"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "statements",
+          "atlas",
+          "notes"
+        ],
+        "title": "SpecialOut"
+      },
+      "SpecialPrecisionOut": {
+        "properties": {
+          "measured_on": {
+            "type": "string",
+            "title": "Measured On"
+          },
+          "n": {
+            "type": "integer",
+            "title": "N"
+          },
+          "correct": {
+            "type": "integer",
+            "title": "Correct"
+          },
+          "share": {
+            "type": "number",
+            "title": "Share"
+          },
+          "wilson_low": {
+            "type": "number",
+            "title": "Wilson Low"
+          },
+          "wilson_high": {
+            "type": "number",
+            "title": "Wilson High"
+          },
+          "n_conservative": {
+            "type": "integer",
+            "title": "N Conservative"
+          },
+          "share_conservative": {
+            "type": "number",
+            "title": "Share Conservative"
+          },
+          "wilson_low_conservative": {
+            "type": "number",
+            "title": "Wilson Low Conservative"
+          },
+          "wilson_high_conservative": {
+            "type": "number",
+            "title": "Wilson High Conservative"
+          },
+          "target": {
+            "type": "number",
+            "title": "Target"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "measured_on",
+          "n",
+          "correct",
+          "share",
+          "wilson_low",
+          "wilson_high",
+          "n_conservative",
+          "share_conservative",
+          "wilson_low_conservative",
+          "wilson_high_conservative",
+          "target"
+        ],
+        "title": "SpecialPrecisionOut",
+        "description": "Measured precision of the confirmed statements on a blinded sample (two automated review passes)."
+      },
+      "SpecialStatementOut": {
+        "properties": {
+          "pop_class": {
+            "type": "string",
+            "enum": [
+              "geriatric",
+              "renal",
+              "hepatic"
+            ],
+            "title": "Pop Class"
+          },
+          "grade": {
+            "type": "string",
+            "title": "Grade"
+          },
+          "measure": {
+            "type": "string",
+            "enum": [
+              "auc",
+              "cmax"
+            ],
+            "title": "Measure"
+          },
+          "ratio": {
+            "type": "number",
+            "title": "Ratio"
+          },
+          "ratio_text": {
+            "type": "string",
+            "title": "Ratio Text"
+          },
+          "definition": {
+            "type": "string",
+            "title": "Definition"
+          },
+          "reference": {
+            "type": "string",
+            "title": "Reference"
+          },
+          "quote": {
+            "type": "string",
+            "title": "Quote"
+          },
+          "set_id": {
+            "type": "string",
+            "title": "Set Id"
+          },
+          "version": {
+            "type": "string",
+            "title": "Version"
+          },
+          "effective_date": {
+            "type": "string",
+            "title": "Effective Date"
+          },
+          "section": {
+            "type": "string",
+            "title": "Section"
+          },
+          "n_labels": {
+            "type": "integer",
+            "title": "N Labels"
+          },
+          "from_table": {
+            "type": "boolean",
+            "title": "From Table"
+          },
+          "source_url": {
+            "type": "string",
+            "title": "Source Url"
+          },
+          "status": {
+            "type": "string",
+            "const": "two_readers_agree",
+            "title": "Status"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "pop_class",
+          "grade",
+          "measure",
+          "ratio",
+          "ratio_text",
+          "definition",
+          "reference",
+          "quote",
+          "set_id",
+          "version",
+          "effective_date",
+          "section",
+          "n_labels",
+          "from_table",
+          "source_url",
+          "status"
+        ],
+        "title": "SpecialStatementOut",
+        "description": "An exposure ratio of a special population as a US label states it, quoted. Read by two independent\nautomated readers that agree; not checked by a person; not extrapolated to a model; no dose advice."
+      },
+      "SpecialSystemOut": {
+        "properties": {
+          "drugs": {
+            "type": "integer",
+            "title": "Drugs"
+          },
+          "statements": {
+            "type": "integer",
+            "title": "Statements"
+          },
+          "by_class": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "By Class"
+          },
+          "drugs_by_class": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Drugs By Class"
+          },
+          "atlas_drugs": {
+            "type": "integer",
+            "title": "Atlas Drugs"
+          },
+          "atlas_rows": {
+            "type": "integer",
+            "title": "Atlas Rows"
+          },
+          "coverage": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Coverage"
+          },
+          "precision": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SpecialPrecisionOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "drugs",
+          "statements",
+          "by_class",
+          "drugs_by_class",
+          "atlas_drugs",
+          "atlas_rows",
+          "coverage",
+          "precision"
+        ],
+        "title": "SpecialSystemOut"
+      },
       "Statements": {
         "properties": {
           "research_use": {
@@ -4833,6 +5160,9 @@
               }
             ]
           },
+          "special_populations": {
+            "$ref": "#/components/schemas/SpecialSystemOut"
+          },
           "missing": {
             "items": {
               "type": "string"
@@ -4879,6 +5209,7 @@
           "not_validated_reasons",
           "no_set_reasons",
           "precision",
+          "special_populations",
           "missing",
           "caveats",
           "reason_text"

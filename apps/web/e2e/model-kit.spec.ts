@@ -632,3 +632,109 @@ test.describe("demo mode", () => {
     ).toEqual([]);
   });
 });
+
+// Special populations (milestone M4): exposure ratios of older adults and of renal and hepatic impairment as
+// quoted from US labels, atlas rows as unconfirmed evidence, and the system report's counts.
+const withSp = (r: Recorded, test: (sp: Json) => boolean) =>
+  Object.keys(r.drug).find((k) => test(r.drug[k]!.special_populations));
+const SP_DRUG = withSp(rel, (sp) => sp.statements.length > 0);
+const SP_MANY = withSp(rel, (sp) => sp.statements.length > 6);
+const SP_ATLAS = withSp(rel, (sp) => sp.atlas.length > 0);
+const SP_NONE = withSp(rel, (sp) => sp.statements.length === 0);
+
+test.describe("special populations", () => {
+  test.skip(!SP_DRUG, "no recorded drug has a special-population statement");
+
+  test("statements are quoted evidence with the label version and a link", async ({
+    page,
+  }) => {
+    await stubApi(page, relStubs);
+    await page.goto(`/en/research/model-kit/drug#${SP_DRUG}`);
+    const sec = page.getByTestId("mk-sp");
+    await expect(sec).toBeVisible();
+    await expect(sec).toContainText(messages.en.ModelKit.sp.intro);
+    await expect(page.getByTestId("mk-sp-notes")).toContainText(
+      messages.en.ModelKit.reasons.sp_statements_note,
+    );
+    const statements = rel.drug[SP_DRUG!]!.special_populations
+      .statements as Json[];
+    const shown = page.getByTestId("mk-sp-statement");
+    await expect(shown).toHaveCount(Math.min(6, statements.length));
+    const first = shown.first();
+    await expect(first.locator("blockquote")).toHaveAttribute("lang", "en");
+    await expect(first.locator("blockquote")).toContainText(
+      statements[0]!.quote.slice(0, 40),
+    );
+    const link = first.getByRole("link", {
+      name: messages.en.ModelKit.sp.openLabel,
+    });
+    await expect(link).toHaveAttribute(
+      "href",
+      new RegExp(
+        `^https://dailymed\\.nlm\\.nih\\.gov/.*setid=${statements[0]!.set_id}$`,
+      ),
+    );
+    await expect(first).toContainText(`version ${statements[0]!.version}`);
+    // no dose advice, no verdict wording
+    const text = (await sec.innerText()).toLowerCase();
+    expect(text).not.toMatch(/\b(safe|recommended dose|should take)\b/);
+    await expectNoAxeViolations(page);
+    await expectNoHorizontalScroll(page);
+  });
+
+  test("a long list shows six statements first and all on request", async ({
+    page,
+  }) => {
+    test.skip(!SP_MANY, "no recorded drug has more than six statements");
+    await stubApi(page, relStubs);
+    await page.goto(`/en/research/model-kit/drug#${SP_MANY}`);
+    const n = (rel.drug[SP_MANY!]!.special_populations.statements as Json[])
+      .length;
+    await expect(page.getByTestId("mk-sp-statement")).toHaveCount(6);
+    await page.getByTestId("mk-sp-more").click();
+    await expect(page.getByTestId("mk-sp-statement")).toHaveCount(n);
+    await expectNoHorizontalScroll(page);
+  });
+
+  test("atlas rows are collapsed, quoted and marked unconfirmed", async ({
+    page,
+  }) => {
+    test.skip(!SP_ATLAS, "no recorded drug has an atlas row");
+    await stubApi(page, relStubs);
+    await page.goto(`/en/research/model-kit/drug#${SP_ATLAS}`);
+    const box = page.getByTestId("mk-sp-atlas");
+    await expect(box).toBeVisible();
+    await expect(box.getByTestId("mk-sp-atlas-row").first()).toBeHidden();
+    await box.locator("summary").click();
+    const row = box.getByTestId("mk-sp-atlas-row").first();
+    await expect(row).toBeVisible();
+    await expect(row).toContainText(
+      messages.en.ModelKit.reasons.automated_extraction_unconfirmed,
+    );
+    await expect(row.locator("blockquote")).toHaveAttribute("lang", "en");
+    await expectNoAxeViolations(page);
+  });
+
+  test("a drug without a confirmed statement says so", async ({ page }) => {
+    test.skip(!SP_NONE, "every recorded drug has a statement");
+    await stubApi(page, relStubs);
+    await page.goto(`/en/research/model-kit/drug#${SP_NONE}`);
+    await expect(page.getByTestId("mk-sp")).toContainText(
+      messages.en.ModelKit.sp.empty,
+    );
+    await expect(page.getByTestId("mk-sp-statement")).toHaveCount(0);
+  });
+
+  test("the system report counts the statements and shows the precision", async ({
+    page,
+  }) => {
+    await stubApi(page, relStubs);
+    await page.goto("/en/research/model-kit/report");
+    const sp = page.getByTestId("mk-sp-system");
+    await expect(sp).toBeVisible();
+    const s = rel.validation.special_populations as Json;
+    await expect(sp).toContainText(String(s.statements));
+    if (s.precision) await expect(sp).toContainText(String(s.precision.n));
+    await expect(sp).toContainText(messages.en.ModelKit.sp.systemIntro);
+  });
+});

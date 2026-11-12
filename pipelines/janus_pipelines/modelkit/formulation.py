@@ -2,7 +2,8 @@
 
 Two resolvers read the study record independently (`formulation_a`, pattern based; `formulation_b`, token and
 structure based). This module is the only place where they meet: where they agree the result is used; where they
-disagree the formulation is `unspecified` and the route is kept as the readers had it (or unknown). A formulation
+disagree the formulation is `unspecified` and the route is kept as the readers had it (or unknown), except that an
+oral and an intravenous statement for the same arm make the route unknown (M4, owner decision 2026-11-11). A formulation
 is never assumed: nothing stated stays `unspecified`. After resolution the confirmation of the pair is decided
 again by code, because the context of both candidates now carries the same formulation. Research use only.
 Not for clinical decisions.
@@ -20,6 +21,10 @@ from janus_pipelines.modelkit.formref import BrandTable, Resolution
 from janus_pipelines.modelkit.model import Candidate
 from janus_pipelines.modelkit.pairing import Paired
 from janus_pipelines.modelkit.resolver import IdentityTable
+
+ROUTE_CONFLICT = (
+    "conflict:iv_and_oral"  # the `why` of `formref.decide` for oral and intravenous words together
+)
 
 
 def combine(a: Resolution, b: Resolution) -> Resolution:
@@ -63,11 +68,22 @@ def resolve_pairs(
             counts["route_resolvers_disagree"] += 1
         route = res.route
         had_a, had_b = p.a.context.route, p.b.context.route
-        if route == "unknown" and had_a == had_b and had_a != "unknown":
+        # Owner decision 2026-11-11 (M4): an oral and an intravenous statement for the same arm make the
+        # route unknown; the readers' own guess is not used then.
+        oral_and_iv = ROUTE_CONFLICT in (ra.why, rb.why)
+        if oral_and_iv:
+            route = "unknown"
+            counts["route_oral_iv_conflict"] += 1
+        elif route == "unknown" and had_a == had_b and had_a != "unknown":
             route = had_a  # both readers found it independently of the resolvers
         if res.formulation == "other_route" and had_a == had_b == "other":
             route = "other"
-        if route != "unknown" and had_a == had_b and had_a not in ("unknown", route):
+        if (
+            not oral_and_iv
+            and route != "unknown"
+            and had_a == had_b
+            and had_a not in ("unknown", route)
+        ):
             route = "unknown"  # the readers and the resolvers contradict each other
             counts["route_conflict"] += 1
         a2, b2 = _apply(p.a, res, route), _apply(p.b, res, route)

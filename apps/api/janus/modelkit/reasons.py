@@ -64,6 +64,20 @@ TEXT: dict[str, str] = {
         "the report). Read every value as unverified."
     ),
     "expert_review_pending": "Expert review has not yet been done.",
+    # special populations (older adults, renal and hepatic impairment) quoted from US labels
+    "sp_statements_note": (
+        "Exposure ratios as the US label states them, quoted. Two independent automated readers agree on each; "
+        "no person has checked them. They are not carried into this drug's model and are not dose advice."
+    ),
+    "sp_atlas_note": (
+        "Rows of the older-adult exposure atlas: one automated extraction that the two-reader rule did not "
+        "confirm and that no person has checked. Evidence only, not a verdict."
+    ),
+    "sp_none": "No special-population statement was confirmed for this drug.",
+    "two_readers_agree": "Two independent automated readers agree; not checked by a person.",
+    "automated_extraction_unconfirmed": (
+        "One automated extraction, not confirmed by the two-reader rule, not checked by a person."
+    ),
     # interval
     "interval_n_too_small": "No interval is shown: fewer than 20 independent held-out studies.",
     "interval_system_level_only": "Intervals are given at system level only, not per drug.",

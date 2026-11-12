@@ -61,6 +61,9 @@ MODELKIT_LINES: Final = (
     "Report the validation status as given (validated, not validated or failed) with n; it "
     "describes a handful of held-out studies, not the drug in general. The readers that confirmed "
     "the values were automated; never say that a person reviewed anything.",
+    "Special-population statements are quoted label text with a ratio that two automated readers "
+    "agreed on; give the quote and the label version, never extrapolate them to a person or a "
+    "dose, and never describe them as reviewed by a person.",
 )
 RESOLVE_LINES: Final = (
     "A resolved product or ingredient is what the public registers publish for that code or "

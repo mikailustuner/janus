@@ -105,7 +105,32 @@ not a PBPK simulator.
 3. An incomplete set or a drug without a set SHALL NOT export a model (409 `incomplete_set` / 404-type code).
 4. Every export file that is text SHALL carry "Research use only. Not for clinical decisions." and "Expert review
    has not yet been done".
-5. PK-Sim, NONMEM and Monolix exports are later milestones (M4, v1.1).
+5. (M4) FOR a drug with a complete set THE service SHALL also export a PK-Sim compound building block (a PK-Sim
+   project snapshot, JSON, with one compound). It SHALL contain only what the evidence has: values that PK-Sim needs
+   for a mechanistic model and the evidence does not hold (lipophilicity, pKa, fraction unbound, blood/plasma ratio,
+   solubility, permeability, molecular weight, the clearance process) SHALL be marked missing in `pksim-inputs.json`
+   and SHALL NOT be invented; an estimated physico-chemical value is allowed only if labelled with its source and
+   status. A test SHALL load the file with the Open Systems Pharmacology tools (version pinned, licence recorded),
+   export it again and check the compound survived; the export SHALL be labelled with what was and was not run
+   (loaded and exported again; not simulated as exported).
+6. NONMEM and Monolix exports are later (v1.1).
+
+## Requirement 9: Special populations (M4)
+1. FOR each pool drug the service SHALL show the exposure change (AUC or Cmax ratio, or a percentage change turned into
+   a ratio by a fixed convention) that the US label states for older adults, for renal impairment and for hepatic
+   impairment, with the population definition as written (age band, creatinine-clearance or eGFR band, Child-Pugh
+   class), the reference population when the sentence names one, the quote, and the label's set id, version and
+   effective date.
+2. A statement SHALL be shown as confirmed only if two independent automated readers (separate code, build time only,
+   run without seeing each other) agree on the label, population class, grade, measure and value (within 1 %) and on
+   the context (parent drug; no metabolite, enantiomer, unbound fraction, pediatric, interaction, animal, pregnancy or
+   dose-change statement; the same sentence). A disagreement in context IS a disagreement.
+3. The rows of the older-adult exposure atlas SHALL be shown only as evidence with their quote and the status
+   "automated extraction, not confirmed by the two-reader rule, not checked by a person", never as a verdict.
+4. Statements are quoted evidence. THE service SHALL NOT extrapolate them to a drug's model, SHALL NOT compute a dose
+   and SHALL say so on every screen that shows them.
+5. THE precision of the confirmed statements SHALL be measured on a blinded sample by two automated review passes and
+   shown with its interval and n; the coverage (labels read, drugs with a statement per class) SHALL be shown.
 
 ## Requirement 5: API
 1. READ-ONLY routes: `GET /modelkit/drugs`, `/modelkit/drugs/{key}`, `/modelkit/drugs/{key}/evidence`,
@@ -137,6 +162,13 @@ Coverage of at least 150 drugs with confirmed sets and 40 validated; AUC within 
 sample audit; three export targets tested in CI; at least one pharmacometrician and one clinical pharmacologist
 have reviewed the method; method write-up, user guide, limits page, change log; every source's terms met.
 Until then the product stays "experimental".
+
+## Owner decisions (continued, M4)
+- **2026-11-11 (c) Route on resolver conflict.** When the formulation and route resolvers find both an intravenous and
+  an oral statement for an arm, the route becomes "unknown" (the arm can neither build nor test a set).
+- **2026-11-11 (d) The held-out unit stays the study.** No arm-level splitting inside a study for testing: the arms of one
+  study are not independent (crossover).
+- **2026-11-11 (e) Two automated review passes remain the precision instrument until the expert audit (M6).**
 
 ## Owner decisions
 - **2026-11-11 (a) Strict validation rule.** A drug is Validated only if every held-out observation point (each

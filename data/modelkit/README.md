@@ -54,3 +54,23 @@ short quotes only; no raw downloads.
 - `precision.json`: the measured precision of confirmed values on the fresh blinded sample of milestone M3 (two automated
   review passes, evaluation only): counts only; the evidence job copies it into the release manifest and the API computes
   the Wilson intervals. Read every value as unverified. Expert review has not yet been done.
+
+## Milestone M4 files
+- `special_populations.csv`: the exposure statements about older adults, renal impairment and hepatic impairment that two
+  independent automated readers of the openFDA label text (CC0) agree on, one row per drug, population class, grade,
+  measure and ratio (population / reference population; "30 % higher" = 1.30, "2-fold lower" = 0.5, a range gives its
+  geometric mean), with the population definition as written, the reference population if the sentence names one, the quote,
+  the label's set id, version and effective date, and the number of labels that state the same ratio. Written by the job
+  `modelkit_special_populations` (it reads the 14 label files once, about 1.8 GB, one at a time). Quoted evidence only: not
+  extrapolated to a model, not dose advice, not checked by a person.
+- `special_populations_atlas.csv`: one row per drug from the older-adult exposure atlas: an earlier automated extraction
+  that the two-reader rule did NOT confirm and that no person has checked; the API and the pages show it only as evidence
+  with its quote and that status, never as a verdict. `quote_checked` is true where the quote was found word for word in the
+  cited label version.
+- `special_populations.meta.json`: coverage counts of the label job and the measured precision of the confirmed statements on
+  a blinded sample (two automated review passes, evaluation only; counts only, the API computes the intervals).
+- PK-Sim export (`target=pksim`): a PK-Sim project snapshot with one compound (name, description, small molecule) and
+  `pksim-inputs.json`. The evidence does not hold lipophilicity, pKa, fraction unbound, blood/plasma ratio, solubility,
+  permeability, molecular weight or the clearance process; they are marked missing and nothing is invented. The file loads
+  in PK-Sim 12.x and exports again (checked in `.github/workflows/modelkit-pksim.yml` with ospsuite 12.4.5, which bundles
+  PK-Sim core 12.3.173, GPL-2.0 with the Suite's clarifying addendum, on Linux); it is not simulated as exported.

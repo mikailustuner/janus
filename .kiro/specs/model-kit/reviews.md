@@ -132,3 +132,63 @@ guess survives), a fixed-dose-combination word winning over a modified-release w
 arm text that the resolvers left unspecified.
 Limits: the resolvers were developed on the same registry; two review passes of one model family; precision, not recall; the
 product table lists today's directory products.
+
+# Review notes: model kit M4 (automated checks only; expert review has not yet been done)
+
+M4 did three things: the route on a resolver conflict, a PK-Sim export, and special populations from US labels. Everything
+was pre-registered before the first result and every reading, confirmation and review is automated.
+
+## Route becomes unknown when the resolvers find an oral and an intravenous statement (owner decision 2026-11-11)
+The M2 pipeline was re-run from the same bulk file with this rule only. Result: it changed the route of 131 confirmed
+values to unknown (110 intravenous, 21 oral in M3); none of them could build or test before, because a conflict also leaves
+the formulation unspecified, so the sets, the status and the gate are identical to M3.
+
+| | M3 | M4 |
+|---|---|---|
+| Confirmed stated parent values (ClinicalTrials.gov) | 2,565 | 2,565 |
+| Route oral / intravenous / unknown | 1,841 / 358 / 366 | 1,820 / 248 / 497 |
+| Immediate release or solution, route known | 1,392 | 1,392 |
+| Drugs with a set / complete set | 26 / 8 | 26 / 8 |
+| Validated / Failed / Not validated | 0 / 1 / 403 | 0 / 1 / 403 |
+| Drugs with AUC and Cmax both tested | 0 | 0 (gate not interpretable) |
+
+Fresh blinded sample (studies of the M1 to M3 samples excluded; two automated review passes, kappa 0.63): (a) 100 random
+confirmed values: precision 0.78 (Wilson 95 % 0.68 to 0.85), n = 81 agreed items; conservative 0.63 (0.53 to 0.72). The route
+field of the values with a known route: 0.98 (0.92 to 1.00), n = 63. The formulation field of the resolved values: 0.91 (0.82 to
+0.95), n = 75. Among the values whose route is "unknown" in the random sample, only 6 of 31 really state no route or both
+(0.19): the resolvers leave many routes unknown that the text states. (b) The values the rule changed to unknown: only 9 could be
+drawn from fresh studies (4 studies); in 8 of 9 the excerpt does not state both an oral and an intravenous route for the drug, so
+the rule looks over-cautious there (n = 9: a description, not an estimate). The owner's rule is applied as decided; it costs no
+set and no test, and the recorded route of these 131 values is now "unknown".
+The held-out unit stays the study (owner decision (d)); two automated review passes stay the precision instrument (decision (e)).
+
+## PK-Sim export
+Feasibility (public documentation and source of the Open Systems Pharmacology Suite): PK-Sim imports a project snapshot (JSON,
+`PKSim.Core.Snapshots`; project snapshot version 80 = PK-Sim 12.x). PK-Sim itself ships for Windows only (installer). The R
+package ospsuite 12.4.5 (GPL-2.0; with the Suite's clarifying addendum for the Suite) bundles PK-Sim core 12.3.173 and runs on
+Linux with a .NET 8 runtime: `loadProjectFromSnapshot`, `exportProjectToSnapshot` and `runSimulationsFromSnapshot` all work
+there (not on macOS). It was run here in the CI image (R 4.6.1, .NET 8.0.34 from the distribution): the export loads, exports
+again with name, description and small-molecule flag unchanged, and a copy completed with test-only numbers simulates.
+The compound building block cannot hold what the kit has: PK-Sim derives distribution and absorption from lipophilicity, pKa,
+fraction unbound, blood/plasma ratio, solubility and permeability, none of which the evidence contains, and it takes clearance
+only as a process (hepatic, renal, ...) with body weight and fraction unbound; the total clearance of the evidence is not
+assigned to an organ, which would be an assumption. The export therefore is a compound with name, description and the
+small-molecule flag, plus `pksim-inputs.json` that lists every missing input with a status; nothing is invented and no
+screening value is included. PK-Sim fills what a snapshot leaves out with its own defaults. Not simulated as exported.
+Shipped: target `pksim` of the export route, the separate workflow `.github/workflows/modelkit-pksim.yml` (path filtered,
+weekly and on demand, R image 4.6.1, ospsuite and rSharp pinned by release asset and sha256, cached library).
+
+## Special populations from US labels
+Two independent automated readers read the openFDA label files (264,510 records, 20,791 single-substance prescription labels of 602 pool
+drugs matched); a statement counts only if both agree on label, population class, grade, measure and value (within 1 %) and on the
+context. 6,070 confirmed pairs, 5,671 of them with a quote that names its own population (the display rule): 389 unique statements for
+151 drugs (older adults 41 drugs, renal impairment 66, hepatic impairment 75). Recall is low: of 577 drugs with older-adult text, 41 have a
+statement; no table gave a confirmed statement.
+Precision on blinded samples of 100 displayed statements (two automated review passes), two iterations of the readers:
+first iteration 0.63 (Wilson 95 % 0.53 to 0.72), n = 94 agreed items; second iteration, after the error classes of the first sample were
+read and fixed (stated openly: that iteration is not blind to the first sample; its sample is fresh): 0.81 (0.71 to 0.88), n = 79;
+conservative 0.64 (0.54 to 0.73). Below the 0.90 target. Remaining errors: another analyte (a metabolite code), a label assigned to the
+wrong pool drug through an identity alias, one value per grade in a list, the wrong measure, a clearance reduction read as AUC.
+The statements are shown as quoted evidence (two readers agree, no person has checked, no model extrapolation, no dose advice). The
+older-adult atlas rows (64, one per drug) are shown only as unconfirmed evidence with their quote and status.
+Limits: one model family and no outside knowledge in the review passes; precision, not recall; the readers were developed on the same labels.

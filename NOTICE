@@ -177,6 +177,24 @@ Janus drug model kit: ClinicalTrials.gov bulk intake (experimental)
   file is never committed. Studies with posted results that name a drug of the
   pool and report a PK outcome measure are read by two automated readers.
 
+Janus drug model kit: special populations from US labels (experimental)
+  Publisher: Janus
+  License: CC0 1.0 (public domain); the quoted sentences are label text of
+  openFDA
+  Research use only. Not for clinical decisions. Expert review has not yet been
+  done.
+  The openFDA drug label bulk files (about 1.8 GB in 14 files, CC0 1.0,
+  https://open.fda.gov, not an FDA endorsement) are read once, one file at a
+  time, by two independent automated readers: the exposure change (AUC or Cmax
+  ratio) of older adults, of patients with renal impairment and of patients with
+  hepatic impairment as the label states it, with the quoted sentence and the
+  label's set id and version. The raw files are never committed; the confirmed
+  statements are written to data/modelkit/special_populations.csv.
+  openFDA states that the labeling is the most recent listing information the
+  company submitted to FDA, that its content has neither been altered nor
+  verified by FDA, and that it may not be the labeling on currently distributed
+  products. Do not rely on openFDA to make decisions regarding medical care.
+
 ClinicalTrials.gov posted results (model kit evidence)
   Publisher: U.S. National Library of Medicine
   License: Free to reuse with attribution (ClinicalTrials.gov terms and

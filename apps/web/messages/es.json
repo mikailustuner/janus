@@ -3082,7 +3082,9 @@
       "janus": "Archivo del motor Janus (zip)",
       "mrgsolve": "Modelo mrgsolve (zip)",
       "demo": "Las descargas necesitan el servicio en vivo. En la demo están desactivadas.",
-      "contents": "Cada zip contiene el archivo del modelo, la procedencia de cada valor, referencias y licencias. Experimental; solo para uso en investigación."
+      "contents": "Cada zip contiene el archivo del modelo, la procedencia de cada valor, referencias y licencias. Experimental; solo para uso en investigación.",
+      "pksim": "Compuesto de PK-Sim (zip)",
+      "pksimNote": "PK-Sim: solo un bloque de construcción «compuesto», no una simulación. Los valores fisicoquímicos que PK-Sim necesita no están en la evidencia; se marcan como ausentes, nunca inventados. El archivo se carga en PK-Sim; tal como se exportó, no se simuló."
     },
     "errors": {
       "unavailable": "El kit de modelos no está disponible ahora. Inténtelo más tarde.",
@@ -3146,7 +3148,12 @@
       "no_drug_validated": "Ningún fármaco está validado.",
       "intervals_not_shown": "No se muestran intervalos de predicción: faltan estudios reservados.",
       "formulation_often_unspecified": "Más de una cuarta parte de los valores confirmados no tiene formulación indicada.",
-      "fewer_than_150_sets": "Menos de 150 fármacos tienen un conjunto de parámetros."
+      "fewer_than_150_sets": "Menos de 150 fármacos tienen un conjunto de parámetros.",
+      "sp_statements_note": "Razones de exposición tal como las indica el prospecto estadounidense, citadas. Dos lectores automáticos independientes coinciden en cada una; ninguna persona las ha revisado. No se trasladan al modelo de este medicamento y no son un consejo de dosis.",
+      "sp_atlas_note": "Filas del atlas de exposición de adultos mayores: una extracción automática que la regla de los dos lectores no confirmó y que ninguna persona ha revisado. Solo evidencia, no un veredicto.",
+      "sp_none": "No se confirmó ninguna declaración sobre poblaciones especiales para este medicamento.",
+      "two_readers_agree": "Dos lectores automáticos independientes coinciden; no revisado por una persona.",
+      "automated_extraction_unconfirmed": "Una extracción automática, no confirmada por la regla de los dos lectores, no revisada por una persona."
     },
     "scrollHint": "Desplácese hacia los lados para ver todas las columnas.",
     "report": {
@@ -3177,6 +3184,59 @@
       "noSetTitle": "Por qué hay fármacos sin conjunto de parámetros",
       "notValidatedTitle": "Por qué hay fármacos no validados",
       "drugsCount": "{count, plural, one {# fármaco} other {# fármacos}}"
+    },
+    "sp": {
+      "title": "Poblaciones especiales",
+      "intro": "Lo que indica el prospecto estadounidense sobre la exposición (AUC o Cmax) de los adultos mayores y de las personas con insuficiencia renal o hepática, frente a un grupo de referencia, citado tal como está escrito. No es una recomendación de dosis y no se ha trasladado al modelo de este medicamento.",
+      "empty": "No se confirmó ninguna declaración sobre poblaciones especiales para este medicamento.",
+      "source": "Prospecto estadounidense, versión {version}.",
+      "sourceDated": "Prospecto estadounidense, versión {version}, vigente desde {date}.",
+      "openLabel": "Abrir el prospecto en DailyMed",
+      "definition": "Población según la define el prospecto",
+      "reference": "Comparada con",
+      "ratio": "{ratio} × el grupo de referencia",
+      "nLabels": "{count, plural, one {# prospecto indica} other {# prospectos indican}} la misma razón.",
+      "atlasTitle": "Filas del atlas de adultos mayores, sin confirmar ({count})",
+      "atlasIntro": "Filas de una extracción automática anterior sobre adultos mayores. La regla de los dos lectores no las confirmó y ninguna persona las ha revisado. Se muestran como evidencia con su cita, nunca como un veredicto.",
+      "qualitative": "el prospecto dice similar o sin diferencia (sin cifra)",
+      "notChecked": "La cita no se encontró palabra por palabra en la versión citada del prospecto.",
+      "class": {
+        "geriatric": "Adultos mayores",
+        "renal": "Insuficiencia renal",
+        "hepatic": "Insuficiencia hepática"
+      },
+      "grade": {
+        "mild": "leve",
+        "moderate": "moderada",
+        "severe": "grave",
+        "esrd": "enfermedad renal terminal",
+        "dialysis": "diálisis",
+        "cp_a": "clase A de Child-Pugh",
+        "cp_b": "clase B de Child-Pugh",
+        "cp_c": "clase C de Child-Pugh",
+        "age65": "65 años o más",
+        "age75": "75 años o más",
+        "age80": "80 años o más",
+        "pooled": "varios grados juntos"
+      },
+      "measure": {
+        "auc": "Exposición (AUC)",
+        "cmax": "Concentración máxima (Cmax)"
+      },
+      "atlasMeasure": {
+        "auc": "Exposición (AUC)",
+        "cmax": "Concentración máxima (Cmax)",
+        "cl": "Aclaramiento",
+        "conc": "Exposición (medida sin nombrar)"
+      },
+      "systemTitle": "Poblaciones especiales (prospectos de EE. UU.)",
+      "systemIntro": "Razones de exposición de los adultos mayores y de las personas con insuficiencia renal o hepática, tal como las indican los prospectos de EE. UU. Dos lectores automáticos independientes leen el texto del prospecto; una declaración solo cuenta si ambos coinciden. Solo evidencia citada: sin extrapolación al modelo, sin consejo de dosis.",
+      "systemCounts": "{statements, plural, one {# declaración} other {# declaraciones}} para {drugs, plural, one {# medicamento} other {# medicamentos}}. Medicamentos por grupo: adultos mayores {geriatric}, insuficiencia renal {renal}, insuficiencia hepática {hepatic}.",
+      "systemCoverage": "{read} registros de prospectos leídos; {matched} prospectos de medicamentos de un solo principio activo del conjunto emparejados, que cubren {drugs} medicamentos.",
+      "systemPrecision": "{share} de las declaraciones muestreadas eran correctas (intervalo de Wilson del 95 % {low} a {high}, n = {n}; muestra ciega, dos pases de revisión automáticos, {date}).",
+      "systemPrecisionConservative": "Lectura prudente, todo lo que los dos pases no calificaron como correcto cuenta como erróneo: {share} ({low} a {high}, n = {n}).",
+      "systemPrecisionNone": "No se ha medido la precisión de estas declaraciones.",
+      "systemAtlas": "{rows, plural, one {# fila del atlas} other {# filas del atlas}} de {drugs, plural, one {# medicamento} other {# medicamentos}} aparecen en las páginas de los medicamentos como evidencia sin confirmar."
     }
   }
 }

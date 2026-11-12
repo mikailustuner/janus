@@ -51,8 +51,23 @@
   - [x] Precision measured again on a fresh blinded sample including the formulation field (two automated review passes)
   - [ ] System report by drug class and bootstrap intervals in the product (not meaningful before 10 drugs have both
     metrics tested)
-- [ ] M4 PK-Sim snapshot export and CI test; special populations (older adults from the audited atlas rows, renal
-  and hepatic classes from labels)
+- [~] M4 Route on conflict, PK-Sim export and CI check, special populations (see `reviews.md` for the numbers)
+  - [x] Pre-registration written before any result (private), with three addenda (code freezes, a run that failed in its
+    accounting and its display rule)
+  - [x] Route becomes unknown when the resolvers find an oral and an intravenous statement (owner decision 2026-11-11);
+    pipeline re-run from the same bulk file, sets and gate recomputed, fresh blinded sample (two automated review passes)
+  - [x] PK-Sim feasibility checked against the open source suite: snapshot (JSON) format, PK-Sim 12.x (project snapshot
+    version 80), ospsuite 12.4.5 (bundles PK-Sim core 12.3.173, GPL-2.0) loads and runs it on Linux with a .NET 8 runtime
+  - [x] PK-Sim compound export (only what the evidence has; the rest marked missing, nothing invented), load and round-trip
+    check in its own workflow `modelkit-pksim.yml`, a completed test copy simulates
+  - [x] Special populations: two independent readers (`sp_a`, `sp_b`), confirmation, job `modelkit_special_populations`,
+    committed statements, older-adult atlas rows as unconfirmed evidence, API fields, system report, web section and
+    report card, five languages, MCP text
+  - [x] Precision of the confirmed statements measured on a blinded sample (two automated review passes)
+  - [ ] Confirmed-value precision >= 0.90 for the ClinicalTrials.gov values and for the special-population statements (not
+    met, see `reviews.md`); expert audit (M6)
+  - [ ] PK-Sim: a mechanistic compound needs lipophilicity, pKa, fraction unbound, blood/plasma ratio and a clearance process;
+    no open evidence source of them is read yet
 - [ ] M5 FDA clinical pharmacology reviews (born-digital first, then OCR) and PMC table reader (dose only from
   table, footnote or methods, species filter)
 - [ ] M6 Expert sample audit, expert review, method write-up, data package with DOI, `CITATION.cff` (owner

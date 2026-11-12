@@ -3082,7 +3082,9 @@
       "janus": "Janus motoru dosyası (zip)",
       "mrgsolve": "mrgsolve modeli (zip)",
       "demo": "İndirmeler canlı hizmeti gerektirir. Demoda kapalıdır.",
-      "contents": "Her zip, model dosyasını, her değerin kaynağını, kaynakçayı ve lisansları içerir. Deneysel; yalnızca araştırma amaçlıdır."
+      "contents": "Her zip, model dosyasını, her değerin kaynağını, kaynakçayı ve lisansları içerir. Deneysel; yalnızca araştırma amaçlıdır.",
+      "pksim": "PK-Sim bileşiği (zip)",
+      "pksimNote": "PK-Sim: yalnızca bir bileşik yapı taşı, simülasyon değil. PK-Sim’in gerek duyduğu fizikokimyasal değerler kanıtta yok; eksik olarak işaretlendi, hiçbiri uydurulmadı. Dosya PK-Sim’de yüklenir; verildiği haliyle simüle edilmedi."
     },
     "errors": {
       "unavailable": "Model seti şu anda kullanılamıyor. Daha sonra yeniden deneyin.",
@@ -3146,7 +3148,12 @@
       "no_drug_validated": "Doğrulanmış ilaç yok.",
       "intervals_not_shown": "Öngörü aralığı gösterilmiyor: ayrı tutulan çalışma yetersiz.",
       "formulation_often_unspecified": "Onaylı değerlerin dörtte birinden fazlasında formülasyon belirtilmemiş.",
-      "fewer_than_150_sets": "Parametre kümesi olan ilaç sayısı 150’den az."
+      "fewer_than_150_sets": "Parametre kümesi olan ilaç sayısı 150’den az.",
+      "sp_statements_note": "ABD prospektüsünün belirttiği maruziyet oranları, alıntılanmış. İki bağımsız otomatik okuyucu her birinde aynı sonuca varıyor; hiçbir kişi kontrol etmedi. Bu ilacın modeline aktarılmadı ve doz önerisi değildir.",
+      "sp_atlas_note": "Yaşlı maruziyet atlasının satırları: iki okuyucu kuralının doğrulamadığı ve hiçbir kişinin kontrol etmediği tek bir otomatik çıkarım. Yalnızca kanıt, hüküm değil.",
+      "sp_none": "Bu ilaç için doğrulanmış bir özel popülasyon ifadesi yok.",
+      "two_readers_agree": "İki bağımsız otomatik okuyucu aynı sonuca vardı; hiçbir kişi kontrol etmedi.",
+      "automated_extraction_unconfirmed": "Tek bir otomatik çıkarım, iki okuyucu kuralıyla doğrulanmadı, hiçbir kişi kontrol etmedi."
     },
     "scrollHint": "Tüm sütunları görmek için yana kaydırın.",
     "report": {
@@ -3177,6 +3184,59 @@
       "noSetTitle": "İlaçların neden parametre kümesi yok",
       "notValidatedTitle": "İlaçların neden doğrulanmadığı",
       "drugsCount": "{count, plural, one {# ilaç} other {# ilaç}}"
+    },
+    "sp": {
+      "title": "Özel popülasyonlar",
+      "intro": "ABD prospektüsünün, yaşlı yetişkinlerin ve böbrek ya da karaciğer yetmezliği olan kişilerin maruziyeti (EAA veya Cmax) hakkında, bir referans grubuyla karşılaştırarak yazdıkları; yazıldığı gibi alıntılanmıştır. Doz önerisi değildir ve bu ilacın modeline aktarılmamıştır.",
+      "empty": "Bu ilaç için doğrulanmış bir özel popülasyon ifadesi yok.",
+      "source": "ABD prospektüsü, sürüm {version}.",
+      "sourceDated": "ABD prospektüsü, sürüm {version}, yürürlük tarihi {date}.",
+      "openLabel": "Prospektüsü DailyMed’de aç",
+      "definition": "Prospektüsün tanımladığı popülasyon",
+      "reference": "Karşılaştırılan grup",
+      "ratio": "referans grubun {ratio} katı",
+      "nLabels": "{count, plural, one {# prospektüs} other {# prospektüs}} aynı oranı belirtiyor.",
+      "atlasTitle": "Yaşlı atlası satırları, doğrulanmamış ({count})",
+      "atlasIntro": "Yaşlı yetişkinlerle ilgili daha önceki otomatik bir çıkarımın satırları. İki okuyucu kuralı bunları doğrulamadı ve hiçbir kişi kontrol etmedi. Alıntılarıyla birlikte kanıt olarak gösterilir, asla bir hüküm olarak değil.",
+      "qualitative": "prospektüs benzer ya da fark yok diyor (sayı yok)",
+      "notChecked": "Alıntı, anılan prospektüs sürümünde kelimesi kelimesine bulunamadı.",
+      "class": {
+        "geriatric": "Yaşlı yetişkinler",
+        "renal": "Böbrek (renal) yetmezliği",
+        "hepatic": "Karaciğer (hepatik) yetmezliği"
+      },
+      "grade": {
+        "mild": "hafif",
+        "moderate": "orta",
+        "severe": "ağır",
+        "esrd": "son dönem böbrek hastalığı",
+        "dialysis": "diyaliz",
+        "cp_a": "Child-Pugh sınıf A",
+        "cp_b": "Child-Pugh sınıf B",
+        "cp_c": "Child-Pugh sınıf C",
+        "age65": "65 yaş ve üzeri",
+        "age75": "75 yaş ve üzeri",
+        "age80": "80 yaş ve üzeri",
+        "pooled": "birkaç derece birlikte"
+      },
+      "measure": {
+        "auc": "Maruziyet (EAA/AUC)",
+        "cmax": "Doruk konsantrasyon (Cmax)"
+      },
+      "atlasMeasure": {
+        "auc": "Maruziyet (EAA/AUC)",
+        "cmax": "Doruk konsantrasyon (Cmax)",
+        "cl": "Klirens",
+        "conc": "Maruziyet (ölçü adlandırılmamış)"
+      },
+      "systemTitle": "Özel popülasyonlar (ABD prospektüsleri)",
+      "systemIntro": "Yaşlı yetişkinlerin ve böbrek ya da karaciğer yetmezliği olan kişilerin, ABD prospektüslerinin belirttiği maruziyet oranları. İki bağımsız otomatik okuyucu prospektüs metnini okur; bir ifade yalnızca ikisi de aynı sonuca varırsa sayılır. Yalnızca alıntılanmış kanıt: modele aktarma yok, doz önerisi yok.",
+      "systemCounts": "{drugs, plural, one {# ilaç} other {# ilaç}} için {statements, plural, one {# ifade} other {# ifade}}. Gruba göre ilaç sayısı: yaşlı yetişkinler {geriatric}, böbrek yetmezliği {renal}, karaciğer yetmezliği {hepatic}.",
+      "systemCoverage": "{read} prospektüs kaydı okundu; havuzdaki tek etkin maddeli ilaçların {matched} prospektüsü eşleşti, {drugs} ilacı kapsıyor.",
+      "systemPrecision": "Örneklenen ifadelerin {share} kadarı doğruydu (%95 Wilson aralığı {low} – {high}, n = {n}; kör örneklem, iki otomatik inceleme geçişi, {date}).",
+      "systemPrecisionConservative": "Temkinli okuma, iki geçişin de doğru demediği her şey yanlış sayılır: {share} ({low} – {high}, n = {n}).",
+      "systemPrecisionNone": "Bu ifadeler için kesinlik ölçülmedi.",
+      "systemAtlas": "{drugs, plural, one {# ilaç} other {# ilaç}} için {rows, plural, one {# atlas satırı} other {# atlas satırı}} ilaç sayfalarında doğrulanmamış kanıt olarak görünür."
     }
   }
 }

@@ -35,6 +35,8 @@ import {
   type MetricOut,
   type ModelKitClient,
   type ParamOut,
+  type SpecialAtlas,
+  type SpecialStatement,
 } from "@/modelkit/model";
 import { useT, type Translate } from "@/theme/words";
 
@@ -160,6 +162,7 @@ function Detail({
       )}
       {ps ? <Params out={out} ev={ev} rows={rows} /> : null}
       <Validation out={out} />
+      <SpecialPopulations out={out} />
       <EvidenceSections out={out} ev={ev} />
       {ps ? <Downloads out={out} client={client} /> : null}
       {ev.status === "ok" ? (
@@ -819,6 +822,200 @@ function EvidenceTable({
   );
 }
 
+/** Statements shown before "show all" (long-content state). */
+const SP_LIMIT = 6;
+
+/** "Renal impairment, moderate" / "Older adults, age 65 and over": the class and grade of a statement. */
+function spTitle(t: Translate, cls: string, grade: string): string {
+  const c = t(`ModelKit.sp.class.${cls}`);
+  return grade ? `${c}, ${t(`ModelKit.sp.grade.${grade}`)}` : c;
+}
+
+function SpQuote({
+  quote,
+  setId,
+  version,
+  url,
+  effective,
+}: {
+  quote: string;
+  setId: string;
+  version: string;
+  url: string;
+  effective?: string;
+}) {
+  const t = useT();
+  return (
+    <>
+      <blockquote
+        lang="en"
+        className="m-0 max-w-[72ch] break-words border-s-4 border-line ps-3 text-sm"
+      >
+        {quote}
+      </blockquote>
+      <p className="text-xs text-muted break-words">
+        {effective
+          ? t("ModelKit.sp.sourceDated", { version, date: effective })
+          : t("ModelKit.sp.source", { version })}
+      </p>
+      <a
+        href={url}
+        {...EXTERNAL}
+        className="inline-flex min-h-11 max-w-full items-center gap-2 self-start text-sm underline"
+      >
+        <span>{t("ModelKit.sp.openLabel")}</span>
+        <span lang="en" className="mono break-all text-xs">
+          {setId}
+        </span>
+      </a>
+    </>
+  );
+}
+
+function SpStatement({ s }: { s: SpecialStatement }) {
+  const t = useT();
+  const nf = new Intl.NumberFormat(useLocale(), { maximumFractionDigits: 2 });
+  return (
+    <li
+      className="card flex min-w-0 flex-col gap-1 p-4"
+      data-testid="mk-sp-statement"
+      data-class={s.pop_class}
+    >
+      <p className="font-bold break-words">
+        {spTitle(t, s.pop_class, s.grade)}
+      </p>
+      <p className="break-words">
+        {t(`ModelKit.sp.measure.${s.measure}`)}:{" "}
+        <span className="font-bold">
+          {t("ModelKit.sp.ratio", { ratio: nf.format(s.ratio) })}
+        </span>{" "}
+        <span lang="en" className="text-muted">
+          ({s.ratio_text})
+        </span>
+      </p>
+      {s.definition ? (
+        <p className="text-sm break-words">
+          {t("ModelKit.sp.definition")}: <span lang="en">{s.definition}</span>
+        </p>
+      ) : null}
+      {s.reference ? (
+        <p className="text-sm break-words">
+          {t("ModelKit.sp.reference")}: <span lang="en">{s.reference}</span>
+        </p>
+      ) : null}
+      <SpQuote
+        quote={s.quote}
+        setId={s.set_id}
+        version={s.version}
+        url={s.source_url}
+        effective={s.effective_date}
+      />
+      {s.n_labels > 1 ? (
+        <p className="text-xs text-muted">
+          {t("ModelKit.sp.nLabels", { count: s.n_labels })}
+        </p>
+      ) : null}
+    </li>
+  );
+}
+
+function SpAtlasRow({ a }: { a: SpecialAtlas }) {
+  const t = useT();
+  const nf = new Intl.NumberFormat(useLocale(), { maximumFractionDigits: 2 });
+  const known = ["auc", "cmax", "cl", "conc"].includes(a.measure.toLowerCase());
+  return (
+    <li
+      className="card flex min-w-0 flex-col gap-1 p-4"
+      data-testid="mk-sp-atlas-row"
+    >
+      <p className="font-bold break-words">
+        {known
+          ? t(`ModelKit.sp.atlasMeasure.${a.measure.toLowerCase()}`)
+          : a.measure}
+        :{" "}
+        {a.qualitative
+          ? t("ModelKit.sp.qualitative")
+          : t("ModelKit.sp.ratio", { ratio: nf.format(a.ratio) })}
+      </p>
+      <p className="text-sm font-bold">
+        <Reason code="automated_extraction_unconfirmed" />
+      </p>
+      <SpQuote
+        quote={a.quote}
+        setId={a.set_id}
+        version={a.version}
+        url={a.source_url}
+      />
+      {a.quote_checked ? null : (
+        <p className="text-xs text-muted">{t("ModelKit.sp.notChecked")}</p>
+      )}
+    </li>
+  );
+}
+
+function SpecialPopulations({ out }: { out: DrugOut }) {
+  const t = useT();
+  const sp = out.special_populations;
+  const [all, setAll] = useState(false);
+  const visible = all ? sp.statements : sp.statements.slice(0, SP_LIMIT);
+  return (
+    <section
+      className="flex min-w-0 flex-col gap-group"
+      aria-labelledby="mk-sp"
+      data-testid="mk-sp"
+    >
+      <h2 id="mk-sp" className="group-header">
+        {t("ModelKit.sp.title")}
+      </h2>
+      <p className="max-w-[72ch] text-sm text-muted">
+        {t("ModelKit.sp.intro")}
+      </p>
+      <ReasonList codes={sp.notes} testId="mk-sp-notes" />
+      {sp.statements.length ? (
+        <>
+          <ul className="m-0 flex list-none flex-col gap-2 p-0">
+            {visible.map((s) => (
+              <SpStatement
+                key={`${s.pop_class}-${s.grade}-${s.measure}-${s.ratio}-${s.set_id}`}
+                s={s}
+              />
+            ))}
+          </ul>
+          {sp.statements.length > SP_LIMIT ? (
+            <Button
+              type="button"
+              onClick={() => setAll(!all)}
+              aria-expanded={all}
+              data-testid="mk-sp-more"
+            >
+              {all
+                ? t("ModelKit.ev.showFewer")
+                : t("ModelKit.ev.showAll", { count: sp.statements.length })}
+            </Button>
+          ) : null}
+        </>
+      ) : (
+        <StateView state="empty" message={t("ModelKit.sp.empty")} />
+      )}
+      {sp.atlas.length ? (
+        <details className="flex flex-col gap-2" data-testid="mk-sp-atlas">
+          <summary className="flex min-h-11 cursor-pointer items-center font-bold">
+            {t("ModelKit.sp.atlasTitle", { count: sp.atlas.length })}
+          </summary>
+          <p className="max-w-[72ch] text-sm text-muted">
+            {t("ModelKit.sp.atlasIntro")}
+          </p>
+          <ul className="m-0 flex list-none flex-col gap-2 p-0">
+            {sp.atlas.map((a) => (
+              <SpAtlasRow key={`${a.measure}-${a.ratio}-${a.set_id}`} a={a} />
+            ))}
+          </ul>
+        </details>
+      ) : null}
+    </section>
+  );
+}
+
 function Downloads({ out, client }: { out: DrugOut; client: ModelKitClient }) {
   const t = useT();
   const key = out.summary.key;
@@ -863,6 +1060,11 @@ function Downloads({ out, client }: { out: DrugOut; client: ModelKitClient }) {
         </p>
       ) : null}
       <p className="text-sm text-muted">{t("ModelKit.dl.contents")}</p>
+      {targets.includes("pksim") ? (
+        <p className="text-sm text-muted" data-testid="mk-dl-pksim-note">
+          {t("ModelKit.dl.pksimNote")}
+        </p>
+      ) : null}
     </SummaryCard>
   );
 }

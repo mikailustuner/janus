@@ -12,7 +12,7 @@ const n = D.nullable(D.num);
 
 export const STATUSES = ["validated", "not_validated", "failed"] as const;
 export type Status = (typeof STATUSES)[number];
-export const TARGETS = ["janus", "mrgsolve"] as const;
+export const TARGETS = ["janus", "mrgsolve", "pksim"] as const;
 export type Target = (typeof TARGETS)[number];
 
 const release = D.obj({
@@ -132,6 +132,80 @@ const paramSet = D.obj({
 });
 const text = D.record(D.str);
 
+export const SP_CLASSES = ["geriatric", "renal", "hepatic"] as const;
+export const SP_GRADES = [
+  "mild",
+  "moderate",
+  "severe",
+  "esrd",
+  "dialysis",
+  "cp_a",
+  "cp_b",
+  "cp_c",
+  "age65",
+  "age75",
+  "age80",
+  "pooled",
+] as const;
+const specialStatement = D.obj({
+  pop_class: D.lit(...SP_CLASSES),
+  grade: D.str,
+  measure: D.lit("auc", "cmax"),
+  ratio: D.num,
+  ratio_text: D.str,
+  definition: D.str,
+  reference: D.str,
+  quote: D.str,
+  set_id: D.str,
+  version: D.str,
+  effective_date: D.str,
+  section: D.str,
+  n_labels: D.int,
+  from_table: D.bool,
+  source_url: D.str,
+  status: D.lit("two_readers_agree"),
+});
+const specialAtlas = D.obj({
+  measure: D.str,
+  ratio: D.num,
+  qualitative: D.bool,
+  quote: D.str,
+  set_id: D.str,
+  version: D.str,
+  n_labels: D.int,
+  quote_checked: D.bool,
+  source_url: D.str,
+  status: D.lit("automated_extraction_unconfirmed"),
+});
+const specialOut = D.obj({
+  statements: D.arr(specialStatement),
+  atlas: D.arr(specialAtlas),
+  notes: D.arr(D.str),
+});
+const specialPrecision = D.obj({
+  measured_on: D.str,
+  n: D.int,
+  correct: D.int,
+  share: D.num,
+  wilson_low: D.num,
+  wilson_high: D.num,
+  n_conservative: D.int,
+  share_conservative: D.num,
+  wilson_low_conservative: D.num,
+  wilson_high_conservative: D.num,
+  target: D.num,
+});
+const specialSystem = D.obj({
+  drugs: D.int,
+  statements: D.int,
+  by_class: D.record(D.int),
+  drugs_by_class: D.record(D.int),
+  atlas_drugs: D.int,
+  atlas_rows: D.int,
+  coverage: D.record(D.int),
+  precision: D.nullable(specialPrecision),
+});
+
 export const drugsOut = D.obj({
   release,
   statements,
@@ -150,6 +224,7 @@ export const drugOut = D.obj({
   validation,
   intervals: D.arr(interval),
   targets: D.arr(D.lit(...TARGETS)),
+  special_populations: specialOut,
   reason_text: text,
 });
 const evidenceRow = D.obj({
@@ -237,6 +312,7 @@ export const systemOut = D.obj({
   not_validated_reasons: D.record(D.int),
   no_set_reasons: D.record(D.int),
   precision: D.nullable(precision),
+  special_populations: specialSystem,
   missing: D.arr(D.str),
   caveats: D.arr(D.str),
   reason_text: text,
@@ -252,6 +328,10 @@ export type EvidenceRow = D.Infer<typeof evidenceRow>;
 export type EvidenceOut = D.Infer<typeof evidenceOut>;
 export type SystemOut = D.Infer<typeof systemOut>;
 export type IntervalOut = D.Infer<typeof interval>;
+export type SpecialStatement = D.Infer<typeof specialStatement>;
+export type SpecialAtlas = D.Infer<typeof specialAtlas>;
+export type SpecialOut = D.Infer<typeof specialOut>;
+export type SpecialSystem = D.Infer<typeof specialSystem>;
 export type PrecisionOut = D.Infer<typeof precision>;
 
 export const FORMULATIONS = [
@@ -509,6 +589,11 @@ export const REASON_CODES = [
   "two_automated_passes",
   "confirmed_precision_below_target",
   "expert_review_pending",
+  "sp_statements_note",
+  "sp_atlas_note",
+  "sp_none",
+  "two_readers_agree",
+  "automated_extraction_unconfirmed",
   "interval_n_too_small",
   "interval_system_level_only",
   "interval_shown",
