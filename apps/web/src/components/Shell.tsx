@@ -280,6 +280,14 @@ function Footer() {
         </li>
         <li>
           <Link
+            href="/about"
+            className="inline-flex min-h-11 items-center px-1 underline underline-offset-4"
+          >
+            {t("About.title")}
+          </Link>
+        </li>
+        <li>
+          <Link
             href="/privacy"
             className="inline-flex min-h-11 items-center px-1 underline underline-offset-4"
           >

@@ -3,6 +3,68 @@
     "title": "Janus",
     "description": "Evdeki ilaçları okur ve doktorunuzla konuşmaya değer olabilecek reçete kaskadı örüntülerini gösterir."
   },
+  "About": {
+    "title": "Janus hakkında",
+    "summary": "Evdeki ilaçlar için reçete kaskadı kontrolü",
+    "what": {
+      "title": "Janus nedir",
+      "body": "Janus, evdeki ilaçları kutunun üzerindeki koddan, etiket fotoğrafından ya da ilacın adından okur ve reçete kaskadı örüntülerini arar: bir ilacın yan etkisinin yeni bir rahatsızlık sanılıp başka bir ilaçla karşılanmış olabileceği durumlar. Her örüntü yayımlanmış kaynağına bağlanır ve kişinin doktoruna götürebileceği, doktorun dilinde kısa bir nota dönüştürülür."
+    },
+    "principles": {
+      "title": "İlkeler",
+      "p1": "Janus bilgi sağlar, tıbbi tavsiye vermez.",
+      "p2": "Janus hiç kimseye bir ilaca başlamasını, ilacı bırakmasını ya da değiştirmesini söylemez.",
+      "p3": "Janus hiçbir ilaç hakkında rahatlatıcı bir hüküm vermez. Hiçbir şey bulmadığında hangi kaynakları ne zaman kontrol ettiğini belirtir.",
+      "p4": "Örüntüler yalnızca yayımlanmış, kaynak gösterilen listelerden gelir. Janus kendi kurallarını uydurmaz.",
+      "p5": "Janus bir araştırma prototipidir, tıbbi cihaz değildir: FDA onaylı ya da CE işaretli değildir.",
+      "p6": "Uzman incelemesi henüz yapılmadı."
+    },
+    "privacy": {
+      "title": "Gizlilik",
+      "body": "Fotoğraflar ve etiket metni cihazınızda kalır. İlaç listeniz tarayıcınızda kalır. Hesap yoktur ve izleme çerezi yoktur.",
+      "link": "Gizlilik sayfasını okuyun"
+    },
+    "sources": {
+      "title": "Açık veri kaynakları",
+      "intro": "Ürün verileri kamuya açık listelerden gelir. Her kaynak, lisans ve atıf NOTICE dosyasında listelenir.",
+      "tr": "Türkiye: TİTCK",
+      "fr": "Fransa: BDPM",
+      "es": "İspanya: CIMA",
+      "us": "Amerika Birleşik Devletleri: openFDA",
+      "ca": "Kanada: Drug Product Database (DPD)",
+      "it": "İtalya: AIFA",
+      "link": "GitHub'da NOTICE dosyası"
+    },
+    "openSource": {
+      "title": "Açık kaynak",
+      "body": "Kod, Apache-2.0 lisansıyla açık kaynaklıdır. Araştırma araçları sayfası açık verileri, herkese açık API'yi ve diğer araçları anlatır.",
+      "repo": "GitHub'da kaynak kod",
+      "research": "Araştırma araçları"
+    },
+    "maintainer": {
+      "title": "Kim sürdürüyor",
+      "body": "Janus, Mikail Üstüner tarafından sürdürülen bağımsız, açık kaynaklı bir projedir."
+    },
+    "status": "Araştırma prototipi, tıbbi cihaz değildir (FDA onaylı ya da CE işaretli değildir). Uzman incelemesi henüz yapılmadı."
+  },
+  "Seo": {
+    "about": "Janus nedir, hangi ilkelere uyar, verileri nereden gelir ve kim sürdürür. Bir araştırma prototipidir, tıbbi cihaz değildir.",
+    "demo": "Janus'u üç yapay hastayla deneyin. Hiçbir şey gönderilmez, hiçbir şey saklanmaz.",
+    "cascades": "Janus'un kontrol ettiği reçete kaskadı örüntüleri, her biri yayımlanmış kaynağına bağlı. Bilgi sağlar, tıbbi tavsiye vermez.",
+    "passport": "Tüm kutular tek listede: birkaç ülkenin kamuya açık ürün listelerinde aynı etkin maddeleri taşıyan bir ürün var mı.",
+    "openData": "Janus'tan açık veri: yayımlanan sayımlar ve reçete kaskadı kural tabanı, araştırma için serbestçe yeniden kullanılabilir.",
+    "privacy": "Cihazınızda neler kalır, neler gönderilir, neler saklanır ve nasıl silinir. Janus'ta hesap ve izleme çerezi yoktur.",
+    "research": "Kamuya açık yan etki verilerine dayanan araştırma araçları: zaman makinesi, kanıt özeti, FAERS başlama süresi, veri kalitesi raporu ve model çalıştırmaları.",
+    "forResearchers": "Açık veri paketleri, herkese açık salt okunur API, MCP sunucusu, veri hatları ve çalışan bir örnek tek yerde. Sayılar bildirimdir, kişi değildir.",
+    "developers": "Janus'un denetimlerini ve açık veri kümelerini başka yazılımlardan kullanın: MCP sunucusu, CDS Hooks hizmeti, herkese açık salt okunur API ve açık veri paketleri.",
+    "dataQuality": "Beş kamu kaynağının aynı etkin madde için verdiği ATC kodlarının haftalık karşılaştırması; her fark listelenir.",
+    "faersOnset": "Yayımlanmış her reçete kaskadı örüntüsü için, FAERS bildirimcilerine göre olay ilaca başlandıktan ne kadar sonra başladı. Bildirimler, kişiler değil.",
+    "timeMachine": "İbn Sina'nın Kanun'undaki ilaçları ve bazı reçete kaskadlarını bugünün açık verileriyle izleyin. Keşif amaçlı araştırma, tavsiye değildir.",
+    "seance": "Araştırma için yan yana üç tanık: tarihsel bir metin, advers olay bildirimleri ve yayımlanmış çalışmalar. Tek bir puanda birleştirilmez.",
+    "modelExplorer": "Basit vücut modellerini ve yayımlanmış çalışmalara karşı ölçülen hatalarını inceleyin. Araştırma içindir; doz hesaplayıcı değildir.",
+    "modelKit": "Kanıtı yeterli ilaçlar için kaynağı izlenebilir parametre setleri, ayrı tutulan çalışmalara karşı sınanmış. Doz hesaplayıcı değildir.",
+    "simulate": "Sanal popülasyonlarla sıraya alınmış model çalıştırmaları, araştırma için. Hiçbir kişiyle ilgili değildir ve doz önerisi değildir."
+  },
   "LocaleSwitcher": {
     "label": "Dil"
   },

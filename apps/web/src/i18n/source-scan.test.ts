@@ -9,7 +9,11 @@ import { extname, join, relative } from "node:path";
 
 import { expect, it } from "vitest";
 
-import { findForbiddenPhrases, forbiddenPhrases } from "./forbidden-phrases";
+import {
+  findContestTerms,
+  findForbiddenPhrases,
+  forbiddenPhrases,
+} from "./forbidden-phrases";
 
 const repoRoot = join(import.meta.dirname, "../../../..");
 const SKIP_DIRS = new Set([
@@ -70,6 +74,53 @@ it("no forbidden medical phrases in apps/ (medical-safety.md rule 2)", () => {
           for (const phrase of findForbiddenPhrases(line, phrases)) {
             findings.push(`${rel}:${i + 1} [${lang}] "${phrase}"`);
           }
+        }
+      });
+  }
+  expect(findings, findings.join("\n")).toEqual([]);
+});
+
+// The website never mentions the event it was built for: not in messages, pages, public files,
+// metadata, structured data or images' text. Wider file types than the medical scan, because
+// public/ holds SVG, CSS and the manifest.
+const CONTEST_EXTENSIONS = new Set([
+  ...EXTENSIONS,
+  ".svg",
+  ".css",
+  ".txt",
+  ".webmanifest",
+  ".toml",
+  ".yml",
+  ".yaml",
+]);
+const CONTEST_EXCLUDE = [
+  /(^|\/)forbidden-phrases\.ts$/, // the term list itself
+  /\.(test|spec)\.tsx?$/, // tests may quote terms on purpose
+  /(^|\/)test_[^/]*\.py$/,
+  // "competition ranking" is a statistics term in a docstring of the API; no user-facing text.
+  /(^|\/)apps\/api\/janus\/light\/ranking\.py$/,
+];
+
+function* walkAll(dir: string): Generator<string> {
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    if (entry.isDirectory()) {
+      if (!SKIP_DIRS.has(entry.name)) yield* walkAll(join(dir, entry.name));
+    } else if (CONTEST_EXTENSIONS.has(extname(entry.name))) {
+      yield join(dir, entry.name);
+    }
+  }
+}
+
+it("no mention of the competition in apps/ (kiroween, hackathon, devpost, ...)", () => {
+  const findings: string[] = [];
+  for (const file of walkAll(join(repoRoot, "apps"))) {
+    const rel = relative(repoRoot, file);
+    if (CONTEST_EXCLUDE.some((re) => re.test(rel))) continue;
+    readFileSync(file, "utf8")
+      .split("\n")
+      .forEach((line, i) => {
+        for (const term of findContestTerms(line)) {
+          findings.push(`${rel}:${i + 1} "${term}"`);
         }
       });
   }

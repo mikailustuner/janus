@@ -1,5 +1,15 @@
+import type { Metadata } from "next";
+
+import { pageMetadata } from "@/seo/metadata";
 import { Home } from "@/components/home/Home";
 import { scenePreloadScript } from "@/components/home/ScenePicture";
+
+export async function generateMetadata({
+  params,
+}: PageProps<"/[locale]">): Promise<Metadata> {
+  const { locale } = await params;
+  return pageMetadata(locale, "home");
+}
 
 export default function HomePage() {
   return (
