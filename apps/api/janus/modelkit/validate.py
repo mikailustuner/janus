@@ -1,4 +1,10 @@
-"""Validation of a parameter set against held-out studies (design DP-M7, DP-M8; Req 3).
+"""Validation of a parameter set against held-out studies (design DP-M7, DP-M8, DP-M39; Req 3).
+
+Held-out design (DP-M39, leave one study out): every study that reports an observation (except label
+studies and studies linked to another study) is held out in turn; the set is built again from the
+drug's OTHER studies only, with the unchanged builder, and the held-out study's observations are
+predicted by that set. A held-out study therefore never influences the set that tests it. The set
+shown is built from every study; its validation is cross-validated over studies.
 
 Strict rule (owner decision 2026-11-11): a drug is Validated only if AUC and Cmax were both tested
 and EVERY held-out observation point (each AUC and each Cmax point, every study) has a ratio
@@ -15,8 +21,9 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from typing import Literal
 
-from janus.modelkit.builder import NoSet, ParameterSet, set_reference
+from janus.modelkit.builder import NoSet, ParameterSet, build_set, set_reference
 from janus.modelkit.evidence import (
+    OBS_PARAMS,
     Ev,
     compatible_populations,
     exclusion_reason,
@@ -30,6 +37,7 @@ Status = Literal["validated", "not_validated", "failed"]
 BAND = 2.0
 MIN_STUDIES_FOR_INTERVAL = 20
 MIN_DRUGS_FOR_INTERPRETATION = 10
+LABEL_SOURCES = frozenset({"dailymed_spl"})  # labels never test (DP-M2)
 
 
 @dataclass(frozen=True)
@@ -42,6 +50,8 @@ class Point:
     predicted: float
     ratio: float
     within_2_fold: bool
+    # the study also builds the set shown; this point is predicted by the set built without it
+    rebuilt_without_study: bool = False
 
 
 @dataclass(frozen=True)
@@ -69,14 +79,28 @@ class Validation:
     failed_points: tuple[str, ...] = ()  # evidence ids of the points outside 2-fold
 
 
-def predict(ps: ParameterSet, metric: str, dose_mg: float) -> float | None:
-    """Predicted AUC (ng*h/mL, to infinity) or Cmax (ng/mL, one dose) from a set; None if the set
-    cannot predict it (no absorption rate for Cmax)."""
+def cmax_steady_state(f: float, ka: float, cl: float, v: float, dose: float, tau: float) -> float:
+    """Peak concentration (mg/L) at steady state of a one-compartment model with first-order
+    absorption, `dose` every `tau` hours (superposition; ka != k)."""
+    k = cl / v
+    rk, ra = 1.0 - math.exp(-k * tau), 1.0 - math.exp(-ka * tau)
+    t = math.log((ka * rk) / (k * ra)) / (ka - k)
+    return f * dose * ka / (v * (ka - k)) * (math.exp(-k * t) / rk - math.exp(-ka * t) / ra)
+
+
+def predict(
+    ps: ParameterSet, metric: str, dose_mg: float, interval_h: float | None = None
+) -> float | None:
+    """Predicted AUC (ng*h/mL, to infinity of one dose = over a dosing interval at steady state) or
+    Cmax (ng/mL; one dose, or at steady state when `interval_h` is given) from a set; None if the
+    set cannot predict it (no absorption rate for Cmax)."""
     f, cl, v, ka = ps.engine()
     if metric == "auc":
         return auc_inf(OneCompartment(f, 1.0, cl, v), dose_mg) * 1000.0
     if ka is None or abs(ka - cl / v) < 1e-12:
         return None
+    if interval_h:
+        return cmax_steady_state(f, ka, cl, v, dose_mg, interval_h) * 1000.0
     return cmax(OneCompartment(f, ka, cl, v), dose_mg) * 1000.0
 
 
@@ -94,8 +118,12 @@ def _obs_reason(e: Ev, ps: ParameterSet, allowed: frozenset[str]) -> str | None:
         return "needs_oral_dose"
     if e.parameter == "auc_tau" and not (e.regimen == "multiple" and e.interval_h):
         return "auc_tau_needs_multiple_dose_interval"
-    if e.parameter == "cmax" and e.regimen != "single":
-        return "steady_state_cmax_not_modelled"
+    if (
+        e.parameter == "cmax"
+        and e.regimen != "single"
+        and not (e.regimen == "multiple" and e.interval_h)
+    ):
+        return "steady_state_cmax_needs_interval"
     if e.parameter == "auc_inf" and e.regimen != "single":
         return "auc_inf_needs_single_dose"
     if (ps.engine()[3] is None) and e.parameter == "cmax":
@@ -125,7 +153,102 @@ def _metric(name: Literal["auc", "cmax"], pts: list[Point]) -> Metric:
     )
 
 
+def _point(e: Ev, ps: ParameterSet, rebuilt: bool) -> Point | None:
+    metric: Literal["auc", "cmax"] = "cmax" if e.parameter == "cmax" else "auc"
+    assert e.dose is not None  # noqa: S101 - checked in _obs_reason
+    ss = e.interval_h if metric == "cmax" and e.regimen == "multiple" else None
+    pred = predict(ps, metric, e.dose, ss)
+    if pred is None or pred <= 0:
+        return None
+    ratio = pred / e.value_si
+    return Point(
+        e.eid,
+        metric,
+        e.study_id,
+        e.dose,
+        e.value_si,
+        pred,
+        ratio,
+        1 / BAND <= ratio <= BAND,
+        rebuilt,
+    )
+
+
+def held_out_candidates(rows: list[Ev]) -> list[tuple[str, str]]:
+    """The studies of one drug that are held out in turn (DP-M39): a study with an observation row,
+    not a label study, not linked to another study (M5 identity guard: it never tests)."""
+    linked = linked_studies(rows)
+    return sorted(
+        {
+            e.study
+            for e in rows
+            if e.parameter in OBS_PARAMS
+            and e.origin != "derived"
+            and e.source_id not in LABEL_SOURCES
+            and e.study not in linked
+        }
+    )
+
+
+def fold_rows(rows: list[Ev], study: tuple[str, str]) -> list[Ev]:
+    """The rows of a held-out study's fold set: every row of the drug except that study's."""
+    return [r for r in rows if r.study != study]
+
+
 def validate(drug_key: str, rows: list[Ev], ps: ParameterSet | NoSet) -> Validation:
+    """Leave-one-study-out validation (DP-M39) of the drug's set. The strict status rule is
+    unchanged; every point is predicted by a set built without the point's study."""
+    rows = [r for r in rows if r.drug_key == drug_key]
+    if isinstance(ps, NoSet):
+        return validate_single_split(drug_key, rows, ps)
+    _, test = split_studies(rows)
+    linked = linked_studies(rows)
+    cands = set(held_out_candidates(rows))
+    by_study: dict[tuple[str, str], list[Ev]] = defaultdict(list)
+    for e in rows:
+        if e.parameter in OBS_PARAMS:
+            by_study[e.study].append(e)
+    pts: list[Point] = []
+    excluded: list[tuple[str, str]] = []
+    for study in sorted(by_study):
+        obs = sorted(by_study[study], key=lambda e: e.eid)
+        if study not in cands:
+            why_all = (
+                "same_study_in_another_source"
+                if study in linked
+                else "observation_in_building_study"
+            )
+            excluded += [(e.eid, why_all) for e in obs]
+            continue
+        fold: ParameterSet | NoSet | None = None
+        allowed: frozenset[str] = frozenset()
+        for e in obs:
+            why = exclusion_reason(e)
+            if why is None:
+                if fold is None:
+                    rest = fold_rows(rows, study)
+                    fold = build_set(drug_key, rest)
+                    if isinstance(fold, ParameterSet):
+                        allowed = compatible_populations(set_reference(fold.used, rest))
+                if isinstance(fold, NoSet):
+                    why = "fold_has_no_parameter_set"
+                else:
+                    why = _obs_reason(e, fold, allowed)
+            if why:
+                excluded.append((e.eid, why))
+                continue
+            assert isinstance(fold, ParameterSet)  # noqa: S101 - set above
+            p = _point(e, fold, study not in test)
+            if p is None:
+                excluded.append((e.eid, "set_cannot_predict_metric"))
+            else:
+                pts.append(p)
+    return _decide(drug_key, pts, excluded)
+
+
+def validate_single_split(drug_key: str, rows: list[Ev], ps: ParameterSet | NoSet) -> Validation:
+    """The single study split of milestones M0 to M6 (DP-M2): only studies without building
+    parameters test, against the set shown. Kept for comparison and for drugs without a set."""
     rows = [r for r in rows if r.drug_key == drug_key]
     _, test = split_studies(rows)
     empty = (_metric("auc", []), _metric("cmax", []))
@@ -155,25 +278,16 @@ def validate(drug_key: str, rows: list[Ev], ps: ParameterSet | NoSet) -> Validat
         if why:
             excluded.append((e.eid, why))
             continue
-        metric = "cmax" if e.parameter == "cmax" else "auc"
-        assert e.dose is not None  # noqa: S101 - checked in _obs_reason
-        pred = predict(ps, metric, e.dose)
-        if pred is None or pred <= 0:
+        p = _point(e, ps, False)
+        if p is None:
             excluded.append((e.eid, "set_cannot_predict_metric"))
             continue
-        ratio = pred / e.value_si
-        pts.append(
-            Point(
-                e.eid,
-                metric,
-                e.study_id,
-                e.dose,
-                e.value_si,
-                pred,
-                ratio,
-                1 / BAND <= ratio <= BAND,
-            )
-        )
+        pts.append(p)
+    return _decide(drug_key, pts, excluded)
+
+
+def _decide(drug_key: str, pts: list[Point], excluded: list[tuple[str, str]]) -> Validation:
+    """The strict status function (DP-M7, owner decision 2026-11-11), unchanged."""
     auc = _metric("auc", [p for p in pts if p.metric == "auc"])
     cm = _metric("cmax", [p for p in pts if p.metric == "cmax"])
     reasons: list[str] = []

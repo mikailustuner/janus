@@ -36,7 +36,8 @@ READS: dict[str, frozenset[str]] = {
     "f": frozenset({"oral"}),
     "cl_f": frozenset({"oral"}),
     "v_f": frozenset({"oral"}),
-    "t_half": frozenset({"oral", "unknown"}),
+    # an intravenous half-life is read only where no oral one exists (rule R1 of the gate study)
+    "t_half": frozenset({"oral", "unknown", "iv"}),
     "tmax": frozenset({"oral"}),
 }
 
@@ -81,6 +82,7 @@ class Pooled:
     eids: tuple[str, ...]
     note: str | None = None
     derived: bool = False  # every contributing row is a clearance derived from dose and AUC
+    derivation: str | None = None  # code of the rule that made the value (rules R2, R3)
 
 
 def _gmean(xs: list[float]) -> float:
@@ -184,7 +186,7 @@ class NoSet:
 
 
 def _p(name: str, label: str, unit: str, pooled: Pooled, derivation: str | None = None) -> Param:
-    how = derivation or ("cl_from_dose_and_auc" if pooled.derived else None)
+    how = derivation or pooled.derivation or ("cl_from_dose_and_auc" if pooled.derived else None)
     return Param(
         name, label, pooled.value, unit, pooled.cls, pooled.n_studies, pooled.spread_cv,
         pooled.eids, how, pooled.note,
@@ -218,6 +220,66 @@ def set_reference(used: set[str] | tuple[str, ...], rows: list[Ev]) -> str:
     return "patients" if "patients" in seen else "unspecified"
 
 
+def _half_life(oral: Pooled | None, iv: Pooled | None) -> Pooled | None:
+    """R1: the terminal half-life is a property of the drug; an oral half-life (or one whose route
+    is not stated) keeps priority, an intravenous one is used only without it."""
+    return oral or iv
+
+
+def _v_from_cl_half_life(cl: Pooled | None, t_half: Pooled | None) -> Pooled | None:
+    """R2: V = CL x t1/2 / ln 2 for an intravenous set without a stated volume (class C)."""
+    if cl is None or t_half is None:
+        return None
+    return Pooled(
+        cl.value * t_half.value / LN2,
+        "C",
+        min(cl.n_studies, t_half.n_studies),
+        None,
+        tuple(sorted({*cl.eids, *t_half.eids})),
+        derivation="v_from_cl_half_life",
+    )
+
+
+def f_from_same_study_auc(rows: list[Ev]) -> Pooled | None:
+    """R3 (plan section 7 rule 1): F = (AUC_oral / dose_oral) / (AUC_iv / dose_iv) from the
+    single-dose AUC to infinity of both routes in ONE study (geometric mean over each route's
+    arms); one value per study, pooled over studies weighted by subjects. Class C. `rows` are the
+    rows the builder may read (confirmed, building study, building population)."""
+    by: dict[tuple[str, str], dict[str, list[Ev]]] = defaultdict(lambda: defaultdict(list))
+    for r in rows:
+        if (
+            r.parameter == "auc_inf"
+            and r.regimen == "single"
+            and r.origin != "derived"
+            and r.route in ("oral", "iv")
+            and r.dose
+            and r.value_si > 0
+        ):
+            by[r.study][r.route].append(r)
+    vals: list[float] = []
+    weights: list[float] = []
+    eids: list[str] = []
+    for study in sorted(by):
+        oral, iv = by[study]["oral"], by[study]["iv"]
+        if not (oral and iv):
+            continue
+        per_dose = {
+            route: _gmean([r.value_si / float(r.dose or 1.0) for r in rs])
+            for route, rs in (("oral", oral), ("iv", iv))
+        }
+        vals.append(per_dose["oral"] / per_dose["iv"])
+        weights.append(float(max((r.n_subjects or 1) for r in oral + iv)))
+        eids += [r.eid for r in oral + iv]
+    if not vals:
+        return None
+    value = math.exp(
+        sum(w * math.log(v) for w, v in zip(weights, vals, strict=True)) / sum(weights)
+    )
+    return Pooled(
+        value, "C", len(vals), None, tuple(sorted(eids)), derivation="f_from_same_study_auc"
+    )
+
+
 def build_set(drug_key: str, rows: list[Ev]) -> ParameterSet | NoSet:
     """The parameter set of one drug from its evidence rows, or why there is none."""
     rows = sorted((r for r in rows if r.drug_key == drug_key), key=lambda r: r.eid)
@@ -234,10 +296,15 @@ def build_set(drug_key: str, rows: list[Ev]) -> ParameterSet | NoSet:
     def get(parameter: str) -> Pooled | None:
         return pool([r for r in ok if r.parameter == parameter and r.route in READS[parameter]])
 
-    cl_iv, f_oral = get("cl"), get("f")
-    v_iv = get("vss") or get("vd")
+    def get_routes(parameter: str, routes: frozenset[str]) -> Pooled | None:
+        return pool([r for r in ok if r.parameter == parameter and r.route in routes])
+
+    cl_iv = get("cl")
+    f_oral = get("f") or f_from_same_study_auc(ok)
+    t_half_iv = get_routes("t_half", frozenset({"iv"}))
+    t_half = _half_life(get_routes("t_half", frozenset({"oral", "unknown"})), t_half_iv)
+    v_iv = get("vss") or get("vd") or _v_from_cl_half_life(cl_iv, t_half_iv)
     cl_f, v_f = get("cl_f"), get("v_f")
-    t_half = get("t_half")
     tmax = get("tmax")
 
     params: list[Param] = []
@@ -265,6 +332,7 @@ def build_set(drug_key: str, rows: list[Ev]) -> ParameterSet | NoSet:
                 min(cl_f.n_studies, t_half.n_studies),
                 None,
                 tuple(sorted({*cl_f.eids, *t_half.eids})),
+                "half_life_intravenous" if t_half is t_half_iv else None,
             )
             v_param = _p("v", "V/F (apparent)", "L", derived, "v_from_clf_half_life")
         else:

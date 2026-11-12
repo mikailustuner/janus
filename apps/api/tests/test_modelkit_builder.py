@@ -34,6 +34,7 @@ from janus.modelkit.validate import (
     conformal_fold_width,
     system_report,
     validate,
+    validate_single_split,
     wilson,
 )
 from tests.modelkit_helpers import ev, seed_rows
@@ -360,13 +361,14 @@ def test_properties_of_the_builder(rows: list[Ev], rnd: random.Random) -> None:
     building, test = split_studies(rows)
     assert building.isdisjoint(test)
     used: set[str] = set(ps.used) if isinstance(ps, ParameterSet) else set()
-    # M1: the studies of the validation points never built the set
-    pts = {p.eid for p in val.points}
+    # M1 (single split): the studies of the validation points never built the set; the
+    # leave-one-study-out properties are in test_modelkit_gate.py
+    pts = {p.eid for p in validate_single_split("exampletine", rows, ps).points}
     assert not (used & pts)
     assert all(by_id[e].study in test for e in pts)
     assert all(by_id[e].study in building for e in used)
     # M2 and M6: only confirmed, parent, not co-administered, immediate-release rows
-    for e in used | pts:
+    for e in used | pts | {p.eid for p in val.points}:
         assert exclusion_reason(by_id[e]) is None
     # M32: special populations never build or test; every used row and point is of a class
     # compatible with the drug's reference population (milestone M6)
@@ -516,8 +518,14 @@ def test_derived_clearance_builds_from_one_designated_study_and_never_tests_it()
     cl = ps.get("cl")
     assert cl is not None and cl.value == pytest.approx(20.0) and cl.cls == "C"
     assert cl.derivation == "cl_from_dose_and_auc"
+    single = validate_single_split("exampletine", rows, ps)
+    assert {p.study_id for p in single.points} == {"C1"}
+    # leave one study out (DP-M39): A1 also tests, against the set built without A1, where C1 is
+    # the designated study (CL/F 25 L/h)
     val = validate("exampletine", rows, ps)
-    assert {p.study_id for p in val.points} == {"C1"}
+    a1 = next(p for p in val.points if p.study_id == "A1")
+    assert a1.rebuilt_without_study and a1.predicted == pytest.approx(50.0 * 1000 / 25.0)
+    assert not next(p for p in val.points if p.study_id == "C1").rebuilt_without_study
     # a stated clearance anywhere switches the designation off
     stated = [*rows, ev(parameter="cl_f", value=22.0, unit="L/h", study_id="B1")]
     building, test = split_studies(stated)
