@@ -1,7 +1,7 @@
 import { defineRouting } from "next-intl/routing";
 
 export const routing = defineRouting({
-  locales: ["en", "tr", "de", "fr", "es"],
+  locales: ["en", "tr", "de", "fr", "es", "pt"],
   defaultLocale: "en",
 });
 
@@ -12,4 +12,5 @@ export const localeNames: Record<(typeof routing.locales)[number], string> = {
   de: "Deutsch",
   fr: "Français",
   es: "Español",
+  pt: "Português",
 };

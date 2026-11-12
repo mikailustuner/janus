@@ -92,6 +92,7 @@ const SAME: Record<Locale, string[]> = {
   de: ["gleich", "dieselbe", "denselben", "derselben", "dasselbe"],
   fr: ["même"],
   es: ["mismo", "misma"],
+  pt: ["mesmo", "mesma"],
 };
 const byName = (n: string) =>
   COLOGNE_PASSPORT.find((i) => i.boxName.startsWith(n))!;

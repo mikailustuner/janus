@@ -5,7 +5,7 @@
  */
 import map from "./messages.json";
 
-export type Lang = "en" | "tr" | "de" | "fr" | "es";
+export type Lang = "en" | "tr" | "de" | "fr" | "es" | "pt";
 export type DoctorMessages = (typeof map)["en"];
 
 export const DOCTOR_MESSAGES = map as Record<Lang, DoctorMessages>;

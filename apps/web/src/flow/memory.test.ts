@@ -145,7 +145,7 @@ describe("P11 CI bar and numbers", () => {
     check(
       fc.property(
         fc.double({ min: 0.001, max: 1000, noNaN: true }),
-        fc.constantFrom("en", "tr", "de", "fr", "es"),
+        fc.constantFrom("en", "tr", "de", "fr", "es", "pt"),
         (x, l) => {
           expect(ratioText(x, l, "OVER")).toBe(formatRatio(x, l));
         },

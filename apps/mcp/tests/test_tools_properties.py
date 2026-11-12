@@ -33,7 +33,7 @@ TOOLS = {
     "janus_modelkit_evidence",
 }
 DATASET = "a" * 64
-# medical-safety.md rule 2, all five languages (kept equal to the steering file by hand).
+# medical-safety.md rule 2, all six languages (kept equal to the steering file by hand).
 FORBIDDEN = {
     "en": ["stop taking", "you should stop", "discontinue", "unnecessary medicine", "cure",
            "cures", "treatment for", "diagnosis", "you have", "safe to stop",
@@ -43,6 +43,8 @@ FORBIDDEN = {
     "de": ["absetzen Sie", "nicht mehr einnehmen", "unnötiges Medikament", "heilt", "Diagnose"],
     "fr": ["arrêtez de prendre", "médicament inutile", "guérit", "diagnostic"],
     "es": ["deje de tomar", "medicamento innecesario", "cura", "diagnóstico"],
+    "pt": ["pare de tomar", "deixe de tomar", "interrompa", "medicamento desnecessário", "cura",
+           "diagnóstico"],
 }  # fmt: skip
 SENTINEL = st.text(alphabet="ghjkmnpqrstuvwxy", min_size=3, max_size=10).map(lambda t: f"zz{t}zz")
 

@@ -2,7 +2,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, type Page, type Request } from "@playwright/test";
 
-export const LOCALES = ["en", "tr", "de", "fr", "es"] as const;
+export const LOCALES = ["en", "tr", "de", "fr", "es", "pt"] as const;
 export const THEMES = ["two-faces", "glass"] as const;
 export type Theme = (typeof THEMES)[number];
 

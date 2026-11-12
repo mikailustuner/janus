@@ -827,7 +827,7 @@ export const SECTION_ORDER = [
 ] as const;
 
 export const noteDocument = obj({
-  language: lit("en", "tr", "de", "fr", "es"),
+  language: lit("en", "tr", "de", "fr", "es", "pt"),
   sections: arr(
     obj({
       id: lit(...SECTION_ORDER),
@@ -883,7 +883,7 @@ const namedIngredient = obj({
 });
 
 export const outcomeFormOut = obj({
-  language: lit("en", "tr", "de", "fr", "es"),
+  language: lit("en", "tr", "de", "fr", "es", "pt"),
   expires_on: date,
   findings: arr(
     obj({

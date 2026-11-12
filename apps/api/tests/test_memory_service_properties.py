@@ -41,7 +41,7 @@ def vocab_text() -> str:
             {
                 "key": key,
                 "direction": "adverse",
-                **{f"label_{c}": "x" for c in ("en", "tr", "de", "fr", "es")},
+                **{f"label_{c}": "x" for c in ("en", "tr", "de", "fr", "es", "pt")},
                 "pts": {0: "Pain|Rash", 1: "Nausea"}.get(i, "Dizziness"),
                 "pipc_positions": ";".join(
                     str(p) for p in range(1, 66) if p % len(ADVERSE_PLACEHOLDERS) == i
@@ -54,7 +54,7 @@ def vocab_text() -> str:
             {
                 "key": key,
                 "direction": "benefit",
-                **{f"label_{c}": "x" for c in ("en", "tr", "de", "fr", "es")},
+                **{f"label_{c}": "x" for c in ("en", "tr", "de", "fr", "es", "pt")},
                 "status": "active",
             }
         )

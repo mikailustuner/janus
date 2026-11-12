@@ -185,6 +185,7 @@ describe("page metadata", () => {
       de: "/de/privacy",
       fr: "/fr/privacy",
       es: "/es/privacy",
+      pt: "/pt/privacy",
       "x-default": "/en/privacy",
     });
     expect(meta.openGraph).toMatchObject({

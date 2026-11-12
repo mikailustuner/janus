@@ -31,6 +31,7 @@ export const MODELS = {
   deu: "19d219bbb6672c869d20a9636c6816a81eb9a71796cb93ebe0cb1530e2cdb22d",
   fra: "ced037562e8c80c13122dece28dd477d399af80911a28791a66a63ac1e3445ca",
   spa: "6f2e04d02774a18f01bed44b1111f2cd7f3ba7ac9dc4373cd3f898a40ea6b464",
+  por: "c4932b937207a9514b7514d518b931a99938c02a28a5a5a553f8599ed58b7deb",
 };
 
 const sha256 = (buf) => createHash("sha256").update(buf).digest("hex");

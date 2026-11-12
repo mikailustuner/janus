@@ -1,6 +1,6 @@
 /**
  * Medical-language guard: scans text under apps/ (web and api) for the forbidden phrases of
- * .kiro/steering/medical-safety.md, rule 2, in all five languages. Run by CI and by the
+ * .kiro/steering/medical-safety.md, rule 2, in all six languages. Run by CI and by the
  * medical-language-guard hook. Suppress a justified line with the comment
  * "medical-language-guard: ignore".
  */

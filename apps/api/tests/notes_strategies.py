@@ -107,7 +107,7 @@ def keyrings(draw: st.DrawFn) -> Keyring:
 # --- synthetic glossaries (design §12) ---------------------------------------------------------
 
 
-GLOSSARY_LANGS = ("en", "tr", "de", "fr", "es")
+GLOSSARY_LANGS = ("en", "tr", "de", "fr", "es", "pt")
 SYNTHETIC_PIPC = {
     n: (f"Class A{chr(64 + (n % 26) + 1)}", f"Event {chr(64 + (n % 26) + 1)}", "Class B")
     for n in range(1, 66)

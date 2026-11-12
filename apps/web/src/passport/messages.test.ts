@@ -81,6 +81,7 @@ const SAME: Record<Locale, string[]> = {
   de: ["gleich", "dieselbe", "denselben", "derselben", "dasselbe"],
   fr: ["même"],
   es: ["mismo", "misma"],
+  pt: ["mesmo", "mesma"],
 };
 const FRAMING: Record<Locale, string> = {
   en: "This may be worth mentioning to your doctor or pharmacist.",
@@ -88,6 +89,7 @@ const FRAMING: Record<Locale, string> = {
   de: "Es kann sinnvoll sein, das Ihrer Ärztin, Ihrem Arzt oder Ihrer Apotheke zu sagen.",
   fr: "Il peut être utile d'en parler à votre médecin ou à votre pharmacien.",
   es: "Puede ser útil comentarlo con su médico o su farmacéutico.",
+  pt: "Pode ser útil falar nisto com o seu médico ou farmacêutico.",
 };
 
 describe.each(routing.locales)("Passport namespace, %s", (locale) => {
@@ -214,13 +216,14 @@ describe.each(routing.locales)("Passport namespace, %s", (locale) => {
       de: "Meldung",
       fr: "signalement",
       es: "notificaci",
+      pt: "notifica",
     };
     expect(
       findPrefixWords(messages.get("Passport.memory.entry")!, [report[l]]),
     ).toEqual([report[l]]);
     for (const [key, value] of messages)
       expect(
-        findPrefixWords(value, ["anonym", "anonim", "anónim"]),
+        findPrefixWords(value, ["anonym", "anonim", "anónim", "anônim"]),
         key,
       ).toEqual([]);
   });

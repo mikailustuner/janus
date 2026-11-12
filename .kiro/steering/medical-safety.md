@@ -11,6 +11,7 @@ inclusion: always
    - DE: "absetzen Sie", "nicht mehr einnehmen", "unnötiges Medikament", "heilt", "Diagnose".
    - FR: "arrêtez de prendre", "médicament inutile", "guérit", "diagnostic".
    - ES: "deje de tomar", "medicamento innecesario", "cura", "diagnóstico".
+   - PT: "pare de tomar", "deixe de tomar", "interrompa", "medicamento desnecessário", "cura", "diagnóstico".
 3. **No false reassurance.** When nothing is found, say "Janus found no pattern from its rule list. This does not mean your medicines are free of problems." Never "safe", "no problems", "all clear".
 4. **Abrupt-stop red flags:** for drug classes that are dangerous to stop suddenly (e.g. beta-blockers, antiepileptics, corticosteroids, benzodiazepines, antidepressants, clonidine), always show an extra warning: "Do not stop this medicine suddenly."
 5. **Every claim cites evidence** (rule source, paper, FAERS statistic with confidence interval, text locator). If evidence is missing — or the evidence is retracted — the sentence is removed.

@@ -8,7 +8,7 @@
  */
 const VERSION = new URL(self.location.href).searchParams.get("v") || "dev";
 const CACHE = `janus-${VERSION}`;
-const LOCALES = ["en", "tr", "de", "fr", "es"];
+const LOCALES = ["en", "tr", "de", "fr", "es", "pt"];
 const ROUTES = [
   "",
   "/demo",

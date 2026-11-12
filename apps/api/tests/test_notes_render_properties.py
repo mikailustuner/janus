@@ -12,7 +12,7 @@ from hypothesis import strategies as st
 from janus.notes import render
 from janus.notes.templates import CATALOGUE
 
-LANGS = ("en", "tr", "de", "fr", "es")
+LANGS = ("en", "tr", "de", "fr", "es", "pt")
 
 
 def parse_back(text: str, lang: str) -> Decimal:
@@ -63,6 +63,7 @@ def test_p13_percent_and_decimal_text(d: Decimal, lang: str) -> None:
         ("de", "12.345", "2,55", "11,9\u00a0%", "03.2026", "08.11.2026"),
         ("fr", "12\u202f345", "2,55", "11,9\u202f%", "03/2026", "08/11/2026"),
         ("es", "12.345", "2,55", "11,9\u00a0%", "03/2026", "08/11/2026"),
+        ("pt", "12\u00a0345", "2,55", "11,9%", "03/2026", "08/11/2026"),
     ],
 )
 def test_p13_hand_checked_examples(

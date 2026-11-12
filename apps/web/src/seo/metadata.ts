@@ -16,6 +16,7 @@ export const OG_LOCALE: Record<string, string> = {
   de: "de_DE",
   fr: "fr_FR",
   es: "es_ES",
+  pt: "pt_PT",
 };
 
 export const OG_SIZE = { width: 1200, height: 630 } as const;

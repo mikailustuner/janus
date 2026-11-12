@@ -76,7 +76,7 @@ export const productPage = D.obj({
 });
 
 export const medicineInfoOut = D.obj({
-  language: D.lit("en", "tr", "de", "fr", "es"),
+  language: D.lit("en", "tr", "de", "fr", "es", "pt"),
   groups_version: D.pattern(/^[0-9a-f]{64}$/),
   ingredients: D.arr(ingredient, 0, 12),
   official: D.nullable(

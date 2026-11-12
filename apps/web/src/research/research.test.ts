@@ -254,7 +254,7 @@ describe("FAERS onset table (R4-R6)", () => {
 
   it("every dataset caveat has a translated short form, in every locale", async () => {
     expect([...CAVEATS].sort()).toEqual(Object.keys(table.caveats).sort());
-    for (const l of ["en", "tr", "de", "fr", "es"]) {
+    for (const l of ["en", "tr", "de", "fr", "es", "pt"]) {
       const m = (await import(`../../messages/${l}.json`)).default as {
         Onset: { caveats: Record<string, string> };
       };

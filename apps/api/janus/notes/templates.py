@@ -1,7 +1,7 @@
 """The template catalogue of the note and the outcome page (doctor-loop design §5.2). Pure.
 
 The code fixes each template's id, kind, evidence roles and typed parameters; the glossary file
-`glossary/sentences.csv` supplies the reviewed wording in five languages and must agree with this
+`glossary/sentences.csv` supplies the reviewed wording in six languages and must agree with this
 catalogue row for row. Claim templates carry evidence roles and contain no digit; fixed texts
 (headings, labels, the disclaimer, the abrupt-stop line, safety lines, limits) carry none.
 `shared` names the message-file key whose five values a shared row must equal (P23).

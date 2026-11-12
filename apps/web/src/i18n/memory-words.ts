@@ -53,6 +53,17 @@ export const peopleWords = {
     "como usted",
     "como tú",
   ],
+  pt: [
+    "pessoa",
+    "pessoas",
+    "paciente",
+    "pacientes",
+    "indivíduo",
+    "indivíduos",
+    "gente",
+    "como você",
+    "como tu",
+  ],
 } as const;
 
 export const causalWords = {
@@ -170,6 +181,39 @@ export const causalWords = {
     "reacción",
     "reacciones",
   ],
+  pt: [
+    "causa",
+    "causas",
+    "cause",
+    "causem",
+    "causar",
+    "provoca",
+    "provocam",
+    "provoque",
+    "provocar",
+    "risco",
+    "riscos",
+    "probabilidade",
+    "seguro",
+    "segura",
+    "perigoso",
+    "perigosa",
+    "normal",
+    "incomum",
+    "invulgar",
+    "interação",
+    "interacção",
+    "interações",
+    "interacções",
+    "efeito secundário",
+    "efeitos secundários",
+    "efeito colateral",
+    "efeitos colaterais",
+    "reação",
+    "reacção",
+    "reações",
+    "reacções",
+  ],
 } as const;
 
 /** The single allow-listed exception, per language (statistics review Q6; owner decision 2026-11-08). */
@@ -179,6 +223,7 @@ export const allowedScreening = {
   de: "Dies ist eine Screening-Statistik. Viele Kombinationen aus Arzneimittel und Ereignis werden gleichzeitig geprüft und die meisten erfüllen diese Kriterien. Diese Kriterien zu erfüllen ist daher häufig und kein Beleg dafür, dass das Arzneimittel das Ereignis verursacht.",
   fr: "Il s'agit d'une statistique de dépistage. De nombreuses associations médicament–événement sont examinées en même temps et la plupart remplissent ces critères ; les remplir est donc courant et ne prouve pas que le médicament provoque l'événement.",
   es: "Es una estadística de cribado. Se examinan a la vez muchas combinaciones de medicamento y evento y la mayoría cumple estos criterios; cumplirlos es habitual y no es una prueba de que el medicamento cause el evento.",
+  pt: "Esta é uma estatística de triagem. Muitos pares de medicamento e acontecimento são examinados em simultâneo e a maioria cumpre estes critérios; por isso, cumpri-los é habitual e não é prova de que o medicamento provoque o acontecimento.",
 } as const;
 
 export const SCREENING_KEY = "Memory.screening";

@@ -1,6 +1,6 @@
 # Clinical glossary of the doctor note (doctor-loop design §5.1)
 
-Five languages (en, tr, de, fr, es). Only rows with `status = accepted` are used; until the owner has accepted the
+Six languages (en, tr, de, fr, es, pt). Only rows with `status = accepted` are used; until the owner has accepted the
 review sheet (`.kiro/specs/doctor-loop/glossary-review.md`) no note language is available.
 
 | File | Rows | Source |
