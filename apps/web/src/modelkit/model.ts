@@ -104,6 +104,27 @@ const precision = D.obj({
   formulation_wilson_high: n,
   target: D.num,
 });
+const documentSource = D.obj({
+  source_id: D.str,
+  published: D.bool,
+  rows: D.int,
+  confirmed_rows: D.int,
+  held_back_rows: D.int,
+  measured_on: D.nullable(D.str),
+  n: D.nullable(D.int),
+  correct: D.nullable(D.int),
+  share: n,
+  wilson_low: n,
+  wilson_high: n,
+  n_conservative: D.nullable(D.int),
+  share_conservative: n,
+});
+const studyIdentity = D.obj({
+  groups_with_several_studies: D.int,
+  links: D.record(D.int),
+  test_studies_without_rule: D.int,
+  test_studies: D.int,
+});
 const param = D.obj({
   name: D.str,
   label: D.str,
@@ -312,6 +333,8 @@ export const systemOut = D.obj({
   not_validated_reasons: D.record(D.int),
   no_set_reasons: D.record(D.int),
   precision: D.nullable(precision),
+  document_sources: D.arr(documentSource),
+  study_identity: studyIdentity,
   special_populations: specialSystem,
   missing: D.arr(D.str),
   caveats: D.arr(D.str),
@@ -333,6 +356,7 @@ export type SpecialAtlas = D.Infer<typeof specialAtlas>;
 export type SpecialOut = D.Infer<typeof specialOut>;
 export type SpecialSystem = D.Infer<typeof specialSystem>;
 export type PrecisionOut = D.Infer<typeof precision>;
+export type DocumentSourceOut = D.Infer<typeof documentSource>;
 
 export const FORMULATIONS = [
   "immediate_release",
@@ -550,6 +574,7 @@ export const REASON_CODES = [
   "per_kg_not_converted",
   "held_out_study",
   "observation_in_building_study",
+  "same_study_in_another_source",
   "not_needed_preferred_basis",
   "auc_to_last_sampling_time_not_comparable",
   "not_an_observation",

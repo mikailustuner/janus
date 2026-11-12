@@ -3101,6 +3101,7 @@
       "per_kg_not_converted": "Der Wert gilt pro Kilogramm; es gibt kein Körpergewicht, daher wird nicht umgerechnet.",
       "held_out_study": "Zurückgehaltene Studie: Ihre Beobachtungen testen einen Satz nur, sie bauen nie einen auf.",
       "observation_in_building_study": "Beobachtung in einer Studie, die auch Aufbauparameter berichtet; nicht getestet.",
+      "same_study_in_another_source": "Möglicherweise dieselbe Studie wie eine in einer anderen Quelle (gemeinsame Studiennummer, gemeinsamer Studiencode oder identische Ergebnisse); auf der Aufbauseite behalten, nicht getestet.",
       "not_needed_preferred_basis": "Nicht nötig: Eine bevorzugte Grundlage oder ein gepoolter Wert wurde verwendet.",
       "auc_to_last_sampling_time_not_comparable": "AUC bis zur letzten Probenzeit: Diese Zeit steht nicht in der Evidenz.",
       "not_an_observation": "Keine Beobachtung von Cmax oder AUC.",
@@ -3183,7 +3184,21 @@
       "missingTitle": "Was fehlt",
       "noSetTitle": "Warum Wirkstoffe keinen Parametersatz haben",
       "notValidatedTitle": "Warum Wirkstoffe nicht validiert sind",
-      "drugsCount": "{count, plural, one {# Wirkstoff} other {# Wirkstoffe}}"
+      "drugsCount": "{count, plural, one {# Wirkstoff} other {# Wirkstoffe}}",
+      "docTitle": "Review-PDFs und Artikel",
+      "docIntro": "Werte aus Tabellen von Drugs@FDA-Review-PDFs (digital erzeugte Textebene) und von PubMed-Central-Artikeln unter CC BY oder CC0, gelesen von zwei automatisierten Lesern. Eine Quelle wird nur veröffentlicht, wenn ihre gemessene Präzision nicht deutlich unter der der früheren Quellen liegt.",
+      "docSource": {
+        "drugsatfda_review": "Drugs@FDA-Review-PDFs",
+        "pmc_oa": "PubMed-Central-Artikel (CC BY oder CC0)"
+      },
+      "docPublished": "In dieser Version veröffentlicht",
+      "docHeldBack": "Zurückgehalten: gemessene Präzision zu niedrig; ihre Werte sind nicht in dieser Version",
+      "docNotMeasured": "Noch nicht gemessen; ihre Werte sind nicht in dieser Version",
+      "docRows": "{rows} Werte in dieser Version, {confirmed} von beiden Lesern bestätigt.",
+      "docHeldRows": "{n} Werte zurückgehalten.",
+      "docPrecision": "Präzision bestätigter Werte: {share} (95-%-Wilson-Intervall {low} bis {high}, n = {n}; verblindete Stichprobe, zwei automatisierte Prüfdurchgänge, {date}). Vorsichtige Lesart: {cons}.",
+      "docIdentityTitle": "Dieselbe Studie in zwei Quellen",
+      "docIdentityLine": "Eine Studie, die dieselbe Studie wie eine in einer anderen Quelle sein kann (gemeinsame Studiennummer, gemeinsamer Studiencode, identische Ergebnisse oder ein Review-Dokument), testet nie einen Satz. Das entfernte {removed} von {before} zurückgehaltenen Studien; {groups} Studiengruppen sind verknüpft."
     },
     "sp": {
       "title": "Spezielle Bevölkerungsgruppen",

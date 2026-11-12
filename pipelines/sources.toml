@@ -329,6 +329,21 @@ cadence_days = 90
 urls = ["https://clinicaltrials.gov/data-api/about-api/api-downloads"]
 
 [[sources]]
+id = "modelkit_documents"
+section = "clinical"
+name = "Janus drug model kit: Drugs@FDA review PDFs and PMC articles (experimental)"
+publisher = "Janus"
+license = "The rows keep the terms of their source (see drugsatfda_review and pmc_oa below)"
+notes = [
+  "Research use only. Not for clinical decisions. Expert review has not yet been done.",
+  "Milestone M5. Review PDFs are located through the Drugs@FDA data file (one download from fda.gov; review pages and PDFs on accessdata.fda.gov at most one request per second); PMC articles are found with the Europe PMC search (title names the drug and a pharmacokinetic word, open access, licence CC BY or CC0; one request every 10 seconds as the site's robots.txt asks) and read from the PMC Article Datasets of NLM. Only tables are read, by two independent automated readers; only the text layer of born-digital PDFs is read. The raw files are never committed.",
+  "A source's values enter the evidence store only if their measured precision allows it (data/modelkit/precision_documents.json). Measured on 2026-11-12 (blinded samples, two automated review passes): review tables 0.48 and PMC tables 0.48, both below the pre-registered threshold, so neither source's milestone-M5 values are published in the current release. A study that may be the same study in another source (shared trial number, shared sponsor study code, identical results) never tests a parameter set.",
+]
+storage = "cache"
+cadence_days = 90
+urls = ["https://www.fda.gov/drugs/drug-approvals-and-databases/drugsfda-data-files", "https://pmc.ncbi.nlm.nih.gov/tools/pmcaws/"]
+
+[[sources]]
 id = "modelkit_special_populations"
 section = "clinical"
 name = "Janus drug model kit: special populations from US labels (experimental)"
@@ -378,10 +393,11 @@ urls = ["https://dailymed.nlm.nih.gov/"]
 id = "pmc_oa"
 section = "clinical"
 name = "PubMed Central Open Access articles licensed CC BY or CC0 (model kit evidence)"
-publisher = "Authors of each article, via Europe PMC"
+publisher = "Authors of each article, via Europe PMC and the PMC Article Datasets of NLM"
 license = "CC BY 4.0 or CC0 1.0, per article"
 notes = [
-  "Only articles whose own licence is CC BY or CC0 are used. Each row names the article (PMCID) and the table cell. Attribution: credit the authors and the source article, see the licence link in the article; changes: values were transcribed from a table, units converted, and short parts quoted. Not an endorsement by the authors.",
+  "Only articles whose own licence is CC BY or CC0 are used (three checks: the Europe PMC search result, the article's metadata in the PMC Article Datasets, and the licence element of the article XML; retracted articles and author manuscripts are not used). Each row names the article (PMCID) and the table cell, and shows the article's authors, title, journal, year, DOI and licence with the value. Attribution: credit the authors and the source article, see the licence link; changes: values were transcribed from a table, units converted, and short parts quoted. Not an endorsement by the authors.",
+  "PMC Article Datasets terms (README of the bucket, read 2026-11-12): acknowledge NLM as the source of the data; do not imply NLM endorsement; distribute only data licensed for redistribution; the data are provided without warranty. Data accessed on 2026-11-12 from https://registry.opendata.aws/ncbi-pmc. Human studies only: articles or tables that name another species are not read.",
 ]
 storage = "commit"
 cadence_days = 90
@@ -394,7 +410,7 @@ name = "Drugs@FDA clinical pharmacology reviews (model kit evidence)"
 publisher = "U.S. Food and Drug Administration"
 license = "Public domain, unless noted (sponsor material reproduced inside a review may be an exception)"
 notes = [
-  "A short quote and the page of the review PDF. Text of scanned reviews was read by optical character recognition and checked against the page image by the reader passes. Not an FDA endorsement.",
+  "A short quote and the page of the review PDF. Milestone M5 reads the text layer of born-digital review PDFs (tables only; never a summary, recommendation or labeling section); scanned reviews are not read in M5. The one scanned review of milestone M0 was read by optical character recognition and its numbers checked against the page image by automated reader passes. Not an FDA endorsement.",
 ]
 storage = "commit"
 region = "US"

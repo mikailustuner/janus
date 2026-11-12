@@ -1581,6 +1581,137 @@
         ],
         "title": "DiscoveryOut"
       },
+      "DocumentSourceOut": {
+        "properties": {
+          "source_id": {
+            "type": "string",
+            "title": "Source Id"
+          },
+          "published": {
+            "type": "boolean",
+            "title": "Published"
+          },
+          "rows": {
+            "type": "integer",
+            "title": "Rows"
+          },
+          "confirmed_rows": {
+            "type": "integer",
+            "title": "Confirmed Rows"
+          },
+          "held_back_rows": {
+            "type": "integer",
+            "title": "Held Back Rows"
+          },
+          "measured_on": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Measured On"
+          },
+          "n": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "N"
+          },
+          "correct": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Correct"
+          },
+          "share": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Share"
+          },
+          "wilson_low": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Wilson Low"
+          },
+          "wilson_high": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Wilson High"
+          },
+          "n_conservative": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "N Conservative"
+          },
+          "share_conservative": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Share Conservative"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "source_id",
+          "published",
+          "rows",
+          "confirmed_rows",
+          "held_back_rows",
+          "measured_on",
+          "n",
+          "correct",
+          "share",
+          "wilson_low",
+          "wilson_high",
+          "n_conservative",
+          "share_conservative"
+        ],
+        "title": "DocumentSourceOut",
+        "description": "A document source of milestone M5 (review PDFs, PMC articles): its rows in this release, whether its values are\npublished, and its measured precision (blinded sample, two automated review passes)."
+      },
       "DrugOut": {
         "properties": {
           "release": {
@@ -4949,6 +5080,39 @@
         ],
         "title": "StorageInfo"
       },
+      "StudyIdentityOut": {
+        "properties": {
+          "groups_with_several_studies": {
+            "type": "integer",
+            "title": "Groups With Several Studies"
+          },
+          "links": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Links"
+          },
+          "test_studies_without_rule": {
+            "type": "integer",
+            "title": "Test Studies Without Rule"
+          },
+          "test_studies": {
+            "type": "integer",
+            "title": "Test Studies"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "groups_with_several_studies",
+          "links",
+          "test_studies_without_rule",
+          "test_studies"
+        ],
+        "title": "StudyIdentityOut",
+        "description": "The leakage guard (milestone M5): studies that may be the same study in another source never test."
+      },
       "SystemMetricOut": {
         "properties": {
           "name": {
@@ -5160,6 +5324,16 @@
               }
             ]
           },
+          "document_sources": {
+            "items": {
+              "$ref": "#/components/schemas/DocumentSourceOut"
+            },
+            "type": "array",
+            "title": "Document Sources"
+          },
+          "study_identity": {
+            "$ref": "#/components/schemas/StudyIdentityOut"
+          },
           "special_populations": {
             "$ref": "#/components/schemas/SpecialSystemOut"
           },
@@ -5209,6 +5383,8 @@
           "not_validated_reasons",
           "no_set_reasons",
           "precision",
+          "document_sources",
+          "study_identity",
           "special_populations",
           "missing",
           "caveats",

@@ -16,7 +16,7 @@ from dataclasses import dataclass, field
 from typing import Literal
 
 from janus.modelkit.builder import NoSet, ParameterSet
-from janus.modelkit.evidence import Ev, exclusion_reason, split_studies
+from janus.modelkit.evidence import Ev, exclusion_reason, linked_studies, split_studies
 from janus.timemachine.pk import OneCompartment, auc_inf, cmax
 
 Status = Literal["validated", "not_validated", "failed"]
@@ -127,11 +127,19 @@ def validate(drug_key: str, rows: list[Ev], ps: ParameterSet | NoSet) -> Validat
         )  # fmt: skip
     pts: list[Point] = []
     excluded: list[tuple[str, str]] = []
+    linked = linked_studies(rows)
     for e in rows:
         if e.parameter not in ("cmax", "auc_inf", "auc_last", "auc_tau"):
             continue
         if e.study not in test:
-            excluded.append((e.eid, "observation_in_building_study"))
+            excluded.append(
+                (
+                    e.eid,
+                    "same_study_in_another_source"
+                    if e.study in linked
+                    else "observation_in_building_study",
+                )
+            )
             continue
         why = _obs_reason(e, ps)
         if why:

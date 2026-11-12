@@ -1,0 +1,22 @@
+{
+  "drugsatfda_review": {
+    "measured_on": "2026-11-12",
+    "n": 92,
+    "correct": 44,
+    "n_conservative": 100,
+    "correct_conservative": 44,
+    "kappa": 0.905,
+    "rule": "published only if precision >= 0.70 and the upper Wilson bound >= 0.75 (pre-registered)",
+    "published": false
+  },
+  "pmc_oa": {
+    "measured_on": "2026-11-12",
+    "n": 91,
+    "correct": 44,
+    "n_conservative": 100,
+    "correct_conservative": 44,
+    "kappa": 0.826,
+    "rule": "published only if precision >= 0.70 and the upper Wilson bound >= 0.75 (pre-registered)",
+    "published": false
+  }
+}

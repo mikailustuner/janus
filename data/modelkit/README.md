@@ -74,3 +74,13 @@ short quotes only; no raw downloads.
   permeability, molecular weight or the clearance process; they are marked missing and nothing is invented. The file loads
   in PK-Sim 12.x and exports again (checked in `.github/workflows/modelkit-pksim.yml` with ospsuite 12.4.5, which bundles
   PK-Sim core 12.3.173, GPL-2.0 with the Suite's clarifying addendum, on Linux); it is not simulated as exported.
+
+## Milestone M5 files
+- `ctgov_study_ids.csv`: the organisation study id and secondary ids of every ClinicalTrials.gov record in the evidence
+  (normalised: upper case letters and digits), read from the official bulk file by
+  `pipelines/tools/build_modelkit_ctgov_ids.py`. Used only by the study identity rule: a study that may be the same study
+  in another source (shared trial number, shared study code, identical results) never tests a parameter set.
+- `precision_documents.json`: the measured precision of the confirmed values of the two document sources of milestone
+  M5 (Drugs@FDA review tables, PMC article tables; blinded samples of 100 values, two automated review passes) and whether
+  their values are published. Rule fixed before the measurement: published only if the precision is at least 0.70 and the
+  upper Wilson bound at least 0.75. Both measured 0.48 on 2026-11-12: neither is published.

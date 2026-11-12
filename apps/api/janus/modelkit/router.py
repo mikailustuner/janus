@@ -21,7 +21,7 @@ from janus.http_policy.routes import medical_router
 from janus.modelkit import export as ex
 from janus.modelkit import special
 from janus.modelkit.builder import NoSet, ParameterSet
-from janus.modelkit.evidence import Ev
+from janus.modelkit.evidence import Ev, split_studies
 from janus.modelkit.reasons import TEXT
 from janus.modelkit.store import DrugEntry, ModelkitHolder, Release
 from janus.modelkit.validate import (
@@ -330,6 +330,34 @@ class PrecisionOut(_Out):
     target: float
 
 
+class DocumentSourceOut(_Out):
+    """A document source of milestone M5 (review PDFs, PMC articles): its rows in this release, whether its values are
+    published, and its measured precision (blinded sample, two automated review passes)."""
+
+    source_id: str
+    published: bool
+    rows: int  # rows of the source in this release (0 when held back)
+    confirmed_rows: int
+    held_back_rows: int  # rows not published because the measured precision was too low
+    measured_on: str | None
+    n: int | None
+    correct: int | None
+    share: float | None
+    wilson_low: float | None
+    wilson_high: float | None
+    n_conservative: int | None
+    share_conservative: float | None
+
+
+class StudyIdentityOut(_Out):
+    """The leakage guard (milestone M5): studies that may be the same study in another source never test."""
+
+    groups_with_several_studies: int
+    links: dict[str, int]  # by rule: nct, code, doc, numeric_duplicate
+    test_studies_without_rule: int
+    test_studies: int
+
+
 class SystemOut(_Out):
     release: dict[str, Any]
     statements: Statements
@@ -352,6 +380,8 @@ class SystemOut(_Out):
     not_validated_reasons: dict[str, int]
     no_set_reasons: dict[str, int]
     precision: PrecisionOut | None
+    document_sources: list[DocumentSourceOut]
+    study_identity: StudyIdentityOut
     special_populations: SpecialSystemOut
     missing: list[str]  # codes of what the release still lacks
     caveats: list[str]
@@ -532,6 +562,67 @@ def _system_extra(rel: Release) -> dict[str, Any]:
     }  # fmt: skip
     rel.__dict__["_system_extra"] = cached
     return cached
+
+
+DOCUMENT_SOURCES = ("drugsatfda_review", "pmc_oa")
+
+
+def document_sources(rel: Release) -> list[DocumentSourceOut]:
+    raw = rel.manifest_metrics.get("precision_documents")
+    prec: dict[str, Any] = cast(dict[str, Any], raw) if isinstance(raw, dict) else {}
+    held_raw = rel.manifest_metrics.get("document_rows_held_back")
+    held: dict[str, Any] = cast(dict[str, Any], held_raw) if isinstance(held_raw, dict) else {}
+    out: list[DocumentSourceOut] = []
+    for src in DOCUMENT_SOURCES:
+        rows = [
+            r
+            for d in rel.drugs.values()
+            for r in d.rows
+            if r.source_id == src and r.origin != "m0_annotation"
+        ]
+        p = prec.get(src) if isinstance(prec.get(src), dict) else None
+        n = k = nc = kc = None
+        share = lo = hi = sc = None
+        if p is not None:
+            try:
+                n, k = int(p["n"]), int(p["correct"])
+                nc, kc = int(p["n_conservative"]), int(p["correct_conservative"])
+                share, lo, hi = _share(k, n)
+                sc = _share(kc, nc)[0]
+            except (KeyError, TypeError, ValueError):
+                n = k = nc = None
+        out.append(
+            DocumentSourceOut(
+                source_id=src, published=bool(p and p.get("published") is True), rows=len(rows),
+                confirmed_rows=sum(1 for r in rows if r.confirmed), held_back_rows=int(held.get(src, 0) or 0),
+                measured_on=str(p["measured_on"]) if p and "measured_on" in p else None, n=n, correct=k,
+                share=share, wilson_low=lo, wilson_high=hi, n_conservative=nc, share_conservative=sc,
+            )
+        )  # fmt: skip
+    return out
+
+
+def study_identity(rel: Release) -> StudyIdentityOut:
+    cached: StudyIdentityOut | None = rel.__dict__.get("_study_identity")
+    if cached is not None:
+        return cached
+    before = after = 0
+    for d in rel.drugs.values():
+        rows = list(d.rows)
+        before += len(split_studies(rows, identity=False)[1])
+        after += len(split_studies(rows)[1])
+    links_raw = rel.manifest_metrics.get("study_identity_links")
+    links = (
+        {str(k): int(v) for k, v in cast(dict[str, Any], links_raw).items()}
+        if isinstance(links_raw, dict)
+        else {}
+    )
+    out = StudyIdentityOut(
+        groups_with_several_studies=int(rel.manifest_metrics.get("study_groups_with_several_studies") or 0),
+        links=links, test_studies_without_rule=before, test_studies=after,
+    )  # fmt: skip
+    rel.__dict__["_study_identity"] = out
+    return out
 
 
 def missing_codes(rel: Release, extra: dict[str, Any]) -> list[str]:
@@ -766,6 +857,8 @@ def system(request: Request, release: str | None = None) -> Any:
         not_validated_reasons=s.reasons_not_validated,
         no_set_reasons=ex_["no_set"],
         precision=precision_out(rel.manifest_metrics.get("precision")),
+        document_sources=document_sources(rel),
+        study_identity=study_identity(rel),
         special_populations=special_system(),
         missing=missing_codes(rel, ex_),
         caveats=[

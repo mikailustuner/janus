@@ -574,6 +574,16 @@ test.describe("system report", () => {
         `n = ${rel.validation.precision.n}`,
       );
     await expect(page.getByTestId("mk-precision")).toBeVisible();
+    // milestone M5: the two document sources with their measured precision, and the study identity rule
+    const docs = page.getByTestId("mk-doc-source");
+    await expect(docs).toHaveCount(rel.validation.document_sources.length);
+    for (const [i, d] of (rel.validation.document_sources as Json[]).entries())
+      await expect(docs.nth(i)).toContainText(
+        d.published ? "Published in this release" : "Held back",
+      );
+    await expect(page.getByTestId("mk-identity")).toContainText(
+      `of ${rel.validation.study_identity.test_studies_without_rule} held-out studies`,
+    );
   });
 
   test("503 and the back link", async ({ page }) => {

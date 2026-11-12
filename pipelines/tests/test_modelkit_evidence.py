@@ -11,6 +11,7 @@ import pytest
 from hypothesis import given
 from hypothesis import strategies as st
 
+from janus_pipelines.core.canonical import Json
 from janus_pipelines.core.manifest import Outcome
 from janus_pipelines.core.registry import load_registry
 from janus_pipelines.core.runner import RunContext, run_job
@@ -199,3 +200,47 @@ def test_committed_seeds_parse_together_and_stay_small() -> None:
     )
     text = " ".join(str(r["quote"]) + str(r["confirm_reason"]) for r in rows)
     assert " AI " not in text and "reviewed by" not in text
+
+
+# --- milestone M5: document sources and study identity ---------------------------------------
+
+
+def _doc_row(**changes: str) -> dict[str, Json]:
+    return dict(evidence_row(base(**changes), "doc"))
+
+
+def test_document_rows_enter_only_when_their_source_is_published() -> None:
+    seed = SEED.read_text(encoding="utf-8")
+    docs = [
+        _doc_row(source_id="pmc_oa", study_id="PMC1", source_locator="PMC1#t1/r1c1"),
+        _doc_row(
+            source_id="drugsatfda_review",
+            study_id="FDA study AB1001",
+            source_locator="u#page=1&line=2&col=3",
+        ),
+    ]
+    held = parse_seed(seed, documents=docs, doc_precision={"pmc_oa": {"published": False}})
+    assert not any(r["source_id"] == "pmc_oa" and r["study_id"] == "PMC1" for r in held.rows)
+    assert held.metrics["document_rows_held_back"] == {"drugsatfda_review": 1, "pmc_oa": 1}
+    shown = parse_seed(seed, documents=docs, doc_precision={"pmc_oa": {"published": True}})
+    assert any(r["study_id"] == "PMC1" for r in shown.rows)
+    assert not any(r["study_id"] == "FDA study AB1001" for r in shown.rows)
+
+
+def test_every_row_gets_its_study_group() -> None:
+    seed = SEED.read_text(encoding="utf-8")
+    docs = [
+        {
+            **_doc_row(source_id="pmc_oa", study_id="PMC1", source_locator="PMC1#t1/r1c1"),
+            "study_keys": "NCT:NCT01234567",
+        },
+        {
+            **_doc_row(source_id="pmc_oa", study_id="PMC2", source_locator="PMC2#t1/r1c1"),
+            "study_keys": "NCT:NCT01234567",
+        },
+    ]
+    res = parse_seed(seed, documents=docs, doc_precision={"pmc_oa": {"published": True}})
+    groups = {r["study_id"]: r["study_group"] for r in res.rows if r["source_id"] == "pmc_oa"}
+    assert groups["PMC1"] == groups["PMC2"] == "pmc_oa:PMC1"
+    assert all(r["study_group"] for r in res.rows)
+    assert res.metrics["study_identity_links"] == {"nct": 1}

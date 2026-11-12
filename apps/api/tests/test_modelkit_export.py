@@ -405,3 +405,21 @@ def test_mrgsolve_reproduces_the_janus_engine_curve(
             assert abs(b - a) <= 0.01 * a, (drug, t, a, b)
         else:
             assert abs(b - a) <= 1e-3 * peak, (drug, t, a, b)
+
+
+def test_source_info_of_review_and_article_rows_milestone_m5() -> None:
+    from janus.modelkit.export import source_info
+    from tests.modelkit_helpers import ev
+
+    pdf = "https://www.accessdata.fda.gov/drugsatfda_docs/nda/2020/123456Orig1s000ClinPharmR.pdf"
+    fda = ev(source_id="drugsatfda_review", study_id="FDA study AB1001",
+             source_locator=f"{pdf}#page=12&line=30&col=40")  # fmt: skip
+    info = source_info(fda, {})
+    assert info is not None and info["url"] == f"{pdf}#page=12" and info["type"] == "review"
+    art = ev(source_id="pmc_oa", study_id="PMC123456", source_locator="PMC123456#tab2/r1c1",
+             source_version="PMC123456; Jane Doe. Title. 2024. Licence CC BY 4.0")  # fmt: skip
+    info = source_info(art, {})
+    assert info is not None
+    assert info["url"] == "https://pmc.ncbi.nlm.nih.gov/articles/PMC123456/"
+    assert "CC BY 4.0" in info["licence"]
+    assert source_info(ev(source_id="pmc_oa", source_locator="elsewhere"), {}) is None

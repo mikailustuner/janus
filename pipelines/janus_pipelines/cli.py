@@ -62,6 +62,7 @@ JOBS: dict[str, tuple[str, str]] = {
     "tm_labels": ("janus_pipelines.jobs.time_machine", "TmLabelsJob"),
     "modelkit_evidence": ("janus_pipelines.jobs.modelkit_evidence", "ModelkitEvidenceJob"),
     "modelkit_ctgov": ("janus_pipelines.jobs.modelkit_ctgov", "ModelkitCtgovJob"),
+    "modelkit_documents": ("janus_pipelines.jobs.modelkit_documents", "ModelkitDocumentsJob"),
     "modelkit_special_populations": (
         "janus_pipelines.jobs.modelkit_special_populations",
         "ModelkitSpecialPopulationsJob",
