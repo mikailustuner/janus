@@ -243,3 +243,39 @@ text stays "Expert review has not yet been done".
 - **M26** Reader B imports nothing from reader A or the pairing; both readers give the same ratio for the same sentence by the
   fixed convention (Hypothesis, shared table of sentences).
 - **M27** A confirmed pair always agrees within 1 %, on class, grade and measure, without context flags (Hypothesis).
+
+## 17. Milestone M5 decisions
+- **DP-M31 Documents job.** `modelkit_documents` reads Drugs@FDA review PDFs and PMC Open Access articles. Reviews are located with the
+  Drugs@FDA data file (single-ingredient NDAs of a pool drug, review documents of the original submission, the table-of-contents page
+  for the PDF links; at most three PDFs per drug, clinical pharmacology or biopharmaceutics first, then multidiscipline or integrated);
+  articles with the Europe PMC search (title names the drug and a PK word, open access, CC BY or CC0; one request every 10 s as robots.txt
+  asks) and read from the PMC Article Datasets of NLM. Three licence checks (search result, bucket metadata, the XML licence element);
+  retracted articles and author manuscripts are not used. The NCBI E-utilities are not used (robots.txt disallows them).
+- **DP-M32 Tables only, two readers.** Born-digital PDFs (at least half of the pages have a text layer) are read through
+  `pdftotext -layout`; scanned PDFs are counted, not read. Reader A (`doc_a`, line patterns) and reader B (`doc_b`, column intervals of
+  the layout or the JATS grid, token rules) share only reference data (identity table, unit table, value types, the formulation evidence
+  functions of the M3 resolvers and `formref.decide`); `documents.py` is the only meeting point: pairing on the shared locator (review:
+  PDF, page, line, column of the number; article: PMCID, table id, row and column), confirmation by code (DP-M1), and the same study
+  for both readers. Never read: summary, recommendation, conclusion, overview and labeling sections; dispersion, bound, count and test
+  columns; ratio, least-squares, model, simulation, toxicokinetic, radioactivity, animal and special-population tables; dose-normalised
+  quantities. Dose only from the column header, the title or caption, the footnotes, or the study's design text (review section of that
+  study code; article methods with a dosing verb). Where a review table is silent on formulation and route and every product of the
+  application is a plain oral tablet or capsule, the products give immediate release and oral (the label rule DP-M15 for reviews).
+- **DP-M33 Human only.** An article is dropped if its title, journal, keywords or abstract name another species or a veterinary context,
+  a table if its caption, footnotes or header name one; an article needs a human cue in its abstract or methods (`species.py`; the pilot's
+  horse case is a test).
+- **DP-M34 Study identity (leakage guard).** Two studies of one drug are the same study if they share an NCT number, a sponsor study code
+  (ClinicalTrials.gov: organisation and secondary ids, `data/modelkit/ctgov_study_ids.csv`), duplicate a result (same parameter other
+  than Tmax, doses equal within 1 %, values within 1 %, n equal or missing), or are a review's document-level study and a coded study
+  of the same PDF; links close transitively (`study_identity.py`; columns `study_keys`, `study_group`, schema `modelkit_evidence-3`).
+  `split_studies` puts a study whose group has more than one study on the training side: it never tests.
+- **DP-M35 Publishing rule.** A document source's values enter the evidence store only if its measured precision (blinded sample, two
+  automated review passes) is at least 0.70 and the upper Wilson bound at least 0.75; `data/modelkit/precision_documents.json` records the
+  measurement and the decision; held-back rows are counted in the manifest. PMC rows carry the article's authors, title, journal, year,
+  DOI and licence in `source_version`, shown with every value.
+
+## 18. Milestone M5 properties
+- **M28** Reader B (`doc_b`) imports nothing from reader A, the pairing or the meeting module (test).
+- **M29** The pilot's horse case and every non-human article reach no reader (test).
+- **M30** A study linked to another study never tests; without links the split is unchanged (tests).
+- **M31** Dispersion, count and test columns never give a value; a dose is never taken from an abstract (tests).

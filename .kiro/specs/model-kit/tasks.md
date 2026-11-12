@@ -68,8 +68,21 @@
     met, see `reviews.md`); expert audit (M6)
   - [ ] PK-Sim: a mechanistic compound needs lipophilicity, pKa, fraction unbound, blood/plasma ratio and a clearance process;
     no open evidence source of them is read yet
-- [ ] M5 FDA clinical pharmacology reviews (born-digital first, then OCR) and PMC table reader (dose only from
-  table, footnote or methods, species filter)
+- [~] M5 FDA clinical pharmacology reviews (born-digital first, then OCR) and PMC table reader (dose only from
+  table, footnote or methods, species filter) (see `reviews.md` for the numbers)
+  - [x] Pre-registration written before any download (private), with six addenda (access routes after robots.txt, two
+    reader rules, born-digital threshold, code freezes, the FDA result, a second reader iteration)
+  - [x] Drugs@FDA review location and download (data file, table-of-contents pages, at most three PDFs per drug), job
+    `modelkit_documents`, born-digital text layer, two independent table readers, confirmation by code, same study
+  - [x] PMC Open Access articles: Europe PMC search, PMC Article Datasets, three licence checks, human-only filter (the
+    pilot's horse case is a test), dose only from table, caption, footnotes or methods with a dosing verb
+  - [x] Study identity across sources (NCT number, sponsor code, numerical duplicate, review document); a linked study
+    never tests; schema `modelkit_evidence-3`
+  - [x] Precision measured on fresh blinded samples (two automated review passes): review tables 0.48, PMC tables 0.48;
+    both held back by the pre-registered rule; system report, five languages, MCP text, public API document
+  - [ ] Precision at least 0.70 for either document source (not met); OCR of scanned reviews (not run: it was to follow a
+    measured born-digital reader)
+  - [ ] Coverage 150 sets and 40 Validated (not approached: 26 sets, 0 Validated; see `reviews.md`)
 - [ ] M6 Expert sample audit, expert review, method write-up, data package with DOI, `CITATION.cff` (owner
   decision)
 - [ ] Two-compartment engine and export, per-kg handling with explicit body weight in a source, a class D

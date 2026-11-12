@@ -192,3 +192,25 @@ wrong pool drug through an identity alias, one value per grade in a list, the wr
 The statements are shown as quoted evidence (two readers agree, no person has checked, no model extrapolation, no dose advice). The
 older-adult atlas rows (64, one per drug) are shown only as unconfirmed evidence with their quote and status.
 Limits: one model family and no outside knowledge in the review passes; precision, not recall; the readers were developed on the same labels.
+
+## Milestone M5: review PDFs and PMC tables (automated checks only; expert review has not yet been done)
+Sources read: 865 Drugs@FDA review PDFs of 452 pool drugs (876 chosen; 392 born-digital, 473 scanned and not read) and 1,966
+PMC articles licensed CC BY or CC0 of 449 drugs (1,979 found; 13 refused by a licence check; 899 dropped by the human-only
+filter). Two independent table readers and confirmation by code gave 385 confirmed review values (38 drugs) and 2,292 confirmed
+article values (142 drugs).
+Precision on fresh blinded samples of 100 confirmed values (two automated review passes):
+| | Review tables (born-digital) | PMC tables |
+|---|---|---|
+| Precision (both passes agree) | 0.48 (Wilson 95 % 0.38 to 0.58), n = 92 | 0.48 (0.38 to 0.58), n = 91 |
+| Conservative (all items) | 0.44 | 0.44 |
+| kappa | 0.91 | 0.83 |
+The pre-registered rule publishes a source only at a precision of at least 0.70 (upper Wilson bound at least 0.75): neither source
+is published; their rows are counted as held back. Error classes: metabolite and other-analyte tables, columns of the number of
+subjects, CV or RSE or p values read as values, model or in-vitro tables, co-administered or fixed-dose-combination arms, special
+populations. A second iteration of the readers (rules from the review sample) was run for the article sample; the article sample is
+fresh, the rules are not blind to the review sample. OCR of scanned reviews was not run.
+Study identity: a study that may be the same study as one in another source (shared NCT number, sponsor code, identical results, or
+one review document) never tests. On the published evidence it removes 11 of 298 held-out studies; statuses do not change.
+Sets and gate are those of M4: 26 sets, 8 complete; Validated 0, Failed 1 (enzalutamide), Not validated 403; no drug has both AUC
+and Cmax tested; the gate is not interpretable. An exploratory run with both held-back sources included (not shipped) gives 35 sets,
+17 complete, still 0 drugs with both metrics tested.
