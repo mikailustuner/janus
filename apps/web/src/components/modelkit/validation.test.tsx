@@ -35,11 +35,14 @@ const messages = (l: Locale) =>
     ),
   ) as { ModelKit: { val: Record<string, string> } };
 
-function enzalutamide(): DrugOut {
-  const r = decode(drugOut, recorded.drug.enzalutamide);
+function recordedDrug(key: keyof typeof recorded.drug): DrugOut {
+  const r = decode(drugOut, recorded.drug[key]);
   if (!r.ok) throw new Error("recorded drug does not decode");
   return r.value;
 }
+const enzalutamide = () => recordedDrug("enzalutamide");
+// a recorded drug with validation points
+const withPoints = () => recordedDrug("repaglinide");
 
 const html = (locale: Locale, out: DrugOut) =>
   renderToStaticMarkup(
@@ -58,8 +61,18 @@ describe("leave-one-study-out validation", () => {
   });
 
   it("counts rebuilt points only when there are some, in every language", () => {
-    const plain = enzalutamide();
-    expect(plain.validation.points.length).toBeGreaterThan(0);
+    const base = withPoints();
+    expect(base.validation.points.length).toBeGreaterThan(0);
+    const plain: DrugOut = {
+      ...base,
+      validation: {
+        ...base.validation,
+        points: base.validation.points.map((p) => ({
+          ...p,
+          rebuilt_without_study: false,
+        })),
+      },
+    };
     const rebuilt: DrugOut = {
       ...plain,
       validation: {

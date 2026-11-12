@@ -28,10 +28,9 @@ RECORDED_M0 = WEB / "modelkit.m0.recorded.json"  # the six M0 drugs: every kind 
 FEATURED = (
     "enzalutamide",
     "gabapentin",
+    "repaglinide",  # a set with leave-one-study-out points
     "brigatinib",
     "theophylline",
-    "candesartan",
-    "sumatriptan",
 )
 RECORDED_ON = "2026-11-12"
 

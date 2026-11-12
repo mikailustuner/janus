@@ -93,12 +93,14 @@ const stubsOf = (r: Recorded) => ({
 });
 const stubs = stubsOf(fx);
 const relStubs = stubsOf(rel);
-// A release drug with a complete set and a validation point, for the release pages.
-const REL_DRUG = Object.keys(rel.drug).find(
-  (k) =>
-    rel.drug[k]!.parameter_set?.complete &&
-    rel.drug[k]!.validation.points.length,
-)!;
+// A release drug with a set and a validation point, for the release pages (a complete set
+// first; the release may have none with a point).
+const withPoints = Object.keys(rel.drug).filter(
+  (k) => rel.drug[k]!.parameter_set && rel.drug[k]!.validation.points.length,
+);
+const REL_DRUG =
+  withPoints.find((k) => rel.drug[k]!.parameter_set?.complete) ??
+  withPoints[0]!;
 
 const PAGE = 25; // drugs per page of the list
 const VALIDATED = "ertugliflozin";
@@ -272,18 +274,26 @@ test.describe("list", () => {
     await stubApi(page, relStubs);
     await page.goto("/en/research/model-kit");
     const all = rel.drugs.drugs as Json[];
-    // a Failed drug whose page is in the recorded release (not every drug page is recorded)
+    // a Failed drug whose page is in the recorded release (not every drug page is recorded);
+    // a release without a Failed drug filters on Not validated instead
+    const status = all.some((d) => d.status === "failed")
+      ? "failed"
+      : "not_validated";
     const failed = all.find(
-      (d) => d.status === "failed" && (d.key as string) in rel.drug,
+      (d) => d.status === status && (d.key as string) in rel.drug,
     );
     expect(failed).toBeTruthy();
     // status filter
-    await page.getByTestId("mk-status-filter").selectOption("failed");
-    const nFailed = all.filter((d) => d.status === "failed").length;
+    await page.getByTestId("mk-status-filter").selectOption(status);
+    const nFailed = all.filter((d) => d.status === status).length;
     await expect(page.getByTestId("mk-matches")).toContainText(
       `${nFailed} drug`,
     );
-    await expect(page.getByTestId("mk-drug").first()).toContainText("Failed");
+    await expect(page.getByTestId("mk-drug").first()).toContainText(
+      status === "failed"
+        ? messages.en.ModelKit.status.failed
+        : messages.en.ModelKit.status.not_validated,
+    );
     await page.getByTestId("mk-status-filter").selectOption("");
     // name search (waits for a pause in typing) and a search without a match
     await page.getByTestId("mk-search").fill(failed!.name.slice(0, 5));
@@ -666,7 +676,13 @@ test.describe("demo mode", () => {
     await expect(page.getByTestId("mk-validation")).toBeVisible();
     await page.getByTestId("mk-value-cl").click();
     await expect(page.getByTestId("mk-quote").first()).toBeVisible();
-    for (const t of rel.drug[REL_DRUG]!.targets)
+    // downloads exist for a complete set only
+    const DL_DRUG = Object.keys(rel.drug).find(
+      (k) => rel.drug[k]!.targets.length,
+    )!;
+    await page.goto(`/en/research/model-kit/drug#${DL_DRUG}`);
+    await expect(page.getByTestId("mk-validation")).toBeVisible();
+    for (const t of rel.drug[DL_DRUG]!.targets)
       await expect(page.getByTestId(`mk-download-${t}`)).toBeDisabled();
     await expect(page.getByTestId("mk-dl-demo")).toContainText(
       "Downloads need the live service",
