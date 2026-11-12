@@ -377,3 +377,14 @@ def test_arbitration_drops_a_one_sided_dose_only_where_the_parameter_needs_none(
     cmax_a, cmax_b = _cand(ctx), replace(_cand(ctx), dose_mg=None)
     kept = strict_ctgov.apply([Paired(cmax_a, cmax_b, differs)], record(), IDS, BRANDS, counts, REF)
     assert not kept[0].result.confirmed
+
+
+def test_reader_c_gives_the_definition_of_the_listed_grade() -> None:
+    q = (
+        "AUC increased by 21%, 32%, and 41% in patients with mild (CLcr 60 to 89 mL/minute), "
+        "moderate (CLcr 30 to 59 mL/minute), and severe (CLcr 15 to 29 mL/minute) renal "
+        "impairment, "
+        "respectively."
+    )
+    assert sp_c.definition_for(q, "moderate") == "moderate (CLcr 30 to 59 mL/minute)"
+    assert sp_c.definition_for("In mild impairment AUC rose 20%.", "mild") is None

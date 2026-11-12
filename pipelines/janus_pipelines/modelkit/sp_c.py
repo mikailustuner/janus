@@ -118,3 +118,24 @@ def agrees(quote: str, measure: str, grade: str, ratio: float) -> bool:
         return False
     v = read(quote).get((measure, g))
     return v is not None and abs(v - ratio) <= 0.01 * max(v, ratio)
+
+
+_GRADE_WORDS: Final = {
+    "mild": r"mild(?:ly)?|childs?[- ]pugh (?:class |score )?a\b",
+    "moderate": r"moderate(?:ly)?|childs?[- ]pugh (?:class |score )?b\b",
+    "severe": r"severe(?:ly)?|childs?[- ]pugh (?:class |score )?c\b",
+    "esrd": r"end[- ]stage|\besrd\b",
+}
+
+
+def definition_for(quote: str, grade: str) -> str | None:
+    """In a sentence that lists several grades, the definition of THIS grade: the grade word with the
+    parenthesis that directly follows it ("moderate (CLcr 30 to 59 mL/min)"), or the grade word
+    alone. None when the quote does not list several grades or does not name this grade."""
+    g = SAME_GRADE.get(grade)
+    if not g or g not in _GRADE_WORDS or len(set(_grades(quote))) < 2:
+        return None
+    m = re.search(
+        rf"\b(?:{_GRADE_WORDS[g]})\b(?:\s+[a-z]+){{0,2}}?(\s*\([^()]{{1,80}}\))?", quote, re.I
+    )
+    return None if m is None else m.group(0).strip()
