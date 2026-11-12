@@ -856,19 +856,18 @@ function SpQuote({
       <p className="text-xs text-muted break-words">
         {effective
           ? t("ModelKit.sp.sourceDated", { version, date: effective })
-          : t("ModelKit.sp.source", { version })}{" "}
-        <a
-          href={url}
-          {...EXTERNAL}
-          className="break-all underline"
-          aria-label={`${t("ModelKit.sp.openLabel")} (${setId.slice(0, 8)})`}
-        >
-          {t("ModelKit.sp.openLabel")}
-        </a>{" "}
-        <span lang="en" className="mono break-all">
+          : t("ModelKit.sp.source", { version })}
+      </p>
+      <a
+        href={url}
+        {...EXTERNAL}
+        className="inline-flex min-h-11 max-w-full items-center gap-2 self-start text-sm underline"
+      >
+        <span>{t("ModelKit.sp.openLabel")}</span>
+        <span lang="en" className="mono break-all text-xs">
           {setId}
         </span>
-      </p>
+      </a>
     </>
   );
 }
@@ -1000,7 +999,7 @@ function SpecialPopulations({ out }: { out: DrugOut }) {
       )}
       {sp.atlas.length ? (
         <details className="flex flex-col gap-2" data-testid="mk-sp-atlas">
-          <summary className="cursor-pointer font-bold">
+          <summary className="flex min-h-11 cursor-pointer items-center font-bold">
             {t("ModelKit.sp.atlasTitle", { count: sp.atlas.length })}
           </summary>
           <p className="max-w-[72ch] text-sm text-muted">
