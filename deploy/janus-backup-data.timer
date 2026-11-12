@@ -1,0 +1,12 @@
+# Weekly snapshot of the server's data directory; Persistent catches up a missed run.
+[Unit]
+Description=Weekly Janus data backup
+
+[Timer]
+OnCalendar=Sun 04:30
+RandomizedDelaySec=15m
+Persistent=true
+Unit=janus-backup@data.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,12 @@
+# Daily database dump; Persistent catches up a run missed while the machine was off.
+[Unit]
+Description=Daily Janus database backup
+
+[Timer]
+OnCalendar=*-*-* 03:30
+RandomizedDelaySec=15m
+Persistent=true
+Unit=janus-backup@db.service
+
+[Install]
+WantedBy=timers.target

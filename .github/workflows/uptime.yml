@@ -1,0 +1,36 @@
+name: Uptime
+
+# External availability check of the public site from outside the server's network. A failed run makes
+# GitHub send its usual failed-workflow notification. Three attempts a minute apart, so a single slow
+# answer does not fail the run.
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: uptime
+  cancel-in-progress: false
+
+jobs:
+  check:
+    name: janusmeds.org answers
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Home page, API health and model kit API
+        run: |
+          check() {
+            curl -fsS -m 20 -o /dev/null "https://janusmeds.org/en" &&
+              curl -fsS -m 20 "https://janusmeds.org/api/health" | grep -q '"status":"ok"' &&
+              curl -fsS -m 20 -o /dev/null "https://janusmeds.org/api/modelkit/drugs?limit=1"
+          }
+          for attempt in 1 2 3; do
+            if check; then echo "up (attempt $attempt)"; exit 0; fi
+            echo "attempt $attempt failed"
+            [ "$attempt" = 3 ] || sleep 60
+          done
+          echo "::error::janusmeds.org did not answer in three attempts"
+          exit 1

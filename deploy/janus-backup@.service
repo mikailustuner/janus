@@ -1,0 +1,14 @@
+# Backup machine, user unit: pull one Janus backup (`db` or `data`) from the server (README.md, "Backups").
+# Install: copy backup-pull.sh to ~/backups/janus/ and this file plus the timers to ~/.config/systemd/user/.
+[Unit]
+Description=Janus backup (%i)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+Environment=BACKUP_DIR=%h/backups/janus
+ExecStart=%h/backups/janus/backup-pull.sh %i
+Nice=10
+IOSchedulingClass=idle
+TimeoutStartSec=2h
