@@ -55,14 +55,14 @@ def sample(text: str, name: str, **labels: str) -> float | None:
 def test_route_template_is_the_label_and_the_request_leaks_nothing() -> None:
     app = create_app(Settings.from_env({}), configure_logs=False)
     client = TestClient(app)
-    client.get(f"/modelkit/drugs/{SECRET}?name=secretquery&code=12345")
+    client.get(f"/modelkit/drugs/{SECRET}?name=secretquery&code=zq7leakcode")
     client.get("/no-such-page-zzqx")
     client.request("BREW", "/health")
     text = exposition()
     assert 'route="/modelkit/drugs/{key}"' in text
     assert 'route="<unmatched>"' in text
     assert 'method="OTHER"' in text
-    for leak in (SECRET, "secretquery", "12345", "zzqx", "BREW", "testclient", "testserver"):
+    for leak in (SECRET, "secretquery", "zq7leakcode", "zzqx", "BREW", "testclient", "testserver"):
         assert leak not in text
     count = sample(
         text,
