@@ -272,7 +272,10 @@ test.describe("list", () => {
     await stubApi(page, relStubs);
     await page.goto("/en/research/model-kit");
     const all = rel.drugs.drugs as Json[];
-    const failed = all.find((d) => d.status === "failed");
+    // a Failed drug whose page is in the recorded release (not every drug page is recorded)
+    const failed = all.find(
+      (d) => d.status === "failed" && (d.key as string) in rel.drug,
+    );
     expect(failed).toBeTruthy();
     // status filter
     await page.getByTestId("mk-status-filter").selectOption("failed");
@@ -353,6 +356,44 @@ test.describe("list", () => {
 });
 
 test.describe("drug page", () => {
+  for (const theme of THEMES)
+    for (const locale of ["en", "pt"] as const)
+      test(`leave one study out: rebuilt points are counted, ${locale}, ${theme}`, async ({
+        page,
+      }, info) => {
+        // a recorded release drug whose points are marked as predicted by a set built without
+        // their study (the recorded drug pages have none; DP-M39)
+        const d = rel.drug[REL_DRUG]!;
+        const pts = d.validation.points as Json[];
+        const body = {
+          ...d,
+          validation: {
+            ...d.validation,
+            points: pts.map((p) => ({ ...p, rebuilt_without_study: true })),
+          },
+        };
+        await useTheme(page, theme);
+        await stubApi(page, {
+          ...relStubs,
+          [`/modelkit/drugs/${REL_DRUG}`]: { body },
+        });
+        await page.goto(`/${locale}/research/model-kit/drug#${REL_DRUG}`);
+        await expect(page.getByTestId("mk-validation")).toBeVisible();
+        await expect(page.getByTestId("mk-rebuilt")).toContainText(
+          String(pts.length),
+        );
+        await expectNoHorizontalScroll(page);
+        await expectNoAxeViolations(page);
+        await shot(page, `rebuilt-${locale}`, info.project.name, theme);
+        if (SHOTS)
+          await page.getByTestId("mk-validation").screenshot({
+            path: join(
+              SHOTS,
+              `modelkit-rebuilt-section-${locale}-${info.project.name}-${theme}.png`,
+            ),
+          });
+      });
+
   test("a long evidence table shows 20 rows first and all on request", async ({
     page,
   }) => {

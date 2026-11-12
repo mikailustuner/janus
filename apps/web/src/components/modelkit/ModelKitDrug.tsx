@@ -519,7 +519,7 @@ function Params({
   );
 }
 
-function Validation({ out }: { out: DrugOut }) {
+export function Validation({ out }: { out: DrugOut }) {
   const t = useT();
   const locale = useLocale();
   const nf = new Intl.NumberFormat(locale, { maximumFractionDigits: 3 });
