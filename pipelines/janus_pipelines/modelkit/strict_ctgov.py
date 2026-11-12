@@ -329,21 +329,8 @@ def level(fails: tuple[str, ...]) -> int:
     return got
 
 
-# Shipped rule set (precision study, addendum 6): every level 1-3 rule except the relaxed ones must pass.
+# Shipped level (precision study, addendum 2): a confirmed value below it becomes unconfirmed.
 PUBLISH_LEVEL: Final = 3
-RELAXED: Final = frozenset(
-    {"route_not_plain", "transform_word", "combination_word", "analyte_word"}
-)
-SHIPPED_RULES: Final[frozenset[str]] = (
-    frozenset[str]().union(*(LEVELS[k] for k in range(1, PUBLISH_LEVEL + 1))) - RELAXED
-)
-# Context fields the record check can arbitrate when the two readers disagree only on them (third vote).
-VOTE_FIELDS: Final = frozenset({"coadministered", "arm"})
-
-
-def publishable(fails: tuple[str, ...]) -> bool:
-    """The value passes every shipped rule."""
-    return "not_located" not in fails and not any(f in SHIPPED_RULES for f in fails)
 
 
 def apply(
@@ -353,24 +340,14 @@ def apply(
     brands: BrandTable,
     counts: Counter[str],
 ) -> list[Paired]:
-    """Confirmed pairs that fail a shipped rule become unconfirmed (reason `strict_check` with the codes).
-    A pair whose readers agree on value, unit, analyte and dose and differ only on VOTE_FIELDS, with
-    reader A saying no other active drug, is confirmed (reason `strict_vote`) when the record check
-    finds a single-agent group and passes every shipped rule: two of three readers agree. Every other
-    pair is returned unchanged."""
+    """Confirmed pairs of one study whose strict level is below PUBLISH_LEVEL become unconfirmed with
+    reason `strict_check` and the failed rule codes; every other pair is returned unchanged."""
     out: list[Paired] = []
     for p in pairs:
-        a, ctx = p.a, p.a.context
-        vote = (
-            not p.result.confirmed
-            and p.result.reason == "context_differs"
-            and bool(p.result.differing)
-            and set(p.result.differing) <= VOTE_FIELDS
-            and not ctx.coadministered
-        )
-        if not p.result.confirmed and not vote:
+        if not p.result.confirmed:
             out.append(p)
             continue
+        a, ctx = p.a, p.a.context
         fails = check(
             study,
             a.drug_key,
@@ -384,14 +361,7 @@ def apply(
             a.parameter,
             brands,
         )
-        if vote:
-            if publishable(fails):
-                counts["strict_vote_confirmed"] += 1
-                out.append(replace(p, result=Confirmation(True, "strict_vote", p.result.differing)))
-            else:
-                out.append(p)
-            continue
-        if publishable(fails):
+        if level(fails) >= PUBLISH_LEVEL:
             counts["strict_check_passed"] += 1
             out.append(p)
             continue

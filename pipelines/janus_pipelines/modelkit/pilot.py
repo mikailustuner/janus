@@ -49,7 +49,6 @@ _REASON: Final = {
     "not_the_parent_drug": "both readers agree the value is not for the parent drug",
     "reader_found_no_value": "a reader found no value",
     "strict_check": "both readers agree, but the strict publication check abstained",
-    "strict_vote": "the readers agree on value, unit, analyte and dose; the record check settles the context they differ on",
 }  # fmt: skip
 
 

@@ -150,47 +150,20 @@ def _cand(confirmed_ctx: Context) -> Candidate:
     )  # fmt: skip
 
 
-def test_apply_keeps_only_publishable_confirmations() -> None:
+def test_apply_only_removes_confirmations() -> None:
     ok = _cand(Context(formulation="immediate_release", route="oral", regimen="single"))
-    relaxed = _cand(Context(formulation="unspecified", route="unknown"))  # route rule is relaxed
-    bad = _cand(Context(formulation="immediate_release", route="oral", coadministered="metformin"))
+    bad = _cand(Context(formulation="unspecified", route="unknown"))
     pairs = [
         Paired(ok, ok, Confirmation(True, "both_readers_agree")),
-        Paired(relaxed, relaxed, Confirmation(True, "both_readers_agree")),
         Paired(bad, bad, Confirmation(True, "both_readers_agree")),
         Paired(ok, None, Confirmation(False, "reader_b_found_nothing")),
     ]
     counts: Counter[str] = Counter()
     out = strict_ctgov.apply(pairs, record(), IDS, BRANDS, counts)
-    assert [p.result.confirmed for p in out] == [True, True, False, False]
-    assert out[2].result.reason == "strict_check"
-    assert "coadministered_claimed" in out[2].result.differing
-    assert out[3] is pairs[3]
-    assert counts == Counter({"strict_check_passed": 2, "strict_check_abstained": 1})
-
-
-def test_vote_settles_only_coadministration_or_arm_disagreements() -> None:
-    a = _cand(Context(formulation="immediate_release", route="oral", regimen="single"))
-    b = _cand(
-        Context(formulation="immediate_release", route="oral", regimen="single", coadministered="x")
-    )
-    single = record()
-    two = record(interventions=(("Lisinopril", ""), ("Andexanet alfa", "")))
-    differs = Confirmation(False, "context_differs", ("coadministered",))
-    regimen = Confirmation(False, "context_differs", ("regimen",))
-    counts: Counter[str] = Counter()
-    got = strict_ctgov.apply(
-        [Paired(a, b, differs), Paired(a, b, regimen)], single, IDS, BRANDS, counts
-    )
-    assert got[0].result.confirmed and got[0].result.reason == "strict_vote"
-    assert not got[1].result.confirmed
-    assert not strict_ctgov.apply([Paired(a, b, differs)], two, IDS, BRANDS, counts)[
-        0
-    ].result.confirmed
-    # reader A itself claims another drug: no vote
-    assert not strict_ctgov.apply([Paired(b, a, differs)], single, IDS, BRANDS, counts)[
-        0
-    ].result.confirmed
+    assert [p.result.confirmed for p in out] == [True, False, False]
+    assert out[1].result.reason == "strict_check" and "route_not_plain" in out[1].result.differing
+    assert out[2] is pairs[2]
+    assert counts == Counter({"strict_check_passed": 1, "strict_check_abstained": 1})
 
 
 @given(
