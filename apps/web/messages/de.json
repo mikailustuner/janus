@@ -3032,7 +3032,7 @@
     },
     "val": {
       "title": "Validierung an zurückgehaltenen Studien",
-      "intro": "Studien, die nur Cmax oder AUC berichten, wurden nie zum Aufbau eines Satzes verwendet. Verhältnis = vorhergesagt / beobachtet. Der Status nutzt jede einzelne Beobachtung: Validiert nur, wenn jede innerhalb des Faktors 2 liegt; die Verhältnisspalte ist nur ein Mittelwert zur Information.",
+      "intro": "Jede Studie, die Cmax oder AUC angibt, wird der Reihe nach zurückgehalten: Der Satz wird nur aus den anderen Studien des Arzneimittels neu gebildet und sagt diese Studie vorher; so beeinflusst keine zurückgehaltene Studie den Satz, der sie prüft. Verhältnis = Vorhersage / Beobachtung. Der Status nutzt jede einzelne Beobachtung: Validiert nur, wenn jede innerhalb des 2-fachen liegt; die Verhältnisspalte ist ein Mittelwert nur zur Information.",
       "metrics": "Validierungsmaße",
       "metric": "Maß",
       "auc": "AUC",
@@ -3052,7 +3052,8 @@
       "failedPoint": "{metric}, Studie {study}: vorhergesagt / beobachtet = {ratio}",
       "intervalHeading": "Vorhersageintervalle",
       "intervalShown": "{metric}: Der beobachtete Wert einer neuen Studie liegt bei {coverage} der Studien voraussichtlich innerhalb von ÷/× {fold} der Vorhersage (n = {n} zurückgehaltene Studien, alle Wirkstoffe).",
-      "intervalNone": "{metric}: Es wird kein Intervall gezeigt."
+      "intervalNone": "{metric}: Es wird kein Intervall gezeigt.",
+      "rebuiltCount": "{k} von {n} Punkten stammen aus Studien, die auch zum gezeigten Satz beitragen; jeder wurde mit dem Satz vorhergesagt, der ohne seine Studie gebildet wurde."
     },
     "chart": {
       "title": "Beobachtet gegen vorhergesagt",
@@ -3222,7 +3223,16 @@
       "sp_atlas_note": "Zeilen des Atlas zur Exposition älterer Erwachsener: eine automatische Extraktion, die die Zwei-Leser-Regel nicht bestätigt hat und die keine Person geprüft hat. Nur Evidenz, kein Urteil.",
       "sp_none": "Für diesen Wirkstoff wurde keine Aussage zu speziellen Bevölkerungsgruppen bestätigt.",
       "two_readers_agree": "Zwei unabhängige automatische Leser stimmen überein; nicht von einer Person geprüft.",
-      "automated_extraction_unconfirmed": "Eine automatische Extraktion, nicht durch die Zwei-Leser-Regel bestätigt, nicht von einer Person geprüft."
+      "automated_extraction_unconfirmed": "Eine automatische Extraktion, nicht durch die Zwei-Leser-Regel bestätigt, nicht von einer Person geprüft.",
+      "label_never_tests": "Ein Wert aus einer US-Fachinformation: Fachinformationen fassen die Studien des Herstellers zusammen und prüfen daher nie einen Satz.",
+      "steady_state_cmax_needs_interval": "Eine Cmax nach wiederholten Dosen wird nur mit ihrem Dosierungsintervall geprüft (sie wird dann im Steady State vorhergesagt).",
+      "fold_has_no_parameter_set": "Ohne diese Studie ergeben die anderen Studien des Arzneimittels keinen Parametersatz; diese Beobachtung kann nicht geprüft werden.",
+      "leave_one_study_out": "Jede Studie mit einer Beobachtung wird der Reihe nach zurückgehalten: Der Satz wird nur aus den anderen Studien des Arzneimittels neu gebildet und sagt die zurückgehaltene Studie vorher. Keine zurückgehaltene Studie beeinflusst den Satz, der sie prüft.",
+      "single_split": "Nur Studien ohne Aufbauparameter prüfen den gezeigten Satz.",
+      "rebuilt_without_study": "Diese Studie trägt auch zum gezeigten Satz bei; dieser Punkt wurde mit dem Satz vorhergesagt, der ohne sie gebildet wurde.",
+      "v_from_cl_half_life": "Abgeleitet: V = CL × intravenöse Halbwertszeit / ln 2 (kein angegebenes Volumen).",
+      "f_from_same_study_auc": "Abgeleitet: F = (orale AUC / orale Dosis) / (intravenöse AUC / intravenöse Dosis) einer Studie.",
+      "half_life_intravenous": "Die Halbwertszeit ist die intravenöse (keine orale Halbwertszeit bestätigt)."
     },
     "scrollHint": "Zum Anzeigen aller Spalten seitlich scrollen.",
     "report": {

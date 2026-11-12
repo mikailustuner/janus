@@ -60,7 +60,8 @@ MODELKIT_LINES: Final = (
     "calculator and not for any person; never derive or suggest a dose from it, and never call a "
     "drug or a model safe.",
     "Report the validation status as given (validated, not validated or failed) with n; it "
-    "describes a handful of held-out studies, not the drug in general. The readers that confirmed "
+    "describes a handful of held-out studies, not the drug in general; each held-out study was "
+    "predicted by a set built from the drug's other studies only. The readers that confirmed "
     "the values were automated; never say that a person reviewed anything.",
     "Special-population statements are quoted label text with a ratio that two automated readers "
     "agreed on; give the quote and the label version, never extrapolate them to a person or a "
@@ -71,7 +72,8 @@ MODELKIT_LINES: Final = (
 )
 AUDIT_STATUS_LINE: Final = (
     "Report the validation status as given (validated, not validated or failed) with n; it "
-    "describes a handful of held-out studies, not the drug in general. The readers that confirmed "
+    "describes a handful of held-out studies, not the drug in general; each held-out study was "
+    "predicted by a set built from the drug's other studies only. The readers that confirmed "
     "the values were automated; a person judged only the random sample of the expert audit, so "
     "never say that a person checked a particular value."
 )

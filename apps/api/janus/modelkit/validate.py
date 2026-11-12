@@ -18,7 +18,7 @@ from __future__ import annotations
 
 import math
 from collections import defaultdict
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from typing import Literal
 
 from janus.modelkit.builder import NoSet, ParameterSet, build_set, set_reference
@@ -34,6 +34,7 @@ from janus.modelkit.evidence import (
 from janus.timemachine.pk import OneCompartment, auc_inf, cmax
 
 Status = Literal["validated", "not_validated", "failed"]
+Design = Literal["leave_one_study_out", "single_split"]
 BAND = 2.0
 MIN_STUDIES_FOR_INTERVAL = 20
 MIN_DRUGS_FOR_INTERPRETATION = 10
@@ -77,6 +78,7 @@ class Validation:
     suspect: tuple[str, ...]
     interval: str
     failed_points: tuple[str, ...] = ()  # evidence ids of the points outside 2-fold
+    design: Design = "leave_one_study_out"  # DP-M39; "single_split" is the M0 to M6 design
 
 
 def cmax_steady_state(f: float, ka: float, cl: float, v: float, dose: float, tau: float) -> float:
@@ -200,7 +202,7 @@ def validate(drug_key: str, rows: list[Ev], ps: ParameterSet | NoSet) -> Validat
     unchanged; every point is predicted by a set built without the point's study."""
     rows = [r for r in rows if r.drug_key == drug_key]
     if isinstance(ps, NoSet):
-        return validate_single_split(drug_key, rows, ps)
+        return replace(validate_single_split(drug_key, rows, ps), design="leave_one_study_out")
     _, test = split_studies(rows)
     linked = linked_studies(rows)
     cands = set(held_out_candidates(rows))
@@ -213,11 +215,7 @@ def validate(drug_key: str, rows: list[Ev], ps: ParameterSet | NoSet) -> Validat
     for study in sorted(by_study):
         obs = sorted(by_study[study], key=lambda e: e.eid)
         if study not in cands:
-            why_all = (
-                "same_study_in_another_source"
-                if study in linked
-                else "observation_in_building_study"
-            )
+            why_all = "same_study_in_another_source" if study in linked else "label_never_tests"
             excluded += [(e.eid, why_all) for e in obs]
             continue
         fold: ParameterSet | NoSet | None = None
@@ -243,7 +241,7 @@ def validate(drug_key: str, rows: list[Ev], ps: ParameterSet | NoSet) -> Validat
                 excluded.append((e.eid, "set_cannot_predict_metric"))
             else:
                 pts.append(p)
-    return _decide(drug_key, pts, excluded)
+    return _decide(drug_key, pts, excluded, "leave_one_study_out")
 
 
 def validate_single_split(drug_key: str, rows: list[Ev], ps: ParameterSet | NoSet) -> Validation:
@@ -283,10 +281,12 @@ def validate_single_split(drug_key: str, rows: list[Ev], ps: ParameterSet | NoSe
             excluded.append((e.eid, "set_cannot_predict_metric"))
             continue
         pts.append(p)
-    return _decide(drug_key, pts, excluded)
+    return _decide(drug_key, pts, excluded, "single_split")
 
 
-def _decide(drug_key: str, pts: list[Point], excluded: list[tuple[str, str]]) -> Validation:
+def _decide(
+    drug_key: str, pts: list[Point], excluded: list[tuple[str, str]], design: Design
+) -> Validation:
     """The strict status function (DP-M7, owner decision 2026-11-11), unchanged."""
     auc = _metric("auc", [p for p in pts if p.metric == "auc"])
     cm = _metric("cmax", [p for p in pts if p.metric == "cmax"])
@@ -319,7 +319,7 @@ def _decide(drug_key: str, pts: list[Point], excluded: list[tuple[str, str]]) ->
     )
     return Validation(
         drug_key, status, tuple(reasons), (auc, cm), tuple(pts), tuple(sorted(excluded)),
-        tuple(suspect), interval, failed_points,
+        tuple(suspect), interval, failed_points, design,
     )  # fmt: skip
 
 

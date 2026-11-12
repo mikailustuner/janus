@@ -3032,7 +3032,7 @@
     },
     "val": {
       "title": "Validation against held-out studies",
-      "intro": "Studies that only report Cmax or AUC were never used to build a set. Ratio = predicted / observed. The status uses every single observation: Validated only if each one is within 2-fold; the ratio column is a mean for information only.",
+      "intro": "Each study that reports Cmax or AUC is held out in turn: the set is built again from the drug's other studies only and predicts that study, so no held-out study influences the set that tests it. Ratio = predicted / observed. The status uses every single observation: Validated only if each one is within 2-fold; the ratio column is a mean for information only.",
       "metrics": "Validation metrics",
       "metric": "Metric",
       "auc": "AUC",
@@ -3052,7 +3052,8 @@
       "failedPoint": "{metric}, study {study}: predicted / observed = {ratio}",
       "intervalHeading": "Prediction intervals",
       "intervalShown": "{metric}: the observed value of a new study is expected within ÷/× {fold} of the prediction for {coverage} of studies (n = {n} held-out studies, all drugs).",
-      "intervalNone": "{metric}: no interval is shown."
+      "intervalNone": "{metric}: no interval is shown.",
+      "rebuiltCount": "{k} of {n} points are from studies that also help build the set shown; each was predicted by the set built without its study."
     },
     "chart": {
       "title": "Observed against predicted",
@@ -3222,7 +3223,16 @@
       "sp_atlas_note": "Rows of the older-adult exposure atlas: one automated extraction that the two-reader rule did not confirm and that no person has checked. Evidence only, not a verdict.",
       "sp_none": "No special-population statement was confirmed for this drug.",
       "two_readers_agree": "Two independent automated readers agree; not checked by a person.",
-      "automated_extraction_unconfirmed": "One automated extraction, not confirmed by the two-reader rule, not checked by a person."
+      "automated_extraction_unconfirmed": "One automated extraction, not confirmed by the two-reader rule, not checked by a person.",
+      "label_never_tests": "A value from a US label: labels summarise the sponsor's studies, so they never test a set.",
+      "steady_state_cmax_needs_interval": "A Cmax after repeated doses is tested only with its dosing interval (it is then predicted at steady state).",
+      "fold_has_no_parameter_set": "Without this study the drug's other studies give no parameter set, so this observation cannot be tested.",
+      "leave_one_study_out": "Each study with an observation is held out in turn: the set is built again from the drug's other studies only and predicts the held-out study. No held-out study influences the set that tests it.",
+      "single_split": "Only studies that report no building parameter test the set shown.",
+      "rebuilt_without_study": "This study also helps build the set shown; this point was predicted by the set built without it.",
+      "v_from_cl_half_life": "Derived: V = CL × intravenous half-life / ln 2 (no stated volume).",
+      "f_from_same_study_auc": "Derived: F = (oral AUC / oral dose) / (intravenous AUC / intravenous dose) of one study.",
+      "half_life_intravenous": "The half-life is the intravenous one (no oral half-life was confirmed)."
     },
     "scrollHint": "Scroll sideways to see all columns.",
     "report": {

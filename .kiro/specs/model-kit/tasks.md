@@ -102,3 +102,12 @@
 
 - [ ] M1 exit criterion: confirmed-value precision ≥ 0.90 on a blinded sample (measured 0.69, n = 85). Shared error
       classes to fix first: regimen, route, combination arms, comparator drugs, population words in label sentences.
+
+## Gate study (branch `feat/modelkit-gate`; pre-registered, private; see `reviews.md`)
+- [x] Leave-one-study-out validation with the unchanged strict rule (DP-M39), Hypothesis properties M35 to M37
+- [x] Derived rules R1, R2, R3 and steady-state Cmax R5 (DP-M40), unit tests; API `design`, `rebuilt_without_study`; web
+  texts in five languages; MCP status line
+- [x] External reference sets checked: Lombardo 2018 not openly licensed (not downloaded); no openly licensed oral AUC/Cmax
+  compilation found; label versions not used (not independent of the label and the studies it summarises)
+- [ ] Gate interpretable (>= 10 drugs with AUC and Cmax tested): 1 drug under the shipped rule; not reachable on the published evidence
+  (structural upper bound 1 drug)

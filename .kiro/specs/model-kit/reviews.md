@@ -235,3 +235,24 @@ almost all are renal clearance read as total clearance (a known reader error); n
 The expert sample audit is pre-registered and drawn (366 items of the published confirmed values: 286 evidence values,
 80 label statements; a 20-drug method review); no person has answered it yet. Without an audit record every surface
 still says "Expert review has not yet been done."
+
+## Gate study: leave one study out and derived rules (automated checks only; expert review has not yet been done)
+Pre-registered before any result (private; one post-hoc addendum, stated as such). Same evidence rows as M6
+(`20261112T142707Z-8ac5398b-8b3e`).
+
+| | Single split (M6 rule) | Leave one study out + R1-R5 (shipped) |
+|---|---|---|
+| Sets / complete | 22 / 7 | 22 / 7 (tasimelteon becomes an intravenous set: V and F derived, class C) |
+| Validated / Failed / Not validated | 0 / 1 / 403 | 0 / 2 / 402 (Failed: enzalutamide, dasatinib) |
+| Drugs with AUC / Cmax / both tested | 0 / 1 / 0 | 4 / 2 / 1 (gate not interpretable; 10 needed) |
+| AUC points within 2-fold | 0 of 0 | 11 of 14 (0.79, Wilson 95 % 0.52 to 0.92; drug-cluster bootstrap 0.18 to 1.00), GMFE 4.9 |
+| Cmax points within 2-fold | 0 of 1 | 0 of 10 (Wilson 0 to 0.28), GMFE 226 |
+
+Every new point is from a study that also builds the set shown, predicted by the set built without it. Dasatinib's 12 points are 133- to
+1,022-fold off because the only other study with a clearance states CL/F in mL/h (0.2 to 0.6 L/h against 135 to 549 L/h in the held-out
+study): the source's unit, read correctly by both readers; the set shown (CL/F 6.6 L/h) pools both and is wrong too. Leaving one study out
+makes such disagreements visible as Failed. R1 and R5 change nothing on this release; R2 and R3 change one set (tasimelteon) and no point.
+Why the gate stays empty: 32 studies of 24 drugs hold a testable observation; 15 drugs have both metrics somewhere, but a drug can test
+only a study it can rebuild without, which needs a second study with a clearance (and a peak time for Cmax): the upper bound is 1 drug.
+With the held-back FDA review and PMC rows included (exploratory, not published): 31 sets, 16 complete, still 1 drug with both metrics.
+External reference sets: Lombardo et al. 2018 is under the Elsevier user licence (not open) and intravenous only; not used.

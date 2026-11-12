@@ -359,6 +359,9 @@ function Body({ s }: { s: SystemOut }) {
             },
           )}
         </p>
+        <p className="text-sm text-muted" data-testid="mk-gate-design">
+          <Reason code="leave_one_study_out" />
+        </p>
       </section>
 
       <section

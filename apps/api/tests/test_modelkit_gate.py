@@ -96,9 +96,7 @@ def test_labels_and_linked_studies_never_test() -> None:
     val = validate(DRUG, world, ps)
     assert {p.study_id for p in val.points} == {"A"}
     why = dict(val.excluded)
-    assert all(
-        why[r.eid] == "observation_in_building_study" for r in label if r.parameter == "cmax"
-    )
+    assert all(why[r.eid] == "label_never_tests" for r in label if r.parameter == "cmax")
     assert all(
         why[r.eid] == "same_study_in_another_source" for r in linked if r.parameter == "cmax"
     )
@@ -338,3 +336,18 @@ def test_steady_state_cmax_is_tested_only_with_an_interval() -> None:
     assert ka is not None
     assert pt.predicted == pytest.approx(1000 * cmax_steady_state(f, ka, cl, v, 50.0, 12.0))
     assert dict(val.excluded)[no_tau.eid] == "steady_state_cmax_needs_interval"
+
+
+def test_r3_bioavailability_above_one_is_capped_and_predicts() -> None:
+    rows = [
+        ev(parameter="cl", value=6.0, unit="L/h", study_id="X", route="iv"),
+        ev(parameter="vss", value=40.0, unit="L", study_id="X", route="iv"),
+        ev(parameter="auc_inf", value=1000.0, dose=10.0, study_id="X", route="iv"),
+        ev(parameter="auc_inf", value=6000.0, dose=50.0, study_id="X", route="oral"),
+        ev(parameter="auc_inf", value=8000.0, dose=50.0, study_id="Y", route="oral"),
+    ]
+    ps = build_set(DRUG, rows)
+    assert isinstance(ps, ParameterSet)
+    f = ps.get("f")
+    assert f is not None and f.value == 1.0 and "bioavailability_capped" in ps.warnings
+    assert predict(ps, "auc", 50.0) == pytest.approx(50.0 * 1000 / 6.0)

@@ -87,6 +87,8 @@ class PointOut(_Out):
     predicted: float
     ratio: float
     within_2_fold: bool
+    # the study also builds the set shown; the point was predicted by the set built without it
+    rebuilt_without_study: bool
 
 
 class ReasonOut(_Out):
@@ -96,6 +98,7 @@ class ReasonOut(_Out):
 
 class ValidationOut(_Out):
     status: Status
+    design: Literal["leave_one_study_out", "single_split"]  # held-out design (DP-M39)
     reasons: list[str]
     metrics: list[MetricOut]
     points: list[PointOut]
@@ -723,12 +726,14 @@ def summary(d: DrugEntry) -> DrugSummary:
 def validation_out(v: Validation) -> ValidationOut:
     return ValidationOut(
         status=v.status,
+        design=v.design,
         reasons=list(v.reasons),
         metrics=[_metric(m) for m in v.metrics],
         points=[
             PointOut(
                 evidence_id=p.eid, metric=p.metric, study_id=p.study_id, dose_mg=p.dose_mg,
                 observed=p.observed, predicted=p.predicted, ratio=p.ratio, within_2_fold=p.within_2_fold,
+                rebuilt_without_study=p.rebuilt_without_study,
             )
             for p in v.points
         ],

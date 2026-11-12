@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import math
 from collections import defaultdict
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import Literal
 
 from janus.modelkit.evidence import (
@@ -317,7 +317,7 @@ def build_set(drug_key: str, rows: list[Ev]) -> ParameterSet | NoSet:
         params += [
             _p("cl", "CL (intravenous)", "L/h", cl_iv),
             _p("v", "V (intravenous)", "L", v_iv),
-            _p("f", "F (oral bioavailability)", "fraction", f_oral),
+            _p("f", "F (oral bioavailability)", "fraction", replace(f_oral, value=f)),
         ]
         if f != f_oral.value:
             capped = True

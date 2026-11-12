@@ -18,15 +18,22 @@ TEXT: dict[str, str] = {
     "observation_in_building_study": "An observation in a study that also reports building parameters; not tested.",
     "same_study_in_another_source": "May be the same study as one in another source (shared trial number, study code or identical results); kept on the building side, not tested.",
     "not_needed_preferred_basis": "Not needed: a preferred basis or a pooled value was used.",
+    "label_never_tests": "A value from a US label: labels summarise the sponsor's studies, so they never test a set.",
     # why an observation was not tested
     "auc_to_last_sampling_time_not_comparable": "AUC to the last sampling time: that time is not in the evidence.",
     "not_an_observation": "Not an observation of Cmax or AUC.",
     "needs_oral_dose": "A test needs an oral dose.",
     "auc_tau_needs_multiple_dose_interval": "AUC over a dosing interval needs a multiple-dose arm with its interval.",
     "steady_state_cmax_not_modelled": "Steady-state Cmax is not modelled in this milestone.",
+    "steady_state_cmax_needs_interval": "A Cmax after repeated doses is tested only with its dosing interval (it is then predicted at steady state).",
     "auc_inf_needs_single_dose": "AUC to infinity needs a single-dose arm.",
     "set_has_no_absorption_rate": "The set has no absorption rate, so it cannot predict Cmax.",
     "set_cannot_predict_metric": "The set cannot predict this metric.",
+    "fold_has_no_parameter_set": "Without this study the drug's other studies give no parameter set, so this observation cannot be tested.",
+    # held-out design (DP-M39)
+    "leave_one_study_out": "Each study with an observation is held out in turn: the set is built again from the drug's other studies only and predicts the held-out study. No held-out study influences the set that tests it.",
+    "single_split": "Only studies that report no building parameter test the set shown (milestones M0 to M6).",
+    "rebuilt_without_study": "This study also helps build the set shown; this point was predicted by the set built without it.",
     # status reasons
     "no_parameter_set": "There is no parameter set to test.",
     "no_independent_observation": "No independent observation: no held-out study reports Cmax or AUC.",
@@ -53,6 +60,9 @@ TEXT: dict[str, str] = {
     "two_volumes_agree": "Central and steady-state volumes agree within 25 %: one compartment.",
     # derivations
     "v_from_clf_half_life": "V/F = CL/F x half-life / ln 2",
+    "v_from_cl_half_life": "Derived: V = CL x intravenous half-life / ln 2 (no stated volume).",
+    "f_from_same_study_auc": "Derived: F = (oral AUC / oral dose) / (intravenous AUC / intravenous dose) of one study.",
+    "half_life_intravenous": "The half-life is the intravenous one (no oral half-life was confirmed).",
     "ka_from_tmax": "ka solves tmax = ln(ka/k) / (ka - k) with k = CL / V",
     "cl_from_dose_and_auc": "Derived: CL/F = dose / AUC to infinity of one study arm (CL for an intravenous dose).",
     "f_fixed_apparent": "Fixed at 1: apparent parameters already contain bioavailability.",
