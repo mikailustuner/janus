@@ -148,13 +148,16 @@ describe("robots", () => {
     expect(rule.allow).toBe("/");
   });
 
-  it("disallows the API, the doctor page and every noindex route in every locale", () => {
+  it("disallows the API and the doctor page only", () => {
     expect(isBlocked("/api/health")).toBe(true);
     expect(isBlocked("/o")).toBe(true);
     expect(isBlocked("/o/anything")).toBe(true);
+  });
+
+  it("leaves noindex routes crawlable so crawlers can read their noindex tag", () => {
     for (const path of Object.keys(NOINDEX))
       for (const locale of LOCALES)
-        expect(isBlocked(`/${locale}${path}`), `/${locale}${path}`).toBe(true);
+        expect(isBlocked(`/${locale}${path}`), `/${locale}${path}`).toBe(false);
   });
 
   it("does not block any indexed route, the sitemap or the Next assets", () => {
