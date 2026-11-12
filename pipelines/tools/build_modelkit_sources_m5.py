@@ -55,7 +55,9 @@ def main(rows_path: Path, dl: Path, precision: Path, out: Path) -> None:
                 "retrieved": r["extracted_at"],
                 "licence": "public domain unless noted (U.S. government work)",
             }
-    out.write_text(json.dumps(records, indent=1, sort_keys=True, ensure_ascii=False) + "\n", "utf-8")
+    out.write_text(
+        json.dumps(records, indent=1, sort_keys=True, ensure_ascii=False) + "\n", "utf-8"
+    )
     print(f"{len(records)} source records")
 
 

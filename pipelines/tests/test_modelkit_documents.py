@@ -393,7 +393,9 @@ def _pmc_one(caption: str, grid: tuple[tuple[str, ...], ...]) -> list[tuple[str,
         "Healthy subjects took part.", "Twelve healthy subjects received a single oral dose of 40 mg telmisartan tablets.",
         (Table("t1", "Table 1", caption, grid, 1, ""),), (), "CC BY 4.0",
     )  # fmt: skip
-    pairs = documents.read_article(art, "telmisartan", TABLE, BRANDS, {"a": ReaderStats(), "b": ReaderStats()}, Counter(), "v")
+    pairs = documents.read_article(
+        art, "telmisartan", TABLE, BRANDS, {"a": ReaderStats(), "b": ReaderStats()}, Counter(), "v"
+    )
     return [(p.a.parameter, p.a.value, p.result.confirmed) for p in pairs]
 
 
