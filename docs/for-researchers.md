@@ -2,7 +2,7 @@
 
 Janus is an open-source research prototype, not a medical device. It provides information, not medical advice. Nothing
 on this page is guidance for a person, and every number is a count of reports, never of people. **Expert review has
-not yet been done.** This page is also available in the app at `/research/for-researchers` (en, tr, de, fr, es).
+not yet been done.** This page is also available in the app at `/research/for-researchers` (en, tr, de, fr, es, pt).
 
 Public site: <https://janusmeds.org> (API under `/api`). Source: <https://github.com/mikailustuner/janus>. Status of
 this page: 2026-11-10; dataset versions below change with each release.

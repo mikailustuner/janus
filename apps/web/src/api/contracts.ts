@@ -6,7 +6,7 @@
 import type * as D from "./decode";
 import type { Infer } from "./decode";
 
-export type Locale = "en" | "tr" | "de" | "fr" | "es";
+export type Locale = "en" | "tr" | "de" | "fr" | "es" | "pt";
 export type ScanRegion = "TR" | "US" | "EU";
 export type UserRegion = "US" | "TR" | "EU" | "OTHER" | "UNKNOWN";
 export type LoopRegion = "TR" | "EU" | "US";

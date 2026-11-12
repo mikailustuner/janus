@@ -34,7 +34,7 @@ export const DEFAULT_SETTINGS: Settings = {
   statisticsRegion: null,
 };
 
-const LOCALES = ["en", "tr", "de", "fr", "es"];
+const LOCALES = ["en", "tr", "de", "fr", "es", "pt"];
 const oneOf = <T>(
   v: unknown,
   values: readonly unknown[],

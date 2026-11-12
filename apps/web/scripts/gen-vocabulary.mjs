@@ -12,7 +12,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-export const LOCALES = ["en", "tr", "de", "fr", "es"];
+export const LOCALES = ["en", "tr", "de", "fr", "es", "pt"];
 const SENTENCE_IDS = [
   "abrupt_stop",
   "name.not_translated",

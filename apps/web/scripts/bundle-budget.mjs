@@ -105,7 +105,7 @@ const lazy = {
     raw(join(vendor, "tesseract/worker.min.js")) +
     raw(join(vendor, "tesseract/core/tesseract-core-simd-lstm.wasm.js")) +
     Math.max(
-      ...["eng", "tur", "deu", "fra", "spa"].map((l) =>
+      ...["eng", "tur", "deu", "fra", "spa", "por"].map((l) =>
         raw(join(vendor, `tesseract/lang/${l}.traineddata`)),
       ),
     ),

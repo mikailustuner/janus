@@ -40,7 +40,7 @@ export interface FixtureItem {
 export interface Fixture {
   patient: PatientId;
   userRegion: "TR" | "EU" | "US";
-  noteLanguage: "en" | "tr" | "de" | "fr" | "es";
+  noteLanguage: "en" | "tr" | "de" | "fr" | "es" | "pt";
   recorded: {
     date: string;
     dataset_version: string;

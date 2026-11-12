@@ -26,7 +26,7 @@ vi.mock("@/i18n/navigation", () => ({
   useRouter: () => ({ push: () => {}, replace: () => {} }),
 }));
 
-const LOCALES = ["en", "tr", "de", "fr", "es"] as const;
+const LOCALES = ["en", "tr", "de", "fr", "es", "pt"] as const;
 const messages = Object.fromEntries(
   LOCALES.map((l) => [
     l,

@@ -1,0 +1,865 @@
+{
+ "events": {
+  "cough": {
+   "label": "Tosse",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    1
+   ]
+  },
+  "dizziness": {
+   "label": "Tonturas ou tensão arterial baixa ao levantar-se",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    2,
+    56
+   ]
+  },
+  "depression": {
+   "label": "Depressão ou humor em baixo",
+   "safety_line": "crisis_support",
+   "direction": "adverse",
+   "pipc_positions": [
+    3,
+    36,
+    55
+   ]
+  },
+  "erectile_dysfunction": {
+   "label": "Disfunção erétil",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    4
+   ]
+  },
+  "peripheral_oedema": {
+   "label": "Tornozelos ou pernas inchados (edema periférico)",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    5,
+    31
+   ]
+  },
+  "oedema": {
+   "label": "Retenção de líquidos ou inchaço (edema)",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    43
+   ]
+  },
+  "constipation": {
+   "label": "Obstipação",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    6,
+    34,
+    65
+   ]
+  },
+  "gout_hyperuricaemia": {
+   "label": "Gota ou ácido úrico elevado",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    7
+   ]
+  },
+  "urinary_incontinence": {
+   "label": "Incontinência urinária",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    8,
+    24,
+    32,
+    35
+   ]
+  },
+  "myalgia_myositis": {
+   "label": "Dor ou inflamação muscular (mialgia, miosite)",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    9,
+    10,
+    11
+   ]
+  },
+  "insomnia": {
+   "label": "Dificuldade em dormir (insónia)",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    12,
+    25,
+    59
+   ]
+  },
+  "nausea": {
+   "label": "Náuseas",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    13,
+    16,
+    52
+   ]
+  },
+  "hypertension": {
+   "label": "Tensão arterial elevada (hipertensão)",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    14,
+    38,
+    53,
+    61,
+    64
+   ]
+  },
+  "rash": {
+   "label": "Erupção na pele",
+   "safety_line": "urgent_care_skin",
+   "direction": "adverse",
+   "pipc_positions": [
+    15
+   ]
+  },
+  "extrapyramidal_symptoms": {
+   "label": "Rigidez, movimentos lentos ou anormais (sintomas extrapiramidais)",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    17,
+    18,
+    19,
+    37,
+    46
+   ]
+  },
+  "akathisia_tardive_movements": {
+   "label": "Inquietação interior ou movimentos involuntários (acatisia, discinesia tardia)",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    20
+   ]
+  },
+  "arrhythmia": {
+   "label": "Batimento cardíaco rápido ou irregular (arritmia)",
+   "safety_line": "urgent_care_heart",
+   "direction": "adverse",
+   "pipc_positions": [
+    21,
+    63
+   ]
+  },
+  "hyperglycaemia": {
+   "label": "Açúcar no sangue elevado (hiperglicemia)",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    22
+   ]
+  },
+  "cognitive_impairment": {
+   "label": "Problemas de memória ou de raciocínio",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    23,
+    33
+   ]
+  },
+  "gastrointestinal_upset": {
+   "label": "Indigestão ou mal-estar no estômago",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    26,
+    27
+   ]
+  },
+  "diarrhoea": {
+   "label": "Diarreia",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    28,
+    42,
+    47
+   ]
+  },
+  "rhinorrhoea": {
+   "label": "Nariz a pingar",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    29
+   ]
+  },
+  "psychosis_hallucinations": {
+   "label": "Alucinações, ideias delirantes ou outros sintomas psicóticos",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    30,
+    60
+   ]
+  },
+  "tremor": {
+   "label": "Tremor",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    39
+   ]
+  },
+  "joint_pain": {
+   "label": "Dor nas articulações",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    40
+   ]
+  },
+  "genital_fungal_infection": {
+   "label": "Infeção genital por fungos (candidíase)",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    41,
+    62
+   ]
+  },
+  "urinary_retention": {
+   "label": "Dificuldade em urinar (retenção urinária)",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    45
+   ]
+  },
+  "osteoporosis_fracture": {
+   "label": "Ossos mais fracos ou fraturas (osteoporose)",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    48
+   ]
+  },
+  "vitamin_mineral_deficiency": {
+   "label": "Vitamina B12, magnésio ou ferro baixos",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    49
+   ]
+  },
+  "gastritis": {
+   "label": "Inflamação do revestimento do estômago (gastrite)",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    50
+   ]
+  },
+  "gastric_ulcer_bleed": {
+   "label": "Irritação do estômago, úlcera ou hemorragia no estômago ou no intestino",
+   "safety_line": "urgent_care_gi",
+   "direction": "adverse",
+   "pipc_positions": [
+    51
+   ]
+  },
+  "heart_failure": {
+   "label": "Insuficiência cardíaca",
+   "safety_line": "urgent_care_breathing",
+   "direction": "adverse",
+   "pipc_positions": [
+    44,
+    54
+   ]
+  },
+  "dry_mouth": {
+   "label": "Boca seca",
+   "safety_line": null,
+   "direction": "adverse",
+   "pipc_positions": [
+    57
+   ]
+  },
+  "seizures": {
+   "label": "Convulsões (crises convulsivas)",
+   "safety_line": "urgent_care_seizure",
+   "direction": "adverse",
+   "pipc_positions": [
+    58
+   ]
+  },
+  "improvement_pain": {
+   "label": "Menos dor",
+   "safety_line": null,
+   "direction": "benefit",
+   "pipc_positions": []
+  },
+  "improvement_sleep": {
+   "label": "Melhor sono",
+   "safety_line": null,
+   "direction": "benefit",
+   "pipc_positions": []
+  },
+  "improvement_mood": {
+   "label": "Melhor humor",
+   "safety_line": null,
+   "direction": "benefit",
+   "pipc_positions": []
+  },
+  "improvement_nausea": {
+   "label": "Menos náuseas",
+   "safety_line": null,
+   "direction": "benefit",
+   "pipc_positions": []
+  },
+  "improvement_swelling": {
+   "label": "Menos inchaço",
+   "safety_line": null,
+   "direction": "benefit",
+   "pipc_positions": []
+  }
+ },
+ "cascades": {
+  "1": {
+   "drug_a": "Inibidor da enzima de conversão da angiotensina",
+   "adverse_event": "Tosse",
+   "drug_b": "Medicamento para a tosse",
+   "translated": true
+  },
+  "2": {
+   "drug_a": "Anti-hipertensor",
+   "adverse_event": "Hipotensão ortostática/tonturas",
+   "drug_b": "Antiemético",
+   "translated": true
+  },
+  "3": {
+   "drug_a": "Betabloqueante (sobretudo lipofílico, p. ex., propranolol)",
+   "adverse_event": "Depressão",
+   "drug_b": "Antidepressor",
+   "translated": true
+  },
+  "4": {
+   "drug_a": "Betabloqueante (sobretudo lipofílico, p. ex., propranolol)",
+   "adverse_event": "Disfunção erétil",
+   "drug_b": "Inibidor da fosfodiesterase 5, alprostadilo",
+   "translated": true
+  },
+  "5": {
+   "drug_a": "Bloqueador dos canais de cálcio",
+   "adverse_event": "Edema periférico",
+   "drug_b": "Diurético",
+   "translated": true
+  },
+  "6": {
+   "drug_a": "Bloqueador dos canais de cálcio",
+   "adverse_event": "Obstipação",
+   "drug_b": "Laxante",
+   "translated": true
+  },
+  "7": {
+   "drug_a": "Diurético",
+   "adverse_event": "Gota ou hiperuricemia",
+   "drug_b": "Antigotoso",
+   "translated": true
+  },
+  "8": {
+   "drug_a": "Diurético",
+   "adverse_event": "Incontinência urinária",
+   "drug_b": "Medicamento para a bexiga hiperativa",
+   "translated": true
+  },
+  "9": {
+   "drug_a": "Inibidor da hidroximetilglutaril-coenzima A (HMG-CoA) redutase (estatina)",
+   "adverse_event": "Mialgia/miosite",
+   "drug_b": "Analgésico",
+   "translated": true
+  },
+  "10": {
+   "drug_a": "Inibidor da HMG-CoA redutase",
+   "adverse_event": "Mialgia/miosite",
+   "drug_b": "Suplemento mineral",
+   "translated": true
+  },
+  "11": {
+   "drug_a": "Inibidor da HMG-CoA redutase",
+   "adverse_event": "Mialgia/miosite",
+   "drug_b": "Sulfato de quinina",
+   "translated": true
+  },
+  "12": {
+   "drug_a": "Inibidor da HMG-CoA redutase",
+   "adverse_event": "Insónia",
+   "drug_b": "Medicamento para dormir",
+   "translated": true
+  },
+  "13": {
+   "drug_a": "Digoxina",
+   "adverse_event": "Náuseas",
+   "drug_b": "Antiemético",
+   "translated": true
+  },
+  "14": {
+   "drug_a": "Midodrina",
+   "adverse_event": "Hipertensão",
+   "drug_b": "Anti-hipertensor",
+   "translated": true
+  },
+  "15": {
+   "drug_a": "Anticonvulsivante",
+   "adverse_event": "Exantema",
+   "drug_b": "Corticosteroide tópico",
+   "translated": true
+  },
+  "16": {
+   "drug_a": "Anticonvulsivante",
+   "adverse_event": "Náuseas",
+   "drug_b": "Antiemético",
+   "translated": true
+  },
+  "17": {
+   "drug_a": "Antipsicótico",
+   "adverse_event": "Sintomas extrapiramidais",
+   "drug_b": "Betabloqueante",
+   "translated": true
+  },
+  "18": {
+   "drug_a": "Antipsicótico",
+   "adverse_event": "Sintomas extrapiramidais",
+   "drug_b": "Antiparkinsónico",
+   "translated": true
+  },
+  "19": {
+   "drug_a": "Antipsicótico",
+   "adverse_event": "Sintomas extrapiramidais",
+   "drug_b": "Antimuscarínico para o tremor",
+   "translated": true
+  },
+  "20": {
+   "drug_a": "Antipsicótico",
+   "adverse_event": "Acatisia ou movimentos anormais tardios",
+   "drug_b": "Sedativo",
+   "translated": true
+  },
+  "21": {
+   "drug_a": "Antipsicótico",
+   "adverse_event": "Arritmia",
+   "drug_b": "Antiarrítmico",
+   "translated": true
+  },
+  "22": {
+   "drug_a": "Antipsicótico",
+   "adverse_event": "Hiperglicemia",
+   "drug_b": "Anti-hiperglicemiante",
+   "translated": true
+  },
+  "23": {
+   "drug_a": "Benzodiazepina",
+   "adverse_event": "Compromisso cognitivo",
+   "drug_b": "Inibidor da colinesterase",
+   "translated": true
+  },
+  "24": {
+   "drug_a": "Inibidor da colinesterase",
+   "adverse_event": "Incontinência urinária",
+   "drug_b": "Medicamento para a bexiga hiperativa",
+   "translated": true
+  },
+  "25": {
+   "drug_a": "Inibidor da colinesterase",
+   "adverse_event": "Insónia",
+   "drug_b": "Medicamento para dormir",
+   "translated": true
+  },
+  "26": {
+   "drug_a": "Inibidor da colinesterase",
+   "adverse_event": "Mal-estar gastrointestinal",
+   "drug_b": "Antiemético",
+   "translated": true
+  },
+  "27": {
+   "drug_a": "Inibidor da colinesterase",
+   "adverse_event": "Mal-estar gastrointestinal",
+   "drug_b": "Subsalicilato de bismuto",
+   "translated": true
+  },
+  "28": {
+   "drug_a": "Inibidor da colinesterase",
+   "adverse_event": "Diarreia",
+   "drug_b": "Antidiarreico",
+   "translated": true
+  },
+  "29": {
+   "drug_a": "Inibidor da colinesterase",
+   "adverse_event": "Rinorreia",
+   "drug_b": "Anti-histamínico",
+   "translated": true
+  },
+  "30": {
+   "drug_a": "Antiparkinsónico dopaminérgico",
+   "adverse_event": "Sintomas psicóticos, alucinações",
+   "drug_b": "Antipsicótico",
+   "translated": true
+  },
+  "31": {
+   "drug_a": "Gabapentinoide",
+   "adverse_event": "Edema periférico",
+   "drug_b": "Diurético",
+   "translated": true
+  },
+  "32": {
+   "drug_a": "Inibidor seletivo da recaptação da serotonina/inibidor da recaptação da serotonina e da noradrenalina (ISRS/IRSN)",
+   "adverse_event": "Incontinência urinária",
+   "drug_b": "Medicamento para a bexiga hiperativa",
+   "translated": true
+  },
+  "33": {
+   "drug_a": "Antidepressor tricíclico",
+   "adverse_event": "Compromisso cognitivo",
+   "drug_b": "Inibidor da colinesterase",
+   "translated": true
+  },
+  "34": {
+   "drug_a": "Antidepressor tricíclico",
+   "adverse_event": "Obstipação",
+   "drug_b": "Laxante",
+   "translated": true
+  },
+  "35": {
+   "drug_a": "Antidepressor tricíclico",
+   "adverse_event": "Incontinência urinária",
+   "drug_b": "Medicamento para a bexiga hiperativa",
+   "translated": true
+  },
+  "36": {
+   "drug_a": "Flunarizina",
+   "adverse_event": "Depressão",
+   "drug_b": "Antidepressor",
+   "translated": true
+  },
+  "37": {
+   "drug_a": "Lítio",
+   "adverse_event": "Sintomas extrapiramidais",
+   "drug_b": "Antiparkinsónico",
+   "translated": true
+  },
+  "38": {
+   "drug_a": "Venlafaxina",
+   "adverse_event": "Hipertensão (dependente da dose)",
+   "drug_b": "Anti-hipertensor",
+   "translated": true
+  },
+  "39": {
+   "drug_a": "Venlafaxina",
+   "adverse_event": "Tremor",
+   "drug_b": "Benzodiazepina",
+   "translated": true
+  },
+  "40": {
+   "drug_a": "Inibidor da dipeptidil peptidase 4 (DPP-4) (p. ex., sitagliptina, saxagliptina)",
+   "adverse_event": "Dor articular",
+   "drug_b": "Anti-inflamatório não esteroide",
+   "translated": true
+  },
+  "41": {
+   "drug_a": "Inibidor do cotransportador de sódio-glicose tipo 2 (SGLT2)",
+   "adverse_event": "Infeções genitais por fungos",
+   "drug_b": "Antifúngico",
+   "translated": true
+  },
+  "42": {
+   "drug_a": "Metformina",
+   "adverse_event": "Diarreia",
+   "drug_b": "Antidiarreico",
+   "translated": true
+  },
+  "43": {
+   "drug_a": "Pioglitazona ou rosiglitazona",
+   "adverse_event": "Edema",
+   "drug_b": "Diurético",
+   "translated": true
+  },
+  "44": {
+   "drug_a": "Rosiglitazona",
+   "adverse_event": "Insuficiência cardíaca",
+   "drug_b": "Diurético",
+   "translated": true
+  },
+  "45": {
+   "drug_a": "Antiemético anticolinérgico",
+   "adverse_event": "Retenção urinária",
+   "drug_b": "Bloqueador dos recetores alfa-1",
+   "translated": true
+  },
+  "46": {
+   "drug_a": "Antiemético antidopaminérgico",
+   "adverse_event": "Sintomas extrapiramidais",
+   "drug_b": "Antiparkinsónico",
+   "translated": true
+  },
+  "47": {
+   "drug_a": "Laxante",
+   "adverse_event": "Diarreia",
+   "drug_b": "Antidiarreico",
+   "translated": true
+  },
+  "48": {
+   "drug_a": "Inibidor da bomba de protões",
+   "adverse_event": "Osteoporose, fraturas",
+   "drug_b": "Suplemento vitamínico",
+   "translated": true
+  },
+  "49": {
+   "drug_a": "Inibidor da bomba de protões",
+   "adverse_event": "Défice de vitaminas ou minerais",
+   "drug_b": "Défice de vitaminas ou minerais",
+   "translated": true
+  },
+  "50": {
+   "drug_a": "Bifosfonato",
+   "adverse_event": "Gastrite",
+   "drug_b": "Gastroprotetor",
+   "translated": true
+  },
+  "51": {
+   "drug_a": "Anti-inflamatório não esteroide (AINE)",
+   "adverse_event": "Gastrite/úlcera gástrica/hemorragia digestiva",
+   "drug_b": "Gastroprotetor",
+   "translated": true
+  },
+  "52": {
+   "drug_a": "AINE",
+   "adverse_event": "Náuseas",
+   "drug_b": "Antiemético",
+   "translated": true
+  },
+  "53": {
+   "drug_a": "AINE",
+   "adverse_event": "Hipertensão",
+   "drug_b": "Anti-hipertensor",
+   "translated": true
+  },
+  "54": {
+   "drug_a": "AINE",
+   "adverse_event": "Agravamento da insuficiência cardíaca",
+   "drug_b": "Medicamento para a insuficiência cardíaca",
+   "translated": true
+  },
+  "55": {
+   "drug_a": "Opioide",
+   "adverse_event": "Depressão",
+   "drug_b": "Antidepressor",
+   "translated": true
+  },
+  "56": {
+   "drug_a": "Bloqueador dos recetores alfa-1",
+   "adverse_event": "Hipotensão ortostática, tonturas",
+   "drug_b": "Supressor vestibular",
+   "translated": true
+  },
+  "57": {
+   "drug_a": "Anticolinérgico urinário",
+   "adverse_event": "Boca seca",
+   "drug_b": "Substituto da saliva",
+   "translated": true
+  },
+  "58": {
+   "drug_a": "Carbapenemo (p. ex., imipenemo, meropenemo, ertapenemo)",
+   "adverse_event": "Convulsões",
+   "drug_b": "Anticonvulsivante",
+   "translated": true
+  },
+  "59": {
+   "drug_a": "Corticosteroide",
+   "adverse_event": "Insónia",
+   "drug_b": "Medicamento para dormir",
+   "translated": true
+  },
+  "60": {
+   "drug_a": "Corticosteroide",
+   "adverse_event": "Psicose",
+   "drug_b": "Antipsicótico",
+   "translated": true
+  },
+  "61": {
+   "drug_a": "Corticosteroide",
+   "adverse_event": "Hipertensão",
+   "drug_b": "Anti-hipertensor",
+   "translated": true
+  },
+  "62": {
+   "drug_a": "Acitretina",
+   "adverse_event": "Candidíase vulvovaginal",
+   "drug_b": "Antifúngico",
+   "translated": true
+  },
+  "63": {
+   "drug_a": "Eritromicina",
+   "adverse_event": "Arritmia",
+   "drug_b": "Antiarrítmico",
+   "translated": true
+  },
+  "64": {
+   "drug_a": "Fludrocortisona",
+   "adverse_event": "Hipertensão",
+   "drug_b": "Anti-hipertensor",
+   "translated": true
+  },
+  "65": {
+   "drug_a": "Suplemento de ferro",
+   "adverse_event": "Obstipação",
+   "drug_b": "Laxante",
+   "translated": true
+  }
+ },
+ "ingredients": {
+  "Q44944": "tegaserod",
+  "Q45050": "tenoxicam",
+  "Q57055": "paracetamol",
+  "Q62947": "flunitrazepam",
+  "Q139195": "calcitriol",
+  "Q139200": "ergocalciferol",
+  "Q139307": "calcifediol",
+  "Q145052": "zaleplon",
+  "Q155883": "alfacalcidol",
+  "Q174259": "droperidol",
+  "Q186257": "lormetazepam",
+  "Q201370": "alprenolol",
+  "Q210402": "diazepam",
+  "Q218284": "zofenopril",
+  "Q218842": "zolpidem",
+  "Q221637": "ambroxol",
+  "Q245280": "sorbitol",
+  "Q251347": "haloperidol",
+  "Q277785": "perindopril",
+  "Q319877": "alprazolam",
+  "Q347613": "valdecoxib",
+  "Q407592": "tramadol",
+  "Q407988": "clonazepam",
+  "Q408099": "brivaracetam",
+  "Q408265": "lorazepam",
+  "Q408556": "levobunolol",
+  "Q408676": "piroxicam",
+  "Q408801": "celecoxib",
+  "Q409468": "metoprolol",
+  "Q409579": "vinbarbital",
+  "Q409632": "pentobarbital",
+  "Q409672": "citalopram",
+  "Q409966": "etizolam",
+  "Q410078": "nitrazepam",
+  "Q410618": "meptazinol",
+  "Q411325": "atenolol",
+  "Q411412": "rofecoxib",
+  "Q411806": "loprazolam",
+  "Q412143": "triazolam",
+  "Q412164": "clobazam",
+  "Q412208": "lisinopril",
+  "Q412299": "oxazepam",
+  "Q412409": "barbital",
+  "Q412515": "bisoprolol",
+  "Q412534": "carvedilol",
+  "Q413591": "sotalol",
+  "Q413994": "timolol",
+  "Q414028": "meloxicam",
+  "Q414463": "tapentadol",
+  "Q414788": "secobarbital",
+  "Q414796": "temazepam",
+  "Q415020": "lactitol",
+  "Q415850": "amobarbital",
+  "Q416025": "misoprostol",
+  "Q416562": "opipramol",
+  "Q416677": "racecadotril",
+  "Q417227": "levetiracetam",
+  "Q417296": "febuxostat",
+  "Q418101": "pindolol",
+  "Q418130": "nebivolol",
+  "Q418139": "esmolol",
+  "Q418857": "acebutolol",
+  "Q418998": "flurazepam",
+  "Q419841": "palonosetron",
+  "Q420586": "celiprolol",
+  "Q421104": "tetrazepam",
+  "Q421119": "captopril",
+  "Q421670": "meropenem",
+  "Q422185": "enalapril",
+  "Q422229": "diltiazem",
+  "Q422435": "bromazepam",
+  "Q422917": "cannabidiol",
+  "Q423071": "midazolam",
+  "Q423364": "propranolol",
+  "Q423757": "escitalopram",
+  "Q424165": "minoxidil",
+  "Q424412": "benperidol",
+  "Q424952": "nadolol",
+  "Q424997": "mesna",
+  "Q425293": "fosinopril",
+  "Q425838": "bupranolol",
+  "Q425963": "oxprenolol",
+  "Q546434": "carteolol",
+  "Q553220": "ertapenem",
+  "Q592802": "benazepril",
+  "Q596022": "quinapril",
+  "Q621834": "aprepitant",
+  "Q631202": "etoricoxib",
+  "Q665725": "vernakalant",
+  "Q667184": "cinolazepam",
+  "Q772735": "miglitol",
+  "Q779118": "deflazacort",
+  "Q794162": "betaxolol",
+  "Q834660": "bopindolol",
+  "Q850074": "brotizolam",
+  "Q867350": "cilazapril",
+  "Q868658": "perampanel",
+  "Q929420": "trandolapril",
+  "Q944244": "penbutolol",
+  "Q958087": "labetalol",
+  "Q1421936": "bentazepam",
+  "Q2291605": "moexipril",
+  "Q2397253": "ketazolam",
+  "Q2602750": "diflunisal",
+  "Q2734874": "lornoxicam",
+  "Q3045264": "estazolam",
+  "Q3486981": "fludiazepam",
+  "Q3927403": "quazepam",
+  "Q4224007": "clobetasol",
+  "Q4385221": "cloxazolam",
+  "Q4463264": "trifluperidol",
+  "Q5187464": "crofelemer",
+  "Q5641126": "halazepam",
+  "Q6593346": "metipranolol",
+  "Q6827783": "mibefradil",
+  "Q7237376": "practolol",
+  "Q7650517": "suvorexant",
+  "Q7679533": "talinolol",
+  "Q7705238": "tertatolol",
+  "Q15708351": "naloxegol",
+  "Q21820633": "lesinurad",
+  "Q76415423": "rolapitant"
+ },
+ "sentences": {
+  "abrupt_stop": "Não suspenda este medicamento de forma brusca.",
+  "name.not_translated": "nome não traduzido",
+  "name.not_reviewed": "nome não revisto",
+  "name.combination_code": "código de associação",
+  "not_checked.homeopathic_product": "Produto homeopático, não verificado",
+  "not_checked.ambiguous": "Substância ativa não identificada com certeza, não pode ser verificada",
+  "not_checked.no_ingredient_key": "Substância ativa não reconhecida, não pode ser verificada",
+  "not_checked.possible_unsplit_combination": "Possivelmente uma associação que não foi possível separar, não pode ser verificada",
+  "not_checked.no_ingredient_atc": "Sem código ATC ao nível da substância ativa, não pode ser verificada",
+  "not_checked.no_ingredient_atc_for_route": "Sem código ATC para esta via de administração, não pode ser verificada"
+ }
+}

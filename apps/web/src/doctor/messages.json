@@ -123,5 +123,30 @@
   "expires": "Este enlace funciona hasta el {date}.",
   "report": "Preparar una notificación a la autoridad",
   "disclaimer": "Janus ofrece información, no consejo médico. Prototipo de investigación: no es un producto sanitario."
+ },
+ "pt": {
+  "errors": {
+   "invalid_token": "Esta ligação não é válida.",
+   "token_expired": "Esta ligação expirou.",
+   "token_not_usable": "Esta ligação já não pode ser utilizada.",
+   "token_used": "Já foi enviada uma resposta para esta nota.",
+   "unavailable": "Não disponível neste momento. Tente novamente mais tarde."
+  },
+  "title": "Janus · comunicação sobre uma nota",
+  "loading": "A carregar o formulário…",
+  "demo": "Demonstração · doente sintético. Este formulário não envia nada.",
+  "first": "Primeiro medicamento",
+  "second": "Segundo medicamento",
+  "send": "Enviar",
+  "sending": "A enviar…",
+  "sent": "Obrigado. {count, plural, =0 {# respostas foram guardadas} one {# resposta foi guardada} other {# respostas foram guardadas}}.",
+  "noAnswer": "Responda a pelo menos uma pergunta para enviar.",
+  "network": "Não é possível contactar o Janus. Tente novamente; as suas respostas ficam guardadas nesta página.",
+  "retry": "Enviar novamente",
+  "medicineQuestion": "Que medicamento?",
+  "notConfirmed": "Forma do produto não confirmada",
+  "expires": "Esta ligação funciona até {date}.",
+  "report": "Preparar uma notificação à autoridade",
+  "disclaimer": "Janus fornece informação, não aconselhamento médico. Protótipo de investigação — não é um dispositivo médico."
  }
 }

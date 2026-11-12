@@ -67,7 +67,7 @@ const MEMORY_REGIONS: readonly string[] = [
   "OTHER",
   "UNKNOWN",
 ];
-const LOCALES: readonly string[] = ["en", "tr", "de", "fr", "es"];
+const LOCALES: readonly string[] = ["en", "tr", "de", "fr", "es", "pt"];
 
 function withRegion<T extends object>(body: T, region: ScanRegion | null): T {
   if (region === null) return body;

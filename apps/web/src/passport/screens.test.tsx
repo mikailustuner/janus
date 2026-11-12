@@ -83,6 +83,7 @@ const SAME: Record<Locale, string[]> = {
   de: ["gleich", "dieselbe", "denselben", "derselben", "dasselbe"],
   fr: ["même"],
   es: ["mismo", "misma"],
+  pt: ["mesmo", "mesma"],
 };
 
 const recordedOut = decode(M.presenceOut, COLOGNE_RECORDED.response);

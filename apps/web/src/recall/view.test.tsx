@@ -82,6 +82,7 @@ const AI: Record<Locale, string[]> = {
   de: ["KI", "künstliche Intelligenz"],
   fr: ["IA", "intelligence artificielle"],
   es: ["IA", "inteligencia artificial"],
+  pt: ["IA", "inteligência artificial"],
 };
 const violations = (value: string, l: Locale) => [
   ...findForbiddenPhrases(value, forbiddenPhrases[l]),

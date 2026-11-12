@@ -2,7 +2,7 @@
  "sources": {
   "data/pipc.csv": "2030ae28388507ac361656586e12f241b06da31c701ba6839fc127be002f7a64",
   "data/pipc_rules.csv": "f034081215b4f6a3d12e303fd4c7a820cfb79c141e8a34a37de85c0ddc2fa8e7",
-  "apps/api/janus/memory/memory_events.csv": "dd24adec4ece889b5b5bce2cb42f5872f72aa0a350fd2df5a7356222e479a534"
+  "apps/api/janus/memory/memory_events.csv": "9f473d94c710dcf64dfe688337eeef0f59db82fb03c2825e0ac4b052e8a41f65"
  },
  "canvas": {
   "width": 1000,
