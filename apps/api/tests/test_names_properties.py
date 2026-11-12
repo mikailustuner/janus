@@ -73,3 +73,9 @@ def test_examples() -> None:
     assert spelling_key(fold("ketiapin")) == spelling_key(fold("quetiapine"))
     assert spelling_key(fold("folik asit")) == spelling_key(fold("folic acid"))
     assert strip_salts(fold("hiyosin butilbromür")) == "hiyosin butilbromur"
+
+
+def test_spelling_key_is_idempotent_when_the_whole_key_is_a_numeral_token() -> None:
+    """`yv` spells as `iv`, which is itself the numeral 4: the key reads the result again."""
+    assert spelling_key("yv") == spelling_key("iv") == "4"
+    assert spelling_key(spelling_key("yv")) == spelling_key("yv")

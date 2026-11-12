@@ -144,6 +144,21 @@ def _acid_word_order(tokens: list[str]) -> list[str]:
 
 
 def spelling_key(folded: str, lang: Lang = "en") -> str:
+    """Spelling-insensitive key of a folded name (spaces removed).
+
+    The key is read again until it stops changing: a whole key can itself be a token with a rule
+    (``yv`` spells as ``iv``, which is the numeral 4), and the key must be idempotent.
+    """
+    k = _spelling_key_once(folded, lang)
+    for _ in range(8):
+        again = _spelling_key_once(k, lang)
+        if again == k:
+            return k
+        k = again
+    raise AssertionError("spelling key did not reach a fixed point")  # pragma: no cover
+
+
+def _spelling_key_once(folded: str, lang: Lang = "en") -> str:
     """Spelling-insensitive key of a folded name (spaces removed)."""
     tokens = [TOKEN_RULES.get(t, t) for t in folded.split()]
     if name_lists.ACID_WORD_ORDER_ENABLED and lang in ("fr", "es"):
