@@ -17,7 +17,7 @@ from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 from typing import Any
 
-from janus_pipelines.modelkit import formulation, reader_a, reader_b
+from janus_pipelines.modelkit import formulation, reader_a, reader_b, strict_ctgov
 from janus_pipelines.modelkit.formref import BrandTable
 from janus_pipelines.modelkit.model import Candidate, ReaderStats
 from janus_pipelines.modelkit.pairing import Paired, pair
@@ -100,6 +100,7 @@ def _read_shard(
                 kept.setdefault(key, set()).add(nct)
                 p, left = pair(a_rows, b_rows)
                 p = formulation.resolve_pairs(p, study, table, brands, counts)
+                p = strict_ctgov.apply(p, study, table, brands, counts)
                 pairs += p
                 only_b += left
     return pairs, only_b, kept, counts, stats

@@ -48,6 +48,7 @@ _REASON: Final = {
     "context_differs": "the readers agree on the value but differ on its context",
     "not_the_parent_drug": "both readers agree the value is not for the parent drug",
     "reader_found_no_value": "a reader found no value",
+    "strict_check": "both readers agree, but the strict publication check abstained",
 }  # fmt: skip
 
 
