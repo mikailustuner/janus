@@ -83,8 +83,18 @@
   - [ ] Precision at least 0.70 for either document source (not met); OCR of scanned reviews (not run: it was to follow a
     measured born-digital reader)
   - [ ] Coverage 150 sets and 40 Validated (not approached: 26 sets, 0 Validated; see `reviews.md`)
-- [ ] M6 Expert sample audit, expert review, method write-up, data package with DOI, `CITATION.cff` (owner
-  decision)
+- [~] M6 Expert sample audit, expert review, method write-up, data package with DOI, `CITATION.cff` (owner
+  decision) (see `reviews.md`)
+  - [x] Special populations neither build nor test a set; patients only without a healthy-adult value; tests in the
+    population of the set (DP-M36, M32); pre-registered (private), evidence re-run, sets and gate recomputed
+  - [x] Expert sample audit pre-registered and drawn (366 items, 48 strata; 20-drug method review), bilingual packet and
+    answer sheet (private), scoring tool tested on synthetic fills (DP-M37)
+  - [x] `expert_audit` record read by the evidence job; API, system report, web pages (five languages) and MCP show the
+    audit line only with a record; shipped without one
+  - [x] Method write-up draft (private); data package builder with the publishable-rows test (DP-M38)
+  - [ ] Expert audit done and its record committed; pharmacometrician and clinical pharmacologist method review; opinions
+    published (owner, plan 12.5)
+  - [ ] DOI and `CITATION.cff` (owner decision); package upload
 - [ ] Two-compartment engine and export, per-kg handling with explicit body weight in a source, a class D
   fallback only if the owner wants it
 

@@ -214,3 +214,24 @@ one review document) never tests. On the published evidence it removes 11 of 298
 Sets and gate are those of M4: 26 sets, 8 complete; Validated 0, Failed 1 (enzalutamide), Not validated 403; no drug has both AUC
 and Cmax tested; the gate is not interpretable. An exploratory run with both held-back sources included (not shipped) gives 35 sets,
 17 complete, still 0 drugs with both metrics tested.
+
+## Milestone M6: population rule, audit prepared (automated checks only; expert review has not yet been done)
+Special-population rows (the readers' class for children, older adults, renal or hepatic impairment) built or tested sets
+before M6. The rule of DP-M36 was pre-registered before the release run; one correction was written after the first live
+result and is stated as such (the live numbers are the same under both versions). Same evidence rows as M5.
+
+| | M5 | M6 |
+|---|---|---|
+| Drugs with a set / complete | 26 / 8 | 22 / 7 |
+| Validated / Failed / Not validated | 0 / 1 / 403 | 0 / 1 / 403 (Failed: enzalutamide) |
+| Drugs with AUC tested / Cmax tested / both | 1 / 1 / 0 | 0 / 1 / 0 (gate not interpretable) |
+| Special-population rows in a set or a test | 109 building, 13 test | 0 |
+
+Sets lost: ertugliflozin (built only from renal-impairment arms; its one AUC point, a healthy-adult value, is no longer
+tested), lorlatinib (renal impairment), olaparib (renal impairment; was complete), solifenacin (children). Talazoparib keeps
+its set without the hepatic-impairment rows (CL/F 5.53 to 5.74 L/h). Dasatinib, ibrutinib and talazoparib carry
+`reference_population_patients`. A diagnostic found 22 usable rows of 12 drugs whose quote names a renal or dialysis word;
+almost all are renal clearance read as total clearance (a known reader error); none is in a set.
+The expert sample audit is pre-registered and drawn (366 items of the published confirmed values: 286 evidence values,
+80 label statements; a 20-drug method review); no person has answered it yet. Without an audit record every surface
+still says "Expert review has not yet been done."
