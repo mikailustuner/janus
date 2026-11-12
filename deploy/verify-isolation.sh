@@ -83,6 +83,9 @@ probe janus-public-internal open api:8000 postgres:5432 || fail=1
 probe janus-public-edge open web:3000 region1.v2.argotunnel.com:7844 || fail=1
 probe janus-public-internal closed 1.1.1.1:443 || fail=1
 probe janus-public-edge closed api:8000 postgres:5432 || fail=1
+# The api's metrics port (observability): internal network only, never on the edge network.
+probe janus-public-internal open api:9464 || fail=1
+probe janus-public-edge closed api:9464 || fail=1
 # The simulator (simulation-service DP-S8): internal network only, no route out. Probed from inside
 # the running container itself: the internet, R package mirrors, the metadata service and the host are
 # closed; postgres is open. The web and api containers share the internal network, so they are

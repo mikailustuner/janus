@@ -29,6 +29,13 @@ for route in /health /privacy/storage /memory/snapshot /seance/catalogue /light/
   /timemachine/catalogue /open/outcomes /simulate/compounds; do
   check "/api$route" 200
 done
+# The private metrics port is not reachable through the public site (deploy README "Metrics").
+for route in /api/metrics "/api/metrics?x=1" /api/health/metrics /api/modelkit/metrics; do
+  check "$route" 404
+done
+if get -s -m 20 "$base/api/metrics" | grep -q 'janus_http_requests\|process_cpu_seconds'; then
+  echo "  FAIL /api/metrics returns metrics"; fail=1
+fi
 # Crawler files (served by the app, not from public/).
 for file in /sitemap.xml /robots.txt; do check "$file" 200; done
 # Static files outside the build output (public/): home media, fonts, service worker, scanner.

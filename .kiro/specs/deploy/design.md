@@ -36,6 +36,7 @@ The repository gets `deploy/` with `compose.yml`, `cloudflared.config.yml.exampl
 | DP8 | `JANUS_PUBLIC_BASE_URL=https://janusmeds.org` (24 bytes ≤ 40) | QR size rule (doctor-loop §6.6) |
 | DP9 | Donations and outcome loop off: `JANUS_DONATION_REGION`, `JANUS_CONSENT_VERSIONS`, `JANUS_NOTE_KEYS` unset; `JANUS_NOISE_KEY` set anyway (open-data release refuses to run without it) | Req 4.1, owner decision |
 | DP10 | `/health` returns `{"status":"ok","commit":"<12 hex>"}` from a build arg `JANUS_COMMIT` (web shows it nowhere) | Req 6.1 |
+| DP11 | Private metrics: the api process opens a second listener on `JANUS_METRICS_PORT` (9464) for Prometheus text, on the internal network only (no `ports:`, not a route of the app, so the web `/api/*` rewrite cannot reach it); a host-network collector scrapes the container directly. Labels from fixed sets only. New runtime dependency `prometheus-client` 0.25.0, pinned (licence Apache-2.0 AND BSD-2-Clause, compatible with the project's Apache-2.0; no network access of its own). Series: `docs/metrics.md` | Req 2.3 |
 
 ## 4. Isolation firewall (owner runs `deploy/firewall.sh` with sudo)
 Docker's bridge traffic to the Host itself goes through `INPUT`; traffic to other networks through
@@ -99,6 +100,7 @@ Web Analytics **off**, Bot Fight Mode on, one free rate-limiting rule on `/api/*
 A check run by the owner outside the Stack (a scheduled job on a private machine) requests
 `https://janusmeds.org/api/health` and `/en/demo` every 5 minutes and notifies the owner on two
 failures in a row. No health data in the check.
+The api also serves private Prometheus metrics on its internal port (DP11; `deploy/README.md` "Metrics").
 
 ## 9. Properties / checks
 | # | Check | Req |

@@ -23,6 +23,7 @@ from janus.notes.glossary import load as load_glossary
 from janus.notes.glossary import vocabulary_digest
 from janus.notes.source import OutcomesSource
 from janus.notes.token import Keyring
+from janus.observability import metrics
 from janus.observability.logging import (
     LogEvent,
     configure_logging,
@@ -79,9 +80,14 @@ def create_app(
         if owns_database and database is not None:
             database.open()
         log_event(LogEvent.startup)
+        # Private Prometheus port (deploy README "Metrics"): never a route of this app.
+        metrics_server = metrics.serve(settings.metrics_port) if settings.metrics_port else None
         try:
             yield
         finally:
+            if metrics_server is not None:
+                metrics_server.shutdown()
+                metrics_server.server_close()
             if owns_database and database is not None:
                 database.close()
             log_event(LogEvent.shutdown)
@@ -89,6 +95,7 @@ def create_app(
     app = FastAPI(title="Janus API", version="0.0.0", lifespan=lifespan)
     app.state.settings = settings
     app.state.database = database
+    metrics.install(database, settings.data_dir)
     app.state.events = load_vocabulary(settings.event_vocabulary_path)
     path = settings.event_vocabulary_path
     app.state.event_vocabulary = load_events(path if path.suffix == ".csv" else EVENT_VOCABULARY)

@@ -75,6 +75,26 @@ Owner decision 2026-11-09: resource caps raised (deploy Req 7.4): long-running s
 9. `JANUS_SIMULATION: "on"` of the api in `compose.yml` switches server runs on; `off` stops accepting
    them (the in-browser explorer keeps working).
 
+## Metrics (private monitoring)
+
+The api serves Prometheus text format on its own port (9464, `JANUS_METRICS_PORT`), inside the container and
+on the internal network only:
+
+- It is a second listener of the api process, not a route of the public app: `/api/metrics` and every
+  variant answer 404, and the web app's `/api/*` rewrite always targets the api's public port, so the
+  proxy cannot reach it. `smoke.sh` and `verify-isolation.sh` check both; no `ports:` entry exists.
+- A collector running on the host with the host network scrapes the api container directly at its address
+  on the internal network, then forwards the samples to a private monitoring service. Nothing else
+  connects to the port. The host firewall (`firewall.sh`) only blocks new connections that containers open
+  towards the host; a connection the host opens towards a container is not affected, so no firewall change
+  is needed.
+- Labels come from fixed sets only (route templates, HTTP methods, status classes, job states, dataset
+  names); no query string, path value, name, code, address or user agent is ever recorded.
+- The api runs a single process, so the series are process-wide; do not raise the worker count without
+  switching `prometheus_client` to its multi-process mode.
+
+Reference: `docs/metrics.md` (every series, its labels and meaning).
+
 ## Releases that change the deploy scripts
 
 `deploy.sh` runs from the `src/` checkout and checks out the new commit while it runs, so a release that

@@ -87,6 +87,10 @@ services:
       # Rate limits count Cloudflare's CF-Connecting-IP: the api is reachable only through the
       # tunnel and the web app (simulation-service DP-S7).
       JANUS_BEHIND_CLOUDFLARE: "on"
+      # Private Prometheus listener of the api container, on the internal network only: no
+      # `ports:`, not under /api, so the web proxy cannot reach it (deploy README "Metrics").
+      JANUS_METRICS_PORT: "9464"
+    expose: ["9464"]
     volumes:
       - ./data:/data:ro
     tmpfs: [/tmp]

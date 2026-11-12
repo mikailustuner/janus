@@ -18,6 +18,7 @@ from starlette.types import ASGIApp, Message, Receive, Scope, Send
 from janus.http_policy.routes import RouteKind, route_kind
 from janus.observability.errors import send_internal_error
 from janus.observability.logging import UNMATCHED_ROUTE, LogEvent, log_event
+from janus.observability.metrics import HTTP_IN_FLIGHT, observe_request
 
 REQUEST_ID_HEADER = b"x-request-id"
 
@@ -42,6 +43,7 @@ class AccessLogMiddleware:
         started_ns = time.perf_counter_ns()
         status = 500
         response_started = False
+        HTTP_IN_FLIGHT.inc()
 
         async def send_wrapper(message: Message) -> None:
             nonlocal status, response_started
@@ -75,10 +77,13 @@ class AccessLogMiddleware:
             status = 500
         finally:
             latency_ms = (time.perf_counter_ns() - started_ns) / 1_000_000
+            route = _route_template(scope)
+            HTTP_IN_FLIGHT.dec()
+            observe_request(route, str(scope.get("method", "")), status, latency_ms / 1000)
             log_event(
                 LogEvent.access,
                 request_id=request_id,
-                route=_route_template(scope),
+                route=route,
                 status=status,
                 latency_ms=latency_ms,
             )
