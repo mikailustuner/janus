@@ -44,6 +44,11 @@ const securityHeaders = [
     value: "camera=(self), microphone=(), geolocation=()",
   },
   { key: "X-Content-Type-Options", value: "nosniff" },
+  // Browsers ignore it over plain HTTP, so local development is unaffected.
+  {
+    key: "Strict-Transport-Security",
+    value: "max-age=31536000; includeSubDomains",
+  },
 ];
 
 const nextConfig: NextConfig = {

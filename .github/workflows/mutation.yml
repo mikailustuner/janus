@@ -1,0 +1,65 @@
+name: Mutation
+
+# Weekly mutation testing of the cascade engine and the name resolution (docs/testing.md). Target:
+# at least 80 % of the mutants killed. Runs on GitHub's machines only (hours of CPU).
+on:
+  schedule:
+    - cron: "23 1 * * 0"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  mutmut:
+    name: mutmut (${{ matrix.target }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [cascades, resolution]
+    env:
+      HYPOTHESIS_PROFILE: ci
+    defaults:
+      run:
+        working-directory: apps/api
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.3.3
+        with:
+          working-directory: apps/api
+      # mutmut 3.8 reads `item._nodeid`, which pytest 9 removed: pytest 8 here only. The project
+      # itself is not installed, so the tests import the mutated copy.
+      - name: Environment
+        run: |
+          uv sync --frozen --no-install-project
+          uv pip install mutmut==3.8.1 "pytest>=8.4,<9"
+      # The copy under apps/api/mutants/ sits one level deeper; the repository paths the code and
+      # tests compute (janus.paths, parents[n]) are linked there.
+      - name: Repository paths for the mutated copy
+        run: |
+          for d in data datasets pipelines; do ln -s "../$d" "../$d"; done
+          ln -s ../web web
+      - name: Configure
+        run: python3 ../../scripts/mutation_config.py ${{ matrix.target }}
+      - name: Run
+        run: .venv/bin/mutmut run --max-children 4 > /dev/null
+      - name: Score (target 80 % killed)
+        run: |
+          .venv/bin/mutmut export-cicd-stats
+          python3 - <<'PY'
+          import json, os
+          s = json.load(open("mutants/mutmut-cicd-stats.json"))
+          tested = s["killed"] + s["survived"] + s["timeout"] + s["suspicious"]
+          score = 100 * (s["killed"] + s["timeout"]) / tested if tested else 0
+          line = (f"**${{ matrix.target }}**: {score:.1f} % of {tested} mutants killed "
+                  f"(survived {s['survived']}, no tests {s['no_tests']})")
+          print(line)
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as f:
+              f.write(line + "\n")
+          raise SystemExit(0 if score >= 80 else 1)
+          PY
+      - name: Surviving mutants
+        if: always()
+        run: .venv/bin/mutmut results

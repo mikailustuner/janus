@@ -62,7 +62,7 @@ else
   else echo "  FAIL simulate result not cached"; fail=1; fi
 fi
 headers="$(get -sI -m 20 "$base/en")"
-for h in content-security-policy referrer-policy x-content-type-options; do
+for h in content-security-policy referrer-policy x-content-type-options strict-transport-security; do
   if grep -qi "^$h:" <<<"$headers"; then echo "  ok   header $h"; else echo "  FAIL header $h"; fail=1; fi
 done
 if grep -qi '^x-powered-by:' <<<"$headers"; then echo "  FAIL x-powered-by present"; fail=1; fi

@@ -19,6 +19,23 @@ for f in "${files[@]}"; do
   esac
 done
 
+# Secrets in the staged changes (same rules as CI, .gitleaks.toml).
+step "gitleaks (staged)"
+cfg=()
+[ -f .gitleaks.toml ] && cfg=(-c "$root/.gitleaks.toml")  # older branches: default rules
+if command -v gitleaks >/dev/null; then
+  gitleaks git --pre-commit --staged --redact --no-banner --log-level warn "${cfg[@]}" . \
+    || bad "gitleaks"
+elif command -v docker >/dev/null; then
+  # Same absolute paths inside the container, so a worktree's .git file still resolves.
+  common="$(cd "$(git rev-parse --git-common-dir)" && pwd)"
+  docker run --rm -v "$root:$root:ro" -v "$common:$common:ro" -w "$root" \
+    ghcr.io/gitleaks/gitleaks:v8.28.0 git --pre-commit --staged --redact --no-banner --log-level warn \
+    "${cfg[@]}" "$root" >/dev/null || bad "gitleaks"
+else
+  step "gitleaks not installed; CI runs it"
+fi
+
 staged() {  # staged <dir prefix> <regex>: staged files under the prefix matching the regex
   local prefix="$1" re="$2" f
   for f in "${files[@]}"; do

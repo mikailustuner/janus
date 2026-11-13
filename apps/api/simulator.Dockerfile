@@ -8,7 +8,10 @@ FROM rocker/r-ver:4.6.1@sha256:780bc87219250a6dfffef6c812999731986fd94d8d5f7e572
 
 ARG HTTK_VERSION=2.7.4
 ENV DEBIAN_FRONTEND=noninteractive
+# Security fixes after the base image (deploy C3: image scan in CI). Nothing is purged: removing a
+# header package auto-removes runtime libraries R needs (libgomp1).
 RUN apt-get update \
+    && apt-get upgrade -y --no-install-recommends \
     && apt-get install -y --no-install-recommends python3.12 python3.12-venv \
     && rm -rf /var/lib/apt/lists/*
 RUN install2.r --error --skipinstalled --ncpus -1 httk \
