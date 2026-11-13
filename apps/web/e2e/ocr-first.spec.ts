@@ -101,7 +101,9 @@ for (const locale of LOCALES)
       const tabs = page.getByRole("tab");
       await expect(tabs).toHaveCount(3);
       await expect(tabs).toHaveText([s.tabs.code, s.tabs.label, s.tabs.type]);
-      await expect(page.getByTestId("any-country")).toHaveText(s.anyCountry);
+      await expect(
+        page.locator("#content").getByTestId("any-country"),
+      ).toHaveText(s.anyCountry);
       // Equal controls: one row, the same size.
       const boxes = await tabs.evaluateAll((els) =>
         els.map((e) => e.getBoundingClientRect()),
