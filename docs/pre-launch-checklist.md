@@ -36,6 +36,7 @@ defers a check to launch.
   out (dementia, epilepsy).
 - [ ] **Native-speaker check of the labels** in Turkish, German, French and Spanish
   (`memory_events.csv`, and the `Memory` message namespace), after the localization-reviewer agent's pass.
+- [ ] **Native-speaker review of the validation-studies wording** in Turkish, German, French, Spanish and Portuguese (`ValidationStudies` and `Calibration` namespaces, `apps/web/messages/*.json`). The five translations were drafted by the automated assistant on 2026-11-13; native-speaker and expert review not yet done.
 - [ ] **Crisis and emergency numbers per region: re-check.** Decided 2026-11-08 (`experience` Requirement 7.3; tables
   `Memory.emergency` and `Memory.crisis` in five languages and `EMERGENCY`/`CRISIS` in `messages.py`): US 911 and 988
   (call or text, Suicide and Crisis Lifeline); TR 112; EU 112 plus the local crisis service; OTHER and UNKNOWN the local

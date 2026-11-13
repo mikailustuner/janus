@@ -26,6 +26,7 @@ import {
 import { formatCount, formatDate, formatShare } from "@/components/format";
 import { keyName } from "@/components/names";
 import { EmergencyNotice } from "@/components/EmergencyNotice";
+import { CalibrationLine } from "@/components/research/CalibrationLine";
 import { SafetyLine } from "@/components/SafetyLine";
 import { StateView } from "@/components/StateView";
 import { Card } from "@/components/ui";
@@ -207,6 +208,7 @@ function Combination({
                     );
                   })}
                 </ul>
+                <CalibrationLine />
                 <p className="text-sm text-muted">{t("Memory.meddra")}</p>
               </Disclosure>
             ) : null}
