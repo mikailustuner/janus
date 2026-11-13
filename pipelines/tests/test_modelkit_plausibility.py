@@ -4,6 +4,7 @@ value."""
 
 from __future__ import annotations
 
+import inspect
 import math
 import random
 from collections import Counter
@@ -12,7 +13,7 @@ from dataclasses import replace
 from hypothesis import given
 from hypothesis import strategies as st
 
-from janus_pipelines.modelkit import plausibility
+from janus_pipelines.modelkit import ctgov_bulk, plausibility
 from janus_pipelines.modelkit.confirm import Confirmation, Context
 from janus_pipelines.modelkit.model import Candidate
 from janus_pipelines.modelkit.pairing import Paired
@@ -224,3 +225,9 @@ def test_apply_only_withholds(rows: list[tuple[str, float, str, bool, bool]]) ->
 
 def test_log_median() -> None:
     assert plausibility._log_median([math.log(1), math.log(100)]) == math.log(10)  # pyright: ignore[reportPrivateUsage]
+
+
+def test_the_intake_runs_the_check_only_when_asked() -> None:
+    # off by default: the pre-registered decision rule was not met (docs/research/modelkit-gate.md)
+
+    assert inspect.signature(ctgov_bulk.read_bulk).parameters["cross_study"].default is False

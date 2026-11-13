@@ -7,7 +7,9 @@ study). This check compares each confirmed value with the drug's OTHER studies a
 differs from them by more than `FACTOR`. It only withholds; it never confirms a value.
 
 `cross_study_outliers` is the rule as a pure function; `apply` wires it into the intake after the strict
-record check. Research use only. Not for clinical decisions.
+record check. The intake runs it only when asked (`read_bulk(cross_study=True)`, job environment
+`JANUS_MODELKIT_CROSS_STUDY=1`): its pre-registered decision rule was not met, so it is off by default
+(docs/research/modelkit-gate.md). Research use only. Not for clinical decisions.
 """
 
 from __future__ import annotations
