@@ -24,7 +24,9 @@ accessibility and SEO at least 0.90 on `/en/about` and `/en/privacy`. The home p
 a warning and 0.85 is the hard floor until that is fixed. Measured on 2026-11-13 on a desktop machine, the same
 build scores 0.93 (three runs; largest paint 3.0 s, the emergency line), so the CI figure depends on the runner. Two
 causes were ruled out: loading the hero eagerly did not help, and rendering the shell without its Suspense boundary
-made it worse (0.86, largest paint 4.0 s on the hero image), so the boundary stays. A small k6 load check of the public API runs weekly
+made it worse (0.86, largest paint 4.0 s on the hero image), so the boundary stays. Since 0.3.0 the CI score of the home page is
+0.83 to 0.85 on unchanged code (it passes or fails the floor from run to run): the finding is open, and fixing it is the
+next performance task. A small k6 load check of the public API runs weekly
 (`deploy/load/smoke.js`; p95 of reads below 500 ms).
 
 ## Alerts
