@@ -3,6 +3,11 @@
 # Base images are multi-arch (linux/amd64, linux/arm64).
 FROM python:3.12-slim AS base
 
+# Security fixes released after the base image was built (deploy C3: image scan in CI).
+RUN apt-get update \
+    && apt-get upgrade -y --no-install-recommends \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY --from=ghcr.io/astral-sh/uv:0.12.17 /uv /uvx /bin/
 
 ENV UV_COMPILE_BYTECODE=1 \
