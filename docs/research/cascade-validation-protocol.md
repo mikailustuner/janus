@@ -106,3 +106,16 @@ many ingredients. Results are reported whether or not the hypotheses are met.
 - Negative pairs are constructed, not observed; specificity on them is a property of this construction.
 - The reference set is assembled by an automated literature step, not by clinicians. Expert review has not
   yet been done; the reference set is part of the expert validation packet.
+
+## Amendment 1 (2026-11-13, before the reference set was complete and before any run on it)
+
+Found while checking the evaluation script on three hand-made pairs that are not part of the reference
+set; nothing was tuned on reference data.
+
+- Name resolution, fixed in `pipelines/tools/cascade_validation.py`: the highest-scoring ingredient
+  candidate of the name search (what a person typing a generic name is offered first); otherwise the
+  mapped ingredient of product candidates whose English label equals the name; otherwise the ingredient
+  of single-ingredient products.
+- A positive pair whose drugs cannot be resolved counts as missed (the person gets no warning). A
+  negative pair that cannot be resolved is left out of the specificity denominator and reported
+  separately, because it says nothing about whether the engine stays silent.
