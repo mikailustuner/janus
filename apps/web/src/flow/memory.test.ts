@@ -1,11 +1,14 @@
 // Feature: experience, Properties P10 (memory display rules) and P11 (CI bar and numbers).
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import { formatRatio } from "@/components/format";
 import { ratioText } from "@/components/memory/CiBar";
 import { check, fc } from "@/test/fc";
 import { PAIRS } from "@/test/results";
 import type { Assessment, PairOut, SharedOut } from "@/api/contracts";
+
+// CiBar renders a link through next-intl navigation, which needs the Next runtime; only ratioText is used here.
+vi.mock("@/i18n/navigation", () => ({ Link: "a" }));
 
 import {
   ciBar,
