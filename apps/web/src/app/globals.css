@@ -41,6 +41,13 @@
     line-height: 1.5;
     -webkit-text-size-adjust: 100%;
   }
+  /* Below 768 px the bottom bar is fixed over the page: keyboard focus and in-page jumps stop
+     above it, so a focused control is never hidden behind it (WCAG 2.2, 2.4.11; plan D5). */
+  @media (width < 48rem) {
+    html {
+      scroll-padding-bottom: calc(7rem + env(safe-area-inset-bottom));
+    }
+  }
   html[data-large-text="on"] {
     font-size: 118.75%; /* 19 px */
     line-height: 1.6;
