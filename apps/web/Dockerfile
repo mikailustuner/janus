@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 # Janus web (Next.js standalone). Build context: repository root.
 # Base images are multi-arch (linux/amd64, linux/arm64).
-FROM node:24-alpine AS base
+FROM node:25-alpine AS base
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN corepack enable
 WORKDIR /app
@@ -24,7 +24,7 @@ COPY apps/web ./apps/web
 RUN node apps/web/scripts/vendor-assets.mjs
 RUN pnpm --filter @janus/web build
 
-FROM node:24-alpine AS runner
+FROM node:25-alpine AS runner
 # Security fixes after the base image, and no package managers at run time: npm and corepack (and
 # their bundled modules) are not needed to serve the standalone build (deploy C3: image scan in CI).
 RUN apk upgrade --no-cache \
