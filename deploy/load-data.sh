@@ -21,4 +21,10 @@ mkdir -p "$STACK_DIR/data/resolution"
 log "evidence";   run python -m janus.integrity.load --data-dir /data
 log "cascades";   run python -m janus.cascades.load
 log "resolution"; run python -m janus.resolution.load --data-dir /data
+# The API builds the new name index on the first lookup after a dataset change; until then the web
+# proxy can drop visitors' searches. One lookup here builds it before anyone else asks.
+code="$(docker run --rm --network "${JANUS_STACK}-internal" --read-only --cap-drop ALL curlimages/curl:8.17.0 \
+  -s -o /dev/null -w '%{http_code}' -m 300 -X POST -H 'content-type: application/json' \
+  -d '{"query":"amlodipine"}' http://api:8000/resolve/search || true)"
+if [ "$code" = 200 ]; then log "name index warm"; else log "warning: warm-up lookup answered ${code:-nothing}"; fi
 log "loaded"

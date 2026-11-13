@@ -6,6 +6,19 @@ public server runs ([docs/releasing.md](docs/releasing.md)). Research use only; 
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-11-13
+
+### Added
+
+- The expert validation protocol (`docs/research/expert-validation-protocol.md`, with amendment 1), registered before
+  any expert sees the material, and the tools that draw its samples and score the answers
+  (`pipelines/tools/validation_packet_sample.py`, `score_validation_packet.py`). Expert review has not yet been done.
+
+### Fixed
+
+- After a dataset change, the first name searches could fail while the API built the new name index; the data load
+  now builds it before visitors search.
+
 ## [0.3.0] - 2026-11-13
 
 ### Added
