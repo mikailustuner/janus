@@ -77,9 +77,9 @@ test("the page is linked from the Research index, the footer and the Open data p
   await stubApi(page, {});
   const href = "/en/research/for-researchers";
   await page.goto("/en/research");
-  await expect(page.locator(`main a[href="${href}"]`)).toBeVisible();
+  await expect(page.locator(`#content a[href="${href}"]`)).toBeVisible();
   await page.goto("/en/open-data");
-  await expect(page.locator(`main a[href="${href}"]`)).toBeVisible();
+  await expect(page.locator(`#content a[href="${href}"]`)).toBeVisible();
   await expect(page.locator(`footer a[href="${href}"]`)).toBeVisible();
 });
 

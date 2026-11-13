@@ -125,7 +125,8 @@ test("the cascade card states its scope and the numbers (en)", async ({
 }) => {
   await stubApi(page, {});
   await page.goto("/en/research/validation-studies");
-  const card = page.getByTestId("vs-cascade");
+  // The shell streams in; look inside the real content, not the fallback copy.
+  const card = page.locator("#content").getByTestId("vs-cascade");
   await expect(card).toContainText("421 of 432 = 0.975 (95 % CI 0.955–0.986)");
   await expect(card).toContainText("79 of 217 = 0.364 (95 % CI 0.303–0.430)");
   await expect(card).toContainText("Hypothesis met.");
@@ -196,4 +197,40 @@ test("the page is linked from the Research index and the calibration line links 
   ).toBeVisible();
   await page.goto("/en/research/validation-studies#faers");
   await expect(page.getByTestId("vs-faers")).toBeVisible();
+});
+
+// Plan D3.2: every card saves its numbers as a CSV and shows the release citation.
+test("each study downloads its CSV and shows the citation", async ({
+  page,
+}) => {
+  await stubApi(page);
+  await page.goto("/en/research/validation-studies");
+  for (const card of [
+    "cascade",
+    "faers",
+    "modelkitPrecision",
+    "modelkitGate",
+  ]) {
+    const [download] = await Promise.all([
+      page.waitForEvent("download"),
+      page.getByTestId(`vs-csv-${card}`).click(),
+    ]);
+    expect(download.suggestedFilename()).toMatch(
+      new RegExp(`^janus-${card}-v\\d+\\.\\d+\\.\\d+\\.csv$`),
+    );
+    const path = await download.path();
+    const text = readFileSync(path, "utf8");
+    expect(text.split("\r\n")[0]).toBe(
+      "study,measure,k,n,estimate,ci95_low,ci95_high,cluster_lower,threshold,met",
+    );
+    expect(text).toContain(`\r\n${card},`);
+  }
+  await page.getByText("Cite this version").first().click();
+  await expect(page.getByTestId("vs-cite-cascade")).toContainText(
+    "Üstüner M. Janus",
+  );
+  await expect(page.getByTestId("vs-limitations")).toHaveAttribute(
+    "href",
+    /limitations\.md$/,
+  );
 });
