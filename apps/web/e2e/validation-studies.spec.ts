@@ -147,7 +147,7 @@ test("the model kit cards state the numbers, the scope and the open items (en)",
 }) => {
   await stubApi(page, {});
   await page.goto("/en/research/validation-studies");
-  const p = page.getByTestId("vs-modelkit-precision");
+  const p = page.locator("#content").getByTestId("vs-modelkit-precision");
   await expect(p).toContainText("126 (14)");
   await expect(p).toContainText("0.992");
   await expect(p).toContainText("0.364");
@@ -159,7 +159,7 @@ test("the model kit cards state the numbers, the scope and the open items (en)",
   await expect(p).toContainText(
     "Two independent automated review passes. Expert review has not yet been done.",
   );
-  const g = page.getByTestId("vs-modelkit-gate");
+  const g = page.locator("#content").getByTestId("vs-modelkit-gate");
   await expect(g.getByTestId("vs-gate-result")).toContainText("needs 10 drugs");
   await expect(g.getByTestId("vs-gate-result")).toContainText("It has 0.");
   await expect(g.getByTestId("vs-gate-result")).toContainText(

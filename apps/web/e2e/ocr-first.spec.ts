@@ -143,7 +143,7 @@ test("code not found → label photo → candidates → confirm → the second i
   });
   await page.goto("/en/scan");
   await page.getByRole("tab", { name: m.Scan.tabs.type }).click();
-  await page.getByLabel(m.Scan.typeLabel).fill("4150000000017");
+  await page.getByLabel(m.Scan.typeLabel).fill("4150000000015");
   await page.getByRole("button", { name: m.Scan.submit, exact: true }).click();
 
   // Not found is said with what was searched, and it is not a dead end.
@@ -170,11 +170,12 @@ test("code not found → label photo → candidates → confirm → the second i
   );
   const candidates = page.getByTestId("label-candidate");
   await expect(candidates).toHaveCount(2, { timeout: 90_000 });
-  await expect(candidates.nth(0)).toContainText("ambroxol");
-  await expect(candidates.nth(0)).toContainText(
+  // Strongest first (ingredient-match.ts): the exact name, then the name joined to its salt.
+  await expect(candidates.nth(0)).toContainText("hydrochlorothiazide");
+  await expect(candidates.nth(1)).toContainText("ambroxol");
+  await expect(candidates.nth(1)).toContainText(
     "On the label: Ambroxolhydrochlorid",
   );
-  await expect(candidates.nth(1)).toContainText("hydrochlorothiazide");
   await expect(page.getByText(m.Scan.ocr.several)).toBeVisible();
   // Nothing is chosen and nothing was sent.
   await expect(
@@ -186,7 +187,7 @@ test("code not found → label photo → candidates → confirm → the second i
   await expectTouchTargets(page);
   await shot(page, "label-candidates-en");
 
-  await candidates.nth(0).click();
+  await candidates.filter({ hasText: "ambroxol" }).click();
   await expect(
     page.getByRole("heading", { name: m.Confirm.title }),
   ).toBeVisible();
@@ -220,8 +221,12 @@ test("code not found → label photo → candidates → confirm → the second i
     page.getByRole("tab", { name: m.Scan.tabs.label }),
   ).toHaveAttribute("aria-selected", "true");
   await expect(candidates).toHaveCount(2);
-  await expect(candidates.nth(0)).toContainText(m.Scan.ocr.inList);
-  await expect(candidates.nth(1)).not.toContainText(m.Scan.ocr.inList);
+  await expect(candidates.filter({ hasText: "ambroxol" })).toContainText(
+    m.Scan.ocr.inList,
+  );
+  await expect(
+    candidates.filter({ hasText: "hydrochlorothiazide" }),
+  ).not.toContainText(m.Scan.ocr.inList);
   await page.getByRole("button", { name: m.Scan.ocr.remove }).click();
   await expect(candidates).toHaveCount(0);
 
@@ -243,7 +248,7 @@ test("a country without a product database leads to the label photo and the name
   await stubApi(page, { "/resolve/scan": { body: noOpenDatabase } });
   await page.goto("/en/scan");
   await page.getByRole("tab", { name: m.Scan.tabs.type }).click();
-  await page.getByLabel(m.Scan.typeLabel).fill("4150000000017");
+  await page.getByLabel(m.Scan.typeLabel).fill("4150000000015");
   await page.getByRole("button", { name: m.Scan.submit, exact: true }).click();
   await expect(page.getByTestId("no-open-database")).toHaveText(
     m.Confirm.noOpenDatabase,
@@ -267,7 +272,10 @@ test("a code that cannot be used offers the other two ways on the scan screen", 
   // A German PZN is a national code, not a GTIN.
   await page.getByLabel(m.Scan.typeLabel).fill("1234567");
   await page.getByRole("button", { name: m.Scan.submit, exact: true }).click();
-  await expect(page.getByRole("alert")).toContainText(m.Scan.nationalCode);
+  // The page's own alert (Next.js also keeps a route announcer with role "alert").
+  await expect(page.locator("#content").getByRole("alert")).toContainText(
+    m.Scan.nationalCode,
+  );
   await page
     .getByTestId("other-ways")
     .getByRole("button", { name: m.Scan.wayLabel })
@@ -384,7 +392,10 @@ for (const [locale, theme] of [
       page.getByRole("heading", { name: s.ocr.candidatesTitle }),
     ).toBeVisible();
     await expect(page.getByText(s.ocr.candidatesIntro)).toBeVisible();
-    await expect(candidates.nth(0)).toContainText("Ambroxolhydrochlorid");
+    // Strongest first (ingredient-match.ts): the exact name, then the name joined to its salt.
+    await expect(candidates.nth(0)).toContainText("Hydrochlorothiazid");
+    await expect(candidates.nth(0)).toHaveAttribute("data-strength", "exact");
+    await expect(candidates.nth(1)).toContainText("Ambroxolhydrochlorid");
     expect(seen).toHaveLength(0);
     await expectNoAxeViolations(page);
     await expectNoHorizontalScroll(page);

@@ -284,6 +284,12 @@ export function Medicines() {
         <>
           <div className="flex flex-wrap gap-3">
             <ButtonLink href="/results">{t("Medicines.check")}</ButtonLink>
+            {/* The next medicine is one tap away (plan D2.1: add → check → note). */}
+            {readOnly ? null : (
+              <ButtonLink href="/scan" variant="secondary">
+                {t("Medicines.add")}
+              </ButtonLink>
+            )}
             <ButtonLink href="/timeline" variant="secondary">
               {t("Medicines.timeline")}
             </ButtonLink>

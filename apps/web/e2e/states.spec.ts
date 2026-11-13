@@ -4,6 +4,8 @@ import { join } from "node:path";
 
 import { expect, test, type Page } from "@playwright/test";
 
+import { RESEARCH_GROUPS } from "../src/components/research/sections";
+
 import { expectNoHorizontalScroll, stubApi } from "./helpers";
 
 const fx = JSON.parse(
@@ -133,18 +135,23 @@ test("research: the four Phase 4 entries open their screens, review status, no n
   page,
 }) => {
   await page.goto("/en/research");
-  // Four Phase 4 entries, the time machine (experience DP58), open data (open-data DP7) and the
-  // cascade map (cascade-map DP1), which counts the PIPC patterns ("All 65 …"): a fact of the
-  // rule list, not a result.
+  // Every hub entry, in its five groups (plan D1, research/sections.ts), among them the cascade
+  // map (cascade-map DP1), which counts the PIPC patterns ("All 65 …"): a fact of the rule list,
+  // not a result.
   await expect(
-    page.locator("main").getByRole("link", { name: /^Open/ }),
-  ).toHaveCount(7);
+    page.locator("#content").getByRole("link", { name: /^Open/ }),
+  ).toHaveCount(RESEARCH_GROUPS.flatMap((g) => g.entries).length);
   await expect(page.getByTestId("research-review")).toContainText(
     "expert review has not yet been done",
   );
-  const text = await page.locator("main").evaluate((m) => {
+  const text = await page.locator("#content").evaluate((m) => {
     const copy = m.cloneNode(true) as HTMLElement;
-    copy.querySelectorAll("a[href$='/cascades']").forEach((a) => a.remove());
+    // The cascade map and the onset table name the 65 PIPC patterns: a fact of the rule list.
+    copy
+      .querySelectorAll(
+        "a[href$='/cascades'], a[href$='/research/faers-onset']",
+      )
+      .forEach((a) => a.remove());
     return copy.textContent ?? "";
   });
   expect(text).not.toMatch(/\d{2,}/);

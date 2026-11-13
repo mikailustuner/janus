@@ -67,6 +67,23 @@ export function recordRequests(page: Page): Request[] {
 
 /** C1: axe with the WCAG 2.2 A and AA rules reports no violation. */
 export async function expectNoAxeViolations(page: Page): Promise<void> {
+  // A fade (page enter, disclosure) still running makes axe measure half-transparent text and
+  // report a contrast it would not have: wait for finite animations to end (infinite ones, such as
+  // the scene's ghosts, never do and are not waited for).
+  await page
+    .waitForFunction(
+      () =>
+        document
+          .getAnimations()
+          .every(
+            (a) =>
+              a.playState !== "running" ||
+              a.effect?.getComputedTiming().endTime === Infinity,
+          ),
+      null,
+      { timeout: 5_000 },
+    )
+    .catch(() => undefined);
   const result = await new AxeBuilder({ page })
     .withTags([
       "wcag2a",

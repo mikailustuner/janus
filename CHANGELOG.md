@@ -6,6 +6,33 @@ public server runs ([docs/releasing.md](docs/releasing.md)). Research use only; 
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-11-13
+
+### Added
+
+- Two ways in on the home page (patients and families; researchers and clinicians). Patient pages show a patient
+  menu (scan, medicines, results, doctor note, passport; settings in the header); researcher pages show their own
+  menu (overview, validation, drug models, data, API and MCP) and a link back. The research hub lists its pages in
+  five groups; hypothesis cards, the séance and the time machine are labelled experimental and are not in the
+  patient menu. Addresses are unchanged.
+- The result card reads in three parts: what Janus found, why it may matter, what you can do, with "do not stop or
+  change a medicine on your own; talk to your doctor or pharmacist first".
+- Every validation study can be downloaded as CSV and shows the citation of the release (from `CITATION.cff`).
+- Portuguese ingredient names in the site and the doctor note (1,015 of 1,126 names, from Wikidata, CC0; review by
+  a native speaker has not yet been done) and in the ingredient name index.
+- CI checks the reading level of the patient texts (Flesch-Kincaid for English, Ateşman for Turkish) and that every
+  message key used in the code exists.
+- Keyboard and focus tests; a usability test protocol and an accessibility page (`docs/accessibility.md`).
+
+### Fixed
+
+- On a phone, a control focused from the keyboard could be hidden behind the bottom bar.
+- Eight screens had no page heading while empty or failing.
+- The model kit table on the validation page showed a message key instead of the interval.
+- The glass theme no longer downloads the night theme's hero image.
+- Stale browser tests (a barcode with a wrong check digit, the candidate order, ambiguous locators) fixed; the full
+  browser suite is now a release step.
+
 ## [0.2.2] - 2026-11-13
 
 ### Fixed
