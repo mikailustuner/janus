@@ -24,6 +24,9 @@ First tagged release: the public site at <https://janusmeds.org> on this date.
 - Operations: daily and weekly backups pulled by a separate machine with a tested restore, private alerting,
   external uptime check, nightly five-fold test runs, pre-commit gate, coverage floors, weekly mutation testing,
   dependency, secret and image scans, CodeQL, hardened images.
+- Model kit precision re-measured with study-level clustering (ClinicalTrials.gov still above the 0.90 bound);
+  PubMed Central tables and Drugs@FDA reviews measured on fresh pre-registered samples and held back; EMA EPARs
+  listed as a cited-only source.
 - Validation studies page for researchers with the cascade detection and FAERS calibration results, and the
   calibration line next to every FAERS reporting ratio.
 - Known limitations in one place, STARD and READUS-PV reporting checklists, one-command reproduction of the
