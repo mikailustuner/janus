@@ -43,7 +43,12 @@ scompose --profile migrate down --volumes --remove-orphans >/dev/null 2>&1 || tr
 log "staging: starting postgres"
 scompose up -d --wait postgres >/dev/null
 log "staging: restoring a fresh dump of production"
-compose exec -T postgres pg_dump -U janus -d janus --format=custom --compress=6 \
+# The production container is found by its compose labels, not through `compose`: the installed
+# production compose file may still be the previous release's (it is replaced only after staging).
+prod_pg="$(docker ps -q --filter "label=com.docker.compose.project=$prod_stack" \
+  --filter label=com.docker.compose.service=postgres)"
+[ "$(wc -w <<<"$prod_pg")" = 1 ] || die "cannot find exactly one production postgres container ($prod_stack)"
+docker exec "$prod_pg" pg_dump -U janus -d janus --format=custom --compress=6 \
   | scompose exec -T postgres pg_restore -U janus -d janus --no-owner --no-privileges --exit-on-error
 # Cluster-wide objects are not in the dump, and --no-privileges drops the grants: give the worker
 # role back what migration 0014 gives it (the migrations below create the role when 0014 is new).
