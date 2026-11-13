@@ -17,7 +17,7 @@ from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 from typing import Any
 
-from janus_pipelines.modelkit import formulation, reader_a, reader_b, strict_ctgov
+from janus_pipelines.modelkit import formulation, plausibility, reader_a, reader_b, strict_ctgov
 from janus_pipelines.modelkit.formref import BrandTable
 from janus_pipelines.modelkit.model import Candidate, ReaderStats
 from janus_pipelines.modelkit.pairing import Paired, pair
@@ -135,7 +135,8 @@ def read_bulk(
 ) -> tuple[list[Paired], list[Candidate], dict[str, set[str]]]:
     """Pairs of the two readers for every (study, drug); candidates only reader B found; the studies
     kept per drug. The member list is cut into SHARDS contiguous parts that are read independently
-    (in `workers` processes) and joined in order, so the result is the same for any worker count."""
+    (in `workers` processes) and joined in order, so the result is the same for any worker count.
+    The cross-study check (`plausibility`) runs once on the joined pairs."""
     with zipfile.ZipFile(zip_path) as zf:
         names = [i.filename for i in zf.infolist() if i.filename.endswith(".json")]
     size = max(1, -(-len(names) // SHARDS))
@@ -171,4 +172,6 @@ def read_bulk(
             stats[r].seen += st[r].seen
             for why, n in st[r].skipped.items():
                 stats[r].skipped[why] = stats[r].skipped.get(why, 0) + n
+    # after the per-study strict check: compare each confirmed value with the drug's other studies
+    pairs = plausibility.apply(pairs, counts)
     return pairs, only_b, kept
