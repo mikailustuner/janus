@@ -1,5 +1,7 @@
 // Feature: medication-passport, Properties P3 (client part), P19 and the state tests (tasks
-// 12.1–12.3). Validates Req 2.2, 6.1, 6.7, 9.3, 10.3–10.5, 12.
+// 12.1–12.3). Validates Req 2.2, 6.1, 6.7, 9.3, 10.3–10.5, 12. The presence answer is synthetic
+// (src/test/fixtures/passport.ts, generated from the request); the recorded demo files are checked in
+// src/test/recorded-contract.test.ts.
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
@@ -8,14 +10,10 @@ import type { ReactNode } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 
-import { decode } from "@/api/decode";
-import {
-  COLOGNE_PASSPORT,
-  COLOGNE_RECORDED,
-  RECORDED,
-} from "@/demo/passport-cologne";
+import { COLOGNE_PASSPORT } from "@/demo/passport-cologne";
 import { routing } from "@/i18n/routing";
 import { check, fc } from "@/test/fc";
+import { presenceFor, presenceRecorded } from "@/test/fixtures/passport";
 
 vi.mock("@/i18n/navigation", () => ({
   Link: ({
@@ -86,7 +84,9 @@ const SAME: Record<Locale, string[]> = {
   pt: ["mesmo", "mesma"],
 };
 
-const recordedOut = decode(M.presenceOut, COLOGNE_RECORDED.response);
+const cologneOut = presenceFor(
+  buildPresenceRequests(COLOGNE_PASSPORT).bodies[0]!,
+);
 const okState = (
   items: readonly M.PassportItem[],
   out: M.PresenceOut,
@@ -141,10 +141,9 @@ describe("P3 (client): rendered rows never say 'same' when not compared", () => 
   });
 
   it("says 'as entered from the box' next to every comparison that used typed values", () => {
-    if (!recordedOut.ok) throw new Error("recorded answer does not decode");
     let marked = 0;
     for (const item of COLOGNE_PASSPORT) {
-      const markup = body(item, okState(COLOGNE_PASSPORT, recordedOut.value));
+      const markup = body(item, okState(COLOGNE_PASSPORT, cologneOut));
       const typedStrength = item.ingredients.some(
         (g) => g.strengthOrigin === "entered",
       );
@@ -169,20 +168,19 @@ describe("P3 (client): rendered rows never say 'same' when not compared", () => 
 });
 
 describe("P19 demo isolation and the recorded answer", () => {
-  it("the recorded answer is schema-valid and names its dataset and source dates", () => {
-    expect(recordedOut.ok).toBe(true);
-    if (!recordedOut.ok) return;
-    const r = COLOGNE_RECORDED as unknown as {
-      recorded: { date: string; dataset_version: string };
-    };
-    expect(recordedOut.value.dataset_version).toBe(r.recorded.dataset_version);
-    expect(r.recorded.date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-    for (const s of recordedOut.value.sources)
+  it("the answer is schema-valid and names its dataset and source dates", () => {
+    expect(M.presenceOut(cologneOut, "$")).toBeTruthy();
+    const rec = presenceRecorded(
+      buildPresenceRequests(COLOGNE_PASSPORT).bodies[0]!,
+    );
+    expect(cologneOut.dataset_version).toBe(rec.recorded.dataset_version);
+    expect(rec.recorded.date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    for (const s of cologneOut.sources)
       if (s.status === "loaded")
         expect(s.snapshot_date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
   });
 
-  it("was recorded for every query the demo lists build (all three patients)", async () => {
+  it("a recorded-shaped file answers every query the demo lists build (all three patients)", async () => {
     const { demoItems } = await import("@/demo/client");
     const { mergeLists } = await import("./merge");
     const lists: Record<string, M.PassportItem[]> = {
@@ -193,13 +191,10 @@ describe("P19 demo isolation and the recorded answer", () => {
       lists[p] = demoItems(f).map((i) => M.fromListItem(i, (_k, l) => l, true));
     }
     for (const [p, list] of Object.entries(lists)) {
-      const rec = RECORDED[p]!;
       const built = buildPresenceRequests(mergeLists(list, []));
-      const sorted = (b: M.PresenceIn) =>
-        b.items.map((q) => JSON.stringify(q)).sort();
-      expect(built.bodies.flatMap(sorted).sort(), p).toEqual(
-        sorted(rec.request),
-      );
+      const rec = presenceRecorded({
+        items: built.bodies.flatMap((b) => b.items),
+      });
       for (const b of built.bodies)
         expect(fromRecorded(rec, b), p).not.toBeNull();
     }
@@ -268,8 +263,7 @@ describe("states (task 12.3)", () => {
     expect(text(m).toLowerCase()).not.toContain("not found");
   });
   it("ok: announces the loaded sources, shows the notes once, attributions, Germany", () => {
-    if (!recordedOut.ok) return;
-    const m = body(item, okState(COLOGNE_PASSPORT, recordedOut.value));
+    const m = body(item, okState(COLOGNE_PASSPORT, cologneOut));
     const t = text(m);
     expect(t).toContain("Results for 4 sources loaded.");
     expect(t.split("Being listed does not mean").length - 1).toBe(1);
@@ -289,8 +283,7 @@ describe("states (task 12.3)", () => {
     expect(rows.at(-1)).toContain("This box's source");
   });
   it("partial: unavailable sources say why, the others render", () => {
-    if (!recordedOut.ok) return;
-    const out = structuredClone(recordedOut.value);
+    const out = structuredClone(cologneOut);
     out.sources[1] = {
       ...out.sources[1]!,
       status: "source_unavailable",
@@ -323,8 +316,7 @@ describe("states (task 12.3)", () => {
     );
   });
   it("statuses carry a shape, and the screens never use the risk colour", () => {
-    if (!recordedOut.ok) return;
-    const m = body(item, okState(COLOGNE_PASSPORT, recordedOut.value));
+    const m = body(item, okState(COLOGNE_PASSPORT, cologneOut));
     expect(
       [...m.matchAll(/data-status="[a-z_]+"><svg/g)].length,
     ).toBeGreaterThanOrEqual(5);

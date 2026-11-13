@@ -134,7 +134,7 @@ the run (the build checks this one; the pure loader gets the vocabulary as an ar
 
 ### 4.4 Review status
 Every row of the three files and the review sheets carry "AI-reviewed, pending expert review" (owner decision); the API
-returns `review_status: "ai_reviewed_pending_expert"` and the screens show it. Review sheets:
+returns `review_status: "automated_checks_pending_expert"` and the screens show it. Review sheets:
 `mapping-pharmacologist-review.md`, `validation-statistician-review.md` (§12).
 
 ## 5. Signals

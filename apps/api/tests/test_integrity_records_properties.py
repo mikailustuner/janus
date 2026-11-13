@@ -222,3 +222,41 @@ def test_doi_normalisation_matches_pipeline_vectors() -> None:
     )
     assert normalise_doi("DOI:10.1000/AbC") == "10.1000/abc"
     assert normalise_doi("not a doi") is None
+
+
+def test_dataset_record_takes_the_registry_url_when_the_run_has_none() -> None:
+    """A derived pipeline run (model kit) writes no source URL; the record takes the registry's
+    first URL, and is still refused when the registry has none either."""
+    from janus.integrity.model import SourceInfo
+
+    ev = {
+        "source_id": "derived",
+        "source_url": "",
+        "license": "L",
+        "snapshot_date": "2026-11-11",
+        "run_id": "r",
+        "doi": None,
+        "region": None,
+    }
+    with_url = {
+        "derived": SourceInfo("derived", "Derived", "cache", 90, url="https://example.org/a")
+    }
+    rec = record_from_evidence_source(ev, {}, with_url)
+    assert rec.source_url == "https://example.org/a"
+    validate_records([rec], {}, with_url)
+    without = {"derived": SourceInfo("derived", "Derived", "cache", 90)}
+    with pytest.raises(RecordError, match="missing_source_url"):
+        validate_records([record_from_evidence_source(ev, {}, without)], {}, without)
+    own = record_from_evidence_source({**ev, "source_url": "https://example.org/own"}, {}, with_url)
+    assert own.source_url == "https://example.org/own"
+
+
+def test_registry_reads_the_first_url() -> None:
+    from janus.integrity.registry import parse_sources
+
+    text = '[[sources]]\nid = "a"\nname = "A"\nstorage = "cache"\nurls = ["https://x.org/1", "https://x.org/2"]\n'
+    assert parse_sources(text)["a"].url == "https://x.org/1"
+    assert (
+        parse_sources(text.replace('urls = ["https://x.org/1", "https://x.org/2"]\n', ""))["a"].url
+        is None
+    )

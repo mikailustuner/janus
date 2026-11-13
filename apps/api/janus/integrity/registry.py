@@ -41,6 +41,8 @@ def parse_sources(toml_text: str) -> dict[str, SourceInfo]:
         name = raw.get("name")
         lic = raw.get("license")
         region = raw.get("region")
+        urls = raw.get("urls")
+        first = urls[0] if isinstance(urls, list) and urls and isinstance(urls[0], str) else None
         out[sid] = SourceInfo(
             source_id=sid,
             name=name if isinstance(name, str) else sid,
@@ -48,6 +50,7 @@ def parse_sources(toml_text: str) -> dict[str, SourceInfo]:
             cadence_days=cadence,
             license=lic if isinstance(lic, str) else None,
             region=region if isinstance(region, str) else None,
+            url=first,
         )
     return out
 

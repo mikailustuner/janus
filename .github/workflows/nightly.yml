@@ -1,0 +1,102 @@
+name: Nightly
+
+# Flakiness and counterexample hunt (docs/testing.md). Every suite runs five times in parallel with
+# the `nightly` Hypothesis profile: random seeds and more examples than CI's fixed seed. A test that
+# fails in only some of the five runs is flaky; a Hypothesis failure prints a reproduction blob, and
+# the counterexample is pinned with @example. A failed run sends GitHub's failed-workflow notification.
+on:
+  schedule:
+    - cron: "17 2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nightly
+  cancel-in-progress: true
+
+jobs:
+  python:
+    name: ${{ matrix.suite }} (run ${{ matrix.run }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        suite: [apps/api, apps/mcp, pipelines]
+        run: [1, 2, 3, 4, 5]
+    defaults:
+      run:
+        working-directory: ${{ matrix.suite }}
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: janus_test
+          POSTGRES_USER: janus
+          POSTGRES_PASSWORD: janus-ci-only
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U janus -d janus_test"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    env:
+      HYPOTHESIS_PROFILE: nightly
+      # Throwaway service container; not a secret. Only the API suite reads it.
+      JANUS_TEST_DATABASE_URL: postgresql://janus:janus-ci-only@127.0.0.1:5432/janus_test
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.3.3
+        with:
+          working-directory: ${{ matrix.suite }}
+          enable-cache: true
+      - run: uv sync --frozen
+      - run: uv run pytest
+
+  web:
+    name: web unit (run ${{ matrix.run }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        run: [1, 2, 3, 4, 5]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test
+
+  web-e2e:
+    name: web e2e (run ${{ matrix.run }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        run: [1, 2, 3, 4, 5]
+    env:
+      E2E_LOCALES: en,tr
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Cache Playwright Chromium
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+      - run: pnpm --filter @janus/web exec playwright install --with-deps chromium
+      - run: pnpm --filter @janus/web build
+      - run: pnpm --filter @janus/web exec playwright test --project=phone

@@ -83,7 +83,8 @@ def record_from_evidence_source(
         id=rid,
         kind="dataset",
         source_id=source_id,
-        source_url=str(evidence.get("source_url") or ""),
+        # Derived runs (the model kit) name no URL of their own: the registry's first URL stands in.
+        source_url=str(evidence.get("source_url") or (info.url if info else None) or ""),
         license=str(evidence.get("license") or ""),
         region=str(region) if region else None,
         snapshot_date=snapshot,

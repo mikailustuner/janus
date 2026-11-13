@@ -1,11 +1,16 @@
 // medication-passport task 12: the Passport screens in a real browser. Axe (WCAG 2.2 A/AA), no
 // horizontal scroll, 44 px targets and the disclaimer at 375 px and 1280 px (by project) in both
-// themes; the Cologne demo (recorded answer, no request to the API, demo label on both screens);
-// the live states with a stubbed API (loaded, error with retry); screenshots for the review.
+// themes; the Cologne demo (bundled recorded answer, no request to the API, demo label on both
+// screens; structure only, the content changes with every release); the live states with the API
+// stubbed from synthetic answers (src/test/fixtures/passport.ts: loaded, error with retry);
+// screenshots for the review.
 import { mkdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { expect, test, type Page } from "@playwright/test";
+
+import { presenceFor } from "../src/test/fixtures/passport";
+import type { PresenceIn } from "../src/passport/model";
 
 import {
   expectNoAxeViolations,
@@ -18,12 +23,6 @@ import {
 } from "./helpers";
 
 const SHOTS = process.env.PASSPORT_SHOTS;
-const recorded = JSON.parse(
-  readFileSync(
-    join(import.meta.dirname, "../src/demo/passport-istanbul.recorded.json"),
-    "utf8",
-  ),
-);
 const istanbul = JSON.parse(
   readFileSync(
     join(import.meta.dirname, "../src/demo/fixtures/istanbul.json"),
@@ -77,11 +76,8 @@ for (const theme of THEMES) {
     await expect(
       page
         .getByRole("status")
-        .filter({ hasText: "Results for 4 sources loaded." }),
+        .filter({ hasText: /^Results for \d+ sources loaded\.$/ }),
     ).toHaveCount(1);
-    await expect(
-      page.getByText("as entered from the box").first(),
-    ).toBeVisible();
     await expect(
       page.getByText("Janus shows listings in public data only.").first(),
     ).toBeVisible();
@@ -124,19 +120,10 @@ test("own list: live answer, typed strength sent as a code only", async ({
 }) => {
   await ownList(page);
   const bodies: unknown[] = [];
-  const key = recorded.request.items.find(
-    (q: { ingredients: { key: string }[] }) =>
-      q.ingredients[0]!.key === "Q19484",
-  );
   await stubApi(page, {
     "/passport/presence": (body) => {
       bodies.push(body);
-      const out = structuredClone(recorded.response);
-      const i = recorded.request.items.indexOf(key);
-      out.items = [
-        { ...out.items.find((x: { item: number }) => x.item === i), item: 0 },
-      ];
-      return { body: out };
+      return { body: presenceFor(body as PresenceIn) };
     },
   });
   await page.goto("/en/passport/item#own-1");

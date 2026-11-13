@@ -13,6 +13,7 @@ import { describe, expect, it, vi } from "vitest";
 import type { Locale } from "@/api/contracts";
 import { decode } from "@/api/decode";
 import { MedicineInfoBody } from "@/components/plaininfo/MedicineInfo";
+import { violations } from "@/test/plaininfo-words";
 import { demoItems, type Fixture } from "@/demo/client";
 import istanbul from "@/demo/fixtures/istanbul.json";
 import { routing } from "@/i18n/routing";
@@ -30,7 +31,6 @@ import {
   type MedicineInfoIn,
   type MedicineInfoOut,
 } from "./model";
-import { violations } from "./plaininfo.test";
 import type { InfoQuery } from "./query";
 import { infoQuery } from "./query";
 import type { InfoState } from "./useMedicineInfo";

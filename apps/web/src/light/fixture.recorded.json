@@ -1629,7 +1629,7 @@
       "patient_layer": "layer_unavailable",
       "patient_reported": [],
       "removed_by_integrity": 0,
-      "review_status": "ai_reviewed_pending_expert",
+      "review_status": "automated_checks_pending_expert",
       "schema_version": "light-1",
       "snapshot": {
         "build_id": "59eec82533f8fa8c",
@@ -3814,7 +3814,7 @@
       "patient_layer": "layer_unavailable",
       "patient_reported": [],
       "removed_by_integrity": 0,
-      "review_status": "ai_reviewed_pending_expert",
+      "review_status": "automated_checks_pending_expert",
       "schema_version": "light-1",
       "snapshot": {
         "build_id": "59eec82533f8fa8c",
@@ -4250,7 +4250,7 @@
       "patient_layer": "layer_unavailable",
       "patient_reported": [],
       "removed_by_integrity": 0,
-      "review_status": "ai_reviewed_pending_expert",
+      "review_status": "automated_checks_pending_expert",
       "schema_version": "light-1",
       "snapshot": {
         "build_id": "59eec82533f8fa8c",
@@ -5839,7 +5839,7 @@
       "patient_layer": "layer_unavailable",
       "patient_reported": [],
       "removed_by_integrity": 0,
-      "review_status": "ai_reviewed_pending_expert",
+      "review_status": "automated_checks_pending_expert",
       "schema_version": "light-1",
       "snapshot": {
         "build_id": "59eec82533f8fa8c",
@@ -8374,7 +8374,7 @@
       "patient_layer": "layer_unavailable",
       "patient_reported": [],
       "removed_by_integrity": 0,
-      "review_status": "ai_reviewed_pending_expert",
+      "review_status": "automated_checks_pending_expert",
       "schema_version": "light-1",
       "snapshot": {
         "build_id": "59eec82533f8fa8c",
@@ -8774,7 +8774,7 @@
       }
     ],
     "licence": "CC BY 4.0",
-    "review_status": "ai_reviewed_pending_expert",
+    "review_status": "automated_checks_pending_expert",
     "rows": [
       {
         "faers_reports": null,
@@ -10026,7 +10026,7 @@
         }
       }
     ],
-    "review_status": "ai_reviewed_pending_expert",
+    "review_status": "automated_checks_pending_expert",
     "schema_version": "light-1",
     "snapshot": {
       "build_id": "59eec82533f8fa8c",
@@ -11949,7 +11949,7 @@
       "misses": 8,
       "not_evaluable": 2
     },
-    "review_status": "ai_reviewed_pending_expert",
+    "review_status": "automated_checks_pending_expert",
     "schema_version": "light-1",
     "sensitivity": {
       "expected_hits_by_chance": 0.35335037760386195,

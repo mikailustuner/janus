@@ -114,7 +114,7 @@ def test_cards_validation_export(env: tuple[TestClient, str]) -> None:
         seed(conn, set())
     ov = c.get("/light/overview")
     assert ov.status_code == 200
-    assert ov.json()["review_status"] == "ai_reviewed_pending_expert"
+    assert ov.json()["review_status"] == "automated_checks_pending_expert"
     body = cards(c)
     assert body["total"] == 2 and body["removed_by_integrity"] == 0
     assert all("candidate_not_treatment" in card["codes"] for card in body["cards"])

@@ -169,7 +169,8 @@ def run_job[T](job: Job[T], ctx: RunContext, raw: RawInput[T] | None = None) -> 
         if raw is None:
             raw = job.fetch(ctx)
         manifest.run_id = _run_id(started, raw.source_sha256)
-        manifest.source_urls = list(raw.source_urls)
+        # A derived job (the model kit) fetches nothing itself: keep the registry URLs then.
+        manifest.source_urls = list(raw.source_urls) or list(source.urls)
         manifest.source_sha256 = raw.source_sha256
         manifest.retrieved_at = raw.retrieved_at
         manifest.snapshot_date = raw.snapshot_date

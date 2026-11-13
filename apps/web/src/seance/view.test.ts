@@ -1,4 +1,5 @@
-// Feature: séance view (séance design §7): decoders on the answers recorded from the real API, the
+// Feature: séance view (séance design §7): decoders on synthetic answers (src/test/fixtures/seance.ts;
+// the recorded file is checked in src/test/recorded-contract.test.ts), the
 // demo client (no network), the picker's choices, the three seats in fixed order, the cross-
 // reference from a hypothesis card (never a different exposure), and the localised vocabularies.
 import { readFileSync } from "node:fs";
@@ -9,6 +10,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { decode } from "@/api/decode";
 import { routing } from "@/i18n/routing";
 import { check, fc } from "@/test/fc";
+import { seanceSet } from "@/test/fixtures/seance";
 
 import { demoSeance, type SeanceFixture } from "./client";
 import {
@@ -38,9 +40,7 @@ import {
   withSubstance,
 } from "./view";
 
-const fx = JSON.parse(
-  readFileSync(join(import.meta.dirname, "fixture.recorded.json"), "utf8"),
-) as SeanceFixture;
+const fx = seanceSet() as unknown as SeanceFixture;
 const cat = fx.catalogue as CatalogueOut;
 const answers = fx.pairs.map((p) => p.answer as SeanceOut);
 
@@ -65,7 +65,7 @@ const has = (tree: Tree, key: string) => {
 
 afterEach(() => vi.unstubAllGlobals());
 
-describe("recorded answers", () => {
+describe("answers", () => {
   it("decode with the contract decoders", () => {
     expect(decode(catalogueOut, fx.catalogue).ok).toBe(true);
     for (const a of answers) expect(decode(seanceOut, a).ok).toBe(true);
@@ -111,7 +111,7 @@ describe("recorded answers", () => {
 });
 
 describe("demo client", () => {
-  it("answers the recorded pairs and the catalogue without any request", async () => {
+  it("answers the given pairs and the catalogue without any request", async () => {
     const fetchSpy = vi.fn(() => {
       throw new Error("no network in demo mode");
     });
@@ -128,7 +128,7 @@ describe("demo client", () => {
     expect(fetchSpy).not.toHaveBeenCalled();
   });
 
-  it("offers only the recorded pairs in the picker", () => {
+  it("offers only the given pairs in the picker", () => {
     const c = demoSeance(fx);
     const list = choices(cat, c.only);
     expect(
@@ -216,7 +216,7 @@ describe("choices", () => {
   });
 });
 
-describe("first pair of the real catalogue", () => {
+describe("first pair of the catalogue", () => {
   it("is St John's wort / wound", () => {
     expect(initialPair(choices(cat), null)).toEqual({
       substance: "st_johns_wort",
@@ -250,7 +250,7 @@ describe("cross-reference from a hypothesis card", () => {
     );
   });
 
-  it("links acetic acid to vinegar and never sodium chloride to salt (real catalogue)", () => {
+  it("links acetic acid to vinegar and never sodium chloride to salt", () => {
     expect(crossLinks(cat, "Q47512").map((l) => l.substance.id)).toEqual([
       "vinegar",
     ]);
@@ -326,7 +326,10 @@ describe("vocabularies", () => {
     for (const k of keys) expect(has(messages[locale]!, k), k).toBe(true);
   });
 
-  it("every present code of the recorded answers is a known code", () => {
+  it("every present code of the answers is a known code", () => {
+    expect(answers.some((a) => a.witnesses.present.codes.length > 0)).toBe(
+      true,
+    );
     for (const a of answers)
       for (const c of a.witnesses.present.codes)
         expect(PRESENT_CODES as readonly string[]).toContain(c);

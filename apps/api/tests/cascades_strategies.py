@@ -55,7 +55,7 @@ from janus.resolution.canonical import content_hash
 LETTERS = "ANR"
 # File-set properties build 65-row files per example; they run fewer examples, like the
 # database-backed properties (design §8).
-FILE_SET_EXAMPLES = 50 if os.environ.get("HYPOTHESIS_PROFILE") == "ci" else 20
+FILE_SET_EXAMPLES = {"ci": 50, "nightly": 100}.get(os.environ.get("HYPOTHESIS_PROFILE", "dev"), 20)
 LAST_TWO = [f"{n:02d}" for n in range(1, 20)]  # outside the WHO numbering series (20, 30, 50-79)
 
 
