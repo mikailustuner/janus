@@ -1,7 +1,7 @@
 "use client";
 /**
  * Validation studies (researcher area): one card per pre-registered study, from the generated
- * numbers (src/research/validation.generated.json). Static, no request. Both cards state what was
+ * numbers (src/research/validation.generated.json). Static, no request. Every card states what was
  * tested, the results with their 95 % intervals, whether each hypothesis was met, the protocol and
  * results documents, and that expert review has not yet been done.
  */
@@ -22,19 +22,8 @@ import {
 } from "@/research/validation";
 import { useT, type Translate } from "@/theme/words";
 
-const EXTERNAL = { target: "_blank", rel: "noopener noreferrer" } as const;
-
-function DocLink({ href, children }: { href: string; children: ReactNode }) {
-  return (
-    <a
-      className="inline-flex min-h-11 items-center self-start font-bold"
-      href={href}
-      {...EXTERNAL}
-    >
-      {children}
-    </a>
-  );
-}
+import { Footer } from "./ValidationFooter";
+import { ModelKitGateCard, ModelKitPrecisionCard } from "./ModelKitCards";
 
 function Outcome({
   label,
@@ -57,26 +46,6 @@ function Outcome({
         {t(hypothesisKey(met))} {bound}
       </span>
     </li>
-  );
-}
-
-function Footer({ card, t }: { card: CardKey; t: Translate }) {
-  const d = VALIDATION[card];
-  return (
-    <>
-      <p className="text-sm">
-        {t("ValidationStudies.preregistered", { commit: d.protocolCommit })}
-      </p>
-      <p className="text-sm font-bold" role="note">
-        {t("ValidationStudies.review")}
-      </p>
-      <div className="flex flex-wrap gap-x-6">
-        <DocLink href={d.protocolUrl}>
-          {t("ValidationStudies.protocol")}
-        </DocLink>
-        <DocLink href={d.resultsUrl}>{t("ValidationStudies.results")}</DocLink>
-      </div>
-    </>
   );
 }
 
@@ -203,6 +172,8 @@ function FaersCard() {
 const VIEWS: Record<CardKey, () => ReactNode> = {
   cascade: CascadeCard,
   faers: FaersCard,
+  modelkitPrecision: ModelKitPrecisionCard,
+  modelkitGate: ModelKitGateCard,
 };
 
 export function ValidationStudies() {

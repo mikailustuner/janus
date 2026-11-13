@@ -4,7 +4,7 @@
 Research use only. Not for clinical decisions. **Expert review has not yet been done.** Every reading, check and review
 pass below is automated; the review passes are an evaluation instrument and never part of the product.
 
-Pre-registered protocol: [`modelkit-precision-protocol.md`](modelkit-precision-protocol.md), pushed before any new sample
+Pre-registered protocol: [`modelkit-precision-protocol.md`](modelkit-precision-protocol.md), registered in commit `7a65950`, pushed before any new sample
 was drawn. The numbers are in [`data/validation/modelkit/precision.json`](../../data/validation/modelkit/precision.json).
 They are computed by `pipelines/tools/modelkit_precision_report.py` from two files:
 [`items.csv`](../../data/validation/modelkit/items.csv), with one row per reviewed value (study, stratum, level and the two

@@ -17,8 +17,9 @@ const REPO = "https://github.com/mikailustuner/janus";
 const DOCS = `${REPO}/blob/main/docs/research`;
 
 /** Pre-registered thresholds (protocols): cascade H1 sensitivity lower bound 0.80, H2 specificity
- * lower bound 0.90; FAERS AUC lower bound above 0.5. */
-const THRESHOLD = { h1: 0.8, h2: 0.9, auc: 0.5 };
+ * lower bound 0.90; FAERS AUC lower bound above 0.5; model kit precision cluster-aware lower bound
+ * 0.90 (the "acceptance_rule" of precision.json). */
+const THRESHOLD = { h1: 0.8, h2: 0.9, auc: 0.5, precision: 0.9 };
 
 const read = (root, path) => readFileSync(join(root, path), "utf8");
 const json = (root, path) => JSON.parse(read(root, path));
@@ -48,6 +49,154 @@ function measure(list, name) {
   return m;
 }
 
+const need = (x, label) => {
+  if (x === undefined || x === null) throw new Error(`${label} missing`);
+  return x;
+};
+
+/** One row of the model kit precision table from a measured point. */
+function precisionRow(key, point, shipsKey) {
+  return {
+    key,
+    values: point.n,
+    studies: point.studies,
+    precision: point.precision,
+    wilsonLow: point.wilson[0],
+    wilsonHigh: point.wilson[1],
+    clusterLower: point.cluster_lower,
+    met: shipsKey,
+  };
+}
+
+function modelkit(root) {
+  const pr = json(root, "data/validation/modelkit/precision.json");
+  const gt = json(root, "data/validation/modelkit/gate.json");
+  const src = pr.sources;
+  const ct = src.clinicaltrials_gov;
+  const pmc = src.pmc_oa;
+  const fda = src.drugsatfda_review;
+  const pmcPoint = pmc.curves[0].points.find(
+    (p) => p.level === pmc.acceptance.levels_tested[0],
+  );
+  const fdaPoint = fda.curves[0].points.find(
+    (p) => p.level === fda.acceptance.levels_tested[0],
+  );
+  const curve = ct.curves[0];
+  const rows = Object.fromEntries(gt.rows.map((r) => [r.id, r]));
+  const row = (id) => need(rows[id], `gate row ${id}`);
+  const num = (id) => row(id).numbers;
+  const g = gt.gate;
+  const cc = gt.claim;
+  const x = gt.cross_study_check;
+  const ids = [
+    "values_read_correctly",
+    "auc_within_2_fold",
+    "cmax_within_2_fold",
+    "gate",
+    "drug_validated",
+    "document_sources",
+    "unit_errors_across_studies",
+    "recall",
+    "special_populations",
+    "expert_review",
+  ];
+  return {
+    precision: {
+      protocolCommit: commit(
+        read(root, "docs/research/modelkit-precision.md"),
+        "modelkit-precision.md",
+      ),
+      protocolUrl: `${DOCS}/modelkit-precision-protocol.md`,
+      resultsUrl: `${DOCS}/modelkit-precision.md`,
+      bound: THRESHOLD.precision,
+      sources: [
+        {
+          ...precisionRow(
+            "clinicaltrials_gov",
+            ct.shipped,
+            ct.shipped.meets_rule,
+          ),
+          confirmed: ct.confirmed_values,
+          level: ct.shipped.level,
+        },
+        {
+          ...precisionRow("pmc_oa", pmcPoint, pmc.acceptance.ships),
+          confirmed: pmc.confirmed_values,
+          level: pmcPoint.level,
+        },
+        {
+          ...precisionRow("drugsatfda_review", fdaPoint, fda.acceptance.ships),
+          confirmed: fda.confirmed_values,
+          level: fdaPoint.level,
+        },
+      ],
+      curve: curve.points.map((p) => ({
+        level: p.level,
+        coverage: p.coverage,
+        precision: p.precision,
+        clusterLower: p.cluster_lower,
+        met: p.meets_rule,
+      })),
+      curveValues: curve.frame_values,
+    },
+    gate: {
+      protocolCommit: commit(
+        read(root, "docs/research/modelkit-gate.md"),
+        "modelkit-gate.md",
+      ),
+      protocolUrl: `${DOCS}/modelkit-gate-protocol.md`,
+      resultsUrl: `${DOCS}/modelkit-gate.md`,
+      needed: g.threshold_drugs,
+      both: g.drugs_both_tested,
+      upperBound: gt.bound.upper_bound_drugs_both,
+      interpretable: g.interpretable,
+      limitedByData: gt.bound.limiting_factor.startsWith("data"),
+      claim: {
+        aucDrugs: cc.auc.drugs,
+        aucK: cc.auc.within_2_fold,
+        aucN: cc.auc.points,
+        aucLow: cc.auc.wilson_95[0],
+        aucHigh: cc.auc.wilson_95[1],
+        cmaxDrugs: cc.cmax.drugs,
+      },
+      rows: ids.map((id) => ({ id, status: row(id).status })),
+      read: {
+        k: num("values_read_correctly").k,
+        n: num("values_read_correctly").n,
+        low: num("values_read_correctly").wilson_95[0],
+        high: num("values_read_correctly").wilson_95[1],
+        clusterLower: num("values_read_correctly").cluster_lower_95,
+      },
+      auc: {
+        k: num("auc_within_2_fold").k,
+        n: num("auc_within_2_fold").n,
+        low: num("auc_within_2_fold").wilson_95[0],
+        high: num("auc_within_2_fold").wilson_95[1],
+        drugs: num("auc_within_2_fold").drugs,
+      },
+      validated: {
+        validated: num("drug_validated").validated,
+        total: g.status.validated + g.status.failed + g.status.not_validated,
+        withSet: num("drug_validated").with_set,
+      },
+      documents: {
+        pmc: num("document_sources").pmc_tables.estimate,
+        pmcLower: num("document_sources").pmc_tables.cluster_lower_95,
+        fda: num("document_sources").fda_reviews.estimate,
+        fdaLower: num("document_sources").fda_reviews.cluster_lower_95,
+      },
+      crossStudy: {
+        implemented: true,
+        switchedOn: x.switched_on,
+        ruleMet: x.earlier_verdicts.decision_rule_met,
+        wouldWithhold: x.would_withhold,
+        checkable: x.checkable,
+        confirmed: x.confirmed_values,
+      },
+    },
+  };
+}
+
 export function generate(root) {
   const cm = json(root, "data/validation/cascades/results/metrics.json");
   const ce = json(root, "data/validation/cascades/results/errors.json");
@@ -60,6 +209,7 @@ export function generate(root) {
   const listed = parseCsv(read(root, "data/pipc.csv")).length;
   const auc = fm.primary_auc_ln_ror;
   const s = fm.secondary;
+  const mk = modelkit(root);
   return {
     cascade: {
       protocolCommit: commit(
@@ -111,6 +261,8 @@ export function generate(root) {
       evansSensitivity: prop(s.evans_sensitivity),
       evansSpecificity: prop(s.evans_specificity),
     },
+    modelkitPrecision: mk.precision,
+    modelkitGate: mk.gate,
   };
 }
 
