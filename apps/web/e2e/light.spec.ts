@@ -1,5 +1,5 @@
 // Light face (light-face design §10, Req 4, 5.2, 5.3): the researcher screens with the API stubbed
-// from answers recorded from the real build (src/light/fixture.recorded.json). C1–C3 in 5 locales ×
+// from synthetic answers (src/test/fixtures/light.ts), never from the recorded file. C1–C3 in 5 locales ×
 // 2 themes, the states, the rule-7 label, and screenshots at 375 and 1280 px in both themes.
 import { mkdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -11,6 +11,8 @@ import {
   forbiddenPhrases,
 } from "../src/i18n/forbidden-phrases";
 import { themeWords } from "../src/i18n/reassurance";
+import { lightSet } from "../src/test/fixtures/light";
+import { seanceSet } from "../src/test/fixtures/seance";
 
 import {
   expectNoAxeViolations,
@@ -22,23 +24,8 @@ import {
   useTheme,
 } from "./helpers";
 
-const fx = JSON.parse(
-  readFileSync(
-    join(import.meta.dirname, "../src/light/fixture.recorded.json"),
-    "utf8",
-  ),
-) as {
-  overview: unknown;
-  cards: Record<string, { goal: { key: string } }>;
-  validation: unknown;
-  export: unknown;
-};
-const seanceFx = JSON.parse(
-  readFileSync(
-    join(import.meta.dirname, "../src/seance/fixture.recorded.json"),
-    "utf8",
-  ),
-) as { catalogue: unknown };
+const fx = lightSet();
+const seanceFx = seanceSet();
 const messages = Object.fromEntries(
   LOCALES.map((l) => [
     l,
@@ -57,7 +44,7 @@ async function stubLight(page: Page) {
     "/light/overview": { body: fx.overview },
     "/light/cards": (body) => {
       const goal = (body as { goal?: string } | null)?.goal ?? "";
-      const answer = fx.cards[goal];
+      const answer = (fx.cards as Record<string, unknown>)[goal];
       return answer
         ? { body: answer }
         : { status: 503, body: { error: "light_unavailable" } };

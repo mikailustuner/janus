@@ -21,11 +21,16 @@ import {
   serverCompounds,
   type SimulationFixture,
 } from "@/simulation/client";
+import { catalogueOut, PRESENT_CODES, seanceOut } from "@/seance/model";
+import type { SeanceFixture } from "@/seance/client";
+import { cardsOut, exportOut, overviewOut, validationOut } from "@/light/model";
 import { openOutcomes } from "@/open/model";
 import { dataQualityReport } from "@/research/dataQuality";
 import { onsetTable } from "@/research/onset";
 
 import simulate from "@/simulation/simulate.recorded.json";
+import light from "@/light/fixture.recorded.json";
+import seance from "@/seance/fixture.recorded.json";
 import openData from "@/open/fixture.recorded.json";
 import dataQuality from "@/research/data-quality.recorded.json";
 import faersOnset from "@/research/faers-onset.recorded.json";
@@ -146,5 +151,57 @@ describe("open/fixture.recorded.json", () => {
     expect(r.value.release_rule.k).toBeGreaterThanOrEqual(20);
     expect(r.value.release_rule.hidden_cells_listed).toBe(false);
     expect(openData.csv.split("\n")[0]).toMatch(/^dataset_version,/);
+  });
+});
+
+describe("seance/fixture.recorded.json", () => {
+  const fx = seance as unknown as SeanceFixture;
+
+  it("decodes: the catalogue and every recorded pair, each pair listed in the catalogue", () => {
+    const cat = decode(catalogueOut, fx.catalogue);
+    expect(cat.ok).toBe(true);
+    expect(fx.pairs.length).toBeGreaterThanOrEqual(1);
+    for (const p of fx.pairs) {
+      const a = decode(seanceOut, p.answer);
+      expect(a.ok).toBe(true);
+      if (cat.ok)
+        expect(
+          cat.value.pairs.some(
+            (x) =>
+              x.substance === p.request.substance &&
+              x.condition === p.request.condition,
+          ),
+        ).toBe(true);
+    }
+  });
+
+  it("uses only present-witness caveat codes the screen can word", () => {
+    for (const p of fx.pairs) {
+      const a = decode(seanceOut, p.answer);
+      if (a.ok)
+        for (const c of a.value.witnesses.present.codes)
+          expect(PRESENT_CODES as readonly string[]).toContain(c);
+    }
+  });
+});
+
+describe("light/fixture.recorded.json", () => {
+  it("decodes: overview, every goal's cards, validation and export", () => {
+    expect(decode(overviewOut, light.overview).ok).toBe(true);
+    expect(Object.keys(light.cards).length).toBeGreaterThanOrEqual(1);
+    for (const [goal, v] of Object.entries(light.cards))
+      expect(decode(cardsOut, v).ok, goal).toBe(true);
+    expect(decode(validationOut, light.validation).ok).toBe(true);
+    expect(decode(exportOut, light.export).ok).toBe(true);
+  });
+
+  it("holds at least one hypothesis card and one export row", () => {
+    const cards = Object.values(light.cards).flatMap(
+      (v) => (v as { cards: unknown[] }).cards,
+    );
+    expect(cards.length).toBeGreaterThanOrEqual(1);
+    expect(
+      (light.export as { rows: unknown[] }).rows.length,
+    ).toBeGreaterThanOrEqual(1);
   });
 });
