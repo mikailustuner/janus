@@ -381,6 +381,18 @@ Brazilian anticholinergic activity drug scale (Nery and Reis 2019)
 Adverse events
 --------------
 
+OMOP 2013 and EU-ADR drug–outcome reference sets
+  Publisher: OHDSI (MethodEvaluation R package)
+  License: Apache License 2.0 (package); facts from the cited publications
+  Ryan PB, Schuemie MJ, Welebob E et al. Defining a reference set to support
+  methodological research in drug safety. Drug Saf 2013;36(Suppl 1):S33–S47.
+  doi:10.1007/s40264-013-0097-8.
+  Coloma PM, Avillach P, Salvo F et al. A reference standard for evaluation of
+  methods for drug safety signal detection using electronic healthcare record
+  databases. Drug Saf 2013;36(1):13–23. doi:10.1007/s40264-012-0002-x.
+  Taken from github.com/OHDSI/MethodEvaluation at commit d7305910f6c6; stored in
+  data/validation/faers/ for the FAERS calibration.
+
 Time to onset per report and drug, derived from the FAERS quarterly files (Time machine)
   Publisher: U.S. Food and Drug Administration (derived by Janus)
   License: CC0 1.0
