@@ -418,6 +418,20 @@ cadence_days = 90
 urls = ["https://www.fda.gov/about-fda/about-website/website-policies"]
 
 [[sources]]
+id = "ema_epar"
+section = "clinical"
+name = "EMA European public assessment reports (EPARs), candidate model kit evidence source"
+publisher = "European Medicines Agency"
+license = "© European Medicines Agency; reproduction and distribution allowed for commercial and non-commercial purposes provided EMA is acknowledged as the source; content supplied by third parties is excluded"
+notes = [
+  "Checked 2026-11-13 for phase B3a of the model kit precision work (docs/research/modelkit-precision.md). Re-use terms: EMA legal notice (copyright and limited reproduction notices); the assessment report PDFs carry 'Reproduction is authorised provided the source is acknowledged.' A list of EPAR documents with their URLs is published as JSON by EMA.",
+  "Not ingested yet: pharmacokinetic values in EPARs are mostly in running text, and the model kit's two table readers are not built for that layout. No value from an EPAR is stored or shown, and no precision has been measured for this source.",
+]
+storage = "cited_only"
+region = "EU"
+urls = ["https://www.ema.europa.eu/en/about-us/legal-notice", "https://www.ema.europa.eu/en/about-us/about-website/download-website-data-json-data-format"]
+
+[[sources]]
 id = "rxnav"
 section = "clinical"
 name = "RxNav / RxClass"
