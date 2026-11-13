@@ -54,6 +54,15 @@ jobs:
           working-directory: ${{ matrix.suite }}
           enable-cache: true
       - run: uv sync --frozen
+      # Same server settings as CI and production: no statement text in the server log.
+      - name: Postgres logs no statements or failing rows
+        if: matrix.suite == 'apps/api'
+        run: |
+          for setting in "log_error_verbosity = 'terse'" "log_min_error_statement = 'panic'" \
+                         "log_statement = 'none'" "log_min_duration_statement = -1"; do
+            psql "$JANUS_TEST_DATABASE_URL" -v ON_ERROR_STOP=1 -c "ALTER SYSTEM SET $setting"
+          done
+          psql "$JANUS_TEST_DATABASE_URL" -v ON_ERROR_STOP=1 -c "SELECT pg_reload_conf()"
       - run: uv run pytest
 
   web:
@@ -99,4 +108,6 @@ jobs:
           key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
       - run: pnpm --filter @janus/web exec playwright install --with-deps chromium
       - run: pnpm --filter @janus/web build
-      - run: pnpm --filter @janus/web exec playwright test --project=phone
+      # The checks CI runs (owner decision 2026-11-08); the full matrix needs the OCR models and a
+      # local API and runs on a developer machine.
+      - run: pnpm --filter @janus/web exec playwright test e2e/smoke.spec.ts e2e/routes.spec.ts --project=phone
