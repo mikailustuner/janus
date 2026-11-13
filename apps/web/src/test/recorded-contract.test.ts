@@ -21,10 +21,12 @@ import {
   serverCompounds,
   type SimulationFixture,
 } from "@/simulation/client";
+import { openOutcomes } from "@/open/model";
 import { dataQualityReport } from "@/research/dataQuality";
 import { onsetTable } from "@/research/onset";
 
 import simulate from "@/simulation/simulate.recorded.json";
+import openData from "@/open/fixture.recorded.json";
 import dataQuality from "@/research/data-quality.recorded.json";
 import faersOnset from "@/research/faers-onset.recorded.json";
 import modelkit from "@/modelkit/modelkit.recorded.json";
@@ -132,5 +134,17 @@ describe("simulate.recorded.json", () => {
         true,
       );
     }
+  });
+});
+
+describe("open/fixture.recorded.json", () => {
+  const r = decode(openOutcomes, openData.outcomes);
+
+  it("decodes, keeps the release rule (k >= 20, hidden cells never listed) and has a CSV header", () => {
+    expect(r.ok).toBe(true);
+    if (!r.ok) return;
+    expect(r.value.release_rule.k).toBeGreaterThanOrEqual(20);
+    expect(r.value.release_rule.hidden_cells_listed).toBe(false);
+    expect(openData.csv.split("\n")[0]).toMatch(/^dataset_version,/);
   });
 });

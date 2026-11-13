@@ -1,5 +1,5 @@
-// Open data page (open-data Req 3; design §4): the API stubbed from the answer recorded from the
-// real local API (src/open/fixture.recorded.json, no released cell yet). C1–C3 in five locales ×
+// Open data page (open-data Req 3; design §4): the API stubbed from synthetic answers
+// (src/test/fixtures/open.ts), never from the recorded file; demo mode is checked for structure only. C1–C3 in five locales ×
 // two themes; the honest empty state with no number; a released cell rendered as a table; the
 // downloads; demo mode with no request; 503. Screenshots when OPEN_SHOTS_DIR is set.
 import { mkdirSync, readFileSync } from "node:fs";
@@ -11,6 +11,7 @@ import {
   findForbiddenPhrases,
   forbiddenPhrases,
 } from "../src/i18n/forbidden-phrases";
+import { cell, openSet } from "../src/test/fixtures/open";
 
 import {
   expectNoAxeViolations,
@@ -25,10 +26,7 @@ import {
 
 const read = (p: string) =>
   JSON.parse(readFileSync(join(import.meta.dirname, p), "utf8"));
-const fx = read("../src/open/fixture.recorded.json") as {
-  outcomes: Record<string, unknown> & { cells: unknown[] };
-  csv: string;
-};
+const fx = openSet(); // no released cell: the empty state
 const messages = Object.fromEntries(
   LOCALES.map((l) => [l, read(`../messages/${l}.json`)]),
 );
@@ -94,19 +92,7 @@ test("empty state: no number for the dataset, no tile, the version and the licen
 test("a released cell is shown as a row with names, never a hidden cell", async ({
   page,
 }) => {
-  const one = {
-    ...fx.outcomes,
-    cells: [
-      {
-        layer: "contributions",
-        ingredients: ["Q411347"],
-        event: "peripheral_oedema",
-        direction: "adverse",
-        region: "EU",
-        value: 23,
-      },
-    ],
-  };
+  const one = openSet([cell()]).outcomes;
   await stubApi(page, { "/open/outcomes": { body: one } });
   await page.goto("/en/open-data");
   const rows = page.getByTestId("open-cells").locator("tbody tr");
@@ -129,7 +115,7 @@ test("states: 503 with retry", async ({ page }) => {
   await expect(page.getByRole("button", { name: "Try again" })).toBeVisible();
 });
 
-test("demo mode: the recorded file, downloads from it, no request", async ({
+test("demo mode: the bundled file, downloads from it, no request", async ({
   page,
 }) => {
   await page.addInitScript(() =>
@@ -138,9 +124,11 @@ test("demo mode: the recorded file, downloads from it, no request", async ({
   const requests = recordRequests(page);
   await page.goto("/en/open-data");
   await expect(page.getByTestId("open-demo")).toBeVisible();
-  await expect(page.getByTestId("open-empty")).toBeVisible();
   const href = await page.getByTestId("open-download-csv").getAttribute("href");
-  expect(decodeURIComponent(href!.split(",").slice(1).join(","))).toBe(fx.csv);
+  expect(href).toMatch(/^data:text\/csv/);
+  expect(decodeURIComponent(href!.split(",").slice(1).join(","))).toMatch(
+    /^dataset_version,/,
+  );
   expect(requests.filter((r) => r.url().includes("/api/"))).toEqual([]);
 });
 
