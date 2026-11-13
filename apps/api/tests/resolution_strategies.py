@@ -149,7 +149,7 @@ def wikidata_row(
     qid: str, codes: list[str], labels: dict[str, str], aliases: dict[str, list[str]] | None = None
 ) -> dict[str, object]:
     row: dict[str, object] = {"qid": qid, "atc_codes": codes, "rxcuis": []}
-    for lang in ("en", "tr", "de", "fr", "es"):
+    for lang in ("en", "tr", "de", "fr", "es", "pt"):
         row[f"label_{lang}"] = labels.get(lang)
         row[f"aliases_{lang}"] = (aliases or {}).get(lang, [])
     return row

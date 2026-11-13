@@ -217,7 +217,7 @@ def parse_curated(text: str, codeless: frozenset[str] = frozenset()) -> Curated:
         dates.append(r["added_on"])
         row: dict[str, Any] = {"qid": key, "atc_codes": codes, "rxcuis": []}
         for lang in prepare.LANGS:
-            row[f"label_{lang}"] = (r[f"label_{lang}"] or "").strip() or None
+            row[f"label_{lang}"] = (r.get(f"label_{lang}") or "").strip() or None  # no pt column
             row[f"aliases_{lang}"] = []
         rows.append(row)
     digest = hashlib.sha256(text.encode("utf-8")).hexdigest() if rows else ""

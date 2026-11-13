@@ -28,7 +28,7 @@ from janus.light.inverse import Counts, faers_stats, inverse_signal, is_inverse
 from janus.light.keys import Item, build_key_map, map_ingredients
 from janus.light.labels import label_signals, single_key
 from janus.light.model import (
-    LANGS,
+    INGREDIENT_LANGS,
     Candidate,
     CaseFaers,
     Curated,
@@ -160,13 +160,13 @@ def read_wikidata(
     items: list[Item] = []
     labels: dict[str, dict[str, str]] = {}
     for row in con.execute(
-        "SELECT qid, rxcuis, label_en, label_tr, label_de, label_fr, label_es "
+        "SELECT qid, rxcuis, label_en, label_tr, label_de, label_fr, label_es, label_pt "
         "FROM read_parquet(?) ORDER BY qid",
         [str(art / "rows.parquet")],
     ).fetchall():
         qid = str(row[0])
         items.append(Item(qid, tuple(str(r) for r in (row[1] or ())), str(row[2] or "")))
-        labels[qid] = {lang: str(v) for lang, v in zip(LANGS, row[2:], strict=True) if v}
+        labels[qid] = {lang: str(v) for lang, v in zip(INGREDIENT_LANGS, row[2:], strict=True) if v}
     return items, labels
 
 

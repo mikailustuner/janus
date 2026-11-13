@@ -15,6 +15,7 @@ from janus.memory.stats import Sensitivity, Stats
 
 LABEL_REGIONS: Final = ("US", "EU", "UK", "JP")
 LANGS: Final = ("en", "tr", "de", "fr", "es")
+INGREDIENT_LANGS: Final = (*LANGS, "pt")  # Wikidata ingredient labels; goals.csv has no pt
 GOAL_KEY_RE: Final = re.compile(r"[a-z][a-z0-9_]{1,40}")
 CASE_ID_RE: Final = re.compile(r"[a-z][a-z0-9_]{1,60}")
 SIGNAL_TYPES: Final = ("label_effect", "inverse_faers", "patient_reported")

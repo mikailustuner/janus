@@ -1,5 +1,11 @@
 """`wikidata_ingredients` pipeline: items with an ATC code (P267), their RxNorm CUIs (P3345)
-and labels/aliases in en, tr, de, fr, es (design §5.3, Req 7). Data CC0."""
+and labels/aliases in en, tr, de, fr, es, pt (design §5.3, Req 7). Data CC0.
+
+Portuguese: `label_pt`/`aliases_pt` come from the `pt` labels. Where an item has no `pt` label
+but has a `pt-br` one, that label is used (checked on 2026-11-13: the 299 `pt-br` labels of
+ATC items are drug names in Brazilian spelling, 292 of them also have a `pt` label and 7 do
+not, so the fallback adds 7 names). A `pt-br` label or alias that differs from the `pt` label
+is kept as an alias (for example xenônio next to xenón). Nothing else is derived from `pt-br`."""
 
 from __future__ import annotations
 
@@ -24,7 +30,9 @@ from janus_pipelines.core.validation import (
 )
 
 ENDPOINT = "https://query.wikidata.org/sparql"
-LANGS = ("en", "tr", "de", "fr", "es")
+LANGS = ("en", "tr", "de", "fr", "es", "pt")
+PT_FALLBACK = "pt-br"  # fetched with the other languages, merged into `pt` only
+FETCH_LANGS = (*LANGS, PT_FALLBACK)
 ATC_FIRST_LETTERS = tuple("ABCDGHJLMNPRSV")
 ENTITY_PREFIX = "http://www.wikidata.org/entity/"
 _QID = re.compile(r"Q[1-9][0-9]*")
@@ -40,7 +48,7 @@ def codes_query(letter: str | None = None) -> str:
 
 
 def labels_query(lang: str, letter: str | None = None) -> str:
-    if lang not in LANGS:
+    if lang not in FETCH_LANGS:
         raise ValueError(f"unsupported language {lang!r}")
     restrict = f' FILTER(STRSTARTS(?a, "{letter}"))' if letter else ""
     return (
@@ -139,6 +147,13 @@ def merge(
                 labels.setdefault((q, lang), set()).add(b["label"]["value"])
             if "alias" in b:
                 aliases.setdefault((q, lang), set()).add(b["alias"]["value"])
+    for q in sorted({q for q, lang in (*labels, *aliases) if lang == PT_FALLBACK}):
+        br_labels = labels.pop((q, PT_FALLBACK), set())
+        br_aliases = aliases.pop((q, PT_FALLBACK), set())
+        if not labels.get((q, "pt")) and br_labels:
+            labels[(q, "pt")] = {min(br_labels)}  # no `pt` label: a `pt-br` label stands in
+        extra = (br_labels | br_aliases) - labels.get((q, "pt"), set())
+        aliases.setdefault((q, "pt"), set()).update(extra)
     rows: list[Row] = []
     for q in sorted(atc, key=lambda x: int(x[1:])):
         row: dict[str, Any] = {
@@ -209,7 +224,7 @@ class WikidataIngredientsJob(Job[Payload]):
         retrieved = ctx.now()
         hashes: dict[str, str] = {}
         payload: Payload = {"codes": self._run_query(fetcher, "codes", codes_query, hashes)}
-        for lang in LANGS:
+        for lang in FETCH_LANGS:
             payload[f"labels_{lang}"] = self._run_query(
                 fetcher,
                 f"labels_{lang}",
@@ -241,7 +256,7 @@ class WikidataIngredientsJob(Job[Payload]):
             report = check_schema(CODES_SCHEMA, observe_bindings(result))
             codes.extend(result.bindings)
         labels: dict[str, Sequence[Binding]] = {}
-        for lang in LANGS:
+        for lang in FETCH_LANGS:
             collected: list[Binding] = []
             for body in raw.payload.get(f"labels_{lang}", []):
                 result = parse_sparql_json(body)
