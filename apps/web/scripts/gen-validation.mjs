@@ -197,6 +197,27 @@ function modelkit(root) {
   };
 }
 
+/** The citation of the current release, from CITATION.cff (release.sh sets version and date). */
+function citation(root) {
+  const cff = read(root, "CITATION.cff");
+  const field = (name) => {
+    const m = new RegExp(`^${name}:\\s*"?([^"\\n]+?)"?\\s*$`, "m").exec(cff);
+    return m ? m[1] : null;
+  };
+  const family = /family-names:\s*"([^"]+)"/.exec(cff);
+  const given = /given-names:\s*"([^"]+)"/.exec(cff);
+  return {
+    title: need(field("title"), "CITATION.cff title"),
+    family: need(family?.[1], "CITATION.cff family-names"),
+    given: need(given?.[1], "CITATION.cff given-names"),
+    version: need(field("version"), "CITATION.cff version"),
+    date: need(field("date-released"), "CITATION.cff date-released"),
+    repository: need(field("repository-code"), "CITATION.cff repository-code"),
+    doi: field("doi"),
+    cffUrl: `${REPO}/blob/main/CITATION.cff`,
+  };
+}
+
 export function generate(root) {
   const cm = json(root, "data/validation/cascades/results/metrics.json");
   const ce = json(root, "data/validation/cascades/results/errors.json");
@@ -263,6 +284,8 @@ export function generate(root) {
     },
     modelkitPrecision: mk.precision,
     modelkitGate: mk.gate,
+    citation: citation(root),
+    limitationsUrl: `${DOCS}/limitations.md`,
   };
 }
 

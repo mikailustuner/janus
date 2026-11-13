@@ -2980,9 +2980,10 @@
     "cite": {
       "title": "Como citar",
       "summary": "Cite a versão que usou.",
-      "body": "Ainda não existe um CITATION.cff: o projeto não publicou metadados de citação. Até lá, cite o conjunto de dados com a sua cadeia de versão e data da cópia:",
+      "body": "Para um conjunto de dados, cite-o com a sua cadeia de versão e data da cópia:",
       "example": "Texto da citação",
-      "pipc": "A própria lista PIPC:"
+      "pipc": "A própria lista PIPC:",
+      "software": "Para o software, cite a versão que utilizou. O repositório tem um CITATION.cff com a sua versão e data:"
     },
     "modelKit": {
       "title": "Kit inicial de modelos de fármacos (experimental)",
@@ -3391,7 +3392,7 @@
   },
   "ValidationStudies": {
     "title": "Estudos de validação",
-    "summary": "Dois estudos pré-registados sobre o desempenho do Janus, cada um com os seus intervalos de confiança de 95 %.",
+    "summary": "Quatro estudos pré-registados sobre o desempenho do Janus, cada um com os seus intervalos de confiança de 95 %.",
     "intro": "Para investigadores. Cada estudo fixou a sua pergunta, os seus dados de referência e os seus critérios de sucesso num protocolo público antes de o Janus ser executado sobre os dados. Os resultados são apresentados tal como saíram, incluindo as hipóteses que não se cumpriram.",
     "review": "A revisão por especialistas ainda não foi feita.",
     "preregistered": "Pré-registado: o protocolo foi publicado no commit {commit} antes de a avaliação ser executada.",
@@ -3505,6 +3506,10 @@
       "crossTitle": "Verificação entre estudos de unidades erradas",
       "crossOff": "Implementada. Não cumpriu a sua regra de decisão registada previamente, por isso está desligada. Reteria {would} de {checkable} valores verificáveis.",
       "crossOn": "Implementada e ligada. Retém {would} de {checkable} valores verificáveis."
-    }
+    },
+    "csv": "Descarregar os números (CSV)",
+    "cite": "Citar esta versão",
+    "citeIntro": "Cite a versão que utilizou:",
+    "limitations": "Limitações destes estudos (GitHub)"
   }
 }

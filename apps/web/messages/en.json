@@ -2980,9 +2980,10 @@
     "cite": {
       "title": "How to cite",
       "summary": "Cite the version you used.",
-      "body": "There is no CITATION.cff yet: the project has not published citation metadata. Until then, cite the dataset with its version string and snapshot date:",
+      "body": "For a dataset, cite it with its version string and snapshot date:",
       "example": "Citation text",
-      "pipc": "The PIPC list itself:"
+      "pipc": "The PIPC list itself:",
+      "software": "For the software, cite the release you used. The repository has a CITATION.cff with its version and date:"
     },
     "modelKit": {
       "title": "Drug model starter kit (experimental)",
@@ -3391,7 +3392,7 @@
   },
   "ValidationStudies": {
     "title": "Validation studies",
-    "summary": "Two pre-registered studies of how well Janus works, each with its 95 % confidence intervals.",
+    "summary": "Four pre-registered studies of how well Janus works, each with its 95 % confidence intervals.",
     "intro": "For researchers. Each study fixed its question, its reference data and its success criteria in a public protocol before Janus was run on the data. The results are reported as they came out, including the hypotheses that were not met.",
     "review": "Expert review has not yet been done.",
     "preregistered": "Pre-registered: the protocol was published in commit {commit} before the evaluation ran.",
@@ -3505,6 +3506,10 @@
       "crossTitle": "Cross-study check for wrong units",
       "crossOff": "Implemented. It did not meet its pre-registered decision rule, so it is switched off. It would withhold {would} of {checkable} checkable values.",
       "crossOn": "Implemented and switched on. It withholds {would} of {checkable} checkable values."
-    }
+    },
+    "csv": "Download the numbers (CSV)",
+    "cite": "Cite this version",
+    "citeIntro": "Please cite the version you used:",
+    "limitations": "Limitations of these studies (GitHub)"
   }
 }

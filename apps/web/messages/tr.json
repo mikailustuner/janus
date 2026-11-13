@@ -2980,9 +2980,10 @@
     "cite": {
       "title": "Nasıl atıf yapılır",
       "summary": "Kullandığınız sürüme atıf yapın.",
-      "body": "Henüz CITATION.cff yok: proje atıf bilgilerini yayımlamadı. O zamana kadar veri kümesine sürüm dizesi ve anlık görüntü tarihiyle atıf yapın:",
+      "body": "Bir veri kümesine sürüm dizesi ve anlık görüntü tarihiyle atıf yapın:",
       "example": "Atıf metni",
-      "pipc": "PIPC listesinin kendisi:"
+      "pipc": "PIPC listesinin kendisi:",
+      "software": "Yazılım için kullandığınız sürümü alıntılayın. Depoda sürümü ve tarihiyle bir CITATION.cff dosyası var:"
     },
     "modelKit": {
       "title": "İlaç modeli başlangıç seti (deneysel)",
@@ -3391,7 +3392,7 @@
   },
   "ValidationStudies": {
     "title": "Doğrulama çalışmaları",
-    "summary": "Janus'un ne kadar iyi çalıştığına dair, her biri %95 güven aralıklı iki önceden kayıtlı çalışma.",
+    "summary": "Janus'un ne kadar iyi çalıştığına dair, her biri %95 güven aralıklı dört önceden kayıtlı çalışma.",
     "intro": "Araştırmacılar için. Her çalışma, Janus veriler üzerinde çalıştırılmadan önce sorusunu, referans verisini ve başarı ölçütlerini herkese açık bir protokolde sabitledi. Sonuçlar, karşılanmayan hipotezler dahil, çıktığı gibi bildirilir.",
     "review": "Uzman incelemesi henüz yapılmadı.",
     "preregistered": "Önceden kayıtlı: protokol, değerlendirme çalıştırılmadan önce {commit} işlemesinde yayımlandı.",
@@ -3505,6 +3506,10 @@
       "crossTitle": "Yanlış birimler için çalışmalar arası denetim",
       "crossOff": "Uygulanmıştır. Önceden kaydedilen karar kuralını karşılamadığı için kapalıdır. Denetlenebilen {checkable} değerin {would} tanesini geri tutardı.",
       "crossOn": "Uygulanmıştır ve açıktır. Denetlenebilen {checkable} değerin {would} tanesini geri tutar."
-    }
+    },
+    "csv": "Sayıları indir (CSV)",
+    "cite": "Bu sürümü alıntıla",
+    "citeIntro": "Lütfen kullandığınız sürümü alıntılayın:",
+    "limitations": "Bu çalışmaların sınırlılıkları (GitHub)"
   }
 }

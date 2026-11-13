@@ -2980,9 +2980,10 @@
     "cite": {
       "title": "Comment citer",
       "summary": "Citez la version que vous avez utilisée.",
-      "body": "Il n'existe pas encore de CITATION.cff : le projet n'a pas publié de métadonnées de citation. D'ici là, citez le jeu de données avec sa chaîne de version et sa date d'instantané :",
+      "body": "Pour un jeu de données, citez-le avec sa chaîne de version et sa date d'instantané :",
       "example": "Texte de citation",
-      "pipc": "La liste PIPC elle-même :"
+      "pipc": "La liste PIPC elle-même :",
+      "software": "Pour le logiciel, citez la version utilisée. Le dépôt contient un CITATION.cff avec sa version et sa date :"
     },
     "modelKit": {
       "title": "Kit de départ de modèles de médicaments (expérimental)",
@@ -3391,7 +3392,7 @@
   },
   "ValidationStudies": {
     "title": "Études de validation",
-    "summary": "Deux études préenregistrées sur la qualité du travail de Janus, chacune avec ses intervalles de confiance à 95 %.",
+    "summary": "Quatre études préenregistrées sur la qualité du travail de Janus, chacune avec ses intervalles de confiance à 95 %.",
     "intro": "Pour les chercheurs. Chaque étude a fixé sa question, ses données de référence et ses critères de réussite dans un protocole public avant que Janus soit exécuté sur les données. Les résultats sont rapportés tels qu'ils sont sortis, y compris les hypothèses non confirmées.",
     "review": "L'examen par des experts n'a pas encore été fait.",
     "preregistered": "Préenregistré : le protocole a été publié dans le commit {commit} avant l'évaluation.",
@@ -3505,6 +3506,10 @@
       "crossTitle": "Contrôle entre études des mauvaises unités",
       "crossOff": "Mis en œuvre. Il n’a pas satisfait sa règle de décision enregistrée à l’avance et est donc désactivé. Il retiendrait {would} valeurs vérifiables sur {checkable}.",
       "crossOn": "Mis en œuvre et activé. Il retient {would} valeurs vérifiables sur {checkable}."
-    }
+    },
+    "csv": "Télécharger les chiffres (CSV)",
+    "cite": "Citer cette version",
+    "citeIntro": "Merci de citer la version utilisée :",
+    "limitations": "Limites de ces études (GitHub)"
   }
 }

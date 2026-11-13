@@ -2980,9 +2980,10 @@
     "cite": {
       "title": "So zitieren Sie",
       "summary": "Zitieren Sie die verwendete Version.",
-      "body": "Es gibt noch keine CITATION.cff: Das Projekt hat keine Zitationsangaben veröffentlicht. Bis dahin den Datensatz mit Versionskennung und Stichtag zitieren:",
+      "body": "Einen Datensatz zitieren Sie mit Versionskennung und Stichtag:",
       "example": "Zitiertext",
-      "pipc": "Die PIPC-Liste selbst:"
+      "pipc": "Die PIPC-Liste selbst:",
+      "software": "Für die Software zitieren Sie die verwendete Version. Das Repository enthält eine CITATION.cff mit Version und Datum:"
     },
     "modelKit": {
       "title": "Starterkit für Arzneimittelmodelle (experimentell)",
@@ -3391,7 +3392,7 @@
   },
   "ValidationStudies": {
     "title": "Validierungsstudien",
-    "summary": "Zwei vorab registrierte Studien dazu, wie gut Janus arbeitet, jeweils mit 95-%-Konfidenzintervallen.",
+    "summary": "Vier vorab registrierte Studien dazu, wie gut Janus arbeitet, jeweils mit 95-%-Konfidenzintervallen.",
     "intro": "Für Forschende. Jede Studie hat ihre Frage, ihre Referenzdaten und ihre Erfolgskriterien in einem öffentlichen Protokoll festgelegt, bevor Janus auf die Daten angewendet wurde. Die Ergebnisse werden so berichtet, wie sie ausfielen, auch die nicht erfüllten Hypothesen.",
     "review": "Eine Prüfung durch Fachleute ist noch nicht erfolgt.",
     "preregistered": "Vorab registriert: Das Protokoll wurde im Commit {commit} veröffentlicht, bevor die Auswertung lief.",
@@ -3505,6 +3506,10 @@
       "crossTitle": "Studienübergreifende Prüfung auf falsche Einheiten",
       "crossOff": "Umgesetzt. Sie erfüllte ihre vorab festgelegte Entscheidungsregel nicht und ist daher abgeschaltet. Sie würde {would} von {checkable} prüfbaren Werten zurückhalten.",
       "crossOn": "Umgesetzt und eingeschaltet. Sie hält {would} von {checkable} prüfbaren Werten zurück."
-    }
+    },
+    "csv": "Zahlen herunterladen (CSV)",
+    "cite": "Diese Version zitieren",
+    "citeIntro": "Bitte zitieren Sie die Version, die Sie verwendet haben:",
+    "limitations": "Grenzen dieser Studien (GitHub)"
   }
 }

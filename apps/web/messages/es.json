@@ -2980,9 +2980,10 @@
     "cite": {
       "title": "Cómo citar",
       "summary": "Cite la versión que usó.",
-      "body": "Todavía no hay CITATION.cff: el proyecto no ha publicado metadatos de cita. Hasta entonces, cite el conjunto de datos con su cadena de versión y la fecha de la instantánea:",
+      "body": "Para un conjunto de datos, cítelo con su cadena de versión y la fecha de la instantánea:",
       "example": "Texto de la cita",
-      "pipc": "La propia lista PIPC:"
+      "pipc": "La propia lista PIPC:",
+      "software": "Para el software, cite la versión que utilizó. El repositorio tiene un CITATION.cff con su versión y fecha:"
     },
     "modelKit": {
       "title": "Kit inicial de modelos de fármacos (experimental)",
@@ -3391,7 +3392,7 @@
   },
   "ValidationStudies": {
     "title": "Estudios de validación",
-    "summary": "Dos estudios preregistrados sobre el rendimiento de Janus, cada uno con sus intervalos de confianza del 95 %.",
+    "summary": "Cuatro estudios preregistrados sobre el rendimiento de Janus, cada uno con sus intervalos de confianza del 95 %.",
     "intro": "Para investigadores. Cada estudio fijó su pregunta, sus datos de referencia y sus criterios de éxito en un protocolo público antes de ejecutar Janus sobre los datos. Los resultados se comunican tal como salieron, incluidas las hipótesis que no se cumplieron.",
     "review": "Todavía no se ha hecho la revisión por expertos.",
     "preregistered": "Preregistrado: el protocolo se publicó en el commit {commit} antes de ejecutar la evaluación.",
@@ -3505,6 +3506,10 @@
       "crossTitle": "Comprobación entre estudios de unidades erróneas",
       "crossOff": "Implementada. No cumplió su regla de decisión registrada de antemano, así que está desactivada. Retendría {would} de {checkable} valores comprobables.",
       "crossOn": "Implementada y activada. Retiene {would} de {checkable} valores comprobables."
-    }
+    },
+    "csv": "Descargar las cifras (CSV)",
+    "cite": "Citar esta versión",
+    "citeIntro": "Cite la versión que utilizó:",
+    "limitations": "Limitaciones de estos estudios (GitHub)"
   }
 }

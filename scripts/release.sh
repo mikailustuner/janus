@@ -16,8 +16,11 @@ date="$(sed -n "s/^## \[$version\] - \([0-9-]*\)$/\1/p" CHANGELOG.md)"
 [ -n "$date" ] || { echo "CHANGELOG.md has no '## [$version] - YYYY-MM-DD' section" >&2; exit 1; }
 
 sed -i "s/^version: .*/version: \"$version\"/; s/^date-released: .*/date-released: \"$date\"/" CITATION.cff
-if [ -n "$(git status --porcelain CITATION.cff)" ]; then
-  git commit --quiet -m "release: $version" CITATION.cff
+# The site's "cite this version" and CSV file names read the release from the generated file.
+node apps/web/scripts/gen-validation.mjs >/dev/null
+gen=apps/web/src/research/validation.generated.json
+if [ -n "$(git status --porcelain CITATION.cff "$gen")" ]; then
+  git commit --quiet -m "release: $version" CITATION.cff "$gen"
 fi
 git tag -a "v$version" -m "Janus $version"
 git push --quiet origin main "v$version"
