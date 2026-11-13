@@ -142,6 +142,19 @@
       "how1Title": "Scanner la boîte",
       "how2Title": "Les schémas sont comparés",
       "how3Title": "Une note pour le médecin"
+    },
+    "audience": {
+      "title": "À qui s'adresse Janus ?",
+      "patients": {
+        "title": "Patients et familles",
+        "body": "Vérifiez une liste de médicaments à la recherche de cascades de prescription et obtenez une note à apporter à votre médecin.",
+        "cta": "Vérifier mes médicaments"
+      },
+      "researchers": {
+        "title": "Chercheurs et cliniciens",
+        "body": "Méthodes, résultats de validation, modèles de médicaments, données ouvertes et API.",
+        "cta": "Ouvrir l'espace recherche"
+      }
     }
   },
   "Shell": {
@@ -154,12 +167,22 @@
       "results": "Résultats",
       "settings": "Réglages",
       "research": "Recherche",
-      "passport": "Passeport"
+      "passport": "Passeport",
+      "note": "Note médicale"
     },
     "privacy": "Confidentialité",
     "demoCodes": "Codes de démo",
     "demoDoctor": "Ouvrir la page de démo du médecin",
-    "donate": "Partager un signalement"
+    "donate": "Partager un signalement",
+    "researchNav": {
+      "overview": "Aperçu",
+      "methods": "Validation",
+      "modelKit": "Modèles",
+      "data": "Données",
+      "developers": "API et MCP"
+    },
+    "researchNavLabel": "Navigation de la recherche",
+    "patientSection": "Section patient"
   },
   "Emergency": {
     "title": "En cas d'urgence",
@@ -665,7 +688,25 @@
         "title": "Études de validation",
         "body": "Deux études préenregistrées sur la qualité du travail de Janus, avec intervalles de confiance."
       }
-    }
+    },
+    "groups": {
+      "methods": {
+        "title": "Méthodes et validation"
+      },
+      "modelKit": {
+        "title": "Modèles de médicaments et simulation"
+      },
+      "data": {
+        "title": "Données"
+      },
+      "developers": {
+        "title": "API, MCP et citation"
+      },
+      "experimental": {
+        "title": "Outils exploratoires"
+      }
+    },
+    "experimental": "Expérimental"
   },
   "Doctor": {
     "errors": {

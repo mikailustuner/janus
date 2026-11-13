@@ -1,47 +1,23 @@
 "use client";
 import { GroupedList, LargeTitle, RowLink } from "@/components/cards";
-import { ButtonLink } from "@/components/ui";
+import { ButtonLink, Chip } from "@/components/ui";
 import { useT, useThemeWord } from "@/theme/words";
 
-const ENTRIES = ["hypotheses", "seance", "validation", "export"] as const;
-/** Light-face screens (light-face design §10) and the séance screen (séance design §7). */
-const LIVE: Record<(typeof ENTRIES)[number], string> = {
-  hypotheses: "/research/hypotheses",
-  seance: "/research/seance",
-  validation: "/research/validation",
-  export: "/research/export",
-};
-
-/** Research tools (research-tools Req 4; simulation-service Req 5): data quality, the onset
- * table, developers, the model explorer and queued simulations. */
-const TOOLS = [
-  { key: "forResearchers", href: "/research/for-researchers" },
-  { key: "dataQuality", href: "/research/data-quality" },
-  { key: "onset", href: "/research/faers-onset" },
-  { key: "developers", href: "/research/developers" },
-  { key: "modelExplorer", href: "/research/model-explorer" },
-  { key: "simulate", href: "/research/simulate" },
-  { key: "modelKit", href: "/research/model-kit" },
-  { key: "validationStudies", href: "/research/validation-studies" },
-] as const;
+import { RESEARCH_GROUPS, type ResearchEntry } from "./sections";
 
 /**
- * Researcher area (design §14, Req 24, DP12, Req 29): the normal theme (DP48), the rule-7
- * sentence, the Phase 4 review status (expert review has not yet been done) and the four entries as
- * one grouped list of row links.
+ * Researcher area (design §14, Req 24, DP12, Req 29; plan D1): the normal theme (DP48), the Phase 4
+ * review status (expert review has not yet been done) and the entries in five groups. The
+ * experimental group carries a label and the rule-7 sentence; it is never in the patient flow.
  */
 export function Research() {
   const t = useT();
   const w = useThemeWord();
-  const title = (e: (typeof ENTRIES)[number]) =>
-    e === "seance"
-      ? w("Research.entries.seance.title")
-      : t(`Research.entries.${e}.title`);
+  const title = (e: ResearchEntry) => (e.themeTitle ? w(e.title) : t(e.title));
   return (
     <>
       <LargeTitle title={t("Research.title")} />
       <p className="max-w-[72ch]">{t("Research.intro")}</p>
-      <p className="card p-5 font-bold">{t("Research.rule7")}</p>
       <p
         className="card p-5 text-muted"
         role="note"
@@ -49,59 +25,39 @@ export function Research() {
       >
         {t("Research.review")}
       </p>
-      <GroupedList>
-        {ENTRIES.map((e) => (
-          <RowLink key={e} href={LIVE[e]}>
-            <span className="sr-only">{t("Light.nav.open")}: </span>
-            <span className="flex flex-col gap-0.5">
-              <span className="text-lg">{title(e)}</span>
-              <span className="font-normal text-muted">
-                {t(`Research.entries.${e}.body`)}
+      {RESEARCH_GROUPS.map((group) => {
+        const experimental = group.key === "experimental";
+        return (
+          <GroupedList
+            key={group.key}
+            headingId={`research-${group.key}`}
+            data-testid={`research-group-${group.key}`}
+            header={
+              <span className="flex flex-wrap items-center gap-2">
+                {t(`Research.groups.${group.key}.title`)}
+                {experimental ? (
+                  <Chip>{t("Research.experimental")}</Chip>
+                ) : null}
               </span>
-            </span>
-          </RowLink>
-        ))}
-        <RowLink href="/research/time-machine">
-          <span className="sr-only">{t("Light.nav.open")}: </span>
-          <span className="flex flex-col gap-0.5">
-            <span className="text-lg">{t("TimeMachine.entry.title")}</span>
-            <span className="font-normal text-muted">
-              {t("TimeMachine.entry.body")}
-            </span>
-          </span>
-        </RowLink>
-        {TOOLS.map((e) => (
-          <RowLink key={e.href} href={e.href}>
-            <span className="sr-only">{t("Light.nav.open")}: </span>
-            <span className="flex flex-col gap-0.5">
-              <span className="text-lg">
-                {t(`Research.tools.${e.key}.title`)}
-              </span>
-              <span className="font-normal text-muted">
-                {t(`Research.tools.${e.key}.body`)}
-              </span>
-            </span>
-          </RowLink>
-        ))}
-        <RowLink href="/open-data">
-          <span className="sr-only">{t("Light.nav.open")}: </span>
-          <span className="flex flex-col gap-0.5">
-            <span className="text-lg">{t("OpenData.entry.title")}</span>
-            <span className="font-normal text-muted">
-              {t("OpenData.entry.body")}
-            </span>
-          </span>
-        </RowLink>
-        <RowLink href="/cascades">
-          <span className="sr-only">{t("Light.nav.open")}: </span>
-          <span className="flex flex-col gap-0.5">
-            <span className="text-lg">{t("CascadeMap.entry.title")}</span>
-            <span className="font-normal text-muted">
-              {t("CascadeMap.entry.body")}
-            </span>
-          </span>
-        </RowLink>
-      </GroupedList>
+            }
+            footer={
+              experimental ? (
+                <p className="font-bold">{t("Research.rule7")}</p>
+              ) : undefined
+            }
+          >
+            {group.entries.map((e) => (
+              <RowLink key={e.href} href={e.href}>
+                <span className="sr-only">{t("Light.nav.open")}: </span>
+                <span className="flex flex-col gap-0.5">
+                  <span className="text-lg">{title(e)}</span>
+                  <span className="font-normal text-muted">{t(e.body)}</span>
+                </span>
+              </RowLink>
+            ))}
+          </GroupedList>
+        );
+      })}
       <ButtonLink href="/" variant="secondary" className="self-start">
         {t("Research.back")}
       </ButtonLink>

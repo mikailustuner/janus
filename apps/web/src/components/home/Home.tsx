@@ -17,6 +17,7 @@ import { localeNames, routing } from "@/i18n/routing";
 import { useList, useSettings } from "@/store/hooks";
 import { useT, useTheme } from "@/theme/words";
 
+import { AudienceEntries } from "./AudienceEntries";
 import { GlassHomeSections } from "./GlassHomeSections";
 import { HomeHero } from "./HomeHero";
 
@@ -69,6 +70,7 @@ export function Home() {
       <div className="mx-auto flex w-full max-w-[720px] flex-col gap-5 px-4 pt-5 lg:max-w-[1120px]">
         <ZombieAlertCard />
         <ReminderCard />
+        <AudienceEntries />
         {ready && count > 0 && !demo ? (
           <Card>
             <p className="font-bold">{t("Home.resume")}</p>

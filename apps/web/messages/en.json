@@ -142,6 +142,19 @@
       "how1Title": "Scan the box",
       "how2Title": "Patterns are compared",
       "how3Title": "A note for the doctor"
+    },
+    "audience": {
+      "title": "Who is Janus for?",
+      "patients": {
+        "title": "Patients and families",
+        "body": "Check a list of medicines for prescribing cascades and get a note to take to your doctor.",
+        "cta": "Check my medicines"
+      },
+      "researchers": {
+        "title": "Researchers and clinicians",
+        "body": "Methods, validation results, drug models, open data and the API.",
+        "cta": "Open the research area"
+      }
     }
   },
   "Shell": {
@@ -154,12 +167,22 @@
       "results": "Results",
       "settings": "Settings",
       "research": "Research",
-      "passport": "Passport"
+      "passport": "Passport",
+      "note": "Doctor note"
     },
     "privacy": "Privacy",
     "demoCodes": "Demo codes",
     "demoDoctor": "Open the demo doctor page",
-    "donate": "Share a report"
+    "donate": "Share a report",
+    "researchNav": {
+      "overview": "Overview",
+      "methods": "Validation",
+      "modelKit": "Drug models",
+      "data": "Data",
+      "developers": "API and MCP"
+    },
+    "researchNavLabel": "Research navigation",
+    "patientSection": "Patient section"
   },
   "Emergency": {
     "title": "In an emergency",
@@ -665,7 +688,25 @@
         "title": "Validation studies",
         "body": "Two pre-registered studies of how well Janus works, with confidence intervals."
       }
-    }
+    },
+    "groups": {
+      "methods": {
+        "title": "Methods and validation"
+      },
+      "modelKit": {
+        "title": "Drug models and simulation"
+      },
+      "data": {
+        "title": "Data"
+      },
+      "developers": {
+        "title": "API, MCP and citation"
+      },
+      "experimental": {
+        "title": "Exploratory tools"
+      }
+    },
+    "experimental": "Experimental"
   },
   "Doctor": {
     "errors": {

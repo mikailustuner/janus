@@ -21,8 +21,13 @@ import { updateSettings, useStorageNotices } from "@/store/hooks";
 import { useT, useTheme } from "@/theme/words";
 
 import {
+  BookIcon,
+  CheckIcon,
+  DocIcon,
+  DownloadIcon,
   FacesIcon,
   GlobeIcon,
+  KeyboardIcon,
   PassportIcon,
   PillIcon,
   ResultsIcon,
@@ -30,6 +35,11 @@ import {
   SettingsIcon,
 } from "./icons";
 import { useUserRegion } from "./region";
+import {
+  RESEARCH_NAV,
+  researchNavKey,
+  type ResearchNavKey,
+} from "./research/sections";
 import { ZombieWatch } from "./zombie/Zombie";
 
 function LanguageSwitcher() {
@@ -89,22 +99,69 @@ function DemoBar() {
   );
 }
 
-const NAV = [
+/** The patient menu (plan D1): adding medicines, the list, results, the doctor note, the passport. */
+const PATIENT_NAV = [
   { href: "/scan", key: "scan", Icon: ScanIcon },
   { href: "/medicines", key: "medicines", Icon: PillIcon },
-  { href: "/passport", key: "passport", Icon: PassportIcon },
   { href: "/results", key: "results", Icon: ResultsIcon },
-  { href: "/settings", key: "settings", Icon: SettingsIcon },
+  { href: "/note", key: "note", Icon: DocIcon },
+  { href: "/passport", key: "passport", Icon: PassportIcon },
 ] as const;
+
+const RESEARCH_ICONS: Record<ResearchNavKey, typeof BookIcon> = {
+  overview: BookIcon,
+  methods: CheckIcon,
+  modelKit: ResultsIcon,
+  data: DownloadIcon,
+  developers: KeyboardIcon,
+};
+
+type NavItem = {
+  href: string;
+  label: string;
+  Icon: typeof BookIcon;
+  active: boolean;
+};
+
+/**
+ * The menu for the current page: the researcher menu on researcher pages (the active item is the
+ * page's group), the patient menu everywhere else. The two never mix (plan D1).
+ */
+function useNavItems(): { research: boolean; items: NavItem[] } {
+  const t = useT();
+  const pathname = usePathname();
+  const group = researchNavKey(pathname);
+  if (group) {
+    return {
+      research: true,
+      items: RESEARCH_NAV.map(({ key, href }) => ({
+        href,
+        label: t(`Shell.researchNav.${key}`),
+        Icon: RESEARCH_ICONS[key],
+        active: key === group,
+      })),
+    };
+  }
+  return {
+    research: false,
+    items: PATIENT_NAV.map(({ href, key, Icon }) => ({
+      href,
+      label: t(`Shell.nav.${key}`),
+      Icon,
+      active: pathname === href || pathname.startsWith(`${href}/`),
+    })),
+  };
+}
 
 function Nav() {
   const t = useT();
   const theme = useTheme();
-  const pathname = usePathname();
+  const { research, items } = useNavItems();
   const glass = theme === "glass";
   return (
     <nav
-      aria-label={t("Shell.navLabel")}
+      aria-label={t(research ? "Shell.researchNavLabel" : "Shell.navLabel")}
+      data-testid="bottom-nav"
       className={
         glass
           ? "fixed inset-x-4 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-20 mx-auto max-w-[720px] rounded-[26px] border border-line bg-[var(--nav-surface)] p-1.5 shadow-[var(--nav-shadow)] [-webkit-backdrop-filter:var(--nav-blur)] [backdrop-filter:var(--nav-blur)] no-print md:hidden"
@@ -112,61 +169,91 @@ function Nav() {
       }
     >
       <ul className="mx-auto grid max-w-[720px] grid-cols-5">
-        {NAV.map(({ href, key, Icon }) => {
-          const active = pathname === href || pathname.startsWith(`${href}/`);
-          return (
-            <li key={key}>
-              <Link
-                href={href}
-                aria-current={active ? "page" : undefined}
-                className={`flex min-h-14 flex-col items-center justify-center gap-0.5 px-1 py-1.5 text-xs font-bold no-underline ${
-                  active
-                    ? glass
-                      ? "rounded-[20px] bg-chip text-chip-fg"
-                      : "text-accent"
-                    : "text-muted"
-                }`}
-              >
-                <Icon size={24} />
-                <span className="max-w-full text-center [overflow-wrap:anywhere] hyphens-auto">
-                  {t(`Shell.nav.${key}`)}
-                </span>
-              </Link>
-            </li>
-          );
-        })}
+        {items.map(({ href, label, Icon, active }) => (
+          <li key={href}>
+            <Link
+              href={href}
+              aria-current={active ? "page" : undefined}
+              className={`flex min-h-14 flex-col items-center justify-center gap-0.5 px-1 py-1.5 text-xs font-bold no-underline ${
+                active
+                  ? glass
+                    ? "rounded-[20px] bg-chip text-chip-fg"
+                    : "text-accent"
+                  : "text-muted"
+              }`}
+            >
+              <Icon size={24} />
+              <span className="max-w-full text-center [overflow-wrap:anywhere] hyphens-auto">
+                {label}
+              </span>
+            </Link>
+          </li>
+        ))}
       </ul>
     </nav>
   );
 }
 
-/** Header navigation from 768 px (Req 27.1): the same places, plus Research (DP48). */
+/** Header navigation from 768 px (Req 27.1): the same menu as the bottom bar. */
 function HeaderNav() {
   const t = useT();
-  const pathname = usePathname();
-  const items: { href: string; label: string }[] = [
-    ...NAV.map(({ href, key }) => ({ href, label: t(`Shell.nav.${key}`) })),
-    { href: "/research", label: t("Shell.nav.research") },
-  ];
+  const { research, items } = useNavItems();
   return (
-    <nav aria-label={t("Shell.navLabel")} className="hidden md:block">
-      <ul className="flex items-center gap-1">
-        {items.map(({ href, label }) => {
-          const active = pathname === href || pathname.startsWith(`${href}/`);
-          return (
-            <li key={href}>
-              <Link
-                href={href}
-                aria-current={active ? "page" : undefined}
-                className={`flex min-h-11 items-center rounded-full px-3 font-bold no-underline ${active ? "bg-chip text-chip-fg" : "text-fg hover:bg-chip"}`}
-              >
-                {label}
-              </Link>
-            </li>
-          );
-        })}
+    <nav
+      aria-label={t(research ? "Shell.researchNavLabel" : "Shell.navLabel")}
+      data-testid="header-nav"
+      className="hidden md:block"
+    >
+      <ul className="flex flex-wrap items-center gap-1">
+        {items.map(({ href, label, active }) => (
+          <li key={href}>
+            <Link
+              href={href}
+              aria-current={active ? "page" : undefined}
+              className={`flex min-h-11 items-center rounded-full px-3 font-bold no-underline ${active ? "bg-chip text-chip-fg" : "text-fg hover:bg-chip"}`}
+            >
+              {label}
+            </Link>
+          </li>
+        ))}
       </ul>
     </nav>
+  );
+}
+
+/**
+ * The way across (plan D1): researcher pages link back to the patient section; patient pages
+ * reach the researcher area from the header on wide screens and from the footer everywhere.
+ */
+function SectionSwitch() {
+  const t = useT();
+  const pathname = usePathname();
+  const research = researchNavKey(pathname) !== null;
+  return (
+    <Link
+      href={research ? "/" : "/research"}
+      data-testid="section-switch"
+      className={`${research ? "flex" : "hidden md:flex"} min-h-11 items-center rounded-full px-3 text-sm font-bold underline underline-offset-4 hover:bg-chip`}
+    >
+      {t(research ? "Shell.patientSection" : "Shell.nav.research")}
+    </Link>
+  );
+}
+
+/** Settings as a header icon on every page (it left the bottom bar for the doctor note, plan D1). */
+function SettingsLink() {
+  const t = useT();
+  const pathname = usePathname();
+  const active = pathname === "/settings";
+  return (
+    <Link
+      href="/settings"
+      aria-current={active ? "page" : undefined}
+      data-testid="settings-link"
+      className={`flex min-h-11 min-w-11 items-center justify-center rounded-full ${active ? "bg-chip text-chip-fg" : "hover:bg-chip"}`}
+    >
+      <SettingsIcon size={22} label={t("Shell.nav.settings")} />
+    </Link>
   );
 }
 
@@ -393,8 +480,10 @@ export function Shell({ children }: { children: ReactNode }) {
             </Link>
             <HeaderNav />
             <div className="flex items-center gap-1">
+              <SectionSwitch />
               <ThemeToggle />
               <LanguageSwitcher />
+              <SettingsLink />
             </div>
           </div>
           <DemoBar />

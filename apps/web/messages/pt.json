@@ -142,6 +142,19 @@
       "how1Title": "Digitalize a caixa",
       "how2Title": "Os padrões são comparados",
       "how3Title": "Uma nota para o médico"
+    },
+    "audience": {
+      "title": "Para quem é o Janus?",
+      "patients": {
+        "title": "Doentes e famílias",
+        "body": "Verifique uma lista de medicamentos quanto a cascatas de prescrição e obtenha uma nota para levar ao seu médico.",
+        "cta": "Verificar os meus medicamentos"
+      },
+      "researchers": {
+        "title": "Investigadores e clínicos",
+        "body": "Métodos, resultados de validação, modelos de fármacos, dados abertos e a API.",
+        "cta": "Abrir a área de investigação"
+      }
     }
   },
   "Shell": {
@@ -154,12 +167,22 @@
       "results": "Resultados",
       "settings": "Definições",
       "research": "Investigação",
-      "passport": "Passaporte"
+      "passport": "Passaporte",
+      "note": "Nota médica"
     },
     "privacy": "Privacidade",
     "demoCodes": "Códigos de demonstração",
     "demoDoctor": "Abrir a página de demonstração do médico",
-    "donate": "Partilhar uma notificação"
+    "donate": "Partilhar uma notificação",
+    "researchNav": {
+      "overview": "Visão geral",
+      "methods": "Validação",
+      "modelKit": "Modelos",
+      "data": "Dados",
+      "developers": "API e MCP"
+    },
+    "researchNavLabel": "Navegação da investigação",
+    "patientSection": "Secção do doente"
   },
   "Emergency": {
     "title": "Numa emergência",
@@ -665,7 +688,25 @@
         "title": "Estudos de validação",
         "body": "Dois estudos pré-registados sobre o desempenho do Janus, com intervalos de confiança."
       }
-    }
+    },
+    "groups": {
+      "methods": {
+        "title": "Métodos e validação"
+      },
+      "modelKit": {
+        "title": "Modelos de fármacos e simulação"
+      },
+      "data": {
+        "title": "Dados"
+      },
+      "developers": {
+        "title": "API, MCP e citação"
+      },
+      "experimental": {
+        "title": "Ferramentas exploratórias"
+      }
+    },
+    "experimental": "Experimental"
   },
   "Doctor": {
     "errors": {

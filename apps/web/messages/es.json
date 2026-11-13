@@ -142,6 +142,19 @@
       "how1Title": "Escanee la caja",
       "how2Title": "Se comparan los patrones",
       "how3Title": "Una nota para el médico"
+    },
+    "audience": {
+      "title": "¿Para quién es Janus?",
+      "patients": {
+        "title": "Pacientes y familias",
+        "body": "Revise una lista de medicamentos en busca de cascadas de prescripción y obtenga una nota para llevar a su médico.",
+        "cta": "Revisar mis medicamentos"
+      },
+      "researchers": {
+        "title": "Investigadores y clínicos",
+        "body": "Métodos, resultados de validación, modelos de fármacos, datos abiertos y la API.",
+        "cta": "Abrir el área de investigación"
+      }
     }
   },
   "Shell": {
@@ -154,12 +167,22 @@
       "results": "Resultados",
       "settings": "Ajustes",
       "research": "Investigación",
-      "passport": "Pasaporte"
+      "passport": "Pasaporte",
+      "note": "Nota médica"
     },
     "privacy": "Privacidad",
     "demoCodes": "Códigos de demo",
     "demoDoctor": "Abrir la página de demo del médico",
-    "donate": "Compartir una notificación"
+    "donate": "Compartir una notificación",
+    "researchNav": {
+      "overview": "Resumen",
+      "methods": "Validación",
+      "modelKit": "Modelos",
+      "data": "Datos",
+      "developers": "API y MCP"
+    },
+    "researchNavLabel": "Navegación de investigación",
+    "patientSection": "Sección del paciente"
   },
   "Emergency": {
     "title": "En una emergencia",
@@ -665,7 +688,25 @@
         "title": "Estudios de validación",
         "body": "Dos estudios preregistrados sobre el rendimiento de Janus, con intervalos de confianza."
       }
-    }
+    },
+    "groups": {
+      "methods": {
+        "title": "Métodos y validación"
+      },
+      "modelKit": {
+        "title": "Modelos de fármacos y simulación"
+      },
+      "data": {
+        "title": "Datos"
+      },
+      "developers": {
+        "title": "API, MCP y cita"
+      },
+      "experimental": {
+        "title": "Herramientas exploratorias"
+      }
+    },
+    "experimental": "Experimental"
   },
   "Doctor": {
     "errors": {

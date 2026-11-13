@@ -142,6 +142,19 @@
       "how1Title": "Packung scannen",
       "how2Title": "Muster werden verglichen",
       "how3Title": "Die Arztnotiz"
+    },
+    "audience": {
+      "title": "Für wen ist Janus?",
+      "patients": {
+        "title": "Patienten und Angehörige",
+        "body": "Prüfen Sie eine Medikamentenliste auf Verschreibungskaskaden und erhalten Sie eine Notiz für Ihre Ärztin oder Ihren Arzt.",
+        "cta": "Meine Medikamente prüfen"
+      },
+      "researchers": {
+        "title": "Forschung und Klinik",
+        "body": "Methoden, Validierungsergebnisse, Arzneimittelmodelle, offene Daten und die API.",
+        "cta": "Forschungsbereich öffnen"
+      }
     }
   },
   "Shell": {
@@ -154,12 +167,22 @@
       "results": "Ergebnisse",
       "settings": "Einstellungen",
       "research": "Forschung",
-      "passport": "Medikamentenpass"
+      "passport": "Medikamentenpass",
+      "note": "Arztnotiz"
     },
     "privacy": "Datenschutz",
     "demoCodes": "Demo-Codes",
     "demoDoctor": "Demo-Seite für die Ärztin oder den Arzt öffnen",
-    "donate": "Meldung teilen"
+    "donate": "Meldung teilen",
+    "researchNav": {
+      "overview": "Überblick",
+      "methods": "Validierung",
+      "modelKit": "Modelle",
+      "data": "Daten",
+      "developers": "API und MCP"
+    },
+    "researchNavLabel": "Forschungsnavigation",
+    "patientSection": "Patientenbereich"
   },
   "Emergency": {
     "title": "Im Notfall",
@@ -665,7 +688,25 @@
         "title": "Validierungsstudien",
         "body": "Zwei vorab registrierte Studien dazu, wie gut Janus arbeitet, mit Konfidenzintervallen."
       }
-    }
+    },
+    "groups": {
+      "methods": {
+        "title": "Methoden und Validierung"
+      },
+      "modelKit": {
+        "title": "Arzneimittelmodelle und Simulation"
+      },
+      "data": {
+        "title": "Daten"
+      },
+      "developers": {
+        "title": "API, MCP und Zitieren"
+      },
+      "experimental": {
+        "title": "Explorative Werkzeuge"
+      }
+    },
+    "experimental": "Experimentell"
   },
   "Doctor": {
     "errors": {

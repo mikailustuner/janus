@@ -142,6 +142,19 @@
       "how1Title": "Kutuyu tarayın",
       "how2Title": "Örüntüler karşılaştırılır",
       "how3Title": "Doktor için not"
+    },
+    "audience": {
+      "title": "Janus kimin için?",
+      "patients": {
+        "title": "Hastalar ve aileler",
+        "body": "İlaç listenizi reçete kaskadları açısından kontrol edin ve doktorunuza götüreceğiniz bir not alın.",
+        "cta": "İlaçlarımı kontrol et"
+      },
+      "researchers": {
+        "title": "Araştırmacılar ve klinisyenler",
+        "body": "Yöntemler, doğrulama sonuçları, ilaç modelleri, açık veri ve API.",
+        "cta": "Araştırma bölümünü aç"
+      }
     }
   },
   "Shell": {
@@ -154,12 +167,22 @@
       "results": "Sonuçlar",
       "settings": "Ayarlar",
       "research": "Araştırma",
-      "passport": "Pasaport"
+      "passport": "Pasaport",
+      "note": "Doktor notu"
     },
     "privacy": "Gizlilik",
     "demoCodes": "Demo kodları",
     "demoDoctor": "Demo doktor sayfasını aç",
-    "donate": "Bildirim paylaş"
+    "donate": "Bildirim paylaş",
+    "researchNav": {
+      "overview": "Genel bakış",
+      "methods": "Doğrulama",
+      "modelKit": "İlaç modelleri",
+      "data": "Veri",
+      "developers": "API ve MCP"
+    },
+    "researchNavLabel": "Araştırma gezinmesi",
+    "patientSection": "Hasta bölümü"
   },
   "Emergency": {
     "title": "Acil durumda",
@@ -665,7 +688,25 @@
         "title": "Doğrulama çalışmaları",
         "body": "Janus'un ne kadar iyi çalıştığına dair, güven aralıklarıyla iki önceden kayıtlı çalışma."
       }
-    }
+    },
+    "groups": {
+      "methods": {
+        "title": "Yöntemler ve doğrulama"
+      },
+      "modelKit": {
+        "title": "İlaç modelleri ve simülasyon"
+      },
+      "data": {
+        "title": "Veri"
+      },
+      "developers": {
+        "title": "API, MCP ve atıf"
+      },
+      "experimental": {
+        "title": "Keşif araçları"
+      }
+    },
+    "experimental": "Deneysel"
   },
   "Doctor": {
     "errors": {
