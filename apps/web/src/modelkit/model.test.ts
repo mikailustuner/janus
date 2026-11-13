@@ -1,4 +1,5 @@
-// Feature: model-kit Req 6. The decoders accept the recorded answers; the view model (hash key,
+// Feature: model-kit Req 6. The decoders accept the answers (synthetic, src/test/fixtures/modelkit.ts;
+// the recorded files are checked in src/test/recorded-contract.test.ts); the view model (hash key,
 // status badge, log-log chart maths) and the reason-code coverage hold in five languages.
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -8,8 +9,8 @@ import { describe, expect, it } from "vitest";
 import { decode } from "@/api/decode";
 import { routing } from "@/i18n/routing";
 
-import recorded from "./modelkit.recorded.json";
-import recordedM0 from "./modelkit.m0.recorded.json";
+import { KEYS, modelKitSet, reasonCodesOf } from "@/test/fixtures/modelkit";
+
 import {
   bandPolygon,
   demoModelKit,
@@ -35,12 +36,11 @@ import {
   statusBadge,
   systemOut,
   TARGETS,
-  type ModelKitFixture,
 } from "./model";
 
 type Tree = { [k: string]: string | Tree };
-const fx = recorded as unknown as ModelKitFixture;
-const fx0 = recordedM0 as unknown as ModelKitFixture;
+const set = modelKitSet();
+const fx = set.raw;
 const root = (p: string) => join(import.meta.dirname, "../../../..", p);
 const catalogue = (l: string) =>
   JSON.parse(
@@ -54,16 +54,25 @@ const has = (t: Tree, path: string) =>
       t,
     ) !== undefined;
 
-describe("decoders accept the recorded answers", () => {
+describe("decoders accept the answers", () => {
   it("drugs, system report, every drug and every evidence list", () => {
-    for (const f of [fx, fx0]) {
-      expect(decode(drugsOut, f.drugs).ok).toBe(true);
-      expect(decode(systemOut, f.validation).ok).toBe(true);
-      for (const k of Object.keys(f.drug))
-        expect(decode(drugOut, f.drug[k]).ok, k).toBe(true);
-      for (const k of Object.keys(f.evidence))
-        expect(decode(evidenceOut, f.evidence[k]).ok, k).toBe(true);
-    }
+    expect(decode(drugsOut, fx.drugs).ok).toBe(true);
+    expect(decode(systemOut, fx.validation).ok).toBe(true);
+    for (const k of Object.keys(fx.drug))
+      expect(decode(drugOut, fx.drug[k]).ok, k).toBe(true);
+    for (const k of Object.keys(fx.evidence))
+      expect(decode(evidenceOut, fx.evidence[k]).ok, k).toBe(true);
+  });
+  it("the set has one drug of every status and a drug with a set and with none", () => {
+    const d = Object.values(set.drug).map((x) => x.summary);
+    for (const st of ["validated", "not_validated", "failed"])
+      expect(
+        d.some((x) => x.status === st),
+        st,
+      ).toBe(true);
+    expect(d.some((x) => x.has_set)).toBe(true);
+    expect(d.some((x) => !x.has_set)).toBe(true);
+    expect(d.length).toBeGreaterThan(PAGE_SIZE);
   });
   it("a changed enum is a contract error", () => {
     const bad = structuredClone(fx.drugs) as { drugs: { status: string }[] };
@@ -73,7 +82,7 @@ describe("decoders accept the recorded answers", () => {
   it("the demo client answers from the file and 404s an unknown key", async () => {
     const c = demoModelKit(fx);
     expect((await c.drugs(NO_QUERY)).ok).toBe(true);
-    expect((await c.drug("enzalutamide")).ok).toBe(true);
+    expect((await c.drug(KEYS.validated)).ok).toBe(true);
     const r = await c.drug("nope");
     expect(r.ok).toBe(false);
     if (!r.ok) expect(r.error.messageKey).toBe("ModelKit.errors.unknown");
@@ -115,21 +124,23 @@ describe("list paging and search", () => {
     });
     expect(found.drugs.some((d) => d.key === first.key)).toBe(true);
     expect(found.counts).toEqual(whole.counts); // counts ignore the filters
-    for (const st of ["validated", "not_validated", "failed"] as const)
-      expect(
-        pageOfDrugs(all.value, {
-          ...NO_QUERY,
-          status: st,
-          limit: 1000,
-        }).drugs.every((d) => d.status === st),
-      ).toBe(true);
-    expect(
-      pageOfDrugs(all.value, {
+    for (const st of ["validated", "not_validated", "failed"] as const) {
+      const kept = pageOfDrugs(all.value, {
         ...NO_QUERY,
-        hasSet: true,
+        status: st,
         limit: 1000,
-      }).drugs.every((d) => d.has_set),
-    ).toBe(true);
+      }).drugs;
+      expect(kept.length, st).toBeGreaterThan(0);
+      expect(kept.every((d) => d.status === st)).toBe(true);
+    }
+    const withSet = pageOfDrugs(all.value, {
+      ...NO_QUERY,
+      hasSet: true,
+      limit: 1000,
+    }).drugs;
+    expect(withSet.length).toBeGreaterThan(0);
+    expect(withSet.length).toBeLessThan(whole.total);
+    expect(withSet.every((d) => d.has_set)).toBe(true);
   });
 });
 
@@ -176,21 +187,16 @@ describe("view model", () => {
       expect(y / x).toBeGreaterThanOrEqual(0.5 - 1e-9);
     }
   });
-  it("inBand is inclusive at 2-fold and matches the recorded points", () => {
+  it("inBand is inclusive at 2-fold and matches the flag of every point", () => {
     expect(inBand({ observed: 10, predicted: 20 })).toBe(true);
     expect(inBand({ observed: 10, predicted: 5 })).toBe(true);
     expect(inBand({ observed: 10, predicted: 4.9 })).toBe(false);
-    for (const d of [...Object.values(fx.drug), ...Object.values(fx0.drug)] as {
-      validation: {
-        points: {
-          observed: number;
-          predicted: number;
-          within_2_fold: boolean;
-        }[];
-      };
-    }[])
-      for (const p of d.validation.points)
-        expect(inBand(p)).toBe(p.within_2_fold);
+    const points = Object.values(set.drug).flatMap((d) => d.validation.points);
+    expect(points.some((p) => p.within_2_fold)).toBe(true);
+    expect(points.some((p) => !p.within_2_fold)).toBe(true);
+    expect(points.some((p) => p.predicted / p.observed === 2)).toBe(true); // on the edge
+    for (const p of points)
+      expect(inBand(p), p.evidence_id).toBe(p.within_2_fold);
   });
   it("shortStudy cuts long internal ids and keeps short ones", () => {
     expect(shortStudy("NCT02404805")).toBe("NCT02404805");
@@ -208,51 +214,14 @@ describe("view model", () => {
 });
 
 describe("reason codes", () => {
-  const seen = new Set<string>();
-  const add = (x: unknown) => {
-    if (typeof x === "string") seen.add(x);
-    else if (Array.isArray(x)) x.forEach(add);
-  };
-  for (const d of [
-    ...Object.values(fx.drug),
-    ...Object.values(fx0.drug),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ] as Record<string, any>[]) {
-    add(d.summary.status_reasons);
-    add(d.no_set_reasons);
-    add(d.validation.reasons);
-    add(d.validation.suspect);
-    add(d.validation.interval_reason);
-    add(d.validation.excluded.map((e: { reason: string }) => e.reason));
-    const ps = d.parameter_set;
-    if (ps) {
-      add(ps.model_reason);
-      add(ps.warnings);
-      add(ps.missing);
-      add(ps.left_out.map((e: { reason: string }) => e.reason));
-      for (const p of ps.params) {
-        add(p.derivation);
-        add(p.notes);
-      }
-    }
-    Object.keys(d.reason_text).forEach((k) => seen.add(k));
-  }
-  const sys = fx.validation as { conformal: string; caveats: string[] };
-  add(sys.conformal);
-  add(sys.caveats);
-  for (const e of [
-    ...Object.values(fx.evidence),
-    ...Object.values(fx0.evidence),
-  ] as {
-    rows: { reason: string | null }[];
-  }[])
-    add(e.rows.map((r) => r.reason));
+  const seen = reasonCodesOf(set);
   const py = readFileSync(root("apps/api/janus/modelkit/reasons.py"), "utf8");
   const api = new Set(
     [...py.matchAll(/^\s{4}"([a-z0-9_]+)":/gm)].map((m) => m[1]!),
   );
 
-  it("every code of the recorded answers is known", () => {
+  it("every code of the synthetic answers is known", () => {
+    expect(seen.size).toBeGreaterThan(10);
     expect([...seen].filter((c) => !reasonKey(c))).toEqual([]);
   });
   it("every code of the API glossary is known, and none is invented", () => {

@@ -8,10 +8,9 @@ import type { ReactNode } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 
-import { decode } from "@/api/decode";
 import { routing } from "@/i18n/routing";
-import { drugOut, type DrugOut } from "@/modelkit/model";
-import recorded from "@/modelkit/modelkit.recorded.json";
+import type { DrugOut } from "@/modelkit/model";
+import { KEYS, modelKitSet } from "@/test/fixtures/modelkit";
 
 vi.mock("@/i18n/navigation", () => ({
   Link: ({ children }: { children: ReactNode }) => <a>{children}</a>,
@@ -35,14 +34,10 @@ const messages = (l: Locale) =>
     ),
   ) as { ModelKit: { val: Record<string, string> } };
 
-function recordedDrug(key: keyof typeof recorded.drug): DrugOut {
-  const r = decode(drugOut, recorded.drug[key]);
-  if (!r.ok) throw new Error("recorded drug does not decode");
-  return r.value;
-}
-const enzalutamide = () => recordedDrug("enzalutamide");
-// a recorded drug with validation points
-const withPoints = () => recordedDrug("repaglinide");
+const drugs = modelKitSet().drug;
+const validated = () => drugs[KEYS.validated]!;
+// a drug with validation points
+const withPoints = () => drugs[KEYS.validated]!;
 
 const html = (locale: Locale, out: DrugOut) =>
   renderToStaticMarkup(
@@ -56,8 +51,8 @@ const html = (locale: Locale, out: DrugOut) =>
   );
 
 describe("leave-one-study-out validation", () => {
-  it("the recorded answer names the design", () => {
-    expect(enzalutamide().validation.design).toBe("leave_one_study_out");
+  it("the answer names the design", () => {
+    expect(validated().validation.design).toBe("leave_one_study_out");
   });
 
   it("counts rebuilt points only when there are some, in every language", () => {

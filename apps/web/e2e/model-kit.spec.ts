@@ -1,5 +1,6 @@
-// Drug model starter kit (model-kit Req 6; experimental). The API is stubbed from the answers
-// recorded from the real local API (src/modelkit/modelkit.recorded.json). C1-C3 in five locales
+// Drug model starter kit (model-kit Req 6; experimental). The API is stubbed from synthetic answers
+// (src/test/fixtures/modelkit.ts), never from the recorded release, so a new release cannot break or
+// empty these tests; demo mode (bundled recorded file) is checked for structure only. C1-C3 in five locales
 // × two themes for the list and three kinds of drug page (validated, not validated with a set,
 // without a set); the evidence disclosure by keyboard; the chart and its table; downloads; demo
 // mode with no request; 503, 404, an invalid or missing key and the empty list.
@@ -13,6 +14,12 @@ import {
   findForbiddenPhrases,
   forbiddenPhrases,
 } from "../src/i18n/forbidden-phrases";
+import {
+  AUDIT,
+  KEYS,
+  modelKitSet,
+  type ModelKitSet,
+} from "../src/test/fixtures/modelkit";
 
 import {
   expectNoAxeViolations,
@@ -28,16 +35,7 @@ import {
 type Json = Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
 const read = (p: string) =>
   JSON.parse(readFileSync(join(import.meta.dirname, p), "utf8"));
-type Recorded = {
-  drugs: Json;
-  validation: Json;
-  drug: Record<string, Json>;
-  evidence: Record<string, Json>;
-};
-// The six golden drugs of milestone M0: one of every kind of drug page.
-const fx = read("../src/modelkit/modelkit.m0.recorded.json") as Recorded;
-// The release (milestone M1): the list, the system report and the drugs with a set.
-const rel = read("../src/modelkit/modelkit.recorded.json") as Recorded;
+const kit = modelKitSet();
 const messages = Object.fromEntries(
   LOCALES.map((l) => [l, read(`../messages/${l}.json`)]),
 );
@@ -48,7 +46,7 @@ const locales = process.env.E2E_LOCALES
 
 /** The list route as the API answers it: name search, status, has_set, limit and offset. */
 const listStub =
-  (r: Recorded) =>
+  (r: ModelKitSet) =>
   (_body: unknown, url: URL): { body: unknown } => {
     const all = r.drugs.drugs as Json[];
     const q = (url.searchParams.get("q") ?? "").toLowerCase();
@@ -81,7 +79,7 @@ const listStub =
       },
     };
   };
-const stubsOf = (r: Recorded) => ({
+const stubsOf = (r: ModelKitSet) => ({
   "/modelkit/drugs": listStub(r),
   "/modelkit/validation": { body: r.validation },
   ...Object.fromEntries(
@@ -91,23 +89,15 @@ const stubsOf = (r: Recorded) => ({
     ]),
   ),
 });
-const stubs = stubsOf(fx);
-const relStubs = stubsOf(rel);
-// A release drug with a set and a validation point, for the release pages (a complete set
-// first; the release may have none with a point).
-const withPoints = Object.keys(rel.drug).filter(
-  (k) => rel.drug[k]!.parameter_set && rel.drug[k]!.validation.points.length,
-);
-const REL_DRUG =
-  withPoints.find((k) => rel.drug[k]!.parameter_set?.complete) ??
-  withPoints[0]!;
+const stubs = stubsOf(kit);
 
 const PAGE = 25; // drugs per page of the list
-const VALIDATED = "ertugliflozin";
-const FAILED = "sunitinib"; // one Cmax point outside 2-fold (strict rule, owner decision 2026-11-11)
-const WITH_SET = "dolutegravir";
-const NO_SET = "gabapentin";
-const HALF_LIFE = "ertugliflozin";
+const VALIDATED = KEYS.validated;
+const FAILED = KEYS.failed; // one Cmax point outside 2-fold (strict rule, owner decision 2026-11-11)
+const WITH_SET = KEYS.notValidated;
+const NO_SET = KEYS.noSet;
+const HALF_LIFE = KEYS.validated;
+const REL_DRUG = KEYS.longEvidence; // set, validation points, 24 excluded evidence rows
 
 /**
  * No table cell wraps inside a word and no scroll region pokes out of the viewport: every cell of
@@ -190,24 +180,11 @@ async function shot(page: Page, name: string, project: string, theme: string) {
 
 const PAGES = [
   { name: "list", path: "/research/model-kit", open: null },
-  {
-    name: "list-release",
-    path: "/research/model-kit",
-    open: null,
-    release: true,
-  },
   { name: "report", path: "/research/model-kit/report", open: null },
   {
-    name: "report-release",
-    path: "/research/model-kit/report",
-    open: null,
-    release: true,
-  },
-  {
-    name: "drug-release",
+    name: "drug-long-evidence",
     path: `/research/model-kit/drug#${REL_DRUG}`,
     open: "cl",
-    release: true,
   },
   {
     name: "drug-validated",
@@ -228,7 +205,7 @@ for (const p of PAGES)
     for (const locale of locales)
       test(`${p.name}, ${locale}, ${theme}`, async ({ page }, info) => {
         await useTheme(page, theme);
-        await stubApi(page, "release" in p && p.release ? relStubs : stubs);
+        await stubApi(page, stubs);
         await page.goto(`/${locale}${p.path}`);
         await expect(page.getByTestId("mk-research-use")).toBeVisible();
         if (p.name.startsWith("list"))
@@ -249,9 +226,9 @@ test.describe("list", () => {
   test("every drug has the Experimental badge, a status, a reason and n", async ({
     page,
   }) => {
-    await stubApi(page, relStubs);
+    await stubApi(page, stubs);
     await page.goto("/en/research/model-kit");
-    const all = rel.drugs.drugs as Json[];
+    const all = kit.drugs.drugs as Json[];
     const rows = page.getByTestId("mk-drug");
     await expect(rows).toHaveCount(Math.min(PAGE, all.length));
     for (const row of await rows.all()) {
@@ -271,17 +248,11 @@ test.describe("list", () => {
   test("search, status filter and pages narrow the list and open a drug", async ({
     page,
   }) => {
-    await stubApi(page, relStubs);
+    await stubApi(page, stubs);
     await page.goto("/en/research/model-kit");
-    const all = rel.drugs.drugs as Json[];
-    // a Failed drug whose page is in the recorded release (not every drug page is recorded);
-    // a release without a Failed drug filters on Not validated instead
-    const status = all.some((d) => d.status === "failed")
-      ? "failed"
-      : "not_validated";
-    const failed = all.find(
-      (d) => d.status === status && (d.key as string) in rel.drug,
-    );
+    const all = kit.drugs.drugs as Json[];
+    const status = "failed";
+    const failed = all.find((d) => d.key === FAILED);
     expect(failed).toBeTruthy();
     // status filter
     await page.getByTestId("mk-status-filter").selectOption(status);
@@ -290,9 +261,7 @@ test.describe("list", () => {
       `${nFailed} drug`,
     );
     await expect(page.getByTestId("mk-drug").first()).toContainText(
-      status === "failed"
-        ? messages.en.ModelKit.status.failed
-        : messages.en.ModelKit.status.not_validated,
+      messages.en.ModelKit.status.failed,
     );
     await page.getByTestId("mk-status-filter").selectOption("");
     // name search (waits for a pause in typing) and a search without a match
@@ -307,18 +276,17 @@ test.describe("list", () => {
     ).toBeVisible();
     await page.getByTestId("mk-search").fill("");
     // pages: 25 at a time, previous disabled on the first page
-    if (all.length > PAGE) {
-      await expect(page.getByTestId("mk-prev")).toBeDisabled();
-      await page.getByTestId("mk-next").click();
-      await expect(page.getByTestId("mk-range")).toContainText(
-        `${PAGE + 1}–${Math.min(2 * PAGE, all.length)} of ${all.length}`,
-      );
-      await expect(page.getByTestId("mk-drug").first()).toContainText(
-        all[PAGE]!.name,
-      );
-      await page.getByTestId("mk-prev").click();
-      await expect(page.getByTestId("mk-range")).toContainText(`1–${PAGE}`);
-    }
+    expect(all.length).toBeGreaterThan(PAGE);
+    await expect(page.getByTestId("mk-prev")).toBeDisabled();
+    await page.getByTestId("mk-next").click();
+    await expect(page.getByTestId("mk-range")).toContainText(
+      `${PAGE + 1}–${Math.min(2 * PAGE, all.length)} of ${all.length}`,
+    );
+    await expect(page.getByTestId("mk-drug").first()).toContainText(
+      all[PAGE]!.name,
+    );
+    await page.getByTestId("mk-prev").click();
+    await expect(page.getByTestId("mk-range")).toContainText(`1–${PAGE}`);
     // a row opens its drug page
     await page.getByTestId("mk-search").fill(failed!.name);
     await page
@@ -335,7 +303,7 @@ test.describe("list", () => {
     await stubApi(page, {
       "/modelkit/drugs": {
         body: {
-          ...fx.drugs,
+          ...kit.drugs,
           drugs: [],
           total: 0,
           counts: {
@@ -371,9 +339,8 @@ test.describe("drug page", () => {
       test(`leave one study out: rebuilt points are counted, ${locale}, ${theme}`, async ({
         page,
       }, info) => {
-        // a recorded release drug whose points are marked as predicted by a set built without
-        // their study (the recorded drug pages have none; DP-M40)
-        const d = rel.drug[REL_DRUG]!;
+        // a drug whose points are marked as predicted by a set built without their study (DP-M40)
+        const d = kit.drug[REL_DRUG]!;
         const pts = d.validation.points as Json[];
         const body = {
           ...d,
@@ -384,7 +351,7 @@ test.describe("drug page", () => {
         };
         await useTheme(page, theme);
         await stubApi(page, {
-          ...relStubs,
+          ...stubs,
           [`/modelkit/drugs/${REL_DRUG}`]: { body },
         });
         await page.goto(`/${locale}/research/model-kit/drug#${REL_DRUG}`);
@@ -407,8 +374,8 @@ test.describe("drug page", () => {
   test("a long evidence table shows 20 rows first and all on request", async ({
     page,
   }) => {
-    await stubApi(page, relStubs);
-    const excluded = rel.evidence[REL_DRUG]!.rows.filter(
+    await stubApi(page, stubs);
+    const excluded = kit.evidence[REL_DRUG]!.rows.filter(
       (r: Json) => r.role === "excluded",
     );
     expect(excluded.length).toBeGreaterThan(20);
@@ -427,11 +394,11 @@ test.describe("drug page", () => {
   }) => {
     await stubApi(page, stubs);
     await page.goto(`/en/research/model-kit/drug#${VALIDATED}`);
-    const set = fx.drug[VALIDATED]!.parameter_set;
-    const cl = set.params.find((p: Json) => p.name === "cl");
-    const row = fx.evidence[VALIDATED]!.rows.find(
-      (r: Json) => r.id === cl.evidence_ids[0],
-    );
+    const set = kit.drug[VALIDATED]!.parameter_set!;
+    const cl = set.params.find((p) => p.name === "cl")!;
+    const row = kit.evidence[VALIDATED]!.rows.find(
+      (r) => r.id === cl.evidence_ids[0],
+    )!;
     const btn = page.getByTestId("mk-value-cl");
     await expect(btn).toHaveAttribute("aria-expanded", "false");
     await btn.focus();
@@ -456,7 +423,7 @@ test.describe("drug page", () => {
       row.confirm_reason,
     );
     const link = pop.getByTestId("mk-source-link").first();
-    await expect(link).toHaveAttribute("href", row.source_url);
+    await expect(link).toHaveAttribute("href", row.source_url!);
     await expect(link).toHaveAttribute("rel", "noopener noreferrer");
     await expect(link).toHaveAttribute("target", "_blank");
     await page.keyboard.press("Space");
@@ -474,11 +441,11 @@ test.describe("drug page", () => {
       "CL/F (apparent)",
     );
     await page.goto(`/en/research/model-kit/drug#${HALF_LIFE}`);
-    const w = fx.drug[HALF_LIFE]!.parameter_set;
+    const w = kit.drug[HALF_LIFE]!.parameter_set!;
     const fmt = (x: number) => (Math.round(x * 10) / 10).toString();
     const box = page.getByTestId("mk-warnings");
-    await expect(box).toContainText(fmt(w.implied_half_life_h));
-    await expect(box).toContainText(fmt(w.stated_half_life_h));
+    await expect(box).toContainText(fmt(w.implied_half_life_h!));
+    await expect(box).toContainText(fmt(w.stated_half_life_h!));
     await expect(box).toContainText("half-life");
     await expect(page.getByTestId("mk-legend")).toContainText("A");
   });
@@ -492,7 +459,7 @@ test.describe("drug page", () => {
       "data-status",
       "failed",
     );
-    const bad = fx.drug[FAILED]!.validation.points.filter(
+    const bad = kit.drug[FAILED]!.validation.points.filter(
       (p: Json) => !p.within_2_fold,
     );
     expect(bad.length).toBeGreaterThan(0);
@@ -510,7 +477,7 @@ test.describe("drug page", () => {
   }) => {
     await stubApi(page, stubs);
     await page.goto(`/en/research/model-kit/drug#${VALIDATED}`);
-    const pts = fx.drug[VALIDATED]!.validation.points.length;
+    const pts = kit.drug[VALIDATED]!.validation.points.length;
     const chart = page.getByTestId("mk-chart");
     await expect(chart.getByRole("img").first()).toHaveAttribute(
       "aria-label",
@@ -552,7 +519,7 @@ test.describe("drug page", () => {
   test("live downloads link to the zip routes", async ({ page }) => {
     await stubApi(page, stubs);
     await page.goto(`/en/research/model-kit/drug#${VALIDATED}`);
-    for (const t of fx.drug[VALIDATED]!.targets)
+    for (const t of kit.drug[VALIDATED]!.targets)
       await expect(page.getByTestId(`mk-download-${t}`)).toHaveAttribute(
         "href",
         `/api/modelkit/drugs/${VALIDATED}/export/${t}`,
@@ -570,7 +537,7 @@ test.describe("drug page", () => {
         body: { error: "unknown_drug" },
       },
       [`/modelkit/drugs/${VALIDATED}/evidence`]: {
-        body: fx.evidence[VALIDATED]!,
+        body: kit.evidence[VALIDATED]!,
       },
       "/modelkit/drugs/nothere/evidence": {
         status: 404,
@@ -601,39 +568,39 @@ test.describe("system report", () => {
   test("counts, the gate, intervals, precision and what is missing", async ({
     page,
   }) => {
-    await stubApi(page, relStubs);
+    await stubApi(page, stubs);
     await page.goto("/en/research/model-kit/report");
     await expect(page.getByTestId("mk-report")).toBeVisible();
     await expect(page.getByTestId("mk-gate")).toContainText(
-      String(rel.validation.n_drugs_both_tested),
+      String(kit.validation.n_drugs_both_tested),
     );
     await expect(page.getByTestId("mk-rows")).toContainText(
-      String(rel.validation.rows_total),
+      String(kit.validation.rows_total),
     );
     await expect(page.getByTestId("mk-formulation-table")).toContainText(
       "Not stated",
     );
-    for (const i of rel.validation.intervals as Json[])
+    for (const i of kit.validation.intervals as Json[])
       await expect(page.getByTestId(`mk-interval-${i.metric}`)).toContainText(
         i.shown ? "shown" : "independent held-out studies",
       );
     await expect(page.getByTestId("mk-missing")).toContainText(
       "Expert review has not yet been done",
     );
-    if (rel.validation.precision)
+    if (kit.validation.precision)
       await expect(page.getByTestId("mk-precision")).toContainText(
-        `n = ${rel.validation.precision.n}`,
+        `n = ${kit.validation.precision.n}`,
       );
     await expect(page.getByTestId("mk-precision")).toBeVisible();
     // milestone M5: the two document sources with their measured precision, and the study identity rule
     const docs = page.getByTestId("mk-doc-source");
-    await expect(docs).toHaveCount(rel.validation.document_sources.length);
-    for (const [i, d] of (rel.validation.document_sources as Json[]).entries())
+    await expect(docs).toHaveCount(kit.validation.document_sources.length);
+    for (const [i, d] of (kit.validation.document_sources as Json[]).entries())
       await expect(docs.nth(i)).toContainText(
         d.published ? "Published in this release" : "Held back",
       );
     await expect(page.getByTestId("mk-identity")).toContainText(
-      `of ${rel.validation.study_identity.test_studies_without_rule} held-out studies`,
+      `of ${kit.validation.study_identity.test_studies_without_rule} held-out studies`,
     );
   });
 
@@ -652,41 +619,39 @@ test.describe("system report", () => {
   });
 });
 
+// Demo mode reads the bundled recorded file with no request. The content changes with every
+// release, so this checks structure only: the list and the report render, search and the "has a
+// set" filter work in the browser, a row opens a drug page, nothing is requested. Download buttons
+// being off in the demo is covered by the unit test of demoModelKit (`downloads` is false).
 test.describe("demo mode", () => {
-  test("answers from the recorded file with no request; downloads are off", async ({
-    page,
-  }) => {
+  test("answers from the bundled file with no request", async ({ page }) => {
     await page.addInitScript(() =>
       sessionStorage.setItem("janus.v1.demo", "istanbul"),
     );
     const seen = recordRequests(page);
     await page.goto("/en/research/model-kit");
-    await expect(page.getByTestId("mk-drug")).toHaveCount(
-      Math.min(PAGE, rel.drugs.drugs.length),
-    );
-    // the demo searches the recorded list in the browser, still with no request
-    await page
-      .getByTestId("mk-search")
-      .fill(rel.drugs.drugs[0].name.slice(0, 5));
-    await expect(page.getByTestId("mk-drug").first()).toBeVisible();
+    const rows = page.getByTestId("mk-drug");
+    await expect(rows.first()).toBeVisible();
+    const name = (
+      await rows.first().locator("span").first().innerText()
+    ).trim();
+    expect(name).not.toBe("");
+    await expect(page.getByTestId("mk-demo")).toBeVisible();
+    // the demo searches the bundled list in the browser, still with no request
+    await page.getByTestId("mk-search").fill(name.slice(0, 5));
+    await expect(rows.first()).toBeVisible();
     await page.getByTestId("mk-search").fill("");
     await expect(page.getByTestId("mk-report-link")).toBeVisible();
-    await expect(page.getByTestId("mk-demo")).toBeVisible();
-    await page.goto(`/en/research/model-kit/drug#${REL_DRUG}`);
-    await expect(page.getByTestId("mk-validation")).toBeVisible();
-    await page.getByTestId("mk-value-cl").click();
-    await expect(page.getByTestId("mk-quote").first()).toBeVisible();
-    // downloads exist for a complete set only
-    const DL_DRUG = Object.keys(rel.drug).find(
-      (k) => rel.drug[k]!.targets.length,
-    )!;
-    await page.goto(`/en/research/model-kit/drug#${DL_DRUG}`);
-    await expect(page.getByTestId("mk-validation")).toBeVisible();
-    for (const t of rel.drug[DL_DRUG]!.targets)
-      await expect(page.getByTestId(`mk-download-${t}`)).toBeDisabled();
-    await expect(page.getByTestId("mk-dl-demo")).toContainText(
-      "Downloads need the live service",
-    );
+    // a row opens its drug page (the bundled file holds only some drug pages, so the page is
+    // checked for rendering, not for a set)
+    await page.getByTestId("mk-has-set").check();
+    await expect(rows.first()).toBeVisible();
+    await rows.first().click();
+    await expect(page).toHaveURL(/model-kit\/drug#[a-z]/);
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    await expect(page.locator('[aria-busy="true"]')).toHaveCount(0);
+    await page.goto("/en/research/model-kit/report");
+    await expect(page.getByTestId("mk-report")).toBeVisible();
     await page.goto("/en/research/model-kit/drug#nothere");
     await page.reload();
     await expect(
@@ -702,20 +667,16 @@ test.describe("demo mode", () => {
 
 // Special populations (milestone M4): exposure ratios of older adults and of renal and hepatic impairment as
 // quoted from US labels, atlas rows as unconfirmed evidence, and the system report's counts.
-const withSp = (r: Recorded, test: (sp: Json) => boolean) =>
-  Object.keys(r.drug).find((k) => test(r.drug[k]!.special_populations));
-const SP_DRUG = withSp(rel, (sp) => sp.statements.length > 0);
-const SP_MANY = withSp(rel, (sp) => sp.statements.length > 6);
-const SP_ATLAS = withSp(rel, (sp) => sp.atlas.length > 0);
-const SP_NONE = withSp(rel, (sp) => sp.statements.length === 0);
+const SP_DRUG = KEYS.fewStatements;
+const SP_MANY = KEYS.manyStatements; // eight statements
+const SP_ATLAS = KEYS.manyStatements;
+const SP_NONE = KEYS.validated;
 
 test.describe("special populations", () => {
-  test.skip(!SP_DRUG, "no recorded drug has a special-population statement");
-
   test("statements are quoted evidence with the label version and a link", async ({
     page,
   }) => {
-    await stubApi(page, relStubs);
+    await stubApi(page, stubs);
     await page.goto(`/en/research/model-kit/drug#${SP_DRUG}`);
     const sec = page.getByTestId("mk-sp");
     await expect(sec).toBeVisible();
@@ -723,7 +684,7 @@ test.describe("special populations", () => {
     await expect(page.getByTestId("mk-sp-notes")).toContainText(
       messages.en.ModelKit.reasons.sp_statements_note,
     );
-    const statements = rel.drug[SP_DRUG!]!.special_populations
+    const statements = kit.drug[SP_DRUG]!.special_populations
       .statements as Json[];
     const shown = page.getByTestId("mk-sp-statement");
     await expect(shown).toHaveCount(Math.min(6, statements.length));
@@ -752,10 +713,9 @@ test.describe("special populations", () => {
   test("a long list shows six statements first and all on request", async ({
     page,
   }) => {
-    test.skip(!SP_MANY, "no recorded drug has more than six statements");
-    await stubApi(page, relStubs);
+    await stubApi(page, stubs);
     await page.goto(`/en/research/model-kit/drug#${SP_MANY}`);
-    const n = (rel.drug[SP_MANY!]!.special_populations.statements as Json[])
+    const n = (kit.drug[SP_MANY]!.special_populations.statements as Json[])
       .length;
     await expect(page.getByTestId("mk-sp-statement")).toHaveCount(6);
     await page.getByTestId("mk-sp-more").click();
@@ -766,8 +726,7 @@ test.describe("special populations", () => {
   test("atlas rows are collapsed, quoted and marked unconfirmed", async ({
     page,
   }) => {
-    test.skip(!SP_ATLAS, "no recorded drug has an atlas row");
-    await stubApi(page, relStubs);
+    await stubApi(page, stubs);
     await page.goto(`/en/research/model-kit/drug#${SP_ATLAS}`);
     const box = page.getByTestId("mk-sp-atlas");
     await expect(box).toBeVisible();
@@ -783,8 +742,7 @@ test.describe("special populations", () => {
   });
 
   test("a drug without a confirmed statement says so", async ({ page }) => {
-    test.skip(!SP_NONE, "every recorded drug has a statement");
-    await stubApi(page, relStubs);
+    await stubApi(page, stubs);
     await page.goto(`/en/research/model-kit/drug#${SP_NONE}`);
     await expect(page.getByTestId("mk-sp")).toContainText(
       messages.en.ModelKit.sp.empty,
@@ -795,49 +753,20 @@ test.describe("special populations", () => {
   test("the system report counts the statements and shows the precision", async ({
     page,
   }) => {
-    await stubApi(page, relStubs);
+    await stubApi(page, stubs);
     await page.goto("/en/research/model-kit/report");
     const sp = page.getByTestId("mk-sp-system");
     await expect(sp).toBeVisible();
-    const s = rel.validation.special_populations as Json;
+    const s = kit.validation.special_populations as Json;
     await expect(sp).toContainText(String(s.statements));
-    if (s.precision) await expect(sp).toContainText(String(s.precision.n));
+    await expect(sp).toContainText(String(s.precision!.n));
     await expect(sp).toContainText(messages.en.ModelKit.sp.systemIntro);
   });
 });
 
 // Milestone M6: with an expert audit record in the answers the review line gives precision, n and
 // date (plan 6.4); without one it stays "Expert review has not yet been done." (the checks above).
-const AUDIT = {
-  date: "2027-01-15",
-  release_audited: "20261112T135125Z-8ac5398b-3c00",
-  n_items: 366,
-  n: 320,
-  correct: 310,
-  cannot_judge: 30,
-  precision: 310 / 320,
-  wilson_low: 0.9435,
-  wilson_high: 0.983,
-  criterion_met: true,
-  reviewer_roles: ["clinical_pharmacologist", "pharmacometrician"],
-};
-const withAudit = (r: Recorded): Recorded => {
-  const st = (o: Json) => ({
-    ...o,
-    statements: { ...o.statements, expert_audit: AUDIT },
-  });
-  return {
-    drugs: st(r.drugs),
-    validation: st(r.validation),
-    drug: Object.fromEntries(
-      Object.entries(r.drug).map(([k, v]) => [k, st(v)]),
-    ),
-    evidence: Object.fromEntries(
-      Object.entries(r.evidence).map(([k, v]) => [k, st(v)]),
-    ),
-  };
-};
-const auditStubs = stubsOf(withAudit(fx));
+const auditStubs = stubsOf(modelKitSet(AUDIT));
 
 for (const theme of THEMES)
   for (const locale of ["en", "tr"] as const)
