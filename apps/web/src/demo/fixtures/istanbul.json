@@ -3,12 +3,12 @@
  "userRegion": "TR",
  "noteLanguage": "tr",
  "recorded": {
-  "date": "2026-11-09",
-  "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+  "date": "2026-11-13",
+  "dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
   "rule_base_version": "8d4881fc6418ee6437d4c2052283f89e6c21ea32405bcd6061f89e9637e32f8f",
-  "integrity_version": "dd1585092cbb19c0ddbcee9f35704f73152e10ce296be984725411b8b06c3fc2",
+  "integrity_version": "d6bb640a67240c657dff12c9a4ce2aaa0da50cae3a6abfb10e4fd7c4bd36249f",
   "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-  "glossary_version": "8005d067e98c17e6d99b18d602802c0fd98857bb1ce9d3c4f32beb15dd8879f1"
+  "glossary_version": "96e4dc4cb80c13c7b9b318e66c00830b184b76c4c0d7ebe4e237f98db93de187"
  },
  "items": [
   {
@@ -22,7 +22,7 @@
    "started": "2024-01",
    "choices": [],
    "resolution": {
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
     "regions_searched": [
      "TR"
     ],
@@ -35,9 +35,9 @@
      },
      {
       "source_id": "wikidata",
-      "run_id": "20261107T163917Z-6bb8fcbc-6855",
+      "run_id": "20261113T093852Z-56f317b1-cd25",
       "region": null,
-      "snapshot_date": "2026-11-07T16:39:17.898888+00:00"
+      "snapshot_date": "2026-11-13T09:38:52.798171+00:00"
      }
     ],
     "scan": {
@@ -87,6 +87,7 @@
           "en": "amlodipine",
           "es": "amlodipina",
           "fr": "(RS)-amlodipine",
+          "pt": "anlodipino",
           "tr": "Amlodipin"
          }
         },
@@ -133,6 +134,7 @@
           "en": "lisinopril",
           "es": "lisinopril",
           "fr": "lisinopril",
+          "pt": "lisinopril",
           "tr": "Lisinopril"
          }
         },
@@ -190,7 +192,7 @@
    "started": "2024-06",
    "choices": [],
    "resolution": {
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
     "regions_searched": [
      "TR"
     ],
@@ -203,9 +205,9 @@
      },
      {
       "source_id": "wikidata",
-      "run_id": "20261107T163917Z-6bb8fcbc-6855",
+      "run_id": "20261113T093852Z-56f317b1-cd25",
       "region": null,
-      "snapshot_date": "2026-11-07T16:39:17.898888+00:00"
+      "snapshot_date": "2026-11-13T09:38:52.798171+00:00"
      }
     ],
     "scan": null,
@@ -248,6 +250,7 @@
           "en": "furosemide",
           "es": "furosemida",
           "fr": "furosémide",
+          "pt": "furosemida",
           "tr": "furosemid"
          }
         },
@@ -305,7 +308,7 @@
    "started": "2022-05",
    "choices": [],
    "resolution": {
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
     "regions_searched": [
      "TR"
     ],
@@ -318,9 +321,9 @@
      },
      {
       "source_id": "wikidata",
-      "run_id": "20261107T163917Z-6bb8fcbc-6855",
+      "run_id": "20261113T093852Z-56f317b1-cd25",
       "region": null,
-      "snapshot_date": "2026-11-07T16:39:17.898888+00:00"
+      "snapshot_date": "2026-11-13T09:38:52.798171+00:00"
      }
     ],
     "scan": null,
@@ -363,6 +366,7 @@
           "en": "metformin",
           "es": "metformina",
           "fr": "Metformine",
+          "pt": "metformina",
           "tr": "Metformin"
          }
         },
@@ -420,7 +424,7 @@
    "started": "2023-01",
    "choices": [],
    "resolution": {
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
     "regions_searched": [
      "TR"
     ],
@@ -433,9 +437,9 @@
      },
      {
       "source_id": "wikidata",
-      "run_id": "20261107T163917Z-6bb8fcbc-6855",
+      "run_id": "20261113T093852Z-56f317b1-cd25",
       "region": null,
-      "snapshot_date": "2026-11-07T16:39:17.898888+00:00"
+      "snapshot_date": "2026-11-13T09:38:52.798171+00:00"
      }
     ],
     "scan": null,
@@ -478,6 +482,7 @@
           "en": "atorvastatin",
           "es": "atorvastatina",
           "fr": "atorvastatine",
+          "pt": "atorvastatina",
           "tr": "Atorvastatin"
          }
         },
@@ -535,7 +540,7 @@
    "started": "2023-05",
    "choices": [],
    "resolution": {
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
     "regions_searched": [
      "TR"
     ],
@@ -548,9 +553,9 @@
      },
      {
       "source_id": "wikidata",
-      "run_id": "20261107T163917Z-6bb8fcbc-6855",
+      "run_id": "20261113T093852Z-56f317b1-cd25",
       "region": null,
-      "snapshot_date": "2026-11-07T16:39:17.898888+00:00"
+      "snapshot_date": "2026-11-13T09:38:52.798171+00:00"
      }
     ],
     "scan": null,
@@ -593,6 +598,7 @@
           "en": "paracetamol",
           "es": "paracetamol",
           "fr": "paracétamol",
+          "pt": "paracetamol",
           "tr": "parasetamol"
          }
         },
@@ -650,7 +656,7 @@
    "started": null,
    "choices": [],
    "resolution": {
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
     "regions_searched": [
      "TR"
     ],
@@ -663,9 +669,9 @@
      },
      {
       "source_id": "wikidata",
-      "run_id": "20261107T163917Z-6bb8fcbc-6855",
+      "run_id": "20261113T093852Z-56f317b1-cd25",
       "region": null,
-      "snapshot_date": "2026-11-07T16:39:17.898888+00:00"
+      "snapshot_date": "2026-11-13T09:38:52.798171+00:00"
      }
     ],
     "scan": null,
@@ -708,6 +714,7 @@
           "en": "omeprazole",
           "es": "omeprazol",
           "fr": "oméprazole",
+          "pt": "omeprazol",
           "tr": "Omeprazol"
          }
         },
@@ -765,7 +772,7 @@
    "started": "2021-03",
    "choices": [],
    "resolution": {
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
     "regions_searched": [
      "TR"
     ],
@@ -778,9 +785,9 @@
      },
      {
       "source_id": "wikidata",
-      "run_id": "20261107T163917Z-6bb8fcbc-6855",
+      "run_id": "20261113T093852Z-56f317b1-cd25",
       "region": null,
-      "snapshot_date": "2026-11-07T16:39:17.898888+00:00"
+      "snapshot_date": "2026-11-13T09:38:52.798171+00:00"
      }
     ],
     "scan": null,
@@ -823,6 +830,7 @@
           "en": "sertraline",
           "es": "sertralina",
           "fr": "sertraline",
+          "pt": "sertralina",
           "tr": "Sertralin"
          }
         },
@@ -880,7 +888,7 @@
    "started": "2024-03",
    "choices": [],
    "resolution": {
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
     "regions_searched": [
      "TR"
     ],
@@ -893,9 +901,9 @@
      },
      {
       "source_id": "wikidata",
-      "run_id": "20261107T163917Z-6bb8fcbc-6855",
+      "run_id": "20261113T093852Z-56f317b1-cd25",
       "region": null,
-      "snapshot_date": "2026-11-07T16:39:17.898888+00:00"
+      "snapshot_date": "2026-11-13T09:38:52.798171+00:00"
      }
     ],
     "scan": null,
@@ -938,6 +946,7 @@
           "en": "β-lactulose",
           "es": "Lactulosa",
           "fr": "lactulose",
+          "pt": "Lactulose",
           "tr": "Laktuloz"
          }
         },
@@ -995,7 +1004,7 @@
    "started": null,
    "choices": [],
    "resolution": {
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
     "regions_searched": [
      "TR"
     ],
@@ -1008,9 +1017,9 @@
      },
      {
       "source_id": "wikidata",
-      "run_id": "20261107T163917Z-6bb8fcbc-6855",
+      "run_id": "20261113T093852Z-56f317b1-cd25",
       "region": null,
-      "snapshot_date": "2026-11-07T16:39:17.898888+00:00"
+      "snapshot_date": "2026-11-13T09:38:52.798171+00:00"
      }
     ],
     "scan": null,
@@ -1053,6 +1062,7 @@
           "en": "alprazolam",
           "es": "Alprazolam",
           "fr": "alprazolam",
+          "pt": "alprazolam",
           "tr": "alprazolam"
          }
         },
@@ -1102,8 +1112,8 @@
  ],
  "evaluation": {
   "rule_base_version": "8d4881fc6418ee6437d4c2052283f89e6c21ea32405bcd6061f89e9637e32f8f",
-  "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-  "integrity_version": "dd1585092cbb19c0ddbcee9f35704f73152e10ce296be984725411b8b06c3fc2",
+  "dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
+  "integrity_version": "d6bb640a67240c657dff12c9a4ce2aaa0da50cae3a6abfb10e4fd7c4bd36249f",
   "as_of_month": "2026-11",
   "window_months": 12,
   "findings": [
@@ -1400,8 +1410,8 @@
  },
  "evidence": {
   "pipc:9:Q668093:Q57055": {
-   "integrity_version": "dd1585092cbb19c0ddbcee9f35704f73152e10ce296be984725411b8b06c3fc2",
-   "as_of": "2026-11-09",
+   "integrity_version": "d6bb640a67240c657dff12c9a4ce2aaa0da50cae3a6abfb10e4fd7c4bd36249f",
+   "as_of": "2026-11-13",
    "items": [
     {
      "id": "dataset:faers",
@@ -1421,7 +1431,7 @@
      },
      "freshness": {
       "state": "current",
-      "age_days": 12,
+      "age_days": 16,
       "limit_days": 182
      },
      "doi_check": "not_applicable",
@@ -1449,7 +1459,7 @@
      },
      "freshness": {
       "state": "current",
-      "age_days": 466,
+      "age_days": 470,
       "limit_days": 730
      },
      "doi_check": "checked",
@@ -1458,7 +1468,7 @@
       "check_status": "corrected",
       "reason": null,
       "checked_at": "2026-11-08",
-      "check_age_days": 1,
+      "check_age_days": 5,
       "check_stale": false,
       "notices": [
        {
@@ -1495,7 +1505,7 @@
      },
      "freshness": {
       "state": "not_applicable",
-      "age_days": 2,
+      "age_days": 6,
       "limit_days": null
      },
      "doi_check": "checked",
@@ -1504,7 +1514,7 @@
       "check_status": "ok",
       "reason": null,
       "checked_at": "2026-11-08",
-      "check_age_days": 1,
+      "check_age_days": 5,
       "check_stale": false,
       "notices": []
      },
@@ -1531,7 +1541,7 @@
      },
      "freshness": {
       "state": "not_applicable",
-      "age_days": 2,
+      "age_days": 6,
       "limit_days": null
      },
      "doi_check": "checked",
@@ -1540,7 +1550,7 @@
       "check_status": "ok",
       "reason": null,
       "checked_at": "2026-11-08",
-      "check_age_days": 1,
+      "check_age_days": 5,
       "check_stale": false,
       "notices": []
      },
@@ -1567,7 +1577,7 @@
      },
      "freshness": {
       "state": "current",
-      "age_days": 466,
+      "age_days": 470,
       "limit_days": 730
      },
      "doi_check": "not_applicable",
@@ -1583,7 +1593,7 @@
         "check_status": "corrected",
         "reason": null,
         "checked_at": "2026-11-08",
-        "check_age_days": 1,
+        "check_age_days": 5,
         "check_stale": false,
         "notices": [
          {
@@ -1597,7 +1607,7 @@
        },
        "freshness": {
         "state": "current",
-        "age_days": 466,
+        "age_days": 470,
         "limit_days": 730
        }
       }
@@ -1637,8 +1647,8 @@
    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
   },
   "pipc:5:Q411347:Q388801": {
-   "integrity_version": "dd1585092cbb19c0ddbcee9f35704f73152e10ce296be984725411b8b06c3fc2",
-   "as_of": "2026-11-09",
+   "integrity_version": "d6bb640a67240c657dff12c9a4ce2aaa0da50cae3a6abfb10e4fd7c4bd36249f",
+   "as_of": "2026-11-13",
    "items": [
     {
      "id": "dataset:faers",
@@ -1658,7 +1668,7 @@
      },
      "freshness": {
       "state": "current",
-      "age_days": 12,
+      "age_days": 16,
       "limit_days": 182
      },
      "doi_check": "not_applicable",
@@ -1686,7 +1696,7 @@
      },
      "freshness": {
       "state": "current",
-      "age_days": 466,
+      "age_days": 470,
       "limit_days": 730
      },
      "doi_check": "checked",
@@ -1695,7 +1705,7 @@
       "check_status": "corrected",
       "reason": null,
       "checked_at": "2026-11-08",
-      "check_age_days": 1,
+      "check_age_days": 5,
       "check_stale": false,
       "notices": [
        {
@@ -1732,7 +1742,7 @@
      },
      "freshness": {
       "state": "not_applicable",
-      "age_days": 2,
+      "age_days": 6,
       "limit_days": null
      },
      "doi_check": "checked",
@@ -1741,7 +1751,7 @@
       "check_status": "ok",
       "reason": null,
       "checked_at": "2026-11-08",
-      "check_age_days": 1,
+      "check_age_days": 5,
       "check_stale": false,
       "notices": []
      },
@@ -1768,7 +1778,7 @@
      },
      "freshness": {
       "state": "not_applicable",
-      "age_days": 2,
+      "age_days": 6,
       "limit_days": null
      },
      "doi_check": "checked",
@@ -1777,7 +1787,7 @@
       "check_status": "ok",
       "reason": null,
       "checked_at": "2026-11-08",
-      "check_age_days": 1,
+      "check_age_days": 5,
       "check_stale": false,
       "notices": []
      },
@@ -1804,7 +1814,7 @@
      },
      "freshness": {
       "state": "current",
-      "age_days": 466,
+      "age_days": 470,
       "limit_days": 730
      },
      "doi_check": "not_applicable",
@@ -1820,7 +1830,7 @@
         "check_status": "corrected",
         "reason": null,
         "checked_at": "2026-11-08",
-        "check_age_days": 1,
+        "check_age_days": 5,
         "check_stale": false,
         "notices": [
          {
@@ -1834,7 +1844,7 @@
        },
        "freshness": {
         "state": "current",
-        "age_days": 466,
+        "age_days": 470,
         "limit_days": 730
        }
       }
@@ -1874,8 +1884,8 @@
    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
   },
   "pipc:6:Q411347:Q422689": {
-   "integrity_version": "dd1585092cbb19c0ddbcee9f35704f73152e10ce296be984725411b8b06c3fc2",
-   "as_of": "2026-11-09",
+   "integrity_version": "d6bb640a67240c657dff12c9a4ce2aaa0da50cae3a6abfb10e4fd7c4bd36249f",
+   "as_of": "2026-11-13",
    "items": [
     {
      "id": "dataset:faers",
@@ -1895,7 +1905,7 @@
      },
      "freshness": {
       "state": "current",
-      "age_days": 12,
+      "age_days": 16,
       "limit_days": 182
      },
      "doi_check": "not_applicable",
@@ -1923,7 +1933,7 @@
      },
      "freshness": {
       "state": "current",
-      "age_days": 466,
+      "age_days": 470,
       "limit_days": 730
      },
      "doi_check": "checked",
@@ -1932,7 +1942,7 @@
       "check_status": "corrected",
       "reason": null,
       "checked_at": "2026-11-08",
-      "check_age_days": 1,
+      "check_age_days": 5,
       "check_stale": false,
       "notices": [
        {
@@ -1969,7 +1979,7 @@
      },
      "freshness": {
       "state": "not_applicable",
-      "age_days": 2,
+      "age_days": 6,
       "limit_days": null
      },
      "doi_check": "checked",
@@ -1978,7 +1988,7 @@
       "check_status": "ok",
       "reason": null,
       "checked_at": "2026-11-08",
-      "check_age_days": 1,
+      "check_age_days": 5,
       "check_stale": false,
       "notices": []
      },
@@ -2005,7 +2015,7 @@
      },
      "freshness": {
       "state": "current",
-      "age_days": 466,
+      "age_days": 470,
       "limit_days": 730
      },
      "doi_check": "not_applicable",
@@ -2021,7 +2031,7 @@
         "check_status": "corrected",
         "reason": null,
         "checked_at": "2026-11-08",
-        "check_age_days": 1,
+        "check_age_days": 5,
         "check_stale": false,
         "notices": [
          {
@@ -2035,7 +2045,7 @@
        },
        "freshness": {
         "state": "current",
-        "age_days": 466,
+        "age_days": 470,
         "limit_days": 730
        }
       }
@@ -2074,8 +2084,8 @@
    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
   },
   "pipc:12:Q668093:Q319877": {
-   "integrity_version": "dd1585092cbb19c0ddbcee9f35704f73152e10ce296be984725411b8b06c3fc2",
-   "as_of": "2026-11-09",
+   "integrity_version": "d6bb640a67240c657dff12c9a4ce2aaa0da50cae3a6abfb10e4fd7c4bd36249f",
+   "as_of": "2026-11-13",
    "items": [
     {
      "id": "dataset:faers",
@@ -2095,7 +2105,7 @@
      },
      "freshness": {
       "state": "current",
-      "age_days": 12,
+      "age_days": 16,
       "limit_days": 182
      },
      "doi_check": "not_applicable",
@@ -2123,7 +2133,7 @@
      },
      "freshness": {
       "state": "current",
-      "age_days": 466,
+      "age_days": 470,
       "limit_days": 730
      },
      "doi_check": "checked",
@@ -2132,7 +2142,7 @@
       "check_status": "corrected",
       "reason": null,
       "checked_at": "2026-11-08",
-      "check_age_days": 1,
+      "check_age_days": 5,
       "check_stale": false,
       "notices": [
        {
@@ -2169,7 +2179,7 @@
      },
      "freshness": {
       "state": "current",
-      "age_days": 466,
+      "age_days": 470,
       "limit_days": 730
      },
      "doi_check": "not_applicable",
@@ -2185,7 +2195,7 @@
         "check_status": "corrected",
         "reason": null,
         "checked_at": "2026-11-08",
-        "check_age_days": 1,
+        "check_age_days": 5,
         "check_stale": false,
         "notices": [
          {
@@ -2199,7 +2209,7 @@
        },
        "freshness": {
         "state": "current",
-        "age_days": 466,
+        "age_days": 470,
         "limit_days": 730
        }
       }
@@ -2250,7 +2260,7 @@
    "faers_run_id": "20261108T004801Z-b4dfb36a-b253",
    "resolution_dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
    "stale": false,
-   "age_days": 12,
+   "age_days": 16,
    "totals": [
     {
      "region": "TR",
@@ -2314,10 +2324,10 @@
      ],
      "faers_run_id": "20261108T004801Z-b4dfb36a-b253",
      "resolution_dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-     "served_resolution_dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-     "counts_match_served": true,
+     "served_resolution_dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
+     "counts_match_served": false,
      "stale": false,
-     "age_days": 12
+     "age_days": 16
     },
     "notices": [
      "spontaneous_reporting",
@@ -2325,7 +2335,8 @@
      "deduplicated_by_case_version_only",
      "window_includes_follow_ups",
      "denominator_mapped_reports",
-     "screening_statistic"
+     "screening_statistic",
+     "counts_built_against_other_dataset"
     ],
     "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device.",
     "attribution": "Source: FDA AEMS (formerly FAERS), snapshot 2026-10-28. Not an FDA endorsement.",
@@ -2413,10 +2424,10 @@
      ],
      "faers_run_id": "20261108T004801Z-b4dfb36a-b253",
      "resolution_dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-     "served_resolution_dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-     "counts_match_served": true,
+     "served_resolution_dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
+     "counts_match_served": false,
      "stale": false,
-     "age_days": 12
+     "age_days": 16
     },
     "notices": [
      "spontaneous_reporting",
@@ -2424,7 +2435,8 @@
      "deduplicated_by_case_version_only",
      "window_includes_follow_ups",
      "denominator_mapped_reports",
-     "screening_statistic"
+     "screening_statistic",
+     "counts_built_against_other_dataset"
     ],
     "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device.",
     "attribution": "Source: FDA AEMS (formerly FAERS), snapshot 2026-10-28. Not an FDA endorsement.",
@@ -2512,10 +2524,10 @@
      ],
      "faers_run_id": "20261108T004801Z-b4dfb36a-b253",
      "resolution_dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-     "served_resolution_dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-     "counts_match_served": true,
+     "served_resolution_dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
+     "counts_match_served": false,
      "stale": false,
-     "age_days": 12
+     "age_days": 16
     },
     "notices": [
      "spontaneous_reporting",
@@ -2523,7 +2535,8 @@
      "deduplicated_by_case_version_only",
      "window_includes_follow_ups",
      "denominator_mapped_reports",
-     "screening_statistic"
+     "screening_statistic",
+     "counts_built_against_other_dataset"
     ],
     "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device.",
     "attribution": "Source: FDA AEMS (formerly FAERS), snapshot 2026-10-28. Not an FDA endorsement.",
@@ -2612,10 +2625,10 @@
      ],
      "faers_run_id": "20261108T004801Z-b4dfb36a-b253",
      "resolution_dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-     "served_resolution_dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-     "counts_match_served": true,
+     "served_resolution_dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
+     "counts_match_served": false,
      "stale": false,
-     "age_days": 12
+     "age_days": 16
     },
     "notices": [
      "spontaneous_reporting",
@@ -2623,7 +2636,8 @@
      "deduplicated_by_case_version_only",
      "window_includes_follow_ups",
      "denominator_mapped_reports",
-     "screening_statistic"
+     "screening_statistic",
+     "counts_built_against_other_dataset"
     ],
     "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device.",
     "attribution": "Source: FDA AEMS (formerly FAERS), snapshot 2026-10-28. Not an FDA endorsement.",
@@ -2717,10 +2731,10 @@
     ],
     "faers_run_id": "20261108T004801Z-b4dfb36a-b253",
     "resolution_dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-    "served_resolution_dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-    "counts_match_served": true,
+    "served_resolution_dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
+    "counts_match_served": false,
     "stale": false,
-    "age_days": 12
+    "age_days": 16
    },
    "notices": [
     "spontaneous_reporting",
@@ -2729,6 +2743,7 @@
     "window_includes_follow_ups",
     "denominator_mapped_reports",
     "screening_statistic",
+    "counts_built_against_other_dataset",
     "reported_together_only",
     "combination_caveat",
     "set_counts_are_lower_bounds",
@@ -6631,10 +6646,10 @@
     ],
     "faers_run_id": "20261108T004801Z-b4dfb36a-b253",
     "resolution_dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-    "served_resolution_dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-    "counts_match_served": true,
+    "served_resolution_dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
+    "counts_match_served": false,
     "stale": false,
-    "age_days": 12
+    "age_days": 16
    },
    "notices": [
     "spontaneous_reporting",
@@ -6643,6 +6658,7 @@
     "window_includes_follow_ups",
     "denominator_mapped_reports",
     "screening_statistic",
+    "counts_built_against_other_dataset",
     "region_is_report_origin",
     "eu_member_states_not_separable",
     "regions_not_comparable",
@@ -7018,10 +7034,10 @@
    "note_format": "janus-note-1",
    "versions": {
     "rule_base_version": "8d4881fc6418ee6437d4c2052283f89e6c21ea32405bcd6061f89e9637e32f8f",
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-    "integrity_version": "dd1585092cbb19c0ddbcee9f35704f73152e10ce296be984725411b8b06c3fc2",
+    "dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
+    "integrity_version": "d6bb640a67240c657dff12c9a4ce2aaa0da50cae3a6abfb10e4fd7c4bd36249f",
     "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-    "glossary_version": "8005d067e98c17e6d99b18d602802c0fd98857bb1ce9d3c4f32beb15dd8879f1"
+    "glossary_version": "96e4dc4cb80c13c7b9b318e66c00830b184b76c4c0d7ebe4e237f98db93de187"
    },
    "as_of_month": "2026-11",
    "removals": [],
@@ -8133,14 +8149,14 @@
          "id": "about:versions",
          "template": "about.versions",
          "kind": "fixed",
-         "text": "Versions: rules 8d4881fc, medicine data 7db3a513, evidence dd158509, report counts 20261108, glossary 8005d067.",
+         "text": "Versions: rules 8d4881fc, medicine data 50d836bf, evidence d6bb640a, report counts 20261108, glossary 96e4dc4c.",
          "evidence_ids": [],
          "numbers": [
           "8d4881fc",
-          "7db3a513",
-          "dd158509",
+          "50d836bf",
+          "d6bb640a",
           "20261108",
-          "8005d067"
+          "96e4dc4c"
          ]
         },
         {
@@ -8180,10 +8196,10 @@
    "note_format": "janus-note-1",
    "versions": {
     "rule_base_version": "8d4881fc6418ee6437d4c2052283f89e6c21ea32405bcd6061f89e9637e32f8f",
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-    "integrity_version": "dd1585092cbb19c0ddbcee9f35704f73152e10ce296be984725411b8b06c3fc2",
+    "dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
+    "integrity_version": "d6bb640a67240c657dff12c9a4ce2aaa0da50cae3a6abfb10e4fd7c4bd36249f",
     "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-    "glossary_version": "8005d067e98c17e6d99b18d602802c0fd98857bb1ce9d3c4f32beb15dd8879f1"
+    "glossary_version": "96e4dc4cb80c13c7b9b318e66c00830b184b76c4c0d7ebe4e237f98db93de187"
    },
    "as_of_month": "2026-11",
    "removals": [],
@@ -9295,14 +9311,14 @@
          "id": "about:versions",
          "template": "about.versions",
          "kind": "fixed",
-         "text": "Sürümler: kurallar 8d4881fc, ilaç verileri 7db3a513, kanıtlar dd158509, bildirim sayıları 20261108, sözlük 8005d067.",
+         "text": "Sürümler: kurallar 8d4881fc, ilaç verileri 50d836bf, kanıtlar d6bb640a, bildirim sayıları 20261108, sözlük 96e4dc4c.",
          "evidence_ids": [],
          "numbers": [
           "8d4881fc",
-          "7db3a513",
-          "dd158509",
+          "50d836bf",
+          "d6bb640a",
           "20261108",
-          "8005d067"
+          "96e4dc4c"
          ]
         },
         {
@@ -9342,10 +9358,10 @@
    "note_format": "janus-note-1",
    "versions": {
     "rule_base_version": "8d4881fc6418ee6437d4c2052283f89e6c21ea32405bcd6061f89e9637e32f8f",
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-    "integrity_version": "dd1585092cbb19c0ddbcee9f35704f73152e10ce296be984725411b8b06c3fc2",
+    "dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
+    "integrity_version": "d6bb640a67240c657dff12c9a4ce2aaa0da50cae3a6abfb10e4fd7c4bd36249f",
     "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-    "glossary_version": "8005d067e98c17e6d99b18d602802c0fd98857bb1ce9d3c4f32beb15dd8879f1"
+    "glossary_version": "96e4dc4cb80c13c7b9b318e66c00830b184b76c4c0d7ebe4e237f98db93de187"
    },
    "as_of_month": "2026-11",
    "removals": [],
@@ -10457,14 +10473,14 @@
          "id": "about:versions",
          "template": "about.versions",
          "kind": "fixed",
-         "text": "Versionen: Regeln 8d4881fc, Arzneimitteldaten 7db3a513, Evidenz dd158509, Meldezahlen 20261108, Glossar 8005d067.",
+         "text": "Versionen: Regeln 8d4881fc, Arzneimitteldaten 50d836bf, Evidenz d6bb640a, Meldezahlen 20261108, Glossar 96e4dc4c.",
          "evidence_ids": [],
          "numbers": [
           "8d4881fc",
-          "7db3a513",
-          "dd158509",
+          "50d836bf",
+          "d6bb640a",
           "20261108",
-          "8005d067"
+          "96e4dc4c"
          ]
         },
         {
@@ -10504,10 +10520,10 @@
    "note_format": "janus-note-1",
    "versions": {
     "rule_base_version": "8d4881fc6418ee6437d4c2052283f89e6c21ea32405bcd6061f89e9637e32f8f",
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-    "integrity_version": "dd1585092cbb19c0ddbcee9f35704f73152e10ce296be984725411b8b06c3fc2",
+    "dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
+    "integrity_version": "d6bb640a67240c657dff12c9a4ce2aaa0da50cae3a6abfb10e4fd7c4bd36249f",
     "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-    "glossary_version": "8005d067e98c17e6d99b18d602802c0fd98857bb1ce9d3c4f32beb15dd8879f1"
+    "glossary_version": "96e4dc4cb80c13c7b9b318e66c00830b184b76c4c0d7ebe4e237f98db93de187"
    },
    "as_of_month": "2026-11",
    "removals": [],
@@ -11619,14 +11635,14 @@
          "id": "about:versions",
          "template": "about.versions",
          "kind": "fixed",
-         "text": "Versions : règles 8d4881fc, données médicaments 7db3a513, sources dd158509, comptes de signalements 20261108, glossaire 8005d067.",
+         "text": "Versions : règles 8d4881fc, données médicaments 50d836bf, sources d6bb640a, comptes de signalements 20261108, glossaire 96e4dc4c.",
          "evidence_ids": [],
          "numbers": [
           "8d4881fc",
-          "7db3a513",
-          "dd158509",
+          "50d836bf",
+          "d6bb640a",
           "20261108",
-          "8005d067"
+          "96e4dc4c"
          ]
         },
         {
@@ -11666,10 +11682,10 @@
    "note_format": "janus-note-1",
    "versions": {
     "rule_base_version": "8d4881fc6418ee6437d4c2052283f89e6c21ea32405bcd6061f89e9637e32f8f",
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-    "integrity_version": "dd1585092cbb19c0ddbcee9f35704f73152e10ce296be984725411b8b06c3fc2",
+    "dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
+    "integrity_version": "d6bb640a67240c657dff12c9a4ce2aaa0da50cae3a6abfb10e4fd7c4bd36249f",
     "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-    "glossary_version": "8005d067e98c17e6d99b18d602802c0fd98857bb1ce9d3c4f32beb15dd8879f1"
+    "glossary_version": "96e4dc4cb80c13c7b9b318e66c00830b184b76c4c0d7ebe4e237f98db93de187"
    },
    "as_of_month": "2026-11",
    "removals": [],
@@ -12781,14 +12797,14 @@
          "id": "about:versions",
          "template": "about.versions",
          "kind": "fixed",
-         "text": "Versiones: reglas 8d4881fc, datos de medicamentos 7db3a513, evidencia dd158509, recuentos de notificaciones 20261108, glosario 8005d067.",
+         "text": "Versiones: reglas 8d4881fc, datos de medicamentos 50d836bf, evidencia d6bb640a, recuentos de notificaciones 20261108, glosario 96e4dc4c.",
          "evidence_ids": [],
          "numbers": [
           "8d4881fc",
-          "7db3a513",
-          "dd158509",
+          "50d836bf",
+          "d6bb640a",
           "20261108",
-          "8005d067"
+          "96e4dc4c"
          ]
         },
         {
@@ -12815,6 +12831,1168 @@
          "template": "about.glossary_status",
          "kind": "fixed",
          "text": "Todavía no se ha hecho la revisión de expertos de las traducciones de los términos clínicos; aún deben revisarlas un farmacéutico o un médico y hablantes nativos.",
+         "evidence_ids": [],
+         "numbers": []
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "pt": {
+   "note_format": "janus-note-1",
+   "versions": {
+    "rule_base_version": "8d4881fc6418ee6437d4c2052283f89e6c21ea32405bcd6061f89e9637e32f8f",
+    "dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
+    "integrity_version": "d6bb640a67240c657dff12c9a4ce2aaa0da50cae3a6abfb10e4fd7c4bd36249f",
+    "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
+    "glossary_version": "96e4dc4cb80c13c7b9b318e66c00830b184b76c4c0d7ebe4e237f98db93de187"
+   },
+   "as_of_month": "2026-11",
+   "removals": [],
+   "documents": [
+    {
+     "language": "pt",
+     "sections": [
+      {
+       "id": "header",
+       "heading": {
+        "template": "header.title",
+        "text": "Nota de revisão da medicação para o médico"
+       },
+       "blocks": [
+        {
+         "type": "sentence",
+         "id": "header:prepared",
+         "template": "header.prepared",
+         "kind": "fixed",
+         "text": "Preparada em 11/2026 por Janus a partir dos medicamentos introduzidos pelo doente ou por um cuidador.",
+         "evidence_ids": [],
+         "numbers": [
+          "11/2026"
+         ]
+        },
+        {
+         "type": "sentence",
+         "id": "header:purpose",
+         "template": "header.purpose",
+         "kind": "fixed",
+         "text": "Esta nota enumera os padrões publicados de cascata de prescrição que coincidem com os medicamentos do doente, com as respetivas fontes. Destina-se a apoiar a conversa com o doente e não dispensa o juízo clínico.",
+         "evidence_ids": [],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
+         "id": "header:disclaimer",
+         "template": "disclaimer",
+         "kind": "fixed",
+         "text": "Janus fornece informação, não aconselhamento médico. Protótipo de investigação — não é um dispositivo médico.",
+         "evidence_ids": [],
+         "numbers": []
+        }
+       ]
+      },
+      {
+       "id": "medicines",
+       "heading": {
+        "template": "medicines.heading",
+        "text": "Medicamentos"
+       },
+       "blocks": [
+        {
+         "type": "sentence",
+         "id": "medicines:count",
+         "template": "medicines.count",
+         "kind": "fixed",
+         "text": "Medicamentos na lista: 9. Verificados na totalidade: 9; verificados em parte (pelo menos uma substância ativa não pôde ser verificada): 0.",
+         "evidence_ids": [],
+         "numbers": [
+          "9",
+          "9",
+          "0"
+         ]
+        },
+        {
+         "type": "medicine",
+         "item": 0,
+         "product_name_slot": true,
+         "product_label": {
+          "template": "medicine.product_name",
+          "text": "Produto (como consta na embalagem)"
+         },
+         "ingredients": [
+          {
+           "key": "Q411347",
+           "name": {
+            "template": "name",
+            "text": "anlodipino"
+           },
+           "name_basis": "glossary",
+           "tag": null,
+           "atc": [
+            "C08CA01"
+           ],
+           "combination_code": null
+          },
+          {
+           "key": "Q412208",
+           "name": {
+            "template": "name",
+            "text": "lisinopril"
+           },
+           "name_basis": "glossary",
+           "tag": null,
+           "atc": [
+            "C09AA03"
+           ],
+           "combination_code": null
+          }
+         ],
+         "not_checked": [],
+         "started": {
+          "template": "medicine.started",
+          "text": "Início: 01/2024"
+         },
+         "abrupt_stop": null
+        },
+        {
+         "type": "medicine",
+         "item": 1,
+         "product_name_slot": true,
+         "product_label": {
+          "template": "medicine.product_name",
+          "text": "Produto (como consta na embalagem)"
+         },
+         "ingredients": [
+          {
+           "key": "Q388801",
+           "name": {
+            "template": "name",
+            "text": "furosemida"
+           },
+           "name_basis": "glossary",
+           "tag": null,
+           "atc": [
+            "C03CA01"
+           ],
+           "combination_code": null
+          }
+         ],
+         "not_checked": [],
+         "started": {
+          "template": "medicine.started",
+          "text": "Início: 06/2024"
+         },
+         "abrupt_stop": null
+        },
+        {
+         "type": "medicine",
+         "item": 2,
+         "product_name_slot": true,
+         "product_label": {
+          "template": "medicine.product_name",
+          "text": "Produto (como consta na embalagem)"
+         },
+         "ingredients": [
+          {
+           "key": "Q19484",
+           "name": {
+            "template": "name",
+            "text": "metformina"
+           },
+           "name_basis": "glossary",
+           "tag": null,
+           "atc": [
+            "A10BA02"
+           ],
+           "combination_code": null
+          }
+         ],
+         "not_checked": [],
+         "started": {
+          "template": "medicine.started",
+          "text": "Início: 05/2022"
+         },
+         "abrupt_stop": null
+        },
+        {
+         "type": "medicine",
+         "item": 3,
+         "product_name_slot": true,
+         "product_label": {
+          "template": "medicine.product_name",
+          "text": "Produto (como consta na embalagem)"
+         },
+         "ingredients": [
+          {
+           "key": "Q668093",
+           "name": {
+            "template": "name",
+            "text": "atorvastatina"
+           },
+           "name_basis": "glossary",
+           "tag": null,
+           "atc": [
+            "C10AA05"
+           ],
+           "combination_code": null
+          }
+         ],
+         "not_checked": [],
+         "started": {
+          "template": "medicine.started",
+          "text": "Início: 01/2023"
+         },
+         "abrupt_stop": null
+        },
+        {
+         "type": "medicine",
+         "item": 4,
+         "product_name_slot": true,
+         "product_label": {
+          "template": "medicine.product_name",
+          "text": "Produto (como consta na embalagem)"
+         },
+         "ingredients": [
+          {
+           "key": "Q57055",
+           "name": {
+            "template": "name",
+            "text": "paracetamol"
+           },
+           "name_basis": "glossary",
+           "tag": null,
+           "atc": [
+            "N02BE01"
+           ],
+           "combination_code": null
+          }
+         ],
+         "not_checked": [],
+         "started": {
+          "template": "medicine.started",
+          "text": "Início: 05/2023"
+         },
+         "abrupt_stop": null
+        },
+        {
+         "type": "medicine",
+         "item": 5,
+         "product_name_slot": true,
+         "product_label": {
+          "template": "medicine.product_name",
+          "text": "Produto (como consta na embalagem)"
+         },
+         "ingredients": [
+          {
+           "key": "Q422210",
+           "name": {
+            "template": "name",
+            "text": "omeprazol"
+           },
+           "name_basis": "glossary",
+           "tag": null,
+           "atc": [
+            "A02BC01"
+           ],
+           "combination_code": null
+          }
+         ],
+         "not_checked": [],
+         "started": {
+          "template": "medicine.start_unknown",
+          "text": "Data de início desconhecida"
+         },
+         "abrupt_stop": null
+        },
+        {
+         "type": "medicine",
+         "item": 6,
+         "product_name_slot": true,
+         "product_label": {
+          "template": "medicine.product_name",
+          "text": "Produto (como consta na embalagem)"
+         },
+         "ingredients": [
+          {
+           "key": "Q407617",
+           "name": {
+            "template": "name",
+            "text": "sertralina"
+           },
+           "name_basis": "glossary",
+           "tag": null,
+           "atc": [
+            "N06AB06"
+           ],
+           "combination_code": null
+          }
+         ],
+         "not_checked": [],
+         "started": {
+          "template": "medicine.started",
+          "text": "Início: 03/2021"
+         },
+         "abrupt_stop": {
+          "type": "sentence",
+          "id": "item:6:abrupt_stop",
+          "template": "abrupt_stop",
+          "kind": "fixed",
+          "text": "Não suspenda este medicamento de forma brusca.",
+          "evidence_ids": [],
+          "numbers": []
+         }
+        },
+        {
+         "type": "medicine",
+         "item": 7,
+         "product_name_slot": true,
+         "product_label": {
+          "template": "medicine.product_name",
+          "text": "Produto (como consta na embalagem)"
+         },
+         "ingredients": [
+          {
+           "key": "Q422689",
+           "name": {
+            "template": "name",
+            "text": "lactulose"
+           },
+           "name_basis": "glossary",
+           "tag": null,
+           "atc": [
+            "A06AD11"
+           ],
+           "combination_code": null
+          }
+         ],
+         "not_checked": [],
+         "started": {
+          "template": "medicine.started",
+          "text": "Início: 03/2024"
+         },
+         "abrupt_stop": null
+        },
+        {
+         "type": "medicine",
+         "item": 8,
+         "product_name_slot": true,
+         "product_label": {
+          "template": "medicine.product_name",
+          "text": "Produto (como consta na embalagem)"
+         },
+         "ingredients": [
+          {
+           "key": "Q319877",
+           "name": {
+            "template": "name",
+            "text": "alprazolam"
+           },
+           "name_basis": "glossary",
+           "tag": null,
+           "atc": [
+            "N05BA12"
+           ],
+           "combination_code": null
+          }
+         ],
+         "not_checked": [],
+         "started": {
+          "template": "medicine.start_unknown",
+          "text": "Data de início desconhecida"
+         },
+         "abrupt_stop": {
+          "type": "sentence",
+          "id": "item:8:abrupt_stop",
+          "template": "abrupt_stop",
+          "kind": "fixed",
+          "text": "Não suspenda este medicamento de forma brusca.",
+          "evidence_ids": [],
+          "numbers": []
+         }
+        }
+       ]
+      },
+      {
+       "id": "findings",
+       "heading": {
+        "template": "findings.heading",
+        "text": "Padrões de cascata de prescrição"
+       },
+       "blocks": [
+        {
+         "type": "sentence",
+         "id": "pipc:9:Q668093:Q57055:cascade",
+         "template": "finding.cascade",
+         "kind": "claim",
+         "text": "Coincidência com o padrão publicado de cascata de prescrição Inibidor da hidroximetilglutaril-coenzima A (HMG-CoA) redutase (estatina) → Mialgia/miosite → Analgésico (lista PIPC, linha 9): atorvastatina e paracetamol.",
+         "evidence_ids": [
+          "dataset:pipc",
+          "rule:pipc:9"
+         ],
+         "numbers": [
+          "9"
+         ]
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:9:Q668093:Q57055:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "A ordem corresponde ao padrão",
+         "evidence_ids": [
+          "rule:pipc:9"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:9:Q668093:Q57055:timing",
+         "template": "finding.timing.within_window",
+         "kind": "claim",
+         "text": "Meses desde o início de atorvastatina até ao início de paracetamol: 4. Está dentro da janela de 12 meses habitualmente utilizada na análise de simetria de sequência de prescrição.",
+         "evidence_ids": [
+          "paper:hendrix_2024:s12874_023_02108_y",
+          "rule:pipc:9"
+         ],
+         "numbers": [
+          "4",
+          "12"
+         ]
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:9:Q668093:Q57055:priority",
+         "template": "finding.priority.incidence",
+         "kind": "claim",
+         "text": "O resumo de um estudo de coorte do BMJ em idosos a viver na comunidade em Ontário, Canadá, cita esta cascata entre as de maior incidência da combinação dos dois medicamentos: 10,9% (intervalo de confiança de 10,7% a 11,0%).",
+         "evidence_ids": [
+          "paper:bmj_2026:e100499"
+         ],
+         "numbers": [
+          "10,9%",
+          "10,7%",
+          "11,0%"
+         ]
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:9:Q668093:Q57055:notice:corrected_notice",
+         "template": "finding.notice.corrected",
+         "kind": "claim",
+         "text": "Foi publicada uma correção a uma fonte deste padrão.",
+         "evidence_ids": [
+          "dataset:pipc",
+          "rule:pipc:9"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:9:Q668093:Q57055:review",
+         "template": "finding.review",
+         "kind": "fixed",
+         "text": "Pode ser útil rever este padrão com o doente.",
+         "evidence_ids": [],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:5:Q411347:Q388801:cascade",
+         "template": "finding.cascade",
+         "kind": "claim",
+         "text": "Coincidência com o padrão publicado de cascata de prescrição Bloqueador dos canais de cálcio → Edema periférico → Diurético (lista PIPC, linha 5): anlodipino e furosemida.",
+         "evidence_ids": [
+          "dataset:pipc",
+          "rule:pipc:5"
+         ],
+         "numbers": [
+          "5"
+         ]
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:5:Q411347:Q388801:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "A ordem corresponde ao padrão",
+         "evidence_ids": [
+          "rule:pipc:5"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:5:Q411347:Q388801:timing",
+         "template": "finding.timing.within_window",
+         "kind": "claim",
+         "text": "Meses desde o início de anlodipino até ao início de furosemida: 5. Está dentro da janela de 12 meses habitualmente utilizada na análise de simetria de sequência de prescrição.",
+         "evidence_ids": [
+          "paper:hendrix_2024:s12874_023_02108_y",
+          "rule:pipc:5"
+         ],
+         "numbers": [
+          "5",
+          "12"
+         ]
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:5:Q411347:Q388801:supporting",
+         "template": "finding.supporting",
+         "kind": "claim",
+         "text": "A mesma cascata também é descrita noutra lista publicada de cascatas (ThinkCascades).",
+         "evidence_ids": [
+          "paper:thinkcascades:drugs_aging_2022"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:5:Q411347:Q388801:notice:corrected_notice",
+         "template": "finding.notice.corrected",
+         "kind": "claim",
+         "text": "Foi publicada uma correção a uma fonte deste padrão.",
+         "evidence_ids": [
+          "dataset:pipc",
+          "rule:pipc:5"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:5:Q411347:Q388801:review",
+         "template": "finding.review",
+         "kind": "fixed",
+         "text": "Pode ser útil rever este padrão com o doente.",
+         "evidence_ids": [],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:6:Q411347:Q422689:cascade",
+         "template": "finding.cascade",
+         "kind": "claim",
+         "text": "Coincidência com o padrão publicado de cascata de prescrição Bloqueador dos canais de cálcio → Obstipação → Laxante (lista PIPC, linha 6): anlodipino e lactulose.",
+         "evidence_ids": [
+          "dataset:pipc",
+          "rule:pipc:6"
+         ],
+         "numbers": [
+          "6"
+         ]
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:6:Q411347:Q422689:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "A ordem corresponde ao padrão",
+         "evidence_ids": [
+          "rule:pipc:6"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:6:Q411347:Q422689:timing",
+         "template": "finding.timing.within_window",
+         "kind": "claim",
+         "text": "Meses desde o início de anlodipino até ao início de lactulose: 2. Está dentro da janela de 12 meses habitualmente utilizada na análise de simetria de sequência de prescrição.",
+         "evidence_ids": [
+          "paper:hendrix_2024:s12874_023_02108_y",
+          "rule:pipc:6"
+         ],
+         "numbers": [
+          "2",
+          "12"
+         ]
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:6:Q411347:Q422689:notice:corrected_notice",
+         "template": "finding.notice.corrected",
+         "kind": "claim",
+         "text": "Foi publicada uma correção a uma fonte deste padrão.",
+         "evidence_ids": [
+          "dataset:pipc",
+          "rule:pipc:6"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:6:Q411347:Q422689:review",
+         "template": "finding.review",
+         "kind": "fixed",
+         "text": "Pode ser útil rever este padrão com o doente.",
+         "evidence_ids": [],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:12:Q668093:Q319877:cascade",
+         "template": "finding.cascade",
+         "kind": "claim",
+         "text": "Coincidência com o padrão publicado de cascata de prescrição Inibidor da HMG-CoA redutase → Insónia → Medicamento para dormir (lista PIPC, linha 12): atorvastatina e alprazolam.",
+         "evidence_ids": [
+          "dataset:pipc",
+          "rule:pipc:12"
+         ],
+         "numbers": [
+          "12"
+         ]
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:12:Q668093:Q319877:order",
+         "template": "finding.order.not_confirmed",
+         "kind": "claim",
+         "text": "Ordem não confirmada",
+         "evidence_ids": [
+          "rule:pipc:12"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:12:Q668093:Q319877:timing",
+         "template": "finding.timing.date_unknown",
+         "kind": "claim",
+         "text": "Pelo menos uma data de início é desconhecida, pelo que não foi possível verificar a ordem dos dois medicamentos.",
+         "evidence_ids": [
+          "rule:pipc:12"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:12:Q668093:Q319877:notice:corrected_notice",
+         "template": "finding.notice.corrected",
+         "kind": "claim",
+         "text": "Foi publicada uma correção a uma fonte deste padrão.",
+         "evidence_ids": [
+          "dataset:pipc",
+          "rule:pipc:12"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:12:Q668093:Q319877:review",
+         "template": "finding.review",
+         "kind": "fixed",
+         "text": "Pode ser útil rever este padrão com o doente.",
+         "evidence_ids": [],
+         "numbers": []
+        }
+       ]
+      },
+      {
+       "id": "statistics",
+       "heading": {
+        "template": "statistics.heading",
+        "text": "Notificações à FDA AEMS (anteriormente FAERS)"
+       },
+       "blocks": [
+        {
+         "type": "stat",
+         "id": "stat:Q668093:myalgia_myositis:ALL",
+         "finding_ids": [
+          "pipc:9:Q668093:Q57055"
+         ],
+         "region": "ALL",
+         "ingredient_key": "Q668093",
+         "event_key": "myalgia_myositis",
+         "reports": 784,
+         "assessment": "disproportionate",
+         "estimates": {
+          "ror": 15.254965328579328,
+          "low": 14.12954027570105,
+          "high": 16.470031058007027
+         },
+         "pts": {
+          "template": "stat.pts",
+          "text": "Termos preferenciais do MedDRA: Myalgia; Myositis"
+         },
+         "citation": {
+          "evidence_id": "dataset:faers",
+          "locator": "faers:ingredient=Q668093;event=myalgia_myositis;region=ALL;scope=suspect"
+         },
+         "sentences": [
+          {
+           "type": "sentence",
+           "id": "stat:Q668093:myalgia_myositis:ALL:ratio",
+           "template": "stat.reports_ratio",
+           "kind": "claim",
+           "text": "Todas as regiões: 784 notificações citam atorvastatina com o acontecimento “Mialgia/miosite”; razão de probabilidades de notificação (ROR) 15,3 (intervalo de confiança de 14,1 a 16,5).",
+           "evidence_ids": [
+            "dataset:faers"
+           ],
+           "numbers": [
+            "784",
+            "15,3",
+            "14,1",
+            "16,5"
+           ]
+          },
+          {
+           "type": "sentence",
+           "id": "stat:Q668093:myalgia_myositis:ALL:assessment",
+           "template": "stat.assessment.disproportionate",
+           "kind": "claim",
+           "text": "O acontecimento aparece numa parte maior das notificações que indicam este medicamento do que nas outras notificações que indicam um medicamento reconhecido.",
+           "evidence_ids": [
+            "dataset:faers"
+           ],
+           "numbers": []
+          }
+         ]
+        },
+        {
+         "type": "stat",
+         "id": "stat:Q411347:peripheral_oedema:ALL",
+         "finding_ids": [
+          "pipc:5:Q411347:Q388801"
+         ],
+         "region": "ALL",
+         "ingredient_key": "Q411347",
+         "event_key": "peripheral_oedema",
+         "reports": 424,
+         "assessment": "disproportionate",
+         "estimates": {
+          "ror": 5.135231786067486,
+          "low": 4.64909208230509,
+          "high": 5.672205460719315
+         },
+         "pts": {
+          "template": "stat.pts",
+          "text": "Termos preferenciais do MedDRA: Oedema peripheral; Peripheral swelling"
+         },
+         "citation": {
+          "evidence_id": "dataset:faers",
+          "locator": "faers:ingredient=Q411347;event=peripheral_oedema;region=ALL;scope=suspect"
+         },
+         "sentences": [
+          {
+           "type": "sentence",
+           "id": "stat:Q411347:peripheral_oedema:ALL:ratio",
+           "template": "stat.reports_ratio",
+           "kind": "claim",
+           "text": "Todas as regiões: 424 notificações citam anlodipino com o acontecimento “Edema periférico”; razão de probabilidades de notificação (ROR) 5,14 (intervalo de confiança de 4,65 a 5,67).",
+           "evidence_ids": [
+            "dataset:faers"
+           ],
+           "numbers": [
+            "424",
+            "5,14",
+            "4,65",
+            "5,67"
+           ]
+          },
+          {
+           "type": "sentence",
+           "id": "stat:Q411347:peripheral_oedema:ALL:assessment",
+           "template": "stat.assessment.disproportionate",
+           "kind": "claim",
+           "text": "O acontecimento aparece numa parte maior das notificações que indicam este medicamento do que nas outras notificações que indicam um medicamento reconhecido.",
+           "evidence_ids": [
+            "dataset:faers"
+           ],
+           "numbers": []
+          }
+         ]
+        },
+        {
+         "type": "stat",
+         "id": "stat:Q411347:constipation:ALL",
+         "finding_ids": [
+          "pipc:6:Q411347:Q422689"
+         ],
+         "region": "ALL",
+         "ingredient_key": "Q411347",
+         "event_key": "constipation",
+         "reports": 157,
+         "assessment": "weak",
+         "estimates": {
+          "ror": 1.5370205731878444,
+          "low": 1.3112486545402726,
+          "high": 1.8016660945447949
+         },
+         "pts": {
+          "template": "stat.pts",
+          "text": "Termos preferenciais do MedDRA: Constipation"
+         },
+         "citation": {
+          "evidence_id": "dataset:faers",
+          "locator": "faers:ingredient=Q411347;event=constipation;region=ALL;scope=suspect"
+         },
+         "sentences": [
+          {
+           "type": "sentence",
+           "id": "stat:Q411347:constipation:ALL:ratio",
+           "template": "stat.reports_ratio",
+           "kind": "claim",
+           "text": "Todas as regiões: 157 notificações citam anlodipino com o acontecimento “Obstipação”; razão de probabilidades de notificação (ROR) 1,54 (intervalo de confiança de 1,31 a 1,80).",
+           "evidence_ids": [
+            "dataset:faers"
+           ],
+           "numbers": [
+            "157",
+            "1,54",
+            "1,31",
+            "1,80"
+           ]
+          },
+          {
+           "type": "sentence",
+           "id": "stat:Q411347:constipation:ALL:assessment",
+           "template": "stat.assessment.weak",
+           "kind": "claim",
+           "text": "Poucas notificações; trate como um padrão fraco.",
+           "evidence_ids": [
+            "dataset:faers"
+           ],
+           "numbers": []
+          }
+         ]
+        },
+        {
+         "type": "stat",
+         "id": "stat:Q668093:insomnia:ALL",
+         "finding_ids": [
+          "pipc:12:Q668093:Q319877"
+         ],
+         "region": "ALL",
+         "ingredient_key": "Q668093",
+         "event_key": "insomnia",
+         "reports": 144,
+         "assessment": "weak",
+         "estimates": {
+          "ror": 1.5978437944719528,
+          "low": 1.3538640898582095,
+          "high": 1.8857910558805908
+         },
+         "pts": {
+          "template": "stat.pts",
+          "text": "Termos preferenciais do MedDRA: Insomnia; Initial insomnia; Middle insomnia; Terminal insomnia; Paradoxical insomnia"
+         },
+         "citation": {
+          "evidence_id": "dataset:faers",
+          "locator": "faers:ingredient=Q668093;event=insomnia;region=ALL;scope=suspect"
+         },
+         "sentences": [
+          {
+           "type": "sentence",
+           "id": "stat:Q668093:insomnia:ALL:ratio",
+           "template": "stat.reports_ratio",
+           "kind": "claim",
+           "text": "Todas as regiões: 144 notificações citam atorvastatina com o acontecimento “Insónia”; razão de probabilidades de notificação (ROR) 1,60 (intervalo de confiança de 1,35 a 1,89).",
+           "evidence_ids": [
+            "dataset:faers"
+           ],
+           "numbers": [
+            "144",
+            "1,60",
+            "1,35",
+            "1,89"
+           ]
+          },
+          {
+           "type": "sentence",
+           "id": "stat:Q668093:insomnia:ALL:assessment",
+           "template": "stat.assessment.weak",
+           "kind": "claim",
+           "text": "Poucas notificações; trate como um padrão fraco.",
+           "evidence_ids": [
+            "dataset:faers"
+           ],
+           "numbers": []
+          }
+         ]
+        },
+        {
+         "type": "sentence",
+         "id": "statistics:spontaneous_reporting",
+         "template": "stat.limit.spontaneous_reporting",
+         "kind": "fixed",
+         "text": "As notificações são enviadas voluntariamente e não são verificadas.",
+         "evidence_ids": [],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
+         "id": "statistics:not_incidence",
+         "template": "stat.limit.not_incidence",
+         "kind": "fixed",
+         "text": "As contagens não mostram com que frequência um acontecimento ocorre.",
+         "evidence_ids": [],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
+         "id": "statistics:deduplicated_by_case_version_only",
+         "template": "stat.limit.deduplicated_by_case_version_only",
+         "kind": "fixed",
+         "text": "Apenas as versões repetidas do mesmo caso são reunidas, pelo que um acontecimento pode continuar a aparecer em mais de um caso.",
+         "evidence_ids": [],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
+         "id": "statistics:screening",
+         "template": "stat.screening",
+         "kind": "fixed",
+         "text": "Esta é uma estatística de triagem. Muitos pares de medicamento e acontecimento são examinados em simultâneo e a maioria cumpre estes critérios; por isso, cumpri-los é habitual e não é prova de que o medicamento provoque o acontecimento.",
+         "evidence_ids": [],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
+         "id": "statistics:absence",
+         "template": "stat.absence",
+         "kind": "fixed",
+         "text": "A ausência de notificações, ou um padrão pouco claro, não significa que não exista associação nem que os medicamentos do doente estejam livres de problemas.",
+         "evidence_ids": [],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
+         "id": "statistics:window",
+         "template": "stat.window",
+         "kind": "fixed",
+         "text": "As contagens abrangem as notificações recebidas ou atualizadas nos quatro trimestres 2025Q4–2026Q3, incluindo versões de seguimento de casos recebidos pela primeira vez antes.",
+         "evidence_ids": [],
+         "numbers": [
+          "2025Q4",
+          "2026Q3"
+         ]
+        },
+        {
+         "type": "sentence",
+         "id": "statistics:denominator",
+         "template": "stat.denominator",
+         "kind": "fixed",
+         "text": "As contagens utilizam apenas as notificações que nomeiam pelo menos um medicamento que Janus reconhece (84,8% das notificações deste período). Algumas grafias não são reconhecidas, pelo que um padrão pode passar despercebido.",
+         "evidence_ids": [],
+         "numbers": [
+          "84,8%"
+         ]
+        },
+        {
+         "type": "sentence",
+         "id": "statistics:attribution",
+         "template": "stat.attribution",
+         "kind": "fixed",
+         "text": "Fonte: FDA AEMS (anteriormente FAERS), instantâneo de 28/10/2026. Não constitui um aval da FDA.",
+         "evidence_ids": [],
+         "numbers": [
+          "28/10/2026"
+         ]
+        },
+        {
+         "type": "sentence",
+         "id": "statistics:meddra",
+         "template": "stat.meddra_long",
+         "kind": "fixed",
+         "text": "MedDRA® the Medical Dictionary for Regulatory Activities terminology is the international medical terminology developed under the auspices of ICH. MedDRA® trademark is registered by IFPMA on behalf of ICH.",
+         "evidence_ids": [],
+         "numbers": []
+        }
+       ]
+      },
+      {
+       "id": "scope",
+       "heading": {
+        "template": "scope.heading",
+        "text": "O que Janus verificou"
+       },
+       "blocks": [
+        {
+         "type": "sentence",
+         "id": "scope:checked",
+         "template": "scope.checked",
+         "kind": "claim",
+         "text": "Janus verificou 63 dos 65 padrões de cascata de prescrição da lista PIPC.",
+         "evidence_ids": [
+          "dataset:pipc"
+         ],
+         "numbers": [
+          "63",
+          "65"
+         ]
+        },
+        {
+         "type": "sentence",
+         "id": "scope:not_checked:pipc:27",
+         "template": "scope.not_checked_rule",
+         "kind": "claim",
+         "text": "A linha 27 (Inibidor da colinesterase → Mal-estar gastrointestinal → Subsalicilato de bismuto) não pode ser verificada.",
+         "evidence_ids": [
+          "dataset:pipc"
+         ],
+         "numbers": [
+          "27"
+         ]
+        },
+        {
+         "type": "sentence",
+         "id": "scope:not_checked:pipc:57",
+         "template": "scope.not_checked_rule",
+         "kind": "claim",
+         "text": "A linha 57 (Anticolinérgico urinário → Boca seca → Substituto da saliva) não pode ser verificada.",
+         "evidence_ids": [
+          "dataset:pipc"
+         ],
+         "numbers": [
+          "57"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "integrity",
+       "heading": {
+        "template": "integrity.heading",
+        "text": "Verificação das fontes"
+       },
+       "blocks": [
+        {
+         "type": "sentence",
+         "id": "integrity:sources",
+         "template": "integrity.sources",
+         "kind": "claim",
+         "text": "Fontes utilizadas: 5, das quais 4 foram verificadas por DOI face aos dados de retratações.",
+         "evidence_ids": [
+          "dataset:faers",
+          "dataset:pipc",
+          "paper:bmj_2026:e100499",
+          "paper:hendrix_2024:s12874_023_02108_y",
+          "paper:thinkcascades:drugs_aging_2022",
+          "rule:pipc:12",
+          "rule:pipc:5",
+          "rule:pipc:6",
+          "rule:pipc:9"
+         ],
+         "numbers": [
+          "5",
+          "4"
+         ]
+        },
+        {
+         "type": "sentence",
+         "id": "integrity:by_status",
+         "template": "integrity.by_status",
+         "kind": "claim",
+         "text": "Estado das fontes verificadas: sem aviso 3, correção 1, expressão de preocupação 0, ainda não verificadas 0.",
+         "evidence_ids": [
+          "dataset:faers",
+          "dataset:pipc",
+          "paper:bmj_2026:e100499",
+          "paper:hendrix_2024:s12874_023_02108_y",
+          "paper:thinkcascades:drugs_aging_2022",
+          "rule:pipc:12",
+          "rule:pipc:5",
+          "rule:pipc:6",
+          "rule:pipc:9"
+         ],
+         "numbers": [
+          "3",
+          "1",
+          "0",
+          "0"
+         ]
+        },
+        {
+         "type": "sentence",
+         "id": "integrity:checks_between",
+         "template": "integrity.checks_between",
+         "kind": "claim",
+         "text": "As verificações de retratações foram feitas entre 08/11/2026 e 08/11/2026.",
+         "evidence_ids": [
+          "dataset:faers",
+          "dataset:pipc",
+          "paper:bmj_2026:e100499",
+          "paper:hendrix_2024:s12874_023_02108_y",
+          "paper:thinkcascades:drugs_aging_2022",
+          "rule:pipc:12",
+          "rule:pipc:5",
+          "rule:pipc:6",
+          "rule:pipc:9"
+         ],
+         "numbers": [
+          "08/11/2026",
+          "08/11/2026"
+         ]
+        },
+        {
+         "type": "sentence",
+         "id": "integrity:no_retracted",
+         "template": "integrity.no_retracted",
+         "kind": "claim",
+         "text": "Não foi utilizada nenhuma fonte retratada.",
+         "evidence_ids": [
+          "dataset:faers",
+          "dataset:pipc",
+          "paper:bmj_2026:e100499",
+          "paper:hendrix_2024:s12874_023_02108_y",
+          "paper:thinkcascades:drugs_aging_2022",
+          "rule:pipc:12",
+          "rule:pipc:5",
+          "rule:pipc:6",
+          "rule:pipc:9"
+         ],
+         "numbers": []
+        }
+       ]
+      },
+      {
+       "id": "about",
+       "heading": {
+        "template": "about.heading",
+        "text": "Sobre esta nota"
+       },
+       "blocks": [
+        {
+         "type": "sentence",
+         "id": "about:versions",
+         "template": "about.versions",
+         "kind": "fixed",
+         "text": "Versões: regras 8d4881fc, dados de medicamentos 50d836bf, evidência d6bb640a, contagens de notificações 20261108, glossário 96e4dc4c.",
+         "evidence_ids": [],
+         "numbers": [
+          "8d4881fc",
+          "50d836bf",
+          "d6bb640a",
+          "20261108",
+          "96e4dc4c"
+         ]
+        },
+        {
+         "type": "sentence",
+         "id": "about:pipc",
+         "template": "about.pipc",
+         "kind": "fixed",
+         "text": "Padrões de cascata de prescrição: lista PIPC (Rochon et al., European Geriatric Medicine 2025), com licença CC BY 4.0.",
+         "evidence_ids": [],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
+         "id": "about:faers",
+         "template": "about.faers",
+         "kind": "fixed",
+         "text": "As contagens de notificações provêm dos dados trimestrais públicos da FDA AEMS (anteriormente FAERS).",
+         "evidence_ids": [],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
+         "id": "about:glossary_status",
+         "template": "about.glossary_status",
+         "kind": "fixed",
+         "text": "A revisão por especialistas das traduções dos termos clínicos ainda não foi feita; ainda têm de ser revistas por um farmacêutico ou médico e por falantes nativos.",
          "evidence_ids": [],
          "numbers": []
         }

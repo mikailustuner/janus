@@ -3,12 +3,12 @@
  "userRegion": "US",
  "noteLanguage": "en",
  "recorded": {
-  "date": "2026-11-09",
-  "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+  "date": "2026-11-13",
+  "dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
   "rule_base_version": "8d4881fc6418ee6437d4c2052283f89e6c21ea32405bcd6061f89e9637e32f8f",
-  "integrity_version": "dd1585092cbb19c0ddbcee9f35704f73152e10ce296be984725411b8b06c3fc2",
+  "integrity_version": "d6bb640a67240c657dff12c9a4ce2aaa0da50cae3a6abfb10e4fd7c4bd36249f",
   "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-  "glossary_version": "8005d067e98c17e6d99b18d602802c0fd98857bb1ce9d3c4f32beb15dd8879f1"
+  "glossary_version": "96e4dc4cb80c13c7b9b318e66c00830b184b76c4c0d7ebe4e237f98db93de187"
  },
  "items": [
   {
@@ -22,7 +22,7 @@
    "started": "2024-04",
    "choices": [],
    "resolution": {
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
     "regions_searched": [
      "US"
     ],
@@ -35,9 +35,9 @@
      },
      {
       "source_id": "wikidata",
-      "run_id": "20261107T163917Z-6bb8fcbc-6855",
+      "run_id": "20261113T093852Z-56f317b1-cd25",
       "region": null,
-      "snapshot_date": "2026-11-07T16:39:17.898888+00:00"
+      "snapshot_date": "2026-11-13T09:38:52.798171+00:00"
      }
     ],
     "scan": null,
@@ -104,6 +104,7 @@
           "en": "donepezil",
           "es": "donepezilo",
           "fr": "donépézil",
+          "pt": "donepezila",
           "tr": "donepezil"
          }
         },
@@ -165,7 +166,7 @@
    "started": "2024-09",
    "choices": [],
    "resolution": {
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
     "regions_searched": [
      "US"
     ],
@@ -178,9 +179,9 @@
      },
      {
       "source_id": "wikidata",
-      "run_id": "20261107T163917Z-6bb8fcbc-6855",
+      "run_id": "20261113T093852Z-56f317b1-cd25",
       "region": null,
-      "snapshot_date": "2026-11-07T16:39:17.898888+00:00"
+      "snapshot_date": "2026-11-13T09:38:52.798171+00:00"
      }
     ],
     "scan": null,
@@ -230,6 +231,7 @@
           "en": "(RS)-oxybutynin",
           "es": "dotropan",
           "fr": "(RS)-oxybutynine",
+          "pt": "oxibutinina",
           "tr": "Oksibutinin"
          }
         },
@@ -291,7 +293,7 @@
    "started": "2025-02",
    "choices": [],
    "resolution": {
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
     "regions_searched": [
      "US"
     ],
@@ -304,9 +306,9 @@
      },
      {
       "source_id": "wikidata",
-      "run_id": "20261107T163917Z-6bb8fcbc-6855",
+      "run_id": "20261113T093852Z-56f317b1-cd25",
       "region": null,
-      "snapshot_date": "2026-11-07T16:39:17.898888+00:00"
+      "snapshot_date": "2026-11-13T09:38:52.798171+00:00"
      }
     ],
     "scan": null,
@@ -390,6 +392,7 @@
           "en": "gabapentin",
           "es": "gabapentina",
           "fr": "gabapentine",
+          "pt": "gabapentina",
           "tr": "Gabapentin"
          }
         },
@@ -461,7 +464,7 @@
    "started": "2025-06",
    "choices": [],
    "resolution": {
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
+    "dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
     "regions_searched": [
      "US"
     ],
@@ -474,9 +477,9 @@
      },
      {
       "source_id": "wikidata",
-      "run_id": "20261107T163917Z-6bb8fcbc-6855",
+      "run_id": "20261113T093852Z-56f317b1-cd25",
       "region": null,
-      "snapshot_date": "2026-11-07T16:39:17.898888+00:00"
+      "snapshot_date": "2026-11-13T09:38:52.798171+00:00"
      }
     ],
     "scan": null,
@@ -534,6 +537,7 @@
           "en": "furosemide",
           "es": "furosemida",
           "fr": "furosémide",
+          "pt": "furosemida",
           "tr": "furosemid"
          }
         },
@@ -587,8 +591,8 @@
  ],
  "evaluation": {
   "rule_base_version": "8d4881fc6418ee6437d4c2052283f89e6c21ea32405bcd6061f89e9637e32f8f",
-  "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-  "integrity_version": "dd1585092cbb19c0ddbcee9f35704f73152e10ce296be984725411b8b06c3fc2",
+  "dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
+  "integrity_version": "d6bb640a67240c657dff12c9a4ce2aaa0da50cae3a6abfb10e4fd7c4bd36249f",
   "as_of_month": "2026-11",
   "window_months": 12,
   "findings": [
@@ -750,8 +754,8 @@
  },
  "evidence": {
   "pipc:24:Q415081:Q1060922": {
-   "integrity_version": "dd1585092cbb19c0ddbcee9f35704f73152e10ce296be984725411b8b06c3fc2",
-   "as_of": "2026-11-09",
+   "integrity_version": "d6bb640a67240c657dff12c9a4ce2aaa0da50cae3a6abfb10e4fd7c4bd36249f",
+   "as_of": "2026-11-13",
    "items": [
     {
      "id": "dataset:faers",
@@ -771,7 +775,7 @@
      },
      "freshness": {
       "state": "current",
-      "age_days": 12,
+      "age_days": 16,
       "limit_days": 182
      },
      "doi_check": "not_applicable",
@@ -799,7 +803,7 @@
      },
      "freshness": {
       "state": "current",
-      "age_days": 466,
+      "age_days": 470,
       "limit_days": 730
      },
      "doi_check": "checked",
@@ -808,7 +812,7 @@
       "check_status": "corrected",
       "reason": null,
       "checked_at": "2026-11-08",
-      "check_age_days": 1,
+      "check_age_days": 5,
       "check_stale": false,
       "notices": [
        {
@@ -845,7 +849,7 @@
      },
      "freshness": {
       "state": "not_applicable",
-      "age_days": 2,
+      "age_days": 6,
       "limit_days": null
      },
      "doi_check": "checked",
@@ -854,7 +858,7 @@
       "check_status": "ok",
       "reason": null,
       "checked_at": "2026-11-08",
-      "check_age_days": 1,
+      "check_age_days": 5,
       "check_stale": false,
       "notices": []
      },
@@ -881,7 +885,7 @@
      },
      "freshness": {
       "state": "current",
-      "age_days": 466,
+      "age_days": 470,
       "limit_days": 730
      },
      "doi_check": "not_applicable",
@@ -897,7 +901,7 @@
         "check_status": "corrected",
         "reason": null,
         "checked_at": "2026-11-08",
-        "check_age_days": 1,
+        "check_age_days": 5,
         "check_stale": false,
         "notices": [
          {
@@ -911,7 +915,7 @@
        },
        "freshness": {
         "state": "current",
-        "age_days": 466,
+        "age_days": 470,
         "limit_days": 730
        }
       }
@@ -950,8 +954,8 @@
    "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device."
   },
   "pipc:31:Q410352:Q388801": {
-   "integrity_version": "dd1585092cbb19c0ddbcee9f35704f73152e10ce296be984725411b8b06c3fc2",
-   "as_of": "2026-11-09",
+   "integrity_version": "d6bb640a67240c657dff12c9a4ce2aaa0da50cae3a6abfb10e4fd7c4bd36249f",
+   "as_of": "2026-11-13",
    "items": [
     {
      "id": "dataset:faers",
@@ -971,7 +975,7 @@
      },
      "freshness": {
       "state": "current",
-      "age_days": 12,
+      "age_days": 16,
       "limit_days": 182
      },
      "doi_check": "not_applicable",
@@ -999,7 +1003,7 @@
      },
      "freshness": {
       "state": "current",
-      "age_days": 466,
+      "age_days": 470,
       "limit_days": 730
      },
      "doi_check": "checked",
@@ -1008,7 +1012,7 @@
       "check_status": "corrected",
       "reason": null,
       "checked_at": "2026-11-08",
-      "check_age_days": 1,
+      "check_age_days": 5,
       "check_stale": false,
       "notices": [
        {
@@ -1045,7 +1049,7 @@
      },
      "freshness": {
       "state": "not_applicable",
-      "age_days": 2,
+      "age_days": 6,
       "limit_days": null
      },
      "doi_check": "checked",
@@ -1054,7 +1058,7 @@
       "check_status": "ok",
       "reason": null,
       "checked_at": "2026-11-08",
-      "check_age_days": 1,
+      "check_age_days": 5,
       "check_stale": false,
       "notices": []
      },
@@ -1081,7 +1085,7 @@
      },
      "freshness": {
       "state": "current",
-      "age_days": 466,
+      "age_days": 470,
       "limit_days": 730
      },
      "doi_check": "not_applicable",
@@ -1097,7 +1101,7 @@
         "check_status": "corrected",
         "reason": null,
         "checked_at": "2026-11-08",
-        "check_age_days": 1,
+        "check_age_days": 5,
         "check_stale": false,
         "notices": [
          {
@@ -1111,7 +1115,7 @@
        },
        "freshness": {
         "state": "current",
-        "age_days": 466,
+        "age_days": 470,
         "limit_days": 730
        }
       }
@@ -1163,7 +1167,7 @@
    "faers_run_id": "20261108T004801Z-b4dfb36a-b253",
    "resolution_dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
    "stale": false,
-   "age_days": 12,
+   "age_days": 16,
    "totals": [
     {
      "region": "TR",
@@ -1227,10 +1231,10 @@
      ],
      "faers_run_id": "20261108T004801Z-b4dfb36a-b253",
      "resolution_dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-     "served_resolution_dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-     "counts_match_served": true,
+     "served_resolution_dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
+     "counts_match_served": false,
      "stale": false,
-     "age_days": 12
+     "age_days": 16
     },
     "notices": [
      "spontaneous_reporting",
@@ -1239,6 +1243,7 @@
      "window_includes_follow_ups",
      "denominator_mapped_reports",
      "screening_statistic",
+     "counts_built_against_other_dataset",
      "absence_is_not_reassurance"
     ],
     "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device.",
@@ -1307,10 +1312,10 @@
      ],
      "faers_run_id": "20261108T004801Z-b4dfb36a-b253",
      "resolution_dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-     "served_resolution_dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-     "counts_match_served": true,
+     "served_resolution_dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
+     "counts_match_served": false,
      "stale": false,
-     "age_days": 12
+     "age_days": 16
     },
     "notices": [
      "spontaneous_reporting",
@@ -1318,7 +1323,8 @@
      "deduplicated_by_case_version_only",
      "window_includes_follow_ups",
      "denominator_mapped_reports",
-     "screening_statistic"
+     "screening_statistic",
+     "counts_built_against_other_dataset"
     ],
     "disclaimer": "Janus provides information, not medical advice. Research prototype — not a medical device.",
     "attribution": "Source: FDA AEMS (formerly FAERS), snapshot 2026-10-28. Not an FDA endorsement.",
@@ -1407,10 +1413,10 @@
     ],
     "faers_run_id": "20261108T004801Z-b4dfb36a-b253",
     "resolution_dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-    "served_resolution_dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-    "counts_match_served": true,
+    "served_resolution_dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
+    "counts_match_served": false,
     "stale": false,
-    "age_days": 12
+    "age_days": 16
    },
    "notices": [
     "spontaneous_reporting",
@@ -1419,6 +1425,7 @@
     "window_includes_follow_ups",
     "denominator_mapped_reports",
     "screening_statistic",
+    "counts_built_against_other_dataset",
     "reported_together_only",
     "combination_caveat",
     "set_counts_are_lower_bounds",
@@ -4742,10 +4749,10 @@
     ],
     "faers_run_id": "20261108T004801Z-b4dfb36a-b253",
     "resolution_dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-    "served_resolution_dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-    "counts_match_served": true,
+    "served_resolution_dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
+    "counts_match_served": false,
     "stale": false,
-    "age_days": 12
+    "age_days": 16
    },
    "notices": [
     "spontaneous_reporting",
@@ -4754,6 +4761,7 @@
     "window_includes_follow_ups",
     "denominator_mapped_reports",
     "screening_statistic",
+    "counts_built_against_other_dataset",
     "region_is_report_origin",
     "eu_member_states_not_separable",
     "regions_not_comparable",
@@ -5005,10 +5013,10 @@
    "note_format": "janus-note-1",
    "versions": {
     "rule_base_version": "8d4881fc6418ee6437d4c2052283f89e6c21ea32405bcd6061f89e9637e32f8f",
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-    "integrity_version": "dd1585092cbb19c0ddbcee9f35704f73152e10ce296be984725411b8b06c3fc2",
+    "dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
+    "integrity_version": "d6bb640a67240c657dff12c9a4ce2aaa0da50cae3a6abfb10e4fd7c4bd36249f",
     "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-    "glossary_version": "8005d067e98c17e6d99b18d602802c0fd98857bb1ce9d3c4f32beb15dd8879f1"
+    "glossary_version": "96e4dc4cb80c13c7b9b318e66c00830b184b76c4c0d7ebe4e237f98db93de187"
    },
    "as_of_month": "2026-11",
    "removals": [],
@@ -5662,14 +5670,14 @@
          "id": "about:versions",
          "template": "about.versions",
          "kind": "fixed",
-         "text": "Versions: rules 8d4881fc, medicine data 7db3a513, evidence dd158509, report counts 20261108, glossary 8005d067.",
+         "text": "Versions: rules 8d4881fc, medicine data 50d836bf, evidence d6bb640a, report counts 20261108, glossary 96e4dc4c.",
          "evidence_ids": [],
          "numbers": [
           "8d4881fc",
-          "7db3a513",
-          "dd158509",
+          "50d836bf",
+          "d6bb640a",
           "20261108",
-          "8005d067"
+          "96e4dc4c"
          ]
         },
         {
@@ -5709,10 +5717,10 @@
    "note_format": "janus-note-1",
    "versions": {
     "rule_base_version": "8d4881fc6418ee6437d4c2052283f89e6c21ea32405bcd6061f89e9637e32f8f",
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-    "integrity_version": "dd1585092cbb19c0ddbcee9f35704f73152e10ce296be984725411b8b06c3fc2",
+    "dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
+    "integrity_version": "d6bb640a67240c657dff12c9a4ce2aaa0da50cae3a6abfb10e4fd7c4bd36249f",
     "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-    "glossary_version": "8005d067e98c17e6d99b18d602802c0fd98857bb1ce9d3c4f32beb15dd8879f1"
+    "glossary_version": "96e4dc4cb80c13c7b9b318e66c00830b184b76c4c0d7ebe4e237f98db93de187"
    },
    "as_of_month": "2026-11",
    "removals": [],
@@ -6366,14 +6374,14 @@
          "id": "about:versions",
          "template": "about.versions",
          "kind": "fixed",
-         "text": "Sürümler: kurallar 8d4881fc, ilaç verileri 7db3a513, kanıtlar dd158509, bildirim sayıları 20261108, sözlük 8005d067.",
+         "text": "Sürümler: kurallar 8d4881fc, ilaç verileri 50d836bf, kanıtlar d6bb640a, bildirim sayıları 20261108, sözlük 96e4dc4c.",
          "evidence_ids": [],
          "numbers": [
           "8d4881fc",
-          "7db3a513",
-          "dd158509",
+          "50d836bf",
+          "d6bb640a",
           "20261108",
-          "8005d067"
+          "96e4dc4c"
          ]
         },
         {
@@ -6413,10 +6421,10 @@
    "note_format": "janus-note-1",
    "versions": {
     "rule_base_version": "8d4881fc6418ee6437d4c2052283f89e6c21ea32405bcd6061f89e9637e32f8f",
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-    "integrity_version": "dd1585092cbb19c0ddbcee9f35704f73152e10ce296be984725411b8b06c3fc2",
+    "dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
+    "integrity_version": "d6bb640a67240c657dff12c9a4ce2aaa0da50cae3a6abfb10e4fd7c4bd36249f",
     "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-    "glossary_version": "8005d067e98c17e6d99b18d602802c0fd98857bb1ce9d3c4f32beb15dd8879f1"
+    "glossary_version": "96e4dc4cb80c13c7b9b318e66c00830b184b76c4c0d7ebe4e237f98db93de187"
    },
    "as_of_month": "2026-11",
    "removals": [],
@@ -7070,14 +7078,14 @@
          "id": "about:versions",
          "template": "about.versions",
          "kind": "fixed",
-         "text": "Versionen: Regeln 8d4881fc, Arzneimitteldaten 7db3a513, Evidenz dd158509, Meldezahlen 20261108, Glossar 8005d067.",
+         "text": "Versionen: Regeln 8d4881fc, Arzneimitteldaten 50d836bf, Evidenz d6bb640a, Meldezahlen 20261108, Glossar 96e4dc4c.",
          "evidence_ids": [],
          "numbers": [
           "8d4881fc",
-          "7db3a513",
-          "dd158509",
+          "50d836bf",
+          "d6bb640a",
           "20261108",
-          "8005d067"
+          "96e4dc4c"
          ]
         },
         {
@@ -7117,10 +7125,10 @@
    "note_format": "janus-note-1",
    "versions": {
     "rule_base_version": "8d4881fc6418ee6437d4c2052283f89e6c21ea32405bcd6061f89e9637e32f8f",
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-    "integrity_version": "dd1585092cbb19c0ddbcee9f35704f73152e10ce296be984725411b8b06c3fc2",
+    "dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
+    "integrity_version": "d6bb640a67240c657dff12c9a4ce2aaa0da50cae3a6abfb10e4fd7c4bd36249f",
     "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-    "glossary_version": "8005d067e98c17e6d99b18d602802c0fd98857bb1ce9d3c4f32beb15dd8879f1"
+    "glossary_version": "96e4dc4cb80c13c7b9b318e66c00830b184b76c4c0d7ebe4e237f98db93de187"
    },
    "as_of_month": "2026-11",
    "removals": [],
@@ -7774,14 +7782,14 @@
          "id": "about:versions",
          "template": "about.versions",
          "kind": "fixed",
-         "text": "Versions : règles 8d4881fc, données médicaments 7db3a513, sources dd158509, comptes de signalements 20261108, glossaire 8005d067.",
+         "text": "Versions : règles 8d4881fc, données médicaments 50d836bf, sources d6bb640a, comptes de signalements 20261108, glossaire 96e4dc4c.",
          "evidence_ids": [],
          "numbers": [
           "8d4881fc",
-          "7db3a513",
-          "dd158509",
+          "50d836bf",
+          "d6bb640a",
           "20261108",
-          "8005d067"
+          "96e4dc4c"
          ]
         },
         {
@@ -7821,10 +7829,10 @@
    "note_format": "janus-note-1",
    "versions": {
     "rule_base_version": "8d4881fc6418ee6437d4c2052283f89e6c21ea32405bcd6061f89e9637e32f8f",
-    "dataset_version": "7db3a51378ef29d49cab8afbeb2fd369f18551f16c7817e8a98d74ef9afec51a",
-    "integrity_version": "dd1585092cbb19c0ddbcee9f35704f73152e10ce296be984725411b8b06c3fc2",
+    "dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
+    "integrity_version": "d6bb640a67240c657dff12c9a4ce2aaa0da50cae3a6abfb10e4fd7c4bd36249f",
     "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
-    "glossary_version": "8005d067e98c17e6d99b18d602802c0fd98857bb1ce9d3c4f32beb15dd8879f1"
+    "glossary_version": "96e4dc4cb80c13c7b9b318e66c00830b184b76c4c0d7ebe4e237f98db93de187"
    },
    "as_of_month": "2026-11",
    "removals": [],
@@ -8481,14 +8489,14 @@
          "id": "about:versions",
          "template": "about.versions",
          "kind": "fixed",
-         "text": "Versiones: reglas 8d4881fc, datos de medicamentos 7db3a513, evidencia dd158509, recuentos de notificaciones 20261108, glosario 8005d067.",
+         "text": "Versiones: reglas 8d4881fc, datos de medicamentos 50d836bf, evidencia d6bb640a, recuentos de notificaciones 20261108, glosario 96e4dc4c.",
          "evidence_ids": [],
          "numbers": [
           "8d4881fc",
-          "7db3a513",
-          "dd158509",
+          "50d836bf",
+          "d6bb640a",
           "20261108",
-          "8005d067"
+          "96e4dc4c"
          ]
         },
         {
@@ -8515,6 +8523,710 @@
          "template": "about.glossary_status",
          "kind": "fixed",
          "text": "Todavía no se ha hecho la revisión de expertos de las traducciones de los términos clínicos; aún deben revisarlas un farmacéutico o un médico y hablantes nativos.",
+         "evidence_ids": [],
+         "numbers": []
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "pt": {
+   "note_format": "janus-note-1",
+   "versions": {
+    "rule_base_version": "8d4881fc6418ee6437d4c2052283f89e6c21ea32405bcd6061f89e9637e32f8f",
+    "dataset_version": "50d836bf88f962a8bb8217e6aacd9aff476105ebded2d939eee827f3ab4684bd",
+    "integrity_version": "d6bb640a67240c657dff12c9a4ce2aaa0da50cae3a6abfb10e4fd7c4bd36249f",
+    "counts_build_id": "20261108T130944Z-7445632a-7db3a513-7f67",
+    "glossary_version": "96e4dc4cb80c13c7b9b318e66c00830b184b76c4c0d7ebe4e237f98db93de187"
+   },
+   "as_of_month": "2026-11",
+   "removals": [],
+   "documents": [
+    {
+     "language": "pt",
+     "sections": [
+      {
+       "id": "header",
+       "heading": {
+        "template": "header.title",
+        "text": "Nota de revisão da medicação para o médico"
+       },
+       "blocks": [
+        {
+         "type": "sentence",
+         "id": "header:prepared",
+         "template": "header.prepared",
+         "kind": "fixed",
+         "text": "Preparada em 11/2026 por Janus a partir dos medicamentos introduzidos pelo doente ou por um cuidador.",
+         "evidence_ids": [],
+         "numbers": [
+          "11/2026"
+         ]
+        },
+        {
+         "type": "sentence",
+         "id": "header:purpose",
+         "template": "header.purpose",
+         "kind": "fixed",
+         "text": "Esta nota enumera os padrões publicados de cascata de prescrição que coincidem com os medicamentos do doente, com as respetivas fontes. Destina-se a apoiar a conversa com o doente e não dispensa o juízo clínico.",
+         "evidence_ids": [],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
+         "id": "header:disclaimer",
+         "template": "disclaimer",
+         "kind": "fixed",
+         "text": "Janus fornece informação, não aconselhamento médico. Protótipo de investigação — não é um dispositivo médico.",
+         "evidence_ids": [],
+         "numbers": []
+        }
+       ]
+      },
+      {
+       "id": "medicines",
+       "heading": {
+        "template": "medicines.heading",
+        "text": "Medicamentos"
+       },
+       "blocks": [
+        {
+         "type": "sentence",
+         "id": "medicines:count",
+         "template": "medicines.count",
+         "kind": "fixed",
+         "text": "Medicamentos na lista: 4. Verificados na totalidade: 4; verificados em parte (pelo menos uma substância ativa não pôde ser verificada): 0.",
+         "evidence_ids": [],
+         "numbers": [
+          "4",
+          "4",
+          "0"
+         ]
+        },
+        {
+         "type": "medicine",
+         "item": 0,
+         "product_name_slot": true,
+         "product_label": {
+          "template": "medicine.product_name",
+          "text": "Produto (como consta na embalagem)"
+         },
+         "ingredients": [
+          {
+           "key": "Q415081",
+           "name": {
+            "template": "name",
+            "text": "donepezila"
+           },
+           "name_basis": "glossary",
+           "tag": null,
+           "atc": [
+            "N06DA02"
+           ],
+           "combination_code": null
+          }
+         ],
+         "not_checked": [],
+         "started": {
+          "template": "medicine.started",
+          "text": "Início: 04/2024"
+         },
+         "abrupt_stop": null
+        },
+        {
+         "type": "medicine",
+         "item": 1,
+         "product_name_slot": true,
+         "product_label": {
+          "template": "medicine.product_name",
+          "text": "Produto (como consta na embalagem)"
+         },
+         "ingredients": [
+          {
+           "key": "Q1060922",
+           "name": {
+            "template": "name",
+            "text": "oxibutinina"
+           },
+           "name_basis": "glossary",
+           "tag": null,
+           "atc": [
+            "G04BD04"
+           ],
+           "combination_code": null
+          }
+         ],
+         "not_checked": [],
+         "started": {
+          "template": "medicine.started",
+          "text": "Início: 09/2024"
+         },
+         "abrupt_stop": null
+        },
+        {
+         "type": "medicine",
+         "item": 2,
+         "product_name_slot": true,
+         "product_label": {
+          "template": "medicine.product_name",
+          "text": "Produto (como consta na embalagem)"
+         },
+         "ingredients": [
+          {
+           "key": "Q410352",
+           "name": {
+            "template": "name",
+            "text": "gabapentina"
+           },
+           "name_basis": "glossary",
+           "tag": null,
+           "atc": [
+            "N02BF01",
+            "N03AX12"
+           ],
+           "combination_code": null
+          }
+         ],
+         "not_checked": [],
+         "started": {
+          "template": "medicine.started",
+          "text": "Início: 02/2025"
+         },
+         "abrupt_stop": {
+          "type": "sentence",
+          "id": "item:2:abrupt_stop",
+          "template": "abrupt_stop",
+          "kind": "fixed",
+          "text": "Não suspenda este medicamento de forma brusca.",
+          "evidence_ids": [],
+          "numbers": []
+         }
+        },
+        {
+         "type": "medicine",
+         "item": 3,
+         "product_name_slot": true,
+         "product_label": {
+          "template": "medicine.product_name",
+          "text": "Produto (como consta na embalagem)"
+         },
+         "ingredients": [
+          {
+           "key": "Q388801",
+           "name": {
+            "template": "name",
+            "text": "furosemida"
+           },
+           "name_basis": "glossary",
+           "tag": null,
+           "atc": [
+            "C03CA01"
+           ],
+           "combination_code": null
+          }
+         ],
+         "not_checked": [],
+         "started": {
+          "template": "medicine.started",
+          "text": "Início: 06/2025"
+         },
+         "abrupt_stop": null
+        }
+       ]
+      },
+      {
+       "id": "findings",
+       "heading": {
+        "template": "findings.heading",
+        "text": "Padrões de cascata de prescrição"
+       },
+       "blocks": [
+        {
+         "type": "sentence",
+         "id": "pipc:24:Q415081:Q1060922:cascade",
+         "template": "finding.cascade",
+         "kind": "claim",
+         "text": "Coincidência com o padrão publicado de cascata de prescrição Inibidor da colinesterase → Incontinência urinária → Medicamento para a bexiga hiperativa (lista PIPC, linha 24): donepezila e oxibutinina.",
+         "evidence_ids": [
+          "dataset:pipc",
+          "rule:pipc:24"
+         ],
+         "numbers": [
+          "24"
+         ]
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:24:Q415081:Q1060922:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "A ordem corresponde ao padrão",
+         "evidence_ids": [
+          "rule:pipc:24"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:24:Q415081:Q1060922:timing",
+         "template": "finding.timing.within_window",
+         "kind": "claim",
+         "text": "Meses desde o início de donepezila até ao início de oxibutinina: 5. Está dentro da janela de 12 meses habitualmente utilizada na análise de simetria de sequência de prescrição.",
+         "evidence_ids": [
+          "paper:hendrix_2024:s12874_023_02108_y",
+          "rule:pipc:24"
+         ],
+         "numbers": [
+          "5",
+          "12"
+         ]
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:24:Q415081:Q1060922:notice:corrected_notice",
+         "template": "finding.notice.corrected",
+         "kind": "claim",
+         "text": "Foi publicada uma correção a uma fonte deste padrão.",
+         "evidence_ids": [
+          "dataset:pipc",
+          "rule:pipc:24"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:24:Q415081:Q1060922:review",
+         "template": "finding.review",
+         "kind": "fixed",
+         "text": "Pode ser útil rever este padrão com o doente.",
+         "evidence_ids": [],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:31:Q410352:Q388801:cascade",
+         "template": "finding.cascade",
+         "kind": "claim",
+         "text": "Coincidência com o padrão publicado de cascata de prescrição Gabapentinoide → Edema periférico → Diurético (lista PIPC, linha 31): gabapentina e furosemida.",
+         "evidence_ids": [
+          "dataset:pipc",
+          "rule:pipc:31"
+         ],
+         "numbers": [
+          "31"
+         ]
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:31:Q410352:Q388801:order",
+         "template": "finding.order.fits",
+         "kind": "claim",
+         "text": "A ordem corresponde ao padrão",
+         "evidence_ids": [
+          "rule:pipc:31"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:31:Q410352:Q388801:timing",
+         "template": "finding.timing.within_window",
+         "kind": "claim",
+         "text": "Meses desde o início de gabapentina até ao início de furosemida: 4. Está dentro da janela de 12 meses habitualmente utilizada na análise de simetria de sequência de prescrição.",
+         "evidence_ids": [
+          "paper:hendrix_2024:s12874_023_02108_y",
+          "rule:pipc:31"
+         ],
+         "numbers": [
+          "4",
+          "12"
+         ]
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:31:Q410352:Q388801:notice:corrected_notice",
+         "template": "finding.notice.corrected",
+         "kind": "claim",
+         "text": "Foi publicada uma correção a uma fonte deste padrão.",
+         "evidence_ids": [
+          "dataset:pipc",
+          "rule:pipc:31"
+         ],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
+         "id": "pipc:31:Q410352:Q388801:review",
+         "template": "finding.review",
+         "kind": "fixed",
+         "text": "Pode ser útil rever este padrão com o doente.",
+         "evidence_ids": [],
+         "numbers": []
+        }
+       ]
+      },
+      {
+       "id": "statistics",
+       "heading": {
+        "template": "statistics.heading",
+        "text": "Notificações à FDA AEMS (anteriormente FAERS)"
+       },
+       "blocks": [
+        {
+         "type": "stat",
+         "id": "stat:Q415081:urinary_incontinence:ALL",
+         "finding_ids": [
+          "pipc:24:Q415081:Q1060922"
+         ],
+         "region": "ALL",
+         "ingredient_key": "Q415081",
+         "event_key": "urinary_incontinence",
+         "reports": null,
+         "assessment": "insufficient_data",
+         "estimates": null,
+         "pts": {
+          "template": "stat.pts",
+          "text": "Termos preferenciais do MedDRA: Urinary incontinence; Urge incontinence; Stress urinary incontinence; Mixed incontinence"
+         },
+         "citation": {
+          "evidence_id": "dataset:faers",
+          "locator": "faers:ingredient=Q415081;event=urinary_incontinence;region=ALL;scope=suspect"
+         },
+         "sentences": [
+          {
+           "type": "sentence",
+           "id": "stat:Q415081:urinary_incontinence:ALL:coverage",
+           "template": "stat.coverage.no_reports",
+           "kind": "claim",
+           "text": "Todas as regiões: nenhuma notificação neste período cita donepezila com o acontecimento “Incontinência urinária”.",
+           "evidence_ids": [
+            "dataset:faers"
+           ],
+           "numbers": []
+          }
+         ]
+        },
+        {
+         "type": "stat",
+         "id": "stat:Q410352:peripheral_oedema:ALL",
+         "finding_ids": [
+          "pipc:31:Q410352:Q388801"
+         ],
+         "region": "ALL",
+         "ingredient_key": "Q410352",
+         "event_key": "peripheral_oedema",
+         "reports": 148,
+         "assessment": "disproportionate",
+         "estimates": {
+          "ror": 2.2226560674400044,
+          "low": 1.886235823627141,
+          "high": 2.6190786603915193
+         },
+         "pts": {
+          "template": "stat.pts",
+          "text": "Termos preferenciais do MedDRA: Oedema peripheral; Peripheral swelling"
+         },
+         "citation": {
+          "evidence_id": "dataset:faers",
+          "locator": "faers:ingredient=Q410352;event=peripheral_oedema;region=ALL;scope=suspect"
+         },
+         "sentences": [
+          {
+           "type": "sentence",
+           "id": "stat:Q410352:peripheral_oedema:ALL:ratio",
+           "template": "stat.reports_ratio",
+           "kind": "claim",
+           "text": "Todas as regiões: 148 notificações citam gabapentina com o acontecimento “Edema periférico”; razão de probabilidades de notificação (ROR) 2,22 (intervalo de confiança de 1,89 a 2,62).",
+           "evidence_ids": [
+            "dataset:faers"
+           ],
+           "numbers": [
+            "148",
+            "2,22",
+            "1,89",
+            "2,62"
+           ]
+          },
+          {
+           "type": "sentence",
+           "id": "stat:Q410352:peripheral_oedema:ALL:assessment",
+           "template": "stat.assessment.disproportionate",
+           "kind": "claim",
+           "text": "O acontecimento aparece numa parte maior das notificações que indicam este medicamento do que nas outras notificações que indicam um medicamento reconhecido.",
+           "evidence_ids": [
+            "dataset:faers"
+           ],
+           "numbers": []
+          }
+         ]
+        },
+        {
+         "type": "sentence",
+         "id": "statistics:spontaneous_reporting",
+         "template": "stat.limit.spontaneous_reporting",
+         "kind": "fixed",
+         "text": "As notificações são enviadas voluntariamente e não são verificadas.",
+         "evidence_ids": [],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
+         "id": "statistics:not_incidence",
+         "template": "stat.limit.not_incidence",
+         "kind": "fixed",
+         "text": "As contagens não mostram com que frequência um acontecimento ocorre.",
+         "evidence_ids": [],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
+         "id": "statistics:deduplicated_by_case_version_only",
+         "template": "stat.limit.deduplicated_by_case_version_only",
+         "kind": "fixed",
+         "text": "Apenas as versões repetidas do mesmo caso são reunidas, pelo que um acontecimento pode continuar a aparecer em mais de um caso.",
+         "evidence_ids": [],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
+         "id": "statistics:screening",
+         "template": "stat.screening",
+         "kind": "fixed",
+         "text": "Esta é uma estatística de triagem. Muitos pares de medicamento e acontecimento são examinados em simultâneo e a maioria cumpre estes critérios; por isso, cumpri-los é habitual e não é prova de que o medicamento provoque o acontecimento.",
+         "evidence_ids": [],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
+         "id": "statistics:absence",
+         "template": "stat.absence",
+         "kind": "fixed",
+         "text": "A ausência de notificações, ou um padrão pouco claro, não significa que não exista associação nem que os medicamentos do doente estejam livres de problemas.",
+         "evidence_ids": [],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
+         "id": "statistics:window",
+         "template": "stat.window",
+         "kind": "fixed",
+         "text": "As contagens abrangem as notificações recebidas ou atualizadas nos quatro trimestres 2025Q4–2026Q3, incluindo versões de seguimento de casos recebidos pela primeira vez antes.",
+         "evidence_ids": [],
+         "numbers": [
+          "2025Q4",
+          "2026Q3"
+         ]
+        },
+        {
+         "type": "sentence",
+         "id": "statistics:denominator",
+         "template": "stat.denominator",
+         "kind": "fixed",
+         "text": "As contagens utilizam apenas as notificações que nomeiam pelo menos um medicamento que Janus reconhece (84,8% das notificações deste período). Algumas grafias não são reconhecidas, pelo que um padrão pode passar despercebido.",
+         "evidence_ids": [],
+         "numbers": [
+          "84,8%"
+         ]
+        },
+        {
+         "type": "sentence",
+         "id": "statistics:attribution",
+         "template": "stat.attribution",
+         "kind": "fixed",
+         "text": "Fonte: FDA AEMS (anteriormente FAERS), instantâneo de 28/10/2026. Não constitui um aval da FDA.",
+         "evidence_ids": [],
+         "numbers": [
+          "28/10/2026"
+         ]
+        },
+        {
+         "type": "sentence",
+         "id": "statistics:meddra",
+         "template": "stat.meddra_long",
+         "kind": "fixed",
+         "text": "MedDRA® the Medical Dictionary for Regulatory Activities terminology is the international medical terminology developed under the auspices of ICH. MedDRA® trademark is registered by IFPMA on behalf of ICH.",
+         "evidence_ids": [],
+         "numbers": []
+        }
+       ]
+      },
+      {
+       "id": "scope",
+       "heading": {
+        "template": "scope.heading",
+        "text": "O que Janus verificou"
+       },
+       "blocks": [
+        {
+         "type": "sentence",
+         "id": "scope:checked",
+         "template": "scope.checked",
+         "kind": "claim",
+         "text": "Janus verificou 63 dos 65 padrões de cascata de prescrição da lista PIPC.",
+         "evidence_ids": [
+          "dataset:pipc"
+         ],
+         "numbers": [
+          "63",
+          "65"
+         ]
+        },
+        {
+         "type": "sentence",
+         "id": "scope:not_checked:pipc:27",
+         "template": "scope.not_checked_rule",
+         "kind": "claim",
+         "text": "A linha 27 (Inibidor da colinesterase → Mal-estar gastrointestinal → Subsalicilato de bismuto) não pode ser verificada.",
+         "evidence_ids": [
+          "dataset:pipc"
+         ],
+         "numbers": [
+          "27"
+         ]
+        },
+        {
+         "type": "sentence",
+         "id": "scope:not_checked:pipc:57",
+         "template": "scope.not_checked_rule",
+         "kind": "claim",
+         "text": "A linha 57 (Anticolinérgico urinário → Boca seca → Substituto da saliva) não pode ser verificada.",
+         "evidence_ids": [
+          "dataset:pipc"
+         ],
+         "numbers": [
+          "57"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "integrity",
+       "heading": {
+        "template": "integrity.heading",
+        "text": "Verificação das fontes"
+       },
+       "blocks": [
+        {
+         "type": "sentence",
+         "id": "integrity:sources",
+         "template": "integrity.sources",
+         "kind": "claim",
+         "text": "Fontes utilizadas: 3, das quais 2 foram verificadas por DOI face aos dados de retratações.",
+         "evidence_ids": [
+          "dataset:faers",
+          "dataset:pipc",
+          "paper:hendrix_2024:s12874_023_02108_y",
+          "rule:pipc:24",
+          "rule:pipc:31"
+         ],
+         "numbers": [
+          "3",
+          "2"
+         ]
+        },
+        {
+         "type": "sentence",
+         "id": "integrity:by_status",
+         "template": "integrity.by_status",
+         "kind": "claim",
+         "text": "Estado das fontes verificadas: sem aviso 1, correção 1, expressão de preocupação 0, ainda não verificadas 0.",
+         "evidence_ids": [
+          "dataset:faers",
+          "dataset:pipc",
+          "paper:hendrix_2024:s12874_023_02108_y",
+          "rule:pipc:24",
+          "rule:pipc:31"
+         ],
+         "numbers": [
+          "1",
+          "1",
+          "0",
+          "0"
+         ]
+        },
+        {
+         "type": "sentence",
+         "id": "integrity:checks_between",
+         "template": "integrity.checks_between",
+         "kind": "claim",
+         "text": "As verificações de retratações foram feitas entre 08/11/2026 e 08/11/2026.",
+         "evidence_ids": [
+          "dataset:faers",
+          "dataset:pipc",
+          "paper:hendrix_2024:s12874_023_02108_y",
+          "rule:pipc:24",
+          "rule:pipc:31"
+         ],
+         "numbers": [
+          "08/11/2026",
+          "08/11/2026"
+         ]
+        },
+        {
+         "type": "sentence",
+         "id": "integrity:no_retracted",
+         "template": "integrity.no_retracted",
+         "kind": "claim",
+         "text": "Não foi utilizada nenhuma fonte retratada.",
+         "evidence_ids": [
+          "dataset:faers",
+          "dataset:pipc",
+          "paper:hendrix_2024:s12874_023_02108_y",
+          "rule:pipc:24",
+          "rule:pipc:31"
+         ],
+         "numbers": []
+        }
+       ]
+      },
+      {
+       "id": "about",
+       "heading": {
+        "template": "about.heading",
+        "text": "Sobre esta nota"
+       },
+       "blocks": [
+        {
+         "type": "sentence",
+         "id": "about:versions",
+         "template": "about.versions",
+         "kind": "fixed",
+         "text": "Versões: regras 8d4881fc, dados de medicamentos 50d836bf, evidência d6bb640a, contagens de notificações 20261108, glossário 96e4dc4c.",
+         "evidence_ids": [],
+         "numbers": [
+          "8d4881fc",
+          "50d836bf",
+          "d6bb640a",
+          "20261108",
+          "96e4dc4c"
+         ]
+        },
+        {
+         "type": "sentence",
+         "id": "about:pipc",
+         "template": "about.pipc",
+         "kind": "fixed",
+         "text": "Padrões de cascata de prescrição: lista PIPC (Rochon et al., European Geriatric Medicine 2025), com licença CC BY 4.0.",
+         "evidence_ids": [],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
+         "id": "about:faers",
+         "template": "about.faers",
+         "kind": "fixed",
+         "text": "As contagens de notificações provêm dos dados trimestrais públicos da FDA AEMS (anteriormente FAERS).",
+         "evidence_ids": [],
+         "numbers": []
+        },
+        {
+         "type": "sentence",
+         "id": "about:glossary_status",
+         "template": "about.glossary_status",
+         "kind": "fixed",
+         "text": "A revisão por especialistas das traduções dos termos clínicos ainda não foi feita; ainda têm de ser revistas por um farmacêutico ou médico e por falantes nativos.",
          "evidence_ids": [],
          "numbers": []
         }
