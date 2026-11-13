@@ -47,6 +47,15 @@ Janus is a research prototype, not a medical device. Expert review has not yet b
   tables (precision 0.36, lower bound 0.09) and Drugs@FDA review tables (0.77, lower bound 0.48; 11 documents).
 - Recall (how many true values are missed) is not yet measured; it needs expert annotation. Details:
   [modelkit-precision.md](modelkit-precision.md).
+- The model kit's validation gate is not yet interpretable: it needs at least 10 drugs with both AUC and Cmax tested
+  against held-out studies, and the current release has 0. With the current data at most 0 drugs can reach it,
+  because too few drugs have a second, independent study that reports a clearance and a time of peak
+  concentration; the limit is the data, not the method. Where AUC could be tested (3 drugs, 11 points), every
+  prediction was within 2-fold (Wilson 95 % 0.74–1.00), but this says nothing about other drugs, and Cmax could not
+  be tested for any drug. ([modelkit-gate.md](modelkit-gate.md))
+- A value whose unit is wrong in the source itself (for example a dasatinib clearance posted in mL/h, about 1,000-fold
+  off) passes both readers; a pre-registered cross-study check catches this case but did not meet its own decision
+  rule and is switched off, so such values can still be shown.
 - It is not a dose calculator and gives no dose advice.
 
 ## Simulations

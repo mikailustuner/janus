@@ -27,6 +27,9 @@ First tagged release: the public site at <https://janusmeds.org> on this date.
 - Model kit precision re-measured with study-level clustering (ClinicalTrials.gov still above the 0.90 bound);
   PubMed Central tables and Drugs@FDA reviews measured on fresh pre-registered samples and held back; EMA EPARs
   listed as a cited-only source.
+- Model kit gate re-examined: not interpretable (0 of the 10 drugs it needs; limited by the data); the claim is
+  narrowed to AUC within 2-fold in 3 drugs; a pre-registered cross-study unit check is implemented and switched off
+  because it did not meet its own decision rule ([docs/research/modelkit-gate.md](docs/research/modelkit-gate.md)).
 - Validation studies page for researchers with the cascade detection and FAERS calibration results, and the
   calibration line next to every FAERS reporting ratio.
 - Known limitations in one place, STARD and READUS-PV reporting checklists, one-command reproduction of the
