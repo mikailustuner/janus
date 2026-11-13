@@ -41,6 +41,19 @@ import { infoQuery } from "@/plaininfo/query";
 import { violations } from "@/test/plaininfo-words";
 import type { Loaded, Vocabulary, VocabularyIndex } from "@/vocabulary";
 import vocabIndex from "@/vocabulary/index.json";
+import { COLOGNE_PASSPORT, RECORDED } from "@/demo/passport-cologne";
+import { COLOGNE_PRODUCTS } from "@/demo/passport-products";
+import { fromRecorded } from "@/passport/client";
+import { fromListItem, presenceOut } from "@/passport/model";
+import type { PassportItem } from "@/passport/model";
+import { mergeLists } from "@/passport/merge";
+import {
+  buildProductsRequest,
+  fromRecordedProducts,
+  LISTABLE,
+  productsOut,
+} from "@/passport/products";
+import { buildPresenceRequests } from "@/passport/request";
 import { openOutcomes } from "@/open/model";
 import { dataQualityReport } from "@/research/dataQuality";
 import { onsetTable } from "@/research/onset";
@@ -297,6 +310,76 @@ describe("demo/plain-info.recorded.json", () => {
           expect(g.text).not.toMatch(/\d/);
           expect(violations(`${g.name} ${g.text}`, l), g.text).toEqual([]);
         }
+      }
+  });
+});
+
+describe("demo/passport-*.recorded.json (presence answers of the three demo patients)", () => {
+  const lists = async () => {
+    const out: Record<string, PassportItem[]> = { cologne: COLOGNE_PASSPORT };
+    for (const p of ["istanbul", "ohio"]) {
+      const f = (await import(`@/demo/fixtures/${p}.json`)).default;
+      out[p] = demoItems(f as Fixture).map((i) =>
+        fromListItem(i, (_k, l) => l, true),
+      );
+    }
+    return out;
+  };
+
+  it("decode, and name their dataset and recording date", () => {
+    for (const [p, rec] of Object.entries(RECORDED)) {
+      const d = decode(presenceOut, rec.response);
+      expect(d.ok, p).toBe(true);
+      if (d.ok)
+        expect(d.value.dataset_version).toBe(rec.recorded.dataset_version);
+      expect(rec.recorded.date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    }
+  });
+
+  it("hold every query the demo lists build (the demo needs this)", async () => {
+    for (const [p, list] of Object.entries(await lists())) {
+      const rec = RECORDED[p]!;
+      const built = buildPresenceRequests(mergeLists(list, []));
+      const sorted = (b: { items: unknown[] }) =>
+        b.items.map((q) => JSON.stringify(q)).sort();
+      expect(built.bodies.flatMap(sorted).sort(), p).toEqual(
+        sorted(rec.request),
+      );
+      for (const b of built.bodies)
+        expect(fromRecorded(rec, b), p).not.toBeNull();
+    }
+  });
+});
+
+describe("demo/passport-products.recorded.json", () => {
+  it("decodes, from listable sources only, with the query's keys, and dates", () => {
+    expect(COLOGNE_PRODUCTS.recorded.date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    for (const a of COLOGNE_PRODUCTS.answers) {
+      const d = decode(productsOut, a.response);
+      expect(d.ok).toBe(true);
+      if (!d.ok) continue;
+      expect(LISTABLE).toContain(d.value.source.source_id);
+      expect(d.value.source.source_id).toBe(a.request.target);
+      expect(d.value.dataset_version).toBe(
+        COLOGNE_PRODUCTS.recorded.dataset_version,
+      );
+      const keys = a.request.ingredients.map((g) => g.key).sort();
+      for (const p of d.value.products)
+        expect([...new Set(p.ingredients.map((g) => g.key))].sort()).toEqual(
+          keys,
+        );
+    }
+  });
+
+  it("holds the first page of every query the Cologne list builds, for every target", () => {
+    for (const item of COLOGNE_PASSPORT)
+      for (const target of LISTABLE) {
+        const body = buildProductsRequest(item, target);
+        if (body)
+          expect(
+            fromRecordedProducts(COLOGNE_PRODUCTS, body),
+            `${item.boxName} ${target}`,
+          ).not.toBeNull();
       }
   });
 });

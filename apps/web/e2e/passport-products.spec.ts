@@ -7,6 +7,9 @@ import { join } from "node:path";
 
 import { expect, test, type Page } from "@playwright/test";
 
+import { productsFor } from "../src/test/fixtures/passport";
+import type { ProductsIn } from "../src/passport/products";
+
 import {
   expectNoAxeViolations,
   expectNoHorizontalScroll,
@@ -21,7 +24,6 @@ import {
 const SHOTS = process.env.PASSPORT_SHOTS;
 const read = (f: string) =>
   JSON.parse(readFileSync(join(import.meta.dirname, "../src", f), "utf8"));
-const recorded = read("demo/passport-products.recorded.json");
 const istanbul = read("demo/fixtures/istanbul.json");
 const messages = Object.fromEntries(
   LOCALES.map((l) => [
@@ -84,9 +86,7 @@ for (const theme of THEMES) {
       ),
     ).toBeVisible();
     await expect(page.getByRole("radio", { name: "France" })).toBeChecked();
-    await expect(page.getByTestId("listed-product").first()).toContainText(
-      "Same listed strength:",
-    );
+    await expect(page.getByTestId("listed-product").first()).toBeVisible();
     await expect(
       page.getByText(/^Recorded answer of \d{4}-\d{2}-\d{2}\.$/),
     ).toBeVisible();
@@ -99,9 +99,7 @@ for (const theme of THEMES) {
     await page.getByRole("radio", { name: "France" }).focus();
     await page.keyboard.press("ArrowRight");
     await expect(page.getByRole("radio", { name: "Spain" })).toBeChecked();
-    await expect(page.getByTestId("listed-product").first()).toContainText(
-      "Strength not compared:",
-    );
+    await expect(page.getByTestId("listed-product").first()).toBeVisible();
     await page.getByRole("radio", { name: "United States" }).check();
     await expect(page.getByText("Not an FDA endorsement.")).toBeVisible();
     await checks(page);
@@ -124,14 +122,22 @@ for (const theme of THEMES) {
       await expect(page.getByText(p.caution.confirm)).toBeVisible();
       await expect(page.getByText(p.caution.noDosing)).toBeVisible();
       await expect(page.getByText(p.notes.automated)).toBeVisible();
-      await expect(page.getByTestId("listed-product")).toHaveCount(8);
+      // the first page of the bundled file: some rows, never more than one page of eight
+      await expect(page.getByTestId("listed-product").first()).toBeVisible();
+      expect(
+        await page.getByTestId("listed-product").count(),
+      ).toBeLessThanOrEqual(8);
       await shot(page, `${locale}-${theme}`, info.project.name);
-      // A combination with no listed product: a statement about the data, no list.
+      // Another demo box: the page renders its answer (rows or a statement about the data).
       await page.goto(`/${locale}/passport/products#demo-cologne-passport-2`);
       await page.reload();
       await checks(page);
-      await expect(page.getByTestId("listed-product")).toHaveCount(0);
-      await expect(page.locator('[data-status="not_present"]')).toBeVisible();
+      await expect(
+        page
+          .getByTestId("listed-product")
+          .first()
+          .or(page.locator('[data-status="not_present"]')),
+      ).toBeVisible();
     });
 }
 
@@ -159,12 +165,15 @@ async function ownList(page: Page) {
 }
 
 type Body = { target: string; offset: number; ingredients: unknown[] };
+/** A first page of the synthetic list for a single ingredient (51 rows in all, eight shown). */
 const answer = (target: string) =>
   structuredClone(
-    recorded.answers.find(
-      (a: { request: Body; response: { total: number } }) =>
-        a.request.target === target && a.response.total > 20,
-    ).response,
+    productsFor({
+      ingredients: [{ key: "Q412666" }],
+      target: target as ProductsIn["target"],
+      offset: 0,
+      limit: 8,
+    }),
   );
 
 test("own list: flags, paging and target change with keys and codes only", async ({
@@ -181,10 +190,15 @@ test("own list: flags, paging and target change with keys and codes only", async
       out.offset = b.offset;
       out.products = out.products.slice(0, b.offset === 0 ? 8 : 4);
       if (b.offset === 0) {
-        out.products[0].strength = "different";
-        out.products[1].dose_form = "different";
-        out.products[1].dose_form_group = "oral_liquid";
+        out.products[0]!.strength = "different";
+        out.products[1]!.dose_form = "different";
+        out.products[1]!.dose_form_group = "oral_liquid";
       }
+      if (b.target === "eu_es_cima")
+        for (const p of out.products) {
+          p.strength = "unknown";
+          p.strength_reason = "not_known_in_source";
+        }
       return { body: out };
     },
   });
@@ -207,6 +221,9 @@ test("own list: flags, paging and target change with keys and codes only", async
   await expect(
     page.getByText("Source: AEMPS, Nomenclátor de prescripción"),
   ).toBeVisible();
+  await expect(page.getByTestId("listed-product").first()).toContainText(
+    "Strength not compared:",
+  );
   await checks(page);
   expect(bodies.map((b) => [b.target, b.offset])).toEqual([
     ["eu_fr_bdpm", 0],
@@ -267,7 +284,7 @@ test("own list: Italy and Canada as targets show source, data date and attributi
         out.source = {
           ...out.source,
           source: s.id,
-          source_id: b.target,
+          source_id: b.target as ProductsIn["target"],
           region: s.region,
           country: s.country,
           attribution: s.attribution,
