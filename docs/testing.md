@@ -17,6 +17,9 @@ throwaway server: its own container name, data in memory, a port Docker picks on
 logging settings as production. Without the variable the database tests are skipped locally; in CI an
 unset variable is an error.
 
+Accessibility checks and the planned manual screen-reader audit: [`accessibility.md`](accessibility.md). Reading level
+of the patient texts (Flesch-Kincaid, Ateşman) is a unit test: `apps/web/src/i18n/readability.test.ts`.
+
 ## Hypothesis profiles
 
 | Profile | Where | Behaviour |
