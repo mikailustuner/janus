@@ -24,6 +24,7 @@ from pathlib import Path
 import psycopg
 
 from janus.observability.logging import LogEvent, configure_logging, log_event
+from janus.settings import SettingsError, secret_value
 from janus.simulation import execute
 from janus.simulation import queue as q
 from janus.simulation.allowlist import allowlist
@@ -127,7 +128,11 @@ def main() -> int:
     if args.selftest:
         return selftest()
     configure_logging()
-    url = os.environ.get("DATABASE_URL", "")
+    try:
+        url = secret_value(os.environ, "DATABASE_URL").strip()
+    except SettingsError as exc:
+        print(str(exc), file=sys.stderr)
+        return 2
     if not url:
         print("DATABASE_URL is not set", file=sys.stderr)
         return 2

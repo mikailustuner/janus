@@ -27,8 +27,10 @@ browser ─HTTPS─▶ Cloudflare ─tunnel (outbound only)─▶ cloudflared �
 | File                                                             | Purpose                                                                                                                                                                                                                                                                         |
 | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `compose.yml`                                                    | The stack (copied to `STACK_DIR`)                                                                                                                                                                                                                                               |
-| `env.example`                                                    | Template of `STACK_DIR/.env` (mode 600, secrets generated on the server)                                                                                                                                                                                                        |
+| `env.example`                                                    | Template of `STACK_DIR/.env` (mode 600, settings only; secrets are files, see "Secrets")                                                                                                                                                                                                        |
 | `cloudflared.config.yml.example`                                 | Tunnel ingress: `janusmeds.org → web:3000`, everything else 404                                                                                                                                                                                                                 |
+| `secrets-setup.sh`                                               | Secrets as files under `STACK_DIR/secrets/` (owner, sudo); `--check`, `--staging`  |
+| `staging.sh <tag>` / `staging-setup.sh`                          | Ephemeral staging check before every production swap; its one-time setup  |
 | `check_compose.py`                                               | CI check of the hardening rules on the resolved compose file                                                                                                                                                                                                                    |
 | `deploy.sh <commit>` / `rollback.sh [tag]`                       | Build on the server, migrate, swap, check; roll back on failure                                                                                                                                                                                                                 |
 | `verify-isolation.sh`                                            | Probes from each Janus network: server ports, other networks, metadata must be closed                                                                                                                                                                                           |
@@ -41,11 +43,71 @@ browser ─HTTPS─▶ Cloudflare ─tunnel (outbound only)─▶ cloudflared �
 | `backup-serve.sh` / `backup-pull.sh` / `backup-restore-check.sh` | Backups pulled by a separate machine; see "Backups"                                                                                                                                                                                                                             |
 | `janus-backup@.service` + `janus-backup-{db,data}.timer`         | Backup machine's user units: daily dump, weekly data snapshot                                                                                                                                                                                                                   |
 
+## Secrets
+
+No secret is an environment value (`docker inspect` would show it). Compose mounts files from
+`STACK_DIR/secrets/` at `/run/secrets/<name>`, and each service gets only what it needs:
+
+| File                     | Mounted into | Read as                                  |
+| ------------------------ | ------------ | ---------------------------------------- |
+| `postgres_password`      | postgres     | `POSTGRES_PASSWORD_FILE`                 |
+| `database_url`           | api, migrate | `DATABASE_URL_FILE`                      |
+| `noise_key`              | api          | `JANUS_NOISE_KEY_FILE`                   |
+| `simulator_db_password`  | migrate      | `SIMULATOR_DB_PASSWORD_FILE` (role step) |
+| `simulator_database_url` | simulator    | `DATABASE_URL_FILE`                      |
+
+The API accepts `NAME_FILE` (path of a file; one trailing newline is removed) for `DATABASE_URL`,
+`JANUS_NOISE_KEY`, `JANUS_NOTE_KEYS` and `SIMULATOR_DB_PASSWORD`; setting both forms, or naming a missing or
+unreadable file, stops the process with the variable's name and never the value.
+
+Plain compose bind-mounts each file with its host permissions, so `secrets-setup.sh` makes each file owned by the
+uid of the container user that reads it (postgres 999, api and migrate 10001, simulator 10002), group = the deploy
+user's group, mode 0440: the container user reads it, and the deploy user's scripts (`load-data.sh`, `staging.sh`)
+read it through the group. `load-data.sh` mounts `database_url` into its throw-away container and passes
+`DATABASE_URL_FILE`; no secret is ever on a command line.
+
+## Setup order on a server
+
+1. `.env` of the stack directory with `JANUS_UID`, `JANUS_GID` (and, once, the three secret lines of an older
+   install or of a new one, generated as in `env.example`).
+2. `sudo deploy/secrets-setup.sh`: writes `secrets/*` with the ownership above, builds the two database URLs,
+   removes the secret lines from `.env` only after the files verify. Idempotent; `deploy/secrets-setup.sh --check`
+   verifies without changing anything.
+3. `sudo deploy/firewall.sh`: now also covers the staging networks.
+4. `deploy/staging-setup.sh` (deploy user), then `sudo deploy/secrets-setup.sh --staging` (the staging secrets are
+   new random values, never the production ones).
+5. `deploy/deploy.sh <commit>`.
+
+## Staging (before every production swap)
+
+`deploy.sh` runs `staging.sh <tag>` after building the images and before it touches production (before the
+migrations), when the staging directory exists (`STAGING_DIR`, default `STACK_DIR/../janus-staging`). If it
+fails, `deploy.sh` stops with "staging failed; production unchanged".
+
+The staging stack is `compose.yml` again, with `JANUS_STACK=janus-staging` and its own subnets from the staging
+directory's `.env` (172.31.253.0/24 edge, 172.31.254.0/24 internal; `firewall.sh` covers both). That directory
+holds its own `.env`, its own `secrets/` and a `data` link to the production data directory (mounted read-only by
+the api). `staging.sh`: removes any earlier staging containers and volume; starts staging postgres; restores a
+fresh `pg_dump -Fc` of the production database into it (`--no-owner --no-privileges`; the simulator role and its
+queue grants are recreated as migration 0014 defines them); runs the new release's migrations and the simulator
+role step; starts `postgres api simulator web` (no cloudflared: no tunnel); runs `verify-isolation.sh` and
+`smoke.sh internal` against it; then removes the stack and its volume, whatever the outcome. It needs disk for a
+copy of the database and, for a few minutes, memory and CPU for a second stack.
+
+The compose project name and network names come from `JANUS_STACK` (default `janus-public`), the subnets from
+`JANUS_NET_INTERNAL` and `JANUS_NET_EDGE`; with none of them set, the resolved production config is identical to
+the one before they existed (`apps/api/tests/test_deploy_compose.py` checks this). `lib.sh` reads `JANUS_STACK`
+from the stack's `.env`; the checks use `${JANUS_STACK}-edge` and `${JANUS_STACK}-internal`.
+
 ## Check locally
 
 ```bash
-POSTGRES_PASSWORD=x JANUS_NOISE_KEY=x SIMULATOR_DB_PASSWORD=x JANUS_UID=1000 JANUS_GID=1000 JANUS_TAG=test \
-  docker compose -f deploy/compose.yml --profile migrate config --format json \
+stack="$(mktemp -d)"; mkdir "$stack/secrets"; cp deploy/compose.yml "$stack/"
+for n in postgres_password database_url noise_key simulator_db_password simulator_database_url; do
+  echo x > "$stack/secrets/$n"
+done
+JANUS_UID=1000 JANUS_GID=1000 JANUS_TAG=test \
+  docker compose --project-directory "$stack" -f "$stack/compose.yml" --profile migrate config --format json \
   | python3 deploy/check_compose.py
 ```
 
@@ -67,9 +129,9 @@ Owner decision 2026-11-09: resource caps raised (deploy Req 7.4): long-running s
    `(http.request.uri.path wildcard "/api/simulate*" and http.request.method eq "POST")`, counted per IP,
    5 requests per 10 seconds, action Block for 10 seconds. The Free plan has one rule: keep the `/api/*` rule
    and rely on the in-app limits, or replace it with this one; with more rules, add both.
-6. Before the first deploy of this release, add `SIMULATOR_DB_PASSWORD` to `STACK_DIR/.env` (see
-   `env.example`). `deploy.sh` gives the worker's own database role (`janus_simulator`: read, update and delete
-   on the queue table only) its login after the migrations, with `python -m janus.simulation.dbrole`.
+6. `deploy.sh` gives the worker's own database role (`janus_simulator`: read, update and delete
+   on the queue table only) its login after the migrations, with `python -m janus.simulation.dbrole`; its
+   password is the secret file `simulator_db_password` (see "Secrets").
 7. The api has `JANUS_BEHIND_CLOUDFLARE: "on"`: rate limits count Cloudflare's `CF-Connecting-IP` (IPv6 per /64).
 8. Rolling back across this release: the older release has no simulator, so restore its compose file first
    (`git -C src show <old-commit>:deploy/compose.yml > compose.yml`), then run `rollback.sh <old-tag>`; it
@@ -130,4 +192,9 @@ reach or delete them.
 
 `deploy.sh` runs from the `src/` checkout and checks out the new commit while it runs, so a release that
 changes `deploy.sh` itself is executed by the **old** script. Run `deploy.sh <commit>` a second time for such
-a release (the second run uses the new script; builds are cached).
+a release (the second run uses the new script; builds are cached). The release that introduces `staging.sh` and the
+secret files is such a release: set up the secrets first (`sudo deploy/secrets-setup.sh`, then `staging-setup.sh`),
+because the old script already installs the new `compose.yml` before it migrates; the staging check runs from the
+second run on. `rollback.sh` uses the installed `compose.yml`, so it keeps working. Rolling back to a release whose
+compose file still reads secrets from `.env` needs that old file and the old `.env` lines, written back from
+`secrets/` by hand.

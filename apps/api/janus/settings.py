@@ -65,13 +65,13 @@ class Settings:
     @classmethod
     def from_env(cls, env: Mapping[str, str] | None = None) -> Settings:
         e = os.environ if env is None else env
-        noise_key = parse_noise_key(e.get("JANUS_NOISE_KEY", ""))
-        note_keys = parse_note_keys(e.get("JANUS_NOTE_KEYS", ""))
+        noise_key = parse_noise_key(secret_value(e, "JANUS_NOISE_KEY"))
+        note_keys = parse_note_keys(secret_value(e, "JANUS_NOTE_KEYS"))
         signing = parse_signing_key_id(_optional(e, "JANUS_NOTE_SIGNING_KEY_ID"), note_keys)
         if noise_key is not None and noise_key in note_keys.values():
             raise SettingsError("JANUS_NOTE_KEYS must not reuse JANUS_NOISE_KEY")
         return cls(
-            database_url=_optional(e, "DATABASE_URL"),
+            database_url=secret_value(e, "DATABASE_URL").strip() or None,
             donation_region=_optional(e, "JANUS_DONATION_REGION"),
             consent_versions=parse_consent_versions(e.get("JANUS_CONSENT_VERSIONS", "")),
             event_vocabulary_path=Path(_optional(e, "JANUS_EVENT_VOCABULARY") or EVENT_VOCABULARY),
@@ -93,6 +93,26 @@ class Settings:
             ),
             metrics_port=parse_metrics_port(e.get("JANUS_METRICS_PORT", "")),
         )
+
+
+def secret_value(env: Mapping[str, str], name: str) -> str:
+    """A secret setting from `NAME` or from the file named by `NAME_FILE` (deploy secrets).
+
+    The file's content is the value, minus one trailing newline. Setting both is an error, and a
+    missing or unreadable file stops the process. Messages name the variable, never the value
+    (the original exception is dropped: a decoding error would quote the bytes).
+    """
+    direct = env.get(name, "")
+    path = env.get(f"{name}_FILE", "").strip()
+    if direct.strip() and path:
+        raise SettingsError(f"set only one of {name} and {name}_FILE")
+    if not path:
+        return direct
+    try:
+        text = Path(path).read_bytes().decode("utf-8")
+    except (OSError, UnicodeDecodeError):
+        raise SettingsError(f"{name}_FILE is missing, unreadable or not UTF-8 text") from None
+    return text.removesuffix("\n")
 
 
 def parse_metrics_port(raw: str) -> int | None:

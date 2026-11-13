@@ -7,7 +7,9 @@
 set -euo pipefail
 [ "$(id -u)" = 0 ] || { echo "run with sudo" >&2; exit 1; }
 TAG="janus-isolation"
-NETS=(172.31.250.0/24 172.31.251.0/24 172.31.252.0/24)   # edge, internal, jobs (compose.yml)
+# edge, internal, jobs (compose.yml); then the ephemeral staging stack's edge and internal networks
+# (staging.sh, `janus-staging`): staging containers get the same isolation as production.
+NETS=(172.31.250.0/24 172.31.251.0/24 172.31.252.0/24 172.31.253.0/24 172.31.254.0/24)
 BLOCK=(10.0.0.0/8 172.16.0.0/12 192.168.0.0/16 100.64.0.0/10 169.254.0.0/16)
 
 remove() {

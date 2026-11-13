@@ -7,7 +7,7 @@ target="${1:?usage: smoke.sh internal|<https url> [tag]}"
 tag="${2:-}"
 if [ "$target" = internal ]; then
   base="http://web:3000"
-  get() { docker run --rm --network janus-public-edge --read-only --cap-drop ALL curlimages/curl:8.17.0 "$@"; }
+  get() { docker run --rm --network "${JANUS_STACK}-edge" --read-only --cap-drop ALL curlimages/curl:8.17.0 "$@"; }
 else
   base="$target"
   get() { curl "$@"; }
