@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 # Janus API. Build context: repository root (the API reads the committed data/ and datasets/).
 # Base images are multi-arch (linux/amd64, linux/arm64).
-FROM python:3.12-slim AS base
+FROM python:3.15-slim AS base
 
 # Security fixes released after the base image was built (deploy C3: image scan in CI).
 RUN apt-get update \
