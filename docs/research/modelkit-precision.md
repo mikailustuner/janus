@@ -102,7 +102,19 @@ Level 3 is empty in the new articles. Every value that passes the other rules fa
 named in the methods, a population or release word, or a model-based study. The pre-registered rule is therefore tested at
 level 2.
 
-<!-- P2-RESULTS -->
+**Results (fresh measurement, two automated passes, kappa 0.88 over all 53 items; 3 disagreements):**
+
+| Level | Coverage of the frame | Agreed values (articles) | Precision | Conservative | Wilson 95 % | Cluster bootstrap 95 % | Design effect | Wilson, n / deff | Cluster-aware lower | Rule (≥ 0.90) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| ≥ 2 | 10 % (42 of 412) | 22 (9) | 0.364 | 0.348 | 0.197–0.570 | 0.091–0.667 | 2.09 | 0.149–0.651 | 0.091 | **no** |
+| ≥ 0 (weighted) | 100 % | 50 (36) | 0.390 | 0.358 | 0.246–0.556 | 0.225–0.564 | 1.10 | 0.240–0.564 | 0.225 | no |
+
+Agreed errors (31): 11 wrong value (a p value, a coefficient of variation or a test statistic read as the parameter;
+creatinine clearance from a demographics table read as drug clearance; model outputs), 10 analyte (metabolites such as
+SN-38 glucuronide, 7-hydroxy-cannabidiol and the ticagrelor metabolite; a partner drug's value in an interaction study;
+tenofovir after its prodrug), 10 context (single-patient values, a rat study, a co-infused or co-administered drug). By
+parameter, volume at steady state was right 5 of 5 times; clearance (0 of 7) and Cmax (1 of 5) were the worst.
+**PMC tables stay held back.**
 
 ### 3.2 Drugs@FDA clinical pharmacology reviews, frame D2
 - **Documents.** Priority-1 and priority-2 review PDFs of original applications not fetched before (up to 5 more per
@@ -114,7 +126,15 @@ level 2.
 
 With 11 documents the cluster-aware lower bound cannot reach 0.90, whatever the verdicts. This was stated before the draw.
 
-<!-- D2-RESULTS -->
+**Results (fresh measurement, kappa 1.00 over 26 items):**
+
+| | Agreed values (documents) | Precision | Wilson 95 % | Cluster bootstrap 95 % | Design effect | Wilson, n / deff | Cluster-aware lower | Rule (≥ 0.90) |
+|---|---|---|---|---|---|---|---|---|
+| Confirmed values (one band) | 26 (11) | 0.769 | 0.579–0.890 | 0.500–1.000 | 2.34 | 0.475–0.925 | 0.475 | **no** |
+
+Agreed errors (6), in 3 of the 11 documents: a test/reference ratio (%) read as AUC and Cmax, a coefficient of
+variation read as a half-life, and in a combination-product review a table of the partner drug (salmeterol) and a
+paediatric subgroup read as fluticasone propionate. **Drugs@FDA review tables stay held back.**
 
 ### 3.3 Sources checked and not measured
 | Source | Re-use | Structured PK values | Decision |
@@ -127,7 +147,32 @@ With 11 documents the cluster-aware lower bound cannot reach 0.90, whatever the 
 
 ## 4. What failed, and why
 
-<!-- FAILED -->
+| Source | Fresh precision (cluster-aware lower bound) | Pre-registered expectation | Ships |
+|---|---|---|---|
+| ClinicalTrials.gov, shipped level 3 (re-analysis) | 0.992 (0.934) | — | yes (unchanged) |
+| PubMed Central tables, level 2 | 0.364 (0.091) | not met | no |
+| Drugs@FDA reviews | 0.769 (0.475) | not met | no |
+
+1. **Both new sources fail the rule**, as expected before the draw. The way out of the exhausted registry did not open in
+   this round: the fresh pools exist, but the document readers are not precise enough on them.
+2. **PMC: the reference tables did not fix the source.** On the development items, iteration 2 looked like a fix (15 of 16
+   at level 3). On new articles it kept **no** value at level 3, and its level 2 was no better than no rule at all (0.36 vs
+   0.39). The development figure did not generalise, the same pattern as the earlier rounds. The errors are not mainly
+   metabolites any more: statistic columns (p values, CV, test statistics), creatinine clearance in demographic tables,
+   single-patient rows, model outputs and animal studies make up more than half (18 of 31). Several of these are words the check already
+   looks for, but in places it does not search (the stub of a single-patient table, the methods of a rat study, a model
+   section); they are rules for a next round, and they would have to be measured on another fresh pool.
+3. **FDA: too few readable documents.** Of 352 new review PDFs downloaded, 199 are scanned and are not read; 11 documents gave a
+   confirmed value. Precision 0.77 is better than the earlier 0.48, but its errors sit in three documents, and 11 documents
+   cannot give a lower bound near 0.90.
+4. **Target sample size not reached:** 79 fresh values from 49 studies (target ≥ 120 from ≥ 40). The frames were taken at
+   capacity under the 3-per-study cap.
+5. **ClinicalTrials.gov:** the shipped figure survives the cluster correction (lower bound 0.934), but it rests on 14
+   studies and one error; in error-prone studies the same level kept 0.64. A fresh ClinicalTrials.gov measurement is not
+   possible with the current intake.
+
+Not measured in this round: recall (phase B3b, expert annotation) and expert precision (tier 2). The negative results are
+also listed in [`negative-results.md`](negative-results.md).
 
 ## 5. Reproduce
 `uv run --project pipelines python pipelines/tools/modelkit_precision_report.py --date 2026-11-13` rewrites

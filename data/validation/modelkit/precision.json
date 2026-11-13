@@ -1,0 +1,516 @@
+{
+ "measured_on": "2026-11-13",
+ "protocol": "docs/research/modelkit-precision-protocol.md",
+ "method": "docs/research/modelkit-precision.md",
+ "truth": "two independent automated review passes per value; expert review has not yet been done",
+ "recall": "not yet measured (needs expert annotation, phase B3b)",
+ "acceptance_rule": "a source ships only if the cluster-aware lower 95 % bound of its precision is >= 0.90",
+ "interval_note": "wilson assumes independent values; cluster_bootstrap resamples whole studies (4,000 resamples, seed 20261113); cluster_lower = min(bootstrap lower, Wilson lower with n / design effect)",
+ "sources": {
+  "clinicaltrials_gov": {
+   "label": "ClinicalTrials.gov results",
+   "confirmed_values": 2565,
+   "curves": [
+    {
+     "name": "iteration 1, frame F (re-analysis of sample A)",
+     "fresh_measurement": false,
+     "frame_values": 1010,
+     "points": [
+      {
+       "level": 0,
+       "coverage_n": 2565,
+       "coverage": 1.0,
+       "items": 174,
+       "n": 144,
+       "k": 133,
+       "studies": 84,
+       "precision": 0.849,
+       "conservative": 0.764,
+       "wilson": [
+        0.742,
+        0.917
+       ],
+       "cluster_bootstrap": [
+        0.732,
+        0.944
+       ],
+       "design_effect": 1.25,
+       "design_effect_estimated": true,
+       "n_effective": 51.2,
+       "wilson_adjusted": [
+        0.727,
+        0.923
+       ],
+       "cluster_lower": 0.727,
+       "kappa": 0.339,
+       "meets_rule": false
+      },
+      {
+       "level": 1,
+       "coverage_n": 1023,
+       "coverage": 0.399,
+       "items": 144,
+       "n": 121,
+       "k": 114,
+       "studies": 66,
+       "precision": 0.877,
+       "conservative": 0.792,
+       "wilson": [
+        0.784,
+        0.934
+       ],
+       "cluster_bootstrap": [
+        0.76,
+        0.986
+       ],
+       "design_effect": 1.78,
+       "design_effect_estimated": true,
+       "n_effective": 41.8,
+       "wilson_adjusted": [
+        0.745,
+        0.946
+       ],
+       "cluster_lower": 0.745,
+       "kappa": 0.299,
+       "meets_rule": false
+      },
+      {
+       "level": 2,
+       "coverage_n": 549,
+       "coverage": 0.214,
+       "items": 114,
+       "n": 101,
+       "k": 98,
+       "studies": 50,
+       "precision": 0.939,
+       "conservative": 0.86,
+       "wilson": [
+        0.867,
+        0.973
+       ],
+       "cluster_bootstrap": [
+        0.837,
+        1.0
+       ],
+       "design_effect": 1.84,
+       "design_effect_estimated": true,
+       "n_effective": 46.6,
+       "wilson_adjusted": [
+        0.831,
+        0.98
+       ],
+       "cluster_lower": 0.831,
+       "kappa": 0.269,
+       "meets_rule": false
+      },
+      {
+       "level": 3,
+       "coverage_n": 416,
+       "coverage": 0.162,
+       "items": 100,
+       "n": 87,
+       "k": 87,
+       "studies": 44,
+       "precision": 1.0,
+       "conservative": 0.87,
+       "wilson": [
+        0.958,
+        1.0
+       ],
+       "cluster_bootstrap": [
+        1.0,
+        1.0
+       ],
+       "design_effect": 1.98,
+       "design_effect_estimated": false,
+       "n_effective": 44.0,
+       "wilson_adjusted": [
+        0.92,
+        1.0
+       ],
+       "cluster_lower": 0.92,
+       "kappa": -0.035,
+       "meets_rule": true
+      },
+      {
+       "level": 4,
+       "coverage_n": 348,
+       "coverage": 0.136,
+       "items": 92,
+       "n": 82,
+       "k": 82,
+       "studies": 41,
+       "precision": 1.0,
+       "conservative": 0.891,
+       "wilson": [
+        0.955,
+        1.0
+       ],
+       "cluster_bootstrap": [
+        1.0,
+        1.0
+       ],
+       "design_effect": 2.0,
+       "design_effect_estimated": false,
+       "n_effective": 41.0,
+       "wilson_adjusted": [
+        0.914,
+        1.0
+       ],
+       "cluster_lower": 0.914,
+       "kappa": -0.036,
+       "meets_rule": true
+      },
+      {
+       "level": 5,
+       "coverage_n": 322,
+       "coverage": 0.126,
+       "items": 81,
+       "n": 71,
+       "k": 71,
+       "studies": 34,
+       "precision": 1.0,
+       "conservative": 0.877,
+       "wilson": [
+        0.949,
+        1.0
+       ],
+       "cluster_bootstrap": [
+        1.0,
+        1.0
+       ],
+       "design_effect": 2.09,
+       "design_effect_estimated": false,
+       "n_effective": 34.0,
+       "wilson_adjusted": [
+        0.898,
+        1.0
+       ],
+       "cluster_lower": 0.898,
+       "kappa": -0.041,
+       "meets_rule": false
+      }
+     ],
+     "errors_agreed": {
+      "analyte": 4,
+      "context": 1,
+      "dose": 2,
+      "value": 4
+     },
+     "by_parameter": {
+      "auc_inf": {
+       "n": 20,
+       "k": 17
+      },
+      "auc_last": {
+       "n": 4,
+       "k": 4
+      },
+      "auc_tau": {
+       "n": 2,
+       "k": 2
+      },
+      "cl": {
+       "n": 4,
+       "k": 4
+      },
+      "cl_f": {
+       "n": 4,
+       "k": 4
+      },
+      "cmax": {
+       "n": 61,
+       "k": 57
+      },
+      "t_half": {
+       "n": 21,
+       "k": 20
+      },
+      "tmax": {
+       "n": 16,
+       "k": 13
+      },
+      "v_f": {
+       "n": 4,
+       "k": 4
+      },
+      "vd": {
+       "n": 4,
+       "k": 4
+      },
+      "vss": {
+       "n": 4,
+       "k": 4
+      }
+     }
+    }
+   ],
+   "shipped": {
+    "name": "iteration 2, level 3 (census C, the shipped figure; re-analysis)",
+    "fresh_measurement": false,
+    "level": 3,
+    "coverage_n": 336,
+    "coverage": 0.131,
+    "items": 126,
+    "n": 126,
+    "k": 125,
+    "studies": 14,
+    "precision": 0.992,
+    "conservative": 0.992,
+    "wilson": [
+     0.956,
+     0.999
+    ],
+    "cluster_bootstrap": [
+     0.966,
+     1.0
+    ],
+    "design_effect": 1.8,
+    "design_effect_estimated": true,
+    "n_effective": 70.0,
+    "wilson_adjusted": [
+     0.934,
+     0.999
+    ],
+    "cluster_lower": 0.934,
+    "kappa": 1.0,
+    "meets_rule": true,
+    "errors_agreed": {
+     "context": 1
+    }
+   },
+   "secondary": [
+    {
+     "name": "iteration 1, level 3 or above, frame X: studies with an earlier error (re-analysis of sample A)",
+     "items": 23,
+     "n": 22,
+     "k": 14,
+     "studies": 8,
+     "precision": 0.636,
+     "conservative": 0.609,
+     "wilson": [
+      0.43,
+      0.803
+     ],
+     "cluster_bootstrap": [
+      0.292,
+      0.92
+     ],
+     "design_effect": 2.51,
+     "design_effect_estimated": true,
+     "n_effective": 8.8,
+     "wilson_adjusted": [
+      0.326,
+      0.864
+     ],
+     "cluster_lower": 0.292,
+     "kappa": 0.912,
+     "meets_rule": false
+    }
+   ]
+  },
+  "pmc_oa": {
+   "label": "PubMed Central open-access tables",
+   "confirmed_values": 412,
+   "curves": [
+    {
+     "name": "strict table check iteration 2, frame P2 (new articles; fresh measurement)",
+     "fresh_measurement": true,
+     "frame_values": 412,
+     "points": [
+      {
+       "level": 0,
+       "coverage_n": 412,
+       "coverage": 1.0,
+       "items": 53,
+       "n": 50,
+       "k": 19,
+       "studies": 36,
+       "precision": 0.39,
+       "conservative": 0.358,
+       "wilson": [
+        0.246,
+        0.556
+       ],
+       "cluster_bootstrap": [
+        0.225,
+        0.564
+       ],
+       "design_effect": 1.1,
+       "design_effect_estimated": true,
+       "n_effective": 31.1,
+       "wilson_adjusted": [
+        0.24,
+        0.564
+       ],
+       "cluster_lower": 0.225,
+       "kappa": 0.881,
+       "meets_rule": false
+      },
+      {
+       "level": 2,
+       "coverage_n": 42,
+       "coverage": 0.102,
+       "items": 23,
+       "n": 22,
+       "k": 8,
+       "studies": 9,
+       "precision": 0.364,
+       "conservative": 0.348,
+       "wilson": [
+        0.197,
+        0.57
+       ],
+       "cluster_bootstrap": [
+        0.091,
+        0.667
+       ],
+       "design_effect": 2.09,
+       "design_effect_estimated": true,
+       "n_effective": 10.5,
+       "wilson_adjusted": [
+        0.149,
+        0.651
+       ],
+       "cluster_lower": 0.091,
+       "kappa": 0.907,
+       "meets_rule": false
+      }
+     ],
+     "errors_agreed": {
+      "analyte": 10,
+      "context": 10,
+      "value": 11
+     },
+     "by_parameter": {
+      "cl": {
+       "n": 4,
+       "k": 0
+      },
+      "cl_f": {
+       "n": 3,
+       "k": 0
+      },
+      "cmax": {
+       "n": 5,
+       "k": 1
+      },
+      "f": {
+       "n": 1,
+       "k": 0
+      },
+      "t_half": {
+       "n": 16,
+       "k": 6
+      },
+      "tmax": {
+       "n": 13,
+       "k": 6
+      },
+      "v_f": {
+       "n": 1,
+       "k": 0
+      },
+      "vd": {
+       "n": 1,
+       "k": 1
+      },
+      "vd_per_kg": {
+       "n": 1,
+       "k": 0
+      },
+      "vss": {
+       "n": 5,
+       "k": 5
+      }
+     }
+    }
+   ],
+   "acceptance": {
+    "rule": "cluster-aware lower 95 % bound >= 0.90",
+    "levels_tested": [
+     2
+    ],
+    "passes_at_level": null,
+    "ships": false
+   }
+  },
+  "drugsatfda_review": {
+   "label": "Drugs@FDA review tables",
+   "confirmed_values": 45,
+   "curves": [
+    {
+     "name": "two-reader confirmation, frame D2 (review PDFs not fetched before; fresh measurement)",
+     "fresh_measurement": true,
+     "frame_values": 45,
+     "points": [
+      {
+       "level": 0,
+       "coverage_n": 45,
+       "coverage": 1.0,
+       "items": 26,
+       "n": 26,
+       "k": 20,
+       "studies": 11,
+       "precision": 0.769,
+       "conservative": 0.769,
+       "wilson": [
+        0.579,
+        0.89
+       ],
+       "cluster_bootstrap": [
+        0.5,
+        1.0
+       ],
+       "design_effect": 2.34,
+       "design_effect_estimated": true,
+       "n_effective": 11.1,
+       "wilson_adjusted": [
+        0.475,
+        0.925
+       ],
+       "cluster_lower": 0.475,
+       "kappa": 1.0,
+       "meets_rule": false
+      }
+     ],
+     "errors_agreed": {
+      "analyte": 2,
+      "context": 1,
+      "value": 3
+     },
+     "by_parameter": {
+      "auc_inf": {
+       "n": 2,
+       "k": 1
+      },
+      "cmax": {
+       "n": 5,
+       "k": 4
+      },
+      "t_half": {
+       "n": 10,
+       "k": 8
+      },
+      "tmax": {
+       "n": 8,
+       "k": 6
+      },
+      "v_f": {
+       "n": 1,
+       "k": 1
+      }
+     }
+    }
+   ],
+   "acceptance": {
+    "rule": "cluster-aware lower 95 % bound >= 0.90",
+    "levels_tested": [
+     0
+    ],
+    "passes_at_level": null,
+    "ships": false
+   }
+  }
+ }
+}

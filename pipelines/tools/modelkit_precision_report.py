@@ -164,7 +164,7 @@ def build(rows: list[dict[str, str]], frames: dict[str, Any], date: str) -> dict
 def svg(result: dict[str, Any]) -> str:
     """Risk-coverage curve: coverage (x) vs precision (y), cluster-aware interval as a bar."""
     w, h, ml, mr, mt, mb = 640, 400, 64, 36, 28, 56
-    y0, y1 = 0.4, 1.0
+    y0, y1 = 0.0, 1.0
 
     def x(c: float) -> float:
         return ml + c * (w - ml - mr)
@@ -181,7 +181,7 @@ def svg(result: dict[str, Any]) -> str:
         "been done.</desc>",
         f'<rect width="{w}" height="{h}" fill="#ffffff"/>',
     ]
-    for t in (0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0):
+    for t in (0.0, 0.2, 0.4, 0.6, 0.8, 1.0):
         out.append(
             f'<line x1="{ml}" x2="{w - mr}" y1="{y(t):.1f}" y2="{y(t):.1f}" stroke="#e5e7eb"/>'
         )
@@ -202,7 +202,8 @@ def svg(result: dict[str, Any]) -> str:
         f'<text transform="translate(16 {(mt + h - mb) / 2}) rotate(-90)" text-anchor="middle" fill="#111827">'
         "precision (agreed verdicts)</text>"
     )
-    legend_y = y(0.55)
+    legend_y = y(0.68)
+    lx = x(0.3)
     for src, res in result["sources"].items():
         col = COLOURS[src]
         for c in res["curves"]:
@@ -238,13 +239,13 @@ def svg(result: dict[str, Any]) -> str:
                 f", n {sh['n']} in {sh['studies']} studies</title></rect>"
             )
         out.append(
-            f'<rect x="{ml + 12}" y="{legend_y + 2}" width="12" height="4" fill="{col}"/>'
-            f'<text x="{ml + 30}" y="{legend_y + 8}" fill="#111827">{res["label"]}</text>'
+            f'<rect x="{lx}" y="{legend_y + 2}" width="12" height="4" fill="{col}"/>'
+            f'<text x="{lx + 18}" y="{legend_y + 8}" fill="#111827">{res["label"]}</text>'
         )
         legend_y += 16
     out.append(
-        f'<rect x="{ml + 13}" y="{legend_y}" width="10" height="10" fill="#ffffff" stroke="#374151" stroke-width="2"/>'
-        f'<text x="{ml + 30}" y="{legend_y + 9}" fill="#111827">shipped setting (ClinicalTrials.gov census)</text>'
+        f'<rect x="{lx + 1}" y="{legend_y}" width="10" height="10" fill="#ffffff" stroke="#374151" stroke-width="2"/>'
+        f'<text x="{lx + 18}" y="{legend_y + 9}" fill="#111827">shipped setting (ClinicalTrials.gov census)</text>'
     )
     out.append("</svg>")
     return "\n".join(out) + "\n"
