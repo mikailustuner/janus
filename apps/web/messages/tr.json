@@ -3453,7 +3453,8 @@
         "caption": "ClinicalTrials.gov değerleri için risk–kapsam tablosu",
         "level": "Denetim düzeyi",
         "coverage": "Kapsam (tutulan değerlerin payı)"
-      }
+      },
+      "interval": "{low}–{high}"
     },
     "modelkitGate": {
       "title": "Model kiti geçidi",

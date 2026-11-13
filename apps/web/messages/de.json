@@ -3453,7 +3453,8 @@
         "caption": "Risiko-Abdeckungs-Tabelle für ClinicalTrials.gov-Werte",
         "level": "Prüfstufe",
         "coverage": "Abdeckung (Anteil der behaltenen Werte)"
-      }
+      },
+      "interval": "{low}–{high}"
     },
     "modelkitGate": {
       "title": "Hürde des Modellbaukastens",

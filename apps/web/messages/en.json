@@ -3453,7 +3453,8 @@
         "caption": "Risk–coverage table for ClinicalTrials.gov values",
         "level": "Check level",
         "coverage": "Coverage (share of values kept)"
-      }
+      },
+      "interval": "{low}–{high}"
     },
     "modelkitGate": {
       "title": "Model kit gate",

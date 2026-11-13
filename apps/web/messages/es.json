@@ -3453,7 +3453,8 @@
         "caption": "Tabla de riesgo y cobertura de los valores de ClinicalTrials.gov",
         "level": "Nivel de comprobación",
         "coverage": "Cobertura (parte de los valores conservados)"
-      }
+      },
+      "interval": "{low}–{high}"
     },
     "modelkitGate": {
       "title": "Umbral del kit de modelos",
