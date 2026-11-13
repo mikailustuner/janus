@@ -16,6 +16,14 @@ The error budget is what the targets leave: 0.5 % of requests may fail and 5 % m
 "Janus SLO" dashboard shows both objectives, the budget left and the burn rate (1 = the budget is used up exactly
 in 30 days). Rules: `deploy/monitoring/slo.rules.yml`; dashboard: `deploy/monitoring/janus-slo.dashboard.json`.
 
+## Performance budgets
+
+`.github/workflows/perf.yml` runs Lighthouse (simulated slow phone) on the production build: performance,
+accessibility and SEO at least 0.90 on `/en/about` and `/en/privacy`. The home page is at 0.87 today (largest paint
+3.9 s, the hero image painted about 2.6 s after it has loaded, behind the page's script work); its target of 0.90 is
+a warning and 0.85 is the hard floor until that is fixed. A small k6 load check of the public API runs weekly
+(`deploy/load/smoke.js`; p95 of reads below 500 ms).
+
 ## Alerts
 
 Alerts go to a private push channel. A failed GitHub workflow (external uptime, nightly tests, security scans,
