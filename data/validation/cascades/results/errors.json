@@ -1,0 +1,191 @@
+{
+ "missed_positive_pairs_by_category": {
+  "cascade_not_in_rule_base": 75,
+  "drug_outside_rule_base_classes": 59,
+  "name_not_resolved": 4
+ },
+ "within_rule_base_scope": {
+  "pairs": 77,
+  "flagged": 77
+ },
+ "rule_exists_not_reported": [],
+ "flagged_negative_pairs": [
+  {
+   "id": "N150",
+   "a": "felodipine",
+   "b": "indapamide",
+   "rules": [
+    "pipc:5"
+   ]
+  },
+  {
+   "id": "N164",
+   "a": "fluvastatin",
+   "b": "morphine",
+   "rules": [
+    "pipc:9"
+   ]
+  },
+  {
+   "id": "N272",
+   "a": "omeprazole",
+   "b": "magnesium oxide",
+   "rules": [
+    "pipc:49"
+   ]
+  },
+  {
+   "id": "N296",
+   "a": "phenobarbital",
+   "b": "betamethasone",
+   "rules": [
+    "pipc:15"
+   ]
+  },
+  {
+   "id": "N297",
+   "a": "phenylbutazone",
+   "b": "bisoprolol",
+   "rules": [
+    "pipc:53"
+   ]
+  },
+  {
+   "id": "N298",
+   "a": "phenylbutazone",
+   "b": "ivabradine",
+   "rules": [
+    "pipc:54"
+   ]
+  },
+  {
+   "id": "N299",
+   "a": "phenylbutazone",
+   "b": "eplerenone",
+   "rules": [
+    "pipc:53",
+    "pipc:54"
+   ]
+  },
+  {
+   "id": "N335",
+   "a": "prochlorperazine",
+   "b": "metformin",
+   "rules": [
+    "pipc:22"
+   ]
+  },
+  {
+   "id": "N366",
+   "a": "rivastigmine",
+   "b": "trazodone",
+   "rules": [
+    "pipc:25"
+   ]
+  },
+  {
+   "id": "N375",
+   "a": "rofecoxib",
+   "b": "spironolactone",
+   "rules": [
+    "pipc:53",
+    "pipc:54"
+   ]
+  },
+  {
+   "id": "N385",
+   "a": "simvastatin",
+   "b": "tasimelteon",
+   "rules": [
+    "pipc:12"
+   ]
+  }
+ ],
+ "missed_cascade_cases_by_category": {
+  "cascade_not_in_rule_base": 25,
+  "drug_outside_rule_base_classes": 11,
+  "expected_drug_not_in_resolved_list": 4
+ },
+ "comparison_case_rules": [
+  {
+   "rule": "pipc:9",
+   "text": "Hydroxymethylglutaryl-coenzyme A (HMG Co-A) reductase inhibitor (statin) → Pain reliever",
+   "cases": 14
+  },
+  {
+   "rule": "pipc:53",
+   "text": "NSAID → Antihypertensive",
+   "cases": 12
+  },
+  {
+   "rule": "pipc:5",
+   "text": "Calcium channel blocker → Diuretic",
+   "cases": 5
+  },
+  {
+   "rule": "pipc:51",
+   "text": "Nonsteroidal anti-inflammatory drug (NSAID) → Gastroprotective agent",
+   "cases": 5
+  },
+  {
+   "rule": "pipc:54",
+   "text": "NSAID → Heart failure agent",
+   "cases": 3
+  },
+  {
+   "rule": "pipc:49",
+   "text": "Proton pump inhibitor → Vitamin or Mineral Deficiency",
+   "cases": 2
+  },
+  {
+   "rule": "pipc:6",
+   "text": "Calcium channel blocker → Laxative",
+   "cases": 2
+  },
+  {
+   "rule": "pipc:3",
+   "text": "Beta-blocker (particularly lipophilic e.g., propranolol) → Antidepressant",
+   "cases": 2
+  },
+  {
+   "rule": "pipc:10",
+   "text": "HMG Co-A reductase inhibitor → Mineral supplement",
+   "cases": 2
+  },
+  {
+   "rule": "pipc:50",
+   "text": "Bisphosphonate → Gastroprotective agent",
+   "cases": 1
+  },
+  {
+   "rule": "pipc:2",
+   "text": "Antihypertensive → Antiemetic",
+   "cases": 1
+  },
+  {
+   "rule": "pipc:61",
+   "text": "Corticosteroid → Antihypertensive",
+   "cases": 1
+  },
+  {
+   "rule": "pipc:31",
+   "text": "Gabapentinoid → Diuretic",
+   "cases": 1
+  },
+  {
+   "rule": "pipc:48",
+   "text": "Proton pump inhibitor → Vitamin supplement",
+   "cases": 1
+  },
+  {
+   "rule": "pipc:12",
+   "text": "HMG Co-A reductase inhibitor → Sleep agent",
+   "cases": 1
+  },
+  {
+   "rule": "pipc:20",
+   "text": "Antipsychotic → Sedative",
+   "cases": 1
+  }
+ ]
+}

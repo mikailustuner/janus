@@ -1,0 +1,3428 @@
+[
+ {
+  "id": "CM001",
+  "medications": [
+   {
+    "name": "amlodipine",
+    "qid": "Q411347",
+    "label": "amlodipine",
+    "atc": [
+     "C08CA01"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "lisinopril",
+    "qid": "Q412208",
+    "label": "lisinopril",
+    "atc": [
+     "C09AA03"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "hydrochlorothiazide",
+    "qid": "Q423930",
+    "label": "hydrochlorothiazide",
+    "atc": [
+     "C03AA03"
+    ],
+    "by": "label"
+   }
+  ],
+  "findings": [
+   {
+    "rule_id": "pipc:5",
+    "index": "Q411347",
+    "marker": "Q423930",
+    "status": "possible",
+    "timing": "date_unknown"
+   }
+  ],
+  "error": null,
+  "any_finding": true,
+  "flagged": false
+ },
+ {
+  "id": "CM002",
+  "medications": [
+   {
+    "name": "amlodipine",
+    "qid": "Q411347",
+    "label": "amlodipine",
+    "atc": [
+     "C08CA01"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "lisinopril",
+    "qid": "Q412208",
+    "label": "lisinopril",
+    "atc": [
+     "C09AA03"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "metoprolol tartrate",
+    "qid": "Q409468",
+    "label": "(RS)-metoprolol",
+    "atc": [
+     "C07AB02"
+    ],
+    "by": "single_ingredient_product"
+   },
+   {
+    "name": "simvastatin",
+    "qid": "Q670131",
+    "label": "simvastatin",
+    "atc": [
+     "C10AA01"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "anastrozole",
+    "qid": "Q419143",
+    "label": "anastrozole",
+    "atc": [
+     "L02BG03"
+    ],
+    "by": "label"
+   }
+  ],
+  "findings": [],
+  "error": null,
+  "any_finding": false,
+  "flagged": false
+ },
+ {
+  "id": "CM003",
+  "medications": [
+   {
+    "name": "lamotrigine",
+    "qid": "Q410346",
+    "label": "lamotrigine",
+    "atc": [
+     "N03AX09"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "bupropion",
+    "qid": "Q834280",
+    "label": "bupropion",
+    "atc": [
+     "N06AX12"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "fluvoxamine",
+    "qid": "Q409236",
+    "label": "fluvoxamine",
+    "atc": [
+     "N06AB08"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "alprazolam",
+    "qid": "Q319877",
+    "label": "alprazolam",
+    "atc": [
+     "N05BA12"
+    ],
+    "by": "label"
+   }
+  ],
+  "findings": [],
+  "error": null,
+  "any_finding": false,
+  "flagged": false
+ },
+ {
+  "id": "CM004",
+  "medications": [
+   {
+    "name": "carvedilol",
+    "qid": "Q412534",
+    "label": "carvedilol",
+    "atc": [
+     "C07AG02"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "furosemide",
+    "qid": "Q388801",
+    "label": "furosemide",
+    "atc": [
+     "C03CA01"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "spironolactone",
+    "qid": "Q422188",
+    "label": "spironolactone",
+    "atc": [
+     "C03DA01"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "sacubitril/valsartan",
+    "qid": null,
+    "why": "no_mapped_ingredient"
+   },
+   {
+    "name": "dapagliflozin",
+    "qid": "Q409898",
+    "label": "dapagliflozin",
+    "atc": [
+     "A10BK01"
+    ],
+    "by": "label"
+   }
+  ],
+  "findings": [],
+  "error": null,
+  "any_finding": false,
+  "flagged": false
+ },
+ {
+  "id": "CM005",
+  "medications": [
+   {
+    "name": "metoprolol tartrate",
+    "qid": "Q409468",
+    "label": "(RS)-metoprolol",
+    "atc": [
+     "C07AB02"
+    ],
+    "by": "single_ingredient_product"
+   },
+   {
+    "name": "lisinopril",
+    "qid": "Q412208",
+    "label": "lisinopril",
+    "atc": [
+     "C09AA03"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "atorvastatin",
+    "qid": "Q668093",
+    "label": "atorvastatin",
+    "atc": [
+     "C10AA05"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "rivaroxaban",
+    "qid": "Q420262",
+    "label": "rivaroxaban",
+    "atc": [
+     "B01AF01"
+    ],
+    "by": "label"
+   }
+  ],
+  "findings": [],
+  "error": null,
+  "any_finding": false,
+  "flagged": false
+ },
+ {
+  "id": "CM006",
+  "medications": [
+   {
+    "name": "aspirin",
+    "qid": "Q18216",
+    "label": "aspirin",
+    "atc": [
+     "A01AD05",
+     "B01AC06",
+     "N02BA01"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "clopidogrel",
+    "qid": "Q410237",
+    "label": "clopidogrel",
+    "atc": [
+     "B01AC04"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "atorvastatin",
+    "qid": "Q668093",
+    "label": "atorvastatin",
+    "atc": [
+     "C10AA05"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "lisinopril",
+    "qid": "Q412208",
+    "label": "lisinopril",
+    "atc": [
+     "C09AA03"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "esomeprazole",
+    "qid": "Q553223",
+    "label": "esomeprazole",
+    "atc": [
+     "A02BC05"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "levothyroxine",
+    "qid": "Q773449",
+    "label": "L-thyroxine",
+    "atc": [
+     "H03AA01"
+    ],
+    "by": "ingredient_candidate"
+   }
+  ],
+  "findings": [
+   {
+    "rule_id": "pipc:9",
+    "index": "Q668093",
+    "marker": "Q18216",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:51",
+    "index": "Q18216",
+    "marker": "Q553223",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:53",
+    "index": "Q18216",
+    "marker": "Q412208",
+    "status": "possible",
+    "timing": "date_unknown"
+   }
+  ],
+  "error": null,
+  "any_finding": true,
+  "flagged": false
+ },
+ {
+  "id": "CM007",
+  "medications": [
+   {
+    "name": "aspirin",
+    "qid": "Q18216",
+    "label": "aspirin",
+    "atc": [
+     "A01AD05",
+     "B01AC06",
+     "N02BA01"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "rosuvastatin",
+    "qid": "Q415159",
+    "label": "rosuvastatin",
+    "atc": [
+     "C10AA07"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "tamsulosin",
+    "qid": "Q418480",
+    "label": "tamsulosin",
+    "atc": [
+     "G04CA02"
+    ],
+    "by": "ingredient_candidate"
+   }
+  ],
+  "findings": [
+   {
+    "rule_id": "pipc:9",
+    "index": "Q415159",
+    "marker": "Q18216",
+    "status": "possible",
+    "timing": "date_unknown"
+   }
+  ],
+  "error": null,
+  "any_finding": true,
+  "flagged": false
+ },
+ {
+  "id": "CM008",
+  "medications": [
+   {
+    "name": "dipyridamole",
+    "qid": "Q419374",
+    "label": "dipyridamole",
+    "atc": [
+     "B01AC07"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "clopidogrel",
+    "qid": "Q410237",
+    "label": "clopidogrel",
+    "atc": [
+     "B01AC04"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "valsartan",
+    "qid": "Q155472",
+    "label": "valsartan",
+    "atc": [
+     "C09CA03"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "atorvastatin",
+    "qid": "Q668093",
+    "label": "atorvastatin",
+    "atc": [
+     "C10AA05"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "insulin",
+    "qid": "Q2754775",
+    "label": "insulin aspart",
+    "atc": [
+     "A10AB05",
+     "A10AD05"
+    ],
+    "by": "ingredient_candidate"
+   }
+  ],
+  "findings": [],
+  "error": null,
+  "any_finding": false,
+  "flagged": false
+ },
+ {
+  "id": "CM009",
+  "medications": [
+   {
+    "name": "carbocisteine",
+    "qid": "Q423408",
+    "label": "L-carbocysteine",
+    "atc": [
+     "R05CB03"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "fluticasone furoate/vilanterol",
+    "qid": "Q2166700",
+    "label": "fluticasone furoate",
+    "atc": [
+     "R01AD12",
+     "R03BA09"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "amlodipine",
+    "qid": "Q411347",
+    "label": "amlodipine",
+    "atc": [
+     "C08CA01"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "esomeprazole",
+    "qid": "Q553223",
+    "label": "esomeprazole",
+    "atc": [
+     "A02BC05"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "alendronate",
+    "qid": "Q420057",
+    "label": "alendronic acid",
+    "atc": [
+     "M05BA04"
+    ],
+    "by": "single_ingredient_product"
+   }
+  ],
+  "findings": [
+   {
+    "rule_id": "pipc:50",
+    "index": "Q420057",
+    "marker": "Q553223",
+    "status": "possible",
+    "timing": "date_unknown"
+   }
+  ],
+  "error": null,
+  "any_finding": true,
+  "flagged": false
+ },
+ {
+  "id": "CM010",
+  "medications": [
+   {
+    "name": "semaglutide",
+    "qid": "Q27261089",
+    "label": "semaglutide",
+    "atc": [
+     "A10BJ06"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "losartan potassium",
+    "qid": "Q410074",
+    "label": "losartan",
+    "atc": [
+     "C09CA01"
+    ],
+    "by": "single_ingredient_product"
+   },
+   {
+    "name": "omeprazole",
+    "qid": "Q422210",
+    "label": "omeprazole",
+    "atc": [
+     "A02BC01"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "bupropion hydrochloride",
+    "qid": "Q834280",
+    "label": "bupropion",
+    "atc": [
+     "N06AX12"
+    ],
+    "by": "single_ingredient_product"
+   },
+   {
+    "name": "zolpidem tartrate",
+    "qid": "Q218842",
+    "label": "zolpidem",
+    "atc": [
+     "N05CF02"
+    ],
+    "by": "single_ingredient_product"
+   }
+  ],
+  "findings": [],
+  "error": null,
+  "any_finding": false,
+  "flagged": false
+ },
+ {
+  "id": "CM011",
+  "medications": [
+   {
+    "name": "metformin",
+    "qid": "Q19484",
+    "label": "metformin",
+    "atc": [
+     "A10BA02"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "quinapril/hydrochlorothiazide",
+    "qid": "Q596022",
+    "label": "quinapril",
+    "atc": [
+     "C09AA06"
+    ],
+    "by": "single_ingredient_product"
+   },
+   {
+    "name": "levothyroxine",
+    "qid": "Q773449",
+    "label": "L-thyroxine",
+    "atc": [
+     "H03AA01"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "rabeprazole",
+    "qid": "Q7301602",
+    "label": "rebamipide",
+    "atc": [
+     "A02BX14"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "domperidone",
+    "qid": "Q424238",
+    "label": "domperidone",
+    "atc": [
+     "A03FA03"
+    ],
+    "by": "ingredient_candidate"
+   }
+  ],
+  "findings": [
+   {
+    "rule_id": "pipc:2",
+    "index": "Q596022",
+    "marker": "Q424238",
+    "status": "possible",
+    "timing": "date_unknown"
+   }
+  ],
+  "error": null,
+  "any_finding": true,
+  "flagged": false
+ },
+ {
+  "id": "CM012",
+  "medications": [
+   {
+    "name": "pantoprazole",
+    "qid": "Q286846",
+    "label": "pantoprazole",
+    "atc": [
+     "A02BC02"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "levothyroxine",
+    "qid": "Q773449",
+    "label": "L-thyroxine",
+    "atc": [
+     "H03AA01"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "tamsulosin",
+    "qid": "Q418480",
+    "label": "tamsulosin",
+    "atc": [
+     "G04CA02"
+    ],
+    "by": "ingredient_candidate"
+   }
+  ],
+  "findings": [],
+  "error": null,
+  "any_finding": false,
+  "flagged": false
+ },
+ {
+  "id": "CM013",
+  "medications": [
+   {
+    "name": "prasugrel",
+    "qid": "Q416232",
+    "label": "prasugrel",
+    "atc": [
+     "B01AC22"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "rosuvastatin",
+    "qid": "Q415159",
+    "label": "rosuvastatin",
+    "atc": [
+     "C10AA07"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "vonoprazan",
+    "qid": null,
+    "why": "no_mapped_ingredient"
+   },
+   {
+    "name": "carvedilol",
+    "qid": "Q412534",
+    "label": "carvedilol",
+    "atc": [
+     "C07AG02"
+    ],
+    "by": "label"
+   }
+  ],
+  "findings": [],
+  "error": null,
+  "any_finding": false,
+  "flagged": false
+ },
+ {
+  "id": "CM014",
+  "medications": [
+   {
+    "name": "ticlopidine",
+    "qid": "Q420571",
+    "label": "ticlopidine",
+    "atc": [
+     "B01AC05"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "amlodipine",
+    "qid": "Q411347",
+    "label": "amlodipine",
+    "atc": [
+     "C08CA01"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "azosemide",
+    "qid": "Q388801",
+    "label": "furosemide",
+    "atc": [
+     "C03CA01"
+    ],
+    "by": "single_ingredient_product"
+   },
+   {
+    "name": "famotidine",
+    "qid": "Q411159",
+    "label": "famotidine",
+    "atc": [
+     "A02BA03"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "atorvastatin",
+    "qid": "Q668093",
+    "label": "atorvastatin",
+    "atc": [
+     "C10AA05"
+    ],
+    "by": "ingredient_candidate"
+   }
+  ],
+  "findings": [
+   {
+    "rule_id": "pipc:5",
+    "index": "Q411347",
+    "marker": "Q388801",
+    "status": "possible",
+    "timing": "date_unknown"
+   }
+  ],
+  "error": null,
+  "any_finding": true,
+  "flagged": false
+ },
+ {
+  "id": "CM015",
+  "medications": [
+   {
+    "name": "insulin glargine",
+    "qid": "Q417317",
+    "label": "insulin glargine",
+    "atc": [
+     "A10AE04"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "insulin lispro",
+    "qid": "Q3492616",
+    "label": "Insulin Lispro",
+    "atc": [
+     "A10AB04",
+     "A10AC04",
+     "A10AD04"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "rosuvastatin",
+    "qid": "Q415159",
+    "label": "rosuvastatin",
+    "atc": [
+     "C10AA07"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "famotidine",
+    "qid": "Q411159",
+    "label": "famotidine",
+    "atc": [
+     "A02BA03"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "ursodeoxycholic acid",
+    "qid": "Q241374",
+    "label": "ursodiol",
+    "atc": [
+     "A05AA02"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "mecobalamin",
+    "qid": "Q250442",
+    "label": "methylcobalamin",
+    "atc": [
+     "B03BA05"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "apixaban",
+    "qid": "Q414462",
+    "label": "apixaban",
+    "atc": [
+     "B01AF02"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "fulvestrant",
+    "qid": "Q5508491",
+    "label": "fulvestrant",
+    "atc": [
+     "L02BA03"
+    ],
+    "by": "label"
+   }
+  ],
+  "findings": [],
+  "error": null,
+  "any_finding": false,
+  "flagged": false
+ },
+ {
+  "id": "CM016",
+  "medications": [
+   {
+    "name": "carbidopa-levodopa",
+    "qid": null,
+    "why": "no_mapped_ingredient"
+   },
+   {
+    "name": "cyanocobalamin",
+    "qid": "Q252251",
+    "label": "cyanocobalamin",
+    "atc": [
+     "B03BA01"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "lansoprazole",
+    "qid": "Q254296",
+    "label": "lansoprazole",
+    "atc": [
+     "A02BC03"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "losartan",
+    "qid": "Q410074",
+    "label": "losartan",
+    "atc": [
+     "C09CA01"
+    ],
+    "by": "ingredient_candidate"
+   }
+  ],
+  "findings": [
+   {
+    "rule_id": "pipc:49",
+    "index": "Q254296",
+    "marker": "Q252251",
+    "status": "possible",
+    "timing": "date_unknown"
+   }
+  ],
+  "error": null,
+  "any_finding": true,
+  "flagged": false
+ },
+ {
+  "id": "CM017",
+  "medications": [
+   {
+    "name": "ferrous gluconate",
+    "qid": "Q421291",
+    "label": "iron(II) gluconate",
+    "atc": [
+     "B03AA03"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "rosuvastatin",
+    "qid": "Q415159",
+    "label": "rosuvastatin",
+    "atc": [
+     "C10AA07"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "bisoprolol",
+    "qid": "Q412515",
+    "label": "bisoprolol",
+    "atc": [
+     "C07AB07"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "mesalamine",
+    "qid": "Q412479",
+    "label": "mesalazine",
+    "atc": [
+     "A07EC02"
+    ],
+    "by": "single_ingredient_product"
+   },
+   {
+    "name": "gliclazide",
+    "qid": "Q290001",
+    "label": "gliclazide",
+    "atc": [
+     "A10BB09"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "metformin",
+    "qid": "Q19484",
+    "label": "metformin",
+    "atc": [
+     "A10BA02"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "vitamin D",
+    "qid": "Q139347",
+    "label": "cholecalciferol",
+    "atc": [
+     "A11CC05"
+    ],
+    "by": "ingredient_candidate"
+   }
+  ],
+  "findings": [],
+  "error": null,
+  "any_finding": false,
+  "flagged": false
+ },
+ {
+  "id": "CM018",
+  "medications": [
+   {
+    "name": "lercanidipine",
+    "qid": "Q410492",
+    "label": "lercanidipine",
+    "atc": [
+     "C08CA13"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "irbesartan",
+    "qid": "Q947266",
+    "label": "irbesartan",
+    "atc": [
+     "C09CA04"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "allopurinol",
+    "qid": "Q412486",
+    "label": "allopurinol",
+    "atc": [
+     "M04AA01"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "rosuvastatin",
+    "qid": "Q415159",
+    "label": "rosuvastatin",
+    "atc": [
+     "C10AA07"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "meloxicam",
+    "qid": "Q414028",
+    "label": "meloxicam",
+    "atc": [
+     "M01AC06"
+    ],
+    "by": "label"
+   }
+  ],
+  "findings": [
+   {
+    "rule_id": "pipc:9",
+    "index": "Q415159",
+    "marker": "Q414028",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:53",
+    "index": "Q414028",
+    "marker": "Q410492",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:53",
+    "index": "Q414028",
+    "marker": "Q947266",
+    "status": "possible",
+    "timing": "date_unknown"
+   }
+  ],
+  "error": null,
+  "any_finding": true,
+  "flagged": false
+ },
+ {
+  "id": "CM019",
+  "medications": [
+   {
+    "name": "indapamide",
+    "qid": "Q1078392",
+    "label": "indapamide",
+    "atc": [
+     "C03BA11"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "doxazosin",
+    "qid": "Q419939",
+    "label": "doxazosin",
+    "atc": [
+     "C02CA04"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "azilsartan",
+    "qid": "Q1087888",
+    "label": "azilsartan medoxomil",
+    "atc": [
+     "C09CA09"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "azelnidipine",
+    "qid": "Q731525",
+    "label": "cilnidipine",
+    "atc": [
+     "C08CA14"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "imidapril",
+    "qid": "Q1041804",
+    "label": "imidapril",
+    "atc": [
+     "C09AA16"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "benidipine",
+    "qid": "Q113514917",
+    "label": "rac-benidipine",
+    "atc": [
+     "C08CA15"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "nifedipine",
+    "qid": "Q39111",
+    "label": "nifedipine",
+    "atc": [
+     "C08CA05"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "dapagliflozin",
+    "qid": "Q409898",
+    "label": "dapagliflozin",
+    "atc": [
+     "A10BK01"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "insulin lispro",
+    "qid": "Q3492616",
+    "label": "Insulin Lispro",
+    "atc": [
+     "A10AB04",
+     "A10AC04",
+     "A10AD04"
+    ],
+    "by": "label"
+   }
+  ],
+  "findings": [
+   {
+    "rule_id": "pipc:5",
+    "index": "Q113514917",
+    "marker": "Q1078392",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:5",
+    "index": "Q39111",
+    "marker": "Q1078392",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:5",
+    "index": "Q731525",
+    "marker": "Q1078392",
+    "status": "possible",
+    "timing": "date_unknown"
+   }
+  ],
+  "error": null,
+  "any_finding": true,
+  "flagged": false
+ },
+ {
+  "id": "CM020",
+  "medications": [
+   {
+    "name": "prednisolone",
+    "qid": "Q11426176",
+    "label": "prednisolone",
+    "atc": [
+     "A07EA01",
+     "C05AA04",
+     "D07AA03",
+     "H02AB06",
+     "R01AD02",
+     "S01BA04",
+     "S02BA03",
+     "S03BA02"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "iguratimod",
+    "qid": "Q413994",
+    "label": "(S)-(\u2212)-timolol",
+    "atc": [
+     "S01ED01"
+    ],
+    "by": "single_ingredient_product"
+   },
+   {
+    "name": "methotrexate",
+    "qid": "Q422232",
+    "label": "methotrexate",
+    "atc": [
+     "L01BA01",
+     "L04AX03"
+    ],
+    "by": "label"
+   }
+  ],
+  "findings": [
+   {
+    "rule_id": "pipc:61",
+    "index": "Q11426176",
+    "marker": "Q413994",
+    "status": "possible",
+    "timing": "date_unknown"
+   }
+  ],
+  "error": null,
+  "any_finding": true,
+  "flagged": false
+ },
+ {
+  "id": "CM021",
+  "medications": [
+   {
+    "name": "aspirin",
+    "qid": "Q18216",
+    "label": "aspirin",
+    "atc": [
+     "A01AD05",
+     "B01AC06",
+     "N02BA01"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "atenolol",
+    "qid": "Q411325",
+    "label": "atenolol",
+    "atc": [
+     "C07AB03"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "furosemide",
+    "qid": "Q388801",
+    "label": "furosemide",
+    "atc": [
+     "C03CA01"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "terazosin",
+    "qid": "Q280786",
+    "label": "terazosin",
+    "atc": [
+     "G04CA03"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "atorvastatin",
+    "qid": "Q668093",
+    "label": "atorvastatin",
+    "atc": [
+     "C10AA05"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "carvedilol",
+    "qid": "Q412534",
+    "label": "carvedilol",
+    "atc": [
+     "C07AG02"
+    ],
+    "by": "label"
+   }
+  ],
+  "findings": [
+   {
+    "rule_id": "pipc:9",
+    "index": "Q668093",
+    "marker": "Q18216",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:53",
+    "index": "Q18216",
+    "marker": "Q388801",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:53",
+    "index": "Q18216",
+    "marker": "Q411325",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:53",
+    "index": "Q18216",
+    "marker": "Q412534",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:54",
+    "index": "Q18216",
+    "marker": "Q388801",
+    "status": "possible",
+    "timing": "date_unknown"
+   }
+  ],
+  "error": null,
+  "any_finding": true,
+  "flagged": false
+ },
+ {
+  "id": "CM022",
+  "medications": [
+   {
+    "name": "clopidogrel",
+    "qid": "Q410237",
+    "label": "clopidogrel",
+    "atc": [
+     "B01AC04"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "nonsteroidal anti-inflammatory drugs",
+    "qid": null,
+    "why": "no_mapped_ingredient"
+   },
+   {
+    "name": "donepezil",
+    "qid": "Q415081",
+    "label": "donepezil",
+    "atc": [
+     "N06DA02"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "glimepiride",
+    "qid": "Q106029845",
+    "label": "glimepiride",
+    "atc": [
+     "A10BB12"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "sitagliptin/metformin",
+    "qid": null,
+    "why": "no_mapped_ingredient"
+   }
+  ],
+  "findings": [],
+  "error": null,
+  "any_finding": false,
+  "flagged": false
+ },
+ {
+  "id": "CM023",
+  "medications": [
+   {
+    "name": "aspirin",
+    "qid": "Q18216",
+    "label": "aspirin",
+    "atc": [
+     "A01AD05",
+     "B01AC06",
+     "N02BA01"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "metoprolol",
+    "qid": "Q409468",
+    "label": "(RS)-metoprolol",
+    "atc": [
+     "C07AB02"
+    ],
+    "by": "single_ingredient_product"
+   },
+   {
+    "name": "rosuvastatin",
+    "qid": "Q415159",
+    "label": "rosuvastatin",
+    "atc": [
+     "C10AA07"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "folic acid",
+    "qid": "Q127060",
+    "label": "folic acid",
+    "atc": [
+     "B03BB01"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "vitamin D3",
+    "qid": "Q139347",
+    "label": "cholecalciferol",
+    "atc": [
+     "A11CC05"
+    ],
+    "by": "ingredient_candidate"
+   }
+  ],
+  "findings": [
+   {
+    "rule_id": "pipc:9",
+    "index": "Q415159",
+    "marker": "Q18216",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:53",
+    "index": "Q18216",
+    "marker": "Q409468",
+    "status": "possible",
+    "timing": "date_unknown"
+   }
+  ],
+  "error": null,
+  "any_finding": true,
+  "flagged": false
+ },
+ {
+  "id": "CM024",
+  "medications": [
+   {
+    "name": "amlodipine",
+    "qid": "Q411347",
+    "label": "amlodipine",
+    "atc": [
+     "C08CA01"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "cardioaspirin",
+    "qid": "Q2203957",
+    "label": "carbaspirin calcium",
+    "atc": [
+     "B01AC08",
+     "N02BA15"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "rosuvastatin/ezetimibe",
+    "qid": "Q415159",
+    "label": "rosuvastatin",
+    "atc": [
+     "C10AA07"
+    ],
+    "by": "single_ingredient_product"
+   },
+   {
+    "name": "pantoprazole",
+    "qid": "Q286846",
+    "label": "pantoprazole",
+    "atc": [
+     "A02BC02"
+    ],
+    "by": "label"
+   }
+  ],
+  "findings": [
+   {
+    "rule_id": "pipc:9",
+    "index": "Q415159",
+    "marker": "Q2203957",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:51",
+    "index": "Q2203957",
+    "marker": "Q286846",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:53",
+    "index": "Q2203957",
+    "marker": "Q411347",
+    "status": "possible",
+    "timing": "date_unknown"
+   }
+  ],
+  "error": null,
+  "any_finding": true,
+  "flagged": false
+ },
+ {
+  "id": "CM025",
+  "medications": [
+   {
+    "name": "amlodipine",
+    "qid": "Q411347",
+    "label": "amlodipine",
+    "atc": [
+     "C08CA01"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "carvedilol",
+    "qid": "Q412534",
+    "label": "carvedilol",
+    "atc": [
+     "C07AG02"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "empagliflozin",
+    "qid": "Q5373824",
+    "label": "empagliflozin",
+    "atc": [
+     "A10BK03",
+     "A10BX12"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "hydralazine",
+    "qid": "Q419987",
+    "label": "hydralazine",
+    "atc": [
+     "C02DB02"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "levothyroxine",
+    "qid": "Q773449",
+    "label": "L-thyroxine",
+    "atc": [
+     "H03AA01"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "losartan",
+    "qid": "Q410074",
+    "label": "losartan",
+    "atc": [
+     "C09CA01"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "metformin",
+    "qid": "Q19484",
+    "label": "metformin",
+    "atc": [
+     "A10BA02"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "rosuvastatin",
+    "qid": "Q415159",
+    "label": "rosuvastatin",
+    "atc": [
+     "C10AA07"
+    ],
+    "by": "label"
+   }
+  ],
+  "findings": [],
+  "error": null,
+  "any_finding": false,
+  "flagged": false
+ },
+ {
+  "id": "CM026",
+  "medications": [
+   {
+    "name": "cetirizine",
+    "qid": "Q423075",
+    "label": "cetirizine",
+    "atc": [
+     "R06AE07"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "cyanocobalamin",
+    "qid": "Q252251",
+    "label": "cyanocobalamin",
+    "atc": [
+     "B03BA01"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "darolutamide",
+    "qid": "Q418669",
+    "label": "flutamide",
+    "atc": [
+     "L02BB01"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "denosumab",
+    "qid": "Q408283",
+    "label": "denosumab",
+    "atc": [
+     "M05BX04"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "ferrous sulfate",
+    "qid": "Q214863",
+    "label": "iron(II) sulfate",
+    "atc": [
+     "B03AA07"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "lisinopril",
+    "qid": "Q412208",
+    "label": "lisinopril",
+    "atc": [
+     "C09AA03"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "multivitamin",
+    "qid": null,
+    "why": "no_mapped_ingredient"
+   },
+   {
+    "name": "leuprolide",
+    "qid": "Q907160",
+    "label": "leuprolide",
+    "atc": [
+     "L02AE02"
+    ],
+    "by": "ingredient_candidate"
+   }
+  ],
+  "findings": [],
+  "error": null,
+  "any_finding": false,
+  "flagged": false
+ },
+ {
+  "id": "CM027",
+  "medications": [
+   {
+    "name": "amlodipine",
+    "qid": "Q411347",
+    "label": "amlodipine",
+    "atc": [
+     "C08CA01"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "telmisartan",
+    "qid": "Q733186",
+    "label": "telmisartan",
+    "atc": [
+     "C09CA07"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "furosemide",
+    "qid": "Q388801",
+    "label": "furosemide",
+    "atc": [
+     "C03CA01"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "magnesium oxide",
+    "qid": "Q214769",
+    "label": "magnesium oxide",
+    "atc": [
+     "A02AA02",
+     "A06AD02",
+     "A12CC10"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "senna",
+    "qid": "Q502327",
+    "label": "senna glycoside",
+    "atc": [
+     "A06AB06"
+    ],
+    "by": "single_ingredient_product"
+   },
+   {
+    "name": "memantine",
+    "qid": "Q412189",
+    "label": "memantine",
+    "atc": [
+     "N06DX01"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "eldecalcitol",
+    "qid": "Q155682",
+    "label": "tacalcitol",
+    "atc": [
+     "D05AX04"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "levothyroxine",
+    "qid": "Q773449",
+    "label": "L-thyroxine",
+    "atc": [
+     "H03AA01"
+    ],
+    "by": "ingredient_candidate"
+   }
+  ],
+  "findings": [
+   {
+    "rule_id": "pipc:5",
+    "index": "Q411347",
+    "marker": "Q388801",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:6",
+    "index": "Q411347",
+    "marker": "Q214769",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:6",
+    "index": "Q411347",
+    "marker": "Q502327",
+    "status": "possible",
+    "timing": "date_unknown"
+   }
+  ],
+  "error": null,
+  "any_finding": true,
+  "flagged": false
+ },
+ {
+  "id": "CM028",
+  "medications": [
+   {
+    "name": "aspirin",
+    "qid": "Q18216",
+    "label": "aspirin",
+    "atc": [
+     "A01AD05",
+     "B01AC06",
+     "N02BA01"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "amlodipine",
+    "qid": "Q411347",
+    "label": "amlodipine",
+    "atc": [
+     "C08CA01"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "candesartan",
+    "qid": "Q415970",
+    "label": "candesartan",
+    "atc": [
+     "C09CA06"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "carbamazepine",
+    "qid": "Q410412",
+    "label": "carbamazepin",
+    "atc": [
+     "N03AF01"
+    ],
+    "by": "single_ingredient_product"
+   },
+   {
+    "name": "lamotrigine",
+    "qid": "Q410346",
+    "label": "lamotrigine",
+    "atc": [
+     "N03AX09"
+    ],
+    "by": "label"
+   }
+  ],
+  "findings": [
+   {
+    "rule_id": "pipc:53",
+    "index": "Q18216",
+    "marker": "Q411347",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:53",
+    "index": "Q18216",
+    "marker": "Q415970",
+    "status": "possible",
+    "timing": "date_unknown"
+   }
+  ],
+  "error": null,
+  "any_finding": true,
+  "flagged": false
+ },
+ {
+  "id": "CM029",
+  "medications": [
+   {
+    "name": "apixaban",
+    "qid": "Q414462",
+    "label": "apixaban",
+    "atc": [
+     "B01AF02"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "diltiazem",
+    "qid": "Q422229",
+    "label": "diltiazem",
+    "atc": [
+     "C05AE03",
+     "C08DB01"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "digoxin",
+    "qid": "Q422222",
+    "label": "digoxin",
+    "atc": [
+     "C01AA05"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "rosuvastatin",
+    "qid": "Q415159",
+    "label": "rosuvastatin",
+    "atc": [
+     "C10AA07"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "docusate",
+    "qid": "Q2815334",
+    "label": "docusate sodium",
+    "atc": [
+     "A06AA02"
+    ],
+    "by": "single_ingredient_product"
+   }
+  ],
+  "findings": [
+   {
+    "rule_id": "pipc:6",
+    "index": "Q422229",
+    "marker": "Q2815334",
+    "status": "possible",
+    "timing": "date_unknown"
+   }
+  ],
+  "error": null,
+  "any_finding": true,
+  "flagged": false
+ },
+ {
+  "id": "CM030",
+  "medications": [
+   {
+    "name": "Adderall",
+    "qid": "Q179452",
+    "label": "DL-amphetamine",
+    "atc": [
+     "N06BA01"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "amitriptyline",
+    "qid": "Q58397",
+    "label": "amitriptyline",
+    "atc": [
+     "N06AA09"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "Lasix",
+    "qid": "Q388801",
+    "label": "furosemide",
+    "atc": [
+     "C03CA01"
+    ],
+    "by": "single_ingredient_product"
+   },
+   {
+    "name": "omeprazole",
+    "qid": "Q422210",
+    "label": "omeprazole",
+    "atc": [
+     "A02BC01"
+    ],
+    "by": "label"
+   }
+  ],
+  "findings": [],
+  "error": null,
+  "any_finding": false,
+  "flagged": false
+ },
+ {
+  "id": "CM031",
+  "medications": [
+   {
+    "name": "aspirin",
+    "qid": "Q18216",
+    "label": "aspirin",
+    "atc": [
+     "A01AD05",
+     "B01AC06",
+     "N02BA01"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "carvedilol",
+    "qid": "Q412534",
+    "label": "carvedilol",
+    "atc": [
+     "C07AG02"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "atorvastatin",
+    "qid": "Q668093",
+    "label": "atorvastatin",
+    "atc": [
+     "C10AA05"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "nifedipine",
+    "qid": "Q39111",
+    "label": "nifedipine",
+    "atc": [
+     "C08CA05"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "sertraline",
+    "qid": "Q407617",
+    "label": "sertraline",
+    "atc": [
+     "N06AB06"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "cinacalcet",
+    "qid": "Q193978",
+    "label": "cinacalcet",
+    "atc": [
+     "H05BX01"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "calcitriol",
+    "qid": "Q139195",
+    "label": "calcitriol",
+    "atc": [
+     "A11CC04"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "IV iron (Venofer)",
+    "qid": "Q27888379",
+    "label": "iron sucrose",
+    "atc": [
+     "B03AB02"
+    ],
+    "by": "single_ingredient_product"
+   },
+   {
+    "name": "Mircera",
+    "qid": "Q6011913",
+    "label": "Methoxy polyethylene glycol-epoetin beta",
+    "atc": [
+     "B03XA03"
+    ],
+    "by": "single_ingredient_product"
+   }
+  ],
+  "findings": [
+   {
+    "rule_id": "pipc:9",
+    "index": "Q668093",
+    "marker": "Q18216",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:3",
+    "index": "Q412534",
+    "marker": "Q407617",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:53",
+    "index": "Q18216",
+    "marker": "Q39111",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:53",
+    "index": "Q18216",
+    "marker": "Q412534",
+    "status": "possible",
+    "timing": "date_unknown"
+   }
+  ],
+  "error": null,
+  "any_finding": true,
+  "flagged": false
+ },
+ {
+  "id": "CM032",
+  "medications": [
+   {
+    "name": "aspirin",
+    "qid": "Q18216",
+    "label": "aspirin",
+    "atc": [
+     "A01AD05",
+     "B01AC06",
+     "N02BA01"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "cholecalciferol",
+    "qid": "Q139347",
+    "label": "cholecalciferol",
+    "atc": [
+     "A11CC05"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "insulin N-insulin regular (Humulin 70/30)",
+    "qid": "Q2893248",
+    "label": "regular insulin",
+    "atc": [
+     "A10AB01"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "rosuvastatin",
+    "qid": "Q415159",
+    "label": "rosuvastatin",
+    "atc": [
+     "C10AA07"
+    ],
+    "by": "label"
+   }
+  ],
+  "findings": [
+   {
+    "rule_id": "pipc:9",
+    "index": "Q415159",
+    "marker": "Q18216",
+    "status": "possible",
+    "timing": "date_unknown"
+   }
+  ],
+  "error": null,
+  "any_finding": true,
+  "flagged": false
+ },
+ {
+  "id": "CM033",
+  "medications": [
+   {
+    "name": "lisinopril",
+    "qid": "Q412208",
+    "label": "lisinopril",
+    "atc": [
+     "C09AA03"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "baclofen",
+    "qid": "Q413717",
+    "label": "(RS)-baclofen",
+    "atc": [
+     "M03BX01"
+    ],
+    "by": "single_ingredient_product"
+   },
+   {
+    "name": "famotidine",
+    "qid": "Q411159",
+    "label": "famotidine",
+    "atc": [
+     "A02BA03"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "gabapentin",
+    "qid": "Q410352",
+    "label": "gabapentin",
+    "atc": [
+     "N02BF01",
+     "N03AX12"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "umeclidinium",
+    "qid": "Q15624035",
+    "label": "umeclidinium bromide",
+    "atc": [
+     "R03BB07"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "latanoprost",
+    "qid": "Q634959",
+    "label": "latanoprost",
+    "atc": [
+     "S01EE01"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "nystatin",
+    "qid": "Q251005",
+    "label": "nystatin",
+    "atc": [
+     "A07AA02",
+     "D01AA01"
+    ],
+    "by": "label"
+   }
+  ],
+  "findings": [],
+  "error": null,
+  "any_finding": false,
+  "flagged": false
+ },
+ {
+  "id": "CM034",
+  "medications": [
+   {
+    "name": "insulin glargine",
+    "qid": "Q417317",
+    "label": "insulin glargine",
+    "atc": [
+     "A10AE04"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "insulin aspart",
+    "qid": "Q2754775",
+    "label": "insulin aspart",
+    "atc": [
+     "A10AB05",
+     "A10AD05"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "atorvastatin",
+    "qid": "Q668093",
+    "label": "atorvastatin",
+    "atc": [
+     "C10AA05"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "lisinopril",
+    "qid": "Q412208",
+    "label": "lisinopril",
+    "atc": [
+     "C09AA03"
+    ],
+    "by": "label"
+   }
+  ],
+  "findings": [],
+  "error": null,
+  "any_finding": false,
+  "flagged": false
+ },
+ {
+  "id": "CM035",
+  "medications": [
+   {
+    "name": "chlorthalidone",
+    "qid": "Q425289",
+    "label": "chlorthalidone",
+    "atc": [
+     "C03BA04"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "insulin aspart",
+    "qid": "Q2754775",
+    "label": "insulin aspart",
+    "atc": [
+     "A10AB05",
+     "A10AD05"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "amlodipine",
+    "qid": "Q411347",
+    "label": "amlodipine",
+    "atc": [
+     "C08CA01"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "losartan",
+    "qid": "Q410074",
+    "label": "losartan",
+    "atc": [
+     "C09CA01"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "atorvastatin",
+    "qid": "Q668093",
+    "label": "atorvastatin",
+    "atc": [
+     "C10AA05"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "empagliflozin",
+    "qid": "Q5373824",
+    "label": "empagliflozin",
+    "atc": [
+     "A10BK03",
+     "A10BX12"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "aspirin",
+    "qid": "Q18216",
+    "label": "aspirin",
+    "atc": [
+     "A01AD05",
+     "B01AC06",
+     "N02BA01"
+    ],
+    "by": "label"
+   }
+  ],
+  "findings": [
+   {
+    "rule_id": "pipc:9",
+    "index": "Q668093",
+    "marker": "Q18216",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:5",
+    "index": "Q411347",
+    "marker": "Q425289",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:53",
+    "index": "Q18216",
+    "marker": "Q410074",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:53",
+    "index": "Q18216",
+    "marker": "Q411347",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:53",
+    "index": "Q18216",
+    "marker": "Q425289",
+    "status": "possible",
+    "timing": "date_unknown"
+   }
+  ],
+  "error": null,
+  "any_finding": true,
+  "flagged": false
+ },
+ {
+  "id": "CM036",
+  "medications": [
+   {
+    "name": "atorvastatin",
+    "qid": "Q668093",
+    "label": "atorvastatin",
+    "atc": [
+     "C10AA05"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "losartan",
+    "qid": "Q410074",
+    "label": "losartan",
+    "atc": [
+     "C09CA01"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "nifedipine",
+    "qid": "Q39111",
+    "label": "nifedipine",
+    "atc": [
+     "C08CA05"
+    ],
+    "by": "label"
+   }
+  ],
+  "findings": [],
+  "error": null,
+  "any_finding": false,
+  "flagged": false
+ },
+ {
+  "id": "CM037",
+  "medications": [
+   {
+    "name": "atorvastatin",
+    "qid": "Q668093",
+    "label": "atorvastatin",
+    "atc": [
+     "C10AA05"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "levothyroxine",
+    "qid": "Q773449",
+    "label": "L-thyroxine",
+    "atc": [
+     "H03AA01"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "aspirin",
+    "qid": "Q18216",
+    "label": "aspirin",
+    "atc": [
+     "A01AD05",
+     "B01AC06",
+     "N02BA01"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "multivitamin",
+    "qid": null,
+    "why": "no_mapped_ingredient"
+   },
+   {
+    "name": "vitamin D3/calcium carbonate supplement",
+    "qid": "Q23767",
+    "label": "calcium carbonate",
+    "atc": [
+     "A02AC01",
+     "A12AA04"
+    ],
+    "by": "ingredient_candidate"
+   }
+  ],
+  "findings": [
+   {
+    "rule_id": "pipc:9",
+    "index": "Q668093",
+    "marker": "Q18216",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:10",
+    "index": "Q668093",
+    "marker": "Q23767",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:51",
+    "index": "Q18216",
+    "marker": "Q23767",
+    "status": "possible",
+    "timing": "date_unknown"
+   }
+  ],
+  "error": null,
+  "any_finding": true,
+  "flagged": false
+ },
+ {
+  "id": "CM038",
+  "medications": [
+   {
+    "name": "metoprolol",
+    "qid": "Q409468",
+    "label": "(RS)-metoprolol",
+    "atc": [
+     "C07AB02"
+    ],
+    "by": "single_ingredient_product"
+   },
+   {
+    "name": "prazosin",
+    "qid": "Q425296",
+    "label": "prazosin",
+    "atc": [
+     "C02CA01"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "telmisartan-amlodipine",
+    "qid": null,
+    "why": "no_mapped_ingredient"
+   },
+   {
+    "name": "rosuvastatin",
+    "qid": "Q415159",
+    "label": "rosuvastatin",
+    "atc": [
+     "C10AA07"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "metformin",
+    "qid": "Q19484",
+    "label": "metformin",
+    "atc": [
+     "A10BA02"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "moxonidine",
+    "qid": "Q419944",
+    "label": "moxonidine",
+    "atc": [
+     "C02AC05"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "levothyroxine",
+    "qid": "Q773449",
+    "label": "L-thyroxine",
+    "atc": [
+     "H03AA01"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "methylcobalamin",
+    "qid": "Q250442",
+    "label": "methylcobalamin",
+    "atc": [
+     "B03BA05"
+    ],
+    "by": "ingredient_candidate"
+   }
+  ],
+  "findings": [],
+  "error": null,
+  "any_finding": false,
+  "flagged": false
+ },
+ {
+  "id": "CM039",
+  "medications": [
+   {
+    "name": "theophylline",
+    "qid": "Q407308",
+    "label": "theophylline",
+    "atc": [
+     "R03DA04"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "montelukast",
+    "qid": "Q417767",
+    "label": "montelukast",
+    "atc": [
+     "R03DC03"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "benidipine",
+    "qid": "Q113514917",
+    "label": "rac-benidipine",
+    "atc": [
+     "C08CA15"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "valsartan",
+    "qid": "Q155472",
+    "label": "valsartan",
+    "atc": [
+     "C09CA03"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "rosuvastatin",
+    "qid": "Q415159",
+    "label": "rosuvastatin",
+    "atc": [
+     "C10AA07"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "esomeprazole",
+    "qid": "Q553223",
+    "label": "esomeprazole",
+    "atc": [
+     "A02BC05"
+    ],
+    "by": "label"
+   }
+  ],
+  "findings": [],
+  "error": null,
+  "any_finding": false,
+  "flagged": false
+ },
+ {
+  "id": "CM040",
+  "medications": [
+   {
+    "name": "celecoxib",
+    "qid": "Q408801",
+    "label": "celecoxib",
+    "atc": [
+     "L01XX33",
+     "M01AH01"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "topical diclofenac",
+    "qid": "Q244408",
+    "label": "Diclofenac",
+    "atc": [
+     "D11AX18",
+     "M02AA15"
+    ],
+    "by": "single_ingredient_product"
+   },
+   {
+    "name": "escitalopram",
+    "qid": "Q423757",
+    "label": "escitalopram",
+    "atc": [
+     "N06AB10"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "famotidine",
+    "qid": "Q411159",
+    "label": "famotidine",
+    "atc": [
+     "A02BA03"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "furosemide",
+    "qid": "Q388801",
+    "label": "furosemide",
+    "atc": [
+     "C03CA01"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "metoprolol",
+    "qid": "Q409468",
+    "label": "(RS)-metoprolol",
+    "atc": [
+     "C07AB02"
+    ],
+    "by": "single_ingredient_product"
+   },
+   {
+    "name": "pregabalin",
+    "qid": "Q412174",
+    "label": "pregabalin",
+    "atc": [
+     "N02BF02",
+     "N03AX16"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "rosuvastatin",
+    "qid": "Q415159",
+    "label": "rosuvastatin",
+    "atc": [
+     "C10AA07"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "pancrelipase",
+    "qid": null,
+    "why": "no_mapped_ingredient"
+   }
+  ],
+  "findings": [
+   {
+    "rule_id": "pipc:9",
+    "index": "Q415159",
+    "marker": "Q244408",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:9",
+    "index": "Q415159",
+    "marker": "Q408801",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:3",
+    "index": "Q409468",
+    "marker": "Q423757",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:31",
+    "index": "Q412174",
+    "marker": "Q388801",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:51",
+    "index": "Q244408",
+    "marker": "Q411159",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:51",
+    "index": "Q408801",
+    "marker": "Q411159",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:53",
+    "index": "Q244408",
+    "marker": "Q388801",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:53",
+    "index": "Q244408",
+    "marker": "Q409468",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:53",
+    "index": "Q408801",
+    "marker": "Q388801",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:53",
+    "index": "Q408801",
+    "marker": "Q409468",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:54",
+    "index": "Q244408",
+    "marker": "Q388801",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:54",
+    "index": "Q408801",
+    "marker": "Q388801",
+    "status": "possible",
+    "timing": "date_unknown"
+   }
+  ],
+  "error": null,
+  "any_finding": true,
+  "flagged": false
+ },
+ {
+  "id": "CM041",
+  "medications": [
+   {
+    "name": "furosemide",
+    "qid": "Q388801",
+    "label": "furosemide",
+    "atc": [
+     "C03CA01"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "spironolactone",
+    "qid": "Q422188",
+    "label": "spironolactone",
+    "atc": [
+     "C03DA01"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "levothyroxine",
+    "qid": "Q773449",
+    "label": "L-thyroxine",
+    "atc": [
+     "H03AA01"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "atorvastatin",
+    "qid": "Q668093",
+    "label": "atorvastatin",
+    "atc": [
+     "C10AA05"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "calcium carbonate",
+    "qid": "Q23767",
+    "label": "calcium carbonate",
+    "atc": [
+     "A02AC01",
+     "A12AA04"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "ergocalciferol",
+    "qid": "Q139200",
+    "label": "ergocalciferol",
+    "atc": [
+     "A11CC01"
+    ],
+    "by": "label"
+   }
+  ],
+  "findings": [
+   {
+    "rule_id": "pipc:10",
+    "index": "Q668093",
+    "marker": "Q23767",
+    "status": "possible",
+    "timing": "date_unknown"
+   }
+  ],
+  "error": null,
+  "any_finding": true,
+  "flagged": false
+ },
+ {
+  "id": "CM042",
+  "medications": [
+   {
+    "name": "aspirin",
+    "qid": "Q18216",
+    "label": "aspirin",
+    "atc": [
+     "A01AD05",
+     "B01AC06",
+     "N02BA01"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "carvedilol",
+    "qid": "Q412534",
+    "label": "carvedilol",
+    "atc": [
+     "C07AG02"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "glipizide",
+    "qid": "Q3108899",
+    "label": "glipizide",
+    "atc": [
+     "A10BB07"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "losartan",
+    "qid": "Q410074",
+    "label": "losartan",
+    "atc": [
+     "C09CA01"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "metformin",
+    "qid": "Q19484",
+    "label": "metformin",
+    "atc": [
+     "A10BA02"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "rosuvastatin",
+    "qid": "Q415159",
+    "label": "rosuvastatin",
+    "atc": [
+     "C10AA07"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "tamsulosin",
+    "qid": "Q418480",
+    "label": "tamsulosin",
+    "atc": [
+     "G04CA02"
+    ],
+    "by": "ingredient_candidate"
+   }
+  ],
+  "findings": [
+   {
+    "rule_id": "pipc:9",
+    "index": "Q415159",
+    "marker": "Q18216",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:53",
+    "index": "Q18216",
+    "marker": "Q410074",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:53",
+    "index": "Q18216",
+    "marker": "Q412534",
+    "status": "possible",
+    "timing": "date_unknown"
+   }
+  ],
+  "error": null,
+  "any_finding": true,
+  "flagged": false
+ },
+ {
+  "id": "CM043",
+  "medications": [
+   {
+    "name": "atorvastatin",
+    "qid": "Q668093",
+    "label": "atorvastatin",
+    "atc": [
+     "C10AA05"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "betahistine hydrochloride",
+    "qid": "Q27281552",
+    "label": "betaine hydrochloride",
+    "atc": [
+     "A09AB02"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "celecoxib",
+    "qid": "Q408801",
+    "label": "celecoxib",
+    "atc": [
+     "L01XX33",
+     "M01AH01"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "ferrous fumarate",
+    "qid": "Q416370",
+    "label": "iron(II) fumarate",
+    "atc": [
+     "B03AA02"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "fesoterodine fumarate",
+    "qid": "Q4482372",
+    "label": "fesoterodine",
+    "atc": [
+     "G04BD11"
+    ],
+    "by": "single_ingredient_product"
+   },
+   {
+    "name": "pantoprazole",
+    "qid": "Q286846",
+    "label": "pantoprazole",
+    "atc": [
+     "A02BC02"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "pregabalin",
+    "qid": "Q412174",
+    "label": "pregabalin",
+    "atc": [
+     "N02BF02",
+     "N03AX16"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "trazodone",
+    "qid": "Q411457",
+    "label": "trazodone",
+    "atc": [
+     "N06AX05"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "valsartan",
+    "qid": "Q155472",
+    "label": "valsartan",
+    "atc": [
+     "C09CA03"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "vitamin B complex",
+    "qid": "Q252251",
+    "label": "cyanocobalamin",
+    "atc": [
+     "B03BA01"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "vitamin D3",
+    "qid": "Q139347",
+    "label": "cholecalciferol",
+    "atc": [
+     "A11CC05"
+    ],
+    "by": "ingredient_candidate"
+   }
+  ],
+  "findings": [
+   {
+    "rule_id": "pipc:9",
+    "index": "Q668093",
+    "marker": "Q408801",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:12",
+    "index": "Q668093",
+    "marker": "Q411457",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:48",
+    "index": "Q286846",
+    "marker": "Q139347",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:49",
+    "index": "Q286846",
+    "marker": "Q252251",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:49",
+    "index": "Q286846",
+    "marker": "Q416370",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:51",
+    "index": "Q408801",
+    "marker": "Q286846",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:53",
+    "index": "Q408801",
+    "marker": "Q155472",
+    "status": "possible",
+    "timing": "date_unknown"
+   }
+  ],
+  "error": null,
+  "any_finding": true,
+  "flagged": false
+ },
+ {
+  "id": "CM044",
+  "medications": [
+   {
+    "name": "metoprolol",
+    "qid": "Q409468",
+    "label": "(RS)-metoprolol",
+    "atc": [
+     "C07AB02"
+    ],
+    "by": "single_ingredient_product"
+   },
+   {
+    "name": "sacubitril-valsartan",
+    "qid": null,
+    "why": "no_mapped_ingredient"
+   },
+   {
+    "name": "dapagliflozin",
+    "qid": "Q409898",
+    "label": "dapagliflozin",
+    "atc": [
+     "A10BK01"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "furosemide",
+    "qid": "Q388801",
+    "label": "furosemide",
+    "atc": [
+     "C03CA01"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "spironolactone",
+    "qid": "Q422188",
+    "label": "spironolactone",
+    "atc": [
+     "C03DA01"
+    ],
+    "by": "label"
+   }
+  ],
+  "findings": [],
+  "error": null,
+  "any_finding": false,
+  "flagged": false
+ },
+ {
+  "id": "CM045",
+  "medications": [
+   {
+    "name": "nifedipine",
+    "qid": "Q39111",
+    "label": "nifedipine",
+    "atc": [
+     "C08CA05"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "azilsartan",
+    "qid": "Q1087888",
+    "label": "azilsartan medoxomil",
+    "atc": [
+     "C09CA09"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "bezafibrate",
+    "qid": "Q577387",
+    "label": "bezafibrate",
+    "atc": [
+     "C10AB02"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "rosuvastatin calcium",
+    "qid": "Q415159",
+    "label": "rosuvastatin",
+    "atc": [
+     "C10AA07"
+    ],
+    "by": "single_ingredient_product"
+   }
+  ],
+  "findings": [],
+  "error": null,
+  "any_finding": false,
+  "flagged": false
+ },
+ {
+  "id": "CM046",
+  "medications": [
+   {
+    "name": "pramipexole",
+    "qid": "Q421304",
+    "label": "pramipexole",
+    "atc": [
+     "N04BC05"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "gabapentin",
+    "qid": "Q410352",
+    "label": "gabapentin",
+    "atc": [
+     "N02BF01",
+     "N03AX12"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "duloxetine",
+    "qid": "Q411932",
+    "label": "(S)-duloxetine",
+    "atc": [
+     "N06AX21"
+    ],
+    "by": "single_ingredient_product"
+   }
+  ],
+  "findings": [],
+  "error": null,
+  "any_finding": false,
+  "flagged": false
+ },
+ {
+  "id": "CM047",
+  "medications": [
+   {
+    "name": "amlodipine",
+    "qid": "Q411347",
+    "label": "amlodipine",
+    "atc": [
+     "C08CA01"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "atorvastatin",
+    "qid": "Q668093",
+    "label": "atorvastatin",
+    "atc": [
+     "C10AA05"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "denosumab",
+    "qid": "Q408283",
+    "label": "denosumab",
+    "atc": [
+     "M05BX04"
+    ],
+    "by": "ingredient_candidate"
+   }
+  ],
+  "findings": [],
+  "error": null,
+  "any_finding": false,
+  "flagged": false
+ },
+ {
+  "id": "CM048",
+  "medications": [
+   {
+    "name": "metformin",
+    "qid": "Q19484",
+    "label": "metformin",
+    "atc": [
+     "A10BA02"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "digoxin",
+    "qid": "Q422222",
+    "label": "digoxin",
+    "atc": [
+     "C01AA05"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "enalapril",
+    "qid": "Q422185",
+    "label": "enalapril",
+    "atc": [
+     "C09AA02"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "simvastatin",
+    "qid": "Q670131",
+    "label": "simvastatin",
+    "atc": [
+     "C10AA01"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "warfarin",
+    "qid": "Q113368879",
+    "label": "rac-warfarin",
+    "atc": [
+     "B01AA03"
+    ],
+    "by": "single_ingredient_product"
+   },
+   {
+    "name": "aspirin",
+    "qid": "Q18216",
+    "label": "aspirin",
+    "atc": [
+     "A01AD05",
+     "B01AC06",
+     "N02BA01"
+    ],
+    "by": "label"
+   }
+  ],
+  "findings": [
+   {
+    "rule_id": "pipc:9",
+    "index": "Q670131",
+    "marker": "Q18216",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:53",
+    "index": "Q18216",
+    "marker": "Q422185",
+    "status": "possible",
+    "timing": "date_unknown"
+   },
+   {
+    "rule_id": "pipc:54",
+    "index": "Q18216",
+    "marker": "Q422222",
+    "status": "possible",
+    "timing": "date_unknown"
+   }
+  ],
+  "error": null,
+  "any_finding": true,
+  "flagged": false
+ },
+ {
+  "id": "CM049",
+  "medications": [
+   {
+    "name": "quetiapine",
+    "qid": "Q408535",
+    "label": "quetiapine",
+    "atc": [
+     "N05AH04"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "gabapentin",
+    "qid": "Q410352",
+    "label": "gabapentin",
+    "atc": [
+     "N02BF01",
+     "N03AX12"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "alprazolam",
+    "qid": "Q319877",
+    "label": "alprazolam",
+    "atc": [
+     "N05BA12"
+    ],
+    "by": "label"
+   },
+   {
+    "name": "lithium",
+    "qid": "Q152763",
+    "label": "lithium",
+    "atc": [
+     "N05AN01"
+    ],
+    "by": "ingredient_candidate"
+   }
+  ],
+  "findings": [
+   {
+    "rule_id": "pipc:20",
+    "index": "Q408535",
+    "marker": "Q319877",
+    "status": "possible",
+    "timing": "date_unknown"
+   }
+  ],
+  "error": null,
+  "any_finding": true,
+  "flagged": false
+ },
+ {
+  "id": "CM050",
+  "medications": [
+   {
+    "name": "albuterol",
+    "qid": "Q410358",
+    "label": "rac-salbutamol",
+    "atc": [
+     "R03AC02",
+     "R03CC02"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "levothyroxine",
+    "qid": "Q773449",
+    "label": "L-thyroxine",
+    "atc": [
+     "H03AA01"
+    ],
+    "by": "ingredient_candidate"
+   },
+   {
+    "name": "amitriptyline",
+    "qid": "Q58397",
+    "label": "amitriptyline",
+    "atc": [
+     "N06AA09"
+    ],
+    "by": "ingredient_candidate"
+   }
+  ],
+  "findings": [],
+  "error": null,
+  "any_finding": false,
+  "flagged": false
+ }
+]
