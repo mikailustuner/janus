@@ -257,6 +257,21 @@ cadence_days = 365
 urls = ["https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12712104/fullTextXML"]
 
 [[sources]]
+id = "ohdsi_reference_sets"
+section = "adverse"
+name = "OMOP 2013 and EU-ADR drug–outcome reference sets"
+publisher = "OHDSI (MethodEvaluation R package)"
+license = "Apache License 2.0 (package); facts from the cited publications"
+notes = [
+  "Ryan PB, Schuemie MJ, Welebob E et al. Defining a reference set to support methodological research in drug safety. Drug Saf 2013;36(Suppl 1):S33–S47. doi:10.1007/s40264-013-0097-8.",
+  "Coloma PM, Avillach P, Salvo F et al. A reference standard for evaluation of methods for drug safety signal detection using electronic healthcare record databases. Drug Saf 2013;36(1):13–23. doi:10.1007/s40264-012-0002-x.",
+  "Taken from github.com/OHDSI/MethodEvaluation at commit d7305910f6c6; stored in data/validation/faers/ for the FAERS calibration.",
+]
+storage = "commit"
+cadence_days = 3650
+urls = ["https://github.com/OHDSI/MethodEvaluation"]
+
+[[sources]]
 id = "onsides"
 section = "clinical"
 name = "OnSIDES v3.1.1"
