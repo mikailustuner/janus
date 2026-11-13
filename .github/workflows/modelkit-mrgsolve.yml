@@ -49,7 +49,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: Cache the R library
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: .rlib
           key: rlib-r4.6.1-mrgsolve-2.0.1
