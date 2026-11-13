@@ -35,3 +35,6 @@ apps/web/playwright-report/
 apps/web/public/vendor/
 
 # Claude Code agent worktrees
+
+# mutmut working copy (scripts/mutation_config.py)
+apps/api/mutants/

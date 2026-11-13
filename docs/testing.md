@@ -44,6 +44,27 @@ Behaviour tests use small synthetic fixtures built through the production types 
 change whenever the data is rebuilt; each has exactly one contract test (it decodes with the production
 decoder and holds the minimum the demo needs), and no other test reads their content.
 
+## Coverage
+
+| Suite | Measured | Floor (CI fails below) |
+| --- | --- | --- |
+| API | `janus/cascades`, `janus/resolution`, `janus/notes`, `janus/modelkit` | 90 % of lines each (`scripts/coverage_gate.py`) |
+| Web unit | `src/cascade-map`, `src/modelkit`, `src/note` | 90 % of lines each (`pnpm test:coverage`) |
+| Pipelines | `janus_pipelines/modelkit` | 84 % (today's level, no regression), to be raised to 90 % |
+
+Offline tools that are run by hand and are not reachable from the service are left out of the API
+measurement (`[tool.coverage.run] omit` in `apps/api/pyproject.toml`: the coverage snapshot, the
+name-rule report, the glossary draft and the two latency benchmarks). Web UI components are covered by
+the Playwright checks, not by unit-test coverage.
+
+## Mutation testing
+
+`.github/workflows/mutation.yml` runs mutmut every week on GitHub's machines for two targets: the pure
+modules of the cascade engine and of the name resolution (`scripts/mutation_config.py` lists the modules
+and the database-free tests used for each mutant). Target: at least 80 % of the mutants killed; the
+score and the surviving mutants are in the run's summary. mutmut 3.8 needs pytest 8, so the workflow
+pins it for that job only.
+
 ## Pre-commit gate
 
 `scripts/install-hooks.sh` points git at `.githooks/` (git worktrees share the setting). Before each
