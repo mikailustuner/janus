@@ -1,0 +1,56 @@
+{
+  "_note": "Frame sizes and coverage counts used to weight strata and to place each measurement on the risk-coverage curve. Protocol: docs/research/modelkit-precision-protocol.md. Expert review has not yet been done.",
+  "clinicaltrials_gov": {
+    "confirmed_values": 2565,
+    "curves": [
+      {
+        "name": "iteration 1, frame F (re-analysis of sample A)",
+        "sample": "A",
+        "fresh_measurement": false,
+        "band_weights": {"L0": 550, "L1": 204, "L2": 73, "L3+": 183},
+        "band_floor": {"L0": 0, "L1": 1, "L2": 2, "L3+": 3},
+        "coverage": {"0": 2565, "1": 1023, "2": 549, "3": 416, "4": 348, "5": 322}
+      }
+    ],
+    "shipped": {
+      "name": "iteration 2, level 3 (census C, the shipped figure; re-analysis)",
+      "sample": "C",
+      "level": 3,
+      "coverage": 336,
+      "fresh_measurement": false
+    },
+    "secondary": [
+      {
+        "name": "iteration 1, level 3 or above, frame X: studies with an earlier error (re-analysis of sample A)",
+        "sample": "A",
+        "stratum": "X"
+      }
+    ]
+  },
+  "pmc_oa": {
+    "confirmed_values": 412,
+    "curves": [
+      {
+        "name": "strict table check iteration 2, frame P2 (new articles; fresh measurement)",
+        "sample": "P2",
+        "fresh_measurement": true,
+        "band_weights": {"L2": 42, "L0-1": 370},
+        "coverage": {"0": 412, "2": 42}
+      }
+    ],
+    "acceptance": {"levels": [2]}
+  },
+  "drugsatfda_review": {
+    "confirmed_values": 45,
+    "curves": [
+      {
+        "name": "two-reader confirmation, frame D2 (review PDFs not fetched before; fresh measurement)",
+        "sample": "D2",
+        "fresh_measurement": true,
+        "band_weights": {"L0": 45},
+        "coverage": {"0": 45}
+      }
+    ],
+    "acceptance": {"levels": [0]}
+  }
+}
