@@ -1,9 +1,12 @@
 # Janus public deploy (deploy spec, design §3). Run from STACK_DIR with `deploy.sh`, never by hand
 # with other files. No `ports:` anywhere: the only way in is the Cloudflare Tunnel (DP2).
-# Values come from STACK_DIR/.env (mode 600, never committed); see env.example.
+# Settings come from STACK_DIR/.env (mode 600, never committed); secrets are files under
+# STACK_DIR/secrets (see env.example and secrets-setup.sh), mounted at /run/secrets, never
+# environment values (they would show in `docker inspect`).
 # Own project name: never shares containers, volumes or networks with the local development
-# compose project `janus` (found in the local rehearsal of task 2).
-name: janus-public
+# compose project `janus` (found in the local rehearsal of task 2). The ephemeral staging check
+# (staging.sh) runs this same file as `janus-staging` on its own subnets.
+name: ${JANUS_STACK:-janus-public}
 
 x-hardening: &hardening
   read_only: true
@@ -34,7 +37,8 @@ services:
     environment:
       POSTGRES_DB: janus
       POSTGRES_USER: janus
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+    secrets: [postgres_password]
     volumes:
       - pgdata:/var/lib/postgresql/data
     tmpfs: [/var/run/postgresql, /tmp]
@@ -55,9 +59,10 @@ services:
     user: "10001"  # the image's `janus` user (apps/api/Dockerfile)
     command: ["alembic", "upgrade", "head"]
     environment:
-      DATABASE_URL: postgresql://janus:${POSTGRES_PASSWORD}@postgres:5432/janus
+      DATABASE_URL_FILE: /run/secrets/database_url
       # Read only by `python -m janus.simulation.dbrole` (deploy.sh, after the migrations).
-      SIMULATOR_DB_PASSWORD: ${SIMULATOR_DB_PASSWORD:?Set SIMULATOR_DB_PASSWORD in .env}
+      SIMULATOR_DB_PASSWORD_FILE: /run/secrets/simulator_db_password
+    secrets: [database_url, simulator_db_password]
     tmpfs: [/tmp]
     networks: [internal]
     mem_limit: 256m
@@ -71,11 +76,11 @@ services:
     image: janus-api:${JANUS_TAG}
     user: "10001"
     environment:
-      DATABASE_URL: postgresql://janus:${POSTGRES_PASSWORD}@postgres:5432/janus
+      DATABASE_URL_FILE: /run/secrets/database_url
       JANUS_DATA_DIR: /data
       JANUS_K: "20"
       JANUS_DP_EPSILON: "1"
-      JANUS_NOISE_KEY: ${JANUS_NOISE_KEY:?Set JANUS_NOISE_KEY in .env}
+      JANUS_NOISE_KEY_FILE: /run/secrets/noise_key
       JANUS_PUBLIC_BASE_URL: https://janusmeds.org
       # Donations and the outcome loop are off at launch (Req 4.1, DP9): these stay empty.
       JANUS_DONATION_REGION: ""
@@ -91,6 +96,7 @@ services:
       # `ports:`, not under /api, so the web proxy cannot reach it (deploy README "Metrics").
       JANUS_METRICS_PORT: "9464"
     expose: ["9464"]
+    secrets: [database_url, noise_key]
     volumes:
       - ./data:/data:ro
     tmpfs: [/tmp]
@@ -120,7 +126,8 @@ services:
     user: "10002"  # the image's `simulator` user (apps/api/simulator.Dockerfile)
     environment:
       # Its own role: read, update and delete queue rows, nothing else (migration 0014).
-      DATABASE_URL: postgresql://janus_simulator:${SIMULATOR_DB_PASSWORD}@postgres:5432/janus
+      DATABASE_URL_FILE: /run/secrets/simulator_database_url
+    secrets: [simulator_database_url]
     tmpfs: ["/tmp:size=256m,noexec,nosuid,nodev"]
     networks: [internal]
     mem_limit: 1536m
@@ -178,15 +185,25 @@ services:
     depends_on:
       web: { condition: service_healthy }
 
+secrets:
+  # Files owned by the uid of the container user that reads them, group of the deploy user, mode
+  # 0440 (secrets-setup.sh). Plain compose bind-mounts them with these host permissions.
+  postgres_password: { file: ./secrets/postgres_password }  # postgres (uid 999)
+  database_url: { file: ./secrets/database_url }  # api, migrate (uid 10001)
+  noise_key: { file: ./secrets/noise_key }  # api (uid 10001)
+  simulator_db_password: { file: ./secrets/simulator_db_password }  # migrate (uid 10001)
+  simulator_database_url: { file: ./secrets/simulator_database_url }  # simulator (uid 10002)
+
 networks:
-  # Fixed subnets: the host firewall rules match them exactly (DP1, design §4).
+  # Fixed subnets: the host firewall rules match them exactly (DP1, design §4). The defaults are
+  # production; staging.sh sets its own names and subnets in the staging stack's .env.
   internal:
-    name: janus-public-internal
+    name: ${JANUS_STACK:-janus-public}-internal
     internal: true
-    ipam: { config: [{ subnet: 172.31.251.0/24 }] }
+    ipam: { config: [{ subnet: "${JANUS_NET_INTERNAL:-172.31.251.0/24}" }] }
   edge:
-    name: janus-public-edge
-    ipam: { config: [{ subnet: 172.31.250.0/24 }] }
+    name: ${JANUS_STACK:-janus-public}-edge
+    ipam: { config: [{ subnet: "${JANUS_NET_EDGE:-172.31.250.0/24}" }] }
 
 volumes:
   pgdata:

@@ -4,12 +4,16 @@ Usage: docker compose -f deploy/compose.yml config --format json | python3 deplo
 Fails when a service publishes a port, uses the host network, runs privileged, adds capabilities,
 mounts the Docker socket or a writable host path, lacks the hardening of design DP4, or exceeds
 the resource caps of Req 7.4 (owner decision 2026-11-09): long-running services together at most
-4.5 CPUs and 6 GB, the simulator at most 2.0 CPUs and 1.5 GB.
+4.5 CPUs and 6 GB, the simulator at most 2.0 CPUs and 1.5 GB. Secrets are files, never environment
+values: no environment entry looks like a password, key or credentialed URL, every service mounts
+exactly the secrets it needs, and each is declared with a file under `secrets:`.
+The project is `janus-public` (production) or `janus-staging` (staging.sh), never `janus`.
 """
 
 from __future__ import annotations
 
 import json
+import re
 import sys
 
 NETWORKS = {
@@ -20,6 +24,15 @@ NETWORKS = {
     "web": {"internal", "edge"},
     "cloudflared": {"edge"},
 }
+PROJECTS = {"janus-public", "janus-staging"}
+SECRETS = {
+    "postgres": {"postgres_password"},
+    "migrate": {"database_url", "simulator_db_password"},
+    "api": {"database_url", "noise_key"},
+    "simulator": {"simulator_database_url"},
+}
+_SECRET_KEY = re.compile(r"PASSWORD|SECRET|TOKEN|KEY", re.IGNORECASE)
+_URL_CREDENTIALS = re.compile(r"://[^/\s:@]+:[^/\s@]+@")
 READ_ONLY_MOUNTS = {"api": {"/data"}, "cloudflared": {"/etc/cloudflared"}}
 GIB = 1024**3
 TOTAL_CPUS = 4.5
@@ -69,10 +82,46 @@ def resource_problems(services: dict[str, dict[str, object]]) -> list[str]:
     return out
 
 
+def secret_problems(config: dict[str, object]) -> list[str]:
+    """Secrets only as mounted files: nothing secret-looking in `environment:`, exact mounts."""
+    out: list[str] = []
+    declared = config.get("secrets") or {}
+    assert isinstance(declared, dict)
+    for sname, spec in declared.items():  # pyright: ignore[reportUnknownVariableType]
+        if not isinstance(spec, dict) or not spec.get("file"):  # pyright: ignore[reportUnknownMemberType]
+            out.append(f"secret {sname} must be a file")
+    services = config.get("services")
+    assert isinstance(services, dict)
+    for name, svc in services.items():
+        assert isinstance(svc, dict)
+        for key, value in (svc.get("environment") or {}).items():
+            text = str(value or "")
+            if key.endswith("_FILE") or not text:
+                continue  # a path to a mounted secret, or an explicitly empty setting
+            if _SECRET_KEY.search(key):
+                out.append(f"{name}: environment {key} has a value (secrets must be files)")
+            elif _URL_CREDENTIALS.search(text):
+                out.append(f"{name}: environment {key} holds a URL with credentials")
+        used: set[str] = set()
+        for ref in svc.get("secrets") or []:
+            source = ref.get("source") if isinstance(ref, dict) else ref
+            used.add(str(source))
+            if source not in declared:
+                out.append(f"{name}: secret {source} is not declared under secrets:")
+        if used != SECRETS.get(name, set()):
+            out.append(
+                f"{name}: secrets must be {sorted(SECRETS.get(name, set()))}, got {sorted(used)}"
+            )
+    return out
+
+
 def problems(config: dict[str, object]) -> list[str]:
     out: list[str] = []
-    if config.get("name") != "janus-public":
-        out.append("project name must be janus-public (never the development project `janus`)")
+    project = config.get("name")
+    if project not in PROJECTS:
+        out.append(
+            "project name must be janus-public or janus-staging (not the development project `janus`)"
+        )
     services = config.get("services")
     assert isinstance(services, dict)
     if set(services) != set(NETWORKS):
@@ -116,12 +165,17 @@ def problems(config: dict[str, object]) -> list[str]:
                 bad(f"unexpected host mount {target}")
             elif not vol.get("read_only"):
                 bad(f"host mount {target} must be read-only")
+    out.extend(secret_problems(config))
     out.extend(resource_problems(services))  # pyright: ignore[reportUnknownArgumentType]
     nets_cfg = config.get("networks")
     assert isinstance(nets_cfg, dict)
     internal = nets_cfg.get("internal")
     if not isinstance(internal, dict) or internal.get("internal") is not True:
         out.append("network internal must have internal: true")
+    for net in ("internal", "edge"):
+        spec = nets_cfg.get(net)
+        if isinstance(spec, dict) and spec.get("name") != f"{project}-{net}":
+            out.append(f"network {net} must be named {project}-{net}")
     return out
 
 

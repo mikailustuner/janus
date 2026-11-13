@@ -49,8 +49,20 @@ jobs:
 
       - name: Deploy compose file keeps its hardening (deploy C1)
         run: |
-          POSTGRES_PASSWORD=x JANUS_NOISE_KEY=x SIMULATOR_DB_PASSWORD=x JANUS_UID=1000 JANUS_GID=1000 JANUS_TAG=ci \
-            docker compose -f deploy/compose.yml --profile migrate config --format json \
+          # Secrets are files next to the compose file: dummy ones in a temp stack directory.
+          stack="$(mktemp -d)"
+          mkdir "$stack/secrets"
+          for n in postgres_password database_url noise_key simulator_db_password simulator_database_url; do
+            echo x > "$stack/secrets/$n"
+          done
+          cp deploy/compose.yml "$stack/compose.yml"
+          JANUS_UID=1000 JANUS_GID=1000 JANUS_TAG=ci \
+            docker compose --project-directory "$stack" -f "$stack/compose.yml" --profile migrate config --format json \
+            | python3 deploy/check_compose.py
+          # The same file as the staging stack.
+          JANUS_STACK=janus-staging JANUS_NET_INTERNAL=172.31.254.0/24 JANUS_NET_EDGE=172.31.253.0/24 \
+            JANUS_UID=1000 JANUS_GID=1000 JANUS_TAG=ci \
+            docker compose --project-directory "$stack" -f "$stack/compose.yml" --profile migrate config --format json \
             | python3 deploy/check_compose.py
 
       - name: Deploy scripts pass shellcheck
