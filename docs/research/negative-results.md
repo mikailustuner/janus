@@ -147,6 +147,23 @@ extraction, annotation and scoring were automated; expert review has not yet bee
 - **Lesson.** The bottleneck is the data, not the model. Janus runs no simulation from label parameters and shows no
   calibrated Cmax or AUC interval.
 
+### Model kit: new document sources do not reach the precision bar
+
+- **Question.** Can PK values read from never-reviewed journal tables (PubMed Central, CC BY or CC0) and Drugs@FDA
+  clinical pharmacology reviews reach a cluster-aware lower 95 % bound of precision of at least 0.90, so that the model
+  kit is no longer limited to ClinicalTrials.gov? (2026-11-13; protocol pre-registered and published before the draw:
+  [modelkit-precision-protocol.md](modelkit-precision-protocol.md).)
+- **Design.** 534 new articles and 352 new review PDFs; the same two rule-based readers; for the tables, a stricter
+  check using metabolite and combination-product reference tables. 79 fresh values from 49 studies, at most 3 per study,
+  judged by two independent automated review passes; study-level cluster bootstrap and design effect.
+- **Result.** Not supported for either source. PMC tables: precision 0.36 at the strictest level that kept any value
+  (cluster-aware lower bound 0.09; 22 values, 9 articles), 0.39 overall; the stricter check kept no value at its top
+  level although it scored 15 of 16 on development items. Drugs@FDA: 0.77 (lower bound 0.48; 26 values from only 11
+  documents, because most new review PDFs are scanned). Kappa 0.88 and 1.00.
+- **Lesson.** Rules tuned on reviewed items did not generalise to fresh ones, again. The errors are statistic columns,
+  laboratory tables, single-patient rows and animal or model studies rather than metabolites. Both sources stay held
+  back; details in [modelkit-precision.md](modelkit-precision.md).
+
 ## What this means for Janus
 
 - Janus keeps checking only published, expert-agreed cascade patterns (PIPC). None of the discovery methods above is
