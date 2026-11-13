@@ -394,3 +394,50 @@ def test_reader_c_gives_the_definition_of_the_listed_grade() -> None:
     )
     assert sp_c.definition_for(q, "moderate") == "moderate (CLcr 30 to 59 mL/minute)"
     assert sp_c.definition_for("In mild impairment AUC rose 20%.", "mild") is None
+
+
+# --- phase B3a: PMC iteration 2 (reference tables, whole-table search) --------------------------
+
+
+def test_pmc_iteration2_reads_the_whole_table_only_with_the_tables() -> None:
+    grid = (
+        ("Parameter", "Lisinopril 10 mg"),
+        ("Cmax (ng/mL)", "45.2"),
+        ("Desethyl lisinopril Cmax (ng/mL)", "12.0"),
+    )
+    a, t = article("Pharmacokinetics of lisinopril", grid)
+    top = max(strict_pmc.LEVELS)
+    assert strict_pmc.level(strict_pmc.check(a, t, 1, 1, "lisinopril", IDS)) == top
+    fails = strict_pmc.check(a, t, 1, 1, "lisinopril", IDS, ref=REF)
+    assert "analyte_word" in fails and strict_pmc.level(fails) == 0
+
+
+def pmc2_level(
+    grid: tuple[tuple[str, ...], ...], caption: str = "PK of lisinopril", methods: str = ""
+) -> int:
+    a, t = article(caption, grid, methods or "Healthy adults received lisinopril.")
+    return strict_pmc.level(strict_pmc.check(a, t, 1, 1, "lisinopril", IDS, ref=REF))
+
+
+def test_pmc_iteration2_matrix_single_patient_combination_and_model_input_abstain() -> None:
+    plain = (("Parameter", "Lisinopril"), ("Cmax (ng/mL)", "45.2"))
+    assert pmc2_level(plain) == max(strict_pmc.LEVELS)
+    assert pmc2_level((*plain, ("Sputum Cmax (ng/mL)", "3.1"))) == 0
+    assert (
+        pmc2_level((("Parameter", "Lisinopril"), ("Patient 1", "45.2"), ("Patient 2", "40.0"))) == 0
+    )
+    assert pmc2_level(plain, methods="Healthy adults took one Zestoretic Plus tablet.") < 2
+    assert pmc2_level(plain, caption="Simcyp input parameters of lisinopril") < 3
+
+
+def test_pmc_iteration2_only_adds_abstentions() -> None:
+    grid = (
+        ("Parameter", "Lisinopril", "CV%"),
+        ("t1/2 (h)", "9.3", "12"),
+        ("Tmax (h)", "1.0", "20"),
+    )
+    a, t = article("PK of lisinopril", grid)
+    for r, c in ((1, 1), (1, 2), (2, 1), (2, 2)):
+        one = set(strict_pmc.check(a, t, r, c, "lisinopril", IDS))
+        two = set(strict_pmc.check(a, t, r, c, "lisinopril", IDS, ref=REF))
+        assert one <= two
