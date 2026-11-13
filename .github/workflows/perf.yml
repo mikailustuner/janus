@@ -42,7 +42,7 @@ jobs:
           pnpm start --port 3200 --hostname 127.0.0.1 &
           for i in $(seq 1 60); do curl -fs http://127.0.0.1:3200/en >/dev/null && break; sleep 1; done
           npx --yes @lhci/cli@0.15.1 autorun --config=lighthouserc.json
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: lighthouse
