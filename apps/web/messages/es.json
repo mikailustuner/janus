@@ -3334,7 +3334,8 @@
       "systemPrecisionConservative": "Lectura prudente, todo lo que los dos pases no calificaron como correcto cuenta como erróneo: {share} ({low} a {high}, n = {n}).",
       "systemPrecisionNone": "No se ha medido la precisión de estas declaraciones.",
       "systemAtlas": "{rows, plural, one {# fila del atlas} other {# filas del atlas}} de {drugs, plural, one {# medicamento} other {# medicamentos}} aparecen en las páginas de los medicamentos como evidencia sin confirmar."
-    }
+    },
+    "validationLink": "Resultados de precisión y umbral del kit de modelos"
   },
   "Calibration": {
     "line": "Capacidad de este método para separar efectos conocidos de no efectos: AUC {auc} (IC del 95 % {low}–{high}).",
@@ -3373,6 +3374,89 @@
       "intervalsPlain": "El intervalo mostrado es más estrecho que la incertidumbre real.",
       "evans": "Los criterios de Evans que Janus usa para calificar un par de desproporcionado señalaron {sensitivity} de los pares con efecto conocido y callaron en {specificity} de los pares sin efecto conocido.",
       "lookCloser": "Una razón de notificación es un motivo para mirar con más atención, no una prueba de que un medicamento cause un evento."
+    },
+    "modelkitPrecision": {
+      "title": "Precisión del kit de modelos",
+      "summary": "Con qué frecuencia los lectores automáticos leyeron bien un valor, por fuente, medida frente a la regla registrada de antemano.",
+      "tested": "Los valores leídos de tres tipos de fuentes se comprobaron con dos pasadas de revisión automática independientes.",
+      "truth": "Dos pasadas de revisión automática independientes. La revisión por expertos aún no se ha hecho.",
+      "recall": "Exhaustividad (recall) aún sin medir: requiere que expertos anoten documentos completos.",
+      "rule": "Regla registrada de antemano: una fuente solo se publica si el límite inferior, con ajuste por conglomerados, de su intervalo de precisión es al menos {bound}.",
+      "caption": "Precisión de los valores por fuente",
+      "cols": {
+        "source": "Fuente",
+        "values": "Valores revisados (estudios)",
+        "precision": "Precisión",
+        "wilson": "Intervalo de Wilson al 95 %",
+        "lower": "Límite inferior con ajuste por conglomerados",
+        "rule": "Frente a la regla"
+      },
+      "sources": {
+        "clinicaltrials_gov": "Resultados de ClinicalTrials.gov (el ajuste publicado)",
+        "pmc_oa": "Tablas de PubMed Central",
+        "drugsatfda_review": "Revisiones de Drugs@FDA"
+      },
+      "pass": "Cumple",
+      "held": "Retenida",
+      "curve": {
+        "title": "ClinicalTrials.gov: precisión y cobertura",
+        "intro": "Comprobaciones más estrictas conservan menos valores, y una mayor parte de ellos es correcta. Reanálisis de una muestra anterior, no una medición nueva.",
+        "caption": "Tabla de riesgo y cobertura de los valores de ClinicalTrials.gov",
+        "level": "Nivel de comprobación",
+        "coverage": "Cobertura (parte de los valores conservados)"
+      }
+    },
+    "modelkitGate": {
+      "title": "Umbral del kit de modelos",
+      "summary": "Si el kit de modelos puede considerarse exacto en todos los fármacos, y qué se muestra y qué no.",
+      "resultTitle": "Resultado del umbral",
+      "result": "El umbral exige {needed} fármacos con AUC y Cmax comprobadas frente a estudios reservados. Hay {both}. El límite superior con los datos actuales es {upper}.",
+      "limited": "Limitado por los datos: muy pocos fármacos tienen un segundo estudio independiente con los valores que necesita la prueba.",
+      "open": "El umbral aún no puede interpretarse.",
+      "met": "El umbral puede interpretarse.",
+      "claimTitle": "Lo que puede decirse",
+      "claim": "El AUC estuvo a menos de un factor 2 de los estudios reservados en los {drugs} fármacos donde pudo comprobarse ({k} de {n} puntos, intervalo de Wilson al 95 % {low}–{high}). {cmax} El umbral exige {needed} fármacos con ambas y tiene {both}; por eso no se afirma nada sobre el kit de modelos en conjunto.",
+      "cmax0": "La Cmax no pudo comprobarse en ningún fármaco.",
+      "cmaxN": "La Cmax se comprobó en {drugs} fármacos.",
+      "shownTitle": "Lo que se muestra y lo que no",
+      "shownCaption": "Afirmaciones sobre el kit de modelos, con su estado",
+      "cols": {
+        "claim": "Afirmación",
+        "status": "Estado",
+        "detail": "Detalle"
+      },
+      "status": {
+        "proven": "Mostrado por los datos",
+        "not_proven": "Comprobado, no mostrado",
+        "not_tested": "Aún sin comprobar"
+      },
+      "claims": {
+        "values_read_correctly": "Los valores de ClinicalTrials.gov que superan la comprobación estricta se leen correctamente",
+        "auc_within_2_fold": "El AUC se predice a menos de un factor 2 para estudios reservados",
+        "cmax_within_2_fold": "La Cmax se predice a menos de un factor 2 para estudios reservados",
+        "gate": "El kit de modelos es exacto en todos los fármacos (el umbral)",
+        "drug_validated": "El conjunto de parámetros de un fármaco está validado (AUC y Cmax ambas a menos de un factor 2)",
+        "document_sources": "Los valores de tablas de artículos y de tablas de revisión de la FDA son lo bastante precisos para publicarse",
+        "unit_errors_across_studies": "Un valor publicado con una unidad errónea se retiene",
+        "recall": "Los lectores encuentran todos los valores que indica una fuente",
+        "special_populations": "Predicciones para niños, personas mayores o con insuficiencia renal o hepática",
+        "expert_review": "Expertos han comprobado los valores y el método"
+      },
+      "details": {
+        "values_read_correctly": "{k} de {n} valores correctos en un censo de estudios completos (intervalo de Wilson al 95 % {low}–{high}; límite inferior con ajuste por conglomerados {lower}), juzgados por dos pasadas de revisión automática, no por expertos.",
+        "auc_within_2_fold": "{k} de {n} puntos a menos de un factor 2 (intervalo de Wilson al 95 % {low}–{high}) en solo {drugs} fármacos. No dice nada de otros fármacos.",
+        "cmax_within_2_fold": "Ningún fármaco tiene el estudio reservado y el segundo estudio que necesita la prueba.",
+        "gate": "Exige {needed} fármacos con ambas comprobadas; hoy {both}; límite superior con los datos actuales {upper}.",
+        "drug_validated": "{validated} de {total} fármacos: un fármaco solo está validado cuando AUC y Cmax están comprobadas. {withSet} fármacos tienen un conjunto de parámetros.",
+        "document_sources": "Ambas incumplieron la regla registrada de antemano y se retienen: tablas de PubMed Central {pmc} (límite inferior con ajuste por conglomerados {pmcLower}), revisiones de Drugs@FDA {fda} (límite inferior con ajuste por conglomerados {fdaLower}).",
+        "unit_errors_across_studies": "La comprobación entre estudios retendría {would} de {checkable} valores comprobables, pero no cumplió su propia regla de decisión y está desactivada. Un fármaco con un solo estudio no puede comprobarse así.",
+        "recall": "La exhaustividad requiere que expertos anoten documentos completos.",
+        "special_populations": "Los valores de estas poblaciones se excluyen de los conjuntos de construcción y de prueba.",
+        "expert_review": "La revisión por expertos aún no se ha hecho."
+      },
+      "crossTitle": "Comprobación entre estudios de unidades erróneas",
+      "crossOff": "Implementada. No cumplió su regla de decisión registrada de antemano, así que está desactivada. Retendría {would} de {checkable} valores comprobables.",
+      "crossOn": "Implementada y activada. Retiene {would} de {checkable} valores comprobables."
     }
   }
 }

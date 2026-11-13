@@ -43,6 +43,53 @@ describe("validation.generated.json", () => {
   });
 });
 
+describe("model kit cards", () => {
+  const mk = (file: string) =>
+    JSON.parse(
+      readFileSync(join(repoRoot, "data/validation/modelkit", file), "utf8"),
+    );
+
+  it("takes the precision table from precision.json and applies the 0.90 rule", () => {
+    const { modelkitPrecision: p } = VALIDATION;
+    const src = mk("precision.json").sources;
+    expect(p.bound).toBe(0.9);
+    expect(p.protocolCommit).toBe("7a65950");
+    expect(p.sources.map((s) => s.key)).toEqual([
+      "clinicaltrials_gov",
+      "pmc_oa",
+      "drugsatfda_review",
+    ]);
+    expect(p.sources[0]).toMatchObject({
+      values: src.clinicaltrials_gov.shipped.n,
+      precision: src.clinicaltrials_gov.shipped.precision,
+      clusterLower: src.clinicaltrials_gov.shipped.cluster_lower,
+    });
+    for (const s of p.sources) expect(s.met).toBe(s.clusterLower >= p.bound);
+    expect(p.sources.map((s) => s.met)).toEqual([true, false, false]);
+    for (const c of p.curve) expect(c.met).toBe(c.clusterLower >= p.bound);
+    expect(p.curve).toHaveLength(6);
+  });
+
+  it("takes the gate, the claim, the rows and the cross-study outcome from gate.json", () => {
+    const { modelkitGate: g } = VALIDATION;
+    const gate = mk("gate.json");
+    expect(g.protocolCommit).toBe("40d09ae");
+    expect([g.needed, g.both, g.upperBound]).toEqual([10, 0, 0]);
+    expect(g.interpretable).toBe(false);
+    expect(g.limitedByData).toBe(true);
+    expect(g.rows.map((r) => [r.id, r.status])).toEqual(
+      gate.rows
+        .map((r: { id: string; status: string }) => [r.id, r.status])
+        .filter(([, st]: string[]) => st),
+    );
+    expect(g.crossStudy).toMatchObject({
+      switchedOn: false,
+      ruleMet: false,
+    });
+    expect(g.protocolUrl).toMatch(/^https:\/\/github\.com\//);
+  });
+});
+
 describe("view model", () => {
   it("formats with the locale and keeps the rounded values", () => {
     expect(proportionValues(VALIDATION.cascade.specificity, "en")).toEqual({

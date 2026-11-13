@@ -4,7 +4,7 @@
 Research use only. Not for clinical decisions. **Expert review has not yet been done.** Every reading, check and review
 pass below is automated.
 
-Pre-registered protocol: [`modelkit-gate-protocol.md`](modelkit-gate-protocol.md), pushed before the cross-study rule was
+Pre-registered protocol: [`modelkit-gate-protocol.md`](modelkit-gate-protocol.md), registered in commit `40d09ae`, pushed before the cross-study rule was
 implemented or run. The numbers are in [`data/validation/modelkit/gate.json`](../../data/validation/modelkit/gate.json).
 They are computed by `pipelines/tools/modelkit_gate_report.py` from the current model kit release (evidence run
 `20261112T170053Z-00e7d273-177c`).

@@ -3334,7 +3334,8 @@
       "systemPrecisionConservative": "Temkinli okuma, iki geçişin de doğru demediği her şey yanlış sayılır: {share} ({low} – {high}, n = {n}).",
       "systemPrecisionNone": "Bu ifadeler için kesinlik ölçülmedi.",
       "systemAtlas": "{drugs, plural, one {# ilaç} other {# ilaç}} için {rows, plural, one {# atlas satırı} other {# atlas satırı}} ilaç sayfalarında doğrulanmamış kanıt olarak görünür."
-    }
+    },
+    "validationLink": "Model kitinin kesinlik ve geçit sonuçları"
   },
   "Calibration": {
     "line": "Bu yöntemin bilinen etkileri etkisizlerden ayırma başarısı: AUC {auc} (%95 GA {low}–{high}).",
@@ -3373,6 +3374,89 @@
       "intervalsPlain": "Verilen aralık, gerçek belirsizlikten daha dardır.",
       "evans": "Janus'un bir çifti orantısız saymak için kullandığı Evans ölçütleri, etkisi bilinen çiftlerin {sensitivity} kadarını işaretledi ve etkisi olmayan çiftlerin {specificity} kadarında sessiz kaldı.",
       "lookCloser": "Bir raporlama oranı daha yakından bakmak için bir nedendir; bir ilacın bir olaya yol açtığının kanıtı değildir."
+    },
+    "modelkitPrecision": {
+      "title": "Model kiti kesinliği",
+      "summary": "Otomatik okuyucuların bir değeri ne sıklıkla doğru okuduğu, kaynak başına, önceden kaydedilen kurala göre ölçülmüştür.",
+      "tested": "Üç tür kaynaktan okunan değerler, birbirinden bağımsız iki otomatik inceleme turuyla denetlendi.",
+      "truth": "Birbirinden bağımsız iki otomatik inceleme turu. Uzman incelemesi henüz yapılmadı.",
+      "recall": "Duyarlılık (recall) henüz ölçülmedi: tüm belgelerin uzmanlarca işaretlenmesi gerekir.",
+      "rule": "Önceden kaydedilen kural: bir kaynak, kesinlik aralığının kümeye duyarlı alt ucu en az {bound} ise yayımlanır.",
+      "caption": "Değerlerin kaynağa göre kesinliği",
+      "cols": {
+        "source": "Kaynak",
+        "values": "İncelenen değerler (çalışmalar)",
+        "precision": "Kesinlik",
+        "wilson": "Wilson %95 aralığı",
+        "lower": "Kümeye duyarlı alt sınır",
+        "rule": "Kurala göre"
+      },
+      "sources": {
+        "clinicaltrials_gov": "ClinicalTrials.gov sonuçları (üründe kullanılan ayar)",
+        "pmc_oa": "PubMed Central tabloları",
+        "drugsatfda_review": "Drugs@FDA incelemeleri"
+      },
+      "pass": "Geçer",
+      "held": "Geri tutuldu",
+      "curve": {
+        "title": "ClinicalTrials.gov: kesinlik ve kapsam",
+        "intro": "Daha sıkı denetimler daha az değer tutar, tuttuklarının daha büyük bölümü doğrudur. Daha önceki bir örneğin yeniden çözümlemesidir, yeni bir ölçüm değildir.",
+        "caption": "ClinicalTrials.gov değerleri için risk–kapsam tablosu",
+        "level": "Denetim düzeyi",
+        "coverage": "Kapsam (tutulan değerlerin payı)"
+      }
+    },
+    "modelkitGate": {
+      "title": "Model kiti geçidi",
+      "summary": "Model kitinin ilaçlar genelinde doğru sayılıp sayılamayacağı ve nelerin gösterildiği, nelerin gösterilmediği.",
+      "resultTitle": "Geçit sonucu",
+      "result": "Geçit, AUC ve Cmax değerleri ayrı tutulan çalışmalara karşı sınanmış {needed} ilaç ister. Elde {both} ilaç var. Mevcut verilerle üst sınır {upper}.",
+      "limited": "Veriyle sınırlı: testin gerek duyduğu değerlere sahip, ikinci bağımsız çalışması olan ilaç sayısı çok az.",
+      "open": "Geçit henüz yorumlanamaz.",
+      "met": "Geçit yorumlanabilir.",
+      "claimTitle": "Neler söylenebilir",
+      "claim": "AUC, sınanabildiği {drugs} ilaçta ayrı tutulan çalışmaların 2 katı içinde kaldı ({n} noktanın {k} tanesi, Wilson %95 aralığı {low}–{high}). {cmax} Geçit her ikisi sınanmış {needed} ilaç ister, elde {both} var; bu yüzden model kitinin bütünü hakkında bir şey söylenmez.",
+      "cmax0": "Cmax hiçbir ilaç için sınanamadı.",
+      "cmaxN": "Cmax {drugs} ilaçta sınandı.",
+      "shownTitle": "Nelerin gösterildiği ve nelerin gösterilmediği",
+      "shownCaption": "Model kitine ilişkin iddialar ve durumları",
+      "cols": {
+        "claim": "İddia",
+        "status": "Durum",
+        "detail": "Ayrıntı"
+      },
+      "status": {
+        "proven": "Veriyle gösterildi",
+        "not_proven": "Sınandı, gösterilemedi",
+        "not_tested": "Henüz sınanmadı"
+      },
+      "claims": {
+        "values_read_correctly": "Sıkı denetimden geçen ClinicalTrials.gov değerleri doğru okunur",
+        "auc_within_2_fold": "AUC, ayrı tutulan çalışmalar için 2 kat içinde öngörülür",
+        "cmax_within_2_fold": "Cmax, ayrı tutulan çalışmalar için 2 kat içinde öngörülür",
+        "gate": "Model kiti ilaçlar genelinde doğrudur (geçit)",
+        "drug_validated": "Bir ilacın parametre kümesi doğrulanmıştır (AUC ve Cmax ikisi de 2 kat içinde)",
+        "document_sources": "Makale tablolarından ve FDA inceleme tablolarından gelen değerler yayımlanacak kadar kesindir",
+        "unit_errors_across_studies": "Yanlış birimle girilmiş bir değer geri tutulur",
+        "recall": "Okuyucular bir kaynağın bildirdiği her değeri bulur",
+        "special_populations": "Çocuklar, yaşlılar veya böbrek ya da karaciğer yetmezliği için öngörüler",
+        "expert_review": "Uzmanlar değerleri ve yöntemi denetledi"
+      },
+      "details": {
+        "values_read_correctly": "Bütün çalışmaların sayımında {n} değerin {k} tanesi doğru (Wilson %95 aralığı {low}–{high}; kümeye duyarlı alt sınır {lower}); uzmanlarca değil, iki otomatik inceleme turuyla değerlendirildi.",
+        "auc_within_2_fold": "Yalnızca {drugs} ilaçta {n} noktanın {k} tanesi 2 kat içinde (Wilson %95 aralığı {low}–{high}). Diğer ilaçlar hakkında bir şey söylemez.",
+        "cmax_within_2_fold": "Hiçbir ilacın, testin gerek duyduğu ayrı tutulan çalışması ve ikinci çalışması yok.",
+        "gate": "İkisi de sınanmış {needed} ilaç gerekir; bugün {both}; mevcut verilerle üst sınır {upper}.",
+        "drug_validated": "{total} ilacın {validated} tanesi: bir ilaç ancak AUC ve Cmax ikisi de sınandığında doğrulanır. {withSet} ilacın parametre kümesi var.",
+        "document_sources": "İkisi de önceden kaydedilen kuralı karşılamadı ve geri tutuldu: PubMed Central tabloları {pmc} (kümeye duyarlı alt sınır {pmcLower}), Drugs@FDA incelemeleri {fda} (kümeye duyarlı alt sınır {fdaLower}).",
+        "unit_errors_across_studies": "Çalışmalar arası denetim, denetlenebilen {checkable} değerin {would} tanesini geri tutardı; ancak kendi karar kuralını karşılamadı ve kapalıdır. Tek çalışması olan ilaç bu yolla denetlenemez.",
+        "recall": "Duyarlılık için uzmanların tüm belgeleri işaretlemesi gerekir.",
+        "special_populations": "Bu gruplardan gelen değerler, kurma ve sınama kümelerinin dışında tutulur.",
+        "expert_review": "Uzman incelemesi henüz yapılmadı."
+      },
+      "crossTitle": "Yanlış birimler için çalışmalar arası denetim",
+      "crossOff": "Uygulanmıştır. Önceden kaydedilen karar kuralını karşılamadığı için kapalıdır. Denetlenebilen {checkable} değerin {would} tanesini geri tutardı.",
+      "crossOn": "Uygulanmıştır ve açıktır. Denetlenebilen {checkable} değerin {would} tanesini geri tutar."
     }
   }
 }

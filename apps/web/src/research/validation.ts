@@ -1,13 +1,17 @@
 /**
  * View model of the validation studies (researcher area). The numbers come from
  * validation.generated.json (scripts/gen-validation.mjs); this file only formats them for a
- * locale. A card added later (model kit precision, model kit gate) adds a key to the generated
- * file and one entry to CARDS.
+ * locale. A card adds a key to the generated file and one entry to CARDS.
  */
 import generated from "./validation.generated.json";
 
 export const VALIDATION = generated;
-export const CARDS = ["cascade", "faers"] as const;
+export const CARDS = [
+  "cascade",
+  "faers",
+  "modelkitPrecision",
+  "modelkitGate",
+] as const;
 export type CardKey = (typeof CARDS)[number];
 
 export interface Estimate {

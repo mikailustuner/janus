@@ -3334,7 +3334,8 @@
       "systemPrecisionConservative": "Lecture prudente, tout ce que les deux passes n’ont pas jugé correct compte comme faux : {share} ({low} à {high}, n = {n}).",
       "systemPrecisionNone": "Aucune précision n’a été mesurée pour ces déclarations.",
       "systemAtlas": "{rows, plural, one {# ligne d’atlas} other {# lignes d’atlas}} pour {drugs, plural, one {# médicament} other {# médicaments}} apparaissent sur les pages des médicaments comme preuve non confirmée."
-    }
+    },
+    "validationLink": "Résultats de précision et de seuil du kit de modèles"
   },
   "Calibration": {
     "line": "Capacité de cette méthode à séparer effets connus et non-effets : AUC {auc} (IC à 95 % {low}–{high}).",
@@ -3373,6 +3374,89 @@
       "intervalsPlain": "L'intervalle affiché est plus étroit que l'incertitude réelle.",
       "evans": "Les critères d'Evans que Janus utilise pour qualifier une paire de disproportionnée ont signalé {sensitivity} des paires à effet connu et sont restés silencieux pour {specificity} des paires sans effet connu.",
       "lookCloser": "Un rapport de notification est une raison de regarder de plus près, pas une preuve qu'un médicament provoque un événement."
+    },
+    "modelkitPrecision": {
+      "title": "Précision du kit de modèles",
+      "summary": "À quelle fréquence les lecteurs automatiques ont lu correctement une valeur, par source, mesurée selon la règle enregistrée à l’avance.",
+      "tested": "Les valeurs lues dans trois types de sources ont été contrôlées par deux passes de revue automatiques indépendantes.",
+      "truth": "Deux passes de revue automatiques indépendantes. L’examen par des experts n’a pas encore été réalisé.",
+      "recall": "Rappel pas encore mesuré : il faut que des experts annotent des documents entiers.",
+      "rule": "Règle enregistrée à l’avance : une source n’est publiée que si la borne inférieure, tenant compte des grappes, de son intervalle de précision est d’au moins {bound}.",
+      "caption": "Précision des valeurs par source",
+      "cols": {
+        "source": "Source",
+        "values": "Valeurs examinées (études)",
+        "precision": "Précision",
+        "wilson": "Intervalle de Wilson à 95 %",
+        "lower": "Borne inférieure tenant compte des grappes",
+        "rule": "Face à la règle"
+      },
+      "sources": {
+        "clinicaltrials_gov": "Résultats de ClinicalTrials.gov (réglage livré)",
+        "pmc_oa": "Tableaux de PubMed Central",
+        "drugsatfda_review": "Revues Drugs@FDA"
+      },
+      "pass": "Respectée",
+      "held": "Retenue",
+      "curve": {
+        "title": "ClinicalTrials.gov : précision et couverture",
+        "intro": "Des contrôles plus stricts conservent moins de valeurs, dont une plus grande part est correcte. Réanalyse d’un échantillon antérieur, pas une nouvelle mesure.",
+        "caption": "Tableau risque–couverture des valeurs de ClinicalTrials.gov",
+        "level": "Niveau de contrôle",
+        "coverage": "Couverture (part des valeurs conservées)"
+      }
+    },
+    "modelkitGate": {
+      "title": "Seuil du kit de modèles",
+      "summary": "Si le kit de modèles peut être jugé exact pour l’ensemble des médicaments, et ce qui est montré ou non.",
+      "resultTitle": "Résultat du seuil",
+      "result": "Le seuil exige {needed} médicaments dont l’AUC et la Cmax sont testées sur des études mises de côté. Il y en a {both}. La borne supérieure avec les données actuelles est {upper}.",
+      "limited": "Limité par les données : trop peu de médicaments ont une seconde étude indépendante avec les valeurs dont le test a besoin.",
+      "open": "Le seuil ne peut pas encore être interprété.",
+      "met": "Le seuil peut être interprété.",
+      "claimTitle": "Ce qui peut être dit",
+      "claim": "L’AUC était à moins d’un facteur 2 des études mises de côté pour les {drugs} médicaments où elle a pu être testée ({k} points sur {n}, intervalle de Wilson à 95 % {low}–{high}). {cmax} Le seuil exige {needed} médicaments avec les deux et en compte {both} ; aucune affirmation n’est donc faite sur le kit de modèles dans son ensemble.",
+      "cmax0": "La Cmax n’a pu être testée pour aucun médicament.",
+      "cmaxN": "La Cmax a été testée pour {drugs} médicaments.",
+      "shownTitle": "Ce qui est montré et ce qui ne l’est pas",
+      "shownCaption": "Affirmations sur le kit de modèles, avec leur statut",
+      "cols": {
+        "claim": "Affirmation",
+        "status": "Statut",
+        "detail": "Détail"
+      },
+      "status": {
+        "proven": "Montré par les données",
+        "not_proven": "Testé, non montré",
+        "not_tested": "Pas encore testé"
+      },
+      "claims": {
+        "values_read_correctly": "Les valeurs de ClinicalTrials.gov qui passent le contrôle strict sont lues correctement",
+        "auc_within_2_fold": "L’AUC est prédite à moins d’un facteur 2 pour des études mises de côté",
+        "cmax_within_2_fold": "La Cmax est prédite à moins d’un facteur 2 pour des études mises de côté",
+        "gate": "Le kit de modèles est exact pour l’ensemble des médicaments (le seuil)",
+        "drug_validated": "L’ensemble de paramètres d’un médicament est validé (AUC et Cmax toutes deux à moins d’un facteur 2)",
+        "document_sources": "Les valeurs des tableaux d’articles et des tableaux de revue de la FDA sont assez précises pour être publiées",
+        "unit_errors_across_studies": "Une valeur publiée avec une mauvaise unité est retenue",
+        "recall": "Les lecteurs trouvent toutes les valeurs que rapporte une source",
+        "special_populations": "Prédictions pour les enfants, les personnes âgées ou en cas d’insuffisance rénale ou hépatique",
+        "expert_review": "Des experts ont vérifié les valeurs et la méthode"
+      },
+      "details": {
+        "values_read_correctly": "{k} valeurs correctes sur {n} dans un recensement d’études entières (intervalle de Wilson à 95 % {low}–{high} ; borne inférieure tenant compte des grappes {lower}), jugées par deux passes de revue automatiques, pas par des experts.",
+        "auc_within_2_fold": "{k} points sur {n} à moins d’un facteur 2 (intervalle de Wilson à 95 % {low}–{high}) pour seulement {drugs} médicaments. Ne dit rien des autres médicaments.",
+        "cmax_within_2_fold": "Aucun médicament n’a l’étude mise de côté et la seconde étude dont le test a besoin.",
+        "gate": "Exige {needed} médicaments testés pour les deux ; aujourd’hui {both} ; borne supérieure avec les données actuelles {upper}.",
+        "drug_validated": "{validated} médicaments sur {total} : un médicament n’est validé que si l’AUC et la Cmax sont toutes deux testées. {withSet} médicaments ont un ensemble de paramètres.",
+        "document_sources": "Les deux ont échoué à la règle enregistrée à l’avance et sont retenus : tableaux de PubMed Central {pmc} (borne inférieure tenant compte des grappes {pmcLower}), revues Drugs@FDA {fda} (borne inférieure tenant compte des grappes {fdaLower}).",
+        "unit_errors_across_studies": "Le contrôle entre études retiendrait {would} valeurs vérifiables sur {checkable}, mais il n’a pas satisfait sa propre règle de décision et est désactivé. Un médicament avec une seule étude ne peut pas être vérifié ainsi.",
+        "recall": "Le rappel exige que des experts annotent des documents entiers.",
+        "special_populations": "Les valeurs de ces populations sont exclues des jeux de construction et de test.",
+        "expert_review": "L’examen par des experts n’a pas encore été réalisé."
+      },
+      "crossTitle": "Contrôle entre études des mauvaises unités",
+      "crossOff": "Mis en œuvre. Il n’a pas satisfait sa règle de décision enregistrée à l’avance et est donc désactivé. Il retiendrait {would} valeurs vérifiables sur {checkable}.",
+      "crossOn": "Mis en œuvre et activé. Il retient {would} valeurs vérifiables sur {checkable}."
     }
   }
 }

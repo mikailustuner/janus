@@ -10,6 +10,7 @@ import { BackLink, GroupedList, LargeTitle, RowLink } from "@/components/cards";
 import { StateView } from "@/components/StateView";
 import { Button } from "@/components/ui";
 import { useCall } from "@/flow/useCall";
+import { Link } from "@/i18n/navigation";
 import {
   NO_QUERY,
   STATUSES,
@@ -81,6 +82,13 @@ export function ModelKitList() {
       <p className="max-w-[72ch] text-sm text-muted">
         {t("ModelKit.introValidation")}
       </p>
+      <Link
+        href="/research/validation-studies#modelkit-precision"
+        className="inline-flex min-h-11 items-center self-start font-bold"
+        data-testid="mk-validation-link"
+      >
+        {t("ModelKit.validationLink")}
+      </Link>
       {failed ? (
         <StateView state="error" messageKey="Errors.generic" />
       ) : !client ? (

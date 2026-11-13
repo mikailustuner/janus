@@ -3334,7 +3334,8 @@
       "systemPrecisionConservative": "Conservative reading, anything not called correct by both passes counts as wrong: {share} ({low} to {high}, n = {n}).",
       "systemPrecisionNone": "No precision has been measured for these statements.",
       "systemAtlas": "{rows, plural, one {# atlas row} other {# atlas rows}} for {drugs, plural, one {# drug} other {# drugs}} appear on the drug pages as unconfirmed evidence."
-    }
+    },
+    "validationLink": "Precision and gate results of the model kit"
   },
   "Calibration": {
     "line": "How well this method separates known effects from non-effects: AUC {auc} (95 % CI {low}–{high}).",
@@ -3373,6 +3374,89 @@
       "intervalsPlain": "The printed interval is narrower than the real uncertainty.",
       "evans": "The Evans criteria that Janus uses to call a pair disproportionate flagged {sensitivity} of the pairs with a known effect and stayed silent for {specificity} of the pairs with no known effect.",
       "lookCloser": "A reporting ratio is a reason to look closer, not evidence that a medicine causes an event."
+    },
+    "modelkitPrecision": {
+      "title": "Model kit precision",
+      "summary": "How often the automated readers got a value right, per source, measured against the pre-registered rule.",
+      "tested": "Values read from three kinds of source were checked by two independent automated review passes.",
+      "truth": "Two independent automated review passes. Expert review has not yet been done.",
+      "recall": "Recall not yet measured: it needs experts to annotate whole documents.",
+      "rule": "Pre-registered rule: a source is published only if the cluster-aware lower end of its precision interval is at least {bound}.",
+      "caption": "Precision of the values by source",
+      "cols": {
+        "source": "Source",
+        "values": "Values reviewed (studies)",
+        "precision": "Precision",
+        "wilson": "Wilson 95 % interval",
+        "lower": "Cluster-aware lower bound",
+        "rule": "Against the rule"
+      },
+      "sources": {
+        "clinicaltrials_gov": "ClinicalTrials.gov results (the shipped setting)",
+        "pmc_oa": "PubMed Central tables",
+        "drugsatfda_review": "Drugs@FDA reviews"
+      },
+      "pass": "Passes",
+      "held": "Held back",
+      "curve": {
+        "title": "ClinicalTrials.gov: precision against coverage",
+        "intro": "Stricter checks keep fewer values and a larger share of them correct. Re-analysis of an earlier sample, not a fresh measurement.",
+        "caption": "Risk–coverage table for ClinicalTrials.gov values",
+        "level": "Check level",
+        "coverage": "Coverage (share of values kept)"
+      }
+    },
+    "modelkitGate": {
+      "title": "Model kit gate",
+      "summary": "Whether the model kit can be called accurate across drugs, and what is and is not shown.",
+      "resultTitle": "Gate result",
+      "result": "The gate needs {needed} drugs with both AUC and Cmax tested against held-out studies. It has {both}. The upper bound with the current data is {upper}.",
+      "limited": "Limited by the data: too few drugs have a second independent study with the values the test needs.",
+      "open": "The gate cannot be interpreted yet.",
+      "met": "The gate can be interpreted.",
+      "claimTitle": "What can be said",
+      "claim": "AUC was within 2-fold of held-out studies in the {drugs} drugs where it could be tested ({k} of {n} points, Wilson 95 % interval {low}–{high}). {cmax} The gate needs {needed} drugs with both and has {both}, so no statement is made about the model kit as a whole.",
+      "cmax0": "Cmax could not be tested for any drug.",
+      "cmaxN": "Cmax was tested in {drugs} drugs.",
+      "shownTitle": "What is shown and what is not shown",
+      "shownCaption": "Claims about the model kit, with their status",
+      "cols": {
+        "claim": "Claim",
+        "status": "Status",
+        "detail": "Detail"
+      },
+      "status": {
+        "proven": "Shown by the data",
+        "not_proven": "Tested, not shown",
+        "not_tested": "Not tested yet"
+      },
+      "claims": {
+        "values_read_correctly": "ClinicalTrials.gov values that pass the strict check are read correctly",
+        "auc_within_2_fold": "AUC is predicted within 2-fold for held-out studies",
+        "cmax_within_2_fold": "Cmax is predicted within 2-fold for held-out studies",
+        "gate": "The model kit is accurate across drugs (the gate)",
+        "drug_validated": "A drug’s parameter set is validated (AUC and Cmax both within 2-fold)",
+        "document_sources": "Values from article tables and FDA review tables are precise enough to publish",
+        "unit_errors_across_studies": "A value posted with a wrong unit is withheld",
+        "recall": "The readers find every value a source reports",
+        "special_populations": "Predictions for children, older adults, or kidney or liver impairment",
+        "expert_review": "Experts have checked the values and the method"
+      },
+      "details": {
+        "values_read_correctly": "{k} of {n} values correct in a census of whole studies (Wilson 95 % interval {low}–{high}; cluster-aware lower bound {lower}), judged by two automated review passes, not by experts.",
+        "auc_within_2_fold": "{k} of {n} points within 2-fold (Wilson 95 % interval {low}–{high}) in only {drugs} drugs. Says nothing about other drugs.",
+        "cmax_within_2_fold": "No drug has the held-out study and the second study that the test needs.",
+        "gate": "Needs {needed} drugs with both tested; today {both}; upper bound with the current data {upper}.",
+        "drug_validated": "{validated} of {total} drugs: a drug is validated only when both AUC and Cmax are tested. {withSet} drugs have a parameter set.",
+        "document_sources": "Both failed the pre-registered rule and are held back: PubMed Central tables {pmc} (cluster-aware lower bound {pmcLower}), Drugs@FDA reviews {fda} (cluster-aware lower bound {fdaLower}).",
+        "unit_errors_across_studies": "The cross-study check would withhold {would} of {checkable} checkable values, but it did not meet its own decision rule and is switched off. A drug with one study cannot be checked this way.",
+        "recall": "Recall needs experts to annotate whole documents.",
+        "special_populations": "Values from these populations are excluded from building and testing sets.",
+        "expert_review": "Expert review has not yet been done."
+      },
+      "crossTitle": "Cross-study check for wrong units",
+      "crossOff": "Implemented. It did not meet its pre-registered decision rule, so it is switched off. It would withhold {would} of {checkable} checkable values.",
+      "crossOn": "Implemented and switched on. It withholds {would} of {checkable} checkable values."
     }
   }
 }
