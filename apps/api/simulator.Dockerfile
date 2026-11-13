@@ -4,7 +4,7 @@
 # R 4.6.1 with CRAN pinned to a dated Posit Package Manager snapshot (2026-10-28) by the rocker
 # image; httk pinned below and checked at build time. Multi-arch base (linux/amd64, linux/arm64):
 # on an arm64 host the packages compile from source if no binary exists.
-FROM rocker/r-ver:4.6.1@sha256:780bc87219250a6dfffef6c812999731986fd94d8d5f7e572d1157c923d1b4bb
+FROM rocker/r-ver:4.6.2@sha256:8739c76d2d9316698a7145b032601f1e82249fdee34670d7b4a0a40d6bacd95a
 
 ARG HTTK_VERSION=2.7.4
 ENV DEBIAN_FRONTEND=noninteractive
