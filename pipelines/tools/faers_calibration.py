@@ -18,13 +18,6 @@ import math
 from pathlib import Path
 from typing import Any
 
-from janus.memory.faers_build import counts_root, current_build
-from janus.memory.reader import ALL_REGION, CountsReader, Session
-from janus.memory.stats import cells_from_counts, evaluate
-from janus.resolution import load as resolution_load
-from janus.resolution.matching import map_name
-from janus.resolution.prepare import build_name_index
-
 OUTCOMES: dict[str, list[str]] = {
     "acute_liver_injury": [
         "Acute hepatic failure", "Hepatic failure", "Liver injury", "Drug-induced liver injury",
@@ -191,6 +184,9 @@ def reference(ref_dir: Path) -> tuple[list[dict[str, Any]], list[dict[str, Any]]
 
 
 def name_index(data_dir: Path) -> Any:
+    from janus.resolution import load as resolution_load
+    from janus.resolution.prepare import build_name_index
+
     inputs = resolution_load.gather(data_dir)
     for a in inputs.artifacts.values():
         a.verify()
@@ -292,7 +288,119 @@ def svg_plot(rows: list[dict[str, Any]], mu: float, sigma: float) -> str:
     return "\n".join(out)
 
 
+def analyse(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    """Every number of the results from the 2x2 tables (no FAERS access needed)."""
+    est = [r for r in rows if r["estimable"]]
+    pos = [r["ln_ror"] for r in est if r["truth"] == 1]
+    neg = [r["ln_ror"] for r in est if r["truth"] == 0]
+    low = min((r["ln_ror"] for r in est), default=0.0) - 1
+    all_pos = [r["ln_ror"] if r["estimable"] else low for r in rows if r["truth"] == 1]
+    all_neg = [r["ln_ror"] if r["estimable"] else low for r in rows if r["truth"] == 0]
+
+    by_set: dict[str, Any] = {}
+    for s in ("omop", "euadr"):
+        sub = [r for r in est if s in r["sets"]]
+        by_set[s] = auc_delong(
+            [r["ln_ror"] for r in sub if r["truth"]], [r["ln_ror"] for r in sub if not r["truth"]]
+        )
+    by_outcome = {
+        o: auc_delong(
+            [r["ln_ror"] for r in est if r["outcome"] == o and r["truth"]],
+            [r["ln_ror"] for r in est if r["outcome"] == o and not r["truth"]],
+        )
+        for o in OUTCOMES
+    }
+
+    tp = sum(1 for r in est if r["truth"] and r["evans_met"])
+    tn = sum(1 for r in est if not r["truth"] and not r["evans_met"])
+    n_pos, n_neg = len(pos), len(neg)
+
+    negs = [(r["ln_ror"], r["se"]) for r in est if not r["truth"]]
+    mu, sigma = fit_null(negs)
+    nominal_excl = sum(1 for x, se in negs if abs(x) > Z95 * se)
+    loo_excl = 0
+    for i, (x, se) in enumerate(negs):
+        m_i, s_i = fit_null(negs[:i] + negs[i + 1 :])
+        loo_excl += calibrated_p(x, se, m_i, s_i) < 0.05
+    for r in est:
+        r["p_nominal"] = 2 * norm_sf(abs(r["ln_ror"]) / r["se"])
+        r["p_calibrated"] = calibrated_p(r["ln_ror"], r["se"], mu, sigma)
+    pos_cal = [r for r in est if r["truth"]]
+
+    reasons: dict[str, int] = {}
+    for r in rows:
+        if not r["estimable"]:
+            reasons[r["reason"]] = reasons.get(r["reason"], 0) + 1
+
+    return {
+        "pairs": {
+            "total": len(rows),
+            "positive": sum(r["truth"] for r in rows),
+            "negative": sum(1 - r["truth"] for r in rows),
+            "estimable": len(est),
+            "not_estimable_by_reason": reasons,
+        },
+        "primary_auc_ln_ror": auc_delong(pos, neg),
+        "secondary": {
+            "auc_including_not_estimable_at_lowest_score": auc_delong(all_pos, all_neg),
+            "auc_by_set": by_set,
+            "auc_by_outcome": by_outcome,
+            "evans_sensitivity": wilson(tp, n_pos),
+            "evans_specificity": wilson(tn, n_neg),
+            "empirical_null": {"mean_ln": mu, "sd_ln": sigma, "n_negative_controls": len(negs)},
+            "negatives_ci_excluding_1_nominal": wilson(nominal_excl, len(negs)),
+            "negatives_p_below_005_calibrated_leave_one_out": wilson(loo_excl, len(negs)),
+            "positives_p_below_005_nominal": wilson(
+                sum(r["p_nominal"] < 0.05 for r in pos_cal), len(pos_cal)
+            ),
+            "positives_p_below_005_calibrated": wilson(
+                sum(r["p_calibrated"] < 0.05 for r in pos_cal), len(pos_cal)
+            ),
+        },
+    }
+
+
+def verify(out: Path) -> int:
+    """Recompute every number from the committed tables (pairs.csv) and compare with metrics.json.
+
+    Needs no FAERS data, so CI can run it (docs/research/reproduce.md)."""
+    with (out / "pairs.csv").open(newline="") as f:
+        rows: list[dict[str, Any]] = []
+        for r in csv.DictReader(f):
+            rec: dict[str, Any] = {
+                **r,
+                "truth": int(r["truth"]),
+                "estimable": r["estimable"] == "True",
+            }
+            if rec["estimable"]:
+                rec.update(
+                    ln_ror=float(r["ln_ror"]), se=float(r["se"]), evans_met=r["evans_met"] == "True"
+                )
+            rows.append(rec)
+    got = json.loads(json.dumps(analyse(rows)))
+    want = json.loads((out / "metrics.json").read_text())
+    want["pairs"].pop(
+        "conflicting_labels_dropped", None
+    )  # a property of the inputs, not the tables
+    bad = [k for k in got if not _close(got[k], want.get(k))]
+    print("faers calibration: " + ("reproduced" if not bad else f"differs in {bad}"))
+    return 1 if bad else 0
+
+
+def _close(a: Any, b: Any) -> bool:
+    if isinstance(a, dict) and isinstance(b, dict):
+        return a.keys() == b.keys() and all(_close(a[k], b[k]) for k in a)
+    if isinstance(a, float) and isinstance(b, (int, float)):
+        return math.isclose(a, b, rel_tol=1e-9, abs_tol=1e-12)
+    return a == b
+
+
 def main() -> None:
+    from janus.memory.faers_build import counts_root, current_build
+    from janus.memory.reader import ALL_REGION, CountsReader, Session
+    from janus.memory.stats import cells_from_counts, evaluate
+    from janus.resolution.matching import map_name
+
     ap = argparse.ArgumentParser()
     ap.add_argument("--data-dir", type=Path, required=True)
     ap.add_argument("--ref", type=Path, required=True)
@@ -358,76 +466,24 @@ def main() -> None:
             rec["ln_ror"], rec["se"] = ln_ror_haldane(table.a, table.b, table.c, table.d)
         rows.append(rec)
 
+    analysis = analyse(rows)
     est = [r for r in rows if r["estimable"]]
-    pos = [r["ln_ror"] for r in est if r["truth"] == 1]
-    neg = [r["ln_ror"] for r in est if r["truth"] == 0]
-    low = min((r["ln_ror"] for r in est), default=0.0) - 1
-    all_pos = [r["ln_ror"] if r["estimable"] else low for r in rows if r["truth"] == 1]
-    all_neg = [r["ln_ror"] if r["estimable"] else low for r in rows if r["truth"] == 0]
-
-    by_set: dict[str, Any] = {}
-    for s in ("omop", "euadr"):
-        sub = [r for r in est if s in r["sets"]]
-        by_set[s] = auc_delong(
-            [r["ln_ror"] for r in sub if r["truth"]], [r["ln_ror"] for r in sub if not r["truth"]]
-        )
-    by_outcome = {
-        o: auc_delong(
-            [r["ln_ror"] for r in est if r["outcome"] == o and r["truth"]],
-            [r["ln_ror"] for r in est if r["outcome"] == o and not r["truth"]],
-        )
-        for o in OUTCOMES
-    }
-
-    tp = sum(1 for r in est if r["truth"] and r["evans_met"])
-    tn = sum(1 for r in est if not r["truth"] and not r["evans_met"])
-    n_pos, n_neg = len(pos), len(neg)
-
-    negs = [(r["ln_ror"], r["se"]) for r in est if not r["truth"]]
-    mu, sigma = fit_null(negs)
-    nominal_excl = sum(1 for x, se in negs if abs(x) > Z95 * se)
-    loo_excl = 0
-    for i, (x, se) in enumerate(negs):
-        m_i, s_i = fit_null(negs[:i] + negs[i + 1 :])
-        loo_excl += calibrated_p(x, se, m_i, s_i) < 0.05
-    for r in est:
-        r["p_nominal"] = 2 * norm_sf(abs(r["ln_ror"]) / r["se"])
-        r["p_calibrated"] = calibrated_p(r["ln_ror"], r["se"], mu, sigma)
-    pos_cal = [r for r in est if r["truth"]]
-
-    reasons: dict[str, int] = {}
-    for r in rows:
-        if not r["estimable"]:
-            reasons[r["reason"]] = reasons.get(r["reason"], 0) + 1
-
+    mu = analysis["secondary"]["empirical_null"]["mean_ln"]
+    sigma = analysis["secondary"]["empirical_null"]["sd_ln"]
+    p = analysis["pairs"]
     metrics = {
         "faers_counts_build": build,
         "faers_run_id": reader.meta.get("faers_run_id") if isinstance(reader.meta, dict) else None,
         "pairs": {
-            "total": len(rows),
-            "positive": sum(r["truth"] for r in rows),
-            "negative": sum(1 - r["truth"] for r in rows),
+            "total": p["total"],
+            "positive": p["positive"],
+            "negative": p["negative"],
             "conflicting_labels_dropped": conflicts,
-            "estimable": len(est),
-            "not_estimable_by_reason": reasons,
+            "estimable": p["estimable"],
+            "not_estimable_by_reason": p["not_estimable_by_reason"],
         },
-        "primary_auc_ln_ror": auc_delong(pos, neg),
-        "secondary": {
-            "auc_including_not_estimable_at_lowest_score": auc_delong(all_pos, all_neg),
-            "auc_by_set": by_set,
-            "auc_by_outcome": by_outcome,
-            "evans_sensitivity": wilson(tp, n_pos),
-            "evans_specificity": wilson(tn, n_neg),
-            "empirical_null": {"mean_ln": mu, "sd_ln": sigma, "n_negative_controls": len(negs)},
-            "negatives_ci_excluding_1_nominal": wilson(nominal_excl, len(negs)),
-            "negatives_p_below_005_calibrated_leave_one_out": wilson(loo_excl, len(negs)),
-            "positives_p_below_005_nominal": wilson(
-                sum(r["p_nominal"] < 0.05 for r in pos_cal), len(pos_cal)
-            ),
-            "positives_p_below_005_calibrated": wilson(
-                sum(r["p_calibrated"] < 0.05 for r in pos_cal), len(pos_cal)
-            ),
-        },
+        "primary_auc_ln_ror": analysis["primary_auc_ln_ror"],
+        "secondary": analysis["secondary"],
         "outcome_terms_found": outcome_pts,
         "outcome_terms_not_in_faers": missing_terms,
         "note_a0": "Pairs with a = 0 have no estimate in Janus; their AUC score is ln ROR with "
@@ -449,4 +505,8 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    import sys
+
+    if sys.argv[1:2] == ["--verify"]:
+        raise SystemExit(verify(Path(sys.argv[2])))
     main()

@@ -1,0 +1,36 @@
+cff-version: 1.2.0
+message: "If you use Janus or its data, please cite it as below, with the version you used."
+title: "Janus: open tools to find prescribing cascades in medication lists"
+type: software
+authors:
+  - family-names: "Üstüner"
+    given-names: "Mikail"
+version: "0.1.0"
+date-released: "2026-11-13"
+license: Apache-2.0
+repository-code: "https://github.com/mikailustuner/janus"
+url: "https://janusmeds.org"
+abstract: >-
+  Janus checks a medication list for 65 published prescribing cascades (the PIPC list) and explains each
+  pattern for a conversation with a doctor. It ships open data and tools for researchers: a FAERS onset table,
+  data-quality reports and an experimental drug model starter kit. Research prototype, not a medical device.
+  Expert review has not yet been done.
+keywords:
+  - prescribing cascade
+  - polypharmacy
+  - pharmacovigilance
+  - FAERS
+  - deprescribing
+references:
+  - type: article
+    title: "Potentially inappropriate prescribing cascades (PIPC) list"
+    authors:
+      - family-names: "Rochon"
+        given-names: "Paula A."
+    journal: "European Geriatric Medicine"
+    year: 2025
+    volume: 16
+    issue: 5
+    start: 1573
+    end: 1584
+    doi: "10.1007/s41999-025-01215-x"

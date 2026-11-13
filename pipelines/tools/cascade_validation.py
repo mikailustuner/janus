@@ -253,28 +253,23 @@ def metric(name: str, k: int, n: int) -> dict[str, Any]:
     return {"measure": name, "k": k, "n": n, "estimate": p, "ci95_low": lo, "ci95_high": hi}
 
 
-def main() -> None:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--ref", type=Path, required=True)
-    ap.add_argument("--out", type=Path, required=True)
-    ap.add_argument("--api", default="https://janusmeds.org/api")
-    args = ap.parse_args()
-    args.out.mkdir(parents=True, exist_ok=True)
-    api = Api(args.api, args.out / "api_cache.json")
-
-    pos = run_pairs(api, read(args.ref / "positive_pairs.csv"), "drug_b", "pair_id")
-    neg = run_pairs(api, read(args.ref / "negative_pairs.csv"), "drug_b_prime", "neg_id")
-    cases = run_cases(api, read(args.ref / "cascade_cases.csv"), expected=True)
-    comp = run_cases(api, read(args.ref / "comparison_cases.csv"), expected=False)
-
+def compute(
+    pos: list[dict[str, Any]],
+    neg: list[dict[str, Any]],
+    cases: list[dict[str, Any]],
+    comp: list[dict[str, Any]],
+    dataset_version: str | None,
+    api: str,
+) -> dict[str, Any]:
+    """Every number of the results from the raw answers."""
     tp = sum(r["flagged"] for r in pos)
     neg_resolved = [r for r in neg if not r.get("unresolved")]
     fp = sum(r["flagged"] for r in neg_resolved)
     tn = len(neg_resolved) - fp
     fn = len(pos) - tp
-    metrics = {
-        "dataset_version": api.dataset_version,
-        "api": args.api,
+    return {
+        "dataset_version": dataset_version,
+        "api": api,
         "primary": [
             metric("sensitivity_pairs", tp, len(pos)),
             metric("specificity_pairs", tn, len(neg_resolved)),
@@ -291,6 +286,57 @@ def main() -> None:
         },
         "api_errors": sum(bool(r.get("error")) for r in pos + neg + cases + comp),
     }
+
+
+def verify(out: Path) -> int:
+    """Recompute the metrics from the committed raw answers and compare them."""
+    load = lambda name: json.loads((out / name).read_text())  # noqa: E731
+    want = load("metrics.json")
+    got = compute(
+        load("pairs_positive.json"),
+        load("pairs_negative.json"),
+        load("cases_cascade.json"),
+        load("cases_comparison.json"),
+        want["dataset_version"],
+        want["api"],
+    )
+    ok = json.loads(json.dumps(got)) == want
+    print("cascade validation: " + ("reproduced" if ok else "differs"))
+    return 0 if ok else 1
+
+
+def compare(a: Path, b: Path) -> int:
+    """Exit 1 when two metrics files differ in any count (live re-run against the recorded one)."""
+    x, y = json.loads(a.read_text()), json.loads(b.read_text())
+    keys = ("primary", "secondary", "unresolved")
+    same = all(x[k] == y[k] for k in keys)
+    print("cascade validation live re-run: " + ("same counts" if same else "counts changed"))
+    if not same:
+        for m_old, m_new in zip(
+            x["primary"] + x["secondary"], y["primary"] + y["secondary"], strict=True
+        ):
+            if m_old != m_new:
+                print(
+                    f"  {m_old['measure']}: {m_old['k']}/{m_old['n']} -> {m_new['k']}/{m_new['n']}"
+                )
+    return 0 if same else 1
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--ref", type=Path, required=True)
+    ap.add_argument("--out", type=Path, required=True)
+    ap.add_argument("--api", default="https://janusmeds.org/api")
+    args = ap.parse_args()
+    args.out.mkdir(parents=True, exist_ok=True)
+    api = Api(args.api, args.out / "api_cache.json")
+
+    pos = run_pairs(api, read(args.ref / "positive_pairs.csv"), "drug_b", "pair_id")
+    neg = run_pairs(api, read(args.ref / "negative_pairs.csv"), "drug_b_prime", "neg_id")
+    cases = run_cases(api, read(args.ref / "cascade_cases.csv"), expected=True)
+    comp = run_cases(api, read(args.ref / "comparison_cases.csv"), expected=False)
+
+    metrics = compute(pos, neg, cases, comp, api.dataset_version, args.api)
     for name, rows in (("pairs_positive", pos), ("pairs_negative", neg)):
         (args.out / f"{name}.json").write_text(json.dumps(rows, indent=1))
     (args.out / "cases_cascade.json").write_text(json.dumps(cases, indent=1))
@@ -300,4 +346,10 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    import sys
+
+    if sys.argv[1:2] == ["--verify"]:
+        raise SystemExit(verify(Path(sys.argv[2])))
+    if sys.argv[1:2] == ["--compare"]:
+        raise SystemExit(compare(Path(sys.argv[2]), Path(sys.argv[3])))
     main()
