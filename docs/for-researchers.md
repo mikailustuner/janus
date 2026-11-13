@@ -200,6 +200,12 @@ decisions. It is not a dose calculator. **Expert review has not yet been done.**
 
 ## 9. Limitations and how to report errors
 
+All known limitations, with the measurement behind each, are in
+[research/limitations.md](research/limitations.md). Validation studies:
+[cascade detection](research/cascade-validation.md), [FAERS calibration](research/faers-calibration.md);
+reporting checklists in [research/reporting-checklists.md](research/reporting-checklists.md), and how to
+recompute every number in [research/reproduce.md](research/reproduce.md).
+
 - Counts are **reports, not people**. FAERS is spontaneous reporting: not incidence, not deduplicated across cases.
 - The onset table is descriptive, not causal. The time machine is in silico and exploratory; a concentration or dose
   in it is never a dose a person could take.
@@ -212,7 +218,8 @@ decisions. It is not a dose calculator. **Expert review has not yet been done.**
 
 ## 10. How to cite
 
-There is no `CITATION.cff` yet. Until the owner publishes citation metadata, cite what you used, with its version:
+Citation metadata are in [`CITATION.cff`](../CITATION.cff) (GitHub shows a "Cite this repository" button). Cite the
+release you used, and for data files the file's own version:
 
 > Janus project (Copyright 2026 Mikail Üstüner). Janus FAERS onset table for the PIPC cascades, version
 > `faers-onset-pipc-1+b1df201877b1` (FAERS snapshot 2026-10-28), CC BY 4.0. https://github.com/mikailustuner/janus

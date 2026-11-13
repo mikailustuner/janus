@@ -1,0 +1,28 @@
+name: Reproduce
+
+# Weekly: the published validation numbers are recomputed (docs/research/reproduce.md). The check
+# fails, and GitHub notifies, when a number no longer follows from the committed data, or when the
+# live cascade engine now answers the reference set differently.
+on:
+  schedule:
+    - cron: "41 5 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  reproduce:
+    name: Validation numbers
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v7
+      - name: From the committed tables and answers
+        run: scripts/reproduce.sh
+      - name: Cascade validation re-run against the public API
+        run: |
+          python3 -I pipelines/tools/cascade_validation.py --ref data/validation/cascades \
+            --out "$RUNNER_TEMP/cascades" > /dev/null
+          python3 -I pipelines/tools/cascade_validation.py --compare \
+            data/validation/cascades/results/metrics.json "$RUNNER_TEMP/cascades/metrics.json"
