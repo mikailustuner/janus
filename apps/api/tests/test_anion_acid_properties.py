@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import pytest
-from hypothesis import assume, given
+from hypothesis import assume, example, given
 from hypothesis import strategies as st
 
 from janus.resolution.anion_acid import AnionAcidTable
@@ -137,11 +137,20 @@ def test_p38_base_suffix_maps_to_the_base(base: str, suffix: str) -> None:
             assert (m.status, m.step, m.keys) == ("mapped", "biologic_suffix", ("Q1",))
 
 
+def _not_by_suffix(name: str, index: NameIndex, lang: Lang = "en") -> bool:
+    """The suffix rule does not map `name`. Another step may: the spelling key folds variant
+    letters and repeated letters, so a generated `bbbbb-bae` can equal the label `bbbbb`."""
+    m = map_name(name, index, lang=lang)
+    return m.status == "none" or m.step != "biologic_suffix"
+
+
+# Counterexamples found by the nightly profile (random seeds), pinned (docs/testing.md).
+@example(base="bbbbb", suffix="BAEA", other="tr")
 @given(base=WORD, suffix=SUFFIX, other=st.sampled_from(["tr", "fr", "es"]))
 def test_p38_near_misses_and_switch_change_nothing(base: str, suffix: str, other: Lang) -> None:
     index = _bio_index(("Q1", base))
     with rule_data(BIOLOGIC_SUFFIX_ENABLED=False):
-        assert map_name(f"{base}-{suffix}", index, lang="en").status == "none"  # switch off
+        assert _not_by_suffix(f"{base}-{suffix}", index)  # switch off
     with rule_data(BIOLOGIC_SUFFIX_ENABLED=True):
         near = [
             f"{base}-{suffix[:3]}",  # three letters
@@ -152,18 +161,19 @@ def test_p38_near_misses_and_switch_change_nothing(base: str, suffix: str, other
             f"-{suffix}",  # no base
         ]
         for name in near:
-            assert map_name(name, index, lang="en").status == "none", name
+            assert _not_by_suffix(name, index), name
         # not English: no effect
-        assert map_name(f"{base}-{suffix}", index, lang=other).status == "none"
+        assert _not_by_suffix(f"{base}-{suffix}", index, lang=other)
         # an unmapped base stays unmapped
-        assert map_name(f"zq{base}-{suffix}", index, lang="en").status == "none"
+        assert _not_by_suffix(f"zq{base}-{suffix}", index)
 
 
+@example(base="bbbbc", suffix="CCCH")
 @given(base=WORD, suffix=SUFFIX)
 def test_p38_ambiguous_base_and_earlier_steps(base: str, suffix: str) -> None:
     with rule_data(BIOLOGIC_SUFFIX_ENABLED=True):
         two = _bio_index(("Q1", base), ("Q2", base))  # the base is ambiguous: not mapped
-        assert map_name(f"{base}-{suffix}", two, lang="en").status == "none"
+        assert map_name(f"{base}-{suffix}", two, lang="en").status != "mapped"
         # the whole name is itself a label: step any_label wins, the suffix rule is not used
         whole = _bio_index(("Q1", base), ("Q2", f"{base}-{suffix}"))
         m = map_name(f"{base}-{suffix}", whole, lang="en")
