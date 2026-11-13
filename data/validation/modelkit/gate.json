@@ -1,0 +1,305 @@
+{
+ "schema": "modelkit-gate-1",
+ "measured_on": "2026-11-13",
+ "release": "20261112T170053Z-00e7d273-177c",
+ "protocol": "docs/research/modelkit-gate-protocol.md",
+ "method": "docs/research/modelkit-gate.md",
+ "note": "Research use only. Not for clinical decisions. Expert review has not yet been done. Every reading and check is automated.",
+ "statuses": {
+  "proven": "shown by the data",
+  "not_proven": "tested, and not shown",
+  "not_tested": "could not be tested yet"
+ },
+ "gate": {
+  "rule": "interpretable only when at least 10 drugs have both AUC and Cmax tested against held-out studies (leave one study out, 2-fold band)",
+  "threshold_drugs": 10,
+  "drugs_in_release": 404,
+  "drugs_with_set": 8,
+  "complete_sets": 2,
+  "drugs_auc_tested": 3,
+  "drugs_cmax_tested": 0,
+  "drugs_both_tested": 0,
+  "interpretable": false,
+  "status": {
+   "validated": 0,
+   "failed": 0,
+   "not_validated": 404
+  }
+ },
+ "bound": {
+  "upper_bound_drugs_both": 0,
+  "tiers": [
+   {
+    "id": "T0",
+    "label": "usable oral AUC and Cmax observations exist",
+    "auc": 10,
+    "cmax": 16,
+    "both": 10
+   },
+   {
+    "id": "T1",
+    "label": "and another study of the drug has a usable clearance",
+    "auc": 5,
+    "cmax": 6,
+    "both": 5
+   },
+   {
+    "id": "T1b",
+    "label": "and, for Cmax, another study has a time of peak concentration",
+    "auc": 5,
+    "cmax": 0,
+    "both": 0
+   },
+   {
+    "id": "gate",
+    "label": "tested by the product gate",
+    "auc": 3,
+    "cmax": 0,
+    "both": 0
+   }
+  ],
+  "counts": {
+   "drugs_with_confirmed_value": 73,
+   "drugs_with_confirmed_values_in_2plus_studies": 23,
+   "drugs_with_testable_observation": 16,
+   "drugs_with_testable_observations_in_2plus_studies": 3,
+   "drugs_with_usable_clearance": 20,
+   "drugs_with_usable_clearance_and_peak_time": 4,
+   "drugs_with_usable_peak_time": 14
+  },
+  "limiting_factor": "data: too few drugs have a second independent study with a clearance and a time of peak concentration",
+  "earlier_release": {
+   "release": "20261112T142707Z-8ac5398b-8b3e",
+   "note": "before the strict check (every value both readers agree on); its one drug with both metrics tested was dasatinib, through the unit error, and it failed",
+   "upper_bound_drugs_both": 1,
+   "drugs_both_tested": 1
+  }
+ },
+ "claim": {
+  "text": "AUC was within 2-fold of held-out studies in the 3 drugs where it could be tested (11 of 11 points, Wilson 95 % 0.74-1.00). Cmax could not be tested for any drug. The gate needs 10 drugs with both and has 0, so no statement is made about the model kit as a whole.",
+  "auc": {
+   "drugs": 3,
+   "points": 11,
+   "within_2_fold": 11,
+   "wilson_95": [
+    0.741,
+    1.0
+   ],
+   "gmfe": 1.222,
+   "gmfe_drug_bootstrap_95": [
+    1.151,
+    1.61
+   ]
+  },
+  "cmax": {
+   "drugs": 0,
+   "points": 0
+  }
+ },
+ "cross_study_check": {
+  "factor": 10.0,
+  "switched_on": false,
+  "confirmed_values": 336,
+  "checkable": 149,
+  "would_withhold": 3,
+  "withheld_values": [
+   {
+    "drug": "dasatinib",
+    "parameter": "cl_f",
+    "study": "NCT00529763",
+    "value": 211.09,
+    "unit": "mL/h",
+    "reference": 245.504438,
+    "reference_unit": "L/h",
+    "ratio": 0.00086
+   },
+   {
+    "drug": "acalabrutinib",
+    "parameter": "v_f",
+    "study": "NCT02029443",
+    "value": 2100.0,
+    "unit": "L",
+    "reference": 171.3,
+    "reference_unit": "L",
+    "ratio": 12.3
+   },
+   {
+    "drug": "dasatinib",
+    "parameter": "cl_f",
+    "study": "NCT00529763",
+    "value": 221.84,
+    "unit": "mL/h",
+    "reference": 245.504438,
+    "reference_unit": "L/h",
+    "ratio": 0.000904
+   }
+  ],
+  "earlier_verdicts": {
+   "note": "earlier automated review verdicts, re-used; not a fresh measurement",
+   "values": [
+    {
+     "drug": "dasatinib",
+     "parameter": "cl_f",
+     "study": "NCT00529763",
+     "matching_items": 2,
+     "verdicts": [
+      "correct/correct"
+     ]
+    },
+    {
+     "drug": "acalabrutinib",
+     "parameter": "v_f",
+     "study": "NCT02029443",
+     "matching_items": 13,
+     "verdicts": [
+      "correct/correct"
+     ]
+    },
+    {
+     "drug": "dasatinib",
+     "parameter": "cl_f",
+     "study": "NCT00529763",
+     "matching_items": 2,
+     "verdicts": [
+      "correct/correct"
+     ]
+    }
+   ],
+   "with_earlier_verdict": 3,
+   "both_correct": 3,
+   "decision_rule_met": false
+  },
+  "gate_change": false,
+  "decision": "not met: the earlier automated review passes judged the withheld values correct (they check the reading against the source, and the source itself carries the unit error), so the check stays switched off"
+ },
+ "rows": [
+  {
+   "id": "values_read_correctly",
+   "claim": "ClinicalTrials.gov values that pass the strict check are read correctly",
+   "status": "proven",
+   "detail": "125 of 126 values correct in a census of 14 studies, judged by two automated review passes, not by experts. Covers 336 of the 2,565 values the readers agree on (13 %).",
+   "numbers": {
+    "k": 125,
+    "n": 126,
+    "estimate": 0.992,
+    "wilson_95": [
+     0.956,
+     0.999
+    ],
+    "cluster_lower_95": 0.934
+   }
+  },
+  {
+   "id": "auc_within_2_fold",
+   "claim": "AUC is predicted within 2-fold for held-out studies",
+   "status": "proven",
+   "detail": "Only 3 drugs (apremilast, repaglinide, talazoparib), 7 studies. Each point is predicted by a set built without its study. Says nothing about other drugs.",
+   "numbers": {
+    "k": 11,
+    "n": 11,
+    "estimate": 1.0,
+    "wilson_95": [
+     0.741,
+     1.0
+    ],
+    "drugs_all_within": 3,
+    "drugs": 3,
+    "drugs_wilson_95": [
+     0.439,
+     1.0
+    ],
+    "gmfe": 1.222
+   }
+  },
+  {
+   "id": "cmax_within_2_fold",
+   "claim": "Cmax is predicted within 2-fold for held-out studies",
+   "status": "not_tested",
+   "detail": "No drug has a held-out study with a Cmax and another study with a time of peak concentration, which the set needs for the absorption rate.",
+   "numbers": {
+    "drugs_tested": 0
+   }
+  },
+  {
+   "id": "gate",
+   "claim": "The model kit is accurate across drugs (the gate)",
+   "status": "not_tested",
+   "detail": "The gate is interpretable only with at least 10 drugs that have both AUC and Cmax tested. Today: 0. Upper bound with the current data: 0.",
+   "numbers": {
+    "drugs_both_tested": 0,
+    "needed": 10,
+    "upper_bound": 0
+   }
+  },
+  {
+   "id": "drug_validated",
+   "claim": "A drug's parameter set is validated (AUC and Cmax both within 2-fold)",
+   "status": "not_tested",
+   "detail": "0 of 404 drugs: a drug is validated only when both AUC and Cmax are tested, and no drug has both. 8 drugs have a parameter set, 2 of them complete.",
+   "numbers": {
+    "validated": 0,
+    "failed": 0,
+    "not_validated": 404,
+    "with_set": 8
+   }
+  },
+  {
+   "id": "document_sources",
+   "claim": "Values from article tables and FDA review tables are precise enough to publish",
+   "status": "not_proven",
+   "detail": "Both failed the pre-registered rule (lower 95 % bound at least 0.90) and are held back.",
+   "numbers": {
+    "pmc_tables": {
+     "estimate": 0.364,
+     "wilson_95": [
+      0.197,
+      0.57
+     ],
+     "cluster_lower_95": 0.091,
+     "n": 22
+    },
+    "fda_reviews": {
+     "estimate": 0.769,
+     "wilson_95": [
+      0.579,
+      0.89
+     ],
+     "cluster_lower_95": 0.475,
+     "n": 26
+    }
+   }
+  },
+  {
+   "id": "unit_errors_across_studies",
+   "claim": "A value posted with a wrong unit is withheld",
+   "status": "not_proven",
+   "detail": "A pre-registered cross-study check withholds the known case (dasatinib clearance posted in mL/h, about 1,000-fold off), but it did not meet its own decision rule and is switched off. Such values can still be shown. A drug with only one study cannot be checked this way.",
+   "numbers": {
+    "would_withhold": 3,
+    "checkable": 149,
+    "confirmed_values": 336
+   }
+  },
+  {
+   "id": "recall",
+   "claim": "The readers find every value a source reports",
+   "status": "not_tested",
+   "detail": "Recall needs experts to annotate whole documents.",
+   "numbers": {}
+  },
+  {
+   "id": "special_populations",
+   "claim": "Predictions for children, older adults, or kidney or liver impairment",
+   "status": "not_tested",
+   "detail": "Values from these populations are excluded from building and testing sets.",
+   "numbers": {}
+  },
+  {
+   "id": "expert_review",
+   "claim": "Experts have checked the values and the method",
+   "status": "not_tested",
+   "detail": "Expert review has not yet been done.",
+   "numbers": {}
+  }
+ ]
+}
