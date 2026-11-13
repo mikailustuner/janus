@@ -6,6 +6,14 @@ public server runs ([docs/releasing.md](docs/releasing.md)). Research use only; 
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-11-13
+
+### Fixed
+
+- The staging check read the production database through the installed compose file, which during the release
+  that moves secrets to files is still the previous one; it now finds the production database container by its
+  labels.
+
 ## [0.2.0] - 2026-11-13
 
 ### Added
