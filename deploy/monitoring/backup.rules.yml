@@ -1,0 +1,20 @@
+# Backups of the public Janus are pulled by a separate machine that serves janus_backup.prom
+# (deploy/README.md, "Backups"). Alerts when a pull is overdue or the machine has not answered.
+groups:
+  - name: janus-backup
+    rules:
+      - alert: JanusDatabaseBackupOverdue
+        expr: time() - janus_backup_last_success_timestamp_seconds{kind="db"} > 30 * 3600
+        for: 15m
+        labels: {severity: warning}
+        annotations: {summary: "No successful Janus database backup for more than 30 hours"}
+      - alert: JanusDataBackupOverdue
+        expr: time() - janus_backup_last_success_timestamp_seconds{kind="data"} > 8 * 86400
+        for: 15m
+        labels: {severity: warning}
+        annotations: {summary: "No successful Janus data snapshot for more than 8 days"}
+      - alert: JanusBackupMachineUnreachable
+        expr: up{job="janus-backup"} == 0
+        for: 36h
+        labels: {severity: warning}
+        annotations: {summary: "The backup machine has not answered for 36 hours (backups may not run)"}

@@ -1,0 +1,48 @@
+# Service level objectives of the public Janus (docs/operations.md). Prometheus rules; the monitoring
+# server loads them next to the other Janus rules. Series come from docs/metrics.md, label system="janus".
+#   Availability: at least 99.5 % of API requests do not end in 5xx (30 days).
+#   Latency:      at least 95 % of API requests finish within 500 ms (30 days), i.e. p95 <= 500 ms.
+# A 5xx series exists only after a first 5xx, hence `or vector(0)`.
+# Burn-rate alerts follow the multi-window method (Google SRE workbook, "Alerting on SLOs").
+groups:
+  - name: janus-slo-recording
+    rules:
+      - record: janus:error_ratio:rate5m
+        expr: (sum(rate(janus_http_requests_total{system="janus",status_class="5xx"}[5m])) or vector(0)) / clamp_min(sum(rate(janus_http_requests_total{system="janus"}[5m])), 1e-9)
+      - record: janus:error_ratio:rate30m
+        expr: (sum(rate(janus_http_requests_total{system="janus",status_class="5xx"}[30m])) or vector(0)) / clamp_min(sum(rate(janus_http_requests_total{system="janus"}[30m])), 1e-9)
+      - record: janus:error_ratio:rate1h
+        expr: (sum(rate(janus_http_requests_total{system="janus",status_class="5xx"}[1h])) or vector(0)) / clamp_min(sum(rate(janus_http_requests_total{system="janus"}[1h])), 1e-9)
+      - record: janus:error_ratio:rate6h
+        expr: (sum(rate(janus_http_requests_total{system="janus",status_class="5xx"}[6h])) or vector(0)) / clamp_min(sum(rate(janus_http_requests_total{system="janus"}[6h])), 1e-9)
+      - record: janus:slow_ratio:rate5m
+        expr: 1 - sum(rate(janus_http_request_duration_seconds_bucket{system="janus",le="0.5"}[5m])) / clamp_min(sum(rate(janus_http_request_duration_seconds_count{system="janus"}[5m])), 1e-9)
+      - record: janus:slow_ratio:rate30m
+        expr: 1 - sum(rate(janus_http_request_duration_seconds_bucket{system="janus",le="0.5"}[30m])) / clamp_min(sum(rate(janus_http_request_duration_seconds_count{system="janus"}[30m])), 1e-9)
+      - record: janus:slow_ratio:rate1h
+        expr: 1 - sum(rate(janus_http_request_duration_seconds_bucket{system="janus",le="0.5"}[1h])) / clamp_min(sum(rate(janus_http_request_duration_seconds_count{system="janus"}[1h])), 1e-9)
+      - record: janus:slow_ratio:rate6h
+        expr: 1 - sum(rate(janus_http_request_duration_seconds_bucket{system="janus",le="0.5"}[6h])) / clamp_min(sum(rate(janus_http_request_duration_seconds_count{system="janus"}[6h])), 1e-9)
+      - record: janus:requests:rate1h
+        expr: sum(rate(janus_http_requests_total{system="janus"}[1h]))
+  - name: janus-slo-alerts
+    rules:
+      # 14.4x burn: 2 % of the 30-day budget in one hour. Needs some traffic (1 request a minute).
+      - alert: JanusAvailabilityBudgetFastBurn
+        expr: janus:error_ratio:rate1h > 14.4 * 0.005 and janus:error_ratio:rate5m > 14.4 * 0.005 and janus:requests:rate1h > 1/60
+        labels: {severity: page}
+        annotations: {summary: "Janus API 5xx share is burning the availability budget fast (1 h and 5 min windows)"}
+      - alert: JanusAvailabilityBudgetSlowBurn
+        expr: janus:error_ratio:rate6h > 6 * 0.005 and janus:error_ratio:rate30m > 6 * 0.005 and janus:requests:rate1h > 1/60
+        for: 15m
+        labels: {severity: warning}
+        annotations: {summary: "Janus API 5xx share is burning the availability budget (6 h and 30 min windows)"}
+      - alert: JanusLatencyBudgetFastBurn
+        expr: janus:slow_ratio:rate1h > 14.4 * 0.05 and janus:slow_ratio:rate5m > 14.4 * 0.05 and janus:requests:rate1h > 1/60
+        labels: {severity: page}
+        annotations: {summary: "Most Janus API requests take longer than 500 ms (1 h and 5 min windows)"}
+      - alert: JanusLatencyBudgetSlowBurn
+        expr: janus:slow_ratio:rate6h > 6 * 0.05 and janus:slow_ratio:rate30m > 6 * 0.05 and janus:requests:rate1h > 1/60
+        for: 15m
+        labels: {severity: warning}
+        annotations: {summary: "Janus API requests over 500 ms are burning the latency budget (6 h and 30 min windows)"}

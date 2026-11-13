@@ -1,0 +1,59 @@
+name: Performance
+
+# Lighthouse budgets on the production build (performance, accessibility and SEO at least 90 on the
+# public pages) and the bundle budget report, on every push; a small load check of the public API every
+# week (docs/operations.md).
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: "53 6 * * 2"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: perf-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lighthouse:
+    name: Lighthouse and bundle budget
+    if: github.event_name != 'schedule'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @janus/web build
+      - name: Bundle budget (report in the run summary)
+        run: |
+          node apps/web/scripts/bundle-budget.mjs | tee bundle.txt
+          { echo '### Bundle budget'; echo '```'; cat bundle.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - name: Lighthouse
+        working-directory: apps/web
+        run: |
+          pnpm start --port 3200 --hostname 127.0.0.1 &
+          for i in $(seq 1 60); do curl -fs http://127.0.0.1:3200/en >/dev/null && break; sleep 1; done
+          npx --yes @lhci/cli@0.15.1 autorun --config=lighthouserc.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lighthouse
+          path: apps/web/lighthouse/
+
+  load:
+    name: Load check of the public API (k6)
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - name: k6
+        run: docker run --rm -i grafana/k6:1.0.0 run -e BASE=https://janusmeds.org - < deploy/load/smoke.js
