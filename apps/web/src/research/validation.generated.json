@@ -1,0 +1,264 @@
+{
+ "cascade": {
+  "protocolCommit": "d7a0b1f",
+  "protocolUrl": "https://github.com/mikailustuner/janus/blob/main/docs/research/cascade-validation-protocol.md",
+  "resultsUrl": "https://github.com/mikailustuner/janus/blob/main/docs/research/cascade-validation.md",
+  "listedCascades": 65,
+  "publishedCascades": 217,
+  "nonCascadePairs": 432,
+  "caseReports": 107,
+  "specificity": {
+   "k": 421,
+   "n": 432,
+   "estimate": 0.9745370370370371,
+   "low": 0.9549855045349731,
+   "high": 0.9857235346013564,
+   "bound": 0.9,
+   "met": true
+  },
+  "sensitivity": {
+   "k": 79,
+   "n": 217,
+   "estimate": 0.3640552995391705,
+   "low": 0.30291580919511474,
+   "high": 0.42992420961805133,
+   "bound": 0.8,
+   "met": false
+  },
+  "inScope": {
+   "k": 77,
+   "n": 77
+  },
+  "comparisonAlert": {
+   "k": 26,
+   "n": 50,
+   "estimate": 0.52,
+   "low": 0.38511744790185476,
+   "high": 0.6520286480910008
+  }
+ },
+ "faers": {
+  "protocolCommit": "d505bd2",
+  "protocolUrl": "https://github.com/mikailustuner/janus/blob/main/docs/research/faers-calibration-protocol.md",
+  "resultsUrl": "https://github.com/mikailustuner/janus/blob/main/docs/research/faers-calibration.md",
+  "auc": {
+   "estimate": 0.7373819163292847,
+   "low": 0.6899165440429058,
+   "high": 0.7848472886156637,
+   "nPositive": 180,
+   "nNegative": 247,
+   "bound": 0.5,
+   "met": true
+  },
+  "negativesNominal": {
+   "k": 64,
+   "n": 247,
+   "estimate": 0.2591093117408907,
+   "low": 0.2084520920916011,
+   "high": 0.31714467117585565
+  },
+  "negativesCalibrated": {
+   "k": 13,
+   "n": 247,
+   "estimate": 0.05263157894736842,
+   "low": 0.031012875698243,
+   "high": 0.08795254179846224
+  },
+  "evansSensitivity": {
+   "k": 99,
+   "n": 180,
+   "estimate": 0.55,
+   "low": 0.4770335498424285,
+   "high": 0.6208769003331349
+  },
+  "evansSpecificity": {
+   "k": 217,
+   "n": 247,
+   "estimate": 0.8785425101214575,
+   "low": 0.8319075929155686,
+   "high": 0.9135832076641424
+  }
+ },
+ "modelkitPrecision": {
+  "protocolCommit": "7a65950",
+  "protocolUrl": "https://github.com/mikailustuner/janus/blob/main/docs/research/modelkit-precision-protocol.md",
+  "resultsUrl": "https://github.com/mikailustuner/janus/blob/main/docs/research/modelkit-precision.md",
+  "bound": 0.9,
+  "sources": [
+   {
+    "key": "clinicaltrials_gov",
+    "values": 126,
+    "studies": 14,
+    "precision": 0.992,
+    "wilsonLow": 0.956,
+    "wilsonHigh": 0.999,
+    "clusterLower": 0.934,
+    "met": true,
+    "confirmed": 2565,
+    "level": 3
+   },
+   {
+    "key": "pmc_oa",
+    "values": 22,
+    "studies": 9,
+    "precision": 0.364,
+    "wilsonLow": 0.197,
+    "wilsonHigh": 0.57,
+    "clusterLower": 0.091,
+    "met": false,
+    "confirmed": 412,
+    "level": 2
+   },
+   {
+    "key": "drugsatfda_review",
+    "values": 26,
+    "studies": 11,
+    "precision": 0.769,
+    "wilsonLow": 0.579,
+    "wilsonHigh": 0.89,
+    "clusterLower": 0.475,
+    "met": false,
+    "confirmed": 45,
+    "level": 0
+   }
+  ],
+  "curve": [
+   {
+    "level": 0,
+    "coverage": 1,
+    "precision": 0.849,
+    "clusterLower": 0.727,
+    "met": false
+   },
+   {
+    "level": 1,
+    "coverage": 0.399,
+    "precision": 0.877,
+    "clusterLower": 0.745,
+    "met": false
+   },
+   {
+    "level": 2,
+    "coverage": 0.214,
+    "precision": 0.939,
+    "clusterLower": 0.831,
+    "met": false
+   },
+   {
+    "level": 3,
+    "coverage": 0.162,
+    "precision": 1,
+    "clusterLower": 0.92,
+    "met": true
+   },
+   {
+    "level": 4,
+    "coverage": 0.136,
+    "precision": 1,
+    "clusterLower": 0.914,
+    "met": true
+   },
+   {
+    "level": 5,
+    "coverage": 0.126,
+    "precision": 1,
+    "clusterLower": 0.898,
+    "met": false
+   }
+  ],
+  "curveValues": 1010
+ },
+ "modelkitGate": {
+  "protocolCommit": "40d09ae",
+  "protocolUrl": "https://github.com/mikailustuner/janus/blob/main/docs/research/modelkit-gate-protocol.md",
+  "resultsUrl": "https://github.com/mikailustuner/janus/blob/main/docs/research/modelkit-gate.md",
+  "needed": 10,
+  "both": 0,
+  "upperBound": 0,
+  "interpretable": false,
+  "limitedByData": true,
+  "claim": {
+   "aucDrugs": 3,
+   "aucK": 11,
+   "aucN": 11,
+   "aucLow": 0.741,
+   "aucHigh": 1,
+   "cmaxDrugs": 0
+  },
+  "rows": [
+   {
+    "id": "values_read_correctly",
+    "status": "proven"
+   },
+   {
+    "id": "auc_within_2_fold",
+    "status": "proven"
+   },
+   {
+    "id": "cmax_within_2_fold",
+    "status": "not_tested"
+   },
+   {
+    "id": "gate",
+    "status": "not_tested"
+   },
+   {
+    "id": "drug_validated",
+    "status": "not_tested"
+   },
+   {
+    "id": "document_sources",
+    "status": "not_proven"
+   },
+   {
+    "id": "unit_errors_across_studies",
+    "status": "not_proven"
+   },
+   {
+    "id": "recall",
+    "status": "not_tested"
+   },
+   {
+    "id": "special_populations",
+    "status": "not_tested"
+   },
+   {
+    "id": "expert_review",
+    "status": "not_tested"
+   }
+  ],
+  "read": {
+   "k": 125,
+   "n": 126,
+   "low": 0.956,
+   "high": 0.999,
+   "clusterLower": 0.934
+  },
+  "auc": {
+   "k": 11,
+   "n": 11,
+   "low": 0.741,
+   "high": 1,
+   "drugs": 3
+  },
+  "validated": {
+   "validated": 0,
+   "total": 404,
+   "withSet": 8
+  },
+  "documents": {
+   "pmc": 0.364,
+   "pmcLower": 0.091,
+   "fda": 0.769,
+   "fdaLower": 0.475
+  },
+  "crossStudy": {
+   "implemented": true,
+   "switchedOn": false,
+   "ruleMet": false,
+   "wouldWithhold": 3,
+   "checkable": 149,
+   "confirmed": 336
+  }
+ }
+}

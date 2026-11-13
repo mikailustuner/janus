@@ -102,8 +102,10 @@ class ModelkitCtgovJob(Job[Path]):
         cache_env = os.environ.get("JANUS_MODELKIT_CHECKPOINT_DIR")  # resumable research runs
         cache = Path(cache_env) if cache_env else None
         workers = max(1, int(os.environ.get("JANUS_MODELKIT_WORKERS", "1")))
+        # research runs only: the cross-study check did not meet its pre-registered decision rule
+        cross_study = os.environ.get("JANUS_MODELKIT_CROSS_STUDY") == "1"
         pairs, only_b, kept = read_bulk(
-            raw.payload, identity, stats, counts, workers, cache, products
+            raw.payload, identity, stats, counts, workers, cache, products, cross_study
         )
         rows_csv, dropped = finalize_rows(pairs, table)
         date = raw.snapshot_date or raw.retrieved_at.date().isoformat()

@@ -1,0 +1,15 @@
+# Backup machine, user unit: serve the backup metrics file to the monitoring server over the private
+# network only (README.md, "Backups"). Set BIND to this machine's private address, e.g. with
+# `systemctl --user edit janus-backup-metrics` -> [Service] Environment=BIND=100.x.y.z
+[Unit]
+Description=Janus backup metrics (read-only, private network)
+After=network-online.target
+
+[Service]
+Environment=BIND=127.0.0.1
+ExecStart=/usr/bin/python3 -I -m http.server 9109 --bind ${BIND} --directory %h/backups/janus/metrics
+Restart=on-failure
+NoNewPrivileges=true
+
+[Install]
+WantedBy=default.target

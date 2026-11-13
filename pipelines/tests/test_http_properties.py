@@ -233,3 +233,22 @@ def test_crossref_request_has_no_mailto_for_url_contact(monkeypatch: pytest.Monk
     assert "mailto" not in str(seen[0].url)
     assert "@" not in seen[0].headers["User-Agent"]
     assert GITHUB in seen[0].headers["User-Agent"]
+
+
+def test_url_query_is_kept_and_merged_with_params() -> None:
+    """httpx2 replaces a URL's own query with `params`, even an empty one; the fetcher keeps it."""
+    seen: list[str] = []
+
+    def handle(request: httpx2.Request) -> httpx2.Response:
+        seen.append(str(request.url))
+        return httpx2.Response(200)
+
+    fetcher, _ = _fetcher(httpx2.MockTransport(handle))
+    fetcher.get("https://example.org/a?prefix=b&list-type=2")
+    fetcher.get("https://example.org/a?prefix=b", params={"x": "2"})
+    fetcher.get("https://example.org/a", params={"x": "2"})
+    assert seen == [
+        "https://example.org/a?prefix=b&list-type=2",
+        "https://example.org/a?prefix=b&x=2",
+        "https://example.org/a?x=2",
+    ]

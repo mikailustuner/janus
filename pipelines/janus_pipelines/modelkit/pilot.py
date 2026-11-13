@@ -50,6 +50,7 @@ _REASON: Final = {
     "reader_found_no_value": "a reader found no value",
     "strict_check": "both readers agree, but the strict publication check abstained",
     "strict_arbitration": "the readers agree once the record settles the analyte or a dose the parameter does not need",
+    "cross_study_check": "both readers agree, but the value differs more than 10-fold from the drug's other studies (cross-study check)",
 }  # fmt: skip
 
 

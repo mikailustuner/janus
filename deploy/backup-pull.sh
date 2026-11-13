@@ -62,3 +62,15 @@ case "$mode" in
     ;;
 esac
 date -u +%Y-%m-%dT%H:%M:%SZ > "$BACKUP_DIR/$mode.last-ok"
+# Prometheus text file of the last successes, served to the monitoring server (README, "Backups").
+mkdir -p "$BACKUP_DIR/metrics"
+{
+  echo "# HELP janus_backup_last_success_timestamp_seconds Unix time of the last successful pull."
+  echo "# TYPE janus_backup_last_success_timestamp_seconds gauge"
+  for kind in db data; do
+    [ -f "$BACKUP_DIR/$kind.last-ok" ] || continue
+    printf 'janus_backup_last_success_timestamp_seconds{kind="%s"} %s\n' \
+      "$kind" "$(date -u -d "$(cat "$BACKUP_DIR/$kind.last-ok")" +%s)"
+  done
+} > "$BACKUP_DIR/metrics/.janus_backup.prom.tmp"
+mv "$BACKUP_DIR/metrics/.janus_backup.prom.tmp" "$BACKUP_DIR/metrics/janus_backup.prom"

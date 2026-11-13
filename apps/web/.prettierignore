@@ -34,3 +34,4 @@ src/plaininfo/fixtures/*.json
 src/demo/plain-info.recorded.json
 # Written by apps/api/tests/modelkit_record.py (compact: the release holds every drug of the pool)
 src/modelkit/*.recorded.json
+src/research/*.generated.json

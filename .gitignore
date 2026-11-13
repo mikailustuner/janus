@@ -41,3 +41,6 @@ apps/api/mutants/
 
 # Cache of API answers of the cascade validation (rebuilt by the script)
 data/validation/cascades/results/api_cache.json
+
+# Coverage data files (pytest --cov)
+.coverage

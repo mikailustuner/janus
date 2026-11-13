@@ -1,0 +1,11 @@
+{
+  "title": "Janus: open tools to find prescribing cascades in medication lists",
+  "upload_type": "software",
+  "creators": [{ "name": "Üstüner, Mikail" }],
+  "license": "Apache-2.0",
+  "keywords": ["prescribing cascade", "polypharmacy", "pharmacovigilance", "FAERS", "deprescribing"],
+  "description": "Janus checks a medication list for 65 published prescribing cascades (the PIPC list) and explains each pattern for a conversation with a doctor, with open data and tools for researchers. Research prototype, not a medical device. Expert review has not yet been done.",
+  "related_identifiers": [
+    { "identifier": "https://janusmeds.org", "relation": "isDocumentedBy", "resource_type": "other" }
+  ]
+}

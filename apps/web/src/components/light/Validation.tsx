@@ -7,6 +7,7 @@
 import { useLocale } from "next-intl";
 
 import { formatCount, formatRatio } from "@/components/format";
+import { CalibrationLine } from "@/components/research/CalibrationLine";
 import { StateView } from "@/components/StateView";
 import { Card, SectionTitle } from "@/components/ui";
 import { useCall } from "@/flow/useCall";
@@ -112,6 +113,7 @@ function CaseCard({ c, data }: { c: CaseResult; data: ValidationOut }) {
           : t("Light.validation.faersNone")}{" "}
         {t("Light.codes.faers_includes_later_use")}
       </p>
+      {c.faers && e ? <CalibrationLine /> : null}
       <p className="text-sm">{c.case.note}</p>
       <p className="text-sm">
         <span className="font-semibold">

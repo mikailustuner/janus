@@ -281,6 +281,21 @@ Drugs@FDA clinical pharmacology reviews (model kit evidence)
   and its numbers checked against the page image by automated reader passes. Not
   an FDA endorsement.
 
+EMA European public assessment reports (EPARs), candidate model kit evidence source
+  Publisher: European Medicines Agency
+  License: © European Medicines Agency; reproduction and distribution allowed
+  for commercial and non-commercial purposes provided EMA is acknowledged as the
+  source; content supplied by third parties is excluded
+  Checked 2026-11-13 for phase B3a of the model kit precision work
+  (docs/research/modelkit-precision.md). Re-use terms: EMA legal notice
+  (copyright and limited reproduction notices); the assessment report PDFs carry
+  'Reproduction is authorised provided the source is acknowledged.' A list of
+  EPAR documents with their URLs is published as JSON by EMA.
+  Not ingested yet: pharmacokinetic values in EPARs are mostly in running text,
+  and the model kit's two table readers are not built for that layout. No value
+  from an EPAR is stored or shown, and no precision has been measured for this
+  source.
+
 RxNav / RxClass
   License: Free to use with the NLM attribution below
   This product uses publicly available data courtesy of the U.S. National

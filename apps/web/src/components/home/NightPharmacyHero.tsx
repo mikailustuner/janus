@@ -173,7 +173,11 @@ export function NightPharmacyHero({ active }: { active: boolean }) {
         <div className="scene np-hero" aria-hidden={room}>
           <div className="np-sky" aria-hidden />
           <div className="scene-box np-box-night">
-            <ScenePicture name="night-diorama" alt={t("Home.alt.diorama")} />
+            <ScenePicture
+              name="night-diorama"
+              alt={t("Home.alt.diorama")}
+              first
+            />
             <div className="np-ghosts" aria-hidden>
               {WINDOWS.map((p, i) => (
                 <span

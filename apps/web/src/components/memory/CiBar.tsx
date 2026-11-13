@@ -7,6 +7,7 @@
 import { useLocale } from "next-intl";
 
 import { formatRatio } from "@/components/format";
+import { CalibrationLine } from "@/components/research/CalibrationLine";
 import { ciBar, OVER, type Ratio } from "@/flow/memory";
 import { useT } from "@/theme/words";
 
@@ -70,6 +71,7 @@ export function CiBar({ ratio }: { ratio: Ratio }) {
       <p className="text-xs text-muted" aria-hidden>
         {t("MemoryView.noDifference")}
       </p>
+      <CalibrationLine />
     </figure>
   );
 }

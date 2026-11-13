@@ -103,6 +103,8 @@ jobs:
       - run: pnpm lint
       - run: pnpm typecheck
       - name: Unit tests with the core-module coverage floors (docs/testing.md)
+        env:
+          FC_PROFILE: ci
         run: pnpm --filter @janus/web test:coverage
 
   web-e2e:

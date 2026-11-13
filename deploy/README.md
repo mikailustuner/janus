@@ -113,6 +113,10 @@ reach or delete them.
   unchanged files are hard links to the previous snapshot; the newest 4 are kept.
 - **Restore check.** `backup-restore-check.sh <dump>` restores into a throwaway Postgres 16 container (own
   name, no network, removed afterwards) and prints time, table count, migration and the largest tables.
+- **Monitoring.** After each success the pull writes `metrics/janus_backup.prom` (last success per kind);
+  `janus-backup-metrics.service` serves that folder read-only on the private network, and the monitoring
+  server alerts when a pull is overdue or the machine has not answered for 36 h
+  (`deploy/monitoring/backup.rules.yml`).
 - **Failure.** A failed pull posts to the private notification service when `NTFY_URL` and `NTFY_TOKEN` are
   set. Timers use `Persistent=true`, so a run missed while the machine was off happens at the next start.
 - **External check.** `.github/workflows/uptime.yml` requests the home page, `/api/health` and the model kit

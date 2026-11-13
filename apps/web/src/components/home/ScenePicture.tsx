@@ -1,7 +1,9 @@
 /**
  * A home scene image in AVIF, WebP and JPEG at 2752, 1600 and 960 px (public/home, README there).
- * `lazy` everywhere: the hidden theme's scene is `display: none` and is never fetched; the active
- * one is preloaded by `scenePreloadScript` before the parser reaches it.
+ * The first scene of each theme is the page's largest paint: it loads eagerly with high priority
+ * (a lazy image waits for layout and the busy main thread before it paints, about 3.5 s on a slow
+ * phone; the hidden theme's first image is then fetched too, 17 to 70 kB). Later scenes stay lazy.
+ * The active theme's first image is also preloaded by `scenePreloadScript`.
  */
 export type SceneName = "night-diorama" | "night-cabinet" | "clinical-hero";
 
@@ -22,10 +24,13 @@ export function ScenePicture({
   name,
   alt,
   className = "",
+  first = false,
 }: {
   name: SceneName;
   alt: string;
   className?: string;
+  /** The theme's first scene, i.e. the largest paint of the page. */
+  first?: boolean;
 }) {
   return (
     <picture className={className}>
@@ -46,7 +51,8 @@ export function ScenePicture({
         alt={alt}
         width={2752}
         height={1536}
-        loading="lazy"
+        loading={first ? "eager" : "lazy"}
+        fetchPriority={first ? "high" : "auto"}
         decoding="async"
       />
     </picture>

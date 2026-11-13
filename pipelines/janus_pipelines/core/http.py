@@ -9,7 +9,7 @@ import re
 import time
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass, field
-from urllib.parse import urlsplit
+from urllib.parse import parse_qsl, urlsplit
 
 import httpx2
 
@@ -111,6 +111,16 @@ class RateLimiter:
         self._last[host] = now
 
 
+def _merged_query(url: str, params: Mapping[str, str] | None) -> httpx2.QueryParams | None:
+    """The URL's own query followed by `params`. httpx2 replaces a URL's query with any `params`,
+    even an empty mapping, so the two are merged here; None leaves the URL as it is."""
+    if not params:
+        return None
+    return httpx2.QueryParams(
+        [*parse_qsl(urlsplit(url).query, keep_blank_values=True), *params.items()]
+    )
+
+
 class FetchError(Exception):
     """A request failed after the allowed retries."""
 
@@ -143,7 +153,10 @@ class Fetcher:
             retry_after: str | None = None
             try:
                 response = self.client.get(
-                    url, params=dict(params or {}), headers=dict(headers or {}), timeout=timeout
+                    url,
+                    params=_merged_query(url, params),
+                    headers=dict(headers or {}),
+                    timeout=timeout,
                 )
             except httpx2.TimeoutException as exc:
                 attempt, failure = Attempt(error="timeout"), f"timeout: {exc}"

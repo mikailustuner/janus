@@ -89,6 +89,7 @@ export function GlassJanusHero({ active }: { active: boolean }) {
           name="clinical-hero"
           alt={t("Home.alt.glassHero")}
           className="gj-picture"
+          first
         />
         <div className="gj-sweep" aria-hidden />
         <div className="gj-scrim" aria-hidden />

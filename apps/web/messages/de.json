@@ -660,6 +660,10 @@
       "modelKit": {
         "title": "Starterkit für Arzneimittelmodelle (experimentell)",
         "body": "Nachvollziehbare Parametersätze für einige Arzneimittel, an zurückgehaltenen Studien geprüft. Experimentell, nur zu Forschungszwecken, kein Dosisrechner."
+      },
+      "validationStudies": {
+        "title": "Validierungsstudien",
+        "body": "Zwei vorab registrierte Studien dazu, wie gut Janus arbeitet, mit Konfidenzintervallen."
       }
     }
   },
@@ -3330,6 +3334,129 @@
       "systemPrecisionConservative": "Vorsichtige Lesart, alles, was nicht beide Durchgänge als richtig bezeichnen, zählt als falsch: {share} ({low} bis {high}, n = {n}).",
       "systemPrecisionNone": "Für diese Aussagen wurde keine Genauigkeit gemessen.",
       "systemAtlas": "{rows, plural, one {# Atlas-Zeile} other {# Atlas-Zeilen}} zu {drugs, plural, one {# Wirkstoff} other {# Wirkstoffen}} erscheinen auf den Wirkstoffseiten als unbestätigte Evidenz."
+    },
+    "validationLink": "Ergebnisse zu Präzision und Hürde des Modellbaukastens"
+  },
+  "Calibration": {
+    "line": "Wie gut diese Methode bekannte Wirkungen von Nicht-Wirkungen trennt: AUC {auc} (95-%-KI {low}–{high}).",
+    "link": "Zur Validierung"
+  },
+  "ValidationStudies": {
+    "title": "Validierungsstudien",
+    "summary": "Zwei vorab registrierte Studien dazu, wie gut Janus arbeitet, jeweils mit 95-%-Konfidenzintervallen.",
+    "intro": "Für Forschende. Jede Studie hat ihre Frage, ihre Referenzdaten und ihre Erfolgskriterien in einem öffentlichen Protokoll festgelegt, bevor Janus auf die Daten angewendet wurde. Die Ergebnisse werden so berichtet, wie sie ausfielen, auch die nicht erfüllten Hypothesen.",
+    "review": "Eine Prüfung durch Fachleute ist noch nicht erfolgt.",
+    "preregistered": "Vorab registriert: Das Protokoll wurde im Commit {commit} veröffentlicht, bevor die Auswertung lief.",
+    "protocol": "Protokoll (GitHub)",
+    "results": "Ergebnisse (GitHub)",
+    "met": "Hypothese erfüllt.",
+    "notMet": "Hypothese nicht erfüllt.",
+    "proportion": "{k} von {n} = {estimate} (95-%-KI {low}–{high})",
+    "cascade": {
+      "title": "Erkennung von Verschreibungskaskaden",
+      "summary": "Markiert Janus veröffentlichte Verschreibungskaskaden und bleibt bei Wirkstoffpaaren ohne Kaskade still?",
+      "tested": "Getestet an {published} Verschreibungskaskaden aus unabhängigen Quellen, {negatives} konstruierten Wirkstoffpaaren ohne Kaskade und {cases} Fallberichten.",
+      "specificity": "Spezifität (kein Hinweis bei Paaren ohne Kaskade)",
+      "sensitivity": "Sensitivität (ein Hinweis bei veröffentlichten Kaskaden)",
+      "bound": "Vorab festgelegtes Ziel: untere Intervallgrenze mindestens {bound}.",
+      "scope": "Janus prüft eine feste Liste von {listed} Kaskaden. Kein Hinweis bedeutet nicht, dass es keine Kaskade gibt.",
+      "inScope": "Alle {k} von {n} veröffentlichten Kaskaden innerhalb dieser Liste wurden gefunden. Was fehlt, liegt außerhalb der Liste.",
+      "burden": "In den vollständigen Medikationslisten älterer Patienten aus nicht verwandten Fallberichten erhielten {k} von {n} mindestens einen Hinweis. Ein Hinweis ist ein Muster zum Besprechen mit Apotheke oder Arztpraxis, kein Befund über die Person."
+    },
+    "faers": {
+      "title": "FAERS-Meldeverhältnisse",
+      "summary": "Wie gut das Reporting-Odds-Ratio bekannte Wirkungen von bekannten Nicht-Wirkungen trennt.",
+      "tested": "Getestet an {positive} Wirkstoff-Ereignis-Paaren mit bekannter Wirkung und {negative} ohne bekannte Wirkung (Referenzsets OMOP 2013 und EU-ADR).",
+      "aucLabel": "Fläche unter der Kurve (AUC)",
+      "auc": "AUC {auc} (95-%-KI {low}–{high})",
+      "aucBound": "Vorab festgelegtes Ziel: untere Intervallgrenze über {bound}.",
+      "intervals": "Bei Paaren ohne bekannte Wirkung schließt das übliche 95-%-Intervall „kein Unterschied“ fälschlich etwa in jedem vierten Fall aus ({estimate}; 95-%-KI {low}–{high}). Nach empirischer Kalibrierung sinkt der Anteil auf {calibrated}.",
+      "intervalsPlain": "Das angegebene Intervall ist enger als die tatsächliche Unsicherheit.",
+      "evans": "Die Evans-Kriterien, mit denen Janus ein Paar als auffällig einstuft, markierten {sensitivity} der Paare mit bekannter Wirkung und blieben bei {specificity} der Paare ohne bekannte Wirkung still.",
+      "lookCloser": "Ein Meldeverhältnis ist ein Grund, genauer hinzusehen, kein Beleg dafür, dass ein Medikament ein Ereignis verursacht."
+    },
+    "modelkitPrecision": {
+      "title": "Präzision des Modellbaukastens",
+      "summary": "Wie oft die automatischen Leser einen Wert richtig gelesen haben, je Quelle, gemessen an der vorab festgelegten Regel.",
+      "tested": "Werte aus drei Arten von Quellen wurden von zwei unabhängigen automatischen Prüfdurchgängen kontrolliert.",
+      "truth": "Zwei unabhängige automatische Prüfdurchgänge. Eine Prüfung durch Fachleute ist noch nicht erfolgt.",
+      "recall": "Recall noch nicht gemessen: Dafür müssten Fachleute ganze Dokumente annotieren.",
+      "rule": "Vorab festgelegte Regel: Eine Quelle wird nur veröffentlicht, wenn die clusterberücksichtigende untere Grenze ihres Präzisionsintervalls mindestens {bound} beträgt.",
+      "caption": "Präzision der Werte je Quelle",
+      "cols": {
+        "source": "Quelle",
+        "values": "Geprüfte Werte (Studien)",
+        "precision": "Präzision",
+        "wilson": "Wilson-95-%-Intervall",
+        "lower": "Clusterberücksichtigende untere Grenze",
+        "rule": "Gegen die Regel"
+      },
+      "sources": {
+        "clinicaltrials_gov": "ClinicalTrials.gov-Ergebnisse (die ausgelieferte Einstellung)",
+        "pmc_oa": "PubMed-Central-Tabellen",
+        "drugsatfda_review": "Drugs@FDA-Gutachten"
+      },
+      "pass": "Erfüllt",
+      "held": "Zurückgehalten",
+      "curve": {
+        "title": "ClinicalTrials.gov: Präzision und Abdeckung",
+        "intro": "Strengere Prüfungen behalten weniger Werte, davon aber einen größeren Anteil richtig. Neuanalyse einer früheren Stichprobe, keine neue Messung.",
+        "caption": "Risiko-Abdeckungs-Tabelle für ClinicalTrials.gov-Werte",
+        "level": "Prüfstufe",
+        "coverage": "Abdeckung (Anteil der behaltenen Werte)"
+      }
+    },
+    "modelkitGate": {
+      "title": "Hürde des Modellbaukastens",
+      "summary": "Ob der Modellbaukasten über Wirkstoffe hinweg als genau gelten kann und was gezeigt wird und was nicht.",
+      "resultTitle": "Ergebnis der Hürde",
+      "result": "Die Hürde verlangt {needed} Wirkstoffe, bei denen AUC und Cmax an zurückgehaltenen Studien geprüft wurden. Es sind {both}. Die Obergrenze mit den aktuellen Daten beträgt {upper}.",
+      "limited": "Durch die Daten begrenzt: Zu wenige Wirkstoffe haben eine zweite unabhängige Studie mit den Werten, die der Test braucht.",
+      "open": "Die Hürde lässt sich noch nicht auswerten.",
+      "met": "Die Hürde lässt sich auswerten.",
+      "claimTitle": "Was sich sagen lässt",
+      "claim": "Die AUC lag bei den {drugs} Wirkstoffen, bei denen sie geprüft werden konnte, innerhalb des Zweifachen zurückgehaltener Studien ({k} von {n} Punkten, Wilson-95-%-Intervall {low}–{high}). {cmax} Die Hürde verlangt {needed} Wirkstoffe mit beidem und hat {both}; daher wird keine Aussage über den Modellbaukasten als Ganzes gemacht.",
+      "cmax0": "Cmax konnte für keinen Wirkstoff geprüft werden.",
+      "cmaxN": "Cmax wurde bei {drugs} Wirkstoffen geprüft.",
+      "shownTitle": "Was gezeigt wird und was nicht",
+      "shownCaption": "Aussagen über den Modellbaukasten mit ihrem Status",
+      "cols": {
+        "claim": "Aussage",
+        "status": "Status",
+        "detail": "Einzelheiten"
+      },
+      "status": {
+        "proven": "Durch die Daten gezeigt",
+        "not_proven": "Geprüft, nicht gezeigt",
+        "not_tested": "Noch nicht geprüft"
+      },
+      "claims": {
+        "values_read_correctly": "ClinicalTrials.gov-Werte, die die strenge Prüfung bestehen, werden richtig gelesen",
+        "auc_within_2_fold": "Die AUC wird für zurückgehaltene Studien innerhalb des Zweifachen vorhergesagt",
+        "cmax_within_2_fold": "Die Cmax wird für zurückgehaltene Studien innerhalb des Zweifachen vorhergesagt",
+        "gate": "Der Modellbaukasten ist über Wirkstoffe hinweg genau (die Hürde)",
+        "drug_validated": "Der Parametersatz eines Wirkstoffs ist validiert (AUC und Cmax beide innerhalb des Zweifachen)",
+        "document_sources": "Werte aus Artikeltabellen und FDA-Gutachtentabellen sind präzise genug zur Veröffentlichung",
+        "unit_errors_across_studies": "Ein Wert mit falscher Einheit wird zurückgehalten",
+        "recall": "Die Leser finden jeden Wert, den eine Quelle angibt",
+        "special_populations": "Vorhersagen für Kinder, ältere Menschen oder bei eingeschränkter Nieren- oder Leberfunktion",
+        "expert_review": "Fachleute haben die Werte und die Methode geprüft"
+      },
+      "details": {
+        "values_read_correctly": "{k} von {n} Werten richtig in einer Vollerhebung ganzer Studien (Wilson-95-%-Intervall {low}–{high}; clusterberücksichtigende untere Grenze {lower}), beurteilt von zwei automatischen Prüfdurchgängen, nicht von Fachleuten.",
+        "auc_within_2_fold": "{k} von {n} Punkten innerhalb des Zweifachen (Wilson-95-%-Intervall {low}–{high}) bei nur {drugs} Wirkstoffen. Sagt nichts über andere Wirkstoffe.",
+        "cmax_within_2_fold": "Kein Wirkstoff hat die zurückgehaltene Studie und die zweite Studie, die der Test braucht.",
+        "gate": "Verlangt {needed} Wirkstoffe, bei denen beides geprüft ist; heute {both}; Obergrenze mit den aktuellen Daten {upper}.",
+        "drug_validated": "{validated} von {total} Wirkstoffen: Ein Wirkstoff gilt nur als validiert, wenn AUC und Cmax beide geprüft sind. {withSet} Wirkstoffe haben einen Parametersatz.",
+        "document_sources": "Beide haben die vorab festgelegte Regel nicht erfüllt und werden zurückgehalten: PubMed-Central-Tabellen {pmc} (clusterberücksichtigende untere Grenze {pmcLower}), Drugs@FDA-Gutachten {fda} (clusterberücksichtigende untere Grenze {fdaLower}).",
+        "unit_errors_across_studies": "Die studienübergreifende Prüfung würde {would} von {checkable} prüfbaren Werten zurückhalten, erfüllte aber ihre eigene Entscheidungsregel nicht und ist abgeschaltet. Ein Wirkstoff mit nur einer Studie lässt sich so nicht prüfen.",
+        "recall": "Für den Recall müssten Fachleute ganze Dokumente annotieren.",
+        "special_populations": "Werte aus diesen Gruppen sind von den Aufbau- und Testsätzen ausgeschlossen.",
+        "expert_review": "Eine Prüfung durch Fachleute ist noch nicht erfolgt."
+      },
+      "crossTitle": "Studienübergreifende Prüfung auf falsche Einheiten",
+      "crossOff": "Umgesetzt. Sie erfüllte ihre vorab festgelegte Entscheidungsregel nicht und ist daher abgeschaltet. Sie würde {would} von {checkable} prüfbaren Werten zurückhalten.",
+      "crossOn": "Umgesetzt und eingeschaltet. Sie hält {would} von {checkable} prüfbaren Werten zurück."
     }
   }
 }
