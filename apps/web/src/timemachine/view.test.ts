@@ -1,4 +1,6 @@
-// Feature: experience Req 30 (time machine screens), properties P36–P40 (design §22).
+// Feature: experience Req 30 (time machine screens), properties P36–P40 (design §22). The answers
+// are synthetic (src/test/fixtures/timemachine.ts); the recorded file is checked in
+// src/test/recorded-contract.test.ts.
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
@@ -7,9 +9,9 @@ import { describe, expect, it } from "vitest";
 import * as D from "@/api/decode";
 import { parseCsv } from "@/report/csv.mjs";
 import { check, fc } from "@/test/fc";
+import { timeMachineSet } from "@/test/fixtures/timemachine";
 import vocabEn from "@/vocabulary/en.json";
 
-import fixture from "./fixture.recorded.json";
 import { cascadeOut, catalogue, substanceOut, type CascadeOut } from "./model";
 import {
   englishShownFor,
@@ -23,11 +25,7 @@ import {
   type IndexEntry,
 } from "./view";
 
-const fx = fixture as unknown as {
-  catalogue: unknown;
-  substances: Record<string, unknown>;
-  cascades: Record<string, unknown>;
-};
+const fx = timeMachineSet();
 const decodeOk = <T>(d: D.Decoder<T>, v: unknown): T => {
   const r = D.decode(d, v);
   if (!r.ok) throw new Error(r.path);
@@ -37,7 +35,7 @@ const answers: CascadeOut[] = Object.values(fx.cascades).map((c) =>
   decodeOk(cascadeOut, c),
 );
 
-describe("recorded fixture", () => {
+describe("synthetic fixture", () => {
   it("decodes: catalogue, every substance, every cascade", () => {
     const cat = decodeOk(catalogue, fx.catalogue);
     expect(Object.keys(fx.substances).sort()).toEqual(
@@ -46,6 +44,7 @@ describe("recorded fixture", () => {
     expect(Object.keys(fx.cascades).sort()).toEqual(
       [...cat.cascade_ids].sort(),
     );
+    expect(Object.keys(fx.substances).length).toBeGreaterThan(1);
     for (const s of Object.values(fx.substances)) decodeOk(substanceOut, s);
     expect(cat.meta.review_status).toBe("Expert review has not yet been done");
   });
@@ -70,7 +69,7 @@ describe("recorded fixture", () => {
     }
   });
 
-  it("today only the amlodipine cascade passes the patient gate (design §10.5)", () => {
+  it("only a cascade that agrees, is not a small sample and matches the index passes the patient gate (design §10.5)", () => {
     const passing = TM_INDEX.cascades.flatMap((e) =>
       e.index_keys.flatMap((k) =>
         patientTiming(e.pipc_position, k, answers) ? [e.id] : [],
@@ -187,15 +186,19 @@ describe("texts (P38)", () => {
     });
     expect(reasonCode("something new")).toBeNull();
     expect(reasonCode("")).toBeNull();
+    let reasons = 0;
     for (const s of Object.values(fx.substances)) {
       const o = decodeOk(substanceOut, s);
       for (const e of o.exposure) {
+        reasons +=
+          Number(!!e.not_validated_reason) + Number(!!e.no_potency_reason);
         if (e.not_validated_reason)
           expect(reasonCode(e.not_validated_reason)).not.toBeNull();
         if (e.no_potency_reason)
           expect(reasonCode(e.no_potency_reason)).not.toBeNull();
       }
     }
+    expect(reasons).toBeGreaterThan(1);
   });
 });
 

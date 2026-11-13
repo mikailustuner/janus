@@ -24,11 +24,17 @@ import {
 import { catalogueOut, PRESENT_CODES, seanceOut } from "@/seance/model";
 import type { SeanceFixture } from "@/seance/client";
 import { cardsOut, exportOut, overviewOut, validationOut } from "@/light/model";
+import {
+  cascadeOut,
+  catalogue as tmCatalogue,
+  substanceOut,
+} from "@/timemachine/model";
 import { openOutcomes } from "@/open/model";
 import { dataQualityReport } from "@/research/dataQuality";
 import { onsetTable } from "@/research/onset";
 
 import simulate from "@/simulation/simulate.recorded.json";
+import timemachine from "@/timemachine/fixture.recorded.json";
 import light from "@/light/fixture.recorded.json";
 import seance from "@/seance/fixture.recorded.json";
 import openData from "@/open/fixture.recorded.json";
@@ -203,5 +209,34 @@ describe("light/fixture.recorded.json", () => {
     expect(
       (light.export as { rows: unknown[] }).rows.length,
     ).toBeGreaterThanOrEqual(1);
+  });
+});
+
+describe("timemachine/fixture.recorded.json", () => {
+  const fx = timemachine as unknown as {
+    catalogue: unknown;
+    substances: Record<string, unknown>;
+    cascades: Record<string, unknown>;
+  };
+  const cat = decode(tmCatalogue, fx.catalogue);
+
+  it("decodes: the catalogue, every substance and every cascade, each listed in the catalogue", () => {
+    expect(cat.ok).toBe(true);
+    if (!cat.ok) return;
+    expect(Object.keys(fx.substances).sort()).toEqual(
+      [...cat.value.substance_ids].sort(),
+    );
+    expect(Object.keys(fx.cascades).sort()).toEqual(
+      [...cat.value.cascade_ids].sort(),
+    );
+    for (const [k, v] of Object.entries(fx.substances))
+      expect(decode(substanceOut, v).ok, k).toBe(true);
+    for (const [k, v] of Object.entries(fx.cascades))
+      expect(decode(cascadeOut, v).ok, k).toBe(true);
+  });
+
+  it("holds at least one substance and one cascade", () => {
+    expect(Object.keys(fx.substances).length).toBeGreaterThanOrEqual(1);
+    expect(Object.keys(fx.cascades).length).toBeGreaterThanOrEqual(1);
   });
 });
