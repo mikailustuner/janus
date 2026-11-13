@@ -1,6 +1,6 @@
 // simulation-service properties on the web side (owner decision 2026-11-09):
 // S2  the explorer and the server form have no person-specific input; results are distributions
-//     only; every recorded server answer carries the virtual-population sentence
+//     only; every server answer (synthetic, src/test/fixtures/simulation.ts) carries the virtual-population sentence
 // S8  the model screens never import patient data (medicine list, findings, scans, notes) and link
 //     to no patient screen
 // plus: bounds of the explorer equal the allow-list; out-of-bounds inputs never run.
@@ -11,6 +11,7 @@ import fc from "fast-check";
 import { describe, expect, it } from "vitest";
 
 import * as D from "@/api/decode";
+import { SENTENCE, simulationSet } from "@/test/fixtures/simulation";
 
 import {
   defaultRequest,
@@ -28,13 +29,10 @@ import {
   type ExplorerInput,
 } from "./explorer";
 import parity from "./parity.fixture.json";
-import recorded from "./simulate.recorded.json";
 
-const SENTENCE =
-  "Virtual population, for research. Not about any person and not a dose recommendation.";
 const PERSON =
   /weight|bw|kg|height|bmi|age|sex|gender|creat|egfr|gfr|kidney|renal|liver|hepat|genotype|cyp|pregnan|name|patient|person|birth/i;
-const fx = recorded as unknown as SimulationFixture;
+const fx = simulationSet() as unknown as SimulationFixture;
 
 describe("S2: no individualised simulation", () => {
   it("the explorer input has exactly the allowed, non-personal fields", () => {
@@ -44,13 +42,13 @@ describe("S2: no individualised simulation", () => {
 
   it("the server requests the form can build have no personal field", () => {
     const c = D.decode(serverCompounds, fx.compounds);
-    if (!c.ok) throw new Error("recorded compounds do not decode");
+    if (!c.ok) throw new Error("compounds do not decode");
     for (const kind of ["compartmental", "httk_population"] as const)
       for (const k of Object.keys(defaultRequest(c.value, kind)))
         expect(k).not.toMatch(PERSON);
   });
 
-  it("every recorded server answer carries the sentence and is a distribution", async () => {
+  it("every server answer carries the sentence and is a distribution", async () => {
     const c = D.decode(serverCompounds, fx.compounds);
     expect(c.ok && c.value.disclaimer.startsWith(SENTENCE)).toBe(true);
     const client = demoSimulation(fx);

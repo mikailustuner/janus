@@ -15,9 +15,16 @@ import {
 } from "@/modelkit/model";
 import { reasonCodesOf, type ModelKitSet } from "@/test/fixtures/modelkit";
 
+import {
+  defaultRequest,
+  job,
+  serverCompounds,
+  type SimulationFixture,
+} from "@/simulation/client";
 import { dataQualityReport } from "@/research/dataQuality";
 import { onsetTable } from "@/research/onset";
 
+import simulate from "@/simulation/simulate.recorded.json";
 import dataQuality from "@/research/data-quality.recorded.json";
 import faersOnset from "@/research/faers-onset.recorded.json";
 import modelkit from "@/modelkit/modelkit.recorded.json";
@@ -97,5 +104,33 @@ describe("faers-onset.recorded.json", () => {
       Array.from({ length: 65 }, (_, i) => i + 1),
     );
     expect(faersOnset.csv.length).toBeGreaterThan(0);
+  });
+});
+
+describe("simulate.recorded.json", () => {
+  const fx = simulate as unknown as SimulationFixture;
+  const compounds = decode(serverCompounds, fx.compounds);
+
+  it("decodes: the compounds list and every recorded job", () => {
+    expect(compounds.ok).toBe(true);
+    expect(fx.jobs.length).toBeGreaterThanOrEqual(1);
+    for (const j of fx.jobs) expect(decode(job, j.job).ok).toBe(true);
+  });
+
+  it("holds a done job for the form's default request of each model (the demo offers those)", () => {
+    if (!compounds.ok) throw new Error("compounds do not decode");
+    for (const kind of ["compartmental", "httk_population"] as const) {
+      const want = defaultRequest(compounds.value, kind);
+      const hit = fx.jobs.find(
+        (j) =>
+          JSON.stringify(Object.entries(j.request).sort()) ===
+          JSON.stringify(Object.entries(want).sort()),
+      );
+      expect(hit, kind).toBeTruthy();
+      const d = decode(job, hit!.job);
+      expect(d.ok && d.value.state === "done" && d.value.result !== null).toBe(
+        true,
+      );
+    }
   });
 });

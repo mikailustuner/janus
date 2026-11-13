@@ -12,9 +12,8 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 
 import { admetUsable } from "@/components/timemachine/SubstanceView";
-import * as D from "@/api/decode";
-import { httkResult, type HttkResult } from "@/simulation/client";
-import recorded from "@/simulation/simulate.recorded.json";
+import type { HttkResult } from "@/simulation/client";
+import { httkOf } from "@/test/fixtures/simulation";
 
 import { EXPLORER } from "@/simulation/explorer";
 
@@ -39,12 +38,7 @@ const messages = Object.fromEntries(
   ]),
 );
 
-const httkJob = (
-  recorded as { jobs: { job: { result: unknown } }[] }
-).jobs.find((j) => (j.job.result as { model?: string }).model === "httk")!;
-const decoded = D.decode(httkResult, httkJob.job.result);
-if (!decoded.ok) throw new Error("recorded httk result does not decode");
-const base = decoded.value;
+const base = httkOf();
 
 const render = (locale: (typeof LOCALES)[number], node: React.ReactNode) =>
   renderToStaticMarkup(
@@ -120,7 +114,7 @@ describe("S9: measured model error", () => {
     }
   });
 
-  it("the recorded httk run carries the calibrated interval around its half-life", () => {
+  it("the httk result carries the calibrated interval around its half-life", () => {
     const [lo, hi] = base.half_life_interval_h;
     expect(lo! < base.half_life_h && base.half_life_h < hi!).toBe(true);
     expect(hi! / lo!).toBeCloseTo(87.4, 6);
