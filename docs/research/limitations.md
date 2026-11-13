@@ -37,11 +37,16 @@ Janus is a research prototype, not a medical device. Expert review has not yet b
 
 ## Drug model starter kit (experimental)
 
-- Values are read from documents by automated readers. The measured precision (0.99) covers ClinicalTrials.gov
-  values that pass a strict check, about 13 % of the values both readers agree on; other sources are held back until
-  they meet the same bar. How many true values are missed (recall) has not been measured.
-- The model kit's validation gate has too few drugs with held-out data to be interpreted.
-  ([modelkit-precision.md](modelkit-precision.md))
+- Model kit precision is measured only for ClinicalTrials.gov values, and only at the shipped strict-check level,
+  which keeps about 13 % of the values the two automated readers agree on (336 of 2,565). On that set, two
+  independent automated review passes found 125 of 126 values correct (precision 0.99). The 126 values come from 14
+  studies, so the interval accounts for clustering: the study-level lower bound is 0.93 (Wilson, which assumes
+  independent values: 0.96). In studies where an earlier sample had found an error, the same level kept only 0.64,
+  and the registry has no unreviewed values left for a fresh measurement.
+- Two new document sources were measured on fresh, pre-registered samples and stay held back: PubMed Central article
+  tables (precision 0.36, lower bound 0.09) and Drugs@FDA review tables (0.77, lower bound 0.48; 11 documents).
+- Recall (how many true values are missed) is not yet measured; it needs expert annotation. Details:
+  [modelkit-precision.md](modelkit-precision.md).
 - It is not a dose calculator and gives no dose advice.
 
 ## Simulations
