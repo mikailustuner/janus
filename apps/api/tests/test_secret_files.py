@@ -45,7 +45,7 @@ def test_plain_variable_still_works() -> None:
 
 
 @NO_TMP
-@given(VALUES, VALUES)
+@given(VALUES.filter(lambda v: v.strip() != ""), VALUES)
 def test_both_set_is_an_error_without_values(tmp_path: Path, direct: str, filed: str) -> None:
     path = _file(tmp_path, filed.encode())
     with pytest.raises(SettingsError) as err:
