@@ -1,4 +1,5 @@
-"""Alembic environment: URL from DATABASE_URL or `-x url=...`; logs via the allowlist formatter."""
+"""Alembic environment: URL from `-x url=...`, DATABASE_URL or DATABASE_URL_FILE; logs via the
+allowlist formatter."""
 
 from __future__ import annotations
 
@@ -8,12 +9,16 @@ from alembic import context
 from sqlalchemy import create_engine, pool
 
 from janus.observability.logging import configure_logging
+from janus.settings import secret_value
 
 configure_logging()
 
 
 def _url() -> str:
-    url = context.get_x_argument(as_dictionary=True).get("url") or os.environ.get("DATABASE_URL")
+    # `-x url=...`, else DATABASE_URL or the file named by DATABASE_URL_FILE (deploy secrets).
+    url = context.get_x_argument(as_dictionary=True).get("url") or secret_value(
+        os.environ, "DATABASE_URL"
+    )
     if not url:
         raise SystemExit("DATABASE_URL (or -x url=...) is required for migrations")
     # SQLAlchemy needs the psycopg 3 driver named explicitly.
