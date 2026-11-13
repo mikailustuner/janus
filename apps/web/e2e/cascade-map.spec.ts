@@ -215,7 +215,7 @@ test("filters only remove, announce the count and have an empty state", async ({
   await expect(page.getByTestId("cm-count")).toHaveText(
     "3 of 65 patterns shown",
   );
-  await page.getByLabel("Search").fill("zzzz");
+  await page.getByLabel("Search", { exact: true }).fill("zzzz");
   await expect(page.getByText("No pattern fits these filters.")).toBeVisible();
   await page.getByRole("button", { name: "Clear filters" }).first().click();
   await expect(page.getByTestId("cm-count")).toHaveText(
@@ -328,8 +328,8 @@ test("performance: no long task over 50 ms while panning, zooming and filtering 
   await mark("filter");
   await page.getByLabel("Medicine class").selectOption("antipsychotic");
   await page.getByLabel("Medicine class").selectOption("");
-  await page.getByLabel("Search").fill("nausea");
-  await page.getByLabel("Search").fill("");
+  await page.getByLabel("Search", { exact: true }).fill("nausea");
+  await page.getByLabel("Search", { exact: true }).fill("");
   await page.waitForTimeout(400);
 
   const r = await page.evaluate((t0) => {

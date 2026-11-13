@@ -15,7 +15,7 @@ from janus_pipelines.core.runner import RawInput
 from janus_pipelines.core.validation import SchemaMismatchError
 from janus_pipelines.jobs.wikidata_ingredients import (
     ENTITY_PREFIX,
-    LANGS,
+    FETCH_LANGS,
     WikidataIngredientsJob,
     labels_query,
     merge,
@@ -72,7 +72,7 @@ def _partition(draw: Callable[[st.SearchStrategy[Any]], Any], items: list[Any]) 
 
 @given(
     st.lists(CODE_BINDING, max_size=30),
-    st.fixed_dictionaries({lang: st.lists(LABEL_BINDING, max_size=15) for lang in LANGS}),
+    st.fixed_dictionaries({lang: st.lists(LABEL_BINDING, max_size=15) for lang in FETCH_LANGS}),
     st.data(),
 )
 def test_merge_independent_of_order_and_split(
@@ -120,8 +120,10 @@ def _payload() -> dict[str, list[bytes]]:
         ],
     )
     payload = {"codes": [codes]}
-    for lang in LANGS:
-        name = {"en": "amlodipine", "tr": "amlodipin", "de": "Amlodipin"}.get(lang)
+    for lang in FETCH_LANGS:
+        name = {"en": "amlodipine", "tr": "amlodipin", "de": "Amlodipin", "pt": "anlodipino"}.get(
+            lang
+        )
         bindings = [{"item": _uri("Q18216"), **({"label": _lit(name)} if name else {})}]
         payload[f"labels_{lang}"] = [_response(["item", "label", "alias"], bindings)]
     return payload
@@ -134,6 +136,8 @@ def test_parse_example() -> None:
     row: Row = result.rows[0]
     assert row["qid"] == "Q18216"
     assert row["atc_codes"] == ["C08CA01"]
+    assert row["label_pt"] == "anlodipino"
+    assert result.metrics["items_with_label_pt"] == 1
     assert row["rxcuis"] == ["17767"]
     assert row["label_tr"] == "amlodipin"
     assert row["label_fr"] is None
@@ -152,3 +156,45 @@ def test_label_query_rejects_unknown_language() -> None:
     with pytest.raises(ValueError):
         labels_query("xx")
     assert 'STRSTARTS(?a, "C")' in labels_query("tr", "C")
+
+
+def _lang_binding(lang: str, qid_: str, label: str | None = None, alias: str | None = None) -> Any:
+    cells = {"item": _uri(qid_)}
+    if label:
+        cells["label"] = _lit(label)
+    if alias:
+        cells["alias"] = _lit(alias)
+    return lang, cells
+
+
+def _merge_pt(*entries: Any) -> dict[str, Row]:
+    codes = [{"item": _uri(q), "atc": _lit("A01")} for q in ("Q1", "Q2", "Q3")]
+    by_lang: dict[str, list[Any]] = {lang: [] for lang in FETCH_LANGS}
+    for lang, cells in entries:
+        by_lang[lang].append(cells)
+    return {str(r["qid"]): r for r in merge(codes, by_lang).rows}
+
+
+def test_pt_label_wins_and_pt_br_variants_become_aliases() -> None:
+    rows = _merge_pt(
+        _lang_binding("pt", "Q1", "xenón"),
+        _lang_binding("pt-br", "Q1", "xenônio", "Xe"),
+        _lang_binding("pt-br", "Q2", "dalbavancina"),
+        _lang_binding("pt", "Q3", None, "apelido"),
+    )
+    assert rows["Q1"]["label_pt"] == "xenón"
+    assert rows["Q1"]["aliases_pt"] == ["Xe", "xenônio"]
+    # No `pt` label: the `pt-br` label stands in.
+    assert rows["Q2"]["label_pt"] == "dalbavancina"
+    assert rows["Q2"]["aliases_pt"] == []
+    # Aliases alone never become the label.
+    assert rows["Q3"]["label_pt"] is None
+    assert rows["Q3"]["aliases_pt"] == ["apelido"]
+    assert "label_pt-br" not in rows["Q1"]
+
+
+def test_pt_br_label_equal_to_pt_label_adds_no_alias() -> None:
+    rows = _merge_pt(
+        _lang_binding("pt", "Q1", "riboflavina"), _lang_binding("pt-br", "Q1", "riboflavina")
+    )
+    assert rows["Q1"]["aliases_pt"] == []

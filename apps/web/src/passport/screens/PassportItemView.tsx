@@ -229,14 +229,16 @@ export function PassportItemView() {
   const view = usePassport();
   const id = useHashId();
   const presence = usePresence(view.items, view.ready, view.demo);
-  if (!view.ready || id === undefined) return <StateView state="loading" />;
+  if (!view.ready || id === undefined)
+    return <StateView title={t("Passport.detail.title")} state="loading" />;
   const merged = id ? (view.resolveId(id) ?? id) : null;
   const item = view.items.find((i) => i.id === merged);
   if (!item)
     return (
       <StateView
+        title={t("Passport.detail.title")}
         state="empty"
-        message={t("Passport.detail.title")}
+        message={t("PlainInfo.notFound")}
         action={<ButtonLink href="/passport">{t("Passport.back")}</ButtonLink>}
       />
     );

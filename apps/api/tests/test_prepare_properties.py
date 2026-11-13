@@ -19,7 +19,7 @@ from janus.resolution.canonical import (
     content_hash,
     content_hash_stream,
 )
-from janus.resolution.prepare import PreparedDataset, prepare_dataset
+from janus.resolution.prepare import PreparedDataset, index_item, prepare_dataset
 from tests.resolution_strategies import (
     ROUTES,
     RULES,
@@ -175,6 +175,26 @@ def test_amlipin_example() -> None:
         ("Q411347", ("C08CA01",)),
         ("Q412208", ("C09AA03",)),
     ]
+
+
+def test_portuguese_names_are_are_searchable_and_kept_but_not_matched() -> None:
+    wd = [
+        wikidata_row(
+            "Q411347",
+            ["C08CA01"],
+            {"en": "amlodipine", "pt": "fantasiaxil"},
+            {"pt": ["besilato de fantasiaxil"]},
+        )
+    ]
+    ds = prepare_dataset([], [], wd, CombinationRules.load(), RouteMap.load())
+    assert ds.ingredients["Q411347"].labels["pt"] == "fantasiaxil"
+    pt_names = {
+        e.display for e in ds.names if e.kind == "ingredient" and e.ref == "Q411347" and e.region
+    }
+    assert pt_names == {"fantasiaxil", "besilato de fantasiaxil"}
+    # Matching keeps its five languages: the name index built from the row has no Portuguese.
+    item = index_item(wd[0])
+    assert "pt" not in item.labels and "pt" not in item.aliases
 
 
 def test_golden_hash_vector() -> None:

@@ -255,10 +255,11 @@ export function NotePage() {
     evaluation.status === "loading" ||
     evaluation.status === "idle"
   )
-    return <StateView state="loading" />;
+    return <StateView title={t("Note.title")} state="loading" />;
   if (evaluation.status !== "ok")
     return (
       <StateView
+        title={t("Note.title")}
         state="empty"
         message={t("Note.empty")}
         action={

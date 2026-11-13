@@ -21,7 +21,10 @@ in 30 days). Rules: `deploy/monitoring/slo.rules.yml`; dashboard: `deploy/monito
 `.github/workflows/perf.yml` runs Lighthouse (simulated slow phone) on the production build: performance,
 accessibility and SEO at least 0.90 on `/en/about` and `/en/privacy`. The home page is at 0.87 today (largest paint
 3.9 s, the hero image painted about 2.6 s after it has loaded, behind the page's script work); its target of 0.90 is
-a warning and 0.85 is the hard floor until that is fixed. A small k6 load check of the public API runs weekly
+a warning and 0.85 is the hard floor until that is fixed. Measured on 2026-11-13 on a desktop machine, the same
+build scores 0.93 (three runs; largest paint 3.0 s, the emergency line), so the CI figure depends on the runner. Two
+causes were ruled out: loading the hero eagerly did not help, and rendering the shell without its Suspense boundary
+made it worse (0.86, largest paint 4.0 s on the hero image), so the boundary stays. A small k6 load check of the public API runs weekly
 (`deploy/load/smoke.js`; p95 of reads below 500 ms).
 
 ## Alerts

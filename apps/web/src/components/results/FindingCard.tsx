@@ -83,6 +83,8 @@ export function FindingCard({
       : t("Findings.startUnknown", { name });
   // On the finding detail the card's title is the page's large title (Req 29.2, DP56).
   const Title = detail ? "h3" : "h1";
+  const Sub = detail ? "h4" : "h2";
+  const subClass = "text-sm font-bold tracking-wide text-muted uppercase";
 
   // The class chain, start months, priority data, notes and integrity notices: folded on the
   // results screen, open on the finding detail (DP39).
@@ -160,58 +162,96 @@ export function FindingCard({
             </Chip>
           </div>
         </header>
-        {/* The summary line: which two medicines; "then" only when the order is known (owner
-            decision 2026-11-08, pharmacologist B2). */}
-        <p className="text-lg leading-snug">
-          {t(orderKnown ? "Findings.medicines" : "Findings.medicinesRoles", {
-            index: words.index,
-            indexBox: boxes(f.index.items),
-            marker: words.marker,
-            markerBox: boxes(f.marker.items),
-          })}
-        </p>
-        <ul className="grouped-plain border-y border-line">
-          <li className="flex flex-col gap-1">
-            <p>{t("Findings.pattern")}</p>
-            <p className="text-sm text-muted">
-              {t("Findings.source", { row })}
-            </p>
-          </li>
-          <li>
-            <p>
-              {t(`Findings.timing.${f.timing}`, {
-                index: words.index,
-                marker: words.marker,
-                months: f.months_between ?? 0,
-                window: result.window_months,
-              })}
-            </p>
-          </li>
-          {f.low_priority ? (
-            <li>
-              <p className="text-sm">{t("Findings.lowPriority")}</p>
+        {/* Three parts a patient can follow (plan D2.3): what was found, why it may matter, what
+            to do. The evidence detail stays folded on the results screen. */}
+        <section
+          aria-labelledby={`finding-${view.position}-found`}
+          className="flex flex-col gap-3"
+        >
+          <Sub id={`finding-${view.position}-found`} className={subClass}>
+            {t("Findings.sections.found")}
+          </Sub>
+          {/* The summary line: which two medicines; "then" only when the order is known (owner
+              decision 2026-11-08, pharmacologist B2). */}
+          <p className="text-lg leading-snug">
+            {t(orderKnown ? "Findings.medicines" : "Findings.medicinesRoles", {
+              index: words.index,
+              indexBox: boxes(f.index.items),
+              marker: words.marker,
+              markerBox: boxes(f.marker.items),
+            })}
+          </p>
+          <ul className="grouped-plain border-y border-line">
+            <li className="flex flex-col gap-1">
+              <p>{t("Findings.pattern")}</p>
+              <p className="text-sm text-muted">
+                {t("Findings.source", { row })}
+              </p>
             </li>
-          ) : null}
-        </ul>
+            <li>
+              <p>
+                {t(`Findings.timing.${f.timing}`, {
+                  index: words.index,
+                  marker: words.marker,
+                  months: f.months_between ?? 0,
+                  window: result.window_months,
+                })}
+              </p>
+            </li>
+            {f.low_priority ? (
+              <li>
+                <p className="text-sm">{t("Findings.lowPriority")}</p>
+              </li>
+            ) : null}
+          </ul>
+          {detail ? (
+            <Disclosure
+              summary={t("Common.details")}
+              summaryClassName="text-muted"
+            >
+              {secondary}
+            </Disclosure>
+          ) : (
+            <div className="flex flex-col gap-2">{secondary}</div>
+          )}
+        </section>
+        {/* The same paragraph on every finding: folded on the results screen, open on the detail. */}
         {detail ? (
           <Disclosure
-            summary={t("Common.details")}
-            summaryClassName="text-muted"
+            summary={t("Findings.sections.why")}
+            summaryClassName="font-bold"
           >
-            {secondary}
+            <p data-testid="finding-why">{t("Findings.why")}</p>
           </Disclosure>
         ) : (
-          <div className="flex flex-col gap-2">{secondary}</div>
+          <section
+            aria-labelledby={`finding-${view.position}-why`}
+            className="flex flex-col gap-2"
+          >
+            <Sub id={`finding-${view.position}-why`} className={subClass}>
+              {t("Findings.sections.why")}
+            </Sub>
+            <p data-testid="finding-why">{t("Findings.why")}</p>
+          </section>
         )}
-        {/* On the results screen the medicines section carries the line once per item (Req 14.5). */}
-        {(detail ? [] : view.warnedItems).map((i) => (
-          <div key={i} className="flex flex-col">
-            <span className="text-sm text-muted">{boxNames[i]}</span>
-            <AbruptStopLine vocab={vocab} />
-          </div>
-        ))}
-        {view.safetyLine ? <SafetyLine code={view.safetyLine} /> : null}
-        <p className="font-bold">{t("Findings.discuss")}</p>
+        <section
+          aria-labelledby={`finding-${view.position}-todo`}
+          className="flex flex-col gap-2"
+        >
+          <Sub id={`finding-${view.position}-todo`} className={subClass}>
+            {t("Findings.sections.todo")}
+          </Sub>
+          {/* On the results screen the medicines section carries the line once per item (Req 14.5). */}
+          {(detail ? [] : view.warnedItems).map((i) => (
+            <div key={i} className="flex flex-col">
+              <span className="text-sm text-muted">{boxNames[i]}</span>
+              <AbruptStopLine vocab={vocab} />
+            </div>
+          ))}
+          {view.safetyLine ? <SafetyLine code={view.safetyLine} /> : null}
+          <p className="font-bold">{t("Findings.discuss")}</p>
+          <p data-testid="finding-self-change">{t("Findings.selfChange")}</p>
+        </section>
         {detail ? (
           <Link
             href={findingReportHref({

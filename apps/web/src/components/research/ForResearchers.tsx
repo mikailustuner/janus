@@ -22,6 +22,7 @@ import {
   SITE,
 } from "@/research/forResearchers";
 import { Link } from "@/i18n/navigation";
+import { citationText } from "@/research/export";
 import { useT } from "@/theme/words";
 
 const BLOB = `${REPO}/blob/main`;
@@ -281,6 +282,10 @@ export function ForResearchers() {
         summary={t("ForResearchers.cite.summary")}
         data-testid="fr-cite"
       >
+        <p>{t("ForResearchers.cite.software")}</p>
+        <p className="mono text-sm break-words" data-testid="fr-cite-software">
+          {citationText()}
+        </p>
         <p>{t("ForResearchers.cite.body")}</p>
         <Snippet
           id="fr-cite-text"

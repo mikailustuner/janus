@@ -551,12 +551,14 @@ export function ProductsView() {
   const merged = id ? (view.resolveId(id) ?? id) : null;
   const item = view.ready ? view.items.find((i) => i.id === merged) : undefined;
   const products = useProducts(item, target, view.demo);
-  if (!view.ready || id === undefined) return <StateView state="loading" />;
+  if (!view.ready || id === undefined)
+    return <StateView title={t("Passport.products.title")} state="loading" />;
   if (!item)
     return (
       <StateView
+        title={t("Passport.products.title")}
         state="empty"
-        message={t("Passport.products.title")}
+        message={t("PlainInfo.notFound")}
         action={<ButtonLink href="/passport">{t("Passport.back")}</ButtonLink>}
       />
     );

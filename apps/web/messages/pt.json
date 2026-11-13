@@ -142,6 +142,19 @@
       "how1Title": "Digitalize a caixa",
       "how2Title": "Os padrões são comparados",
       "how3Title": "Uma nota para o médico"
+    },
+    "audience": {
+      "title": "Para quem é o Janus?",
+      "patients": {
+        "title": "Doentes e famílias",
+        "body": "Verifique uma lista de medicamentos quanto a cascatas de prescrição e obtenha uma nota para levar ao seu médico.",
+        "cta": "Verificar os meus medicamentos"
+      },
+      "researchers": {
+        "title": "Investigadores e clínicos",
+        "body": "Métodos, resultados de validação, modelos de fármacos, dados abertos e a API.",
+        "cta": "Abrir a área de investigação"
+      }
     }
   },
   "Shell": {
@@ -154,12 +167,22 @@
       "results": "Resultados",
       "settings": "Definições",
       "research": "Investigação",
-      "passport": "Passaporte"
+      "passport": "Passaporte",
+      "note": "Nota médica"
     },
     "privacy": "Privacidade",
     "demoCodes": "Códigos de demonstração",
     "demoDoctor": "Abrir a página de demonstração do médico",
-    "donate": "Partilhar uma notificação"
+    "donate": "Partilhar uma notificação",
+    "researchNav": {
+      "overview": "Visão geral",
+      "methods": "Validação",
+      "modelKit": "Modelos",
+      "data": "Dados",
+      "developers": "API e MCP"
+    },
+    "researchNavLabel": "Navegação da investigação",
+    "patientSection": "Secção do doente"
   },
   "Emergency": {
     "title": "Numa emergência",
@@ -478,7 +501,14 @@
       "fits": "A ordem corresponde ao padrão",
       "fitsLate": "A ordem corresponde, para além da janela habitual",
       "notConfirmed": "Ordem não confirmada"
-    }
+    },
+    "sections": {
+      "found": "O que o Janus encontrou",
+      "why": "Porque pode ser importante",
+      "todo": "O que pode fazer"
+    },
+    "why": "Por vezes, um efeito secundário de um medicamento é confundido com um novo problema de saúde e é iniciado um segundo medicamento para ele. Chama-se a isto cascata de prescrição. Nem sempre é um problema: o segundo medicamento pode continuar a ser necessário.",
+    "selfChange": "Não suspenda nem altere nenhum medicamento por iniciativa própria. Fale primeiro com o seu médico ou farmacêutico."
   },
   "ReadAloud": {
     "read": "Ler em voz alta",
@@ -665,7 +695,25 @@
         "title": "Estudos de validação",
         "body": "Dois estudos pré-registados sobre o desempenho do Janus, com intervalos de confiança."
       }
-    }
+    },
+    "groups": {
+      "methods": {
+        "title": "Métodos e validação"
+      },
+      "modelKit": {
+        "title": "Modelos de fármacos e simulação"
+      },
+      "data": {
+        "title": "Dados"
+      },
+      "developers": {
+        "title": "API, MCP e citação"
+      },
+      "experimental": {
+        "title": "Ferramentas exploratórias"
+      }
+    },
+    "experimental": "Experimental"
   },
   "Doctor": {
     "errors": {
@@ -2932,9 +2980,10 @@
     "cite": {
       "title": "Como citar",
       "summary": "Cite a versão que usou.",
-      "body": "Ainda não existe um CITATION.cff: o projeto não publicou metadados de citação. Até lá, cite o conjunto de dados com a sua cadeia de versão e data da cópia:",
+      "body": "Para um conjunto de dados, cite-o com a sua cadeia de versão e data da cópia:",
       "example": "Texto da citação",
-      "pipc": "A própria lista PIPC:"
+      "pipc": "A própria lista PIPC:",
+      "software": "Para o software, cite a versão que utilizou. O repositório tem um CITATION.cff com a sua versão e data:"
     },
     "modelKit": {
       "title": "Kit inicial de modelos de fármacos (experimental)",
@@ -3343,7 +3392,7 @@
   },
   "ValidationStudies": {
     "title": "Estudos de validação",
-    "summary": "Dois estudos pré-registados sobre o desempenho do Janus, cada um com os seus intervalos de confiança de 95 %.",
+    "summary": "Quatro estudos pré-registados sobre o desempenho do Janus, cada um com os seus intervalos de confiança de 95 %.",
     "intro": "Para investigadores. Cada estudo fixou a sua pergunta, os seus dados de referência e os seus critérios de sucesso num protocolo público antes de o Janus ser executado sobre os dados. Os resultados são apresentados tal como saíram, incluindo as hipóteses que não se cumpriram.",
     "review": "A revisão por especialistas ainda não foi feita.",
     "preregistered": "Pré-registado: o protocolo foi publicado no commit {commit} antes de a avaliação ser executada.",
@@ -3404,7 +3453,8 @@
         "caption": "Tabela de risco e cobertura dos valores do ClinicalTrials.gov",
         "level": "Nível de verificação",
         "coverage": "Cobertura (parte dos valores mantidos)"
-      }
+      },
+      "interval": "{low}–{high}"
     },
     "modelkitGate": {
       "title": "Limiar do kit de modelos",
@@ -3457,6 +3507,10 @@
       "crossTitle": "Verificação entre estudos de unidades erradas",
       "crossOff": "Implementada. Não cumpriu a sua regra de decisão registada previamente, por isso está desligada. Reteria {would} de {checkable} valores verificáveis.",
       "crossOn": "Implementada e ligada. Retém {would} de {checkable} valores verificáveis."
-    }
+    },
+    "csv": "Descarregar os números (CSV)",
+    "cite": "Citar esta versão",
+    "citeIntro": "Cite a versão que utilizou:",
+    "limitations": "Limitações destes estudos (GitHub)"
   }
 }

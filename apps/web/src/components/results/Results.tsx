@@ -259,6 +259,7 @@ export function ResultsBody({
 
 export function Results() {
   const t = useT();
+  const w = useThemeWord();
   const session = useSession();
   const vocab = useVocabulary();
   const evaluation = useEvaluation(session);
@@ -268,11 +269,18 @@ export function Results() {
     evaluation.status === "idle" ||
     evaluation.status === "loading"
   )
-    return <StateView state="loading" label={t("Findings.evaluating")} />;
+    return (
+      <StateView
+        title={w("Findings.title")}
+        state="loading"
+        label={t("Findings.evaluating")}
+      />
+    );
   if (evaluation.status === "blocked") {
     if (evaluation.reason === "empty")
       return (
         <StateView
+          title={w("Findings.title")}
           state="empty"
           message={t("Findings.empty")}
           action={<ButtonLink href="/scan">{t("Medicines.add")}</ButtonLink>}
@@ -280,6 +288,7 @@ export function Results() {
       );
     return (
       <StateView
+        title={w("Findings.title")}
         state="error"
         messageKey={
           evaluation.reason === "too_many"
@@ -296,6 +305,7 @@ export function Results() {
         : undefined;
     return (
       <StateView
+        title={w("Findings.title")}
         state="error"
         messageKey={evaluation.error.messageKey}
         retry={retry}

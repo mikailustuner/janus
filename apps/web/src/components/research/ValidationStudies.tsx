@@ -186,6 +186,15 @@ export function ValidationStudies() {
         summary={t("ValidationStudies.summary")}
       />
       <p className="max-w-[72ch]">{t("ValidationStudies.intro")}</p>
+      <a
+        className="inline-flex min-h-11 items-center self-start font-bold"
+        href={VALIDATION.limitationsUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        data-testid="vs-limitations"
+      >
+        {t("ValidationStudies.limitations")}
+      </a>
       <p className="card p-4 font-bold" data-testid="vs-review">
         {t("ValidationStudies.review")}
       </p>

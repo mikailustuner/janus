@@ -142,6 +142,19 @@
       "how1Title": "Kutuyu tarayın",
       "how2Title": "Örüntüler karşılaştırılır",
       "how3Title": "Doktor için not"
+    },
+    "audience": {
+      "title": "Janus kimin için?",
+      "patients": {
+        "title": "Hastalar ve aileler",
+        "body": "İlaç listenizi reçete kaskadları açısından kontrol edin ve doktorunuza götüreceğiniz bir not alın.",
+        "cta": "İlaçlarımı kontrol et"
+      },
+      "researchers": {
+        "title": "Araştırmacılar ve klinisyenler",
+        "body": "Yöntemler, doğrulama sonuçları, ilaç modelleri, açık veri ve API.",
+        "cta": "Araştırma bölümünü aç"
+      }
     }
   },
   "Shell": {
@@ -154,12 +167,22 @@
       "results": "Sonuçlar",
       "settings": "Ayarlar",
       "research": "Araştırma",
-      "passport": "Pasaport"
+      "passport": "Pasaport",
+      "note": "Doktor notu"
     },
     "privacy": "Gizlilik",
     "demoCodes": "Demo kodları",
     "demoDoctor": "Demo doktor sayfasını aç",
-    "donate": "Bildirim paylaş"
+    "donate": "Bildirim paylaş",
+    "researchNav": {
+      "overview": "Genel bakış",
+      "methods": "Doğrulama",
+      "modelKit": "İlaç modelleri",
+      "data": "Veri",
+      "developers": "API ve MCP"
+    },
+    "researchNavLabel": "Araştırma gezinmesi",
+    "patientSection": "Hasta bölümü"
   },
   "Emergency": {
     "title": "Acil durumda",
@@ -478,7 +501,14 @@
       "fits": "Sıra örüntüye uyuyor",
       "fitsLate": "Sıra uyuyor, olağan pencereden daha geç",
       "notConfirmed": "Sıra doğrulanmadı"
-    }
+    },
+    "sections": {
+      "found": "Janus ne buldu",
+      "why": "Neden önemli olabilir",
+      "todo": "Ne yapabilirsiniz"
+    },
+    "why": "Bazen bir ilacın yan etkisi yeni bir sağlık sorunu sanılır ve bunun için ikinci bir ilaç başlanır. Buna reçete kaskadı denir. Bu her zaman bir sorun değildir: ikinci ilaç yine de gerekli olabilir.",
+    "selfChange": "Hiçbir ilacı kendi başınıza bırakmayın ya da değiştirmeyin. Önce doktorunuzla ya da eczacınızla konuşun."
   },
   "ReadAloud": {
     "read": "Sesli oku",
@@ -665,7 +695,25 @@
         "title": "Doğrulama çalışmaları",
         "body": "Janus'un ne kadar iyi çalıştığına dair, güven aralıklarıyla iki önceden kayıtlı çalışma."
       }
-    }
+    },
+    "groups": {
+      "methods": {
+        "title": "Yöntemler ve doğrulama"
+      },
+      "modelKit": {
+        "title": "İlaç modelleri ve simülasyon"
+      },
+      "data": {
+        "title": "Veri"
+      },
+      "developers": {
+        "title": "API, MCP ve atıf"
+      },
+      "experimental": {
+        "title": "Keşif araçları"
+      }
+    },
+    "experimental": "Deneysel"
   },
   "Doctor": {
     "errors": {
@@ -2739,7 +2787,7 @@
       "notFound": "Verilerde şu maddeler için ABD prospektüsü yok: {names}. Bunlar okunmadı.",
       "labelsRead": "Okunan prospektüsler",
       "readRow": "{ingredient}: {substance}, yürürlük tarihi {date}",
-      "method": "Listenizdeki diğer etkin maddeler için Janus'un elindeki adların, her etkin madde için bir ABD prospektüsünün (verilerdeki en yeni tek maddeli prospektüs) \"Drug Interactions\" bölümünde tam sözcük olarak otomatik aranması. İlaç sınıfları eşleştirilmez, başka ülkelerin prospektüsleri okunmaz ve prospektüs metni güncel olmayabilir.",
+      "method": "Janus her etkin madde için bir ABD prospektüsü alır: verilerdeki en yeni tek maddeli prospektüs. Bu prospektüsün \"Drug Interactions\" bölümünde, listenizdeki diğer etkin maddeler için Janus'un elindeki adlar tam sözcük olarak otomatik aranır. İlaç sınıfları eşleştirilmez. Başka ülkelerin prospektüsleri okunmaz. Prospektüs metni güncel olmayabilir.",
       "source": "Kaynak: openFDA ilaç prospektüsü verileri (ABD Gıda ve İlaç Dairesi, CC0 1.0), veri tarihi {date}. FDA onayı değildir.",
       "outdated": "Bu prospektüs verisi Janus'un beklediğinden eski.",
       "unavailable": "Prospektüs metinleri şu anda yüklü değil, bu nedenle bu kontrol çalışmadı."
@@ -2932,9 +2980,10 @@
     "cite": {
       "title": "Nasıl atıf yapılır",
       "summary": "Kullandığınız sürüme atıf yapın.",
-      "body": "Henüz CITATION.cff yok: proje atıf bilgilerini yayımlamadı. O zamana kadar veri kümesine sürüm dizesi ve anlık görüntü tarihiyle atıf yapın:",
+      "body": "Bir veri kümesine sürüm dizesi ve anlık görüntü tarihiyle atıf yapın:",
       "example": "Atıf metni",
-      "pipc": "PIPC listesinin kendisi:"
+      "pipc": "PIPC listesinin kendisi:",
+      "software": "Yazılım için kullandığınız sürümü alıntılayın. Depoda sürümü ve tarihiyle bir CITATION.cff dosyası var:"
     },
     "modelKit": {
       "title": "İlaç modeli başlangıç seti (deneysel)",
@@ -3343,7 +3392,7 @@
   },
   "ValidationStudies": {
     "title": "Doğrulama çalışmaları",
-    "summary": "Janus'un ne kadar iyi çalıştığına dair, her biri %95 güven aralıklı iki önceden kayıtlı çalışma.",
+    "summary": "Janus'un ne kadar iyi çalıştığına dair, her biri %95 güven aralıklı dört önceden kayıtlı çalışma.",
     "intro": "Araştırmacılar için. Her çalışma, Janus veriler üzerinde çalıştırılmadan önce sorusunu, referans verisini ve başarı ölçütlerini herkese açık bir protokolde sabitledi. Sonuçlar, karşılanmayan hipotezler dahil, çıktığı gibi bildirilir.",
     "review": "Uzman incelemesi henüz yapılmadı.",
     "preregistered": "Önceden kayıtlı: protokol, değerlendirme çalıştırılmadan önce {commit} işlemesinde yayımlandı.",
@@ -3404,7 +3453,8 @@
         "caption": "ClinicalTrials.gov değerleri için risk–kapsam tablosu",
         "level": "Denetim düzeyi",
         "coverage": "Kapsam (tutulan değerlerin payı)"
-      }
+      },
+      "interval": "{low}–{high}"
     },
     "modelkitGate": {
       "title": "Model kiti geçidi",
@@ -3457,6 +3507,10 @@
       "crossTitle": "Yanlış birimler için çalışmalar arası denetim",
       "crossOff": "Uygulanmıştır. Önceden kaydedilen karar kuralını karşılamadığı için kapalıdır. Denetlenebilen {checkable} değerin {would} tanesini geri tutardı.",
       "crossOn": "Uygulanmıştır ve açıktır. Denetlenebilen {checkable} değerin {would} tanesini geri tutar."
-    }
+    },
+    "csv": "Sayıları indir (CSV)",
+    "cite": "Bu sürümü alıntıla",
+    "citeIntro": "Lütfen kullandığınız sürümü alıntılayın:",
+    "limitations": "Bu çalışmaların sınırlılıkları (GitHub)"
   }
 }

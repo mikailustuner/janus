@@ -142,6 +142,19 @@
       "how1Title": "Packung scannen",
       "how2Title": "Muster werden verglichen",
       "how3Title": "Die Arztnotiz"
+    },
+    "audience": {
+      "title": "Für wen ist Janus?",
+      "patients": {
+        "title": "Patienten und Angehörige",
+        "body": "Prüfen Sie eine Medikamentenliste auf Verschreibungskaskaden und erhalten Sie eine Notiz für Ihre Ärztin oder Ihren Arzt.",
+        "cta": "Meine Medikamente prüfen"
+      },
+      "researchers": {
+        "title": "Forschung und Klinik",
+        "body": "Methoden, Validierungsergebnisse, Arzneimittelmodelle, offene Daten und die API.",
+        "cta": "Forschungsbereich öffnen"
+      }
     }
   },
   "Shell": {
@@ -154,12 +167,22 @@
       "results": "Ergebnisse",
       "settings": "Einstellungen",
       "research": "Forschung",
-      "passport": "Medikamentenpass"
+      "passport": "Medikamentenpass",
+      "note": "Arztnotiz"
     },
     "privacy": "Datenschutz",
     "demoCodes": "Demo-Codes",
     "demoDoctor": "Demo-Seite für die Ärztin oder den Arzt öffnen",
-    "donate": "Meldung teilen"
+    "donate": "Meldung teilen",
+    "researchNav": {
+      "overview": "Überblick",
+      "methods": "Validierung",
+      "modelKit": "Modelle",
+      "data": "Daten",
+      "developers": "API und MCP"
+    },
+    "researchNavLabel": "Forschungsnavigation",
+    "patientSection": "Patientenbereich"
   },
   "Emergency": {
     "title": "Im Notfall",
@@ -478,7 +501,14 @@
       "fits": "Reihenfolge passt zum Muster",
       "fitsLate": "Reihenfolge passt, später als das übliche Zeitfenster",
       "notConfirmed": "Reihenfolge nicht bestätigt"
-    }
+    },
+    "sections": {
+      "found": "Was Janus gefunden hat",
+      "why": "Warum es wichtig sein kann",
+      "todo": "Was Sie tun können"
+    },
+    "why": "Manchmal wird eine Nebenwirkung eines Medikaments für ein neues Gesundheitsproblem gehalten, und dafür wird ein zweites Medikament begonnen. Das nennt man eine Verschreibungskaskade. Das ist nicht immer ein Problem: Das zweite Medikament kann trotzdem nötig sein.",
+    "selfChange": "Setzen Sie kein Medikament eigenmächtig ab und ändern Sie nichts selbst. Sprechen Sie zuerst mit Ihrer Ärztin, Ihrem Arzt oder in der Apotheke."
   },
   "ReadAloud": {
     "read": "Vorlesen",
@@ -665,7 +695,25 @@
         "title": "Validierungsstudien",
         "body": "Zwei vorab registrierte Studien dazu, wie gut Janus arbeitet, mit Konfidenzintervallen."
       }
-    }
+    },
+    "groups": {
+      "methods": {
+        "title": "Methoden und Validierung"
+      },
+      "modelKit": {
+        "title": "Arzneimittelmodelle und Simulation"
+      },
+      "data": {
+        "title": "Daten"
+      },
+      "developers": {
+        "title": "API, MCP und Zitieren"
+      },
+      "experimental": {
+        "title": "Explorative Werkzeuge"
+      }
+    },
+    "experimental": "Experimentell"
   },
   "Doctor": {
     "errors": {
@@ -2932,9 +2980,10 @@
     "cite": {
       "title": "So zitieren Sie",
       "summary": "Zitieren Sie die verwendete Version.",
-      "body": "Es gibt noch keine CITATION.cff: Das Projekt hat keine Zitationsangaben veröffentlicht. Bis dahin den Datensatz mit Versionskennung und Stichtag zitieren:",
+      "body": "Einen Datensatz zitieren Sie mit Versionskennung und Stichtag:",
       "example": "Zitiertext",
-      "pipc": "Die PIPC-Liste selbst:"
+      "pipc": "Die PIPC-Liste selbst:",
+      "software": "Für die Software zitieren Sie die verwendete Version. Das Repository enthält eine CITATION.cff mit Version und Datum:"
     },
     "modelKit": {
       "title": "Starterkit für Arzneimittelmodelle (experimentell)",
@@ -3343,7 +3392,7 @@
   },
   "ValidationStudies": {
     "title": "Validierungsstudien",
-    "summary": "Zwei vorab registrierte Studien dazu, wie gut Janus arbeitet, jeweils mit 95-%-Konfidenzintervallen.",
+    "summary": "Vier vorab registrierte Studien dazu, wie gut Janus arbeitet, jeweils mit 95-%-Konfidenzintervallen.",
     "intro": "Für Forschende. Jede Studie hat ihre Frage, ihre Referenzdaten und ihre Erfolgskriterien in einem öffentlichen Protokoll festgelegt, bevor Janus auf die Daten angewendet wurde. Die Ergebnisse werden so berichtet, wie sie ausfielen, auch die nicht erfüllten Hypothesen.",
     "review": "Eine Prüfung durch Fachleute ist noch nicht erfolgt.",
     "preregistered": "Vorab registriert: Das Protokoll wurde im Commit {commit} veröffentlicht, bevor die Auswertung lief.",
@@ -3404,7 +3453,8 @@
         "caption": "Risiko-Abdeckungs-Tabelle für ClinicalTrials.gov-Werte",
         "level": "Prüfstufe",
         "coverage": "Abdeckung (Anteil der behaltenen Werte)"
-      }
+      },
+      "interval": "{low}–{high}"
     },
     "modelkitGate": {
       "title": "Hürde des Modellbaukastens",
@@ -3457,6 +3507,10 @@
       "crossTitle": "Studienübergreifende Prüfung auf falsche Einheiten",
       "crossOff": "Umgesetzt. Sie erfüllte ihre vorab festgelegte Entscheidungsregel nicht und ist daher abgeschaltet. Sie würde {would} von {checkable} prüfbaren Werten zurückhalten.",
       "crossOn": "Umgesetzt und eingeschaltet. Sie hält {would} von {checkable} prüfbaren Werten zurück."
-    }
+    },
+    "csv": "Zahlen herunterladen (CSV)",
+    "cite": "Diese Version zitieren",
+    "citeIntro": "Bitte zitieren Sie die Version, die Sie verwendet haben:",
+    "limitations": "Grenzen dieser Studien (GitHub)"
   }
 }

@@ -41,7 +41,8 @@
   "kalsiyum karbonat",
   "Calciumcarbonat",
   "carbonate de calcium",
-  "carbonato de calcio"
+  "carbonato de calcio",
+  "carbonato de cálcio"
  ],
  "Q26979": [
   "aluminium acetoacetate",
@@ -50,20 +51,23 @@
  "Q28128": [
   "budipine",
   "Budipin",
-  "budipina"
+  "budipina",
+  "budipino"
  ],
  "Q29428": [
   "tropisetron",
   "Tropisetron",
   "tropisétron",
-  "tropisetrón"
+  "tropisetrón",
+  "tropizetrona"
  ],
  "Q39111": [
   "nifedipine",
   "nifedipin",
   "Nifedipin",
   "nifédipine",
-  "nifedipina"
+  "nifedipina",
+  "nifedipino"
  ],
  "Q44944": [
   "tegaserod",
@@ -75,7 +79,8 @@
   "magnezyum sitrat",
   "Magnesiumcitrat",
   "citrate de magnésium",
-  "citrato de magnesio"
+  "citrato de magnesio",
+  "citrato de magnésio"
  ],
  "Q45050": [
   "tenoxicam",
@@ -87,7 +92,8 @@
   "opium",
   "afyon",
   "Opium",
-  "opio"
+  "opio",
+  "ópio"
  ],
  "Q55434": [
   "pethidine",
@@ -113,7 +119,8 @@
  "Q58375": [
   "thioridazine",
   "tiyoridazin",
-  "Thioridazin"
+  "Thioridazin",
+  "tioridazina"
  ],
  "Q58376": [
   "fluphenazine",
@@ -149,7 +156,8 @@
   "tolfenamic acid",
   "Tolfenaminsäure",
   "acide tolfénamique",
-  "ácido tolfenámico"
+  "ácido tolfenámico",
+  "ácido tolfenâmico"
  ],
  "Q60168": [
   "diamorphine",
@@ -192,7 +200,8 @@
   "potasyum iyodür",
   "Kaliumiodid",
   "iodure de potassium",
-  "yoduro de potasio"
+  "yoduro de potasio",
+  "iodeto de potássio"
  ],
  "Q132501": [
   "glycerol",
@@ -242,7 +251,8 @@
   "lityum",
   "Lithium",
   "sel de lithium",
-  "sal de litio"
+  "sal de litio",
+  "sal de lítio"
  ],
  "Q155472": [
   "valsartan",
@@ -252,7 +262,8 @@
  "Q155685": [
   "dihydrotachysterol",
   "Dihydrotachysterol",
-  "dihydrotachystérol"
+  "dihydrotachystérol",
+  "di-hidrotaquisterol"
  ],
  "Q155883": [
   "alfacalcidol",
@@ -261,14 +272,17 @@
  "Q158289": [
   "Hypericum perforatum",
   "Kantaron",
-  "Echtes Johanniskraut"
+  "Echtes Johanniskraut",
+  "hipericão"
  ],
  "Q159376": [
-  "Ceratonia"
+  "Ceratonia",
+  "ceratonia"
  ],
  "Q161572": [
   "eucalyptol",
-  "1,8-Cineol"
+  "1,8-Cineol",
+  "eucaliptol"
  ],
  "Q166476": [
   "darifenacin",
@@ -279,7 +293,8 @@
   "ibandronic acid",
   "Ibandronsäure",
   "acide ibandronique",
-  "ácido ibandrónico"
+  "ácido ibandrónico",
+  "ácido ibandrônico"
  ],
  "Q174259": [
   "droperidol",
@@ -298,7 +313,8 @@
   "carbetapentane",
   "pentoksiverin",
   "Pentoxyverin",
-  "pentoxyvérine"
+  "pentoxyvérine",
+  "pentoxiverina"
  ],
  "Q176301": [
   "oxcarbazepine",
@@ -311,7 +327,8 @@
   "klordiazepoksid",
   "Chlordiazepoxid",
   "chlordiazépoxide",
-  "clordiazepóxido"
+  "clordiazepóxido",
+  "clorodiazepóxido"
  ],
  "Q179996": [
   "methadone",
@@ -375,10 +392,12 @@
   "tetrahydrocannabinol",
   "Δ-9-Tetrahydrocannabinol",
   "Δ-9-tétrahydrocannabinol",
-  "Δ-9-tetrahidrocannabinol"
+  "Δ-9-tetrahidrocannabinol",
+  "tetraidrocanabinol"
  ],
  "Q190875": [
-  "hydrocortisone"
+  "hydrocortisone",
+  "cortisol"
  ],
  "Q191521": [
   "sildenafil",
@@ -392,12 +411,14 @@
  "Q194682": [
   "metopimazine",
   "Metopimazin",
-  "métopimazine"
+  "métopimazine",
+  "metopimazina"
  ],
  "Q198473": [
   "ziconotide",
   "zikonotid",
-  "Ziconotid"
+  "Ziconotid",
+  "ziconotida"
  ],
  "Q201370": [
   "alprenolol",
@@ -412,13 +433,15 @@
  "Q203483": [
   "zimelidine",
   "zimelidin",
-  "Zimelidin"
+  "Zimelidin",
+  "zimelidina"
  ],
  "Q204954": [
   "zinc sulfate",
   "Zinksulfat",
   "sulfate de zinc",
-  "sulfato de zinc"
+  "sulfato de zinc",
+  "sulfato de zinco"
  ],
  "Q205517": [
   "ziprasidone",
@@ -438,14 +461,16 @@
   "kalsiyum klorür",
   "Calciumchlorid",
   "chlorure de calcium",
-  "cloruro de calcio"
+  "cloruro de calcio",
+  "cloreto de cálcio"
  ],
  "Q210021": [
   "aminobutyric acid",
   "gamma aminobütirik asit",
   "Aminobuttersäure",
   "acide γ-aminobutyrique",
-  "ácido γ-aminobutírico"
+  "ácido γ-aminobutírico",
+  "ácido gama-aminobutírico"
  ],
  "Q210402": [
   "diazepam",
@@ -463,13 +488,15 @@
   "magnesium oxide",
   "Magnesiumoxid",
   "oxyde de magnésium",
-  "óxido de magnesio"
+  "óxido de magnesio",
+  "óxido de magnésio"
  ],
  "Q214863": [
   "iron(II) sulfate",
   "Eisen-sulfat",
   "sulfate de fer(II)",
-  "sulfato de hierro(II)"
+  "sulfato de hierro(II)",
+  "sulfato de ferro (II)"
  ],
  "Q216935": [
   "lidocaine",
@@ -514,7 +541,8 @@
   "triamterene",
   "Triamteren",
   "triamtérène",
-  "triamtereno"
+  "triamtereno",
+  "triantereno"
  ],
  "Q221637": [
   "ambroxol",
@@ -522,7 +550,8 @@
  ],
  "Q226905": [
   "zotepine",
-  "Zotepin"
+  "Zotepin",
+  "zotepina"
  ],
  "Q228143": [
   "zuclopenthixol",
@@ -534,7 +563,8 @@
   "oxitriptan",
   "5-hidroksitriptofan",
   "5-Hydroxy-L-Tryptophan",
-  "5-hidroxitriptófano"
+  "5-hidroxitriptófano",
+  "5-hidroxitriptofano"
  ],
  "Q239593": [
   "cobamamide",
@@ -543,14 +573,16 @@
  "Q239778": [
   "bromhexine",
   "Bromhexin",
-  "bromhexina"
+  "bromhexina",
+  "bromexina"
  ],
  "Q240642": [
   "valproic acid",
   "valproik asit",
   "Valproinsäure",
   "acide valproïque",
-  "ácido valproico"
+  "ácido valproico",
+  "valproato"
  ],
  "Q244408": [
   "diclofenac",
@@ -572,7 +604,8 @@
  ],
  "Q250442": [
   "methylcobalamin",
-  "méthylcobalamine"
+  "méthylcobalamine",
+  "metilcobalamina"
  ],
  "Q251005": [
   "nystatin",
@@ -609,17 +642,20 @@
   "isoconazol"
  ],
  "Q263612": [
-  "aprindine"
+  "aprindine",
+  "aprindina"
  ],
  "Q265414": [
   "magnesium chloride",
   "magnezyum klorür",
   "Magnesiumchlorid",
   "chlorure de magnésium",
-  "cloruro de magnesio"
+  "cloruro de magnesio",
+  "cloreto de magnésio"
  ],
  "Q266321": [
-  "mitiglinide"
+  "mitiglinide",
+  "mitiglinida"
  ],
  "Q268997": [
   "procyclidine",
@@ -665,7 +701,8 @@
   "mefenamik asit",
   "Mefenaminsäure",
   "acide méfénamique",
-  "ácido mefenámico"
+  "ácido mefenámico",
+  "ácido mefenâmico"
  ],
  "Q286846": [
   "pantoprazole",
@@ -677,7 +714,8 @@
   "magnezyum sülfat",
   "Magnesiumsulfat",
   "sulfate de magnésium",
-  "sulfato de magnesio"
+  "sulfato de magnesio",
+  "sulfato de magnésio"
  ],
  "Q290001": [
   "gliclazide",
@@ -720,7 +758,8 @@
   "castor oil",
   "Rizinusöl",
   "huile de ricin",
-  "aceite de ricino"
+  "aceite de ricino",
+  "óleo de rícino"
  ],
  "Q338005": [
   "acarbose",
@@ -737,7 +776,8 @@
  ],
  "Q342745": [
   "acrivastine",
-  "Acrivastin"
+  "Acrivastin",
+  "acrivastina"
  ],
  "Q347613": [
   "valdecoxib",
@@ -745,25 +785,30 @@
  ],
  "Q347941": [
   "parecoxib",
-  "Parecoxib"
+  "Parecoxib",
+  "parecoxibe"
  ],
  "Q368222": [
-  "azapropazone"
+  "azapropazone",
+  "apazona"
  ],
  "Q368941": [
   "lofepramine",
-  "Lofepramin"
+  "Lofepramin",
+  "lofepramina"
  ],
  "Q368995": [
   "betahistine",
   "betahistin",
   "Betahistin",
   "bétahistine",
-  "betahistina"
+  "betahistina",
+  "betaistina"
  ],
  "Q372725": [
   "thiethylperazine",
-  "tietilperazin"
+  "tietilperazin",
+  "tietilperazina"
  ],
  "Q373243": [
   "benorilate",
@@ -775,7 +820,8 @@
  "Q374826": [
   "solifenacin",
   "Solifenacin",
-  "solifénacine"
+  "solifénacine",
+  "succinato de solifenacina"
  ],
  "Q375613": [
   "acetylcysteine",
@@ -788,10 +834,12 @@
   "dihydrocodeine",
   "Dihydrocodein",
   "dihydrocodéine",
-  "dihidrocodeína"
+  "dihidrocodeína",
+  "di-hidrocodeína"
  ],
  "Q378997": [
-  "emylcamate"
+  "emylcamate",
+  "emilcamato"
  ],
  "Q382185": [
   "carbromal",
@@ -813,7 +861,8 @@
   "meklizin",
   "Meclozin",
   "méclozine",
-  "meclizino"
+  "meclizino",
+  "meclizina"
  ],
  "Q388801": [
   "furosemide",
@@ -823,7 +872,8 @@
   "furosemida"
  ],
  "Q389207": [
-  "eprazinone"
+  "eprazinone",
+  "eprazinona"
  ],
  "Q392481": [
   "perazine",
@@ -846,7 +896,8 @@
   "aluminum hydroxide",
   "Aluminiumhydroxid",
   "hydroxyde d'aluminium",
-  "hidróxido de aluminio"
+  "hidróxido de aluminio",
+  "hidróxido de alumínio"
  ],
  "Q407241": [
   "phenobarbital",
@@ -871,7 +922,8 @@
   "magnezyum hidroksit",
   "Magnesiumhydroxid",
   "hydroxyde de magnésium",
-  "hidróxido de magnesio"
+  "hidróxido de magnesio",
+  "hidróxido de magnésio"
  ],
  "Q407592": [
   "tramadol",
@@ -912,20 +964,23 @@
   "ferrous chloride",
   "Eisen(II)-chlorid",
   "chlorure de fer(II)",
-  "cloruro de hierro"
+  "cloruro de hierro",
+  "cloreto de ferro (II)"
  ],
  "Q407883": [
   "ketoconazole",
   "ketokonazol",
   "Ketoconazol",
   "kétoconazole",
-  "ketoconazol"
+  "ketoconazol",
+  "cetoconazol"
  ],
  "Q407931": [
   "magnesium carbonate",
   "Magnesiumcarbonat",
   "carbonate de magnésium",
-  "carbonato de magnesio"
+  "carbonato de magnesio",
+  "carbonato de magnésio"
  ],
  "Q407972": [
   "chlorpromazine",
@@ -956,11 +1011,13 @@
  ],
  "Q408300": [
   "fluspirilene",
-  "Fluspirilen"
+  "Fluspirilen",
+  "fluspirileno"
  ],
  "Q408370": [
   "dihydralazine",
-  "Dihydralazin"
+  "Dihydralazin",
+  "di-hidralazina"
  ],
  "Q408432": [
   "protriptyline",
@@ -1018,7 +1075,8 @@
   "risedronic acid",
   "Risedronsäure",
   "acide risédronique",
-  "ácido risedrónico"
+  "ácido risedrónico",
+  "ácido risedrônico"
  ],
  "Q408801": [
   "celecoxib",
@@ -1028,18 +1086,21 @@
  ],
  "Q408959": [
   "pyrithyldione",
-  "Pyrithyldion"
+  "Pyrithyldion",
+  "piritildiona"
  ],
  "Q408963": [
   "indoramin",
   "Indoramin",
-  "indoramine"
+  "indoramine",
+  "indoramina"
  ],
  "Q409192": [
   "ketoprofen",
   "Ketoprofen",
   "kétoprofène",
-  "ketoprofeno"
+  "ketoprofeno",
+  "cetoprofeno"
  ],
  "Q409231": [
   "indometacin",
@@ -1071,16 +1132,19 @@
   "trisodium phosphate",
   "Trinatriumphosphat",
   "phosphate trisodique",
-  "fosfato trisódico"
+  "fosfato trisódico",
+  "fosfato trissódico"
  ],
  "Q409549": [
   "barbexaclone",
-  "Barbexaclon"
+  "Barbexaclon",
+  "barbexaclona"
  ],
  "Q409558": [
   "methyprylon",
   "Methyprylon",
-  "metiprilon"
+  "metiprilon",
+  "metiprilona"
  ],
  "Q409579": [
   "vinbarbital",
@@ -1104,7 +1168,8 @@
   "amantadine",
   "amantadin",
   "Amantadin",
-  "amantadina"
+  "amantadina",
+  "amantidina"
  ],
  "Q409898": [
   "dapagliflozin",
@@ -1135,7 +1200,8 @@
   "ondansetron",
   "Ondansetron",
   "ondansétron",
-  "ondansetrón"
+  "ondansetrón",
+  "ondansetrona"
  ],
  "Q410061": [
   "amiodarone",
@@ -1158,17 +1224,20 @@
   "polietilen glikol",
   "Polyethylenglycol",
   "polyéthylène glycol",
-  "polietilenglicol"
+  "polietilenglicol",
+  "polietilenoglicol"
  ],
  "Q410157": [
   "vinylbital",
-  "Vinylbital"
+  "Vinylbital",
+  "vinilbital"
  ],
  "Q410265": [
   "sodium picosulfate",
   "Natriumpicosulfat",
   "picosulfate de sodium",
-  "picosulfato sódico"
+  "picosulfato sódico",
+  "picossulfato sódico"
  ],
  "Q410291": [
   "verapamil",
@@ -1205,13 +1274,15 @@
  "Q410435": [
   "benzbromarone",
   "benzbromaron",
-  "Benzbromaron"
+  "Benzbromaron",
+  "benzbromarona"
  ],
  "Q410492": [
   "lercanidipine",
   "lerkanidipin",
   "Lercanidipin",
-  "lercanidipino"
+  "lercanidipino",
+  "lercanidipina"
  ],
  "Q410618": [
   "meptazinol",
@@ -1219,7 +1290,8 @@
  ],
  "Q410829": [
   "heptabarbital",
-  "Heptabarbital"
+  "Heptabarbital",
+  "heptabarbe"
  ],
  "Q410965": [
   "insulin detemir",
@@ -1230,7 +1302,8 @@
  ],
  "Q411150": [
   "diphenylpyraline",
-  "Diphenylpyralin"
+  "Diphenylpyralin",
+  "difenilpiralina"
  ],
  "Q411159": [
   "famotidine",
@@ -1252,7 +1325,8 @@
  "Q411251": [
   "melitracen",
   "melitrasen",
-  "Melitracen"
+  "Melitracen",
+  "melitraceno"
  ],
  "Q411325": [
   "atenolol",
@@ -1263,7 +1337,8 @@
   "amlodipine",
   "amlodipin",
   "Amlodipin",
-  "amlodipina"
+  "amlodipina",
+  "anlodipino"
  ],
  "Q411412": [
   "rofecoxib",
@@ -1292,7 +1367,8 @@
  "Q411552": [
   "doripenem",
   "Doripenem",
-  "doripénème"
+  "doripénème",
+  "doripeném"
  ],
  "Q411594": [
   "methoxyflurane",
@@ -1305,7 +1381,8 @@
   "methylphenobarbital",
   "mephobarbital",
   "Methylphenobarbital",
-  "mefobarbital"
+  "mefobarbital",
+  "metilfenobarbital"
  ],
  "Q411770": [
   "silodosin",
@@ -1317,7 +1394,8 @@
   "levacetylmethadol",
   "levomethadyl acetate",
   "Levacetylmethadol",
-  "levacetilmetadol"
+  "levacetilmetadol",
+  "acetato de levacetilmetadol"
  ],
  "Q411806": [
   "loprazolam",
@@ -1331,7 +1409,8 @@
  "Q411932": [
   "duloxetine",
   "Duloxetin",
-  "duloxétine"
+  "duloxétine",
+  "duloxetina"
  ],
  "Q411940": [
   "aprobarbital",
@@ -1345,7 +1424,8 @@
  "Q412090": [
   "meparfynol",
   "Methylpentynol",
-  "methylpentynol"
+  "methylpentynol",
+  "metilpentinol"
  ],
  "Q412107": [
   "dibenzepin",
@@ -1354,7 +1434,8 @@
  ],
  "Q412127": [
   "gallopamil",
-  "Gallopamil"
+  "Gallopamil",
+  "galopamil"
  ],
  "Q412133": [
   "dexmedetomidine",
@@ -1398,7 +1479,8 @@
   "amfoterisin B",
   "Amphotericin B",
   "amphotéricine B",
-  "anfotericina B"
+  "anfotericina B",
+  "anfotericina b"
  ],
  "Q412299": [
   "oxazepam",
@@ -1468,11 +1550,13 @@
  ],
  "Q412699": [
   "bufexamac",
-  "Bufexamac"
+  "Bufexamac",
+  "bufexamaco"
  ],
  "Q413000": [
   "clopenthixol",
-  "Clopenthixol"
+  "Clopenthixol",
+  "clopentixol"
  ],
  "Q413184": [
   "eszopiclone",
@@ -1485,7 +1569,8 @@
   "difenhidramin",
   "Diphenhydramin",
   "diphénhydramine",
-  "difenhidramina"
+  "difenhidramina",
+  "difenidramina"
  ],
  "Q413546": [
   "clotrimazole",
@@ -1514,7 +1599,8 @@
   "calcium gluconate",
   "kalsiyum glukonat",
   "Calciumgluconat",
-  "gluconato cálcico"
+  "gluconato cálcico",
+  "gluconato de cálcio"
  ],
  "Q413744": [
   "lumiracoxib",
@@ -1568,13 +1654,15 @@
  "Q414547": [
   "sodium salicylate",
   "sodyum salisilat",
-  "Natriumsalicylat"
+  "Natriumsalicylat",
+  "salicilato de sódio"
  ],
  "Q414626": [
   "sodium selenite",
   "Natriumselenit",
   "sélénite de sodium",
-  "selenito de sodio"
+  "selenito de sodio",
+  "selenito de sódio"
  ],
  "Q414788": [
   "secobarbital",
@@ -1589,12 +1677,14 @@
  "Q414873": [
   "isradipine",
   "Isradipin",
-  "isradipina"
+  "isradipina",
+  "isradipino"
  ],
  "Q414904": [
   "aliskiren",
   "Aliskiren",
-  "aliskirène"
+  "aliskirène",
+  "aliscireno"
  ],
  "Q414914": [
   "biperiden",
@@ -1622,13 +1712,15 @@
   "donepezil",
   "Donepezil",
   "donépézil",
-  "donepezilo"
+  "donepezilo",
+  "donepezila"
  ],
  "Q415118": [
   "pipamperone",
   "pipamperon",
   "Pipamperon",
-  "pipampérone"
+  "pipampérone",
+  "pipamperona"
  ],
  "Q415122": [
   "fexofenadine",
@@ -1646,12 +1738,14 @@
  "Q415203": [
   "tripelennamine",
   "tripelennamin",
-  "Tripelennamin"
+  "Tripelennamin",
+  "tripelenamina"
  ],
  "Q415403": [
   "flupirtine",
   "flupirtin",
-  "Flupirtin"
+  "Flupirtin",
+  "flupirtina"
  ],
  "Q415480": [
   "cerium(III) oxalate",
@@ -1668,7 +1762,8 @@
  "Q415619": [
   "noscapine",
   "Noscapin",
-  "noscapina"
+  "noscapina",
+  "narcotina"
  ],
  "Q415654": [
   "clobutinol",
@@ -1703,7 +1798,8 @@
  "Q415997": [
   "ketanserin",
   "Ketanserin",
-  "ketanserina"
+  "ketanserina",
+  "cetanserina"
  ],
  "Q416025": [
   "misoprostol",
@@ -1725,17 +1821,20 @@
   "methyl cellulose",
   "Methylcellulose",
   "méthylcellulose",
-  "metilcelulosa"
+  "metilcelulosa",
+  "metilcelulose"
  ],
  "Q416341": [
   "flufenamic acid",
   "Flufenaminsäure",
-  "ácido flufenámico"
+  "ácido flufenámico",
+  "ácido flufenâmico"
  ],
  "Q416365": [
   "calcium silicate",
   "Calciumsilicat",
-  "silicate de calcium"
+  "silicate de calcium",
+  "silicato de cálcio"
  ],
  "Q416370": [
   "iron(II) fumarate",
@@ -1746,7 +1845,8 @@
  "Q416414": [
   "tiapride",
   "tiaprid",
-  "Tiaprid"
+  "Tiaprid",
+  "tiaprida"
  ],
  "Q416431": [
   "diphenoxylate",
@@ -1756,7 +1856,8 @@
  ],
  "Q416439": [
   "piritramide",
-  "Piritramid"
+  "Piritramid",
+  "piritramida"
  ],
  "Q416444": [
   "entacapone",
@@ -1766,13 +1867,15 @@
  "Q416503": [
   "aminophenazone",
   "Aminophenazon",
-  "4-aminophénazone"
+  "4-aminophénazone",
+  "aminofenazona"
  ],
  "Q416545": [
   "asenapine",
   "asenapin",
   "Asenapin",
-  "asénapine"
+  "asénapine",
+  "asenapina"
  ],
  "Q416562": [
   "opipramol",
@@ -1797,7 +1900,8 @@
  "Q416701": [
   "mianserin",
   "Mianserin",
-  "miansérine"
+  "miansérine",
+  "mianserina"
  ],
  "Q416791": [
   "doxepin",
@@ -1805,7 +1909,8 @@
  ],
  "Q416966": [
   "cyclobarbital",
-  "Cyclobarbital"
+  "Cyclobarbital",
+  "ciclobarbital"
  ],
  "Q416992": [
   "lurasidone",
@@ -1859,7 +1964,8 @@
  ],
  "Q417432": [
   "remikiren",
-  "Remikiren"
+  "Remikiren",
+  "remiquireno"
  ],
  "Q417597": [
   "procainamide",
@@ -1897,23 +2003,27 @@
  ],
  "Q417830": [
   "mizolastine",
-  "Mizolastin"
+  "Mizolastin",
+  "mizolastina"
  ],
  "Q417874": [
   "bisacodyl",
   "bisakodil",
   "Bisacodyl",
-  "bisacodilo"
+  "bisacodilo",
+  "bisacodil"
  ],
  "Q417884": [
   "cyproheptadine",
   "Cyproheptadin",
-  "ciproheptadina"
+  "ciproheptadina",
+  "cipro-heptadina"
  ],
  "Q417909": [
   "terfenadine",
   "Terfenadin",
-  "terfénadine"
+  "terfénadine",
+  "terfenadina"
  ],
  "Q417942": [
   "fluvastatin",
@@ -1954,7 +2064,8 @@
   "meprobamate",
   "meprobamat",
   "Meprobamat",
-  "méprobamate"
+  "méprobamate",
+  "meprobamato"
  ],
  "Q418361": [
   "maprotiline",
@@ -1966,7 +2077,8 @@
   "tamsulosin",
   "Tamsulosin",
   "tamsulosine",
-  "tamsulosina"
+  "tamsulosina",
+  "tansulosina"
  ],
  "Q418571": [
   "ethacrynic acid",
@@ -1977,7 +2089,8 @@
   "amisulpride",
   "amisülpirid",
   "Amisulprid",
-  "amisulprida"
+  "amisulprida",
+  "amissulprida"
  ],
  "Q418850": [
   "clorazepic acid",
@@ -1985,7 +2098,8 @@
   "klorazepat",
   "Clorazepat",
   "clorazépate",
-  "clorazepato"
+  "clorazepato",
+  "clorazepato dipotássico"
  ],
  "Q418857": [
   "acebutolol",
@@ -1994,7 +2108,8 @@
  ],
  "Q418905": [
   "allobarbital",
-  "Allobarbital"
+  "Allobarbital",
+  "alobarbital"
  ],
  "Q418922": [
   "urapidil",
@@ -2045,13 +2160,15 @@
   "sodium selenate",
   "Natriumselenat",
   "sélénate de sodium",
-  "seleniato de sodio"
+  "seleniato de sodio",
+  "selenato de sódio"
  ],
  "Q419503": [
   "aluminium phosphate",
   "Aluminiumorthophosphat",
   "phosphate d'aluminium",
-  "fosfato de aluminio"
+  "fosfato de aluminio",
+  "fosfato de alumínio"
  ],
  "Q419550": [
   "pirenzepine",
@@ -2066,13 +2183,15 @@
  ],
  "Q419643": [
   "amineptine",
-  "Amineptin"
+  "Amineptin",
+  "amineptina"
  ],
  "Q419693": [
   "calcium lactate",
   "Calciumlactat",
   "lactate de calcium",
-  "lactato de calcio"
+  "lactato de calcio",
+  "lactato de cálcio"
  ],
  "Q419820": [
   "azelastine",
@@ -2083,7 +2202,8 @@
  ],
  "Q419822": [
   "promazine",
-  "Promazin"
+  "Promazin",
+  "promazina"
  ],
  "Q419832": [
   "sitagliptin",
@@ -2105,7 +2225,8 @@
  "Q419926": [
   "tiaprofenic acid",
   "Tiaprofensäure",
-  "acide tiaprofénique"
+  "acide tiaprofénique",
+  "ácido tiaprofênico"
  ],
  "Q419939": [
   "doxazosin",
@@ -2115,7 +2236,8 @@
  ],
  "Q419944": [
   "moxonidine",
-  "Moxonidin"
+  "Moxonidin",
+  "moxonidina"
  ],
  "Q419948": [
   "torasemide",
@@ -2155,19 +2277,22 @@
   "nitroprusside",
   "Nitroprussid",
   "nitroprussiate de sodium",
-  "nitroprusiato"
+  "nitroprusiato",
+  "nitroprussiato de sódio"
  ],
  "Q420051": [
   "dexibuprofen",
   "Dexibuprofen",
-  "dexibuprofène"
+  "dexibuprofène",
+  "dexibuprofeno"
  ],
  "Q420057": [
   "alendronic acid",
   "alendronik asit",
   "Alendronsäure",
   "acide alendronique",
-  "ácido alendrónico"
+  "ácido alendrónico",
+  "alendronato de sódio"
  ],
  "Q420077": [
   "lacosamide",
@@ -2177,7 +2302,8 @@
  ],
  "Q420082": [
   "benoxaprofen",
-  "Benoxaprofen"
+  "Benoxaprofen",
+  "benoxaprofeno"
  ],
  "Q420133": [
   "chlorphenamine",
@@ -2185,13 +2311,15 @@
   "klorfenamin",
   "Chlorphenamin",
   "chlorphéniramine",
-  "clorfenamina"
+  "clorfenamina",
+  "clorfeniramina"
  ],
  "Q420280": [
   "calcium citrate",
   "Calciumcitrat",
   "citrate tricalcique",
-  "citrato de calcio"
+  "citrato de calcio",
+  "citrato de cálcio"
  ],
  "Q420350": [
   "flupentixol",
@@ -2280,7 +2408,8 @@
   "milnacipran",
   "milnasipran",
   "Milnacipran",
-  "milnaciprán"
+  "milnaciprán",
+  "milnaciprano"
  ],
  "Q421076": [
   "tacrine",
@@ -2388,7 +2517,8 @@
   "etosüksimid",
   "Ethosuximid",
   "éthosuximide",
-  "etosuximida"
+  "etosuximida",
+  "etossuximida"
  ],
  "Q421663": [
   "vigabatrin",
@@ -2422,7 +2552,8 @@
   "hydroxyzine",
   "hidroksizin",
   "Hydroxyzin",
-  "hidroxicina"
+  "hidroxicina",
+  "hidroxizina"
  ],
  "Q422071": [
   "guar gum",
@@ -2434,7 +2565,8 @@
   "alginic acid",
   "Alginsäure",
   "acide alginique",
-  "ácido algínico"
+  "ácido algínico",
+  "algina"
  ],
  "Q422185": [
   "enalapril",
@@ -2496,7 +2628,8 @@
   "bromür",
   "Bromide",
   "bromure",
-  "bromuro"
+  "bromuro",
+  "brometo"
  ],
  "Q422435": [
   "bromazepam",
@@ -2561,7 +2694,8 @@
  "Q423292": [
   "paliperidone",
   "paliperidon",
-  "Paliperidon"
+  "Paliperidon",
+  "paliperidona"
  ],
  "Q423308": [
   "cabergoline",
@@ -2583,7 +2717,8 @@
   "carbocisteine",
   "carbocysteine",
   "Carbocystein",
-  "carbocystéine"
+  "carbocystéine",
+  "carbocisteína"
  ],
  "Q423437": [
   "astemizole",
@@ -2668,13 +2803,15 @@
  "Q424156": [
   "tadalafil",
   "Tadalafil",
-  "tadalafilo"
+  "tadalafilo",
+  "tadalafila"
  ],
  "Q424161": [
   "vardenafil",
   "Vardenafil",
   "vardénafil",
-  "vardenafilo"
+  "vardenafilo",
+  "vardenafila"
  ],
  "Q424165": [
   "minoxidil",
@@ -2705,7 +2842,8 @@
   "paraldehit",
   "Paraldehyd",
   "paraldéhyde",
-  "paraldehído"
+  "paraldehído",
+  "paraldeído"
  ],
  "Q424412": [
   "benperidol",
@@ -2793,7 +2931,8 @@
   "deksketoprofen",
   "Dexketoprofen",
   "dexkétoprofène",
-  "dexketoprofeno"
+  "dexketoprofeno",
+  "dexcetoprofeno"
  ],
  "Q425729": [
   "ivabradine",
@@ -2812,21 +2951,25 @@
  ],
  "Q425991": [
   "halcinonide",
-  "Halcinonid"
+  "Halcinonid",
+  "halcinonida"
  ],
  "Q426070": [
   "dimetindene",
   "dimethindene",
-  "Dimetinden"
+  "Dimetinden",
+  "dimetindeno"
  ],
  "Q426524": [
-  "progabide"
+  "progabide",
+  "progabida"
  ],
  "Q430675": [
   "ispaghula",
   "psyllium",
   "Flohsamenschalen",
-  "ispaghul"
+  "ispaghul",
+  "psílio"
  ],
  "Q481757": [
   "aceclofenac",
@@ -2839,22 +2982,26 @@
   "senna glycosides",
   "senna glikozidleri",
   "sennoside",
-  "senósido"
+  "senósido",
+  "senosídeo"
  ],
  "Q510494": [
   "triflupromazine",
-  "Triflupromazin"
+  "Triflupromazin",
+  "triflupromazina"
  ],
  "Q513396": [
   "trospium",
   "Trospium-Kation"
  ],
  "Q514534": [
-  "encainide"
+  "encainide",
+  "encainida"
  ],
  "Q544834": [
   "medifoxamine",
-  "Medifoxamin"
+  "Medifoxamin",
+  "medifoxamina"
  ],
  "Q546434": [
   "carteolol",
@@ -2876,15 +3023,18 @@
  "Q553324": [
   "ethenzamide",
   "etenzamid",
-  "éthenzamide"
+  "éthenzamide",
+  "etenzamida"
  ],
  "Q554881": [
   "ethylmorphine",
-  "éthylmorphine"
+  "éthylmorphine",
+  "etilmorfina"
  ],
  "Q567927": [
   "pipotiazine",
-  "pipotiazin"
+  "pipotiazin",
+  "pipotiazina"
  ],
  "Q572796": [
   "medazepam",
@@ -2924,7 +3074,8 @@
   "granisetron",
   "Granisetron",
   "granisétron",
-  "granisetrón"
+  "granisetrón",
+  "granisetrona"
  ],
  "Q598713": [
   "dosulepin",
@@ -2938,23 +3089,28 @@
  ],
  "Q599160": [
   "azatadine",
-  "Azatadin"
+  "Azatadin",
+  "azatadina"
  ],
  "Q600951": [
   "xipamide",
-  "Xipamid"
+  "Xipamid",
+  "xipamida"
  ],
  "Q607349": [
   "fluorometholone",
   "fluorométholone",
-  "fluorometolona"
+  "fluorometolona",
+  "fluormetolona"
  ],
  "Q610084": [
   "chlorproethazine",
-  "chlorproéthazine"
+  "chlorproéthazine",
+  "clorproetazina"
  ],
  "Q617226": [
-  "thonzylamine"
+  "thonzylamine",
+  "tonzilamina"
  ],
  "Q621834": [
   "aprepitant",
@@ -2969,11 +3125,13 @@
  "Q631457": [
   "niaprazine",
   "niaprazin",
-  "Niaprazin"
+  "Niaprazin",
+  "niaprazina"
  ],
  "Q631829": [
   "alizapride",
-  "Alizaprid"
+  "Alizaprid",
+  "alizaprida"
  ],
  "Q632405": [
   "epinastine",
@@ -2982,7 +3140,8 @@
   "epinastina"
  ],
  "Q646567": [
-  "nifenazone"
+  "nifenazone",
+  "nifenazona"
  ],
  "Q656259": [
   "pheniramine",
@@ -2993,7 +3152,8 @@
  ],
  "Q660090": [
   "letosteine",
-  "létostéine"
+  "létostéine",
+  "letosteína"
  ],
  "Q662511": [
   "propafenone",
@@ -3020,7 +3180,8 @@
   "simvastatin",
   "Simvastatin",
   "simvastatine",
-  "simvastatina"
+  "simvastatina",
+  "sinvastatina"
  ],
  "Q715104": [
   "buformin",
@@ -3028,7 +3189,8 @@
   "buformina"
  ],
  "Q719694": [
-  "mephenoxalone"
+  "mephenoxalone",
+  "mefenoxalona"
  ],
  "Q729213": [
   "nicardipine",
@@ -3037,7 +3199,8 @@
  ],
  "Q729863": [
   "chloropyramine",
-  "Chlorpyramin"
+  "Chlorpyramin",
+  "cloropiramina"
  ],
  "Q731525": [
   "cilnidipine",
@@ -3053,7 +3216,8 @@
   "difluprednato"
  ],
  "Q750288": [
-  "prenoxdiazine"
+  "prenoxdiazine",
+  "prenoxdiazina"
  ],
  "Q752861": [
   "carbenoxolone",
@@ -3066,11 +3230,13 @@
  ],
  "Q757058": [
   "tocainide",
-  "Tocainid"
+  "Tocainid",
+  "tocainida"
  ],
  "Q771975": [
   "antazoline",
-  "Antazolin"
+  "Antazolin",
+  "antazolina"
  ],
  "Q772735": [
   "miglitol",
@@ -3113,11 +3279,13 @@
   "bétaxolol"
  ],
  "Q794409": [
-  "bezitramide"
+  "bezitramide",
+  "bezitramida"
  ],
  "Q818139": [
   "benproperine",
-  "Benproperin"
+  "Benproperin",
+  "bemproperina"
  ],
  "Q821869": [
   "pinacidil",
@@ -3132,7 +3300,8 @@
  "Q834280": [
   "bupropion",
   "Bupropion",
-  "bupropione"
+  "bupropione",
+  "bupropiom"
  ],
  "Q834660": [
   "bopindolol"
@@ -3156,21 +3325,26 @@
  "Q851813": [
   "methohexital",
   "Methohexital",
-  "méthohexital"
+  "méthohexital",
+  "metohexital"
  ],
  "Q851922": [
-  "bumadizone"
+  "bumadizone",
+  "bumadizona"
  ],
  "Q851942": [
-  "bunaftine"
+  "bunaftine",
+  "bunaftina"
  ],
  "Q862414": [
   "bendazac",
-  "bendazak"
+  "bendazak",
+  "bendazaco"
  ],
  "Q867171": [
   "cifenline",
-  "cibenzoline"
+  "cibenzoline",
+  "cibenzolina"
  ],
  "Q867308": [
   "cyclizine",
@@ -3202,25 +3376,30 @@
  "Q900898": [
   "probenecid",
   "Probenecid",
-  "probénécide"
+  "probénécide",
+  "probenecida"
  ],
  "Q903551": [
   "prothipendyl",
-  "Prothipendyl"
+  "Prothipendyl",
+  "protipendil"
  ],
  "Q904011": [
   "desonide",
-  "désonide"
+  "désonide",
+  "desonida"
  ],
  "Q904071": [
   "moracizine",
   "moricizine",
-  "Moricizin"
+  "Moricizin",
+  "moracizina"
  ],
  "Q904321": [
   "propiverine",
   "Propiverin",
-  "propivérine"
+  "propivérine",
+  "propiverina"
  ],
  "Q904524": [
   "butriptyline",
@@ -3228,7 +3407,8 @@
   "butriptilina"
  ],
  "Q904647": [
-  "dexetimide"
+  "dexetimide",
+  "dexetimida"
  ],
  "Q904673": [
   "iprindole",
@@ -3239,7 +3419,8 @@
   "mesuximide",
   "methsuximide",
   "Mesuximid",
-  "metosuximida"
+  "metosuximida",
+  "messuximida"
  ],
  "Q906452": [
   "proxibarbal",
@@ -3262,7 +3443,8 @@
  "Q908663": [
   "kaolin",
   "Kaolin",
-  "caolín"
+  "caolín",
+  "caulim"
  ],
  "Q909745": [
   "linagliptin",
@@ -3274,7 +3456,8 @@
   "creosote",
   "Kreosot",
   "créosote",
-  "creosota"
+  "creosota",
+  "creosoto"
  ],
  "Q910111": [
   "dropropizine",
@@ -3286,22 +3469,26 @@
   "keten tohumu",
   "Leinsamen",
   "graine de lin",
-  "linaza"
+  "linaza",
+  "linhaça"
  ],
  "Q921133": [
   "manidipine"
  ],
  "Q924467": [
   "fluocinolone acetonide",
-  "acetónido de fluocinolona"
+  "acetónido de fluocinolona",
+  "fluocinolona acetonida"
  ],
  "Q925327": [
   "barnidipine",
-  "Barnidipin"
+  "Barnidipin",
+  "barnidipina"
  ],
  "Q928054": [
   "isothipendyl",
-  "Isothipendyl"
+  "Isothipendyl",
+  "isotipendil"
  ],
  "Q929420": [
   "trandolapril"
@@ -3309,7 +3496,8 @@
  "Q937085": [
   "dexchlorphenamine",
   "dexchlorpheniramine",
-  "dexchlorphéniramine"
+  "dexchlorphéniramine",
+  "dexclorfeniramina"
  ],
  "Q944244": [
   "penbutolol",
@@ -3329,7 +3517,8 @@
   "desoxycortone",
   "desoxycorticosterone",
   "11-Deoxycorticosteron",
-  "désoxycortone"
+  "désoxycortone",
+  "desoxicortona"
  ],
  "Q958087": [
   "labetalol",
@@ -3347,20 +3536,24 @@
  ],
  "Q967973": [
   "rilmenidine",
-  "rilménidine"
+  "rilménidine",
+  "rilmenidina"
  ],
  "Q999767": [
-  "fendiline"
+  "fendiline",
+  "fendilina"
  ],
  "Q999780": [
-  "phenglutarimide"
+  "phenglutarimide",
+  "fenglutarimida"
  ],
  "Q999805": [
   "phensuximide",
   "fensuximida"
  ],
  "Q999936": [
-  "feprazone"
+  "feprazone",
+  "feprazona"
  ],
  "Q1002165": [
   "fluticasone",
@@ -3372,7 +3565,8 @@
   "guacetisal"
  ],
  "Q1036070": [
-  "hexapropymate"
+  "hexapropymate",
+  "hexapropimato"
  ],
  "Q1041804": [
   "imidapril",
@@ -3382,17 +3576,20 @@
   "mometasone",
   "Mometason",
   "mométasone",
-  "mometasona"
+  "mometasona",
+  "furoato de mometasona"
  ],
  "Q1047468": [
   "chlorobutanol",
-  "klorobütanol"
+  "klorobütanol",
+  "clorobutanol"
  ],
  "Q1060922": [
   "oxybutynin",
   "oksibutinin",
   "Oxybutynin",
-  "oxybutynine"
+  "oxybutynine",
+  "oxibutinina"
  ],
  "Q1074056": [
   "triamcinolone",
@@ -3422,14 +3619,17 @@
   "Apronal"
  ],
  "Q1105900": [
-  "kebuzone"
+  "kebuzone",
+  "cebuzona"
  ],
  "Q1109018": [
-  "dezocine"
+  "dezocine",
+  "dezocina"
  ],
  "Q1163827": [
   "lacidipine",
-  "Lacidipin"
+  "Lacidipin",
+  "lacidipino"
  ],
  "Q1164067": [
   "delapril",
@@ -3437,7 +3637,8 @@
  ],
  "Q1169059": [
   "remoxipride",
-  "Remoxiprid"
+  "Remoxiprid",
+  "remoxiprida"
  ],
  "Q1169164": [
   "bendroflumethiazide",
@@ -3453,10 +3654,12 @@
  ],
  "Q1175385": [
   "mephenytoin",
-  "Mephenytoin"
+  "Mephenytoin",
+  "mefenitoína"
  ],
  "Q1176294": [
-  "metharbital"
+  "metharbital",
+  "metarbital"
  ],
  "Q1176336": [
   "metixene",
@@ -3481,11 +3684,13 @@
   "naproxeno"
  ],
  "Q1218578": [
-  "normethadone"
+  "normethadone",
+  "normetadona"
  ],
  "Q1232737": [
   "perhexiline",
-  "perhexilina"
+  "perhexilina",
+  "perexilina"
  ],
  "Q1240093": [
   "pravastatin",
@@ -3509,19 +3714,22 @@
  "Q1326389": [
   "aloxiprin",
   "aloksiprin",
-  "aloxiprine"
+  "aloxiprine",
+  "acetilsalicilato de alumínio"
  ],
  "Q1421936": [
   "bentazepam",
   "Bentazepam"
  ],
  "Q1452256": [
-  "levosulpiride"
+  "levosulpiride",
+  "levossulpirida"
  ],
  "Q1623593": [
   "tebipenem pivoxil",
   "Tebipenem pivoxil",
-  "tebipenem"
+  "tebipenem",
+  "tebipeném pivoxila"
  ],
  "Q1747559": [
   "phenelzine",
@@ -3547,28 +3755,32 @@
  "Q1829318": [
   "dolasetron",
   "Dolasetron",
-  "dolasetrón"
+  "dolasetrón",
+  "dolasetrona"
  ],
  "Q1956953": [
   "bevantolol",
   "bévantolol"
  ],
  "Q1958189": [
-  "bromopride"
+  "bromopride",
+  "bromoprida"
  ],
  "Q1969733": [
   "dibunate",
   "Dibunat"
  ],
  "Q1994982": [
-  "mebhydrolin"
+  "mebhydrolin",
+  "mebidrolina"
  ],
  "Q2014797": [
   "ketorolac",
   "ketorolak",
   "Ketorolac",
   "kétorolac",
-  "ketorolaco"
+  "ketorolaco",
+  "cetorolaco de trometamina"
  ],
  "Q2034113": [
   "insulin (human)"
@@ -3587,7 +3799,8 @@
   "benzonatato"
  ],
  "Q2071515": [
-  "oxatomide"
+  "oxatomide",
+  "oxatomida"
  ],
  "Q2072745": [
   "trichlormethiazide",
@@ -3623,7 +3836,8 @@
   "carbasalate calcium",
   "carbaspirin calcium",
   "carbasalate calcique",
-  "carbasalato de calcio"
+  "carbasalato de calcio",
+  "carbasalato de cálcio"
  ],
  "Q2208070": [
   "proglumetacin",
@@ -3638,7 +3852,8 @@
  "Q2240116": [
   "levocabastine",
   "Levocabastin",
-  "lévocabastine"
+  "lévocabastine",
+  "levocabastina"
  ],
  "Q2254797": [
   "nateglinide",
@@ -3665,7 +3880,8 @@
  "Q2304195": [
   "fenbufen",
   "fenbufene",
-  "fenbufeno"
+  "fenbufeno",
+  "fembufeno"
  ],
  "Q2327739": [
   "ebastine",
@@ -3676,7 +3892,8 @@
  ],
  "Q2341200": [
   "clodronic acid",
-  "acide clodronique"
+  "acide clodronique",
+  "ácido clodrônico"
  ],
  "Q2359690": [
   "prochlorperazine",
@@ -3692,19 +3909,22 @@
  "Q2360598": [
   "butamirate",
   "butamirat",
-  "Butamirat"
+  "Butamirat",
+  "butamirato"
  ],
  "Q2364943": [
   "sultiame",
   "sulthiame",
-  "Sultiam"
+  "Sultiam",
+  "sultiamo"
  ],
  "Q2365493": [
   "esketamine",
   "esketamin",
   "Esketamin",
   "eskétamine",
-  "esketamina"
+  "esketamina",
+  "escetamina"
  ],
  "Q2392530": [
   "sulconazole",
@@ -3713,7 +3933,8 @@
  "Q2393323": [
   "chlorcyclizine",
   "klorsiklizin",
-  "Chlorcyclizin"
+  "Chlorcyclizin",
+  "clorciclizina"
  ],
  "Q2397253": [
   "ketazolam",
@@ -3733,7 +3954,8 @@
   "ketotifen",
   "Ketotifen",
   "kétotifène",
-  "ketotifeno"
+  "ketotifeno",
+  "cetotifeno"
  ],
  "Q2465218": [
   "etodolac",
@@ -3775,7 +3997,8 @@
  "Q2606497": [
   "brompheniramine",
   "bromphéniramine",
-  "bromfeniramina"
+  "bromfeniramina",
+  "bronfeniramina"
  ],
  "Q2608288": [
   "tiotixene",
@@ -3787,20 +4010,24 @@
  "Q2622839": [
   "thioproperazine",
   "Thioproperazin",
-  "thiopropérazine"
+  "thiopropérazine",
+  "tioproperazina"
  ],
  "Q2622907": [
   "periciazine",
-  "périciazine"
+  "périciazine",
+  "periciazina"
  ],
  "Q2623251": [
   "alimemazine",
   "trimeprazine",
-  "alimémazine"
+  "alimémazine",
+  "alimemazina"
  ],
  "Q2650256": [
   "gepirone",
-  "gepiron"
+  "gepiron",
+  "gepirona"
  ],
  "Q2697578": [
   "fludrocortisone",
@@ -3821,20 +4048,23 @@
  "Q2736873": [
   "alfuzosin",
   "Alfuzosin",
-  "alfuzosine"
+  "alfuzosine",
+  "alfuzosina"
  ],
  "Q2754775": [
   "insulin aspart",
   "Insulin aspart",
   "insuline asparte",
-  "insulina aspart"
+  "insulina aspart",
+  "insulina asparte"
  ],
  "Q2755412": [
   "ipecacuanha",
   "ipecac",
   "Ipecac-Sirup",
   "sirop d'ipéca",
-  "jarabe de ipecacuana"
+  "jarabe de ipecacuana",
+  "xarope de ipeca"
  ],
  "Q2758338": [
   "etidronic acid",
@@ -3844,29 +4074,34 @@
  ],
  "Q2759774": [
   "dixyrazine",
-  "Dixyrazin"
+  "Dixyrazin",
+  "dixirazina"
  ],
  "Q2760233": [
   "mepindolol"
  ],
  "Q2787672": [
-  "thebacon"
+  "thebacon",
+  "tebacona"
  ],
  "Q2815334": [
   "docusate sodium",
   "dokusat sodyum",
   "Docusat",
   "docusate de sodium",
-  "dioctilsulfosuccinato de sodio"
+  "dioctilsulfosuccinato de sodio",
+  "dioctilsulfossuccinato de sódio"
  ],
  "Q2823284": [
   "meclofenamic acid",
   "acide méclofénamique",
-  "ácido meclofenámico"
+  "ácido meclofenámico",
+  "ácido meclofenâmico"
  ],
  "Q2823312": [
   "tiludronic acid",
-  "acide tiludronique"
+  "acide tiludronique",
+  "ácido tiludrónico"
  ],
  "Q2873270": [
   "avanafil",
@@ -3875,7 +4110,8 @@
  ],
  "Q2893248": [
   "insulin (human)",
-  "regular insulin"
+  "regular insulin",
+  "insulina regular"
  ],
  "Q2902977": [
   "bilastine",
@@ -3914,7 +4150,8 @@
   "triheksifenidil",
   "Trihexyphenidyl",
   "trihexyphénidyle",
-  "trihexifenidilo"
+  "trihexifenidilo",
+  "triexafenid"
  ],
  "Q3003746": [
   "polyvinylpolypyrrolidone",
@@ -3924,7 +4161,8 @@
  "Q3008033": [
   "cyamemazine",
   "Cyamemazin",
-  "cyamémazine"
+  "cyamémazine",
+  "ciamemazina"
  ],
  "Q3045264": [
   "estazolam",
@@ -3932,7 +4170,8 @@
  ],
  "Q3068413": [
   "fenticonazole",
-  "fentikonazol"
+  "fentikonazol",
+  "fenticonazol"
  ],
  "Q3085140": [
   "ethchlorvynol",
@@ -3945,10 +4184,12 @@
  "Q3121121": [
   "saxagliptin",
   "Saxagliptin",
-  "saxagliptine"
+  "saxagliptine",
+  "saxagliptina"
  ],
  "Q3124290": [
-  "pholcodine"
+  "pholcodine",
+  "folcodina"
  ],
  "Q3180288": [
   "nordazepam",
@@ -3959,7 +4200,8 @@
   "sodium phosphates",
   "Natriumphosphate",
   "phosphate de sodium",
-  "fosfato sódico"
+  "fosfato sódico",
+  "fosfatos de sódio"
  ],
  "Q3267092": [
   "olopatadine",
@@ -3973,18 +4215,22 @@
  ],
  "Q3332124": [
   "mecamylamine",
-  "mécamylamine"
+  "mécamylamine",
+  "mecamilamina"
  ],
  "Q3333256": [
   "mequitazine",
-  "méquitazine"
+  "méquitazine",
+  "mequitazina"
  ],
  "Q3333696": [
   "methoserpidine",
-  "méthoserpidine"
+  "méthoserpidine",
+  "metoserpidina"
  ],
  "Q3335996": [
-  "naproxcinod"
+  "naproxcinod",
+  "naproxinode"
  ],
  "Q3342150": [
   "nisoldipine",
@@ -3999,16 +4245,19 @@
  ],
  "Q3359071": [
   "oxomemazine",
-  "oxomémazine"
+  "oxomémazine",
+  "oxomemazina"
  ],
  "Q3395266": [
   "butobarbital",
   "butethal",
   "Butobarbital",
-  "butéthal"
+  "butéthal",
+  "butetal"
  ],
  "Q3395566": [
-  "Polygala senega"
+  "Polygala senega",
+  "polygala senega"
  ],
  "Q3479994": [
   "sertaconazole",
@@ -4028,15 +4277,18 @@
  ],
  "Q3530618": [
   "toloxatone",
-  "toloksaton"
+  "toloksaton",
+  "toloxatona"
  ],
  "Q3539707": [
   "tritoqualine",
-  "Tritoqualin"
+  "Tritoqualin",
+  "tritoqualina"
  ],
  "Q3540344": [
   "tropatepine",
-  "tropatépine"
+  "tropatépine",
+  "tropatepina"
  ],
  "Q3563148": [
   "vortioxetine",
@@ -4051,19 +4303,23 @@
  ],
  "Q3592452": [
   "etifoxine",
-  "étifoxine"
+  "étifoxine",
+  "etifoxina"
  ],
  "Q3592644": [
   "etybenzatropine",
-  "étybenzatropine"
+  "étybenzatropine",
+  "etibenzatropina"
  ],
  "Q3612806": [
   "alminoprofen",
   "Alminoprofen",
-  "alminoprofène"
+  "alminoprofène",
+  "alminoprofeno"
  ],
  "Q3637399": [
-  "beclamide"
+  "beclamide",
+  "beclamida"
  ],
  "Q3649490": [
   "cadralazine",
@@ -4077,7 +4333,8 @@
  "Q3655600": [
   "potassium canrenoate",
   "Kaliumcanrenoat",
-  "canrénoate de potassium"
+  "canrénoate de potassium",
+  "canrenoato de potássio"
  ],
  "Q3661095": [
   "clotiapine",
@@ -4093,12 +4350,14 @@
   "Cloprednol"
  ],
  "Q3698382": [
-  "histapyrrodine"
+  "histapyrrodine",
+  "histapirrodina"
  ],
  "Q3702534": [
   "mirabegron",
   "Mirabegron",
-  "mirabegrón"
+  "mirabegrón",
+  "mirabegrona"
  ],
  "Q3704421": [
   "debrisoquin",
@@ -4123,40 +4382,50 @@
  "Q3731252": [
   "erdosteine",
   "erdostein",
-  "erdostéine"
+  "erdostéine",
+  "erdosteína"
  ],
  "Q3742067": [
-  "felbinac"
+  "felbinac",
+  "felbinaco"
  ],
  "Q3742404": [
   "phenacemide",
-  "Phenacemid"
+  "Phenacemid",
+  "fenacemida"
  ],
  "Q3742488": [
-  "fenquizone"
+  "fenquizone",
+  "fenquizona"
  ],
  "Q3742491": [
-  "fentiazac"
+  "fentiazac",
+  "fentiazaco"
  ],
  "Q3746837": [
   "flunoxaprofen",
-  "Flunoxaprofen"
+  "Flunoxaprofen",
+  "flunoxaprofeno"
  ],
  "Q3772225": [
-  "glibornuride"
+  "glibornuride",
+  "glibornurida"
  ],
  "Q3778223": [
-  "guanoxan"
+  "guanoxan",
+  "guanoxano"
  ],
  "Q3786756": [
   "iron(II) iodide",
   "Eisen(II)-iodid",
-  "iodure de fer"
+  "iodure de fer",
+  "iodeto ferroso"
  ],
  "Q3790542": [
   "sulfinpyrazone",
   "Sulfinpyrazon",
-  "sulfinpirazona"
+  "sulfinpirazona",
+  "sulfimpirazona"
  ],
  "Q3791611": [
   "ibuproxam"
@@ -4177,13 +4446,15 @@
  "Q3800087": [
   "mepyramine",
   "pyrilamine",
-  "Mepyramin"
+  "Mepyramin",
+  "mepiramina"
  ],
  "Q3822815": [
   "zinc gluconate",
   "Zinkgluconat",
   "gluconate de zinc",
-  "gluconato de zinc"
+  "gluconato de zinc",
+  "gluconato de zinco"
  ],
  "Q3832559": [
   "linaclotide",
@@ -4192,13 +4463,16 @@
  "Q3836403": [
   "lofexidine",
   "lofeksidin",
-  "loféxidine"
+  "loféxidine",
+  "lofexidina"
  ],
  "Q3868794": [
-  "muzolimine"
+  "muzolimine",
+  "muzolimina"
  ],
  "Q3882290": [
-  "omoconazole"
+  "omoconazole",
+  "omoconazol"
  ],
  "Q3887768": [
   "oxametacin",
@@ -4212,10 +4486,12 @@
  ],
  "Q3905617": [
   "piretanide",
-  "Piretanid"
+  "Piretanid",
+  "piretanida"
  ],
  "Q3905662": [
-  "pirprofen"
+  "pirprofen",
+  "pirprofeno"
  ],
  "Q3927403": [
   "quazepam",
@@ -4224,16 +4500,19 @@
  ],
  "Q3930120": [
   "ranitidine bismuth citrate",
-  "citrato bismuto de ranitidina"
+  "citrato bismuto de ranitidina",
+  "citrato bismútico de ranitidina"
  ],
  "Q3963210": [
   "sobrerol"
  ],
  "Q3978097": [
-  "suprofen"
+  "suprofen",
+  "suprofeno"
  ],
  "Q3982536": [
-  "tedisamil"
+  "tedisamil",
+  "tedisamila"
  ],
  "Q3992411": [
   "tolmetin",
@@ -4247,15 +4526,18 @@
   "zipeprol"
  ],
  "Q4024685": [
-  "zomepirac"
+  "zomepirac",
+  "zomepiraco"
  ],
  "Q4060653": [
-  "algeldrate"
+  "algeldrate",
+  "algeldrato"
  ],
  "Q4116192": [
   "oxyphenbutazone",
   "Oxyphenbutazon",
-  "oxifenbutazona"
+  "oxifenbutazona",
+  "oxifembutazona"
  ],
  "Q4119838": [
   "calcium glycerophosphate",
@@ -4264,7 +4546,8 @@
   "glicerofosfato de calcio"
  ],
  "Q4162027": [
-  "diosmectite"
+  "diosmectite",
+  "diosmectita"
  ],
  "Q4199443": [
   "iloperidone",
@@ -4276,7 +4559,8 @@
   "iron(II) carbonate",
   "Eisen(II)-carbonat",
   "carbonate ferreux",
-  "carbonato de hierro (II)"
+  "carbonato de hierro (II)",
+  "carbonato de ferro"
  ],
  "Q4224007": [
   "clobetasol",
@@ -4284,7 +4568,8 @@
  ],
  "Q4332778": [
   "oxeladin",
-  "oxéladine"
+  "oxéladine",
+  "oxeladina"
  ],
  "Q4334652": [
   "papaveretum"
@@ -4295,11 +4580,13 @@
   "prednicarbato"
  ],
  "Q4381806": [
-  "troxipide"
+  "troxipide",
+  "troxipida"
  ],
  "Q4383636": [
   "flumetasone",
-  "flumétasone"
+  "flumétasone",
+  "flumetasona"
  ],
  "Q4385221": [
   "cloxazolam",
@@ -4310,7 +4597,8 @@
   "itoprid"
  ],
  "Q4418107": [
-  "sequifenadine"
+  "sequifenadine",
+  "sequifenadina"
  ],
  "Q4445779": [
   "sultopride",
@@ -4327,19 +4615,23 @@
   "fesoterodina"
  ],
  "Q4497981": [
-  "quifenadine"
+  "quifenadine",
+  "quifenadina"
  ],
  "Q4499058": [
   "choline salicylate",
-  "salicylate de choline"
+  "salicylate de choline",
+  "salicilato de colina"
  ],
  "Q4533122": [
-  "ethotoin"
+  "ethotoin",
+  "etotoína"
  ],
  "Q4673274": [
   "acetohexamide",
   "Acetohexamid",
-  "acetohexamida"
+  "acetohexamida",
+  "acetoexamida"
  ],
  "Q4673282": [
   "acetoxolone",
@@ -4347,13 +4639,15 @@
  ],
  "Q4673284": [
   "acetophenazine",
-  "acétophénazine"
+  "acétophénazine",
+  "acetofenazina"
  ],
  "Q4673302": [
   "acetyldihydrocodeine",
   "Acetyldihydrocodein",
   "acétyldihydrocodéine",
-  "acetildihidrocodeína"
+  "acetildihidrocodeína",
+  "acetildi-hidrocodeína"
  ],
  "Q4673309": [
   "acetylglycinamide chloral hydrate"
@@ -4363,7 +4657,8 @@
   "Adinazolam"
  ],
  "Q4708345": [
-  "alaproclate"
+  "alaproclate",
+  "alaproclato"
  ],
  "Q4712362": [
   "albiglutide",
@@ -4389,7 +4684,8 @@
  "Q4734170": [
   "alogliptin",
   "Alogliptin",
-  "alogliptine"
+  "alogliptine",
+  "alogliptina"
  ],
  "Q4734171": [
   "aloglutamol"
@@ -4403,17 +4699,21 @@
  ],
  "Q4742041": [
   "amcinonide",
-  "Amcinonid"
+  "Amcinonid",
+  "ancinonida"
  ],
  "Q4815980": [
-  "udenafil"
+  "udenafil",
+  "udenafila"
  ],
  "Q4853502": [
-  "bamipine"
+  "bamipine",
+  "bamipina"
  ],
  "Q4859329": [
   "buclizine",
-  "Buclizin"
+  "Buclizin",
+  "buclizina"
  ],
  "Q4859855": [
   "epanolol"
@@ -4426,45 +4726,55 @@
  ],
  "Q4890786": [
   "benzoctamine",
-  "Benzoctamin"
+  "Benzoctamin",
+  "benzoctamina"
  ],
  "Q4890934": [
   "bepridil"
  ],
  "Q4902548": [
-  "biapenem"
+  "biapenem",
+  "biapeném"
  ],
  "Q4902992": [
-  "bibenzonium bromide"
+  "bibenzonium bromide",
+  "brometo de bibenzônio"
  ],
  "Q4904688": [
-  "bietaserpine"
+  "bietaserpine",
+  "bietaserpina"
  ],
  "Q4904728": [
   "bifemelane",
-  "bifemelan"
+  "bifemelan",
+  "bifemelano"
  ],
  "Q4918383": [
-  "bisoxatin"
+  "bisoxatin",
+  "bisoxatina"
  ],
  "Q4926102": [
   "bromazine",
-  "bromodiphenhydramine"
+  "bromodiphenhydramine",
+  "bromazina"
  ],
  "Q4946040": [
   "bornaprine",
   "bornaprin",
-  "Bornaprin"
+  "Bornaprin",
+  "bornaprina"
  ],
  "Q4973749": [
   "bromperidol",
   "Bromperidol"
  ],
  "Q4982520": [
-  "bucetin"
+  "bucetin",
+  "bucetina"
  ],
  "Q5002359": [
-  "butaperazine"
+  "butaperazine",
+  "butaperazina"
  ],
  "Q5018826": [
   "calcium gluceptate",
@@ -4490,27 +4800,33 @@
  ],
  "Q5038107": [
   "carbutamide",
-  "Carbutamid"
+  "Carbutamid",
+  "carbutamida"
  ],
  "Q5049003": [
-  "casopitant"
+  "casopitant",
+  "casopitanto"
  ],
  "Q5102911": [
-  "chlorhexadol"
+  "chlorhexadol",
+  "cloralodol"
  ],
  "Q5102982": [
   "chlormidazole",
   "clormidazol"
  ],
  "Q5103225": [
-  "chlorphenoxamine"
+  "chlorphenoxamine",
+  "clorfenoxamina"
  ],
  "Q5119443": [
   "cicletanine",
-  "ciclétanine"
+  "ciclétanine",
+  "cicletanina"
  ],
  "Q5120196": [
-  "cinchophen"
+  "cinchophen",
+  "cinchofeno"
  ],
  "Q5121012": [
   "cinitapride",
@@ -4527,14 +4843,17 @@
   "clevidipina"
  ],
  "Q5134764": [
-  "clobetasone"
+  "clobetasone",
+  "clobetasona"
  ],
  "Q5134843": [
   "clocortolone",
-  "Clocortolon"
+  "Clocortolon",
+  "clocortolona"
  ],
  "Q5134876": [
-  "clofenamide"
+  "clofenamide",
+  "clofenamida"
  ],
  "Q5134879": [
   "clofezone"
@@ -4556,10 +4875,12 @@
  ],
  "Q5221244": [
   "dantron",
-  "danthron"
+  "danthron",
+  "dantrona"
  ],
  "Q5260984": [
-  "deptropine"
+  "deptropine",
+  "deptropina"
  ],
  "Q5263885": [
   "deserpidine",
@@ -4568,7 +4889,8 @@
  ],
  "Q5268318": [
   "dexbrompheniramine",
-  "dexbromphéniramine"
+  "dexbromphéniramine",
+  "dexbronfeniramina"
  ],
  "Q5268339": [
   "dexlansoprazole",
@@ -4582,33 +4904,40 @@
   "difenoxin",
   "difenoksin",
   "Difenoxin",
-  "difénoxine"
+  "difénoxine",
+  "difenoxina"
  ],
  "Q5275253": [
   "difenpiramide",
   "difenpiramida"
  ],
  "Q5275451": [
-  "diflorasone"
+  "diflorasone",
+  "diflorasona"
  ],
  "Q5275453": [
   "diflucortolone",
   "difluocortolone"
  ],
  "Q5277240": [
-  "dimemorfan"
+  "dimemorfan",
+  "dimemorfano"
  ],
  "Q5277302": [
-  "dimetacrine"
+  "dimetacrine",
+  "dimetacrina"
  ],
  "Q5277306": [
-  "dimethoxanate"
+  "dimethoxanate",
+  "dimetoxanato"
  ],
  "Q5280140": [
-  "dipyrocetyl"
+  "dipyrocetyl",
+  "dipirocetila"
  ],
  "Q5308700": [
-  "droxypropine"
+  "droxypropine",
+  "droxipropina"
  ],
  "Q5308701": [
   "droxicam",
@@ -4616,7 +4945,8 @@
  ],
  "Q5370378": [
   "emepronium bromide",
-  "bromure d'emepronium"
+  "bromure d'emepronium",
+  "brometo de emeprônio"
  ],
  "Q5373824": [
   "empagliflozin",
@@ -4629,7 +4959,8 @@
   "endralazina"
  ],
  "Q5379483": [
-  "enprostil"
+  "enprostil",
+  "emprostila"
  ],
  "Q5402835": [
   "ethadione",
@@ -4643,7 +4974,8 @@
  ],
  "Q5404460": [
   "ethyl loflazepate",
-  "loflazépate d'éthyle"
+  "loflazépate d'éthyle",
+  "loflazepato de etilo"
  ],
  "Q5404839": [
   "etoperidone",
@@ -4653,28 +4985,35 @@
  ],
  "Q5404861": [
   "etozoline",
-  "Etozolin"
+  "Etozolin",
+  "etozolina"
  ],
  "Q5441137": [
-  "fedrilate"
+  "fedrilate",
+  "fedrilato"
  ],
  "Q5459971": [
   "floctafenine",
-  "floctafénine"
+  "floctafénine",
+  "floctafenina"
  ],
  "Q5462605": [
-  "fluanisone"
+  "fluanisone",
+  "fluanisona"
  ],
  "Q5462632": [
   "fludroxycortide",
   "flurandrenolide",
-  "fludroxicortida"
+  "fludroxicortida",
+  "fludoxicortide"
  ],
  "Q5462791": [
-  "fluocinonide"
+  "fluocinonide",
+  "fluocinonida"
  ],
  "Q5462792": [
-  "fluocortin"
+  "fluocortin",
+  "fluocortina"
  ],
  "Q5462793": [
   "fluocortolone",
@@ -4682,7 +5021,8 @@
   "fluocortolona"
  ],
  "Q5462984": [
-  "flutrimazole"
+  "flutrimazole",
+  "flutrimazol"
  ],
  "Q5473363": [
   "fosphenytoin",
@@ -4691,32 +5031,39 @@
   "fosfenitoína"
  ],
  "Q5529721": [
-  "gedocarnil"
+  "gedocarnil",
+  "gedocarnila"
  ],
  "Q5530013": [
-  "gefarnate"
+  "gefarnate",
+  "gefarnato"
  ],
  "Q5530612": [
   "gemigliptin"
  ],
  "Q5566483": [
   "glafenine",
-  "glafénine"
+  "glafénine",
+  "glafenina"
  ],
  "Q5569924": [
-  "gliquidone"
+  "gliquidone",
+  "gliquidona"
  ],
  "Q5569932": [
-  "glisoxepide"
+  "glisoxepide",
+  "glisoxepida"
  ],
  "Q5572813": [
   "glymidine"
  ],
  "Q5613302": [
-  "4-guaiacolsulfonic acid"
+  "4-guaiacolsulfonic acid",
+  "ácido guaiacolsulfônico"
  ],
  "Q5613575": [
-  "guanazodine"
+  "guanazodine",
+  "guanazodina"
  ],
  "Q5613599": [
   "guanfacine",
@@ -4733,7 +5080,8 @@
   "halazépam"
  ],
  "Q5954736": [
-  "hydrocortisone buteprate"
+  "hydrocortisone buteprate",
+  "buteprato de hidrocortisona"
  ],
  "Q5954738": [
   "hydrocortisone butyrate"
@@ -4748,7 +5096,8 @@
   "iproclozida"
  ],
  "Q6085251": [
-  "isoaminile"
+  "isoaminile",
+  "isoaminila"
  ],
  "Q6144116": [
   "mosapramine",
@@ -4760,33 +5109,40 @@
  ],
  "Q6535776": [
   "levomethadone",
-  "Levomethadon"
+  "Levomethadon",
+  "levometadona"
  ],
  "Q6535827": [
   "verbenone",
   "Verbenon"
  ],
  "Q6543740": [
-  "lidoflazine"
+  "lidoflazine",
+  "lidoflazina"
  ],
  "Q6553356": [
-  "metahexamide"
+  "metahexamide",
+  "metaexamida"
  ],
  "Q6557471": [
   "liquid paraffin",
   "Paraffinöl"
  ],
  "Q6578658": [
-  "talastine"
+  "talastine",
+  "talastina"
  ],
  "Q6578796": [
-  "thenalidine"
+  "thenalidine",
+  "tenalidina"
  ],
  "Q6583284": [
-  "phenindamine"
+  "phenindamine",
+  "fenindamina"
  ],
  "Q6590380": [
-  "tolonidine"
+  "tolonidine",
+  "tolonidina"
  ],
  "Q6593346": [
   "metipranolol",
@@ -4799,29 +5155,36 @@
   "lixisenatida"
  ],
  "Q6665709": [
-  "methdilazine"
+  "methdilazine",
+  "metidilazina"
  ],
  "Q6669652": [
-  "lonazolac"
+  "lonazolac",
+  "lonazolaco"
  ],
  "Q6676374": [
   "pyrrobutamine"
  ],
  "Q6676377": [
   "pimethixene",
-  "pimétixène"
+  "pimétixène",
+  "pimetixeno"
  ],
  "Q6676872": [
-  "hydroxyethylpromethazine"
+  "hydroxyethylpromethazine",
+  "hidroxietilprometazina"
  ],
  "Q6678756": [
-  "lorajmine"
+  "lorajmine",
+  "lorajmina"
  ],
  "Q6678811": [
-  "lorcainide"
+  "lorcainide",
+  "lorcainida"
  ],
  "Q6687842": [
-  "nepinalone"
+  "nepinalone",
+  "nepinalona"
  ],
  "Q6695342": [
   "lubiprostone",
@@ -4834,13 +5197,15 @@
  "Q6731392": [
   "magnesium gluconate",
   "Magnesiumgluconat",
-  "gluconate de magnésium"
+  "gluconate de magnésium",
+  "gliconato de magnésio"
  ],
  "Q6731395": [
   "magnesium levulinate"
  ],
  "Q6804368": [
-  "mebutamate"
+  "mebutamate",
+  "mebutamato"
  ],
  "Q6804380": [
   "mebutizide",
@@ -4849,13 +5214,16 @@
  ],
  "Q6807947": [
   "mefruside",
-  "Mefrusid"
+  "Mefrusid",
+  "mefrusida"
  ],
  "Q6810940": [
-  "meladrazine"
+  "meladrazine",
+  "meladrazina"
  ],
  "Q6817833": [
-  "meprednisone"
+  "meprednisone",
+  "meprednisona"
  ],
  "Q6821618": [
   "mesoridazine",
@@ -4868,10 +5236,12 @@
   "meticlotiazida"
  ],
  "Q6824052": [
-  "methylprednisolone aceponate"
+  "methylprednisolone aceponate",
+  "aceponato de metilprednisolona"
  ],
  "Q6824077": [
-  "meticrane"
+  "meticrane",
+  "meticrano"
  ],
  "Q6824116": [
   "metirosine",
@@ -4881,7 +5251,8 @@
   "mibefradil"
  ],
  "Q6863173": [
-  "minaprine"
+  "minaprine",
+  "minaprina"
  ],
  "Q6890329": [
   "mofebutazone",
@@ -4892,7 +5263,8 @@
   "moperona"
  ],
  "Q6909555": [
-  "morclofone"
+  "morclofone",
+  "morclofona"
  ],
  "Q6912761": [
   "morniflumate",
@@ -4905,11 +5277,13 @@
  ],
  "Q7030497": [
   "nicomorphine",
-  "Nicomorphin"
+  "Nicomorphin",
+  "nicomorfina"
  ],
  "Q7037489": [
   "nilvadipine",
-  "Nilvadipin"
+  "Nilvadipin",
+  "nilvadipino"
  ],
  "Q7039435": [
   "niperotidine",
@@ -4917,17 +5291,21 @@
  ],
  "Q7115050": [
   "oxaflozane",
-  "Oxaflozan"
+  "Oxaflozan",
+  "oxaflozano"
  ],
  "Q7116102": [
-  "oxypertine"
+  "oxypertine",
+  "oxipertina"
  ],
  "Q7116108": [
-  "oxyphenisatin"
+  "oxyphenisatin",
+  "oxifenisatina"
  ],
  "Q7135218": [
   "paramethasone",
-  "paraméthasone"
+  "paraméthasone",
+  "parametasona"
  ],
  "Q7160794": [
   "pegloticase",
@@ -4941,7 +5319,8 @@
   "phenazocine"
  ],
  "Q7181340": [
-  "pheneturide"
+  "pheneturide",
+  "feneturida"
  ],
  "Q7194603": [
   "pimavanserin",
@@ -4954,7 +5333,8 @@
   "Pinazepam"
  ],
  "Q7197205": [
-  "pipazethate"
+  "pipazethate",
+  "pipazetato"
  ],
  "Q7197355": [
   "piperidione"
@@ -4965,7 +5345,8 @@
  "Q7226181": [
   "polycarbophil calcium",
   "calcium polycarbophile",
-  "policarbofilo"
+  "policarbofilo",
+  "policarbofila cálcica"
  ],
  "Q7227099": [
   "polythiazide",
@@ -4980,30 +5361,38 @@
   "practolol"
  ],
  "Q7238143": [
-  "prajmaline"
+  "prajmaline",
+  "prajmálio"
  ],
  "Q7239696": [
-  "prednylidene"
+  "prednylidene",
+  "prednilideno"
  ],
  "Q7247908": [
   "profenamine",
-  "Profenamin"
+  "Profenamin",
+  "profenamina"
  ],
  "Q7248362": [
-  "proglumide"
+  "proglumide",
+  "proglumida"
  ],
  "Q7250328": [
-  "propiomazine"
+  "propiomazine",
+  "propiomazina"
  ],
  "Q7250480": [
-  "proquazone"
+  "proquazone",
+  "proquazona"
  ],
  "Q7272222": [
-  "quinethazone"
+  "quinethazone",
+  "quinetazona"
  ],
  "Q7272541": [
   "quinupramine",
-  "Quinupramin"
+  "Quinupramin",
+  "quinupramina"
  ],
  "Q7301602": [
   "rebamipide"
@@ -5016,10 +5405,12 @@
   "rimexolona"
  ],
  "Q7611141": [
-  "stepronin"
+  "stepronin",
+  "estepronina"
  ],
  "Q7636239": [
-  "sulglicotide"
+  "sulglicotide",
+  "sulglicotida"
  ],
  "Q7650517": [
   "suvorexant",
@@ -5027,7 +5418,8 @@
   "Suvorexant"
  ],
  "Q7650623": [
-  "suxibuzone"
+  "suxibuzone",
+  "suxibuzona"
  ],
  "Q7679533": [
   "talinolol",
@@ -5047,7 +5439,8 @@
   "terconazol"
  ],
  "Q7702989": [
-  "terodiline"
+  "terodiline",
+  "terodilina"
  ],
  "Q7705238": [
   "tertatolol",
@@ -5057,16 +5450,20 @@
   "thiazinamium"
  ],
  "Q7784690": [
-  "thiopropazate"
+  "thiopropazate",
+  "tiopropazato"
  ],
  "Q7801054": [
-  "ticrynafen"
+  "ticrynafen",
+  "ácido tienílico"
  ],
  "Q7808816": [
-  "tipepidine"
+  "tipepidine",
+  "tipepidina"
  ],
  "Q7809617": [
-  "tisopurine"
+  "tisopurine",
+  "tisopurina"
  ],
  "Q7814101": [
   "tolazamide",
@@ -5079,20 +5476,24 @@
   "trimetobenzamida"
  ],
  "Q7844989": [
-  "troglitazone"
+  "troglitazone",
+  "troglitazona"
  ],
  "Q7860340": [
   "tyloxapol",
-  "Tyloxapol"
+  "Tyloxapol",
+  "tiloxapol"
  ],
  "Q7939403": [
   "voglibose"
  ],
  "Q8073565": [
-  "zolimidine"
+  "zolimidine",
+  "zolimidina"
  ],
  "Q8563179": [
-  "fimasartan"
+  "fimasartan",
+  "fimasartana"
  ],
  "Q9003473": [
   "hydrotalcite",
@@ -5102,11 +5503,13 @@
   "magnesium orotate",
   "Magnesiumorotat",
   "oroate de magnésium",
-  "oroato de magnesio"
+  "oroato de magnesio",
+  "orotato de magnésio"
  ],
  "Q10910139": [
   "halometasone",
-  "Halometason"
+  "Halometason",
+  "halometasona"
  ],
  "Q10967792": [
   "melevodopa"
@@ -5128,12 +5531,14 @@
   "guanoxabenz"
  ],
  "Q15264815": [
-  "isobromindione"
+  "isobromindione",
+  "isobromindiona"
  ],
  "Q15305564": [
   "triclofos",
   "triklofos",
-  "Triclofos"
+  "Triclofos",
+  "triclofós"
  ],
  "Q15408408": [
   "ethacizine"
@@ -5143,11 +5548,13 @@
   "ipidacrina"
  ],
  "Q15409428": [
-  "imipraminoxide"
+  "imipraminoxide",
+  "imipraminóxido"
  ],
  "Q15409432": [
   "hydrocortisone aceponate",
-  "acéponate d'hydrocortisone"
+  "acéponate d'hydrocortisone",
+  "aceponato de hidrocortisona"
  ],
  "Q15491377": [
   "iron(III) hydroxide",
@@ -5171,7 +5578,8 @@
   "insulin degludec",
   "insülin degludec",
   "insuline dégludec",
-  "insulina degludec"
+  "insulina degludec",
+  "insulina degludeca"
  ],
  "Q17193526": [
   "ipragliflozin"
@@ -5188,24 +5596,29 @@
   "lobeglitazone"
  ],
  "Q20077596": [
-  "roxatidine"
+  "roxatidine",
+  "acetato de roxatidina"
  ],
  "Q20539232": [
   "eluxadoline",
-  "éluxadoline"
+  "éluxadoline",
+  "eluxadolina"
  ],
  "Q20817068": [
   "ulobetasol",
   "halobetasol propionate",
   "Halobetasolpropionat",
-  "propionate d'ulobetasol"
+  "propionate d'ulobetasol",
+  "propionato de halobetasol"
  ],
  "Q20817221": [
   "attapulgite",
-  "Attapulgit"
+  "Attapulgit",
+  "atapulgita ativada"
  ],
  "Q20817261": [
-  "spaglumic acid"
+  "spaglumic acid",
+  "ácido espaglúmico"
  ],
  "Q21011225": [
   "efinaconazole",
@@ -5237,7 +5650,8 @@
  ],
  "Q27077226": [
   "eslicarbazepine",
-  "eslicarbazépine"
+  "eslicarbazépine",
+  "eslicarbazepina"
  ],
  "Q27088208": [
   "opicapone",
@@ -5253,27 +5667,33 @@
  "Q27108485": [
   "trimetaphan",
   "trimethaphan camsylate",
-  "camsilato de trimetafán"
+  "camsilato de trimetafán",
+  "cansilato de trimetafana"
  ],
  "Q27114265": [
   "bismuth subnitrate",
   "Basisches Bismut(III)-nitrat",
-  "sous-nitrate de bismuth"
+  "sous-nitrate de bismuth",
+  "subnitrato de bismuto"
  ],
  "Q27155578": [
-  "calcium levulinate"
+  "calcium levulinate",
+  "levulinato de cálcio"
  ],
  "Q27156976": [
-  "eberconazole"
+  "eberconazole",
+  "eberconazol"
  ],
  "Q27247536": [
   "fluclorolone"
  ],
  "Q27256513": [
-  "piketoprofen"
+  "piketoprofen",
+  "picetoprofeno"
  ],
  "Q27259796": [
-  "imidazole salicylate"
+  "imidazole salicylate",
+  "salicilato de imidazol"
  ],
  "Q27261089": [
   "semaglutide",
@@ -5284,7 +5704,8 @@
  ],
  "Q27261422": [
   "ferrous glycine sulfate",
-  "sulfate de glycine ferreux"
+  "sulfate de glycine ferreux",
+  "complexo de sulfato ferroso e glicina"
  ],
  "Q27263884": [
   "dexrabeprazole"
@@ -5294,7 +5715,8 @@
  ],
  "Q27269230": [
   "ferrous succinate",
-  "succinate ferreux"
+  "succinate ferreux",
+  "succinato de ferro"
  ],
  "Q27269528": [
   "dihydroxyaluminum sodium carbonate"
@@ -5316,14 +5738,17 @@
  ],
  "Q27284849": [
   "loperamide oxide",
-  "Loperamid N-oxid"
+  "Loperamid N-oxid",
+  "óxido de loperamida"
  ],
  "Q27288511": [
-  "fluperolone"
+  "fluperolone",
+  "fluperolona"
  ],
  "Q27291565": [
   "magnesium pidolate",
-  "pyrrolidonecarboxylate de magnésium"
+  "pyrrolidonecarboxylate de magnésium",
+  "pidolato de magnésio"
  ],
  "Q27294711": [
   "desfesoterodine"
@@ -5334,7 +5759,8 @@
  "Q28208887": [
   "mometasone",
   "mometazon",
-  "mométasone"
+  "mométasone",
+  "mometasona"
  ],
  "Q28559278": [
   "plecanatide",
@@ -5350,7 +5776,8 @@
   "complexe fer hydroxyde-polymaltose"
  ],
  "Q33150707": [
-  "fluprednidene"
+  "fluprednidene",
+  "fluprednideno"
  ],
  "Q45024802": [
   "tilidine",
@@ -5359,24 +5786,29 @@
   "tilidina"
  ],
  "Q48838266": [
-  "bismuth subcitrate"
+  "bismuth subcitrate",
+  "subcitrato de bismuto coloidal"
  ],
  "Q55186498": [
   "thiopental",
-  "Thiopental"
+  "Thiopental",
+  "tiopental"
  ],
  "Q59854145": [
-  "methapyrilene"
+  "methapyrilene",
+  "metapirileno"
  ],
  "Q59904170": [
   "methylnaltrexone bromide",
   "Methylnaltrexon-Bromid",
-  "metilnaltrexona"
+  "metilnaltrexona",
+  "brometo de metilnaltrexona"
  ],
  "Q61653285": [
   "candicidin",
   "Candicidin",
-  "candicidine"
+  "candicidine",
+  "candicidina"
  ],
  "Q72282660": [
   "acetylleucine",
@@ -5399,7 +5831,8 @@
  ],
  "Q94572860": [
   "gefapixant",
-  "Gefapixant"
+  "Gefapixant",
+  "gefapixanto"
  ],
  "Q96196338": [
   "althea root",

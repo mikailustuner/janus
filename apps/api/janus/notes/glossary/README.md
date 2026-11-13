@@ -11,6 +11,11 @@ review sheet (`.kiro/specs/doctor-loop/glossary-review.md`) no note language is 
 
 Event names and safety lines come from `janus/memory/memory_events.csv` (already reviewed) and are not copied here.
 
+Empty ingredient names of one language can be filled from a Wikidata run with
+`pipelines/tools/glossary_fill_names.py` (accepted rows only, existing names never changed, checked labels; the row
+note records the source and that native-speaker and expert review have not yet been done). Portuguese was filled this way
+on 2026-11-13 (1,015 of 1,126 accepted rows now have a pt name).
+
 When a name is missing in a language, the note prints the accepted English INN with "name not translated" and the ATC
 code (owner decision 2026-11-08). Clinical terms are never machine-translated at run time.
 

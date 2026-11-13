@@ -103,7 +103,9 @@ test("label photo: recognised on the device, nothing sent until a choice, the ND
     { timeout: 60_000 },
   );
   await page.getByText("Choose the words yourself").click();
-  await expect(page.getByRole("button", { name: "DONEPEZIL" })).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "DONEPEZIL", exact: true }),
+  ).toBeVisible();
   expect(seen).toHaveLength(0); // recognised text is never sent as a whole
   // The demo NDC is recognised before any request (it opens the demo prompt).
   await page.getByRole("button", { name: /Look up NDC 0295-2680-01/ }).click();

@@ -142,6 +142,19 @@
       "how1Title": "Escanee la caja",
       "how2Title": "Se comparan los patrones",
       "how3Title": "Una nota para el médico"
+    },
+    "audience": {
+      "title": "¿Para quién es Janus?",
+      "patients": {
+        "title": "Pacientes y familias",
+        "body": "Revise una lista de medicamentos en busca de cascadas de prescripción y obtenga una nota para llevar a su médico.",
+        "cta": "Revisar mis medicamentos"
+      },
+      "researchers": {
+        "title": "Investigadores y clínicos",
+        "body": "Métodos, resultados de validación, modelos de fármacos, datos abiertos y la API.",
+        "cta": "Abrir el área de investigación"
+      }
     }
   },
   "Shell": {
@@ -154,12 +167,22 @@
       "results": "Resultados",
       "settings": "Ajustes",
       "research": "Investigación",
-      "passport": "Pasaporte"
+      "passport": "Pasaporte",
+      "note": "Nota médica"
     },
     "privacy": "Privacidad",
     "demoCodes": "Códigos de demo",
     "demoDoctor": "Abrir la página de demo del médico",
-    "donate": "Compartir una notificación"
+    "donate": "Compartir una notificación",
+    "researchNav": {
+      "overview": "Resumen",
+      "methods": "Validación",
+      "modelKit": "Modelos",
+      "data": "Datos",
+      "developers": "API y MCP"
+    },
+    "researchNavLabel": "Navegación de investigación",
+    "patientSection": "Sección del paciente"
   },
   "Emergency": {
     "title": "En una emergencia",
@@ -478,7 +501,14 @@
       "fits": "El orden coincide con el patrón",
       "fitsLate": "El orden coincide, después de la ventana habitual",
       "notConfirmed": "Orden no confirmado"
-    }
+    },
+    "sections": {
+      "found": "Qué encontró Janus",
+      "why": "Por qué puede importar",
+      "todo": "Qué puede hacer"
+    },
+    "why": "A veces, un efecto adverso de un medicamento se confunde con un nuevo problema de salud y se empieza un segundo medicamento para ello. Esto se llama cascada de prescripción. No siempre es un problema: el segundo medicamento puede seguir siendo necesario.",
+    "selfChange": "No suspenda ni cambie ningún medicamento por su cuenta. Hable primero con su médico o farmacéutico."
   },
   "ReadAloud": {
     "read": "Leer en voz alta",
@@ -665,7 +695,25 @@
         "title": "Estudios de validación",
         "body": "Dos estudios preregistrados sobre el rendimiento de Janus, con intervalos de confianza."
       }
-    }
+    },
+    "groups": {
+      "methods": {
+        "title": "Métodos y validación"
+      },
+      "modelKit": {
+        "title": "Modelos de fármacos y simulación"
+      },
+      "data": {
+        "title": "Datos"
+      },
+      "developers": {
+        "title": "API, MCP y cita"
+      },
+      "experimental": {
+        "title": "Herramientas exploratorias"
+      }
+    },
+    "experimental": "Experimental"
   },
   "Doctor": {
     "errors": {
@@ -2932,9 +2980,10 @@
     "cite": {
       "title": "Cómo citar",
       "summary": "Cite la versión que usó.",
-      "body": "Todavía no hay CITATION.cff: el proyecto no ha publicado metadatos de cita. Hasta entonces, cite el conjunto de datos con su cadena de versión y la fecha de la instantánea:",
+      "body": "Para un conjunto de datos, cítelo con su cadena de versión y la fecha de la instantánea:",
       "example": "Texto de la cita",
-      "pipc": "La propia lista PIPC:"
+      "pipc": "La propia lista PIPC:",
+      "software": "Para el software, cite la versión que utilizó. El repositorio tiene un CITATION.cff con su versión y fecha:"
     },
     "modelKit": {
       "title": "Kit inicial de modelos de fármacos (experimental)",
@@ -3343,7 +3392,7 @@
   },
   "ValidationStudies": {
     "title": "Estudios de validación",
-    "summary": "Dos estudios preregistrados sobre el rendimiento de Janus, cada uno con sus intervalos de confianza del 95 %.",
+    "summary": "Cuatro estudios preregistrados sobre el rendimiento de Janus, cada uno con sus intervalos de confianza del 95 %.",
     "intro": "Para investigadores. Cada estudio fijó su pregunta, sus datos de referencia y sus criterios de éxito en un protocolo público antes de ejecutar Janus sobre los datos. Los resultados se comunican tal como salieron, incluidas las hipótesis que no se cumplieron.",
     "review": "Todavía no se ha hecho la revisión por expertos.",
     "preregistered": "Preregistrado: el protocolo se publicó en el commit {commit} antes de ejecutar la evaluación.",
@@ -3404,7 +3453,8 @@
         "caption": "Tabla de riesgo y cobertura de los valores de ClinicalTrials.gov",
         "level": "Nivel de comprobación",
         "coverage": "Cobertura (parte de los valores conservados)"
-      }
+      },
+      "interval": "{low}–{high}"
     },
     "modelkitGate": {
       "title": "Umbral del kit de modelos",
@@ -3457,6 +3507,10 @@
       "crossTitle": "Comprobación entre estudios de unidades erróneas",
       "crossOff": "Implementada. No cumplió su regla de decisión registrada de antemano, así que está desactivada. Retendría {would} de {checkable} valores comprobables.",
       "crossOn": "Implementada y activada. Retiene {would} de {checkable} valores comprobables."
-    }
+    },
+    "csv": "Descargar las cifras (CSV)",
+    "cite": "Citar esta versión",
+    "citeIntro": "Cite la versión que utilizó:",
+    "limitations": "Limitaciones de estos estudios (GitHub)"
   }
 }

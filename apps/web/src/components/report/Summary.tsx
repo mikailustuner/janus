@@ -598,11 +598,18 @@ export function Summary() {
     evaluation.status === "idle" ||
     evaluation.status === "loading"
   )
-    return <StateView state="loading" label={t("Findings.evaluating")} />;
+    return (
+      <StateView
+        title={t("Report.title")}
+        state="loading"
+        label={t("Findings.evaluating")}
+      />
+    );
   if (evaluation.status === "blocked") {
     if (evaluation.reason === "empty")
       return (
         <StateView
+          title={t("Report.title")}
           state="empty"
           message={t("Findings.empty")}
           action={<ButtonLink href="/scan">{t("Medicines.add")}</ButtonLink>}
@@ -610,6 +617,7 @@ export function Summary() {
       );
     return (
       <StateView
+        title={t("Report.title")}
         state="error"
         messageKey={
           evaluation.reason === "too_many"
@@ -626,6 +634,7 @@ export function Summary() {
         : undefined;
     return (
       <StateView
+        title={t("Report.title")}
         state="error"
         messageKey={evaluation.error.messageKey}
         retry={retry}

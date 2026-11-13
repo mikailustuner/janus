@@ -142,6 +142,19 @@
       "how1Title": "Scan the box",
       "how2Title": "Patterns are compared",
       "how3Title": "A note for the doctor"
+    },
+    "audience": {
+      "title": "Who is Janus for?",
+      "patients": {
+        "title": "Patients and families",
+        "body": "Check a list of medicines for prescribing cascades and get a note to take to your doctor.",
+        "cta": "Check my medicines"
+      },
+      "researchers": {
+        "title": "Researchers and clinicians",
+        "body": "Methods, validation results, drug models, open data and the API.",
+        "cta": "Open the research area"
+      }
     }
   },
   "Shell": {
@@ -154,12 +167,22 @@
       "results": "Results",
       "settings": "Settings",
       "research": "Research",
-      "passport": "Passport"
+      "passport": "Passport",
+      "note": "Doctor note"
     },
     "privacy": "Privacy",
     "demoCodes": "Demo codes",
     "demoDoctor": "Open the demo doctor page",
-    "donate": "Share a report"
+    "donate": "Share a report",
+    "researchNav": {
+      "overview": "Overview",
+      "methods": "Validation",
+      "modelKit": "Drug models",
+      "data": "Data",
+      "developers": "API and MCP"
+    },
+    "researchNavLabel": "Research navigation",
+    "patientSection": "Patient section"
   },
   "Emergency": {
     "title": "In an emergency",
@@ -469,7 +492,7 @@
     "safetyHeading": "When to get urgent help",
     "medicinesRoles": "First medicine of the pattern: {index} ({indexBox}). Second: {marker} ({markerBox}).",
     "priority": {
-      "incidence": "In a published study of older adults in Ontario, Canada (BMJ 2026, abstract), this pattern was among those with the highest incidence of the two-medicine combination: {value}% (confidence interval {low} to {high}).",
+      "incidence": "A published study looked at older adults in Ontario, Canada (BMJ 2026, abstract). In it, this pattern was among those where the two medicines were most often used together: {value}% (confidence interval {low} to {high}).",
       "adjusted_sequence_ratio": "In a published study of older adults in Ontario, Canada (BMJ 2026, abstract), this pattern was among those with the highest adjusted sequence ratio: {value} (confidence interval {low} to {high}). A ratio above one means the second medicine was started after the first more often than before it."
     },
     "source": "Source: PIPC list (Rochon et al., Eur Geriatr Med 2025), row {row}.",
@@ -478,7 +501,14 @@
       "fits": "Order fits the pattern",
       "fitsLate": "Order fits, later than the usual window",
       "notConfirmed": "Order not confirmed"
-    }
+    },
+    "sections": {
+      "found": "What Janus found",
+      "why": "Why it may matter",
+      "todo": "What you can do"
+    },
+    "why": "Sometimes a side effect of one medicine is taken for a new health problem, and a second medicine is started for it. This is called a prescribing cascade. It is not always a problem: the second medicine may still be needed.",
+    "selfChange": "Do not stop or change a medicine on your own. Talk to your doctor or pharmacist first."
   },
   "ReadAloud": {
     "read": "Read aloud",
@@ -665,7 +695,25 @@
         "title": "Validation studies",
         "body": "Two pre-registered studies of how well Janus works, with confidence intervals."
       }
-    }
+    },
+    "groups": {
+      "methods": {
+        "title": "Methods and validation"
+      },
+      "modelKit": {
+        "title": "Drug models and simulation"
+      },
+      "data": {
+        "title": "Data"
+      },
+      "developers": {
+        "title": "API, MCP and citation"
+      },
+      "experimental": {
+        "title": "Exploratory tools"
+      }
+    },
+    "experimental": "Experimental"
   },
   "Doctor": {
     "errors": {
@@ -871,7 +919,7 @@
     },
     "network": {
       "title": "Network provider",
-      "body": "Janus is delivered through Cloudflare, which carries the encrypted connection between your browser and the Janus server and blocks attacks. To do this, Cloudflare processes technical data of each request, such as your IP address, browser type and time, and may set a short-lived technical cookie that tells people apart from automated traffic. Janus adds no analytics, no advertising and no tracking cookies, and its own server does not record IP addresses."
+      "body": "Janus reaches you through Cloudflare. Cloudflare carries the encrypted link between your browser and the Janus server, and it blocks attacks. To do this, it handles technical data of each request, such as your IP address, browser type and time. It may also set a short-lived technical cookie that tells people apart from automated traffic. Janus adds no analytics, no ads and no tracking cookies. Its own server does not record IP addresses."
     },
     "sources": {
       "title": "Data sources",
@@ -2739,7 +2787,7 @@
       "notFound": "No US label in the data for: {names}. These were not read.",
       "labelsRead": "Labels read",
       "readRow": "{ingredient}: {substance}, effective {date}",
-      "method": "Automated search of the \"Drug Interactions\" section of one US label per ingredient (the most recent single-substance label in the data) for the names Janus holds for the other ingredients on your list, as whole words. Classes of medicines are not matched, labels of other countries are not read, and label text can be out of date.",
+      "method": "For each ingredient, Janus takes one US label: the most recent single-ingredient label in the data. In its \"Drug Interactions\" section, an automated search looks for the names Janus holds for the other ingredients on your list, as whole words. Classes of medicines are not matched. Labels of other countries are not read. Label text can be out of date.",
       "source": "Source: openFDA drug label data (U.S. Food and Drug Administration, CC0 1.0), data of {date}. Not an FDA endorsement.",
       "outdated": "This label data is older than Janus expects it to be.",
       "unavailable": "The label texts are not loaded right now, so this check did not run."
@@ -2932,9 +2980,10 @@
     "cite": {
       "title": "How to cite",
       "summary": "Cite the version you used.",
-      "body": "There is no CITATION.cff yet: the project has not published citation metadata. Until then, cite the dataset with its version string and snapshot date:",
+      "body": "For a dataset, cite it with its version string and snapshot date:",
       "example": "Citation text",
-      "pipc": "The PIPC list itself:"
+      "pipc": "The PIPC list itself:",
+      "software": "For the software, cite the release you used. The repository has a CITATION.cff with its version and date:"
     },
     "modelKit": {
       "title": "Drug model starter kit (experimental)",
@@ -3343,7 +3392,7 @@
   },
   "ValidationStudies": {
     "title": "Validation studies",
-    "summary": "Two pre-registered studies of how well Janus works, each with its 95 % confidence intervals.",
+    "summary": "Four pre-registered studies of how well Janus works, each with its 95 % confidence intervals.",
     "intro": "For researchers. Each study fixed its question, its reference data and its success criteria in a public protocol before Janus was run on the data. The results are reported as they came out, including the hypotheses that were not met.",
     "review": "Expert review has not yet been done.",
     "preregistered": "Pre-registered: the protocol was published in commit {commit} before the evaluation ran.",
@@ -3404,7 +3453,8 @@
         "caption": "Risk–coverage table for ClinicalTrials.gov values",
         "level": "Check level",
         "coverage": "Coverage (share of values kept)"
-      }
+      },
+      "interval": "{low}–{high}"
     },
     "modelkitGate": {
       "title": "Model kit gate",
@@ -3457,6 +3507,10 @@
       "crossTitle": "Cross-study check for wrong units",
       "crossOff": "Implemented. It did not meet its pre-registered decision rule, so it is switched off. It would withhold {would} of {checkable} checkable values.",
       "crossOn": "Implemented and switched on. It withholds {would} of {checkable} checkable values."
-    }
+    },
+    "csv": "Download the numbers (CSV)",
+    "cite": "Cite this version",
+    "citeIntro": "Please cite the version you used:",
+    "limitations": "Limitations of these studies (GitHub)"
   }
 }
