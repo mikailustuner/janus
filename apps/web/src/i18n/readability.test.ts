@@ -3,12 +3,16 @@
 // meant for 100 words or more), so the target (school grade 6–8) applies to each patient message
 // group and to the patient texts as a whole. A long text (20 words or more) on its own must stay
 // under a ceiling one band looser (FK 10, Ateşman 40). Exempt: licence attributions and lists of
-// source names (their wording is set by the publisher or is proper names) and versioned consent
-// texts (a wording change needs a new consent version).
+// source names (their wording is set by the publisher or is proper names), versioned consent
+// texts (a wording change needs a new consent version) and the rows the doctor note shares word for
+// word (apps/api/janus/notes/glossary/sentences.csv, column `shared`: a change goes through the
+// glossary and the note together).
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { describe, expect, it } from "vitest";
+
+import { parseCsv } from "../../scripts/gen-vocabulary.mjs";
 
 import {
   meetsTarget,
@@ -31,6 +35,23 @@ const EXEMPT = [
   /^Privacy\.sources\.body$/,
   /^OutcomeConsent\./,
 ];
+
+/** Message keys the doctor note shares word for word (sentences.csv, column `shared`). */
+const SHARED = new Set(
+  (
+    parseCsv(
+      readFileSync(
+        join(
+          import.meta.dirname,
+          "../../../api/janus/notes/glossary/sentences.csv",
+        ),
+        "utf8",
+      ),
+    ) as Record<string, string>[]
+  )
+    .map((r) => r.shared)
+    .filter((k): k is string => Boolean(k)),
+);
 
 const load = (l: ReadingLocale): Record<string, unknown> =>
   JSON.parse(
@@ -74,6 +95,11 @@ describe("formula parts", () => {
   });
 });
 
+it("reads the doctor note's shared rows", () => {
+  expect(SHARED.has("Memory.codes.disproportionate")).toBe(true);
+  expect(SHARED.size).toBeGreaterThan(20);
+});
+
 describe.each(LOCALES)("patient texts, %s", (locale) => {
   const messages = load(locale);
   const groups = PATIENT_NAMESPACES.map((ns) => ({
@@ -108,6 +134,7 @@ describe.each(LOCALES)("patient texts, %s", (locale) => {
       .flatMap((g) => g.texts)
       .filter((t) => words(t.text).length >= 20)
       .filter((t) => !EXEMPT.some((re) => re.test(t.key)))
+      .filter((t) => !SHARED.has(t.key))
       .map((t) => ({ key: t.key, value: score([t.text], locale).value }))
       .filter((t) =>
         locale === "en" ? t.value > CEILING.en : t.value < CEILING.tr,
