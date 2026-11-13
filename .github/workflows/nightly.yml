@@ -82,6 +82,8 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm test
+        env:
+          FC_PROFILE: nightly
 
   web-e2e:
     name: web e2e (run ${{ matrix.run }})

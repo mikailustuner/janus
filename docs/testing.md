@@ -25,7 +25,8 @@ unset variable is an error.
 | `ci` | every push and pull request | `derandomize=True`: the same examples on every run, so a red build is reproducible |
 | `nightly` | `.github/workflows/nightly.yml` | random seeds, 1000 examples (200 for database properties), reproduction blob printed |
 
-Select one with `HYPOTHESIS_PROFILE=<name>`. When the nightly run finds a counterexample, the failing
+Select one with `HYPOTHESIS_PROFILE=<name>`. The web property tests (fast-check) follow the same
+scheme with `FC_PROFILE=dev|ci|nightly` (CI: fixed seed, 300 cases; nightly: random seed, 1000 cases). When the nightly run finds a counterexample, the failing
 input is pinned on the property with `@example(...)` in the fix, so it is checked on every run from then on.
 
 ## Flaky tests
