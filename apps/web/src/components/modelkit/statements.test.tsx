@@ -8,10 +8,9 @@ import { NextIntlClientProvider } from "next-intl";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 
-import { decode } from "@/api/decode";
 import { routing } from "@/i18n/routing";
-import { drugsOut, type ExpertAudit } from "@/modelkit/model";
-import recorded from "@/modelkit/modelkit.recorded.json";
+import type { ExpertAudit } from "@/modelkit/model";
+import { AUDIT, modelKitSet } from "@/test/fixtures/modelkit";
 
 import { Statements } from "./common";
 
@@ -23,20 +22,6 @@ const messages = (l: Locale) =>
       "utf8",
     ),
   ) as Record<string, Record<string, string>>;
-
-const AUDIT: ExpertAudit = {
-  date: "2027-01-15",
-  release_audited: "20261112T135125Z-8ac5398b-3c00",
-  n_items: 366,
-  n: 320,
-  correct: 310,
-  cannot_judge: 30,
-  precision: 310 / 320,
-  wilson_low: 0.9435,
-  wilson_high: 0.983,
-  criterion_met: true,
-  reviewer_roles: ["clinical_pharmacologist", "pharmacometrician"],
-};
 
 const html = (locale: Locale, audit: ExpertAudit | null) =>
   renderToStaticMarkup(
@@ -73,14 +58,12 @@ describe("expert review line", () => {
     expect(html("tr", AUDIT)).toContain("0,97");
   });
 
-  it("the recorded release has no audit record (the live text is unchanged)", () => {
-    const d = decode(drugsOut, recorded.drugs);
-    expect(d.ok).toBe(true);
-    if (d.ok) {
-      expect(d.value.statements.expert_audit).toBeNull();
-      expect(d.value.statements.expert_review).toBe(
-        "Expert review has not yet been done.",
-      );
-    }
+  it("an answer without an audit record keeps the live text unchanged", () => {
+    const { statements } = modelKitSet().drugs;
+    expect(statements.expert_audit).toBeNull();
+    expect(statements.expert_review).toBe(
+      "Expert review has not yet been done.",
+    );
+    expect(modelKitSet(AUDIT).drugs.statements.expert_audit).toEqual(AUDIT);
   });
 });

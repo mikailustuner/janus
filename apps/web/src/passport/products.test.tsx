@@ -11,9 +11,9 @@ import { describe, expect, it, vi } from "vitest";
 
 import { decode } from "@/api/decode";
 import { COLOGNE_PASSPORT } from "@/demo/passport-cologne";
-import { COLOGNE_PRODUCTS } from "@/demo/passport-products";
 import { routing } from "@/i18n/routing";
 import { check, fc } from "@/test/fc";
+import { productsRecorded } from "@/test/fixtures/passport";
 
 vi.mock("@/i18n/navigation", () => ({
   Link: ({
@@ -468,7 +468,15 @@ describe("states (Req 17.2, 17.4)", () => {
   });
 });
 
-describe("recorded demo answers (DP33)", () => {
+// The recorded demo files are checked in src/test/recorded-contract.test.ts; these tests use a
+// recorded-shaped file generated from the queries the Cologne list builds.
+const COLOGNE_PRODUCTS = productsRecorded(
+  COLOGNE_PASSPORT.flatMap((item) =>
+    P.LISTABLE.flatMap((t) => P.buildProductsRequest(item, t) ?? []),
+  ),
+);
+
+describe("recorded-shaped demo answers (DP33)", () => {
   it("are schema-valid, from listable sources only, with exactly the query's keys", () => {
     expect(COLOGNE_PRODUCTS.recorded.date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
     for (const a of COLOGNE_PRODUCTS.answers) {
@@ -486,7 +494,7 @@ describe("recorded demo answers (DP33)", () => {
         expect([...new Set(p.ingredients.map((g) => g.key))].sort()).toEqual(
           keys,
         );
-        // P23 on real data: no "same" without a strength on the box.
+        // P23: no "same" without a strength on the box.
         if (a.request.ingredients.some((g) => !g.strength))
           expect(p.strength).toBe("unknown");
         if (!a.request.dose_form) expect(p.dose_form).toBe("unknown");

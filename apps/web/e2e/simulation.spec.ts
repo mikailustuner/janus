@@ -1,8 +1,8 @@
 // Model explorer and queued model runs (simulation-service Req 1, 5; owner decision 2026-11-09).
 // C1-C3 in five locales × two themes; the explorer runs on the device with no request, offers no
 // person-specific input and shows only distributions, the validation status and the sentence; the
-// server form goes queued → done (API stubbed from a job recorded from the real API and worker),
-// 429 queue full, 503 off; demo mode with no request. Screenshots when RESEARCH_SHOTS_DIR is set.
+// server form goes queued → done (API stubbed from synthetic answers, src/test/fixtures/simulation.ts),
+// 429 queue full, 503 off; demo mode (bundled recorded runs) with no request. Screenshots when RESEARCH_SHOTS_DIR is set.
 import { mkdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
@@ -12,6 +12,7 @@ import {
   findForbiddenPhrases,
   forbiddenPhrases,
 } from "../src/i18n/forbidden-phrases";
+import { simulationSet } from "../src/test/fixtures/simulation";
 
 import {
   expectNoAxeViolations,
@@ -26,10 +27,7 @@ import {
 
 const read = (p: string) =>
   JSON.parse(readFileSync(join(import.meta.dirname, p), "utf8"));
-const fx = read("../src/simulation/simulate.recorded.json") as {
-  compounds: Record<string, unknown>;
-  jobs: { request: Record<string, unknown>; job: Record<string, unknown> }[];
-};
+const fx = simulationSet();
 const messages = Object.fromEntries(
   LOCALES.map((l) => [l, read(`../messages/${l}.json`)]),
 );

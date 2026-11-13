@@ -1,12 +1,12 @@
-// Feature: light-face, Property P16: rank text, CSV round trip, decoders (design §10, §11).
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
-
+// Feature: light-face, Property P16: rank text, CSV round trip, decoders (design §10, §11). The
+// answers are synthetic (src/test/fixtures/light.ts); the recorded file is checked in
+// src/test/recorded-contract.test.ts.
 import fc from "fast-check";
 import { describe, expect, it } from "vitest";
 
 import { decode } from "@/api/decode";
 import { messageKeyFor } from "@/api/errors";
+import { lightSet } from "@/test/fixtures/light";
 
 import {
   cardsOut,
@@ -24,18 +24,12 @@ import {
   toCsv,
 } from "./view";
 
-const fixture = JSON.parse(
-  readFileSync(join(import.meta.dirname, "fixture.recorded.json"), "utf8"),
-) as {
-  overview: unknown;
-  cards: Record<string, unknown>;
-  validation: unknown;
-  export: unknown;
-};
+const fixture = lightSet();
 
 describe("decoders", () => {
-  it("accept the answers recorded from the real API", () => {
+  it("accept the answers", () => {
     expect(decode(overviewOut, fixture.overview).ok).toBe(true);
+    expect(Object.keys(fixture.cards).length).toBeGreaterThan(1);
     for (const v of Object.values(fixture.cards))
       expect(decode(cardsOut, v).ok).toBe(true);
     expect(decode(validationOut, fixture.validation).ok).toBe(true);

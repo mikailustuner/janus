@@ -1,11 +1,12 @@
-// Feature: open-data Req 3 (design §4): the recorded file decodes, the dashboard partition
-// keeps every cell once, the demo downloads are the recorded files.
+// Feature: open-data Req 3 (design §4): the answers decode (synthetic, src/test/fixtures/open.ts;
+// the recorded file is checked in src/test/recorded-contract.test.ts), the dashboard partition
+// keeps every cell once, the demo downloads are the files the client was given.
 import { describe, expect, it } from "vitest";
 
 import * as D from "@/api/decode";
 import { check, fc } from "@/test/fc";
+import { CSV_HEADER, cell, openSet } from "@/test/fixtures/open";
 
-import fixture from "./fixture.recorded.json";
 import {
   byLayer,
   demoOpenData,
@@ -13,11 +14,7 @@ import {
   type OpenOutcomes,
 } from "./model";
 
-const fx = fixture as unknown as {
-  recorded: string;
-  outcomes: unknown;
-  csv: string;
-};
+const fx = openSet();
 
 const cellArb = fc.record({
   layer: fc.constantFrom("contributions" as const, "outcomes" as const),
@@ -29,16 +26,21 @@ const cellArb = fc.record({
 });
 
 describe("open outcome dataset", () => {
-  it("the recorded answer decodes and is the honest empty state", () => {
+  it("the empty release decodes and is the honest empty state", () => {
     const r = D.decode(openOutcomes, fx.outcomes);
     expect(r.ok).toBe(true);
     if (!r.ok) return;
     expect(r.value.cells).toEqual([]);
     expect(r.value.release_rule.k).toBeGreaterThanOrEqual(20);
     expect(r.value.release_rule.hidden_cells_listed).toBe(false);
-    expect(fx.csv.trim()).toBe(
-      "dataset_version,snapshot_date,layer,ingredients,event,direction,region,value",
-    );
+    expect(fx.csv.trim()).toBe(CSV_HEADER);
+  });
+
+  it("a release with cells decodes and keeps its cells", () => {
+    const withCells = openSet([cell(), cell({ layer: "outcomes", value: 41 })]);
+    const r = D.decode(openOutcomes, withCells.outcomes);
+    expect(r.ok && r.value.cells.length).toBe(2);
+    expect(withCells.csv.trim().split("\n")).toHaveLength(3);
   });
 
   it("byLayer keeps every cell exactly once, in its layer, in order", () => {
@@ -55,7 +57,7 @@ describe("open outcome dataset", () => {
     );
   });
 
-  it("demo downloads are the recorded files as data URLs (no request)", () => {
+  it("demo downloads are the given files as data URLs (no request)", () => {
     const c = demoOpenData(fx);
     const csv = c.download("csv");
     expect(csv.startsWith("data:text/csv")).toBe(true);

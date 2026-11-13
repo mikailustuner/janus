@@ -1,7 +1,9 @@
 // Feature: plain-medicine-info, web properties W1–W3 (design §7). Validates Req 4, 5.3, 5.8,
 // 5.9, 6.2, 6.3: the request holds only codes and the product's own code or published name;
 // the decoder accepts the API's answers and refuses changed ones; demo mode answers from the
-// recorded file; every PlainInfo text exists in five languages within the word rules.
+// recorded-shaped file (synthetic, src/test/fixtures/plaininfo.ts; the recorded file itself is
+// checked in src/test/recorded-contract.test.ts); every PlainInfo text exists in five languages
+// within the word rules.
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
@@ -15,18 +17,15 @@ import { demoItems, type Fixture } from "@/demo/client";
 import cologne from "@/demo/fixtures/cologne.json";
 import istanbul from "@/demo/fixtures/istanbul.json";
 import ohio from "@/demo/fixtures/ohio.json";
-import {
-  findForbiddenPhrases,
-  forbiddenPhrases,
-} from "@/i18n/forbidden-phrases";
-import { reassurance } from "@/i18n/reassurance";
 import { routing } from "@/i18n/routing";
 import type { Item } from "@/store/list";
 import { check, fc } from "@/test/fc";
+import { plainInfoRecorded } from "@/test/fixtures/plaininfo";
+import { violations } from "@/test/plaininfo-words";
 import type { Loaded, Vocabulary, VocabularyIndex } from "@/vocabulary";
 import index from "@/vocabulary/index.json";
 
-import { demoInfo, recordedCall, type Recorded } from "./client";
+import { recordedCall } from "./client";
 import { medicineInfoOut, type MedicineInfoOut } from "./model";
 import { codesOf, infoQuery, productOf, queryKey } from "./query";
 
@@ -44,7 +43,6 @@ const vocab = (l: Locale): Loaded => ({
 });
 const en = vocab("en");
 const answers = read("fixtures/info.json") as Record<string, unknown>;
-const recorded = read("../demo/plain-info.recorded.json") as Recorded;
 
 const fixtures = [istanbul, ohio, cologne] as unknown as Fixture[];
 const items: Item[] = fixtures.flatMap((f) => demoItems(f));
@@ -286,7 +284,17 @@ describe("W2: the contract", () => {
   });
 });
 
-describe("demo mode answers from the recorded file", () => {
+describe("demo mode answers from a recorded-shaped file", () => {
+  const codeSets = LOCALES.flatMap((language) =>
+    items.flatMap((item) =>
+      infoQuery(vocab(language), item, language, true).body!.ingredients.map(
+        (i) => i.atc_codes.join(" "),
+      ),
+    ),
+  );
+  const recorded = plainInfoRecorded(codeSets);
+  const demoInfo = recordedCall(async () => recorded);
+
   it("has an answer for every demo medicine in every language, without a product", async () => {
     for (const language of LOCALES)
       for (const item of items) {
@@ -340,22 +348,6 @@ const args = (message: string) =>
   [...message.matchAll(/\{\s*([A-Za-z_]\w*)\s*(?:\}|,)/g)]
     .map((m) => m[1]!)
     .sort();
-const AI: Record<Locale, string[]> = {
-  en: ["AI", "artificial intelligence"],
-  tr: ["yapay zeka", "yapay zekâ"],
-  de: ["KI", "künstliche Intelligenz"],
-  fr: ["IA", "intelligence artificielle"],
-  es: ["IA", "inteligencia artificial"],
-  pt: ["IA", "inteligência artificial"],
-};
-export const violations = (value: string, l: Locale) => [
-  ...findForbiddenPhrases(value, forbiddenPhrases[l]),
-  ...findForbiddenPhrases(value, reassurance[l]),
-  ...AI[l].filter((w) =>
-    new RegExp(`(?<!\\p{L})${w}(?!\\p{L})`, "u").test(value),
-  ),
-];
-
 describe.each(LOCALES)("W3: PlainInfo texts, %s", (l) => {
   const messages = texts(l);
   const english = texts("en");
@@ -391,15 +383,5 @@ describe.each(LOCALES)("W3: PlainInfo texts, %s", (l) => {
       flatten(catalogues[l]).get("TimeMachine.review"),
     );
     expect(violations(messages.get("PlainInfo.method")!, l)).toEqual([]);
-  });
-
-  it("names no dose and no way of taking a medicine in the recorded group texts", () => {
-    for (const answer of Object.values(recorded.ingredients[l]!)) {
-      const { groups } = answer as { groups: { name: string; text: string }[] };
-      for (const g of groups) {
-        expect(g.text).not.toMatch(/\d/);
-        expect(violations(`${g.name} ${g.text}`, l), g.text).toEqual([]);
-      }
-    }
   });
 });

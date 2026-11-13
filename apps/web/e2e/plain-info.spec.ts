@@ -1,6 +1,6 @@
 // Medicine information in the interface language (plain-medicine-info Req 5): the page reached
-// from the medicine list. The API is stubbed with what the API tests produce: the group answers
-// of src/demo/plain-info.recorded.json (five languages) and the official parts of
+// from the medicine list. The API is stubbed with synthetic group answers
+// (src/test/fixtures/plaininfo.ts, never the recorded file) and the official parts of
 // src/plaininfo/fixtures/info.json (invented products). C1-C3 in five locales × two themes; the
 // request holds codes and the product's own code or published name only; no information, error
 // with retry, large text, demo mode with no request. Screenshots when PLAININFO_SHOTS_DIR is set.
@@ -14,6 +14,7 @@ import {
   forbiddenPhrases,
 } from "../src/i18n/forbidden-phrases";
 import { reassurance } from "../src/i18n/reassurance";
+import { answerOf, GROUPS_VERSION } from "../src/test/fixtures/plaininfo";
 
 import {
   expectNoAxeViolations,
@@ -29,7 +30,6 @@ import {
 const read = (p: string) =>
   JSON.parse(readFileSync(join(import.meta.dirname, p), "utf8"));
 const answers = read("../src/plaininfo/fixtures/info.json");
-const recorded = read("../src/demo/plain-info.recorded.json");
 const noRecall = {
   ...read("../src/recall/fixtures/check.json"),
   matches: [],
@@ -51,7 +51,7 @@ type Body = {
   product?: { country: string; ndc?: string; name?: string };
 };
 
-/** The API's answer for a request: recorded group answers, and the fixture's official part. */
+/** The API's answer for a request: synthetic group answers, and the fixture's official part. */
 function answerFor(body: Body) {
   const official =
     body.product?.country === "US"
@@ -62,9 +62,9 @@ function answerFor(body: Body) {
   return {
     body: {
       language: body.language,
-      groups_version: recorded.groups_version,
-      ingredients: body.ingredients.map(
-        (i) => recorded.ingredients[body.language][i.atc_codes.join(" ")],
+      groups_version: GROUPS_VERSION,
+      ingredients: body.ingredients.map((i) =>
+        answerOf(body.language, i.atc_codes.join(" ")),
       ),
       official,
       official_status: official
@@ -197,7 +197,7 @@ for (const locale of locales)
         new RegExp(`/${locale}/medicines/info#us-1$`),
       );
 
-      const group = recorded.ingredients[locale]["C09AA03"].groups[0];
+      const group = answerOf(locale, "C09AA03").groups[0]!;
       const card = page.getByTestId("plain-info-group");
       await expect(card).toHaveCount(1);
       await expect(card.getByTestId("plain-info-sentence")).toHaveText(
@@ -272,10 +272,12 @@ for (const locale of locales)
     });
     await page.goto(`/${locale}/medicines/info#fr-1`);
     await expect(page.getByTestId("plain-info-ingredient")).toHaveCount(2);
-    await expect(page.getByTestId("plain-info-sentence")).toHaveText([
-      recorded.ingredients[locale]["C08CA01"].groups[0].text,
-      recorded.ingredients[locale]["C09AA03"].groups[0].text,
-    ]);
+    // The sentences come from the bundled file (its content changes with every release): there
+    // is at least one, each is non-empty.
+    const sentences = page.getByTestId("plain-info-sentence");
+    await expect(sentences.first()).toBeVisible();
+    for (const text of await sentences.allInnerTexts())
+      expect(text.trim()).not.toBe("");
     await expect(page.getByTestId("plain-info-review")).toHaveCount(2);
     const official = page.getByTestId("plain-info-official");
     await expect(official).toHaveAttribute("data-kind", "product_page");
@@ -311,12 +313,13 @@ for (const locale of locales)
       }) =>
         i.resolution.candidates[0]!.ingredients.every(
           (g) =>
-            recorded.ingredients.en[
+            answerOf(
+              "en",
               g.atc_codes
                 .map((a) => a.code)
                 .sort()
-                .join(" ")
-            ]?.status === "none",
+                .join(" "),
+            ).status === "none",
         ),
     );
     expect(none).toBeGreaterThanOrEqual(0);
@@ -428,7 +431,7 @@ test("a medicine that is not on the list gets a way back", async ({ page }) => {
 });
 
 for (const locale of locales)
-  test(`demo mode: group sentences from the recorded file, no request, ${locale}`, async ({
+  test(`demo mode: group sentences from the bundled file, no request, ${locale}`, async ({
     page,
   }, info) => {
     const m = messages[locale].PlainInfo;
@@ -443,10 +446,12 @@ for (const locale of locales)
     );
     await page.getByRole("link", { name: m.link }).first().click();
     await expect(page.getByTestId("demo-label")).toBeVisible();
-    await expect(page.getByTestId("plain-info-sentence")).toHaveText([
-      recorded.ingredients[locale]["C08CA01"].groups[0].text,
-      recorded.ingredients[locale]["C09AA03"].groups[0].text,
-    ]);
+    // The sentences come from the bundled file (its content changes with every release): there
+    // is at least one, each is non-empty.
+    const sentences = page.getByTestId("plain-info-sentence");
+    await expect(sentences.first()).toBeVisible();
+    for (const text of await sentences.allInnerTexts())
+      expect(text.trim()).not.toBe("");
     await expect(page.getByTestId("plain-info-no-official")).toHaveText(
       m.official.none.demo,
     );

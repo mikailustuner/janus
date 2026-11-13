@@ -1,5 +1,6 @@
 // Séance screen (séance design §7.3, Req 7; experience Req 4.4, 6.4, 24): the API stubbed from
-// answers recorded from the real local API (src/seance/fixture.recorded.json). C1–C3 in 5 locales ×
+// synthetic answers (src/test/fixtures/seance.ts and light.ts), never from the recorded files; demo
+// mode (bundled recorded file) is checked for structure only. C1–C3 in 5 locales ×
 // 2 themes, the three seats, labels and states, demo mode without any request, the cross-reference
 // from a hypothesis card, and screenshots at 375 and 1280 px in both themes.
 import { mkdirSync, readFileSync } from "node:fs";
@@ -11,6 +12,8 @@ import {
   findForbiddenPhrases,
   forbiddenPhrases,
 } from "../src/i18n/forbidden-phrases";
+import { lightSet } from "../src/test/fixtures/light";
+import { seanceSet } from "../src/test/fixtures/seance";
 import { themeWords } from "../src/i18n/reassurance";
 
 import {
@@ -31,14 +34,11 @@ type Answer = Record<string, unknown> & {
 };
 const read = (p: string) =>
   JSON.parse(readFileSync(join(import.meta.dirname, p), "utf8"));
-const fx = read("../src/seance/fixture.recorded.json") as {
+const fx = seanceSet() as unknown as {
   catalogue: unknown;
   pairs: { request: Pair; answer: Answer }[];
 };
-const light = read("../src/light/fixture.recorded.json") as {
-  overview: unknown;
-  cards: Record<string, { cards: { ingredient: { key: string } }[] }>;
-};
+const light = lightSet();
 const messages = Object.fromEntries(
   LOCALES.map((l) => [l, read(`../messages/${l}.json`)]),
 );
@@ -221,7 +221,9 @@ test("states: 503, zero witnesses and a hazardous substance", async ({
   await expectNoAxeViolations(page);
 });
 
-test("demo mode answers from the recorded fixture without any request", async ({
+// Demo mode reads the bundled recorded file. Its content changes with every release, so this
+// checks structure only (the file is checked in src/test/recorded-contract.test.ts).
+test("demo mode answers from the bundled file without any request", async ({
   page,
 }) => {
   await page.addInitScript(() =>
@@ -230,14 +232,10 @@ test("demo mode answers from the recorded fixture without any request", async ({
   const all = recordRequests(page);
   await page.goto("/en/research/seance");
   await expect(page.getByTestId("seance-demo")).toBeVisible();
-  await expect(page.getByTestId("witness-count")).toHaveText(
-    "2 of 3 witnesses",
-  );
-  await expect(page.getByLabel("Substance").locator("option")).toHaveCount(2);
-  await page.getByLabel("Substance").selectOption("vinegar");
-  await expect(page.getByTestId("seat-present")).toContainText(
-    "Too few FAERS reports",
-  );
+  await expect(page.getByTestId("witness-count")).toBeVisible();
+  expect(
+    await page.getByLabel("Substance").locator("option").count(),
+  ).toBeGreaterThan(0);
   expect(
     all.filter((r) => new URL(r.url()).pathname.startsWith("/api/")),
   ).toEqual([]);
@@ -246,8 +244,7 @@ test("demo mode answers from the recorded fixture without any request", async ({
 test("a hypothesis card of the same ingredient opens the séance on that pair", async ({
   page,
 }) => {
-  const goal = Object.keys(light.cards)[0]!;
-  const cards = structuredClone(light.cards[goal]!);
+  const cards = structuredClone(light.cards.alopecia);
   cards.cards[0]!.ingredient.key = "Q47512"; // acetic acid, the component of vinegar
   await stubApi(page, {
     "/light/overview": { body: light.overview },
