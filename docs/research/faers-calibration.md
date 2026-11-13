@@ -50,6 +50,9 @@ fixed for this analysis.
 | AUC including non-estimable pairs at the lowest score | 0.698 | 0.649–0.747 |
 | AUC, OMOP 2013 pairs | 0.702 | 0.646–0.757 (145 / 202) |
 | AUC, EU-ADR pairs | 0.871 | 0.795–0.946 (42 / 45) |
+
+The per-set counts add up to more than the pooled ones because 7 estimable positive pairs (and some negative pairs)
+appear in both sets; they count once in the pooled analysis (145 + 42 − 7 = 180).
 | Evans decision: sensitivity | 0.550 (99/180) | 0.477–0.621 |
 | Evans decision: specificity | 0.879 (217/247) | 0.832–0.914 |
 | Negative controls whose nominal interval excludes 1 | 0.259 (64/247) | 0.208–0.317 |

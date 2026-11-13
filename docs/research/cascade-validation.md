@@ -52,6 +52,7 @@ denominator, amendment 1).
 | Case-level detection (cascade case reports) | 17 / 57 = 0.298 | 0.195–0.427 |
 | Alert rate, comparison cases (no cascade described) | 26 / 50 = 0.520 | 0.385–0.652 |
 | Sensitivity within the rule base's scope (exploratory, uses the rule base) | 77 / 77 = 1.000 | 0.953–1.000 |
+| Sensitivity, one pair per cascade (protocol §6; lowest pair id per A class → B class) | 74 / 203 = 0.365 | 0.301–0.433 |
 
 PPV and NPV depend on the 1 : 2 ratio fixed by design and are not clinical predictive values.
 
@@ -103,7 +104,10 @@ not changed; read it as a lower bound.
    the first parser, 17 / 57 = 0.298 (0.195–0.427) corrected. Pair-level results, the primary outcomes, do not use
    this parser and are identical in both runs; the comparison alert rate is unchanged (26 / 50). The first run's
    files are kept (`metrics_v1.json`, `cases_*_v1.json`).
-2. **Reference-set builder choices beyond the protocol text** (recorded by the builder before any run, see
+2. **Late sensitivity analysis.** The pre-specified analysis counting one pair per cascade (protocol §6) was computed
+   after the first version of this report, with the pair chosen by a fixed rule (the lowest pair id of each A
+   class → B class group, 203 groups): 74 / 203 = 0.365 (0.301–0.433), the same as the primary estimate.
+3. **Reference-set builder choices beyond the protocol text** (recorded by the builder before any run, see
    `data/validation/cascades/README.md`): a negative B′ was redrawn when it had no single-ingredient US label (the
    label check cannot run without one); study signals from untargeted screens of all drugs, and rows without a
    positive association, were not used as positive pairs.
