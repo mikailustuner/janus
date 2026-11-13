@@ -1,0 +1,435 @@
+neg_id,from_pair_id,drug_a,atc_a,drug_b_prime,atc_b_prime,draws,redraw_reasons,a_onsides_events
+N001,P001,acetylsalicylic acid,B01AC06,oxyquinoline,A01AB07,2,idanpramine:no_us_label,39
+N002,P001,acetylsalicylic acid,B01AC06,sapropterin,A16AX07,1,,39
+N003,P002,acitretin,D05BB02,ulipristal acetate,G03XB02,2,desogestrel:no_us_label,180
+N004,P002,acitretin,D05BB02,sildenafil,G04BE03,2,ergometrine:no_us_label,180
+N005,P003,alprenolol,C07AA01,paliperidone,N05AX13,2,bupivacaine-(rs):no_us_label,0
+N006,P003,alprenolol,C07AA01,morphine,N02AA01,2,co-codamol:no_us_label,0
+N007,P004,alprenolol,C07AA01,sodium oxybate,N01AX11,1,,0
+N008,P004,alprenolol,C07AA01,opicapone,N04BX04,1,,0
+N009,P005,amantadine,N04BB01,ketoconazole,G01AF11,3,chlorquinaldol:no_us_label;gestrinone:no_us_label,41
+N010,P005,amantadine,N04BB01,silodosin,G04CA04,1,,41
+N011,P006,amezinium metilsulfate,C01CA25,methyltestosterone,G03EK01,4,quingestanol:no_us_label;mepartricin:no_us_label;lynestrenol:no_us_label,0
+N012,P006,amezinium metilsulfate,C01CA25,levonorgestrel,G03AC03,2,candicidin:no_us_label,0
+N013,P007,amezinium metilsulfate,C01CA25,hypericum perforatum,N06AX25,2,paraldehyde:no_us_label,0
+N014,P007,amezinium metilsulfate,C01CA25,phenytoin,N03AB02,2,tofisopam:no_us_label,0
+N015,P008,amiodarone,C01BD01,teriparatide,H05AA02,1,,39
+N016,P008,amiodarone,C01BD01,ganirelix,H01CC01,5,somatropin recombinant:no_us_label;dexamethasone:a_event_is_indication(hemolytic anemia);elcatonin:no_us_label;liothyronine sodium:a_event_is_indication(hyperthyroidism),39
+N017,P009,amiodarone,C01BD01,deflazacort,H02AB13,1,,39
+N018,P009,amiodarone,C01BD01,pegvisomant,H01AX01,4,prednisone:a_event_is_indication(fibrosis);carbetocin:no_us_label;octreotide:a_event_is_indication(flushing),39
+N019,P010,amiodarone,C01BD01,lanreotide,H01CB03,1,,39
+N020,P010,amiodarone,C01BD01,betamethasone,H02AB01,1,,39
+N021,P011,amlodipine,C08CA01,inclisiran,C10AX16,1,,56
+N022,P011,amlodipine,C08CA01,isosorbide dinitrate,C05AE02,14,ergoloid mesylate:no_us_label;guanoclor:no_us_label;nicergoline:no_us_label;mefruside:no_us_label;bopindolol:no_us_label;lorcainide:no_us_label;mepindolol:no_us_label;fluocortolone:no_us_label;fimasartan:no_us_label;policosanol:no_us_label;nafronyl:no_us_label;potassium canrenoate:no_us_label;bevantolol:no_us_label,56
+N023,P012,amlodipine,C08CA01,minoxidil,C02DC01,2,prenalterol:no_us_label,56
+N024,P012,amlodipine,C08CA01,disopyramide,C01BA03,2,guanoxabenz:no_us_label,56
+N025,P013,amlodipine,C08CA01,sodium fluoride,A01AA01,1,,56
+N026,P013,amlodipine,C08CA01,biotin,A11HA05,6,magnesium orotate:no_us_label;tiropramide:no_us_label;calcium gluceptate:no_us_label;moxaverine:no_us_label;pyridoxal phosphate:no_us_label,56
+N027,P014,amlodipine,C08CA01,butoconazole,G01AF15,1,,56
+N028,P014,amlodipine,C08CA01,sertaconazole,G01AF19,4,vitamin c:a_event_is_indication(cough);norethisterone:no_us_label;chlorotrianisene:no_us_label,56
+N029,P015,amlodipine,C08CA01,aripiprazole,N05AX12,1,,56
+N030,P015,amlodipine,C08CA01,tolcapone,N04BX01,2,lisuride:no_us_label,56
+N031,P016,amlodipine,C08CA01,stiripentol,N03AX17,1,,56
+N032,P016,amlodipine,C08CA01,clonidine,N02CX02,2,medifoxamine:no_us_label,56
+N033,P017,amlodipine,C08CA01,miconazole,G01AF04,4,prostaglandin f2α:no_us_label;tibolone:no_us_label;desogestrel:no_us_label,56
+N034,P017,amlodipine,C08CA01,ospemifene,G03XC05,1,,56
+N035,P018,amlodipine,C08CA01,ibutilide,C01BD05,14,evolocumab:a_event_is_indication(myocardial infarction);metaraminol:no_us_label;timolol:a_event_is_indication(headache);itramin tosylate:no_us_label;gallopamil:no_us_label;trimethaphan camsylate:no_us_label;colestyramine:no_us_label;troxerutin:no_us_label;ifenprodil:no_us_label;colestyramine:no_us_label;choline fenofibrate:no_us_label;captopril:a_event_is_indication(angioedema);probucol:no_us_label,56
+N036,P018,amlodipine,C08CA01,angiotensin ii,C01CX09,1,,56
+N037,P019,apixaban,B01AF02,oxyquinoline,A01AB07,2,sebelipase alfa:no_us_label,74
+N038,P019,apixaban,B01AF02,sitagliptin,A10BH01,3,methenolone:no_us_label;pyridoxal phosphate:no_us_label,74
+N039,P020,apixaban,B01AF02,biotin,A11HA05,2,lobeglitazone:no_us_label,74
+N040,P020,apixaban,B01AF02,imiglucerase,A16AB02,3,mitiglinide:no_us_label;tin(ii) fluoride:no_us_label,74
+N041,P021,apixaban,B01AF02,tramadol,N02AX02,6,antipyrine:no_us_label;dixyrazine:no_us_label;xaliproden:no_us_label;cyclobarbital:no_us_label;pyrithyldione:no_us_label,74
+N042,P021,apixaban,B01AF02,oxazepam,N05BA04,2,pirisudanol:no_us_label,74
+N043,P022,bendroflumethiazide,C03AA01,methocarbamol,M03BA03,14,parecoxib:no_us_label;mivacurium:no_us_label;mofebutazone:no_us_label;hyaluronan sodium:no_us_label;lonazolac:no_us_label;bromelain:no_us_label;mephenesin:no_us_label;phenylbutazone:no_us_label;phenylbutazone:no_us_label;alendronic acid:no_us_label;lumiracoxib:no_us_label;nifenazone:no_us_label;fentiazac:no_us_label,0
+N044,P022,bendroflumethiazide,C03AA01,etodolac,M01AB08,2,meclofenamic acid:no_us_label,0
+N045,P023,bendroflumethiazide,C03AA01,megestrol acetate,G03AC05,1,,0
+N046,P023,bendroflumethiazide,C03AA01,estriol,G03CC06,2,isoconazole:no_us_label,0
+N047,P024,bendroflumethiazide,C03AA01,fexinidazole,P01CA03,1,,0
+N048,P024,bendroflumethiazide,C03AA01,triclabendazole,P02BX04,4,phanquone:no_us_label;difetarsone:no_us_label;lindane:no_us_label,0
+N049,P025,bendroflumethiazide,C03AA01,bromocriptine,G02CB01,1,,0
+N050,P025,bendroflumethiazide,C03AA01,acetic acid,G01AD02,3,iodoquinol:no_us_label;ergometrine:no_us_label,0
+N051,P026,betamethasone,H02AB01,calcitriol,A11CC04,2,nicotinyl methylamide:no_us_label,155
+N052,P026,betamethasone,H02AB01,vestronidase alfa,A16AB18,3,fenpiverinium:no_us_label;pepsin:no_us_label,155
+N053,P027,betamethasone,H02AB01,linaclotide,A06AX04,3,dexlansoprazole:a_event_is_indication(heartburn);acetohexamide:no_us_label,155
+N054,P027,betamethasone,H02AB01,fenfluramine,A08AA02,3,rebamipide:no_us_label;dulaglutide:a_event_is_indication(diabetes mellitus),155
+N055,P028,betamethasone,H02AB01,magnesium oxide,A02AA02,7,d-sorbitol:no_us_label;aluminum hydroxide:a_event_is_indication(heartburn);colistin:no_us_label;l-scopolamine:no_us_label;neomycin:a_event_is_indication(infection);piprozolin:no_us_label,155
+N056,P028,betamethasone,H02AB01,sapropterin,A16AX07,3,glymidine:no_us_label;methylatropine:no_us_label,155
+N057,P029,buspirone,N05BE01,edaravone,N07XX14,1,,38
+N058,P029,buspirone,N05BE01,valproic acid,N03AG01,1,,38
+N059,P030,butylscopolamine,A03BB01,methyltestosterone,G03EK01,2,ethinylestradiol:no_us_label,7
+N060,P030,butylscopolamine,A03BB01,levonorgestrel,G03AC03,1,,7
+N061,P031,captopril,C09AA01,flunisolide,R01AD04,10,cromoglicic acid:no_us_label;tulobuterol:no_us_label;chloropyramine:no_us_label;antazoline:no_us_label;potassium iodide:a_event_is_indication(potassium);mizolastine:no_us_label;octenidine:no_us_label;isoprenaline:no_us_label;phenylephrine:a_event_is_indication(fever),113
+N062,P031,captopril,C09AA01,povidone-iodine,R02AA15,17,seratrodast:no_us_label;cetirizine:a_event_is_indication(fever);domiodol:no_us_label;myristalkonium:no_us_label;terbutaline:a_event_is_indication(bronchospasm);oxymetazoline:a_event_is_indication(fever);loratadine:a_event_is_indication(fever);prethcamide:no_us_label;prednisolone:a_event_is_indication(anemia);doxapram:a_event_is_indication(nervous);terbutaline:a_event_is_indication(bronchospasm);calcium hexamine thiocyanate:no_us_label;benzydamine:no_us_label;pirbuterol:no_us_label;clenbuterol:no_us_label;thiazinamium:no_us_label,113
+N063,P032,captopril,C09AA01,flurbiprofen,R02AX01,2,bamipine:no_us_label,113
+N064,P032,captopril,C09AA01,mupirocin,R01AX06,3,4-guaiacolsulfonic acid:no_us_label;epinephrine:a_event_is_indication(anaphylaxis),113
+N065,P033,captopril,C09AA01,famotidine,A02BA03,1,,113
+N066,P033,captopril,C09AA01,cerliponase alfa,A16AB17,1,,113
+N067,P034,captopril,C09AA01,dicloxacillin,J01CF01,2,minocycline:a_event_is_indication(fever),113
+N068,P034,captopril,C09AA01,sofosbuvir,J05AX15,6,meningococcal vaccine:no_us_label;midecamycin acetate:no_us_label;streptoduocin:no_us_label;aztreonam:a_event_is_indication(injection);didanosine:no_us_label,113
+N069,P035,captopril,C09AA01,insulin degludec,A10AE06,2,ondansetron:a_event_is_indication(nausea),113
+N070,P035,captopril,C09AA01,psyllium,A06AC01,10,methylatropine:no_us_label;sodium selenate:no_us_label;evogliptin:no_us_label;tridihexethyl:no_us_label;polymyxin b:no_us_label;gemigliptin:no_us_label;obeticholic acid:no_us_label;pinaverium:no_us_label;polycarbophil calcium:no_us_label,113
+N071,P036,captopril,C09AA01,terconazole,G01AG02,5,gestrinone:no_us_label;ethynodiol diacetate:no_us_label;isoconazole:no_us_label;prasterone enantate:no_us_label,113
+N072,P036,captopril,C09AA01,ospemifene,G03XC05,4,"gestrinone:no_us_label;bazedoxifene:no_us_label;dienestrol (e,e-isomer):no_us_label",113
+N073,P037,captopril,C09AA01,oxcarbazepine,N03AF02,2,fluphenazine:a_event_is_indication(injection),113
+N074,P037,captopril,C09AA01,lidocaine,N01BB02,1,,113
+N075,P038,captopril,C09AA01,protriptyline,N06AA11,1,,113
+N076,P038,captopril,C09AA01,trazodone,N06AX05,9,pivagabine:no_us_label;phenibut:no_us_label;amifampridine:a_event_is_indication(potassium);floctafenine:no_us_label;trimethadione:no_us_label;potassium salicylate:no_us_label;deanol:no_us_label;chloroform:no_us_label,113
+N077,P039,captopril,C09AA01,oxiconazole,G01AF17,4,isoconazole:no_us_label;mepartricin:no_us_label;dl-lactic acid:no_us_label,113
+N078,P039,captopril,C09AA01,levonorgestrel,G03AD01,5,"methallenestril:no_us_label;clioquinol:no_us_label;oxytetracycline:no_us_label;dienestrol (e,e-isomer):no_us_label",113
+N079,P040,carbamazepine,N03AF01,lanreotide,H01CB03,3,aldosterone:no_us_label;trilostane:no_us_label,200
+N080,P040,carbamazepine,N03AF01,methimazole,H03BB02,5,sermorelin:no_us_label;meprednisone:no_us_label;fluocortolone:no_us_label;oxytocin:a_event_is_indication(bleeding),200
+N081,P041,chlorpromazine,N05AA01,ulipristal,G03AD02,2,diethylstilbestrol:no_us_label,63
+N082,P041,chlorpromazine,N05AA01,methylergonovine,G02AB01,1,,63
+N083,P042,chlortalidone,C03BA04,velaglucerase alfa,A16AB10,1,,7
+N084,P042,chlortalidone,C03BA04,vitamin e,A11HA03,1,,7
+N085,P043,cimetidine,A02BA01,natamycin,G01AA02,1,,78
+N086,P043,cimetidine,A02BA01,ospemifene,G03XC05,3,17α-hydroxyprogesterone:no_us_label;hachimycin:no_us_label,78
+N087,P044,cimetidine,A02BA01,cannabidiol,N03AX24,1,,78
+N088,P044,cimetidine,A02BA01,escitalopram,N06AB10,5,mebutamate:no_us_label;pirisudanol:no_us_label;moclobemide:no_us_label;esketamine:a_event_is_indication(depression),78
+N089,P045,ciprofloxacin,J01MA02,methyldopa,C02AB01,3,ciprofibrate:no_us_label;tolazoline:no_us_label,230
+N090,P045,ciprofloxacin,J01MA02,amiloride,C03DB01,19,aliskiren:a_event_is_indication(blood pressure);bethanidine:no_us_label;nicotinyl alcohol:no_us_label;verapamil:a_event_is_indication(blood pressure);prenylamine:no_us_label;pravastatin:a_event_is_indication(cholesterol);enoximone:no_us_label;ouabain:no_us_label;moxonidine:no_us_label;xantinol nicotinate:no_us_label;practolol:no_us_label;nicotinyl alcohol:no_us_label;ibuprofen:a_event_is_indication(arthritis);cloridarol:no_us_label;pentifylline:no_us_label;norfenefrine:no_us_label;tiadenol:no_us_label;levosimendan:no_us_label,230
+N091,P046,cyclophosphamide,L01AA01,etonogestrel,G03AC08,2,dydrogesterone:no_us_label,316
+N092,P046,cyclophosphamide,L01AA01,ulipristal acetate,G03XB02,1,,316
+N093,P047,dapagliflozin,A10BK01,amcinonide,D07AC11,3,sulfamethizole:no_us_label;tacalcitol:no_us_label,52
+N094,P047,dapagliflozin,A10BK01,policresulen,D08AE02,2,chlortetracycline:no_us_label,52
+N095,P048,desipramine,N06AA01,galsulfase,A16AB08,2,pyridoxine:no_us_label,17
+N096,P048,desipramine,N06AA01,olsalazine,A07EC03,2,alverine:no_us_label,17
+N097,P049,diazepam,N05BA01,pramipexole,N04BC05,11,citicoline:no_us_label;aspirin:a_event_is_indication(headache);acamprosate:a_event_is_indication(dependence);dexmedetomidine:a_event_is_indication(sedation);pramiracetam:no_us_label;buspirone:a_event_is_indication(anxiety);protriptyline:a_event_is_indication(depression);d-methamphetamine:no_us_label;paracetamol:no_us_label;opipramol:no_us_label,121
+N098,P049,diazepam,N05BA01,pentobarbital,N05CA01,7,chlorhexadol:no_us_label;cinolazepam:no_us_label;remoxipride:no_us_label;methadone:a_event_is_indication(addiction);dexmedetomidine:a_event_is_indication(sedation);ketazolam:no_us_label,121
+N099,P050,diazepam,N05BA01,etonogestrel,G03AC08,7,lynestrenol:no_us_label;nylidrin:no_us_label;quingestanol:no_us_label;flunoxaprofen:no_us_label;chorionic gonadotropin:a_event_is_indication(discomfort);crystal violet:no_us_label,121
+N100,P050,diazepam,N05BA01,butoconazole,G01AF15,4,norgestrienone:no_us_label;estrone:a_event_is_indication(discomfort);17α-hydroxyprogesterone:no_us_label,121
+N101,P051,diazepam,N05BA01,bupropion,N06AX12,9,diazepam:same_as_a;iprindole:no_us_label;butethal:no_us_label;dyclonine:a_event_is_indication(infection);almotriptan:a_event_is_indication(headache);idebenone:no_us_label;anileridine:no_us_label;5-htp:no_us_label,121
+N102,P051,diazepam,N05BA01,eszopiclone,N05CF04,2,ambenonium:no_us_label,121
+N103,P052,diazepam,N05BA01,cocaine,N01BC01,8,thiopental:no_us_label;oxazepam:a_event_is_indication(agitation);bifemelane:no_us_label;levomethadyl acetate:no_us_label;doxefazepam:no_us_label;ethyl loflazepate:no_us_label;bupropion:duplicate_negative,121
+N104,P052,diazepam,N05BA01,isoflurane,N01AB06,1,,121
+N105,P053,diclofenac,M01AB05,isosorbide dinitrate,C05AE02,28,eplerenone:a_event_is_indication(blood pressure);lorajmine:no_us_label;nisoldipine:a_event_is_indication(hypertension);sotalol:a_event_is_indication(tachycardia);lidocaine:a_event_is_indication(pain);meglutol:no_us_label;phenoxybenzamine:a_event_is_indication(hypertension);ronifibrate:no_us_label;gemfibrozil:a_event_is_indication(abdominal pain);methyclothiazide:no_us_label;moexipril:a_event_is_indication(agranulocytosis);conivaptan:no_us_label;isradipine:a_event_is_indication(hypertension);bendroflumethiazide:no_us_label;indoramin:no_us_label;oxprenolol:no_us_label;ethacrynic acid:a_event_is_indication(congestive heart failure);tolvaptan:a_event_is_indication(sodium);meldonium:no_us_label;camphor:a_event_is_indication(pain);hidrosmin:no_us_label;ronifibrate:no_us_label;propranolol:a_event_is_indication(blood pressure);digoxin:a_event_is_indication(tachycardia);digoxin:a_event_is_indication(tachycardia);dobutamine:a_event_is_indication(congestive heart failure);potassium canrenoate:no_us_label,325
+N106,P053,diclofenac,M01AB05,regadenoson,C01EB21,57,chlorthalidone:a_event_is_indication(congestive heart failure);atorvastatin:a_event_is_indication(congestive heart failure);pentaerythritol tetranitrate:no_us_label;phenoxybenzamine:a_event_is_indication(hypertension);atenolol:a_event_is_indication(blood pressure);imidapril:no_us_label;ticrynafen:no_us_label;oxethazaine:no_us_label;lidoflazine:no_us_label;levosimendan:no_us_label;dextrothyroxine:no_us_label;benzocaine:a_event_is_indication(pain);trandolapril:a_event_is_indication(congestive heart failure);sitaxentan:no_us_label;disopyramide:a_event_is_indication(tachycardia);oxedrine:no_us_label;nicotinic acid:no_us_label;lercanidipine:no_us_label;oxethazaine:no_us_label;trandolapril:a_event_is_indication(congestive heart failure);penbutolol:no_us_label;omega-3 fatty acid:no_us_label;macitentan:a_event_is_indication(hypertension);procainamide:a_event_is_indication(agranulocytosis);bumetanide:a_event_is_indication(congestive heart failure);phentolamine:a_event_is_indication(necrosis);spironolactone:a_event_is_indication(blood pressure);ketanserin:no_us_label;bevantolol:no_us_label;lidocaine:a_event_is_indication(pain);visnadine:no_us_label;muzolimine:no_us_label;cicletanine:no_us_label;tasosartan:no_us_label;guanoxan:no_us_label;nisoldipine:a_event_is_indication(hypertension);etilefrine:no_us_label;nicotinyl alcohol:no_us_label;isradipine:a_event_is_indication(hypertension);bopindolol:no_us_label;carteolol:a_event_is_indication(hypertension);guanazodine:no_us_label;triamcinolone:a_event_is_indication(anemia);nylidrin:no_us_label;sodium myristyl sulfate:no_us_label;acetyldigitoxin:no_us_label;trimethaphan camsylate:no_us_label;penbutolol:no_us_label;isoprenaline:no_us_label;erythrityl tetranitrate:no_us_label;choline fenofibrate:no_us_label;indoramin:no_us_label;losartan:a_event_is_indication(albumin);nicardipine:a_event_is_indication(blood pressure);benziodarone:no_us_label;fenofibrate:a_event_is_indication(hypertension),325
+N107,P054,dicloxacillin,J01CF01,calcitriol,A11CC04,1,,9
+N108,P054,dicloxacillin,J01CF01,polyethylene glycol,A06AD15,1,,9
+N109,P055,diflunisal,N02BA11,fenofibrate,C10AB05,4,metaraminol:no_us_label;itramin tosylate:no_us_label;azapetine:no_us_label,18
+N110,P055,diflunisal,N02BA11,dronedarone,C01BD07,1,,18
+N111,P056,digoxin,C01AA05,sitagliptin,A10BH01,1,,77
+N112,P056,digoxin,C01AA05,neomycin,A01AB08,2,chlorobutanol:no_us_label,77
+N113,P057,diltiazem,C08DB01,polidocanol,C05BB02,3,procainamide:a_event_is_indication(injection);irbesartan:a_event_is_indication(blood pressure),129
+N114,P057,diltiazem,C08DB01,betaxolol,C07AB05,8,cilnidipine:no_us_label;debrisoquin:no_us_label;hydroflumethiazide:no_us_label;dihydralazine:no_us_label;meldonium:no_us_label;moxisylyte:no_us_label;ifenprodil:no_us_label,129
+N115,P058,diphenhydramine,D04AA32,potassium chloride,A12BA01,2,gefarnate:no_us_label,45
+N116,P058,diphenhydramine,D04AA32,sodium fluoride,A12CD01,4,belladonna alkaloids:no_us_label;velmanase alfa:a_event_is_indication(nervous);fenpiverinium:no_us_label,45
+N117,P059,donepezil,N06DA02,montelukast,R03DC03,3,prenoxdiazine:no_us_label;oxyquinoline:a_event_is_indication(infection),178
+N118,P059,donepezil,N06DA02,beclomethasone dipropionate,R03BA01,4,gramicidin d:no_us_label;dextromethorphan:a_event_is_indication(fever);antazoline:no_us_label,178
+N119,P060,donepezil,N06DA02,butoconazole,G01AF15,2,testosterone:a_event_is_indication(fatigue),178
+N120,P060,donepezil,N06DA02,natamycin,G01AA02,5,candicidin:no_us_label;povidone-iodine:a_event_is_indication(infection);testosterone:a_event_is_indication(fatigue);ergot alkaloids:no_us_label,178
+N121,P061,donepezil,N06DA02,policresulen,G01AX03,3,atosiban:no_us_label;furazolidone:no_us_label,178
+N122,P061,donepezil,N06DA02,oxiconazole,G01AF17,1,,178
+N123,P062,donepezil,N06DA02,levonorgestrel,G03AD01,1,,178
+N124,P062,donepezil,N06DA02,ulipristal acetate,G03XB02,6,follitropin beta:no_us_label;fexapotide:no_us_label;epimestrol:no_us_label;nylidrin:no_us_label;clindamycin:a_event_is_indication(diarrhea),178
+N125,P063,doxazosin,C02CA04,trazodone,N06AX05,7,etoperidone:no_us_label;nomifensine:no_us_label;opium:no_us_label;clozapine:a_event_is_indication(neutropenia);mosapramine:no_us_label;clozapine:a_event_is_indication(neutropenia),61
+N126,P063,doxazosin,C02CA04,tiagabine,N03AG06,7,mephenytoin:no_us_label;aspirin:a_event_is_indication(arthritis);laquinimod:no_us_label;rimazolium:no_us_label;mephenoxalone:no_us_label;linopirdine:no_us_label,61
+N127,P064,duloxetine,N06AX21,elosulfase alfa,A16AB12,4,almasilate:no_us_label;miglitol:a_event_is_indication(diabetes);aspirin:a_event_is_indication(headache),204
+N128,P064,duloxetine,N06AX21,retinol,A11CA01,3,calcium dl-lactate:no_us_label;insulin degludec:a_event_is_indication(diabetes),204
+N129,P065,dyphylline,R03DA01,cysteamine,A16AA04,3,nifurzide:no_us_label;isopropamide:no_us_label,0
+N130,P065,dyphylline,R03DA01,acarbose,A10BF01,1,,0
+N131,P066,dyphylline,R03DA01,magnesium carbonate,A06AD01,3,almagate dihydrate:no_us_label;tibezonium iodide:no_us_label,0
+N132,P066,dyphylline,R03DA01,cortisol,A01AC03,1,,0
+N133,P067,epinephrine,R03AA01,praziquantel,P02BA01,1,,130
+N134,P067,epinephrine,R03AA01,pyrantel,P02CC01,4,thiram:no_us_label;azanidazole:no_us_label;broxyquinoline:no_us_label,130
+N135,P068,ertapenem,J01DH03,riluzole,N07XX02,1,,74
+N136,P068,ertapenem,J01DH03,amitriptyline,N06AA09,7,5-htp:no_us_label;emylcamate:no_us_label;etidocaine:no_us_label;sodium oxybate:a_event_is_indication(nervous);pramiracetam:no_us_label;halothane:no_us_label,74
+N137,P069,ertapenem,J01DH03,rasagiline,N04BD02,4,tapentadol:a_event_is_indication(death);bromazepam:no_us_label;butriptyline:no_us_label,74
+N138,P069,ertapenem,J01DH03,varenicline,N07BA03,7,deprenyl:no_us_label;ziconotide:a_event_is_indication(infusion);halothane:no_us_label;suvorexant:a_event_is_indication(insomnia);mianserin:no_us_label;ethchlorvynol:no_us_label,74
+N139,P070,ertapenem,J01DH03,xenon,N01AX15,12,propanidid:no_us_label;quetiapine:positive_pair;metamizole sodium:no_us_label;thiopropazate:no_us_label;penfluridol:no_us_label;butethal:no_us_label;sodium oxybate:a_event_is_indication(nervous);clotiapine:no_us_label;thiopropazate:no_us_label;benorilate:no_us_label;brexpiprazole:a_event_is_indication(agitation),74
+N140,P070,ertapenem,J01DH03,naltrexone,N07BB04,7,tofisopam:no_us_label;gedocarnil:no_us_label;chlorproethazine:no_us_label;sultopride:no_us_label;toloxatone:no_us_label;citicoline:no_us_label,74
+N141,P071,erythromycin,J01FA01,hydralazine,C02DB02,5,nylidrin:no_us_label;imidapril:no_us_label;niceritrol:no_us_label;eplerenone:a_event_is_indication(blood pressure),70
+N142,P071,erythromycin,J01FA01,mecamylamine,C02BB01,6,benidipine:no_us_label;valsartan:a_event_is_indication(blood pressure);dihydroergocristine:no_us_label;xantinol nicotinate:no_us_label;hidrosmin:no_us_label,70
+N143,P072,erythromycin,J01FA01,eliglustat,A16AX10,2,mepartricin:no_us_label,70
+N144,P072,erythromycin,J01FA01,glycerol phenylbutyrate,A16AX09,2,tidiacic arginine:no_us_label,70
+N145,P073,esomeprazole,A02BC05,phenol,R02AA19,5,pheniramine:no_us_label;tipepidine:no_us_label;depemokimab:a_event_is_indication(bronchospasm);terbutaline:a_event_is_indication(bronchospasm),81
+N146,P073,esomeprazole,A02BC05,olodaterol,R03AC19,8,metizoline:no_us_label;spaglumic acid:no_us_label;dexamethasone:a_event_is_indication(alopecia);ibudilast:no_us_label;pheniramine:no_us_label;azatadine:no_us_label;sequifenadine:no_us_label,81
+N147,P074,ethinylestradiol,G03CA01,tioconazole,G01AF08,2,methallenestril:no_us_label,47
+N148,P074,ethinylestradiol,G03CA01,progesterone,G03DA04,1,,47
+N149,P075,felodipine,C08CA02,irbesartan,C09CA04,1,,17
+N150,P075,felodipine,C08CA02,indapamide,C03BA11,3,guanoclor:no_us_label;lacidipine:no_us_label,17
+N151,P076,fesoterodine,G04BD11,calcium gluconate,A12AA03,1,,0
+N152,P076,fesoterodine,G04BD11,pioglitazone,A10BG03,1,,0
+N153,P077,fludrocortisone,H02AA02,silicone,A03AX13,1,,96
+N154,P077,fludrocortisone,H02AA02,magnesium oxide,A12CC10,5,calcium dl-lactate:no_us_label;hydrochloric acid:a_event_is_indication(itching);tiropramide:no_us_label;sodium sulfate:a_event_is_indication(nausea),96
+N155,P078,flurazepam,N05CD01,carboprost,G02AD04,1,,10
+N156,P078,flurazepam,N05CD01,oxyquinoline,G01AC30,4,promestriene:no_us_label;iodoquinol:no_us_label;drospirenone:no_us_label,10
+N157,P079,fluticasone,R03BA05,dalbavancin,J01XA04,62,cefaclor:a_event_is_indication(fever);meningococcal vaccine:no_us_label;tobramycin:a_event_is_indication(infection);inosine pranobex:no_us_label;pefloxacin:no_us_label;xibornol:no_us_label;oxacillin:a_event_is_indication(infection);cefdinir:a_event_is_indication(fever);cefaclor:a_event_is_indication(fever);ceforanide:no_us_label;cefotiam:no_us_label;ethionamide:no_us_label;methicillin:no_us_label;sulphamethoxydiazine:no_us_label;4-aminosalicylic acid:no_us_label;efavirenz:a_event_is_indication(infection);azlocillin:no_us_label;rokitamycin:no_us_label;plague vaccine:no_us_label;etravirine:a_event_is_indication(infection);dicloxacillin:a_event_is_indication(infection);ritonavir:a_event_is_indication(infection);botulinum antitoxin:no_us_label;obiltoxaximab:a_event_is_indication(anaphylaxis);doravirine:a_event_is_indication(infection);lysozyme:no_us_label;sulfadimethoxine:no_us_label;boceprevir:no_us_label;cefozopran:no_us_label;4-aminosalicylic acid:no_us_label;sulfalene:no_us_label;brivudine:no_us_label;nalidixic acid:no_us_label;isepamicin:no_us_label;tenofovir disoproxil:a_event_is_indication(infection);daclatasvir:no_us_label;sulfapyridine:no_us_label;ceftaroline fosamil:a_event_is_indication(infection);piperacillin:no_us_label;cefapirin:no_us_label;penimepicycline:no_us_label;infanrix hexa:no_us_label;ribostamycin:no_us_label;cefepime:a_event_is_indication(infection);meningococcal vaccine:no_us_label;carbenicillin:no_us_label;clofazimine:a_event_is_indication(erythema);ribostamycin:no_us_label;hetacillin:no_us_label;clofazimine:a_event_is_indication(erythema);nemonoxacin:no_us_label;propicillin:no_us_label;sulfalene:no_us_label;telaprevir:no_us_label;arbekacin:no_us_label;typhoid vaccine:no_us_label;amprenavir:no_us_label;meningococcal vaccine:no_us_label;methacycline:no_us_label;cefmenoxime:no_us_label;hepatitis b immune globulin:a_event_is_indication(infection),119
+N158,P079,fluticasone,R03BA05,cidofovir,J05AB12,7,temocillin:no_us_label;sulfathiazole:no_us_label;cefpodoxime:a_event_is_indication(fever);telaprevir:no_us_label;colistin:no_us_label;rimantadine:a_event_is_indication(fever),119
+N159,P080,fluticasone,R03BA05,prasterone,A14AA07,1,,119
+N160,P080,fluticasone,R03BA05,zinc sulfate,A12CB01,2,pyridoxine:no_us_label,119
+N161,P081,fluticasone,R03BA05,ergocalciferol,A11CC01,3,danthron:no_us_label;mefenorex:no_us_label,119
+N162,P081,fluticasone,R03BA05,migalastat,A16AX14,7,trimebutine:no_us_label;palonosetron:a_event_is_indication(nausea);galactosidase alpha:no_us_label;algeldrate:no_us_label;attapulgite:no_us_label;esomeprazole:a_event_is_indication(infection),119
+N163,P082,fluvastatin,C10AA04,sufentanil,N01AH03,1,,124
+N164,P082,fluvastatin,C10AA04,morphine,N02AA01,1,,124
+N165,P083,fluvastatin,C10AA04,pyrantel,P02CC01,3,cyclobendazole:no_us_label;clefamide:no_us_label,124
+N166,P083,fluvastatin,C10AA04,fexinidazole,P01CA03,4,tetramethrin:no_us_label;metrifonate:no_us_label;metronidazole:a_event_is_indication(pneumonia),124
+N167,P084,fluvastatin,C10AA04,retinol,A11CA01,2,butylscopolamine bromide:no_us_label,124
+N168,P084,fluvastatin,C10AA04,balsalazide,A07EC04,3,oxabolone cipionate:no_us_label;trimebutine:no_us_label,124
+N169,P085,furosemide,C03CA01,sildenafil,G04BE03,3,prostaglandin f2α:no_us_label;bromocriptine:a_event_is_indication(hypotension),143
+N170,P085,furosemide,C03CA01,oxiconazole,G01AF17,3,lynestrenol:no_us_label;desogestrel:no_us_label,143
+N171,P086,furosemide,C03CA01,nizatidine,A02BA04,1,,143
+N172,P086,furosemide,C03CA01,misoprostol,A02BB01,2,pyridoxal phosphate:no_us_label,143
+N173,P087,furosemide,C03CA01,nateglinide,A10BX03,4,prednisone:a_event_is_indication(dermatitis);magaldrate:no_us_label;calcium chloride:a_event_is_indication(calcium),143
+N174,P087,furosemide,C03CA01,calcium carbonate,A02AC01,1,,143
+N175,P088,furosemide,C03CA01,dimethyl fumarate,N07XX09,2,hexobarbital:no_us_label,143
+N176,P088,furosemide,C03CA01,rufinamide,N03AF03,6,ethchlorvynol:no_us_label;melitracen:no_us_label;cevimeline:a_event_is_indication(dry mouth);alaproclate:no_us_label;toloxatone:no_us_label,143
+N177,P089,furosemide,C03CA01,pyrantel,P02CC01,3,metrifonate:no_us_label;propenidazole:no_us_label,143
+N178,P089,furosemide,C03CA01,triclabendazole,P02BX04,6,phenothrin:no_us_label;fumagillin:no_us_label;piperazine:no_us_label;thiram:no_us_label;propenidazole:no_us_label,143
+N179,P090,furosemide,C03CA01,methyltestosterone,G03BA02,1,,143
+N180,P090,furosemide,C03CA01,ulipristal,G03AD02,1,,143
+N181,P091,gabapentin,N02BF01,angiotensin ii,C01CX09,2,encainide:no_us_label,116
+N182,P091,gabapentin,N02BF01,clonidine,C02AC01,1,,116
+N183,P092,galantamine,N06DA04,progesterone,G03DA04,1,,207
+N184,P092,galantamine,N06DA04,terconazole,G01AG02,2,norethisterone:no_us_label,207
+N185,P093,haloperidol,N05AD01,asenapine,N05AH05,4,clorazepic acid:no_us_label;nizofenone:no_us_label;temazepam:a_event_is_indication(insomnia),232
+N186,P093,haloperidol,N05AD01,nicotine,N07BA01,2,temazepam:a_event_is_indication(insomnia),232
+N187,P094,haloperidol,N05AD01,milnacipran,N06AX17,11,oxazepam:a_event_is_indication(agitation);nitrous oxide:no_us_label;rufinamide:a_event_is_indication(seizures);paracetamol:no_us_label;camazepam:no_us_label;opipramol:no_us_label;bromocriptine:a_event_is_indication(amenorrhea);butethal:no_us_label;eslicarbazepine:a_event_is_indication(seizures);esketamine:a_event_is_indication(depression),232
+N188,P094,haloperidol,N05AD01,lithium,N05AN01,20,methsuximide:a_event_is_indication(seizures);vinylbital:no_us_label;lurasidone:a_event_is_indication(depression);meptazinol:no_us_label;dibucaine:a_event_is_indication(itching);laquinimod:no_us_label;propiomazine:no_us_label;tiapride:no_us_label;melevodopa:no_us_label;acetylglycinamide chloral hydrate:no_us_label;methoxyflurane:no_us_label;phenacemide:no_us_label;bezitramide:no_us_label;lurasidone:a_event_is_indication(depression);halazepam:no_us_label;levomethadyl acetate:no_us_label;nicotine:duplicate_negative;sultopride:no_us_label;glutethimide:no_us_label,232
+N189,P095,hydrochlorothiazide,C03AA03,piroxicam,M02AA07,12,naproxen:a_event_is_indication(headache);chymopapain:no_us_label;aurotioprol:no_us_label;d-glucosamine:no_us_label;oxycinchophen:no_us_label;succinylcholine:a_event_is_indication(chloride);tiludronic acid:no_us_label;aurothioglucose:no_us_label;alminoprofen:no_us_label;aceclofenac:no_us_label;hyaluronan sodium:no_us_label,100
+N190,P095,hydrochlorothiazide,C03AA03,vecuronium,M03AC03,13,diclofenac:a_event_is_indication(sodium);thiocolchicoside:no_us_label;bumadizone:no_us_label;styramate:no_us_label;etidronic acid:no_us_label;pirprofen:no_us_label;alclofenac:no_us_label;oxyphenbutazone:no_us_label;fazadinium bromide:no_us_label;mofebutazone:no_us_label;styramate:no_us_label;oxametacin:no_us_label,100
+N191,P096,insulin (human),A10AB01,streptomycin,A07AA04,3,magnesium gluconate:no_us_label;insulin aspart:a_event_is_indication(diabetic),38
+N192,P096,insulin (human),A10AB01,sodium fluoride,A01AA01,2,ondansetron:a_event_is_indication(cancer),38
+N193,P097,isosorbide mononitrate,C01DA14,amphotericin b,A01AB04,1,,0
+N194,P097,isosorbide mononitrate,C01DA14,niacinamide,A11HA01,1,,0
+N195,P098,isosorbide mononitrate,C01DA14,cocaine,N01BC01,1,,0
+N196,P098,isosorbide mononitrate,C01DA14,pyridostigmine,N07AA02,1,,0
+N197,P099,isotretinoin,D10BA01,ethosuximide,N03AD01,7,ethenzamide:no_us_label;metamizole sodium:no_us_label;aniracetam:no_us_label;fonazine mesylate:no_us_label;ambenonium:no_us_label;fludiazepam:no_us_label,73
+N198,P099,isotretinoin,D10BA01,lofexidine,N07BC04,5,perazine:no_us_label;methoxyflurane:no_us_label;procaine:no_us_label;alfaxalone:no_us_label,73
+N199,P100,isradipine,C08CA03,ubidecarenone,C01EB09,6,aprindine:no_us_label;bezafibrate:no_us_label;chlorthalidone:a_event_is_indication(edema);ouabain:no_us_label;kallidinogenase:no_us_label,18
+N200,P100,isradipine,C08CA03,phentolamine,C04AB01,1,,18
+N201,P101,latanoprost,S01EE01,carbinoxamine,R06AA08,6,prenoxdiazine:no_us_label;2-heptylamine:no_us_label;pholcodine:no_us_label;chlorphenoxamine:no_us_label;bemegride:no_us_label,87
+N202,P101,latanoprost,S01EE01,tetrahydrozoline,R01AA06,2,antazoline:no_us_label,87
+N203,P102,latanoprost,S01EE01,chlordiazepoxide,N05BA02,4,methylphenidate:a_event_is_indication(nervous);levosulpiride:no_us_label;methoxyflurane:no_us_label,87
+N204,P102,latanoprost,S01EE01,fosphenytoin,N03AB05,3,prolintane:no_us_label;clopenthixol:no_us_label,87
+N205,P103,latanoprost,S01EE01,mupirocin,R01AX06,31,tetrahydrozoline:duplicate_negative;hyaluronan sodium:no_us_label;deptropine:no_us_label;ibudilast:no_us_label;methapyrilene:no_us_label;l-carbocysteine:no_us_label;isoprenaline:no_us_label;gefapixant:no_us_label;acetyldihydrocodeine:no_us_label;methdilazine:no_us_label;chlorphenoxamine:no_us_label;acetyldihydrocodeine:no_us_label;methapyrilene:no_us_label;cromoglicic acid:no_us_label;beclomethasone dipropionate:a_event_is_indication(asthma);azelastine:a_event_is_indication(itching);phenylephrine:a_event_is_indication(headache);phenylephrine:a_event_is_indication(headache);tetrahydrozoline:duplicate_negative;isoprenaline:no_us_label;cyclopentamine:no_us_label;gefapixant:no_us_label;oxomemazine:no_us_label;beclomethasone dipropionate:a_event_is_indication(asthma);calcium hexamine thiocyanate:no_us_label;n-acetyl-l-cysteine:no_us_label;tyrothricin:no_us_label;fluticasone furoate:a_event_is_indication(asthma);glycopyrrolate:a_event_is_indication(bradycardia);bemegride:no_us_label,87
+N206,P103,latanoprost,S01EE01,ivacaftor,R07AX02,7,pheniramine:no_us_label;bemegride:no_us_label;tiotropium:a_event_is_indication(asthma);thiethylperazine:no_us_label;dequalinium chloride:no_us_label;phenol:a_event_is_indication(itching),87
+N207,P104,levodopa,N04BA01,exenatide,A10BX04,5,nifurzide:no_us_label;diethylpropion:a_event_is_indication(weight);bismuth subnitrate:a_event_is_indication(flatulence);cimetidine:a_event_is_indication(pain),159
+N208,P104,levodopa,N04BA01,doxycycline,A01AB22,3,tropisetron:no_us_label;n-ethylamphetamine:no_us_label,159
+N209,P105,levomepromazine,N05AA02,amphotericin b,G01AA03,1,,38
+N210,P105,levomepromazine,N05AA02,ospemifene,G03XC05,3,prostaglandin f2α:no_us_label;diethylstilbestrol:no_us_label,38
+N211,P106,levosulpiride,N05AL07,bupropion,N06AX12,6,bifemelane:no_us_label;halazepam:no_us_label;quinupramine:no_us_label;bezitramide:no_us_label;triflupromazine:no_us_label,0
+N212,P106,levosulpiride,N05AL07,fluphenazine,N05AB02,2,5-htp:no_us_label,0
+N213,P107,lisinopril,C09AA03,tetrahydrozoline,R01AA06,23,benralizumab:a_event_is_indication(asthma);fluticasone furoate:a_event_is_indication(asthma);desloratadine:a_event_is_indication(rhinitis);doxapram:a_event_is_indication(nervous);chlorquinaldol:no_us_label;triamcinolone:a_event_is_indication(arthritis);theobromine:no_us_label;pirbuterol:no_us_label;ipratropium bromide:a_event_is_indication(nasal congestion);antazoline:no_us_label;phenol:a_event_is_indication(discomfort);nedocromil:no_us_label;epinastine:a_event_is_indication(itching);buclizine:no_us_label;salbutamol:no_us_label;rupatadine:no_us_label;bambuterol:no_us_label;tretoquinol:no_us_label;thenalidine:no_us_label;chlorquinaldol:no_us_label;oxomemazine:no_us_label;ephedrine:a_event_is_indication(asthma),154
+N214,P107,lisinopril,C09AA03,neomycin,R02AB01,24,mequitazine:no_us_label;etamiphyllin:no_us_label;spaglumic acid:no_us_label;isoprenaline:no_us_label;phenindamine:no_us_label;naphazoline:a_event_is_indication(cold);naphazoline:a_event_is_indication(cold);fusafungine:no_us_label;fusafungine:no_us_label;mepolizumab:a_event_is_indication(asthma);fenoxazoline:no_us_label;epinephrine:a_event_is_indication(angioedema);tymazoline:no_us_label;tretoquinol:no_us_label;dimefline:no_us_label;eprozinol:no_us_label;thenalidine:no_us_label;promethazine:a_event_is_indication(angioedema);benzocaine:a_event_is_indication(pain);isoprenaline:no_us_label;bemegride:no_us_label;cyproheptadine:a_event_is_indication(angioedema);hexoprenaline:no_us_label,154
+N215,P108,lisinopril,C09AA03,sulfadiazine,J01EC02,3,sulfamethizole:no_us_label;netilmicin:no_us_label,154
+N216,P108,lisinopril,C09AA03,remdesivir,J05AB16,7,rabies vaccine:no_us_label;cefepime:a_event_is_indication(hypotension);umifenovir:no_us_label;rabies immunoglobulin or antiserum:no_us_label;spiramycin:no_us_label;meningococcal vaccine:no_us_label,154
+N217,P109,lisinopril,C09AA03,methylergonovine,G02AB01,3,vitamin c:a_event_is_indication(cold);ornidazole:no_us_label,154
+N218,P109,lisinopril,C09AA03,methyltestosterone,G03EK01,11,nylidrin:no_us_label;levonorgestrel:a_event_is_indication(pregnancy);vitamin c:a_event_is_indication(cold);ergot alkaloids:no_us_label;gestrinone:no_us_label;follitropin alpha:no_us_label;methylergonovine:duplicate_negative;chlordantoin:no_us_label;epimestrol:no_us_label;follitropin beta:no_us_label,154
+N219,P110,lisinopril,C09AA03,gabapentin,N02BF01,2,flumedroxone:no_us_label,154
+N220,P110,lisinopril,C09AA03,meprobamate,N05BC01,4,tilidine:no_us_label;nalbuphine:a_event_is_indication(injection);bentazepam:no_us_label,154
+N221,P111,lithium,N05AN01,zonisamide,N03AX15,1,,162
+N222,P111,lithium,N05AN01,melatonin,N05CH01,8,triclofos:no_us_label;nefazodone:a_event_is_indication(fatigue);carbaspirin calcium:no_us_label;zuclopenthixol:no_us_label;hydroxyzine:a_event_is_indication(anxiety);rivastigmine:a_event_is_indication(dementia);methaqualone:no_us_label,162
+N223,P112,lithium,N05AN01,thyrotropin alfa,H01AB01,2,cortivazol:no_us_label,162
+N224,P112,lithium,N05AN01,nafarelin,H01CA02,4,prednisone:a_event_is_indication(diuresis);somatrem:no_us_label;somatrem:no_us_label,162
+N225,P113,lorazepam,N05BA06,metformin,A10BA02,2,pipenzolate:no_us_label,151
+N226,P113,lorazepam,N05BA06,galsulfase,A16AB08,3,ethylestrenol:no_us_label;rabeprazole:a_event_is_indication(sodium),151
+N227,P114,losartan,C09CA01,nystatin,G01AA01,13,misoprostol:a_event_is_indication(discomfort);ormeloxifene:no_us_label;methallenestril:no_us_label;drospirenone:no_us_label;ergot alkaloids:no_us_label;propenidazole:no_us_label;quinagolide:no_us_label;copper iud:no_us_label;chlorquinaldol:no_us_label;danazol:a_event_is_indication(angioedema);ormeloxifene:no_us_label;bazedoxifene:no_us_label,173
+N228,P114,losartan,C09CA01,methylergonovine,G02AB01,2,ibuprofen:a_event_is_indication(fever),173
+N229,P115,losartan,C09CA01,bethanechol,N07AB02,6,bornaprine:no_us_label;galcanezumab:a_event_is_indication(headache);ropinirol:no_us_label;meptazinol:no_us_label;methohexital:a_event_is_indication(sodium),173
+N230,P115,losartan,C09CA01,safinamide,N04BD03,3,paroxetine:a_event_is_indication(anxiety);rizatriptan:a_event_is_indication(headache),173
+N231,P116,losartan,C09CA01,acetic acid,G01AD02,1,,173
+N232,P116,losartan,C09CA01,ospemifene,G03XC05,2,lisuride:no_us_label,173
+N233,P117,memantine,N06DX01,methyltestosterone,G03BA02,1,,102
+N234,P117,memantine,N06DX01,clotrimazole,G01AF02,2,androstanolone:no_us_label,102
+N235,P118,metoclopramide,A03FA01,buprenorphine,N07BC01,1,,64
+N236,P118,metoclopramide,A03FA01,pregabalin,N02BF02,4,ipidacrine:no_us_label;pramiracetam:no_us_label;nordazepam:no_us_label,64
+N237,P119,metoclopramide,A03FA01,nateglinide,A10BX03,1,,64
+N238,P119,metoclopramide,A03FA01,cholic acid,A05AA03,4,sulbutiamine:no_us_label;rosiglitazone:no_us_label;pyridoxal phosphate:no_us_label,64
+N239,P120,metoclopramide,A03FA01,tetrabenazine,N07XX06,3,bupivacaine-(rs):no_us_label;deprenyl:no_us_label,64
+N240,P120,metoclopramide,A03FA01,methsuximide,N03AD03,3,buprenorphine:duplicate_negative;prochlorperazine:a_event_is_indication(depression),64
+N241,P121,metoclopramide,A03FA01,duloxetine,N06AX21,4,chlorproethazine:no_us_label;flurazepam:a_event_is_indication(insomnia);flunitrazepam:no_us_label,64
+N242,P121,metoclopramide,A03FA01,dexmedetomidine,N05CM18,1,,64
+N243,P122,midazolam,N05CD08,bosentan,C02KX01,5,kallidinogenase:no_us_label;carteolol:a_event_is_indication(glaucoma);fenoldopam:no_us_label;reserpine:no_us_label,58
+N244,P122,midazolam,N05CD08,perindopril,C09AA04,1,,58
+N245,P123,milnacipran,N06AX17,cabergoline,G02CB03,1,,150
+N246,P123,milnacipran,N06AX17,testosterone,G03BA03,5,quinagolide:no_us_label;protiofate:no_us_label;ritodrine:no_us_label;atosiban:no_us_label,150
+N247,P124,mirogabalin,N02BF03,benazepril,C09AA07,2,temocapril:no_us_label,0
+N248,P124,mirogabalin,N02BF03,isosorbide mononitrate,C01DA14,1,,0
+N249,P125,morphine,N02AA01,levonorgestrel,G03AD01,6,corifollitropin alfa:no_us_label;3-acetylamino-4-hydroxyphenyl arsonic acid:no_us_label;isoconazole:no_us_label;demegestone:no_us_label;corifollitropin alfa:no_us_label,172
+N250,P125,morphine,N02AA01,estriol,G03CC06,1,,172
+N251,P126,morphine,N02AA01,tetrabenazine,N07XX06,3,lavender oil:no_us_label;fenethylline:no_us_label,172
+N252,P126,morphine,N02AA01,galantamine,N06DA04,16,enflurane:no_us_label;ethotoin:no_us_label;lofepramine:no_us_label;carbamazepin:no_us_label;ropinirol:no_us_label;nialamide:no_us_label;etifoxine:no_us_label;dexmethylphenidate:a_event_is_indication(nervous);naltrexone:a_event_is_indication(dependence);lacosamide:a_event_is_indication(seizures);ambenonium:no_us_label;ezogabine:no_us_label;doxefazepam:no_us_label;lamotrigine:a_event_is_indication(depression);oxazepam:a_event_is_indication(agitation),172
+N253,P127,morphine,N02AA01,silodosin,G04CA04,9,gemeprost:no_us_label;dl-lactic acid:no_us_label;17β-estradiol:no_us_label;lutropin alfa:no_us_label;candicidin:no_us_label;bazedoxifene:no_us_label;norethisterone:no_us_label;megestrol acetate:a_event_is_indication(anorexia),172
+N254,P127,morphine,N02AA01,prasterone,G03XX01,10,lisuride:no_us_label;testosterone:a_event_is_indication(fatigue);dienogest:no_us_label;dl-lactic acid:no_us_label;protiofate:no_us_label;dienogest:no_us_label;dl-lactic acid:no_us_label;androstanolone:no_us_label;ritodrine:no_us_label,172
+N255,P128,nifedipine,C08CA05,nisoldipine,C08CA07,2,olmesartan:a_event_is_indication(myocardial infarction),148
+N256,P128,nifedipine,C08CA05,riociguat,C02KX05,2,dihydroergocristine:no_us_label,148
+N257,P129,nifedipine,C08CA05,oxyquinoline,A01AB07,3,tetrahydrocannabinol:no_us_label;diastase:no_us_label,148
+N258,P129,nifedipine,C08CA05,agalsidase beta,A16AB04,7,magnesium silicate:no_us_label;chlorbenzoxamine:no_us_label;calcium dl-lactate:no_us_label;chlortetracycline:no_us_label;benzydamine:no_us_label;olaflur:no_us_label,148
+N259,P130,nifedipine,C08CA05,estriol,G03CA04,7,"ethisterone:no_us_label;sulfatolamide:no_us_label;chlorotrianisene:no_us_label;flunoxaprofen:no_us_label;dienestrol (e,e-isomer):no_us_label;tibolone:no_us_label",148
+N260,P130,nifedipine,C08CA05,mifepristone,G03XB01,15,clomifene:no_us_label;moxestrol:no_us_label;iodoquinol:no_us_label;17α-hydroxyprogesterone:no_us_label;cyclofenil:no_us_label;protiofate:no_us_label;dutasteride:a_event_is_indication(urinary retention);atosiban:no_us_label;methallenestril:no_us_label;urofollitropin:no_us_label;mesterolone:no_us_label;oxytetracycline:no_us_label;lactobacillus:no_us_label;vitamin c:a_event_is_indication(cough),148
+N261,P131,nifedipine,C08CA05,rivastigmine,N06DA03,1,,148
+N262,P131,nifedipine,C08CA05,varenicline,N07BA03,8,tianeptine:no_us_label;laquinimod:no_us_label;tetracaine:a_event_is_indication(pain);acetylleucine:no_us_label;procaine:no_us_label;phenibut:no_us_label;minaprine:no_us_label,148
+N263,P132,olanzapine,N05AH03,velaglucerase alfa,A16AB10,19,bismuth subcitrate:no_us_label;dapagliflozin:a_event_is_indication(diabetes);fenpiverinium:no_us_label;lafutidine:no_us_label;mepenzolate:no_us_label;psyllium:a_event_is_indication(constipation);calcium pangamate:no_us_label;difenoxin:no_us_label;calcium 2-glycerophosphate:no_us_label;fenpiverinium:no_us_label;methandrostenolone:no_us_label;ertugliflozin:a_event_is_indication(diabetes);miglustat:a_event_is_indication(hypersensitivity);otilonium bromide:no_us_label;sodium selenate:no_us_label;oxyphenisatin:no_us_label;magnesium pidolate:no_us_label;mazindol:no_us_label,183
+N264,P132,olanzapine,N05AH03,calcitriol,A11CC04,1,,183
+N265,P133,olanzapine,N05AH03,isosorbide dinitrate,C05AE02,4,verapamil:a_event_is_indication(bradycardia);diltiazem:a_event_is_indication(hypertension);ethacizine:no_us_label,183
+N266,P133,olanzapine,N05AH03,polidocanol,C05BB02,3,bunaftine:no_us_label;cinepazet:no_us_label,183
+N267,P134,omeprazole,A02BC01,diflunisal,N02BA11,2,ethchlorvynol:no_us_label,185
+N268,P134,omeprazole,A02BC01,vilazodone,N06AX24,8,apronal:no_us_label;propiomazine:no_us_label;ezogabine:no_us_label;bromocriptine:a_event_is_indication(confusion);estazolam:a_event_is_indication(insomnia);pyritinol:no_us_label;buspirone:a_event_is_indication(anxiety),185
+N269,P135,omeprazole,A02BC01,codeine,R05DA04,3,noscapine:no_us_label;omalizumab:a_event_is_indication(anaphylaxis),185
+N270,P135,omeprazole,A02BC01,xylometazoline,R01AB06,2,chloropyramine:no_us_label,185
+N271,P136,omeprazole,A02BC01,alvimopan,A06AH02,2,silymarin:no_us_label,185
+N272,P136,omeprazole,A02BC01,magnesium oxide,A06AD02,5,rimonabant:no_us_label;pantoprazole:a_event_is_indication(gastrointestinal bleeding);neomycin:a_event_is_indication(infection);rebamipide:no_us_label,185
+N273,P137,oxcarbazepine,N03AF02,deflazacort,H02AB13,1,,137
+N274,P137,oxcarbazepine,N03AF02,cinacalcet,H05BX01,3,meprednisone:no_us_label;carbetocin:no_us_label,137
+N275,P138,oxybutynin,G04BD04,fluvoxamine,N06AB08,3,laquinimod:no_us_label;glafenine:no_us_label,53
+N276,P138,oxybutynin,G04BD04,amifampridine,N07XX05,1,,53
+N277,P139,oxycodone,N02AA05,cabergoline,G02CB03,1,,103
+N278,P139,oxycodone,N02AA05,etonogestrel,G03AC08,2,lynestrenol:no_us_label,103
+N279,P140,oxycodone,N02AA05,estrone,G03CA07,6,bazedoxifene:no_us_label;furazolidone:no_us_label;ethinylestradiol:no_us_label;ciclopirox:a_event_is_indication(herpes simplex);ergot alkaloids:no_us_label,103
+N280,P140,oxycodone,N02AA05,flibanserin,G02CX02,5,candicidin:no_us_label;chlorquinaldol:no_us_label;ketoconazole:a_event_is_indication(infection);quingestanol:no_us_label,103
+N281,P141,pantoprazole,A02BC02,olodaterol,R03AC19,3,thonzylamine:no_us_label;spaglumic acid:no_us_label,53
+N282,P141,pantoprazole,A02BC02,mupirocin,R01AX06,1,,53
+N283,P142,paroxetine,N06AB05,ketamine,N01AX03,1,,265
+N284,P142,paroxetine,N06AB05,varenicline,N07BA03,24,hydromorphone:a_event_is_indication(death);aminophenazone:no_us_label;perazine:no_us_label;pheneturide:no_us_label;medifoxamine:no_us_label;lurasidone:a_event_is_indication(depression);levobupivacaine:no_us_label;salicylamide:no_us_label;tiagabine:a_event_is_indication(seizures);hypericum perforatum:a_event_is_indication(pain);clomethiazole:no_us_label;choline salicylate:no_us_label;prochlorperazine:a_event_is_indication(anxiety);suvorexant:a_event_is_indication(insomnia);iproniazid:no_us_label;brivaracetam:a_event_is_indication(seizures);bromazepam:no_us_label;ergotamine:a_event_is_indication(headache);bilobalide:no_us_label;idebenone:no_us_label;clopenthixol:no_us_label;cyamemazine:no_us_label;temazepam:a_event_is_indication(insomnia),265
+N285,P143,paroxetine,N06AB05,sufentanil,N01AH03,12,apronal:no_us_label;tiagabine:a_event_is_indication(seizures);allobarbital:no_us_label;promazine:no_us_label;tapentadol:a_event_is_indication(death);ethenzamide:no_us_label;dihydroergotamine:a_event_is_indication(headache);reposal:no_us_label;fluoxetine:a_event_is_indication(depression);guacetisal:no_us_label;prochlorperazine:a_event_is_indication(anxiety),265
+N286,P143,paroxetine,N06AB05,riluzole,N07XX02,2,valpromide:no_us_label,265
+N287,P144,paroxetine,N06AB05,etonogestrel,G03AC08,1,,265
+N288,P144,paroxetine,N06AB05,estrone,G03CC04,8,lynestrenol:no_us_label;quingestanol:no_us_label;chlormadinone acetate:no_us_label;prasterone enantate:no_us_label;17β-estradiol:no_us_label;amphotericin b:a_event_is_indication(infection);povidone-iodine:a_event_is_indication(infection),265
+N289,P145,pentobarbital,N05CA01,bromide,N05CM11,2,betahistine:no_us_label,9
+N290,P145,pentobarbital,N05CA01,paliperidone,N05AX13,1,,9
+N291,P146,pentobarbital,N05CA01,miconazole,G01AF04,4,diethylstilbestrol:no_us_label;prasterone enantate:no_us_label;ethinylestradiol:no_us_label,9
+N292,P146,pentobarbital,N05CA01,natamycin,G01AA02,5,diethylstilbestrol:no_us_label;dequalinium chloride:no_us_label;dapivirine:no_us_label;ibuprofen:a_event_is_indication(headache),9
+N293,P147,pentobarbital,N05CA01,vortioxetine,N06AX26,1,,9
+N294,P147,pentobarbital,N05CA01,ramelteon,N05CH02,1,,9
+N295,P148,phenobarbital,N03AA02,nafarelin,H01CA02,1,,28
+N296,P148,phenobarbital,N03AA02,betamethasone,H02AB01,5,deoxycorticosterone:no_us_label;benzylthiouracil:no_us_label;prednisone:a_event_is_indication(exfoliative dermatitis);meprednisone:no_us_label,28
+N297,P149,phenylbutazone,M01AA01,bisoprolol,C07AB07,1,,0
+N298,P149,phenylbutazone,M01AA01,ivabradine,C01EB17,3,barnidipine:no_us_label;xamoterol:no_us_label,0
+N299,P150,phenylbutazone,M01AA01,eplerenone,C03DA04,1,,0
+N300,P150,phenylbutazone,M01AA01,ezetimibe,C10AX09,6,simfibrate:no_us_label;chromonar:no_us_label;fenquizone:no_us_label;azapetine:no_us_label;mefruside:no_us_label,0
+N301,P151,phenylbutazone,M01AA01,modafinil,N06BA07,2,anileridine:no_us_label,0
+N302,P151,phenylbutazone,M01AA01,phenobarbital,N03AA02,4,heptabarbital:no_us_label;acetylglycinamide chloral hydrate:no_us_label;bezitramide:no_us_label,0
+N303,P152,phenytoin,N03AB02,propylthiouracil,H03BA02,2,diiodo-l-tyrosine:no_us_label,54
+N304,P152,phenytoin,N03AB02,octreotide,H01CB02,2,teriparatide:a_event_is_indication(osteoporosis),54
+N305,P153,pioglitazone,A10BG03,landiolol,C07AB14,23,"pramoxine:a_event_is_indication(discomfort);moexipril:a_event_is_indication(blood pressure);cifenline:no_us_label;cortisol:a_event_is_indication(pain);diltiazem:a_event_is_indication(hypertension);beta-fructose 1,6-bisphosphate:no_us_label;meglutol:no_us_label;inositol niacinate:no_us_label;nimodipine:a_event_is_indication(calcium);magnesium pyridoxal 5-phosphate glutamate:no_us_label;lorajmine:no_us_label;azilsartan medoxomil:a_event_is_indication(blood pressure);bretylium:no_us_label;cilazapril:no_us_label;epinephrine:a_event_is_indication(blood pressure);rilmenidine:no_us_label;guanoxan:no_us_label;hydrochlorothiazide:a_event_is_indication(blood pressure);lercanidipine:no_us_label;indapamide:a_event_is_indication(congestive heart failure);mipomersen parent acid:no_us_label;probucol:no_us_label",117
+N306,P153,pioglitazone,A10BG03,amiodarone,C01BD01,6,aluminium clofibrate:no_us_label;co-amilofruse:no_us_label;pentifylline:no_us_label;methoserpidine:no_us_label;vernakalant:no_us_label,117
+N307,P154,potassium chloride,A12BA01,exenatide,A10BJ01,7,bisoxatin:no_us_label;carbenoxolone:no_us_label;ipragliflozin:no_us_label;calcium glubionate:no_us_label;calcium dl-lactate:no_us_label;tiropramide:no_us_label,14
+N308,P154,potassium chloride,A12BA01,alvimopan,A06AH02,1,,14
+N309,P155,pravastatin,C10AA03,anidulafungin,J02AX06,11,thiamphenicol:no_us_label;sulfisomidine:no_us_label;daclatasvir:no_us_label;isavuconazole:no_us_label;cefamandole:no_us_label;ceftaroline fosamil:a_event_is_indication(infection);cefepime:a_event_is_indication(infection);nebacumab:no_us_label;oxytetracycline:no_us_label;moroxydine:no_us_label,120
+N310,P155,pravastatin,C10AA03,eravacycline,J01AA13,9,lamivudine:a_event_is_indication(infection);saquinavir:no_us_label;nemonoxacin:no_us_label;cefprozil:a_event_is_indication(fever);anidulafungin:duplicate_negative;japanese encephalitis vaccine:no_us_label;sulfamethoxazole:no_us_label;hepatitis b immune globulin:a_event_is_indication(infection),120
+N311,P156,pravastatin,C10AA03,oritavancin,J01XA05,16,typhoid vaccine:no_us_label;ceftibuten:no_us_label;ribavirin:a_event_is_indication(gas);iclaprim:no_us_label;sulfamethoxazole:no_us_label;enoxacin:no_us_label;idoxuridine:no_us_label;rabies immunoglobulin or antiserum:no_us_label;fosamprenavir:a_event_is_indication(infection);tilorone:no_us_label;sulfamethoxazole:no_us_label;rabies vaccine:no_us_label;capreomycin:no_us_label;bezlotoxumab:a_event_is_indication(infection);gentamicin:a_event_is_indication(infection),120
+N312,P156,pravastatin,C10AA03,voriconazole,J02AC03,35,carumonam:no_us_label;telavancin:a_event_is_indication(pneumonia);miconazole:a_event_is_indication(discomfort);enfuvirtide:no_us_label;diphtheria antitoxin:no_us_label;thioacetazone:no_us_label;sulfapyridine:no_us_label;cefadroxil:a_event_is_indication(fever);sulfathiazole:no_us_label;rifabutin:a_event_is_indication(infection);sulfamerazine:no_us_label;streptomycin:a_event_is_indication(infection);tenofovir disoproxil:a_event_is_indication(infection);ceforanide:no_us_label;adefovir dipivoxil:a_event_is_indication(infection);hepatyrix:no_us_label;influvac:no_us_label;cefotaxime:a_event_is_indication(infection);cefmetazole:no_us_label;botulinum antitoxin:no_us_label;ciprofloxacin:a_event_is_indication(diarrhea);nemonoxacin:no_us_label;cefapirin:no_us_label;antivenom:no_us_label;thioacetazone:no_us_label;tetanus vaccine:no_us_label;enisamium iodide:no_us_label;rifabutin:a_event_is_indication(infection);ketoconazole:a_event_is_indication(infection);cephacetrile:no_us_label;lascufloxacin:no_us_label;gemifloxacin:no_us_label;anti-tetanus immunoglobulin:no_us_label;sitafloxacin:no_us_label,120
+N313,P157,pravastatin,C10AA03,silodosin,G04CA04,5,methallenestril:no_us_label;diethylstilbestrol:no_us_label;naproxen:a_event_is_indication(fever);promegestone:no_us_label,120
+N314,P157,pravastatin,C10AA03,levonorgestrel,G03AC03,4,medrogestone:no_us_label;estrone:a_event_is_indication(discomfort);drospirenone:no_us_label,120
+N315,P158,pravastatin,C10AA03,cannabidiol,N03AX24,4,alaproclate:no_us_label;captodiame:no_us_label;cinnarizine:no_us_label,120
+N316,P158,pravastatin,C10AA03,erenumab,N02CD01,6,bilobalide:no_us_label;pentazocine:no_us_label;fluspirilene:no_us_label;methoxyflurane:no_us_label;levomethadone:no_us_label,120
+N317,P159,pravastatin,C10AA03,alglucosidase alfa,A16AB07,4,cascara:no_us_label;lorcaserin:no_us_label;timepidium bromide:no_us_label,120
+N318,P159,pravastatin,C10AA03,glycopyrrolate,A03AB02,4,dihydrotestosterone:no_us_label;alverine:no_us_label;omeprazole:a_event_is_indication(heartburn),120
+N319,P160,pravastatin,C10AA03,pitolisant,N07XX11,2,dextromoramide:no_us_label,120
+N320,P160,pravastatin,C10AA03,amifampridine,N07XX05,1,,120
+N321,P161,pravastatin,C10AA03,malathion,P03AX03,10,broxyquinoline:no_us_label;mesulfen:no_us_label;oxamniquine:no_us_label;dimethyl carbate:no_us_label;tenonitrozole:no_us_label;glycobiarsol:no_us_label;cypermethrin:no_us_label;azanidazole:no_us_label;diethylcarbamazine:no_us_label,120
+N322,P161,pravastatin,C10AA03,benznidazole,P01CA02,1,,120
+N323,P162,pravastatin,C10AA03,oxiconazole,G01AF17,5,oxytetracycline:no_us_label;quingestanol:no_us_label;follitropin alpha:no_us_label;prasterone enantate:no_us_label,120
+N324,P162,pravastatin,C10AA03,terconazole,G01AG02,1,,120
+N325,P163,prazosin,C02CA01,medroxyprogesterone,G03AC06,3,"clioquinol:no_us_label;dienestrol (e,e-isomer):no_us_label",68
+N326,P163,prazosin,C02CA01,policresulen,G01AX03,1,,68
+N327,P164,prednisone,H02AB07,miconazole,A01AB09,1,,46
+N328,P164,prednisone,H02AB07,eluxadoline,A07DA06,3,algeldrate:no_us_label;calcium pangamate:no_us_label,46
+N329,P165,pregabalin,N02BF02,dofetilide,C01BD04,12,cinepazet:no_us_label;tocainide:no_us_label;fimasartan:no_us_label;niceritrol:no_us_label;cloranolol:no_us_label;tasosartan:no_us_label;isradipine:a_event_is_indication(hypertension);isoprenaline:no_us_label;co-amilofruse:no_us_label;telmisartan:a_event_is_indication(cough);ethacizine:no_us_label,442
+N330,P165,pregabalin,N02BF02,ezetimibe,C10AX09,2,metoprolol:a_event_is_indication(heart failure),442
+N331,P166,prochlorperazine,N05AB04,amifampridine,N07XX05,3,doxefazepam:no_us_label;talbutal:no_us_label,39
+N332,P166,prochlorperazine,N05AB04,remifentanil,N01AH06,3,glutethimide:no_us_label;lofepramine:no_us_label,39
+N333,P167,prochlorperazine,N05AB04,mepivacaine,N01BB03,3,iproclozide:no_us_label;tiapride:no_us_label,39
+N334,P167,prochlorperazine,N05AB04,perampanel,N03AX22,3,methixene:no_us_label;meptazinol:no_us_label,39
+N335,P168,prochlorperazine,N05AB04,metformin,A10BA02,3,evogliptin:no_us_label;rimonabant:no_us_label,39
+N336,P168,prochlorperazine,N05AB04,lansoprazole,A02BC03,1,,39
+N337,P169,quinethazone,C03BA02,megestrol acetate,G03AC05,2,3-acetylamino-4-hydroxyphenyl arsonic acid:no_us_label,0
+N338,P169,quinethazone,C03BA02,policresulen,G01AX03,1,,0
+N339,P170,rabeprazole,A02BC04,rivaroxaban,B01AF01,1,,47
+N340,P170,rabeprazole,A02BC04,icatibant,B06AC02,1,,47
+N341,P171,rabeprazole,A02BC04,potassium chloride,B05XA01,1,,47
+N342,P171,rabeprazole,A02BC04,calcium chloride,B05XA07,3,picotamide:no_us_label;ancrod:no_us_label,47
+N343,P172,rabeprazole,A02BC04,theophylline,R03DA04,5,promethazine hydroxyethyl:no_us_label;chlorphenoxamine:no_us_label;procaterol:no_us_label;tyloxapol:no_us_label,47
+N344,P172,rabeprazole,A02BC04,nitric oxide,R07AX01,1,,47
+N345,P173,risperidone,N05AX08,terlipressin,H01BA04,3,gonadorelin:no_us_label;salmon calcitonin:no_us_label,297
+N346,P173,risperidone,N05AX08,methimazole,H03BB02,8,teriparatide:a_event_is_indication(injection);ornipressin:no_us_label;somatostatin:no_us_label;dibromotyrosine:no_us_label;mecasermin:a_event_is_indication(injection);mecasermin:a_event_is_indication(injection);glucagon:a_event_is_indication(diabetes),297
+N347,P174,risperidone,N05AX08,olsalazine,A07EC03,1,,297
+N348,P174,risperidone,N05AX08,lumasiran,A16AX18,3,nicofetamide:no_us_label;rociverine:no_us_label,297
+N349,P175,risperidone,N05AX08,tasimelteon,N05CH03,9,atomoxetine:a_event_is_indication(psychosis);rufinamide:a_event_is_indication(seizures);sertindole:no_us_label;imidazole salicylate:no_us_label;methadone:a_event_is_indication(injection);methylphenidate:a_event_is_indication(nervous);zolpidem:a_event_is_indication(insomnia);moclobemide:no_us_label,297
+N350,P175,risperidone,N05AX08,trazodone,N06AX05,5,potassium salicylate:no_us_label;iprazochrome:no_us_label;ziprasidone:a_event_is_indication(agitation);prothipendyl:no_us_label,297
+N351,P176,risperidone,N05AX08,bupropion,N06AX12,2,adrafinil:no_us_label,297
+N352,P176,risperidone,N05AX08,amifampridine,N07XX05,3,propentofylline:no_us_label;amisulpride:a_event_is_indication(nausea),297
+N353,P177,risperidone,N05AX08,policresulen,G01AX03,2,promestriene:no_us_label,297
+N354,P177,risperidone,N05AX08,ospemifene,G03XC05,8,danazol:a_event_is_indication(angioedema);lisuride:no_us_label;methyltestosterone:a_event_is_indication(tumor);clomifene:no_us_label;nylidrin:no_us_label;hexetidine:no_us_label;quinagolide:no_us_label,297
+N355,P178,risperidone,N05AX08,naltrexone,N07BB04,29,ketobemidone:no_us_label;tolcapone:a_event_is_indication(parkinson's disease);amantadine:a_event_is_indication(infection);deanol:no_us_label;lurasidone:a_event_is_indication(depression);ethenzamide:no_us_label;buprenorphine:a_event_is_indication(pain);butanilicaine:no_us_label;bromisoval:no_us_label;nitrazepam:no_us_label;atomoxetine:a_event_is_indication(psychosis);salicylamide:no_us_label;acetophenazine:no_us_label;fentanyl:a_event_is_indication(injection);reboxetine:no_us_label;niaprazine:no_us_label;paracetamol:no_us_label;pentazocine:no_us_label;sultopride:no_us_label;triclofos:no_us_label;choline salicylate:no_us_label;frovatriptan:a_event_is_indication(headache);minaprine:no_us_label;progabide:no_us_label;oxcarbazepine:a_event_is_indication(seizures);naratriptan:a_event_is_indication(headache);escitalopram:a_event_is_indication(anxiety);oxazepam:a_event_is_indication(agitation),297
+N356,P178,risperidone,N05AX08,bethanechol,N07AB02,22,phenibut:no_us_label;rizatriptan:a_event_is_indication(headache);enflurane:no_us_label;pramiracetam:no_us_label;desipramine:a_event_is_indication(depression);gedocarnil:no_us_label;deprenyl:no_us_label;chloroprocaine:a_event_is_indication(injection);tianeptine:no_us_label;glafenine:no_us_label;emylcamate:no_us_label;benorilate:no_us_label;quinupramine:no_us_label;ambenonium:no_us_label;levomethadyl acetate:no_us_label;fosphenytoin:a_event_is_indication(injection);pivagabine:no_us_label;captodiame:no_us_label;levobupivacaine:no_us_label;oxcarbazepine:a_event_is_indication(seizures);morpholine salicylate:no_us_label,297
+N357,P179,rivastigmine,N06DA03,cabergoline,N04BC06,26,loprazolam:no_us_label;tiagabine:a_event_is_indication(seizures);fluoxetine:a_event_is_indication(depression);propentofylline:no_us_label;thioproperazine:no_us_label;periciazine:no_us_label;chloral hydrate:no_us_label;thiopental:no_us_label;lidocaine:a_event_is_indication(pain);capsaicin:a_event_is_indication(arthritis);phenytoin:a_event_is_indication(seizures);ramelteon:a_event_is_indication(insomnia);phenobarbital:positive_pair;ethadione:no_us_label;oxycodone:a_event_is_indication(pain);clomethiazole:no_us_label;bilobalide:no_us_label;dimetacrine:no_us_label;dihydroergotamine:a_event_is_indication(headache);ethallobarbital:no_us_label;cinnarizine:no_us_label;ketobemidone:no_us_label;butethal:no_us_label;amisulpride:a_event_is_indication(nausea);pergolide:no_us_label,155
+N358,P179,rivastigmine,N06DA03,modafinil,N06BA07,3,pheneturide:no_us_label;bezitramide:no_us_label,155
+N359,P180,rivastigmine,N06DA03,retinol,A11CA01,6,butylscopolamine bromide:no_us_label;zolimidine:no_us_label;difenoxin:no_us_label;biotin:a_event_is_indication(cold);magnesium peroxide:no_us_label,155
+N360,P180,rivastigmine,N06DA03,potassium chloride,A12BA01,2,diastase:no_us_label,155
+N361,P181,rivastigmine,N06DA03,olsalazine,A07EC03,6,troglitazone:no_us_label;polynoxylin:no_us_label;magnesium sulfate:a_event_is_indication(constipation);cortisol:a_event_is_indication(fatigue);tegaserod:no_us_label,155
+N362,P181,rivastigmine,N06DA03,cholecalciferol,A11CC05,3,albiglutide:no_us_label;sibutramine:no_us_label,155
+N363,P182,rivastigmine,N06DA03,tioconazole,G01AF08,4,"follitropin beta:no_us_label;lynestrenol:no_us_label;dienestrol (e,e-isomer):no_us_label",155
+N364,P182,rivastigmine,N06DA03,estrone,G03CA07,2,moxestrol:no_us_label,155
+N365,P183,rivastigmine,N06DA03,mirtazapine,N06AX11,20,"tryptophan:a_event_is_indication(anxiety);pipamperone:no_us_label;pipamperone:no_us_label;meprobamate:a_event_is_indication(anxiety);bromazepam:no_us_label;chloroethane:no_us_label;felbamate:a_event_is_indication(anemia);pilocarpine:a_event_is_indication(hypertension);dextropropoxyphene:no_us_label;diethyl ether:no_us_label;trimethadione:no_us_label;chlorprothixene (z according to who inn rl 40, conflated wikidata):no_us_label;pentazocine:no_us_label;flupentixol:no_us_label;stiripentol:a_event_is_indication(seizures);imipramine:a_event_is_indication(depression);laquinimod:no_us_label;iproniazid:no_us_label;lofepramine:no_us_label",155
+N366,P183,rivastigmine,N06DA03,trazodone,N06AX05,17,minaprine:no_us_label;triflupromazine:no_us_label;alfaxalone:no_us_label;mianserin:no_us_label;melitracen:no_us_label;thiopropazate:no_us_label;perazine:no_us_label;choline salicylate:no_us_label;fentanyl:a_event_is_indication(pain);ketobemidone:no_us_label;phenazocine:no_us_label;γ-aminobutyric acid:no_us_label;minaprine:no_us_label;fencamfamin:no_us_label;amantadine:a_event_is_indication(infection);aspirin:a_event_is_indication(arthritis),155
+N367,P184,rivastigmine,N06DA03,opicapone,N04BX04,1,,155
+N368,P184,rivastigmine,N06DA03,molindone,N05AE02,1,,155
+N369,P185,rofecoxib,M01AH02,pectin,A07BC01,6,methenolone:no_us_label;diphenoxylate:no_us_label;guar gum:no_us_label;hexetidine:no_us_label;tropisetron:no_us_label,0
+N370,P185,rofecoxib,M01AH02,sodium phenylbutyrate,A16AX03,1,,0
+N371,P186,rofecoxib,M01AH02,empagliflozin,A10BX12,2,magnesium silicate:no_us_label,0
+N372,P186,rofecoxib,M01AH02,loperamide,A07DA03,1,,0
+N373,P187,rofecoxib,M01AH02,insulin degludec,A10AE06,2,propanthelinium:no_us_label,0
+N374,P187,rofecoxib,M01AH02,laronidase,A16AB05,12,nabilone:no_us_label;pantethine:no_us_label;bevonium:no_us_label;rimonabant:no_us_label;pectin:duplicate_negative;tin(ii) fluoride:no_us_label;casopitant:no_us_label;polycarbophil calcium:no_us_label;alfacalcidol:no_us_label;idanpramine:no_us_label;n-ethylamphetamine:no_us_label,0
+N375,P188,rofecoxib,M01AH02,spironolactone,C03DA01,7,phosphocreatine:no_us_label;cyclandelate:no_us_label;benidipine:no_us_label;naftazone:no_us_label;sitaxentan:no_us_label;acetyldigitoxin:no_us_label,0
+N376,P188,rofecoxib,M01AH02,epinephrine,C01CA24,3,inamrinone:no_us_label;esatenolol:no_us_label,0
+N377,P189,rofecoxib,M01AH02,desflurane,N01AB07,3,methoxyflurane:no_us_label;clomethiazole:no_us_label,0
+N378,P189,rofecoxib,M01AH02,erenumab,N02CD01,1,,0
+N379,P190,ropinirole,N04BC04,regadenoson,C01EB21,13,atenolol:a_event_is_indication(atherosclerosis);digitoxin:no_us_label;invert sugar:no_us_label;hydrochlorothiazide:a_event_is_indication(dependent edema);phosphocreatine:no_us_label;ivabradine:a_event_is_indication(heart rate);methoserpidine:no_us_label;magnesium pyridoxal 5-phosphate glutamate:no_us_label;niceritrol:no_us_label;bendroflumethiazide:no_us_label;lercanidipine:no_us_label;glybera:no_us_label,159
+N380,P190,ropinirole,N04BC04,fluocinolone acetonide,C05AA10,12,landiolol:a_event_is_indication(atrial fibrillation);barnidipine:no_us_label;heptaminol:no_us_label;cilnidipine:no_us_label;choline fenofibrate:no_us_label;buflomedil:no_us_label;meldonium:no_us_label;methyclothiazide:no_us_label;imolamine:no_us_label;pindolol:a_event_is_indication(hypertension);bamethan:no_us_label,159
+N381,P191,rosiglitazone,A10BG02,rutin,C05CA01,12,dilazep:no_us_label;sodium apolate:no_us_label;inositol niacinate:no_us_label;alprenolol:no_us_label;timolol:a_event_is_indication(headache);digitoxin:no_us_label;deserpidine:no_us_label;atenolol:a_event_is_indication(hypertension);sodium apolate:no_us_label;invert sugar:no_us_label;metoprolol:a_event_is_indication(hypertension),18
+N382,P191,rosiglitazone,A10BG02,sotalol,C07AA07,2,isoprenaline:no_us_label,18
+N383,P192,salbutamol,R03AC02,disulfiram,P03AA04,1,,129
+N384,P192,salbutamol,R03AC02,permethrin,P03AC04,3,dimethyl phthalate:no_us_label;thiram:no_us_label,129
+N385,P193,simvastatin,C10AA01,tasimelteon,N05CH03,6,methoxyflurane:no_us_label;pirisudanol:no_us_label;xenon:a_event_is_indication(gas);papaveretum:no_us_label;clonazepam:a_event_is_indication(chest pain),118
+N386,P193,simvastatin,C10AA01,olanzapine,N05AH03,2,articaine:no_us_label,118
+N387,P194,simvastatin,C10AA01,mebendazole,P02CA01,1,,118
+N388,P194,simvastatin,C10AA01,fenbendazole,P02CA06,2,dichlorophen:no_us_label,118
+N389,P195,solifenacin,G04BD08,insulin aspart,A10AD05,3,dl-magnesium lactate:no_us_label;succinylsulfathiazole:no_us_label,153
+N390,P195,solifenacin,G04BD08,insulin degludec,A10AD06,13,obeticholic acid:no_us_label;atropine:a_event_is_indication(bradycardia);epinephrine:a_event_is_indication(anaphylaxis);sodium phenylbutyrate:a_event_is_indication(protein);pyridoxine:no_us_label;mebeverine:no_us_label;glutamic acid hydrochloride:no_us_label;piprozolin:no_us_label;triethylenetetramine:no_us_label;pirenzepine:no_us_label;rociverine:no_us_label;gemigliptin:no_us_label,153
+N391,P196,spironolactone,C03DA01,fexinidazole,P01CA03,8,dimethyl carbate:no_us_label;sodium stibogluconate:no_us_label;bithionol:no_us_label;3-acetylamino-4-hydroxyphenyl arsonic acid:no_us_label;metronidazole:a_event_is_indication(nervous);thiabendazole:no_us_label;azanidazole:no_us_label,19
+N392,P196,spironolactone,C03DA01,fenbendazole,P02CA06,1,,19
+N393,P197,sulpiride,N05AL01,mirabegron,G04BD12,3,dienogest:no_us_label;lynestrenol:no_us_label,29
+N394,P197,sulpiride,N05AL01,testosterone,G03BA03,2,follitropin beta:no_us_label,29
+N395,P198,sulpiride,N05AL01,tapentadol,N02AX06,3,pethidine:no_us_label;carbaspirin calcium:no_us_label,29
+N396,P198,sulpiride,N05AL01,lithium,N05AN01,3,tiapride:no_us_label;articaine:no_us_label,29
+N397,P199,sulpiride,N05AL01,dutasteride,G04CB02,3,furazolidone:no_us_label;lactobacillus:no_us_label,29
+N398,P199,sulpiride,N05AL01,progesterone,G03DA04,1,,29
+N399,P200,sulpiride,N05AL01,ergotamine,N02CA02,3,perazine:no_us_label;levomepromazine:no_us_label,29
+N400,P200,sulpiride,N05AL01,morphine,N02AA01,2,fonazine mesylate:no_us_label,29
+N401,P201,timolol,S01ED01,levocetirizine,R06AE09,6,carbuterol:no_us_label;epinephrine:same_as_b;fenoterol:no_us_label;metizoline:no_us_label;pimethixene:no_us_label,121
+N402,P201,timolol,S01ED01,fexofenadine,R06AX26,8,umeclidinium bromide:no_us_label;amlexanox:no_us_label;hyaluronan sodium:no_us_label;diphenylpyraline:no_us_label;histapyrrodine:no_us_label;etamiphyllin:no_us_label;proxyphylline:no_us_label,121
+N403,P202,timolol,S01ED01,guaifenesin,R05CA03,5,mepolizumab:a_event_is_indication(bronchospasm);roflumilast:a_event_is_indication(bronchospasm);prednisolone:a_event_is_indication(conjunctivitis);tymazoline:no_us_label,121
+N404,P202,timolol,S01ED01,tetrahydrozoline,R01AB03,12,salmeterol:a_event_is_indication(bronchospasm);phenylephrine:a_event_is_indication(cold);ephedrine:a_event_is_indication(hypotension);isoetarine:no_us_label;prenoxdiazine:no_us_label;azelastine:a_event_is_indication(conjunctivitis);diphenylpyraline:no_us_label;clenbuterol:no_us_label;spaglumic acid:no_us_label;4-guaiacolsulfonic acid:no_us_label;4-guaiacolsulfonic acid:no_us_label,121
+N405,P203,timolol,C07AA06,carteolol,C07AA15,2,tribenoside:no_us_label,121
+N406,P203,timolol,C07AA06,perindopril,C09AA04,8,barnidipine:no_us_label;colestyramine:no_us_label;irbesartan:a_event_is_indication(blood pressure);lercanidipine:no_us_label;choline fenofibrate:no_us_label;troxerutin:no_us_label;endralazine:no_us_label,121
+N407,P204,timolol,C07AA06,clozapine,N05AH02,1,,121
+N408,P204,timolol,C07AA06,cevimeline,N07AX03,5,benzatropine:no_us_label;pizotyline:no_us_label;dexetimide:no_us_label;prochlorperazine:positive_pair,121
+N409,P205,timolol,C07AA06,pentobarbital,N05CA01,8,bentazepam:no_us_label;carbaspirin calcium:no_us_label;captodiame:no_us_label;antipyrine:no_us_label;carbamazepin:no_us_label;heroin:no_us_label;reposal:no_us_label,121
+N410,P205,timolol,C07AA06,vigabatrin,N03AG04,2,opium:no_us_label,121
+N411,P206,timolol,S01ED01,cocaine,R02AD03,14,bacitracin a:no_us_label;clenbuterol:no_us_label;calcium hexamine thiocyanate:no_us_label;hexamidine:no_us_label;umeclidinium bromide:no_us_label;pyrilamine:a_event_is_indication(cold);codeine:a_event_is_indication(pain);levocetirizine:duplicate_negative;prednisolone:a_event_is_indication(conjunctivitis);clemastine:a_event_is_indication(pruritus);nepinalone:no_us_label;4-guaiacolsulfonic acid:no_us_label;d-(-)-mannitol:no_us_label,121
+N412,P206,timolol,S01ED01,theophylline,R03DA04,10,omalizumab:a_event_is_indication(allergy);procaterol:no_us_label;normethadone:no_us_label;fenspiride:no_us_label;phenylephrine:a_event_is_indication(cold);benproperine:no_us_label;calcium hexamine thiocyanate:no_us_label;pentetrazol:no_us_label;dyclonine:a_event_is_indication(pain),121
+N413,P207,timolol,C07AA06,terconazole,G01AG02,1,,121
+N414,P207,timolol,C07AA06,clindamycin,G01AA10,10,prasterone:a_event_is_indication(atrophy);mesterolone:no_us_label;lutropin alfa:no_us_label;menotropin:no_us_label;gemeprost:no_us_label;bromocriptine:a_event_is_indication(hypotension);lutropin alfa:no_us_label;ibuprofen:a_event_is_indication(cold);crystal violet:no_us_label,121
+N415,P208,timolol,S01ED01,formoterol,R03AC13,12,benproperine:no_us_label;carbuterol:no_us_label;bemegride:no_us_label;ibuprofen:a_event_is_indication(cold);gefapixant:no_us_label;eprozinol:no_us_label;epinastine:a_event_is_indication(conjunctivitis);seratrodast:no_us_label;pyrilamine:a_event_is_indication(cold);hexamidine:no_us_label;phenylephrine:a_event_is_indication(cold),121
+N416,P208,timolol,S01ED01,cetylpyridinium,R02AA06,15,dexchlorpheniramine:a_event_is_indication(conjunctivitis);metaproterenol:no_us_label;benzydamine:no_us_label;sequifenadine:no_us_label;talastine:no_us_label;reslizumab:a_event_is_indication(bronchospasm);bacitracin a:no_us_label;lidocaine:a_event_is_indication(pain);cyclizine:no_us_label;bitolterol:no_us_label;mepolizumab:a_event_is_indication(bronchospasm);prenoxdiazine:no_us_label;framycetin:no_us_label;sobrerol:no_us_label,121
+N417,P209,tiotropium,R03BB04,amphotericin b,G01AA03,6,"cyproterone:no_us_label;menotropin:no_us_label;dienestrol (e,e-isomer):no_us_label;17α-hydroxyprogesterone:no_us_label;isoconazole:no_us_label",19
+N418,P209,tiotropium,R03BB04,estrone,G03CA07,7,cyclofenil:no_us_label;cyproterone:no_us_label;3-acetylamino-4-hydroxyphenyl arsonic acid:no_us_label;androstanolone:no_us_label;lasofoxifene:no_us_label;lactobacillus:no_us_label,19
+N419,P210,tolterodine,G04BD07,suvorexant,N05CJ01,3,propanidid:no_us_label;galcanezumab:a_event_is_indication(headache),38
+N420,P210,tolterodine,G04BD07,asenapine,N05AH05,2,adrafinil:no_us_label,38
+N421,P211,tolterodine,G04BD07,morphine,N02AA01,1,,38
+N422,P211,tolterodine,G04BD07,lofexidine,N07BC04,2,nomifensine:no_us_label,38
+N423,P212,tramadol,N02AX02,vancomycin,A07AA09,1,,119
+N424,P212,tramadol,N02AX02,magnesium oxide,A06AD02,8,canagliflozin:a_event_is_indication(death);tilactase:no_us_label;racecadotril:no_us_label;calcium gluceptate:no_us_label;nandrolone:no_us_label;lafutidine:no_us_label;oxyphencyclimine:no_us_label,119
+N425,P213,tramadol,N02AX02,melatonin,N05CH01,6,halazepam:no_us_label;phenelzine:a_event_is_indication(anxiety);jwh-018:no_us_label;nalbuphine:a_event_is_indication(addiction);divinyl ether:no_us_label,119
+N426,P213,tramadol,N02AX02,opicapone,N04BX04,3,pyritinol:no_us_label;escitalopram:a_event_is_indication(anxiety),119
+N427,P214,valproic acid,N03AG01,cinacalcet,H05BX01,3,fluocortolone:no_us_label;somatropin recombinant:no_us_label,130
+N428,P214,valproic acid,N03AG01,mecasermin,H01AC03,4,deoxycorticosterone:no_us_label;cortisone:a_event_is_indication(dry mouth);cortisol:a_event_is_indication(pain),130
+N429,P215,varenicline,N07BA03,pramipexole,N04BC05,3,xaliproden:no_us_label;buprenorphine:a_event_is_indication(death),128
+N430,P215,varenicline,N07BA03,apomorphine,N04BC07,7,"chlorprothixene (z according to who inn rl 40, conflated wikidata):no_us_label;rimazolium:no_us_label;thioproperazine:no_us_label;bromperidol:no_us_label;nizofenone:no_us_label;reboxetine:no_us_label",128
+N431,P216,warfarin,B01AA03,nusinersen,M09AX07,1,,27
+N432,P216,warfarin,B01AA03,tolmetin,M01AB03,1,,27
+N433,P217,zimelidine,N06AB02,safinamide,N04BD03,1,,0
+N434,P217,zimelidine,N06AB02,benzocaine,N01BA05,1,,0
