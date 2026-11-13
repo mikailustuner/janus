@@ -1,0 +1,271 @@
+{
+ "faers_counts_build": "20261108T130944Z-7445632a-7db3a513-7f67",
+ "faers_run_id": null,
+ "pairs": {
+  "total": 485,
+  "positive": 201,
+  "negative": 284,
+  "conflicting_labels_dropped": [],
+  "estimable": 427,
+  "not_estimable_by_reason": {
+   "name_not_mapped": 31,
+   "no_reports_for_drug": 27
+  }
+ },
+ "primary_auc_ln_ror": {
+  "auc": 0.7373819163292847,
+  "se": 0.024217471487424706,
+  "ci95_low": 0.6899165440429058,
+  "ci95_high": 0.7848472886156637,
+  "n_pos": 180,
+  "n_neg": 247
+ },
+ "secondary": {
+  "auc_including_not_estimable_at_lowest_score": {
+   "auc": 0.697787471095228,
+   "se": 0.024942344453061392,
+   "ci95_low": 0.6489013738916279,
+   "ci95_high": 0.746673568298828,
+   "n_pos": 201,
+   "n_neg": 284
+  },
+  "auc_by_set": {
+   "omop": {
+    "auc": 0.7017582792762035,
+    "se": 0.028274412938292793,
+    "ci95_low": 0.6463414477960154,
+    "ci95_high": 0.7571751107563915,
+    "n_pos": 145,
+    "n_neg": 202
+   },
+   "euadr": {
+    "auc": 0.8708994708994708,
+    "se": 0.038515788218674255,
+    "ci95_low": 0.7954099125592452,
+    "ci95_high": 0.9463890292396965,
+    "n_pos": 42,
+    "n_neg": 45
+   }
+  },
+  "auc_by_outcome": {
+   "acute_liver_injury": {
+    "auc": 0.7404778393351801,
+    "se": 0.04951266848698882,
+    "ci95_low": 0.6434347915567475,
+    "ci95_high": 0.8375208871136126,
+    "n_pos": 76,
+    "n_neg": 38
+   },
+   "acute_kidney_injury": {
+    "auc": 0.8402777777777777,
+    "se": 0.04455629693570715,
+    "ci95_low": 0.7529490398104813,
+    "ci95_high": 0.927606515745074,
+    "n_pos": 24,
+    "n_neg": 60
+   },
+   "acute_myocardial_infarction": {
+    "auc": 0.5785353535353535,
+    "se": 0.06391914210344765,
+    "ci95_low": 0.4532561361017118,
+    "ci95_high": 0.7038145709689951,
+    "n_pos": 33,
+    "n_neg": 60
+   },
+   "upper_gi_bleeding": {
+    "auc": 0.8134642356241235,
+    "se": 0.04496474152133145,
+    "ci95_low": 0.7253349609730086,
+    "ci95_high": 0.9015935102752384,
+    "n_pos": 23,
+    "n_neg": 62
+   },
+   "anaphylaxis": {
+    "auc": 1.0,
+    "se": 0.0,
+    "ci95_low": 1.0,
+    "ci95_high": 1.0,
+    "n_pos": 5,
+    "n_neg": 4
+   },
+   "aplastic_anaemia": {
+    "auc": 0.9199999999999999,
+    "se": 0.09380831519646858,
+    "ci95_low": 0.7361390793142686,
+    "ci95_high": 1.0,
+    "n_pos": 5,
+    "n_neg": 5
+   },
+   "cardiac_valve_fibrosis": {
+    "auc": null,
+    "ci95_low": null,
+    "ci95_high": null,
+    "n_pos": 0,
+    "n_neg": 5
+   },
+   "leukopenia": {
+    "auc": 0.8,
+    "se": 0.21602468994692867,
+    "ci95_low": 0.37659938459285797,
+    "ci95_high": 1.0,
+    "n_pos": 5,
+    "n_neg": 3
+   },
+   "rhabdomyolysis": {
+    "auc": 1.0,
+    "se": 0.0,
+    "ci95_low": 1.0,
+    "ci95_high": 1.0,
+    "n_pos": 4,
+    "n_neg": 5
+   },
+   "stevens_johnson": {
+    "auc": 0.8,
+    "se": 0.15491933384829668,
+    "ci95_low": 0.49636368275335707,
+    "ci95_high": 1.0,
+    "n_pos": 5,
+    "n_neg": 5
+   }
+  },
+  "evans_sensitivity": {
+   "k": 99,
+   "n": 180,
+   "estimate": 0.55,
+   "ci95_low": 0.4770335498424285,
+   "ci95_high": 0.6208769003331349
+  },
+  "evans_specificity": {
+   "k": 217,
+   "n": 247,
+   "estimate": 0.8785425101214575,
+   "ci95_low": 0.8319075929155686,
+   "ci95_high": 0.9135832076641424
+  },
+  "empirical_null": {
+   "mean_ln": 0.3585083472448384,
+   "sd_ln": 1.1423938058648977,
+   "n_negative_controls": 247
+  },
+  "negatives_ci_excluding_1_nominal": {
+   "k": 64,
+   "n": 247,
+   "estimate": 0.2591093117408907,
+   "ci95_low": 0.2084520920916011,
+   "ci95_high": 0.31714467117585565
+  },
+  "negatives_p_below_005_calibrated_leave_one_out": {
+   "k": 13,
+   "n": 247,
+   "estimate": 0.05263157894736842,
+   "ci95_low": 0.031012875698243,
+   "ci95_high": 0.08795254179846224
+  },
+  "positives_p_below_005_nominal": {
+   "k": 121,
+   "n": 180,
+   "estimate": 0.6722222222222223,
+   "ci95_low": 0.6006746444502444,
+   "ci95_high": 0.7365724617100293
+  },
+  "positives_p_below_005_calibrated": {
+   "k": 29,
+   "n": 180,
+   "estimate": 0.16111111111111112,
+   "ci95_low": 0.11458022838593224,
+   "ci95_high": 0.22180449820191656
+  }
+ },
+ "outcome_terms_found": {
+  "acute_liver_injury": [
+   "Acute hepatic failure",
+   "Cholestatic liver injury",
+   "Drug-induced liver injury",
+   "Hepatic failure",
+   "Hepatic necrosis",
+   "Hepatitis acute",
+   "Hepatitis fulminant",
+   "Hepatocellular injury",
+   "Hepatotoxicity",
+   "Liver injury",
+   "Mixed liver injury"
+  ],
+  "acute_kidney_injury": [
+   "Acute kidney injury",
+   "Anuria",
+   "Nephropathy toxic",
+   "Renal failure",
+   "Renal injury",
+   "Renal tubular necrosis",
+   "Tubulointerstitial nephritis"
+  ],
+  "acute_myocardial_infarction": [
+   "Acute myocardial infarction",
+   "Myocardial infarction",
+   "Silent myocardial infarction"
+  ],
+  "upper_gi_bleeding": [
+   "Duodenal ulcer haemorrhage",
+   "Gastric haemorrhage",
+   "Gastric ulcer haemorrhage",
+   "Gastritis haemorrhagic",
+   "Haematemesis",
+   "Melaena",
+   "Oesophageal haemorrhage",
+   "Peptic ulcer haemorrhage",
+   "Upper gastrointestinal haemorrhage"
+  ],
+  "anaphylaxis": [
+   "Anaphylactic reaction",
+   "Anaphylactic shock",
+   "Anaphylactoid reaction",
+   "Anaphylactoid shock"
+  ],
+  "aplastic_anaemia": [
+   "Aplastic anaemia",
+   "Bone marrow failure",
+   "Pancytopenia"
+  ],
+  "cardiac_valve_fibrosis": [
+   "Aortic valve incompetence",
+   "Cardiac valve disease",
+   "Mitral valve incompetence",
+   "Tricuspid valve incompetence"
+  ],
+  "leukopenia": [
+   "Agranulocytosis",
+   "Febrile neutropenia",
+   "Leukopenia",
+   "Neutropenia",
+   "Neutrophil count decreased",
+   "White blood cell count decreased"
+  ],
+  "rhabdomyolysis": [
+   "Myoglobinuria",
+   "Necrotising myositis",
+   "Rhabdomyolysis"
+  ],
+  "stevens_johnson": [
+   "SJS-TEN overlap",
+   "Stevens-Johnson syndrome",
+   "Toxic epidermal necrolysis"
+  ]
+ },
+ "outcome_terms_not_in_faers": {
+  "acute_liver_injury": [],
+  "acute_kidney_injury": [
+   "Renal failure acute"
+  ],
+  "acute_myocardial_infarction": [],
+  "upper_gi_bleeding": [],
+  "anaphylaxis": [],
+  "aplastic_anaemia": [],
+  "cardiac_valve_fibrosis": [
+   "Cardiac valve fibrosis"
+  ],
+  "leukopenia": [],
+  "rhabdomyolysis": [],
+  "stevens_johnson": []
+ },
+ "note_a0": "Pairs with a = 0 have no estimate in Janus; their AUC score is ln ROR with 0.5 added to every cell (the Haldane rule Janus applies to zero cells)."
+}
