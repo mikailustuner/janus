@@ -501,7 +501,14 @@
       "fits": "Sıra örüntüye uyuyor",
       "fitsLate": "Sıra uyuyor, olağan pencereden daha geç",
       "notConfirmed": "Sıra doğrulanmadı"
-    }
+    },
+    "sections": {
+      "found": "Janus ne buldu",
+      "why": "Neden önemli olabilir",
+      "todo": "Ne yapabilirsiniz"
+    },
+    "why": "Bazen bir ilacın yan etkisi yeni bir sağlık sorunu sanılır ve bunun için ikinci bir ilaç başlanır. Buna reçete kaskadı denir. Bu her zaman bir sorun değildir: ikinci ilaç yine de gerekli olabilir.",
+    "selfChange": "Hiçbir ilacı kendi başınıza bırakmayın ya da değiştirmeyin. Önce doktorunuzla ya da eczacınızla konuşun."
   },
   "ReadAloud": {
     "read": "Sesli oku",

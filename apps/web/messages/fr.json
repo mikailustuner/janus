@@ -501,7 +501,14 @@
       "fits": "L'ordre correspond au schéma",
       "fitsLate": "L'ordre correspond, au-delà de la fenêtre habituelle",
       "notConfirmed": "Ordre non confirmé"
-    }
+    },
+    "sections": {
+      "found": "Ce que Janus a trouvé",
+      "why": "Pourquoi cela peut compter",
+      "todo": "Ce que vous pouvez faire"
+    },
+    "why": "Parfois, un effet indésirable d'un médicament est pris pour un nouveau problème de santé, et un second médicament est commencé pour cela. C'est ce qu'on appelle une cascade de prescription. Ce n'est pas toujours un problème : le second médicament peut quand même être nécessaire.",
+    "selfChange": "N'arrêtez et ne modifiez aucun médicament de vous-même. Parlez-en d'abord à votre médecin ou à votre pharmacien."
   },
   "ReadAloud": {
     "read": "Lire à voix haute",

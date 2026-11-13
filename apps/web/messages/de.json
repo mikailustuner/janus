@@ -501,7 +501,14 @@
       "fits": "Reihenfolge passt zum Muster",
       "fitsLate": "Reihenfolge passt, später als das übliche Zeitfenster",
       "notConfirmed": "Reihenfolge nicht bestätigt"
-    }
+    },
+    "sections": {
+      "found": "Was Janus gefunden hat",
+      "why": "Warum es wichtig sein kann",
+      "todo": "Was Sie tun können"
+    },
+    "why": "Manchmal wird eine Nebenwirkung eines Medikaments für ein neues Gesundheitsproblem gehalten, und dafür wird ein zweites Medikament begonnen. Das nennt man eine Verschreibungskaskade. Das ist nicht immer ein Problem: Das zweite Medikament kann trotzdem nötig sein.",
+    "selfChange": "Setzen Sie kein Medikament eigenmächtig ab und ändern Sie nichts selbst. Sprechen Sie zuerst mit Ihrer Ärztin, Ihrem Arzt oder in der Apotheke."
   },
   "ReadAloud": {
     "read": "Vorlesen",

@@ -29,17 +29,19 @@ async function menuHrefs(page: Page): Promise<string[]> {
 test("the home offers the two ways in", async ({ page }) => {
   await stubApi(page);
   await page.goto("/en");
-  const entries = page.getByTestId("audience-entries");
+  // The shell streams in; look inside the real content, not the fallback copy.
+  const content = page.locator("#content");
+  const entries = content.getByTestId("audience-entries");
   await expect(entries).toBeVisible();
-  await expect(page.getByTestId("audience-patients")).toHaveAttribute(
+  await expect(content.getByTestId("audience-patients")).toHaveAttribute(
     "href",
     "/en/scan",
   );
-  await expect(page.getByTestId("audience-researchers")).toHaveAttribute(
+  await expect(content.getByTestId("audience-researchers")).toHaveAttribute(
     "href",
     "/en/research",
   );
-  await page.getByTestId("audience-researchers").click();
+  await content.getByTestId("audience-researchers").click();
   await expect(page).toHaveURL(/\/en\/research$/);
 });
 

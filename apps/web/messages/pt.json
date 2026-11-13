@@ -501,7 +501,14 @@
       "fits": "A ordem corresponde ao padrão",
       "fitsLate": "A ordem corresponde, para além da janela habitual",
       "notConfirmed": "Ordem não confirmada"
-    }
+    },
+    "sections": {
+      "found": "O que o Janus encontrou",
+      "why": "Porque pode ser importante",
+      "todo": "O que pode fazer"
+    },
+    "why": "Por vezes, um efeito secundário de um medicamento é confundido com um novo problema de saúde e é iniciado um segundo medicamento para ele. Chama-se a isto cascata de prescrição. Nem sempre é um problema: o segundo medicamento pode continuar a ser necessário.",
+    "selfChange": "Não suspenda nem altere nenhum medicamento por iniciativa própria. Fale primeiro com o seu médico ou farmacêutico."
   },
   "ReadAloud": {
     "read": "Ler em voz alta",

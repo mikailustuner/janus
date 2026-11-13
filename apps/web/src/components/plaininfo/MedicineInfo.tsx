@@ -367,11 +367,12 @@ export function MedicineInfoView({ call }: { call?: InfoCall }) {
   const vocab = useVocabulary();
   const id = useHashId();
   if (!session.ready || !vocab || id === undefined)
-    return <StateView state="loading" />;
+    return <StateView title={t("PlainInfo.eyebrow")} state="loading" />;
   const item = session.items.find((i) => i.id === id);
   if (!item)
     return (
       <StateView
+        title={t("PlainInfo.eyebrow")}
         state="empty"
         message={t("PlainInfo.notFound")}
         action={

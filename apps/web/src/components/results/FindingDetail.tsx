@@ -88,10 +88,11 @@ export function FindingDetail() {
     evaluation.status === "idle" ||
     position === undefined
   )
-    return <StateView state="loading" />;
+    return <StateView title={w("Findings.title")} state="loading" />;
   if (evaluation.status === "error")
     return (
       <StateView
+        title={w("Findings.title")}
         state="error"
         messageKey={evaluation.error.messageKey}
         retry={evaluation.retry}
@@ -100,6 +101,7 @@ export function FindingDetail() {
   if (!result || !finding)
     return (
       <StateView
+        title={w("Findings.title")}
         state="empty"
         message={t("Findings.empty")}
         action={
@@ -109,7 +111,13 @@ export function FindingDetail() {
     );
   const view = resultsView(result, vocab);
   if (view.kind !== "ok")
-    return <StateView state="error" messageKey="Findings.unavailable" />;
+    return (
+      <StateView
+        title={w("Findings.title")}
+        state="error"
+        messageKey="Findings.unavailable"
+      />
+    );
   const fv = [...view.confirmed, ...view.unconfirmed].find(
     (f) => f.position === position,
   )!;

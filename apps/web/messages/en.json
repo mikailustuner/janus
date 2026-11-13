@@ -501,7 +501,14 @@
       "fits": "Order fits the pattern",
       "fitsLate": "Order fits, later than the usual window",
       "notConfirmed": "Order not confirmed"
-    }
+    },
+    "sections": {
+      "found": "What Janus found",
+      "why": "Why it may matter",
+      "todo": "What you can do"
+    },
+    "why": "Sometimes a side effect of one medicine is taken for a new health problem, and a second medicine is started for it. This is called a prescribing cascade. It is not always a problem: the second medicine may still be needed.",
+    "selfChange": "Do not stop or change a medicine on your own. Talk to your doctor or pharmacist first."
   },
   "ReadAloud": {
     "read": "Read aloud",

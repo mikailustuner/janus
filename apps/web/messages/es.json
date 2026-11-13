@@ -501,7 +501,14 @@
       "fits": "El orden coincide con el patrón",
       "fitsLate": "El orden coincide, después de la ventana habitual",
       "notConfirmed": "Orden no confirmado"
-    }
+    },
+    "sections": {
+      "found": "Qué encontró Janus",
+      "why": "Por qué puede importar",
+      "todo": "Qué puede hacer"
+    },
+    "why": "A veces, un efecto adverso de un medicamento se confunde con un nuevo problema de salud y se empieza un segundo medicamento para ello. Esto se llama cascada de prescripción. No siempre es un problema: el segundo medicamento puede seguir siendo necesario.",
+    "selfChange": "No suspenda ni cambie ningún medicamento por su cuenta. Hable primero con su médico o farmacéutico."
   },
   "ReadAloud": {
     "read": "Leer en voz alta",

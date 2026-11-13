@@ -193,10 +193,18 @@ export function ConfirmPage() {
   const [shown, setShown] = useState(10);
   const [warning, setWarning] = useState<string | null>(null);
 
-  if (!vocab) return <StateView state="loading" label={t("Confirm.loading")} />;
+  if (!vocab)
+    return (
+      <StateView
+        title={t("Confirm.title")}
+        state="loading"
+        label={t("Confirm.loading")}
+      />
+    );
   if (!pending)
     return (
       <StateView
+        title={t("Confirm.title")}
         state="empty"
         message={t("Medicines.empty")}
         action={<ButtonLink href="/scan">{t("Confirm.back")}</ButtonLink>}
