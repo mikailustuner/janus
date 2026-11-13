@@ -1,4 +1,8 @@
 {
+ "one_pair_per_cascade": {
+  "cascades": 203,
+  "flagged": 74
+ },
  "missed_positive_pairs_by_category": {
   "cascade_not_in_rule_base": 75,
   "drug_outside_rule_base_classes": 59,
@@ -133,8 +137,8 @@
    "cases": 3
   },
   {
-   "rule": "pipc:49",
-   "text": "Proton pump inhibitor → Vitamin or Mineral Deficiency",
+   "rule": "pipc:3",
+   "text": "Beta-blocker (particularly lipophilic e.g., propranolol) → Antidepressant",
    "cases": 2
   },
   {
@@ -143,19 +147,14 @@
    "cases": 2
   },
   {
-   "rule": "pipc:3",
-   "text": "Beta-blocker (particularly lipophilic e.g., propranolol) → Antidepressant",
-   "cases": 2
-  },
-  {
    "rule": "pipc:10",
    "text": "HMG Co-A reductase inhibitor → Mineral supplement",
    "cases": 2
   },
   {
-   "rule": "pipc:50",
-   "text": "Bisphosphonate → Gastroprotective agent",
-   "cases": 1
+   "rule": "pipc:49",
+   "text": "Proton pump inhibitor → Vitamin or Mineral Deficiency",
+   "cases": 2
   },
   {
    "rule": "pipc:2",
@@ -163,8 +162,13 @@
    "cases": 1
   },
   {
-   "rule": "pipc:61",
-   "text": "Corticosteroid → Antihypertensive",
+   "rule": "pipc:12",
+   "text": "HMG Co-A reductase inhibitor → Sleep agent",
+   "cases": 1
+  },
+  {
+   "rule": "pipc:20",
+   "text": "Antipsychotic → Sedative",
    "cases": 1
   },
   {
@@ -178,13 +182,13 @@
    "cases": 1
   },
   {
-   "rule": "pipc:12",
-   "text": "HMG Co-A reductase inhibitor → Sleep agent",
+   "rule": "pipc:50",
+   "text": "Bisphosphonate → Gastroprotective agent",
    "cases": 1
   },
   {
-   "rule": "pipc:20",
-   "text": "Antipsychotic → Sedative",
+   "rule": "pipc:61",
+   "text": "Corticosteroid → Antihypertensive",
    "cases": 1
   }
  ]

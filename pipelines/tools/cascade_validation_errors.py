@@ -15,6 +15,7 @@ the engine did not report it (evidence gate, form or timing).
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 from collections import Counter
 from pathlib import Path
@@ -102,11 +103,23 @@ def main() -> None:
 
     comp_rules: Counter[str] = Counter()
     for c in comp:
-        for rid in {f["rule_id"] for f in c.get("findings") or []}:
+        for rid in sorted({f["rule_id"] for f in c.get("findings") or []}):
             comp_rules[rid] += 1
     rule_text = {f"pipc:{r.position}": f"{r.drug_a} → {r.drug_b}" for r in rb.rules}
 
+    # Protocol §6 sensitivity analysis: one pair per cascade (A class, B class), the lowest pair id.
+    ref_dir = args.results.parent
+    with (ref_dir / "positive_pairs.csv").open(newline="") as f:
+        groups: dict[tuple[str, str], list[str]] = {}
+        for row in csv.DictReader(f):
+            key = (row["class_a_label"].strip().casefold(), row["class_b_label"].strip().casefold())
+            groups.setdefault(key, []).append(row["pair_id"])
+    flagged_by_id = {r["id"]: bool(r["flagged"]) for r in pos}
+    firsts = [sorted(ids)[0] for ids in groups.values()]
+    one_per_cascade = {"cascades": len(firsts), "flagged": sum(flagged_by_id[i] for i in firsts)}
+
     out = {
+        "one_pair_per_cascade": one_per_cascade,
         "missed_positive_pairs_by_category": dict(missed),
         "within_rule_base_scope": {"pairs": in_scope, "flagged": in_scope_hit},
         "rule_exists_not_reported": rule_exists,
@@ -114,7 +127,9 @@ def main() -> None:
         "missed_cascade_cases_by_category": dict(case_missed),
         "comparison_case_rules": [
             {"rule": rid, "text": rule_text.get(rid, ""), "cases": n}
-            for rid, n in comp_rules.most_common()
+            for rid, n in sorted(
+                comp_rules.items(), key=lambda kv: (-kv[1], int(kv[0].split(":")[1]))
+            )
         ],
     }
     (args.results / "errors.json").write_text(json.dumps(out, indent=1, ensure_ascii=False) + "\n")
