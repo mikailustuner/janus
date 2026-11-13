@@ -1,0 +1,61 @@
+{
+ "dataset_version": "a8ae53c225ee72dcb338d47707bc30a34561d97882ea082f5e7bd17625a70a03",
+ "api": "https://janusmeds.org/api",
+ "primary": [
+  {
+   "measure": "sensitivity_pairs",
+   "k": 79,
+   "n": 217,
+   "estimate": 0.3640552995391705,
+   "ci95_low": 0.30291580919511474,
+   "ci95_high": 0.42992420961805133
+  },
+  {
+   "measure": "specificity_pairs",
+   "k": 421,
+   "n": 432,
+   "estimate": 0.9745370370370371,
+   "ci95_low": 0.9549855045349731,
+   "ci95_high": 0.9857235346013564
+  }
+ ],
+ "secondary": [
+  {
+   "measure": "ppv_pairs_at_1_to_2",
+   "k": 79,
+   "n": 90,
+   "estimate": 0.8777777777777778,
+   "ci95_low": 0.7942625751197446,
+   "ci95_high": 0.9303638406525853
+  },
+  {
+   "measure": "npv_pairs_at_1_to_2",
+   "k": 421,
+   "n": 559,
+   "estimate": 0.7531305903398927,
+   "ci95_low": 0.7157386203776251,
+   "ci95_high": 0.787067268446718
+  },
+  {
+   "measure": "case_detection",
+   "k": 7,
+   "n": 57,
+   "estimate": 0.12280701754385964,
+   "ci95_low": 0.0607806012587819,
+   "ci95_high": 0.23246448538691086
+  },
+  {
+   "measure": "comparison_alert_rate",
+   "k": 26,
+   "n": 50,
+   "estimate": 0.52,
+   "ci95_low": 0.38511744790185476,
+   "ci95_high": 0.6520286480910008
+  }
+ ],
+ "unresolved": {
+  "positive_pairs": 4,
+  "negative_pairs": 2
+ },
+ "api_errors": 0
+}

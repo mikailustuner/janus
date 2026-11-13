@@ -196,7 +196,23 @@ def run_pairs(
 
 
 def meds(field: str) -> list[str]:
-    return [m.strip() for m in field.split(";") if m.strip()]
+    """Medicine names of a case list (deviation 1, results file): split on semicolons outside
+    brackets, drop bracketed and parenthesised notes, split "X and Y" into two names."""
+    items, depth, cur = [], 0, []
+    for ch in field:
+        if ch in "[(":
+            depth += 1
+        elif ch in "])":
+            depth = max(0, depth - 1)
+        elif ch == ";" and depth == 0:
+            items.append("".join(cur))
+            cur = []
+            continue
+        if depth == 0 and ch not in "])":
+            cur.append(ch)
+    items.append("".join(cur))
+    names = [n.strip() for item in items for n in item.split(" and ")]
+    return [n for n in names if n]
 
 
 def run_cases(api: Api, rows: list[dict[str, str]], expected: bool) -> list[dict[str, Any]]:
