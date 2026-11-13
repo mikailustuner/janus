@@ -132,3 +132,11 @@ would need a fresh sample, which the exhausted registry cannot give.
 No new source, reader or sample. No change to the 2-fold criterion, the status rule, the leave-one-study-out design or the
 threshold of 10 drugs. Production artifacts are not rebuilt here. The re-run of the intake with the rule on is a separate
 step.
+
+## Erratum (2026-11-13, written after the unit tests and before any run on data; the rule is unchanged)
+
+Section 3.3 says the median "is robust to one wrong study when three or more studies exist". That is wrong for the rule
+as written. A candidate's reference is the median of the **other** studies, so with three studies in all it is the
+geometric mean of two studies, one of which may be the wrong one. One wrong study is outvoted only when there are **four
+or more** studies in all (three or more other studies). With two or three studies, one wrong study can take the
+candidates of the correct studies with it. The rule itself (section 3.2) is not changed. The unit tests state both cases.
