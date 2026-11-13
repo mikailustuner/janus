@@ -53,7 +53,7 @@ jobs:
           dotnet --list-runtimes
           dotnet --list-runtimes | grep -q "Microsoft.NETCore.App 8\."
       - name: Cache the R library
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: .rlib
           key: rlib-r4.6.1-ospsuite-12.4.5-rsharp-1.2.3-${{ hashFiles('apps/api/tests/install_ospsuite.R') }}
