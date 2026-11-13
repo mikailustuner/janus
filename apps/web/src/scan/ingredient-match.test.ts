@@ -173,7 +173,12 @@ describe("P2 the tolerance has a strict cap", () => {
               n + 1 < raw.length &&
               skeletons(c.key).includes(skeleton(w + raw[n + 1]!)),
           );
-          const near = printed.some((word) => {
+          // Each printed word, and each pair of neighbours joined (a name split in two, then
+          // repaired and within the cap, e.g. "paa1l iperidone" → paliperidone).
+          const joined = printed.flatMap((w, n) =>
+            n + 1 < printed.length ? [w + printed[n + 1]!] : [],
+          );
+          const near = [...printed, ...joined].some((word) => {
             return skeletons(c.key).some((s) => {
               const cap = distanceCap(s.length);
               if (cap === 0) return s === word;
@@ -188,6 +193,8 @@ describe("P2 the tolerance has a strict cap", () => {
           );
         }
       }),
+      // Found with a random seed in CI (docs/testing.md): a split, repaired name within the cap.
+      { examples: [[["paa1l iperidone", "dimenhydrinate"]]] },
     );
   });
 
