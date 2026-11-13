@@ -6,6 +6,13 @@ public server runs ([docs/releasing.md](docs/releasing.md)). Research use only; 
 
 ## [Unreleased]
 
+## [0.2.2] - 2026-11-13
+
+### Fixed
+
+- Migrations read the database URL from `DATABASE_URL_FILE` too (the staging check found that the migration step
+  still expected the variable).
+
 ## [0.2.1] - 2026-11-13
 
 ### Fixed
