@@ -265,7 +265,7 @@
   "title": "Janus: open tools to find prescribing cascades in medication lists",
   "family": "Üstüner",
   "given": "Mikail",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "date": "2026-11-13",
   "repository": "https://github.com/mikailustuner/janus",
   "doi": null,
