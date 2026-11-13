@@ -29,11 +29,24 @@ import {
   catalogue as tmCatalogue,
   substanceOut,
 } from "@/timemachine/model";
+import type { Locale } from "@/api/contracts";
+import { demoItems, type Fixture } from "@/demo/client";
+import cologne from "@/demo/fixtures/cologne.json";
+import istanbul from "@/demo/fixtures/istanbul.json";
+import ohio from "@/demo/fixtures/ohio.json";
+import { routing } from "@/i18n/routing";
+import { demoInfo } from "@/plaininfo/client";
+import { ingredient } from "@/plaininfo/model";
+import { infoQuery } from "@/plaininfo/query";
+import { violations } from "@/test/plaininfo-words";
+import type { Loaded, Vocabulary, VocabularyIndex } from "@/vocabulary";
+import vocabIndex from "@/vocabulary/index.json";
 import { openOutcomes } from "@/open/model";
 import { dataQualityReport } from "@/research/dataQuality";
 import { onsetTable } from "@/research/onset";
 
 import simulate from "@/simulation/simulate.recorded.json";
+import plainInfo from "@/demo/plain-info.recorded.json";
 import timemachine from "@/timemachine/fixture.recorded.json";
 import light from "@/light/fixture.recorded.json";
 import seance from "@/seance/fixture.recorded.json";
@@ -238,5 +251,52 @@ describe("timemachine/fixture.recorded.json", () => {
   it("holds at least one substance and one cascade", () => {
     expect(Object.keys(fx.substances).length).toBeGreaterThanOrEqual(1);
     expect(Object.keys(fx.cascades).length).toBeGreaterThanOrEqual(1);
+  });
+});
+
+describe("demo/plain-info.recorded.json", () => {
+  const LOCALES = routing.locales as readonly Locale[];
+  const items = [istanbul, ohio, cologne].flatMap((f) =>
+    demoItems(f as unknown as Fixture),
+  );
+  const vocab = async (l: Locale): Promise<Loaded> => ({
+    locale: l,
+    vocab: (await import(`@/vocabulary/${l}.json`)).default as Vocabulary,
+    index: vocabIndex as VocabularyIndex,
+  });
+
+  it("answers every demo medicine in every language, without a product (the demo needs this)", async () => {
+    for (const language of LOCALES) {
+      const v = await vocab(language);
+      for (const item of items) {
+        const q = infoQuery(v, item, language, true);
+        const r = await demoInfo(q.body!);
+        expect(r.ok, `${item.id} ${language}`).toBe(true);
+        if (r.ok) expect(r.data.official).toBeNull();
+      }
+    }
+  });
+
+  it("decodes every recorded ingredient answer", () => {
+    for (const [language, byCodes] of Object.entries(plainInfo.ingredients))
+      for (const [codes, answer] of Object.entries(byCodes))
+        expect(decode(ingredient, answer).ok, `${language} ${codes}`).toBe(
+          true,
+        );
+  });
+
+  it("names no dose and no way of taking a medicine in the group texts", () => {
+    for (const l of LOCALES)
+      for (const answer of Object.values(
+        (plainInfo.ingredients as Record<string, Record<string, unknown>>)[l]!,
+      )) {
+        const { groups } = answer as {
+          groups: { name: string; text: string }[];
+        };
+        for (const g of groups) {
+          expect(g.text).not.toMatch(/\d/);
+          expect(violations(`${g.name} ${g.text}`, l), g.text).toEqual([]);
+        }
+      }
   });
 });
