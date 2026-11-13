@@ -169,16 +169,6 @@ def make_experts(
     return out
 
 
-def eligible(experts: Sequence[Expert], section: str) -> list[Expert]:
-    """Experts of the section's groups in round-robin order: groups interleaved (first expert of
-    each group, then the second of each, ...), so a pair of a shared section mixes the groups."""
-    by = [[e for e in experts if e.group == g] for g in SECTION_GROUPS[section]]
-    out: list[Expert] = []
-    for i in range(max((len(b) for b in by), default=0)):
-        out += [b[i] for b in by if i < len(b)]
-    return out
-
-
 @dataclass
 class Assignment:
     assigned: dict[str, dict[str, list[str]]] = field(
@@ -193,43 +183,50 @@ def assign(
     experts: Sequence[Expert],
     cap: float = CAP_MINUTES,
 ) -> Assignment:
-    """Protocol section 5. `sections` maps a section to its items in the fixed random order, each
-    (item id, language or None). Sections are filled in protocol order; inside a section each item
-    goes to the next two experts of the round robin who read its language, have time left under
-    the cap and are under the section limit (C2: 6 documents). An item that cannot get two experts
-    is dropped; because items are taken in order, dropped items are the end of the order."""
+    """Protocol section 5 with Amendment 1. `sections` maps a section to its items in the fixed
+    random order, each (item id, language or None). Sections are filled in protocol order. An item
+    of a section with one group goes to the next two experts of that group's round robin; an item of
+    a shared section (A1, A2, B) goes to one expert of each group, each group with its own round
+    robin. An expert is taken only if they read the item's language, have time left under the cap
+    and are under the section limit (C2: 6 documents). An item that cannot get its two experts is
+    dropped; because items are taken in order, dropped items are the end of the order."""
     res = Assignment(minutes={e.id: 0.0 for e in experts})
     for s in SECTIONS:
         if s not in sections:
             continue
-        pool = eligible(experts, s)
-        taken: dict[str, int] = {e.id: 0 for e in pool}
+        lanes = [[e for e in experts if e.group == g] for g in SECTION_GROUPS[s]]
+        need = EXPERTS_PER_ITEM // len(lanes)  # 2 from one group, or 1 from each of two
+        ptr = [0] * len(lanes)
+        taken: dict[str, int] = {e.id: 0 for lane in lanes for e in lane}
         res.assigned[s] = {}
         res.dropped[s] = []
-        ptr = 0
         for item_id, lang in sections[s]:
-            chosen: list[int] = []
-            for step in range(len(pool)):
-                j = (ptr + step) % len(pool)
-                e = pool[j]
-                if lang is not None and lang not in e.languages:
-                    continue
-                if res.minutes[e.id] + MINUTES[s] > cap + 1e-9:
-                    continue
-                if taken[e.id] >= PER_EXPERT_LIMIT.get(s, math.inf):
-                    continue
-                chosen.append(j)
-                if len(chosen) == EXPERTS_PER_ITEM:
-                    break
-            if len(chosen) < EXPERTS_PER_ITEM:
+            picks: list[tuple[int, int]] = []  # (lane, index)
+            for li, lane in enumerate(lanes):
+                got = 0
+                for step in range(len(lane)):
+                    j = (ptr[li] + step) % len(lane)
+                    e = lane[j]
+                    if lang is not None and lang not in e.languages:
+                        continue
+                    if res.minutes[e.id] + MINUTES[s] > cap + 1e-9:
+                        continue
+                    if taken[e.id] >= PER_EXPERT_LIMIT.get(s, math.inf):
+                        continue
+                    picks.append((li, j))
+                    got += 1
+                    if got == need:
+                        break
+            if len(picks) < EXPERTS_PER_ITEM:
                 res.dropped[s].append(item_id)
                 continue
-            ids = [pool[j].id for j in chosen]
+            ids = [lanes[li][j].id for li, j in picks]
             for eid in ids:
                 res.minutes[eid] += MINUTES[s]
                 taken[eid] += 1
             res.assigned[s][item_id] = ids
-            ptr = (chosen[-1] + 1) % len(pool)
+            for li, j in picks:
+                ptr[li] = (j + 1) % len(lanes[li])
     return res
 
 

@@ -313,6 +313,13 @@ def result_c1(table: Mapping[str, Any], key: Mapping[str, Any], ans: Answers) ->
         ]  # both verdicts of an item are the consensus here; agreement is reported above
         by_source[src] = res | {
             "passes_decision_rule": accepted(summ, THRESHOLD),
+            # Amendment 1: values from the B3a samples P2/D2 measure a held-back source; they never
+            # decide whether it ships (that needs a fresh sample under the B3a rule)
+            "decides_shipping": all(
+                key["C1"][i].get("frame", "release") == "release"
+                for i in col
+                if key["C1"][i]["source"] == src
+            ),
             "errors_in_consensus": dict(sorted(errors[src].items())),
             "not_settled": sum(not it.agreed and it.verdict_1 != it.verdict_2 for it in its),
         }
@@ -442,7 +449,6 @@ def score(packet: Path, files: Sequence[Path]) -> dict[str, Any]:
         "answer_files": len(files),
         "judged": mapping["judged"],
         "dropped": {s: len(v) for s, v in mapping["dropped"].items()},
-        "held": mapping["held"],
         "agreement": agreement(mapping, ans),
         "consensus": {s: {q: status_counts(c) for q, c in qs.items()} for s, qs in table.items()},
         "needs_third_expert": needs_third(mapping, table, ans),

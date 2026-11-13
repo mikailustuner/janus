@@ -18,7 +18,6 @@ from janus_pipelines.expert_validation import (
     assign,
     check_value,
     consensus,
-    eligible,
     kappa,
     kappa_interval,
     make_experts,
@@ -48,9 +47,20 @@ def test_experts_are_numbered_by_group_and_never_named() -> None:
         make_experts({"pharmacist": 1}, {"E09": frozenset({"tr"})})
 
 
-def test_shared_sections_pair_the_two_groups() -> None:
-    pool = eligible(default_experts(), "A1")
-    assert [e.id for e in pool] == ["E03", "E05", "E04", "E06"]
+def test_shared_sections_pair_one_expert_of_each_group() -> None:
+    """Amendment 1, point 3: each A1, A2 and B item goes to one geriatrician or family physician
+    and one clinical pharmacist, also when the groups differ in size."""
+    ex = make_experts({"clinician": 3, "pharmacist": 2})
+    group = {e.id: e.group for e in ex}
+    res = assign(items({"A1": 30, "B": 12}), ex)
+    for s in ("A1", "B"):
+        assert all(
+            sorted(group[e] for e in v) == ["clinician", "pharmacist"]
+            for v in res.assigned[s].values()
+        )
+    load = [sum(e in v for v in res.assigned["A1"].values()) for e in ("E01", "E02", "E03")]
+    assert load == [10, 10, 10]
+    assert assign(items({"A1": 4}), default_experts()).assigned["A1"]["A1-001"] == ["E03", "E05"]
 
 
 def test_protocol_workload_at_two_experts_per_group() -> None:
@@ -68,6 +78,11 @@ def test_protocol_workload_at_two_experts_per_group() -> None:
     assert max(res.minutes.values()) <= CAP_MINUTES
 
 
+def test_c2_documents_alternate_in_the_order() -> None:
+    res = assign(items(PROTOCOL_SIZES), default_experts())
+    assert list(res.assigned["C2"]) == [f"C2-{i:03d}" for i in range(1, 7)]
+
+
 def test_further_pharmacologist_adds_three_documents() -> None:
     ex = make_experts({"pharmacologist": 3, "clinician": 2, "pharmacist": 2})
     assert len(assign(items(PROTOCOL_SIZES), ex).assigned["C2"]) == 9
@@ -82,12 +97,20 @@ def test_one_expert_cannot_make_a_pair_so_the_section_is_dropped() -> None:
 
 
 def test_cap_drops_from_the_end_of_the_order() -> None:
-    """Two pharmacists alone take A, B and E: past 225 minutes the last items are dropped."""
+    """One expert per shared group takes every A and B item: past 225 minutes the last B items
+    are dropped; the single pharmacist cannot pair in E, so E is dropped."""
+    ex = make_experts({"clinician": 1, "pharmacist": 1})
+    res = assign(items({"A1": 200, "A2": 40, "B": 50, "E": 10}), ex)
+    assert res.minutes == {"E01": 224.0, "E02": 224.0}  # 200 + 20 + 2 x 2
+    assert res.dropped["B"] == [f"B-{i:03d}" for i in range(3, 51)]
+    assert len(res.dropped["E"]) == 10 and res.assigned["E"] == {}
+
+
+def test_without_a_group_a_shared_section_is_dropped() -> None:
     ex = make_experts({"pharmacologist": 2, "clinician": 0, "pharmacist": 2})
     res = assign(items(PROTOCOL_SIZES), ex)
-    assert res.minutes["E03"] <= CAP_MINUTES
-    assert res.minutes["E03"] == 100 + 20 + 100 + 5  # A1, A2, B all; E only 10 proposals
-    assert res.dropped["E"] == [f"E-{i:03d}" for i in range(11, 91)]
+    assert res.assigned["A1"] == {} and len(res.dropped["A1"]) == 100
+    assert len(res.assigned["E"]) == 90
 
 
 def test_language_is_respected_in_section_b() -> None:
@@ -119,6 +142,8 @@ def test_assignment_invariants(sizes: dict[str, int], counts: dict[str, int]) ->
         assert sorted(assigned) + sorted(res.dropped[s]) == sorted(ids)
         for v in assigned.values():
             assert len(set(v)) == 2 and all(group[e] in SECTION_GROUPS[s] for e in v)
+            if len(SECTION_GROUPS[s]) == 2:
+                assert sorted(group[e] for e in v) == sorted(SECTION_GROUPS[s])
         # dropped items are the end of the fixed order
         assert res.dropped[s] == ids[len(ids) - len(res.dropped[s]) :]
         for e, n in PER_EXPERT_LIMIT.items():

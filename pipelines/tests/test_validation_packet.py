@@ -94,6 +94,11 @@ def release_frame() -> list[dict[str, Any]]:
                 rows.append({"source_id": src, "study_id": study, "source_locator": loc, "parameter": "cmax",
                              "analyte": "d", "value": float(10 + v), "unit": "ng/mL", "drug_key": f"drug{s}",
                              "quote": "q"})  # fmt: skip
+                if src != "clinicaltrials_gov":
+                    rows[-1] |= {
+                        "frame": "P2" if src == "pmc_oa" else "D2",
+                        "automated_verdicts": ["correct", "incorrect"],
+                    }
     return rows
 
 
@@ -119,14 +124,13 @@ def method20() -> list[dict[str, Any]]:
              "points": []} for i in range(20)]  # fmt: skip
 
 
-def full_draw(hold: frozenset[str] = frozenset()) -> Any:
+def full_draw() -> Any:
     d = S.Draw()
     d.items["A1"] = a1()
     d.items["A2"] = a2()
     d.items["B"] = b_items()
-    d.items["C1"], held = S.draw_c1(release_frame(), {}, hold)
-    d.held |= held
-    d.items["C2"], held = S.draw_c2(release_frame())
+    d.items["C1"] = S.draw_c1(release_frame(), {})
+    d.items["C2"] = S.draw_c2(release_frame())
     d.items["D"] = S.draw_d(atlas())
     ca_it, es = forms()
     d.items["E"] = S.draw_e(ca_it, es)
@@ -178,21 +182,42 @@ def test_sampling_is_deterministic_with_the_seed() -> None:
     assert refs[:60].count("negative") > 0
 
 
-def test_a_short_frame_stops_unless_held() -> None:
+def test_a_short_frame_stops_the_draw() -> None:
     small = [
         r for r in release_frame() if r["source_id"] != "pmc_oa" or r["study_id"] < "PMC0000002"
     ]
-    with pytest.raises(S.ShortfallError, match="C1 pmc_oa"):
+    with pytest.raises(S.ShortfallError, match="C1 pmc_oa: needs 10 values"):
         S.draw_c1(small, {})
-    items, held = S.draw_c1(small, {}, {"pmc_oa"})
-    assert "C1:pmc_oa" in held and all(it.key["source"] != "pmc_oa" for it in items)
     with pytest.raises(S.ShortfallError, match="C2 pmc_oa"):
         S.draw_c2(small)
-    assert S.draw_c2(small, hold=True)[0] == []
+
+
+def test_c1_keeps_the_b3a_verdicts_in_the_key_only() -> None:
+    d = full_draw()
+    b3a = [it for it in d.items["C1"] if it.key["source"] != "clinicaltrials_gov"]
+    assert len(b3a) == 20 and all(
+        it.key["automated_verdicts"] == ["correct", "incorrect"] for it in b3a
+    )
+    assert {it.key["frame"] for it in b3a} == {"P2", "D2"}
+    assert not any("automated_verdicts" in it.show or "frame" in it.show for it in d.items["C1"])
+
+
+def test_c2_alternates_sources_each_in_its_own_order() -> None:
+    d = full_draw()
+    assert [it.key["source"] for it in d.items["C2"]] == ["clinicaltrials_gov", "pmc_oa"] * 10
+    # one source's order does not depend on the other source's documents
+    extra = [r | {"study_id": "PMC9999999"} for r in release_frame() if r["source_id"] == "pmc_oa"][
+        :3
+    ]
+    one = S.ordered("C2", S.draw_c2(release_frame()))
+    two = S.ordered("C2", S.draw_c2(release_frame() + extra))
+    ct = [i.label for i in one if i.key["source"] == "clinicaltrials_gov"]
+    assert ct == [i.label for i in two if i.key["source"] == "clinicaltrials_gov"]
 
 
 BLINDED_KEYS = {"reference", "b1_flagged", "pair_id", "from_pair_id", "sources", "confidence", "rule", "flags",
-                "numeric", "classes", "cls", "automated_verdicts", "stratum", "level", "confirmed", "reason"}  # fmt: skip
+                "numeric", "classes", "cls", "automated_verdicts", "stratum", "level", "confirmed", "reason",
+                "frame", "band"}  # fmt: skip
 
 
 def all_keys(o: Any) -> set[str]:
@@ -281,6 +306,11 @@ def test_score_known_results(packet: Path, tmp_path: Path) -> None:
     assert p["positives_called_realistic"]["wilson"][0] == pytest.approx(0.9398, abs=1e-3)
     c1 = res["C1"]["primary"]["tier2_precision_by_source"]["clinicaltrials_gov"]
     assert c1["precision"] == 1.0 and c1["n"] == 30 and "cluster_lower" in c1
+    assert c1["decides_shipping"] is True
+    pmc = res["C1"]["primary"]["tier2_precision_by_source"]["pmc_oa"]
+    assert pmc["n"] == 10 and pmc["decides_shipping"] is False
+    # tier 1: the automated passes disagree on every B3a value, so no pair enters kappa
+    assert res["C1"]["secondary"]["tier1_agreement_with_expert_consensus"]["n"] == 0
     assert res["E"]["primary"]["CA"]["accept"] == 30
     assert res["agreement"]["A1"]["realistic"][0]["kappa"] is None
     assert res["needs_third_expert"] == []
