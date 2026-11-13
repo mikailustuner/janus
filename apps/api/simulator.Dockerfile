@@ -37,7 +37,7 @@ COPY data/time_machine/compartmental_pk.csv ./data/time_machine/compartmental_pk
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen --no-dev
 
-RUN apt-get purge -y --auto-remove linux-libc-dev 2>/dev/null || true \
+RUN apt-get purge -y --auto-remove linux-libc-dev \
     && rm -rf /var/lib/apt/lists/*
 RUN useradd --system --uid 10002 --no-create-home simulator
 USER simulator
