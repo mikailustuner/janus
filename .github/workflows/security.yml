@@ -84,7 +84,7 @@ jobs:
             trivy image --quiet --format cyclonedx --output "/sbom/janus-$img.cdx.json" "janus-$img:scan"
           done
           exit "$fail"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: sbom
