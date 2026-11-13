@@ -22,6 +22,7 @@ dev = [
     "hypothesis>=6.170.15",
     "pyright>=1.1.414",
     "pytest>=9.2.0",
+    "pytest-cov>=7.0.0",
     "ruff>=0.17.4",
 ]
 
@@ -81,3 +82,14 @@ typeCheckingMode = "strict"
 include = ["janus", "tests"]
 venvPath = "."
 venv = ".venv"
+
+[tool.coverage.run]
+source = ["janus"]
+# Offline tools run by hand, not reachable from the service (docs/testing.md, "Coverage").
+omit = [
+    "janus/resolution/coverage_snapshot.py",
+    "janus/resolution/name_rules_report.py",
+    "janus/notes/glossary_draft.py",
+    "janus/notes/bench.py",
+    "janus/memory/bench.py",
+]
