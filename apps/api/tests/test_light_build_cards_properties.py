@@ -107,10 +107,12 @@ def write_world(root: Path, labels: list[tuple[int, str, str, list[str], list[in
         d = _artifact(root, "wikidata_ingredients", "w1", "2026-11-07")
         con.execute(
             "CREATE TABLE w (qid VARCHAR, rxcuis VARCHAR[], label_en VARCHAR, label_tr VARCHAR, "
-            "label_de VARCHAR, label_fr VARCHAR, label_es VARCHAR)"
+            "label_de VARCHAR, label_fr VARCHAR, label_es VARCHAR, label_pt VARCHAR)"
         )
         for q, rx, en in WIKIDATA:
-            con.execute("INSERT INTO w VALUES (?, ?, ?, NULL, NULL, NULL, NULL)", [q, rx, en])
+            con.execute(
+                "INSERT INTO w VALUES (?, ?, ?, NULL, NULL, NULL, NULL, ?)", [q, rx, en, f"{en} pt"]
+            )
         con.execute(f"COPY w TO '{d / 'rows.parquet'}' (FORMAT parquet)")
         d = _artifact(root, "openfda_label", "f1", "2026-11-08")
         con.execute("CREATE TABLE f (set_id VARCHAR, indications VARCHAR)")

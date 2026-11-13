@@ -234,8 +234,8 @@ NOTICE must keep every entry of the current hand-written file.
 
 ### 5.3 `wikidata_ingredients` (Req 7)
 - Query 1: `?item wdt:P267 ?atc . OPTIONAL { ?item wdt:P3345 ?rxcui }` → codes.
-- Queries 2–6: labels and aliases (`rdfs:label`, `skos:altLabel`) for items with P267, one
-  query per language (en, tr, de, fr, es). If a query times out, it is split by the first ATC
+- Queries 2–8: labels and aliases (`rdfs:label`, `skos:altLabel`) for items with P267, one
+  query per language (en, tr, de, fr, es, pt; plus `pt-br`, merged into pt). If a query times out, it is split by the first ATC
   letter (A–V) and the parts merged.
 - Merge is a pure function over result rows: group by QID; ATC codes and RxCUIs as sorted
   unique lists; labels per language; aliases sorted unique. Items without P267 never appear.

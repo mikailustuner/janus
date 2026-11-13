@@ -35,6 +35,7 @@ from janus.resolution.code_exclusions import (
     excluded_pairs,
 )
 from janus.resolution.component_codes import ComponentCode, validate_against_dataset
+from janus.resolution.matching import LANGS as MATCH_LANGS
 from janus.resolution.matching import IndexItem, Match, NameIndex, label_keys, map_name
 from janus.resolution.name_lists import Lang
 from janus.resolution.names import fold
@@ -61,9 +62,9 @@ TITCK = "titck"
 OPENFDA = "openfda_ndc"
 WIKIDATA = "wikidata"
 JANUS_CURATED = "janus_curated"  # curated Janus ingredient keys, data/janus_ingredients.csv
-LANGS = ("en", "tr", "de", "fr", "es")
+LANGS = ("en", "tr", "de", "fr", "es", "pt")  # Wikidata label languages kept per ingredient
 SEARCH_LANGS = ("en", "tr")  # name entries of every region (region "")
-EU_SEARCH_LANGS = ("de", "fr", "es")  # name entries of region EU (DP39)
+EU_SEARCH_LANGS = ("de", "fr", "es", "pt")  # name entries of region EU (DP39)
 FINISHED_TYPES = frozenset(
     {
         "HUMAN PRESCRIPTION DRUG",
@@ -185,8 +186,10 @@ def _item_names(row: Row) -> dict[str, tuple[str, ...]]:
 
 
 def index_item(row: Row) -> IndexItem:
-    labels = {lang: str(row[f"label_{lang}"]) for lang in LANGS if row.get(f"label_{lang}")}
-    aliases = {lang: _strs(row.get(f"aliases_{lang}")) for lang in LANGS}
+    # Matching stays on the five languages of the audited name rules: Portuguese names are kept
+    # for display and search (`_item_names`, the ingredient record) but do not map products.
+    labels = {lang: str(row[f"label_{lang}"]) for lang in MATCH_LANGS if row.get(f"label_{lang}")}
+    aliases = {lang: _strs(row.get(f"aliases_{lang}")) for lang in MATCH_LANGS}
     return IndexItem(str(row["qid"]), labels, {k: v for k, v in aliases.items() if v})
 
 
