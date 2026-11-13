@@ -1,0 +1,15 @@
+# gitleaks configuration (docs/security.md). The default rules apply; one narrow exception below.
+title = "Janus"
+
+[extend]
+useDefault = true
+
+# Fields named "key" in recorded API answers and open data files hold literature identifiers
+# (e.g. "bates_1995_dirham") or content hashes, not credentials. Only these field names, and only in
+# these files, are exempt: a secret under any other name, or anywhere else, is still reported.
+[[allowlists]]
+description = "identifier fields named key in data files"
+condition = "AND"
+paths = ['''\.recorded\.json$''', '''^data/.+\.json$''']
+regexTarget = "match"
+regexes = ['''^(key|reference_key|key_exclusions_sha256)": "''']
