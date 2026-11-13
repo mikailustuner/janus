@@ -50,7 +50,7 @@ const SNAPSHOT = {
 const common = {
   status: "prototype" as const,
   // the contract's only value of this field
-  review_status: "ai_reviewed_pending_expert" as const,
+  review_status: "automated_checks_pending_expert" as const,
   snapshot: SNAPSHOT,
   codes: ["prototype", "candidate_not_treatment"],
   disclaimer:

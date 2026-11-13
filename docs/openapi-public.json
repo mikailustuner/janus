@@ -2401,9 +2401,9 @@
           },
           "review_status": {
             "type": "string",
-            "const": "ai_reviewed_pending_expert",
+            "const": "automated_checks_pending_expert",
             "title": "Review Status",
-            "default": "ai_reviewed_pending_expert"
+            "default": "automated_checks_pending_expert"
           },
           "snapshot": {
             "$ref": "#/components/schemas/janus__light__schemas__SnapshotOut"
@@ -3927,9 +3927,9 @@
           },
           "review_status": {
             "type": "string",
-            "const": "ai_reviewed_pending_expert",
+            "const": "automated_checks_pending_expert",
             "title": "Review Status",
-            "default": "ai_reviewed_pending_expert"
+            "default": "automated_checks_pending_expert"
           },
           "snapshot": {
             "$ref": "#/components/schemas/janus__light__schemas__SnapshotOut"
@@ -5645,9 +5645,9 @@
           },
           "review_status": {
             "type": "string",
-            "const": "ai_reviewed_pending_expert",
+            "const": "automated_checks_pending_expert",
             "title": "Review Status",
-            "default": "ai_reviewed_pending_expert"
+            "default": "automated_checks_pending_expert"
           },
           "snapshot": {
             "$ref": "#/components/schemas/janus__light__schemas__SnapshotOut"

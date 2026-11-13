@@ -32,7 +32,7 @@ export const snapshot = obj({
 
 const common = {
   status: lit("experimental", "prototype"),
-  review_status: lit("ai_reviewed_pending_expert"),
+  review_status: lit("automated_checks_pending_expert"),
   snapshot,
   codes: strs,
   disclaimer: str,

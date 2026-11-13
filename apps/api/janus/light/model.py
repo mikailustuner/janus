@@ -20,7 +20,7 @@ CASE_ID_RE: Final = re.compile(r"[a-z][a-z0-9_]{1,60}")
 SIGNAL_TYPES: Final = ("label_effect", "inverse_faers", "patient_reported")
 ONSIDES_EVIDENCE_ID: Final = "dataset:onsides"
 TOP_K: Final = 10
-REVIEW_STATUS: Final = "ai_reviewed_pending_expert"
+REVIEW_STATUS: Final = "automated_checks_pending_expert"
 
 SignalType = Literal["label_effect", "inverse_faers", "patient_reported"]
 MapStatus = Literal["active", "excluded"]

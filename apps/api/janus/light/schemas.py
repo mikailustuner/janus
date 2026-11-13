@@ -271,7 +271,7 @@ class GoalSummaryOut(_M):
 class Common(_M):
     schema_version: Literal["light-1"] = "light-1"
     status: Literal["experimental", "prototype"]
-    review_status: Literal["ai_reviewed_pending_expert"] = "ai_reviewed_pending_expert"
+    review_status: Literal["automated_checks_pending_expert"] = "automated_checks_pending_expert"
     snapshot: SnapshotOut
     codes: list[str]
     disclaimer: str
