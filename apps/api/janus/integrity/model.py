@@ -91,6 +91,7 @@ class SourceInfo:
     cadence_days: int | None
     license: str | None = None
     region: str | None = None
+    url: str | None = None  # first URL in the registry; fallback when a run names none
 
 
 @dataclass(frozen=True)

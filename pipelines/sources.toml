@@ -313,6 +313,7 @@ notes = [
 ]
 storage = "cache"
 cadence_days = 90
+urls = ["https://janusmeds.org/en/research/model-kit"]
 
 [[sources]]
 id = "modelkit_ctgov"

@@ -338,3 +338,16 @@ def test_side_tables_are_outside_the_hash_and_recorded(
             before = snapshot_tree(store.run_dir(result.run_id))
             run_job(FileStubJob(Path(d)), context(Path(d)), raw_input(records))
             assert snapshot_tree(store.run_dir(result.run_id)) == before
+
+
+def test_a_run_without_urls_keeps_the_registry_urls(tmp_path: Path) -> None:
+    """A derived job (the model kit) fetches nothing itself and names no URL; the manifest and the
+    evidence record then carry the registry's URLs, so the integrity loader can cite the source."""
+    from dataclasses import replace
+
+    raw = replace(raw_input(_records(3)), source_urls=())
+    result = run_job(StubJob(), context(tmp_path), raw)
+    assert result.outcome is Outcome.SUCCEEDED
+    assert result.manifest.source_urls == ["https://example.org/stub"]
+    evidence = (Store(tmp_path, "stub").run_dir(result.run_id) / "evidence_source.json").read_text()
+    assert '"source_url": "https://example.org/stub"' in evidence
