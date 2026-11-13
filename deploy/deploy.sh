@@ -9,6 +9,7 @@ commit="${1:-}"
 [ -f "$STACK_DIR/.env" ] || die "STACK_DIR/.env is missing (see deploy/env.example)"
 [ "$(stat -c %a "$STACK_DIR/.env")" = "600" ] || die "STACK_DIR/.env must have mode 600"
 [ -f "$STACK_DIR/cloudflared/config.yml" ] || die "cloudflared/config.yml is missing"
+"$DEPLOY_DIR/secrets-setup.sh" --check >/dev/null || die "secrets are not set up (run sudo deploy/secrets-setup.sh)"
 
 cd "$SRC_DIR"
 [ -z "$(git status --porcelain)" ] || die "the src checkout has local changes"
@@ -22,12 +23,20 @@ docker build --quiet -t "janus-web:$tag" --build-arg "JANUS_COMMIT=$full" -f app
 # Simulation worker: R + httk (the first build on the server compiles packages; later builds are cached).
 docker build --quiet -t "janus-simulator:$tag" -f apps/api/simulator.Dockerfile . >/dev/null
 
+# Staging check on a copy of the production database, before anything of production is touched.
+if [ -d "$STAGING_DIR" ]; then
+  log "staging check"
+  "$DEPLOY_DIR/staging.sh" "$tag" || die "staging failed; production unchanged"
+else
+  log "no staging directory: staging check skipped (deploy/staging-setup.sh creates it)"
+fi
+
 prev="$(current_tag)"
 install -m 644 deploy/compose.yml "$STACK_DIR/compose.yml"
 export JANUS_TAG="$tag"
 log "migrating"
 compose --profile migrate run --rm migrate >/dev/null
-# The simulation worker's database role gets its login (idempotent; password from .env, never argv).
+# The simulation worker's database role gets its login (idempotent; password from a secret file).
 compose --profile migrate run --rm migrate python -m janus.simulation.dbrole >/dev/null
 log "starting"
 if ! compose up -d --wait --remove-orphans; then

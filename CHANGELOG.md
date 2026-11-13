@@ -6,6 +6,17 @@ public server runs ([docs/releasing.md](docs/releasing.md)). Research use only; 
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-13
+
+### Added
+
+- Every release is first checked on an ephemeral staging stack: a fresh copy of the production database, the new
+  release's migrations, the isolation probe and the smoke test, before production is touched.
+
+### Changed
+
+- Secrets reach the containers only as mounted files (`*_FILE`), never as environment variables.
+
 ## [0.1.0] - 2026-11-13
 
 First tagged release: the public site at <https://janusmeds.org> on this date.

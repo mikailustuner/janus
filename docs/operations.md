@@ -62,6 +62,20 @@ Every step that changes the server is followed by `deploy/smoke.sh` against the 
 3. If it started with a release: roll back with `deploy/rollback.sh` (previous tag), then investigate on a branch.
 4. If the database is the cause (pool waiting, connection errors): `docker compose restart postgres`, then the API.
 
+### Release flow
+
+1. Merge to the release branch; CI is green.
+2. On the server: `deploy/deploy.sh <commit>`. It builds the images, then runs `deploy/staging.sh <tag>`: the new
+   release on a throw-away `janus-staging` stack (own networks, own volume, own secrets, no tunnel) with a fresh
+   restore of the production database, the migrations, the isolation check and the smoke test. The staging stack
+   and its volume are removed afterwards in every case.
+3. If staging fails, `deploy.sh` stops with "staging failed; production unchanged": nothing of production was
+   touched. Read the log, fix on a branch, release again.
+4. Otherwise it migrates the production database, swaps the containers, checks them, and rolls back by itself when a
+   check fails. Then run `deploy/smoke.sh https://janusmeds.org`.
+
+Staging needs free disk for a copy of the database and memory for a second stack for a few minutes.
+
 ### Slow answers
 
 1. "Janus app" → p95 by route; "System overview" → CPU, memory, disk I/O.
