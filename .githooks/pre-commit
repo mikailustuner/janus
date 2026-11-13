@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+# Pre-commit gate (docs/testing.md): the same lint, format and type checks as CI, only for the
+# packages that have staged changes. Install once per clone: scripts/install-hooks.sh
+# (git worktrees share the setting). Bypassing it with --no-verify is not allowed.
+set -euo pipefail
+root="$(git rev-parse --show-toplevel)"
+cd "$root"
+mapfile -t files < <(git diff --cached --name-only --diff-filter=ACMR)
+[ "${#files[@]}" -gt 0 ] || exit 0
+fail=0
+step() { printf '[pre-commit] %s\n' "$*"; }
+bad() { printf '[pre-commit] FAIL: %s\n' "$*" >&2; fail=1; }
+
+# Private or local-only paths never enter a commit.
+for f in "${files[@]}"; do
+  case "$f" in
+    .env | .env.* | */.env | docs/internal/* | .claude/* | .data/* | .shots/* | docs/kiro-usage.md)
+      [ "$f" = ".env.example" ] || bad "private path staged: $f" ;;
+  esac
+done
+
+staged() {  # staged <dir prefix> <regex>: staged files under the prefix matching the regex
+  local prefix="$1" re="$2" f
+  for f in "${files[@]}"; do
+    [[ "$f" == "$prefix"* && "$f" =~ $re ]] && printf '%s\n' "${f#"$prefix"}"
+  done
+  return 0
+}
+
+for pkg in apps/api apps/mcp pipelines; do
+  mapfile -t py < <(staged "$pkg/" '\.py$')
+  [ "${#py[@]}" -gt 0 ] || continue
+  step "$pkg: ruff, ruff format, pyright"
+  (cd "$pkg" && uv run --frozen ruff check -q "${py[@]}") || bad "$pkg ruff check"
+  (cd "$pkg" && uv run --frozen ruff format --check -q "${py[@]}") || bad "$pkg ruff format"
+  (cd "$pkg" && uv run --frozen pyright >/dev/null) || {
+    (cd "$pkg" && uv run --frozen pyright | tail -n 20) >&2 || true
+    bad "$pkg pyright"
+  }
+done
+
+mapfile -t web < <(staged apps/web/ '.')
+if [ "${#web[@]}" -gt 0 ]; then
+  mapfile -t fmt < <(printf '%s\n' "${web[@]}" | grep -E '\.(ts|tsx|js|mjs|cjs|json|css|md|yml|yaml)$' || true)
+  mapfile -t lint < <(printf '%s\n' "${web[@]}" | grep -E '\.(ts|tsx|js|mjs|cjs)$' || true)
+  step "apps/web: prettier, eslint, tsc"
+  if [ "${#fmt[@]}" -gt 0 ]; then
+    (cd apps/web && pnpm exec prettier --check --log-level warn "${fmt[@]}") || bad "apps/web prettier"
+  fi
+  if [ "${#lint[@]}" -gt 0 ]; then
+    (cd apps/web && pnpm exec eslint --max-warnings 0 "${lint[@]}") || bad "apps/web eslint"
+    (cd apps/web && pnpm run --silent typecheck >/dev/null) || {
+      (cd apps/web && pnpm exec tsc --noEmit | tail -n 20) >&2 || true
+      bad "apps/web tsc"
+    }
+  fi
+fi
+
+mapfile -t sh < <(printf '%s\n' "${files[@]}" | grep -E '^(deploy|scripts)/[^/]+\.sh$|^\.githooks/' || true)
+if [ "${#sh[@]}" -gt 0 ]; then
+  step "shellcheck"
+  if command -v shellcheck >/dev/null; then
+    shellcheck -x -P deploy "${sh[@]}" || bad "shellcheck"
+  elif command -v docker >/dev/null; then
+    docker run --rm -v "$root:/mnt:ro" -w /mnt koalaman/shellcheck:v0.10.0 -x -P deploy "${sh[@]}" \
+      || bad "shellcheck"
+  else
+    step "shellcheck not installed; CI runs it"
+  fi
+fi
+
+[ "$fail" = 0 ] || { printf '[pre-commit] fix the failures above, stage again and commit\n' >&2; exit 1; }

@@ -26,10 +26,20 @@ settings.register_profile(
     derandomize=True,
     suppress_health_check=[HealthCheck.too_slow, HealthCheck.function_scoped_fixture],
 )
-settings.load_profile(os.environ.get("HYPOTHESIS_PROFILE", "dev"))
+# Nightly: random seeds and more examples, to find counterexamples that the fixed CI seed never
+# reaches. A failure prints its reproduction blob; the example is then pinned with @example.
+settings.register_profile(
+    "nightly",
+    max_examples=1000,
+    deadline=None,
+    print_blob=True,
+    suppress_health_check=[HealthCheck.too_slow, HealthCheck.function_scoped_fixture],
+)
+PROFILE = os.environ.get("HYPOTHESIS_PROFILE", "dev")
+settings.load_profile(PROFILE)
 
 # Database-backed properties run fewer examples (design §7).
-DB_EXAMPLES = 100 if os.environ.get("HYPOTHESIS_PROFILE") == "ci" else 50
+DB_EXAMPLES = {"ci": 100, "nightly": 200}.get(PROFILE, 50)
 
 TEST_DB_ENV = "JANUS_TEST_DATABASE_URL"
 

@@ -10,4 +10,12 @@ settings.register_profile(
     derandomize=True,
     suppress_health_check=[HealthCheck.too_slow],
 )
+# Nightly: random seeds and more examples; a failure prints its blob, then pin it with @example.
+settings.register_profile(
+    "nightly",
+    max_examples=1000,
+    deadline=None,
+    print_blob=True,
+    suppress_health_check=[HealthCheck.too_slow],
+)
 settings.load_profile(os.environ.get("HYPOTHESIS_PROFILE", "dev"))
