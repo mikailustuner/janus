@@ -110,3 +110,31 @@ results. Material outside the samples keeps the sentence.
 Answer files carry an expert identifier (E01, E02, …), not a name. The mapping of identifiers to names and e-mail
 addresses, the conflict-of-interest forms and the raw answer files stay outside the repository. Results are published
 in aggregate; free comments are quoted only without anything that identifies the expert.
+
+## Amendment 1 (2026-11-13, before the packet is sent; no answer exists)
+
+Found while building the packet: the current drug model release holds only 12 PubMed Central values (2 studies) and 4
+Drugs@FDA values (1 study), because those sources did not pass the B3a rule and were held back. C1 and C2 cannot be
+drawn as written. Changes, made before any expert has seen an item:
+
+1. **C1 frames.** ClinicalTrials.gov: 30 values from the current release, as registered. PubMed Central: 10 values
+   from the B3a fresh sample P2 (`data/validation/modelkit/items.csv`, 53 values in 38 articles). Drugs@FDA: 10 values
+   from the B3a fresh sample D2 (26 values in 11 documents). At most 2 values per study, seed 20261113. The B3a
+   automated verdicts of these values stay hidden from the experts. Purpose of the two held-back parts: an expert
+   precision of the held-back sources and a check of the automated review passes against experts (κ); they do not
+   decide whether these sources ship, which needs a fresh sample under the B3a rule.
+2. **C2 frames and order.** ClinicalTrials.gov: 10 results records with a confirmed value in the current release.
+   PubMed Central: 10 articles of the P2 frame. Each source has its own fixed random order (seed 20261113), so the
+   documents of one source do not depend on the other. Assignment alternates between the two sources.
+3. **Time per expert (§4).** §5 governs: each A1, A2 and B item goes to two experts, one geriatrician or family
+   physician and one clinical pharmacist. With two experts in each of these groups each expert judges half of A1, A2
+   and B; the cover letter gives the times that follow from the actual assignment.
+4. **Choices fixed now** where §6 left them open:
+   - The third expert's answer decides when two disagree. On a 1–5 scale, a third answer of 3 decides nothing, and
+     the item is "not settled".
+   - The κ interval is a bootstrap over items.
+   - In C2, a value counts as marked by the experts when both mark the same drug and parameter with values within
+     1 % of each other.
+   - In F, the evidence class (A/B/C) is hidden; it is Janus's own confidence grade.
+   - A group with a single expert cannot pair; its items are dropped and reported.
+
