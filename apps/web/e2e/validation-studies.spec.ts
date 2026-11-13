@@ -11,7 +11,6 @@ import {
   findForbiddenPhrases,
   forbiddenPhrases,
 } from "../src/i18n/forbidden-phrases";
-import { VALIDATION } from "../src/research/validation";
 
 import {
   expectNoAxeViolations,
@@ -30,6 +29,12 @@ const messages = Object.fromEntries(
       readFileSync(join(import.meta.dirname, `../messages/${l}.json`), "utf8"),
     ),
   ]),
+);
+const VALIDATION = JSON.parse(
+  readFileSync(
+    join(import.meta.dirname, "../src/research/validation.generated.json"),
+    "utf8",
+  ),
 );
 const locales = (process.env.E2E_LOCALES ?? "en,tr")
   .split(",")

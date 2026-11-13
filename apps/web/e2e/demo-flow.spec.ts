@@ -32,6 +32,9 @@ test("demo flow end to end, with no API request", async ({ page }) => {
   );
   await expect(page.getByTestId("pair-panel")).toContainText("424 reports");
   await expect(page.getByTestId("ci-bar")).toBeVisible();
+  await expect(page.getByTestId("calibration-line").first()).toContainText(
+    "AUC",
+  );
 
   await page.getByRole("link", { name: "Reports for the whole list" }).click();
   await expect(page.getByTestId("memory-combination")).toBeVisible();
