@@ -492,7 +492,7 @@
     "safetyHeading": "When to get urgent help",
     "medicinesRoles": "First medicine of the pattern: {index} ({indexBox}). Second: {marker} ({markerBox}).",
     "priority": {
-      "incidence": "In a published study of older adults in Ontario, Canada (BMJ 2026, abstract), this pattern was among those with the highest incidence of the two-medicine combination: {value}% (confidence interval {low} to {high}).",
+      "incidence": "A published study looked at older adults in Ontario, Canada (BMJ 2026, abstract). In it, this pattern was among those where the two medicines were most often used together: {value}% (confidence interval {low} to {high}).",
       "adjusted_sequence_ratio": "In a published study of older adults in Ontario, Canada (BMJ 2026, abstract), this pattern was among those with the highest adjusted sequence ratio: {value} (confidence interval {low} to {high}). A ratio above one means the second medicine was started after the first more often than before it."
     },
     "source": "Source: PIPC list (Rochon et al., Eur Geriatr Med 2025), row {row}.",
@@ -912,7 +912,7 @@
     },
     "network": {
       "title": "Network provider",
-      "body": "Janus is delivered through Cloudflare, which carries the encrypted connection between your browser and the Janus server and blocks attacks. To do this, Cloudflare processes technical data of each request, such as your IP address, browser type and time, and may set a short-lived technical cookie that tells people apart from automated traffic. Janus adds no analytics, no advertising and no tracking cookies, and its own server does not record IP addresses."
+      "body": "Janus reaches you through Cloudflare. Cloudflare carries the encrypted link between your browser and the Janus server, and it blocks attacks. To do this, it handles technical data of each request, such as your IP address, browser type and time. It may also set a short-lived technical cookie that tells people apart from automated traffic. Janus adds no analytics, no ads and no tracking cookies. Its own server does not record IP addresses."
     },
     "sources": {
       "title": "Data sources",
@@ -941,7 +941,7 @@
       "spontaneous_reporting": "Reports are sent voluntarily and are not verified.",
       "not_incidence": "The counts do not show how often an event happens.",
       "deduplicated_by_case_version_only": "Only repeated versions of the same case are merged, so one event can still appear in more than one case.",
-      "window_includes_follow_ups": "Counts cover reports received or updated in the four quarters {first}–{last}, including follow-up versions of cases first received earlier.",
+      "window_includes_follow_ups": "Counts cover reports received or updated in the four quarters {first}–{last}. This includes later versions of cases that were first received before then.",
       "denominator_mapped_reports": "Counts use only reports that name at least one medicine Janus recognizes ({share} of the reports in this window). Some spellings are not recognized, so a pattern can be missed. Figures for all reports are shown beside these.",
       "region_is_report_origin": "A report's region is the country where the event is said to have happened or, when that is missing, where the reporter is. It does not tell where the medicine was taken or where it was bought.",
       "eu_member_states_not_separable": "EU means the 27 member states pooled; FAERS cannot tell them apart.",
@@ -955,7 +955,7 @@
       "not_disproportionate": "The event does not appear in a clearly larger share of the reports that name this medicine. This does not mean there is no association.",
       "weak": "Few reports; treat as a weak pattern.",
       "weak_pattern": "Few reports; treat as a weak pattern.",
-      "disproportionate": "The event appears in a larger share of the reports that name this medicine than in the other reports that name a recognized medicine.",
+      "disproportionate": "Among the reports that name this medicine, a larger share include the event. The other reports that name a recognized medicine include it less often.",
       "estimate_uses_continuity_correction": "The size of this ratio depends on a small adjustment made because a count is zero.",
       "interval_approximate": "The range is approximate and is less reliable when few reports are involved.",
       "denominator_sensitive": "The result changes when all reports are used as the comparison.",
@@ -2780,7 +2780,7 @@
       "notFound": "No US label in the data for: {names}. These were not read.",
       "labelsRead": "Labels read",
       "readRow": "{ingredient}: {substance}, effective {date}",
-      "method": "Automated search of the \"Drug Interactions\" section of one US label per ingredient (the most recent single-substance label in the data) for the names Janus holds for the other ingredients on your list, as whole words. Classes of medicines are not matched, labels of other countries are not read, and label text can be out of date.",
+      "method": "For each ingredient, Janus takes one US label: the most recent single-ingredient label in the data. In its \"Drug Interactions\" section, an automated search looks for the names Janus holds for the other ingredients on your list, as whole words. Classes of medicines are not matched. Labels of other countries are not read. Label text can be out of date.",
       "source": "Source: openFDA drug label data (U.S. Food and Drug Administration, CC0 1.0), data of {date}. Not an FDA endorsement.",
       "outdated": "This label data is older than Janus expects it to be.",
       "unavailable": "The label texts are not loaded right now, so this check did not run."

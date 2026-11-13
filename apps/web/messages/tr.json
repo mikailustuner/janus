@@ -2780,7 +2780,7 @@
       "notFound": "Verilerde şu maddeler için ABD prospektüsü yok: {names}. Bunlar okunmadı.",
       "labelsRead": "Okunan prospektüsler",
       "readRow": "{ingredient}: {substance}, yürürlük tarihi {date}",
-      "method": "Listenizdeki diğer etkin maddeler için Janus'un elindeki adların, her etkin madde için bir ABD prospektüsünün (verilerdeki en yeni tek maddeli prospektüs) \"Drug Interactions\" bölümünde tam sözcük olarak otomatik aranması. İlaç sınıfları eşleştirilmez, başka ülkelerin prospektüsleri okunmaz ve prospektüs metni güncel olmayabilir.",
+      "method": "Janus her etkin madde için bir ABD prospektüsü alır: verilerdeki en yeni tek maddeli prospektüs. Bu prospektüsün \"Drug Interactions\" bölümünde, listenizdeki diğer etkin maddeler için Janus'un elindeki adlar tam sözcük olarak otomatik aranır. İlaç sınıfları eşleştirilmez. Başka ülkelerin prospektüsleri okunmaz. Prospektüs metni güncel olmayabilir.",
       "source": "Kaynak: openFDA ilaç prospektüsü verileri (ABD Gıda ve İlaç Dairesi, CC0 1.0), veri tarihi {date}. FDA onayı değildir.",
       "outdated": "Bu prospektüs verisi Janus'un beklediğinden eski.",
       "unavailable": "Prospektüs metinleri şu anda yüklü değil, bu nedenle bu kontrol çalışmadı."
