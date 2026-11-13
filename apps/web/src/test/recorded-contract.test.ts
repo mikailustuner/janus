@@ -15,6 +15,11 @@ import {
 } from "@/modelkit/model";
 import { reasonCodesOf, type ModelKitSet } from "@/test/fixtures/modelkit";
 
+import { dataQualityReport } from "@/research/dataQuality";
+import { onsetTable } from "@/research/onset";
+
+import dataQuality from "@/research/data-quality.recorded.json";
+import faersOnset from "@/research/faers-onset.recorded.json";
 import modelkit from "@/modelkit/modelkit.recorded.json";
 import modelkitM0 from "@/modelkit/modelkit.m0.recorded.json";
 
@@ -63,5 +68,34 @@ describe.each([
       validation: val(decode(systemOut, fx.validation)),
     } as unknown as ModelKitSet;
     expect([...reasonCodesOf(set)].filter((c) => !reasonKey(c))).toEqual([]);
+  });
+});
+
+describe("data-quality.recorded.json", () => {
+  const r = decode(dataQualityReport, dataQuality.report);
+
+  it("decodes and holds at least one finding with a CSV and a Markdown file", () => {
+    expect(r.ok).toBe(true);
+    if (!r.ok) return;
+    expect(r.value.findings.length).toBeGreaterThanOrEqual(1);
+    expect(dataQuality.csv.length).toBeGreaterThan(0);
+    expect(dataQuality.md.length).toBeGreaterThan(0);
+  });
+
+  it("carries no TİTCK barcode or GTIN (the page can show the whole file)", () => {
+    expect(JSON.stringify(dataQuality)).not.toMatch(/(?<!\d)0?869\d{10}(?!\d)/);
+  });
+});
+
+describe("faers-onset.recorded.json", () => {
+  const r = decode(onsetTable, faersOnset.table);
+
+  it("decodes and holds the 65 PIPC positions with a CSV file", () => {
+    expect(r.ok).toBe(true);
+    if (!r.ok) return;
+    expect(r.value.rows.map((x) => x.pipc_position)).toEqual(
+      Array.from({ length: 65 }, (_, i) => i + 1),
+    );
+    expect(faersOnset.csv.length).toBeGreaterThan(0);
   });
 });

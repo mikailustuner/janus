@@ -1,4 +1,5 @@
-// research-tools properties R1-R6 (design §5): the recorded datasets decode; the data-quality
+// research-tools properties R1-R6 (design §5): the datasets (synthetic, src/test/fixtures/research.ts;
+// the recorded files are checked in src/test/recorded-contract.test.ts) decode; the data-quality
 // counts and filters partition the findings; evidence links stay on the two report hosts; no
 // TİTCK barcode reaches the page model; the onset table shows statistics only where the design
 // allows them, and sorting is a stable permutation that keeps rows without a median last.
@@ -7,7 +8,8 @@ import { describe, expect, it } from "vitest";
 
 import * as D from "@/api/decode";
 
-import dqFx from "./data-quality.recorded.json";
+import { dataQualitySet, onsetSet } from "@/test/fixtures/research";
+
 import {
   classStatusCounts,
   CLASSES,
@@ -20,7 +22,6 @@ import {
   type Filter,
   type Finding,
 } from "./dataQuality";
-import onsetFx from "./faers-onset.recorded.json";
 import {
   demoOnset,
   CAVEATS,
@@ -34,9 +35,11 @@ import {
   type SortKey,
 } from "./onset";
 
+const dqFx = dataQualitySet();
+const onsetFx = onsetSet();
 const dq = D.decode(dataQualityReport, dqFx.report);
 const onset = D.decode(onsetTable, onsetFx.table);
-if (!dq.ok || !onset.ok) throw new Error("recorded fixtures do not decode");
+if (!dq.ok || !onset.ok) throw new Error("synthetic fixtures do not decode");
 const report = dq.value;
 const table = onset.value;
 
@@ -128,11 +131,7 @@ describe("data-quality report (R1-R3)", () => {
     }
   });
 
-  it("R3: no TİTCK barcode or GTIN in the recorded files the page can show", () => {
-    const text = JSON.stringify(dqFx);
-    expect(text).not.toMatch(/(?<!\d)869\d{10}(?!\d)/);
-    expect(text).not.toMatch(/(?<!\d)0?869\d{10}(?!\d)/);
-    // The decoded model keeps only the documented fields of a finding.
+  it("R3: the decoded model keeps only the documented fields of a finding", () => {
     const keys = new Set(
       report.findings.flatMap((f: Finding) => Object.keys(f)),
     );

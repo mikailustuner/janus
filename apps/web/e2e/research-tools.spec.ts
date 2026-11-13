@@ -1,6 +1,7 @@
 // Research tools (research-tools Req 1-4, Phase 1): the data-quality report, the FAERS onset
-// table and one row, and "For developers & clinicians". The API is stubbed from the answers
-// recorded from the real local API (src/research/*.recorded.json). C1-C3 in five locales × two
+// table and one row, and "For developers & clinicians". The API is stubbed from synthetic answers
+// (src/test/fixtures/research.ts), never from the recorded files; demo mode (bundled recorded
+// files) is checked for structure only. C1-C3 in five locales × two
 // themes; filters, sorting, the presentation rules of the onset table, downloads, demo mode with
 // no request, 503 and 404. Screenshots when RESEARCH_SHOTS_DIR is set.
 import { mkdirSync, readFileSync } from "node:fs";
@@ -8,10 +9,18 @@ import { join } from "node:path";
 
 import { expect, test, type Page } from "@playwright/test";
 
+import type { OnsetRow } from "../src/research/onset";
+
 import {
   findForbiddenPhrases,
   forbiddenPhrases,
 } from "../src/i18n/forbidden-phrases";
+import {
+  comparableMedian,
+  dataQualitySet,
+  firstRowWith,
+  onsetSet,
+} from "../src/test/fixtures/research";
 
 import {
   expectNoAxeViolations,
@@ -26,23 +35,8 @@ import {
 
 const read = (p: string) =>
   JSON.parse(readFileSync(join(import.meta.dirname, p), "utf8"));
-const dq = read("../src/research/data-quality.recorded.json") as {
-  report: Record<string, unknown> & {
-    findings: { class: string; status: string }[];
-  };
-  csv: string;
-};
-const onset = read("../src/research/faers-onset.recorded.json") as {
-  table: Record<string, unknown> & {
-    rows: (Record<string, unknown> & {
-      pipc_position: number;
-      status: string;
-      median_days: number | null;
-      median_reflects_zero_heaping: boolean | null;
-    })[];
-  };
-  csv: string;
-};
+const dq = dataQualitySet();
+const onset = onsetSet();
 const messages = Object.fromEntries(
   LOCALES.map((l) => [l, read(`../messages/${l}.json`)]),
 );
@@ -64,8 +58,8 @@ const rowOut = (p: number) => {
     row: t.rows.find((r) => r.pipc_position === p),
   };
 };
-const firstRow = (status: string) =>
-  onset.table.rows.find((r) => r.status === status)!.pipc_position;
+const firstRow = (status: OnsetRow["status"]) =>
+  firstRowWith(onset.table, status);
 
 const stubs = {
   "/open/data-quality": { body: dq.report },
@@ -230,22 +224,15 @@ test.describe("FAERS onset table", () => {
     await page.getByTestId("onset-sort-median").click();
     const th = page.locator("th[aria-sort]");
     await expect(th).toHaveAttribute("aria-sort", "descending");
-    const withMedian = onset.table.rows.filter(
-      (r) =>
-        (r.status === "described" || r.status === "small_sample") &&
-        r.median_days !== null &&
-        !r.median_reflects_zero_heaping,
-    ).length;
+    const withMedian = onset.table.rows.filter(comparableMedian).length;
+    expect(withMedian).toBeGreaterThan(0);
+    expect(withMedian).toBeLessThan(onset.table.rows.length);
     const positions = await rows.evaluateAll((els) =>
       els.map((e) => Number(e.querySelector("th")!.textContent)),
     );
     for (const p of positions.slice(withMedian)) {
       const r = onset.table.rows.find((x) => x.pipc_position === p)!;
-      const comparable =
-        (r.status === "described" || r.status === "small_sample") &&
-        r.median_days !== null &&
-        !r.median_reflects_zero_heaping;
-      expect(comparable, `row ${p}`).toBe(false);
+      expect(comparableMedian(r), `row ${p}`).toBe(false);
     }
     await page.getByTestId("onset-sort-median").click();
     await expect(th).toHaveAttribute("aria-sort", "ascending");
@@ -255,7 +242,7 @@ test.describe("FAERS onset table", () => {
     page,
   }) => {
     await stubApi(page, stubs);
-    for (const status of ["count_only", "cluster_dominated"]) {
+    for (const status of ["count_only", "cluster_dominated"] as const) {
       await page.goto(`/en/research/faers-onset/row#${firstRow(status)}`);
       await expect(page.getByTestId("onset-row-status")).toHaveText(
         messages.en.Onset.status[status],
@@ -281,6 +268,7 @@ test.describe("FAERS onset table", () => {
     const heaping = onset.table.rows.filter(
       (r) => r.median_reflects_zero_heaping,
     );
+    expect(heaping.length).toBeGreaterThan(0);
     await expect(page.getByTestId("onset-heaping-flag")).toHaveCount(
       heaping.length,
     );
@@ -324,7 +312,9 @@ test("developers: copy a snippet", async ({ page, context }) => {
   );
 });
 
-test("demo mode: recorded files, downloads from them, no request", async ({
+// Demo mode reads the bundled recorded files with no request. Their content changes with every
+// release, so this checks structure only (the files are checked in src/test/recorded-contract).
+test("demo mode: bundled files, downloads from them, no request", async ({
   page,
 }) => {
   await page.addInitScript(() =>
@@ -333,13 +323,17 @@ test("demo mode: recorded files, downloads from them, no request", async ({
   const requests = recordRequests(page);
   await page.goto("/en/research/data-quality");
   await expect(page.getByTestId("dq-demo")).toBeVisible();
+  await expect(page.getByTestId("dq-finding").first()).toBeVisible();
   const href = await page.getByTestId("dq-download-csv").getAttribute("href");
-  expect(decodeURIComponent(href!.split(",").slice(1).join(","))).toBe(dq.csv);
+  expect(href).toMatch(/^data:text\/csv/);
+  expect(
+    decodeURIComponent(href!.split(",").slice(1).join(",")).length,
+  ).toBeGreaterThan(0);
   await page.goto("/en/research/faers-onset");
   await expect(page.getByTestId("onset-demo")).toBeVisible();
-  await expect(page.getByTestId("onset-row")).toHaveCount(65);
-  await page.goto(`/en/research/faers-onset/row#${firstRow("described")}`);
-  await expect(page.getByTestId("onset-stats")).toBeVisible();
+  await expect(page.getByTestId("onset-row").first()).toBeVisible();
+  await page.goto("/en/research/faers-onset/row#1");
+  await expect(page.getByTestId("onset-framing")).toBeVisible();
   expect(requests.filter((r) => r.url().includes("/api/"))).toEqual([]);
 });
 
