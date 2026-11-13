@@ -660,6 +660,10 @@
       "modelKit": {
         "title": "Kit de départ de modèles de médicaments (expérimental)",
         "body": "Des jeux de paramètres traçables jusqu’aux preuves pour quelques médicaments, testés sur des études mises de côté. Expérimental, usage de recherche uniquement, pas un calculateur de dose."
+      },
+      "validationStudies": {
+        "title": "Études de validation",
+        "body": "Deux études préenregistrées sur la qualité du travail de Janus, avec intervalles de confiance."
       }
     }
   },
@@ -3330,6 +3334,45 @@
       "systemPrecisionConservative": "Lecture prudente, tout ce que les deux passes n’ont pas jugé correct compte comme faux : {share} ({low} à {high}, n = {n}).",
       "systemPrecisionNone": "Aucune précision n’a été mesurée pour ces déclarations.",
       "systemAtlas": "{rows, plural, one {# ligne d’atlas} other {# lignes d’atlas}} pour {drugs, plural, one {# médicament} other {# médicaments}} apparaissent sur les pages des médicaments comme preuve non confirmée."
+    }
+  },
+  "Calibration": {
+    "line": "Capacité de cette méthode à séparer effets connus et non-effets : AUC {auc} (IC à 95 % {low}–{high}).",
+    "link": "À propos de la validation"
+  },
+  "ValidationStudies": {
+    "title": "Études de validation",
+    "summary": "Deux études préenregistrées sur la qualité du travail de Janus, chacune avec ses intervalles de confiance à 95 %.",
+    "intro": "Pour les chercheurs. Chaque étude a fixé sa question, ses données de référence et ses critères de réussite dans un protocole public avant que Janus soit exécuté sur les données. Les résultats sont rapportés tels qu'ils sont sortis, y compris les hypothèses non confirmées.",
+    "review": "L'examen par des experts n'a pas encore été fait.",
+    "preregistered": "Préenregistré : le protocole a été publié dans le commit {commit} avant l'évaluation.",
+    "protocol": "Protocole (GitHub)",
+    "results": "Résultats (GitHub)",
+    "met": "Hypothèse confirmée.",
+    "notMet": "Hypothèse non confirmée.",
+    "proportion": "{k} sur {n} = {estimate} (IC à 95 % {low}–{high})",
+    "cascade": {
+      "title": "Détection des cascades",
+      "summary": "Janus signale-t-il les cascades de prescription publiées et reste-t-il silencieux pour les paires de médicaments qui n'en sont pas ?",
+      "tested": "Testé sur {published} cascades de prescription publiées dans des sources indépendantes, {negatives} paires de médicaments construites qui ne sont pas des cascades et {cases} cas cliniques.",
+      "specificity": "Spécificité (aucun avis pour les paires qui ne sont pas des cascades)",
+      "sensitivity": "Sensibilité (un avis pour les cascades publiées)",
+      "bound": "Objectif préenregistré : borne inférieure de l'intervalle d'au moins {bound}.",
+      "scope": "Janus vérifie une liste fixe de {listed} cascades. L'absence d'avis ne signifie pas l'absence de cascade.",
+      "inScope": "Les {k} cascades publiées sur {n} qui figurent dans cette liste ont toutes été trouvées. Celles qu'il manque sont hors de la liste.",
+      "burden": "Dans les listes complètes de médicaments de patients âgés tirées de cas cliniques sans rapport, {k} sur {n} ont reçu au moins un avis. Un avis est un schéma à discuter avec un pharmacien ou un médecin, pas un constat sur la personne."
+    },
+    "faers": {
+      "title": "Rapports de notification FAERS",
+      "summary": "Capacité du rapport de cotes de notification à séparer effets connus et non-effets connus.",
+      "tested": "Testé sur {positive} paires médicament-événement à effet connu et {negative} sans effet connu (jeux de référence OMOP 2013 et EU-ADR).",
+      "aucLabel": "Aire sous la courbe (AUC)",
+      "auc": "AUC {auc} (IC à 95 % {low}–{high})",
+      "aucBound": "Objectif préenregistré : borne inférieure de l'intervalle supérieure à {bound}.",
+      "intervals": "Pour les paires sans effet connu, l'intervalle à 95 % habituel exclut à tort « aucune différence » environ une fois sur quatre ({estimate} ; IC à 95 % {low}–{high}). Après calibration empirique, cette part tombe à {calibrated}.",
+      "intervalsPlain": "L'intervalle affiché est plus étroit que l'incertitude réelle.",
+      "evans": "Les critères d'Evans que Janus utilise pour qualifier une paire de disproportionnée ont signalé {sensitivity} des paires à effet connu et sont restés silencieux pour {specificity} des paires sans effet connu.",
+      "lookCloser": "Un rapport de notification est une raison de regarder de plus près, pas une preuve qu'un médicament provoque un événement."
     }
   }
 }

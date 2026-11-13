@@ -660,6 +660,10 @@
       "modelKit": {
         "title": "Drug model starter kit (experimental)",
         "body": "Evidence-traceable parameter sets for a few drugs, tested against held-out studies. Experimental, research use only, not a dose calculator."
+      },
+      "validationStudies": {
+        "title": "Validation studies",
+        "body": "Two pre-registered studies of how well Janus works, with confidence intervals."
       }
     }
   },
@@ -3330,6 +3334,45 @@
       "systemPrecisionConservative": "Conservative reading, anything not called correct by both passes counts as wrong: {share} ({low} to {high}, n = {n}).",
       "systemPrecisionNone": "No precision has been measured for these statements.",
       "systemAtlas": "{rows, plural, one {# atlas row} other {# atlas rows}} for {drugs, plural, one {# drug} other {# drugs}} appear on the drug pages as unconfirmed evidence."
+    }
+  },
+  "Calibration": {
+    "line": "How well this method separates known effects from non-effects: AUC {auc} (95 % CI {low}–{high}).",
+    "link": "About the validation"
+  },
+  "ValidationStudies": {
+    "title": "Validation studies",
+    "summary": "Two pre-registered studies of how well Janus works, each with its 95 % confidence intervals.",
+    "intro": "For researchers. Each study fixed its question, its reference data and its success criteria in a public protocol before Janus was run on the data. The results are reported as they came out, including the hypotheses that were not met.",
+    "review": "Expert review has not yet been done.",
+    "preregistered": "Pre-registered: the protocol was published in commit {commit} before the evaluation ran.",
+    "protocol": "Protocol (GitHub)",
+    "results": "Results (GitHub)",
+    "met": "Hypothesis met.",
+    "notMet": "Hypothesis not met.",
+    "proportion": "{k} of {n} = {estimate} (95 % CI {low}–{high})",
+    "cascade": {
+      "title": "Cascade detection",
+      "summary": "Does Janus flag published prescribing cascades and stay quiet for drug pairs that are not cascades?",
+      "tested": "Tested on {published} prescribing cascades published in independent sources, {negatives} constructed drug pairs that are not cascades, and {cases} case reports.",
+      "specificity": "Specificity (no notice for pairs that are not cascades)",
+      "sensitivity": "Sensitivity (a notice for published cascades)",
+      "bound": "Pre-registered goal: lower end of the interval at least {bound}.",
+      "scope": "Janus checks a fixed list of {listed} cascades. No notice does not mean there is no cascade.",
+      "inScope": "All {k} of {n} published cascades that fall inside that list were found. The ones it misses lie outside the list.",
+      "burden": "In the full medication lists of older patients taken from unrelated case reports, {k} of {n} got at least one notice. A notice is a pattern to discuss with a pharmacist or doctor, not a finding about the person."
+    },
+    "faers": {
+      "title": "FAERS reporting ratios",
+      "summary": "How well the reporting odds ratio separates known effects from known non-effects.",
+      "tested": "Tested on {positive} drug and event pairs with a known effect and {negative} with no known effect (OMOP 2013 and EU-ADR reference sets).",
+      "aucLabel": "Area under the curve (AUC)",
+      "auc": "AUC {auc} (95 % CI {low}–{high})",
+      "aucBound": "Pre-registered goal: lower end of the interval above {bound}.",
+      "intervals": "For pairs known to have no effect, the usual 95 % interval wrongly excludes “no difference” about one time in four ({estimate}; 95 % CI {low}–{high}). After empirical calibration this falls to {calibrated}.",
+      "intervalsPlain": "The printed interval is narrower than the real uncertainty.",
+      "evans": "The Evans criteria that Janus uses to call a pair disproportionate flagged {sensitivity} of the pairs with a known effect and stayed silent for {specificity} of the pairs with no known effect.",
+      "lookCloser": "A reporting ratio is a reason to look closer, not evidence that a medicine causes an event."
     }
   }
 }

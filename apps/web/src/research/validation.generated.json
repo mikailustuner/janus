@@ -1,0 +1,82 @@
+{
+ "cascade": {
+  "protocolCommit": "d7a0b1f",
+  "protocolUrl": "https://github.com/mikailustuner/janus/blob/main/docs/research/cascade-validation-protocol.md",
+  "resultsUrl": "https://github.com/mikailustuner/janus/blob/main/docs/research/cascade-validation.md",
+  "listedCascades": 65,
+  "publishedCascades": 217,
+  "nonCascadePairs": 432,
+  "caseReports": 107,
+  "specificity": {
+   "k": 421,
+   "n": 432,
+   "estimate": 0.9745370370370371,
+   "low": 0.9549855045349731,
+   "high": 0.9857235346013564,
+   "bound": 0.9,
+   "met": true
+  },
+  "sensitivity": {
+   "k": 79,
+   "n": 217,
+   "estimate": 0.3640552995391705,
+   "low": 0.30291580919511474,
+   "high": 0.42992420961805133,
+   "bound": 0.8,
+   "met": false
+  },
+  "inScope": {
+   "k": 77,
+   "n": 77
+  },
+  "comparisonAlert": {
+   "k": 26,
+   "n": 50,
+   "estimate": 0.52,
+   "low": 0.38511744790185476,
+   "high": 0.6520286480910008
+  }
+ },
+ "faers": {
+  "protocolCommit": "d505bd2",
+  "protocolUrl": "https://github.com/mikailustuner/janus/blob/main/docs/research/faers-calibration-protocol.md",
+  "resultsUrl": "https://github.com/mikailustuner/janus/blob/main/docs/research/faers-calibration.md",
+  "auc": {
+   "estimate": 0.7373819163292847,
+   "low": 0.6899165440429058,
+   "high": 0.7848472886156637,
+   "nPositive": 180,
+   "nNegative": 247,
+   "bound": 0.5,
+   "met": true
+  },
+  "negativesNominal": {
+   "k": 64,
+   "n": 247,
+   "estimate": 0.2591093117408907,
+   "low": 0.2084520920916011,
+   "high": 0.31714467117585565
+  },
+  "negativesCalibrated": {
+   "k": 13,
+   "n": 247,
+   "estimate": 0.05263157894736842,
+   "low": 0.031012875698243,
+   "high": 0.08795254179846224
+  },
+  "evansSensitivity": {
+   "k": 99,
+   "n": 180,
+   "estimate": 0.55,
+   "low": 0.4770335498424285,
+   "high": 0.6208769003331349
+  },
+  "evansSpecificity": {
+   "k": 217,
+   "n": 247,
+   "estimate": 0.8785425101214575,
+   "low": 0.8319075929155686,
+   "high": 0.9135832076641424
+  }
+ }
+}

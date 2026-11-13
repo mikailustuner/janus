@@ -660,6 +660,10 @@
       "modelKit": {
         "title": "Kit inicial de modelos de fármacos (experimental)",
         "body": "Conjuntos de parâmetros com rastreio da evidência para alguns fármacos, testados com estudos reservados. Experimental, apenas para investigação, não é uma calculadora de doses."
+      },
+      "validationStudies": {
+        "title": "Estudos de validação",
+        "body": "Dois estudos pré-registados sobre o desempenho do Janus, com intervalos de confiança."
       }
     }
   },
@@ -3330,6 +3334,45 @@
       "systemPrecisionConservative": "Leitura conservadora, tudo o que não for considerado correto por ambas as passagens conta como errado: {share} ({low} a {high}, n = {n}).",
       "systemPrecisionNone": "Não foi medida nenhuma precisão para estas afirmações.",
       "systemAtlas": "{rows, plural, =0 {# linhas do atlas} one {# linha do atlas} other {# linhas do atlas}} para {drugs, plural, =0 {# fármacos} one {# fármaco} other {# fármacos}} aparecem nas páginas dos fármacos como evidência não confirmada."
+    }
+  },
+  "Calibration": {
+    "line": "Capacidade deste método para separar efeitos conhecidos de não efeitos: AUC {auc} (IC de 95 % {low}–{high}).",
+    "link": "Sobre a validação"
+  },
+  "ValidationStudies": {
+    "title": "Estudos de validação",
+    "summary": "Dois estudos pré-registados sobre o desempenho do Janus, cada um com os seus intervalos de confiança de 95 %.",
+    "intro": "Para investigadores. Cada estudo fixou a sua pergunta, os seus dados de referência e os seus critérios de sucesso num protocolo público antes de o Janus ser executado sobre os dados. Os resultados são apresentados tal como saíram, incluindo as hipóteses que não se cumpriram.",
+    "review": "A revisão por especialistas ainda não foi feita.",
+    "preregistered": "Pré-registado: o protocolo foi publicado no commit {commit} antes de a avaliação ser executada.",
+    "protocol": "Protocolo (GitHub)",
+    "results": "Resultados (GitHub)",
+    "met": "Hipótese cumprida.",
+    "notMet": "Hipótese não cumprida.",
+    "proportion": "{k} de {n} = {estimate} (IC de 95 % {low}–{high})",
+    "cascade": {
+      "title": "Deteção de cascatas",
+      "summary": "O Janus assinala as cascatas de prescrição publicadas e fica em silêncio nos pares de medicamentos que não o são?",
+      "tested": "Testado em {published} cascatas de prescrição publicadas em fontes independentes, {negatives} pares de medicamentos construídos que não são cascatas e {cases} relatos de casos.",
+      "specificity": "Especificidade (nenhum aviso em pares que não são cascatas)",
+      "sensitivity": "Sensibilidade (um aviso em cascatas publicadas)",
+      "bound": "Objetivo pré-registado: limite inferior do intervalo de pelo menos {bound}.",
+      "scope": "O Janus verifica uma lista fixa de {listed} cascatas. A ausência de aviso não significa que não haja cascata.",
+      "inScope": "Foram encontradas as {k} de {n} cascatas publicadas que estão dentro dessa lista. As que lhe escapam ficam fora da lista.",
+      "burden": "Nas listas completas de medicamentos de doentes mais velhos retiradas de relatos de casos não relacionados, {k} de {n} receberam pelo menos um aviso. Um aviso é um padrão para falar com um farmacêutico ou médico, não uma conclusão sobre a pessoa."
+    },
+    "faers": {
+      "title": "Razões de notificação do FAERS",
+      "summary": "Capacidade da razão de odds de notificação para separar efeitos conhecidos de não efeitos conhecidos.",
+      "tested": "Testado em {positive} pares de medicamento e acontecimento com efeito conhecido e {negative} sem efeito conhecido (conjuntos de referência OMOP 2013 e EU-ADR).",
+      "aucLabel": "Área sob a curva (AUC)",
+      "auc": "AUC {auc} (IC de 95 % {low}–{high})",
+      "aucBound": "Objetivo pré-registado: limite inferior do intervalo acima de {bound}.",
+      "intervals": "Nos pares sem efeito conhecido, o intervalo de 95 % habitual exclui por engano «sem diferença» cerca de uma vez em cada quatro ({estimate}; IC de 95 % {low}–{high}). Após a calibração empírica desce para {calibrated}.",
+      "intervalsPlain": "O intervalo apresentado é mais estreito do que a incerteza real.",
+      "evans": "Os critérios de Evans que o Janus usa para considerar um par desproporcionado assinalaram {sensitivity} dos pares com efeito conhecido e ficaram em silêncio em {specificity} dos pares sem efeito conhecido.",
+      "lookCloser": "Uma razão de notificação é um motivo para olhar com mais atenção, não uma prova de que um medicamento causa um acontecimento."
     }
   }
 }

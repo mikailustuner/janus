@@ -660,6 +660,10 @@
       "modelKit": {
         "title": "Starterkit für Arzneimittelmodelle (experimentell)",
         "body": "Nachvollziehbare Parametersätze für einige Arzneimittel, an zurückgehaltenen Studien geprüft. Experimentell, nur zu Forschungszwecken, kein Dosisrechner."
+      },
+      "validationStudies": {
+        "title": "Validierungsstudien",
+        "body": "Zwei vorab registrierte Studien dazu, wie gut Janus arbeitet, mit Konfidenzintervallen."
       }
     }
   },
@@ -3330,6 +3334,45 @@
       "systemPrecisionConservative": "Vorsichtige Lesart, alles, was nicht beide Durchgänge als richtig bezeichnen, zählt als falsch: {share} ({low} bis {high}, n = {n}).",
       "systemPrecisionNone": "Für diese Aussagen wurde keine Genauigkeit gemessen.",
       "systemAtlas": "{rows, plural, one {# Atlas-Zeile} other {# Atlas-Zeilen}} zu {drugs, plural, one {# Wirkstoff} other {# Wirkstoffen}} erscheinen auf den Wirkstoffseiten als unbestätigte Evidenz."
+    }
+  },
+  "Calibration": {
+    "line": "Wie gut diese Methode bekannte Wirkungen von Nicht-Wirkungen trennt: AUC {auc} (95-%-KI {low}–{high}).",
+    "link": "Zur Validierung"
+  },
+  "ValidationStudies": {
+    "title": "Validierungsstudien",
+    "summary": "Zwei vorab registrierte Studien dazu, wie gut Janus arbeitet, jeweils mit 95-%-Konfidenzintervallen.",
+    "intro": "Für Forschende. Jede Studie hat ihre Frage, ihre Referenzdaten und ihre Erfolgskriterien in einem öffentlichen Protokoll festgelegt, bevor Janus auf die Daten angewendet wurde. Die Ergebnisse werden so berichtet, wie sie ausfielen, auch die nicht erfüllten Hypothesen.",
+    "review": "Eine Prüfung durch Fachleute ist noch nicht erfolgt.",
+    "preregistered": "Vorab registriert: Das Protokoll wurde im Commit {commit} veröffentlicht, bevor die Auswertung lief.",
+    "protocol": "Protokoll (GitHub)",
+    "results": "Ergebnisse (GitHub)",
+    "met": "Hypothese erfüllt.",
+    "notMet": "Hypothese nicht erfüllt.",
+    "proportion": "{k} von {n} = {estimate} (95-%-KI {low}–{high})",
+    "cascade": {
+      "title": "Erkennung von Verschreibungskaskaden",
+      "summary": "Markiert Janus veröffentlichte Verschreibungskaskaden und bleibt bei Wirkstoffpaaren ohne Kaskade still?",
+      "tested": "Getestet an {published} Verschreibungskaskaden aus unabhängigen Quellen, {negatives} konstruierten Wirkstoffpaaren ohne Kaskade und {cases} Fallberichten.",
+      "specificity": "Spezifität (kein Hinweis bei Paaren ohne Kaskade)",
+      "sensitivity": "Sensitivität (ein Hinweis bei veröffentlichten Kaskaden)",
+      "bound": "Vorab festgelegtes Ziel: untere Intervallgrenze mindestens {bound}.",
+      "scope": "Janus prüft eine feste Liste von {listed} Kaskaden. Kein Hinweis bedeutet nicht, dass es keine Kaskade gibt.",
+      "inScope": "Alle {k} von {n} veröffentlichten Kaskaden innerhalb dieser Liste wurden gefunden. Was fehlt, liegt außerhalb der Liste.",
+      "burden": "In den vollständigen Medikationslisten älterer Patienten aus nicht verwandten Fallberichten erhielten {k} von {n} mindestens einen Hinweis. Ein Hinweis ist ein Muster zum Besprechen mit Apotheke oder Arztpraxis, kein Befund über die Person."
+    },
+    "faers": {
+      "title": "FAERS-Meldeverhältnisse",
+      "summary": "Wie gut das Reporting-Odds-Ratio bekannte Wirkungen von bekannten Nicht-Wirkungen trennt.",
+      "tested": "Getestet an {positive} Wirkstoff-Ereignis-Paaren mit bekannter Wirkung und {negative} ohne bekannte Wirkung (Referenzsets OMOP 2013 und EU-ADR).",
+      "aucLabel": "Fläche unter der Kurve (AUC)",
+      "auc": "AUC {auc} (95-%-KI {low}–{high})",
+      "aucBound": "Vorab festgelegtes Ziel: untere Intervallgrenze über {bound}.",
+      "intervals": "Bei Paaren ohne bekannte Wirkung schließt das übliche 95-%-Intervall „kein Unterschied“ fälschlich etwa in jedem vierten Fall aus ({estimate}; 95-%-KI {low}–{high}). Nach empirischer Kalibrierung sinkt der Anteil auf {calibrated}.",
+      "intervalsPlain": "Das angegebene Intervall ist enger als die tatsächliche Unsicherheit.",
+      "evans": "Die Evans-Kriterien, mit denen Janus ein Paar als auffällig einstuft, markierten {sensitivity} der Paare mit bekannter Wirkung und blieben bei {specificity} der Paare ohne bekannte Wirkung still.",
+      "lookCloser": "Ein Meldeverhältnis ist ein Grund, genauer hinzusehen, kein Beleg dafür, dass ein Medikament ein Ereignis verursacht."
     }
   }
 }

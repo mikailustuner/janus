@@ -173,6 +173,8 @@ export const NOINDEX: Readonly<Record<string, string>> = {
   "/demo/doctor": "demo form",
   "/research/hypotheses": "repurposing candidates, researcher-facing",
   "/research/validation": "repurposing validation, researcher-facing",
+  "/research/validation-studies":
+    "pre-registered validation studies, researcher-facing",
   "/research/export": "dataset download",
   "/research/faers-onset/row": "query-driven detail",
   "/research/time-machine/cascade": "query-driven detail",
