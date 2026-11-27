@@ -58,7 +58,7 @@ jobs:
           mkdir -p "$R_LIBS_USER"
           Rscript -e 'if (!requireNamespace("mrgsolve", quietly = TRUE)) install.packages(c("mrgsolve", "jsonlite"), Ncpus = 2)'
           Rscript -e 'v <- as.character(packageVersion("mrgsolve")); cat("mrgsolve", v, "\n"); stopifnot(v == Sys.getenv("MRGSOLVE_VERSION"))'
-      - uses: astral-sh/setup-uv@v10.3.3
+      - uses: astral-sh/setup-uv@v10.4.0
         with:
           working-directory: apps/api
           enable-cache: true

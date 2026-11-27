@@ -59,7 +59,7 @@ jobs:
           key: rlib-r4.6.1-ospsuite-12.4.5-rsharp-1.2.3-${{ hashFiles('apps/api/tests/install_ospsuite.R') }}
       - name: Install ospsuite (pinned) and its dependencies
         run: Rscript apps/api/tests/install_ospsuite.R
-      - uses: astral-sh/setup-uv@v10.3.3
+      - uses: astral-sh/setup-uv@v10.4.0
         with:
           working-directory: apps/api
           enable-cache: true
