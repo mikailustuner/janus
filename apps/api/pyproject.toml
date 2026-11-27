@@ -6,24 +6,24 @@ license = "Apache-2.0"
 requires-python = ">=3.12,<3.13"
 dependencies = [
     "alembic>=1.20.1",
-    "duckdb>=2.0.0",
-    "fastapi>=0.162.1",
-    "prometheus-client==0.25.0",
+    "duckdb>=2.0.1",
+    "fastapi>=0.165.0",
+    "prometheus-client==0.26.0",
     "psycopg-pool>=3.3.3",
     "psycopg[binary]>=3.3.8",
-    "pydantic>=2.14.3",
-    "sqlalchemy>=2.1.8",
+    "pydantic>=2.14.4",
+    "sqlalchemy>=2.1.9",
     "uvicorn[standard]>=0.54.0",
 ]
 
 [dependency-groups]
 dev = [
-    "httpx2>=2.16.0",
-    "hypothesis>=6.170.15",
+    "httpx2>=2.16.2",
+    "hypothesis>=6.170.17",
     "pyright>=1.1.414",
     "pytest>=9.2.0",
     "pytest-cov>=7.0.0",
-    "ruff>=0.17.4",
+    "ruff>=0.17.6",
 ]
 
 [build-system]
