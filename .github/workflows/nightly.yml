@@ -49,7 +49,7 @@ jobs:
       JANUS_TEST_DATABASE_URL: postgresql://janus:janus-ci-only@127.0.0.1:5432/janus_test
     steps:
       - uses: actions/checkout@v7
-      - uses: astral-sh/setup-uv@v10.3.3
+      - uses: astral-sh/setup-uv@v10.4.0
         with:
           working-directory: ${{ matrix.suite }}
           enable-cache: true
